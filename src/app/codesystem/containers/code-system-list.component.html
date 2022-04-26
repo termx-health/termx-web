@@ -1,0 +1,9 @@
+<h3>i am a list</h3>
+<div>
+  <button kui-button [routerLink]="['add']" translate>test.add</button>
+</div>
+<div *ngIf="codesystems">
+  <div *ngFor="let cs of codesystems.data">
+    <a [routerLink]="['edit', cs.id]">{{cs.names | json}}</a>
+  </div>
+</div>

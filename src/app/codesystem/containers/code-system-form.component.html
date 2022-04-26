@@ -1,0 +1,20 @@
+<h3> i am a form </h3>
+<div *ngIf="codeSystem && !loading">
+  <form #form="ngForm">
+    <div>
+      id:
+      <input [(ngModel)]="codeSystem.id" name="id">
+    </div>
+    <div>
+      uri:
+      <input [(ngModel)]="codeSystem.uri" name="uri">
+    </div>
+    <div>
+      name:
+      <input [(ngModel)]="codeSystem.names.en" name="name">
+    </div>
+    <div>
+      <button kui-button (click)="save()" translate>test.save</button>
+    </div>
+  </form>
+</div>
