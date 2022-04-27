@@ -7,6 +7,8 @@ import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TerminologyLibModule} from 'terminology-lib/terminology-lib.module';
+import {environment} from '../environments/environment';
+import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -31,6 +33,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'et'},
+    {provide: TERMINOLOGY_API, useValue: environment.terminologyApi}
   ],
   bootstrap: [AppComponent]
 })
