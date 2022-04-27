@@ -1,24 +1,26 @@
-<h3>i am a list</h3>
 <div>
   <m-button [routerLink]="['add']" display="default">{{'test.add' |  translate}}</m-button>
 </div>
-<div *ngIf="codesystems">
+
+<ng-container *ngIf="codesystems">
   <m-form-row>
     <div *mFormCol>
-      <nz-table #table [nzData]="codesystems.data">
-        <thead>
-        <tr>
-          <th>ID</th>
-          <th>Name</th>
-          <th>URI</th>
-        </tr>
-        </thead>
-        <tr *ngFor="let cs of codesystems.data">
-          <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
-          <td>{{cs.names | json}}</td>
-          <td>{{cs.uri}}</td>
-        </tr>
-      </nz-table>
+      <nz-card>
+        <nz-table #table [nzData]="codesystems.data">
+          <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>URI</th>
+          </tr>
+          </thead>
+          <tr *ngFor="let cs of codesystems.data">
+            <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
+            <td>{{cs.names | json}}</td>
+            <td>{{cs.uri}}</td>
+          </tr>
+        </nz-table>
+      </nz-card>
     </div>
   </m-form-row>
-</div>
+</ng-container>

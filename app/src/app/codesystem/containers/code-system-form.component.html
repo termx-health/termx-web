@@ -1,20 +1,22 @@
 <h3> i am a form </h3>
-<div *ngIf="codeSystem && !loading">
+<ng-container *ngIf="codeSystem && !loading">
   <form #form="ngForm">
     <m-form-row>
       <div *mFormCol>
-        <m-form-item name="id" label="ID">
-          <m-input [(ngModel)]="codeSystem.id" name="id"></m-input>
-        </m-form-item>
-        <m-form-item name="name" label="Name">
-          <m-input [(ngModel)]="codeSystem.names.en" name="name"></m-input>
-        </m-form-item>
-        <m-form-item name="uri" label="URI">
-          <m-input [(ngModel)]="codeSystem.uri" name="uri"></m-input>
-        </m-form-item>
+        <nz-card>
+          <m-form-item name="id" label="ID">
+            <m-input [(ngModel)]="codeSystem.id" name="id"></m-input>
+          </m-form-item>
+          <m-form-item name="name" label="Name">
+            <m-input [(ngModel)]="codeSystem.names.en" name="name"></m-input>
+          </m-form-item>
+          <m-form-item name="uri" label="URI">
+            <m-input [(ngModel)]="codeSystem.uri" name="uri"></m-input>
+          </m-form-item>
 
-        <m-button (click)="save()">{{'test.save' | translate}}</m-button>
+          <m-button (click)="save()">{{'test.save' | translate}}</m-button>
+        </nz-card>
       </div>
     </m-form-row>
   </form>
-</div>
+</ng-container>
