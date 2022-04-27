@@ -6,6 +6,7 @@ import {AppComponent} from './app.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import {TerminologyLibModule} from 'terminology-lib/terminology-lib.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -26,10 +27,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    TerminologyLibModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'et'},
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+}

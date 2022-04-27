@@ -1,6 +1,6 @@
 <h3>i am a list</h3>
 <div>
-  <button kui-button [routerLink]="['add']" translate>test.add</button>
+  <button kui-button [routerLink]="['add']">{{'test.add' |  translate}}</button>
 </div>
 <div *ngIf="codesystems">
   <div *ngFor="let cs of codesystems.data">

@@ -1,15 +1,15 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {CodeSystem} from '../services/code-system';
-import {CodeSystemService} from '../services/code-system.service';
 import {Location} from '@angular/common';
+import {CodeSystem} from 'terminology-lib/codesystem';
+import {CodeSystemService} from '../services/code-system.service';
 
 @Component({
   templateUrl: 'code-system-form.component.html'
 })
 export class CodeSystemFormComponent implements OnInit {
-  public codeSystem: CodeSystem;
-  public loading: boolean;
+  public codeSystem?: CodeSystem;
+  public loading?: boolean;
 
   constructor(
     private codeSystemService: CodeSystemService,
@@ -21,7 +21,7 @@ export class CodeSystemFormComponent implements OnInit {
     const params = this.route.snapshot.paramMap;
     if (params.has('id')) {
       this.loading = true;
-      this.codeSystemService.load(params.get('id')).subscribe(cs => this.codeSystem = cs).add(() => this.loading = false);
+      this.codeSystemService.load(params.get('id')!).subscribe(cs => this.codeSystem = cs).add(() => this.loading = false);
     } else {
       this.codeSystem = new CodeSystem();
       this.codeSystem.names = {};
@@ -29,6 +29,8 @@ export class CodeSystemFormComponent implements OnInit {
   }
 
   public save(): void {
-    this.codeSystemService.save(this.codeSystem).subscribe(() => this.location.back());
+    if (this.codeSystem) {
+      this.codeSystemService.save(this.codeSystem).subscribe(() => this.location.back());
+    }
   }
 }
