@@ -6,6 +6,7 @@ import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {CodeSystemLibModule} from 'terminology-lib/codesystem';
+import {MarinaUiModule} from '@kodality-health/marina-ui';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -24,7 +25,8 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     RouterModule,
     FormsModule,
     TranslateModule,
-    CodeSystemLibModule
+    CodeSystemLibModule,
+    MarinaUiModule,
   ]
 })
 export class CodeSystemModule {

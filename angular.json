@@ -74,6 +74,7 @@
               "app/src/assets"
             ],
             "styles": [
+              "./node_modules/@kodality-health/marina-ui/mui.styles.less",
               "app/src/styles.less"
             ],
             "scripts": []

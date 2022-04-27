@@ -9,6 +9,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TerminologyLibModule} from 'terminology-lib/terminology-lib.module';
 import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
+import {MarinaUiModule} from '@kodality-health/marina-ui';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -29,6 +30,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
+    MarinaUiModule,
     TerminologyLibModule
   ],
   providers: [
