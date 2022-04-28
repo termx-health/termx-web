@@ -48,6 +48,6 @@ export class AppModule {
     i18nService: I18nService
   ) {
     translateService.use('en');
-    translateService.onLangChange.subscribe(({lang}) => i18nService.use(lang))
+    translateService.onLangChange.subscribe(({lang}) => i18nService.use(lang));
   }
 }

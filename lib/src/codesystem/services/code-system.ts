@@ -1,4 +1,4 @@
-import {LocalizedName} from '../../commons/localized-name';
+import {LocalizedName} from '@kodality-health/marina-util';
 
 export class CodeSystem {
   public id?: string;
