@@ -10,12 +10,12 @@ export class AppComponent {
   public menu: MuiMenuItem[] = [
     {
       icon: 'unordered-list',
-      label: 'CS list',
+      label: 'List',
       click: () => this.router.navigateByUrl('code-systems')
     },
     {
       icon: 'plus',
-      label: 'CS add',
+      label: 'Add',
       click: () => this.router.navigateByUrl('code-systems/add')
     }
   ];
