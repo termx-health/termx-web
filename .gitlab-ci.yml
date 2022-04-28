@@ -6,9 +6,9 @@ stages:
 build:
   stage: build
   before_script:
-    - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" > ~/.npmrc
+    - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
     - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
-    - echo "//kexus.kodality.com/repository/npm-health/:_authToken=$NEXUS_NPM_HEALTH_TOKEN" > ~/.npmrc
+    - echo "//kexus.kodality.com/repository/npm-health/:_authToken=$NEXUS_NPM_HEALTH_TOKEN" >> ~/.npmrc
     - echo "@kodality-health:registry=https://kexus.kodality.com/repository/npm-health/" >> ~/.npmrc
   script:
     - npm install
