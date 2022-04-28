@@ -1,11 +1,7 @@
-<div>
-  <m-button [routerLink]="['add']" display="default">{{'test.add' |  translate}}</m-button>
-</div>
-
 <ng-container *ngIf="codesystems">
   <m-form-row>
     <div *mFormCol>
-      <nz-card>
+      <m-card title="Code System list">
         <nz-table #table [nzData]="codesystems.data">
           <thead>
           <tr>
@@ -16,11 +12,11 @@
           </thead>
           <tr *ngFor="let cs of codesystems.data">
             <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
-            <td>{{cs.names | json}}</td>
+            <td>{{cs.names | localName}}</td>
             <td>{{cs.uri}}</td>
           </tr>
         </nz-table>
-      </nz-card>
+      </m-card>
     </div>
   </m-form-row>
 </ng-container>

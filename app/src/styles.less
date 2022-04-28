@@ -14,3 +14,14 @@
 body {
   background-color: var(--color-background);
 }
+
+.layout {
+  display: grid;
+  grid-template-columns: auto 4fr;
+  height: calc(100vh - 4rem - 1px);
+
+  &--content {
+    overflow: auto;
+    padding: 4rem;
+  }
+}

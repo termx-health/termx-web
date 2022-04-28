@@ -71,10 +71,16 @@
             "inlineStyleLanguage": "less",
             "assets": [
               "app/src/favicon.ico",
-              "app/src/assets"
+              "app/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
-              "./node_modules/@kodality-health/marina-ui/mui.styles.less",
+              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
+              "node_modules/@kodality-health/marina-ui/mui.styles.less",
               "app/src/styles.less"
             ],
             "scripts": []

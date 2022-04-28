@@ -1,9 +1,8 @@
-<h3> i am a form </h3>
 <ng-container *ngIf="codeSystem && !loading">
   <form #form="ngForm">
     <m-form-row>
       <div *mFormCol>
-        <nz-card>
+        <m-card title="Code System Form" raised borderless>
           <m-form-item name="id" label="ID">
             <m-input [(ngModel)]="codeSystem.id" name="id"></m-input>
           </m-form-item>
@@ -15,7 +14,7 @@
           </m-form-item>
 
           <m-button (click)="save()">{{'test.save' | translate}}</m-button>
-        </nz-card>
+        </m-card>
       </div>
     </m-form-row>
   </form>
