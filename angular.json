@@ -79,10 +79,10 @@
               }
             ],
             "styles": [
-              "node_modules/ng-zorro-antd/ng-zorro-antd.min.css",
               "node_modules/@kodality-health/marina-ui/mui.styles.css",
               "app/src/styles.less"
             ],
+            "preserveSymlinks": true,
             "scripts": []
           },
           "configurations": {

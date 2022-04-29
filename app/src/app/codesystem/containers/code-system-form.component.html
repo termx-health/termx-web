@@ -3,11 +3,11 @@
     <m-form-row>
       <div *mFormCol>
         <m-card title="Code System Form">
-          <m-form-item name="id" label="ID">
-            <m-input [(ngModel)]="codeSystem.id" name="id"></m-input>
+          <m-form-item name="id" label="ID" required>
+            <m-input [(ngModel)]="codeSystem.id" name="id" required></m-input>
           </m-form-item>
-          <m-form-item name="name" label="Name">
-            <m-input [(ngModel)]="codeSystem.names.en" name="name"></m-input>
+          <m-form-item name="name" label="Name" required>
+            <m-input [(ngModel)]="codeSystem.names.en" name="name" required></m-input>
           </m-form-item>
           <m-form-item name="uri" label="URI">
             <m-input [(ngModel)]="codeSystem.uri" name="uri"></m-input>

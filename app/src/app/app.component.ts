@@ -10,7 +10,6 @@ export class AppComponent {
   public menu: MuiMenuItem[] = [
     {
       icon: 'unordered-list',
-      label: 'List',
       click: () => this.router.navigateByUrl('code-systems')
     },
     {

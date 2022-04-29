@@ -1,8 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {CodeSystem} from 'terminology-lib/codesystem';
 import {CodeSystemService} from '../services/code-system.service';
+import {NgForm} from '@angular/forms';
+import {isNil, validateForm} from '@kodality-web/core-util';
 
 @Component({
   templateUrl: 'code-system-form.component.html'
@@ -10,6 +12,8 @@ import {CodeSystemService} from '../services/code-system.service';
 export class CodeSystemFormComponent implements OnInit {
   public codeSystem?: CodeSystem;
   public loading?: boolean;
+
+  @ViewChild("form") public form?: NgForm;
 
   constructor(
     private codeSystemService: CodeSystemService,
@@ -29,8 +33,9 @@ export class CodeSystemFormComponent implements OnInit {
   }
 
   public save(): void {
-    if (this.codeSystem) {
-      this.codeSystemService.save(this.codeSystem).subscribe(() => this.location.back());
+    if (isNil(this.codeSystem) || !validateForm(this.form)) {
+      return;
     }
+    this.codeSystemService.save(this.codeSystem).subscribe(() => this.location.back());
   }
 }

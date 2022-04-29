@@ -10,7 +10,7 @@ import {TerminologyLibModule} from 'terminology-lib/terminology-lib.module';
 import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
 import {CoreZorroModule, MarinaUiModule} from '@kodality-health/marina-ui';
-import {I18nService} from '@kodality-web/core-util';
+import {CoreI18nService} from '@kodality-web/core-util';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -45,7 +45,7 @@ export class AppModule {
 
   public constructor(
     translateService: TranslateService,
-    i18nService: I18nService
+    i18nService: CoreI18nService
   ) {
     translateService.use('en');
     translateService.onLangChange.subscribe(({lang}) => i18nService.use(lang));
