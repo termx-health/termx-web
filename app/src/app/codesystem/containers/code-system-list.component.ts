@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {SearchResult, sort} from '@kodality-web/core-util';
-import {CodeSystem} from 'terminology-lib/codesystem';
+import {SearchResult} from '@kodality-web/core-util';
+import {CodeSystem, CodeSystemSearchParams} from 'terminology-lib/codesystem';
 import {CodeSystemService} from '../services/code-system.service';
 
 @Component({
@@ -9,14 +9,20 @@ import {CodeSystemService} from '../services/code-system.service';
 
 export class CodeSystemListComponent implements OnInit {
   public searchResult?: SearchResult<CodeSystem> = new SearchResult<CodeSystem>();
+  public query: any = new CodeSystemSearchParams(); //fixme!
   public loading?: boolean;
 
-  constructor(private codeSystemService: CodeSystemService) {}
+  public constructor(private codeSystemService: CodeSystemService) {}
 
   public ngOnInit(): void {
-    this.loading = true;
-    this.codeSystemService.search().subscribe(r => this.searchResult = r).add(() => this.loading = false);
+    this.query.limit = 2;
+    this.loadData();
   }
 
-  public sortTableData = (cs: CodeSystem[]) => sort(cs, 'id');
+
+  public loadData(): void {
+    this.loading = true;
+    this.codeSystemService.search(this.query).subscribe(r => this.searchResult = r).add(() => this.loading = false);
+  }
+
 }

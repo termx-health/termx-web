@@ -1,18 +1,21 @@
 <m-form-row>
   <div *mFormCol>
     <m-card [title]="'web.code-system.list.header'">
-      <nz-table #table [nzData]="searchResult.data" [nzLoading]="loading" nzHideOnSinglePage>
+      {{query['page']}}
+      <nz-table #table nzShowSizeChanger [nzFrontPagination]="false" (nzQueryParams)="loadData()" [nzData]="searchResult.data" [nzLoading]="loading" [nzTotal]="searchResult.meta.total" [(nzPageSize)]="query.limit" [(nzPageIndex)]="query['page']">
         <thead>
         <tr>
-          <th>{{'web.code-system.entity.id' | translate}}</th>
-          <th>{{'web.code-system.entity.name' | translate}}</th>
-          <th>{{'web.code-system.entity.uri' | translate}}</th>
+          <th nzColumnKey="id">{{'web.code-system.entity.id' | translate}}</th>
+          <th nzColumnKey="name" [nzSortFn]="true">{{'web.code-system.entity.name' | translate}}</th>
+          <th nzColumnKey="uri">{{'web.code-system.entity.uri' | translate}}</th>
+          <th nzColumnKey="actions">Actions</th> <!improve this>
         </tr>
         </thead>
-        <tr *ngFor="let cs of table.data | apply: sortTableData">
+        <tr *ngFor="let cs of table.data">
           <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
           <td>{{cs.names | localName}}</td>
           <td>{{cs.uri}}</td>
+          <td><button nz-button nzType="primary" nzDanger>Delete</button></td>
         </tr>
       </nz-table>
     </m-card>
