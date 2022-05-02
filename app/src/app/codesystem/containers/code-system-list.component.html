@@ -1,22 +1,20 @@
-<ng-container *ngIf="codesystems">
-  <m-form-row>
-    <div *mFormCol>
-      <m-card title="Code System list">
-        <nz-table #table [nzData]="codesystems.data">
-          <thead>
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>URI</th>
-          </tr>
-          </thead>
-          <tr *ngFor="let cs of codesystems.data">
-            <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
-            <td>{{cs.names | localName}}</td>
-            <td>{{cs.uri}}</td>
-          </tr>
-        </nz-table>
-      </m-card>
-    </div>
-  </m-form-row>
-</ng-container>
+<m-form-row>
+  <div *mFormCol>
+    <m-card [title]="'web.code-system.list.header'">
+      <nz-table #table [nzData]="searchResult.data" [nzLoading]="loading" nzHideOnSinglePage>
+        <thead>
+        <tr>
+          <th>{{'web.code-system.entity.id' | translate}}</th>
+          <th>{{'web.code-system.entity.name' | translate}}</th>
+          <th>{{'web.code-system.entity.uri' | translate}}</th>
+        </tr>
+        </thead>
+        <tr *ngFor="let cs of table.data | apply: sortTableData">
+          <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
+          <td>{{cs.names | localName}}</td>
+          <td>{{cs.uri}}</td>
+        </tr>
+      </nz-table>
+    </m-card>
+  </div>
+</m-form-row>

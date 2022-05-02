@@ -1,6 +1,26 @@
 {
-  "test": {
-    "add": "Add",
-    "save": "Save"
+  "core": {
+    "btn": {
+      "save": "Save"
+    }
+  },
+  "web": {
+    "app": {
+      "header": "Terminology"
+    },
+    "code-system": {
+      "entity": {
+        "id": "Identifier",
+        "uri": "Uniform resource identifier (URI)",
+        "name": "Name"
+      },
+      "form": {
+        "add-header": "Create a new code system",
+        "edit-header": "Edit code system"
+      },
+      "list": {
+        "header": "Code system list"
+      }
+    }
   }
 }

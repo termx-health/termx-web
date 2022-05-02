@@ -18,7 +18,7 @@ export class CodeSystemLibService {
     return this.http.get<CodeSystem>(`${this.baseUrl}/${id}`);
   }
 
-  public search(params: CodeSystemSearchParams): Observable<SearchResult<CodeSystem>> {
+  public search(params: CodeSystemSearchParams = {}): Observable<SearchResult<CodeSystem>> {
     return this.http.get<SearchResult<CodeSystem>>(this.baseUrl, {params: SearchHttpParams.build(params)});
   }
 }

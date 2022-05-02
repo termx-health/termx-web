@@ -9,11 +9,15 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TerminologyLibModule} from 'terminology-lib/terminology-lib.module';
 import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
-import {CoreZorroModule, MarinaUiModule} from '@kodality-health/marina-ui';
-import {CoreI18nService} from '@kodality-web/core-util';
+import {MarinaUiModule} from '@kodality-health/marina-ui';
+import {CoreI18nService, CoreI18nTranslationHandler, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
+}
+
+export function TranslationHandlerFactory(translateService: TranslateService): CoreI18nTranslationHandler {
+  return (key, params) => translateService.instant(key, params);
 }
 
 @NgModule({
@@ -31,22 +35,18 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    CoreZorroModule,
-    MarinaUiModule,
-    TerminologyLibModule
+    TerminologyLibModule,
+    MarinaUiModule
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'et'},
-    {provide: TERMINOLOGY_API, useValue: environment.terminologyApi}
+    {provide: LOCALE_ID, useValue: 'en'},
+    {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
+    {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]}
   ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
-
-  public constructor(
-    translateService: TranslateService,
-    i18nService: CoreI18nService
-  ) {
+  public constructor(translateService: TranslateService, i18nService: CoreI18nService) {
     translateService.use('en');
     translateService.onLangChange.subscribe(({lang}) => i18nService.use(lang));
   }

@@ -8,6 +8,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {CodeSystemLibModule} from 'terminology-lib/codesystem';
 import {MarinaUiModule} from '@kodality-health/marina-ui';
 import {MarinaUtilModule} from '@kodality-health/marina-util';
+import {CoreUtilModule} from '@kodality-web/core-util';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -27,8 +28,10 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     FormsModule,
     TranslateModule,
     CodeSystemLibModule,
+
     MarinaUiModule,
     MarinaUtilModule,
+    CoreUtilModule,
   ]
 })
 export class CodeSystemModule {

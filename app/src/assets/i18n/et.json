@@ -1,0 +1,26 @@
+{
+  "core": {
+    "btn": {
+      "save": "Salvesta"
+    }
+  },
+  "web": {
+    "app": {
+      "header": "Terminoloogia"
+    },
+    "code-system": {
+      "entity": {
+        "id": "Identifikaator",
+        "uri": "Ühtne ressursiidentifikaator (URI)",
+        "name": "Nimi"
+      },
+      "form": {
+        "add-header": "Lisa uus koodisüsteem",
+        "edit-header": "Koodisüsteemi muutmise vorm"
+      },
+      "list": {
+        "header": "Koodisüsteemide nimekiri"
+      }
+    }
+  }
+}

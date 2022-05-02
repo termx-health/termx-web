@@ -1,0 +1,18 @@
+[
+  {
+    "label": {
+      "en": "Code system list",
+      "et": "Koodisüsteemide nimekiri"
+    },
+    "icon": "unordered-list",
+    "link": "code-systems"
+  },
+  {
+    "label": {
+      "en": "Code system form",
+      "et": "Koodisüsteemi lisamine"
+    },
+    "icon": "plus",
+    "link": "code-systems/add"
+  }
+]
