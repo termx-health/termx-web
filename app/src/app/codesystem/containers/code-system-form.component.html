@@ -6,12 +6,26 @@
           <m-form-item name="id" label="web.code-system.entity.id" required>
             <m-input [(ngModel)]="codeSystem.id" name="id" [disabled]="!!codeSystem.id" required></m-input>
           </m-form-item>
-          <m-form-item name="name" label="web.code-system.entity.name" required>
+          <m-form-item name="name" label="web.code-system.entity.name" required> <!--fixme translations-->
             <m-input [(ngModel)]="codeSystem.names.en" name="name" required></m-input>
           </m-form-item>
           <m-form-item name="uri" label="web.code-system.entity.uri">
             <m-input [(ngModel)]="codeSystem.uri" name="uri"></m-input>
           </m-form-item>
+          <m-form-item name="description" label="web.code-system.entity.description">
+            <m-input [(ngModel)]="codeSystem.description" name="description"></m-input>
+          </m-form-item>
+          <nz-table #table
+              nzShowSizeChanger
+              [nzFrontPagination]="false"> <!--load new data (seperate func)? Get from existing?-->
+            <thead>
+            <tr>
+              <th nzColumnKey="property-name">{{'web.code-system.entity.id' | translate}}</th> <!--wrong translations-->
+              <th nzColumnKey="property-type" [nzSortFn]="true">{{'web.code-system.entity.name' | translate}}</th> <!--wrong translations-->
+              <th nzColumnKey="property-status">{{'web.code-system.entity.domain' | translate}}</th> <!--wrong translations-->
+            </tr>
+            </thead>
+          </nz-table>
 
           <m-button (click)="save()">{{'core.btn.save' | translate}}</m-button>
         </m-card>

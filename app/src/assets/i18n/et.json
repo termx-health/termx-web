@@ -12,14 +12,18 @@
       "entity": {
         "id": "Identifikaator",
         "uri": "Ühtne ressursiidentifikaator (URI)",
-        "name": "Nimi"
+        "name": "Nimi",
+        "domain": "Domeen",
+        "description": "Kirjeldus"
       },
       "form": {
         "add-header": "Lisa uus koodisüsteem",
         "edit-header": "Koodisüsteemi muutmise vorm"
       },
       "list": {
-        "header": "Koodisüsteemide nimekiri"
+        "header": "Koodisüsteemide nimekiri",
+        "operations": "Toimingud",
+        "versions": "Versioonid"
       }
     }
   }

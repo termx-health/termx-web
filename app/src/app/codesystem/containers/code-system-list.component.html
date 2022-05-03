@@ -1,22 +1,61 @@
 <m-form-row>
   <div *mFormCol>
     <m-card [title]="'web.code-system.list.header'">
-      {{query['page']}}
-      <nz-table #table nzShowSizeChanger [nzFrontPagination]="false" (nzQueryParams)="loadData()" [nzData]="searchResult.data" [nzLoading]="loading" [nzTotal]="searchResult.meta.total" [(nzPageSize)]="query.limit" [(nzPageIndex)]="query['page']">
+      <nz-table #table
+          nzShowSizeChanger
+          [nzFrontPagination]="false"
+          (nzQueryParams)="loadData()"
+          [nzData]="searchResult.data"
+          [nzLoading]="loading"
+          [nzTotal]="searchResult.meta.total"
+          [(nzPageSize)]="query.limit"
+          [(nzPageIndex)]="query['page']">
         <thead>
         <tr>
+          <th></th>
           <th nzColumnKey="id">{{'web.code-system.entity.id' | translate}}</th>
-          <th nzColumnKey="name" [nzSortFn]="true">{{'web.code-system.entity.name' | translate}}</th>
-          <th nzColumnKey="uri">{{'web.code-system.entity.uri' | translate}}</th>
-          <th nzColumnKey="actions">Actions</th> <!improve this>
+          <th nzColumnKey="name" [nzSortFn]="true">{{'web.code-system.entity.name' | translate}}</th> <!--sorting not workie-->
+          <th nzColumnKey="uri">{{'web.code-system.entity.domain' | translate}}</th>
+          <th nzColumnKey="actions">{{'web.code-system.list.operations' | translate}}</th>
         </tr>
         </thead>
-        <tr *ngFor="let cs of table.data">
-          <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
-          <td>{{cs.names | localName}}</td>
-          <td>{{cs.uri}}</td>
-          <td><button nz-button nzType="primary" nzDanger>Delete</button></td>
-        </tr>
+        <ng-container *ngFor="let cs of table.data">
+          <tr>
+            <td nzShowExpand [nzExpand]="cs.expand" (nzExpandChange)="onExpandChange(cs, $event)"></td>
+            <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
+            <td>{{cs.names | localName}}</td>
+            <td>{{cs.uri | apply: parseDomain}}</td>
+            <td>
+              <button nz-button nzType="primary" nzDanger>Delete</button>
+            </td>
+          </tr>
+          <tr [nzExpand]="cs.expand">
+            <form> <!--fixme-->
+              <m-form-row full>
+                <div *mFormCol>
+                  <m-form-item label="web.code-system.entity.uri" [labelStyle]="{fontWeight:'bold'}">
+                    {{cs.uri}}
+                  </m-form-item>
+                  <m-form-item label="web.code-system.entity.description" [labelStyle]="{fontWeight:'bold'}">
+                    {{cs.description}}
+                  </m-form-item>
+                  <m-form-item label="web.code-system.list.versions" [labelStyle]="{fontWeight:'bold'}">
+                    <div *ngFor="let version of cs.versions">
+                      {{
+                      version | apply: getVersionTranslateTokens: ({
+                        releaseDate: (version.releaseDate | localDate),
+                        expirationDate: (version.expirationDate | localDate),
+                        version: version.version
+                      }) | join: ' '}}
+                    </div>
+                    <!--                    {{cs.versions | apply: checkVersions}}-->
+                  </m-form-item>
+                </div>
+              </m-form-row>
+            </form>
+          </tr>
+        </ng-container>
+
       </nz-table>
     </m-card>
   </div>

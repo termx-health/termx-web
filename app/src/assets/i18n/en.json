@@ -12,14 +12,21 @@
       "entity": {
         "id": "Identifier",
         "uri": "Uniform resource identifier (URI)",
-        "name": "Name"
+        "name": "Name",
+        "domain": "Domain",
+        "description": "Description"
       },
       "form": {
         "add-header": "Create a new code system",
         "edit-header": "Edit code system"
       },
       "list": {
-        "header": "Code system list"
+        "header": "Code system list",
+        "operations": "Operations",
+        "versions": "Versions",
+        "versions-release-date": "From: {{releaseDate}}",
+        "versions-expiration-date": "to {{expirationDate}}",
+        "versions-version": "Version name: {{version}}"
       }
     }
   }
