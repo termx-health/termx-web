@@ -16,6 +16,20 @@
         "domain": "Domain",
         "description": "Description"
       },
+      "property": {
+        "properties": "Properties",
+        "name": "Name",
+        "type": "Type",
+        "status": "Status"
+      },
+      "version": {
+        "versions": "Versions",
+        "version": "Version",
+        "source": "Source",
+        "release": "Release date",
+        "expiration": "Expiration date",
+        "status": "Status"
+      },
       "form": {
         "add-header": "Create a new code system",
         "edit-header": "Edit code system"

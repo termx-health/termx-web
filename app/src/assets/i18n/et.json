@@ -16,6 +16,20 @@
         "domain": "Domeen",
         "description": "Kirjeldus"
       },
+      "property": {
+        "properties": "Omadused",
+        "name": "Nimi",
+        "type": "Tüüp",
+        "status": "Olek"
+      },
+      "version": {
+        "versions": "Versioonid",
+        "version": "Versioon",
+        "source": "Allikas",
+        "release": "Väljastus kuupäev",
+        "expiration": "Aegumis kuupäev",
+        "status": "Olek"
+      },
       "form": {
         "add-header": "Lisa uus koodisüsteem",
         "edit-header": "Koodisüsteemi muutmise vorm"

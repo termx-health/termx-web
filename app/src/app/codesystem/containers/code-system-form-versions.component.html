@@ -1,0 +1,22 @@
+<nz-divider nzPlain nzText="{{'web.code-system.version.versions' | translate}}"></nz-divider>
+<nz-table #table [nzBordered]="false" [nzData]="versions" [nzSize]="'small'" [nzLoading]="loading">
+  <thead>
+  <tr>
+    <th nzColumnKey="version-version">{{'web.code-system.version.version' | translate}}</th>
+    <th nzColumnKey="version-source">{{'web.code-system.version.source' | translate}}</th>
+    <th nzColumnKey="version-release">{{'web.code-system.version.release' | translate}}</th>
+    <th nzColumnKey="version-expiration">{{'web.code-system.version.expiration' | translate}}</th>
+    <th nzColumnKey="version-status">{{'web.code-system.version.status' | translate}}</th>
+  </tr>
+  </thead>
+  <ng-container *ngFor="let version of table.data">
+    <tr>
+      <td>{{version.version}}</td>
+      <td>{{version.source}}</td>
+      <td>{{version.releaseDate}}</td>
+      <td>{{version.expirationDate}}</td>
+      <td>{{version.status}}</td>
+
+    </tr>
+  </ng-container>
+</nz-table>

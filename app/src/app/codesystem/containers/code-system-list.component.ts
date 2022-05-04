@@ -16,7 +16,6 @@ export class CodeSystemListComponent implements OnInit {
 
   public onExpandChange(cs: (CodeSystem & {expand?: boolean}), checked: boolean): void {
     cs.expand = checked;
-    console.log("hello, ", cs, checked);
   }
 
   public constructor(private codeSystemService: CodeSystemService, private translateService: TranslateService) {}
@@ -26,7 +25,11 @@ export class CodeSystemListComponent implements OnInit {
   }
 
   public parseDomain(uri: string): string {
-    return new URL(uri).host;
+    try {
+      return new URL(uri).host;
+    } catch (error) {
+      return '';
+    }
   }
 
   public getVersionTranslateTokens = (version: CodeSystemVersion, translateOptions: object): string[] => {
@@ -47,7 +50,6 @@ export class CodeSystemListComponent implements OnInit {
     this.loading = true;
     this.query.decorated = true;
     this.codeSystemService.search(this.query).subscribe(r => {
-      console.log(r);
       return this.searchResult = r;
     }).add(() => this.loading = false);
   }
