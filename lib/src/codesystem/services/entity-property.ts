@@ -9,6 +9,6 @@ export class EntityProperty {
 
 export class EntityPropertyValue{
   public id?: number;
-  public value?: object;
+  public value?: any;
   public entityPropertyId?: number;
 }

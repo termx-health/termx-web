@@ -22,7 +22,7 @@ export class CodeSystemFormComponent implements OnChanges {
 
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["codeSystemId"]?.currentValue || changes["mode"].currentValue) {
+    if (changes["codeSystemId"]?.currentValue || changes["mode"]?.currentValue) {
       this.initCodeSystem();
     }
   }

@@ -2,44 +2,44 @@
   <div *mFormCol>
     <m-card [title]="'web.code-system.list.header'">
       <nz-table #table
-          nzShowSizeChanger
-          [nzFrontPagination]="false"
           (nzQueryParams)="loadData()"
           [nzData]="searchResult.data"
-          [nzLoading]="loading"
           [nzTotal]="searchResult.meta.total"
           [(nzPageSize)]="query.limit"
-          [(nzPageIndex)]="query['page']">
-        <thead>
+          [(nzPageIndex)]="query['page']"
+          [nzFrontPagination]="false"
+          [nzLoading]="loading"
+          nzShowSizeChanger>
+      <thead>
         <tr>
           <th></th>
-          <th nzColumnKey="id">{{'web.code-system.entity.id' | translate}}</th>
-          <th nzColumnKey="name" [nzSortFn]="true">{{'web.code-system.entity.name' | translate}}</th> <!--sorting not workie-->
-          <th nzColumnKey="uri">{{'web.code-system.entity.domain' | translate}}</th>
-          <th nzColumnKey="actions">{{'web.code-system.list.operations' | translate}}</th>
+          <th>{{'web.code-system.entity.id' | translate}}</th>
+          <th>{{'web.code-system.entity.name' | translate}}</th>
+          <th>{{'web.code-system.entity.domain' | translate}}</th>
+          <th>{{'web.code-system.list.operations' | translate}}</th>
         </tr>
         </thead>
         <ng-container *ngFor="let cs of table.data">
           <tr>
-            <td nzShowExpand [nzExpand]="cs.expand" (nzExpandChange)="onExpandChange(cs, $event)"></td>
+            <td nzShowExpand [(nzExpand)]="cs.expand"></td>
             <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
             <td>{{cs.names | localName}}</td>
             <td>{{cs.uri | apply: parseDomain}}</td>
             <td>
-              <button nz-button nzType="primary" nzDanger>Delete</button>
+              <button nz-button nzType="primary" nzDanger>{{'web.code-system.list.delete' | translate}}</button>
             </td>
           </tr>
           <tr [nzExpand]="cs.expand">
             <form> <!--fixme-->
               <m-form-row full>
                 <div *mFormCol>
-                  <m-form-item label="web.code-system.entity.uri" [labelStyle]="{fontWeight:'bold'}">
+                  <m-form-item label="web.code-system.entity.uri">
                     {{cs.uri}}
                   </m-form-item>
-                  <m-form-item label="web.code-system.entity.description" [labelStyle]="{fontWeight:'bold'}">
+                  <m-form-item label="web.code-system.entity.description">
                     {{cs.description}}
                   </m-form-item>
-                  <m-form-item label="web.code-system.list.versions" [labelStyle]="{fontWeight:'bold'}">
+                  <m-form-item label="web.code-system.list.versions">
                     <div *ngFor="let version of cs.versions">
                       {{
                       version | apply: getVersionTranslateTokens: ({
@@ -54,7 +54,6 @@
             </form>
           </tr>
         </ng-container>
-
       </nz-table>
     </m-card>
   </div>

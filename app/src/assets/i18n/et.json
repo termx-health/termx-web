@@ -8,6 +8,22 @@
     "app": {
       "header": "Terminoloogia"
     },
+    "code-system-version": {
+      "entity": {
+        "version": "Versioon",
+        "source": "Allikas",
+        "release": "Väljastus kuupäev",
+        "expiration": "Aegumis kuupäev",
+        "status": "Olek"
+      }
+    },
+    "entity-property": {
+      "entity": {
+        "name": "Nimi",
+        "type": "Tüüp",
+        "status": "Olek"
+      }
+    },
     "code-system": {
       "entity": {
         "id": "Identifikaator",
@@ -16,28 +32,19 @@
         "domain": "Domeen",
         "description": "Kirjeldus"
       },
-      "property": {
-        "properties": "Omadused",
-        "name": "Nimi",
-        "type": "Tüüp",
-        "status": "Olek"
-      },
-      "version": {
-        "versions": "Versioonid",
-        "version": "Versioon",
-        "source": "Allikas",
-        "release": "Väljastus kuupäev",
-        "expiration": "Aegumis kuupäev",
-        "status": "Olek"
-      },
       "form": {
         "add-header": "Lisa uus koodisüsteem",
         "edit-header": "Koodisüsteemi muutmise vorm"
       },
       "list": {
+        "properties": "Omadused",
         "header": "Koodisüsteemide nimekiri",
         "operations": "Toimingud",
-        "versions": "Versioonid"
+        "delete": "Kustuta",
+        "versions": "Versioonid",
+        "versions-release-date": "From: {{releaseDate}}",
+        "versions-expiration-date": "to {{expirationDate}}",
+        "versions-version": "Version name: {{version}}"
       }
     }
   }

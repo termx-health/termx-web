@@ -18,7 +18,7 @@ export class CodeSystemEditComponent implements OnInit {
     private codeSystemService: CodeSystemService,
     private route: ActivatedRoute,
     private location: Location
-  ) { }
+  ) {}
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id') || undefined;
@@ -28,7 +28,10 @@ export class CodeSystemEditComponent implements OnInit {
   public save(): void {
     if (this.codeSystemForm?.validate()) {
       this.loading = true;
-      this.codeSystemService.save(this.codeSystemForm.readForm()!).subscribe(() => this.location.back()).add(()=>this.loading = false);
+      this.codeSystemService
+        .save(this.codeSystemForm.readForm()!)
+        .subscribe(() => this.location.back())
+        .add(() => this.loading = false);
     }
   }
 }

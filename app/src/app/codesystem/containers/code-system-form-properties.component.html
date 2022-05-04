@@ -1,10 +1,10 @@
-<nz-divider nzPlain nzText="{{'web.code-system.property.properties' | translate}}"></nz-divider>
+<nz-divider nzPlain [nzText]="'web.code-system.list.properties' | translate"></nz-divider>
 <nz-table #table [nzBordered]="false" [nzData]="properties" [nzSize]="'small'" [nzLoading]="loading">
   <thead>
   <tr>
-    <th nzColumnKey="property-name">{{'web.code-system.property.name' | translate}}</th>
-    <th nzColumnKey="property-type">{{'web.code-system.property.type' | translate}}</th>
-    <th nzColumnKey="property-status">{{'web.code-system.property.status' | translate}}</th>
+    <th>{{'web.entity-property.entity.name' | translate}}</th>
+    <th>{{'web.entity-property.entity.type' | translate}}</th>
+    <th>{{'web.entity-property.entity.status' | translate}}</th>
   </tr>
   </thead>
   <ng-container *ngFor="let property of table.data">
