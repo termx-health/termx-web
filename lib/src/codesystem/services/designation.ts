@@ -1,0 +1,12 @@
+export class Designation {
+  public id?: number;
+  public designationTypeId?: number;
+  public name?: number;
+  public language?: string;
+  public rendering?: string;
+  public preferred?: boolean;
+  public caseSignificance?: string;
+  public designationKind?: string;
+  public description?: string;
+  public status?: string;
+}

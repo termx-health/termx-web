@@ -8,18 +8,43 @@
     "app": {
       "header": "Terminology"
     },
+    "code-system-version": {
+      "entity": {
+        "version": "Version",
+        "source": "Source",
+        "release-date": "Release date",
+        "expiration-date": "Expiration date",
+        "status": "Status"
+      }
+    },
+    "entity-property": {
+      "entity": {
+        "name": "Name",
+        "type": "Type",
+        "status": "Status"
+      }
+    },
     "code-system": {
       "entity": {
         "id": "Identifier",
         "uri": "Uniform resource identifier (URI)",
-        "name": "Name"
+        "name": "Name",
+        "domain": "Domain",
+        "description": "Description"
       },
       "form": {
         "add-header": "Create a new code system",
         "edit-header": "Edit code system"
       },
       "list": {
-        "header": "Code system list"
+        "properties": "Properties",
+        "header": "Code system list",
+        "operations": "Operations",
+        "delete": "Delete",
+        "versions": "Versions",
+        "versions-release-date": "From: {{releaseDate}}",
+        "versions-expiration-date": "to {{expirationDate}}",
+        "versions-version": "Version name: {{version}}"
       }
     }
   }
