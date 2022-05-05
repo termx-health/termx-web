@@ -1,8 +1,9 @@
 <nz-divider nzPlain [nzText]="'web.code-system.list.properties' | translate"></nz-divider>
+<a [routerLink]="['../property/add']">Add Property</a>
 <nz-table #table [nzBordered]="false" [nzData]="properties" [nzSize]="'small'" [nzLoading]="loading">
   <thead>
   <tr>
-    <th>{{'web.entity-property.entity.name' | translate}}</th>
+    <th>{{'web.entity-property.entity.name' | translate}}</th> <!--Add router to edit when editing becomes available-->
     <th>{{'web.entity-property.entity.type' | translate}}</th>
     <th>{{'web.entity-property.entity.status' | translate}}</th>
   </tr>

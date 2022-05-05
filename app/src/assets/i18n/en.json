@@ -30,7 +30,12 @@
       "entity": {
         "name": "Name",
         "type": "Type",
-        "status": "Status"
+        "status": "Status",
+        "description": "Description"
+      },
+      "form": {
+        "edit-header": "Edit property",
+        "add-header": "Add property"
       }
     },
     "code-system": {

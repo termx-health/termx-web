@@ -23,6 +23,9 @@ export class CodeSystemLibService {
   public loadProperties(id: string): Observable<EntityProperty[]> {
     return this.http.get<EntityProperty[]>(`${this.baseUrl}/${id}/properties`);
   }
+  public loadProperty(id: string, propertyName: string): Observable<EntityProperty> {
+    return this.http.get<EntityProperty>(`${this.baseUrl}/${id}/properties/${propertyName}`); //this GET doesn't exist yet
+  }
 
   public loadVersion(codeSystemId: string, versionId: string): Observable<CodeSystemVersion> {
     return this.http.get<CodeSystemVersion>(`${this.baseUrl}/${codeSystemId}/versions/${versionId}`);

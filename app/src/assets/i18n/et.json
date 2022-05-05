@@ -30,7 +30,12 @@
       "entity": {
         "name": "Nimi",
         "type": "Tüüp",
-        "status": "Olek"
+        "status": "Olek",
+        "description": "Kirjeldus"
+      },
+      "form": {
+        "edit-header": "Muuda omadust",
+        "add-header": "Lisa omadus"
       }
     },
     "code-system": {

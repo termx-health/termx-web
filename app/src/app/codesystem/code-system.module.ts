@@ -13,14 +13,16 @@ import {CodeSystemFormPropertiesComponent} from './containers/code-system-form-p
 import {CodeSystemFormVersionsComponent} from './containers/code-system-form-versions.component';
 import {CodeSystemEditComponent} from './containers/code-system-edit.component';
 import {VersionFormComponent} from './containers/version-form.component';
+import {PropertyFormComponent} from './containers/property-form.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
   {path: '', component: CodeSystemListComponent},
+  {path: 'add', component: CodeSystemEditComponent},
   {path: ':id/edit', component: CodeSystemEditComponent},
   {path: ':id/version/add', component: VersionFormComponent},
   {path: ':id/version/:versionId/edit', component: VersionFormComponent},
-  {path: 'add', component: CodeSystemEditComponent}
+  {path: ':id/property/add', component: PropertyFormComponent}
 ];
 
 @NgModule({
@@ -31,6 +33,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     CodeSystemFormPropertiesComponent,
     CodeSystemFormVersionsComponent,
     VersionFormComponent,
+    PropertyFormComponent,
   ],
   imports: [
     CommonModule,
