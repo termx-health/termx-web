@@ -10,7 +10,7 @@ import {TranslateService} from '@ngx-translate/core';
 })
 
 export class CodeSystemListComponent implements OnInit {
-  public searchResult: SearchResult<CodeSystem & {expand?: boolean}> = new SearchResult<CodeSystem>();
+  public searchResult: SearchResult<CodeSystem> = new SearchResult<CodeSystem>();
   public query: CodeSystemSearchParams = new CodeSystemSearchParams();
   public loading?: boolean;
 
