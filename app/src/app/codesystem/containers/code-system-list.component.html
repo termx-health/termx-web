@@ -24,7 +24,7 @@
 
         <tr *mTableRow="let cs">
           <td m-table-expand [item]="cs"></td>
-          <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
+          <td><a [routerLink]="[cs.id,'edit']">{{cs.id}}</a></td>
           <td>{{cs.names | localName}}</td>
           <td>{{cs.uri | apply: parseDomain}}</td>
           <td>
