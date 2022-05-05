@@ -11,6 +11,11 @@ import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
 import {MarinaUiModule} from '@kodality-health/marina-ui';
 import {CoreI18nService, CoreI18nTranslationHandler, TRANSLATION_HANDLER} from '@kodality-web/core-util';
+import {registerLocaleData} from '@angular/common';
+import et from '@angular/common/locales/et';
+
+
+registerLocaleData(et);
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
