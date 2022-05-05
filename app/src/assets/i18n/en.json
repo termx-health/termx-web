@@ -1,7 +1,8 @@
 {
   "core": {
     "btn": {
-      "save": "Save"
+      "save": "Save",
+      "delete": "Delete"
     }
   },
   "web": {
@@ -40,7 +41,6 @@
         "properties": "Properties",
         "header": "Code system list",
         "operations": "Operations",
-        "delete": "Delete",
         "versions": "Versions",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",

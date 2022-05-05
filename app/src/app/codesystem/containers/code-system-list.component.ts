@@ -30,8 +30,7 @@ export class CodeSystemListComponent implements OnInit {
       version.expirationDate ? 'web.code-system.list.versions-expiration-date' : '',
       version.version ? 'web.code-system.list.versions-version' : ''
     ];
-    return tokens.filter(Boolean).map(t =>
-      this.translateService.instant(t, translateOptions));
+    return tokens.filter(Boolean).map(t => this.translateService.instant(t, translateOptions));
   };
 
   public loadData(): void {

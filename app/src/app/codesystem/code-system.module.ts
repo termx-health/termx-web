@@ -12,7 +12,6 @@ import {CoreUtilModule} from '@kodality-web/core-util';
 import {CodeSystemFormPropertiesComponent} from './containers/code-system-form-properties.component';
 import {CodeSystemFormVersionsComponent} from './containers/code-system-form-versions.component';
 import {CodeSystemEditComponent} from './containers/code-system-edit.component';
-import {PropertyFormComponent} from './containers/property-form.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -28,7 +27,6 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     CodeSystemFormComponent,
     CodeSystemFormPropertiesComponent,
     CodeSystemFormVersionsComponent,
-    PropertyFormComponent
   ],
   imports: [
     CommonModule,
