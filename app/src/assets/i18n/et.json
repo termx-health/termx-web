@@ -1,25 +1,50 @@
 {
   "core": {
     "btn": {
-      "save": "Salvesta"
+      "save": "Salvesta",
+      "delete": "Kustuta"
     }
   },
   "web": {
     "app": {
       "header": "Terminoloogia"
     },
+    "code-system-version": {
+      "entity": {
+        "version": "Versioon",
+        "source": "Allikas",
+        "release": "Väljastus kuupäev",
+        "expiration": "Aegumis kuupäev",
+        "status": "Olek"
+      }
+    },
+    "entity-property": {
+      "entity": {
+        "name": "Nimi",
+        "type": "Tüüp",
+        "status": "Olek"
+      }
+    },
     "code-system": {
       "entity": {
         "id": "Identifikaator",
         "uri": "Ühtne ressursiidentifikaator (URI)",
-        "name": "Nimi"
+        "name": "Nimi",
+        "domain": "Domeen",
+        "description": "Kirjeldus"
       },
       "form": {
         "add-header": "Lisa uus koodisüsteem",
         "edit-header": "Koodisüsteemi muutmise vorm"
       },
       "list": {
-        "header": "Koodisüsteemide nimekiri"
+        "properties": "Omadused",
+        "header": "Koodisüsteemide nimekiri",
+        "operations": "Toimingud",
+        "versions": "Versioonid",
+        "versions-release-date": "From: {{releaseDate}}",
+        "versions-expiration-date": "to {{expirationDate}}",
+        "versions-version": "Version name: {{version}}"
       }
     }
   }
