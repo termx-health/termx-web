@@ -22,7 +22,7 @@
         <ng-container *ngFor="let cs of table.data">
           <tr>
             <td nzShowExpand [(nzExpand)]="cs.expand"></td>
-            <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
+            <td><a [routerLink]="[cs.id, 'edit']">{{cs.id}}</a></td>
             <td>{{cs.names | localName}}</td>
             <td>{{cs.uri | apply: parseDomain}}</td>
             <td>

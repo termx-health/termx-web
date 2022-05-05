@@ -11,11 +11,19 @@
     },
     "code-system-version": {
       "entity": {
+        "id": "Identifikaator",
         "version": "Versioon",
         "source": "Allikas",
-        "release": "Väljastus kuupäev",
-        "expiration": "Aegumis kuupäev",
+        "preferredLanguage": "Eelistatud keel",
+        "supportedLanguages": "Toetatud keeled",
+        "description": "Kirjeldus",
+        "release-date": "Väljastus kuupäev",
+        "expiration-date": "Aegumis kuupäev",
         "status": "Olek"
+      },
+      "form": {
+        "edit-header": "Muuda versiooni",
+        "add-header": "Lisa versioon"
       }
     },
     "entity-property": {

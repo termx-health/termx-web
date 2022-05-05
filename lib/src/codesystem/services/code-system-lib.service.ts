@@ -24,6 +24,10 @@ export class CodeSystemLibService {
     return this.http.get<EntityProperty[]>(`${this.baseUrl}/${id}/properties`);
   }
 
+  public loadVersion(codeSystemId: string, versionId: string): Observable<CodeSystemVersion> {
+    return this.http.get<CodeSystemVersion>(`${this.baseUrl}/${codeSystemId}/versions/${versionId}`);
+  }
+
   public loadVersions(id: string): Observable<CodeSystemVersion[]> {
     return this.http.get<CodeSystemVersion[]>(`${this.baseUrl}/${id}/versions`);
   }

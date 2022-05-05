@@ -12,11 +12,14 @@ import {CoreUtilModule} from '@kodality-web/core-util';
 import {CodeSystemFormPropertiesComponent} from './containers/code-system-form-properties.component';
 import {CodeSystemFormVersionsComponent} from './containers/code-system-form-versions.component';
 import {CodeSystemEditComponent} from './containers/code-system-edit.component';
+import {VersionFormComponent} from './containers/version-form.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
   {path: '', component: CodeSystemListComponent},
-  {path: 'edit/:id', component: CodeSystemEditComponent},
+  {path: ':id/edit', component: CodeSystemEditComponent},
+  {path: ':id/version/add', component: VersionFormComponent},
+  {path: ':id/version/:versionId/edit', component: VersionFormComponent},
   {path: 'add', component: CodeSystemEditComponent}
 ];
 
@@ -27,6 +30,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     CodeSystemFormComponent,
     CodeSystemFormPropertiesComponent,
     CodeSystemFormVersionsComponent,
+    VersionFormComponent,
   ],
   imports: [
     CommonModule,

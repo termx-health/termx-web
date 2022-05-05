@@ -1,4 +1,5 @@
 <nz-divider nzPlain nzText="{{'web.code-system.list.versions' | translate}}"></nz-divider>
+<a [routerLink]="['../version/add']">Add Version</a>
 <nz-table #table [nzBordered]="false" [nzData]="versions" [nzSize]="'small'" [nzLoading]="loading">
   <thead>
   <tr>
@@ -11,12 +12,11 @@
   </thead>
   <ng-container *ngFor="let version of table.data">
     <tr>
-      <td>{{version.version}}</td>
+      <td><a [routerLink]="['../version', version.version, 'edit']">{{version.version}}</a></td>
       <td>{{version.source}}</td>
       <td>{{version.releaseDate}}</td>
       <td>{{version.expirationDate}}</td>
       <td>{{version.status}}</td>
-
     </tr>
   </ng-container>
 </nz-table>

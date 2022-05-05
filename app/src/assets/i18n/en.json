@@ -11,11 +11,19 @@
     },
     "code-system-version": {
       "entity": {
+        "id": "Identifier",
         "version": "Version",
         "source": "Source",
+        "preferredLanguage": "Preferred language",
+        "supportedLanguages": "Supported languages",
+        "description": "Description",
         "release-date": "Release date",
         "expiration-date": "Expiration date",
         "status": "Status"
+      },
+      "form": {
+        "edit-header": "Edit version",
+        "add-header": "Add version"
       }
     },
     "entity-property": {
