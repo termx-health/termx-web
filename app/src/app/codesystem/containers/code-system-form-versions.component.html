@@ -1,22 +1,18 @@
-<nz-divider nzPlain nzText="{{'web.code-system.list.versions' | translate}}"></nz-divider>
+<nz-divider [nzText]="'web.code-system.list.versions' | translate"></nz-divider>
 <a [routerLink]="['../version/add']">Add Version</a>
-<nz-table #table [nzBordered]="false" [nzData]="versions" [nzSize]="'small'" [nzLoading]="loading">
-  <thead>
-  <tr>
+<m-table [data]="versions" [loading]="loading" size="small" bordered enablePagination hideOnSinglePage>
+  <tr *mTableHead>
     <th>{{'web.code-system-version.entity.version' | translate}}</th>
     <th>{{'web.code-system-version.entity.source' | translate}}</th>
     <th>{{'web.code-system-version.entity.release-date' | translate}}</th>
     <th>{{'web.code-system-version.entity.expiration-date' | translate}}</th>
     <th>{{'web.code-system-version.entity.status' | translate}}</th>
   </tr>
-  </thead>
-  <ng-container *ngFor="let version of table.data">
-    <tr>
-      <td><a [routerLink]="['../version', version.version, 'edit']">{{version.version}}</a></td>
-      <td>{{version.source}}</td>
-      <td>{{version.releaseDate}}</td>
-      <td>{{version.expirationDate}}</td>
-      <td>{{version.status}}</td>
-    </tr>
-  </ng-container>
-</nz-table>
+  <tr *mTableRow="let version">
+    <td><a [routerLink]="['../version', version.version, 'edit']">{{version.version}}</a></td>
+    <td>{{version.source}}</td>
+    <td>{{version.releaseDate}}</td>
+    <td>{{version.expirationDate}}</td>
+    <td>{{version.status}}</td>
+  </tr>
+</m-table>

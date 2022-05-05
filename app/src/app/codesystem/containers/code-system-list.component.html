@@ -1,60 +1,61 @@
 <m-form-row>
   <div *mFormCol>
     <m-card [title]="'web.code-system.list.header'">
-      <nz-table #table
-          (nzQueryParams)="loadData()"
-          [nzData]="searchResult.data"
-          [nzTotal]="searchResult.meta.total"
-          [(nzPageSize)]="query.limit"
-          [(nzPageIndex)]="query['page']"
-          [nzFrontPagination]="false"
-          [nzLoading]="loading"
-          nzShowSizeChanger>
-      <thead>
-        <tr>
+      <!-- todo: m-backend-table -->
+      <m-table
+          [data]="searchResult.data"
+          [loading]="loading"
+          size="small"
+          bordered
+          enablePagination
+          manualPagination
+          [total]="searchResult.meta.total"
+          [pageSize]="query.limit"
+          [(pageIndex)]="query['page']"
+          (pageIndexChange)="loadData()"
+      >
+        <tr *mTableHead>
           <th></th>
           <th>{{'web.code-system.entity.id' | translate}}</th>
           <th>{{'web.code-system.entity.name' | translate}}</th>
           <th>{{'web.code-system.entity.domain' | translate}}</th>
           <th>{{'web.code-system.list.operations' | translate}}</th>
         </tr>
-        </thead>
-        <ng-container *ngFor="let cs of table.data">
-          <tr>
-            <td nzShowExpand [(nzExpand)]="cs.expand"></td>
-            <td><a [routerLink]="[cs.id, 'edit']">{{cs.id}}</a></td>
-            <td>{{cs.names | localName}}</td>
-            <td>{{cs.uri | apply: parseDomain}}</td>
-            <td>
-              <button nz-button nzType="primary" nzDanger>{{'core.btn.delete' | translate}}</button>
-            </td>
-          </tr>
-          <tr [nzExpand]="cs.expand">
-            <form> <!--fixme-->
-              <m-form-row full>
-                <div *mFormCol>
-                  <m-form-item label="web.code-system.entity.uri">
-                    {{cs.uri}}
-                  </m-form-item>
-                  <m-form-item label="web.code-system.entity.description">
-                    {{cs.description}}
-                  </m-form-item>
-                  <m-form-item label="web.code-system.list.versions">
-                    <div *ngFor="let version of cs.versions">
-                      {{
-                      version | apply: getVersionTranslateTokens: ({
-                        releaseDate: (version.releaseDate | localDate),
-                        expirationDate: (version.expirationDate | localDate),
-                        version: version.version
-                      }) | join: ' '}}
-                    </div>
-                  </m-form-item>
-                </div>
-              </m-form-row>
-            </form>
-          </tr>
-        </ng-container>
-      </nz-table>
+
+        <tr *mTableRow="let cs">
+          <td m-table-expand [item]="cs"></td>
+          <td><a [routerLink]="['edit', cs.id]">{{cs.id}}</a></td>
+          <td>{{cs.names | localName}}</td>
+          <td>{{cs.uri | apply: parseDomain}}</td>
+          <td>
+            <button nz-button nzType="primary" nzDanger>{{'core.btn.delete' | translate}}</button>
+          </td>
+        </tr>
+
+        <tr *mTableRowExpand="let cs" class="m-table-expanded-row">
+          <td colspan="5">
+            <m-form-row full>
+              <div *mFormCol>
+                <m-form-item label="web.code-system.entity.uri">
+                  {{cs.uri}}
+                </m-form-item>
+                <m-form-item label="web.code-system.entity.description">
+                  {{cs.description}}
+                </m-form-item>
+                <m-form-item label="web.code-system.list.versions">
+                  <div *ngFor="let version of cs.versions">{{
+                    version | apply: getVersionTranslateTokens: ({
+                      releaseDate: (version.releaseDate | localDate),
+                      expirationDate: (version.expirationDate | localDate),
+                      version: version.version
+                    }) | join: ' '}}
+                  </div>
+                </m-form-item>
+              </div>
+            </m-form-row>
+          </td>
+        </tr>
+      </m-table>
     </m-card>
   </div>
 </m-form-row>
