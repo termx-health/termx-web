@@ -1,21 +1,16 @@
 <m-spinner [loading]="loading">
   <form #form="ngForm" *ngIf="codeSystem">
-    <m-form-row>
-      <div *mFormCol>
-        <m-card [title]="codeSystem.id ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'">
-          <m-form-item name="id" label="web.code-system.entity.id" required>
-            <m-input [(ngModel)]="codeSystem.id" name="id" [disabled]="!!codeSystem.id" required></m-input>
-          </m-form-item>
-          <m-form-item name="name" label="web.code-system.entity.name" required>
-            <m-input [(ngModel)]="codeSystem.names.en" name="name" required></m-input>
-          </m-form-item>
-          <m-form-item name="uri" label="web.code-system.entity.uri">
-            <m-input [(ngModel)]="codeSystem.uri" name="uri"></m-input>
-          </m-form-item>
-
-          <m-button (click)="save()">{{'core.btn.save' | translate}}</m-button>
-        </m-card>
-      </div>
-    </m-form-row>
+    <m-form-item name="id" label="web.code-system.entity.id" required>
+      <m-input [(ngModel)]="codeSystem.id" name="id" [disabled]="mode==='edit'" required></m-input>
+    </m-form-item>
+    <m-form-item name="name" label="web.code-system.entity.name" required>
+      <m-input [(ngModel)]="codeSystem.names.en" name="name" required></m-input>
+    </m-form-item>
+    <m-form-item name="uri" label="web.code-system.entity.uri">
+      <m-input [(ngModel)]="codeSystem.uri" name="uri"></m-input>
+    </m-form-item>
+    <m-form-item name="description" label="web.code-system.entity.description">
+      <m-input [(ngModel)]="codeSystem.description" name="description"></m-input>
+    </m-form-item>
   </form>
 </m-spinner>
