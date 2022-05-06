@@ -9,7 +9,7 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TerminologyLibModule} from 'terminology-lib/terminology-lib.module';
 import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
-import {MarinaUiModule} from '@kodality-health/marina-ui';
+import {MarinaUiModule, MULTI_LANGUAGE_INPUT_LANGS, MULTI_LANGUAGE_INPUT_REQUIRED_LANGS} from '@kodality-health/marina-ui';
 import {CoreI18nService, CoreI18nTranslationHandler, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
@@ -44,9 +44,17 @@ export function TranslationHandlerFactory(translateService: TranslateService): C
     MarinaUiModule
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'en'},
     {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
-    {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]}
+    {provide: LOCALE_ID, useValue: 'en'},
+    {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},
+    {
+      provide: MULTI_LANGUAGE_INPUT_LANGS, useValue: [
+        {code: 'en', names: {'en': 'English', 'et': 'Inglise'}},
+        {code: 'et', names: {'en': 'Estonian', 'et': 'Eesti'}},
+        {code: 'ru', names: {'en': 'Russian', 'et': 'Vene'}},
+      ]
+    },
+    {provide: MULTI_LANGUAGE_INPUT_REQUIRED_LANGS, useValue: ['en']}
   ],
   bootstrap: [AppComponent]
 })
