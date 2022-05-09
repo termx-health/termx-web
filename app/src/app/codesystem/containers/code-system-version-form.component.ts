@@ -8,9 +8,9 @@ import {Location} from '@angular/common';
 
 @Component({
   selector: 'twa-version-form',
-  templateUrl: './version-form.component.html',
+  templateUrl: './code-system-version-form.component.html',
 })
-export class VersionFormComponent implements OnInit {
+export class CodeSystemVersionFormComponent implements OnInit {
   public version?: CodeSystemVersion;
   public versionVersion?: string;
   public loading?: boolean;
@@ -28,38 +28,36 @@ export class VersionFormComponent implements OnInit {
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id') || undefined;
     this.versionVersion = this.route.snapshot.paramMap.get('versionId') || undefined;
-    this.loading = true;
-    if (this.codeSystemId && this.versionVersion) {
-      this.mode = 'edit';
-      this.codeSystemService.loadVersion(this.codeSystemId, this.versionVersion)
-        .subscribe(v => this.version = v)
-        .add(() => this.loading = false);
+    this.mode = this.versionVersion ? 'edit' : 'add';
+    if (this.mode === 'edit') {
+      this.loadVersion();
     } else {
-      this.mode = 'add';
       this.version = new CodeSystemVersion();
-      this.loading = false;
+      this.version.status = 'draft';
     }
   }
 
-  public validate(): boolean {
+  private loadVersion(): void {
+    if (this.codeSystemId && this.versionVersion) {
+      this.loading = true;
+      this.codeSystemService.loadVersion(this.codeSystemId, this.versionVersion)
+        .subscribe(v => this.version = v)
+        .add(() => this.loading = false);
+    }
+  }
+
+  private validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
   }
 
   public save(): void {
-    if (this.validate() && this.codeSystemId && this.version) {
-      this.loading = true;
-      if (this.mode === 'add') {
-        this.codeSystemService
-          .saveVersion(this.codeSystemId, this.version)
-          .subscribe(() => this.location.back())
-          .add(() => this.loading = false);
-      }
-      if (this.mode === 'edit' && this.version.id) {
-        this.codeSystemService
-          .editVersion(this.codeSystemId, this.version.id, this.version)
-          .subscribe(() => this.location.back())
-          .add(() => this.loading = false);
-      }
+  if (!this.validate() || !this.codeSystemId || !this.version) {
+      return;
     }
+    this.loading = true;
+    this.codeSystemService
+      .saveVersion(this.codeSystemId, this.version)
+      .subscribe(() => this.location.back())
+      .add(() => this.loading = false);
   }
 }

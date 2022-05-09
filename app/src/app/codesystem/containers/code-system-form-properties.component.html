@@ -1,5 +1,4 @@
 <nz-divider [nzText]="'web.code-system.list.properties' | translate"></nz-divider>
-<a [routerLink]="['../property/add']">Add Property</a>
 <m-table [data]="properties" [loading]="loading" size="small" bordered enablePagination hideOnSinglePage>
   <tr *mTableHead>
     <th>{{'web.entity-property.entity.name' | translate}}</th><!--Add router to edit when editing becomes available-->

@@ -14,8 +14,8 @@
         "id": "Identifier",
         "version": "Version",
         "source": "Source",
-        "preferredLanguage": "Preferred language",
-        "supportedLanguages": "Supported languages",
+        "preferred-language": "Preferred language",
+        "supported-languages": "Supported languages",
         "description": "Description",
         "release-date": "Release date",
         "expiration-date": "Expiration date",
@@ -55,6 +55,7 @@
         "header": "Code system list",
         "operations": "Operations",
         "versions": "Versions",
+        "add-version": "Add version",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}"

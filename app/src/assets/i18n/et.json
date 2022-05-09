@@ -15,7 +15,7 @@
         "version": "Versioon",
         "source": "Allikas",
         "preferredLanguage": "Eelistatud keel",
-        "supportedLanguages": "Toetatud keeled",
+        "supported-languages": "Toetatud keeled",
         "description": "Kirjeldus",
         "release-date": "Väljastus kuupäev",
         "expiration-date": "Aegumis kuupäev",
@@ -55,6 +55,7 @@
         "header": "Koodisüsteemide nimekiri",
         "operations": "Toimingud",
         "versions": "Versioonid",
+        "add-version": "Lisa versioon",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}"

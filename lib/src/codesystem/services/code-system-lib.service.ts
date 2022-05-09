@@ -13,26 +13,23 @@ export class CodeSystemLibService {
   protected baseUrl;
 
   public constructor(@Inject(TERMINOLOGY_API) api: string, protected http: HttpClient) {
-    this.baseUrl = `${api}/code-systems`;
+    this.baseUrl = `${api}/ts/code-systems`;
   }
 
-  public load(id: string): Observable<CodeSystem> {
-    return this.http.get<CodeSystem>(`${this.baseUrl}/${id}`);
+  public load(codeSystemId: string): Observable<CodeSystem> {
+    return this.http.get<CodeSystem>(`${this.baseUrl}/${codeSystemId}`);
   }
 
-  public loadProperties(id: string): Observable<EntityProperty[]> {
-    return this.http.get<EntityProperty[]>(`${this.baseUrl}/${id}/properties`);
-  }
-  public loadProperty(id: string, propertyName: string): Observable<EntityProperty> {
-    return this.http.get<EntityProperty>(`${this.baseUrl}/${id}/properties/${propertyName}`); //this GET doesn't exist yet
+  public loadProperties(codeSystemId: string): Observable<EntityProperty[]> {
+    return this.http.get<EntityProperty[]>(`${this.baseUrl}/${codeSystemId}/properties`);
   }
 
   public loadVersion(codeSystemId: string, versionId: string): Observable<CodeSystemVersion> {
     return this.http.get<CodeSystemVersion>(`${this.baseUrl}/${codeSystemId}/versions/${versionId}`);
   }
 
-  public loadVersions(id: string): Observable<CodeSystemVersion[]> {
-    return this.http.get<CodeSystemVersion[]>(`${this.baseUrl}/${id}/versions`);
+  public loadVersions(codeSystemId: string): Observable<CodeSystemVersion[]> {
+    return this.http.get<CodeSystemVersion[]>(`${this.baseUrl}/${codeSystemId}/versions`);
   }
 
   public search(params: CodeSystemSearchParams = {}): Observable<SearchResult<CodeSystem>> {

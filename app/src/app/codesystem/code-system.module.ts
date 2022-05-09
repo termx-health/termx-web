@@ -12,17 +12,15 @@ import {CoreUtilModule} from '@kodality-web/core-util';
 import {CodeSystemFormPropertiesComponent} from './containers/code-system-form-properties.component';
 import {CodeSystemFormVersionsComponent} from './containers/code-system-form-versions.component';
 import {CodeSystemEditComponent} from './containers/code-system-edit.component';
-import {VersionFormComponent} from './containers/version-form.component';
-import {PropertyFormComponent} from './containers/property-form.component';
+import {CodeSystemVersionFormComponent} from './containers/code-system-version-form.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
   {path: '', component: CodeSystemListComponent},
   {path: 'add', component: CodeSystemEditComponent},
   {path: ':id/edit', component: CodeSystemEditComponent},
-  {path: ':id/version/add', component: VersionFormComponent},
-  {path: ':id/version/:versionId/edit', component: VersionFormComponent},
-  {path: ':id/property/add', component: PropertyFormComponent}
+  {path: ':id/versions/add', component: CodeSystemVersionFormComponent},
+  {path: ':id/versions/:versionId/edit', component: CodeSystemVersionFormComponent},
 ];
 
 @NgModule({
@@ -32,8 +30,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     CodeSystemFormComponent,
     CodeSystemFormPropertiesComponent,
     CodeSystemFormVersionsComponent,
-    VersionFormComponent,
-    PropertyFormComponent,
+    CodeSystemVersionFormComponent,
   ],
   imports: [
     CommonModule,
