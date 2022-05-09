@@ -11,18 +11,31 @@
     },
     "code-system-version": {
       "entity": {
+        "id": "Identifikaator",
         "version": "Versioon",
         "source": "Allikas",
-        "release": "Väljastus kuupäev",
-        "expiration": "Aegumis kuupäev",
+        "preferredLanguage": "Eelistatud keel",
+        "supported-languages": "Toetatud keeled",
+        "description": "Kirjeldus",
+        "release-date": "Väljastus kuupäev",
+        "expiration-date": "Aegumis kuupäev",
         "status": "Olek"
+      },
+      "form": {
+        "edit-header": "Muuda versiooni",
+        "add-header": "Lisa versioon"
       }
     },
     "entity-property": {
       "entity": {
         "name": "Nimi",
         "type": "Tüüp",
-        "status": "Olek"
+        "status": "Olek",
+        "description": "Kirjeldus"
+      },
+      "form": {
+        "edit-header": "Muuda omadust",
+        "add-header": "Lisa omadus"
       }
     },
     "code-system": {
@@ -42,6 +55,7 @@
         "header": "Koodisüsteemide nimekiri",
         "operations": "Toimingud",
         "versions": "Versioonid",
+        "add-version": "Lisa versioon",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}"

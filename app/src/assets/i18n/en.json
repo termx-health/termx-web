@@ -11,18 +11,31 @@
     },
     "code-system-version": {
       "entity": {
+        "id": "Identifier",
         "version": "Version",
         "source": "Source",
+        "preferred-language": "Preferred language",
+        "supported-languages": "Supported languages",
+        "description": "Description",
         "release-date": "Release date",
         "expiration-date": "Expiration date",
         "status": "Status"
+      },
+      "form": {
+        "edit-header": "Edit version",
+        "add-header": "Add version"
       }
     },
     "entity-property": {
       "entity": {
         "name": "Name",
         "type": "Type",
-        "status": "Status"
+        "status": "Status",
+        "description": "Description"
+      },
+      "form": {
+        "edit-header": "Edit property",
+        "add-header": "Add property"
       }
     },
     "code-system": {
@@ -42,6 +55,7 @@
         "header": "Code system list",
         "operations": "Operations",
         "versions": "Versions",
+        "add-version": "Add version",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}"

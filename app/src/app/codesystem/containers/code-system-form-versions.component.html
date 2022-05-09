@@ -1,4 +1,5 @@
 <nz-divider [nzText]="'web.code-system.list.versions' | translate"></nz-divider>
+<m-button [routerLink]="['../versions/add']" label="web.code-system.list.add-version"></m-button>
 <m-table [data]="versions" [loading]="loading" size="small" bordered enablePagination hideOnSinglePage>
   <tr *mTableHead>
     <th>{{'web.code-system-version.entity.version' | translate}}</th>
@@ -8,7 +9,7 @@
     <th>{{'web.code-system-version.entity.status' | translate}}</th>
   </tr>
   <tr *mTableRow="let version">
-    <td>{{version.version}}</td>
+    <td><a [routerLink]="['../versions', version.version, 'edit']">{{version.version}}</a></td>
     <td>{{version.source}}</td>
     <td>{{version.releaseDate}}</td>
     <td>{{version.expirationDate}}</td>
