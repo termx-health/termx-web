@@ -1,0 +1,40 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-card [title]="mode==='edit' ? 'web.code-system-version.form.edit-header' : 'web.code-system-version.form.add-header'">
+      <m-spinner [loading]="loading">
+        <form #form="ngForm" *ngIf="version">
+          <m-form-item name="version" label="web.code-system-version.entity.version" required>
+            <m-input [(ngModel)]="version.version" name="version" required></m-input>
+          </m-form-item>
+          <m-form-item name="source" label="web.code-system-version.entity.source">
+            <m-input [(ngModel)]="version.source" name="source"></m-input>
+          </m-form-item>
+          <m-form-item name="preferredLanguage" label="web.code-system-version.entity.preferred-language">
+            <m-select [(ngModel)]="version.preferredLanguage" name="preferredLanguage">
+              <m-option [label]="'et'" value="et"></m-option>
+              <m-option [label]="'en'" value="en"></m-option>
+              <m-option [label]="'la'" value="la"></m-option>
+            </m-select>
+          </m-form-item>
+          <m-form-item name="supportedLanguages" label="web.code-system-version.entity.supported-languages">
+            <m-select multiple [(ngModel)]="version.supportedLanguages" name="supportedLanguages">
+              <m-option [label]="'et'" value="et"></m-option>
+              <m-option [label]="'en'" value="en"></m-option>
+              <m-option [label]="'la'" value="la"></m-option>
+            </m-select>
+          </m-form-item>
+          <m-form-item name="description" label="web.code-system-version.entity.description">
+            <m-textarea [(ngModel)]="version.description" name="description"></m-textarea>
+          </m-form-item>
+          <m-form-item name="releaseDate" label="web.code-system-version.entity.release-date">
+            <nz-date-picker [(ngModel)]="version.releaseDate" name="releaseDate"></nz-date-picker>
+          </m-form-item>
+          <m-form-item name="expirationDate" label="web.code-system-version.entity.expiration-date">
+            <nz-date-picker [(ngModel)]="version.expirationDate" name="expirationDate"></nz-date-picker>
+          </m-form-item>
+          <m-button [loading]="loading" [disabled]="loading" (click)="save()">{{'core.btn.save' | translate}}</m-button>
+        </form>
+      </m-spinner>
+    </m-card>
+  </div>
+</m-form-row>
