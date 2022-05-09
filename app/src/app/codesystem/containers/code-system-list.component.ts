@@ -36,7 +36,7 @@ export class CodeSystemListComponent implements OnInit {
   public loadData(): void {
     this.loading = true;
     const q = copyDeep(this.query);
-    q.decorated = true;
+    q.versionsDecorated = true;
     this.codeSystemService.search(q).subscribe(r => {
       this.searchResult = r;
     }).add(() => this.loading = false);
