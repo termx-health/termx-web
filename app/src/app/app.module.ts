@@ -9,13 +9,13 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {TerminologyLibModule} from 'terminology-lib/terminology-lib.module';
 import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
-import {MarinaUiModule} from '@kodality-health/marina-ui';
+import {MarinaUiModule, MUI_CONFIG, MuiConfig} from '@kodality-health/marina-ui';
 import {CoreI18nService, CoreI18nTranslationHandler, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
 
-
 registerLocaleData(et);
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -23,6 +23,20 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 export function TranslationHandlerFactory(translateService: TranslateService): CoreI18nTranslationHandler {
   return (key, params) => translateService.instant(key, params);
+}
+
+export function MarinaUiConfigFactory(): MuiConfig {
+  return {
+    multiLanguageInput: {
+      languages: [
+        {code: 'en', names: {'en': 'English', 'et': 'Inglise'}},
+        {code: 'et', names: {'en': 'Estonian', 'et': 'Eesti'}},
+        {code: 'ru', names: {'en': 'Russian', 'et': 'Vene'}},
+      ],
+      requiredLanguages: ['en']
+    }
+  };
+
 }
 
 @NgModule({
@@ -44,9 +58,10 @@ export function TranslationHandlerFactory(translateService: TranslateService): C
     MarinaUiModule
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'en'},
     {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
-    {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]}
+    {provide: LOCALE_ID, useValue: 'en'},
+    {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},
+    {provide: MUI_CONFIG, useFactory: MarinaUiConfigFactory}
   ],
   bootstrap: [AppComponent]
 })
