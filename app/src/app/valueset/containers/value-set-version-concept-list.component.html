@@ -1,0 +1,16 @@
+<nz-divider [nzText]="'web.concept.list.concepts' | translate"></nz-divider>
+<m-table [data]="concepts" [loading]="loading" size="small" bordered hideOnSinglePage>
+  <tr *mTableHead>
+    <th>{{'web.concept.list.concept' | translate}}</th>
+    <th>{{'web.designation.list.designation' | translate}}</th>
+    <th>{{'web.concept.list.operations' | translate}}</th>
+  </tr>
+  <tr *mTableRow="let concept">
+    <td>{{concept.code}}</td>
+    <td>{{concept.versions | apply: getDesignationName}}</td>
+    <td>filler</td>
+  </tr>
+</m-table>
+<m-button style="width: 100%">
+  <m-icon code="plus"></m-icon>
+</m-button>

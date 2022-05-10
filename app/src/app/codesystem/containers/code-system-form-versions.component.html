@@ -9,7 +9,7 @@
     <th>{{'web.code-system-version.entity.status' | translate}}</th>
   </tr>
   <tr *mTableRow="let version">
-    <td><a [routerLink]="['../versions', version.version, 'edit']">{{version.version}}</a></td>
+    <td><a [routerLink]="['../versions/', version.version, 'edit']">{{version.version}}</a></td>
     <td>{{version.source}}</td>
     <td>{{version.releaseDate}}</td>
     <td>{{version.expirationDate}}</td>

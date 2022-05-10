@@ -1,0 +1,22 @@
+<nz-divider [nzText]="'web.value-set.list.versions' | translate"></nz-divider>
+<m-button [routerLink]="['../versions/add']" label="web.value-set-version.form.add-header"></m-button>
+<m-table [data]="versions" [loading]="loading" size="small" bordered enablePagination hideOnSinglePage>
+  <tr *mTableHead>
+    <th>{{'web.value-set-version.entity.version' | translate}}</th>
+    <th>{{'web.value-set-version.entity.source' | translate}}</th>
+    <th>{{'web.value-set-version.entity.release-date' | translate}}</th>
+    <th>{{'web.value-set-version.entity.expiration-date' | translate}}</th>
+    <th>{{'web.value-set-version.entity.status' | translate}}</th>
+    <th>{{'web.value-set-version.list.operations'| translate}}</th>
+  </tr>
+  <tr *mTableRow="let version">
+    <td><a [routerLink]="['../versions/', version.version, 'edit']">{{version.version}}</a></td>
+    <td>{{version.source}}</td>
+    <td>{{version.releaseDate}}</td>
+    <td>{{version.expirationDate}}</td>
+    <td>{{version.status}}</td>
+    <button *ngIf="version.status === 'active'" nz-button nzType="link" (click)="changeStatus(version)">Retire</button>
+    <button *ngIf="version.status === 'draft'" nz-button nzType="link" (click)="changeStatus(version)">Activate</button>
+    <button *ngIf="version.status === 'retired'" nz-button nzType="link" (click)="changeStatus(version)">Activate</button>
+  </tr>
+</m-table>

@@ -60,6 +60,65 @@
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}"
       }
+    },
+    "value-set" : {
+      "entity": {
+        "id": "Identifier",
+        "uri": "Uniform resource identifier (URI)",
+        "name": "Name",
+        "names": "Names",
+        "description": "Description"
+      },
+      "form": {
+        "add-header": "Create a new value set",
+        "edit-header": "Edit value set"
+      },
+      "list": {
+        "properties": "Properties",
+        "domain": "Domain",
+        "header": "Code system list",
+        "operations": "Operations",
+        "versions": "Versions",
+        "add-version": "Add version",
+        "versions-release-date": "From: {{releaseDate}}",
+        "versions-expiration-date": "to {{expirationDate}}",
+        "versions-version": "Version name: {{version}}"
+      }
+    },
+    "value-set-version": {
+      "entity": {
+        "id": "Identifier",
+        "version": "Version",
+        "source": "Source",
+        "supported-languages": "Supported languages",
+        "description": "Description",
+        "release-date": "Release date",
+        "expiration-date": "Expiration date",
+        "status": "Status"
+      },
+      "form": {
+        "edit-header": "Edit version",
+        "add-header": "Add version"
+      },
+      "list": {
+        "operations": "Operations"
+      }
+    },
+    "concept": {
+      "entity": {
+      },
+      "list": {
+        "concept" : "Concept",
+        "concepts" : "Concepts",
+        "operations": "Operations"
+      }
+    },
+    "designation": {
+      "entity":{
+      },
+      "list": {
+        "designation" : "Designation"
+      }
     }
   }
 }
