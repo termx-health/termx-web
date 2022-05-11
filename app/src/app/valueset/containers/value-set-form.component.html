@@ -16,7 +16,7 @@
             <m-textarea [(ngModel)]="valueSet.description" name="description"></m-textarea>
           </m-form-item>
           <twa-value-set-form-versions [valueSetId]="valueSetId" *ngIf="mode==='edit'"></twa-value-set-form-versions>
-          <m-button [loading]="loading" [disabled]="loading" (click)="save()">{{'core.btn.save' | translate}}</m-button>
+          <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">{{'core.btn.save' | translate}}</m-button>
         </form>
       </m-spinner>
     </m-card>

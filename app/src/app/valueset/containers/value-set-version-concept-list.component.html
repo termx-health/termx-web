@@ -6,11 +6,18 @@
     <th>{{'web.concept.list.operations' | translate}}</th>
   </tr>
   <tr *mTableRow="let concept">
-    <td>{{concept.code}}</td>
-    <td>{{concept.versions | apply: getDesignationName}}</td>
+    <td>
+      <twl-concept-search-input [ngModel]="concept.id" style="width: 100%"></twl-concept-search-input>
+      <!--m-option *ngFor="let concept of concepts" [label]="concept.code" [value]="concept.code"></m-option-->
+    </td>
+    <td>{{concept.versions | apply: getDesignationName }}</td>
     <td>filler</td>
   </tr>
+  <tr>
+    <td colspan="4" style="padding: 0">
+      <m-button display="text" size="small" style="width: 100%" (click)="newConceptRow()">
+        <m-icon [code]="'plus'"></m-icon>
+      </m-button>
+    </td>
+  </tr>
 </m-table>
-<m-button style="width: 100%">
-  <m-icon code="plus"></m-icon>
-</m-button>

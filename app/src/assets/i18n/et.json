@@ -61,7 +61,7 @@
         "versions-version": "Version name: {{version}}"
       }
     },
-    "value-set" : {
+    "value-set": {
       "entity": {
         "id": "Identifikaator",
         "uri": "Ühtne ressursiidentifikaator (URI)",
@@ -83,41 +83,43 @@
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}"
+      }
+    },
+    "value-set-version": {
+      "entity": {
+        "id": "Identifikaator",
+        "version": "Versioon",
+        "source": "Allikas",
+        "supported-languages": "Toetatud keeled",
+        "description": "Kirjeldus",
+        "release-date": "Väljastus kuupäev",
+        "expiration-date": "Aegumis kuupäev",
+        "status": "Olek"
       },
-      "value-set-version": {
-        "entity": {
-          "id": "Identifikaator",
-          "version": "Versioon",
-          "source": "Allikas",
-          "supported-languages": "Toetatud keeled",
-          "description": "Kirjeldus",
-          "release-date": "Väljastus kuupäev",
-          "expiration-date": "Aegumis kuupäev",
-          "status": "Olek"
-        },
-        "form": {
-          "edit-header": "Muuda versiooni",
-          "add-header": "Lisa versioon"
-        },
-        "list": {
-          "operation": "Toimingud"
-        }
+      "form": {
+        "edit-header": "Muuda versiooni",
+        "add-header": "Lisa versioon"
       },
-      "concept": {
-        "entity": {
-        },
-        "list": {
-          "concept" : "Kontsept",
-          "concepts" : "Kontseptid",
-          "operations": "Toimingud"
-        }
+      "list": {
+        "operations": "Toimingud"
+      }
+    },
+    "concept": {
+      "entity": {
+        "code": "Kood",
+        "description": "Kirjeldus"
       },
-      "designation": {
-        "entity":{
-        },
-        "list": {
-          "designation" : "Tähendus"
-        }
+      "list": {
+        "concept": "Kontsept",
+        "concepts": "Kontseptid",
+        "operations": "Toimingud"
+      }
+    },
+    "designation": {
+      "entity": {
+      },
+      "list": {
+        "designation": "Tähendus"
       }
     }
   }

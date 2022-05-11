@@ -12,7 +12,7 @@
           <m-form-item name="expirationDate" label="web.value-set-version.entity.expiration-date">
             <nz-date-picker [(ngModel)]="version.expirationDate" name="expirationDate"></nz-date-picker>
           </m-form-item>
-          <m-form-item name="supportedLanguages" label="supported-languages">
+          <m-form-item name="supportedLanguages" label="web.value-set-version.entity.supported-languages">
             <m-select multiple [(ngModel)]="version.supportedLanguages" name="supportedLanguages">
               <m-option [label]="'et'" value="et"></m-option>
               <m-option [label]="'en'" value="en"></m-option>
@@ -22,7 +22,7 @@
           <m-form-item name="description" label="web.value-set-version.entity.description">
             <m-textarea [(ngModel)]="version.description" name="description"></m-textarea>
           </m-form-item>
-          <m-button [loading]="loading" [disabled]="loading" (click)="save()">{{'core.btn.save' | translate}}</m-button>
+          <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">{{'core.btn.save' | translate}}</m-button>
         </form>
       </m-spinner>
     </m-card>

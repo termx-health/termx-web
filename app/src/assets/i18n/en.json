@@ -61,7 +61,7 @@
         "versions-version": "Version name: {{version}}"
       }
     },
-    "value-set" : {
+    "value-set": {
       "entity": {
         "id": "Identifier",
         "uri": "Uniform resource identifier (URI)",
@@ -106,18 +106,20 @@
     },
     "concept": {
       "entity": {
+        "code": "Code",
+        "description": "Description"
       },
       "list": {
-        "concept" : "Concept",
-        "concepts" : "Concepts",
+        "concept": "Concept",
+        "concepts": "Concepts",
         "operations": "Operations"
       }
     },
     "designation": {
-      "entity":{
+      "entity": {
       },
       "list": {
-        "designation" : "Designation"
+        "designation": "Designation"
       }
     }
   }
