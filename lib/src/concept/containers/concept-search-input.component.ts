@@ -18,8 +18,6 @@ import {ConceptLibService} from '../services/concept-lib.service';
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchInputComponent), multi: true}]
 })
 export class ConceptSearchInputComponent implements ControlValueAccessor {
-  // @Input() public loadFunction: ((input: string) => Observable<T[]>);
-  // @Input() public labelFormat: ((item: T) => string);
   @Input() public compareWith = (o1: unknown, o2: unknown) => o1 == o2;
   @Input() public valuePrimitive: boolean = false;
   @Input() public placeholder: string = 'marina.ui.components.search.placeholder';
@@ -45,18 +43,6 @@ export class ConceptSearchInputComponent implements ControlValueAccessor {
   public onSearch(text: string): void {
     this.searchUpdate.next(text);
   }
-
-  // private loadData(text: string): Observable<T[]> {
-  //   if (!text || text.length < 1) {
-  //     this.data = this.multiple ? this.data : {};
-  //     return of(null);
-  //   }
-  //   this.loading = true;
-  //   return this.loadFunction(text).pipe(tap(resp => {
-  //     resp?.forEach(r => this.data[this.getKey(r)] = r);
-  //     this.loading = false;
-  //   }));
-  // }
 
   public searchConcepts(text: string): Observable<void> {
     if (!text || text.length < 1) {

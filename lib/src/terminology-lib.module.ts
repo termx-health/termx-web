@@ -9,7 +9,6 @@ import {CodeSystemLibModule} from './codesystem';
   exports: [
     CodeSystemLibModule
   ]
-
 })
 export class TerminologyLibModule {
 }

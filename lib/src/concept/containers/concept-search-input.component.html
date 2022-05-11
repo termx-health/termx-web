@@ -1,5 +1,4 @@
-<m-select
-    style="width: 100%"
+<m-select style="width: 100%"
     [loading]="loading"
     [(ngModel)]="value"
     (mInputChange)="onSearch($event)"
@@ -7,7 +6,6 @@
     icon="search"
     [placeholder]="placeholder"
     [autoUnselect]="false"
-    [compareWith]="compareWith"
->
+    [compareWith]="compareWith">
   <m-option *ngFor="let key of (data | keys)" [value]="key" [label]="data[key]?.code"></m-option>
 </m-select>

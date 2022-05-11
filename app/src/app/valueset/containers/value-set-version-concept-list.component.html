@@ -8,7 +8,6 @@
   <tr *mTableRow="let concept">
     <td>
       <twl-concept-search-input [ngModel]="concept.id" style="width: 100%"></twl-concept-search-input>
-      <!--m-option *ngFor="let concept of concepts" [label]="concept.code" [value]="concept.code"></m-option-->
     </td>
     <td>{{concept.versions | apply: getDesignationName }}</td>
     <td>filler</td>

@@ -23,5 +23,4 @@ export class ConceptLibService {
   public search(params: ConceptSearchParams = {}): Observable<SearchResult<Concept>> {
     return this.http.get<SearchResult<Concept>>(this.baseUrl, {params: SearchHttpParams.build(params)});
   }
-
 }
