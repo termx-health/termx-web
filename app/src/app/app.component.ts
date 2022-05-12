@@ -10,18 +10,7 @@ import {LocalizedName} from '@kodality-health/marina-util';
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
-  public menu: MuiMenuItem[] = [
-    {
-      icon: 'unordered-list',
-      label: 'menu.code-system.list',
-      click: () => this.router.navigateByUrl('code-systems')
-    },
-    {
-      icon: 'plus',
-      label: 'menu.code-system.add',
-      click: () => this.router.navigateByUrl('code-systems/add')
-    }
-  ];
+  public menu: MuiMenuItem[] = [];
 
   public constructor(
     private router: Router,

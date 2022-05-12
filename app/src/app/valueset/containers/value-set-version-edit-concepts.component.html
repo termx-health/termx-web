@@ -1,0 +1,27 @@
+<nz-divider [nzText]="'web.concept.list.concepts' | translate"></nz-divider>
+<m-table [data]="concepts" [loading]="loading" size="small" bordered hideOnSinglePage>
+  <tr *mTableHead>
+    <th>{{'web.concept.list.concept' | translate}}</th>
+    <th>{{'web.designation.list.designation' | translate}}</th>
+    <th>{{'web.concept.list.operations' | translate}}</th>
+  </tr>
+  <tr *mTableRow="let concept">
+    <td>
+      <twl-concept-search [ngModel]="concept.id"></twl-concept-search>
+    </td>
+    <td>{{concept.versions | apply: getDesignationName }}</td>
+    <td>filler</td>
+  </tr>
+  <tr>
+    <td colspan="4" style="padding: 0">
+      <m-button display="text" size="small" style="width: 100%" (click)="addRow()">
+        <m-icon [code]="'plus'"></m-icon>
+      </m-button>
+    </td>
+  </tr>
+  <tr *mTableNoData>
+    <td colspan="3">
+      <m-no-data></m-no-data>
+    </td>
+  </tr>
+</m-table>

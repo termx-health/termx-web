@@ -14,5 +14,21 @@
     },
     "icon": "plus",
     "link": "code-systems/add"
+  },
+  {
+    "label": {
+      "en": "Value set list",
+      "et": "Väärtuste nimekiri"
+    },
+    "icon": "unordered-list",
+    "link": "value-sets"
+  },
+  {
+    "label": {
+      "en": "Value set form",
+      "et": "Väärtuste nimekirja lisamine"
+    },
+    "icon": "plus",
+    "link": "value-sets/add"
   }
 ]

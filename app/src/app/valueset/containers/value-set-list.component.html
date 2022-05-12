@@ -1,9 +1,8 @@
 <m-form-row>
   <div *mFormCol>
-    <m-card [title]="'web.code-system.list.header'">
+    <m-card [title]="''">
       <!-- todo: m-backend-table -->
-      <m-table
-          [data]="searchResult.data"
+      <m-table [data]="searchResult.data"
           [loading]="loading"
           size="small"
           bordered
@@ -12,38 +11,36 @@
           [total]="searchResult.meta.total"
           [pageSize]="query.limit"
           [(pageIndex)]="query['page']"
-          (pageIndexChange)="loadData()"
-      >
+          (pageIndexChange)="loadData()">
         <tr *mTableHead>
           <th></th>
-          <th>{{'web.code-system.entity.id' | translate}}</th>
-          <th>{{'web.code-system.entity.name' | translate}}</th>
-          <th>{{'web.code-system.entity.domain' | translate}}</th>
-          <th>{{'web.code-system.list.operations' | translate}}</th>
+          <th>{{'web.value-set.entity.id' | translate}}</th>
+          <th>{{'web.value-set.entity.name' | translate}}</th>
+          <th>{{'web.value-set.list.domain' | translate}}</th>
+          <th>{{'web.value-set.list.operations' | translate}}</th>
         </tr>
-
-        <tr *mTableRow="let cs">
-          <td m-table-expand [item]="cs"></td>
-          <td><a [routerLink]="[cs.id,'edit']">{{cs.id}}</a></td>
-          <td>{{cs.names | localName}}</td>
-          <td>{{cs.uri | apply: parseDomain}}</td>
+        <tr *mTableRow="let vs">
+          <td m-table-expand [item]="vs"></td>
+          <td><a [routerLink]="[vs.id, 'edit']">{{vs.id}}</a></td>
+          <td>{{vs.names | localName}}</td>
+          <td>{{vs.uri | apply: parseDomain}}</td>
           <td>
             <button nz-button nzType="primary" nzDanger>{{'core.btn.delete' | translate}}</button>
           </td>
         </tr>
 
-        <tr *mTableRowExpand="let cs" class="m-table-expanded-row">
+        <tr *mTableRowExpand="let vs" class="m-table-expanded-row">
           <td colspan="5">
             <m-form-row full>
               <div *mFormCol>
-                <m-form-item label="web.code-system.entity.uri">
-                  {{cs.uri}}
+                <m-form-item label="web.value-set.entity.uri">
+                  {{vs.uri}}
                 </m-form-item>
-                <m-form-item label="web.code-system.entity.description">
-                  {{cs.description}}
+                <m-form-item label="web.value-set.entity.description">
+                  {{vs.description}}
                 </m-form-item>
-                <m-form-item label="web.code-system.list.versions">
-                  <div *ngFor="let version of cs.versions">{{
+                <m-form-item label="web.value-set.list.versions">
+                  <div *ngFor="let version of vs.versions">{{
                     version | apply: getVersionTranslateTokens: ({
                       releaseDate: (version.releaseDate | localDate),
                       expirationDate: (version.expirationDate | localDate),
