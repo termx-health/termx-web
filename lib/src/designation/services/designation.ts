@@ -1,7 +1,7 @@
 export class Designation {
   public id?: number;
   public designationTypeId?: number;
-  public name?: number;
+  public name?: string;
   public language?: string;
   public rendering?: string;
   public preferred?: boolean;
