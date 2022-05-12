@@ -8,7 +8,6 @@ import {Location} from '@angular/common';
 
 
 @Component({
-  selector: 'twa-version-form',
   templateUrl: './code-system-version-edit.component.html',
 })
 export class CodeSystemVersionEditComponent implements OnInit {

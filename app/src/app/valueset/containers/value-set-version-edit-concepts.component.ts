@@ -4,10 +4,10 @@ import {Concept} from 'terminology-lib/concept/services/concept';
 import {CodeSystemEntityVersion} from 'terminology-lib/codesystem/services/code-system-entity';
 
 @Component({
-  selector: 'twa-value-set-version-concept-list',
-  templateUrl: './value-set-version-concept-list.component.html',
+  selector: 'twa-value-set-version-edit-concepts',
+  templateUrl: './value-set-version-edit-concepts.component.html',
 })
-export class ValueSetVersionConceptListComponent implements OnChanges {
+export class ValueSetVersionEditConceptsComponent implements OnChanges {
   public loading?: boolean;
   @Input() public valueSetId?: string;
   @Input() public versionVersion?: string;

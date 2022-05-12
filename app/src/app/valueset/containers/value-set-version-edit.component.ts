@@ -8,7 +8,6 @@ import {ValueSetVersion} from 'terminology-lib/valueset/services/value-set-versi
 import {ValueSetService} from '../services/value-set.service';
 
 @Component({
-  selector: 'twa-value-set-version-form',
   templateUrl: './value-set-version-edit.component.html',
 })
 export class ValueSetVersionEditComponent implements OnInit {

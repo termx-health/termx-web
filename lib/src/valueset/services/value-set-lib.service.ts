@@ -6,7 +6,6 @@ import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {ValueSet} from './value-set';
 import {ValueSetVersion} from './value-set-version';
-import {CodeSystemVersion} from '../../codesystem/services/code-system-version';
 import {Concept} from '../../concept/services/concept';
 
 @Injectable()
@@ -20,8 +19,8 @@ export class ValueSetLibService {
     return this.http.get<ValueSet>(`${this.baseUrl}/${valueSetId}`);
   }
 
-  public loadVersion(valueSetId: string, versionId: string): Observable<CodeSystemVersion> {
-    return this.http.get<CodeSystemVersion>(`${this.baseUrl}/${valueSetId}/versions/${versionId}`);
+  public loadVersion(valueSetId: string, versionId: string): Observable<ValueSetVersion> {
+    return this.http.get<ValueSetVersion>(`${this.baseUrl}/${valueSetId}/versions/${versionId}`);
   }
 
   public loadVersions(valueSetId: string): Observable<ValueSetVersion[]> {

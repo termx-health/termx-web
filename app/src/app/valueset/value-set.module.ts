@@ -11,7 +11,7 @@ import {ValueSetEditComponent} from './containers/value-set-edit.component';
 import {FormsModule} from '@angular/forms';
 import {ValueSetEditVersionsComponent} from './containers/value-set-edit-versions.component';
 import {ValueSetVersionEditComponent} from './containers/value-set-version-edit.component';
-import {ValueSetVersionConceptListComponent} from './containers/value-set-version-concept-list.component';
+import {ValueSetVersionEditConceptsComponent} from './containers/value-set-version-edit-concepts.component';
 import {ConceptLibModule} from 'terminology-lib/concept/concept-lib.module';
 
 
@@ -29,7 +29,7 @@ export const VALUE_SET_ROUTES: Routes = [
     ValueSetEditComponent,
     ValueSetEditVersionsComponent,
     ValueSetVersionEditComponent,
-    ValueSetVersionConceptListComponent
+    ValueSetVersionEditConceptsComponent
   ],
   imports: [
     CommonModule,

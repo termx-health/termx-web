@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ConceptLibService} from '../../../../../lib/src/concept/services/concept-lib.service';
+import {ConceptLibService} from 'terminology-lib/concept/services/concept-lib.service';
 
 
 @Injectable({

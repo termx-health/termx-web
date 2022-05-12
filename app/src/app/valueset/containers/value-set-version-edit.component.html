@@ -24,7 +24,7 @@
           </m-form-item>
           <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">{{'core.btn.save' | translate}}</m-button>
         </form>
-        <twa-value-set-version-concept-list [valueSetId]="valueSetId" [versionVersion]="versionVersion"></twa-value-set-version-concept-list>
+        <twa-value-set-version-edit-concepts *ngIf="mode === 'edit'" [valueSetId]="valueSetId" [versionVersion]="versionVersion"></twa-value-set-version-edit-concepts>
       </m-spinner>
     </m-card>
   </div>
