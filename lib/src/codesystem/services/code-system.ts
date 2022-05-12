@@ -1,7 +1,7 @@
 import {LocalizedName} from '@kodality-health/marina-util';
 import {EntityProperty} from './entity-property';
 import {CodeSystemVersion} from './code-system-version';
-import {Concept} from './concept';
+import {Concept} from '../../concept/services/concept';
 
 export class CodeSystem {
   public id?: string;

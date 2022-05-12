@@ -7,7 +7,7 @@ import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {ValueSet} from './value-set';
 import {ValueSetVersion} from './value-set-version';
 import {CodeSystemVersion} from '../../codesystem/services/code-system-version';
-import {Concept} from '../../codesystem/services/concept';
+import {Concept} from '../../concept/services/concept';
 
 @Injectable()
 export class ValueSetLibService {
@@ -16,7 +16,7 @@ export class ValueSetLibService {
   public constructor(@Inject(TERMINOLOGY_API) api: string, protected http: HttpClient) {
     this.baseUrl = `${api}/ts/value-sets`;
   }
-  public loadValueSet(valueSetId: string): Observable<ValueSet>{
+  public load(valueSetId: string): Observable<ValueSet>{
     return this.http.get<ValueSet>(`${this.baseUrl}/${valueSetId}`);
   }
 

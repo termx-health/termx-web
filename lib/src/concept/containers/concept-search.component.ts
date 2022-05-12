@@ -1,38 +1,38 @@
-import {Component, ElementRef, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, Input} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BehaviorSubject, finalize, map, Observable, of, tap} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {findFocusableElement, group, isDefined} from '@kodality-web/core-util';
-import {Concept} from '../../codesystem/services/concept';
+import {group, isDefined} from '@kodality-web/core-util';
+import {Concept} from '../services/concept';
 import {ConceptSearchParams} from '../services/concept-search-params';
 import {ConceptLibService} from '../services/concept-lib.service';
 
 @Component({
-  selector: 'twl-concept-search-input',
-  templateUrl: './concept-search-input.component.html',
+  selector: 'twl-concept-search',
+  templateUrl: './concept-search.component.html',
   styles: [
-    `::ng-deep .ant-select {
+    `::ng-deep .twa-concept-search  .ant-select {
         width: 100%
     }`
   ],
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchInputComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}]
 })
-export class ConceptSearchInputComponent implements ControlValueAccessor {
-  @Input() public compareWith = (o1: unknown, o2: unknown) => o1 == o2;
+export class ConceptSearchComponent implements ControlValueAccessor {
   @Input() public valuePrimitive: boolean = false;
   @Input() public placeholder: string = 'marina.ui.components.search.placeholder';
 
+  public searchUpdate: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  public compareWith = (o1: unknown, o2: unknown): boolean => o1 == o2;
 
   public data?: {[id: string]: Concept};
-  public loading?: boolean;
   public value?: number;
-  public searchUpdate: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private loading: {[key: string]: boolean} = {};
+
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
 
 
   public constructor(
-    private elementRef: ElementRef,
     private conceptService: ConceptLibService,
   ) {}
 
@@ -48,24 +48,26 @@ export class ConceptSearchInputComponent implements ControlValueAccessor {
     if (!text || text.length < 1) {
       return of(undefined);
     }
-    this.loading = true;
     const q = new ConceptSearchParams();
     q.codeContains = text;
+    q.limit = 10_000;
+    this.loading['search'] = true;
     return this.conceptService.search(q).pipe(
       tap(ca => this.data = group(ca.data, c => c.id!)),
       map(() => undefined),
-      finalize(() => this.loading = false)
+      finalize(() => this.loading['search'] = false)
     );
   }
 
-  private loadConcept(id: number): void {
+  private loadConcept(id?: number): void {
     if (isDefined(id)) {
-      this.conceptService.load(id).subscribe(c => this.data = {...(this.data || {}), [c.id!]: c});
+      this.loading['load'] = true;
+      this.conceptService.load(id).subscribe(c => this.data = {...(this.data || {}), [c.id!]: c}).add(() => this.loading['load'] = false);
     }
   }
 
   public writeValue(obj: Concept | number): void {
-    this.value = (typeof obj === 'object' ? obj?.id : obj) as number;
+    this.value = (typeof obj === 'object' ? obj?.id : obj);
     this.loadConcept(this.value);
   }
 
@@ -85,8 +87,8 @@ export class ConceptSearchInputComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  public focus(): void {
-    findFocusableElement(this.elementRef.nativeElement).focus();
+  public get isLoading(): boolean {
+    return Object.values(this.loading).some(Boolean);
   }
 
 }

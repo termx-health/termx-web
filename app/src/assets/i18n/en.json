@@ -121,6 +121,17 @@
       "list": {
         "designation": "Designation"
       }
+    },
+    "publication-status": {
+      "statuses": {
+        "active": "Active",
+        "retired": "Retired",
+        "draft": "Draft"
+      },
+      "operations": {
+        "activate": "Activate",
+        "retire": "Retire"
+      }
     }
   }
 }

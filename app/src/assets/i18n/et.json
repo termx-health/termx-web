@@ -56,9 +56,9 @@
         "operations": "Toimingud",
         "versions": "Versioonid",
         "add-version": "Lisa versioon",
-        "versions-release-date": "From: {{releaseDate}}",
-        "versions-expiration-date": "to {{expirationDate}}",
-        "versions-version": "Version name: {{version}}"
+        "versions-release-date": "Alates: {{releaseDate}}",
+        "versions-expiration-date": "kuni {{expirationDate}}",
+        "versions-version": "Versiooni nimi: {{version}}"
       }
     },
     "value-set": {
@@ -80,9 +80,9 @@
         "operations": "Toimingud",
         "versions": "Versioonid",
         "add-version": "Lisa versioon",
-        "versions-release-date": "From: {{releaseDate}}",
-        "versions-expiration-date": "to {{expirationDate}}",
-        "versions-version": "Version name: {{version}}"
+        "versions-release-date": "Alates: {{releaseDate}}",
+        "versions-expiration-date": "kuni {{expirationDate}}",
+        "versions-version": "Versiooni nimi: {{version}}"
       }
     },
     "value-set-version": {
@@ -120,6 +120,17 @@
       },
       "list": {
         "designation": "Tähendus"
+      }
+    },
+    "publication-status": {
+      "statuses": {
+        "active": "Aktiivne",
+        "retired": "Kõrvaldatud",
+        "draft": "Mustand"
+      },
+      "operations": {
+        "activate": "Aktiveeri",
+        "retire": "Kõrvalda"
       }
     }
   }

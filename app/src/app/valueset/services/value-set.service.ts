@@ -6,7 +6,7 @@ import {ValueSetVersion} from 'terminology-lib/valueset/services/value-set-versi
 
 @Injectable({providedIn: 'root'})
 export class ValueSetService extends ValueSetLibService {
-  public saveValueSet(valueSet: ValueSet): Observable<any> {
+  public save(valueSet: ValueSet): Observable<any> {
     return this.http.post(this.baseUrl, valueSet);
   }
 
@@ -17,10 +17,11 @@ export class ValueSetService extends ValueSetLibService {
     return this.http.post(`${this.baseUrl}/${valueSetId}/versions`, version);
   }
 
-  public changeVersionStatus(version: ValueSetVersion): Observable<any> {
-    if (version.status === 'retired') {
-      return this.http.post(`${this.baseUrl}/${version.valueSet}/versions/${version.version}/retire`, {});
-    }
-    return this.http.post(`${this.baseUrl}/${version.valueSet}/versions/${version.version}/activate`, {});
+  public activateVersion(valueSetId: string, version: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${valueSetId}/versions/${version}/activate`, {});
+  }
+
+  public retireVersion(valueSetId: string, version: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${valueSetId}/versions/${version}/retire`, {});
   }
 }

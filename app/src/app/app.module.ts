@@ -17,7 +17,7 @@ import et from '@angular/common/locales/et';
 registerLocaleData(et);
 
 
-export function HttpLoaderFactory(http: HttpClient) {
+export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http);
 }
 

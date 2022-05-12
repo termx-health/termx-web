@@ -12,11 +12,24 @@
   <tr *mTableRow="let version">
     <td><a [routerLink]="['../versions/', version.version, 'edit']">{{version.version}}</a></td>
     <td>{{version.source}}</td>
-    <td>{{version.releaseDate}}</td>
-    <td>{{version.expirationDate}}</td>
-    <td>{{version.status}}</td>
-    <button *ngIf="version.status === 'active'" nz-button nzType="link" (click)="changeStatus(version)">Retire</button>
-    <button *ngIf="version.status === 'draft'" nz-button nzType="link" (click)="changeStatus(version)">Activate</button>
-    <button *ngIf="version.status === 'retired'" nz-button nzType="link" (click)="changeStatus(version)">Activate</button>
+    <td>{{version.releaseDate | localDate}}</td>
+    <td>{{version.expirationDate | localDate}}</td>
+    <td>{{('web.publication-status.statuses.' + version.status) | translate}}</td>
+    <td>
+      <m-button *ngIf="version.status === 'active'"
+          display="link"
+          (click)="retireVersion(version)">{{'web.publication-status.operations.retire' | translate}}</m-button>
+      <m-button *ngIf="version.status === 'draft'"
+          display="link"
+          (click)="activateVersion(version)">{{'web.publication-status.operations.activate' | translate}}</m-button>
+      <m-button *ngIf="version.status === 'retired'"
+          display="link"
+          (click)="activateVersion(version)">{{'web.publication-status.operations.activate' | translate}}</m-button>
+    </td>
+  </tr>
+  <tr *mTableNoData>
+    <td colspan="6">
+      <m-no-data></m-no-data>
+    </td>
   </tr>
 </m-table>

@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {DesignationSearchParams} from './designation-search-params';
 import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
-import {Designation} from '../../codesystem/services/designation';
+import {Designation} from './designation';
 
 @Injectable()
 export class DesignationLibService {

@@ -7,16 +7,21 @@
   </tr>
   <tr *mTableRow="let concept">
     <td>
-      <twl-concept-search-input [ngModel]="concept.id" style="width: 100%"></twl-concept-search-input>
+      <twl-concept-search [ngModel]="concept.id"></twl-concept-search>
     </td>
     <td>{{concept.versions | apply: getDesignationName }}</td>
     <td>filler</td>
   </tr>
   <tr>
     <td colspan="4" style="padding: 0">
-      <m-button display="text" size="small" style="width: 100%" (click)="newConceptRow()">
+      <m-button display="text" size="small" style="width: 100%" (click)="addRow()">
         <m-icon [code]="'plus'"></m-icon>
       </m-button>
+    </td>
+  </tr>
+  <tr *mTableNoData>
+    <td colspan="6">
+      <m-no-data></m-no-data>
     </td>
   </tr>
 </m-table>

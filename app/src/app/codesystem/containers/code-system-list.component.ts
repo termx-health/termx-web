@@ -5,6 +5,7 @@ import {CodeSystemService} from '../services/code-system.service';
 import {CodeSystemVersion} from 'terminology-lib/codesystem/services/code-system-version';
 import {TranslateService} from '@ngx-translate/core';
 
+
 @Component({
   templateUrl: './code-system-list.component.html'
 })
@@ -14,7 +15,10 @@ export class CodeSystemListComponent implements OnInit {
   public query: CodeSystemSearchParams = new CodeSystemSearchParams();
   public loading?: boolean;
 
-  public constructor(private codeSystemService: CodeSystemService, private translateService: TranslateService) {}
+  public constructor(
+    private codeSystemService: CodeSystemService,
+    private translateService: TranslateService
+  ) {}
 
   public ngOnInit(): void {
     this.loadData();
@@ -37,9 +41,8 @@ export class CodeSystemListComponent implements OnInit {
     this.loading = true;
     const q = copyDeep(this.query);
     q.versionsDecorated = true;
-    this.codeSystemService.search(q).subscribe(r => {
-      this.searchResult = r;
-    }).add(() => this.loading = false);
+    this.codeSystemService.search(q)
+      .subscribe(r => this.searchResult = r)
+      .add(() => this.loading = false);
   }
-
 }

@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
-import {DesignationLibService} from 'terminology-lib/designation/services/designation-lib.service';
+import {Injectable} from '@angular/core';
+import {DesignationLibService} from '../../../../../lib/src/designation/services/designation-lib.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class DesignationService extends DesignationLibService {
 }

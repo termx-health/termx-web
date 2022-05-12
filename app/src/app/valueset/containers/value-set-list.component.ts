@@ -6,6 +6,7 @@ import {ValueSetSearchParams} from 'terminology-lib/valueset/services/value-set-
 import {CodeSystemVersion} from 'terminology-lib/codesystem/services/code-system-version';
 import {TranslateService} from '@ngx-translate/core';
 
+
 @Component({
   selector: 'twa-value-set-list',
   templateUrl: './value-set-list.component.html',
@@ -15,7 +16,10 @@ export class ValueSetListComponent implements OnInit {
   public query: ValueSetSearchParams = new ValueSetSearchParams();
   public loading?: boolean;
 
-  public constructor(private valueSetService: ValueSetService, private translateService: TranslateService) {}
+  public constructor(
+    private valueSetService: ValueSetService,
+    private translateService: TranslateService
+  ) {}
 
   public ngOnInit(): void {
     this.loadData();
@@ -27,9 +31,9 @@ export class ValueSetListComponent implements OnInit {
 
   public getVersionTranslateTokens = (version: CodeSystemVersion, translateOptions: object): string[] => {
     const tokens = [
-      version.releaseDate ? 'web.code-system.list.versions-release-date' : '',
-      version.expirationDate ? 'web.code-system.list.versions-expiration-date' : '',
-      version.version ? 'web.code-system.list.versions-version' : ''
+      version.releaseDate ? 'web.value-set.list.versions-release-date' : '',
+      version.expirationDate ? 'web.value-set.list.versions-expiration-date' : '',
+      version.version ? 'web.value-set.list.versions-version' : ''
     ];
     return tokens.filter(Boolean).map(t => this.translateService.instant(t, translateOptions));
   };
@@ -38,8 +42,8 @@ export class ValueSetListComponent implements OnInit {
     this.loading = true;
     const q = copyDeep(this.query);
     q.decorated = true;
-    this.valueSetService.search(q).subscribe(r => {
-    this.searchResult = r;
-    }).add(()=> this.loading = false);
+    this.valueSetService.search(q)
+      .subscribe(r => this.searchResult = r)
+      .add(() => this.loading = false);
   }
 }

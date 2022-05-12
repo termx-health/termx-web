@@ -2,9 +2,8 @@
   <div *mFormCol>
     <m-card [title]="''">
       <!-- todo: m-backend-table -->
-      <m-table
-        [data]="searchResult.data"
-        [loading]="loading"
+      <m-table [data]="searchResult.data"
+          [loading]="loading"
           size="small"
           bordered
           enablePagination
@@ -51,6 +50,11 @@
                 </m-form-item>
               </div>
             </m-form-row>
+          </td>
+        </tr>
+        <tr *mTableNoData>
+          <td colspan="6">
+            <m-no-data></m-no-data>
           </td>
         </tr>
       </m-table>

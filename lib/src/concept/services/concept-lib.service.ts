@@ -3,12 +3,10 @@ import {TERMINOLOGY_API} from '../../terminology-lib.token';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
-import {Concept} from '../../codesystem/services/concept';
+import {Concept} from './concept';
 import {ConceptSearchParams} from './concept-search-params';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ConceptLibService {
   protected baseUrl;
 

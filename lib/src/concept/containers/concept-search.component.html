@@ -1,5 +1,5 @@
-<m-select style="width: 100%"
-    [loading]="loading"
+<m-select class="twa-concept-search"
+    [loading]="isLoading"
     [(ngModel)]="value"
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"

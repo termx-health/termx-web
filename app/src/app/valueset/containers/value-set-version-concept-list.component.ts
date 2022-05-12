@@ -1,63 +1,43 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ValueSetService} from '../services/value-set.service';
-import {ActivatedRoute} from '@angular/router';
-import {Concept} from 'terminology-lib/codesystem/services/concept';
+import {Concept} from 'terminology-lib/concept/services/concept';
 import {CodeSystemEntityVersion} from 'terminology-lib/codesystem/services/code-system-entity';
-import {ConceptSearchParams} from 'terminology-lib/concept/services/concept-search-params';
-import {DesignationSearchParams} from 'terminology-lib/designation/services/designation-search-params';
 
 @Component({
   selector: 'twa-value-set-version-concept-list',
   templateUrl: './value-set-version-concept-list.component.html',
 })
-export class ValueSetVersionConceptListComponent implements OnInit {
+export class ValueSetVersionConceptListComponent implements OnChanges {
   public loading?: boolean;
-  public valueSetId?: string;
-  public verisonVersion?: string;
+  @Input() public valueSetId?: string;
+  @Input() public versionVersion?: string;
   public concepts?: Concept[];
-  public searchLoading?: boolean;
-  public conceptQuery: ConceptSearchParams = new ConceptSearchParams();
-  public designationQuery: DesignationSearchParams = new DesignationSearchParams();
-
 
   public constructor(
     private valueSetService: ValueSetService,
-    private route: ActivatedRoute
   ) { }
 
-  public ngOnInit(): void {
-    this.valueSetId = this.route.snapshot.paramMap.get('id') || undefined;
-    this.verisonVersion = this.route.snapshot.paramMap.get('versionId') || undefined;
-    this.loadData();
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes["valueSetId"] || changes["versionVersion"]) {
+      this.loadData();
+    }
   }
 
   public loadData(): void {
-    if (!this.valueSetId || !this.verisonVersion) {
+    if (!this.valueSetId || !this.versionVersion) {
       return;
     }
     this.loading = true;
-    this.valueSetService.loadConcepts(this.valueSetId, this.verisonVersion).subscribe(c => {
-      this.concepts = c;
-    }).add(() => this.loading = false);
+    this.valueSetService.loadConcepts(this.valueSetId, this.versionVersion)
+      .subscribe(c => this.concepts = c)
+      .add(() => this.loading = false);
   }
 
   public getDesignationName(versions: CodeSystemEntityVersion[]): string | undefined {
-    if (versions) {
-      for (let version of versions) {
-        if (version.status === 'active' && version.designations) {
-          for (let designation of version.designations) {
-            if (designation.preferred) {
-              return designation.name;
-            }
-          }
-        }
-      }
-    }
-    return "fix me";
+    return versions?.filter(v => v.status === 'active').flatMap(v => v.designations || []).find(d => d.preferred)?.name;
   }
 
-  public newConceptRow(): void {
+  public addRow(): void {
     this.concepts = [...(this.concepts || []), new Concept()];
-    return;
   }
 }

@@ -9,16 +9,16 @@ import {ValueSetService} from '../services/value-set.service';
 
 @Component({
   selector: 'twa-value-set-version-form',
-  templateUrl: './value-set-version-form.component.html',
+  templateUrl: './value-set-version-edit.component.html',
 })
-export class ValueSetVersionFormComponent implements OnInit {
-  public version?: ValueSetVersion;
-  public versionVersion?: string;
-  public loading?: boolean;
-  public valueSetId?: string;
-  public mode?: 'add' | 'edit';
-
+export class ValueSetVersionEditComponent implements OnInit {
   @ViewChild("form") public form?: NgForm;
+
+  public version?: ValueSetVersion;
+  public versionVersion?: string | null;
+  public loading?: boolean;
+  public valueSetId?: string | null;
+  public mode?: 'add' | 'edit';
 
   public constructor(
     private valueSetService: ValueSetService,
@@ -27,8 +27,8 @@ export class ValueSetVersionFormComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.valueSetId = this.route.snapshot.paramMap.get('id') || undefined;
-    this.versionVersion = this.route.snapshot.paramMap.get('versionId') || undefined;
+    this.valueSetId = this.route.snapshot.paramMap.get('id');
+    this.versionVersion = this.route.snapshot.paramMap.get('versionId');
     this.mode = this.versionVersion ? 'edit' : 'add';
     if (this.mode === 'edit') {
       this.loadVersion();
@@ -55,9 +55,8 @@ export class ValueSetVersionFormComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.version.status ='draft';
-    this.valueSetService
-      .saveVersion(this.valueSetId, this.version)
+    this.version.status = 'draft';
+    this.valueSetService.saveVersion(this.valueSetId, this.version)
       .subscribe(() => this.location.back())
       .add(() => this.loading = false);
   }

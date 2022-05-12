@@ -6,18 +6,17 @@ import {isDefined, validateForm} from '@kodality-web/core-util';
 import {ValueSet} from 'terminology-lib/valueset/services/value-set';
 import {ValueSetService} from '../services/value-set.service';
 
-@Component({
-  selector: 'twa-value-set-form',
-  templateUrl: './value-set-form.component.html',
-})
-export class ValueSetFormComponent implements OnInit {
 
+@Component({
+  templateUrl: './value-set-edit.component.html',
+})
+export class ValueSetEditComponent implements OnInit {
+  @ViewChild("form") public form?: NgForm;
+
+  public valueSetId?: string | null;
   public valueSet?: ValueSet;
   public loading?: boolean;
-  public valueSetId?: string;
   public mode?: 'add' | 'edit';
-
-  @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private valueSetService: ValueSetService,
@@ -26,7 +25,7 @@ export class ValueSetFormComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.valueSetId = this.route.snapshot.paramMap.get('id') || undefined;
+    this.valueSetId = this.route.snapshot.paramMap.get('id');
     this.mode = this.valueSetId ? 'edit' : 'add';
     if (this.mode === 'edit') {
       this.loadValueSet();
@@ -36,12 +35,13 @@ export class ValueSetFormComponent implements OnInit {
   }
 
   private loadValueSet(): void {
-    if (this.valueSetId) {
-      this.loading = true;
-      this.valueSetService.loadValueSet(this.valueSetId)
-        .subscribe(v => this.valueSet = v)
-        .add(() => this.loading = false);
+    if (!this.valueSetId) {
+      return;
     }
+    this.loading = true;
+    this.valueSetService.load(this.valueSetId)
+      .subscribe(v => this.valueSet = v)
+      .add(() => this.loading = false);
   }
 
   private validate(): boolean {
@@ -54,7 +54,7 @@ export class ValueSetFormComponent implements OnInit {
     }
     this.loading = true;
     this.valueSetService
-      .saveValueSet(this.valueSet)
+      .save(this.valueSet)
       .subscribe(() => this.location.back())
       .add(() => this.loading = false);
   }
