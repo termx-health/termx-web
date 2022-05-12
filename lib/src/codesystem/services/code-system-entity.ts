@@ -1,4 +1,4 @@
-import {Designation} from './designation';
+import {Designation} from '../../designation/services/designation';
 import {CodeSystemAssociation} from './code-system-association';
 import {EntityPropertyValue} from './entity-property';
 

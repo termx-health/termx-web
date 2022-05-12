@@ -6,18 +6,18 @@ import {ActivatedRoute} from '@angular/router';
 import {CodeSystemService} from '../services/code-system.service';
 import {Location} from '@angular/common';
 
-@Component({
-  selector: 'twa-version-form',
-  templateUrl: './code-system-version-form.component.html',
-})
-export class CodeSystemVersionFormComponent implements OnInit {
-  public version?: CodeSystemVersion;
-  public versionVersion?: string;
-  public loading?: boolean;
-  public codeSystemId?: string;
-  public mode?: 'add' | 'edit';
 
+@Component({
+  templateUrl: './code-system-version-edit.component.html',
+})
+export class CodeSystemVersionEditComponent implements OnInit {
   @ViewChild("form") public form?: NgForm;
+
+  public version?: CodeSystemVersion;
+  public versionVersion?: string | null;
+  public codeSystemId?: string | null;
+  public loading?: boolean;
+  public mode?: 'add' | 'edit';
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -26,8 +26,8 @@ export class CodeSystemVersionFormComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.codeSystemId = this.route.snapshot.paramMap.get('id') || undefined;
-    this.versionVersion = this.route.snapshot.paramMap.get('versionId') || undefined;
+    this.codeSystemId = this.route.snapshot.paramMap.get('id');
+    this.versionVersion = this.route.snapshot.paramMap.get('versionId');
     this.mode = this.versionVersion ? 'edit' : 'add';
     if (this.mode === 'edit') {
       this.loadVersion();
@@ -51,7 +51,7 @@ export class CodeSystemVersionFormComponent implements OnInit {
   }
 
   public save(): void {
-  if (!this.validate() || !this.codeSystemId || !this.version) {
+    if (!this.validate() || !this.codeSystemId || !this.version) {
       return;
     }
     this.loading = true;

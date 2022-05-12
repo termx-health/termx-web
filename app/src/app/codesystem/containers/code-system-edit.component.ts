@@ -4,15 +4,16 @@ import {Location} from '@angular/common';
 import {CodeSystemService} from '../services/code-system.service';
 import {CodeSystemFormComponent} from './code-system-form.component';
 
+
 @Component({
   templateUrl: 'code-system-edit.component.html'
 })
 export class CodeSystemEditComponent implements OnInit {
-  public codeSystemId?: string;
+  @ViewChild("codeSystemForm") public codeSystemForm?: CodeSystemFormComponent;
+
+  public codeSystemId?: string | null;
   public loading?: boolean;
   public mode?: 'edit' | 'add';
-
-  @ViewChild("codeSystemForm") public codeSystemForm?: CodeSystemFormComponent;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -21,7 +22,7 @@ export class CodeSystemEditComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.codeSystemId = this.route.snapshot.paramMap.get('id') || undefined;
+    this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.mode = this.codeSystemId ? 'edit' : 'add';
   }
 

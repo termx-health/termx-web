@@ -4,22 +4,20 @@ import {CodeSystemService} from '../services/code-system.service';
 import {NgForm} from '@angular/forms';
 import {isDefined, validateForm} from '@kodality-web/core-util';
 
+
 @Component({
   selector: 'twa-code-system-form',
   templateUrl: 'code-system-form.component.html'
 })
 export class CodeSystemFormComponent implements OnChanges {
-  public codeSystem?: CodeSystem;
-  public loading?: boolean;
-
   @Input() public codeSystemId?: string;
   @Input() public mode?: 'edit' | 'add';
   @ViewChild("form") public form?: NgForm;
 
-  public constructor(
-    private codeSystemService: CodeSystemService,
-  ) { }
+  public codeSystem?: CodeSystem;
+  public loading?: boolean;
 
+  public constructor(private codeSystemService: CodeSystemService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["codeSystemId"]?.currentValue || changes["mode"]?.currentValue) {

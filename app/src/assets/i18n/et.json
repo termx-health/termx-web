@@ -56,9 +56,81 @@
         "operations": "Toimingud",
         "versions": "Versioonid",
         "add-version": "Lisa versioon",
-        "versions-release-date": "From: {{releaseDate}}",
-        "versions-expiration-date": "to {{expirationDate}}",
-        "versions-version": "Version name: {{version}}"
+        "versions-release-date": "Alates: {{releaseDate}}",
+        "versions-expiration-date": "kuni {{expirationDate}}",
+        "versions-version": "Versiooni nimi: {{version}}"
+      }
+    },
+    "value-set": {
+      "entity": {
+        "id": "Identifikaator",
+        "uri": "Ühtne ressursiidentifikaator (URI)",
+        "name": "Nimi",
+        "names": "Nimed",
+        "description": "Kirjeldus"
+      },
+      "form": {
+        "add-header": "Lisa uus väärtuste nimekiri",
+        "edit-header": "Väärtuste nimekirja muutmise vorm"
+      },
+      "list": {
+        "properties": "Omadused",
+        "domain": "Domeen",
+        "header": "Koodisüsteemide nimekiri",
+        "operations": "Toimingud",
+        "versions": "Versioonid",
+        "add-version": "Lisa versioon",
+        "versions-release-date": "Alates: {{releaseDate}}",
+        "versions-expiration-date": "kuni {{expirationDate}}",
+        "versions-version": "Versiooni nimi: {{version}}"
+      }
+    },
+    "value-set-version": {
+      "entity": {
+        "id": "Identifikaator",
+        "version": "Versioon",
+        "source": "Allikas",
+        "supported-languages": "Toetatud keeled",
+        "description": "Kirjeldus",
+        "release-date": "Väljastus kuupäev",
+        "expiration-date": "Aegumis kuupäev",
+        "status": "Olek"
+      },
+      "form": {
+        "edit-header": "Muuda versiooni",
+        "add-header": "Lisa versioon"
+      },
+      "list": {
+        "operations": "Toimingud"
+      }
+    },
+    "concept": {
+      "entity": {
+        "code": "Kood",
+        "description": "Kirjeldus"
+      },
+      "list": {
+        "concept": "Kontsept",
+        "concepts": "Kontseptid",
+        "operations": "Toimingud"
+      }
+    },
+    "designation": {
+      "entity": {
+      },
+      "list": {
+        "designation": "Tähendus"
+      }
+    },
+    "publication-status": {
+      "statuses": {
+        "active": "Aktiivne",
+        "retired": "Kõrvaldatud",
+        "draft": "Mustand"
+      },
+      "operations": {
+        "activate": "Aktiveeri",
+        "retire": "Kõrvalda"
       }
     }
   }
