@@ -16,16 +16,13 @@
     <td>{{version.expirationDate | localDate}}</td>
     <td>{{('web.publication-status.statuses.' + version.status) | translate}}</td>
     <td>
-      <m-button *ngIf="version.status === 'active'" display="link"
-          (click)="retireVersion(version)">
+      <m-button *ngIf="version.status === 'active'" display="link" (click)="retireVersion(version)">
         {{'web.publication-status.operations.retire' | translate}}
       </m-button>
-      <m-button *ngIf="version.status === 'draft'" display="link"
-          (click)="activateVersion(version)">
+      <m-button *ngIf="version.status === 'draft'" display="link" (click)="activateVersion(version)">
         {{'web.publication-status.operations.activate' | translate}}
       </m-button>
-      <m-button *ngIf="version.status === 'retired'" display="link"
-          (click)="activateVersion(version)">
+      <m-button *ngIf="version.status === 'retired'" display="link" (click)="activateVersion(version)">
         {{'web.publication-status.operations.activate' | translate}}
       </m-button>
     </td>
