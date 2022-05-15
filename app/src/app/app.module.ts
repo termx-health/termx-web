@@ -6,13 +6,15 @@ import {AppComponent} from './app.component';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
-import {TerminologyLibModule} from 'terminology-lib/terminology-lib.module';
 import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
 import {MarinaUiModule, MUI_CONFIG, MuiConfig} from '@kodality-health/marina-ui';
 import {CoreI18nService, CoreI18nTranslationHandler, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
+import {ResourcesModule} from './resources/resources.module';
+import {MarinaUtilModule} from '@kodality-health/marina-util';
+import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
 
 registerLocaleData(et);
 
@@ -54,8 +56,12 @@ export function MarinaUiConfigFactory(): MuiConfig {
         deps: [HttpClient]
       }
     }),
-    TerminologyLibModule,
-    MarinaUiModule
+
+    MarinaUiModule,
+    MarinaUtilModule,
+
+    ResourcesLibModule,
+    ResourcesModule,
   ],
   providers: [
     {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},

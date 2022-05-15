@@ -1,0 +1,30 @@
+<m-card class="tw-table-card">
+  <div *m-card-header class="tw-table-card-header">
+    <div class="m-card-title">{{'web.code-system.list.versions' | translate}}</div>
+    <m-button [routerLink]="['../versions/add']" label="web.code-system.list.add-version"></m-button>
+  </div>
+
+  <m-table [data]="versions" [loading]="loading" bordered enablePagination hideOnSinglePage>
+    <tr *mTableHead>
+      <th>{{'web.code-system-version.entity.version' | translate}}</th>
+      <th>{{'web.code-system-version.entity.source' | translate}}</th>
+      <th>{{'web.code-system-version.entity.release-date' | translate}}</th>
+      <th>{{'web.code-system-version.entity.expiration-date' | translate}}</th>
+      <th>{{'web.code-system-version.entity.status' | translate}}</th>
+    </tr>
+
+    <tr *mTableRow="let version">
+      <td><a [routerLink]="['../versions', version.version, 'edit']">{{version.version}}</a></td>
+      <td>{{version.source}}</td>
+      <td>{{version.releaseDate | localDate}}</td>
+      <td>{{version.expirationDate | localDate}}</td>
+      <td>{{version.status }}</td>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="5">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-table>
+</m-card>

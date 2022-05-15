@@ -5,7 +5,7 @@
       "et": "Koodisüsteemide nimekiri"
     },
     "icon": "unordered-list",
-    "link": "code-systems"
+    "link": "resources/code-systems"
   },
   {
     "label": {
@@ -13,7 +13,7 @@
       "et": "Koodisüsteemi lisamine"
     },
     "icon": "plus",
-    "link": "code-systems/add"
+    "link": "resources/code-systems/add"
   },
   {
     "label": {
@@ -21,7 +21,7 @@
       "et": "Väärtuste nimekiri"
     },
     "icon": "unordered-list",
-    "link": "value-sets"
+    "link": "resources/value-sets"
   },
   {
     "label": {
@@ -29,6 +29,6 @@
       "et": "Väärtuste nimekirja lisamine"
     },
     "icon": "plus",
-    "link": "value-sets/add"
+    "link": "resources/value-sets/add"
   }
 ]

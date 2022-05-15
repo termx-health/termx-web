@@ -76,7 +76,7 @@
       "list": {
         "properties": "Properties",
         "domain": "Domain",
-        "header": "Code system list",
+        "header": "Value set list",
         "operations": "Operations",
         "versions": "Versions",
         "add-version": "Add version",

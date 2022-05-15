@@ -1,0 +1,45 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-card [title]="mode === 'edit' ? 'web.code-system-version.form.edit-header' : 'web.code-system-version.form.add-header'">
+      <m-spinner [loading]="loading">
+        <form #form="ngForm" *ngIf="version">
+          <m-form-item name="version" label="web.value-set-version.entity.version" required>
+            <m-input name="version" [(ngModel)]="version.version" required></m-input>
+          </m-form-item>
+
+          <m-form-item name="releaseDate" label="web.value-set-version.entity.release-date">
+            <nz-date-picker name="releaseDate" [(ngModel)]="version.releaseDate"></nz-date-picker>
+          </m-form-item>
+
+          <m-form-item name="expirationDate" label="web.value-set-version.entity.expiration-date">
+            <nz-date-picker name="expirationDate" [(ngModel)]="version.expirationDate"></nz-date-picker>
+          </m-form-item>
+
+          <m-form-item name="supportedLanguages" label="web.value-set-version.entity.supported-languages">
+            <m-select multiple name="supportedLanguages" [(ngModel)]="version.supportedLanguages">
+              <!-- FIXME: concept-select -->
+              <m-option [label]="'et'" value="et"></m-option>
+              <m-option [label]="'en'" value="en"></m-option>
+              <m-option [label]="'la'" value="la"></m-option>
+            </m-select>
+          </m-form-item>
+
+          <m-form-item name="description" label="web.value-set-version.entity.description">
+            <m-textarea [(ngModel)]="version.description" name="description"></m-textarea>
+          </m-form-item>
+        </form>
+
+        <twa-value-set-version-concepts-list *ngIf="mode === 'edit'"
+            [valueSetId]="valueSetId"
+            [valueSetVersion]="valueSetVersion"
+        ></twa-value-set-version-concepts-list>
+
+        <ng-container *m-card-footer>
+          <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-spinner>
+    </m-card>
+  </div>
+</m-form-row>

@@ -1,22 +1,12 @@
 import {NgModule} from '@angular/core';
-import {CodeSystemLibModule} from './codesystem';
-import {ConceptLibModule} from './concept/concept-lib.module';
-import {DesignationLibModule} from './designation/designation-lib.module';
-import {ValueSetLibModule} from './valueset/value-set-lib.module';
+import {ResourcesLibModule} from './resources/resources-lib.module';
 
 @NgModule({
-  declarations: [],
   imports: [
-    CodeSystemLibModule,
-    ConceptLibModule,
-    DesignationLibModule,
-    ValueSetLibModule
+    ResourcesLibModule
   ],
   exports: [
-    CodeSystemLibModule,
-    ConceptLibModule,
-    DesignationLibModule,
-    ValueSetLibModule
+    ResourcesLibModule
   ]
 })
 export class TerminologyLibModule {

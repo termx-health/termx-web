@@ -1,0 +1,15 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-card [title]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'">
+      <twa-code-system-form #codeSystemForm [mode]="mode" [codeSystemId]="codeSystemId"></twa-code-system-form>
+      <twa-code-system-properties-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-properties-list>
+      <twa-code-system-versions-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-versions-list>
+
+      <ng-container *m-card-footer>
+        <m-button display="primary" [loading]="loading" [disabled]="loading || codeSystemForm.loading" (click)="save()">
+          {{'core.btn.save' | translate}}
+        </m-button>
+      </ng-container>
+    </m-card>
+  </div>
+</m-form-row>

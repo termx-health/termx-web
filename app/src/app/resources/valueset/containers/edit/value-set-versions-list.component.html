@@ -1,0 +1,42 @@
+<m-card class="tw-table-card">
+  <div *m-card-header class="tw-table-card-header">
+    <div class="m-card-title">{{'web.value-set.list.versions' | translate}}</div>
+    <m-button [routerLink]="['../versions/add']" label="web.value-set-version.form.add-header"></m-button>
+  </div>
+
+  <m-table [data]="versions" [loading]="loading" bordered enablePagination hideOnSinglePage>
+    <tr *mTableHead>
+      <th>{{'web.value-set-version.entity.version' | translate}}</th>
+      <th>{{'web.value-set-version.entity.source' | translate}}</th>
+      <th>{{'web.value-set-version.entity.release-date' | translate}}</th>
+      <th>{{'web.value-set-version.entity.expiration-date' | translate}}</th>
+      <th>{{'web.value-set-version.entity.status' | translate}}</th>
+      <th class="tw-table-actions">{{'web.value-set-version.list.operations'| translate}}</th>
+    </tr>
+
+    <tr *mTableRow="let version">
+      <td><a [routerLink]="['../versions/', version.version, 'edit']">{{version.version}}</a></td>
+      <td>{{version.source}}</td>
+      <td>{{version.releaseDate | localDate}}</td>
+      <td>{{version.expirationDate | localDate}}</td>
+      <td>{{('web.publication-status.statuses.' + version.status) | translate}}</td>
+      <td class="tw-table-actions">
+        <a *ngIf="version.status === 'active'" (click)="retireVersion(version)">
+          {{'web.publication-status.operations.retire' | translate}}
+        </a>
+        <a *ngIf="version.status === 'draft'" (click)="activateVersion(version)">
+          {{'web.publication-status.operations.activate' | translate}}
+        </a>
+        <a *ngIf="version.status === 'retired'" (click)="activateVersion(version)">
+          {{'web.publication-status.operations.activate' | translate}}
+        </a>
+      </td>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="6">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-table>
+</m-card>
