@@ -3,8 +3,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DesignationLibService} from '../../services/designation-lib.service';
 import {DesignationSearchParams} from '../../model/designation-search-params';
 import {Designation} from '../../model/designation';
-import {catchError, finalize, map, of} from 'rxjs';
-import {BooleanInput, group} from '@kodality-web/core-util';
+import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
 
 @Component({
   selector: 'twl-designation-select',
@@ -18,14 +17,11 @@ import {BooleanInput, group} from '@kodality-web/core-util';
 })
 export class DesignationSelectComponent implements OnChanges, ControlValueAccessor {
   @Input() public conceptId?: number;
-  @Input() @BooleanInput() public autoUnselect?: string | boolean = false;
+  @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
 
   public data: {[id: string]: Designation} = {};
   public value?: number;
   public loading: boolean = false;
-  public defaultValue?: string;
-  public compareWith = (o1: unknown, o2: unknown): boolean => o1 == o2;
-
 
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
@@ -35,8 +31,16 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["conceptId"].currentValue){
+    if (changes["conceptId"].currentValue) {
       this.loadDesignations();
+    }
+  }
+
+  public fireOnChange(): void {
+    if (this.valuePrimitive) {
+      this.onChange(this.value);
+    } else {
+      this.onChange(this.data?.[this.value!]);
     }
   }
 
@@ -48,15 +52,21 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
     q.conceptId = this.conceptId;
     q.limit = 10_000;
     this.loading = true;
-    this.designationService.search(q).pipe(
-      map(da => { return group(da.data, d => d.id!);}),
-      catchError(() => of(this.data)),
-      finalize(() => this.loading = false)
-    ).subscribe(da => this.data = da).add(() => this.loading = false);
+    this.designationService.search(q)
+      .subscribe(da => this.data = group(da.data, designation => designation.id!))
+      .add(() => this.loading = false);
+  }
+
+  public loadDesignation(id?: number): void {
+    if (isDefined(id)) {
+      this.loading = true;
+      this.designationService.load(id).subscribe(d => this.data = {...(this.data || {}), [d.id!]: d}).add(() => this.loading = false);
+    }
   }
 
   public writeValue(obj: Designation | number): void {
     this.value = (typeof obj === 'object' ? obj?.id : obj);
+    this.loadDesignation(this.value);
   }
 
   public registerOnChange(fn: any): void {

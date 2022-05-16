@@ -17,4 +17,8 @@ export class DesignationLibService {
   public search(params: DesignationSearchParams = {}): Observable<SearchResult<Designation>> {
     return this.http.get<SearchResult<Designation>>(this.baseUrl, {params: SearchHttpParams.build(params)});
   }
+
+  public load(id: number): Observable<Designation> {
+    return this.http.get<Designation>(`${this.baseUrl}/${id}`);
+  }
 }

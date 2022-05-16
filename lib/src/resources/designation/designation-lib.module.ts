@@ -1,18 +1,24 @@
 import {NgModule} from '@angular/core';
 import {DesignationLibService} from './services/designation-lib.service';
 import {DesignationSelectComponent} from './containers/designation-select/designation-select.component';
-import {SharedModule} from '../../../../app/src/app/shared/shared.module';
+import {MarinaUiModule} from '@kodality-health/marina-ui';
+import {CorePipesModule} from '@kodality-web/core-util';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 
 
 @NgModule({
+  imports: [
+    MarinaUiModule,
+    CorePipesModule,
+    FormsModule,
+    CommonModule
+  ],
   providers: [
     DesignationLibService
   ],
   declarations: [
     DesignationSelectComponent
-  ],
-  imports: [
-    SharedModule
   ],
   exports: [
     DesignationSelectComponent

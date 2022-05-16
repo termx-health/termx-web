@@ -1,7 +1,6 @@
 <m-select class="tw-designation-select"
     [loading]="loading"
     [(ngModel)]="value"
-    [autoUnselect]="autoUnselect"
-    [compareWith]="compareWith">
-  <m-option *ngFor="let key of (data | keys)" [value]="key" [label]="data[key]?.name"></m-option>
+    (mChange)="fireOnChange()">
+  <m-option *ngFor="let key of (data | keys)" [value]="data[key]?.id" [label]="data[key]?.name"></m-option>
 </m-select>

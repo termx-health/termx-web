@@ -12,9 +12,7 @@ export class ValueSetVersionConceptsListComponent implements OnChanges {
   @Input() public valueSetId?: string;
   @Input() public valueSetVersion?: string;
 
-  public conceptDesignation: {conceptId?: number, designationId?: number}[] = [];
-  public concepts: Concept[] = [];
-  public designations: Designation[] = [];
+  public conceptDesignation: {concept?: Concept, designation?: Designation}[] = [];
   public loading = false;
 
   public constructor(private valueSetService: ValueSetService) { }
@@ -34,12 +32,10 @@ export class ValueSetVersionConceptsListComponent implements OnChanges {
       this.valueSetService.loadConcepts(this.valueSetId, this.valueSetVersion),
       this.valueSetService.loadDesignations(this.valueSetId, this.valueSetVersion)
     ]).subscribe(([concepts, designations]) => {
-      this.concepts = concepts;
-      this.designations = designations;
 
       const designationsIds: number[] = designations.map(d => d.id!).filter(unique);
 
-      this.conceptDesignation = this.concepts.flatMap((c: Concept) => {
+      this.conceptDesignation = concepts.flatMap((c: Concept) => {
         const activeConceptVersion = c.versions?.find(v => v.status === 'active');
         if (!activeConceptVersion) {
           return [];
@@ -47,9 +43,9 @@ export class ValueSetVersionConceptsListComponent implements OnChanges {
         const persistedVersionDesignations = activeConceptVersion.designations?.filter(d => designationsIds.includes(d.id!)) || [];
 
         if (persistedVersionDesignations.length > 0) {
-          return persistedVersionDesignations.map((d: Designation) => ({conceptId: c.id!, designationId: d.id}));
+          return persistedVersionDesignations.map((d: Designation) => ({concept: c, designation: d}));
         }
-        return [{conceptId: c.id!}];
+        return [{concept: c}];
       });
     }).add(() => this.loading = false);
   }

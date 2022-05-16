@@ -8,10 +8,10 @@
 
     <tr *mTableRow="let cd">
       <td>
-        <twl-concept-search [(ngModel)]="cd.conceptId" valuePrimitive></twl-concept-search>
+        <twl-concept-search [(ngModel)]="cd.concept" (ngModelChange)="cd.designation = undefined"></twl-concept-search>
       </td>
       <td>
-        <twl-designation-select  [conceptId]="cd.conceptId" [(ngModel)]="cd.designationId" autoUnselect></twl-designation-select>
+        <twl-designation-select  [(ngModel)]="cd.designation"></twl-designation-select>
       </td>
       <td class="tw-table-actions">filler</td>
     </tr>
@@ -30,5 +30,5 @@
       </td>
     </tr>
   </m-table>
-</m-card>
+  </m-card>
 

@@ -23,7 +23,6 @@ export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
 
 
   public searchUpdate = new Subject<string>();
-  public compareWith = (o1: unknown, o2: unknown): boolean => o1 == o2;
 
   public data: {[id: string]: Concept} = {};
   public value?: number;
@@ -31,7 +30,6 @@ export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
 
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
-
 
   public constructor(
     private conceptService: ConceptLibService,
