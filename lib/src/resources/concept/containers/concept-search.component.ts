@@ -1,8 +1,8 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BehaviorSubject, catchError, finalize, map, Observable, of} from 'rxjs';
+import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
 import {Concept} from '../model/concept';
 import {ConceptSearchParams} from '../model/concept-search-params';
 import {ConceptLibService} from '../services/concept-lib.service';
@@ -11,18 +11,18 @@ import {ConceptLibService} from '../services/concept-lib.service';
   selector: 'twl-concept-search',
   templateUrl: './concept-search.component.html',
   styles: [
-    `::ng-deep .twa-concept-search .ant-select {
+    `::ng-deep .tw-concept-search .ant-select {
         width: 100%
     }`
   ],
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}]
 })
-export class ConceptSearchComponent implements ControlValueAccessor {
-  @Input() public valuePrimitive: boolean = false;
+export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
+  @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
 
-  public searchUpdate: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  public compareWith = (o1: unknown, o2: unknown): boolean => o1 == o2;
+
+  public searchUpdate = new Subject<string>();
 
   public data: {[id: string]: Concept} = {};
   public value?: number;
@@ -30,7 +30,6 @@ export class ConceptSearchComponent implements ControlValueAccessor {
 
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
-
 
   public constructor(
     private conceptService: ConceptLibService,

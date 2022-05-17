@@ -7,6 +7,7 @@ import {Concept} from '../../concept';
 import {ValueSet} from '../model/value-set';
 import {ValueSetVersion} from '../model/value-set-version';
 import {ValueSetSearchParams} from '../model/value-set-search-params';
+import {Designation} from '../../designation';
 
 @Injectable()
 export class ValueSetLibService {
@@ -30,6 +31,10 @@ export class ValueSetLibService {
 
   public loadConcepts(valueSetId: string, versionVersion: string): Observable<Concept[]> {
     return this.http.get<Concept[]>(`${this.baseUrl}/${valueSetId}/versions/${versionVersion}/concepts`);
+  }
+
+  public loadDesignations(valueSetId: string, versionVersion: string): Observable<Designation[]> {
+    return this.http.get<Designation[]>(`${this.baseUrl}/${valueSetId}/versions/${versionVersion}/designations`);
   }
 
   public search(params: ValueSetSearchParams = {}): Observable<SearchResult<ValueSet>> {

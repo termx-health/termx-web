@@ -1,0 +1,7 @@
+<m-select class="tw-designation-select"
+    [loading]="loading"
+    [(ngModel)]="value"
+    [autoUnselect]="false"
+    (mChange)="fireOnChange()">
+  <m-option *ngFor="let key of (data | keys)" [value]="data[key]?.id" [label]="data[key]?.name"></m-option>
+</m-select>
