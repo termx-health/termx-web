@@ -16,7 +16,7 @@ const commonModules = [
   MarinaUiModule,
   MarinaUtilModule,
   CoreUtilModule
-]
+];
 
 @NgModule({
   imports: [...commonModules],
