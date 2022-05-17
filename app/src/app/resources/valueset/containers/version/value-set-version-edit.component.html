@@ -29,7 +29,7 @@
           </m-form-item>
         </form>
 
-        <twa-value-set-version-concepts-list *ngIf="mode === 'edit'"
+        <twa-value-set-version-concepts-list #conceptList *ngIf="mode === 'edit'"
             [valueSetId]="valueSetId"
             [valueSetVersion]="valueSetVersion"
         ></twa-value-set-version-concepts-list>
