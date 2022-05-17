@@ -60,7 +60,7 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
   public loadDesignation(id?: number): void {
     if (isDefined(id)) {
       this.loading = true;
-      this.designationService.load(id).subscribe(d => this.data = {...(this.data || {}), [d.id!]: d}).add(() => this.loading = false);
+      this.designationService.load(id).subscribe(d => this.data = {...this.data, [d.id!]: d}).add(() => this.loading = false);
     }
   }
 
