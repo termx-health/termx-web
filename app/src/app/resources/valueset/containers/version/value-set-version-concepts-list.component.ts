@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ValueSetService} from '../../services/value-set.service';
 import {Concept, Designation} from 'terminology-lib/resources';
 import {forkJoin} from 'rxjs';
-import {isDefined, unique} from '@kodality-web/core-util';
+import {isDefined, unique, uniqueBy} from '@kodality-web/core-util';
 
 @Component({
   selector: 'twa-value-set-version-concepts-list',
@@ -54,11 +54,13 @@ export class ValueSetVersionConceptsListComponent implements OnChanges {
   };
 
   public readConcepts(): Concept[] {
-    return this.data.map(item => item.concept).filter(isDefined);
+    const concepts = this.data.map(item => item.concept).filter(isDefined);
+    return uniqueBy(concepts, c => c?.id)!;
   }
 
   public readDesignations(): Designation[] {
-    return this.data.map(item => item.designation).filter(isDefined);
+    const designations = this.data.map(item => item.designation).filter(isDefined);
+    return uniqueBy(designations, d => d?.id)!;
   }
 
   public addRow(): void {

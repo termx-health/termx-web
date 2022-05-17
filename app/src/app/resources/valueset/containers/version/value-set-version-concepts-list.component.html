@@ -6,7 +6,7 @@
       <th class="tw-table-actions">{{'web.concept.list.operations' | translate}}</th>
     </tr>
 
-    <tr *mTableRow="let item">
+    <tr *mTableRow="let item; let index">
       <td>
         <twl-concept-search [(ngModel)]="item.concept" (ngModelChange)="item.designation = undefined"></twl-concept-search>
       </td>
@@ -14,7 +14,7 @@
         <twl-designation-select [conceptId]="item.concept?.id" [(ngModel)]="item.designation"></twl-designation-select>
       </td>
       <td class="tw-table-actions">
-        <m-button display="link" (click)="removeRow(data.indexOf(item))">Delete</m-button>
+        <m-button display="link" (click)="removeRow(index)">{{'core.btn.delete' | translate}}</m-button>
       </td>
     </tr>
 
