@@ -22,7 +22,7 @@
 
         <tr *mTableRow="let vs">
           <td m-table-expand [item]="vs"></td>
-          <td><a [routerLink]="[vs.id, 'edit']">{{vs.id}}</a></td>
+          <td><a [routerLink]="['../../value-sets',vs.id, 'edit']">{{vs.id}}</a></td>
           <td>{{vs.names | localName}}</td>
           <td>{{vs.uri | apply: parseDomain}}</td>
           <td class="tw-table-actions">
