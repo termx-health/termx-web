@@ -6,14 +6,16 @@
       <th class="tw-table-actions">{{'web.concept.list.operations' | translate}}</th>
     </tr>
 
-    <tr *mTableRow="let data">
+    <tr *mTableRow="let item">
       <td>
-        <twl-concept-search [(ngModel)]="data.concept" (ngModelChange)="data.designation = undefined"></twl-concept-search>
+        <twl-concept-search [(ngModel)]="item.concept" (ngModelChange)="item.designation = undefined"></twl-concept-search>
       </td>
       <td>
-        <twl-designation-select  [conceptId]="data.concept?.id" [(ngModel)]="data.designation"></twl-designation-select>
+        <twl-designation-select [conceptId]="item.concept?.id" [(ngModel)]="item.designation"></twl-designation-select>
       </td>
-      <td class="tw-table-actions">filler</td>
+      <td class="tw-table-actions">
+        <m-button display="link" (click)="removeRow(data.indexOf(item))">Delete</m-button>
+      </td>
     </tr>
 
     <tr>
