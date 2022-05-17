@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {ValueSetListComponent} from './containers/value-set-list.component';
-import {ConceptLibModule, ValueSetLibModule} from 'terminology-lib/resources';
+import {ConceptLibModule, DesignationLibModule, ValueSetLibModule} from 'terminology-lib/resources';
 import {ValueSetVersionEditComponent} from './containers/version/value-set-version-edit.component';
 import {ValueSetVersionConceptsListComponent} from './containers/version/value-set-version-concepts-list.component';
 import {SharedModule} from '../../shared/shared.module';
@@ -22,6 +22,7 @@ export const VALUE_SET_ROUTES: Routes = [
   imports: [
     SharedModule,
     ValueSetLibModule,
+    DesignationLibModule,
     ConceptLibModule
   ],
   declarations: [

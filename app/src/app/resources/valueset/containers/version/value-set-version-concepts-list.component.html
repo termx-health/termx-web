@@ -1,16 +1,18 @@
 <m-card [title]="'web.concept.list.concepts'" class="tw-table-card">
-  <m-table [data]="concepts" [loading]="loading" bordered hideOnSinglePage>
+  <m-table [data]="data" [loading]="loading" bordered hideOnSinglePage>
     <tr *mTableHead>
       <th>{{'web.concept.list.concept' | translate}}</th>
       <th>{{'web.designation.list.designation' | translate}}</th>
       <th class="tw-table-actions">{{'web.concept.list.operations' | translate}}</th>
     </tr>
 
-    <tr *mTableRow="let concept">
+    <tr *mTableRow="let data">
       <td>
-        <twl-concept-search [ngModel]="concept.id"></twl-concept-search>
+        <twl-concept-search [(ngModel)]="data.concept" (ngModelChange)="data.designation = undefined"></twl-concept-search>
       </td>
-      <td>{{concept.versions | apply: getDesignationName }}</td>
+      <td>
+        <twl-designation-select  [conceptId]="data.concept?.id" [(ngModel)]="data.designation"></twl-designation-select>
+      </td>
       <td class="tw-table-actions">filler</td>
     </tr>
 
@@ -29,3 +31,4 @@
     </tr>
   </m-table>
 </m-card>
+
