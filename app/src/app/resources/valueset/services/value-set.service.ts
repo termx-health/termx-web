@@ -1,6 +1,6 @@
 import {Concept, Designation, ValueSet, ValueSetLibService, ValueSetVersion} from 'terminology-lib/resources';
 import {Injectable} from '@angular/core';
-import {map, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class ValueSetService extends ValueSetLibService {
@@ -16,18 +16,18 @@ export class ValueSetService extends ValueSetLibService {
   }
 
   public activateVersion(valueSetId: string, version: string): Observable<void> {
-    return this.http.post(`${this.baseUrl}/${valueSetId}/versions/${version}/activate`, {}).pipe(map(() => undefined));
+    return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/activate`, {});
   }
 
   public retireVersion(valueSetId: string, version: string): Observable<void> {
-    return this.http.post(`${this.baseUrl}/${valueSetId}/versions/${version}/retire`, {}).pipe(map(() => undefined));
+    return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/retire`, {});
   }
 
-  public saveConcepts(valueSetId: string, version: string, concepts: Concept[]): Observable<void>{
-    return this.http.post(`${this.baseUrl}/${valueSetId}/versions/${version}/concepts`, {concepts}).pipe(map(() => undefined));
+  public saveConcepts(valueSetId: string, version: string, concepts: Concept[]): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/concepts`, {concepts});
   }
 
-  public saveDesignations(valueSetId: string, version: string, designations: Designation[]): Observable<void>{
-    return this.http.post(`${this.baseUrl}/${valueSetId}/versions/${version}/designations`, {designations}).pipe(map(() => undefined));
+  public saveDesignations(valueSetId: string, version: string, designations: Designation[]): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/designations`, {designations});
   }
 }
