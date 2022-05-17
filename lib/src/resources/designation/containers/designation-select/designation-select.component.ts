@@ -8,11 +8,6 @@ import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
 @Component({
   selector: 'twl-designation-select',
   templateUrl: './designation-select.component.html',
-  styles: [
-    `::ng-deep .tw-designation-select .ant-select {
-        width: 100%
-    }`
-  ],
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => DesignationSelectComponent), multi: true}]
 })
 export class DesignationSelectComponent implements OnChanges, ControlValueAccessor {

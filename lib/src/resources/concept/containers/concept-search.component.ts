@@ -10,17 +10,11 @@ import {ConceptLibService} from '../services/concept-lib.service';
 @Component({
   selector: 'twl-concept-search',
   templateUrl: './concept-search.component.html',
-  styles: [
-    `::ng-deep .tw-concept-search .ant-select {
-        width: 100%
-    }`
-  ],
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}]
 })
 export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
-
 
   public searchUpdate = new Subject<string>();
 

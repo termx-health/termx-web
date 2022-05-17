@@ -1,10 +1,12 @@
-<m-select class="tw-concept-search"
-    [loading]="isLoading"
+<m-select
+    class="tw-concept-search"
+    icon="search"
     [(ngModel)]="value"
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
-    icon="search"
+    [placeholder]="placeholder"
     [autoUnselect]="false"
-    [placeholder]="placeholder">
+    [loading]="isLoading"
+>
   <m-option *ngFor="let key of (data | keys)" [value]="data[key]?.id" [label]="data[key]?.code"></m-option>
 </m-select>
