@@ -4,6 +4,7 @@
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
     icon="search"
+    [autoUnselect]="false"
     [placeholder]="placeholder">
   <m-option *ngFor="let key of (data | keys)" [value]="data[key]?.id" [label]="data[key]?.code"></m-option>
 </m-select>
