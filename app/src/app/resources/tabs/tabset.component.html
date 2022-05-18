@@ -1,0 +1,9 @@
+<nz-tabset nzLinkRouter>
+  <nz-tab>
+    <a *nzTabLink nz-tab-link [routerLink]="['code-systems']">{{'web.resources.tabset.code-systems' | translate}}</a>
+  </nz-tab>
+  <nz-tab>
+    <a *nzTabLink nz-tab-link [routerLink]="['value-sets']">{{'web.resources.tabset.value-sets' | translate}}</a>
+  </nz-tab>
+</nz-tabset>
+<router-outlet ></router-outlet>

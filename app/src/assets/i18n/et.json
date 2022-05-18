@@ -70,13 +70,13 @@
         "description": "Kirjeldus"
       },
       "form": {
-        "add-header": "Lisa uus väärtuste nimekiri",
-        "edit-header": "Väärtuste nimekirja muutmise vorm"
+        "add-header": "Lisa uus väärtuste kogum",
+        "edit-header": "Muuda väärtuste kogumit"
       },
       "list": {
         "properties": "Omadused",
         "domain": "Domeen",
-        "header": "Väärtuste nimekiri",
+        "header": "Väärtuste kogumite nimekiri",
         "operations": "Toimingud",
         "versions": "Versioonid",
         "add-version": "Lisa versioon",
@@ -131,6 +131,12 @@
       "operations": {
         "activate": "Aktiveeri",
         "retire": "Kõrvalda"
+      }
+    },
+    "resources": {
+      "tabset": {
+        "code-systems": "Koodisüsteemid",
+        "value-sets": "Väärtuste kogumid"
       }
     }
   }
