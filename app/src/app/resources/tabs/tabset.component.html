@@ -1,9 +1,18 @@
 <nz-tabset nzLinkRouter>
   <nz-tab>
-    <a *nzTabLink nz-tab-link [routerLink]="['code-systems']">{{'web.resources.tabset.code-systems' | translate}}</a>
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'code-systems' }">{{'web.resources.tabset.code-systems' | translate}}
+      <nz-badge nzStandalone
+          [nzCount]="codeSystem.searchResult.meta.total"
+          [nzStyle]="{ backgroundColor: '#fff', color: '#999', boxShadow: '0 0 0 1px #d9d9d9 inset' }"></nz-badge>
+    </a>
+    <twa-code-system-list #codeSystem></twa-code-system-list>
   </nz-tab>
   <nz-tab>
-    <a *nzTabLink nz-tab-link [routerLink]="['value-sets']">{{'web.resources.tabset.value-sets' | translate}}</a>
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'value-sets' }">{{'web.resources.tabset.value-sets' | translate}}
+      <nz-badge nzStandalone
+          [nzCount]="valueSet.searchResult.meta.total"
+          [nzStyle]="{ backgroundColor: '#fff', color: '#999', boxShadow: '0 0 0 1px #d9d9d9 inset' }"></nz-badge>
+    </a>
+    <twa-value-set-list #valueSet></twa-value-set-list>
   </nz-tab>
 </nz-tabset>
-<router-outlet ></router-outlet>

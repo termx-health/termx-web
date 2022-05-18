@@ -5,6 +5,6 @@
       "et": "Ressursid"
     },
     "icon": "unordered-list",
-    "link": "resources/tabs"
+    "link": "resources?tab=code-systems"
   }
 ]

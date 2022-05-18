@@ -11,9 +11,6 @@ import {SharedModule} from '../../shared/shared.module';
 import {CodeSystemService} from './services/code-system.service';
 
 
-export const CODE_SYSTEM_TAB_ROUTES: Routes = [
-  {path: '', component: CodeSystemListComponent},
-];
 
 export const CODE_SYSTEM_ROUTES: Routes = [
   {path: 'add', component: CodeSystemEditComponent},
@@ -34,6 +31,9 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     CodeSystemPropertiesListComponent,
     CodeSystemVersionsListComponent,
     CodeSystemVersionEditComponent,
+  ],
+  exports: [
+    CodeSystemListComponent
   ],
   providers: [
     CodeSystemService
