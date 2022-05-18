@@ -4,7 +4,7 @@ import {CODE_SYSTEM_ROUTES, CodeSystemModule} from './codesystem/code-system.mod
 import {VALUE_SET_ROUTES, ValueSetModule} from './valueset/value-set.module';
 import {ConceptModule} from './concept/concept.module';
 import {DesignationModule} from './designation/designation.module';
-import {ResourcesTabsetComponent} from './tabs/tabset.component';
+import {ResourcesTabsetComponent} from './tabs/resources-tabset.component';
 import {SharedModule} from '../shared/shared.module';
 
 
