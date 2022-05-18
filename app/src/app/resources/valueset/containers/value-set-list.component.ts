@@ -6,6 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
+  selector: 'twa-value-set-list',
   templateUrl: 'value-set-list.component.html',
 })
 export class ValueSetListComponent implements OnInit {

@@ -6,6 +6,7 @@ import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
+  selector: 'twa-code-system-list',
   templateUrl: 'code-system-list.component.html'
 })
 export class CodeSystemListComponent implements OnInit {
