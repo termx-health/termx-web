@@ -1,6 +1,12 @@
 <m-form-row full>
   <div *mFormCol>
-    <m-card [title]="'web.value-set.list.header'">
+    <m-card>
+      <div *m-card-header class="tw-table-card-header">
+        <div class="m-card-title">{{'web.value-set.list.header' | translate}}</div>
+        <m-button display="text" size="small" [routerLink]="'../../value-sets/add'">
+          <m-icon [code]="'plus'"></m-icon>
+        </m-button>
+      </div>
       <!-- todo: m-backend-table -->
       <m-table [data]="searchResult.data"
           [loading]="loading"
@@ -10,8 +16,7 @@
           [total]="searchResult.meta.total"
           [pageSize]="query.limit"
           [(pageIndex)]="query['page']"
-          (pageIndexChange)="loadData()"
-      >
+          (pageIndexChange)="loadData()">
         <tr *mTableHead>
           <th></th>
           <th>{{'web.value-set.entity.id' | translate}}</th>

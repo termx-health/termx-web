@@ -1,60 +1,71 @@
-<m-card [title]="'web.code-system.list.header'">
-  <!-- todo: m-backend-table -->
-  <m-table [data]="searchResult.data"
-      [loading]="loading"
-      bordered
-      enablePagination
-      manualPagination
-      [total]="searchResult.meta.total"
-      [pageSize]="query.limit"
-      [(pageIndex)]="query['page']"
-      (pageIndexChange)="loadData()">
-    <tr *mTableHead>
-      <th></th>
-      <th>{{'web.code-system.entity.id' | translate}}</th>
-      <th>{{'web.code-system.entity.name' | translate}}</th>
-      <th>{{'web.code-system.entity.domain' | translate}}</th>
-      <th class="tw-table-actions">{{'web.code-system.list.operations' | translate}}</th>
-    </tr>
+<m-form-row full>
+  <div *mFormCol>
+    <m-card>
+      <div *m-card-header class="tw-table-card-header">
+        <div class="m-card-title">{{'web.code-system.list.header' | translate}}</div>
+        <m-button display="text" size="small" [routerLink]="'../../code-systems/add'">
+          <m-icon [code]="'plus'"></m-icon>
+        </m-button>
+      </div>
 
-    <tr *mTableRow="let cs">
-      <td m-table-expand [item]="cs"></td>
-      <td><a [routerLink]="['../../code-systems',cs.id,'edit']">{{cs.id}}</a></td>
-      <td>{{cs.names | localName}}</td>
-      <td>{{cs.uri | apply: parseDomain}}</td>
-      <td class="tw-table-actions">
-        <button nz-button nzType="primary" nzDanger>{{'core.btn.delete' | translate}}</button>
-      </td>
-    </tr>
+      <!-- todo: m-backend-table -->
+      <m-table [data]="searchResult.data"
+          [loading]="loading"
+          bordered
+          enablePagination
+          manualPagination
+          [total]="searchResult.meta.total"
+          [pageSize]="query.limit"
+          [(pageIndex)]="query['page']"
+          (pageIndexChange)="loadData()">
+        <tr *mTableHead>
+          <th></th>
+          <th>{{'web.code-system.entity.id' | translate}}</th>
+          <th>{{'web.code-system.entity.name' | translate}}</th>
+          <th>{{'web.code-system.entity.domain' | translate}}</th>
+          <th class="tw-table-actions">{{'web.code-system.list.operations' | translate}}</th>
+        </tr>
 
-    <tr *mTableRowExpand="let cs" class="m-table-expanded-row">
-      <td colspan="5">
-        <m-form-row full>
-          <div *mFormCol>
-            <m-form-item label="web.code-system.entity.uri">
-              {{cs.uri}}
-            </m-form-item>
-            <m-form-item label="web.code-system.entity.description">
-              {{cs.description}}
-            </m-form-item>
-            <m-form-item label="web.code-system.list.versions">
-              <div *ngFor="let version of cs.versions">{{
-                version | apply: getVersionTranslateTokens: ({
-                  releaseDate: (version.releaseDate | localDate),
-                  expirationDate: (version.expirationDate | localDate),
-                  version: version.version
-                }) | join: ' '}}
+        <tr *mTableRow="let cs">
+          <td m-table-expand [item]="cs"></td>
+          <td><a [routerLink]="['../../code-systems',cs.id,'edit']">{{cs.id}}</a></td>
+          <td>{{cs.names | localName}}</td>
+          <td>{{cs.uri | apply: parseDomain}}</td>
+          <td class="tw-table-actions">
+            <button nz-button nzType="primary" nzDanger>{{'core.btn.delete' | translate}}</button>
+          </td>
+        </tr>
+
+        <tr *mTableRowExpand="let cs" class="m-table-expanded-row">
+          <td colspan="5">
+            <m-form-row full>
+              <div *mFormCol>
+                <m-form-item label="web.code-system.entity.uri">
+                  {{cs.uri}}
+                </m-form-item>
+                <m-form-item label="web.code-system.entity.description">
+                  {{cs.description}}
+                </m-form-item>
+                <m-form-item label="web.code-system.list.versions">
+                  <div *ngFor="let version of cs.versions">{{
+                    version | apply: getVersionTranslateTokens: ({
+                      releaseDate: (version.releaseDate | localDate),
+                      expirationDate: (version.expirationDate | localDate),
+                      version: version.version
+                    }) | join: ' '}}
+                  </div>
+                </m-form-item>
               </div>
-            </m-form-item>
-          </div>
-        </m-form-row>
-      </td>
-    </tr>
+            </m-form-row>
+          </td>
+        </tr>
 
-    <tr *mTableNoData>
-      <td colspan="5">
-        <m-no-data></m-no-data>
-      </td>
-    </tr>
-  </m-table>
-</m-card>
+        <tr *mTableNoData>
+          <td colspan="5">
+            <m-no-data></m-no-data>
+          </td>
+        </tr>
+      </m-table>
+    </m-card>
+  </div>
+</m-form-row>
