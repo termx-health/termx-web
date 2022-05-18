@@ -11,6 +11,7 @@ import {isDefined, unique, uniqueBy} from '@kodality-web/core-util';
 export class ValueSetVersionConceptsListComponent implements OnChanges {
   @Input() public valueSetId?: string;
   @Input() public valueSetVersion?: string;
+  @Input() public viewMode?: boolean;
 
   public data: {concept?: Concept, designation?: Designation}[] = [];
   public loading = false;

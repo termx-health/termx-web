@@ -1,0 +1,34 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-card [title]="'web.value-set-version.form.view-header'">
+      <m-spinner [loading]="loading">
+        <div *ngIf="version">
+          <m-form-item label="web.value-set-version.entity.version">
+            {{version.version}}
+          </m-form-item>
+
+          <m-form-item label="web.value-set-version.entity.release-date">
+            {{version.releaseDate | localDate}}
+          </m-form-item>
+
+          <m-form-item label="web.value-set-version.entity.expiration-date">
+            {{version.expirationDate | localDate}}
+          </m-form-item>
+
+          <m-form-item label="web.value-set-version.entity.supported-languages">
+            {{version.supportedLanguages}}
+          </m-form-item>
+
+          <m-form-item label="web.value-set-version.entity.description">
+            {{version.description }}
+          </m-form-item>
+        </div>
+
+        <twa-value-set-version-concepts-list #conceptList
+            [valueSetId]="valueSetId"
+            [valueSetVersion]="valueSetVersion"
+            [viewMode]=true></twa-value-set-version-concepts-list>
+      </m-spinner>
+    </m-card>
+  </div>
+</m-form-row>
