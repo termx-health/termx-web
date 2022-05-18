@@ -4,13 +4,14 @@ import {CODE_SYSTEM_ROUTES, CODE_SYSTEM_TAB_ROUTES, CodeSystemModule} from './co
 import {VALUE_SET_ROUTES, VALUE_SET_TAB_ROUTES, ValueSetModule} from './valueset/value-set.module';
 import {ConceptModule} from './concept/concept.module';
 import {DesignationModule} from './designation/designation.module';
-import {TabsComponent} from './tabs/tabs.component';
+import {ResourcesTabsetComponent} from './tabs/tabset.component';
 import {MarinaUiModule} from '@kodality-health/marina-ui';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 export const RESOURCES_ROUTES: Routes = [
   {
-    path: 'tabs', component: TabsComponent, children: [
+    path: 'tabs', component: ResourcesTabsetComponent, children: [
       {path: 'code-systems', children: CODE_SYSTEM_TAB_ROUTES},
       {path: 'value-sets', children: VALUE_SET_TAB_ROUTES},
     ]
@@ -31,10 +32,10 @@ const resourceModules = [
 ];
 
 @NgModule({
-  imports: [...resourceModules, MarinaUiModule, RouterModule],
+  imports: [...resourceModules, MarinaUiModule, RouterModule, TranslateModule],
   exports: [...resourceModules],
   declarations: [
-    TabsComponent
+    ResourcesTabsetComponent
   ]
 })
 export class ResourcesModule {
