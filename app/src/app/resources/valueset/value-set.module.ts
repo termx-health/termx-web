@@ -8,6 +8,7 @@ import {SharedModule} from '../../shared/shared.module';
 import {ValueSetService} from './services/value-set.service';
 import {ValueSetEditComponent} from './containers/edit/value-set-edit.component';
 import {ValueSetVersionsListComponent} from './containers/edit/value-set-versions-list.component';
+import {ValueSetVersionViewComponent} from './containers/version/value-set-version-view.component';
 
 
 export const VALUE_SET_ROUTES: Routes = [
@@ -15,6 +16,7 @@ export const VALUE_SET_ROUTES: Routes = [
   {path: ':id/edit', component: ValueSetEditComponent},
   {path: ':id/versions/add', component: ValueSetVersionEditComponent},
   {path: ':id/versions/:version/edit', component: ValueSetVersionEditComponent},
+  {path: ':id/versions/:version/view', component: ValueSetVersionViewComponent},
 ];
 
 @NgModule({
@@ -29,6 +31,7 @@ export const VALUE_SET_ROUTES: Routes = [
     ValueSetEditComponent,
     ValueSetVersionsListComponent,
     ValueSetVersionEditComponent,
+    ValueSetVersionViewComponent,
     ValueSetVersionConceptsListComponent
   ],
   exports: [

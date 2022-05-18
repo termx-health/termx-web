@@ -3,22 +3,24 @@
     <tr *mTableHead>
       <th>{{'web.concept.list.concept' | translate}}</th>
       <th>{{'web.designation.list.designation' | translate}}</th>
-      <th class="tw-table-actions">{{'web.concept.list.operations' | translate}}</th>
+      <th *ngIf="!viewMode" class="tw-table-actions">{{'web.concept.list.operations' | translate}}</th>
     </tr>
 
     <tr *mTableRow="let item; let index">
       <td>
-        <twl-concept-search [(ngModel)]="item.concept" (ngModelChange)="item.designation = undefined"></twl-concept-search>
+        <twl-concept-search *ngIf="!viewMode" [(ngModel)]="item.concept" (ngModelChange)="item.designation = undefined"></twl-concept-search>
+        <div *ngIf="viewMode">{{item.concept?.code}}</div>
       </td>
       <td>
-        <twl-designation-select [conceptId]="item.concept?.id" [(ngModel)]="item.designation"></twl-designation-select>
+        <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.designation"></twl-designation-select>
+        <div *ngIf="viewMode">{{item.designation?.name}}</div>
       </td>
-      <td class="tw-table-actions">
+      <td class="tw-table-actions" *ngIf="!viewMode">
         <m-button display="link" (click)="removeRow(index)">{{'core.btn.delete' | translate}}</m-button>
       </td>
     </tr>
 
-    <tr>
+    <tr *ngIf="!viewMode">
       <td colspan="3" style="padding: 0">
         <m-button display="text" size="small" style="width: 100%" (click)="addRow()">
           <m-icon [code]="'plus'"></m-icon>
