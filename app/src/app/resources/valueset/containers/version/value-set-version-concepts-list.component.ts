@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ValueSetService} from '../../services/value-set.service';
 import {Concept, Designation} from 'terminology-lib/resources';
 import {forkJoin} from 'rxjs';
-import {isDefined, unique, uniqueBy} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, unique, uniqueBy} from '@kodality-web/core-util';
 
 @Component({
   selector: 'twa-value-set-version-concepts-list',
@@ -11,7 +11,7 @@ import {isDefined, unique, uniqueBy} from '@kodality-web/core-util';
 export class ValueSetVersionConceptsListComponent implements OnChanges {
   @Input() public valueSetId?: string;
   @Input() public valueSetVersion?: string;
-  @Input() public viewMode?: boolean;
+  @Input() @BooleanInput() public viewMode: string | boolean = false;
 
   public data: {concept?: Concept, designation?: Designation}[] = [];
   public loading = false;
@@ -19,7 +19,7 @@ export class ValueSetVersionConceptsListComponent implements OnChanges {
   public constructor(private valueSetService: ValueSetService) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["valueSetId"] || changes["versionVersion"]) {
+    if (changes["valueSetId"] || changes["valueSetVersion"]) {
       this.loadConcepts();
     }
   }

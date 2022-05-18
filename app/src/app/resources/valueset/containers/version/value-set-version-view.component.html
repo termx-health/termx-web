@@ -24,10 +24,7 @@
           </m-form-item>
         </div>
 
-        <twa-value-set-version-concepts-list #conceptList
-            [valueSetId]="valueSetId"
-            [valueSetVersion]="valueSetVersion"
-            [viewMode]=true></twa-value-set-version-concepts-list>
+        <twa-value-set-version-concepts-list [valueSetId]="valueSetId" [valueSetVersion]="version?.version" viewMode></twa-value-set-version-concepts-list>
       </m-spinner>
     </m-card>
   </div>
