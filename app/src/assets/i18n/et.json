@@ -98,7 +98,8 @@
       },
       "form": {
         "edit-header": "Muuda versiooni",
-        "add-header": "Lisa versioon"
+        "add-header": "Lisa versioon",
+        "view-header": "Vaata versiooni"
       },
       "list": {
         "operations": "Toimingud"
