@@ -132,6 +132,12 @@
         "activate": "Activate",
         "retire": "Retire"
       }
+    },
+    "resources": {
+      "tabset": {
+        "code-systems": "Code systems",
+        "value-sets": "Value Sets"
+      }
     }
   }
 }

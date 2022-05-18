@@ -1,34 +1,10 @@
 [
   {
     "label": {
-      "en": "Code system list",
-      "et": "Koodisüsteemide nimekiri"
+      "en": "Resources",
+      "et": "Ressursid"
     },
     "icon": "unordered-list",
-    "link": "resources/code-systems"
-  },
-  {
-    "label": {
-      "en": "Code system form",
-      "et": "Koodisüsteemi lisamine"
-    },
-    "icon": "plus",
-    "link": "resources/code-systems/add"
-  },
-  {
-    "label": {
-      "en": "Value set list",
-      "et": "Väärtuste nimekiri"
-    },
-    "icon": "unordered-list",
-    "link": "resources/value-sets"
-  },
-  {
-    "label": {
-      "en": "Value set form",
-      "et": "Väärtuste nimekirja lisamine"
-    },
-    "icon": "plus",
-    "link": "resources/value-sets/add"
+    "link": "resources/tabs"
   }
 ]

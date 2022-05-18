@@ -10,8 +10,11 @@ import {ValueSetEditComponent} from './containers/edit/value-set-edit.component'
 import {ValueSetVersionsListComponent} from './containers/edit/value-set-versions-list.component';
 
 
-export const VALUE_SET_ROUTES: Routes = [
+export const VALUE_SET_TAB_ROUTES: Routes = [
   {path: '', component: ValueSetListComponent},
+];
+
+export const VALUE_SET_ROUTES: Routes = [
   {path: 'add', component: ValueSetEditComponent},
   {path: ':id/edit', component: ValueSetEditComponent},
   {path: ':id/versions/add', component: ValueSetVersionEditComponent},
