@@ -1,6 +1,6 @@
 <m-form-row>
   <div *mFormCol>
-    <m-card [title]="mode === 'edit' ? 'web.code-system-version.form.edit-header' : 'web.code-system-version.form.add-header'">
+    <m-card [title]="mode === 'edit' ? 'web.value-set-version.form.edit-header' : 'web.value-set-version.form.add-header'">
       <m-spinner [loading]="loading">
         <form #form="ngForm" *ngIf="version">
           <m-form-item name="version" label="web.value-set-version.entity.version" required>
