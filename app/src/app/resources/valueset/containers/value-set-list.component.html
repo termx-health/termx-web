@@ -1,10 +1,11 @@
 <m-card>
   <div *m-card-header class="tw-card-header">
-    <div class="m-card-title">{{'web.value-set.list.header' | translate}}</div>
-    <m-button display="text" size="small" [routerLink]="'value-sets/add'">
-      <m-icon [code]="'plus'"></m-icon>
+    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <m-button [routerLink]="'value-sets/add'">
+      <m-icon [code]="'plus'"></m-icon> &nbsp; {{'web.value-set.form.add-header' | translate}}
     </m-button>
   </div>
+
   <!-- todo: m-backend-table -->
   <m-table [data]="searchResult.data"
       [loading]="loading"
