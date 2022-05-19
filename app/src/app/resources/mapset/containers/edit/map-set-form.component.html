@@ -1,0 +1,19 @@
+<m-spinner [loading]="loading">
+  <form #form="ngForm" *ngIf="mapSet">
+    <m-form-item name="id" label="web.map-set.entity.id" required>
+      <m-input name="id" [(ngModel)]="mapSet.id" [disabled]="mode === 'edit'" required></m-input>
+    </m-form-item>
+
+    <m-form-item label="web.map-set.entity.name" required>
+      <m-multi-language-input name="name" [(ngModel)]="mapSet.names" required></m-multi-language-input>
+    </m-form-item>
+
+    <m-form-item name="uri" label="web.map-set.entity.uri">
+      <m-input name="uri" [(ngModel)]="mapSet.uri"></m-input>
+    </m-form-item>
+
+    <m-form-item name="description" label="web.map-set.entity.description">
+      <m-textarea name="description" [(ngModel)]="mapSet.description"></m-textarea>
+    </m-form-item>
+  </form>
+</m-spinner>

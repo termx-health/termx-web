@@ -15,6 +15,11 @@ export class MapSetLibService {
     this.baseUrl = `${api}/ts/map-sets`;
   }
 
+  public load(mapSetId: string): Observable<MapSet> {
+    return this.http.get<MapSet>(`${this.baseUrl}/${mapSetId}`);
+  }
+
+
   public search(params: MapSetSearchParams = {}): Observable<SearchResult<MapSet>> {
     return this.http.get<SearchResult<MapSet>>(this.baseUrl, {params: SearchHttpParams.build(params)});
   }

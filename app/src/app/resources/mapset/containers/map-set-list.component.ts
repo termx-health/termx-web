@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
-import {MapSet, MapSetSearchParams, MapSetVersion} from 'terminology-lib/resources/mapset';
-import {MapSetService} from '../../services/map-set-service';
+import {MapSet, MapSetSearchParams, MapSetVersion} from 'lib/src/resources/mapset';
+import {MapSetService} from '../services/map-set-service';
 
 
 @Component({
