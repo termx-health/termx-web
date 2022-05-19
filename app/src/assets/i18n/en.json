@@ -23,7 +23,8 @@
       },
       "form": {
         "edit-header": "Edit version",
-        "add-header": "Add version"
+        "add-header": "Add version",
+        "view-header": "View version"
       }
     },
     "entity-property": {

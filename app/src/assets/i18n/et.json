@@ -23,7 +23,8 @@
       },
       "form": {
         "edit-header": "Muuda versiooni",
-        "add-header": "Lisa versioon"
+        "add-header": "Lisa versioon",
+        "view-header": "Vaata versiooni"
       }
     },
     "entity-property": {
@@ -47,8 +48,8 @@
         "description": "Kirjeldus"
       },
       "form": {
-        "add-header": "Lisa uus koodisüsteem",
-        "edit-header": "Koodisüsteemi muutmise vorm"
+        "add-header": "Lisa koodisüsteem",
+        "edit-header": "Muuda koodisüsteemi"
       },
       "list": {
         "properties": "Omadused",

@@ -14,7 +14,6 @@ import {ConceptLibService} from '../services/concept-lib.service';
 })
 export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
-  @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
 
   public searchUpdate = new Subject<string>();
 
