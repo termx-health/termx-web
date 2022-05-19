@@ -138,7 +138,29 @@
     "resources": {
       "tabset": {
         "code-systems": "Koodisüsteemid",
-        "value-sets": "Väärtuste kogumid"
+        "value-sets": "Väärtuste kogumid",
+        "map-sets": "Kaardistus kogumid"
+      }
+    },
+    "map-set": {
+      "entity": {
+        "id": "Identifikaator",
+        "uri": "Ühtne ressursiidentifikaator (URI)",
+        "name": "Nimi",
+        "domain": "Domeen",
+        "description": "Kirjeldus"
+      },
+      "form": {
+        "add-header": "Lisa kaardistus kogum",
+        "edit-header": "Muuda kaardistus kogumit"
+      },
+      "list": {
+        "operations": "Toimingud",
+        "versions": "Versioonid",
+        "add-version": "Lisa versioon",
+        "versions-release-date": "Alates: {{releaseDate}}",
+        "versions-expiration-date": "kuni {{expirationDate}}",
+        "versions-version": "Versiooni nimi: {{version}}"
       }
     }
   }
