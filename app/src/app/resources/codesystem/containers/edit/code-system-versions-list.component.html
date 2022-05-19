@@ -24,10 +24,7 @@
         <a *ngIf="version.status === 'active'" (click)="retireVersion(version)">
           {{'web.publication-status.operations.retire' | translate}}
         </a>
-        <a *ngIf="version.status === 'draft'" (click)="activateVersion(version)">
-          {{'web.publication-status.operations.activate' | translate}}
-        </a>
-        <a *ngIf="version.status === 'retired'" (click)="activateVersion(version)">
+        <a *ngIf="version.status !== 'active'" (click)="activateVersion(version)">
           {{'web.publication-status.operations.activate' | translate}}
         </a>
       </td>

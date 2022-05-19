@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CodeSystemService} from '../codesystem/services/code-system.service';
 import {ValueSetService} from '../valueset/services/value-set.service';
-import {CodeSystemSearchParams} from 'terminology-lib/resources';
 
 @Component({
   selector: 'twa-tabset',
@@ -20,16 +19,11 @@ export class ResourcesTabsetComponent implements OnInit{
 
 
   public ngOnInit(): void {
-    this.loadTotal();
+    this.loadTotals();
   }
 
-  public loadTotal(): void{
-    const csQuery = new CodeSystemSearchParams();
-    const vsQuery = new CodeSystemSearchParams();
-    csQuery.limit = 0;
-    vsQuery.limit = 0;
-
-    this.codeSystemService.search(csQuery).subscribe(cs => this.codeSystemTotal = cs.meta?.total).add();
-    this.valueSetService.search(vsQuery).subscribe(vs => this.valueSetTotal = vs.meta?.total).add();
+  public loadTotals(): void{
+    this.codeSystemService.search({limit: 0}).subscribe(cs => this.codeSystemTotal = cs.meta?.total).add();
+    this.valueSetService.search({limit: 0}).subscribe(vs => this.valueSetTotal = vs.meta?.total).add();
   }
 }

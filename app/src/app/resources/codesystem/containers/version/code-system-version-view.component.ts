@@ -1,5 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CodeSystemVersion} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
@@ -9,10 +8,7 @@ import {CodeSystemService} from '../../services/code-system.service';
 })
 export class CodeSystemVersionViewComponent implements OnInit {
   public version?: CodeSystemVersion;
-
   public loading = false;
-
-  @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private codeSystemService: CodeSystemService,

@@ -1,6 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ValueSetVersion} from 'terminology-lib/resources';
-import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {ValueSetService} from '../../services/value-set.service';
 
@@ -10,10 +9,7 @@ import {ValueSetService} from '../../services/value-set.service';
 export class ValueSetVersionViewComponent implements OnInit {
   public valueSetId?: string | null;
   public version?: ValueSetVersion;
-
   public loading = false;
-
-  @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private valueSetService: ValueSetService,
