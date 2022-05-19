@@ -11,8 +11,8 @@
             <m-multi-language-input name="names" [(ngModel)]="valueSet.names"></m-multi-language-input>
           </m-form-item>
 
-          <m-form-item name="uri" label="web.value-set.entity.uri">
-            <m-input name="uri" [(ngModel)]="valueSet.uri"></m-input>
+          <m-form-item name="uri" label="web.value-set.entity.uri" required>
+            <m-input name="uri" [(ngModel)]="valueSet.uri" required></m-input>
           </m-form-item>
 
           <m-form-item name="description" label="web.value-set.entity.description">

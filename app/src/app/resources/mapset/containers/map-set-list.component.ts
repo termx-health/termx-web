@@ -1,24 +1,24 @@
 import {Component, OnInit} from '@angular/core';
-import {ValueSetService} from '../services/value-set.service';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
-import {CodeSystemVersion, ValueSet, ValueSetSearchParams} from 'terminology-lib/resources';
 import {TranslateService} from '@ngx-translate/core';
 import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
+import {MapSet, MapSetSearchParams, MapSetVersion} from 'lib/src/resources/mapset';
+import {MapSetService} from '../services/map-set-service';
 
 
 @Component({
-  selector: 'twa-value-set-list',
-  templateUrl: 'value-set-list.component.html',
+  selector: 'twa-map-set-list',
+  templateUrl: 'map-set-list.component.html'
 })
-export class ValueSetListComponent implements OnInit {
-  public searchResult = new SearchResult<ValueSet>();
-  public query = new ValueSetSearchParams();
-  public loading = false;
+export class MapSetListComponent implements OnInit {
+  public searchResult = new SearchResult<MapSet>();
+  public query = new MapSetSearchParams();
+  public loading: boolean = false;
   public searchInput: string = "";
   public searchUpdate = new BehaviorSubject<string>("");
 
   public constructor(
-    private valueSetService: ValueSetService,
+    private mapSetService: MapSetService,
     private translateService: TranslateService
   ) {}
 
@@ -30,24 +30,23 @@ export class ValueSetListComponent implements OnInit {
     ).subscribe(data => this.searchResult = data);
   }
 
-  public search(): Observable<SearchResult<ValueSet>> {
+  public search(): Observable<SearchResult<MapSet>> {
     const q = copyDeep(this.query);
-    q.decorated = true;
+    q.versionsDecorated = true;
     q.textContains = this.searchInput || undefined;
     this.loading = true;
-    return this.valueSetService.search(q).pipe(finalize(() => this.loading = false));
+    return this.mapSetService.search(q).pipe(finalize(() => this.loading = false));
   }
 
   public loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
   }
 
-
-  public getVersionTranslateTokens = (version: CodeSystemVersion, translateOptions: object): string[] => {
+  public getVersionTranslateTokens = (version: MapSetVersion, translateOptions: object): string[] => {
     const tokens = [
-      version.releaseDate ? 'web.value-set.list.versions-release-date' : '',
-      version.expirationDate ? 'web.value-set.list.versions-expiration-date' : '',
-      version.version ? 'web.value-set.list.versions-version' : ''
+      version.releaseDate ? 'web.map-set.list.versions-release-date' : '',
+      version.expirationDate ? 'web.map-set.list.versions-expiration-date' : '',
+      version.version ? 'web.map-set.list.versions-version' : ''
     ];
     return tokens.filter(Boolean).map(t => this.translateService.instant(t, translateOptions));
   };
@@ -55,4 +54,5 @@ export class ValueSetListComponent implements OnInit {
   public parseDomain(uri: string): string {
     return uri?.split('//')[1]?.split('/')[0];
   }
+
 }

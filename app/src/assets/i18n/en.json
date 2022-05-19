@@ -138,7 +138,29 @@
     "resources": {
       "tabset": {
         "code-systems": "Code systems",
-        "value-sets": "Value Sets"
+        "value-sets": "Value sets",
+        "map-sets": "Map sets"
+      }
+    },
+    "map-set": {
+      "entity": {
+        "id": "Identifier",
+        "uri": "Uniform resource identifier (URI)",
+        "name": "Name",
+        "domain": "Domain",
+        "description": "Description"
+      },
+      "form": {
+        "add-header": "Create a new map set",
+        "edit-header": "Edit map set"
+      },
+      "list": {
+        "operations": "Operations",
+        "versions": "Versions",
+        "add-version": "Add version",
+        "versions-release-date": "From: {{releaseDate}}",
+        "versions-expiration-date": "to {{expirationDate}}",
+        "versions-version": "Version name: {{version}}"
       }
     }
   }
