@@ -23,7 +23,6 @@ export class ValueSetListComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.query.limit = 1;
     this.searchUpdate.pipe(
       debounceTime(250),
       distinctUntilChanged(),

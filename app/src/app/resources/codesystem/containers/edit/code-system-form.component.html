@@ -4,12 +4,12 @@
       <m-input name="id" [(ngModel)]="codeSystem.id" [disabled]="mode === 'edit'" required></m-input>
     </m-form-item>
 
-    <m-form-item label="web.code-system.entity.name" required>
-      <m-multi-language-input name="name" [(ngModel)]="codeSystem.names" required></m-multi-language-input>
+    <m-form-item label="web.code-system.entity.name">
+      <m-multi-language-input name="name" [(ngModel)]="codeSystem.names"></m-multi-language-input>
     </m-form-item>
 
-    <m-form-item name="uri" label="web.code-system.entity.uri">
-      <m-input name="uri" [(ngModel)]="codeSystem.uri"></m-input>
+    <m-form-item name="uri" label="web.code-system.entity.uri" required>
+      <m-input name="uri" [(ngModel)]="codeSystem.uri" required></m-input>
     </m-form-item>
 
     <m-form-item name="description" label="web.code-system.entity.description">

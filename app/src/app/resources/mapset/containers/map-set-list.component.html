@@ -24,28 +24,28 @@
       <th class="tw-table-actions">{{'web.map-set.list.operations' | translate}}</th>
     </tr>
 
-    <tr *mTableRow="let cs">
-      <td m-table-expand [item]="cs"></td>
-      <td><a [routerLink]="['map-sets',cs.id,'edit']">{{cs.id}}</a></td>
-      <td>{{cs.names | localName}}</td>
-      <td>{{cs.uri | apply: parseDomain}}</td>
+    <tr *mTableRow="let ms">
+      <td m-table-expand [item]="ms"></td>
+      <td><a [routerLink]="['map-sets',ms.id,'edit']">{{ms.id}}</a></td>
+      <td>{{ms.names | localName}}</td>
+      <td>{{ms.uri | apply: parseDomain}}</td>
       <td class="tw-table-actions">
         <button nz-button nzType="primary" nzDanger>{{'core.btn.delete' | translate}}</button>
       </td>
     </tr>
 
-    <tr *mTableRowExpand="let cs" class="m-table-expanded-row">
+    <tr *mTableRowExpand="let ms" class="m-table-expanded-row">
       <td colspan="5">
         <m-form-row full>
           <div *mFormCol>
             <m-form-item label="web.map-set.entity.uri">
-              {{cs.uri}}
+              {{ms.uri}}
             </m-form-item>
             <m-form-item label="web.map-set.entity.description">
-              {{cs.description}}
+              {{ms.description}}
             </m-form-item>
             <m-form-item label="web.map-set.list.versions">
-              <div *ngFor="let version of cs.versions">{{
+              <div *ngFor="let version of ms.versions">{{
                 version | apply: getVersionTranslateTokens: ({
                   releaseDate: (version.releaseDate | localDate),
                   expirationDate: (version.expirationDate | localDate),

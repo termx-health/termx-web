@@ -4,12 +4,12 @@
       <m-input name="id" [(ngModel)]="mapSet.id" [disabled]="mode === 'edit'" required></m-input>
     </m-form-item>
 
-    <m-form-item label="web.map-set.entity.name" required>
-      <m-multi-language-input name="name" [(ngModel)]="mapSet.names" required></m-multi-language-input>
+    <m-form-item label="web.map-set.entity.name">
+      <m-multi-language-input name="name" [(ngModel)]="mapSet.names"></m-multi-language-input>
     </m-form-item>
 
-    <m-form-item name="uri" label="web.map-set.entity.uri">
-      <m-input name="uri" [(ngModel)]="mapSet.uri"></m-input>
+    <m-form-item name="uri" label="web.map-set.entity.uri" required>
+      <m-input name="uri" [(ngModel)]="mapSet.uri" required></m-input>
     </m-form-item>
 
     <m-form-item name="description" label="web.map-set.entity.description">
