@@ -1,10 +1,10 @@
 <m-select
     class="tw-concept-search"
     icon="search"
+    placeholder="marina.ui.inputs.search.placeholder"
     [(ngModel)]="value"
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
-    [placeholder]="placeholder"
     [autoUnselect]="false"
     [loading]="isLoading"
 >
