@@ -12,7 +12,6 @@ import {CodeSystemService} from './services/code-system.service';
 import {CodeSystemVersionViewComponent} from './containers/version/code-system-version-view.component';
 
 
-
 export const CODE_SYSTEM_ROUTES: Routes = [
   {path: 'add', component: CodeSystemEditComponent},
   {path: ':id/edit', component: CodeSystemEditComponent},

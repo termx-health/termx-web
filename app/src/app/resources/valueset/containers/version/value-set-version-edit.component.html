@@ -29,10 +29,10 @@
           </m-form-item>
         </form>
 
-        <twa-value-set-version-concepts-list #conceptList *ngIf="mode === 'edit'"
+        <twa-value-set-version-concepts-list #conceptList
+            *ngIf="mode === 'edit'"
             [valueSetId]="valueSetId"
-            [valueSetVersion]="valueSetVersion"
-        ></twa-value-set-version-concepts-list>
+            [valueSetVersion]="valueSetVersion"></twa-value-set-version-concepts-list>
 
         <ng-container *m-card-footer>
           <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
