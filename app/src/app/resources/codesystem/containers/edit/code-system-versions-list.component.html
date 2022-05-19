@@ -11,14 +11,26 @@
       <th>{{'web.code-system-version.entity.release-date' | translate}}</th>
       <th>{{'web.code-system-version.entity.expiration-date' | translate}}</th>
       <th>{{'web.code-system-version.entity.status' | translate}}</th>
+      <th class="tw-table-actions">{{'web.code-system.list.operations' | translate}}</th>
     </tr>
 
     <tr *mTableRow="let version">
-      <td><a [routerLink]="['../versions', version.version, 'edit']">{{version.version}}</a></td>
+      <td><a [routerLink]="['../versions', version.version, version.status === 'active'? 'view' : 'edit']">{{version.version}}</a></td>
       <td>{{version.source}}</td>
       <td>{{version.releaseDate | localDate}}</td>
       <td>{{version.expirationDate | localDate}}</td>
-      <td>{{version.status }}</td>
+      <td>{{version.status}}</td>
+      <td class="tw-table-actions">
+        <a *ngIf="version.status === 'active'" (click)="retireVersion(version)">
+          {{'web.publication-status.operations.retire' | translate}}
+        </a>
+        <a *ngIf="version.status === 'draft'" (click)="activateVersion(version)">
+          {{'web.publication-status.operations.activate' | translate}}
+        </a>
+        <a *ngIf="version.status === 'retired'" (click)="activateVersion(version)">
+          {{'web.publication-status.operations.activate' | translate}}
+        </a>
+      </td>
     </tr>
 
     <tr *mTableNoData>

@@ -23,11 +23,21 @@ export class CodeSystemVersionsListComponent implements OnChanges {
 
   private loadVersions(): void {
     if (!this.codeSystemId) {
-      return
+      return;
     }
     this.loading = true;
     this.codeSystemService.loadVersions(this.codeSystemId)
       .subscribe(versions => this.versions = versions)
       .add(() => this.loading = false);
+  }
+
+  public activateVersion(version: CodeSystemVersion): void {
+    this.loading = true;
+    this.codeSystemService.activateVersion(version.codeSystem!, version.version!).subscribe(() => version.status = 'active').add(() => this.loading = false);
+  }
+
+  public retireVersion(version: CodeSystemVersion): void {
+    this.loading = true;
+    this.codeSystemService.retireVersion(version.codeSystem!, version.version!).subscribe(() => version.status = 'retired').add(() => this.loading = false);
   }
 }

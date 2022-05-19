@@ -2,17 +2,17 @@
   <nz-tab>
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'code-systems' }">{{'web.resources.tabset.code-systems' | translate}}
       <nz-badge nzStandalone
-          [nzCount]="codeSystem.searchResult.meta.total"
+          [nzCount]="codeSystemTotal"
           [nzStyle]="badgeStyle"></nz-badge>
     </a>
-    <twa-code-system-list #codeSystem></twa-code-system-list>
+    <twa-code-system-list></twa-code-system-list>
   </nz-tab>
   <nz-tab>
     <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'value-sets' }">{{'web.resources.tabset.value-sets' | translate}}
       <nz-badge nzStandalone
-          [nzCount]="valueSet.searchResult.meta.total"
+          [nzCount]="valueSetTotal"
           [nzStyle]="badgeStyle"></nz-badge>
     </a>
-    <twa-value-set-list #valueSet></twa-value-set-list>
+    <twa-value-set-list></twa-value-set-list>
   </nz-tab>
 </nz-tabset>

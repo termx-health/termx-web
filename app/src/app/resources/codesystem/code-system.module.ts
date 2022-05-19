@@ -9,6 +9,7 @@ import {CodeSystemEditComponent} from './containers/edit/code-system-edit.compon
 import {CodeSystemVersionEditComponent} from './containers/version/code-system-version-edit.component';
 import {SharedModule} from '../../shared/shared.module';
 import {CodeSystemService} from './services/code-system.service';
+import {CodeSystemVersionViewComponent} from './containers/version/code-system-version-view.component';
 
 
 
@@ -17,6 +18,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/edit', component: CodeSystemEditComponent},
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:version/edit', component: CodeSystemVersionEditComponent},
+  {path: ':id/versions/:version/view', component: CodeSystemVersionViewComponent},
 ];
 
 @NgModule({
@@ -31,6 +33,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     CodeSystemPropertiesListComponent,
     CodeSystemVersionsListComponent,
     CodeSystemVersionEditComponent,
+    CodeSystemVersionViewComponent
   ],
   exports: [
     CodeSystemListComponent

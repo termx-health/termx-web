@@ -4,14 +4,22 @@ import {CodeSystem, CodeSystemLibService, CodeSystemVersion} from 'terminology-l
 
 @Injectable()
 export class CodeSystemService extends CodeSystemLibService {
-  public save(cs: CodeSystem): Observable<any> {
+  public save(cs: CodeSystem): Observable<CodeSystem> {
     return this.http.post(this.baseUrl, cs);
   }
 
   public saveVersion(codeSystemId: string, version: CodeSystemVersion): Observable<CodeSystemVersion> {
     if (version.id && version.version) {
-      return this.http.put(`${this.baseUrl}/${codeSystemId}/versions/${version.version}`, version);
+      return this.http.put(`${this.baseUrl}/${codeSystemId}/versions/${version.id}`, version);
     }
     return this.http.post(`${this.baseUrl}/${codeSystemId}/versions`, version);
+  }
+
+  public activateVersion(codeSystemId: string, version: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/activate`, {});
+  }
+
+  public retireVersion(codeSystemId: string, version: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/retire`, {});
   }
 }

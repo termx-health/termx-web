@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'terminology-lib/resources';
 import {CodeSystemService} from '../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
+import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
 
 
 @Component({
@@ -10,9 +11,15 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: 'code-system-list.component.html'
 })
 export class CodeSystemListComponent implements OnInit {
+  @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
+
   public searchResult = new SearchResult<CodeSystem>();
   public query = new CodeSystemSearchParams();
   public loading: boolean = false;
+  public searchInput: string = "";
+
+
+  public searchUpdate = new BehaviorSubject<string>("");
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -20,17 +27,27 @@ export class CodeSystemListComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.loadData();
+    this.searchUpdate.pipe(
+      debounceTime(250),
+      distinctUntilChanged(),
+      switchMap(() => this.search()),
+    ).subscribe(data => this.searchResult = data);
+  }
+
+  public search(): Observable<SearchResult<CodeSystem>> {
+    const q = copyDeep(this.query);
+    q.versionsDecorated = true;
+    if (this.searchInput){
+      q.textContains = this.searchInput;
+    }
+    this.loading = true;
+    return this.codeSystemService.search(q).pipe(
+      finalize(() => this.loading = false)
+    );
   }
 
   public loadData(): void {
-    const q = copyDeep(this.query);
-    q.versionsDecorated = true;
-
-    this.loading = true;
-    this.codeSystemService.search(q)
-      .subscribe(r => this.searchResult = r)
-      .add(() => this.loading = false);
+    this.search().subscribe(resp => this.searchResult = resp);
   }
 
   public getVersionTranslateTokens = (version: CodeSystemVersion, translateOptions: object): string[] => {
@@ -45,4 +62,5 @@ export class CodeSystemListComponent implements OnInit {
   public parseDomain(uri: string): string {
     return uri?.split('//')[1]?.split('/')[0];
   }
+
 }
