@@ -1,0 +1,33 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-card [title]="'web.map-set-version.form.view-header'">
+      <m-spinner [loading]="loading">
+        <div *ngIf="version">
+          <m-form-item label="web.map-set-version.entity.version">
+            {{version.version}}
+          </m-form-item>
+
+          <m-form-item name="source" label="web.map-set-version.entity.source">
+            {{version.source}}
+          </m-form-item>
+
+          <m-form-item label="web.map-set-version.entity.supported-languages">
+            {{version.supportedLanguages}}
+          </m-form-item>
+
+          <m-form-item label="web.map-set-version.entity.description">
+            {{version.description}}
+          </m-form-item>
+
+          <m-form-item label="web.map-set-version.entity.release-date">
+            {{version.releaseDate | localDate}}
+          </m-form-item>
+
+          <m-form-item label="web.map-set-version.entity.expiration-date">
+            {{version.expirationDate | localDate}}
+          </m-form-item>
+        </div>
+      </m-spinner>
+    </m-card>
+  </div>
+</m-form-row>
