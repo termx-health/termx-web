@@ -7,8 +7,8 @@
             <m-input name="version" [(ngModel)]="version.version" required></m-input>
           </m-form-item>
 
-          <m-form-item name="releaseDate" label="web.value-set-version.entity.release-date">
-            <nz-date-picker name="releaseDate" [(ngModel)]="version.releaseDate"></nz-date-picker>
+          <m-form-item name="releaseDate" label="web.value-set-version.entity.release-date" required>
+            <nz-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" required></nz-date-picker>
           </m-form-item>
 
           <m-form-item name="expirationDate" label="web.value-set-version.entity.expiration-date">

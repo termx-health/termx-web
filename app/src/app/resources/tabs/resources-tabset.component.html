@@ -11,4 +11,10 @@
     </a>
     <twa-value-set-list></twa-value-set-list>
   </nz-tab>
+  <nz-tab>
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'map-sets' }">{{'web.resources.tabset.map-sets' | translate}}
+      <nz-badge nzStandalone [nzCount]="mapSetTotal" [nzStyle]="badgeStyle"></nz-badge>
+    </a>
+    <twa-map-set-list></twa-map-set-list>
+  </nz-tab>
 </nz-tabset>
