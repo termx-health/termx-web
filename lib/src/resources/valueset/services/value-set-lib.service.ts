@@ -21,8 +21,8 @@ export class ValueSetLibService {
     return this.http.get<ValueSet>(`${this.baseUrl}/${valueSetId}`);
   }
 
-  public loadVersion(valueSetId: string, versionId: string): Observable<ValueSetVersion> {
-    return this.http.get<ValueSetVersion>(`${this.baseUrl}/${valueSetId}/versions/${versionId}`);
+  public loadVersion(valueSetId: string, version: string): Observable<ValueSetVersion> {
+    return this.http.get<ValueSetVersion>(`${this.baseUrl}/${valueSetId}/versions/${version}`);
   }
 
   public loadVersions(valueSetId: string): Observable<ValueSetVersion[]> {
