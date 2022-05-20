@@ -2,7 +2,7 @@
   <div *mFormCol>
     <m-card [title]="mode === 'edit' ? 'web.map-set.form.edit-header' : 'web.map-set.form.add-header'">
       <twa-map-set-form #mapSetForm [mode]="mode" [mapSetId]="mapSetId"></twa-map-set-form>
-
+      <twa-map-set-versions-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></twa-map-set-versions-list>
       <ng-container *m-card-footer>
         <m-button display="primary" [loading]="loading" [disabled]="loading || mapSetForm.loading" (click)="save()">
           {{'core.btn.save' | translate}}
