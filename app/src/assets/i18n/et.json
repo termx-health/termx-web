@@ -162,6 +162,23 @@
         "versions-expiration-date": "kuni {{expirationDate}}",
         "versions-version": "Versiooni nimi: {{version}}"
       }
+    },
+    "map-set-version": {
+      "entity": {
+        "id": "Identifikaator",
+        "version": "Versioon",
+        "source": "Allikas",
+        "supported-languages": "Toetatud keeled",
+        "description": "Kirjeldus",
+        "release-date": "Väljastus kuupäev",
+        "expiration-date": "Aegumis kuupäev",
+        "status": "Olek"
+      },
+      "form": {
+        "edit-header": "Muuda versiooni",
+        "add-header": "Lisa versioon",
+        "view-header": "Vaata versiooni"
+      }
     }
   }
 }

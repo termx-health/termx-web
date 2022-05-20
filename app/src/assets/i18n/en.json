@@ -162,6 +162,23 @@
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}"
       }
+    },
+    "map-set-version": {
+      "entity": {
+        "id": "Identifier",
+        "version": "Version",
+        "source": "Source",
+        "supported-languages": "Supported languages",
+        "description": "Description",
+        "release-date": "Release date",
+        "expiration-date": "Expiration date",
+        "status": "Status"
+      },
+      "form": {
+        "edit-header": "Edit version",
+        "add-header": "Add version",
+        "view-header": "View version"
+      }
     }
   }
 }
