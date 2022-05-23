@@ -12,6 +12,7 @@ export abstract class CodeSystemEntity {
 export class CodeSystemEntityVersion {
   public id?: number;
   public code?: string;
+  public codeSystem?: string;
   public description?: string;
   public status?: string;
   public created?: Date;

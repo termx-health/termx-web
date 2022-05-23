@@ -9,6 +9,7 @@ import {MapSetFormComponent} from './containers/edit/map-set-form.component';
 import {MapSetVersionsListComponent} from './containers/edit/map-set-versions-list.component';
 import {MapSetVersionEditComponent} from './containers/version/map-set-version-edit.component';
 import {MapSetVersionViewComponent} from './containers/version/map-set-version-view.component';
+import {MapSetAssociationListComponent} from './containers/edit/map-set-association-list.component';
 
 
 export const MAP_SET_ROUTES: Routes = [
@@ -33,7 +34,8 @@ export const MAP_SET_ROUTES: Routes = [
     MapSetFormComponent,
     MapSetVersionsListComponent,
     MapSetVersionEditComponent,
-    MapSetVersionViewComponent
+    MapSetVersionViewComponent,
+    MapSetAssociationListComponent
   ],
   providers: [
     MapSetService

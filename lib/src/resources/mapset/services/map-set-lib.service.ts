@@ -6,6 +6,8 @@ import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {MapSet} from '../model/map-set';
 import {MapSetSearchParams} from '../model/map-set-search-params';
 import {MapSetVersion} from '../model/map-set-version';
+import {MapSetAssociationSearchParams} from '../model/map-set-association-search-params';
+import {MapSetAssociation} from '../model/map-set-association';
 
 
 @Injectable()
@@ -30,5 +32,9 @@ export class MapSetLibService {
 
   public loadVersions(mapSetId: string): Observable<MapSetVersion[]> {
     return this.http.get<MapSetVersion[]>(`${this.baseUrl}/${mapSetId}/versions`);
+  }
+
+  public searchAssociations(mapSetId: string, params: MapSetAssociationSearchParams = {}): Observable<SearchResult<MapSetAssociation>> {
+    return this.http.get<SearchResult<MapSetAssociation>>(`${this.baseUrl}/${mapSetId}/associations`, {params: SearchHttpParams.build(params)});
   }
 }
