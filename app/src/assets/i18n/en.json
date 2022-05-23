@@ -179,6 +179,20 @@
         "add-header": "Add version",
         "view-header": "View version"
       }
+    },
+    "map-set-association": {
+      "entity": {
+        "source": "Source",
+        "target": "Target",
+        "type": "Type",
+        "status": "Status",
+        "concept": "Concept"
+      },
+      "list": {
+        "code-system": "Code System",
+        "operations": "Operations",
+        "associations": "Associations"
+      }
     }
   }
 }

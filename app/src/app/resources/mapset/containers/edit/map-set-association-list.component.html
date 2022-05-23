@@ -1,0 +1,45 @@
+<m-card [title]="'web.map-set-association.list.associations'" class="tw-table-card">
+  <m-table [data]="data | keys" [loading]="loading" bordered hideOnSinglePage enablePagination>
+
+    <ng-container *mTableHead>
+      <tr>
+        <th colSpan="2">{{'web.map-set-association.entity.source' | translate}}</th>
+        <th colSpan="2">{{'web.map-set-association.entity.target' | translate}}</th>
+        <th rowSpan="2">{{'web.map-set-association.entity.type' | translate}}</th>
+        <th rowSpan="2">{{'web.map-set-association.entity.status' | translate}}</th>
+        <th rowSpan="2" class="tw-table-actions">{{'web.map-set-association.list.operations' | translate}}</th>
+      </tr>
+      <tr>
+        <th>{{'web.map-set-association.list.code-system' | translate}}</th>
+        <th>{{'web.map-set-association.entity.concept' | translate}}</th>
+        <th>{{'web.map-set-association.entity.concept' | translate}}</th>
+        <th>{{'web.map-set-association.list.code-system' | translate}}</th>
+      </tr>
+    </ng-container>
+
+    <ng-container *mTableRow="let key;">
+      <tr *ngFor="let association of data[key]; let isFirst = first;">
+        <td *ngIf="isFirst" [rowSpan]="data[key].length">{{association.source.codeSystem}}</td>
+        <td>{{association.source.code}}</td>
+        <td>{{association.target.code}}</td>
+        <td>{{association.target.codeSystem}}</td>
+        <td>{{association.associationType}}</td>
+        <td>{{association.status}}</td>
+        <td class="tw-table-actions">
+          <a *ngIf="association.status === 'active'" (click)="retireAssociation()">
+            {{'web.publication-status.operations.retire' | translate}}
+          </a>
+          <a *ngIf="association.status !== 'active'" (click)="activateAssociation()">
+            {{'web.publication-status.operations.activate' | translate}}
+          </a>
+        </td>
+      </tr>
+    </ng-container>
+
+    <tr *mTableNoData>
+      <td colspan="7">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-table>
+</m-card>
