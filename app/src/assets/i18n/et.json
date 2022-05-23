@@ -179,6 +179,20 @@
         "add-header": "Lisa versioon",
         "view-header": "Vaata versiooni"
       }
+    },
+    "map-set-association": {
+      "entity": {
+        "source": "Allikas",
+        "target": "Siht",
+        "type": "Seos",
+        "status": "Status",
+        "concept": "Kontsept"
+      },
+      "list": {
+        "code-system": "Koodisüsteem",
+        "operations": "Toimingud",
+        "associations": "Seosed"
+      }
     }
   }
 }
