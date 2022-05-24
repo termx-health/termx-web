@@ -19,7 +19,7 @@ build:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
 
   script:
-    - npm ci --cache .npm --prefer-offline
+    - npm install --cache .npm --prefer-offline
     - ng build --base-href /kts/ -c production
     - docker build -t docker.kodality.com/terminology-web:latest .
     - docker push docker.kodality.com/terminology-web:latest
