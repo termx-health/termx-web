@@ -6,9 +6,6 @@ import {Component} from '@angular/core';
 export class IntegrationMenuComponent {
   public sync?: 'CodeSystem' | 'ValueSet' | 'ConceptMap';
 
-  public constructor() { }
-
-
   public toggleSync(input: 'CodeSystem' | 'ValueSet' | 'ConceptMap'): void {
     this.sync = input;
   }
