@@ -36,6 +36,19 @@ html {
   width: min-content;
 }
 
+
+.tw-button-danger {
+  color: red;
+  border: 0;
+
+  &:focus,
+  &:not([disabled]):active,
+  &:not([disabled]):hover {
+    color: red;
+    border-color: red;
+  }
+}
+
 // MUI overrides
 
 .m-card-footer {
@@ -47,7 +60,7 @@ html {
 
 .layout {
   display: grid;
-  grid-template-columns: auto 4fr;
+  grid-template-columns: auto 1fr;
   height: calc(100vh - 4rem - 1px);
 
   &--content {

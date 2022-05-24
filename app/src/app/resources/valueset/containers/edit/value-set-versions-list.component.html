@@ -4,7 +4,7 @@
     <m-button [routerLink]="['../versions/add']" label="web.value-set-version.form.add-header"></m-button>
   </div>
 
-  <m-table [data]="versions" [loading]="loading" bordered enablePagination hideOnSinglePage>
+  <m-table [data]="versions" [loading]="loading" outlined enablePagination hideOnSinglePage>
     <tr *mTableHead>
       <th>{{'web.value-set-version.entity.version' | translate}}</th>
       <th>{{'web.value-set-version.entity.source' | translate}}</th>
