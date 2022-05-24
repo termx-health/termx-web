@@ -5,7 +5,7 @@ cache:
     files:
       - package-lock.json
   paths:
-    - .npm/
+    - /root/.npm/
 
 stages:
   - build
