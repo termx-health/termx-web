@@ -4,7 +4,7 @@
     <m-button [routerLink]="['../versions/add']" label="web.map-set.list.add-version"></m-button>
   </div>
 
-  <m-table [data]="versions" [loading]="loading" bordered enablePagination hideOnSinglePage>
+  <m-table [data]="versions" [loading]="loading" outlined enablePagination hideOnSinglePage>
     <tr *mTableHead>
       <th>{{'web.map-set-version.entity.version' | translate}}</th>
       <th>{{'web.map-set-version.entity.source' | translate}}</th>
