@@ -1,5 +1,12 @@
 image: registry.gitlab.com/kodality-public/gitlab-builders/gitlab-ci-builder
 
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm/
+
 stages:
   - build
 
