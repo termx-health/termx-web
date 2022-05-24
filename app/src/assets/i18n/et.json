@@ -193,6 +193,15 @@
         "operations": "Toimingud",
         "associations": "Seosed"
       }
+    },
+    "integration": {
+      "menu": {
+        "headers": {
+          "codesystem": "Koodi Süsteem",
+          "valueset": "Väärtuste Kogum",
+          "conceptmap": "Kontsepti Kaardistus"
+        }
+      }
     }
   }
 }

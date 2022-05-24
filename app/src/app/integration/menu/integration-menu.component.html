@@ -1,0 +1,27 @@
+<div nz-row nzGutter="12">
+  <div nz-col nzSpan="4">
+    <m-card>
+      <nz-divider nzText="FHIR"></nz-divider>
+      <nz-collapse nzGhost>
+        <nz-collapse-panel nzHeader="{{'web.integration.menu.headers.codesystem' | translate}}">
+          <m-button display="link" (click)="toggleSync('CodeSystem')">$sync</m-button>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <nz-collapse nzGhost>
+        <nz-collapse-panel nzHeader="{{'web.integration.menu.headers.valueset' | translate}}">
+          <m-button display="link" (click)="toggleSync('ValueSet')">$sync</m-button>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <nz-collapse nzGhost>
+        <nz-collapse-panel nzHeader="{{'web.integration.menu.headers.conceptmap' | translate}}">
+          <m-button display="link" (click)="toggleSync('ConceptMap')">$sync</m-button>
+        </nz-collapse-panel>
+      </nz-collapse>
+      <nz-divider nzText="ATC"></nz-divider>
+      <nz-divider nzText="ICD-10"></nz-divider>
+    </m-card>
+  </div>
+  <div nz-col nzSpan="20">
+    <twa-integration-sync *ngIf="sync" [source]="sync"></twa-integration-sync>
+  </div>
+</div>

@@ -193,6 +193,15 @@
         "operations": "Operations",
         "associations": "Associations"
       }
+    },
+    "integration": {
+      "menu": {
+        "headers": {
+          "codesystem": "Code System",
+          "valueset": "Value Set",
+          "conceptmap": "Concept Map"
+        }
+      }
     }
   }
 }

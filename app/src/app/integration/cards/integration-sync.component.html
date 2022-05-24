@@ -1,0 +1,32 @@
+<m-card>
+  <div *m-card-header class="tw-card-header">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>FHIR</nz-breadcrumb-item>
+      <nz-breadcrumb-item>{{source}}</nz-breadcrumb-item>
+      <nz-breadcrumb-item>$sync</nz-breadcrumb-item>
+    </nz-breadcrumb>
+    <m-button (click)="sendRequests()">Send Request</m-button>
+  </div>
+  <p>URL: </p>
+  <div style="display:flex" *ngFor="let url of data; let index = index">
+    <p>{{url}} &nbsp;</p>
+    <m-button style="margin-left: 1em" size="small" (click)="removeRow(index)">
+      <m-icon [code]="'delete'"></m-icon>
+    </m-button>
+  </div>
+  <div style="display: flex">
+    <m-input [(ngModel)]="input"></m-input>
+    <m-button (click)="addRow()">
+      <m-icon [code]="'plus'"></m-icon>
+    </m-button>
+  </div>
+  <m-spinner [loading]=loading></m-spinner>
+  <div *ngIf="success" style="color:green;">
+    <m-icon [code]="'check'"></m-icon>
+    Success
+  </div>
+  <div *ngIf="message" style="color: red">
+    <m-icon [code]="'close'"></m-icon>
+    {{message}}
+  </div>
+</m-card>
