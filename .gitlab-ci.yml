@@ -14,6 +14,6 @@ build:
 
   script:
     - npm install
-    - ng build --base-href /kts/
+    - ng build --base-href /kts/ -c production
     - docker build -t docker.kodality.com/terminology-web:latest .
     - docker push docker.kodality.com/terminology-web:latest
