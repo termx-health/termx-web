@@ -12,4 +12,6 @@ build:
     - echo "@kodality-health:registry=https://kexus.kodality.com/repository/npm-health/" >> ~/.npmrc
   script:
     - npm install
-    - npm run build
+    - ng build --base-href /kts/
+    - docker build -t docker.kodality.com/terminology-web:latest .
+    - docker push docker.kodality.com/terminology-web:latest
