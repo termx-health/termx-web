@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   }
 
   private loadMenu(): void {
-    this.http.get<{label?: LocalizedName, icon: string, link: string}[]>("/assets/menu.json").subscribe((menu) => {
+    this.http.get<{label?: LocalizedName, icon: string, link: string}[]>("./assets/menu.json").subscribe((menu) => {
       this.menu = menu.map(i => ({label: i.label?.[this.translateService.currentLang], icon: i.icon, click: () => this.router.navigateByUrl(i.link)}))
     })
   }
