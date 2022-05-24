@@ -1,8 +1,5 @@
 image: registry.gitlab.com/kodality-public/gitlab-builders/gitlab-ci-builder
 
-before_script:
-  - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
-
 stages:
   - build
 
@@ -13,6 +10,8 @@ build:
     - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
     - echo "//kexus.kodality.com/repository/npm-health/:_authToken=$NEXUS_NPM_HEALTH_TOKEN" >> ~/.npmrc
     - echo "@kodality-health:registry=https://kexus.kodality.com/repository/npm-health/" >> ~/.npmrc
+    - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
+
   script:
     - npm install
     - ng build --base-href /kts/
