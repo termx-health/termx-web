@@ -1,25 +1,41 @@
 image: registry.gitlab.com/kodality-public/gitlab-builders/gitlab-ci-builder
 
 cache:
-  key: $CI_COMMIT_REF_SLUG
+  key:
+    files:
+      - package-lock.json
   policy: pull-push
   paths:
     - .npm/
+    - node_modules/
 
 stages:
   - build
 
-build:
-  stage: build
+
+.build:
   before_script:
     - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
     - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
     - echo "//kexus.kodality.com/repository/npm-health/:_authToken=$NEXUS_NPM_HEALTH_TOKEN" >> ~/.npmrc
     - echo "@kodality-health:registry=https://kexus.kodality.com/repository/npm-health/" >> ~/.npmrc
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
-
   script:
     - npm install --cache .npm --prefer-offline
     - ng build --base-href /kts/ -c production
+
+
+snapshot:
+  extends: .build
+  stage: build
+  after_script:
     - docker build -t docker.kodality.com/terminology-web:latest .
     - docker push docker.kodality.com/terminology-web:latest
+  only:
+    - main
+
+build:
+  extends: .build
+  stage: build
+  except:
+    - main
