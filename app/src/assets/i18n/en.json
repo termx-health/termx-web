@@ -197,7 +197,7 @@
     "integration": {
       "fhir": {
         "sync": {
-          "send-requests": "Send requests"
+          "send-request": "Send request"
         }
       }
     }

@@ -5,8 +5,8 @@ import {IntegrationFhirSyncComponent} from './fhir/integration-fhir-sync.compone
 import {IntegrationLibModule} from 'terminology-lib/integration/integration-lib.module';
 import {IntegrationFhirService} from './services/integration-fhir-service';
 import {IntegrationService} from './services/integration-service';
-import {JobLibService} from 'terminology-lib/job/services/job-lib-service';
 import {Routes} from '@angular/router';
+import {JobLibModule} from 'terminology-lib/job/job-lib.module';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -19,7 +19,8 @@ export const INTEGRATION_ROUTES: Routes = [
 @NgModule({
   imports: [
     SharedModule,
-    IntegrationLibModule
+    IntegrationLibModule,
+    JobLibModule
   ],
   declarations: [
     IntegrationDashboardComponent,
@@ -27,8 +28,7 @@ export const INTEGRATION_ROUTES: Routes = [
   ],
   providers: [
     IntegrationFhirService,
-    IntegrationService,
-    JobLibService
+    IntegrationService
   ]
 })
 export class IntegrationModule {

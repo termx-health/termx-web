@@ -4,10 +4,10 @@ import {IntegrationFhirLibService} from 'terminology-lib/integration/services/in
 
 
 class IntegrationSyncParameters {
-  public parameter?: jobValuePair[];
+  public parameter?: IntegrationSyncParameter[];
 }
 
-class jobValuePair {
+class IntegrationSyncParameter {
   public name?: string;
   public valueDecimal?: number;
   public valueString?: string;

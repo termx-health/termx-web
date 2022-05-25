@@ -2,8 +2,8 @@ export class JobLog {
   public id?: number;
   public definition?: JobDefinition;
   public execution?: JobExecution;
-  public warnings?: {[id: string]: any};
-  public errors?: {[id: string]: any};
+  public warnings?: {[key: string]: any};
+  public errors?: {[key: string]: any};
 }
 
 class JobDefinition {

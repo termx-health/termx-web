@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {TERMINOLOGY_API} from '../../terminology-lib.token';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {JobLog} from '../model/jobLog';
+import {JobLog} from '../model/job-log';
 
 @Injectable()
 export class JobLibService {

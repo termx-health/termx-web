@@ -5,7 +5,7 @@
       <nz-breadcrumb-item>{{source}}</nz-breadcrumb-item>
       <nz-breadcrumb-item>$sync</nz-breadcrumb-item>
     </nz-breadcrumb>
-    <m-button (click)="sendRequests()">{{'web.integration.fhir.sync.send-requests' | translate}}</m-button>
+    <m-button (click)="sendRequests()">{{'web.integration.fhir.sync.send-request' | translate}}</m-button>
   </div>
   <p>URL: </p>
   <div style="display:flex" *ngFor="let url of data; let index = index">
