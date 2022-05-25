@@ -3,14 +3,21 @@ import {Observable} from 'rxjs';
 import {IntegrationFhirLibService} from 'terminology-lib/integration/services/integration-fhir-lib-service';
 
 
-interface IntegrationImportRequest {
-  parameter: {valueString: string; name: string}[]
+class IntegrationSyncParameters {
+  public parameter?: jobValuePair[];
 }
+
+class jobValuePair {
+  public name?: string;
+  public valueDecimal?: number;
+  public valueString?: string;
+}
+
 
 @Injectable()
 export class IntegrationFhirService extends IntegrationFhirLibService {
 
-  public import(source: string, urls: IntegrationImportRequest): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/${source}/$sync`, urls);
+  public import(source: string, urls: IntegrationSyncParameters): Observable<IntegrationSyncParameters> {
+    return this.http.post<IntegrationSyncParameters>(`${this.baseUrl}/${source}/$sync`, urls);
   }
 }

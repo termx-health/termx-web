@@ -195,11 +195,9 @@
       }
     },
     "integration": {
-      "menu": {
-        "headers": {
-          "codesystem": "Code System",
-          "valueset": "Value Set",
-          "conceptmap": "Concept Map"
+      "fhir": {
+        "sync": {
+          "send-requests": "Send requests"
         }
       }
     }

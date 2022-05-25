@@ -195,11 +195,9 @@
       }
     },
     "integration": {
-      "menu": {
-        "headers": {
-          "codesystem": "Koodi Süsteem",
-          "valueset": "Väärtuste Kogum",
-          "conceptmap": "Kontsepti Kaardistus"
+      "fhir": {
+        "sync": {
+          "send-requests": "Saada päringud"
         }
       }
     }

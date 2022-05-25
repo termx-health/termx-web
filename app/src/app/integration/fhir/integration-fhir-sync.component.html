@@ -5,7 +5,7 @@
       <nz-breadcrumb-item>{{source}}</nz-breadcrumb-item>
       <nz-breadcrumb-item>$sync</nz-breadcrumb-item>
     </nz-breadcrumb>
-    <m-button (click)="sendRequests()">Send Request</m-button>
+    <m-button (click)="sendRequests()">{{'web.integration.fhir.sync.send-requests' | translate}}</m-button>
   </div>
   <p>URL: </p>
   <div style="display:flex" *ngFor="let url of data; let index = index">
@@ -21,12 +21,5 @@
     </m-button>
   </div>
   <m-spinner [loading]=loading></m-spinner>
-  <div *ngIf="success" style="color:green;">
-    <m-icon [code]="'check'"></m-icon>
-    Success
-  </div>
-  <div *ngIf="message" style="color: red">
-    <m-icon [code]="'close'"></m-icon>
-    {{message}}
-  </div>
+  <m-alert *ngIf="message" type="{{(message | keys)[0]}}" showIcon>{{message[(message | keys)[0]]}}</m-alert>
 </m-card>

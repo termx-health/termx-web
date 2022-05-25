@@ -2,6 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {TERMINOLOGY_API} from '../../terminology-lib.token';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {JobLog} from '../model/jobLog';
 
 @Injectable()
 export class JobLibService {
@@ -11,7 +12,7 @@ export class JobLibService {
     this.baseUrl = `${api}/job-logs`;
   }
 
-  public getJobStatus(jobId: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${jobId}`);
+  public getJobStatus(jobId: number): Observable<JobLog> {
+    return this.http.get<JobLog>(`${this.baseUrl}/${jobId}`);
   }
 }

@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {RESOURCES_ROUTES} from './resources/resources.module';
-import {IntegrationMenuComponent} from './integration/menu/integration-menu.component';
+import {INTEGRATION_ROUTES} from './integration/integration.module';
 
 const routes: Routes = [
   {path: 'resources', children: RESOURCES_ROUTES},
-  {path: 'integration', component: IntegrationMenuComponent}
+  {path: 'integration', children: INTEGRATION_ROUTES}
 ];
 
 @NgModule({
