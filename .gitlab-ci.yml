@@ -1,14 +1,13 @@
 image: registry.gitlab.com/kodality-public/gitlab-builders/gitlab-ci-builder
 
 cache:
-  key: npm
+  key: $CI_COMMIT_REF_SLUG
   policy: pull-push
   paths:
     - .npm/
 
 stages:
   - build
-
 
 build:
   stage: build
