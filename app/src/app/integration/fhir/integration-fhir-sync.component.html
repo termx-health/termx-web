@@ -1,0 +1,26 @@
+<m-card>
+  <m-spinner [loading]=loading>
+    <div *m-card-header class="tw-card-header">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>FHIR</nz-breadcrumb-item>
+        <nz-breadcrumb-item>{{source}}</nz-breadcrumb-item>
+        <nz-breadcrumb-item>$sync</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <m-button (click)="importUrls()">{{'web.integration.fhir.sync.send-request' | translate}}</m-button>
+    </div>
+    <p>URL: </p>
+    <div style="display:flex" *ngFor="let url of urls; let index = index">
+      <p>{{url}}</p>
+      <m-button style="margin-left: 1em" size="small" (click)="removeUrl(index)">
+        <m-icon [code]="'delete'"></m-icon>
+      </m-button>
+    </div>
+    <div style="display: flex">
+      <m-input [(ngModel)]="input"></m-input>
+      <m-button (click)="addUrl()">
+        <m-icon [code]="'plus'"></m-icon>
+      </m-button>
+    </div>
+    <m-alert *ngIf="jobResponse" [type]="jobResponse.type" showIcon>{{jobResponse.message}}</m-alert>
+  </m-spinner>
+</m-card>

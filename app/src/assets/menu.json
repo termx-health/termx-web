@@ -6,5 +6,13 @@
     },
     "icon": "unordered-list",
     "link": "resources?tab=code-systems"
+  },
+  {
+    "label": {
+      "en": "Integration",
+      "et": "Integratsioon"
+    },
+    "icon": "unordered-list",
+    "link": "integration"
   }
 ]
