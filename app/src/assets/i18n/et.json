@@ -193,6 +193,13 @@
         "operations": "Toimingud",
         "associations": "Seosed"
       }
+    },
+    "integration": {
+      "fhir": {
+        "sync": {
+          "send-request": "Saada päring"
+        }
+      }
     }
   }
 }
