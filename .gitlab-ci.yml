@@ -1,5 +1,11 @@
 image: registry.gitlab.com/kodality-public/gitlab-builders/gitlab-ci-builder
 
+cache:
+  key: npm
+  policy: pull-push
+  paths:
+    - .npm/
+
 stages:
   - build
 
@@ -13,7 +19,7 @@ build:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
 
   script:
-    - npm install
-    - ng build --base-href /kts/
+    - npm install --cache .npm --prefer-offline
+    - ng build --base-href /kts/ -c production
     - docker build -t docker.kodality.com/terminology-web:latest .
     - docker push docker.kodality.com/terminology-web:latest
