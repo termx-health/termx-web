@@ -193,6 +193,13 @@
         "operations": "Operations",
         "associations": "Associations"
       }
+    },
+    "integration": {
+      "fhir": {
+        "sync": {
+          "send-request": "Send request"
+        }
+      }
     }
   }
 }

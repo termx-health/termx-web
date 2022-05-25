@@ -14,7 +14,10 @@ import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
 import {ResourcesModule} from './resources/resources.module';
 import {MarinaUtilModule} from '@kodality-health/marina-util';
+import {IntegrationModule} from './integration/integration.module';
 import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
+import {IntegrationLibModule} from 'terminology-lib/integration/integration-lib.module';
+import {JobLibModule} from 'terminology-lib/job/job-lib.module';
 
 registerLocaleData(et);
 
@@ -62,6 +65,11 @@ export function MarinaUiConfigFactory(): MuiConfig {
 
     ResourcesLibModule,
     ResourcesModule,
+
+    IntegrationLibModule,
+    IntegrationModule,
+
+    JobLibModule
   ],
   providers: [
     {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
