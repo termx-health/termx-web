@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {SharedModule} from '../shared/shared.module';
-import {IntegrationDashboardComponent} from './menu/integration-dashboard.component';
+import {IntegrationDashboardComponent} from './dashboard/integration-dashboard.component';
 import {IntegrationFhirSyncComponent} from './fhir/integration-fhir-sync.component';
 import {IntegrationLibModule} from 'terminology-lib/integration/integration-lib.module';
 import {IntegrationFhirService} from './services/integration-fhir-service';

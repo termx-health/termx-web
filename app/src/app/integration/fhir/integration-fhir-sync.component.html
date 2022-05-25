@@ -1,25 +1,26 @@
 <m-card>
-  <div *m-card-header class="tw-card-header">
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>FHIR</nz-breadcrumb-item>
-      <nz-breadcrumb-item>{{source}}</nz-breadcrumb-item>
-      <nz-breadcrumb-item>$sync</nz-breadcrumb-item>
-    </nz-breadcrumb>
-    <m-button (click)="sendRequests()">{{'web.integration.fhir.sync.send-request' | translate}}</m-button>
-  </div>
-  <p>URL: </p>
-  <div style="display:flex" *ngFor="let url of data; let index = index">
-    <p>{{url}} &nbsp;</p>
-    <m-button style="margin-left: 1em" size="small" (click)="removeRow(index)">
-      <m-icon [code]="'delete'"></m-icon>
-    </m-button>
-  </div>
-  <div style="display: flex">
-    <m-input [(ngModel)]="input"></m-input>
-    <m-button (click)="addRow()">
-      <m-icon [code]="'plus'"></m-icon>
-    </m-button>
-  </div>
-  <m-spinner [loading]=loading></m-spinner>
-  <m-alert *ngIf="message" type="{{(message | keys)[0]}}" showIcon>{{message[(message | keys)[0]]}}</m-alert>
+  <m-spinner [loading]=loading>
+    <div *m-card-header class="tw-card-header">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>FHIR</nz-breadcrumb-item>
+        <nz-breadcrumb-item>{{source}}</nz-breadcrumb-item>
+        <nz-breadcrumb-item>$sync</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <m-button (click)="importUrls()">{{'web.integration.fhir.sync.send-request' | translate}}</m-button>
+    </div>
+    <p>URL: </p>
+    <div style="display:flex" *ngFor="let url of urls; let index = index">
+      <p>{{url}}</p>
+      <m-button style="margin-left: 1em" size="small" (click)="removeUrl(index)">
+        <m-icon [code]="'delete'"></m-icon>
+      </m-button>
+    </div>
+    <div style="display: flex">
+      <m-input [(ngModel)]="input"></m-input>
+      <m-button (click)="addUrl()">
+        <m-icon [code]="'plus'"></m-icon>
+      </m-button>
+    </div>
+    <m-alert *ngIf="jobResponse" type="{{jobResponse.type}}" showIcon>{{jobResponse.message}}</m-alert>
+  </m-spinner>
 </m-card>

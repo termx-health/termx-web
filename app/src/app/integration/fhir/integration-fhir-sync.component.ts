@@ -2,6 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {IntegrationFhirService} from '../services/integration-fhir-service';
 import {JobLibService} from 'terminology-lib/job/services/job-lib-service';
 import {ActivatedRoute} from '@angular/router';
+import {filter} from 'rxjs';
+import {JobLog} from 'terminology-lib/job';
 
 
 @Component({
@@ -13,8 +15,8 @@ export class IntegrationFhirSyncComponent implements OnInit {
 
   public input: string = "";
   public loading: boolean = false;
-  public message?: {[type: string]: string};
-  public data: string[] = [];
+  public jobResponse?: {type: string, message: string};
+  public urls: string[] = [];
 
   public constructor(
     private integrationFhirService: IntegrationFhirService,
@@ -25,18 +27,20 @@ export class IntegrationFhirSyncComponent implements OnInit {
   public ngOnInit(): void {
     this.route.queryParamMap.subscribe(queryParamMap => {
       this.source = queryParamMap.get('source');
+      this.jobResponse = undefined;
+      this.input = '';
+      this.urls = [];
     });
   }
 
-  public sendRequests(): void {
-    if (this.data.length === 0) {
+  public importUrls(): void {
+    if (this.urls.length === 0) {
       return;
     }
-    this.message = undefined;
+    this.jobResponse = undefined;
     this.loading = true;
-    this.integrationFhirService.import(this.source!, {
-      parameter: this.data.map(url => ({"name": "url", "valueString": url}))
-    }).subscribe(resp => {
+    const fhirSyncParameters = {parameter: this.urls.map(url => ({"name": "url", "valueString": url}))};
+    this.integrationFhirService.import(this.source!, fhirSyncParameters).subscribe(resp => {
         const jobIdParameter = resp.parameter?.find(p => p.name === 'jobId');
         if (jobIdParameter?.valueDecimal) {
           this.pollJobStatus(jobIdParameter.valueDecimal);
@@ -47,32 +51,39 @@ export class IntegrationFhirSyncComponent implements OnInit {
 
   private pollJobStatus(jobId: number): void {
     const i = setInterval(() => {
-      this.jobService.getJobStatus(jobId).subscribe(jobResp => {
-        if (jobResp.execution?.status !== 'running') {
+      this.jobService.getJobStatus(jobId).pipe(filter(resp => resp.execution?.status !== 'running')).subscribe(jobResp => {
           clearInterval(i);
           this.loading = false;
-          const type = (jobResp.errors ? 'danger' : '') || (jobResp.warnings ? 'warning' : '') || 'success';
-          const message = (jobResp.errors ? jobResp.errors.errors : '') || (jobResp.warnings ? jobResp.warnings.warnings : '') || 'completed';
-          this.message = {[type!]: message};
-          if (type === 'success') {
-            this.data = [];
+          this.setJobResponse(jobResp);
+          if (this.jobResponse?.type === 'success') {
+            this.urls = [];
           }
         }
-      });
+      );
     }, 5000);
   }
 
 
-  public removeRow(index: number): void {
-    this.data.splice(index, 1);
-    this.data = [...this.data];
+  private setJobResponse(jobResp: JobLog): void {
+    if (jobResp.errors) {
+      this.jobResponse = {type: 'danger', message: jobResp.errors.errors};
+    } else if (jobResp.warnings) {
+      this.jobResponse = {type: 'warning', message: jobResp.warnings.warnings};
+    } else {
+      this.jobResponse = {type: 'success', message: 'Completed'};
+    }
   }
 
-  public addRow(): void {
+  public removeUrl(index: number): void {
+    this.urls.splice(index, 1);
+    this.urls = [...this.urls];
+  }
+
+  public addUrl(): void {
     if (this.input.trim().length === 0) {
       return;
     }
-    this.data.push(this.input);
+    this.urls.push(this.input);
     this.input = '';
   }
 }

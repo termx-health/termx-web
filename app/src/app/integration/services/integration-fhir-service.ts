@@ -3,11 +3,11 @@ import {Observable} from 'rxjs';
 import {IntegrationFhirLibService} from 'terminology-lib/integration/services/integration-fhir-lib-service';
 
 
-class IntegrationSyncParameters {
-  public parameter?: IntegrationSyncParameter[];
+class FhirSyncParameters {
+  public parameter?: FhirSyncParameter[];
 }
 
-class IntegrationSyncParameter {
+class FhirSyncParameter {
   public name?: string;
   public valueDecimal?: number;
   public valueString?: string;
@@ -17,7 +17,7 @@ class IntegrationSyncParameter {
 @Injectable()
 export class IntegrationFhirService extends IntegrationFhirLibService {
 
-  public import(source: string, urls: IntegrationSyncParameters): Observable<IntegrationSyncParameters> {
-    return this.http.post<IntegrationSyncParameters>(`${this.baseUrl}/${source}/$sync`, urls);
+  public import(source: string, urls: FhirSyncParameters): Observable<FhirSyncParameters> {
+    return this.http.post<FhirSyncParameters>(`${this.baseUrl}/${source}/$sync`, urls);
   }
 }
