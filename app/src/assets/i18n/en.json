@@ -59,7 +59,17 @@
         "add-version": "Add version",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
-        "versions-version": "Version name: {{version}}"
+        "versions-version": "Version name: {{version}}",
+        "duplicate": {
+          "duplicate-header": "Create duplicate code system",
+          "source-code-system": "Source code system:",
+          "target-code-system": "Target code system:",
+          "target-uri": "Target URI:",
+          "button": {
+            "duplicate": "Duplicate",
+            "cancel": "Cancel"
+          }
+        }
       }
     },
     "value-set": {

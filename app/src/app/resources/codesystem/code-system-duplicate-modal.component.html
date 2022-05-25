@@ -1,0 +1,21 @@
+<nz-modal [(nzVisible)]="modalVisible" [nzTitle]="'web.code-system.list.duplicate.duplicate-header' | translate" nzCentered (nzOnCancel)="toggleModal()">
+  <div *nzModalContent>
+    <form #form="ngForm">
+      <m-form-item name="sourceCodeSystem" required label="web.code-system.list.duplicate.source-code-system">
+        <m-select name="sourceCodeSystem" required [(ngModel)]="selectedCodeSystem">
+          <m-option *ngFor="let cs of codeSystems" [value]="cs.id" [label]="cs.id"></m-option>
+        </m-select>
+      </m-form-item>
+      <m-form-item name="targetCodeSystem" required label="web.code-system.list.duplicate.target-code-system">
+        <m-input name="targetCodeSystem" required [(ngModel)]="targetCodeSystem"></m-input>
+      </m-form-item>
+      <m-form-item name="targetUri" required label="web.code-system.list.duplicate.target-uri">
+        <m-input name="targetUri" required [(ngModel)]="targetUri"></m-input>
+      </m-form-item>
+    </form>
+  </div>
+  <div *nzModalFooter>
+    <m-button style="margin-right: 1em" (click)="toggleModal()">{{'web.code-system.list.duplicate.button.cancel' | translate}}</m-button>
+    <m-button display="primary" (click)="duplicate()">{{'web.code-system.list.duplicate.button.duplicate' | translate}}</m-button>
+  </div>
+</nz-modal>

@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'terminology-lib/resources';
 import {CodeSystemService} from '../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
+import {CodeSystemDuplicateModalComponent} from '../code-system-duplicate-modal.component';
 
 
 @Component({
@@ -16,6 +17,8 @@ export class CodeSystemListComponent implements OnInit {
   public loading: boolean = false;
   public searchInput: string = "";
   public searchUpdate = new BehaviorSubject<string>("");
+
+  @ViewChild('modalContent') public codeSystemModal!: CodeSystemDuplicateModalComponent;
 
   public constructor(
     private codeSystemService: CodeSystemService,
