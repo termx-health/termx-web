@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {CodeSystem} from 'terminology-lib/resources';
 import {CodeSystemService} from './services/code-system.service';
 import {NgForm} from '@angular/forms';
-import {isDefined, validateForm} from '@kodality-web/core-util';
+import {isDefined, SearchResult, validateForm} from '@kodality-web/core-util';
 
 
 @Component({
@@ -10,7 +10,7 @@ import {isDefined, validateForm} from '@kodality-web/core-util';
   templateUrl: './code-system-duplicate-modal.component.html',
 })
 export class CodeSystemDuplicateModalComponent {
-  @Input() public codeSystems?: CodeSystem[];
+  @Input() public codeSystems?: SearchResult<CodeSystem>;
   @Output() public codeSystemDuplicate: EventEmitter<boolean> = new EventEmitter();
 
   public modalVisible = false;
@@ -21,6 +21,7 @@ export class CodeSystemDuplicateModalComponent {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(private codeSystemService: CodeSystemService) { }
+
 
   public toggleModal(codeSystem?: string): void {
     this.modalVisible = !this.modalVisible;
@@ -38,6 +39,7 @@ export class CodeSystemDuplicateModalComponent {
       }
     );
   }
+
 
   public validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);

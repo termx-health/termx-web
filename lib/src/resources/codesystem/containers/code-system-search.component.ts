@@ -3,36 +3,37 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
-import {Concept} from '../model/concept';
-import {ConceptSearchParams} from '../model/concept-search-params';
-import {ConceptLibService} from '../services/concept-lib.service';
+import {CodeSystem} from '../model/code-system';
+import {CodeSystemLibService} from '../services/code-system-lib.service';
+import {CodeSystemSearchParams} from '../model/code-system-search-params';
+
 
 @Component({
-  selector: 'twl-concept-search',
-  templateUrl: './concept-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}]
+  selector: 'twl-code-system-search',
+  templateUrl: './code-system-search.component.html',
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemSearchComponent), multi: true}]
 })
-export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
+export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
 
   public searchUpdate = new Subject<string>();
 
-  public data: {[id: string]: Concept} = {};
-  public value?: number;
+  public data: {[id: string]: CodeSystem} = {};
+  public value?: string;
   private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
 
   public constructor(
-    private conceptService: ConceptLibService,
+    private codeSystemService: CodeSystemLibService,
   ) {}
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(
       debounceTime(250),
       distinctUntilChanged(),
-      switchMap(text => this.searchConcepts(text)),
+      switchMap(text => this.searchCodeSystems(text)),
     ).subscribe(data => this.data = data);
   }
 
@@ -40,31 +41,31 @@ export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
     this.searchUpdate.next(text);
   }
 
-  public searchConcepts(text: string): Observable<{[id: string]: Concept}> {
+  public searchCodeSystems(text: string): Observable<{[id: string]: CodeSystem}> {
     if (!text || text.length < 1) {
       return of(this.data);
     }
-    const q = new ConceptSearchParams();
-    q.codeContains = text;
+    const q = new CodeSystemSearchParams();
+    q.textContains = text
     q.limit = 10_000;
     this.loading['search'] = true;
-    return this.conceptService.search(q).pipe(
+    return this.codeSystemService.search(q).pipe(
       map(ca => ({...this.data, ...group(ca.data, c => c.id!)})),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
     );
   }
 
-  private loadConcept(id?: number): void {
+  private loadCodeSystem(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.conceptService.load(id).subscribe(c => this.data = {...(this.data || {}), [c.id!]: c}).add(() => this.loading['load'] = false);
+      this.codeSystemService.load(id).subscribe(c => this.data = {...(this.data || {}), [c.id!]: c}).add(() => this.loading['load'] = false);
     }
   }
 
-  public writeValue(obj: Concept | number): void {
+  public writeValue(obj: CodeSystem | string): void {
     this.value = (typeof obj === 'object' ? obj?.id : obj);
-    this.loadConcept(this.value);
+    this.loadCodeSystem(this.value);
   }
 
   public fireOnChange(): void {

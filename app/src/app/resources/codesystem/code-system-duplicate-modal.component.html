@@ -1,10 +1,8 @@
 <nz-modal [(nzVisible)]="modalVisible" [nzTitle]="'web.code-system.list.duplicate.duplicate-header' | translate" nzCentered (nzOnCancel)="toggleModal()">
   <div *nzModalContent>
     <form #form="ngForm">
-      <m-form-item name="sourceCodeSystem" required label="web.code-system.list.duplicate.source-code-system">
-        <m-select name="sourceCodeSystem" required [(ngModel)]="selectedCodeSystem">
-          <m-option *ngFor="let cs of codeSystems" [value]="cs.id" [label]="cs.id"></m-option>
-        </m-select>
+      <m-form-item name="sourceCodeSystem" label="web.code-system.list.duplicate.source-code-system" required>
+        <twl-code-system-search name="sourceCodeSystem" [(ngModel)]="selectedCodeSystem" valuePrimitive required></twl-code-system-search>
       </m-form-item>
       <m-form-item name="targetCodeSystem" required label="web.code-system.list.duplicate.target-code-system">
         <m-input name="targetCodeSystem" required [(ngModel)]="targetCodeSystem"></m-input>
