@@ -13,7 +13,7 @@ export class IntegrationFhirSyncComponent implements OnInit {
 
   public input: string = "";
   public loading: boolean = false;
-  public message?: {[type:string]: string};
+  public message?: {[type: string]: string};
   public data: string[] = [];
 
   public constructor(
@@ -29,7 +29,7 @@ export class IntegrationFhirSyncComponent implements OnInit {
   }
 
   public sendRequests(): void {
-    if (this.data.length === 0){
+    if (this.data.length === 0) {
       return;
     }
     this.message = undefined;
@@ -37,7 +37,7 @@ export class IntegrationFhirSyncComponent implements OnInit {
     this.integrationFhirService.import(this.source!, {
       parameter: this.data.map(url => ({"name": "url", "valueString": url}))
     }).subscribe(resp => {
-      const jobIdParameter = resp.parameter?.find(p => p.name === 'jobId');
+        const jobIdParameter = resp.parameter?.find(p => p.name === 'jobId');
         if (jobIdParameter?.valueDecimal) {
           this.pollJobStatus(jobIdParameter.valueDecimal);
         }
@@ -51,10 +51,10 @@ export class IntegrationFhirSyncComponent implements OnInit {
         if (jobResp.execution?.status !== 'running') {
           clearInterval(i);
           this.loading = false;
-          const type = (jobResp.errors? 'danger' : '') || (jobResp.warnings? 'warning' : '') || 'success';
-          const message = (jobResp.errors? jobResp.errors.errors : '') || (jobResp.warnings? jobResp.warnings.warnings : '') || 'completed';
-          this.message = {[type!]: message} ;
-          if (type === 'success'){
+          const type = (jobResp.errors ? 'danger' : '') || (jobResp.warnings ? 'warning' : '') || 'success';
+          const message = (jobResp.errors ? jobResp.errors.errors : '') || (jobResp.warnings ? jobResp.warnings.warnings : '') || 'completed';
+          this.message = {[type!]: message};
+          if (type === 'success') {
             this.data = [];
           }
         }
