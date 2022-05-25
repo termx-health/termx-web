@@ -7,8 +7,8 @@ export class JobLog {
 }
 
 class JobDefinition {
-  public type!: string;
-  public source!: string;
+  public type?: string;
+  public source?: string;
 }
 
 class JobExecution {

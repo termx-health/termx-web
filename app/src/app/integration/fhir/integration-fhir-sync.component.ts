@@ -51,7 +51,7 @@ export class IntegrationFhirSyncComponent implements OnInit {
 
   private pollJobStatus(jobId: number): void {
     const i = setInterval(() => {
-      this.jobService.getJobStatus(jobId).pipe(filter(resp => resp.execution?.status !== 'running')).subscribe(jobResp => {
+      this.jobService.getLog(jobId).pipe(filter(resp => resp.execution?.status !== 'running')).subscribe(jobResp => {
           clearInterval(i);
           this.loading = false;
           this.setJobResponse(jobResp);

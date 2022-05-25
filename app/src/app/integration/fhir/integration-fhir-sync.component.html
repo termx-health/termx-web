@@ -21,6 +21,6 @@
         <m-icon [code]="'plus'"></m-icon>
       </m-button>
     </div>
-    <m-alert *ngIf="jobResponse" type="{{jobResponse.type}}" showIcon>{{jobResponse.message}}</m-alert>
+    <m-alert *ngIf="jobResponse" [type]="jobResponse.type" showIcon>{{jobResponse.message}}</m-alert>
   </m-spinner>
 </m-card>

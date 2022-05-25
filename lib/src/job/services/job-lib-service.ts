@@ -12,7 +12,7 @@ export class JobLibService {
     this.baseUrl = `${api}/job-logs`;
   }
 
-  public getJobStatus(jobId: number): Observable<JobLog> {
+  public getLog(jobId: number): Observable<JobLog> {
     return this.http.get<JobLog>(`${this.baseUrl}/${jobId}`);
   }
 }
