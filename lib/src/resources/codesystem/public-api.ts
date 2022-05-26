@@ -5,5 +5,6 @@ export * from './model/code-system-search-params';
 export * from './model/code-system-version';
 export * from './model/entity-property';
 export * from './services/code-system-lib.service';
+export * from './services/code-system-entity-version-lib.service';
 export * from './code-system-lib.module';
 export * from './containers/code-system-search.component';

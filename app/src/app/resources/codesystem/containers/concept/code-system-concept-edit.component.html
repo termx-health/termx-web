@@ -1,0 +1,53 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-card [title]="mode === 'edit' ? 'web.concept.form.edit-header' : 'web.concept.form.add-header'">
+      <m-spinner [loading]="loading">
+        <form #form="ngForm" *ngIf="concept">
+          <m-form-item name="code" label="web.concept.entity.code" required>
+            <m-input name="code" [(ngModel)]="concept.code" required></m-input>
+          </m-form-item>
+
+          <m-form-item name="description" label="web.concept.entity.description">
+            <m-textarea name="description" [(ngModel)]="concept.description"></m-textarea>
+          </m-form-item>
+
+          <ng-container *m-card-footer>
+            <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
+              {{'core.btn.save' | translate}}
+            </m-button>
+          </ng-container>
+        </form>
+        <m-card class="tw-table-card">
+          <div *m-card-header class="tw-card-header">
+            <div class="m-card-title">{{'web.concept.version.list.versions' | translate}}</div>
+            <m-button label="web.concept.version.form.add-header"></m-button>
+          </div>
+          <m-table *ngIf="concept && concept.versions" [data]="concept.versions" outlined enablePagination hideOnSinglePage>
+            <tr *mTableHead>
+              <th>{{'web.concept.version.list.number' | translate}}</th>
+              <th>{{'web.concept.version.list.created' | translate}}</th>
+              <th>{{'web.concept.version.list.description' | translate}}</th>
+              <th>{{'web.concept.version.list.status' | translate}}</th>
+              <th class="tw-table-actions">{{'web.concept.version.list.operations' | translate}}</th>
+            </tr>
+
+            <tr *mTableRow="let version">
+              <td>{{version.id}}</td>
+              <td>{{version.created | localDateTime}}</td>
+              <td>{{version.description}}</td>
+              <td>{{version.status}}</td>
+              <td class="tw-table-actions">
+                <a *ngIf="version.status === 'active'" (click)="retireVersion(version)">
+                  {{'web.publication-status.operations.retire' | translate}}
+                </a>
+                <a *ngIf="version.status !== 'active'" (click)="activateVersion(version)">
+                  {{'web.publication-status.operations.activate' | translate}}
+                </a>
+              </td>
+            </tr>
+          </m-table>
+        </m-card>
+      </m-spinner>
+    </m-card>
+  </div>
+</m-form-row>

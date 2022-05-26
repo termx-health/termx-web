@@ -19,6 +19,7 @@ export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
 
   public data: {[id: string]: Concept} = {};
   public value?: number;
+  public codeSystem?: string;
   private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any) => x;
