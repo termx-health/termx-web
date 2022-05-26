@@ -2,13 +2,13 @@
   <div *nzModalContent>
     <form #form="ngForm">
       <m-form-item name="sourceCodeSystem" label="web.code-system.list.duplicate.source-code-system" required>
-        <twl-code-system-search name="sourceCodeSystem" [(ngModel)]="selectedCodeSystem" valuePrimitive required></twl-code-system-search>
+        <twl-code-system-search name="sourceCodeSystem" [(ngModel)]="sourceCodeSystem" valuePrimitive required></twl-code-system-search>
       </m-form-item>
-      <m-form-item name="targetCodeSystem" required label="web.code-system.list.duplicate.target-code-system">
-        <m-input name="targetCodeSystem" required [(ngModel)]="targetCodeSystem"></m-input>
+      <m-form-item name="targetCodeSystem" label="web.code-system.list.duplicate.target-code-system" required>
+        <m-input name="targetCodeSystem" [(ngModel)]="targetCodeSystem" required></m-input>
       </m-form-item>
-      <m-form-item name="targetUri" required label="web.code-system.list.duplicate.target-uri">
-        <m-input name="targetUri" required [(ngModel)]="targetUri"></m-input>
+      <m-form-item name="targetUri" label="web.code-system.list.duplicate.target-uri" required>
+        <m-input name="targetUri" [(ngModel)]="targetUri" required></m-input>
       </m-form-item>
     </form>
   </div>

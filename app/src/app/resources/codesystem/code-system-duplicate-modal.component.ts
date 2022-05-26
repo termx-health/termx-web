@@ -12,7 +12,7 @@ export class CodeSystemDuplicateModalComponent {
   @Output() public duplicated: EventEmitter<boolean> = new EventEmitter();
 
   public modalVisible = false;
-  public selectedCodeSystem?: string;
+  public sourceCodeSystem?: string;
   public targetCodeSystem?: string;
   public targetUri?: string;
 
@@ -20,10 +20,9 @@ export class CodeSystemDuplicateModalComponent {
 
   public constructor(private codeSystemService: CodeSystemService) { }
 
-
   public toggleModal(codeSystem?: string): void {
     this.modalVisible = !this.modalVisible;
-    this.selectedCodeSystem = codeSystem;
+    this.sourceCodeSystem = codeSystem;
   }
 
   public duplicate(): void {
@@ -31,7 +30,7 @@ export class CodeSystemDuplicateModalComponent {
       return;
     }
     const duplicateRequest = {codeSystem: this.targetCodeSystem!, codeSystemUri: this.targetUri!};
-    this.codeSystemService.duplicateCodeSystem(this.selectedCodeSystem!, duplicateRequest).subscribe(() => {
+    this.codeSystemService.duplicateCodeSystem(this.sourceCodeSystem!, duplicateRequest).subscribe(() => {
         this.modalVisible = false;
         this.duplicated.emit();
       }
