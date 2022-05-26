@@ -10,6 +10,7 @@ import {CodeSystemVersionEditComponent} from './containers/version/code-system-v
 import {SharedModule} from '../../shared/shared.module';
 import {CodeSystemService} from './services/code-system.service';
 import {CodeSystemVersionViewComponent} from './containers/version/code-system-version-view.component';
+import {CodeSystemDuplicateModalComponent} from './code-system-duplicate-modal.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -32,7 +33,8 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     CodeSystemPropertiesListComponent,
     CodeSystemVersionsListComponent,
     CodeSystemVersionEditComponent,
-    CodeSystemVersionViewComponent
+    CodeSystemVersionViewComponent,
+    CodeSystemDuplicateModalComponent
   ],
   exports: [
     CodeSystemListComponent
