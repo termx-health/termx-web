@@ -1,6 +1,6 @@
 import {CodeSystemEntity} from './code-system-entity';
 
-export class Concept extends CodeSystemEntity{
+export class CodeSystemConcept extends CodeSystemEntity{
   public code?: string;
   public description?: string;
 }

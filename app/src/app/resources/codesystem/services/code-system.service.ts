@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {CodeSystem, CodeSystemLibService, CodeSystemVersion, Concept} from 'terminology-lib/resources';
+import {CodeSystem, CodeSystemLibService, CodeSystemVersion, CodeSystemConcept} from 'terminology-lib/resources';
 
 @Injectable()
 export class CodeSystemService extends CodeSystemLibService {
@@ -27,7 +27,7 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/duplicate`, duplicateRequest);
   }
 
-  public saveConcept(codeSystemId: string, concept: Concept): Observable<Concept> {
+  public saveConcept(codeSystemId: string, concept: CodeSystemConcept): Observable<CodeSystemConcept> {
     return this.http.post(`${this.baseUrl}/${codeSystemId}/concepts`, concept);
   }
 }

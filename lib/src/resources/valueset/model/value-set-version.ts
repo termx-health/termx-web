@@ -1,5 +1,5 @@
 import {Designation} from '../../designation';
-import {Concept} from '../../codesystem';
+import {CodeSystemConcept} from '../../codesystem';
 
 export class ValueSetVersion {
   public id?: number;
@@ -12,6 +12,6 @@ export class ValueSetVersion {
   public expirationDate?: Date;
   public created?: Date;
 
-  public concepts?: Concept[];
+  public concepts?: CodeSystemConcept[];
   public designations?: Designation[];
 }

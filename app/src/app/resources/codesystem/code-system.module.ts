@@ -14,7 +14,6 @@ import {CodeSystemDuplicateModalComponent} from './containers/code-system-duplic
 import {CodeSystemConceptsListComponent} from './containers/edit/code-system-concepts-list.component';
 import {CodeSystemConceptEditComponent} from './containers/concept/code-system-concept-edit.component';
 import {CodeSystemEntityVersionService} from './services/code-system-entity-version.service';
-import {ConceptService} from './services/concept.service';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -50,7 +49,6 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   providers: [
     CodeSystemService,
     CodeSystemEntityVersionService,
-    ConceptService
   ]
 })
 export class CodeSystemModule {

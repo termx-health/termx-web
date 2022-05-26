@@ -1,8 +1,8 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Concept, ConceptSearchParams} from 'terminology-lib/resources';
-import {ConceptService} from '../../services/concept.service';
+import {CodeSystemConcept, ConceptSearchParams} from 'terminology-lib/resources';
 import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
+import {CodeSystemService} from '../../services/code-system.service';
 
 @Component({
   selector: 'twa-code-system-concepts-list',
@@ -12,13 +12,13 @@ export class CodeSystemConceptsListComponent implements OnInit {
   @Input() public codeSystemId?: string;
 
   public query = new ConceptSearchParams();
-  public searchResult = new SearchResult<Concept>();
+  public searchResult = new SearchResult<CodeSystemConcept>();
   public searchInput: string = "";
-  public concepts: Concept[] = [];
+  public concepts: CodeSystemConcept[] = [];
   public loading = false;
   public searchUpdate = new BehaviorSubject<string>("");
 
-  public constructor(private conceptService: ConceptService) { }
+  public constructor(private codeSystemService: CodeSystemService) { }
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(
@@ -28,12 +28,12 @@ export class CodeSystemConceptsListComponent implements OnInit {
     ).subscribe(data => this.searchResult = data);
   }
 
-  public search(): Observable<SearchResult<Concept>> {
+  public search(): Observable<SearchResult<CodeSystemConcept>> {
     const q = copyDeep(this.query);
     q.codeSystem = this.codeSystemId;
     q.codeContains = this.searchInput || undefined;
     this.loading = true;
-    return this.conceptService.search(q).pipe(finalize(() => this.loading = false));
+    return this.codeSystemService.searchConcepts(this.codeSystemId!, q).pipe(finalize(() => this.loading = false));
   }
 
   public loadData(): void {

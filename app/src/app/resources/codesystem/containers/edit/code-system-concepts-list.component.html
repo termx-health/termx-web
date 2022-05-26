@@ -17,5 +17,10 @@
     <tr *mTableRow="let concept">
       <td><a [routerLink]="['../concepts/', concept.code, 'edit']">{{concept.code}}</a></td>
     </tr>
+    <tr *mTableNoData>
+      <td>
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
   </m-table>
 </m-card>
