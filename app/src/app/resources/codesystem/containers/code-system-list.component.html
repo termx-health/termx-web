@@ -33,10 +33,10 @@
         <m-button>
           <m-icon [code]="'delete'"></m-icon>
         </m-button>
-        <m-button (click)="codeSystemModal.toggleModal(cs.id)">
+        <m-button (click)="duplicateModal.toggleModal(cs.id)">
           <m-icon [code]="'copy'"></m-icon>
         </m-button>
-        <twa-code-system-duplicate-modal #modalContent (codeSystemDuplicate)="loadData()"></twa-code-system-duplicate-modal>
+        <twa-code-system-duplicate-modal #duplicateModal (duplicated)="loadData()"></twa-code-system-duplicate-modal>
       </td>
     </tr>
 

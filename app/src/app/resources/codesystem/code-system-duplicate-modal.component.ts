@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {CodeSystem} from 'terminology-lib/resources';
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {CodeSystemService} from './services/code-system.service';
 import {NgForm} from '@angular/forms';
-import {isDefined, SearchResult, validateForm} from '@kodality-web/core-util';
+import {validateForm} from '@kodality-web/core-util';
 
 
 @Component({
@@ -10,8 +9,7 @@ import {isDefined, SearchResult, validateForm} from '@kodality-web/core-util';
   templateUrl: './code-system-duplicate-modal.component.html',
 })
 export class CodeSystemDuplicateModalComponent {
-  @Input() public codeSystems?: SearchResult<CodeSystem>;
-  @Output() public codeSystemDuplicate: EventEmitter<boolean> = new EventEmitter();
+  @Output() public duplicated: EventEmitter<boolean> = new EventEmitter();
 
   public modalVisible = false;
   public selectedCodeSystem?: string;
@@ -25,23 +23,19 @@ export class CodeSystemDuplicateModalComponent {
 
   public toggleModal(codeSystem?: string): void {
     this.modalVisible = !this.modalVisible;
-    this.selectedCodeSystem = codeSystem || '';
+    this.selectedCodeSystem = codeSystem;
   }
 
   public duplicate(): void {
-    if (!this.validate()) {
+    if (!validateForm(this.form)) {
       return;
     }
-    const duplicateRequest = {sourceCodeSystem: this.selectedCodeSystem!, targetCodeSystemUri: this.targetUri!};
-    this.codeSystemService.duplicateCodeSystem(this.targetCodeSystem!, duplicateRequest).subscribe(() => {
+    const duplicateRequest = {codeSystem: this.targetCodeSystem!, codeSystemUri: this.targetUri!};
+    this.codeSystemService.duplicateCodeSystem(this.selectedCodeSystem!, duplicateRequest).subscribe(() => {
         this.modalVisible = false;
-        this.codeSystemDuplicate.emit();
+        this.duplicated.emit();
       }
     );
   }
 
-
-  public validate(): boolean {
-    return isDefined(this.form) && validateForm(this.form);
-  }
 }
