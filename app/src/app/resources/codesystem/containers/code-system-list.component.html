@@ -30,7 +30,13 @@
       <td>{{cs.names | localName}}</td>
       <td>{{cs.uri | apply: parseDomain}}</td>
       <td class="tw-table-actions">
-        <button nz-button nzType="primary" nzDanger>{{'core.btn.delete' | translate}}</button>
+        <m-button>
+          <m-icon [code]="'delete'"></m-icon>
+        </m-button>
+        <m-button (click)="duplicateModal.toggleModal(cs.id)">
+          <m-icon [code]="'copy'"></m-icon>
+        </m-button>
+        <twa-code-system-duplicate-modal #duplicateModal (duplicated)="loadData()"></twa-code-system-duplicate-modal>
       </td>
     </tr>
 
