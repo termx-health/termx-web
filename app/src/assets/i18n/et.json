@@ -59,7 +59,17 @@
         "add-version": "Lisa versioon",
         "versions-release-date": "Alates: {{releaseDate}}",
         "versions-expiration-date": "kuni {{expirationDate}}",
-        "versions-version": "Versiooni nimi: {{version}}"
+        "versions-version": "Versiooni nimi: {{version}}",
+        "duplicate": {
+          "duplicate-header": "Loo koodisüsteemi duplikaat",
+          "source-code-system": "Allikas koodisüsteem:",
+          "target-code-system": "Siht koodisüsteem:",
+          "target-uri": "Siht URI:",
+          "button": {
+            "duplicate": "Duplitseeri",
+            "cancel": "Katkesta"
+          }
+        }
       }
     },
     "value-set": {

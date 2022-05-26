@@ -22,4 +22,8 @@ export class CodeSystemService extends CodeSystemLibService {
   public retireVersion(codeSystemId: string, version: string): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/retire`, {});
   }
+
+  public duplicateCodeSystem(codeSystemId: string, duplicateRequest: {codeSystem: string, codeSystemUri: string}): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/duplicate`, duplicateRequest);
+  }
 }

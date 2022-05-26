@@ -6,3 +6,4 @@ export * from './model/code-system-version';
 export * from './model/entity-property';
 export * from './services/code-system-lib.service';
 export * from './code-system-lib.module';
+export * from './containers/code-system-search.component';
