@@ -4,6 +4,7 @@ import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemVersion, ValueSet, ValueSetSearchParams} from 'terminology-lib/resources';
 import {TranslateService} from '@ngx-translate/core';
 import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
+import {MuiTableSortOrder} from '@kodality-health/marina-ui';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class ValueSetListComponent implements OnInit {
 
   public search(): Observable<SearchResult<ValueSet>> {
     const q = copyDeep(this.query);
+    q.lang = this.translateService.currentLang;
     q.decorated = true;
     q.textContains = this.searchInput || undefined;
     this.loading = true;
@@ -40,6 +42,11 @@ export class ValueSetListComponent implements OnInit {
 
   public loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
+  }
+
+  public sortChange(key: string, order: MuiTableSortOrder): void {
+    this.query.sort = order ? (order === 'descend' ? `-${key}` : key) : undefined; // fixme: backend-table
+    this.loadData();
   }
 
 

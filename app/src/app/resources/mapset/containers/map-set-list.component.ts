@@ -4,6 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
 import {MapSet, MapSetSearchParams, MapSetVersion} from 'lib/src/resources/mapset';
 import {MapSetService} from '../services/map-set-service';
+import {MuiTableSortOrder} from '@kodality-health/marina-ui';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class MapSetListComponent implements OnInit {
 
   public search(): Observable<SearchResult<MapSet>> {
     const q = copyDeep(this.query);
+    q.lang = this.translateService.currentLang;
     q.versionsDecorated = true;
     q.textContains = this.searchInput || undefined;
     this.loading = true;
@@ -40,6 +42,11 @@ export class MapSetListComponent implements OnInit {
 
   public loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
+  }
+
+  public sortChange(key: string, order: MuiTableSortOrder): void {
+    this.query.sort = order ? (order === 'descend' ? `-${key}` : key) : undefined; // fixme: backend-table
+    this.loadData();
   }
 
   public getVersionTranslateTokens = (version: MapSetVersion, translateOptions: object): string[] => {
