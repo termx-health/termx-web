@@ -3,11 +3,11 @@ import {TERMINOLOGY_API} from '../../../terminology-lib.token';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
-import {Concept} from '../../concept';
 import {ValueSet} from '../model/value-set';
 import {ValueSetVersion} from '../model/value-set-version';
 import {ValueSetSearchParams} from '../model/value-set-search-params';
 import {Designation} from '../../designation';
+import {Concept} from '../../codesystem';
 
 @Injectable()
 export class ValueSetLibService {

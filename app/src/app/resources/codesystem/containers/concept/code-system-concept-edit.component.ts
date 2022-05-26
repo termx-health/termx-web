@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {CodeSystemEntityVersion, CodeSystemVersion, Concept, ConceptSearchParams} from 'terminology-lib/resources';
 import {NgForm} from '@angular/forms';
-import {ConceptService} from '../../../concept/services/concept.service';
+import {ConceptService} from '../../services/concept.service';
 import {ActivatedRoute} from '@angular/router';
 import {copyDeep, validateForm} from '@kodality-web/core-util';
 import {Location} from '@angular/common';

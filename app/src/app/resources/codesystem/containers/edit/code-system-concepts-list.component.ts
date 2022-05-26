@@ -1,14 +1,14 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Concept, ConceptSearchParams} from 'terminology-lib/resources';
-import {ConceptService} from '../../../concept/services/concept.service';
+import {ConceptService} from '../../services/concept.service';
 import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 
 @Component({
-  selector: 'twa-code-system-concept-list',
-  templateUrl: './code-system-concept-list.component.html',
+  selector: 'twa-code-system-concepts-list',
+  templateUrl: './code-system-concepts-list.component.html',
 })
-export class CodeSystemConceptListComponent implements OnInit {
+export class CodeSystemConceptsListComponent implements OnInit {
   @Input() public codeSystemId?: string;
 
   public query = new ConceptSearchParams();
