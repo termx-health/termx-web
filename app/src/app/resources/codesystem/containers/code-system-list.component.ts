@@ -4,6 +4,7 @@ import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'terminology
 import {CodeSystemService} from '../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
+import {MuiTableSortOrder} from '@kodality-health/marina-ui';
 
 
 @Component({
@@ -32,6 +33,7 @@ export class CodeSystemListComponent implements OnInit {
 
   public search(): Observable<SearchResult<CodeSystem>> {
     const q = copyDeep(this.query);
+    q.lang = this.translateService.currentLang;
     q.versionsDecorated = true;
     q.textContains = this.searchInput || undefined;
     this.loading = true;
@@ -40,6 +42,11 @@ export class CodeSystemListComponent implements OnInit {
 
   public loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
+  }
+
+  public sortChange(key: string, order: MuiTableSortOrder): void {
+    this.query.sort = order ? (order === 'descend' ? `-${key}` : key) : undefined; // fixme: backend-table
+    this.loadData();
   }
 
   public getVersionTranslateTokens = (version: CodeSystemVersion, translateOptions: object): string[] => {
@@ -54,5 +61,4 @@ export class CodeSystemListComponent implements OnInit {
   public parseDomain(uri: string): string {
     return uri?.split('//')[1]?.split('/')[0];
   }
-
 }

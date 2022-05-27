@@ -1,5 +1,5 @@
-<m-spinner [loading]=loading>
-  <m-card>
+<m-card>
+  <m-spinner [loading]=loading>
     <div *m-card-header class="tw-card-header">
       <nz-breadcrumb>
         <nz-breadcrumb-item>FHIR</nz-breadcrumb-item>
@@ -22,5 +22,5 @@
       </m-button>
     </div>
     <m-alert *ngIf="jobResponse" [type]="jobResponse.type" showIcon>{{jobResponse.message}}</m-alert>
-  </m-card>
-</m-spinner>
+  </m-spinner>
+</m-card>
