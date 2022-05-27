@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {MapSetListComponent} from './containers/map-set-list.component';
-import {SharedModule} from '../../shared/shared.module';
+import {SharedModule} from '../../core/shared/shared.module';
 import {MapSetLibModule} from 'terminology-lib/resources/mapset';
 import {Routes} from '@angular/router';
 import {MapSetService} from './services/map-set-service';

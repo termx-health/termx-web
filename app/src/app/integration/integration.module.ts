@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {SharedModule} from '../shared/shared.module';
+import {SharedModule} from '../core/shared/shared.module';
 import {IntegrationDashboardComponent} from './dashboard/integration-dashboard.component';
 import {IntegrationFhirSyncComponent} from './fhir/integration-fhir-sync.component';
 import {IntegrationLibModule} from 'terminology-lib/integration/integration-lib.module';

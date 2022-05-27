@@ -4,7 +4,7 @@ import {ValueSetListComponent} from './containers/value-set-list.component';
 import {ConceptLibModule, DesignationLibModule, ValueSetLibModule} from 'terminology-lib/resources';
 import {ValueSetVersionEditComponent} from './containers/version/value-set-version-edit.component';
 import {ValueSetVersionConceptsListComponent} from './containers/version/value-set-version-concepts-list.component';
-import {SharedModule} from '../../shared/shared.module';
+import {SharedModule} from '../../core/shared/shared.module';
 import {ValueSetService} from './services/value-set.service';
 import {ValueSetEditComponent} from './containers/edit/value-set-edit.component';
 import {ValueSetVersionsListComponent} from './containers/edit/value-set-versions-list.component';

@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
@@ -18,8 +18,11 @@ import {IntegrationModule} from './integration/integration.module';
 import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
 import {IntegrationLibModule} from 'terminology-lib/integration/integration-lib.module';
 import {JobLibModule} from 'terminology-lib/job/job-lib.module';
+import {ErrorHandler} from './core/http/error-handler';
+
 
 registerLocaleData(et);
+
 
 
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
@@ -39,6 +42,9 @@ export function MarinaUiConfigFactory(): MuiConfig {
         {code: 'ru', names: {'en': 'Russian', 'et': 'Vene'}},
       ],
       requiredLanguages: ['en']
+    },
+    notifications: {
+      top: '4em'
     }
   };
 
@@ -72,6 +78,7 @@ export function MarinaUiConfigFactory(): MuiConfig {
     JobLibModule
   ],
   providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: ErrorHandler, multi: true},
     {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
     {provide: LOCALE_ID, useValue: 'en'},
     {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},

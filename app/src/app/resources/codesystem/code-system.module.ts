@@ -7,7 +7,7 @@ import {CodeSystemPropertiesListComponent} from './containers/edit/code-system-p
 import {CodeSystemVersionsListComponent} from './containers/edit/code-system-versions-list.component';
 import {CodeSystemEditComponent} from './containers/edit/code-system-edit.component';
 import {CodeSystemVersionEditComponent} from './containers/version/code-system-version-edit.component';
-import {SharedModule} from '../../shared/shared.module';
+import {SharedModule} from '../../core/shared/shared.module';
 import {CodeSystemService} from './services/code-system.service';
 import {CodeSystemVersionViewComponent} from './containers/version/code-system-version-view.component';
 import {CodeSystemDuplicateModalComponent} from './code-system-duplicate-modal.component';

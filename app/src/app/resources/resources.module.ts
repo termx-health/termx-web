@@ -5,7 +5,7 @@ import {VALUE_SET_ROUTES, ValueSetModule} from './valueset/value-set.module';
 import {ConceptModule} from './concept/concept.module';
 import {DesignationModule} from './designation/designation.module';
 import {ResourcesTabsetComponent} from './tabs/resources-tabset.component';
-import {SharedModule} from '../shared/shared.module';
+import {SharedModule} from '../core/shared/shared.module';
 import {MAP_SET_ROUTES, MapSetModule} from './mapset/map-set.module';
 
 
