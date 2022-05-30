@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {CodeSystem, CodeSystemLibService, CodeSystemVersion, CodeSystemConcept} from 'terminology-lib/resources';
+import {CodeSystem, CodeSystemConcept, CodeSystemLibService, CodeSystemVersion} from 'terminology-lib/resources';
 
 @Injectable()
 export class CodeSystemService extends CodeSystemLibService {

@@ -3,8 +3,7 @@ import {ValueSetService} from '../services/value-set.service';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemVersion, ValueSet, ValueSetSearchParams} from 'terminology-lib/resources';
 import {TranslateService} from '@ngx-translate/core';
-import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
-import {MuiTableSortOrder} from '@kodality-health/marina-ui';
+import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 
 
 @Component({
@@ -16,7 +15,7 @@ export class ValueSetListComponent implements OnInit {
   public query = new ValueSetSearchParams();
   public loading = false;
   public searchInput: string = "";
-  public searchUpdate = new BehaviorSubject<string>("");
+  public searchUpdate = new Subject<string>();
 
   public constructor(
     private valueSetService: ValueSetService,
@@ -24,6 +23,7 @@ export class ValueSetListComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.loadData();
     this.searchUpdate.pipe(
       debounceTime(250),
       distinctUntilChanged(),
@@ -43,12 +43,6 @@ export class ValueSetListComponent implements OnInit {
   public loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
   }
-
-  public sortChange(key: string, order: MuiTableSortOrder): void {
-    this.query.sort = order ? (order === 'descend' ? `-${key}` : key) : undefined; // fixme: backend-table
-    this.loadData();
-  }
-
 
   public getVersionTranslateTokens = (version: CodeSystemVersion, translateOptions: object): string[] => {
     const tokens = [

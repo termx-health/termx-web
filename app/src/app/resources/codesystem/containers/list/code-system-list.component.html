@@ -6,18 +6,7 @@
     </m-button>
   </div>
 
-  <!-- todo: m-backend-table -->
-  <m-table [data]="searchResult.data"
-      [loading]="loading"
-      outlined
-      enablePagination
-      manualPagination
-      [total]="searchResult.meta.total"
-      [pageSize]="query.limit"
-      [(pageIndex)]="query['page']"
-      (pageIndexChange)="loadData()"
-      (sortOrderChange)="sortChange($event.key, $event.order)"
-  >
+  <m-backend-table [result]="searchResult" [(query)]="query" (queryChange)="loadData()" [loading]="loading">
     <tr *mTableHead>
       <th></th>
       <th mColumnKey="id">{{'web.code-system.entity.id' | translate}}</th>
@@ -71,6 +60,6 @@
         <m-no-data></m-no-data>
       </td>
     </tr>
-  </m-table>
+  </m-backend-table>
 </m-card>
 

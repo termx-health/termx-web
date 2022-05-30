@@ -1,26 +1,18 @@
-<m-card class="tw-table-card">
+<m-card class="tw-card-table">
   <div *m-card-header class="tw-card-header">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <m-button [routerLink]="['../concepts/add']" label="web.code-system.list.add-concept"></m-button>
   </div>
-  <m-table [data]="searchResult.data"
-      [loading]="loading"
-      size="small"
-      outlined
-      enablePagination
-      manualPagination
-      hideOnSinglePage
-      [total]="searchResult.meta.total"
-      [pageSize]="query.limit"
-      [(pageIndex)]="query['page']"
-      (pageIndexChange)="loadData()">
+
+  <m-backend-table [result]="searchResult" [(query)]="query" (queryChange)="loadData()" [loading]="loading" size="small">
     <tr *mTableRow="let concept">
       <td><a [routerLink]="['../concepts/', concept.code, 'edit']">{{concept.code}}</a></td>
     </tr>
+
     <tr *mTableNoData>
       <td>
         <m-no-data></m-no-data>
       </td>
     </tr>
-  </m-table>
+  </m-backend-table>
 </m-card>

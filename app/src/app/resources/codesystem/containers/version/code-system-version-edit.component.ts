@@ -12,7 +12,6 @@ import {Location} from '@angular/common';
 })
 export class CodeSystemVersionEditComponent implements OnInit {
   public codeSystemId?: string | null;
-  public codeSystemVersion?: string | null;
   public version?: CodeSystemVersion;
 
   public loading = false;
@@ -28,11 +27,11 @@ export class CodeSystemVersionEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    this.codeSystemVersion = this.route.snapshot.paramMap.get('version');
-    this.mode = this.codeSystemId && this.codeSystemVersion ? 'edit' : 'add';
+    const codeSystemVersion = this.route.snapshot.paramMap.get('version');
+    this.mode = this.codeSystemId && codeSystemVersion ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadVersion(this.codeSystemId!, this.codeSystemVersion!);
+      this.loadVersion(this.codeSystemId!, codeSystemVersion!);
     } else {
       this.version = new CodeSystemVersion();
       this.version.status = 'draft';
