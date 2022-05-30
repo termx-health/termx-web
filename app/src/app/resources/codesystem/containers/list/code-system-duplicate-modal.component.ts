@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
-import {CodeSystemService} from './services/code-system.service';
+import {CodeSystemService} from '../../services/code-system.service';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 

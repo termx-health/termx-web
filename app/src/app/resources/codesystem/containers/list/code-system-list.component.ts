@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
-import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'terminology-lib/resources';
-import {CodeSystemService} from '../services/code-system.service';
+import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'lib/src/resources';
+import {CodeSystemService} from '../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
 import {MuiTableSortOrder} from '@kodality-health/marina-ui';

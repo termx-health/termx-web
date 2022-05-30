@@ -3,9 +3,9 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
-import {Concept} from '../model/concept';
+import {CodeSystemConcept} from '../model/code-system-concept';
 import {ConceptSearchParams} from '../model/concept-search-params';
-import {ConceptLibService} from '../services/concept-lib.service';
+import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.service';
 
 @Component({
   selector: 'twl-concept-search',
@@ -17,7 +17,7 @@ export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
 
   public searchUpdate = new Subject<string>();
 
-  public data: {[id: string]: Concept} = {};
+  public data: {[id: string]: CodeSystemConcept} = {};
   public value?: number;
   private loading: {[key: string]: boolean} = {};
 
@@ -25,7 +25,7 @@ export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
   public onTouched = (x: any) => x;
 
   public constructor(
-    private conceptService: ConceptLibService,
+    private conceptService: CodeSystemConceptLibService,
   ) {}
 
   public ngOnInit(): void {
@@ -40,7 +40,7 @@ export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
     this.searchUpdate.next(text);
   }
 
-  public searchConcepts(text: string): Observable<{[id: string]: Concept}> {
+  public searchConcepts(text: string): Observable<{[id: string]: CodeSystemConcept}> {
     if (!text || text.length < 1) {
       return of(this.data);
     }
@@ -62,7 +62,7 @@ export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  public writeValue(obj: Concept | number): void {
+  public writeValue(obj: CodeSystemConcept | number): void {
     this.value = (typeof obj === 'object' ? obj?.id : obj);
     this.loadConcept(this.value);
   }

@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {CODE_SYSTEM_ROUTES, CodeSystemModule} from './codesystem/code-system.module';
 import {VALUE_SET_ROUTES, ValueSetModule} from './valueset/value-set.module';
-import {ConceptModule} from './concept/concept.module';
 import {DesignationModule} from './designation/designation.module';
 import {ResourcesTabsetComponent} from './tabs/resources-tabset.component';
 import {SharedModule} from '../core/shared/shared.module';
@@ -19,7 +18,6 @@ export const RESOURCES_ROUTES: Routes = [
 const resourceModules = [
   CodeSystemModule,
   ValueSetModule,
-  ConceptModule,
   DesignationModule,
   MapSetModule
 ];

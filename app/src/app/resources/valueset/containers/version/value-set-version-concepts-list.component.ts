@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ValueSetService} from '../../services/value-set.service';
-import {Concept, Designation} from 'terminology-lib/resources';
+import {CodeSystemConcept, Designation} from 'terminology-lib/resources';
 import {forkJoin} from 'rxjs';
 import {BooleanInput, isDefined, unique, uniqueBy} from '@kodality-web/core-util';
 
@@ -13,7 +13,7 @@ export class ValueSetVersionConceptsListComponent implements OnChanges {
   @Input() public valueSetVersion?: string;
   @Input() @BooleanInput() public viewMode: string | boolean = false;
 
-  public data: {concept?: Concept, designation?: Designation}[] = [];
+  public data: {concept?: CodeSystemConcept, designation?: Designation}[] = [];
   public loading = false;
 
   public constructor(private valueSetService: ValueSetService) { }
@@ -37,7 +37,7 @@ export class ValueSetVersionConceptsListComponent implements OnChanges {
     }).add(() => this.loading = false);
   }
 
-  public prepareData(concepts: Concept[], designations: Designation[]): void {
+  public prepareData(concepts: CodeSystemConcept[], designations: Designation[]): void {
     const designationsIds: number[] = designations.map(d => d.id!).filter(unique);
 
     this.data = concepts.flatMap(c => {
@@ -54,7 +54,7 @@ export class ValueSetVersionConceptsListComponent implements OnChanges {
     });
   };
 
-  public readConcepts(): Concept[] {
+  public readConcepts(): CodeSystemConcept[] {
     const concepts = this.data.map(item => item.concept).filter(isDefined);
     return uniqueBy(concepts, c => c?.id)!;
   }

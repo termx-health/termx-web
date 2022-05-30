@@ -5,6 +5,9 @@ import {CodeSystemSearchComponent} from './containers/code-system-search.compone
 import {MarinaUiModule} from '@kodality-health/marina-ui';
 import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
+import {CodeSystemEntityVersionLibService} from './services/code-system-entity-version-lib.service';
+import {ConceptSearchComponent} from './containers/concept-search.component';
+import {CodeSystemConceptLibService} from './services/code-system-concept-lib.service';
 
 
 @NgModule({
@@ -15,13 +18,17 @@ import {CoreUtilModule} from '@kodality-web/core-util';
     CoreUtilModule
   ],
   providers: [
-    CodeSystemLibService
+    CodeSystemLibService,
+    CodeSystemEntityVersionLibService,
+    CodeSystemConceptLibService
   ],
   declarations: [
-    CodeSystemSearchComponent
+    CodeSystemSearchComponent,
+    ConceptSearchComponent
   ],
   exports: [
-    CodeSystemSearchComponent
+    CodeSystemSearchComponent,
+    ConceptSearchComponent
   ]
 })
 export class CodeSystemLibModule {
