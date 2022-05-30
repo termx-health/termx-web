@@ -9,6 +9,18 @@
     "app": {
       "header": "Terminoloogia"
     },
+    "case-sensitive-options": {
+      "ics": "esitähe tõstutundlik",
+      "cs": "tõstutundlik",
+      "ci": "tõstutundetu"
+    },
+    "content-options": {
+      "complete": "täielik",
+      "not-present": "puudulik",
+      "example": "näidis",
+      "fragment": "katkend",
+      "supplement": "lisand"
+    },
     "code-system-version": {
       "entity": {
         "id": "Identifikaator",
@@ -52,6 +64,24 @@
         "edit-header": "Muuda koodisüsteemi"
       },
       "list": {
+        "contact": {
+          "contacts": "Kontaktid",
+          "add-contact": "Lisa kontakt",
+          "form": {
+            "name": "Nimi",
+            "edit-header": "Muuda kontakti",
+            "system": "Süsteem",
+            "value": "Väärtus",
+            "use": "Kasutus",
+            "operations": "Operatsioonid",
+            "button": {
+              "cancel": "Katkesta",
+              "confirm": "Kinnita"
+            }
+          }
+        },
+        "content": "Sisu",
+        "case-sensitivity": "Tõstutundlikkus",
         "properties": "Omadused",
         "concepts": "Kontseptid",
         "add-concept": "Lisa kontsept",

@@ -9,6 +9,18 @@
     "app": {
       "header": "Terminology"
     },
+    "case-sensitive-options": {
+      "ics": "initial character sensitive",
+      "cs": "case sensitive",
+      "ci": "case insensitive"
+    },
+    "content-options": {
+      "complete": "complete",
+      "not-present": "not-present",
+      "example": "example",
+      "fragment": "fragment",
+      "supplement": "supplement"
+    },
     "code-system-version": {
       "entity": {
         "id": "Identifier",
@@ -52,6 +64,24 @@
         "edit-header": "Edit code system"
       },
       "list": {
+        "contact": {
+          "contacts": "Contacts",
+          "add-contact": "Add contact",
+          "form": {
+            "name": "Name",
+            "edit-header": "Edit contact",
+            "system": "System",
+            "value": "Value",
+            "use": "Use",
+            "operations": "Operations",
+            "button": {
+              "cancel": "Cancel",
+              "confirm": "Confirm"
+            }
+          }
+        },
+        "content": "Content",
+        "case-sensitivity": "Case sensitivity",
         "properties": "Properties",
         "concepts": "Concepts",
         "add-concept": "Add concept",

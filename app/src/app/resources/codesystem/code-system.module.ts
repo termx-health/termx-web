@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {CodeSystemListComponent} from './containers/list/code-system-list.component';
-import {CodeSystemFormComponent} from './containers/edit/code-system-form.component';
 import {CodeSystemLibModule} from 'terminology-lib/resources';
 import {CodeSystemPropertiesListComponent} from './containers/edit/code-system-properties-list.component';
 import {CodeSystemVersionsListComponent} from './containers/edit/code-system-versions-list.component';
@@ -14,6 +13,7 @@ import {CodeSystemDuplicateModalComponent} from './containers/list/code-system-d
 import {CodeSystemConceptsListComponent} from './containers/edit/code-system-concepts-list.component';
 import {CodeSystemConceptEditComponent} from './containers/concept/code-system-concept-edit.component';
 import {CodeSystemEntityVersionService} from './services/code-system-entity-version.service';
+import {CodeSystemContactsComponent} from './containers/edit/code-system-contacts.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -34,14 +34,14 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   declarations: [
     CodeSystemListComponent,
     CodeSystemEditComponent,
-    CodeSystemFormComponent,
     CodeSystemPropertiesListComponent,
     CodeSystemVersionsListComponent,
     CodeSystemVersionEditComponent,
     CodeSystemVersionViewComponent,
     CodeSystemDuplicateModalComponent,
     CodeSystemConceptsListComponent,
-    CodeSystemConceptEditComponent
+    CodeSystemConceptEditComponent,
+    CodeSystemContactsComponent,
   ],
   exports: [
     CodeSystemListComponent
