@@ -1,32 +1,37 @@
 <m-card class="tw-table-card">
+
   <div *m-card-header class="tw-card-header">
     <div class="m-card-title">{{'web.code-system.list.contact.contacts' | translate}}</div>
     <m-button (click)="addContact()">
       {{'web.code-system.list.contact.add-contact' | translate}}
     </m-button>
   </div>
-  <nz-collapse nzGhost *ngFor="let contact of contacts">
 
+  <nz-collapse nzGhost *ngFor="let contact of contacts">
     <nz-collapse-panel [nzHeader]="header" [nzExtra]="edit">
+
       <ng-template #header>
         <m-icon *ngIf="!contact.name" [code]="'user'"></m-icon>
         <div *ngIf="contact.name">{{contact.name}}</div>
       </ng-template>
+
       <ng-template #edit>
         <m-button size="small" (click)="$event.stopPropagation();toggleModal(contact)">
           <m-icon [code]="'edit'"></m-icon>
         </m-button>
       </ng-template>
+
       <m-table [data]="contact.telecoms">
         <tr *mTableRow="let telecom">
           <td>{{telecom.system}}</td>
           <td>{{telecom.value}}</td>
           <td>{{telecom.use}}</td>
         </tr>
-
       </m-table>
+
     </nz-collapse-panel>
   </nz-collapse>
+
   <nz-modal [(nzVisible)]="modalVisible" [nzTitle]="'web.code-system.list.contact.form.edit-header' | translate" nzCentered (nzOnCancel)="toggleModal()">
     <div *nzModalContent>
       <form #form="ngForm">

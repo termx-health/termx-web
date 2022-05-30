@@ -24,6 +24,7 @@
               <m-option [label]="'supplement'" value="supplement"></m-option>
             </m-select>
           </m-form-item>
+
           <m-form-item name="caseSensitive" label="web.code-system.list.case-sensitivity">
             <m-select name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive">
               <m-option [label]="'ci'" value="ci"></m-option>
@@ -35,15 +36,22 @@
           <m-form-item name="description" label="web.code-system.entity.description">
             <m-textarea name="description" [(ngModel)]="codeSystem.description"></m-textarea>
           </m-form-item>
+
+          <m-form-item name="narrative" label="web.code-system.list.narrative">
+            <m-textarea name="narrative" [(ngModel)]="codeSystem.narrative"></m-textarea>
+          </m-form-item>
         </form>
+
         <twa-code-system-versions-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-versions-list>
         <twa-code-system-properties-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-properties-list>
         <twa-code-system-contacts *ngIf="codeSystem" [contacts]="codeSystem.contacts"></twa-code-system-contacts>
+
         <ng-container *m-card-footer>
           <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>
+
       </m-card>
     </m-spinner>
 

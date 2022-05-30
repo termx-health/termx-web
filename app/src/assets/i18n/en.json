@@ -80,6 +80,7 @@
             }
           }
         },
+        "narrative": "Narrative",
         "content": "Content",
         "case-sensitivity": "Case sensitivity",
         "properties": "Properties",
