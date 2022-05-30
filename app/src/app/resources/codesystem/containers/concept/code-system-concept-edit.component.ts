@@ -13,7 +13,6 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
 })
 export class CodeSystemConceptEditComponent implements OnInit {
   public codeSystemId?: string | null;
-  public conceptCode?: string | null;
   public concept?: CodeSystemConcept;
 
   public loading = false;
@@ -31,11 +30,11 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    this.conceptCode = this.route.snapshot.paramMap.get('concept');
-    this.mode = this.codeSystemId && this.conceptCode ? 'edit' : 'add';
+    let conceptCode = this.route.snapshot.paramMap.get('concept');
+    this.mode = this.codeSystemId && conceptCode ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadConcept(this.codeSystemId!, this.conceptCode!);
+      this.loadConcept(this.codeSystemId!, conceptCode!);
     } else {
       this.concept = new CodeSystemVersion();
     }

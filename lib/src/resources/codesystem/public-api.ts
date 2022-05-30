@@ -8,7 +8,7 @@ export * from './model/code-system-concept';
 export * from './model/concept-search-params';
 export * from './services/code-system-lib.service';
 export * from './services/code-system-entity-version-lib.service';
-export * from './services/concept-lib.service';
+export * from './services/code-system-concept-lib.service';
 export * from './code-system-lib.module';
 export * from './containers/code-system-search.component';
 export * from './containers/concept-search.component';

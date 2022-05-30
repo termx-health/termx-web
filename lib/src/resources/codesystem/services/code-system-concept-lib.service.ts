@@ -7,7 +7,7 @@ import {CodeSystemConcept} from '../model/code-system-concept';
 import {ConceptSearchParams} from '../model/concept-search-params';
 
 @Injectable()
-export class ConceptLibService {
+export class CodeSystemConceptLibService {
   protected baseUrl;
 
   public constructor(@Inject(TERMINOLOGY_API) api: string, protected http: HttpClient) {

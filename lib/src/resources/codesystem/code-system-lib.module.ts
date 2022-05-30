@@ -7,7 +7,7 @@ import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {CodeSystemEntityVersionLibService} from './services/code-system-entity-version-lib.service';
 import {ConceptSearchComponent} from './containers/concept-search.component';
-import {ConceptLibService} from './services/concept-lib.service';
+import {CodeSystemConceptLibService} from './services/code-system-concept-lib.service';
 
 
 @NgModule({
@@ -20,7 +20,7 @@ import {ConceptLibService} from './services/concept-lib.service';
   providers: [
     CodeSystemLibService,
     CodeSystemEntityVersionLibService,
-    ConceptLibService
+    CodeSystemConceptLibService
   ],
   declarations: [
     CodeSystemSearchComponent,

@@ -5,7 +5,7 @@ import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
 import {CodeSystemConcept} from '../model/code-system-concept';
 import {ConceptSearchParams} from '../model/concept-search-params';
-import {ConceptLibService} from '../services/concept-lib.service';
+import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.service';
 
 @Component({
   selector: 'twl-concept-search',
@@ -19,14 +19,13 @@ export class ConceptSearchComponent implements OnInit, ControlValueAccessor {
 
   public data: {[id: string]: CodeSystemConcept} = {};
   public value?: number;
-  public codeSystem?: string;
   private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
 
   public constructor(
-    private conceptService: ConceptLibService,
+    private conceptService: CodeSystemConceptLibService,
   ) {}
 
   public ngOnInit(): void {
