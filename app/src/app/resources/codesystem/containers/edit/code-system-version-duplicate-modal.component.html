@@ -1,0 +1,22 @@
+<nz-modal [(nzVisible)]="modalVisible" [nzTitle]="'web.code-system.form.duplicate.duplicate-header' | translate" nzCentered (nzOnCancel)="closeModal()">
+  <div *nzModalContent>
+    <form #form="ngForm">
+      <m-form-item name="sourceCodeSystem" label="web.code-system.form.duplicate.source-code-system" required>
+        <twl-code-system-search name="sourceCodeSystem" [(ngModel)]="sourceCodeSystem" valuePrimitive required></twl-code-system-search>
+      </m-form-item>
+      <m-form-item name="sourceVersion" label="web.code-system.form.duplicate.source-version" required>
+        <twl-code-system-version-select name="sourceVersion"
+            [(ngModel)]="sourceVersion"
+            [codeSystemId]="sourceCodeSystem"
+            required></twl-code-system-version-select>
+      </m-form-item>
+      <m-form-item name="targetVersion" label="web.code-system.form.duplicate.target-version" required>
+        <m-input name="targetVersion" [(ngModel)]="targetVersion" required></m-input>
+      </m-form-item>
+    </form>
+  </div>
+  <div *nzModalFooter>
+    <m-button style="margin-right: 1em" (click)="closeModal()">{{'web.code-system.form.duplicate.button.cancel' | translate}}</m-button>
+    <m-button display="primary" (click)="duplicate()">{{'web.code-system.form.duplicate.button.duplicate' | translate}}</m-button>
+  </div>
+</nz-modal>

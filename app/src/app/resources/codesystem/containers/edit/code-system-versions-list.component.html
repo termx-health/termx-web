@@ -1,7 +1,17 @@
 <m-card class="tw-card-table">
   <div *m-card-header class="tw-card-header">
     <div class="m-card-title">{{'web.code-system.list.versions' | translate}}</div>
-    <m-button [routerLink]="['../versions/add']" label="web.code-system.list.add-version"></m-button>
+    <m-dropdown>
+      <ng-template #buttonTemplate>
+        <m-button buttonClass="m-language-input-dropdown-button">
+          <span>{{'web.code-system.list.add-version' | translate}}</span>
+          <m-icon code="down" size="10"></m-icon>
+        </m-button>
+      </ng-template>
+      <a *mDropdownItem [routerLink]="['../versions/add']">{{'web.code-system.list.add-new-version' | translate}}</a>
+      <a *mDropdownItem (click)="duplicateModal.toggleModal(codeSystemId)">{{'web.code-system.list.duplicate-version' | translate}}</a>
+    </m-dropdown>
+
   </div>
 
   <m-table [data]="versions" [loading]="loading" enablePagination hideOnSinglePage>
@@ -27,6 +37,12 @@
         <a *ngIf="version.status !== 'active'" (click)="activateVersion(version)">
           {{'web.publication-status.operations.activate' | translate}}
         </a>
+        <m-button (click)="exportFhirFormatVersion(version.id)">
+          <m-icon [code]="'download'"></m-icon>
+        </m-button>
+        <m-button (click)="duplicateModal.toggleModal(codeSystemId, codeSystemId, version)">
+          <m-icon [code]="'copy'"></m-icon>
+        </m-button>
       </td>
     </tr>
 
@@ -37,3 +53,5 @@
     </tr>
   </m-table>
 </m-card>
+
+<twa-code-system-version-duplicate-modal #duplicateModal (duplicated)="loadVersions()"></twa-code-system-version-duplicate-modal>

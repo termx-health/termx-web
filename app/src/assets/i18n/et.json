@@ -59,6 +59,8 @@
         "operations": "Toimingud",
         "versions": "Versioonid",
         "add-version": "Lisa versioon",
+        "add-new-version": "Lisa uus versioon",
+        "duplicate-version": "Loo versiooni duplikaat",
         "versions-release-date": "Alates: {{releaseDate}}",
         "versions-expiration-date": "kuni {{expirationDate}}",
         "versions-version": "Versiooni nimi: {{version}}",
