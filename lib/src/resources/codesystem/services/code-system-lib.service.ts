@@ -7,6 +7,8 @@ import {CodeSystem} from '../model/code-system';
 import {EntityProperty} from '../model/entity-property';
 import {CodeSystemVersion} from '../model/code-system-version';
 import {CodeSystemSearchParams} from '../model/code-system-search-params';
+import {CodeSystemConcept} from '../model/code-system-concept';
+import {ConceptSearchParams} from '../model/concept-search-params';
 
 @Injectable()
 export class CodeSystemLibService {
@@ -32,7 +34,15 @@ export class CodeSystemLibService {
     return this.http.get<CodeSystemVersion[]>(`${this.baseUrl}/${codeSystemId}/versions`);
   }
 
+  public loadConcept(codeSystemId: string, conceptCode: string): Observable<CodeSystemConcept> {
+    return this.http.get<CodeSystemConcept>(`${this.baseUrl}/${codeSystemId}/concepts/${conceptCode}`);
+  }
+
   public search(params: CodeSystemSearchParams = {}): Observable<SearchResult<CodeSystem>> {
     return this.http.get<SearchResult<CodeSystem>>(this.baseUrl, {params: SearchHttpParams.build(params)});
+  }
+
+  public searchConcepts(codeSystemId:string, params: ConceptSearchParams = {}): Observable<SearchResult<CodeSystemConcept>> {
+    return this.http.get<SearchResult<CodeSystemConcept>>(`${this.baseUrl}/${codeSystemId}/concepts`, {params: SearchHttpParams.build(params)});
   }
 }

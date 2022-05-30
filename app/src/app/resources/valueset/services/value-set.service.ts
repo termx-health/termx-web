@@ -1,4 +1,4 @@
-import {Concept, Designation, ValueSet, ValueSetLibService, ValueSetVersion} from 'terminology-lib/resources';
+import {CodeSystemConcept, Designation, ValueSet, ValueSetLibService, ValueSetVersion} from 'terminology-lib/resources';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
@@ -23,7 +23,7 @@ export class ValueSetService extends ValueSetLibService {
     return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/retire`, {});
   }
 
-  public saveConcepts(valueSetId: string, version: string, concepts: Concept[]): Observable<void> {
+  public saveConcepts(valueSetId: string, version: string, concepts: CodeSystemConcept[]): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/concepts`, {concepts});
   }
 

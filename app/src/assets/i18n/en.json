@@ -53,6 +53,8 @@
       },
       "list": {
         "properties": "Properties",
+        "concepts": "Concepts",
+        "add-concept": "Add concept",
         "header": "Code system list",
         "operations": "Operations",
         "versions": "Versions",
@@ -121,10 +123,27 @@
         "code": "Code",
         "description": "Description"
       },
+      "version": {
+        "list": {
+          "versions": "Versions",
+          "number": "Number",
+          "created": "Created",
+          "description": "Description",
+          "status": "Status",
+          "operations": "Operations"
+        },
+        "form": {
+          "add-header": "Add version"
+        }
+      },
       "list": {
         "concept": "Concept",
         "concepts": "Concepts",
         "operations": "Operations"
+      },
+      "form": {
+        "add-header": "Add concept",
+        "edit-header": "Edit concept"
       }
     },
     "designation": {

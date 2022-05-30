@@ -53,6 +53,8 @@
       },
       "list": {
         "properties": "Omadused",
+        "concepts": "Kontseptid",
+        "add-concept": "Lisa kontsept",
         "header": "Koodisüsteemide nimekiri",
         "operations": "Toimingud",
         "versions": "Versioonid",
@@ -121,10 +123,27 @@
         "code": "Kood",
         "description": "Kirjeldus"
       },
+      "version": {
+        "list": {
+          "versions": "Versioonid",
+          "number": "Number",
+          "created": "Loodud",
+          "description": "Kirjeldus",
+          "status": "Olek",
+          "operations": "Toimingud"
+        },
+        "form": {
+          "add-header": "Lisa versioon"
+        }
+      },
       "list": {
         "concept": "Kontsept",
         "concepts": "Kontseptid",
         "operations": "Toimingud"
+      },
+      "form": {
+        "add-header": "Lisa kontsept",
+        "edit-header": "Muuda kontsepti"
       }
     },
     "designation": {
