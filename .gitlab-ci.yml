@@ -1,41 +1,48 @@
-image: registry.gitlab.com/kodality-public/gitlab-builders/gitlab-ci-builder
+image: registry.gitlab.com/kodality-public/gitlab-builders/ng
 
-cache:
-  key:
-    files:
-      - package-lock.json
-  policy: pull-push
-  paths:
-    - .npm/
-    - node_modules/
+.dependencies_cache:
+  cache:
+    key:
+      files:
+        - package-lock.json
+    paths:
+      - .npm/
+      - node_modules
+
 
 stages:
   - build
+  - publish
 
 
-.build:
+build:
+  stage: build
+  extends: .dependencies_cache
   before_script:
     - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
     - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
     - echo "//kexus.kodality.com/repository/npm-health/:_authToken=$NEXUS_NPM_HEALTH_TOKEN" >> ~/.npmrc
     - echo "@kodality-health:registry=https://kexus.kodality.com/repository/npm-health/" >> ~/.npmrc
-    - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
   script:
     - npm install --cache .npm --prefer-offline
     - ng build --base-href /kts/ -c production
+  artifacts:
+    paths:
+      - "**/dist"
+    expire_in: 1 hour
+  only:
+    - branches
+    - tags
 
 
-snapshot:
-  extends: .build
-  stage: build
-  after_script:
+publish:
+  stage: publish
+  image: docker:20.10.16
+  before_script:
+    - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
+  script:
     - docker build -t docker.kodality.com/terminology-web:latest .
     - docker push docker.kodality.com/terminology-web:latest
   only:
     - main
 
-build:
-  extends: .build
-  stage: build
-  except:
-    - main
