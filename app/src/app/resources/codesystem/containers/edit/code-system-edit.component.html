@@ -1,10 +1,9 @@
-<m-form-row>
-  <div *mFormCol>
+<div nz-row [nzGutter]="12" nzJustify="center">
+  <div nz-col nzSpan="12">
     <m-card [title]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'">
       <twa-code-system-form #codeSystemForm [mode]="mode" [codeSystemId]="codeSystemId"></twa-code-system-form>
-      <twa-code-system-properties-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-properties-list>
       <twa-code-system-versions-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-versions-list>
-
+      <twa-code-system-properties-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-properties-list>
       <ng-container *m-card-footer>
         <m-button display="primary" [loading]="loading" [disabled]="loading || codeSystemForm.loading" (click)="save()">
           {{'core.btn.save' | translate}}
@@ -12,4 +11,10 @@
       </ng-container>
     </m-card>
   </div>
-</m-form-row>
+
+  <div nz-col nzSpan="6" style="height: min-content" *ngIf="mode === 'edit'">
+    <m-card [title]="'web.code-system.list.concepts'">
+      <twa-code-system-concepts-list [codeSystemId]="codeSystemId"></twa-code-system-concepts-list>
+    </m-card>
+  </div>
+</div>
