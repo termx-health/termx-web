@@ -28,11 +28,6 @@ export class CodeSystemContactsListComponent {
   }
 
   public toggleModal(contact?: CodeSystemContactDetail, index?: number): void {
-    // if (contact && isDefined(index)) {
-    //   this.modalData = {visible: true, contactsIndex: index, contact: copyDeep(contact)};
-    //   return;
-    // }
-    // this.modalData.visible = false;
     this.modalData = {
       visible: contact && isDefined(index),
       contact: copyDeep(contact),
