@@ -5,12 +5,25 @@
       "delete": "Kustuta",
       "cancel": "Tühista",
       "close": "Sulge",
-      "duplicate": "Duplitseeri"
+      "duplicate": "Duplitseeri",
+      "confirm": "Kinnita"
     }
   },
   "web": {
     "app": {
       "header": "Terminoloogia"
+    },
+    "case-sensitive-options": {
+      "ics": "esitähe tõstutundlik",
+      "cs": "tõstutundlik",
+      "ci": "tõstutundetu"
+    },
+    "content-options": {
+      "complete": "täielik",
+      "not-present": "puudulik",
+      "example": "näidis",
+      "fragment": "katkend",
+      "supplement": "lisand"
     },
     "code-system-version": {
       "entity": {
@@ -66,7 +79,24 @@
         "add-header": "Lisa koodisüsteem",
         "edit-header": "Muuda koodisüsteemi"
       },
+      "contacts": {
+        "list": {
+          "header": "Kontaktid",
+          "add-contact": "Lisa kontakt"
+        },
+        "modal": {
+          "name": "Nimi",
+          "edit-header": "Muuda kontakti",
+          "system": "Süsteem",
+          "value": "Väärtus",
+          "use": "Kasutus",
+          "operations": "Operatsioonid"
+        }
+      },
       "list": {
+        "narrative": "Narratiiv",
+        "content": "Sisu",
+        "case-sensitivity": "Tõstutundlikkus",
         "properties": "Omadused",
         "concepts": "Kontseptid",
         "add-concept": "Lisa kontsept",

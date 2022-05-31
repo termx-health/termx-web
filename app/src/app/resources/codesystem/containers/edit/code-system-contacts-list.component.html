@@ -1,0 +1,92 @@
+<m-card class="tw-table-card">
+
+  <div *m-card-header class="tw-card-header">
+    <div class="m-card-title">{{'web.code-system.contacts.list.header' | translate}}</div>
+    <m-button (click)="addContact()">
+      {{'web.code-system.contacts.list.add-contact' | translate}}
+    </m-button>
+  </div>
+
+  <nz-collapse nzGhost *ngFor="let contact of contacts; let index = index">
+    <nz-collapse-panel [nzHeader]="header" [nzExtra]="edit">
+
+      <ng-template #header>
+        <m-icon *ngIf="!contact.name" [code]="'user'"></m-icon>
+        <div *ngIf="contact.name">{{contact.name}}</div>
+      </ng-template>
+
+      <ng-template #edit>
+        <m-button (click)="$event.stopPropagation();toggleModal(contact, index)">
+          <m-icon [code]="'edit'"></m-icon>
+        </m-button>
+        <m-button style="margin-left: 0.5em" (click)="$event.stopPropagation();removeContact(index)">
+          <m-icon [code]="'delete'"></m-icon>
+        </m-button>
+      </ng-template>
+
+      <m-table [data]="contact.telecoms">
+        <tr *mTableRow="let telecom">
+          <td>{{telecom.system}}</td>
+          <td>{{telecom.value}}</td>
+          <td>{{telecom.use}}</td>
+        </tr>
+      </m-table>
+
+    </nz-collapse-panel>
+  </nz-collapse>
+
+  <nz-modal [(nzVisible)]="modalData.visible" [nzTitle]="'web.code-system.contacts.modal.edit-header' | translate" nzCentered (nzOnCancel)="toggleModal()">
+    <div *nzModalContent>
+      <form #form="ngForm" *ngIf="modalData.contact">
+        <m-form-item name="contactName" label="web.code-system.contacts.modal.name">
+          <m-input name="contactName" [(ngModel)]="modalData.contact.name"></m-input>
+        </m-form-item>
+
+        <m-table [data]="modalData.contact.telecoms">
+          <tr *mTableHead>
+            <th>{{'web.code-system.contacts.modal.system' | translate}}</th>
+            <th>{{'web.code-system.contacts.modal.value' | translate}}</th>
+            <th>{{'web.code-system.contacts.modal.use' | translate}}</th>
+            <th>{{'web.code-system.contacts.modal.operations' | translate}}</th>
+          </tr>
+
+          <tr *mTableRow="let telecom; let index = index">
+            <td>
+              <m-form-control>
+                <m-input name="system-{{index}}" [(ngModel)]="telecom.system"></m-input>
+              </m-form-control>
+            </td>
+            <td>
+              <m-form-control>
+                <m-input name="value-{{index}}" [(ngModel)]="telecom.value"></m-input>
+              </m-form-control>
+            </td>
+            <td>
+              <m-form-control>
+                <m-input name="use-{{index}}" [(ngModel)]="telecom.use"></m-input>
+              </m-form-control>
+            </td>
+            <td>
+              <m-button (click)="removeModalTelecom(index)">
+                <m-icon [code]="'delete'"></m-icon>
+              </m-button>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="4" style="padding: 0">
+              <m-button display="text" size="small" style="width: 100%" (click)="addModalTelecom()">
+                <m-icon [code]="'plus'"></m-icon>
+              </m-button>
+            </td>
+          </tr>
+        </m-table>
+      </form>
+    </div>
+
+    <div *nzModalFooter>
+      <m-button style="margin-right: 1em" (click)="toggleModal()">{{'core.btn.cancel' | translate}}</m-button>
+      <m-button display="primary" (click)="confirmModalContact()">{{'core.btn.confirm' | translate}}</m-button>
+    </div>
+  </nz-modal>
+</m-card>
