@@ -71,7 +71,6 @@
         "concepts": "Kontseptid",
         "add-concept": "Lisa kontsept",
         "header": "Koodisüsteemide nimekiri",
-        "operations": "Toimingud",
         "versions": "Versioonid",
         "versions-release-date": "Alates: {{releaseDate}}",
         "versions-expiration-date": "kuni {{expirationDate}}",

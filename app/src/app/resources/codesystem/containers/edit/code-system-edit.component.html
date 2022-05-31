@@ -1,5 +1,5 @@
 <div nz-row [nzGutter]="12" nzJustify="center">
-  <div nz-col nzSpan="12">
+  <div nz-col [nzMd]="12" [nzXs]="24">
     <m-card [title]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'">
       <twa-code-system-form #codeSystemForm [mode]="mode" [codeSystemId]="codeSystemId"></twa-code-system-form>
       <twa-code-system-versions-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-versions-list>
@@ -12,7 +12,7 @@
     </m-card>
   </div>
 
-  <div nz-col nzSpan="6" style="height: min-content" *ngIf="mode === 'edit'">
+  <div nz-col [nzMd]="6" [nzXs]="24" style="height: min-content" *ngIf="mode === 'edit'">
     <m-card [title]="'web.code-system.list.concepts'">
       <twa-code-system-concepts-list [codeSystemId]="codeSystemId"></twa-code-system-concepts-list>
     </m-card>

@@ -2,7 +2,7 @@
   <div *m-card-header class="tw-card-header">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <m-button [routerLink]="'code-systems/add'">
-      <m-icon [code]="'plus'"></m-icon> &nbsp; {{'web.code-system.form.add-header' | translate}}
+      <m-icon [code]="'plus'"></m-icon>&nbsp; {{'web.code-system.form.add-header' | translate}}
     </m-button>
   </div>
 
@@ -12,7 +12,7 @@
       <th mColumnKey="id">{{'web.code-system.entity.id' | translate}}</th>
       <th mColumnKey="name">{{'web.code-system.entity.name' | translate}}</th>
       <th mColumnKey="uri">{{'web.code-system.entity.domain' | translate}}</th>
-      <th class="tw-table-actions">{{'web.code-system.list.operations' | translate}}</th>
+      <th class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let cs">
@@ -21,13 +21,11 @@
       <td>{{cs.names | localName}}</td>
       <td>{{cs.uri | apply: parseDomain}}</td>
       <td class="tw-table-actions">
-        <m-button>
-          <m-icon [code]="'delete'"></m-icon>
-        </m-button>
-        <m-button (click)="duplicateModal.toggleModal({sourceCodeSystem: cs.id})">
-          <m-icon [code]="'copy'"></m-icon>
-        </m-button>
-        <twa-code-system-duplicate-modal #duplicateModal (duplicated)="loadData()"></twa-code-system-duplicate-modal>
+        <m-dropdown>
+          <a *m-dropdown-item (click)="duplicateModal.toggleModal({sourceCodeSystem: cs.id})">
+            <m-icon [code]="'copy'"></m-icon>&nbsp; {{'core.btn.duplicate' | translate}}
+          </a>
+        </m-dropdown>
       </td>
     </tr>
 
@@ -38,9 +36,11 @@
             <m-form-item *ngIf="cs.uri" label="web.code-system.entity.uri">
               {{cs.uri}}
             </m-form-item>
+
             <m-form-item *ngIf="cs.description" label="web.code-system.entity.description">
               {{cs.description}}
             </m-form-item>
+
             <m-form-item *ngIf="cs.versions.length > 0" label="web.code-system.list.versions">
               <div *ngFor="let version of cs.versions">{{
                 version | apply: getVersionTranslateTokens: ({
@@ -63,3 +63,4 @@
   </m-backend-table>
 </m-card>
 
+<twa-code-system-duplicate-modal #duplicateModal (duplicated)="loadData()"></twa-code-system-duplicate-modal>

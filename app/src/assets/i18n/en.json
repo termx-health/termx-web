@@ -71,7 +71,6 @@
         "concepts": "Concepts",
         "add-concept": "Add concept",
         "header": "Code system list",
-        "operations": "Operations",
         "versions": "Versions",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",

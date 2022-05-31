@@ -27,12 +27,14 @@ export class CodeSystemDuplicateModalComponent {
     if (!validateForm(this.form)) {
       return;
     }
-    const duplicateRequest = {codeSystem: this.params?.targetCodeSystem!, codeSystemUri: this.params?.targetUri!};
+    const duplicateRequest = {
+      codeSystem: this.params?.targetCodeSystem!,
+      codeSystemUri: this.params?.targetUri!
+    };
     this.codeSystemService.duplicateCodeSystem(this.params?.sourceCodeSystem!, duplicateRequest).subscribe(() => {
         this.modalVisible = false;
         this.duplicated.emit();
       }
     );
   }
-
 }
