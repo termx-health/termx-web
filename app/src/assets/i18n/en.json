@@ -2,7 +2,10 @@
   "core": {
     "btn": {
       "save": "Save",
-      "delete": "Delete"
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "close": "Close",
+      "duplicate": "Duplicate"
     }
   },
   "web": {
@@ -24,7 +27,19 @@
       "form": {
         "edit-header": "Edit version",
         "add-header": "Add version",
-        "view-header": "View version"
+        "view-header": "View version",
+        "duplicate": {
+          "duplicate-header": "Create duplicate code system version",
+          "source-code-system": "Source code system:",
+          "source-version": "Source version:",
+          "target-version": "Target version:"
+        }
+      },
+      "list": {
+        "add-version": "Add version",
+        "add-new-version": "Add new version",
+        "duplicate-version": "Duplicate version",
+        "export-fhir": "Export FHIR json"
       }
     },
     "entity-property": {
@@ -58,7 +73,6 @@
         "header": "Code system list",
         "operations": "Operations",
         "versions": "Versions",
-        "add-version": "Add version",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}",
@@ -66,11 +80,7 @@
           "duplicate-header": "Create duplicate code system",
           "source-code-system": "Source code system:",
           "target-code-system": "Target code system:",
-          "target-uri": "Target URI:",
-          "button": {
-            "duplicate": "Duplicate",
-            "cancel": "Cancel"
-          }
+          "target-uri": "Target URI:"
         }
       }
     },
