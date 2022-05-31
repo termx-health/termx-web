@@ -2,7 +2,10 @@
   "core": {
     "btn": {
       "save": "Salvesta",
-      "delete": "Kustuta"
+      "delete": "Kustuta",
+      "cancel": "Tühista",
+      "close": "Sulge",
+      "duplicate": "Duplitseeri"
     }
   },
   "web": {
@@ -24,7 +27,19 @@
       "form": {
         "edit-header": "Muuda versiooni",
         "add-header": "Lisa versioon",
-        "view-header": "Vaata versiooni"
+        "view-header": "Vaata versiooni",
+        "duplicate": {
+          "duplicate-header": "Loo koodisüsteemi versiooni duplikaat",
+          "source-code-system": "Allikas koodisüsteem:",
+          "source-version": "Allikas versioon:",
+          "target-version": "Siht versioon:"
+        }
+      },
+      "list": {
+        "add-version": "Lisa versioon",
+        "add-new-version": "Lisa uus versioon",
+        "duplicate-version": "Loo versiooni duplikaat",
+        "export-fhir": "Ekspordi FHIR json"
       }
     },
     "entity-property": {
@@ -58,7 +73,6 @@
         "header": "Koodisüsteemide nimekiri",
         "operations": "Toimingud",
         "versions": "Versioonid",
-        "add-version": "Lisa versioon",
         "versions-release-date": "Alates: {{releaseDate}}",
         "versions-expiration-date": "kuni {{expirationDate}}",
         "versions-version": "Versiooni nimi: {{version}}",
@@ -66,11 +80,7 @@
           "duplicate-header": "Loo koodisüsteemi duplikaat",
           "source-code-system": "Allikas koodisüsteem:",
           "target-code-system": "Siht koodisüsteem:",
-          "target-uri": "Siht URI:",
-          "button": {
-            "duplicate": "Duplitseeri",
-            "cancel": "Katkesta"
-          }
+          "target-uri": "Siht URI:"
         }
       }
     },

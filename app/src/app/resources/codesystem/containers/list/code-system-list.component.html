@@ -24,7 +24,7 @@
         <m-button>
           <m-icon [code]="'delete'"></m-icon>
         </m-button>
-        <m-button (click)="duplicateModal.toggleModal(cs.id)">
+        <m-button (click)="duplicateModal.toggleModal({sourceCodeSystem: cs.id})">
           <m-icon [code]="'copy'"></m-icon>
         </m-button>
         <twa-code-system-duplicate-modal #duplicateModal (duplicated)="loadData()"></twa-code-system-duplicate-modal>

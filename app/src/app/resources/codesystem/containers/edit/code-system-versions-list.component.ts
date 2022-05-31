@@ -1,6 +1,8 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {CodeSystemService} from '../../services/code-system.service';
 import {CodeSystemVersion} from 'terminology-lib/resources';
+import {IntegrationFhirLibService} from 'terminology-lib/integration';
+import {saveAs} from 'file-saver';
 
 
 @Component({
@@ -13,7 +15,10 @@ export class CodeSystemVersionsListComponent implements OnChanges {
   public versions: CodeSystemVersion[] = [];
   public loading = false;
 
-  public constructor(private codeSystemService: CodeSystemService) {}
+  public constructor(
+    private codeSystemService: CodeSystemService,
+    private integrationFhirLibService: IntegrationFhirLibService
+  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["codeSystemId"]?.currentValue) {
@@ -21,7 +26,7 @@ export class CodeSystemVersionsListComponent implements OnChanges {
     }
   }
 
-  private loadVersions(): void {
+  public loadVersions(): void {
     if (!this.codeSystemId) {
       return;
     }
@@ -39,5 +44,11 @@ export class CodeSystemVersionsListComponent implements OnChanges {
   public retireVersion(version: CodeSystemVersion): void {
     this.loading = true;
     this.codeSystemService.retireVersion(version.codeSystem!, version.version!).subscribe(() => version.status = 'retired').add(() => this.loading = false);
+  }
+
+  public exportFhirFormatVersion(id: number): void {
+    this.integrationFhirLibService.getCodeSystem(id).subscribe(fhirCs => {
+      saveAs(new Blob([JSON.stringify(fhirCs, null, 2)], {type: 'application/json'}), `${fhirCs.id}.json`);
+    });
   }
 }
