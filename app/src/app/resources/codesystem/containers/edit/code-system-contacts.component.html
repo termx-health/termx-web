@@ -7,7 +7,7 @@
     </m-button>
   </div>
 
-  <nz-collapse nzGhost *ngFor="let contact of contacts">
+  <nz-collapse nzGhost *ngFor="let contact of contacts; let index = index">
     <nz-collapse-panel [nzHeader]="header" [nzExtra]="edit">
 
       <ng-template #header>
@@ -16,8 +16,11 @@
       </ng-template>
 
       <ng-template #edit>
-        <m-button size="small" (click)="$event.stopPropagation();toggleModal(contact)">
+        <m-button (click)="$event.stopPropagation();toggleModal(contact)">
           <m-icon [code]="'edit'"></m-icon>
+        </m-button>
+        <m-button style="margin-left: 0.5em" (click)="$event.stopPropagation();removeContact(index)">
+          <m-icon [code]="'delete'"></m-icon>
         </m-button>
       </ng-template>
 

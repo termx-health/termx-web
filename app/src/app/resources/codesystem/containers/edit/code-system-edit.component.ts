@@ -39,7 +39,6 @@ export class CodeSystemEditComponent implements OnInit {
     }
   }
 
-
   public save(): void {
     if (!this.validate()) {
       return;
