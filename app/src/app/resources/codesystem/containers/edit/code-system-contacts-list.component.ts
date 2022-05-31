@@ -1,69 +1,60 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {CodeSystemContactDetail} from 'terminology-lib/resources/codesystem/model/code-system-contact-detail';
 import {NgForm} from '@angular/forms';
 import {copyDeep, isDefined, isNil} from '@kodality-web/core-util';
 
 
 @Component({
-  selector: 'twa-code-system-contacts',
+  selector: 'twa-code-system-contacts-list',
   templateUrl: './code-system-contacts-list.component.html',
 })
-export class CodeSystemContactsListComponent implements OnInit {
+export class CodeSystemContactsListComponent {
   @Input() public contacts!: CodeSystemContactDetail[];
-  @Output() public emittedContacts: EventEmitter<CodeSystemContactDetail[]> = new EventEmitter<CodeSystemContactDetail[]>();
+  @Output() public contactsChange: EventEmitter<CodeSystemContactDetail[]> = new EventEmitter<CodeSystemContactDetail[]>();
 
-  public modalData: {visible?: boolean, contactsIndex?: number, contact?: CodeSystemContactDetail} = {};
+  public modalData: {visible?: boolean, contactIndex?: number, contact?: CodeSystemContactDetail} = {};
 
   @ViewChild("form") public form?: NgForm;
 
-  public ngOnInit(): void {
-    if (!this.contacts) {
-      this.contacts = [];
-    }
-  }
-
   public addContact(): void {
-    this.contacts = [...this.contacts, {}];
-    this.emittedContacts.emit(this.contacts);
+    this.contacts = [...this.contacts || [], {}];
+    this.contactsChange.emit(this.contacts);
   }
 
   public removeContact(index: number): void {
-    if (this.contacts.length < index) {
-      return;
-    }
     this.contacts.splice(index, 1);
     this.contacts = [...this.contacts];
-    this.emittedContacts.emit(this.contacts);
+    this.contactsChange.emit(this.contacts);
   }
 
   public toggleModal(contact?: CodeSystemContactDetail, index?: number): void {
-    if (contact && isDefined(index)) {
-      this.modalData = {visible: true, contactsIndex: index, contact: copyDeep(contact)};
-      return;
-    }
-    this.modalData.visible = false;
+    // if (contact && isDefined(index)) {
+    //   this.modalData = {visible: true, contactsIndex: index, contact: copyDeep(contact)};
+    //   return;
+    // }
+    // this.modalData.visible = false;
+    this.modalData = {
+      visible: contact && isDefined(index),
+      contact: copyDeep(contact),
+      contactIndex: index
+    };
+
   }
 
   public addModalTelecom(): void {
-    if (!this.modalData.contact) {
-      return;
-    }
-    this.modalData.contact.telecoms = [...(this.modalData.contact.telecoms || []), {}];
+    this.modalData.contact!.telecoms = [...(this.modalData.contact!.telecoms || []), {}];
   }
 
   public removeModalTelecom(index: number): void {
-    if (!this.modalData.contact || !this.modalData.contact.telecoms || this.modalData.contact.telecoms.length < index) {
-      return;
-    }
-    this.modalData.contact.telecoms.splice(index, 1);
-    this.modalData.contact.telecoms = [...this.modalData.contact.telecoms];
+    this.modalData.contact!.telecoms!.splice(index, 1);
+    this.modalData.contact!.telecoms = [...this.modalData.contact!.telecoms!];
   }
 
   public confirmModalContact(): void {
-    if (isNil(this.modalData.contactsIndex) || !this.modalData.contact) {
+    if (isNil(this.modalData.contactIndex) || !this.modalData.contact) {
       return;
     }
-    this.modalData.visible = false;
-    this.contacts[this.modalData.contactsIndex] = this.modalData.contact;
+    this.contacts[this.modalData.contactIndex] = this.modalData.contact;
+    this.toggleModal();
   }
 }

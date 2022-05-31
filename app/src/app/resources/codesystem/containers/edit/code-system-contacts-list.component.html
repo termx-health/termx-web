@@ -37,7 +37,7 @@
 
   <nz-modal [(nzVisible)]="modalData.visible" [nzTitle]="'web.code-system.contacts.modal.edit-header' | translate" nzCentered (nzOnCancel)="toggleModal()">
     <div *nzModalContent>
-      <form #form="ngForm">
+      <form #form="ngForm" *ngIf="modalData.contact">
         <m-form-item name="contactName" label="web.code-system.contacts.modal.name">
           <m-input name="contactName" [(ngModel)]="modalData.contact.name"></m-input>
         </m-form-item>
