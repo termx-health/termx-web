@@ -8,6 +8,8 @@ import {CoreUtilModule} from '@kodality-web/core-util';
 import {CodeSystemEntityVersionLibService} from './services/code-system-entity-version-lib.service';
 import {ConceptSearchComponent} from './containers/concept-search.component';
 import {CodeSystemConceptLibService} from './services/code-system-concept-lib.service';
+import {CodeSystemVersionLibService} from './services/code-system-version-lib.service';
+import {CodeSystemVersionSelectComponent} from './containers/code-system-version-select.component';
 
 
 @NgModule({
@@ -20,15 +22,18 @@ import {CodeSystemConceptLibService} from './services/code-system-concept-lib.se
   providers: [
     CodeSystemLibService,
     CodeSystemEntityVersionLibService,
-    CodeSystemConceptLibService
+    CodeSystemConceptLibService,
+    CodeSystemVersionLibService
   ],
   declarations: [
     CodeSystemSearchComponent,
-    ConceptSearchComponent
+    ConceptSearchComponent,
+    CodeSystemVersionSelectComponent
   ],
   exports: [
     CodeSystemSearchComponent,
-    ConceptSearchComponent
+    ConceptSearchComponent,
+    CodeSystemVersionSelectComponent
   ]
 })
 export class CodeSystemLibModule {

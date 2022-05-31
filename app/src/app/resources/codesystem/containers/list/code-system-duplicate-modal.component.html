@@ -1,19 +1,19 @@
 <nz-modal [(nzVisible)]="modalVisible" [nzTitle]="'web.code-system.list.duplicate.duplicate-header' | translate" nzCentered (nzOnCancel)="toggleModal()">
   <div *nzModalContent>
-    <form #form="ngForm">
+    <form #form="ngForm" *ngIf="params">
       <m-form-item name="sourceCodeSystem" label="web.code-system.list.duplicate.source-code-system" required>
-        <twl-code-system-search name="sourceCodeSystem" [(ngModel)]="sourceCodeSystem" valuePrimitive required></twl-code-system-search>
+        <twl-code-system-search name="sourceCodeSystem" [(ngModel)]="params.sourceCodeSystem" valuePrimitive required></twl-code-system-search>
       </m-form-item>
       <m-form-item name="targetCodeSystem" label="web.code-system.list.duplicate.target-code-system" required>
-        <m-input name="targetCodeSystem" [(ngModel)]="targetCodeSystem" required></m-input>
+        <m-input name="targetCodeSystem" [(ngModel)]="params.targetCodeSystem" required></m-input>
       </m-form-item>
       <m-form-item name="targetUri" label="web.code-system.list.duplicate.target-uri" required>
-        <m-input name="targetUri" [(ngModel)]="targetUri" required></m-input>
+        <m-input name="targetUri" [(ngModel)]="params.targetUri" required></m-input>
       </m-form-item>
     </form>
   </div>
   <div *nzModalFooter>
-    <m-button style="margin-right: 1em" (click)="toggleModal()">{{'web.code-system.list.duplicate.button.cancel' | translate}}</m-button>
-    <m-button display="primary" (click)="duplicate()">{{'web.code-system.list.duplicate.button.duplicate' | translate}}</m-button>
+    <m-button style="margin-right: 1em" (click)="toggleModal()">{{'core.btn.close' | translate}}</m-button>
+    <m-button display="primary" (click)="duplicate()">{{'core.btn.duplicate' | translate}}</m-button>
   </div>
 </nz-modal>
