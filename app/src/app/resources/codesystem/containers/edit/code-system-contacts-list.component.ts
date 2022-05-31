@@ -48,10 +48,7 @@ export class CodeSystemContactsListComponent implements OnInit {
     if (!this.modalData.contact) {
       return;
     }
-    if (!this.modalData.contact.telecoms) {
-      this.modalData.contact.telecoms = [];
-    }
-    this.modalData.contact.telecoms = [...this.modalData.contact.telecoms, {}];
+    this.modalData.contact.telecoms = [...(this.modalData.contact.telecoms || []), {}];
   }
 
   public removeModalTelecom(index: number): void {
