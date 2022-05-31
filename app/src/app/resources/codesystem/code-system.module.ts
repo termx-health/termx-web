@@ -50,7 +50,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   ],
   providers: [
     CodeSystemService,
-    CodeSystemEntityVersionService,
+    CodeSystemEntityVersionService
   ]
 })
 export class CodeSystemModule {

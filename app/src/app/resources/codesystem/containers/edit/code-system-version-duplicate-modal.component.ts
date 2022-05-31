@@ -13,32 +13,23 @@ export class CodeSystemVersionDuplicateModalComponent {
   @Output() public duplicated: EventEmitter<boolean> = new EventEmitter();
 
   public modalVisible = false;
-  public sourceCodeSystem?: string;
-  public sourceVersion?: CodeSystemVersion;
-  public targetCodeSystem?: string;
-  public targetVersion?: string;
+  public params?: {targetCodeSystem?: string, targetVersion?: string, sourceCodeSystem?: string, sourceVersion?: CodeSystemVersion};
 
   @ViewChild("form") public form?: NgForm;
 
   public constructor(private codeSystemService: CodeSystemService) { }
 
-  public toggleModal(targetCodeSystem: string, sourceCodeSystem?: string, sourceVersion?: CodeSystemVersion): void {
+  public toggleModal(params?: {targetCodeSystem: string, sourceCodeSystem?: string, sourceVersion?: CodeSystemVersion}): void {
     this.modalVisible = !this.modalVisible;
-    this.sourceCodeSystem = sourceCodeSystem;
-    this.sourceVersion = sourceVersion;
-    this.targetCodeSystem = targetCodeSystem;
-  }
-
-  public closeModal(): void {
-    this.modalVisible = false;
+    this.params = params;
   }
 
   public duplicate(): void {
     if (!validateForm(this.form)) {
       return;
     }
-    const duplicateRequest = {codeSystem: this.targetCodeSystem!, version: this.targetVersion!};
-    this.codeSystemService.duplicateCodeSystemVersion(this.sourceCodeSystem!, this.sourceVersion?.version!, duplicateRequest).subscribe(() => {
+    const duplicateRequest = {codeSystem: this.params?.targetCodeSystem!, version: this.params?.targetVersion!};
+    this.codeSystemService.duplicateCodeSystemVersion(this.params?.sourceCodeSystem!, this.params?.sourceVersion?.version!, duplicateRequest).subscribe(() => {
         this.modalVisible = false;
         this.duplicated.emit();
       }

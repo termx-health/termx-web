@@ -4,12 +4,12 @@
     <m-dropdown>
       <ng-template #buttonTemplate>
         <m-button buttonClass="m-language-input-dropdown-button">
-          <span>{{'web.code-system.list.add-version' | translate}}</span>
+          <span>{{'web.code-system-version.list.add-version' | translate}}</span>
           <m-icon code="down" size="10"></m-icon>
         </m-button>
       </ng-template>
-      <a *mDropdownItem [routerLink]="['../versions/add']">{{'web.code-system.list.add-new-version' | translate}}</a>
-      <a *mDropdownItem (click)="duplicateModal.toggleModal(codeSystemId)">{{'web.code-system.list.duplicate-version' | translate}}</a>
+      <a *mDropdownItem [routerLink]="['../versions/add']">{{'web.code-system-version.list.add-new-version' | translate}}</a>
+      <a *mDropdownItem (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId})">{{'web.code-system-version.list.duplicate-version' | translate}}</a>
     </m-dropdown>
 
   </div>
@@ -21,7 +21,8 @@
       <th>{{'web.code-system-version.entity.release-date' | translate}}</th>
       <th>{{'web.code-system-version.entity.expiration-date' | translate}}</th>
       <th>{{'web.code-system-version.entity.status' | translate}}</th>
-      <th class="tw-table-actions">{{'web.code-system.list.operations' | translate}}</th>
+      <th class="tw-table-actions"></th>
+      <th class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let version">
@@ -37,12 +38,19 @@
         <a *ngIf="version.status !== 'active'" (click)="activateVersion(version)">
           {{'web.publication-status.operations.activate' | translate}}
         </a>
-        <m-button (click)="exportFhirFormatVersion(version.id)">
-          <m-icon [code]="'download'"></m-icon>
-        </m-button>
-        <m-button (click)="duplicateModal.toggleModal(codeSystemId, codeSystemId, version)">
-          <m-icon [code]="'copy'"></m-icon>
-        </m-button>
+      </td>
+      <td class="tw-table-actions">
+        <m-dropdown>
+          <ng-template #buttonTemplate>
+            <m-button><m-icon [code]="'ellipsis'"></m-icon></m-button>
+          </ng-template>
+          <a *mDropdownItem (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId, sourceCodeSystem: codeSystemId, sourceVersion: version})">
+            {{'core.btn.duplicate' | translate}}
+          </a>
+          <a *mDropdownItem (click)="exportFhirFormatVersion(version.id)">
+            {{'web.code-system-version.list.export-fhir' | translate}}
+          </a>
+        </m-dropdown>
       </td>
     </tr>
 
