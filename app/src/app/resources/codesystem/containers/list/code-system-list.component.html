@@ -36,6 +36,12 @@
             <m-form-item *ngIf="cs.uri" label="web.code-system.entity.uri">
               {{cs.uri}}
             </m-form-item>
+            <m-form-item *ngIf="cs.content" label="web.code-system.list.content">
+              {{'web.content-options.' + cs.content | translate}}
+            </m-form-item>
+            <m-form-item *ngIf="cs.caseSensitive" label="web.code-system.list.case-sensitivity">
+              {{'web.case-sensitive-options.' + cs.caseSensitive | translate}}
+            </m-form-item>
 
             <m-form-item *ngIf="cs.description" label="web.code-system.entity.description">
               {{cs.description}}

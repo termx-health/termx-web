@@ -25,7 +25,7 @@ export class CodeSystemSearchParams extends QueryParams {
 
   public propertiesDecorated?: boolean;
 
-  public codeSystemEntityVersionId?: number
+  public codeSystemEntityVersionId?: number;
 
   public lang?: string;
 }

@@ -5,12 +5,25 @@
       "delete": "Delete",
       "cancel": "Cancel",
       "close": "Close",
-      "duplicate": "Duplicate"
+      "duplicate": "Duplicate",
+      "confirm": "Confirm"
     }
   },
   "web": {
     "app": {
       "header": "Terminology"
+    },
+    "case-sensitive-options": {
+      "ics": "initial character sensitive",
+      "cs": "case sensitive",
+      "ci": "case insensitive"
+    },
+    "content-options": {
+      "complete": "complete",
+      "not-present": "not-present",
+      "example": "example",
+      "fragment": "fragment",
+      "supplement": "supplement"
     },
     "code-system-version": {
       "entity": {
@@ -66,7 +79,24 @@
         "add-header": "Create a new code system",
         "edit-header": "Edit code system"
       },
+      "contacts": {
+        "list": {
+          "header": "Contacts",
+          "add-contact": "Add contact"
+        },
+        "modal": {
+          "name": "Name",
+          "edit-header": "Edit contact",
+          "system": "System",
+          "value": "Value",
+          "use": "Use",
+          "operations": "Operations"
+        }
+      },
       "list": {
+        "narrative": "Narrative",
+        "content": "Content",
+        "case-sensitivity": "Case sensitivity",
         "properties": "Properties",
         "concepts": "Concepts",
         "add-concept": "Add concept",
