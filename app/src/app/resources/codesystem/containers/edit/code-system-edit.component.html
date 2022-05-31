@@ -17,19 +17,19 @@
 
           <m-form-item name="content" label="web.code-system.list.content" required>
             <m-select name="content" [(ngModel)]="codeSystem.content" required>
-              <m-option [label]="'complete'" value="complete"></m-option>
-              <m-option [label]="'not-present'" value="not-present"></m-option>
-              <m-option [label]="'example'" value="example"></m-option>
-              <m-option [label]="'fragment'" value="fragment"></m-option>
-              <m-option [label]="'supplement'" value="supplement"></m-option>
+              <m-option label="web.content-options.complete" value="complete"></m-option>
+              <m-option label="web.content-options.not-present" value="not-present"></m-option>
+              <m-option label="web.content-options.example" value="example"></m-option>
+              <m-option label="web.content-options.fragment" value="fragment"></m-option>
+              <m-option label="web.content-options.supplement" value="supplement"></m-option>
             </m-select>
           </m-form-item>
 
           <m-form-item name="caseSensitive" label="web.code-system.list.case-sensitivity">
             <m-select name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive">
-              <m-option [label]="'ci'" value="ci"></m-option>
-              <m-option [label]="'cs'" value="cs"></m-option>
-              <m-option [label]="'ics'" value="ics"></m-option>
+              <m-option label="web.case-sensitive-options.ci" value="ci"></m-option>
+              <m-option label="web.case-sensitive-options.cs" value="cs"></m-option>
+              <m-option label="web.case-sensitive-options.ics" value="ics"></m-option>
             </m-select>
           </m-form-item>
 
@@ -44,7 +44,9 @@
 
         <twa-code-system-versions-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-versions-list>
         <twa-code-system-properties-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-properties-list>
-        <twa-code-system-contacts *ngIf="codeSystem" [contacts]="codeSystem.contacts"></twa-code-system-contacts>
+        <twa-code-system-contacts *ngIf="codeSystem"
+            [contacts]="codeSystem.contacts"
+            (emittedContacts)="codeSystem.contacts = $event"></twa-code-system-contacts>
 
         <ng-container *m-card-footer>
           <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">

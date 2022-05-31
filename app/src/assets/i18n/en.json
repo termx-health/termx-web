@@ -2,7 +2,10 @@
   "core": {
     "btn": {
       "save": "Save",
-      "delete": "Delete"
+      "delete": "Delete",
+      "confirm": "Confirm",
+      "cancel": "Cancel",
+      "duplicate": "Duplicate"
     }
   },
   "web": {
@@ -63,23 +66,21 @@
         "add-header": "Create a new code system",
         "edit-header": "Edit code system"
       },
-      "list": {
-        "contact": {
-          "contacts": "Contacts",
-          "add-contact": "Add contact",
-          "form": {
-            "name": "Name",
-            "edit-header": "Edit contact",
-            "system": "System",
-            "value": "Value",
-            "use": "Use",
-            "operations": "Operations",
-            "button": {
-              "cancel": "Cancel",
-              "confirm": "Confirm"
-            }
-          }
+      "contacts": {
+        "list": {
+          "header": "Contacts",
+          "add-contact": "Add contact"
         },
+        "modal": {
+          "name": "Name",
+          "edit-header": "Edit contact",
+          "system": "System",
+          "value": "Value",
+          "use": "Use",
+          "operations": "Operations"
+        }
+      },
+      "list": {
         "narrative": "Narrative",
         "content": "Content",
         "case-sensitivity": "Case sensitivity",
@@ -97,11 +98,7 @@
           "duplicate-header": "Create duplicate code system",
           "source-code-system": "Source code system:",
           "target-code-system": "Target code system:",
-          "target-uri": "Target URI:",
-          "button": {
-            "duplicate": "Duplicate",
-            "cancel": "Cancel"
-          }
+          "target-uri": "Target URI:"
         }
       }
     },

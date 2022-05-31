@@ -2,7 +2,10 @@
   "core": {
     "btn": {
       "save": "Salvesta",
-      "delete": "Kustuta"
+      "delete": "Kustuta",
+      "confirm": "Kinnita",
+      "cancel": "Katkesta",
+      "duplicate": "Duplitseeri"
     }
   },
   "web": {
@@ -63,23 +66,21 @@
         "add-header": "Lisa koodisüsteem",
         "edit-header": "Muuda koodisüsteemi"
       },
-      "list": {
-        "contact": {
-          "contacts": "Kontaktid",
-          "add-contact": "Lisa kontakt",
-          "form": {
-            "name": "Nimi",
-            "edit-header": "Muuda kontakti",
-            "system": "Süsteem",
-            "value": "Väärtus",
-            "use": "Kasutus",
-            "operations": "Operatsioonid",
-            "button": {
-              "cancel": "Katkesta",
-              "confirm": "Kinnita"
-            }
-          }
+      "contacts": {
+        "list": {
+          "header": "Kontaktid",
+          "add-contact": "Lisa kontakt"
         },
+        "modal": {
+          "name": "Nimi",
+          "edit-header": "Muuda kontakti",
+          "system": "Süsteem",
+          "value": "Väärtus",
+          "use": "Kasutus",
+          "operations": "Operatsioonid"
+        }
+      },
+      "list": {
         "narrative": "Narratiiv",
         "content": "Sisu",
         "case-sensitivity": "Tõstutundlikkus",
