@@ -1,17 +1,26 @@
-<m-card class="tw-table-card">
+<m-card class="tw-card-table">
   <div *m-card-header class="tw-card-header">
     <div class="m-card-title">{{'web.code-system.list.versions' | translate}}</div>
-    <m-button [routerLink]="['../versions/add']" label="web.code-system.list.add-version"></m-button>
+    <m-dropdown>
+      <m-button *m-dropdown-container buttonClass="m-language-input-dropdown-button">
+        <span>{{'web.code-system-version.list.add-version' | translate}}</span>
+        <m-icon code="down" size="10"></m-icon>
+      </m-button>
+      <a *m-dropdown-item [routerLink]="['../versions/add']">{{'web.code-system-version.list.add-new-version' | translate}}</a>
+      <a *m-dropdown-item (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId})">{{'web.code-system-version.list.duplicate-version' | translate}}</a>
+    </m-dropdown>
+
   </div>
 
-  <m-table [data]="versions" [loading]="loading" outlined enablePagination hideOnSinglePage>
+  <m-table [data]="versions" [loading]="loading" enablePagination hideOnSinglePage>
     <tr *mTableHead>
       <th>{{'web.code-system-version.entity.version' | translate}}</th>
       <th>{{'web.code-system-version.entity.source' | translate}}</th>
       <th>{{'web.code-system-version.entity.release-date' | translate}}</th>
       <th>{{'web.code-system-version.entity.expiration-date' | translate}}</th>
       <th>{{'web.code-system-version.entity.status' | translate}}</th>
-      <th class="tw-table-actions">{{'web.code-system.list.operations' | translate}}</th>
+      <th class="tw-table-actions"></th>
+      <th class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let version">
@@ -28,6 +37,16 @@
           {{'web.publication-status.operations.activate' | translate}}
         </a>
       </td>
+      <td class="tw-table-actions">
+        <m-dropdown>
+          <a *m-dropdown-item (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId, sourceCodeSystem: codeSystemId, sourceVersion: version})">
+            {{'core.btn.duplicate' | translate}}
+          </a>
+          <a *m-dropdown-item (click)="exportFhirFormatVersion(version.id)">
+            {{'web.code-system-version.list.export-fhir' | translate}}
+          </a>
+        </m-dropdown>
+      </td>
     </tr>
 
     <tr *mTableNoData>
@@ -37,3 +56,5 @@
     </tr>
   </m-table>
 </m-card>
+
+<twa-code-system-version-duplicate-modal #duplicateModal (duplicated)="loadVersions()"></twa-code-system-version-duplicate-modal>

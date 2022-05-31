@@ -1,5 +1,5 @@
 <div nz-row [nzGutter]="12" nzJustify="center">
-  <div nz-col nzSpan="12">
+  <div nz-col [nzMd]="12" [nzXs]="24">
     <m-spinner [loading]="loading">
       <m-card [title]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'">
         <form #form="ngForm" *ngIf="codeSystem">
@@ -44,10 +44,6 @@
 
         <twa-code-system-versions-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-versions-list>
         <twa-code-system-properties-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-properties-list>
-        <twa-code-system-contacts *ngIf="codeSystem"
-            [contacts]="codeSystem.contacts"
-            (emittedContacts)="codeSystem.contacts = $event"></twa-code-system-contacts>
-
         <ng-container *m-card-footer>
           <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
             {{'core.btn.save' | translate}}
@@ -56,11 +52,9 @@
 
       </m-card>
     </m-spinner>
-
   </div>
 
-
-  <div nz-col nzSpan="6" style="height: min-content" *ngIf="mode === 'edit'">
+  <div nz-col [nzMd]="6" [nzXs]="24" style="height: min-content" *ngIf="mode === 'edit'">
     <m-card [title]="'web.code-system.list.concepts'">
       <twa-code-system-concepts-list [codeSystemId]="codeSystemId"></twa-code-system-concepts-list>
     </m-card>

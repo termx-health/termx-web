@@ -18,7 +18,6 @@ export class CodeSystemConceptEditComponent implements OnInit {
   public loading = false;
   public mode: 'add' | 'edit' = 'add';
 
-
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
@@ -30,7 +29,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    let conceptCode = this.route.snapshot.paramMap.get('concept');
+    const conceptCode = this.route.snapshot.paramMap.get('concept');
     this.mode = this.codeSystemId && conceptCode ? 'edit' : 'add';
 
     if (this.mode === 'edit') {

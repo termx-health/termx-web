@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CodeSystemConcept, ConceptSearchParams} from 'terminology-lib/resources';
-import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
+import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../services/code-system.service';
 
@@ -11,16 +11,17 @@ import {CodeSystemService} from '../../services/code-system.service';
 export class CodeSystemConceptsListComponent implements OnInit {
   @Input() public codeSystemId?: string;
 
-  public query = new ConceptSearchParams();
   public searchResult = new SearchResult<CodeSystemConcept>();
-  public searchInput: string = "";
-  public concepts: CodeSystemConcept[] = [];
+  public query = new ConceptSearchParams();
   public loading = false;
-  public searchUpdate = new BehaviorSubject<string>("");
+
+  public searchInput: string = "";
+  public searchUpdate = new Subject<string>();
 
   public constructor(private codeSystemService: CodeSystemService) { }
 
   public ngOnInit(): void {
+    this.loadData();
     this.searchUpdate.pipe(
       debounceTime(250),
       distinctUntilChanged(),
@@ -28,10 +29,10 @@ export class CodeSystemConceptsListComponent implements OnInit {
     ).subscribe(data => this.searchResult = data);
   }
 
-  public search(): Observable<SearchResult<CodeSystemConcept>> {
+  private search(): Observable<SearchResult<CodeSystemConcept>> {
     const q = copyDeep(this.query);
     q.codeSystem = this.codeSystemId;
-    q.codeContains = this.searchInput || undefined;
+    q.codeContains = this.searchInput;
     this.loading = true;
     return this.codeSystemService.searchConcepts(this.codeSystemId!, q).pipe(finalize(() => this.loading = false));
   }
@@ -39,5 +40,4 @@ export class CodeSystemConceptsListComponent implements OnInit {
   public loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
   }
-
 }

@@ -1,10 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
+import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 import {MapSet, MapSetSearchParams, MapSetVersion} from 'lib/src/resources/mapset';
 import {MapSetService} from '../services/map-set-service';
-import {MuiTableSortOrder} from '@kodality-health/marina-ui';
 
 
 @Component({
@@ -16,7 +15,7 @@ export class MapSetListComponent implements OnInit {
   public query = new MapSetSearchParams();
   public loading: boolean = false;
   public searchInput: string = "";
-  public searchUpdate = new BehaviorSubject<string>("");
+  public searchUpdate = new Subject<string>();
 
   public constructor(
     private mapSetService: MapSetService,
@@ -24,6 +23,7 @@ export class MapSetListComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.loadData();
     this.searchUpdate.pipe(
       debounceTime(250),
       distinctUntilChanged(),
@@ -44,10 +44,6 @@ export class MapSetListComponent implements OnInit {
     this.search().subscribe(resp => this.searchResult = resp);
   }
 
-  public sortChange(key: string, order: MuiTableSortOrder): void {
-    this.query.sort = order ? (order === 'descend' ? `-${key}` : key) : undefined; // fixme: backend-table
-    this.loadData();
-  }
 
   public getVersionTranslateTokens = (version: MapSetVersion, translateOptions: object): string[] => {
     const tokens = [

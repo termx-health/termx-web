@@ -3,8 +3,7 @@ import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'lib/src/resources';
 import {CodeSystemService} from '../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
-import {BehaviorSubject, debounceTime, distinctUntilChanged, finalize, Observable, switchMap} from 'rxjs';
-import {MuiTableSortOrder} from '@kodality-health/marina-ui';
+import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 
 
 @Component({
@@ -14,9 +13,10 @@ import {MuiTableSortOrder} from '@kodality-health/marina-ui';
 export class CodeSystemListComponent implements OnInit {
   public searchResult = new SearchResult<CodeSystem>();
   public query = new CodeSystemSearchParams();
-  public loading: boolean = false;
-  public searchInput: string = "";
-  public searchUpdate = new BehaviorSubject<string>("");
+  public loading = false;
+
+  public searchInput?: string;
+  public searchUpdate = new Subject<string>();
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -24,6 +24,7 @@ export class CodeSystemListComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.loadData();
     this.searchUpdate.pipe(
       debounceTime(250),
       distinctUntilChanged(),
@@ -31,11 +32,12 @@ export class CodeSystemListComponent implements OnInit {
     ).subscribe(data => this.searchResult = data);
   }
 
-  public search(): Observable<SearchResult<CodeSystem>> {
+
+  private search(): Observable<SearchResult<CodeSystem>> {
     const q = copyDeep(this.query);
     q.lang = this.translateService.currentLang;
     q.versionsDecorated = true;
-    q.textContains = this.searchInput || undefined;
+    q.textContains = this.searchInput;
     this.loading = true;
     return this.codeSystemService.search(q).pipe(finalize(() => this.loading = false));
   }
@@ -44,10 +46,6 @@ export class CodeSystemListComponent implements OnInit {
     this.search().subscribe(resp => this.searchResult = resp);
   }
 
-  public sortChange(key: string, order: MuiTableSortOrder): void {
-    this.query.sort = order ? (order === 'descend' ? `-${key}` : key) : undefined; // fixme: backend-table
-    this.loadData();
-  }
 
   public getVersionTranslateTokens = (version: CodeSystemVersion, translateOptions: object): string[] => {
     const tokens = [

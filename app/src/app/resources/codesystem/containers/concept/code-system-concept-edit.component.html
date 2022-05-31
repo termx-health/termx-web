@@ -11,12 +11,14 @@
             <m-textarea name="description" [(ngModel)]="concept.description"></m-textarea>
           </m-form-item>
         </form>
-        <m-card class="tw-table-card" *ngIf="concept && concept.versions">
+
+        <m-card class="tw-card-table" *ngIf="concept && concept.versions">
           <div *m-card-header class="tw-card-header">
             <div class="m-card-title">{{'web.concept.version.list.versions' | translate}}</div>
             <m-button label="web.concept.version.form.add-header"></m-button>
           </div>
-          <m-table [data]="concept.versions" outlined enablePagination hideOnSinglePage>
+
+          <m-table [data]="concept.versions" enablePagination hideOnSinglePage>
             <tr *mTableHead>
               <th>{{'web.concept.version.list.number' | translate}}</th>
               <th>{{'web.concept.version.list.created' | translate}}</th>
@@ -46,6 +48,7 @@
             </tr>
           </m-table>
         </m-card>
+
         <ng-container *m-card-footer>
           <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
             {{'core.btn.save' | translate}}

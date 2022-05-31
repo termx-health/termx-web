@@ -3,9 +3,10 @@
     "btn": {
       "save": "Save",
       "delete": "Delete",
-      "confirm": "Confirm",
       "cancel": "Cancel",
-      "duplicate": "Duplicate"
+      "close": "Close",
+      "duplicate": "Duplicate",
+      "confirm": "Confirm"
     }
   },
   "web": {
@@ -39,7 +40,19 @@
       "form": {
         "edit-header": "Edit version",
         "add-header": "Add version",
-        "view-header": "View version"
+        "view-header": "View version",
+        "duplicate": {
+          "duplicate-header": "Create duplicate code system version",
+          "source-code-system": "Source code system:",
+          "source-version": "Source version:",
+          "target-version": "Target version:"
+        }
+      },
+      "list": {
+        "add-version": "Add version",
+        "add-new-version": "Add new version",
+        "duplicate-version": "Duplicate version",
+        "export-fhir": "Export FHIR json"
       }
     },
     "entity-property": {
@@ -88,9 +101,7 @@
         "concepts": "Concepts",
         "add-concept": "Add concept",
         "header": "Code system list",
-        "operations": "Operations",
         "versions": "Versions",
-        "add-version": "Add version",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}",

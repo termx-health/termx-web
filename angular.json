@@ -74,7 +74,7 @@
               "app/src/assets",
               {
                 "glob": "**/*",
-                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "input": "./node_modules/@kodality-health/marina-ui/src/icons",
                 "output": "/assets/"
               }
             ],
