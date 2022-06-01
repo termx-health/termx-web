@@ -7,6 +7,21 @@ import {copyDeep, isDefined} from '@kodality-web/core-util';
 @Component({
   selector: 'twa-code-system-contacts-list',
   templateUrl: './code-system-contacts-list.component.html',
+  styles: [`
+    .tw-cs-contact-collapse ::ng-deep {
+      .ant-collapse-header {
+        align-items: center;
+      }
+
+      .ant-collapse-content-box {
+        padding: 0;
+      }
+
+      .m-table {
+        border-radius: 0 0 4px 4px;
+      }
+    }
+  `]
 })
 export class CodeSystemContactsListComponent {
   @Input() public contacts!: CodeSystemContactDetail[];
