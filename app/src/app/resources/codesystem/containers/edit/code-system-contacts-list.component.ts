@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {CodeSystemContactDetail} from 'terminology-lib/resources/codesystem/model/code-system-contact-detail';
 import {NgForm} from '@angular/forms';
-import {copyDeep, isDefined, isNil} from '@kodality-web/core-util';
+import {copyDeep, isDefined} from '@kodality-web/core-util';
 
 
 @Component({
@@ -17,8 +17,8 @@ export class CodeSystemContactsListComponent {
   @ViewChild("form") public form?: NgForm;
 
   public addContact(): void {
-    this.contacts = [...this.contacts || [], {}];
-    this.contactsChange.emit(this.contacts);
+    this.contacts = [...this.contacts || []];
+    this.toggleModal({});
   }
 
   public removeContact(index: number): void {
@@ -29,11 +29,10 @@ export class CodeSystemContactsListComponent {
 
   public toggleModal(contact?: CodeSystemContactDetail, index?: number): void {
     this.modalData = {
-      visible: contact && isDefined(index),
+      visible: !!contact,
       contact: copyDeep(contact),
-      contactIndex: index
+      contactIndex: index,
     };
-
   }
 
   public addModalTelecom(): void {
@@ -46,10 +45,12 @@ export class CodeSystemContactsListComponent {
   }
 
   public confirmModalContact(): void {
-    if (isNil(this.modalData.contactIndex) || !this.modalData.contact) {
-      return;
+    if (isDefined(this.modalData.contactIndex)) {
+      this.contacts[this.modalData.contactIndex!] = this.modalData.contact!;
+    } else {
+      this.contacts = [...this.contacts, this.modalData.contact!];
     }
-    this.contacts[this.modalData.contactIndex] = this.modalData.contact;
+    this.contactsChange.emit(this.contacts);
     this.toggleModal();
   }
 }

@@ -7,8 +7,8 @@
     </m-button>
   </div>
 
-  <nz-collapse nzGhost *ngFor="let contact of contacts; let index = index">
-    <nz-collapse-panel [nzHeader]="header" [nzExtra]="edit">
+  <nz-collapse nzGhost>
+    <nz-collapse-panel *ngFor="let contact of contacts; let index = index" [nzHeader]="header" [nzExtra]="edit">
 
       <ng-template #header>
         <m-icon *ngIf="!contact.name" [code]="'user'"></m-icon>
@@ -30,10 +30,17 @@
           <td>{{telecom.value}}</td>
           <td>{{telecom.use}}</td>
         </tr>
+        <tr *mTableNoData>
+          <td>
+            <m-no-data></m-no-data>
+          </td>
+        </tr>
       </m-table>
 
     </nz-collapse-panel>
   </nz-collapse>
+  <m-no-data *ngIf="contacts?.length === 0"></m-no-data>
+
 
   <nz-modal [(nzVisible)]="modalData.visible" [nzTitle]="'web.code-system.contacts.modal.edit-header' | translate" nzCentered (nzOnCancel)="toggleModal()">
     <div *nzModalContent>
