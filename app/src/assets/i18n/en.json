@@ -151,10 +151,51 @@
       "form": {
         "edit-header": "Edit version",
         "add-header": "Add version",
-        "view-header": "View version"
+        "view-header": "View version",
+        "rule-set": "Rule set"
       },
       "list": {
         "operations": "Operations"
+      }
+    },
+    "value-set-version-concept": {
+      "entity": {
+        "concept": "Concept",
+        "display": "Display",
+        "additional-designations": "Additional designations"
+      }
+    },
+    "value-set-rule-set": {
+      "entity": {
+        "locked-date": "Locked date",
+        "inactive": "Inactive concepts",
+        "rule": {
+          "code-system": "Code system",
+          "code-system-version": "Code system version",
+          "value-set": "Value set",
+          "value-set-version": "Value set version",
+          "concepts": "Concepts",
+          "filters": "Filters"
+        }
+      },
+      "form": {
+        "add-rule-set": "Add rule",
+        "code-system-rule": "Code system rule",
+        "value-set-rule": "Value set rule",
+        "inactive": "Inactive",
+        "all": "All",
+        "active": "Active",
+        "rule": "Rule",
+        "include": "Include",
+        "exclude": "Exclude",
+        "edit-header": "Edit rule"
+      }
+    },
+    "value-set-rule-filter": {
+      "entity": {
+        "property": "Property",
+        "operator": "Operator",
+        "value": "Value"
       }
     },
     "concept": {

@@ -14,7 +14,7 @@ import {CodeSystemConceptsListComponent} from './containers/edit/code-system-con
 import {CodeSystemConceptEditComponent} from './containers/concept/code-system-concept-edit.component';
 import {CodeSystemEntityVersionService} from './services/code-system-entity-version.service';
 import {CodeSystemVersionDuplicateModalComponent} from './containers/edit/code-system-version-duplicate-modal.component';
-import {CodeSystemContactsListComponent} from './containers/edit/code-system-contacts-list.component';
+import {ContactLibModule} from 'terminology-lib/resources/contact/contact-lib.module';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -31,6 +31,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   imports: [
     SharedModule,
     CodeSystemLibModule,
+    ContactLibModule
   ],
   declarations: [
     CodeSystemListComponent,
@@ -43,8 +44,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     CodeSystemConceptsListComponent,
     CodeSystemConceptEditComponent,
     CodeSystemVersionDuplicateModalComponent,
-    CodeSystemConceptEditComponent,
-    CodeSystemContactsListComponent
+    CodeSystemConceptEditComponent
   ],
   exports: [
     CodeSystemListComponent
