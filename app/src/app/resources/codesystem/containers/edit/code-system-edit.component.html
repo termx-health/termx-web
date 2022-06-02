@@ -42,9 +42,8 @@
             <ng-template #narrativeHeader>
               <div class="tw-card-header">
                 <div>{{'web.code-system.list.narrative' | translate}}</div> &nbsp;
-                <m-button (click)="toggleNarrativeView()" size="small" display="link" shape="circle">
-                  <m-icon *ngIf="narrativeView" [code]="'edit'"></m-icon>
-                  <m-icon *ngIf="!narrativeView" [code]="'check'"></m-icon>
+                <m-button (click)="narrativeView = !narrativeView" size="small" display="link" shape="circle">
+                  <m-icon [code]="narrativeView? 'edit': 'check'"></m-icon>
                 </m-button>
               </div>
             </ng-template>

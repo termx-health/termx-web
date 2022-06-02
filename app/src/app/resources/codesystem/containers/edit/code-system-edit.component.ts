@@ -40,10 +40,6 @@ export class CodeSystemEditComponent implements OnInit {
     }
   }
 
-  public toggleNarrativeView(): void {
-    this.narrativeView = !this.narrativeView;
-  }
-
   public save(): void {
     if (!this.validate()) {
       return;
