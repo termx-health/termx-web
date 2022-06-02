@@ -1,9 +1,8 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, group} from '@kodality-web/core-util';
 import {ValueSetVersion} from '../model/value-set-version';
 import {ValueSetLibService} from '../services/value-set-lib.service';
-import {ValueSetVersionLibService} from '../services/value-set-version-lib.service';
 
 
 @Component({
@@ -16,16 +15,13 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
 
   public data: {[version: string]: ValueSetVersion} = {};
-  public value?: number;
+  public value?: string;
   public loading: boolean = false;
 
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
 
-  public constructor(
-    private valueSetService: ValueSetLibService,
-    private valueSetVersionService: ValueSetVersionLibService
-  ) {}
+  public constructor(private valueSetService: ValueSetLibService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["valueSetId"]) {
@@ -49,20 +45,12 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
     }
     this.loading = true;
     this.valueSetService.loadVersions(this.valueSetId)
-      .subscribe(versions => this.data = group(versions, v => v.id!))
+      .subscribe(versions => this.data = group(versions, v => v.version!))
       .add(() => this.loading = false);
   }
 
-  public loadVersion(id?: number): void {
-    if (isDefined(id)) {
-      this.loading = true;
-      this.valueSetVersionService.load(id).subscribe(v => this.data[v.version!] = v).add(() => this.loading = false);
-    }
-  }
-
-  public writeValue(obj: ValueSetVersion | number): void {
-    this.value = (typeof obj === 'object' ? obj?.id : obj);
-    this.loadVersion(this.value);
+  public writeValue(obj: ValueSetVersion | string): void {
+    this.value = (typeof obj === 'object' ? obj?.version : obj);
   }
 
   public registerOnChange(fn: any): void {

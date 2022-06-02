@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {ValueSetConcept} from 'terminology-lib/resources';
 import {BooleanInput} from '@kodality-web/core-util';
 
@@ -16,15 +16,19 @@ export class ValueSetVersionConceptListComponent {
 
   @Input() @BooleanInput() public viewMode: string | boolean = false;
 
+  @Output() public conceptsChange: EventEmitter<ValueSetConcept[]> = new EventEmitter<ValueSetConcept[]>();
+
   public constructor() { }
 
   public addRow(): void {
     this.concepts.push(new ValueSetConcept());
     this.concepts = [...this.concepts];
+    this.conceptsChange.emit(this.concepts);
   }
 
   public removeRow(index: number): void {
     this.concepts.splice(index, 1);
     this.concepts = [...this.concepts];
+    this.conceptsChange.emit(this.concepts);
   }
 }

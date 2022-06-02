@@ -42,9 +42,11 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["codeSystem"] || changes["codeSystemVersion"] ||
-      changes["codeSystemVersionReleaseDateLe"] || changes["codeSystemVersionExpirationDateGe"] ||
-      changes["entityVersionStatus"]) {
+    if (changes["codeSystem"]
+      || changes["codeSystemVersion"]
+      || changes["codeSystemVersionReleaseDateLe"]
+      || changes["codeSystemVersionExpirationDateGe"]
+      || changes["entityVersionStatus"]) {
       this.data = {};
       this.searchConcepts().subscribe(data => this.data = data);
     }

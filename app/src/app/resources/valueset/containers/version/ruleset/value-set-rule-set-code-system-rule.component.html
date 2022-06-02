@@ -27,10 +27,14 @@
         [lockedDate]="lockedDate"
         [concepts]="includeRule.concepts"
         [inactiveConcepts]="inactiveConcepts"
-        [viewMode]="viewMode"></twa-value-set-version-concept-list>
+        [viewMode]="viewMode"
+        (conceptsChange)="includeRule.concepts = $event"></twa-value-set-version-concept-list>
   </m-form-item>
   <m-form-item label="web.value-set-rule-set.entity.rule.filters">
-    <twa-value-set-rule-filter-list [codeSystem]="codeSystem" [filters]="includeRule.filters" [viewMode]="viewMode"></twa-value-set-rule-filter-list>
+    <twa-value-set-rule-filter-list [codeSystem]="codeSystem"
+        [filters]="includeRule.filters"
+        [viewMode]="viewMode"
+        (filtersChange)="includeRule.filters = $event"></twa-value-set-rule-filter-list>
   </m-form-item>
 
 
@@ -42,7 +46,10 @@
   </nz-divider>
   <ng-container *ngIf="excludeRuleOn && excludeRule">
     <m-form-item label="web.value-set-rule-set.entity.rule.filters">
-      <twa-value-set-rule-filter-list [codeSystem]="codeSystem" [filters]="excludeRule.filters" [viewMode]="viewMode"></twa-value-set-rule-filter-list>
+      <twa-value-set-rule-filter-list [codeSystem]="codeSystem"
+          [filters]="excludeRule.filters"
+          [viewMode]="viewMode"
+          (filtersChange)="excludeRule.filters = $event"></twa-value-set-rule-filter-list>
     </m-form-item>
   </ng-container>
 </ng-container>

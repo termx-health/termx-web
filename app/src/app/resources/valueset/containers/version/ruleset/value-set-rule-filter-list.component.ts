@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {EntityProperty, ValueSetRuleFilter} from 'terminology-lib/resources';
 import {BooleanInput} from '@kodality-web/core-util';
 import {EntityPropertyLibService} from 'terminology-lib/resources/codesystem/services/entity-property-lib.service';
@@ -16,6 +16,8 @@ export class ValueSetRuleFilterListComponent implements OnChanges {
 
   @Input() @BooleanInput() public viewMode: string | boolean = false;
 
+  @Output() public filtersChange: EventEmitter<ValueSetRuleFilter[]> = new EventEmitter<ValueSetRuleFilter[]>();
+
   public loading = false;
   public properties: EntityProperty[] = [];
 
@@ -31,11 +33,13 @@ export class ValueSetRuleFilterListComponent implements OnChanges {
   public addRow(): void {
     this.filters.push(new ValueSetRuleFilter());
     this.filters = [...this.filters];
+    this.filtersChange.emit(this.filters);
   }
 
   public removeRow(index: number): void {
     this.filters.splice(index, 1);
     this.filters = [...this.filters];
+    this.filtersChange.emit(this.filters);
   }
 
   private loadEntityProperties(): void {
