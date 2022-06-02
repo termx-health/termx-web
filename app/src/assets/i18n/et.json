@@ -151,10 +151,51 @@
       "form": {
         "edit-header": "Muuda versiooni",
         "add-header": "Lisa versioon",
-        "view-header": "Vaata versiooni"
+        "view-header": "Vaata versiooni",
+        "rule-set": "Reeglite kogum"
       },
       "list": {
         "operations": "Toimingud"
+      }
+    },
+    "value-set-version-concept": {
+      "entity": {
+        "concept": "Kontsept",
+        "display": "Kuva",
+        "additional-designations": "Lisa tähendused"
+      }
+    },
+    "value-set-rule-set": {
+      "entity": {
+        "locked-date": "Lukustatud kuupäev",
+        "inactive": "Mitteaktiivsed kontseptid",
+        "rule": {
+          "code-system": "Koodisüsteem",
+          "code-system-version": "Koodisüsteemi versioon",
+          "value-set": "Väärtuste kogum",
+          "value-set-version": "Väärtuste kogumi versioon",
+          "concepts": "Kontseptid",
+          "filters": "Filtrid"
+        }
+      },
+      "form": {
+        "add-rule-set": "Lisa reegel",
+        "code-system-rule": "Koodisüsteemi reegel",
+        "value-set-rule": "Väärtuste kogumi reegel",
+        "inactive": "Mitteaktiivsed",
+        "all": "Kõik",
+        "active": "Aktiivsed",
+        "rule": "Reegel",
+        "include": "Kaasatud",
+        "exclude": "Välistatud",
+        "edit-header": "Muuda reeglit"
+      }
+    },
+    "value-set-rule-filter": {
+      "entity": {
+        "property": "Omadus",
+        "operator": "Operaator",
+        "value": "Väärtus"
       }
     },
     "concept": {

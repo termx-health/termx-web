@@ -3,6 +3,7 @@ import {CodeSystemLibModule} from './codesystem';
 import {DesignationLibModule} from './designation';
 import {ValueSetLibModule} from './valueset';
 import {MapSetLibModule} from './mapset';
+import {ContactLibModule} from './contact/contact-lib.module';
 
 @NgModule({
   declarations: [],
@@ -10,13 +11,15 @@ import {MapSetLibModule} from './mapset';
     CodeSystemLibModule,
     MapSetLibModule,
     DesignationLibModule,
-    ValueSetLibModule
+    ValueSetLibModule,
+    ContactLibModule
   ],
   exports: [
     CodeSystemLibModule,
     MapSetLibModule,
     DesignationLibModule,
-    ValueSetLibModule
+    ValueSetLibModule,
+    ContactLibModule
   ]
 })
 export class ResourcesLibModule {

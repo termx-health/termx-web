@@ -44,7 +44,7 @@
 
         <twa-code-system-versions-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-versions-list>
         <twa-code-system-properties-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-properties-list>
-        <twa-code-system-contacts-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></twa-code-system-contacts-list>
+        <twl-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></twl-contact-list>
 
         <ng-container *m-card-footer>
           <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">

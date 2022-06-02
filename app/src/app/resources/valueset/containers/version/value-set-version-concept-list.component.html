@@ -1,0 +1,44 @@
+<m-table [data]="concepts" hideOnSinglePage>
+  <tr *mTableHead>
+    <th>{{'web.value-set-version-concept.entity.concept' | translate}}</th>
+    <th>{{'web.value-set-version-concept.entity.display' | translate}}</th>
+    <th>{{'web.value-set-version-concept.entity.additional-designations' | translate}}</th>
+    <th *ngIf="!viewMode" class="tw-table-actions"></th>
+  </tr>
+
+  <tr *mTableRow="let item; let i = index">
+    <td>
+      <twl-concept-search *ngIf="!viewMode"
+          [(ngModel)]="item.concept"
+          (ngModelChange)="item.designation = undefined"
+          [codeSystem]="codeSystem"
+          [codeSystemVersion]="codeSystemVersion"
+          [codeSystemVersionReleaseDateLe]="lockedDate"
+          [codeSystemVersionExpirationDateGe]="lockedDate"
+          [entityVersionStatus]="inactiveConcepts === true ? 'retired' : inactiveConcepts === false ? 'active' : undefined"></twl-concept-search>
+      <div *ngIf="viewMode">{{item.concept?.code}}</div>
+    </td>
+    <td>
+      <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.display"></twl-designation-select>
+      <div *ngIf="viewMode">{{item.display?.name}}</div>
+    </td>
+    <td></td>
+    <td class="tw-table-actions" *ngIf="!viewMode">
+      <m-button display="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
+    </td>
+  </tr>
+
+  <tr *ngIf="!viewMode">
+    <td colspan="3" style="padding: 0">
+      <m-button display="text" size="small" style="width: 100%" (click)="addRow()">
+        <m-icon [code]="'plus'"></m-icon>
+      </m-button>
+    </td>
+  </tr>
+
+  <tr *mTableNoData>
+    <td colspan="3">
+      <m-no-data></m-no-data>
+    </td>
+  </tr>
+</m-table>
