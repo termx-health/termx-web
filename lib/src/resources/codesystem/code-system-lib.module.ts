@@ -10,6 +10,7 @@ import {ConceptSearchComponent} from './containers/concept-search.component';
 import {CodeSystemConceptLibService} from './services/code-system-concept-lib.service';
 import {CodeSystemVersionLibService} from './services/code-system-version-lib.service';
 import {CodeSystemVersionSelectComponent} from './containers/code-system-version-select.component';
+import {EntityPropertyLibService} from './services/entity-property-lib.service';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {CodeSystemVersionSelectComponent} from './containers/code-system-version
     CodeSystemLibService,
     CodeSystemEntityVersionLibService,
     CodeSystemConceptLibService,
-    CodeSystemVersionLibService
+    CodeSystemVersionLibService,
+    EntityPropertyLibService
   ],
   declarations: [
     CodeSystemSearchComponent,

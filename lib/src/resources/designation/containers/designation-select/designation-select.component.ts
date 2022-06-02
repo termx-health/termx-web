@@ -26,7 +26,7 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["conceptId"].currentValue) {
+    if (changes["conceptId"]?.currentValue) {
       this.loadDesignations();
     }
   }

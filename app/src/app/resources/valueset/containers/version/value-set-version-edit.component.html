@@ -7,6 +7,10 @@
             <m-input name="version" [(ngModel)]="version.version" required></m-input>
           </m-form-item>
 
+          <m-form-item name="source" label="web.value-set-version.entity.source">
+            <m-input name="source" [(ngModel)]="version.source"></m-input>
+          </m-form-item>
+
           <m-form-item name="releaseDate" label="web.value-set-version.entity.release-date" required>
             <nz-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" required></nz-date-picker>
           </m-form-item>
@@ -27,18 +31,15 @@
           <m-form-item name="description" label="web.value-set-version.entity.description">
             <m-textarea [(ngModel)]="version.description" name="description"></m-textarea>
           </m-form-item>
+
+          <twa-value-set-rule-set #ruleSetComponent [ruleSet]="version.ruleSet"></twa-value-set-rule-set>
+
+          <ng-container *m-card-footer>
+            <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
+              {{'core.btn.save' | translate}}
+            </m-button>
+          </ng-container>
         </form>
-
-        <twa-value-set-version-concepts-list #conceptList
-            *ngIf="mode === 'edit'"
-            [valueSetId]="valueSetId"
-            [valueSetVersion]="valueSetVersion"></twa-value-set-version-concepts-list>
-
-        <ng-container *m-card-footer>
-          <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
-            {{'core.btn.save' | translate}}
-          </m-button>
-        </ng-container>
       </m-spinner>
     </m-card>
   </div>
