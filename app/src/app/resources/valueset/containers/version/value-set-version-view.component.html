@@ -7,6 +7,10 @@
             {{version.version}}
           </m-form-item>
 
+          <m-form-item label="web.value-set-version.entity.source">
+            {{version.source}}
+          </m-form-item>
+
           <m-form-item label="web.value-set-version.entity.release-date">
             {{version.releaseDate | localDate}}
           </m-form-item>
@@ -22,9 +26,8 @@
           <m-form-item label="web.value-set-version.entity.description">
             {{version.description }}
           </m-form-item>
+          <twa-value-set-rule-set [ruleSet]="version.ruleSet" viewMode></twa-value-set-rule-set>
         </div>
-
-        <twa-value-set-version-concepts-list [valueSetId]="valueSetId" [valueSetVersion]="version?.version" viewMode></twa-value-set-version-concepts-list>
       </m-spinner>
     </m-card>
   </div>

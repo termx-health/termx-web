@@ -2,7 +2,7 @@ import {LocalizedName} from '@kodality-health/marina-util';
 import {EntityProperty} from './entity-property';
 import {CodeSystemVersion} from './code-system-version';
 import {CodeSystemConcept} from './code-system-concept';
-import {CodeSystemContactDetail} from './code-system-contact-detail';
+import {ContactDetail} from '../../contact/model/contact-detail';
 
 export class CodeSystem {
   public id?: string;
@@ -12,7 +12,7 @@ export class CodeSystem {
   public caseSensitive?: string;
   public narrative?: string;
   public description?: string;
-  public contacts?: CodeSystemContactDetail[];
+  public contacts?: ContactDetail[];
 
   public concepts?: CodeSystemConcept[];
   public properties?: EntityProperty[];
