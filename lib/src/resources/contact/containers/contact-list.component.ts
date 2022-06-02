@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {CodeSystemContactDetail} from 'terminology-lib/resources/codesystem/model/code-system-contact-detail';
+import {ContactDetail} from 'lib/src/resources/contact/model/contact-detail';
 import {NgForm} from '@angular/forms';
 import {copyDeep, isDefined} from '@kodality-web/core-util';
 
 
 @Component({
-  selector: 'twa-code-system-contacts-list',
-  templateUrl: './code-system-contacts-list.component.html',
+  selector: 'twl-contact-list',
+  templateUrl: './contact-list.component.html',
   styles: [`
     .tw-cs-contact-collapse ::ng-deep {
       .ant-collapse-header {
@@ -23,11 +23,11 @@ import {copyDeep, isDefined} from '@kodality-web/core-util';
     }
   `]
 })
-export class CodeSystemContactsListComponent {
-  @Input() public contacts!: CodeSystemContactDetail[];
-  @Output() public contactsChange: EventEmitter<CodeSystemContactDetail[]> = new EventEmitter<CodeSystemContactDetail[]>();
+export class ContactListComponent {
+  @Input() public contacts!: ContactDetail[];
+  @Output() public contactsChange: EventEmitter<ContactDetail[]> = new EventEmitter<ContactDetail[]>();
 
-  public modalData: {visible?: boolean, contactIndex?: number, contact?: CodeSystemContactDetail} = {};
+  public modalData: {visible?: boolean, contactIndex?: number, contact?: ContactDetail} = {};
 
   @ViewChild("form") public form?: NgForm;
 
@@ -42,7 +42,7 @@ export class CodeSystemContactsListComponent {
     this.contactsChange.emit(this.contacts);
   }
 
-  public toggleModal(contact?: CodeSystemContactDetail, index?: number): void {
+  public toggleModal(contact?: ContactDetail, index?: number): void {
     this.modalData = {
       visible: !!contact,
       contact: copyDeep(contact),
