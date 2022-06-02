@@ -37,8 +37,19 @@
             <m-textarea name="description" [(ngModel)]="codeSystem.description"></m-textarea>
           </m-form-item>
 
-          <m-form-item name="narrative" label="web.code-system.list.narrative">
-            <m-textarea name="narrative" [(ngModel)]="codeSystem.narrative"></m-textarea>
+          <m-form-item name="narrative" [label]="narrativeHeader">
+
+            <ng-template #narrativeHeader>
+              <div class="tw-card-header">
+                <div>{{'web.code-system.list.narrative' | translate}}</div> &nbsp;
+                <m-button (click)="narrativeView = !narrativeView" size="small" display="link" shape="circle">
+                  <m-icon [code]="narrativeView? 'edit': 'check'"></m-icon>
+                </m-button>
+              </div>
+            </ng-template>
+
+            <m-rich-text-editor *ngIf="narrativeView" [(ngModel)]="codeSystem.narrative" name="narrative" disabled></m-rich-text-editor>
+            <m-textarea *ngIf="!narrativeView" [(ngModel)]="codeSystem.narrative" name="narrative"></m-textarea>
           </m-form-item>
         </form>
 
