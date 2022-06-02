@@ -15,6 +15,7 @@ export class CodeSystemEditComponent implements OnInit {
 
   public loading = false;
   public codeSystem?: CodeSystem;
+  public narrativeView = true;
   public mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
@@ -37,6 +38,10 @@ export class CodeSystemEditComponent implements OnInit {
       this.loading = true;
       this.codeSystemService.load(this.codeSystemId!).subscribe(cs => this.codeSystem = cs).add(() => this.loading = false);
     }
+  }
+
+  public toggleNarrativeView(): void {
+    this.narrativeView = !this.narrativeView;
   }
 
   public save(): void {
