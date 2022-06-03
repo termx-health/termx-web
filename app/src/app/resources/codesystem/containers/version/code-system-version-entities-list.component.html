@@ -2,16 +2,16 @@
   <div *m-card-header class="tw-card-header">
     <div style="font-weight: bold">{{'web.code-system.entity-version.list.header' | translate}}</div>
     <m-button (click)="modalVisible = !modalVisible">
-      <m-icon [code]="'plus'"></m-icon> &nbsp; {{'web.code-system.entity-version.list.add-entity' | translate}}
+      <m-icon mCode="plus"></m-icon> &nbsp; {{'web.code-system.entity-version.list.add-entity' | translate}}
     </m-button>
   </div>
   <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
 
-  <m-backend-table [result]="searchResult"
-      [(query)]="query"
-      (queryChange)="loadData()"
-      [loading]="loading"
-      size="small"
+  <m-backend-table [mResult]="searchResult"
+      [(mQuery)]="query"
+      (mQueryChange)="loadData()"
+      [mLoading]="loading"
+      mSize="small"
       style="margin-top: 1rem; display: block">
     <tr *mTableHead>
       <th mColumnKey="code">{{'web.code-system.entity-version.list.code' | translate}}</th>
@@ -23,7 +23,7 @@
       <td>{{entityProperty.description}}</td>
       <td>
         <m-button (click)="delete(index)">
-          <m-icon [code]="'delete'"></m-icon>
+          <m-icon mCode="delete"></m-icon>
         </m-button>
       </td>
     </tr>
@@ -36,17 +36,17 @@
   </m-backend-table>
 </m-card>
 
-<nz-modal [(nzVisible)]="modalVisible"
-    [nzTitle]="'web.code-system.entity-version.list.add-entity' | translate"
-    nzCentered
-    (nzOnCancel)="modalVisible = !modalVisible">
-  <div *nzModalContent>
-    <m-form-item label="web.code-system.entity-version.list.code" required>
+<m-modal [(mVisible)]="modalVisible" (mClose)="modalVisible = !modalVisible">
+  <ng-container *mModalHeader>
+    {{'web.code-system.entity-version.list.add-entity' | translate}}
+  </ng-container>
+  <ng-container *mModalContent>
+    <m-form-item mLabel="web.code-system.entity-version.list.code" required>
       <twl-code-system-version-entity-select name="modalData" [(ngModel)]="modalData" [codeSystemId]="codeSystemId"></twl-code-system-version-entity-select>
     </m-form-item>
-  </div>
-  <div *nzModalFooter>
-    <m-button style="margin-right: 0.5em" (click)="modalVisible = !modalVisible">{{'core.btn.close' | translate}}</m-button>
-    <m-button display="primary" (click)="save()">{{'core.btn.add' | translate}}</m-button>
-  </div>
-</nz-modal>
+  </ng-container>
+  <ng-container *mModalFooter>
+    <m-button mStyle="margin-right: 0.5em" (click)="modalVisible = !modalVisible">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="save()">{{'core.btn.add' | translate}}</m-button>
+  </ng-container>
+</m-modal>
