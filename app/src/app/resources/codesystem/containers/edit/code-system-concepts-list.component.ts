@@ -34,7 +34,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
     q.codeSystem = this.codeSystemId;
     q.codeContains = this.searchInput;
     this.loading = true;
-    return this.codeSystemService.searchConcepts(this.codeSystemId!, q).pipe(finalize(() => this.loading = false));
+    return this.codeSystemService.searchConcepts(q).pipe(finalize(() => this.loading = false));
   }
 
   public loadData(): void {

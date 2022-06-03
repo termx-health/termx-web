@@ -46,6 +46,9 @@
               {{'core.btn.save' | translate}}
             </m-button>
           </ng-container>
+          <twa-code-system-version-entities-list [codeSystemId]="codeSystemId"
+              [versionId]="version.id"
+              [version]="version.version"></twa-code-system-version-entities-list>
         </form>
       </m-spinner>
     </m-card>
