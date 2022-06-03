@@ -1,8 +1,8 @@
-<m-page-header class="m-cls-raised" title="web.app.header" (langChange)="onLangChange($event)"></m-page-header>
+<m-page-header class="m-cls-raised" mTitle="web.app.header" (mLangChange)="onLangChange($event)"></m-page-header>
 
 <div class="layout">
   <div class="layout--sidebar">
-    <m-menu [menuItems]="menu" class="m-cls-raised"></m-menu>
+    <m-menu [mMenuItems]="menu" class="m-cls-raised"></m-menu>
   </div>
   <div class="layout--content">
     <router-outlet></router-outlet>

@@ -4,19 +4,22 @@
       <nz-divider nzOrientation="left" nzText="FHIR"></nz-divider>
       <nz-collapse nzGhost>
         <nz-collapse-panel nzHeader="CodeSystem">
-          <m-button display="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'CodeSystem'}">$sync</m-button>
+          <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'CodeSystem'}">$sync</m-button>
         </nz-collapse-panel>
       </nz-collapse>
+
       <nz-collapse nzGhost>
         <nz-collapse-panel nzHeader="ValueSet">
-          <m-button display="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ValueSet'}">$sync</m-button>
+          <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ValueSet'}">$sync</m-button>
         </nz-collapse-panel>
       </nz-collapse>
+
       <nz-collapse nzGhost>
         <nz-collapse-panel nzHeader="ConceptMap">
-          <m-button display="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ConceptMap'}">$sync</m-button>
+          <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ConceptMap'}">$sync</m-button>
         </nz-collapse-panel>
       </nz-collapse>
+
       <nz-divider nzOrientation="left" nzText="ATC"></nz-divider>
       <nz-divider nzOrientation="left" nzText="ICD-10"></nz-divider>
     </m-card>

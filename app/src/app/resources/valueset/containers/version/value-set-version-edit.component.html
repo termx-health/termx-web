@@ -1,25 +1,25 @@
 <m-form-row>
   <div *mFormCol>
-    <m-card [title]="mode === 'edit' ? 'web.value-set-version.form.edit-header' : 'web.value-set-version.form.add-header'">
-      <m-spinner [loading]="loading">
+    <m-card [mTitle]="mode === 'edit' ? 'web.value-set-version.form.edit-header' : 'web.value-set-version.form.add-header'">
+      <m-spinner [mLoading]="loading">
         <form #form="ngForm" *ngIf="version">
-          <m-form-item name="version" label="web.value-set-version.entity.version" required>
+          <m-form-item mName="version" mLabel="web.value-set-version.entity.version" required>
             <m-input name="version" [(ngModel)]="version.version" required></m-input>
           </m-form-item>
 
-          <m-form-item name="source" label="web.value-set-version.entity.source">
+          <m-form-item mName="source" mLabel="web.value-set-version.entity.source">
             <m-input name="source" [(ngModel)]="version.source"></m-input>
           </m-form-item>
 
-          <m-form-item name="releaseDate" label="web.value-set-version.entity.release-date" required>
+          <m-form-item mName="releaseDate" mLabel="web.value-set-version.entity.release-date" required>
             <nz-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" required></nz-date-picker>
           </m-form-item>
 
-          <m-form-item name="expirationDate" label="web.value-set-version.entity.expiration-date">
+          <m-form-item mName="expirationDate" mLabel="web.value-set-version.entity.expiration-date">
             <nz-date-picker name="expirationDate" [(ngModel)]="version.expirationDate"></nz-date-picker>
           </m-form-item>
 
-          <m-form-item name="supportedLanguages" label="web.value-set-version.entity.supported-languages">
+          <m-form-item mName="supportedLanguages" mLabel="web.value-set-version.entity.supported-languages">
             <m-select multiple name="supportedLanguages" [(ngModel)]="version.supportedLanguages">
               <!-- FIXME: concept-select -->
               <m-option [label]="'et'" value="et"></m-option>
@@ -28,14 +28,14 @@
             </m-select>
           </m-form-item>
 
-          <m-form-item name="description" label="web.value-set-version.entity.description">
+          <m-form-item mName="description" mLabel="web.value-set-version.entity.description">
             <m-textarea [(ngModel)]="version.description" name="description"></m-textarea>
           </m-form-item>
 
           <twa-value-set-rule-set #ruleSetComponent [ruleSet]="version.ruleSet"></twa-value-set-rule-set>
 
           <ng-container *m-card-footer>
-            <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
+            <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
               {{'core.btn.save' | translate}}
             </m-button>
           </ng-container>

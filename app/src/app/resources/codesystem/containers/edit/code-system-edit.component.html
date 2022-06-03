@@ -1,21 +1,22 @@
 <div nz-row [nzGutter]="12" nzJustify="center">
   <div nz-col [nzMd]="12" [nzXs]="24">
-    <m-spinner [loading]="loading">
-      <m-card [title]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'">
+    <m-spinner [mLoading]="loading">
+      <m-card [mTitle]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'">
         <form #form="ngForm" *ngIf="codeSystem">
-          <m-form-item name="id" label="web.code-system.entity.id" required>
+
+          <m-form-item mName="id" mLabel="web.code-system.entity.id" required>
             <m-input name="id" [(ngModel)]="codeSystem.id" [disabled]="mode === 'edit'" required></m-input>
           </m-form-item>
 
-          <m-form-item label="web.code-system.entity.name">
+          <m-form-item mLabel="web.code-system.entity.name">
             <m-multi-language-input name="name" [(ngModel)]="codeSystem.names"></m-multi-language-input>
           </m-form-item>
 
-          <m-form-item name="uri" label="web.code-system.entity.uri" required>
+          <m-form-item mName="uri" mLabel="web.code-system.entity.uri" required>
             <m-input name="uri" [(ngModel)]="codeSystem.uri" required></m-input>
           </m-form-item>
 
-          <m-form-item name="content" label="web.code-system.list.content" required>
+          <m-form-item mName="content" mLabel="web.code-system.list.content" required>
             <m-select name="content" [(ngModel)]="codeSystem.content" required>
               <m-option label="web.content-options.complete" value="complete"></m-option>
               <m-option label="web.content-options.not-present" value="not-present"></m-option>
@@ -25,7 +26,7 @@
             </m-select>
           </m-form-item>
 
-          <m-form-item name="caseSensitive" label="web.code-system.list.case-sensitivity">
+          <m-form-item mName="caseSensitive" mLabel="web.code-system.list.case-sensitivity">
             <m-select name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive">
               <m-option label="web.case-sensitive-options.ci" value="ci"></m-option>
               <m-option label="web.case-sensitive-options.cs" value="cs"></m-option>
@@ -33,17 +34,16 @@
             </m-select>
           </m-form-item>
 
-          <m-form-item name="description" label="web.code-system.entity.description">
+          <m-form-item mName="description" mLabel="web.code-system.entity.description">
             <m-textarea name="description" [(ngModel)]="codeSystem.description"></m-textarea>
           </m-form-item>
 
-          <m-form-item name="narrative" [label]="narrativeHeader">
-
+          <m-form-item mName="narrative" [mLabel]="narrativeHeader">
             <ng-template #narrativeHeader>
               <div class="tw-card-header">
                 <div>{{'web.code-system.list.narrative' | translate}}</div> &nbsp;
-                <m-button (click)="narrativeView = !narrativeView" size="small" display="link" shape="circle">
-                  <m-icon [code]="narrativeView? 'edit': 'check'"></m-icon>
+                <m-button (click)="narrativeView = !narrativeView" mSize="small" mDisplay="link" mShape="circle">
+                  <m-icon [mCode]="narrativeView? 'edit': 'check'"></m-icon>
                 </m-button>
               </div>
             </ng-template>
@@ -58,17 +58,16 @@
         <twl-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></twl-contact-list>
 
         <ng-container *m-card-footer>
-          <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>
-
       </m-card>
     </m-spinner>
   </div>
 
   <div nz-col [nzMd]="6" [nzXs]="24" style="height: min-content" *ngIf="mode === 'edit'">
-    <m-card [title]="'web.code-system.list.concepts'">
+    <m-card [mTitle]="'web.code-system.list.concepts'">
       <twa-code-system-concepts-list [codeSystemId]="codeSystemId"></twa-code-system-concepts-list>
     </m-card>
   </div>

@@ -1,10 +1,12 @@
 <m-card class="tw-card-table">
   <div *m-card-header class="tw-card-header">
     <div class="m-card-title">{{'web.value-set.list.versions' | translate}}</div>
-    <m-button [routerLink]="['../versions/add']" label="web.value-set-version.form.add-header"></m-button>
+    <m-button [routerLink]="['../versions/add']">
+      {{'web.value-set-version.form.add-header' | translate}}
+    </m-button>
   </div>
 
-  <m-table [data]="versions" [loading]="loading" enablePagination hideOnSinglePage>
+  <m-table [mData]="versions" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
     <tr *mTableHead>
       <th>{{'web.value-set-version.entity.version' | translate}}</th>
       <th>{{'web.value-set-version.entity.source' | translate}}</th>

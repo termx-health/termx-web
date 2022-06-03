@@ -1,4 +1,4 @@
-<m-table [data]="filters" [loading]="loading" hideOnSinglePage>
+<m-table [mData]="filters" [mLoading]="loading" mHideOnSinglePage>
   <tr *mTableHead>
     <th>{{'web.value-set-rule-filter.entity.property' | translate}}</th>
     <th>{{'web.value-set-rule-filter.entity.operator' | translate}}</th>
@@ -21,20 +21,20 @@
       <div *ngIf="viewMode">{{item.value}}</div>
     </td>
     <td class="tw-table-actions" *ngIf="!viewMode">
-      <m-button display="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
+      <m-button mDisplay="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
     </td>
   </tr>
 
   <tr *ngIf="!viewMode">
-    <td colspan="3" style="padding: 0">
-      <m-button display="text" size="small" style="width: 100%" (click)="addRow()">
-        <m-icon [code]="'plus'"></m-icon>
+    <td colspan="4" style="padding: 0">
+      <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addRow()">
+        <m-icon [mCode]="'plus'"></m-icon>
       </m-button>
     </td>
   </tr>
 
   <tr *mTableNoData>
-    <td colspan="3">
+    <td colspan="4">
       <m-no-data></m-no-data>
     </td>
   </tr>

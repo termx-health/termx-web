@@ -1,13 +1,13 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [loading]="loading">
-      <m-card [title]="mode === 'edit' ? 'web.concept.form.edit-header' : 'web.concept.form.add-header'">
+    <m-spinner [mLoading]="loading">
+      <m-card [mTitle]="mode === 'edit' ? 'web.concept.form.edit-header' : 'web.concept.form.add-header'">
         <form #form="ngForm" *ngIf="concept">
-          <m-form-item name="code" label="web.concept.entity.code" required>
+          <m-form-item mName="code" mLabel="web.concept.entity.code" required>
             <m-input name="code" [(ngModel)]="concept.code" required></m-input>
           </m-form-item>
 
-          <m-form-item name="description" label="web.concept.entity.description">
+          <m-form-item mName="description" mLabel="web.concept.entity.description">
             <m-textarea name="description" [(ngModel)]="concept.description"></m-textarea>
           </m-form-item>
         </form>
@@ -15,10 +15,10 @@
         <m-card class="tw-card-table" *ngIf="concept && concept.versions">
           <div *m-card-header class="tw-card-header">
             <div class="m-card-title">{{'web.concept.version.list.versions' | translate}}</div>
-            <m-button label="web.concept.version.form.add-header"></m-button>
+            <m-button mLabel="web.concept.version.form.add-header"></m-button>
           </div>
 
-          <m-table [data]="concept.versions" enablePagination hideOnSinglePage>
+          <m-table [mData]="concept.versions" mEnablePagination mHideOnSinglePage>
             <tr *mTableHead>
               <th>{{'web.concept.version.list.number' | translate}}</th>
               <th>{{'web.concept.version.list.created' | translate}}</th>
@@ -50,7 +50,7 @@
         </m-card>
 
         <ng-container *m-card-footer>
-          <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>

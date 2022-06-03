@@ -8,26 +8,32 @@ import {copyDeep, isDefined} from '@kodality-web/core-util';
   selector: 'twl-contact-list',
   templateUrl: './contact-list.component.html',
   styles: [`
-    .tw-cs-contact-collapse ::ng-deep {
+      .tw-cs-contact-collapse ::ng-deep {
+
       .ant-collapse-header {
-        align-items: center;
+          align-items: center;
       }
 
       .ant-collapse-content-box {
-        padding: 0;
+          padding: 0;
       }
 
       .m-table {
-        border-radius: 0 0 4px 4px;
+          border-radius: 0 0 4px 4px;
       }
-    }
+
+      }
   `]
 })
 export class ContactListComponent {
   @Input() public contacts!: ContactDetail[];
   @Output() public contactsChange: EventEmitter<ContactDetail[]> = new EventEmitter<ContactDetail[]>();
 
-  public modalData: {visible?: boolean, contactIndex?: number, contact?: ContactDetail} = {};
+  public modalData: {
+    visible?: boolean,
+    contactIndex?: number,
+    contact?: ContactDetail
+  } = {};
 
   @ViewChild("form") public form?: NgForm;
 
@@ -41,6 +47,7 @@ export class ContactListComponent {
     this.contacts = [...this.contacts];
     this.contactsChange.emit(this.contacts);
   }
+
 
   public toggleModal(contact?: ContactDetail, index?: number): void {
     this.modalData = {
@@ -65,6 +72,7 @@ export class ContactListComponent {
     } else {
       this.contacts = [...this.contacts, this.modalData.contact!];
     }
+
     this.contactsChange.emit(this.contacts);
     this.toggleModal();
   }

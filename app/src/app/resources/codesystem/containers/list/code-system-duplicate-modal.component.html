@@ -1,19 +1,24 @@
-<nz-modal [(nzVisible)]="modalVisible" [nzTitle]="'web.code-system.list.duplicate.duplicate-header' | translate" nzCentered (nzOnCancel)="toggleModal()">
-  <div *nzModalContent>
+<m-modal #modal [(mVisible)]="modalVisible" (close)="toggleModal()">
+  <ng-container *m-modal-header>
+    {{'web.code-system.list.duplicate.duplicate-header' | translate}}
+  </ng-container>
+
+  <ng-container *m-modal-content>
     <form #form="ngForm" *ngIf="params">
-      <m-form-item name="sourceCodeSystem" label="web.code-system.list.duplicate.source-code-system" required>
+      <m-form-item mName="sourceCodeSystem" mLabel="web.code-system.list.duplicate.source-code-system" required>
         <twl-code-system-search name="sourceCodeSystem" [(ngModel)]="params.sourceCodeSystem" valuePrimitive required></twl-code-system-search>
       </m-form-item>
-      <m-form-item name="targetCodeSystem" label="web.code-system.list.duplicate.target-code-system" required>
+      <m-form-item mName="targetCodeSystem" mLabel="web.code-system.list.duplicate.target-code-system" required>
         <m-input name="targetCodeSystem" [(ngModel)]="params.targetCodeSystem" required></m-input>
       </m-form-item>
-      <m-form-item name="targetUri" label="web.code-system.list.duplicate.target-uri" required>
+      <m-form-item mName="targetUri" mLabel="web.code-system.list.duplicate.target-uri" required>
         <m-input name="targetUri" [(ngModel)]="params.targetUri" required></m-input>
       </m-form-item>
     </form>
-  </div>
-  <div *nzModalFooter>
-    <m-button style="margin-right: 0.5em" (click)="toggleModal()">{{'core.btn.close' | translate}}</m-button>
-    <m-button display="primary" (click)="duplicate()">{{'core.btn.duplicate' | translate}}</m-button>
-  </div>
-</nz-modal>
+  </ng-container>
+
+  <ng-container *m-modal-footer>
+    <m-button (click)="modal.close()">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="duplicate()">{{'core.btn.duplicate' | translate}}</m-button>
+  </ng-container>
+</m-modal>

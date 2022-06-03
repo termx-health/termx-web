@@ -1,4 +1,4 @@
-<m-table [data]="concepts" hideOnSinglePage>
+<m-table [mData]="concepts" mHideOnSinglePage>
   <tr *mTableHead>
     <th>{{'web.value-set-version-concept.entity.concept' | translate}}</th>
     <th>{{'web.value-set-version-concept.entity.display' | translate}}</th>
@@ -15,7 +15,8 @@
           [codeSystemVersion]="codeSystemVersion"
           [codeSystemVersionReleaseDateLe]="lockedDate"
           [codeSystemVersionExpirationDateGe]="lockedDate"
-          [entityVersionStatus]="inactiveConcepts === true ? 'retired' : inactiveConcepts === false ? 'active' : undefined"></twl-concept-search>
+          [entityVersionStatus]="inactiveConcepts === true ? 'retired' : inactiveConcepts === false ? 'active' : undefined"
+      ></twl-concept-search>
       <div *ngIf="viewMode">{{item.concept?.code}}</div>
     </td>
     <td>
@@ -24,20 +25,20 @@
     </td>
     <td></td>
     <td class="tw-table-actions" *ngIf="!viewMode">
-      <m-button display="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
+      <m-button mDisplay="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
     </td>
   </tr>
 
   <tr *ngIf="!viewMode">
-    <td colspan="3" style="padding: 0">
-      <m-button display="text" size="small" style="width: 100%" (click)="addRow()">
-        <m-icon [code]="'plus'"></m-icon>
+    <td colspan="4" style="padding: 0">
+      <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addRow()">
+        <m-icon [mCode]="'plus'"></m-icon>
       </m-button>
     </td>
   </tr>
 
   <tr *mTableNoData>
-    <td colspan="3">
+    <td colspan="4">
       <m-no-data></m-no-data>
     </td>
   </tr>

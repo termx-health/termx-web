@@ -20,7 +20,7 @@ export class CodeSystemVersionDuplicateModalComponent {
   public constructor(private codeSystemService: CodeSystemService) { }
 
   public toggleModal(params?: {targetCodeSystem: string, sourceCodeSystem?: string, sourceVersion?: CodeSystemVersion}): void {
-    this.modalVisible = !this.modalVisible;
+    this.modalVisible = !!params;
     this.params = params;
   }
 
@@ -30,8 +30,8 @@ export class CodeSystemVersionDuplicateModalComponent {
     }
     const duplicateRequest = {codeSystem: this.params?.targetCodeSystem!, version: this.params?.targetVersion!};
     this.codeSystemService.duplicateCodeSystemVersion(this.params?.sourceCodeSystem!, this.params?.sourceVersion?.version!, duplicateRequest).subscribe(() => {
-        this.modalVisible = false;
         this.duplicated.emit();
+        this.toggleModal();
       }
     );
   }

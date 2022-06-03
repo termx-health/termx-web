@@ -19,7 +19,7 @@ export class CodeSystemDuplicateModalComponent {
   public constructor(private codeSystemService: CodeSystemService) { }
 
   public toggleModal(params?: {sourceCodeSystem: string}): void {
-    this.modalVisible = !this.modalVisible;
+    this.modalVisible = !!params;
     this.params = params;
   }
 
@@ -32,7 +32,7 @@ export class CodeSystemDuplicateModalComponent {
       codeSystemUri: this.params?.targetUri!
     };
     this.codeSystemService.duplicateCodeSystem(this.params?.sourceCodeSystem!, duplicateRequest).subscribe(() => {
-        this.modalVisible = false;
+        this.toggleModal();
         this.duplicated.emit();
       }
     );

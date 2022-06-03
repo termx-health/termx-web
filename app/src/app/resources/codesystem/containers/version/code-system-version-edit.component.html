@@ -1,17 +1,17 @@
 <m-form-row>
   <div *mFormCol>
-    <m-card [title]="mode === 'edit' ? 'web.code-system-version.form.edit-header' : 'web.code-system-version.form.add-header'">
-      <m-spinner [loading]="loading">
+    <m-card [mTitle]="mode === 'edit' ? 'web.code-system-version.form.edit-header' : 'web.code-system-version.form.add-header'">
+      <m-spinner [mLoading]="loading">
         <form #form="ngForm" *ngIf="version">
-          <m-form-item name="version" label="web.code-system-version.entity.version" required>
+          <m-form-item mName="version" mLabel="web.code-system-version.entity.version" required>
             <m-input name="version" [(ngModel)]="version.version" required></m-input>
           </m-form-item>
 
-          <m-form-item name="source" label="web.code-system-version.entity.source">
+          <m-form-item mName="source" mLabel="web.code-system-version.entity.source">
             <m-input name="source" [(ngModel)]="version.source"></m-input>
           </m-form-item>
 
-          <m-form-item name="preferredLanguage" label="web.code-system-version.entity.preferred-language">
+          <m-form-item mName="preferredLanguage" mLabel="web.code-system-version.entity.preferred-language">
             <m-select name="preferredLanguage" [(ngModel)]="version.preferredLanguage">
               <!-- FIXME: concept-select -->
               <m-option [label]="'et'" value="et"></m-option>
@@ -20,7 +20,7 @@
             </m-select>
           </m-form-item>
 
-          <m-form-item name="supportedLanguages" label="web.code-system-version.entity.supported-languages">
+          <m-form-item mName="supportedLanguages" mLabel="web.code-system-version.entity.supported-languages">
             <m-select name="supportedLanguages" [(ngModel)]="version.supportedLanguages" multiple>
               <!-- FIXME: concept-select -->
               <m-option [label]="'et'" value="et"></m-option>
@@ -29,20 +29,20 @@
             </m-select>
           </m-form-item>
 
-          <m-form-item name="description" label="web.code-system-version.entity.description">
+          <m-form-item mName="description" mLabel="web.code-system-version.entity.description">
             <m-textarea name="description" [(ngModel)]="version.description"></m-textarea>
           </m-form-item>
 
-          <m-form-item name="releaseDate" label="web.code-system-version.entity.release-date" required>
+          <m-form-item mName="releaseDate" mLabel="web.code-system-version.entity.release-date" required>
             <nz-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" required></nz-date-picker>
           </m-form-item>
 
-          <m-form-item name="expirationDate" label="web.code-system-version.entity.expiration-date">
+          <m-form-item mName="expirationDate" mLabel="web.code-system-version.entity.expiration-date">
             <nz-date-picker name="expirationDate" [(ngModel)]="version.expirationDate"></nz-date-picker>
           </m-form-item>
 
           <ng-container *m-card-footer>
-            <m-button display="primary" [loading]="loading" [disabled]="loading" (click)="save()">
+            <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
               {{'core.btn.save' | translate}}
             </m-button>
           </ng-container>
