@@ -2,11 +2,11 @@
   <div *m-card-header class="tw-card-header">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <m-button [routerLink]="'code-systems/add'">
-      <m-icon [code]="'plus'"></m-icon>&nbsp; {{'web.code-system.form.add-header' | translate}}
+      <m-icon mCode="plus"></m-icon>&nbsp; {{'web.code-system.form.add-header' | translate}}
     </m-button>
   </div>
 
-  <m-backend-table [result]="searchResult" [(query)]="query" (queryChange)="loadData()" [loading]="loading">
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
       <th></th>
       <th mColumnKey="id">{{'web.code-system.entity.id' | translate}}</th>
@@ -16,14 +16,14 @@
     </tr>
 
     <tr *mTableRow="let cs">
-      <td m-table-expand [item]="cs"></td>
+      <td m-table-expand [mItem]="cs"></td>
       <td><a [routerLink]="['code-systems',cs.id,'edit']">{{cs.id}}</a></td>
       <td>{{cs.names | localName}}</td>
       <td>{{cs.uri | apply: parseDomain}}</td>
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="duplicateModal.toggleModal({sourceCodeSystem: cs.id})">
-            <m-icon [code]="'copy'"></m-icon>&nbsp; {{'core.btn.duplicate' | translate}}
+            <m-icon [mCode]="'copy'"></m-icon>&nbsp; {{'core.btn.duplicate' | translate}}
           </a>
         </m-dropdown>
       </td>
@@ -31,23 +31,23 @@
 
     <tr *mTableRowExpand="let cs" class="m-table-expanded-row">
       <td colspan="5">
-        <m-form-row full>
+        <m-form-row mFull>
           <div *mFormCol>
-            <m-form-item *ngIf="cs.uri" label="web.code-system.entity.uri">
+            <m-form-item *ngIf="cs.uri" mLabel="web.code-system.entity.uri">
               {{cs.uri}}
             </m-form-item>
-            <m-form-item *ngIf="cs.content" label="web.code-system.list.content">
+            <m-form-item *ngIf="cs.content" mLabel="web.code-system.list.content">
               {{'web.content-options.' + cs.content | translate}}
             </m-form-item>
-            <m-form-item *ngIf="cs.caseSensitive" label="web.code-system.list.case-sensitivity">
+            <m-form-item *ngIf="cs.caseSensitive" mLabel="web.code-system.list.case-sensitivity">
               {{'web.case-sensitive-options.' + cs.caseSensitive | translate}}
             </m-form-item>
 
-            <m-form-item *ngIf="cs.description" label="web.code-system.entity.description">
+            <m-form-item *ngIf="cs.description" mLabel="web.code-system.entity.description">
               {{cs.description}}
             </m-form-item>
 
-            <m-form-item *ngIf="cs.versions.length > 0" label="web.code-system.list.versions">
+            <m-form-item *ngIf="cs.versions.length > 0" mLabel="web.code-system.list.versions">
               <div *ngFor="let version of cs.versions">{{
                 version | apply: getVersionTranslateTokens: ({
                   releaseDate: (version.releaseDate | localDate),

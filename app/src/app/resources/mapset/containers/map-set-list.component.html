@@ -2,11 +2,11 @@
   <div *m-card-header class="tw-card-header">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <m-button [routerLink]="'map-sets/add'">
-      <m-icon [code]="'plus'"></m-icon> &nbsp; {{'web.map-set.form.add-header' | translate}}
+      <m-icon [mCode]="'plus'"></m-icon> &nbsp; {{'web.map-set.form.add-header' | translate}}
     </m-button>
   </div>
 
-  <m-backend-table [result]="searchResult" [(query)]="query" (queryChange)="loadData()" [loading]="loading">
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
       <th></th>
       <th mColumnKey="id">{{'web.map-set.entity.id' | translate}}</th>
@@ -16,8 +16,8 @@
     </tr>
 
     <tr *mTableRow="let ms">
-      <td m-table-expand [item]="ms"></td>
-      <td><a [routerLink]="['map-sets',ms.id,'edit']">{{ms.id}}</a></td>
+      <td m-table-expand [mItem]="ms"></td>
+      <td><a [routerLink]="['map-sets', ms.id, 'edit']">{{ms.id}}</a></td>
       <td>{{ms.names | localName}}</td>
       <td>{{ms.uri | apply: parseDomain}}</td>
       <td class="tw-table-actions">
@@ -27,15 +27,15 @@
 
     <tr *mTableRowExpand="let ms" class="m-table-expanded-row">
       <td colspan="5">
-        <m-form-row full>
+        <m-form-row mFull>
           <div *mFormCol>
-            <m-form-item label="web.map-set.entity.uri">
+            <m-form-item mLabel="web.map-set.entity.uri">
               {{ms.uri}}
             </m-form-item>
-            <m-form-item label="web.map-set.entity.description">
+            <m-form-item mLabel="web.map-set.entity.description">
               {{ms.description}}
             </m-form-item>
-            <m-form-item label="web.map-set.list.versions">
+            <m-form-item mLabel="web.map-set.list.versions">
               <div *ngFor="let version of ms.versions">{{
                 version | apply: getVersionTranslateTokens: ({
                   releaseDate: (version.releaseDate | localDate),

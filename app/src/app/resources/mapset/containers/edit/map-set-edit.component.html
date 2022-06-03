@@ -1,11 +1,12 @@
 <m-form-row>
   <div *mFormCol>
-    <m-card [title]="mode === 'edit' ? 'web.map-set.form.edit-header' : 'web.map-set.form.add-header'">
+    <m-card [mTitle]="mode === 'edit' ? 'web.map-set.form.edit-header' : 'web.map-set.form.add-header'">
       <twa-map-set-form #mapSetForm [mode]="mode" [mapSetId]="mapSetId"></twa-map-set-form>
       <twa-map-set-versions-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></twa-map-set-versions-list>
       <twa-map-set-association-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></twa-map-set-association-list>
+
       <ng-container *m-card-footer>
-        <m-button display="primary" [loading]="loading" [disabled]="loading || mapSetForm.loading" (click)="save()">
+        <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading || mapSetForm.loading" (click)="save()">
           {{'core.btn.save' | translate}}
         </m-button>
       </ng-container>

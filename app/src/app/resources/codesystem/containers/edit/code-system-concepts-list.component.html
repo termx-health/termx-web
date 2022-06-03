@@ -2,11 +2,11 @@
   <div *m-card-header class="tw-card-header">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <m-button [routerLink]="['../concepts/add']">
-      <m-icon [code]="'plus'"></m-icon> &nbsp; {{'web.code-system.list.add-concept' | translate}}
+      <m-icon mCode="plus"></m-icon> &nbsp; {{'web.code-system.list.add-concept' | translate}}
     </m-button>
   </div>
 
-  <m-backend-table [result]="searchResult" [(query)]="query" (queryChange)="loadData()" [loading]="loading" size="small">
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading" mSize="small">
     <tr *mTableRow="let concept">
       <td><a [routerLink]="['../concepts/', concept.code, 'edit']">{{concept.code}}</a></td>
     </tr>

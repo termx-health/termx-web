@@ -2,11 +2,11 @@
   <div *m-card-header class="tw-card-header">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <m-button [routerLink]="'value-sets/add'">
-      <m-icon [code]="'plus'"></m-icon> &nbsp; {{'web.value-set.form.add-header' | translate}}
+      <m-icon [mCode]="'plus'"></m-icon> &nbsp; {{'web.value-set.form.add-header' | translate}}
     </m-button>
   </div>
 
-  <m-backend-table [result]="searchResult" [(query)]="query" (queryChange)="loadData()" [loading]="loading">
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
       <th></th>
       <th mColumnKey="id">{{'web.value-set.entity.id' | translate}}</th>
@@ -16,7 +16,7 @@
     </tr>
 
     <tr *mTableRow="let vs">
-      <td m-table-expand [item]="vs"></td>
+      <td m-table-expand [mItem]="vs"></td>
       <td><a [routerLink]="['value-sets',vs.id, 'edit']">{{vs.id}}</a></td>
       <td>{{vs.names | localName}}</td>
       <td>{{vs.uri | apply: parseDomain}}</td>
@@ -27,15 +27,15 @@
 
     <tr *mTableRowExpand="let vs" class="m-table-expanded-row">
       <td colspan="5">
-        <m-form-row full>
+        <m-form-row mFull>
           <div *mFormCol>
-            <m-form-item label="web.value-set.entity.uri">
+            <m-form-item mLabel="web.value-set.entity.uri">
               {{vs.uri}}
             </m-form-item>
-            <m-form-item label="web.value-set.entity.description">
+            <m-form-item mLabel="web.value-set.entity.description">
               {{vs.description}}
             </m-form-item>
-            <m-form-item label="web.value-set.list.versions">
+            <m-form-item mLabel="web.value-set.list.versions">
               <div *ngFor="let version of vs.versions">{{
                 version | apply: getVersionTranslateTokens: ({
                   releaseDate: (version.releaseDate | localDate),

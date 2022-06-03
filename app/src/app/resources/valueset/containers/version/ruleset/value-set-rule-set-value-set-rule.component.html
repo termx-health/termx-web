@@ -1,33 +1,37 @@
 <form #form="ngForm">
-  <m-form-item name="valueSet" label="web.value-set-rule-set.entity.rule.value-set" required>
+  <m-form-item mName="valueSet" mLabel="web.value-set-rule-set.entity.rule.value-set" required>
     <twl-value-set-search *ngIf="!viewMode"
         name="valueSet"
         [(ngModel)]="valueSet"
         (ngModelChange)="valueSetChange($event)"
         valuePrimitive
-        required></twl-value-set-search>
+        required
+    ></twl-value-set-search>
     <label *ngIf="viewMode">{{valueSet}}</label>
   </m-form-item>
-  <m-form-item name="valueSetVersion" label="web.value-set-rule-set.entity.rule.value-set-version" [required]="!lockedDate">
+
+  <m-form-item mName="valueSetVersion" mLabel="web.value-set-rule-set.entity.rule.value-set-version" [required]="!lockedDate">
     <twl-value-set-version-select *ngIf="!viewMode"
         name="valueSetVersion"
         [(ngModel)]="valueSetVersion"
         (ngModelChange)="valueSetVersionChange($event)"
         [valueSetId]="valueSet"
-        [required]="!lockedDate"></twl-value-set-version-select>
+        [required]="!lockedDate"
+    ></twl-value-set-version-select>
     <label *ngIf="viewMode">{{valueSetVersion?.version}}</label>
   </m-form-item>
 </form>
 
+
 <ng-container *ngIf="valueSet">
   <nz-divider [nzText]="'web.value-set-rule-set.form.include' | translate" nzOrientation="left"></nz-divider>
-  <m-form-item label="web.value-set-rule-set.entity.rule.filters">
+  <m-form-item mLabel="web.value-set-rule-set.entity.rule.filters">
     <twa-value-set-rule-filter-list [valueSet]="valueSet"
         [filters]="includeRule.filters"
         [viewMode]="viewMode"
-        (filtersChange)="includeRule.filters = $event"></twa-value-set-rule-filter-list>
+        (filtersChange)="includeRule.filters = $event"
+    ></twa-value-set-rule-filter-list>
   </m-form-item>
-
 
   <nz-divider [nzText]="exclude" nzOrientation="left">
     <ng-template #exclude>
@@ -35,12 +39,14 @@
       <nz-switch [(ngModel)]="excludeRuleOn" (ngModelChange)="switchExcludeRule($event)" [disabled]="!!viewMode"></nz-switch>
     </ng-template>
   </nz-divider>
+
   <ng-container *ngIf="excludeRuleOn && excludeRule">
-    <m-form-item label="web.value-set-rule-set.entity.rule.filters">
+    <m-form-item mLabel="web.value-set-rule-set.entity.rule.filters">
       <twa-value-set-rule-filter-list [valueSet]="valueSet"
           [filters]="excludeRule.filters"
           [viewMode]="viewMode"
-          (filtersChange)="excludeRule.filters = $event"></twa-value-set-rule-filter-list>
+          (filtersChange)="excludeRule.filters = $event"
+      ></twa-value-set-rule-filter-list>
     </m-form-item>
   </ng-container>
 </ng-container>

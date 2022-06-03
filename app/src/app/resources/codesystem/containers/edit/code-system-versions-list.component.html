@@ -1,18 +1,18 @@
 <m-card class="tw-card-table">
   <div *m-card-header class="tw-card-header">
     <div class="m-card-title">{{'web.code-system.list.versions' | translate}}</div>
+
     <m-dropdown>
-      <m-button *m-dropdown-container buttonClass="m-language-input-dropdown-button">
-        <span>{{'web.code-system-version.list.add-version' | translate}}</span>
-        <m-icon code="down" size="10"></m-icon>
+      <m-button *m-dropdown-container>
+        <span>{{'web.code-system-version.list.add-version' | translate}}</span> &nbsp;
+        <m-icon mCode="down" mSize="10"></m-icon>
       </m-button>
       <a *m-dropdown-item [routerLink]="['../versions/add']">{{'web.code-system-version.list.add-new-version' | translate}}</a>
       <a *m-dropdown-item (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId})">{{'web.code-system-version.list.duplicate-version' | translate}}</a>
     </m-dropdown>
-
   </div>
 
-  <m-table [data]="versions" [loading]="loading" enablePagination hideOnSinglePage>
+  <m-table [mData]="versions" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
     <tr *mTableHead>
       <th>{{'web.code-system-version.entity.version' | translate}}</th>
       <th>{{'web.code-system-version.entity.source' | translate}}</th>

@@ -1,33 +1,33 @@
 <m-form-row>
   <div *mFormCol>
-    <m-card [title]="'web.code-system-version.form.view-header'">
-      <m-spinner [loading]="loading">
+    <m-card [mTitle]="'web.code-system-version.form.view-header'">
+      <m-spinner [mLoading]="loading">
         <div *ngIf="version">
-          <m-form-item label="web.code-system-version.entity.version">
+          <m-form-item mLabel="web.code-system-version.entity.version">
             {{version.version}}
           </m-form-item>
 
-          <m-form-item name="source" label="web.code-system-version.entity.source">
+          <m-form-item mLabel="web.code-system-version.entity.source">
             {{version.source}}
           </m-form-item>
 
-          <m-form-item label="web.code-system-version.entity.preferred-language">
+          <m-form-item mLabel="web.code-system-version.entity.preferred-language">
             {{version.preferredLanguage}}
           </m-form-item>
 
-          <m-form-item label="web.code-system-version.entity.supported-languages">
+          <m-form-item mLabel="web.code-system-version.entity.supported-languages">
             {{version.supportedLanguages}}
           </m-form-item>
 
-          <m-form-item label="web.code-system-version.entity.description">
+          <m-form-item mLabel="web.code-system-version.entity.description">
             {{version.description}}
           </m-form-item>
 
-          <m-form-item label="web.code-system-version.entity.release-date">
+          <m-form-item mLabel="web.code-system-version.entity.release-date">
             {{version.releaseDate | localDate}}
           </m-form-item>
 
-          <m-form-item label="web.code-system-version.entity.expiration-date">
+          <m-form-item mLabel="web.code-system-version.entity.expiration-date">
             {{version.expirationDate | localDate}}
           </m-form-item>
         </div>

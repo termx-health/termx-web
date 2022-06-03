@@ -39,7 +39,7 @@ export class ValueSetRuleSetValueSetRuleComponent implements OnChanges {
   }
 
   public initRule(rule: ValueSetRule): void {
-    rule.valueSet = rule.valueSet ||  this.valueSet;
+    rule.valueSet = rule.valueSet || this.valueSet;
     rule.valueSetVersion = rule.valueSetVersion || this.valueSetVersion?.version;
     rule.concepts = rule.concepts || [];
     rule.filters = rule.filters || [];

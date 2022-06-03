@@ -3,7 +3,27 @@ html {
 }
 
 
+// MUI overrides
+
+.m-card-footer {
+  .m-button-wrapper {
+    width: 100%;
+  }
+}
+
+.m-modal-footer {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: end;
+
+  .m-button-wrapper {
+    width: initial;
+  }
+}
+
+
 // MUI tweaks
+
 .tw-card-table {
   box-shadow: none;
 
@@ -35,27 +55,6 @@ html {
   text-align: right !important;
   width: 0;
   white-space: nowrap;
-}
-
-
-.tw-button-danger {
-  color: red;
-  border: 0;
-
-  &:focus,
-  &:not([disabled]):active,
-  &:not([disabled]):hover {
-    color: red;
-    border-color: red;
-  }
-}
-
-// MUI overrides
-
-.m-card-footer {
-  .m-button-wrapper {
-    width: 100%;
-  }
 }
 
 
