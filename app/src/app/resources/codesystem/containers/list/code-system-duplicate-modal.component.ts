@@ -32,7 +32,7 @@ export class CodeSystemDuplicateModalComponent {
       codeSystemUri: this.params?.targetUri!
     };
     this.codeSystemService.duplicateCodeSystem(this.params?.sourceCodeSystem!, duplicateRequest).subscribe(() => {
-        this.toggleModal();
+        this.modalVisible = false;
         this.duplicated.emit();
       }
     );

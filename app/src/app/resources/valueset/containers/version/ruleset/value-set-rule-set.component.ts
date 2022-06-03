@@ -76,7 +76,8 @@ export class ValueSetRuleSetComponent implements OnChanges {
     } else {
       this.rules = [...this.rules, this.modalData.rule!];
     }
-    this.toggleModal();
+
+    this.modalData.visible = false;
   }
 
   private validate(): boolean {

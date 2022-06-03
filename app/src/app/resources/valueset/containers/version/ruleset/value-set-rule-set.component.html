@@ -35,7 +35,9 @@
   <nz-collapse class="tw-cs-contact-collapse" *ngIf="rules?.length">
     <nz-collapse-panel *ngFor="let rule of rules; let i = index" [nzHeader]="header" [nzExtra]="!viewMode && edit">
       <ng-template #header>
-        <m-icon *ngIf="rule.type === 'code-system' && !rule.include?.codeSystem || rule.type === 'value-set' && !rule.include?.valueSet" [mCode]="'file-text'"></m-icon>
+        <m-icon *ngIf="rule.type === 'code-system' && !rule.include?.codeSystem || rule.type === 'value-set' && !rule.include?.valueSet"
+            [mCode]="'file-text'"
+        ></m-icon>
         <div *ngIf="rule.type === 'code-system' && rule.include?.codeSystem">
           {{rule.include.codeSystem}}{{rule.include.codeSystemVersion ? ' / ' + rule.include.codeSystemVersion : ''}}
         </div>

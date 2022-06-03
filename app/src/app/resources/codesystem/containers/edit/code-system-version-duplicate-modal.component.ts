@@ -31,7 +31,7 @@ export class CodeSystemVersionDuplicateModalComponent {
     const duplicateRequest = {codeSystem: this.params?.targetCodeSystem!, version: this.params?.targetVersion!};
     this.codeSystemService.duplicateCodeSystemVersion(this.params?.sourceCodeSystem!, this.params?.sourceVersion?.version!, duplicateRequest).subscribe(() => {
         this.duplicated.emit();
-        this.toggleModal();
+        this.modalVisible = false;
       }
     );
   }
