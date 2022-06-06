@@ -40,7 +40,7 @@
 
           <m-form-item mName="narrative" [mLabel]="narrativeHeader">
             <ng-template #narrativeHeader>
-              <div class="tw-card-header">
+              <div class="tw-items-between">
                 <div>{{'web.code-system.list.narrative' | translate}}</div> &nbsp;
                 <m-button (click)="narrativeView = !narrativeView" mSize="small" mDisplay="link" mShape="circle">
                   <m-icon [mCode]="narrativeView? 'edit': 'check'"></m-icon>

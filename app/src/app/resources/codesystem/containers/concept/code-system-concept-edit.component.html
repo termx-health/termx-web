@@ -12,8 +12,8 @@
           </m-form-item>
         </form>
 
-        <m-card class="tw-card-table" *ngIf="concept && concept.versions">
-          <div *m-card-header class="tw-card-header">
+        <m-card class="tw-card-inner" *ngIf="concept && concept.versions">
+          <div *m-card-header class="tw-items-between">
             <div class="m-card-title">{{'web.concept.version.list.versions' | translate}}</div>
             <m-button mLabel="web.concept.version.form.add-header"></m-button>
           </div>

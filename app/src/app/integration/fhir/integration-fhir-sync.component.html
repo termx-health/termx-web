@@ -1,6 +1,6 @@
 <m-card>
   <m-spinner [mLoading]=loading>
-    <div *m-card-header class="tw-card-header">
+    <div *m-card-header class="tw-items-between">
       <nz-breadcrumb>
         <nz-breadcrumb-item>FHIR</nz-breadcrumb-item>
         <nz-breadcrumb-item>{{source}}</nz-breadcrumb-item>
@@ -11,8 +11,8 @@
 
     <p>URL: </p>
     <div style="display:flex" *ngFor="let url of urls; let index = index">
-      <p>{{url}}</p>
-      <m-button style="margin-left: 1em" mSize="small" (click)="removeUrl(index)">
+      <p>{{url}}</p> &nbsp;
+      <m-button mSize="small" (click)="removeUrl(index)">
         <m-icon [mCode]="'delete'"></m-icon>
       </m-button>
     </div>

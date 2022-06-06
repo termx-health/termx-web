@@ -1,5 +1,5 @@
-<m-card class="tw-card-table">
-  <div *m-card-header class="tw-card-header">
+<m-card class="tw-card-inner">
+  <div *m-card-header class="tw-items-between">
     <div class="m-card-title">{{'web.value-set-version.form.rule-set' | translate}} &nbsp;
       <m-button mSize="small">
         <m-icon mCode="eye"></m-icon>
@@ -47,15 +47,17 @@
       </ng-template>
 
       <ng-template #edit>
-        <m-button mSize="small">
-          <m-icon [mCode]="'eye'"></m-icon>
-        </m-button>
-        <m-button style="margin-left: 0.5em" (click)="$event.stopPropagation();toggleModal(rule, i)" mSize="small">
-          <m-icon [mCode]="'edit'"></m-icon>
-        </m-button>
-        <m-button style="margin-left: 0.5em" (click)="$event.stopPropagation();deleteRule(i)" mSize="small">
-          <m-icon [mCode]="'delete'"></m-icon>
-        </m-button>
+        <div class="tw-button-group">
+          <m-button mSize="small">
+            <m-icon [mCode]="'eye'"></m-icon>
+          </m-button>
+          <m-button (click)="$event.stopPropagation();toggleModal(rule, i)" mSize="small">
+            <m-icon [mCode]="'edit'"></m-icon>
+          </m-button>
+          <m-button (click)="$event.stopPropagation();deleteRule(i)" mSize="small">
+            <m-icon [mCode]="'delete'"></m-icon>
+          </m-button>
+        </div>
       </ng-template>
 
       <twa-value-set-code-system-rule *ngIf="rule?.type === 'code-system'"
@@ -98,9 +100,9 @@
       ></twa-value-set-value-set-rule>
     </ng-container>
 
-    <ng-container *m-modal-footer>
+    <div *m-modal-footer class="tw-button-group">
       <m-button (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
       <m-button mDisplay="primary" (click)="confirmModalRuleSet()">{{'core.btn.confirm' | translate}}</m-button>
-    </ng-container>
+    </div>
   </m-modal>
 </m-card>

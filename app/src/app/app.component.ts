@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {LocalizedName} from '@kodality-health/marina-util';
 
 @Component({
-  selector: 'app-root',
+  selector: 'twa-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
@@ -24,12 +24,12 @@ export class AppComponent implements OnInit {
 
   private loadMenu(): void {
     this.http.get<{label?: LocalizedName, icon: string, link: string}[]>("./assets/menu.json").subscribe((menu) => {
-      this.menu = menu.map(i => ({label: i.label?.[this.translateService.currentLang], icon: i.icon, click: () => this.router.navigateByUrl(i.link)}))
-    })
+      this.menu = menu.map(i => ({label: i.label?.[this.translateService.currentLang], icon: i.icon, click: () => this.router.navigateByUrl(i.link)}));
+    });
   }
 
   public onLangChange(lang: string): void {
     this.translateService.use(lang);
-    this.loadMenu()
+    this.loadMenu();
   }
 }

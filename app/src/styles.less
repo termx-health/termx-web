@@ -13,8 +13,7 @@ html {
 
 .m-modal-footer {
   display: flex;
-  gap: 0.5rem;
-  justify-content: end;
+  justify-content: flex-end;
 
   .m-button-wrapper {
     width: initial;
@@ -24,7 +23,7 @@ html {
 
 // MUI tweaks
 
-.tw-card-table {
+.tw-card-inner {
   box-shadow: none;
 
   .m-card-header, .m-card-footer {
@@ -45,7 +44,7 @@ html {
   }
 }
 
-.tw-card-header {
+.tw-items-between {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -56,6 +55,13 @@ html {
   width: 0;
   white-space: nowrap;
 }
+
+.tw-button-group {
+  display: flex;
+  align-self: center;
+  gap: 0.5rem;
+}
+
 
 
 .layout {
