@@ -10,7 +10,7 @@ import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
 import {MarinaUiModule, MUI_CONFIG, MuiConfig} from '@kodality-health/marina-ui';
 import {CoreI18nService, CoreI18nTranslationHandler, TRANSLATION_HANDLER} from '@kodality-web/core-util';
-import {registerLocaleData} from '@angular/common';
+import {APP_BASE_HREF, registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
 import {ResourcesModule} from './resources/resources.module';
 import {MarinaUtilModule} from '@kodality-health/marina-util';
@@ -19,14 +19,14 @@ import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module
 import {IntegrationLibModule} from 'terminology-lib/integration/integration-lib.module';
 import {JobLibModule} from 'terminology-lib/job/job-lib.module';
 import {ErrorHandler} from './core/http/error-handler';
+import {assetUrl} from '../single-spa/asset-url';
 
 
 registerLocaleData(et);
 
 
-
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
-  return new TranslateHttpLoader(http, "./assets/i18n/");
+  return new TranslateHttpLoader(http, assetUrl("./i18n/"));
 }
 
 export function TranslationHandlerFactory(translateService: TranslateService): CoreI18nTranslationHandler {
@@ -82,7 +82,9 @@ export function MarinaUiConfigFactory(): MuiConfig {
     {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
     {provide: LOCALE_ID, useValue: 'en'},
     {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},
-    {provide: MUI_CONFIG, useFactory: MarinaUiConfigFactory}
+    {provide: MUI_CONFIG, useFactory: MarinaUiConfigFactory},
+    {provide: APP_BASE_HREF, useValue: '/'}
+
   ],
   bootstrap: [AppComponent]
 })

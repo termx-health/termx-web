@@ -63,19 +63,19 @@ html {
 }
 
 
-
 .layout {
   display: grid;
   grid-template-columns: auto 1fr;
-  height: calc(100vh - 4rem - 1px);
+  height: 100vh;
 
   &--sidebar {
     z-index: 1;
   }
 
   &--content {
-    overflow: auto;
     padding: 4rem;
+    overflow: auto;
+    height: calc(100vh - 4rem - 1px);
   }
 }
 

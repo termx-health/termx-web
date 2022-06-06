@@ -4,6 +4,7 @@ import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {LocalizedName} from '@kodality-health/marina-util';
+import {assetUrl} from '../single-spa/asset-url';
 
 @Component({
   selector: 'twa-root',
@@ -23,7 +24,7 @@ export class AppComponent implements OnInit {
   }
 
   private loadMenu(): void {
-    this.http.get<{label?: LocalizedName, icon: string, link: string}[]>("./assets/menu.json").subscribe((menu) => {
+    this.http.get<{label?: LocalizedName, icon: string, link: string}[]>(assetUrl("./menu.json")).subscribe((menu) => {
       this.menu = menu.map(i => ({label: i.label?.[this.translateService.currentLang], icon: i.icon, click: () => this.router.navigateByUrl(i.link)}));
     });
   }

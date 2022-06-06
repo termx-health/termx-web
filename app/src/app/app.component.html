@@ -1,11 +1,16 @@
-<m-page-header class="m-cls-raised" mTitle="web.app.header" (mLangChange)="onLangChange($event)"></m-page-header>
-
 <div class="layout">
   <div class="layout--sidebar">
-    <m-menu [mMenuItems]="menu" class="m-cls-raised"></m-menu>
+    <ul nz-menu nzMode="inline" style="width: 240px; height: 100%" nzTheme="dark">
+      <li nz-menu-item [routerLink]="['/resources']" nzMatchRouter>Resources</li>
+      <li nz-menu-item [routerLink]="['/integration']" nzMatchRouter>Integration</li>
+    </ul>
   </div>
-  <div class="layout--content">
-    <router-outlet></router-outlet>
+
+  <div class="layout--wrapper">
+    <m-page-header class="layout-header m-cls-raised" mTitle="web.app.header" (mLangChange)="onLangChange($event)"></m-page-header>
+    <div class="layout--content">
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </div>
 
