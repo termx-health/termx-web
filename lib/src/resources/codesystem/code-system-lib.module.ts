@@ -11,6 +11,8 @@ import {CodeSystemConceptLibService} from './services/code-system-concept-lib.se
 import {CodeSystemVersionLibService} from './services/code-system-version-lib.service';
 import {CodeSystemVersionSelectComponent} from './containers/code-system-version-select.component';
 import {EntityPropertyLibService} from './services/entity-property-lib.service';
+import {CodeSystemEntityVersionSearchComponent} from './containers/code-system-entity-version-search.component';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import {EntityPropertyLibService} from './services/entity-property-lib.service';
     CommonModule,
     MarinaUiModule,
     FormsModule,
-    CoreUtilModule
+    CoreUtilModule,
+    TranslateModule
   ],
   providers: [
     CodeSystemLibService,
@@ -30,12 +33,14 @@ import {EntityPropertyLibService} from './services/entity-property-lib.service';
   declarations: [
     CodeSystemSearchComponent,
     ConceptSearchComponent,
-    CodeSystemVersionSelectComponent
+    CodeSystemVersionSelectComponent,
+    CodeSystemEntityVersionSearchComponent
   ],
   exports: [
     CodeSystemSearchComponent,
     ConceptSearchComponent,
-    CodeSystemVersionSelectComponent
+    CodeSystemVersionSelectComponent,
+    CodeSystemEntityVersionSearchComponent
   ]
 })
 export class CodeSystemLibModule {

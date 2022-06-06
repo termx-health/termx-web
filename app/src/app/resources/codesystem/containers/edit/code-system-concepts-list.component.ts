@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CodeSystemConcept, ConceptSearchParams} from 'terminology-lib/resources';
-import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
+import {debounceTime, distinctUntilChanged, finalize, Observable, of, Subject, switchMap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../services/code-system.service';
 
@@ -30,11 +30,13 @@ export class CodeSystemConceptsListComponent implements OnInit {
   }
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
+    if (!this.codeSystemId) {
+      return of(this.searchResult);
+    }
     const q = copyDeep(this.query);
-    q.codeSystem = this.codeSystemId;
     q.codeContains = this.searchInput;
     this.loading = true;
-    return this.codeSystemService.searchConcepts(this.codeSystemId!, q).pipe(finalize(() => this.loading = false));
+    return this.codeSystemService.searchConcepts(this.codeSystemId, q).pipe(finalize(() => this.loading = false));
   }
 
   public loadData(): void {
