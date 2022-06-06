@@ -12,6 +12,7 @@ import {CodeSystemVersionLibService} from './services/code-system-version-lib.se
 import {CodeSystemVersionSelectComponent} from './containers/code-system-version-select.component';
 import {EntityPropertyLibService} from './services/entity-property-lib.service';
 import {CodeSystemEntityVersionSearchComponent} from './containers/code-system-entity-version-search.component';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {CodeSystemEntityVersionSearchComponent} from './containers/code-system-e
     CommonModule,
     MarinaUiModule,
     FormsModule,
-    CoreUtilModule
+    CoreUtilModule,
+    TranslateModule
   ],
   providers: [
     CodeSystemLibService,

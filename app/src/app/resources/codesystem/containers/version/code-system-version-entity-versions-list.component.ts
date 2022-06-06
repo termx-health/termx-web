@@ -15,7 +15,7 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
   @Input() public codeSystemId?: string;
   @Input() public version?: string;
 
-  public loading = false;
+  public loading: {[key: string]: boolean} = {};
 
   public modalVisible = false;
   public modalData?: CodeSystemEntityVersion;
@@ -46,8 +46,8 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
     q.textContains = this.searchInput;
     q.codeSystem = this.codeSystemId;
     q.codeSystemVersion = this.version;
-    this.loading = true;
-    return this.codeSystemEntityVersionService.search(q).pipe(finalize(() => this.loading = false));
+    this.loading['search'] = true;
+    return this.codeSystemEntityVersionService.search(q).pipe(finalize(() => this.loading['search'] = false));
   }
 
   public loadData(): void {
@@ -55,17 +55,21 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
   }
 
   public delete(entity: CodeSystemEntityVersion): void {
-    this.loading = true;
-    this.codeSystemService.deleteCodeSystemEntityVersion(this.codeSystemId!, this.version!, entity.id!).subscribe(() => this.loadData());
+    this.codeSystemService.unlinkEntityVersion(this.codeSystemId!, this.version!, entity.id!).subscribe(() => this.loadData());
   }
 
   public save(): void {
     if (!validateForm(this.form)) {
       return;
     }
-    this.codeSystemService.addCodeSystemEntityVersion(this.codeSystemId!, this.version!, this.modalData!.id!).subscribe(() => {
+    this.loading['save'] = true;
+    this.codeSystemService.linkEntityVersion(this.codeSystemId!, this.version!, this.modalData!.id!).subscribe(() => {
       this.loadData();
-      this.modalVisible = !this.modalVisible;
-    });
+      this.modalVisible = false;
+    }).add(() => this.loading['save'] = false);
+  }
+
+  public get isLoading(): boolean {
+    return Object.values(this.loading).some(Boolean);
   }
 }

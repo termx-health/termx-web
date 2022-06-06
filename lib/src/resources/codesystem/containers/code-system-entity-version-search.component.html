@@ -5,5 +5,5 @@
     (mChange)="fireOnChange()"
     [autoUnselect]="false"
     [loading]="isLoading">
-  <m-option *ngFor="let key of (data | keys)" [value]="data[key]?.id" [label]="data[key]?.code"></m-option>
+  <m-option *ngFor="let key of (data | keys)" [value]="data[key]?.id" [label]="data[key]?.code + ' ' + (data[key]?.created | localDateTime) + ' ' + (('web.publication-status.statuses.' + data[key]?.status) | translate) "></m-option>
 </m-select>

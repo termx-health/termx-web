@@ -1,5 +1,5 @@
-<m-card class="tw-card-table">
-  <div *m-card-header class="tw-card-header">
+<m-card class="tw-card-inner">
+  <div *m-card-header class="tw-items-between">
     <div class="m-card-title">{{'web.code-system.entity-version.list.header' | translate}}</div>
     <m-button (click)="modalVisible = true">
       <m-icon mCode="plus"></m-icon> &nbsp; {{'web.code-system.entity-version.list.add-entity' | translate}}
@@ -10,7 +10,7 @@
   <m-backend-table [mResult]="searchResult"
       [(mQuery)]="query"
       (mQueryChange)="loadData()"
-      [mLoading]="loading"
+      [mLoading]="isLoading"
       mSize="small"
       style="margin-top: 1rem; display: block">
     <tr *mTableHead>
@@ -21,7 +21,7 @@
     <tr *mTableRow="let entityVersion">
       <td>{{entityVersion.code}}</td>
       <td>{{entityVersion.description}}</td>
-      <td>
+      <td class="tw-table-actions">
         <m-button (click)="delete(entityVersion)">
           <m-icon mCode="delete"></m-icon>
         </m-button>
@@ -43,15 +43,16 @@
   <ng-container *mModalContent>
     <form #form="ngForm">
       <m-form-item mName="modalData" mLabel="web.code-system.entity-version.list.code" required>
-        <twl-code-system-version-entity-search required
-            name="modalData"
+        <twl-code-system-entity-version-search name="modalData"
             [(ngModel)]="modalData"
-            [codeSystemId]="codeSystemId"></twl-code-system-version-entity-search>
+            [codeSystemId]="codeSystemId"
+            required
+        ></twl-code-system-entity-version-search>
       </m-form-item>
     </form>
   </ng-container>
   <ng-container *mModalFooter>
-    <m-button mStyle="margin-right: 0.5em" (click)="modalVisible = false">{{'core.btn.close' | translate}}</m-button>
-    <m-button mDisplay="primary" (click)="save()">{{'core.btn.add' | translate}}</m-button>
+    <m-button mStyle="margin-right: 0.5em" [disabled]="isLoading" (click)="modalVisible = false">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary" [disabled]="isLoading" [mLoading]="isLoading" (click)="save()">{{'core.btn.add' | translate}}</m-button>
   </ng-container>
 </m-modal>
