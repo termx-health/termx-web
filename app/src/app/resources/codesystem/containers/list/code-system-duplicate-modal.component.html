@@ -17,8 +17,8 @@
     </form>
   </ng-container>
 
-  <ng-container *m-modal-footer>
+  <div *m-modal-footer class="tw-button-group">
     <m-button (click)="modal.close()">{{'core.btn.close' | translate}}</m-button>
     <m-button mDisplay="primary" (click)="duplicate()">{{'core.btn.duplicate' | translate}}</m-button>
-  </ng-container>
+  </div>
 </m-modal>

@@ -74,6 +74,6 @@ export class ContactListComponent {
     }
 
     this.contactsChange.emit(this.contacts);
-    this.toggleModal();
+    this.modalData.visible = false;
   }
 }

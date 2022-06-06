@@ -1,5 +1,5 @@
-<m-card class="tw-card-table">
-  <div *m-card-header class="tw-card-header">
+<m-card class="tw-card-inner">
+  <div *m-card-header class="tw-items-between">
     <div class="m-card-title">{{'web.code-system.contacts.list.header' | translate}}</div>
     <m-button (click)="addContact()">
       {{'web.code-system.contacts.list.add-contact' | translate}}
@@ -107,9 +107,9 @@
       </form>
     </ng-container>
 
-    <ng-container *m-modal-footer>
+    <div *m-modal-footer class="tw-button-group">
       <m-button (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
       <m-button mDisplay="primary" (click)="confirmModalContact()">{{'core.btn.confirm' | translate}}</m-button>
-    </ng-container>
+    </div>
   </m-modal>
 </m-card>
