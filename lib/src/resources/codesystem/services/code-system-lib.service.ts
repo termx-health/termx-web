@@ -42,7 +42,7 @@ export class CodeSystemLibService {
     return this.http.get<SearchResult<CodeSystem>>(this.baseUrl, {params: SearchHttpParams.build(params)});
   }
 
-  public searchConcepts(codeSystemId:string, params: ConceptSearchParams = {}): Observable<SearchResult<CodeSystemConcept>> {
+  public searchConcepts(codeSystemId: string, params: ConceptSearchParams): Observable<SearchResult<CodeSystemConcept>> {
     return this.http.get<SearchResult<CodeSystemConcept>>(`${this.baseUrl}/${codeSystemId}/concepts`, {params: SearchHttpParams.build(params)});
   }
 }

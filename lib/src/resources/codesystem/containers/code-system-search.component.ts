@@ -46,7 +46,7 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
       return of(this.data);
     }
     const q = new CodeSystemSearchParams();
-    q.textContains = text
+    q.textContains = text;
     q.limit = 10_000;
     this.loading['search'] = true;
     return this.codeSystemService.search(q).pipe(

@@ -6,7 +6,8 @@
       "cancel": "Cancel",
       "close": "Close",
       "duplicate": "Duplicate",
-      "confirm": "Confirm"
+      "confirm": "Confirm",
+      "add": "Add"
     }
   },
   "web": {
@@ -74,6 +75,15 @@
         "name": "Name",
         "domain": "Domain",
         "description": "Description"
+      },
+      "entity-version": {
+        "list": {
+          "header": "Entities",
+          "add-entity": "Add entity",
+          "operations": "Operations",
+          "code": "Code",
+          "description": "Description"
+        }
       },
       "form": {
         "add-header": "Create a new code system",

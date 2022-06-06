@@ -34,4 +34,12 @@ export class CodeSystemService extends CodeSystemLibService {
   public saveConcept(codeSystemId: string, concept: CodeSystemConcept): Observable<CodeSystemConcept> {
     return this.http.post(`${this.baseUrl}/${codeSystemId}/concepts`, concept);
   }
+
+  public unlinkEntityVersion(codeSystemId: string, version: string, entityVersionId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/entity-versions/${entityVersionId}/membership`);
+  }
+
+  public linkEntityVersion(codeSystemId: string, version: string, entityVersionId: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/entity-versions/${entityVersionId}/membership`, {});
+  }
 }
