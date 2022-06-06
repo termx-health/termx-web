@@ -6,7 +6,8 @@
       "cancel": "Tühista",
       "close": "Sulge",
       "duplicate": "Duplitseeri",
-      "confirm": "Kinnita"
+      "confirm": "Kinnita",
+      "add": "Lisa"
     }
   },
   "web": {
@@ -74,6 +75,15 @@
         "name": "Nimi",
         "domain": "Domeen",
         "description": "Kirjeldus"
+      },
+      "entity-version": {
+        "list": {
+          "header": "Üksused",
+          "add-entity": "Lisa üksus",
+          "operations": "Tegevused",
+          "code": "Kood",
+          "description": "Kirjeldus"
+        }
       },
       "form": {
         "add-header": "Lisa koodisüsteem",
