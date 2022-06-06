@@ -1,7 +1,7 @@
 <m-card class="tw-card-table">
   <div *m-card-header class="tw-card-header">
-    <div style="font-weight: bold">{{'web.code-system.entity-version.list.header' | translate}}</div>
-    <m-button (click)="modalVisible = !modalVisible">
+    <div class="m-card-title">{{'web.code-system.entity-version.list.header' | translate}}</div>
+    <m-button (click)="modalVisible = true">
       <m-icon mCode="plus"></m-icon> &nbsp; {{'web.code-system.entity-version.list.add-entity' | translate}}
     </m-button>
   </div>
@@ -18,11 +18,11 @@
       <th mColumnKey="description">{{'web.code-system.entity-version.list.description' | translate}}</th>
       <th class="tw-table-actions">{{'web.code-system.entity-version.list.operations' | translate}}</th>
     </tr>
-    <tr *mTableRow="let entityProperty; let index = index">
-      <td>{{entityProperty.code}}</td>
-      <td>{{entityProperty.description}}</td>
+    <tr *mTableRow="let entityVersion">
+      <td>{{entityVersion.code}}</td>
+      <td>{{entityVersion.description}}</td>
       <td>
-        <m-button (click)="delete(index)">
+        <m-button (click)="delete(entityVersion)">
           <m-icon mCode="delete"></m-icon>
         </m-button>
       </td>
@@ -36,17 +36,22 @@
   </m-backend-table>
 </m-card>
 
-<m-modal [(mVisible)]="modalVisible" (mClose)="modalVisible = !modalVisible">
+<m-modal [(mVisible)]="modalVisible" (mClose)="modalVisible = false; modalData = undefined">
   <ng-container *mModalHeader>
     {{'web.code-system.entity-version.list.add-entity' | translate}}
   </ng-container>
   <ng-container *mModalContent>
-    <m-form-item mLabel="web.code-system.entity-version.list.code" required>
-      <twl-code-system-version-entity-select name="modalData" [(ngModel)]="modalData" [codeSystemId]="codeSystemId"></twl-code-system-version-entity-select>
-    </m-form-item>
+    <form #form="ngForm">
+      <m-form-item mName="modalData" mLabel="web.code-system.entity-version.list.code" required>
+        <twl-code-system-version-entity-search required
+            name="modalData"
+            [(ngModel)]="modalData"
+            [codeSystemId]="codeSystemId"></twl-code-system-version-entity-search>
+      </m-form-item>
+    </form>
   </ng-container>
   <ng-container *mModalFooter>
-    <m-button mStyle="margin-right: 0.5em" (click)="modalVisible = !modalVisible">{{'core.btn.close' | translate}}</m-button>
+    <m-button mStyle="margin-right: 0.5em" (click)="modalVisible = false">{{'core.btn.close' | translate}}</m-button>
     <m-button mDisplay="primary" (click)="save()">{{'core.btn.add' | translate}}</m-button>
   </ng-container>
 </m-modal>

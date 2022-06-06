@@ -11,7 +11,7 @@ import {CodeSystemConceptLibService} from './services/code-system-concept-lib.se
 import {CodeSystemVersionLibService} from './services/code-system-version-lib.service';
 import {CodeSystemVersionSelectComponent} from './containers/code-system-version-select.component';
 import {EntityPropertyLibService} from './services/entity-property-lib.service';
-import {CodeSystemVersionEntitySelectComponent} from './containers/code-system-version-entity-select.component';
+import {CodeSystemEntityVersionSearchComponent} from './containers/code-system-entity-version-search.component';
 
 
 @NgModule({
@@ -32,13 +32,13 @@ import {CodeSystemVersionEntitySelectComponent} from './containers/code-system-v
     CodeSystemSearchComponent,
     ConceptSearchComponent,
     CodeSystemVersionSelectComponent,
-    CodeSystemVersionEntitySelectComponent
+    CodeSystemEntityVersionSearchComponent
   ],
   exports: [
     CodeSystemSearchComponent,
     ConceptSearchComponent,
     CodeSystemVersionSelectComponent,
-    CodeSystemVersionEntitySelectComponent
+    CodeSystemEntityVersionSearchComponent
   ]
 })
 export class CodeSystemLibModule {

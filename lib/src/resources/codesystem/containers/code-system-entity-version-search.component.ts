@@ -1,7 +1,6 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {BooleanInput, group, isNil} from '@kodality-web/core-util';
+import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
 import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
-import {CodeSystemLibService} from '../services/code-system-lib.service';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {CodeSystemEntityVersion} from '../model/code-system-entity';
 import {CodeSystemEntityVersionQueryParams} from '../model/code-system-entity-version-search-params';
@@ -9,11 +8,11 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CodeSystemEntityVersionLibService} from '../services/code-system-entity-version-lib.service';
 
 @Component({
-  selector: 'twl-code-system-version-entity-select',
-  templateUrl: './code-system-version-entity-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemVersionEntitySelectComponent), multi: true}]
+  selector: 'twl-code-system-version-entity-search',
+  templateUrl: './code-system-entity-version-search.component.html',
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemEntityVersionSearchComponent), multi: true}]
 })
-export class CodeSystemVersionEntitySelectComponent implements OnInit, ControlValueAccessor {
+export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() public codeSystemId?: string;
 
@@ -27,7 +26,6 @@ export class CodeSystemVersionEntitySelectComponent implements OnInit, ControlVa
   public onTouched = (x: any) => x;
 
   public constructor(
-    private codeSystemService: CodeSystemLibService,
     private codeSystemEntityVersionLibService: CodeSystemEntityVersionLibService,
   ) {}
 
@@ -44,15 +42,15 @@ export class CodeSystemVersionEntitySelectComponent implements OnInit, ControlVa
   }
 
   public searchEntities(text: string): Observable<{[id: string]: CodeSystemEntityVersion}> {
-    if (!text || text.length === 1) {
+    if (!text || text.length === 1 || !this.codeSystemId) {
       return of(this.data);
     }
     const q = new CodeSystemEntityVersionQueryParams();
     q.textContains = text;
-    q.codeSystem = this.codeSystemId!;
+    q.codeSystem = this.codeSystemId;
     q.limit = 10_000;
     this.loading['search'] = true;
-    return this.codeSystemService.searchEntityVersionsByCodeSystem(q).pipe(
+    return this.codeSystemEntityVersionLibService.search(q).pipe(
       map(cseva => ({...this.data, ...group(cseva.data, csev => csev.id!)})),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
@@ -60,7 +58,7 @@ export class CodeSystemVersionEntitySelectComponent implements OnInit, ControlVa
   }
 
   private loadCodeSystemEntityVersion(id?: number): void {
-    if (!isNil(id)) {
+    if (isDefined(id)) {
       this.loading['load'] = true;
       this.codeSystemEntityVersionLibService.load(id).subscribe(csev => this.data = {...(this.data || {}), [csev.id!]: csev})
         .add(() => this.loading['load'] = false);

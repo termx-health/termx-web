@@ -15,7 +15,7 @@ import {CodeSystemConceptEditComponent} from './containers/concept/code-system-c
 import {CodeSystemEntityVersionService} from './services/code-system-entity-version.service';
 import {CodeSystemVersionDuplicateModalComponent} from './containers/edit/code-system-version-duplicate-modal.component';
 import {ContactLibModule} from 'terminology-lib/resources/contact/contact-lib.module';
-import {CodeSystemVersionEntitiesListComponent} from './containers/version/code-system-version-entities-list.component';
+import {CodeSystemVersionEntityVersionsListComponent} from './containers/version/code-system-version-entity-versions-list.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -46,7 +46,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     CodeSystemConceptEditComponent,
     CodeSystemVersionDuplicateModalComponent,
     CodeSystemConceptEditComponent,
-    CodeSystemVersionEntitiesListComponent,
+    CodeSystemVersionEntityVersionsListComponent,
   ],
   exports: [
     CodeSystemListComponent
