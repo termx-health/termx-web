@@ -4,6 +4,7 @@
     (mChange)="fireOnChange()"
     [autoUnselect]="false"
     [loading]="loading"
+    [multiple]="multiple"
 >
   <m-option *ngFor="let key of (data | keys)" [value]="data[key]?.id" [label]="data[key]?.name"></m-option>
 </m-select>

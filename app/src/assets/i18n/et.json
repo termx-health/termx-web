@@ -156,7 +156,8 @@
         "description": "Kirjeldus",
         "release-date": "Väljastus kuupäev",
         "expiration-date": "Aegumis kuupäev",
-        "status": "Olek"
+        "status": "Olek",
+        "concepts": "Kontseptid"
       },
       "form": {
         "edit-header": "Muuda versiooni",
@@ -179,6 +180,7 @@
       "entity": {
         "locked-date": "Lukustatud kuupäev",
         "inactive": "Mitteaktiivsed kontseptid",
+        "rules": "Reeglid",
         "rule": {
           "code-system": "Koodisüsteem",
           "code-system-version": "Koodisüsteemi versioon",

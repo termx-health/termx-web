@@ -4,10 +4,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {ValueSet} from '../model/value-set';
-import {ValueSetVersion} from '../model/value-set-version';
+import {ValueSetConcept, ValueSetVersion} from '../model/value-set-version';
 import {ValueSetSearchParams} from '../model/value-set-search-params';
-import {Designation} from '../../designation';
-import {CodeSystemConcept} from '../../codesystem';
 
 @Injectable()
 export class ValueSetLibService {
@@ -29,12 +27,8 @@ export class ValueSetLibService {
     return this.http.get<ValueSetVersion[]>(`${this.baseUrl}/${valueSetId}/versions`);
   }
 
-  public loadConcepts(valueSetId: string, versionVersion: string): Observable<CodeSystemConcept[]> {
-    return this.http.get<CodeSystemConcept[]>(`${this.baseUrl}/${valueSetId}/versions/${versionVersion}/concepts`);
-  }
-
-  public loadDesignations(valueSetId: string, versionVersion: string): Observable<Designation[]> {
-    return this.http.get<Designation[]>(`${this.baseUrl}/${valueSetId}/versions/${versionVersion}/designations`);
+  public loadConcepts(valueSetId: string, versionVersion: string): Observable<ValueSetConcept[]> {
+    return this.http.get<ValueSetConcept[]>(`${this.baseUrl}/${valueSetId}/versions/${versionVersion}/concepts`);
   }
 
   public search(params: ValueSetSearchParams = {}): Observable<SearchResult<ValueSet>> {

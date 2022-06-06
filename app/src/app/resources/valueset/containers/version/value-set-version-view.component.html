@@ -26,7 +26,12 @@
           <m-form-item mLabel="web.value-set-version.entity.description">
             {{version.description }}
           </m-form-item>
+
           <twa-value-set-rule-set [ruleSet]="version.ruleSet" viewMode></twa-value-set-rule-set>
+
+          <m-form-item mName="concepts" mLabel="web.value-set-version.entity.concepts">
+            <twa-value-set-version-concept-list [concepts]="concepts" viewMode></twa-value-set-version-concept-list>
+          </m-form-item>
         </div>
       </m-spinner>
     </m-card>

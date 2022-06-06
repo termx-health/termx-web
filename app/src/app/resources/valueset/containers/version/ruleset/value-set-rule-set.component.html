@@ -29,54 +29,53 @@
         <label nz-radio-button [nzValue]="false">{{'web.value-set-rule-set.form.active' | translate}}</label>
       </nz-radio-group>
     </m-form-item>
+
+    <m-form-item mName="rules" mLabel="web.value-set-rule-set.entity.rules">
+      <m-no-data *ngIf="!rules?.length"></m-no-data>
+      <nz-collapse class="tw-cs-contact-collapse" *ngIf="rules?.length">
+        <nz-collapse-panel *ngFor="let rule of rules; let i = index" [nzHeader]="header" [nzExtra]="!viewMode && edit">
+          <ng-template #header>
+            <m-icon *ngIf="rule.type === 'code-system' && !rule.include?.codeSystem || rule.type === 'value-set' && !rule.include?.valueSet"
+                [mCode]="'file-text'"></m-icon>
+            <div *ngIf="rule.type === 'code-system' && rule.include?.codeSystem">
+              {{rule.include.codeSystem}}{{rule.include.codeSystemVersion ? ' / ' + rule.include.codeSystemVersion : ''}}
+            </div>
+            <div *ngIf="rule.type === 'value-set' && rule.include?.valueSet">
+              {{rule.include.valueSet}}{{rule.include.valueSetVersion ? ' / ' + rule.include.valueSetVersion : ''}}
+            </div>
+          </ng-template>
+
+          <ng-template #edit>
+            <div class="tw-button-group">
+              <m-button mSize="small">
+                <m-icon [mCode]="'eye'"></m-icon>
+              </m-button>
+              <m-button (click)="$event.stopPropagation();toggleModal(rule, i)" mSize="small">
+                <m-icon [mCode]="'edit'"></m-icon>
+              </m-button>
+              <m-button (click)="$event.stopPropagation();deleteRule(i)" mSize="small">
+                <m-icon [mCode]="'delete'"></m-icon>
+              </m-button>
+            </div>
+          </ng-template>
+
+          <twa-value-set-code-system-rule *ngIf="rule?.type === 'code-system'"
+              [lockedDate]="ruleSet.lockedDate"
+              [includeRule]="rule.include"
+              [excludeRule]="rule.exclude"
+              [inactiveConcepts]="ruleSet.inactive"
+              viewMode></twa-value-set-code-system-rule>
+
+          <twa-value-set-value-set-rule *ngIf="rule?.type === 'value-set'"
+              [lockedDate]="ruleSet.lockedDate"
+              [includeRule]="rule.include"
+              [excludeRule]="rule.exclude"
+              [inactiveConcepts]="ruleSet.inactive"
+              viewMode></twa-value-set-value-set-rule>
+        </nz-collapse-panel>
+      </nz-collapse>
+    </m-form-item>
   </form>
-
-  <m-no-data *ngIf="!rules?.length"></m-no-data>
-  <nz-collapse class="tw-cs-contact-collapse" *ngIf="rules?.length">
-    <nz-collapse-panel *ngFor="let rule of rules; let i = index" [nzHeader]="header" [nzExtra]="!viewMode && edit">
-      <ng-template #header>
-        <m-icon *ngIf="rule.type === 'code-system' && !rule.include?.codeSystem || rule.type === 'value-set' && !rule.include?.valueSet"
-            [mCode]="'file-text'"
-        ></m-icon>
-        <div *ngIf="rule.type === 'code-system' && rule.include?.codeSystem">
-          {{rule.include.codeSystem}}{{rule.include.codeSystemVersion ? ' / ' + rule.include.codeSystemVersion : ''}}
-        </div>
-        <div *ngIf="rule.type === 'value-set' && rule.include?.valueSet">
-          {{rule.include.valueSet}}{{rule.include.valueSetVersion ? ' / ' + rule.include.valueSetVersion : ''}}
-        </div>
-      </ng-template>
-
-      <ng-template #edit>
-        <div class="tw-button-group">
-          <m-button mSize="small">
-            <m-icon [mCode]="'eye'"></m-icon>
-          </m-button>
-          <m-button (click)="$event.stopPropagation();toggleModal(rule, i)" mSize="small">
-            <m-icon [mCode]="'edit'"></m-icon>
-          </m-button>
-          <m-button (click)="$event.stopPropagation();deleteRule(i)" mSize="small">
-            <m-icon [mCode]="'delete'"></m-icon>
-          </m-button>
-        </div>
-      </ng-template>
-
-      <twa-value-set-code-system-rule *ngIf="rule?.type === 'code-system'"
-          [lockedDate]="ruleSet.lockedDate"
-          [includeRule]="rule.include"
-          [excludeRule]="rule.exclude"
-          [inactiveConcepts]="ruleSet.inactive"
-          viewMode
-      ></twa-value-set-code-system-rule>
-
-      <twa-value-set-value-set-rule *ngIf="rule?.type === 'value-set'"
-          [lockedDate]="ruleSet.lockedDate"
-          [includeRule]="rule.include"
-          [excludeRule]="rule.exclude"
-          [inactiveConcepts]="ruleSet.inactive"
-          viewMode
-      ></twa-value-set-value-set-rule>
-    </nz-collapse-panel>
-  </nz-collapse>
 
 
   <m-modal #modal [(mVisible)]="modalData.visible" (close)="toggleModal()" mStyle="width: 900px">
@@ -90,15 +89,14 @@
           [lockedDate]="ruleSet.lockedDate"
           [includeRule]="modalData.rule.include"
           [excludeRule]="modalData.rule.exclude"
-          [inactiveConcepts]="ruleSet.inactive"
-      ></twa-value-set-code-system-rule>
+          [inactiveConcepts]="ruleSet.inactive"></twa-value-set-code-system-rule>
 
       <twa-value-set-value-set-rule #valueSetRuleComponent
           *ngIf="modalData.rule?.type === 'value-set'"
           [includeRule]="modalData.rule.include"
-          [excludeRule]="modalData.rule.exclude"
-      ></twa-value-set-value-set-rule>
+          [excludeRule]="modalData.rule.exclude"></twa-value-set-value-set-rule>
     </ng-container>
+
 
     <div *m-modal-footer class="tw-button-group">
       <m-button (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>

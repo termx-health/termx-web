@@ -7,28 +7,18 @@
   </tr>
 
   <ng-container *mTableRow="let item; let i = index">
-    <tr *ngFor="let ad of item.additionalDesignations; let isFirst = first">
-      <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
-        <twl-concept-search *ngIf="!viewMode"
-            [(ngModel)]="item.concept"
-            (ngModelChange)="item.designation = undefined"
-            [codeSystem]="codeSystem"
-            [codeSystemVersion]="codeSystemVersion"
-            [codeSystemVersionReleaseDateLe]="lockedDate"
-            [codeSystemVersionExpirationDateGe]="lockedDate"
-            [entityVersionStatus]="inactiveConcepts === true ? 'retired' : inactiveConcepts === false ? 'active' : undefined"></twl-concept-search>
-        <div *ngIf="viewMode">{{item.concept?.code}}</div>
-      </td>
-      <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
-        <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.display"></twl-designation-select>
-        <div *ngIf="viewMode">{{item.display?.name}}</div>
-      </td>
-      <td>{{ad.language}} | {{ad.name}}</td>
-      <td *ngIf="!viewMode && isFirst" [rowSpan]="item.additionalDesignations?.length" class="tw-table-actions">
-        <m-button mDisplay="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
-      </td>
-    </tr>
-    <tr *ngIf="!(item.additionalDesignations?.length > 0)">
+    <ng-container *ngIf="viewMode">
+      <tr *ngFor="let ad of item.additionalDesignations; let isFirst = first">
+        <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
+         <div *ngIf="viewMode">{{item.concept?.code}}</div>
+        </td>
+        <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
+          <div *ngIf="viewMode">{{item.display?.name}}</div>
+        </td>
+        <td>{{ad.language}} | {{ad.name}}</td>
+      </tr>
+    </ng-container>
+    <tr *ngIf="!(item.additionalDesignations?.length > 0) || !viewMode">
       <td>
         <twl-concept-search *ngIf="!viewMode"
             [(ngModel)]="item.concept"
@@ -44,7 +34,9 @@
         <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.display"></twl-designation-select>
         <div *ngIf="viewMode">{{item.display?.name}}</div>
       </td>
-      <td></td>
+      <td>
+        <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.additionalDesignations" multiple></twl-designation-select>
+      </td>
       <td *ngIf="!viewMode" class="tw-table-actions">
         <m-button mDisplay="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
       </td>

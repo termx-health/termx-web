@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ValueSetVersion} from 'terminology-lib/resources';
+import {ValueSetConcept, ValueSetVersion} from 'terminology-lib/resources';
 import {ActivatedRoute} from '@angular/router';
 import {ValueSetService} from '../../services/value-set.service';
+import {forkJoin} from 'rxjs';
 
 @Component({
   templateUrl: 'value-set-version-view.component.html',
@@ -9,6 +10,7 @@ import {ValueSetService} from '../../services/value-set.service';
 export class ValueSetVersionViewComponent implements OnInit {
   public valueSetId?: string | null;
   public version?: ValueSetVersion;
+  public concepts?: ValueSetConcept[];
   public loading = false;
 
   public constructor(
@@ -24,6 +26,12 @@ export class ValueSetVersionViewComponent implements OnInit {
 
   private loadVersion(id: string, version: string): void {
     this.loading = true;
-    this.valueSetService.loadVersion(id, version).subscribe(v => this.version = v).add(() => this.loading = false);
+    forkJoin([
+      this.valueSetService.loadVersion(id, version),
+      this.valueSetService.loadConcepts(id, version)
+    ]).subscribe(([version, concepts]) => {
+      this.version = version;
+      this.concepts = concepts;
+    }).add(() => this.loading = false);
   }
 }

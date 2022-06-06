@@ -13,9 +13,10 @@ import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
 export class DesignationSelectComponent implements OnChanges, ControlValueAccessor {
   @Input() public conceptId?: number;
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() @BooleanInput() public multiple: string | boolean = false;
 
   public data: {[id: string]: Designation} = {};
-  public value?: number;
+  public value?: number | number[];
   public loading: boolean = false;
 
   public onChange = (x: any) => x;
@@ -35,7 +36,12 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
     if (this.valuePrimitive) {
       this.onChange(this.value);
     } else {
-      this.onChange(this.data?.[this.value!]);
+      if (Array.isArray(this.value)) {
+        const ids = this.value;
+        this.onChange(Object.entries(this.data).filter(e => ids.includes(Number(e[0]))).map(e => e[1]));
+      } else {
+        this.onChange(this.data?.[this.value!]);
+      }
     }
   }
 
@@ -59,9 +65,13 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
     }
   }
 
-  public writeValue(obj: Designation | number): void {
-    this.value = (typeof obj === 'object' ? obj?.id : obj);
-    this.loadDesignation(this.value);
+  public writeValue(obj: Designation | number | Designation[] | number[]): void {
+    if (Array.isArray(obj)) {
+      this.value = obj.map(o => typeof o === 'object' ? o?.id as number : o);
+    } else {
+      this.value = (typeof obj === 'object' ? obj?.id : obj);
+      this.loadDesignation(this.value);
+    }
   }
 
   public registerOnChange(fn: any): void {

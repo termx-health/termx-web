@@ -156,7 +156,8 @@
         "description": "Description",
         "release-date": "Release date",
         "expiration-date": "Expiration date",
-        "status": "Status"
+        "status": "Status",
+        "concepts": "Concepts"
       },
       "form": {
         "edit-header": "Edit version",
@@ -179,6 +180,7 @@
       "entity": {
         "locked-date": "Locked date",
         "inactive": "Inactive concepts",
+        "rules": "Rules",
         "rule": {
           "code-system": "Code system",
           "code-system-version": "Code system version",

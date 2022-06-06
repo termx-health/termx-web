@@ -1,11 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemVersion, ValueSetVersion} from 'terminology-lib/resources';
+import {CodeSystemVersion, ValueSetConcept, ValueSetVersion} from 'terminology-lib/resources';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {validateForm} from '@kodality-web/core-util';
 import {ValueSetService} from '../../services/value-set.service';
 import {ValueSetRuleSetComponent} from './ruleset/value-set-rule-set.component';
+import {forkJoin, mergeMap, of} from 'rxjs';
 
 @Component({
   templateUrl: 'value-set-version-edit.component.html',
@@ -14,6 +15,7 @@ export class ValueSetVersionEditComponent implements OnInit {
   public valueSetId?: string | null;
   public valueSetVersion?: string | null;
   public version?: ValueSetVersion;
+  public concepts: ValueSetConcept[] = [];
 
   public mode: 'add' | 'edit' = 'add';
   public loading = false;
@@ -41,7 +43,13 @@ export class ValueSetVersionEditComponent implements OnInit {
 
   private loadVersion(id: string, version: string): void {
     this.loading = true;
-    this.valueSetService.loadVersion(id, version).subscribe(v => this.version = v).add(() => this.loading = false);
+    forkJoin([
+      this.valueSetService.loadVersion(id, version),
+      this.valueSetService.loadConcepts(id, version)
+    ]).subscribe(([version, concepts]) => {
+      this.version = version;
+      this.concepts = concepts;
+    }).add(() => this.loading = false);
   }
 
   public save(): void {
@@ -51,8 +59,9 @@ export class ValueSetVersionEditComponent implements OnInit {
     this.loading = true;
     this.version!.status = 'draft';
     this.version!.ruleSet = this.ruleSetComponent?.getRuleSet();
-    this.valueSetService.saveVersion(this.valueSetId!, this.version!)
-      .subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+    this.valueSetService.saveVersion(this.valueSetId!, this.version!).pipe(mergeMap(resp => forkJoin([
+      of(resp),
+      this.valueSetService.saveConcepts(this.valueSetId!, resp.version!, this.concepts),
+    ]))).subscribe(() => this.location.back()).add(() => this.loading = false);
   }
 }
