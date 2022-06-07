@@ -19,8 +19,8 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
   public value?: number;
   public loading: boolean = false;
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
+  public onChange = (x: any): void => x;
+  public onTouched = (x: any): void => x;
 
   public constructor(
     private codeSystemService: CodeSystemLibService,
@@ -29,28 +29,21 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["codeSystemId"]) {
-      this.loadVersions();
+      this.loadSelectData();
     }
   }
 
-  public fireOnChange(): void {
-    if (this.valuePrimitive) {
-      this.onChange(this.value);
-    } else {
-      this.onChange(this.data?.[this.value!]);
-    }
-  }
-
-  public loadVersions(): void {
+  public loadSelectData(): void {
     if (!this.codeSystemId) {
-      this.value = undefined;
       this.data = {};
+      this.value = undefined;
       return;
     }
+
     this.loading = true;
-    this.codeSystemService.loadVersions(this.codeSystemId)
-      .subscribe(versions => this.data = group(versions, v => v.id!))
-      .add(() => this.loading = false);
+    this.codeSystemService.loadVersions(this.codeSystemId).subscribe(versions => {
+      this.data = group(versions, v => v.id!);
+    }).add(() => this.loading = false);
   }
 
   public loadVersion(id?: number): void {
@@ -63,6 +56,14 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
   public writeValue(obj: CodeSystemVersion | number): void {
     this.value = (typeof obj === 'object' ? obj?.id : obj);
     this.loadVersion(this.value);
+  }
+
+  public fireOnChange(): void {
+    if (this.valuePrimitive) {
+      this.onChange(this.value);
+    } else {
+      this.onChange(this.data?.[this.value!]);
+    }
   }
 
   public registerOnChange(fn: any): void {

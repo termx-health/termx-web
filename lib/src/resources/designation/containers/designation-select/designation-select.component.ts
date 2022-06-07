@@ -3,7 +3,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DesignationLibService} from '../../services/designation-lib.service';
 import {DesignationSearchParams} from '../../model/designation-search-params';
 import {Designation} from '../../model/designation';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, group, isNil} from '@kodality-web/core-util';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'twl-designation-select',
@@ -19,58 +20,73 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
   public value?: number | number[];
   public loading: boolean = false;
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
+  public onChange = (x: any): void => x;
+  public onTouched = (x: any): void => x;
 
   public constructor(
     private designationService: DesignationLibService
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["conceptId"]?.currentValue) {
-      this.loadDesignations();
+    if (changes["conceptId"]) {
+      this.loadSelectData();
+    }
+  }
+
+  public loadSelectData(): void {
+    if (!this.conceptId) {
+      this.data = {};
+      this.value = undefined;
+      return;
+    }
+
+    const q = new DesignationSearchParams();
+    q.conceptId = this.conceptId;
+    q.limit = 10_000;
+
+    this.loading = true;
+    this.designationService.search(q).subscribe(da => {
+      this.data = group(da.data, designation => designation.id!);
+    }).add(() => this.loading = false);
+  }
+
+  public loadDesignations(ids: number[]): void {
+    ids = ids.filter(id => !this.data[id]);
+    if (ids.length === 0) {
+      return;
+    }
+    this.loading = true;
+    // todo: add 'ids' param
+    forkJoin(ids.map(id => this.designationService.load(id))).subscribe(resp => {
+      resp.forEach(d => this.data = {...this.data, [d.id!]: d});
+    }).add(() => this.loading = false);
+  }
+
+  public writeValue(obj: Designation | Designation[] | number | number[]): void {
+    if (isNil(obj)) {
+      this.value = undefined;
+      return;
+    }
+
+    if (Array.isArray(obj)) {
+      this.value = obj.map(o => typeof o === 'object' ? o?.id as number : o);
+      this.loadDesignations(this.value);
+    } else {
+      this.value = typeof obj === 'object' ? obj?.id! : obj;
+      this.loadDesignations([this.value]);
     }
   }
 
   public fireOnChange(): void {
     if (this.valuePrimitive) {
       this.onChange(this.value);
-    } else {
-      if (Array.isArray(this.value)) {
-        const ids = this.value;
-        this.onChange(Object.entries(this.data).filter(e => ids.includes(Number(e[0]))).map(e => e[1]));
-      } else {
-        this.onChange(this.data?.[this.value!]);
-      }
-    }
-  }
-
-  public loadDesignations(): void {
-    if (!this.conceptId) {
       return;
     }
-    const q = new DesignationSearchParams();
-    q.conceptId = this.conceptId;
-    q.limit = 10_000;
-    this.loading = true;
-    this.designationService.search(q)
-      .subscribe(da => this.data = group(da.data, designation => designation.id!))
-      .add(() => this.loading = false);
-  }
 
-  public loadDesignation(id?: number): void {
-    if (isDefined(id)) {
-      this.loading = true;
-      this.designationService.load(id).subscribe(d => this.data = {...this.data, [d.id!]: d}).add(() => this.loading = false);
-    }
-  }
-
-  public writeValue(obj: Designation | number | Designation[] | number[]): void {
-    if (Array.isArray(obj)) {
-      this.value = obj.map(o => typeof o === 'object' ? o?.id as number : o);
+    if (Array.isArray(this.value)) {
+      this.onChange(this.value.map(id => this.data[id]).filter(Boolean));
     } else {
-      this.value = (typeof obj === 'object' ? obj?.id : obj);
-      this.loadDesignation(this.value);
+      this.onChange(this.data?.[this.value!]);
     }
   }
 
