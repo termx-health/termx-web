@@ -16,6 +16,7 @@ import {CodeSystemEntityVersionService} from './services/code-system-entity-vers
 import {CodeSystemVersionDuplicateModalComponent} from './containers/edit/code-system-version-duplicate-modal.component';
 import {ContactLibModule} from 'terminology-lib/resources/contact/contact-lib.module';
 import {CodeSystemVersionEntityVersionsListComponent} from './containers/version/code-system-version-entity-versions-list.component';
+import {CodeSystemConceptVersionEditComponent} from './containers/concept/code-system-concept-version-edit.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -23,6 +24,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/edit', component: CodeSystemEditComponent},
   {path: ':id/concepts/add', component: CodeSystemConceptEditComponent},
   {path: ':id/concepts/:concept/edit', component: CodeSystemConceptEditComponent},
+  {path: ':id/concepts/:concept/:entityVersion/edit', component: CodeSystemConceptVersionEditComponent},
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:version/edit', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:version/view', component: CodeSystemVersionViewComponent},
@@ -47,6 +49,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     CodeSystemVersionDuplicateModalComponent,
     CodeSystemConceptEditComponent,
     CodeSystemVersionEntityVersionsListComponent,
+    CodeSystemConceptVersionEditComponent,
   ],
   exports: [
     CodeSystemListComponent

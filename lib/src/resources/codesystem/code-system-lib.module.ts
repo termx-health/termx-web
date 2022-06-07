@@ -34,7 +34,7 @@ import {TranslateModule} from '@ngx-translate/core';
     CodeSystemSearchComponent,
     ConceptSearchComponent,
     CodeSystemVersionSelectComponent,
-    CodeSystemEntityVersionSearchComponent
+    CodeSystemEntityVersionSearchComponent,
   ],
   exports: [
     CodeSystemSearchComponent,

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'terminology-lib/resources';
+import {CodeSystemConcept, CodeSystemEntityVersion} from 'terminology-lib/resources';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {validateForm} from '@kodality-web/core-util';
@@ -35,7 +35,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
     if (this.mode === 'edit') {
       this.loadConcept(this.codeSystemId!, conceptCode!);
     } else {
-      this.concept = new CodeSystemVersion();
+      this.concept = new CodeSystemConcept();
     }
   }
 

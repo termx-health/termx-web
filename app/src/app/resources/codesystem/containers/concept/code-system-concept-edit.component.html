@@ -28,7 +28,7 @@
             </tr>
 
             <tr *mTableRow="let version">
-              <td>{{version.id}}</td>
+              <td><a [routerLink]="['../', version.id, 'edit']">{{version.id}}</a></td>
               <td>{{version.created | localDateTime}}</td>
               <td>{{version.description}}</td>
               <td>{{version.status}}</td>
