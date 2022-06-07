@@ -1,10 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {MuiMenuItem} from '@kodality-health/marina-ui';
+import {MuiDestroyService, MuiMenuItem} from '@kodality-health/marina-ui';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {LocalizedName} from '@kodality-health/marina-util';
 import {assetUrl} from '../single-spa/asset-url';
+import {singleSpaPropsSubject} from '../single-spa/single-spa-props';
+import {takeUntil} from 'rxjs';
+
+interface ParentProps {
+  callParentNotification?: (args: any) => void
+}
 
 @Component({
   selector: 'twa-root',
@@ -16,11 +22,16 @@ export class AppComponent implements OnInit {
   public constructor(
     private router: Router,
     private http: HttpClient,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private destroy$: MuiDestroyService
   ) {}
 
   public ngOnInit(): void {
     this.loadMenu();
+    singleSpaPropsSubject.pipe(takeUntil(this.destroy$)).subscribe((props) => {
+      const _props = props as ParentProps;
+      _props.callParentNotification!('Hello from KTS');
+    });
   }
 
   private loadMenu(): void {

@@ -89,7 +89,7 @@
               "libraryName": "app",
               "libraryTarget": "umd"
             },
-            "deployUrl": "http://localhost:4400/"
+            "deployUrl": "http://localhost:4400"
           },
           "configurations": {
             "production": {

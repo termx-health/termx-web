@@ -1,8 +1,8 @@
 <div class="layout">
   <div class="layout--sidebar">
     <ul nz-menu nzMode="inline" style="width: 240px; height: 100%" nzTheme="dark">
-      <li nz-menu-item [routerLink]="['/resources']" nzMatchRouter>Resources</li>
-      <li nz-menu-item [routerLink]="['/integration']" nzMatchRouter>Integration</li>
+      <li nz-menu-item [routerLink]="['/resources']" [queryParams]="{tab: 'code-systems'}">Resources</li>
+      <li nz-menu-item [routerLink]="['/integration']">Integration</li>
     </ul>
   </div>
 

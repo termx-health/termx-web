@@ -9,7 +9,7 @@
     "test": "ng test",
     "lint": "ng lint",
     "build:single-spa:app": "ng build app --configuration production",
-    "serve:single-spa:app": "ng s --project app --disable-host-check --port 4400 --live-reload false"
+    "serve:single-spa:app": "ng s --project app --port 4400 --live-reload false"
   },
   "private": true,
   "dependencies": {
