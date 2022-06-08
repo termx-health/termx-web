@@ -138,6 +138,10 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
     this.designations![key].splice(index, 1);
     this.designations = {...this.designations};
   }
+  public activateDesignation(key: string, index: number): void {
+    this.designations![key][index!].status = 'active';
+    this.designations = {...this.designations};
+  }
 
   public saveDesignation(): void {
     if (!validateForm(this.designationForm)) {

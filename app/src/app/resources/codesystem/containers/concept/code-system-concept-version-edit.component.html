@@ -46,7 +46,7 @@
                         {{'web.designation.modal.delete-designation' | translate}}
                       </m-button>
                     </a>
-                    <a *mDropdownItemIf="designation.status !== 'active'">
+                    <a *mDropdownItemIf="designation.status !== 'active'" (click)="activateDesignation(key, index)">
                       {{'web.publication-status.operations.activate' | translate}}
                     </a>
                   </m-dropdown>
