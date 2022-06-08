@@ -15,7 +15,7 @@ export class CodeSystemEditComponent implements OnInit {
 
   public loading = false;
   public codeSystem?: CodeSystem;
-  public narrativeView = true;
+  public narrativeRaw = false;
   public mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
