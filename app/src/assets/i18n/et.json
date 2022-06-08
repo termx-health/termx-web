@@ -255,6 +255,7 @@
       "modal": {
         "add-designation": "Lisa tähendus",
         "delete-designation": "Kustuta tähendus",
+        "edit-designation": "Muuda tähendust",
         "designation-kind": "Tähenduse liik",
         "case-significance": "Tõstutundlikkus",
         "description": "Kirjeldus"

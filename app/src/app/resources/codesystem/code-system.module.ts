@@ -26,7 +26,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/concepts/add', component: CodeSystemConceptEditComponent},
   {path: ':id/concepts/:concept/edit', component: CodeSystemConceptEditComponent},
   {path: ':id/concepts/:concept/versions/add', component: CodeSystemConceptVersionEditComponent},
-  {path: ':id/concepts/:concept/versions/:entityVersion/edit', component: CodeSystemConceptVersionEditComponent},
+  {path: ':id/concepts/:concept/versions/:conceptVersion/edit', component: CodeSystemConceptVersionEditComponent},
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:version/edit', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:version/view', component: CodeSystemVersionViewComponent},

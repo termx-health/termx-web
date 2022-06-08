@@ -254,7 +254,8 @@
       },
       "modal": {
         "add-designation": "Add designation",
-        "delete-designation": "Kustuta tähendus",
+        "delete-designation": "Delete designation",
+        "edit-designation": "Edit designation",
         "designation-kind": "Designation kind",
         "case-significance": "Case significance",
         "description": "Description"
