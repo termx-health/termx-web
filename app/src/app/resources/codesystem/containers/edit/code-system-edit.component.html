@@ -41,15 +41,15 @@
           <m-form-item mName="narrative" [mLabel]="narrativeHeader">
             <ng-template #narrativeHeader>
               <div class="tw-items-between">
-                <div>{{'web.code-system.list.narrative' | translate}}</div> &nbsp;
-                <m-button (click)="narrativeView = !narrativeView" mSize="small" mDisplay="link" mShape="circle">
-                  <m-icon [mCode]="narrativeView? 'edit': 'check'"></m-icon>
+                <div>{{'web.code-system.list.narrative' | translate}}</div>&nbsp;
+                <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
+                  <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
                 </m-button>
               </div>
             </ng-template>
 
-            <m-rich-text-editor *ngIf="narrativeView" [(ngModel)]="codeSystem.narrative" name="narrative" disabled></m-rich-text-editor>
-            <m-textarea *ngIf="!narrativeView" [(ngModel)]="codeSystem.narrative" name="narrative"></m-textarea>
+            <m-rich-text-editor *ngIf="!narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-rich-text-editor>
+            <m-textarea *ngIf="narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-textarea>
           </m-form-item>
         </form>
 
