@@ -1,45 +1,49 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="isLoading">
-      <m-card [mTitle]="mode === 'edit' ? 'adit eader' : 'edd heaer'">
-        <form #form="ngForm" *ngIf="entityVerison">
-          <m-form-item mName="code" mLabel="conkept verzion" required>
-            {{entityVerison.status}}
+      <m-card [mTitle]="mode === 'edit' ? 'web.concept.version.form.edit-header' : 'web.concept.version.form.add-header'">
+        <form #entityVersionForm="ngForm" *ngIf="entityVersion">
+          <m-form-item mName="code" mLabel="web.concept.version.list.concept-status">
+            {{entityVersion.status}}
           </m-form-item>
 
-          <m-form-item mName="description" mLabel="desk">
-            <m-textarea name="description" [(ngModel)]="entityVerison.description"></m-textarea>
+          <m-form-item mName="description" mLabel="web.concept.version.list.description">
+            <m-textarea name="description" [(ngModel)]="entityVersion.description"></m-textarea>
           </m-form-item>
         </form>
 
         <m-card class="tw-card-inner">
           <div *m-card-header class="tw-items-between">
-            <div class="m-card-title">{{'dasignations'}}</div>
-            <m-button mLabel="add dagestan" (click)="designationModalData.visible = true"></m-button>
+            <div class="m-card-title">{{'web.concept.version.list.designations' | translate}}</div>
+            <m-button mLabel="web.designation.modal.add-designation" (click)="designationModalData.visible = true"></m-button>
           </div>
 
           <m-table [mData]="designations | keys" mEnablePagination mHideOnSinglePage>
             <tr *mTableHead>
-              <th>{{'tipe'}}</th>
-              <th>{{'neim'}}</th>
-              <th>{{'lenguage'}}</th>
-              <th>{{'ztatus'}}</th>
-              <th class="tw-table-actions">{{'ops'}}</th>
+              <th>{{'web.designation.list.type' | translate}}</th>
+              <th>{{'web.designation.list.name' | translate}}</th>
+              <th>{{'web.designation.list.language' | translate}}</th>
+              <th>{{'web.designation.list.status' | translate}}</th>
+              <th class="tw-table-actions"></th>
             </tr>
 
             <ng-container *mTableRow="let key;">
-              <tr *ngFor="let designation of designations[key]; let isFirst = first;">
+              <tr *ngFor="let designation of designations[key]; let isFirst = first; let index = index">
                 <td *ngIf="isFirst" [rowSpan]="designations[key].length">{{properties[designation.designationTypeId]?.name}}</td>
-                <td>{{designation.name}}</td>
+                <td>
+                  <m-button mDisplay="link" (click)="loadDesignationModal(key, index)">{{designation.name.slice(0, 40)}}</m-button>
+                </td>
                 <td>{{designation.language}}</td>
                 <td>{{designation.status}}</td>
                 <td class="tw-table-actions">
-                  <m-icon *ngIf="designation.preferred" [mOptions]="{nzTheme: 'filled'}" [mCode]="'check'"></m-icon>
-                  <m-icon *ngIf="!designation.preferred" [mOptions]="{nzTheme: 'outline'}" [mCode]="'check'"></m-icon>
+                  <m-button mDisplay="text" mShape="circle" (click)="designation.preferred = !designation.preferred">
+                    <m-icon *ngIf="designation.preferred" [mOptions]="{nzTheme : 'fill'}" [mCode]="'star'"></m-icon>
+                    <m-icon *ngIf="!designation.preferred" [mOptions]="{nzTheme : 'outline'}" [mCode]="'star'"></m-icon>
+                  </m-button>
                   <m-dropdown>
                     <a *mDropdownItemIf="designation.status === 'active'">
-                      <m-button>
-                        <m-icon [mCode]="'delete'"></m-icon>
+                      <m-button mDisplay="text" (click)="deleteDesignation(key, index)">
+                        {{'web.designation.modal.delete-designation' | translate}}
                       </m-button>
                     </a>
                     <a *mDropdownItemIf="designation.status !== 'active'">
@@ -60,21 +64,23 @@
 
         <m-card class="tw-card-inner">
           <div *m-card-header class="tw-items-between">
-            <div class="m-card-title">{{'proborty valuez'}}</div>
-            <m-button mLabel="add proborti" (click)="propertyModalData.visible = true"></m-button>
+            <div class="m-card-title">{{'web.concept.version.list.property-values' | translate}}</div>
+            <m-button mLabel="web.property-value.modal.add-property" (click)="propertyModalData.visible = true"></m-button>
           </div>
 
           <m-table [mData]="propertyValues | keys" mEnablePagination mHideOnSinglePage>
             <tr *mTableHead>
-              <th>{{'prop'}}</th>
-              <th>{{'value'}}</th>
-              <th class="tw-table-actions">{{'ops'}}</th>
+              <th>{{'web.property-value.list.property' | translate}}</th>
+              <th>{{'web.property-value.list.value' | translate}}</th>
+              <th class="tw-table-actions"></th>
             </tr>
 
             <ng-container *mTableRow="let key">
               <tr *ngFor="let property of propertyValues[key | toNumber]; let isFirst = first; let index = index;">
                 <td *ngIf="isFirst" [rowSpan]="propertyValues[key].length">{{properties[property.entityPropertyId].name}}</td>
-                <td>{{property.value}}</td>
+                <td>
+                  <m-button mDisplay="link" (click)="loadPropertyModal(key, index)">{{property.value}}</m-button>
+                </td>
                 <td class="tw-table-actions">
                   <m-button mSize="small" (click)="deletePropertyValue(key, index)">
                     <m-icon [mCode]="'close'"></m-icon>
@@ -101,74 +107,93 @@
   </div>
 </m-form-row>
 
-<m-modal [(mVisible)]="propertyModalData.visible" (mClose)="propertyModalData.visible = false">
+<m-modal [(mVisible)]="propertyModalData.visible" (mClose)="propertyModalData = {visible: false}">
   <ng-container *mModalHeader>
-    {{'edd probori'}}
+    {{(propertyModalData.editKey ? 'web.property-value.modal.edit-property' : 'web.property-value.modal.add-property') | translate}}
   </ng-container>
+
   <ng-container *mModalContent>
-    <m-form-item mName="propertyModalData" mLabel="proberdy" required>
-      <m-select icon="search"
-          placeholder="marina.ui.inputs.search.placeholder"
-          name="propertyModalId"
-          [(ngModel)]="propertyModalData.propertyId"
-          [autoUnselect]="false">
-        <m-option *ngFor="let key of (properties | keys)" [value]="key | toNumber" [label]="properties[key | toNumber].name"></m-option>
-      </m-select>
-    </m-form-item>
-    <m-form-item mLabel="valjue">
-      <m-input name="propertyModalValue" [(ngModel)]="propertyModalData.value"></m-input>
-    </m-form-item>
+    <form #propertyForm="ngForm">
+      <m-form-item mName="propertyModalProperty" mLabel="web.property-value.list.property" required>
+        <m-select icon="search"
+            placeholder="marina.ui.inputs.search.placeholder"
+            name="propertyModalProperty"
+            [(ngModel)]="propertyModalData.propertyId"
+            [autoUnselect]="false"
+            required>
+          <m-option *ngFor="let key of (properties | keys)" [value]="key | toNumber" [label]="properties[key | toNumber].name"></m-option>
+        </m-select>
+      </m-form-item>
+      <m-form-item mName="propertyModalValue" mLabel="web.property-value.list.value" required>
+        <m-input name="propertyModalValue" [(ngModel)]="propertyModalData.value" required></m-input>
+      </m-form-item>
+    </form>
   </ng-container>
+
   <ng-container *mModalFooter>
-    <m-button mStyle="margin-right: 0.5em" (click)="propertyModalData.visible = false">{{'core.btn.close' | translate}}</m-button>
-    <m-button mDisplay="primary" [mLoading]="isLoading" (click)="savePropertyValue()">{{'core.btn.add' | translate}}</m-button>
+    <m-button mStyle="margin-right: 0.5em" (click)="propertyModalData = {visible: false}">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary"
+        [mLoading]="isLoading"
+        (click)="savePropertyValue()">{{(propertyModalData.editKey ? 'core.btn.confirm' : 'core.btn.add') | translate}}</m-button>
   </ng-container>
 </m-modal>
 
 
-<m-modal [(mVisible)]="designationModalData.visible" (mClose)="designationModalData.visible = false">
+<m-modal [(mVisible)]="designationModalData.visible" (mClose)="designationModalData = {visible: false}">
   <ng-container *mModalHeader>
-    {{'edd probori'}}
+    {{(designationModalData.editKey ? 'web.designation.modal.delete-designation' : 'web.designation.modal.add-designation') | translate}}
   </ng-container>
+
   <ng-container *mModalContent>
-    <m-form-item mName="designationModalType" mLabel="dype" required>
-      <m-select icon="search"
-          placeholder="marina.ui.inputs.search.placeholder"
-          name="designationModalType"
-          [(ngModel)]="designationModalData.propertyId"
-          [autoUnselect]="false">
-        <m-option *ngFor="let key of (properties | keys)" [value]="key | toNumber" [label]="properties[key | toNumber].name"></m-option>
-      </m-select>
-    </m-form-item>
-    <m-form-item mLabel="njeim">
-      <m-input name="designationModalName" [(ngModel)]="designationModalData.name"></m-input>
-    </m-form-item>
-    <m-form-item mLabel="ljang">
-      <m-select name="designationModalLanguage" [(ngModel)]="designationModalData.language">
-        <m-option [label]="'la'" value="la"></m-option>
-        <m-option [label]="'en'" value="en"></m-option>
-        <m-option [label]="'et'" value="et"></m-option>
-      </m-select>
-    </m-form-item>
-    <m-form-item mLabel="kind">
-      <m-select name="designationModalKind" [(ngModel)]="designationModalData.kind">
-        <m-option [label]="'text'" value="text"></m-option>
-        <m-option [label]="'blob'" value="blob"></m-option>
-      </m-select>
-    </m-form-item>
-    <m-form-item mLabel="caseSig">
-      <m-select name="designationModalCaseSignificance" [(ngModel)]="designationModalData.caseSig">
-        <m-option [label]="'ics'" value="ics"></m-option>
-        <m-option [label]="'cs'" value="cs"></m-option>
-        <m-option [label]="'ci'" value="ci"></m-option>
-      </m-select>
-    </m-form-item>
-    <m-form-item mLabel="description">
-      <m-textarea name="description" [(ngModel)]="designationModalData.description"></m-textarea>
-    </m-form-item>
+    <form #designationForm="ngForm">
+      <m-form-item mName="designationModalType" mLabel="web.designation.list.type" required>
+        <m-select icon="search"
+            placeholder="marina.ui.inputs.search.placeholder"
+            name="designationModalType"
+            [(ngModel)]="designationModalData.propertyId"
+            [autoUnselect]="false"
+            required>
+          <m-option *ngFor="let key of (properties | keys)" [value]="key | toNumber" [label]="properties[key | toNumber].name"></m-option>
+        </m-select>
+      </m-form-item>
+
+      <m-form-item mName="designationModalName" mLabel="web.designation.list.name" required>
+        <m-input name="designationModalName" [(ngModel)]="designationModalData.name" required></m-input>
+      </m-form-item>
+
+      <m-form-item mLabel="web.designation.list.language">
+        <m-select name="designationModalLanguage" [(ngModel)]="designationModalData.language">
+          <m-option [label]="'la'" value="la"></m-option>
+          <m-option [label]="'en'" value="en"></m-option>
+          <m-option [label]="'et'" value="et"></m-option>
+        </m-select>
+      </m-form-item>
+
+      <m-form-item mLabel="web.designation.modal.designation-kind">
+        <m-select name="designationModalKind" [(ngModel)]="designationModalData.kind">
+          <m-option [label]="'text'" value="text"></m-option>
+          <m-option [label]="'blob'" value="blob"></m-option>
+        </m-select>
+      </m-form-item>
+
+      <m-form-item mName="designationModalCaseSignificance" mLabel="web.designation.modal.case-significance" required>
+        <m-select name="designationModalCaseSignificance" [(ngModel)]="designationModalData.caseSig" required>
+          <m-option [label]="'ics'" value="ics"></m-option>
+          <m-option [label]="'cs'" value="cs"></m-option>
+          <m-option [label]="'ci'" value="ci"></m-option>
+        </m-select>
+      </m-form-item>
+
+      <m-form-item mLabel="web.designation.modal.description">
+        <m-textarea name="designationModalDescription" [(ngModel)]="designationModalData.description"></m-textarea>
+      </m-form-item>
+    </form>
   </ng-container>
+
   <ng-container *mModalFooter>
-    <m-button mStyle="margin-right: 0.5em" (click)="designationModalData.visible = false">{{'core.btn.close' | translate}}</m-button>
-    <m-button mDisplay="primary" [mLoading]="isLoading" (click)="saveDesignation()">{{'core.btn.add' | translate}}</m-button>
+    <m-button mStyle="margin-right: 0.5em" (click)="designationModalData = {visible: false}">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary"
+        [mLoading]="isLoading"
+        (click)="saveDesignation()">{{(designationModalData.editKey ? 'core.btn.confirm' : 'core.btn.add') | translate}}</m-button>
   </ng-container>
 </m-modal>

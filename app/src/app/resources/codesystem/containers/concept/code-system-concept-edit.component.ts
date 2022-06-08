@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemConcept, CodeSystemEntityVersion} from 'terminology-lib/resources';
+import {CodeSystemConcept, CodeSystemEntityVersion, ConceptLibService} from 'terminology-lib/resources';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {validateForm} from '@kodality-web/core-util';
@@ -21,6 +21,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
+    public conceptService: ConceptLibService,
     public codeSystemService: CodeSystemService,
     public codeSystemEntityVersionService: CodeSystemEntityVersionService,
     private route: ActivatedRoute,
@@ -29,11 +30,11 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    const conceptCode = this.route.snapshot.paramMap.get('concept');
-    this.mode = this.codeSystemId && conceptCode ? 'edit' : 'add';
+    const conceptId = Number(this.route.snapshot.paramMap.get('concept'));
+    this.mode = this.codeSystemId && conceptId ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadConcept(this.codeSystemId!, conceptCode!);
+      this.loadConcept(conceptId);
     } else {
       this.concept = new CodeSystemConcept();
     }
@@ -49,9 +50,9 @@ export class CodeSystemConceptEditComponent implements OnInit {
       .add(() => this.loading = false);
   }
 
-  private loadConcept(codeSystemId: string, conceptCode: string): void {
+  private loadConcept(conceptId: number): void {
     this.loading = true;
-    this.codeSystemService.loadConcept(codeSystemId, conceptCode).subscribe(c => this.concept = c).add(() => this.loading = false);
+    this.conceptService.load(conceptId).subscribe(c => this.concept = c).add(() => this.loading = false);
   }
 
   public activateVersion(version: CodeSystemEntityVersion): void {
