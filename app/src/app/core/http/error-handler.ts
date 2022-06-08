@@ -6,7 +6,7 @@ import {catchError, Observable, throwError} from 'rxjs';
 @Injectable()
 export class ErrorHandler implements HttpInterceptor {
   // todo: move to MarinaUI
-  constructor(private notificationService: MuiNotificationService) { }
+  public constructor(private notificationService: MuiNotificationService) { }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(req).pipe(
@@ -15,7 +15,6 @@ export class ErrorHandler implements HttpInterceptor {
   }
 
   private handleError(error: HttpErrorResponse): Observable<HttpEvent<any>> {
-    console.log(error)
     if (this.isErrorStatus(error)) {
       this.showMessage(error);
       return throwError(() => error);
