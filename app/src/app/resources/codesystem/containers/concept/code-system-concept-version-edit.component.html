@@ -31,7 +31,7 @@
               <tr *ngFor="let designation of designations[key]; let isFirst = first; let index = index">
                 <td *ngIf="isFirst" [rowSpan]="designations[key].length">{{entityProperties[designation.designationTypeId]?.name}}</td>
                 <td>
-                  <m-button mDisplay="link" (click)="openDesignationModal({key, index})">{{designation.name.slice(0, 40)}}</m-button>
+                  <a (click)="openDesignationModal({key, index})">{{designation.name.slice(0, 40)}}</a>
                 </td>
                 <td>{{designation.language}}</td>
                 <td>{{designation.status}}</td>
@@ -73,7 +73,7 @@
               <tr *ngFor="let property of propertyValues[key | toNumber]; let isFirst = first; let index = index;">
                 <td *ngIf="isFirst" [rowSpan]="propertyValues[key].length">{{entityProperties[property.entityPropertyId]?.name}}</td>
                 <td>
-                  <m-button mDisplay="link" (click)="openPropertyValueModal({key, index})">{{property.value}}</m-button>
+                  <a (click)="openPropertyValueModal({key, index})">{{property.value}}</a>
                 </td>
                 <td class="tw-table-actions">
                   <m-button mSize="small" (click)="deletePropertyValue(key, index)">

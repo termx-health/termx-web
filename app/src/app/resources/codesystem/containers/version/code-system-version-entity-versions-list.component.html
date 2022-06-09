@@ -16,15 +16,17 @@
     <tr *mTableHead>
       <th mColumnKey="code">{{'web.code-system.entity-version.list.code' | translate}}</th>
       <th mColumnKey="description">{{'web.code-system.entity-version.list.description' | translate}}</th>
-      <th class="tw-table-actions">{{'web.code-system.entity-version.list.operations' | translate}}</th>
+      <th class="tw-table-actions"></th>
     </tr>
     <tr *mTableRow="let entityVersion">
       <td>{{entityVersion.code}}</td>
       <td>{{entityVersion.description}}</td>
       <td class="tw-table-actions">
-        <m-button (click)="delete(entityVersion)">
-          <m-icon mCode="delete"></m-icon>
-        </m-button>
+        <m-dropdown>
+          <a *m-dropdown-item (click)="delete(entityVersion)">
+            {{'core.btn.delete' | translate}}
+          </a>
+        </m-dropdown>
       </td>
     </tr>
 

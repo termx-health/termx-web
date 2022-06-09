@@ -249,7 +249,8 @@
         "designation": "Designation",
         "type": "Type",
         "name": "Name",
-        "language": "Language"
+        "language": "Language",
+        "status": "Status"
       },
       "modal": {
         "add-designation": "Add designation",
