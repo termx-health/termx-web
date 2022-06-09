@@ -217,15 +217,19 @@
       },
       "version": {
         "list": {
+          "concept-status": "Concept status",
           "versions": "Versions",
           "number": "Number",
           "created": "Created",
           "description": "Description",
           "status": "Status",
-          "operations": "Operations"
+          "operations": "Operations",
+          "designations": "Designations",
+          "property-values": "Property values"
         },
         "form": {
-          "add-header": "Add version"
+          "add-header": "Add version",
+          "edit-header": "Edit version"
         }
       },
       "list": {
@@ -242,7 +246,29 @@
       "entity": {
       },
       "list": {
-        "designation": "Designation"
+        "designation": "Designation",
+        "type": "Type",
+        "name": "Name",
+        "language": "Language"
+      },
+      "modal": {
+        "add-designation": "Add designation",
+        "delete-designation": "Delete designation",
+        "edit-designation": "Edit designation",
+        "designation-kind": "Designation kind",
+        "case-significance": "Case significance",
+        "description": "Description",
+        "status": "Status"
+      }
+    },
+    "property-value": {
+      "list": {
+        "property": "Property",
+        "value": "Value"
+      },
+      "modal": {
+        "add-property": "Add property",
+        "edit-property": "Edit property"
       }
     },
     "publication-status": {
