@@ -348,5 +348,59 @@
         }
       }
     }
+  },
+  "entities": {
+    "code-system": {
+      "id": "Identifier",
+      "uri": "Uniform resource identifier (URI)",
+      "uri-short": "URI",
+      "name": "Name",
+      "content": "Content",
+      "case-sensitivity": "Case sensitivity",
+      "narrative": "Narrative",
+      "description": "Description",
+      "contacts": "Contacts",
+      "concepts": "Concepts",
+      "properties": "Properties",
+      "versions": "Versions"
+    },
+    "code-system-entity": {
+      "type": "Type",
+      "versions": "Entity versions"
+    },
+    "code-system-concept": {
+      "code": "Code",
+      "description": "Description",
+      "versions": "Concept versions"
+    },
+    "code-system-version": {
+      "id": "Identifier",
+      "version": "Version",
+      "source": "Source",
+      "preferred-language": "Preferred language",
+      "supported-languages": "Supported languages",
+      "description": "Description",
+      "status": "Status",
+      "type": "Type",
+      "release-date": "Release date",
+      "expiration-date": "Expiration date",
+      "entities": "Entity versions"
+    },
+    "entity-property": {
+      "name": "Name",
+      "type": "Type",
+      "description": "Description",
+      "status": "Status",
+      "value": "Value"
+    },
+    "contact-detail": {
+      "name": "Name",
+      "telecoms": "Telecoms",
+      "telecom": {
+        "system": "System",
+        "value": "Value",
+        "use": "Use"
+      }
+    }
   }
 }

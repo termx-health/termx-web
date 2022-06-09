@@ -12,6 +12,12 @@ import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switc
 })
 export class CodeSystemListComponent implements OnInit {
   public searchResult = new SearchResult<CodeSystem>();
+
+  public a = {
+    1: 'success',
+    2: '#132435',
+    3: 'info'
+  }
   public query = new CodeSystemSearchParams();
   public loading = false;
 

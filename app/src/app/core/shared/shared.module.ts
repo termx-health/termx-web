@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {MarinaUiModule} from '@kodality-health/marina-ui';
 import {MarinaUtilModule} from '@kodality-health/marina-util';
+import {FinderModule} from '../finder/finder.module';
 
 
 const commonModules = [
@@ -15,7 +16,8 @@ const commonModules = [
   TranslateModule,
   MarinaUiModule,
   MarinaUtilModule,
-  CoreUtilModule
+  CoreUtilModule,
+  FinderModule
 ];
 
 @NgModule({
