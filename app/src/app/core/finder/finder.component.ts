@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation} from '@angular/core';
-import {BooleanInput} from '@kodality-web/core-util';
+import {BooleanInput, NumberInput} from '@kodality-web/core-util';
 
 
 @Component({
@@ -24,7 +24,7 @@ export class FinderItemComponent {
     </div>
 
 
-    <div *ngIf="navigate">
+    <div *ngIf="navigate" class="tw-items-between">
       <a [routerLink]="navigate" routerLinkActive="tw-finder-menu-item-active">
         <ng-container *ngTemplateOutlet="contentTpl"></ng-container>
       </a>
@@ -68,7 +68,7 @@ export class FinderMenuItemComponent {
 })
 export class FinderMenuComponent {
   @Input() public title?: string | TemplateRef<void>;
-  @Input() public length: number = -1;
+  @Input() @NumberInput() public length: number = 0;
   @Input() @BooleanInput() public loading: string | boolean = false;
   @Input() @BooleanInput() public open: string | boolean = true;
   @Output() public openChange = new EventEmitter<boolean>();

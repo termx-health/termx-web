@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 
 @Component({
   template: `
-    <div style="height: calc(100% + 8rem); width: 100%; overflow: auto; margin: -4rem;">
+    <div style="height: 100%; width: 100%; overflow: auto;">
       <twa-finder-wrapper [loading]="loading">
         <twa-finder-menu title="CODE SYSTEMS" [length]="searchResult.meta.total">
           <twa-finder-menu-item *ngFor="let cs of searchResult.data" [navigate]="[cs.id]" (view)="openResource(cs)">

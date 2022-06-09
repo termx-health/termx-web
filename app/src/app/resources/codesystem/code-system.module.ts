@@ -46,7 +46,7 @@ export const CODE_SYSTEM_NAV_ROUTES: Routes = [
             path: 'versions/:versionCode', component: FinderCodeSystemVersionViewComponent
           },
           {
-            path: 'concepts/:conceptCode', component: FinderCodeSystemConceptViewComponent, children: [
+            path: 'concepts/:conceptId', component: FinderCodeSystemConceptViewComponent, children: [
               {path: 'versions/:versionId', component: FinderCodeSystemConceptVersionViewComponent},
             ]
           }]

@@ -11,8 +11,12 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
   template: `
     <twa-finder-wrapper [loading]="loading">
       <twa-finder-item title="CODE SYSTEM CONCEPT VERSION">
-        {{conceptVersion?.status}}
-        {{conceptVersion?.description}}
+        <m-form-item mLabel="status">
+          {{conceptVersion?.status || '-'}}
+        </m-form-item>
+        <m-form-item mLabel="description">
+          {{conceptVersion?.description || '-'}}
+        </m-form-item>
       </twa-finder-item>
 
       <twa-finder-menu title="DESIGNATIONS" [length]="conceptVersion?.designations?.length">
