@@ -40,11 +40,8 @@
                     <m-icon [mOptions]="{nzTheme : designation.preferred? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
                   </m-button>
                   <m-dropdown>
-                    <a *mDropdownItemIf="designation.status === 'active'" (click)="deleteDesignation(key, index)">
+                    <a *m-dropdown-item (click)="deleteDesignation(key, index)">
                       {{'web.designation.modal.delete-designation' | translate}}
-                    </a>
-                    <a *mDropdownItemIf="designation.status !== 'active'" (click)="activateDesignation(key, index)">
-                      {{'web.publication-status.operations.activate' | translate}}
                     </a>
                   </m-dropdown>
                 </td>
@@ -181,6 +178,14 @@
 
       <m-form-item mLabel="web.designation.modal.description">
         <m-textarea name="designationModalDescription" [(ngModel)]="designationModalData.designation.description"></m-textarea>
+      </m-form-item>
+
+      <m-form-item mName="designationModalStatus" mLabel="web.designation.modal.status" required>
+        <m-select name="designationModalStatus" [(ngModel)]="designationModalData.designation.status" required>
+          <m-option [label]="'web.publication-status.statuses.active'" value="active"></m-option>
+          <m-option [label]="'web.publication-status.statuses.draft'" value="draft"></m-option>
+          <m-option [label]="'web.publication-status.statuses.retired'" value="retired"></m-option>
+        </m-select>
       </m-form-item>
     </form>
   </ng-container>

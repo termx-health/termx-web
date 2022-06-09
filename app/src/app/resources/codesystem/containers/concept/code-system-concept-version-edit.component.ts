@@ -14,7 +14,7 @@ import {Location} from '@angular/common';
   templateUrl: './code-system-concept-version-edit.component.html',
 })
 export class CodeSystemConceptVersionEditComponent implements OnInit {
-  private conceptId?: string;
+  private conceptId?: string | null;
   public conceptVersion?: CodeSystemEntityVersion;
   public designations?: {[id: string]: Designation[]} = {};
   public propertyValues?: {[id: number]: EntityPropertyValue[]} = {};
@@ -51,7 +51,7 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
 
   public ngOnInit(): void {
     const codeSystemId = this.route.snapshot.paramMap.get('id');
-    this.conceptId = this.route.snapshot.paramMap.get('concept') || undefined;
+    this.conceptId = this.route.snapshot.paramMap.get('concept');
     const versionId = this.route.snapshot.paramMap.get('conceptVersion');
     this.mode = versionId ? 'edit' : 'add';
     if (codeSystemId) {
@@ -69,17 +69,33 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
     }
   }
 
+  public save(): void {
+    if (!validateForm(this.conceptVersionForm) || !this.conceptVersion) {
+      return;
+    }
+    this.conceptVersion.designations = Object.values(this.designations || []).flat();
+    this.conceptVersion.propertyValues = Object.values(this.propertyValues || []).flat();
+    this.conceptVersion.status = 'draft';
+    this.loading['save'] = true;
+    this.codeSystemEntityService.saveVersion(Number(this.conceptId), this.conceptVersion).subscribe(() => this.location.back())
+      .add(() => this.loading['save'] = false);
+  }
+
+  private loadVersion(versionId: number): void {
+    this.loading['load'] = true;
+    this.codeSystemEntityVersionService.load(versionId).subscribe(v => {
+      this.conceptVersion = v;
+      this.designations = collect(v.designations || [], d => d.designationTypeId!);
+      this.propertyValues = collect(v.propertyValues || [], pv => pv.entityPropertyId!);
+    }).add(() => this.loading['load'] = false);
+  }
+
   private loadProperties(codeSystem: string): void {
     const q = new EntityPropertySearchParams();
     q.codeSystem = codeSystem;
     q.limit = 10000;
     this.loading['load'] = true;
     this.entityPropertyService.search(q).subscribe(ep => this.entityProperties = group(ep.data, p => p.id!)).add(() => this.loading['load'] = false);
-  }
-
-  public deletePropertyValue(key: number, index: number): void {
-    this.propertyValues![key].splice(index, 1);
-    this.propertyValues = {...this.propertyValues};
   }
 
   public savePropertyValue(): void {
@@ -97,6 +113,11 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
     this.propertyValueModalData.visible = false;
   }
 
+  public deletePropertyValue(key: number, index: number): void {
+    this.propertyValues![key].splice(index, 1);
+    this.propertyValues = {...this.propertyValues};
+  }
+
   public openPropertyValueModal(options: {key?: number, index?: number} = {}): void {
     const {key, index} = options;
     this.propertyValueModalData = {
@@ -107,22 +128,11 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
     };
   }
 
-  public deleteDesignation(key: string, index: number): void {
-    this.designations![key].splice(index, 1);
-    this.designations = {...this.designations};
-  }
-
-  public activateDesignation(key: string, index: number): void {
-    this.designations![key][index!].status = 'active';
-    this.designations = {...this.designations};
-  }
-
   public saveDesignation(): void {
     if (!validateForm(this.designationForm)) {
       return;
     }
     const designation = this.designationModalData.designation;
-    designation!.status = 'draft';
     designation!.preferred = this.designationModalData!.designation?.preferred || false;
     if (isDefined(this.designationModalData.editKey) && isDefined(this.designationModalData.editIndex)) {
       this.deleteDesignation(this.designationModalData.editKey, this.designationModalData.editIndex);
@@ -130,6 +140,11 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
     this.designations![designation!.designationTypeId!] = [...(this.designations![designation?.designationTypeId!] || []), designation!];
     this.designations = {...this.designations};
     this.designationModalData.visible = false;
+  }
+
+  public deleteDesignation(key: string, index: number): void {
+    this.designations![key].splice(index, 1);
+    this.designations = {...this.designations};
   }
 
   public openDesignationModal(options: {key?: string, index?: number} = {}): void {
@@ -140,31 +155,6 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
       editIndex: index,
       designation: (key && isDefined(index)) ? copyDeep(this.designations![key][index]) : new Designation()
     };
-  }
-
-  public save(): void {
-    if (!validateForm(this.conceptVersionForm) || !this.conceptVersion) {
-      return;
-    }
-    if (this.designations) {
-      this.conceptVersion.designations = Object.values(this.designations).flat();
-    }
-    if (this.propertyValues) {
-      this.conceptVersion.propertyValues = Object.values(this.propertyValues!).flat();
-    }
-    this.conceptVersion.status = 'draft';
-    this.loading['save'] = true;
-    this.codeSystemEntityService.saveVersion(Number(this.conceptId), this.conceptVersion).subscribe(() => this.location.back())
-      .add(() => this.loading['save'] = false);
-  }
-
-  private loadVersion(versionId: number): void {
-    this.loading['load'] = true;
-    this.codeSystemEntityVersionService.load(versionId).subscribe(v => {
-      this.conceptVersion = v;
-      this.designations = collect(v.designations || [], d => d.designationTypeId!);
-      this.propertyValues = collect(v.propertyValues || [], pv => pv.entityPropertyId!);
-    }).add(() => this.loading['load'] = false);
   }
 
   public get isLoading(): boolean {

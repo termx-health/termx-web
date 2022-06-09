@@ -249,8 +249,7 @@
         "designation": "Designation",
         "type": "Type",
         "name": "Name",
-        "language": "Language",
-        "status": "Status"
+        "language": "Language"
       },
       "modal": {
         "add-designation": "Add designation",
@@ -258,7 +257,8 @@
         "edit-designation": "Edit designation",
         "designation-kind": "Designation kind",
         "case-significance": "Case significance",
-        "description": "Description"
+        "description": "Description",
+        "status": "Status"
       }
     },
     "property-value": {

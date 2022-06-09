@@ -249,8 +249,7 @@
         "designation": "Tähendus",
         "type": "Tüüp",
         "name": "Nimi",
-        "language": "Keel",
-        "status": "Olek"
+        "language": "Keel"
       },
       "modal": {
         "add-designation": "Lisa tähendus",
@@ -258,7 +257,8 @@
         "edit-designation": "Muuda tähendust",
         "designation-kind": "Tähenduse liik",
         "case-significance": "Tõstutundlikkus",
-        "description": "Kirjeldus"
+        "description": "Kirjeldus",
+        "status": "Olek"
       }
     },
     "property-value": {
