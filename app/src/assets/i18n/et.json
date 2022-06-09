@@ -217,15 +217,19 @@
       },
       "version": {
         "list": {
+          "concept-status": "Kontsepti olek",
           "versions": "Versioonid",
           "number": "Number",
           "created": "Loodud",
           "description": "Kirjeldus",
           "status": "Olek",
-          "operations": "Toimingud"
+          "operations": "Toimingud",
+          "designations": "Tähendused",
+          "property-values": "Omaduste väärtused"
         },
         "form": {
-          "add-header": "Lisa versioon"
+          "add-header": "Lisa versioon",
+          "edit-header": "Muuda versiooni"
         }
       },
       "list": {
@@ -242,7 +246,29 @@
       "entity": {
       },
       "list": {
-        "designation": "Tähendus"
+        "designation": "Tähendus",
+        "type": "Tüüp",
+        "name": "Nimi",
+        "language": "Keel"
+      },
+      "modal": {
+        "add-designation": "Lisa tähendus",
+        "delete-designation": "Kustuta tähendus",
+        "edit-designation": "Muuda tähendust",
+        "designation-kind": "Tähenduse liik",
+        "case-significance": "Tõstutundlikkus",
+        "description": "Kirjeldus",
+        "status": "Olek"
+      }
+    },
+    "property-value": {
+      "list": {
+        "property": "Omadus",
+        "value": "Väärtus"
+      },
+      "modal": {
+        "add-property": "Lisa omadus",
+        "edit-property": "Muuda omadust"
       }
     },
     "publication-status": {

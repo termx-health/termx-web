@@ -13,6 +13,7 @@ import {CodeSystemVersionSelectComponent} from './containers/code-system-version
 import {EntityPropertyLibService} from './services/entity-property-lib.service';
 import {CodeSystemEntityVersionSearchComponent} from './containers/code-system-entity-version-search.component';
 import {TranslateModule} from '@ngx-translate/core';
+import {CodeSystemEntityLibService} from './services/code-system-entity-lib.service';
 
 
 @NgModule({
@@ -25,16 +26,17 @@ import {TranslateModule} from '@ngx-translate/core';
   ],
   providers: [
     CodeSystemLibService,
+    CodeSystemEntityLibService,
     CodeSystemEntityVersionLibService,
     CodeSystemConceptLibService,
     CodeSystemVersionLibService,
-    EntityPropertyLibService
+    EntityPropertyLibService,
   ],
   declarations: [
     CodeSystemSearchComponent,
     ConceptSearchComponent,
     CodeSystemVersionSelectComponent,
-    CodeSystemEntityVersionSearchComponent
+    CodeSystemEntityVersionSearchComponent,
   ],
   exports: [
     CodeSystemSearchComponent,
