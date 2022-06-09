@@ -8,7 +8,7 @@
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading" mSize="small">
     <tr *mTableRow="let concept">
-      <td><a [routerLink]="['../concepts/', concept.code, 'edit']">{{concept.code}}</a></td>
+      <td><a [routerLink]="['../concepts/', concept.id, 'edit']">{{concept.code}}</a></td>
     </tr>
 
     <tr *mTableNoData>

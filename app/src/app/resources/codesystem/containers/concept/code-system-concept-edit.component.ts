@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'terminology-lib/resources';
+import {CodeSystemConcept, CodeSystemConceptLibService, CodeSystemEntityVersion} from 'terminology-lib/resources';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {validateForm} from '@kodality-web/core-util';
@@ -21,6 +21,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
+    public codeSystemConceptLibService: CodeSystemConceptLibService,
     public codeSystemService: CodeSystemService,
     public codeSystemEntityVersionService: CodeSystemEntityVersionService,
     private route: ActivatedRoute,
@@ -29,13 +30,13 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    const conceptCode = this.route.snapshot.paramMap.get('concept');
-    this.mode = this.codeSystemId && conceptCode ? 'edit' : 'add';
+    const conceptId = this.route.snapshot.paramMap.get('concept');
+    this.mode = this.codeSystemId && conceptId ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadConcept(this.codeSystemId!, conceptCode!);
+      this.loadConcept(Number(conceptId));
     } else {
-      this.concept = new CodeSystemVersion();
+      this.concept = new CodeSystemConcept();
     }
   }
 
@@ -49,9 +50,9 @@ export class CodeSystemConceptEditComponent implements OnInit {
       .add(() => this.loading = false);
   }
 
-  private loadConcept(codeSystemId: string, conceptCode: string): void {
+  private loadConcept(conceptId: number): void {
     this.loading = true;
-    this.codeSystemService.loadConcept(codeSystemId, conceptCode).subscribe(c => this.concept = c).add(() => this.loading = false);
+    this.codeSystemConceptLibService.load(conceptId).subscribe(c => this.concept = c).add(() => this.loading = false);
   }
 
   public activateVersion(version: CodeSystemEntityVersion): void {

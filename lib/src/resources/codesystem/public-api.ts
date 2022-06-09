@@ -7,6 +7,7 @@ export * from './model/entity-property';
 export * from './model/code-system-concept';
 export * from './model/concept-search-params';
 export * from './services/code-system-lib.service';
+export * from './services/code-system-entity-lib.service';
 export * from './services/code-system-entity-version-lib.service';
 export * from './services/code-system-concept-lib.service';
 export * from './code-system-lib.module';

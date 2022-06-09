@@ -15,7 +15,7 @@
         <m-card class="tw-card-inner" *ngIf="concept && concept.versions">
           <div *m-card-header class="tw-items-between">
             <div class="m-card-title">{{'web.concept.version.list.versions' | translate}}</div>
-            <m-button mLabel="web.concept.version.form.add-header"></m-button>
+            <m-button [routerLink]="['../versions/add']" mLabel="web.concept.version.form.add-header"></m-button>
           </div>
 
           <m-table [mData]="concept.versions" mEnablePagination mHideOnSinglePage>
@@ -28,7 +28,7 @@
             </tr>
 
             <tr *mTableRow="let version">
-              <td>{{version.id}}</td>
+              <td><a [routerLink]="['../versions', version.id, 'edit']">{{version.id}}</a></td>
               <td>{{version.created | localDateTime}}</td>
               <td>{{version.description}}</td>
               <td>{{version.status}}</td>

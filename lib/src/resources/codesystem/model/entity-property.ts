@@ -7,8 +7,8 @@ export class EntityProperty {
   public created?: Date;
 }
 
-export class EntityPropertyValue{
+export class EntityPropertyValue {
   public id?: number;
-  public value?: any;
+  public value?: string;
   public entityPropertyId?: number;
 }
