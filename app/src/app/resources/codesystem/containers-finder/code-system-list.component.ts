@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
 
 @Component({
   template: `
-    <div style="max-height: 100%; width: 100%; height: 100%; padding: 0 0 1rem 0; overflow: auto;">
+    <div style="max-height: 100%; width: 100%; height: 100%; padding: 0 0 1rem 0;">
       <twa-finder-wrapper [loading]="loading">
         <twa-finder-menu title="CODE SYSTEMS" [length]="searchResult.meta.total">
           <twa-finder-menu-item *ngFor="let cs of searchResult.data" [navigate]="[cs.id]" (view)="openResource(cs)">
@@ -35,6 +35,6 @@ export class FinderCodeSystemListComponent implements OnInit {
   }
 
   public openResource(cs: CodeSystem): void {
-    this.router.navigate(['/resources/code-systems/', cs.id, 'edit'])
+    this.router.navigate(['/resources/code-systems/', cs.id, 'edit']);
   }
 }

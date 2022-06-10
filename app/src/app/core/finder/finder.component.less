@@ -10,7 +10,8 @@
         line-height: 0;
         font-size: 0.875rem;
         font-weight: bold;
-        height: min-content !important;
+        text-transform: uppercase;
+        height: min-content;
       }
     }
 
@@ -24,9 +25,22 @@
     gap: 0.25rem;
 
     height: 100%;
-    max-height: 100%;
     max-width: 100%;
 
+    &-header {
+      &-navigation {
+        font-size: 0.875rem;
+
+        & i {
+          font-size: 0.875rem !important;
+        }
+      }
+
+      &-title {
+        font-weight: bold;
+        margin-bottom: -2px;
+      }
+    }
 
     &-inner {
       height: 100%;

@@ -8,7 +8,9 @@
       "duplicate": "Duplicate",
       "confirm": "Confirm",
       "add": "Add"
-    }
+    },
+    "no-data": "No data",
+    "back": "Back"
   },
   "web": {
     "case-sensitive-options": {

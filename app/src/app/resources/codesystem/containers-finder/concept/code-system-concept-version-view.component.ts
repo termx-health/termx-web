@@ -21,7 +21,10 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
 
       <twa-finder-menu title="entities.code-system-entity-version.designations" [length]="conceptVersion?.designations?.length">
         <twa-finder-menu-item *ngFor="let d of conceptVersion?.designations">
-          {{d.name}}
+          <div style="display: flex; gap: 0.5rem">
+            <m-icon mCode="star" [mOptions]="{nzTheme: d.preferred ? 'fill' : 'outline'}"></m-icon>
+            <div>{{d.name}}</div>
+          </div>
         </twa-finder-menu-item>
       </twa-finder-menu>
 

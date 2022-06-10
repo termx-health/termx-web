@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {CodeSystemVersion} from 'lib/src/resources';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
-import {takeUntil} from 'rxjs';
+import {forkJoin, takeUntil} from 'rxjs';
 import {MuiDestroyService} from '@kodality-health/marina-ui';
 import {isNil} from '@kodality-web/core-util';
+import {CodeSystemEntityVersionService} from '../../services/code-system-entity-version.service';
 
 
 @Component({
@@ -14,27 +15,27 @@ import {isNil} from '@kodality-web/core-util';
         <m-form-item mLabel="entities.code-system-version.version">
           {{version?.version || '-'}}
         </m-form-item>
-      
+
         <m-form-item mLabel="entities.code-system-version.source">
           {{version?.source || '-'}}
         </m-form-item>
-      
+
         <m-form-item mLabel="entities.code-system-version.preferred-language">
           {{version?.preferredLanguage || '-'}}
         </m-form-item>
-      
+
         <m-form-item mLabel="entities.code-system-version.supported-languages">
           {{version?.supportedLanguages || '-'}}
         </m-form-item>
-      
+
         <m-form-item mLabel="entities.code-system-version.description">
           {{version?.description || '-'}}
         </m-form-item>
-        
+
         <m-form-item mLabel="entities.code-system-version.release-date">
           {{(version?.releaseDate | localDate) || '-'}}
         </m-form-item>
-        
+
         <m-form-item mLabel="entities.code-system-version.expiration-date">
           {{(version?.expirationDate | localDate) || '-'}}
         </m-form-item>
@@ -55,6 +56,7 @@ export class FinderCodeSystemVersionViewComponent implements OnInit {
 
   public constructor(
     private codeSystemService: CodeSystemService,
+    private codeSystemEntityVersionService: CodeSystemEntityVersionService,
     private route: ActivatedRoute,
     private destroy$: MuiDestroyService
   ) {}
@@ -72,8 +74,16 @@ export class FinderCodeSystemVersionViewComponent implements OnInit {
       }
 
       this.loading = true;
-      this.codeSystemService.loadVersion(codeSystemId, codeSystemVersionCode).subscribe(version => {
+      forkJoin([
+        this.codeSystemService.loadVersion(codeSystemId, codeSystemVersionCode),
+        this.codeSystemEntityVersionService.search({
+          codeSystem: codeSystemId,
+          codeSystemVersion: codeSystemVersionCode,
+          limit: -1
+        })
+      ]).subscribe(([version, entities]) => {
         this.version = version;
+        this.version.entities = entities.data;
       }).add(() => this.loading = false);
     });
   }

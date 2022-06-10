@@ -48,12 +48,16 @@ export class FinderMenuItemComponent {
         <m-button (click)="toggleOpen()" mSize="small" mDisplay="text" mShape="circle">
           <m-icon [mCode]="open ? 'folder-open' : 'folder'"></m-icon>
         </m-button>
-        {{title | toString | translate}}
+        {{title
+          
+          | toString | translate}}
       </div>
 
       <div *ngIf="open">
         <ng-content></ng-content>
-        <div *ngIf="length === 0" class="tw-finder-menu-item">No data</div>
+        <div *ngIf="length === 0" class="tw-finder-menu-item">
+          {{'core.no-data' | translate}}
+        </div>
       </div>
     </m-spinner>
   `
@@ -81,12 +85,12 @@ export class FinderMenuComponent {
     <m-card class="tw-finder-wrapper-inner" *ngIf="isDisplayed">
       <ng-container *ngIf="title || isMobile">
         <ng-container *m-card-header>
-          <div *ngIf="title">
-            {{title}}
-          </div>
-          <a *ngIf="isMobile" (click)="location.back()">
-            <m-icon mCode="left"></m-icon>&nbsp; Back
+          <a *ngIf="isMobile" (click)="location.back()" class="tw-finder-wrapper-header-navigation tw-finder-title">
+            <m-icon mCode="left"></m-icon>&nbsp; {{'core.back' | translate}}
           </a>
+          <div *ngIf="title" class="tw-finder-wrapper-header-title">
+            {{title | translate}}
+          </div>
         </ng-container>
       </ng-container>
 

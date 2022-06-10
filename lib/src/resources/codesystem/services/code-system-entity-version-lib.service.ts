@@ -19,7 +19,6 @@ export class CodeSystemEntityVersionLibService {
   }
 
   public search(params: CodeSystemEntityVersionQueryParams = {}): Observable<SearchResult<CodeSystemEntityVersion>> {
-    return this.http.get<SearchResult<CodeSystemEntityVersion>>(`${this.baseUrl}`,
-      {params: SearchHttpParams.build(params)});
+    return this.http.get<SearchResult<CodeSystemEntityVersion>>(`${this.baseUrl}`,  {params: SearchHttpParams.build(params)});
   }
 }

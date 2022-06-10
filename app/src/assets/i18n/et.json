@@ -8,7 +8,9 @@
       "duplicate": "Duplitseeri",
       "confirm": "Kinnita",
       "add": "Lisa"
-    }
+    },
+    "no-data": "Andmed puuduvad",
+    "back": "Tagasi"
   },
   "web": {
     "app": {

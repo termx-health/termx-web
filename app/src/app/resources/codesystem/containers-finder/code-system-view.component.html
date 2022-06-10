@@ -41,6 +41,24 @@
     </m-form-item>
   </div>
 
+  <twa-finder-menu title="entities.code-system.properties" [length]="codeSystem?.properties?.length ">
+    <twa-finder-menu-item *ngFor="let p of codeSystem?.properties">
+      {{p.name}} - {{p.type}}
+    </twa-finder-menu-item>
+  </twa-finder-menu>
+
+  <twa-finder-menu title="entities.code-system.versions" [length]="codeSystem?.versions?.length">
+    <twa-finder-menu-item *ngFor="let v of codeSystem?.versions" [navigate]="['versions', v.version]">
+      {{v.version}} - {{v.source}}
+    </twa-finder-menu-item>
+  </twa-finder-menu>
+
+  <twa-finder-menu title="entities.code-system.concepts" [length]="codeSystem?.concepts?.length">
+    <twa-finder-menu-item *ngFor="let c of codeSystem?.concepts" [navigate]="['concepts', c.id]">
+      {{c.code}}
+    </twa-finder-menu-item>
+  </twa-finder-menu>
+
   <twa-finder-menu title="entities.code-system.contacts" [length]="codeSystem?.contacts?.length">
     <twa-finder-menu-item *ngFor="let c of codeSystem?.contacts">
       <twa-finder-menu [title]="c.name || 'Unknown'" [open]="false" [length]="c?.telecoms?.length">
@@ -51,21 +69,4 @@
     </twa-finder-menu-item>
   </twa-finder-menu>
 
-  <twa-finder-menu title="entities.code-system.properties" [length]="codeSystem?.properties?.length ">
-    <twa-finder-menu-item *ngFor="let p of codeSystem?.properties">
-      {{p.name}} - {{p.type}}
-    </twa-finder-menu-item>
-  </twa-finder-menu>
-
-  <twa-finder-menu title="entities.code-system.concepts" [length]="codeSystem?.concepts?.length">
-    <twa-finder-menu-item *ngFor="let c of codeSystem?.concepts" [navigate]="['concepts', c.id]">
-      {{c.code}}
-    </twa-finder-menu-item>
-  </twa-finder-menu>
-
-  <twa-finder-menu title="entities.code-system.versions" [length]="codeSystem?.versions?.length">
-    <twa-finder-menu-item *ngFor="let v of codeSystem?.versions" [navigate]="['versions', v.version]">
-      {{v.version}} - {{v.source}}
-    </twa-finder-menu-item>
-  </twa-finder-menu>
 </twa-finder-wrapper>
