@@ -225,7 +225,7 @@
         "rule": "Rule",
         "include": "Include",
         "exclude": "Exclude",
-        "edit-header": "Edit rule"
+        "edit-header": "Rule"
       }
     },
     "value-set-rule-filter": {

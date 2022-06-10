@@ -15,7 +15,8 @@
         <m-card class="tw-card-inner" *ngIf="concept && concept.versions">
           <div *m-card-header class="tw-items-between">
             <div class="m-card-title">{{'entities.code-system-concept.versions' | translate}}</div>
-            <m-button [routerLink]="['../versions/add']" mLabel="web.code-system-concept.form.versions.add-version"></m-button>
+            <m-button [routerLink]="['../versions/add']">
+              <m-icon mCode="plus"></m-icon>&nbsp; {{'web.code-system-concept.form.versions.add-version' | translate}}</m-button>
           </div>
 
           <m-table [mData]="concept.versions" mEnablePagination mHideOnSinglePage>
@@ -31,7 +32,9 @@
               <td><a [routerLink]="['../versions', version.id, 'edit']">{{version.id}}</a></td>
               <td>{{version.created | localDateTime}}</td>
               <td>{{version.description}}</td>
-              <td><twa-status-tag [status]="version.status"></twa-status-tag></td>
+              <td>
+                <twa-status-tag [status]="version.status"></twa-status-tag>
+              </td>
               <td class="tw-table-actions">
                 <m-dropdown>
                   <a *mDropdownItemIf="version.status === 'active'" (click)="retireVersion(version)">

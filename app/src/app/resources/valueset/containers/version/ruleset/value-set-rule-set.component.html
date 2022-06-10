@@ -5,14 +5,9 @@
         <m-icon mCode="eye"></m-icon>
       </m-button>
     </div>
-
-    <m-dropdown *ngIf="!viewMode">
-      <m-button *m-dropdown-container mClass="m-language-input-dropdown-button">
-        <span>{{'web.value-set-rule-set.form.add-rule-set' | translate}}</span>
-        <m-icon mCode="down" mSize="10"></m-icon>
-      </m-button>
-      <a *m-dropdown-item (click)="addRule()">{{'web.value-set-rule-set.form.add-rule' | translate}}</a>
-    </m-dropdown>
+    <m-button (click)="addRule()">
+      <m-icon mCode="plus"></m-icon>&nbsp; <span>{{'web.value-set-rule-set.form.add-rule-set' | translate}}</span>
+    </m-button>
   </div>
 
   <form #form="ngForm" *ngIf="ruleSet">
@@ -60,8 +55,7 @@
             </div>
           </ng-template>
 
-          <twa-value-set-code-system-rule
-              [lockedDate]="ruleSet.lockedDate"
+          <twa-value-set-code-system-rule [lockedDate]="ruleSet.lockedDate"
               [includeRule]="rule.include"
               [excludeRule]="rule.exclude"
               [inactiveConcepts]="ruleSet.inactive"

@@ -205,7 +205,7 @@
         "rule": "Reegel",
         "include": "Kaasatud",
         "exclude": "Välistatud",
-        "edit-header": "Muuda reeglit"
+        "edit-header": "Reegel"
       }
     },
     "value-set-rule-filter": {
