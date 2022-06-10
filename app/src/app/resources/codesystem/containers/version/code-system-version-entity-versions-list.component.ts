@@ -27,7 +27,10 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
 
   @ViewChild("form") public form?: NgForm;
 
-  public constructor(private codeSystemEntityVersionService: CodeSystemEntityVersionService, private codeSystemService: CodeSystemService) { }
+  public constructor(
+    private codeSystemEntityVersionService: CodeSystemEntityVersionService,
+    private codeSystemService: CodeSystemService
+  ) { }
 
   public ngOnInit(): void {
     this.loadData();

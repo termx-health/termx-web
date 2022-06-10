@@ -1,29 +1,30 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="isLoading">
-      <m-card [mTitle]="mode === 'edit' ? 'web.concept.version.form.edit-header' : 'web.concept.version.form.add-header'">
+      <m-card [mTitle]="mode === 'edit' ? 'web.code-system-concept-version.form.edit-header' : 'web.code-system-concept-version.form.add-header'">
         <form #conceptVersionForm="ngForm" *ngIf="conceptVersion">
-          <m-form-item mName="code" mLabel="web.concept.version.list.concept-status">
+          <m-form-item mName="code" mLabel="entities.code-system-entity-version.status">
             {{conceptVersion.status}}
           </m-form-item>
 
-          <m-form-item mName="description" mLabel="web.concept.version.list.description">
+          <m-form-item mName="description" mLabel="entities.code-system-entity-version.description">
             <m-textarea name="description" [(ngModel)]="conceptVersion.description"></m-textarea>
           </m-form-item>
         </form>
 
+
         <m-card class="tw-card-inner">
           <div *m-card-header class="tw-items-between">
-            <div class="m-card-title">{{'web.concept.version.list.designations' | translate}}</div>
-            <m-button mLabel="web.designation.modal.add-designation" (click)="openDesignationModal()"></m-button>
+            <div class="m-card-title">{{'entities.code-system-entity-version.designations' | translate}}</div>
+            <m-button mLabel="web.code-system-concept-version.designation-modal.add-designation" (click)="openDesignationModal()"></m-button>
           </div>
 
           <m-table [mData]="designations | keys" mEnablePagination mHideOnSinglePage>
             <tr *mTableHead>
-              <th>{{'web.designation.list.type' | translate}}</th>
-              <th>{{'web.designation.list.name' | translate}}</th>
-              <th>{{'web.designation.list.language' | translate}}</th>
-              <th>{{'web.designation.list.status' | translate}}</th>
+              <th>{{'entities.designation.type' | translate}}</th>
+              <th>{{'entities.designation.name' | translate}}</th>
+              <th>{{'entities.designation.language' | translate}}</th>
+              <th>{{'entities.designation.status' | translate}}</th>
               <th class="tw-table-actions"></th>
             </tr>
 
@@ -41,7 +42,7 @@
                   </m-button>
                   <m-dropdown>
                     <a *m-dropdown-item (click)="deleteDesignation(key, index)">
-                      {{'web.designation.modal.delete-designation' | translate}}
+                      {{'web.code-system-concept-version.designation-modal.delete-designation' | translate}}
                     </a>
                   </m-dropdown>
                 </td>
@@ -56,16 +57,17 @@
           </m-table>
         </m-card>
 
+
         <m-card class="tw-card-inner">
           <div *m-card-header class="tw-items-between">
-            <div class="m-card-title">{{'web.concept.version.list.property-values' | translate}}</div>
-            <m-button mLabel="web.property-value.modal.add-property" (click)="openPropertyValueModal()"></m-button>
+            <div class="m-card-title">{{'entities.code-system-entity-version.property-values' | translate}}</div>
+            <m-button mLabel="web.code-system-concept-version.property-modal.add-property" (click)="openPropertyValueModal()"></m-button>
           </div>
 
           <m-table [mData]="propertyValues | keys" mEnablePagination mHideOnSinglePage>
             <tr *mTableHead>
-              <th>{{'web.property-value.list.property' | translate}}</th>
-              <th>{{'web.property-value.list.value' | translate}}</th>
+              <th>{{'entities.entity-property.name' | translate}}</th>
+              <th>{{'entities.entity-property.value' | translate}}</th>
               <th class="tw-table-actions"></th>
             </tr>
 
@@ -101,59 +103,63 @@
   </div>
 </m-form-row>
 
+
 <m-modal [(mVisible)]="propertyValueModalData.visible" (mClose)="propertyValueModalData = {visible: false}">
   <ng-container *mModalHeader>
-    {{(propertyValueModalData.editKey ? 'web.property-value.modal.edit-property' : 'web.property-value.modal.add-property') | translate}}
+    {{(propertyValueModalData.editKey ? 'web.code-system-concept-version.property-modal.edit-property' : 'web.code-system-concept-version.property-modal.add-property') | translate}}
   </ng-container>
 
   <ng-container *mModalContent>
     <form #propertyForm="ngForm">
-      <m-form-item mName="propertyModalProperty" mLabel="web.property-value.list.property" required>
+      <m-form-item mName="propertyModalProperty" mLabel="entities.entity-property.name" required>
         <m-select icon="search"
             placeholder="marina.ui.inputs.search.placeholder"
             name="propertyModalProperty"
             [(ngModel)]="propertyValueModalData.propertyValue.entityPropertyId"
-            required>
+            required
+        >
           <m-option *ngFor="let prop of entityProperties | values" [value]="prop.id" [label]="prop.name"></m-option>
         </m-select>
       </m-form-item>
-      <m-form-item mName="propertyModalValue" mLabel="web.property-value.list.value" required>
+      <m-form-item mName="propertyModalValue" mLabel="entities.entity-property.value" required>
         <m-input name="propertyModalValue" [(ngModel)]="propertyValueModalData.propertyValue.value" required></m-input>
       </m-form-item>
     </form>
   </ng-container>
 
   <div *m-modal-footer class="tw-button-group">
-    <m-button (click)="propertyValueModalData = {visible: false}">{{'core.btn.close' | translate}}</m-button>
+    <m-button (click)="propertyValueModalData.visible = false">
+      {{'core.btn.close' | translate}}
+    </m-button>
     <m-button mDisplay="primary" [mLoading]="isLoading" (click)="savePropertyValue()">
       {{(propertyValueModalData.editKey ? 'core.btn.confirm' : 'core.btn.add') | translate}}
     </m-button>
   </div>
 </m-modal>
 
-
 <m-modal [(mVisible)]="designationModalData.visible" (mClose)="designationModalData = {visible: false}">
   <ng-container *mModalHeader>
-    {{(designationModalData.editKey ? 'web.designation.modal.edit-designation' : 'web.designation.modal.add-designation') | translate}}
+    {{(designationModalData.editKey ? 'web.code-system-concept-version.designation-modal.edit-designation' : 'web.code-system-concept-version.designation-modal.add-designation') | translate}}
   </ng-container>
 
   <ng-container *mModalContent>
     <form #designationForm="ngForm">
-      <m-form-item mName="designationModalType" mLabel="web.designation.list.type" required>
+      <m-form-item mName="designationModalType" mLabel="entities.designation.type" required>
         <m-select icon="search"
             placeholder="marina.ui.inputs.search.placeholder"
             name="designationModalType"
             [(ngModel)]="designationModalData.designation.designationTypeId"
-            required>
+            required
+        >
           <m-option *ngFor="let prop of entityProperties | values" [value]="prop.id" [label]="prop.name"></m-option>
         </m-select>
       </m-form-item>
 
-      <m-form-item mName="designationModalName" mLabel="web.designation.list.name" required>
+      <m-form-item mName="designationModalName" mLabel="entities.designation.name" required>
         <m-input name="designationModalName" [(ngModel)]="designationModalData.designation.name" required></m-input>
       </m-form-item>
 
-      <m-form-item mLabel="web.designation.list.language">
+      <m-form-item mLabel="entities.designation.language">
         <m-select name="designationModalLanguage" [(ngModel)]="designationModalData.designation.language">
           <m-option [label]="'la'" value="la"></m-option>
           <m-option [label]="'en'" value="en"></m-option>
@@ -161,14 +167,14 @@
         </m-select>
       </m-form-item>
 
-      <m-form-item mLabel="web.designation.modal.designation-kind">
+      <m-form-item mLabel="entities.designation.designation-kind">
         <m-select name="designationModalKind" [(ngModel)]="designationModalData.designation.designationKind">
           <m-option [label]="'text'" value="text"></m-option>
           <m-option [label]="'blob'" value="blob"></m-option>
         </m-select>
       </m-form-item>
 
-      <m-form-item mName="designationModalCaseSignificance" mLabel="web.designation.modal.case-significance" required>
+      <m-form-item mName="designationModalCaseSignificance" mLabel="entities.designation.case-significance" required>
         <m-select name="designationModalCaseSignificance" [(ngModel)]="designationModalData.designation.caseSignificance" required>
           <m-option [label]="'ics'" value="ics"></m-option>
           <m-option [label]="'cs'" value="cs"></m-option>
@@ -176,11 +182,11 @@
         </m-select>
       </m-form-item>
 
-      <m-form-item mLabel="web.designation.modal.description">
+      <m-form-item mLabel="entities.designation.description">
         <m-textarea name="designationModalDescription" [(ngModel)]="designationModalData.designation.description"></m-textarea>
       </m-form-item>
 
-      <m-form-item mName="designationModalStatus" mLabel="web.designation.modal.status" required>
+      <m-form-item mName="designationModalStatus" mLabel="entities.designation.status" required>
         <m-select name="designationModalStatus" [(ngModel)]="designationModalData.designation.status" required>
           <m-option [label]="'web.publication-status.statuses.active'" value="active"></m-option>
           <m-option [label]="'web.publication-status.statuses.draft'" value="draft"></m-option>
@@ -191,7 +197,9 @@
   </ng-container>
 
   <div *m-modal-footer class="tw-button-group">
-    <m-button (click)="designationModalData = {visible: false}">{{'core.btn.close' | translate}}</m-button>
+    <m-button (click)="designationModalData.visible = false">
+      {{'core.btn.close' | translate}}
+    </m-button>
     <m-button mDisplay="primary" [mLoading]="isLoading" (click)="saveDesignation()">
       {{(designationModalData.editKey ? 'core.btn.confirm' : 'core.btn.add') | translate}}
     </m-button>
