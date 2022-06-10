@@ -11,9 +11,6 @@
     }
   },
   "web": {
-    "app": {
-      "header": "Terminology"
-    },
     "case-sensitive-options": {
       "ics": "initial character sensitive",
       "cs": "case sensitive",
@@ -26,103 +23,126 @@
       "fragment": "fragment",
       "supplement": "supplement"
     },
-    "code-system-version": {
-      "entity": {
-        "id": "Identifier",
-        "version": "Version",
-        "source": "Source",
-        "preferred-language": "Preferred language",
-        "supported-languages": "Supported languages",
-        "description": "Description",
-        "release-date": "Release date",
-        "expiration-date": "Expiration date",
-        "status": "Status"
+    "publication-status": {
+      "statuses": {
+        "active": "Active",
+        "retired": "Retired",
+        "draft": "Draft"
       },
-      "form": {
-        "edit-header": "Edit version",
-        "add-header": "Add version",
-        "view-header": "View version",
-        "duplicate": {
-          "duplicate-header": "Create duplicate code system version",
-          "source-code-system": "Source code system:",
-          "source-version": "Source version:",
-          "target-version": "Target version:"
-        }
-      },
-      "list": {
-        "add-version": "Add version",
-        "add-new-version": "Add new version",
-        "duplicate-version": "Duplicate version",
-        "export-fhir": "Export FHIR json"
+      "operations": {
+        "activate": "Activate",
+        "retire": "Retire"
       }
     },
+
+    "app": {
+      "header": "Terminology"
+    },
+
     "entity-property": {
-      "entity": {
-        "name": "Name",
-        "type": "Type",
-        "status": "Status",
-        "description": "Description"
-      },
       "form": {
         "edit-header": "Edit property",
         "add-header": "Add property"
       }
     },
-    "code-system": {
-      "entity": {
-        "id": "Identifier",
-        "uri": "Uniform resource identifier (URI)",
-        "name": "Name",
-        "domain": "Domain",
-        "description": "Description"
-      },
-      "entity-version": {
-        "list": {
-          "header": "Entities",
-          "add-entity": "Add entity",
-          "operations": "Operations",
-          "code": "Code",
-          "description": "Description"
-        }
-      },
-      "form": {
-        "add-header": "Create a new code system",
-        "edit-header": "Edit code system"
-      },
-      "contacts": {
-        "list": {
-          "header": "Contacts",
-          "add-contact": "Add contact"
-        },
-        "modal": {
-          "name": "Name",
-          "edit-header": "Edit contact",
-          "system": "System",
-          "value": "Value",
-          "use": "Use",
-          "operations": "Operations"
-        }
-      },
+    "contacts": {
       "list": {
-        "narrative": "Narrative",
-        "content": "Content",
-        "case-sensitivity": "Case sensitivity",
-        "properties": "Properties",
-        "concepts": "Concepts",
-        "add-concept": "Add concept",
-        "header": "Code system list",
-        "versions": "Versions",
+        "header": "Contacts",
+        "add-contact": "Add contact"
+      },
+      "modal": {
+        "name": "Name",
+        "edit-header": "Edit contact",
+        "operations": "Operations"
+      }
+    },
+    "resources": {
+      "tabset": {
+        "code-systems": "Code systems",
+        "value-sets": "Value sets",
+        "map-sets": "Map sets"
+      }
+    },
+
+    "code-system": {
+      "list": {
+        "add-code-system": "Add code system",
+        "domain": "Domain",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}",
         "duplicate": {
-          "duplicate-header": "Create duplicate code system",
+          "header": "Create duplicate code system",
           "source-code-system": "Source code system:",
           "target-code-system": "Target code system:",
           "target-uri": "Target URI:"
         }
+      },
+      "form": {
+        "add-header": "Create a new code system",
+        "edit-header": "Edit code system",
+        "concepts": {
+          "add-concept": "Add concept"
+        },
+        "versions": {
+          "duplicate": {
+            "duplicate-header": "Create duplicate code system version",
+            "source-code-system": "Source code system:",
+            "source-version": "Source version:",
+            "target-version": "Target version:"
+          },
+          "list": {
+            "add-version": "Add version",
+            "add-new-version": "Add new version",
+            "duplicate-version": "Duplicate version",
+            "export-fhir": "Export FHIR json"
+          }
+        }
       }
     },
+    "code-system-version": {
+      "form": {
+        "edit-header": "Edit version",
+        "add-header": "Add version",
+        "view-header": "View version",
+        "entities": {
+          "add-entity": "Add entity",
+          "operations": "Operations",
+          "modal": {
+            "add-header": "Add entity"
+          }
+        }
+      }
+    },
+    "code-system-concept": {
+      "form": {
+        "add-header": "Add concept",
+        "edit-header": "Edit concept",
+        "versions": {
+          "add-version": "Add version"
+        }
+      }
+    },
+    "code-system-concept-version": {
+      "form": {
+        "add-header": "Add version",
+        "edit-header": "Edit version"
+      },
+      "list": {
+        "operations": "Operations"
+      },
+      "designation-modal": {
+        "add-designation": "Add designation",
+        "delete-designation": "Delete designation",
+        "edit-designation": "Edit designation"
+      },
+      "property-modal": {
+        "add-property": "Add property",
+        "edit-property": "Edit property"
+      }
+    },
+
+
     "value-set": {
       "entity": {
         "id": "Identifier",
@@ -210,85 +230,7 @@
         "value": "Value"
       }
     },
-    "concept": {
-      "entity": {
-        "code": "Code",
-        "description": "Description"
-      },
-      "version": {
-        "list": {
-          "concept-status": "Concept status",
-          "versions": "Versions",
-          "number": "Number",
-          "created": "Created",
-          "description": "Description",
-          "status": "Status",
-          "operations": "Operations",
-          "designations": "Designations",
-          "property-values": "Property values"
-        },
-        "form": {
-          "add-header": "Add version",
-          "edit-header": "Edit version"
-        }
-      },
-      "list": {
-        "concept": "Concept",
-        "concepts": "Concepts",
-        "operations": "Operations"
-      },
-      "form": {
-        "add-header": "Add concept",
-        "edit-header": "Edit concept"
-      }
-    },
-    "designation": {
-      "entity": {
-      },
-      "list": {
-        "designation": "Designation",
-        "type": "Type",
-        "name": "Name",
-        "language": "Language"
-      },
-      "modal": {
-        "add-designation": "Add designation",
-        "delete-designation": "Delete designation",
-        "edit-designation": "Edit designation",
-        "designation-kind": "Designation kind",
-        "case-significance": "Case significance",
-        "description": "Description",
-        "status": "Status"
-      }
-    },
-    "property-value": {
-      "list": {
-        "property": "Property",
-        "value": "Value"
-      },
-      "modal": {
-        "add-property": "Add property",
-        "edit-property": "Edit property"
-      }
-    },
-    "publication-status": {
-      "statuses": {
-        "active": "Active",
-        "retired": "Retired",
-        "draft": "Draft"
-      },
-      "operations": {
-        "activate": "Activate",
-        "retire": "Retire"
-      }
-    },
-    "resources": {
-      "tabset": {
-        "code-systems": "Code systems",
-        "value-sets": "Value sets",
-        "map-sets": "Map sets"
-      }
-    },
+
     "map-set": {
       "entity": {
         "id": "Identifier",
@@ -341,11 +283,95 @@
         "associations": "Associations"
       }
     },
+
     "integration": {
       "fhir": {
         "sync": {
           "send-request": "Send request"
         }
+      }
+    }
+  },
+  "entities": {
+    "code-system": {
+      "id": "Identifier",
+      "uri": "Uniform resource identifier (URI)",
+      "uri-short": "URI",
+      "name": "Name",
+      "content": "Content",
+      "case-sensitivity": "Case sensitivity",
+      "narrative": "Narrative",
+      "description": "Description",
+      "contacts": "Contacts",
+      "concepts": "Concepts",
+      "properties": "Properties",
+      "versions": "Versions"
+    },
+    "code-system-version": {
+      "id": "Identifier",
+      "version": "Version",
+      "source": "Source",
+      "preferred-language": "Preferred language",
+      "supported-languages": "Supported languages",
+      "description": "Description",
+      "status": "Status",
+      "type": "Type",
+      "release-date": "Release date",
+      "expiration-date": "Expiration date",
+      "entities": "Entity versions"
+    },
+    "code-system-concept": {
+      "type": "Type",
+      "code": "Code",
+      "description": "Description",
+      "versions": "Concept versions"
+    },
+    "code-system-association": {
+      "type": "Type",
+      "status": "Status",
+      "target-id": "Target ID",
+      "target-code": "Target code",
+      "versions": "Association versions"
+    },
+    "code-system-entity": {
+      "type": "Type",
+      "versions": "Entity versions"
+    },
+    "code-system-entity-version": {
+      "id": "ID",
+      "code": "Code",
+      "description": "Description",
+      "status": "Status",
+      "created": "Created at",
+      "property-values": "Property values",
+      "designations": "Designations",
+      "associations": "Associations"
+    },
+    "entity-property": {
+      "name": "Name",
+      "type": "Type",
+      "description": "Description",
+      "status": "Status",
+      "value": "Value"
+    },
+    "designation": {
+      "type": "Type",
+      "name": "Name",
+      "language": "Language",
+      "rendering": "Rendering",
+      "preferred": "Preferred",
+      "case-significance": "Case significance",
+      "designation-kind": "Designation kind",
+      "description": "Description",
+      "status": "Status"
+    },
+    "contact-detail": {
+      "name": "Name",
+      "telecoms": "Telecoms",
+      "telecom": {
+        "system": "System",
+        "value": "Value",
+        "use": "Use"
       }
     }
   }

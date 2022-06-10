@@ -1,30 +1,30 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit' ? 'web.concept.form.edit-header' : 'web.concept.form.add-header'">
+      <m-card [mTitle]="mode === 'edit' ? 'web.code-system-concept.form.edit-header' : 'web.code-system-concept.form.add-header'">
         <form #form="ngForm" *ngIf="concept">
-          <m-form-item mName="code" mLabel="web.concept.entity.code" required>
+          <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>
             <m-input name="code" [(ngModel)]="concept.code" required></m-input>
           </m-form-item>
 
-          <m-form-item mName="description" mLabel="web.concept.entity.description">
+          <m-form-item mName="description" mLabel="entities.code-system-concept.description">
             <m-textarea name="description" [(ngModel)]="concept.description"></m-textarea>
           </m-form-item>
         </form>
 
         <m-card class="tw-card-inner" *ngIf="concept && concept.versions">
           <div *m-card-header class="tw-items-between">
-            <div class="m-card-title">{{'web.concept.version.list.versions' | translate}}</div>
-            <m-button [routerLink]="['../versions/add']" mLabel="web.concept.version.form.add-header"></m-button>
+            <div class="m-card-title">{{'entities.code-system-concept.versions' | translate}}</div>
+            <m-button [routerLink]="['../versions/add']" mLabel="web.code-system-concept.form.versions.add-version"></m-button>
           </div>
 
           <m-table [mData]="concept.versions" mEnablePagination mHideOnSinglePage>
             <tr *mTableHead>
-              <th>{{'web.concept.version.list.number' | translate}}</th>
-              <th>{{'web.concept.version.list.created' | translate}}</th>
-              <th>{{'web.concept.version.list.description' | translate}}</th>
-              <th>{{'web.concept.version.list.status' | translate}}</th>
-              <th class="tw-table-actions">{{'web.concept.version.list.operations' | translate}}</th>
+              <th>{{'entities.code-system-entity-version.id' | translate}}</th>
+              <th>{{'entities.code-system-entity-version.created' | translate}}</th>
+              <th>{{'entities.code-system-entity-version.description' | translate}}</th>
+              <th>{{'entities.code-system-entity-version.status' | translate}}</th>
+              <th class="tw-table-actions">{{'web.code-system-concept-version.list.operations' | translate}}</th>
             </tr>
 
             <tr *mTableRow="let version">

@@ -18,6 +18,12 @@ import {ContactLibModule} from 'terminology-lib/resources/contact/contact-lib.mo
 import {CodeSystemVersionEntityVersionsListComponent} from './containers/version/code-system-version-entity-versions-list.component';
 import {CodeSystemConceptVersionEditComponent} from './containers/concept/code-system-concept-version-edit.component';
 import {CodeSystemEntityService} from './services/code-system-entity.service';
+import {FinderCodeSystemListComponent} from './containers-finder/code-system-list.component';
+import {FinderCodeSystemViewComponent} from './containers-finder/code-system-view.component';
+import {FinderCodeSystemVersionViewComponent} from './containers-finder/version/code-system-version-view.component';
+import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/code-system-concept-view.component';
+import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
+import {FinderModule} from '../../core/finder/finder.module';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -32,9 +38,22 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/versions/:version/view', component: CodeSystemVersionViewComponent},
 ];
 
+export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
+  path: '', component: FinderCodeSystemListComponent, children: [{
+    path: ':id', component: FinderCodeSystemViewComponent, children: [{
+      path: 'versions/:versionCode', component: FinderCodeSystemVersionViewComponent
+    }, {
+      path: 'concepts/:conceptId', component: FinderCodeSystemConceptViewComponent, children: [{
+        path: 'versions/:versionId', component: FinderCodeSystemConceptVersionViewComponent
+      }]
+    }]
+  }]
+}];
+
 @NgModule({
   imports: [
     SharedModule,
+    FinderModule,
     CodeSystemLibModule,
     ContactLibModule
   ],
@@ -52,6 +71,12 @@ export const CODE_SYSTEM_ROUTES: Routes = [
     CodeSystemConceptEditComponent,
     CodeSystemVersionEntityVersionsListComponent,
     CodeSystemConceptVersionEditComponent,
+
+    FinderCodeSystemListComponent,
+    FinderCodeSystemViewComponent,
+    FinderCodeSystemVersionViewComponent,
+    FinderCodeSystemConceptViewComponent,
+    FinderCodeSystemConceptVersionViewComponent
   ],
   exports: [
     CodeSystemListComponent
