@@ -3,17 +3,18 @@ import {Routes} from '@angular/router';
 import {ValueSetListComponent} from './containers/value-set-list.component';
 import {CodeSystemLibModule, DesignationLibModule, ValueSetLibModule} from 'terminology-lib/resources';
 import {ValueSetVersionEditComponent} from './containers/version/value-set-version-edit.component';
-import {ValueSetVersionConceptListComponent} from './containers/version/value-set-version-concept-list.component';
+import {ValueSetVersionConceptListComponent} from './containers/version/concepts/value-set-version-concept-list.component';
 import {SharedModule} from '../../core/shared/shared.module';
 import {ValueSetService} from './services/value-set.service';
 import {ValueSetEditComponent} from './containers/edit/value-set-edit.component';
 import {ValueSetVersionsListComponent} from './containers/edit/value-set-versions-list.component';
 import {ValueSetVersionViewComponent} from './containers/version/value-set-version-view.component';
 import {ValueSetRuleSetComponent} from './containers/version/ruleset/value-set-rule-set.component';
-import {ValueSetRuleSetCodeSystemRuleComponent} from './containers/version/ruleset/value-set-rule-set-code-system-rule.component';
+import {ValueSetRuleSetRuleComponent} from './containers/version/ruleset/value-set-rule-set-rule.component';
 import {ValueSetRuleSetValueSetRuleComponent} from './containers/version/ruleset/value-set-rule-set-value-set-rule.component';
 import {ValueSetRuleFilterListComponent} from './containers/version/ruleset/value-set-rule-filter-list.component';
 import {ContactLibModule} from 'terminology-lib/resources/contact/contact-lib.module';
+import {ValueSetVersionConceptModalComponent} from './containers/version/concepts/value-set-version-concept-modal.component';
 
 
 export const VALUE_SET_ROUTES: Routes = [
@@ -39,8 +40,9 @@ export const VALUE_SET_ROUTES: Routes = [
     ValueSetVersionEditComponent,
     ValueSetVersionViewComponent,
     ValueSetVersionConceptListComponent,
+    ValueSetVersionConceptModalComponent,
     ValueSetRuleSetComponent,
-    ValueSetRuleSetCodeSystemRuleComponent,
+    ValueSetRuleSetRuleComponent,
     ValueSetRuleSetValueSetRuleComponent,
     ValueSetRuleFilterListComponent
   ],

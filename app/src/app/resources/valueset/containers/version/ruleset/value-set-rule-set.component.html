@@ -1,7 +1,7 @@
 <m-card class="tw-card-inner">
   <div *m-card-header class="tw-items-between">
     <div class="m-card-title">{{'web.value-set-version.form.rule-set' | translate}} &nbsp;
-      <m-button mSize="small">
+      <m-button (click)="expand()" mSize="small">
         <m-icon mCode="eye"></m-icon>
       </m-button>
     </div>
@@ -11,8 +11,7 @@
         <span>{{'web.value-set-rule-set.form.add-rule-set' | translate}}</span>
         <m-icon mCode="down" mSize="10"></m-icon>
       </m-button>
-      <a *m-dropdown-item (click)="addRule('code-system')">{{'web.value-set-rule-set.form.code-system-rule' | translate}}</a>
-      <a *m-dropdown-item (click)="addRule('value-set')">{{'web.value-set-rule-set.form.value-set-rule' | translate}}</a>
+      <a *m-dropdown-item (click)="addRule()">{{'web.value-set-rule-set.form.add-rule' | translate}}</a>
     </m-dropdown>
   </div>
 
@@ -35,19 +34,21 @@
       <nz-collapse class="tw-cs-contact-collapse" *ngIf="rules?.length">
         <nz-collapse-panel *ngFor="let rule of rules; let i = index" [nzHeader]="header" [nzExtra]="!viewMode && edit">
           <ng-template #header>
-            <m-icon *ngIf="rule.type === 'code-system' && !rule.include?.codeSystem || rule.type === 'value-set' && !rule.include?.valueSet"
-                [mCode]="'file-text'"></m-icon>
-            <div *ngIf="rule.type === 'code-system' && rule.include?.codeSystem">
+            <m-icon *ngIf="!rule.include?.codeSystem && !rule.include?.valueSet" [mCode]="'file-text'"></m-icon>
+            <label *ngIf="rule.include?.codeSystem">
               {{rule.include.codeSystem}}{{rule.include.codeSystemVersion ? ' / ' + rule.include.codeSystemVersion : ''}}
-            </div>
-            <div *ngIf="rule.type === 'value-set' && rule.include?.valueSet">
+            </label>
+            <label *ngIf="rule.include?.codeSystem && rule.include?.valueSet">
+              &nbsp;{{'+'}}&nbsp;
+            </label>
+            <label *ngIf="rule.include?.valueSet">
               {{rule.include.valueSet}}{{rule.include.valueSetVersion ? ' / ' + rule.include.valueSetVersion : ''}}
-            </div>
+            </label>
           </ng-template>
 
           <ng-template #edit>
             <div class="tw-button-group">
-              <m-button mSize="small">
+              <m-button (click)="$event.stopPropagation();expand(rule)" mSize="small">
                 <m-icon [mCode]="'eye'"></m-icon>
               </m-button>
               <m-button (click)="$event.stopPropagation();toggleModal(rule, i)" mSize="small">
@@ -59,19 +60,12 @@
             </div>
           </ng-template>
 
-          <twa-value-set-code-system-rule *ngIf="rule?.type === 'code-system'"
+          <twa-value-set-code-system-rule
               [lockedDate]="ruleSet.lockedDate"
               [includeRule]="rule.include"
               [excludeRule]="rule.exclude"
               [inactiveConcepts]="ruleSet.inactive"
               viewMode></twa-value-set-code-system-rule>
-
-          <twa-value-set-value-set-rule *ngIf="rule?.type === 'value-set'"
-              [lockedDate]="ruleSet.lockedDate"
-              [includeRule]="rule.include"
-              [excludeRule]="rule.exclude"
-              [inactiveConcepts]="ruleSet.inactive"
-              viewMode></twa-value-set-value-set-rule>
         </nz-collapse-panel>
       </nz-collapse>
     </m-form-item>
@@ -84,17 +78,11 @@
     </ng-container>
 
     <ng-container *m-modal-content>
-      <twa-value-set-code-system-rule #codeSystemRuleComponent
-          *ngIf="modalData.rule?.type === 'code-system'"
+      <twa-value-set-code-system-rule #ruleComponent
           [lockedDate]="ruleSet.lockedDate"
           [includeRule]="modalData.rule.include"
           [excludeRule]="modalData.rule.exclude"
           [inactiveConcepts]="ruleSet.inactive"></twa-value-set-code-system-rule>
-
-      <twa-value-set-value-set-rule #valueSetRuleComponent
-          *ngIf="modalData.rule?.type === 'value-set'"
-          [includeRule]="modalData.rule.include"
-          [excludeRule]="modalData.rule.exclude"></twa-value-set-value-set-rule>
     </ng-container>
 
 
@@ -104,3 +92,5 @@
     </div>
   </m-modal>
 </m-card>
+
+<twa-value-set-version-concept-modal #conceptModal></twa-value-set-version-concept-modal>

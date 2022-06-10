@@ -1,13 +1,13 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {CodeSystemLibService, CodeSystemVersion, ValueSetRule} from 'lib/src/resources';
+import {CodeSystemLibService, CodeSystemVersion, ValueSetLibService, ValueSetRule, ValueSetVersion} from 'lib/src/resources';
 import {BooleanInput, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'twa-value-set-code-system-rule',
-  templateUrl: 'value-set-rule-set-code-system-rule.component.html',
+  templateUrl: 'value-set-rule-set-rule.component.html',
 })
-export class ValueSetRuleSetCodeSystemRuleComponent implements OnChanges {
+export class ValueSetRuleSetRuleComponent implements OnChanges {
   @Input() public includeRule?: ValueSetRule;
   @Input() public excludeRule?: ValueSetRule;
   @Input() public lockedDate?: Date;
@@ -18,9 +18,10 @@ export class ValueSetRuleSetCodeSystemRuleComponent implements OnChanges {
 
   public codeSystem?: string;
   public codeSystemVersion?: CodeSystemVersion;
+  public valueSetVersion?: ValueSetVersion;
   public excludeRuleOn?: boolean;
 
-  public constructor(private codeSystemService: CodeSystemLibService) {}
+  public constructor(private codeSystemService: CodeSystemLibService, private valueSetService: ValueSetLibService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["includeRule"]?.currentValue) {
@@ -31,9 +32,16 @@ export class ValueSetRuleSetCodeSystemRuleComponent implements OnChanges {
           this.codeSystemVersion = version;
         });
       }
+      if (this.includeRule?.valueSet && this.includeRule.valueSetVersion) {
+        this.valueSetService.loadVersion(this.includeRule.valueSet, this.includeRule.valueSetVersion).subscribe(version => {
+          this.valueSetVersion = version;
+        });
+      }
     }
     if (changes["excludeRule"]?.currentValue) {
-      this.excludeRuleOn = this.excludeRule!.filters && this.excludeRule!.filters.length > 0;
+      this.excludeRuleOn =
+        this.excludeRule!.filters && this.excludeRule!.filters.length > 0 ||
+        this.excludeRule!.concepts && this.excludeRule!.concepts.length > 0;
       this.initRule(this.excludeRule!);
     }
   }

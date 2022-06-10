@@ -2,8 +2,9 @@ import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/co
 import {ValueSetRule, ValueSetRuleSet} from 'lib/src/resources';
 import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
-import {ValueSetRuleSetCodeSystemRuleComponent} from './value-set-rule-set-code-system-rule.component';
-import {ValueSetRuleSetValueSetRuleComponent} from './value-set-rule-set-value-set-rule.component';
+import {ValueSetRuleSetRuleComponent} from './value-set-rule-set-rule.component';
+import {ValueSetService} from '../../../services/value-set.service';
+import {ValueSetVersionConceptModalComponent} from '../concepts/value-set-version-concept-modal.component';
 
 @Component({
   selector: 'twa-value-set-rule-set',
@@ -14,13 +15,13 @@ export class ValueSetRuleSetComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: string | boolean = false;
 
   @ViewChild("form") public form?: NgForm;
-  @ViewChild("codeSystemRuleComponent") public codeSystemRuleComponent?: ValueSetRuleSetCodeSystemRuleComponent;
-  @ViewChild("valueSetRuleComponent") public valueSetRuleComponent?: ValueSetRuleSetValueSetRuleComponent;
+  @ViewChild("ruleComponent") public ruleComponent?: ValueSetRuleSetRuleComponent;
+  @ViewChild("conceptModal") public conceptModal?: ValueSetVersionConceptModalComponent;
 
-  public rules: {include: ValueSetRule, exclude?: ValueSetRule, type: 'code-system' | 'value-set'}[] = [];
-  public modalData: {visible?: boolean, ruleIndex?: number, rule?: {include: ValueSetRule, exclude?: ValueSetRule, type: 'code-system' | 'value-set'}} = {};
+  public rules: {include: ValueSetRule, exclude?: ValueSetRule}[] = [];
+  public modalData: {visible?: boolean, ruleIndex?: number, rule?: {include: ValueSetRule, exclude?: ValueSetRule}} = {};
 
-  public constructor() {}
+  public constructor(private valueSetService: ValueSetService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["ruleSet"]) {
@@ -46,12 +47,12 @@ export class ValueSetRuleSetComponent implements OnChanges {
         const sameVs = !!include.valueSet && exclude.valueSet === include.valueSet && exclude.valueSetVersion === include.valueSetVersion;
         return sameCs || sameVs;
       });
-      this.rules.push({include: include, exclude: exclude ? exclude : new ValueSetRule(), type: include.codeSystem ? 'code-system' : 'value-set'});
+      this.rules.push({include: include, exclude: exclude ? exclude : new ValueSetRule()});
     });
   }
 
-  public addRule(ruleType: 'code-system' | 'value-set'): void {
-    this.toggleModal({include: new ValueSetRule(), exclude: new ValueSetRule(), type: ruleType});
+  public addRule(): void {
+    this.toggleModal({include: new ValueSetRule(), exclude: new ValueSetRule()});
   }
 
   public deleteRule(index: number): void {
@@ -59,7 +60,7 @@ export class ValueSetRuleSetComponent implements OnChanges {
     this.rules = [...this.rules];
   }
 
-  public toggleModal(rule?: {include: ValueSetRule, exclude?: ValueSetRule, type: 'code-system' | 'value-set'}, index?: number): void {
+  public toggleModal(rule?: {include: ValueSetRule, exclude?: ValueSetRule}, index?: number): void {
     this.modalData = {
       visible: !!rule,
       rule: copyDeep(rule),
@@ -81,9 +82,7 @@ export class ValueSetRuleSetComponent implements OnChanges {
   }
 
   private validate(): boolean {
-    return validateForm(this.form) &&
-      (!this.codeSystemRuleComponent || this.codeSystemRuleComponent.validate()) &&
-      (!this.valueSetRuleComponent || this.valueSetRuleComponent.validate());
+    return validateForm(this.form) && (!this.ruleComponent || this.ruleComponent.validate());
   }
 
   public getRuleSet(): ValueSetRuleSet {
@@ -91,10 +90,24 @@ export class ValueSetRuleSetComponent implements OnChanges {
     this.ruleSet!.excludeRules = [];
     this.rules.forEach(r => {
       this.ruleSet!.includeRules?.push(r.include);
-      if (r.exclude) {
+      if (r.exclude && (r.exclude.concepts && r.exclude.concepts.length > 0 || r.exclude.filters && r.exclude.filters.length > 0)) {
         this.ruleSet!.excludeRules?.push(r.exclude);
       }
     });
     return this.ruleSet!;
+  }
+
+  public expand(rule?: {include: ValueSetRule, exclude?: ValueSetRule}): void {
+    const ruleSet = this.getRuleSet();
+    if (!!rule) {
+      ruleSet.includeRules = rule.include ? [rule.include] : [];
+      ruleSet.excludeRules = [];
+      if (rule.exclude && (rule.exclude.concepts && rule.exclude.concepts.length > 0 || rule.exclude.filters && rule.exclude.filters.length > 0)) {
+        ruleSet.excludeRules = [rule.exclude];
+      }
+    }
+    this.valueSetService.expandByRuleSet(ruleSet).subscribe(vsConcepts => {
+      this.conceptModal?.toggleModal(vsConcepts);
+    });
   }
 }

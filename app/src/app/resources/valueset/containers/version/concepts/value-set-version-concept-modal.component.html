@@ -1,0 +1,9 @@
+<m-modal [(mVisible)]="modalVisible" (close)="toggleModal()" mClosable>
+  <ng-container *m-modal-header>
+    {{'web.value-set-version-concept.modal.header' | translate}}
+  </ng-container>
+
+  <ng-container *m-modal-content>
+    <twa-value-set-version-concept-list [concepts]="concepts" viewMode></twa-value-set-version-concept-list>
+  </ng-container>
+</m-modal>

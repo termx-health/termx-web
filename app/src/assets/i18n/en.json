@@ -196,6 +196,9 @@
         "concept": "Concept",
         "display": "Display",
         "additional-designations": "Additional designations"
+      },
+      "modal": {
+        "header": "Preview of result concepts"
       }
     },
     "value-set-rule-set": {
