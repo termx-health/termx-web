@@ -3,9 +3,9 @@
     <m-spinner [mLoading]="loading">
 
       <m-card>
-        <div *m-card-header style="display: flex">
+        <div *m-card-header class="tw-items-middle">
           <div class="m-card-title">{{(mode === 'edit' ? 'web.code-system-version.form.edit-header' : 'web.code-system-version.form.add-header') | translate}}</div>
-          <twa-status-tag *ngIf="version?.status" [status]="version.status" style="margin-left: 0.5em"></twa-status-tag>
+          <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
         <form #form="ngForm" *ngIf="version">
           <m-form-item mName="version" mLabel="entities.code-system-version.version" required>

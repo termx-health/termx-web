@@ -4,7 +4,7 @@
       <m-card>
         <div *m-card-header style="display: flex">
           <div class="m-card-title">{{(mode === 'edit' ? 'web.map-set-version.form.edit-header' : 'web.map-set-version.form.add-header') | translate}}</div>
-          <twa-status-tag *ngIf="version?.status" [status]="version.status" style="margin-left: 0.5em"></twa-status-tag>
+          <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
         <form #form="ngForm" *ngIf="version">
           <m-form-item mName="version" mLabel="web.map-set-version.entity.version" required>

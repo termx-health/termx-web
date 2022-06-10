@@ -1,2 +1,2 @@
-<m-tag mColor="{{convertStatus()}}" mLabel="{{'web.publication-status.statuses.' + status}}">
+<m-tag [mColor]="statusMap[status]" [mLabel]="'web.publication-status.statuses.' + status">
 </m-tag>

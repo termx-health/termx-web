@@ -2,9 +2,9 @@
   <div *mFormCol>
     <m-spinner [mLoading]="isLoading">
       <m-card>
-        <div *m-card-header style="display: flex">
+        <div *m-card-header class="tw-items-middle">
           <div class="m-card-title">{{(mode === 'edit' ? 'web.code-system-concept-version.form.edit-header' : 'web.code-system-concept-version.form.add-header') | translate}}</div>
-          <twa-status-tag *ngIf="conceptVersion?.status" [status]="conceptVersion.status" style="margin-left: 0.5em"></twa-status-tag>
+          <twa-status-tag *ngIf="conceptVersion?.status" [status]="conceptVersion.status"></twa-status-tag>
         </div>
         <form #conceptVersionForm="ngForm" *ngIf="conceptVersion">
 
