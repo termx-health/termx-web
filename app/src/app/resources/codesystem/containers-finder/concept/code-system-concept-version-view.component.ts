@@ -12,7 +12,7 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
     <twa-finder-wrapper [loading]="loading" title="CODE SYSTEM CONCEPT VERSION">
       <div class="tw-finder-view-form">
         <m-form-item mLabel="entities.code-system-entity-version.status">
-          {{conceptVersion?.status || '-'}}
+          <twa-status-tag [status]="conceptVersion?.status"></twa-status-tag>
         </m-form-item>
         <m-form-item mLabel="entities.code-system-entity-version.description">
           {{conceptVersion?.description || '-'}}
@@ -49,7 +49,6 @@ export class FinderCodeSystemConceptVersionViewComponent implements OnInit {
   public ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
       const conceptVersionId = params.get('versionId');
-
       if (isNil(conceptVersionId)) {
         this.conceptVersion = undefined;
         return;

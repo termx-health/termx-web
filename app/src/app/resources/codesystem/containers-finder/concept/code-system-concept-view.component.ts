@@ -39,7 +39,6 @@ export class FinderCodeSystemConceptViewComponent implements OnInit {
   public ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
       const codeSystemConceptId = params.get('conceptId');
-
       if (isNil(codeSystemConceptId)) {
         this.concept = undefined;
         return;

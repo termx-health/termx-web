@@ -5,21 +5,27 @@
         <m-form-item mLabel="entities.code-system.id">
           {{codeSystem?.id || '-'}}
         </m-form-item>
+      </div>
 
+      <div *mFormCol>
         <m-form-item mLabel="entities.code-system.name">
           {{(codeSystem?.names | localName) || '-'}}
         </m-form-item>
-
-        <m-form-item mLabel="entities.code-system.uri-short">
-          {{codeSystem?.uri || '-'}}
-        </m-form-item>
       </div>
+    </m-form-row>
 
+    <m-form-item mLabel="entities.code-system.uri-short">
+      {{codeSystem?.uri || '-'}}
+    </m-form-item>
+
+    <m-form-row mFull>
       <div *mFormCol>
         <m-form-item mLabel="entities.code-system.content">
           {{codeSystem?.content || '-'}}
         </m-form-item>
+      </div>
 
+      <div *mFormCol>
         <m-form-item mLabel="entities.code-system.case-sensitivity">
           {{codeSystem?.caseSensitive || '-'}}
         </m-form-item>
