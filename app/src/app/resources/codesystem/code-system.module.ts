@@ -37,22 +37,17 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/versions/:version/view', component: CodeSystemVersionViewComponent},
 ];
 
-export const CODE_SYSTEM_NAV_ROUTES: Routes = [
-  {
-    path: '', component: FinderCodeSystemListComponent, children: [
-      {
-        path: ':id', component: FinderCodeSystemViewComponent, children: [
-          {
-            path: 'versions/:versionCode', component: FinderCodeSystemVersionViewComponent
-          },
-          {
-            path: 'concepts/:conceptId', component: FinderCodeSystemConceptViewComponent, children: [
-              {path: 'versions/:versionId', component: FinderCodeSystemConceptVersionViewComponent},
-            ]
-          }]
+export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
+  path: '', component: FinderCodeSystemListComponent, children: [{
+    path: ':id', component: FinderCodeSystemViewComponent, children: [{
+      path: 'versions/:versionCode', component: FinderCodeSystemVersionViewComponent
+    }, {
+      path: 'concepts/:conceptId', component: FinderCodeSystemConceptViewComponent, children: [{
+        path: 'versions/:versionId', component: FinderCodeSystemConceptVersionViewComponent
       }]
-  }
-];
+    }]
+  }]
+}];
 
 @NgModule({
   imports: [

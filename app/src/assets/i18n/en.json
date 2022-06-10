@@ -27,17 +27,7 @@
       "supplement": "supplement"
     },
     "code-system-version": {
-      "entity": {
-        "id": "Identifier",
-        "version": "Version",
-        "source": "Source",
-        "preferred-language": "Preferred language",
-        "supported-languages": "Supported languages",
-        "description": "Description",
-        "release-date": "Release date",
-        "expiration-date": "Expiration date",
-        "status": "Status"
-      },
+
       "form": {
         "edit-header": "Edit version",
         "add-header": "Add version",
@@ -57,25 +47,12 @@
       }
     },
     "entity-property": {
-      "entity": {
-        "name": "Name",
-        "type": "Type",
-        "status": "Status",
-        "description": "Description"
-      },
       "form": {
         "edit-header": "Edit property",
         "add-header": "Add property"
       }
     },
     "code-system": {
-      "entity": {
-        "id": "Identifier",
-        "uri": "Uniform resource identifier (URI)",
-        "name": "Name",
-        "domain": "Domain",
-        "description": "Description"
-      },
       "entity-version": {
         "list": {
           "header": "Entities",
@@ -211,10 +188,6 @@
       }
     },
     "concept": {
-      "entity": {
-        "code": "Code",
-        "description": "Description"
-      },
       "version": {
         "list": {
           "concept-status": "Concept status",
@@ -243,8 +216,6 @@
       }
     },
     "designation": {
-      "entity": {
-      },
       "list": {
         "designation": "Designation",
         "type": "Type",
@@ -364,15 +335,6 @@
       "properties": "Properties",
       "versions": "Versions"
     },
-    "code-system-entity": {
-      "type": "Type",
-      "versions": "Entity versions"
-    },
-    "code-system-concept": {
-      "code": "Code",
-      "description": "Description",
-      "versions": "Concept versions"
-    },
     "code-system-version": {
       "id": "Identifier",
       "version": "Version",
@@ -386,12 +348,48 @@
       "expiration-date": "Expiration date",
       "entities": "Entity versions"
     },
+    "code-system-concept": {
+      "code": "Code",
+      "description": "Description",
+      "type": "Type",
+      "versions": "Concept versions"
+    },
+    "code-system-association": {
+      "type": "Type",
+      "status": "Status",
+      "target-id": "Target ID",
+      "target-code": "Target code"
+    },
+    "code-system-entity": {
+      "type": "Type",
+      "versions": "Entity versions"
+    },
+    "code-system-entity-version": {
+      "code": "Code",
+      "description": "Description",
+      "status": "Status",
+      "created": "Created at",
+      "property-values": "Property values",
+      "designations": "Designations",
+      "associations": "Associations"
+    },
     "entity-property": {
       "name": "Name",
       "type": "Type",
       "description": "Description",
       "status": "Status",
       "value": "Value"
+    },
+    "designation": {
+      "type": "Type",
+      "name": "Name",
+      "language": "Language",
+      "rendering": "Rendering",
+      "preferred": "Preferred",
+      "case-significance": "Case significance",
+      "designation-kind": "Designation kind",
+      "description": "Description",
+      "status": "Status"
     },
     "contact-detail": {
       "name": "Name",

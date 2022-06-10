@@ -11,21 +11,21 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
   template: `
     <twa-finder-wrapper [loading]="loading" title="CODE SYSTEM CONCEPT VERSION">
       <div class="tw-finder-view-form">
-        <m-form-item mLabel="status">
+        <m-form-item mLabel="entities.code-system-entity-version.status">
           {{conceptVersion?.status || '-'}}
         </m-form-item>
-        <m-form-item mLabel="description">
+        <m-form-item mLabel="entities.code-system-entity-version.description">
           {{conceptVersion?.description || '-'}}
         </m-form-item>
       </div>
 
-      <twa-finder-menu title="DESIGNATIONS" [length]="conceptVersion?.designations?.length">
+      <twa-finder-menu title="entities.code-system-entity-version.designations" [length]="conceptVersion?.designations?.length">
         <twa-finder-menu-item *ngFor="let d of conceptVersion?.designations">
           {{d.name}}
         </twa-finder-menu-item>
       </twa-finder-menu>
 
-      <twa-finder-menu title="PROPERTIES" [length]="conceptVersion?.propertyValues?.length">
+      <twa-finder-menu title="entities.code-system-entity-version.property-values" [length]="conceptVersion?.propertyValues?.length">
         <twa-finder-menu-item *ngFor="let pv of conceptVersion?.propertyValues">
           {{pv.entityPropertyId}} - {{pv.value}}
         </twa-finder-menu-item>
