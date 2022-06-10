@@ -1,6 +1,6 @@
 <m-card class="tw-card-inner">
   <div *m-card-header class="tw-items-between">
-    <div class="m-card-title">{{'web.code-system.entity-version.list.header' | translate}}</div>
+    <div class="m-card-title">{{'entities.code-system-version.entities' | translate}}</div>
     <m-button (click)="modalVisible = true">
       <m-icon mCode="plus"></m-icon> &nbsp; {{'web.code-system.entity-version.list.add-entity' | translate}}
     </m-button>
@@ -12,10 +12,11 @@
       (mQueryChange)="loadData()"
       [mLoading]="isLoading"
       mSize="small"
-      style="margin-top: 1rem; display: block">
+      style="margin-top: 1rem; display: block"
+  >
     <tr *mTableHead>
-      <th mColumnKey="code">{{'web.code-system.entity-version.list.code' | translate}}</th>
-      <th mColumnKey="description">{{'web.code-system.entity-version.list.description' | translate}}</th>
+      <th mColumnKey="code">{{'entities.code-system-entity-version.code' | translate}}</th>
+      <th mColumnKey="description">{{'entities.code-system-entity-version.description' | translate}}</th>
       <th class="tw-table-actions">{{'web.code-system.entity-version.list.operations' | translate}}</th>
     </tr>
     <tr *mTableRow="let entityVersion">
@@ -42,7 +43,7 @@
   </ng-container>
   <ng-container *mModalContent>
     <form #form="ngForm">
-      <m-form-item mName="modalData" mLabel="web.code-system.entity-version.list.code" required>
+      <m-form-item mName="modalData" mLabel="entities.code-system-entity-version.code" required>
         <twl-code-system-entity-version-search name="modalData"
             [(ngModel)]="modalData"
             [codeSystemId]="codeSystemId"

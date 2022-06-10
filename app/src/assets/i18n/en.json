@@ -349,22 +349,24 @@
       "entities": "Entity versions"
     },
     "code-system-concept": {
+      "type": "Type",
       "code": "Code",
       "description": "Description",
-      "type": "Type",
       "versions": "Concept versions"
     },
     "code-system-association": {
       "type": "Type",
       "status": "Status",
       "target-id": "Target ID",
-      "target-code": "Target code"
+      "target-code": "Target code",
+      "versions": "Association versions"
     },
     "code-system-entity": {
       "type": "Type",
       "versions": "Entity versions"
     },
     "code-system-entity-version": {
+      "id": "ID",
       "code": "Code",
       "description": "Description",
       "status": "Status",
