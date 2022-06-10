@@ -45,6 +45,10 @@ export function MarinaUiConfigFactory(): MuiConfig {
     },
     notifications: {
       top: '4em'
+    },
+    supportedLangs: {
+      en: true,
+      et: true
     }
   };
 

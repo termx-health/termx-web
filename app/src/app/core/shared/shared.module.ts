@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 import {TranslateModule} from '@ngx-translate/core';
 import {MarinaUiModule} from '@kodality-health/marina-ui';
 import {MarinaUtilModule} from '@kodality-health/marina-util';
+import {StatusTagComponent} from './publication-status/status-tag/status-tag.component';
 
 
 const commonModules = [
@@ -20,7 +21,10 @@ const commonModules = [
 
 @NgModule({
   imports: [...commonModules],
-  exports: [...commonModules]
+  exports: [...commonModules, StatusTagComponent],
+  declarations: [
+    StatusTagComponent
+  ]
 })
 export class SharedModule {
 }
