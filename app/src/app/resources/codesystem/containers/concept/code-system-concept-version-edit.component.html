@@ -3,9 +3,9 @@
     <m-spinner [mLoading]="isLoading">
       <m-card [mTitle]="mode === 'edit' ? 'web.concept.version.form.edit-header' : 'web.concept.version.form.add-header'">
         <form #conceptVersionForm="ngForm" *ngIf="conceptVersion">
-          <m-form-item mName="code" mLabel="web.concept.version.list.concept-status">
+          <<m-form-item mName="code" mLabel="web.concept.version.list.concept-status">
             {{conceptVersion.status}}
-          </m-form-item>
+          </m-form-item>>
 
           <m-form-item mName="description" mLabel="web.concept.version.list.description">
             <m-textarea name="description" [(ngModel)]="conceptVersion.description"></m-textarea>
