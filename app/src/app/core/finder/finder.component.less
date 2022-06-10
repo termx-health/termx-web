@@ -1,0 +1,112 @@
+@border-color: #d3d3d3;
+
+
+.tw-finder {
+  &-view-form .ant-form-item {
+    &-label {
+      height: min-content;
+
+      label {
+        line-height: 0;
+        font-size: 0.875rem;
+        font-weight: bold;
+        height: min-content !important;
+      }
+    }
+
+    &-control-input {
+      min-height: min-content;
+    }
+  }
+
+  &-wrapper {
+    display: flex;
+    gap: 0.25rem;
+
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+
+
+    &-inner {
+      height: 100%;
+      min-width: 450px;
+      max-width: 450px;
+      overflow: auto;
+
+      // fixme: maybe put this in MUI as modal uses the same trick
+
+      .m-card-header {
+        background-color: white;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+      }
+
+      .m-card-footer {
+        background-color: white;
+        position: sticky;
+        bottom: 0;
+        z-index: 1;
+      }
+    }
+  }
+
+  &-outlet {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &-title {
+    font-size: 0.875rem;
+    text-transform: uppercase;
+  }
+
+  &-menu {
+    &-item {
+      display: block;
+      margin-left: 2rem;
+      position: relative;
+
+      &-active {
+        font-weight: bold;
+      }
+
+
+      &:not(:only-child):not(:last-child)::before {
+        position: absolute;
+        content: " ";
+        height: 100%;
+        top: 0;
+        left: -1.1rem;
+        border-left: 1px solid #d3d3d3;
+      }
+
+
+      &::after {
+        position: absolute;
+        height: 1rem;
+        content: " ";
+        width: 0.5rem;
+        left: -1.1rem;
+        top: 0;
+        border-left: 1px solid @border-color;
+        border-bottom: 1px solid @border-color;
+      }
+    }
+  }
+}
+
+
+@media only screen and (max-width: 768px) {
+  .tw-finder-wrapper {
+    display: block;
+  }
+
+  .tw-finder-wrapper-inner {
+    min-width: 100%;
+    max-width: 100vw;
+    border-right: none;
+  }
+}
+

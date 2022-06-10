@@ -4,19 +4,19 @@
       <m-card [mTitle]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'">
         <form #form="ngForm" *ngIf="codeSystem">
 
-          <m-form-item mName="id" mLabel="web.code-system.entity.id" required>
+          <m-form-item mName="id" mLabel="entities.code-system.id" required>
             <m-input name="id" [(ngModel)]="codeSystem.id" [disabled]="mode === 'edit'" required></m-input>
           </m-form-item>
 
-          <m-form-item mLabel="web.code-system.entity.name">
+          <m-form-item mLabel="entities.code-system.name">
             <m-multi-language-input name="name" [(ngModel)]="codeSystem.names"></m-multi-language-input>
           </m-form-item>
 
-          <m-form-item mName="uri" mLabel="web.code-system.entity.uri" required>
+          <m-form-item mName="uri" mLabel="entities.code-system.uri" required>
             <m-input name="uri" [(ngModel)]="codeSystem.uri" required></m-input>
           </m-form-item>
 
-          <m-form-item mName="content" mLabel="web.code-system.list.content" required>
+          <m-form-item mName="content" mLabel="entities.code-system.content" required>
             <m-select name="content" [(ngModel)]="codeSystem.content" required>
               <m-option label="web.content-options.complete" value="complete"></m-option>
               <m-option label="web.content-options.not-present" value="not-present"></m-option>
@@ -26,7 +26,7 @@
             </m-select>
           </m-form-item>
 
-          <m-form-item mName="caseSensitive" mLabel="web.code-system.list.case-sensitivity">
+          <m-form-item mName="caseSensitive" mLabel="entities.code-system.case-sensitivity">
             <m-select name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive">
               <m-option label="web.case-sensitive-options.ci" value="ci"></m-option>
               <m-option label="web.case-sensitive-options.cs" value="cs"></m-option>
@@ -34,14 +34,14 @@
             </m-select>
           </m-form-item>
 
-          <m-form-item mName="description" mLabel="web.code-system.entity.description">
+          <m-form-item mName="description" mLabel="entities.code-system.description">
             <m-textarea name="description" [(ngModel)]="codeSystem.description"></m-textarea>
           </m-form-item>
 
           <m-form-item mName="narrative" [mLabel]="narrativeHeader">
             <ng-template #narrativeHeader>
               <div class="tw-items-between">
-                <div>{{'web.code-system.list.narrative' | translate}}</div>&nbsp;
+                <div>{{'entities.code-system.narrative' | translate}}</div>&nbsp;
                 <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
                   <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
                 </m-button>
@@ -67,7 +67,7 @@
   </div>
 
   <div nz-col [nzMd]="6" [nzXs]="24" style="height: min-content" *ngIf="mode === 'edit'">
-    <m-card [mTitle]="'web.code-system.list.concepts'">
+    <m-card [mTitle]="'entities.code-system.concepts'">
       <twa-code-system-concepts-list [codeSystemId]="codeSystemId"></twa-code-system-concepts-list>
     </m-card>
   </div>

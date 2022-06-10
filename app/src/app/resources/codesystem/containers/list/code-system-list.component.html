@@ -1,17 +1,22 @@
 <m-card>
   <div *m-card-header class="tw-items-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <div>
     <m-button [routerLink]="'code-systems/add'">
-      <m-icon mCode="plus"></m-icon>&nbsp; {{'web.code-system.form.add-header' | translate}}
+      <m-icon mCode="plus"></m-icon>&nbsp; {{'web.code-system.list.add-code-system' | translate}}
+    </m-button>&nbsp;
+    <m-button [routerLink]="'finder/code-systems'">
+      <m-icon mCode="fire"></m-icon>
     </m-button>
+    </div>
   </div>
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
       <th></th>
-      <th mColumnKey="id">{{'web.code-system.entity.id' | translate}}</th>
-      <th mColumnKey="name">{{'web.code-system.entity.name' | translate}}</th>
-      <th mColumnKey="uri">{{'web.code-system.entity.domain' | translate}}</th>
+      <th mColumnKey="id">{{'entities.code-system.id' | translate}}</th>
+      <th mColumnKey="name">{{'entities.code-system.name' | translate}}</th>
+      <th mColumnKey="uri">{{'web.code-system.list.domain' | translate}}</th>
       <th class="tw-table-actions"></th>
     </tr>
 
@@ -33,21 +38,21 @@
       <td colspan="5">
         <m-form-row mFull>
           <div *mFormCol>
-            <m-form-item *ngIf="cs.uri" mLabel="web.code-system.entity.uri">
+            <m-form-item *ngIf="cs.uri" mLabel="entities.code-system.uri">
               {{cs.uri}}
             </m-form-item>
-            <m-form-item *ngIf="cs.content" mLabel="web.code-system.list.content">
+            <m-form-item *ngIf="cs.content" mLabel="entities.code-system.content">
               {{'web.content-options.' + cs.content | translate}}
             </m-form-item>
-            <m-form-item *ngIf="cs.caseSensitive" mLabel="web.code-system.list.case-sensitivity">
+            <m-form-item *ngIf="cs.caseSensitive" mLabel="entities.code-system.case-sensitivity">
               {{'web.case-sensitive-options.' + cs.caseSensitive | translate}}
             </m-form-item>
 
-            <m-form-item *ngIf="cs.description" mLabel="web.code-system.entity.description">
+            <m-form-item *ngIf="cs.description" mLabel="entities.code-system.description">
               {{cs.description}}
             </m-form-item>
 
-            <m-form-item *ngIf="cs.versions.length > 0" mLabel="web.code-system.list.versions">
+            <m-form-item *ngIf="cs.versions.length > 0" mLabel="entities.code-system.versions">
               <div *ngFor="let version of cs.versions">{{
                 version | apply: getVersionTranslateTokens: ({
                   releaseDate: (version.releaseDate | localDate),

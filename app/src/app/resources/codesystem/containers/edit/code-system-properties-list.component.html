@@ -1,9 +1,9 @@
-<m-card [mTitle]="'web.code-system.list.properties'" class="tw-card-inner">
+<m-card [mTitle]="'entities.code-system.properties'" class="tw-card-inner">
   <m-table [mData]="properties" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
     <tr *mTableHead>
-      <th>{{'web.entity-property.entity.name' | translate}}</th><!--Add router to edit when editing becomes available-->
-      <th>{{'web.entity-property.entity.type' | translate}}</th>
-      <th>{{'web.entity-property.entity.status' | translate}}</th>
+      <th>{{'entities.entity-property.name' | translate}}</th><!--Add router to edit when editing becomes available-->
+      <th>{{'entities.entity-property.type' | translate}}</th>
+      <th>{{'entities.entity-property.status' | translate}}</th>
     </tr>
 
     <tr *mTableRow="let property">
