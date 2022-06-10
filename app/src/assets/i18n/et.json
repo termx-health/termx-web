@@ -38,7 +38,7 @@
         "description": "Kirjeldus",
         "release-date": "Väljastus kuupäev",
         "expiration-date": "Aegumis kuupäev",
-        "status": "Olek"
+        "status": "Staatus"
       },
       "form": {
         "edit-header": "Muuda versiooni",
@@ -62,7 +62,7 @@
       "entity": {
         "name": "Nimi",
         "type": "Tüüp",
-        "status": "Olek",
+        "status": "Staatus",
         "description": "Kirjeldus"
       },
       "form": {
@@ -158,7 +158,7 @@
         "description": "Kirjeldus",
         "release-date": "Väljastus kuupäev",
         "expiration-date": "Aegumis kuupäev",
-        "status": "Olek",
+        "status": "Staatus",
         "concepts": "Kontseptid"
       },
       "form": {
@@ -219,12 +219,12 @@
       },
       "version": {
         "list": {
-          "concept-status": "Kontsepti olek",
+          "concept-status": "Kontsepti staatus",
           "versions": "Versioonid",
           "number": "Number",
           "created": "Loodud",
           "description": "Kirjeldus",
-          "status": "Olek",
+          "status": "Staatus",
           "operations": "Toimingud",
           "designations": "Tähendused",
           "property-values": "Omaduste väärtused"
@@ -251,7 +251,8 @@
         "designation": "Tähendus",
         "type": "Tüüp",
         "name": "Nimi",
-        "language": "Keel"
+        "language": "Keel",
+        "status": "Staatus"
       },
       "modal": {
         "add-designation": "Lisa tähendus",
@@ -260,7 +261,7 @@
         "designation-kind": "Tähenduse liik",
         "case-significance": "Tõstutundlikkus",
         "description": "Kirjeldus",
-        "status": "Olek"
+        "status": "Staatus"
       }
     },
     "property-value": {
@@ -321,7 +322,7 @@
         "description": "Kirjeldus",
         "release-date": "Väljastus kuupäev",
         "expiration-date": "Aegumis kuupäev",
-        "status": "Olek"
+        "status": "Staatus"
       },
       "form": {
         "edit-header": "Muuda versiooni",
