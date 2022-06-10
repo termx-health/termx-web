@@ -21,7 +21,7 @@
       <td>{{version.source}}</td>
       <td>{{version.releaseDate | localDate}}</td>
       <td>{{version.expirationDate | localDate}}</td>
-      <td>{{version.status}}</td>
+      <td><twa-status-tag [status]="version.status"></twa-status-tag></td>
       <td class="tw-table-actions">
         <m-dropdown>
           <a *mDropdownItemIf="version.status === 'active'" (click)="retireVersion(version)">

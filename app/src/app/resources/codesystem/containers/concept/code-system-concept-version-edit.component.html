@@ -36,7 +36,7 @@
                   <a (click)="openDesignationModal({key, index})">{{designation.name.slice(0, 40)}}</a>
                 </td>
                 <td>{{designation.language}}</td>
-                <td>{{designation.status}}</td>
+                <td><twa-status-tag [status]="designation.status"></twa-status-tag></td>
                 <td class="tw-table-actions">
                   <m-button mDisplay="text" mShape="circle" (click)="designation.preferred = !designation.preferred">
                     <m-icon [mOptions]="{nzTheme : designation.preferred? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>

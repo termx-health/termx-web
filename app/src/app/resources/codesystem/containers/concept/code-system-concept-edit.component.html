@@ -31,7 +31,7 @@
               <td><a [routerLink]="['../versions', version.id, 'edit']">{{version.id}}</a></td>
               <td>{{version.created | localDateTime}}</td>
               <td>{{version.description}}</td>
-              <td>{{version.status}}</td>
+              <td><twa-status-tag [status]="version.status"></twa-status-tag></td>
               <td class="tw-table-actions">
                 <m-dropdown>
                   <a *mDropdownItemIf="version.status === 'active'" (click)="retireVersion(version)">
