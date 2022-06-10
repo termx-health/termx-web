@@ -9,10 +9,8 @@ import {isNil} from '@kodality-web/core-util';
 
 @Component({
   template: `
-    <twa-finder-wrapper [loading]="loading">
-      <twa-finder-item title="CODE SYSTEM VERSION">
-        {{version?.id}}
-      </twa-finder-item>
+    <twa-finder-wrapper [loading]="loading" title="CODE SYSTEM VERSION">
+      {{version?.id}}
     </twa-finder-wrapper>
   `
 })

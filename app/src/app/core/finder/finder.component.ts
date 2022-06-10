@@ -8,19 +8,6 @@ import {Location} from '@angular/common';
 
 
 @Component({
-  selector: 'twa-finder-item',
-  encapsulation: ViewEncapsulation.None,
-  template: `
-    <div *stringTemplateOutlet="title" class="tw-finder-title">{{title | toString | translate}}</div>
-    <ng-content></ng-content>
-  `
-})
-export class FinderItemComponent {
-  @Input() public title?: string | TemplateRef<void>;
-}
-
-
-@Component({
   selector: 'twa-finder-menu-item',
   encapsulation: ViewEncapsulation.None,
   template: `
@@ -92,11 +79,15 @@ export class FinderMenuComponent {
   encapsulation: ViewEncapsulation.None,
   template: `
     <m-card class="tw-finder-wrapper-inner" *ngIf="isDisplayed">
-      <ng-container *m-card-header>
-        CODE SYSTEM <br>
-        <a *ngIf="isMobile" (click)="location.back()">
-          <m-icon mCode="arrow-left"></m-icon>&nbsp; Back
-        </a>
+      <ng-container *ngIf="title || isMobile">
+        <ng-container *m-card-header>
+          <div *ngIf="title">
+            {{title}}
+          </div>
+          <a *ngIf="isMobile" (click)="location.back()">
+            <m-icon mCode="left"></m-icon>&nbsp; Back
+          </a>
+        </ng-container>
       </ng-container>
 
       <m-spinner [mLoading]="loading" style="display: block">
@@ -105,14 +96,15 @@ export class FinderMenuComponent {
         </div>
       </m-spinner>
     </m-card>
+
     <router-outlet></router-outlet>
-    <!-- router components are injected here -->
   `,
   host: {
     '[class.tw-finder-wrapper]': `true`
   }
 })
 export class FinderWrapperComponent {
+  @Input() public title?: string;
   @Input() @BooleanInput() public loading: string | boolean = false;
 
   public isMobile: boolean = false;
@@ -123,11 +115,7 @@ export class FinderWrapperComponent {
     breakpointObserver: BreakpointObserver,
     destroy$: MuiDestroyService
   ) {
-    breakpointObserver.observe(['(max-width: 768px)'])
-      .pipe(takeUntil(destroy$))
-      .subscribe((state: BreakpointState) => {
-        this.isMobile = state.matches;
-      });
+    breakpointObserver.observe(['(max-width: 768px)']).pipe(takeUntil(destroy$)).subscribe((state: BreakpointState) => this.isMobile = state.matches);
   }
 
   public get isDisplayed(): boolean {

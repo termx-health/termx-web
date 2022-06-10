@@ -9,15 +9,15 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
 
 @Component({
   template: `
-    <twa-finder-wrapper [loading]="loading">
-      <twa-finder-item title="CODE SYSTEM CONCEPT VERSION">
+    <twa-finder-wrapper [loading]="loading" title="CODE SYSTEM CONCEPT VERSION">
+      <div class="tw-finder-view-form">
         <m-form-item mLabel="status">
           {{conceptVersion?.status || '-'}}
         </m-form-item>
         <m-form-item mLabel="description">
           {{conceptVersion?.description || '-'}}
         </m-form-item>
-      </twa-finder-item>
+      </div>
 
       <twa-finder-menu title="DESIGNATIONS" [length]="conceptVersion?.designations?.length">
         <twa-finder-menu-item *ngFor="let d of conceptVersion?.designations">

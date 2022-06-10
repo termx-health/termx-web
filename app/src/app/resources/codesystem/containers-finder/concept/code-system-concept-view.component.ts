@@ -8,15 +8,15 @@ import {isNil} from '@kodality-web/core-util';
 
 @Component({
   template: `
-    <twa-finder-wrapper [loading]="loading" class="tw-finder-view-form">
-      <twa-finder-item title="CODE SYSTEM CONCEPT">
+    <twa-finder-wrapper [loading]="loading" title="CODE SYSTEM CONCEPT">
+      <div class="tw-finder-view-form">
         <m-form-item mLabel="entities.code-system-concept.code">
           {{concept?.code || '-'}}
         </m-form-item>
         <m-form-item mLabel="entities.code-system-concept.description">
           {{concept?.description || '-'}}
         </m-form-item>
-      </twa-finder-item>
+      </div>
 
       <twa-finder-menu title="entities.code-system-concept.versions" [length]="concept?.versions?.length">
         <twa-finder-menu-item *ngFor="let v of concept?.versions" [navigate]="['versions', v.id]">
