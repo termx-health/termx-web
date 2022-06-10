@@ -23,9 +23,11 @@
       <td>{{entityVersion.code}}</td>
       <td>{{entityVersion.description}}</td>
       <td class="tw-table-actions">
-        <m-button (click)="delete(entityVersion)">
-          <m-icon mCode="delete"></m-icon>
-        </m-button>
+        <m-dropdown>
+          <a *m-dropdown-item (click)="delete(entityVersion)">
+            {{'core.btn.delete' | translate}}
+          </a>
+        </m-dropdown>
       </td>
     </tr>
 
