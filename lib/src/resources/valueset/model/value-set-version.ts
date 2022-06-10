@@ -42,6 +42,6 @@ export class ValueSetRuleFilter {
 
 export class ValueSetConcept {
   public concept?: CodeSystemConcept;
-  public display?: string;
-  public additionalDesignations?: Designation;
+  public display?: Designation;
+  public additionalDesignations?: Designation[];
 }

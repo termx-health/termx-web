@@ -15,6 +15,10 @@ import {ValueSetRuleSetValueSetRuleComponent} from './containers/version/ruleset
 import {ValueSetRuleFilterListComponent} from './containers/version/ruleset/value-set-rule-filter-list.component';
 import {ContactLibModule} from 'terminology-lib/resources/contact/contact-lib.module';
 import {ValueSetVersionConceptModalComponent} from './containers/version/concepts/value-set-version-concept-modal.component';
+import {FinderValueSetListComponent} from './containers-finder/value-set-list.component';
+import {FinderModule} from '../../core/finder/finder.module';
+import {FinderValueSetViewComponent} from './containers-finder/value-set-view.component';
+import {FinderValueSetVersionViewComponent} from './containers-finder/version/value-set-version-view.component';
 
 
 export const VALUE_SET_ROUTES: Routes = [
@@ -25,9 +29,19 @@ export const VALUE_SET_ROUTES: Routes = [
   {path: ':id/versions/:version/view', component: ValueSetVersionViewComponent},
 ];
 
+export const VALUE_SET_FINDER_ROUTES: Routes = [{
+  path: '', component: FinderValueSetListComponent, children: [{
+    path: ':id', component: FinderValueSetViewComponent, children: [{
+      path: 'versions/:versionCode', component: FinderValueSetVersionViewComponent
+
+    }]
+  }]
+}];
+
 @NgModule({
   imports: [
     SharedModule,
+    FinderModule,
     ValueSetLibModule,
     DesignationLibModule,
     CodeSystemLibModule,
@@ -44,7 +58,11 @@ export const VALUE_SET_ROUTES: Routes = [
     ValueSetRuleSetComponent,
     ValueSetRuleSetRuleComponent,
     ValueSetRuleSetValueSetRuleComponent,
-    ValueSetRuleFilterListComponent
+    ValueSetRuleFilterListComponent,
+
+    FinderValueSetListComponent,
+    FinderValueSetViewComponent,
+    FinderValueSetVersionViewComponent
   ],
   exports: [
     ValueSetListComponent
