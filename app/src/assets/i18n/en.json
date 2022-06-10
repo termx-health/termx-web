@@ -11,9 +11,6 @@
     }
   },
   "web": {
-    "app": {
-      "header": "Terminology"
-    },
     "case-sensitive-options": {
       "ics": "initial character sensitive",
       "cs": "case sensitive",
@@ -36,6 +33,10 @@
         "activate": "Activate",
         "retire": "Retire"
       }
+    },
+
+    "app": {
+      "header": "Terminology"
     },
 
     "entity-property": {
@@ -140,6 +141,7 @@
         "edit-property": "Edit property"
       }
     },
+
 
     "value-set": {
       "entity": {
