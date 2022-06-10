@@ -24,7 +24,6 @@ import {ErrorHandler} from './core/http/error-handler';
 registerLocaleData(et);
 
 
-
 export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
   return new TranslateHttpLoader(http, "./assets/i18n/");
 }
@@ -47,8 +46,7 @@ export function MarinaUiConfigFactory(): MuiConfig {
       top: '4em'
     },
     supportedLangs: {
-      en: true,
-      et: true
+      en: true
     }
   };
 

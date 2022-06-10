@@ -1,17 +1,11 @@
 [
   {
-    "label": {
-      "en": "Resources",
-      "et": "Ressursid"
-    },
+
     "icon": "unordered-list",
     "link": "resources?tab=code-systems"
   },
   {
-    "label": {
-      "en": "Integration",
-      "et": "Integratsioon"
-    },
+
     "icon": "interaction",
     "link": "integration"
   }

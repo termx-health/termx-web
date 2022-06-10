@@ -1,0 +1,71 @@
+<twa-finder-wrapper [loading]="loading" title="CODE SYSTEM">
+  <div class="tw-finder-view-form">
+    <m-form-row mFull>
+      <div *mFormCol>
+        <m-form-item mLabel="entities.code-system.id">
+          {{codeSystem?.id || '-'}}
+        </m-form-item>
+
+        <m-form-item mLabel="entities.code-system.name">
+          {{(codeSystem?.names | localName) || '-'}}
+        </m-form-item>
+
+        <m-form-item mLabel="entities.code-system.uri-short">
+          {{codeSystem?.uri || '-'}}
+        </m-form-item>
+      </div>
+
+      <div *mFormCol>
+        <m-form-item mLabel="entities.code-system.content">
+          {{codeSystem?.content || '-'}}
+        </m-form-item>
+
+        <m-form-item mLabel="entities.code-system.case-sensitivity">
+          {{codeSystem?.caseSensitive || '-'}}
+        </m-form-item>
+      </div>
+    </m-form-row>
+
+    <m-form-item mLabel="entities.code-system.description">
+      {{codeSystem?.description || '-'}}
+    </m-form-item>
+
+    <m-form-item mLabel="entities.code-system.narrative">
+      <ng-container *ngIf="codeSystem?.narrative">
+        <m-rich-text-editor *ngIf="narrativeVisible" [ngModel]="codeSystem.narrative" mViewMode></m-rich-text-editor>
+        <m-button mDisplay="text" style="width: 100%" (click)="narrativeVisible = !narrativeVisible">
+          {{narrativeVisible ? 'Hide narrative' : 'Show narrative'}}
+        </m-button>
+      </ng-container>
+      <ng-container *ngIf="!codeSystem?.narrative">-</ng-container>
+    </m-form-item>
+  </div>
+
+  <twa-finder-menu title="entities.code-system.contacts" [length]="codeSystem?.contacts?.length">
+    <twa-finder-menu-item *ngFor="let c of codeSystem?.contacts">
+      <twa-finder-menu [title]="c.name || 'Unknown'" [open]="false" [length]="c?.telecoms?.length">
+        <twa-finder-menu-item *ngFor="let t of c.telecoms">
+          {{t.system}} {{t.use ? '(' + t.use + ')' : ''}} - {{t.value}}
+        </twa-finder-menu-item>
+      </twa-finder-menu>
+    </twa-finder-menu-item>
+  </twa-finder-menu>
+
+  <twa-finder-menu title="entities.code-system.properties" [length]="codeSystem?.properties?.length ">
+    <twa-finder-menu-item *ngFor="let p of codeSystem?.properties">
+      {{p.name}} - {{p.type}}
+    </twa-finder-menu-item>
+  </twa-finder-menu>
+
+  <twa-finder-menu title="entities.code-system.concepts" [length]="codeSystem?.concepts?.length">
+    <twa-finder-menu-item *ngFor="let c of codeSystem?.concepts" [navigate]="['concepts', c.id]">
+      {{c.code}}
+    </twa-finder-menu-item>
+  </twa-finder-menu>
+
+  <twa-finder-menu title="entities.code-system.versions" [length]="codeSystem?.versions?.length">
+    <twa-finder-menu-item *ngFor="let v of codeSystem?.versions" [navigate]="['versions', v.version]">
+      {{v.version}} - {{v.source}}
+    </twa-finder-menu-item>
+  </twa-finder-menu>
+</twa-finder-wrapper>

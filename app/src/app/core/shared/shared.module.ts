@@ -16,7 +16,7 @@ const commonModules = [
   TranslateModule,
   MarinaUiModule,
   MarinaUtilModule,
-  CoreUtilModule
+  CoreUtilModule,
 ];
 
 @NgModule({
