@@ -1,7 +1,7 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="isLoading">
-      <m-card [mTitle]="mode === 'edit' ? 'web.concept.version.form.edit-header' : 'web.concept.version.form.add-header'">
+      <m-card [mTitle]="mode === 'edit' ? 'web.code-system-concept-version.form.edit-header' : 'web.code-system-concept-version.form.add-header'">
         <form #conceptVersionForm="ngForm" *ngIf="conceptVersion">
           <m-form-item mName="code" mLabel="entities.code-system-entity-version.status">
             {{conceptVersion.status}}
@@ -16,7 +16,7 @@
         <m-card class="tw-card-inner">
           <div *m-card-header class="tw-items-between">
             <div class="m-card-title">{{'entities.code-system-entity-version.designations' | translate}}</div>
-            <m-button mLabel="web.designation.modal.add-designation" (click)="openDesignationModal()"></m-button>
+            <m-button mLabel="web.code-system-concept-version.designation-modal.add-designation" (click)="openDesignationModal()"></m-button>
           </div>
 
           <m-table [mData]="designations | keys" mEnablePagination mHideOnSinglePage>
@@ -42,7 +42,7 @@
                   </m-button>
                   <m-dropdown>
                     <a *m-dropdown-item (click)="deleteDesignation(key, index)">
-                      {{'web.designation.modal.delete-designation' | translate}}
+                      {{'web.code-system-concept-version.designation-modal.delete-designation' | translate}}
                     </a>
                   </m-dropdown>
                 </td>
@@ -61,7 +61,7 @@
         <m-card class="tw-card-inner">
           <div *m-card-header class="tw-items-between">
             <div class="m-card-title">{{'entities.code-system-entity-version.property-values' | translate}}</div>
-            <m-button mLabel="web.property-value.modal.add-property" (click)="openPropertyValueModal()"></m-button>
+            <m-button mLabel="web.code-system-concept-version.property-modal.add-property" (click)="openPropertyValueModal()"></m-button>
           </div>
 
           <m-table [mData]="propertyValues | keys" mEnablePagination mHideOnSinglePage>
@@ -106,7 +106,7 @@
 
 <m-modal [(mVisible)]="propertyValueModalData.visible" (mClose)="propertyValueModalData = {visible: false}">
   <ng-container *mModalHeader>
-    {{(propertyValueModalData.editKey ? 'web.property-value.modal.edit-property' : 'web.property-value.modal.add-property') | translate}}
+    {{(propertyValueModalData.editKey ? 'web.code-system-concept-version.property-modal.edit-property' : 'web.code-system-concept-version.property-modal.add-property') | translate}}
   </ng-container>
 
   <ng-container *mModalContent>
@@ -139,7 +139,7 @@
 
 <m-modal [(mVisible)]="designationModalData.visible" (mClose)="designationModalData = {visible: false}">
   <ng-container *mModalHeader>
-    {{(designationModalData.editKey ? 'web.designation.modal.edit-designation' : 'web.designation.modal.add-designation') | translate}}
+    {{(designationModalData.editKey ? 'web.code-system-concept-version.designation-modal.edit-designation' : 'web.code-system-concept-version.designation-modal.add-designation') | translate}}
   </ng-container>
 
   <ng-container *mModalContent>
@@ -186,7 +186,7 @@
         <m-textarea name="designationModalDescription" [(ngModel)]="designationModalData.designation.description"></m-textarea>
       </m-form-item>
 
-      <m-form-item mName="designationModalStatus" mLabel="web.designation.modal.status" required>
+      <m-form-item mName="designationModalStatus" mLabel="web.code-system-concept-version.designation-modal.status" required>
         <m-select name="designationModalStatus" [(ngModel)]="designationModalData.designation.status" required>
           <m-option [label]="'web.publication-status.statuses.active'" value="active"></m-option>
           <m-option [label]="'web.publication-status.statuses.draft'" value="draft"></m-option>
