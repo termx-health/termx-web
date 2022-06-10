@@ -1,5 +1,10 @@
 import {Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation} from '@angular/core';
 import {BooleanInput, NumberInput} from '@kodality-web/core-util';
+import {ActivatedRoute} from '@angular/router';
+import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
+import {MuiDestroyService} from '@kodality-health/marina-ui';
+import {takeUntil} from 'rxjs';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -86,15 +91,21 @@ export class FinderMenuComponent {
   styleUrls: ['finder.component.less'],
   encapsulation: ViewEncapsulation.None,
   template: `
-    <router-outlet>
-      <div class="tw-finder-wrapper-inner">
-        <m-spinner [mLoading]="loading">
-          <div class="tw-finder-outlet">
-            <ng-content></ng-content>
-          </div>
-        </m-spinner>
-      </div>
-    </router-outlet>
+    <m-card class="tw-finder-wrapper-inner" *ngIf="isDisplayed">
+      <ng-container *m-card-header>
+        CODE SYSTEM <br>
+        <a *ngIf="isMobile" (click)="location.back()">
+          <m-icon mCode="arrow-left"></m-icon>&nbsp; Back
+        </a>
+      </ng-container>
+
+      <m-spinner [mLoading]="loading" style="display: block">
+        <div class="tw-finder-outlet">
+          <ng-content></ng-content>
+        </div>
+      </m-spinner>
+    </m-card>
+    <router-outlet></router-outlet>
     <!-- router components are injected here -->
   `,
   host: {
@@ -103,4 +114,23 @@ export class FinderMenuComponent {
 })
 export class FinderWrapperComponent {
   @Input() @BooleanInput() public loading: string | boolean = false;
+
+  public isMobile: boolean = false;
+
+  public constructor(
+    public location: Location,
+    private route: ActivatedRoute,
+    breakpointObserver: BreakpointObserver,
+    destroy$: MuiDestroyService
+  ) {
+    breakpointObserver.observe(['(max-width: 768px)'])
+      .pipe(takeUntil(destroy$))
+      .subscribe((state: BreakpointState) => {
+        this.isMobile = state.matches;
+      });
+  }
+
+  public get isDisplayed(): boolean {
+    return this.isMobile ? !this.route.firstChild : true;
+  }
 }
