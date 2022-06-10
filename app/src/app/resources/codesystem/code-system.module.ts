@@ -23,6 +23,7 @@ import {FinderCodeSystemViewComponent} from './containers-finder/code-system-vie
 import {FinderCodeSystemVersionViewComponent} from './containers-finder/version/code-system-version-view.component';
 import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/code-system-concept-view.component';
 import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
+import {FinderModule} from '../../core/finder/finder.module';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -52,6 +53,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
 @NgModule({
   imports: [
     SharedModule,
+    FinderModule,
     CodeSystemLibModule,
     ContactLibModule
   ],
