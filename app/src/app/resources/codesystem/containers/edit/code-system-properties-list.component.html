@@ -9,7 +9,7 @@
     <tr *mTableRow="let property">
       <td>{{property.name}}</td>
       <td>{{property.type}}</td>
-      <td>{{property.status}}</td>
+      <td><twa-status-tag [status]="property.status"></twa-status-tag></td>
     </tr>
 
     <tr *mTableNoData>

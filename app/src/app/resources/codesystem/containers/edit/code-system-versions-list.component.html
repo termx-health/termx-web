@@ -20,7 +20,6 @@
       <th>{{'entities.code-system-version.expiration-date' | translate}}</th>
       <th>{{'entities.code-system-version.status' | translate}}</th>
       <th class="tw-table-actions"></th>
-      <th class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let version">
@@ -28,15 +27,7 @@
       <td>{{version.source}}</td>
       <td>{{version.releaseDate | localDate}}</td>
       <td>{{version.expirationDate | localDate}}</td>
-      <td>{{version.status}}</td>
-      <td class="tw-table-actions">
-        <a *ngIf="version.status === 'active'" (click)="retireVersion(version)">
-          {{'web.publication-status.operations.retire' | translate}}
-        </a>
-        <a *ngIf="version.status !== 'active'" (click)="activateVersion(version)">
-          {{'web.publication-status.operations.activate' | translate}}
-        </a>
-      </td>
+      <td><twa-status-tag [status]="version.status"></twa-status-tag></td>
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId, sourceCodeSystem: codeSystemId, sourceVersion: version})">
@@ -44,6 +35,12 @@
           </a>
           <a *m-dropdown-item (click)="exportFhirFormatVersion(version.id)">
             {{'web.code-system.form.versions.list.export-fhir' | translate}}
+          </a>
+          <a *mDropdownItemIf="version.status === 'active'" (click)="retireVersion(version)">
+            {{'web.publication-status.operations.retire' | translate}}
+          </a>
+          <a *mDropdownItemIf="version.status !== 'active'" (click)="activateVersion(version)">
+            {{'web.publication-status.operations.activate' | translate}}
           </a>
         </m-dropdown>
       </td>

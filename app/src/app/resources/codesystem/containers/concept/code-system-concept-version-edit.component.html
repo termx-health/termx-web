@@ -1,11 +1,12 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="isLoading">
-      <m-card [mTitle]="mode === 'edit' ? 'web.code-system-concept-version.form.edit-header' : 'web.code-system-concept-version.form.add-header'">
+      <m-card>
+        <div *m-card-header class="tw-items-middle">
+          <div class="m-card-title">{{(mode === 'edit' ? 'web.code-system-concept-version.form.edit-header' : 'web.code-system-concept-version.form.add-header') | translate}}</div>
+          <twa-status-tag *ngIf="conceptVersion?.status" [status]="conceptVersion.status"></twa-status-tag>
+        </div>
         <form #conceptVersionForm="ngForm" *ngIf="conceptVersion">
-          <m-form-item mName="code" mLabel="entities.code-system-entity-version.status">
-            {{conceptVersion.status}}
-          </m-form-item>
 
           <m-form-item mName="description" mLabel="entities.code-system-entity-version.description">
             <m-textarea name="description" [(ngModel)]="conceptVersion.description"></m-textarea>
@@ -32,10 +33,10 @@
               <tr *ngFor="let designation of designations[key]; let isFirst = first; let index = index">
                 <td *ngIf="isFirst" [rowSpan]="designations[key].length">{{entityProperties[designation.designationTypeId]?.name}}</td>
                 <td>
-                  <m-button mDisplay="link" (click)="openDesignationModal({key, index})">{{designation.name.slice(0, 40)}}</m-button>
+                  <a (click)="openDesignationModal({key, index})">{{designation.name.slice(0, 40)}}</a>
                 </td>
                 <td>{{designation.language}}</td>
-                <td>{{designation.status}}</td>
+                <td><twa-status-tag [status]="designation.status"></twa-status-tag></td>
                 <td class="tw-table-actions">
                   <m-button mDisplay="text" mShape="circle" (click)="designation.preferred = !designation.preferred">
                     <m-icon [mOptions]="{nzTheme : designation.preferred? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
@@ -75,7 +76,7 @@
               <tr *ngFor="let property of propertyValues[key | toNumber]; let isFirst = first; let index = index;">
                 <td *ngIf="isFirst" [rowSpan]="propertyValues[key].length">{{entityProperties[property.entityPropertyId]?.name}}</td>
                 <td>
-                  <m-button mDisplay="link" (click)="openPropertyValueModal({key, index})">{{property.value}}</m-button>
+                  <a (click)="openPropertyValueModal({key, index})">{{property.value}}</a>
                 </td>
                 <td class="tw-table-actions">
                   <m-button mSize="small" (click)="deletePropertyValue(key, index)">

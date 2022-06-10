@@ -6,7 +6,7 @@
         <th colSpan="2">{{'web.map-set-association.entity.target' | translate}}</th>
         <th rowSpan="2">{{'web.map-set-association.entity.type' | translate}}</th>
         <th rowSpan="2">{{'web.map-set-association.entity.status' | translate}}</th>
-        <th rowSpan="2" class="tw-table-actions">{{'web.map-set-association.list.operations' | translate}}</th>
+        <th rowSpan="2" class="tw-table-actions"></th>
       </tr>
       <tr>
         <th>{{'web.map-set-association.list.code-system' | translate}}</th>
@@ -23,14 +23,16 @@
         <td>{{association.target.code}}</td>
         <td>{{association.target.codeSystem}}</td>
         <td>{{association.associationType}}</td>
-        <td>{{association.status}}</td>
+        <td><twa-status-tag [status]="association.status"></twa-status-tag></td>
         <td class="tw-table-actions">
-          <a *ngIf="association.status === 'active'" (click)="retireAssociation()">
-            {{'web.publication-status.operations.retire' | translate}}
-          </a>
-          <a *ngIf="association.status !== 'active'" (click)="activateAssociation()">
-            {{'web.publication-status.operations.activate' | translate}}
-          </a>
+          <m-dropdown>
+            <a *mDropdownItemIf="association.status === 'active'" (click)="retireAssociation()">
+              {{'web.publication-status.operations.retire' | translate}}
+            </a>
+            <a *mDropdownItemIf="association.status !== 'active'" (click)="activateAssociation()">
+              {{'web.publication-status.operations.activate' | translate}}
+            </a>
+          </m-dropdown>
         </td>
       </tr>
     </ng-container>

@@ -1,7 +1,11 @@
 <m-form-row>
   <div *mFormCol>
-    <m-card [mTitle]="mode === 'edit' ? 'web.map-set-version.form.edit-header' : 'web.map-set-version.form.add-header'">
-      <m-spinner [mLoading]="loading">
+    <m-spinner [mLoading]="loading">
+      <m-card>
+        <div *m-card-header style="display: flex">
+          <div class="m-card-title">{{(mode === 'edit' ? 'web.map-set-version.form.edit-header' : 'web.map-set-version.form.add-header') | translate}}</div>
+          <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
+        </div>
         <form #form="ngForm" *ngIf="version">
           <m-form-item mName="version" mLabel="web.map-set-version.entity.version" required>
             <m-input name="version" [(ngModel)]="version.version" required></m-input>
@@ -38,7 +42,7 @@
             </m-button>
           </ng-container>
         </form>
-      </m-spinner>
-    </m-card>
+      </m-card>
+    </m-spinner>
   </div>
 </m-form-row>
