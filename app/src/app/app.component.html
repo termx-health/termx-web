@@ -1,10 +1,10 @@
-<m-page-header class="m-cls-raised" mTitle="web.app.header" (mLangChange)="onLangChange($event)"></m-page-header>
+<m-page-header class="m-raised" mTitle="web.app.header" (mLangChange)="onLangChange($event)"></m-page-header>
 
-<div class="layout">
-  <div class="layout--sidebar">
-    <m-menu [mMenuItems]="menu" class="m-cls-raised"></m-menu>
+<div class="m-page-layout">
+  <div class="m-page-layout--sidebar">
+    <m-menu [mMenuItems]="menu" class="m-raised"></m-menu>
   </div>
-  <div class="layout--content">
+  <div class="m-page-layout--content">
     <router-outlet></router-outlet>
   </div>
 </div>

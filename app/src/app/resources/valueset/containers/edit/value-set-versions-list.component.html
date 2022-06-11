@@ -1,9 +1,9 @@
-<m-card class="tw-card-inner">
-  <div *m-card-header class="tw-items-between">
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
     <div class="m-card-title">{{'web.value-set.list.versions' | translate}}</div>
-    <m-button [routerLink]="['../versions/add']">
-      <m-icon mCode="plus"></m-icon>&nbsp; {{'web.value-set-version.form.add-header' | translate}}
-    </m-button>
+    <twa-add-button [routerLink]="['../versions/add']">
+      {{'web.value-set-version.form.add-header' | translate}}
+    </twa-add-button>
   </div>
 
   <m-table [mData]="versions" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
@@ -21,7 +21,7 @@
       <td>{{version.source}}</td>
       <td>{{version.releaseDate | localDate}}</td>
       <td>{{version.expirationDate | localDate}}</td>
-      <td><twa-status-tag [status]="version.status"></twa-status-tag></td>
+      <td class="tw-table-min-width"><twa-status-tag [status]="version.status"></twa-status-tag></td>
       <td class="tw-table-actions">
         <m-dropdown>
           <a *mDropdownItemIf="version.status === 'active'" (click)="retireVersion(version)">

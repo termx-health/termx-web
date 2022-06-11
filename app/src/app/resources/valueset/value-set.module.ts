@@ -13,8 +13,8 @@ import {ValueSetRuleSetComponent} from './containers/version/ruleset/value-set-r
 import {ValueSetRuleSetRuleComponent} from './containers/version/ruleset/value-set-rule-set-rule.component';
 import {ValueSetRuleSetValueSetRuleComponent} from './containers/version/ruleset/value-set-rule-set-value-set-rule.component';
 import {ValueSetRuleFilterListComponent} from './containers/version/ruleset/value-set-rule-filter-list.component';
-import {ContactLibModule} from 'terminology-lib/resources/contact/contact-lib.module';
 import {ValueSetVersionConceptModalComponent} from './containers/version/concepts/value-set-version-concept-modal.component';
+import {ContactModule} from '../contact/contact.module';
 
 
 export const VALUE_SET_ROUTES: Routes = [
@@ -31,7 +31,7 @@ export const VALUE_SET_ROUTES: Routes = [
     ValueSetLibModule,
     DesignationLibModule,
     CodeSystemLibModule,
-    ContactLibModule
+    ContactModule
   ],
   declarations: [
     ValueSetListComponent,

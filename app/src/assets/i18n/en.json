@@ -109,7 +109,6 @@
         "view-header": "View version",
         "entities": {
           "add-entity": "Add entity",
-          "operations": "Operations",
           "modal": {
             "add-header": "Add entity"
           }
@@ -129,9 +128,6 @@
       "form": {
         "add-header": "Add version",
         "edit-header": "Edit version"
-      },
-      "list": {
-        "operations": "Operations"
       },
       "designation-modal": {
         "add-designation": "Add designation",

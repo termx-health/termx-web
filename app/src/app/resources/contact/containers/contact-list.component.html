@@ -1,9 +1,9 @@
-<m-card class="tw-card-inner">
-  <div *m-card-header class="tw-items-between">
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
     <div class="m-card-title">{{'web.contacts.list.header' | translate}}</div>
-    <m-button (click)="addContact()">
-      <m-icon mCode="plus"></m-icon>&nbsp; {{'web.contacts.list.add-contact' | translate}}
-    </m-button>
+    <twa-add-button (click)="addContact()">
+      {{'web.contacts.list.add-contact' | translate}}
+    </twa-add-button>
   </div>
 
   <m-no-data *ngIf="!contacts?.length"></m-no-data>
@@ -35,7 +35,6 @@
           </td>
         </tr>
       </m-table>
-
     </nz-collapse-panel>
   </nz-collapse>
 

@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchResult} from '@kodality-web/core-util';
-import {CodeSystem} from 'lib/src/resources';
+import {CodeSystem} from 'terminology-lib/resources';
 import {CodeSystemService} from '../services/code-system.service';
 import {Router} from '@angular/router';
 

@@ -1,10 +1,10 @@
 <m-card>
-  <div *m-card-header class="tw-items-between">
+  <div *m-card-header class="m-items-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-    <div class="tw-items-middle">
-      <m-button [routerLink]="'code-systems/add'">
-        <m-icon mCode="plus"></m-icon>&nbsp; {{'web.code-system.list.add-code-system' | translate}}
-      </m-button>
+    <div class="m-items-middle">
+      <twa-add-button [routerLink]="['code-systems/add']">
+        {{'web.code-system.list.add-code-system' | translate}}
+      </twa-add-button>
       <m-button [routerLink]="'finder/code-systems'">
         <m-icon mCode="layout"></m-icon>
       </m-button>

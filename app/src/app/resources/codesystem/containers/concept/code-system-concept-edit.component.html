@@ -12,11 +12,12 @@
           </m-form-item>
         </form>
 
-        <m-card class="tw-card-inner" *ngIf="concept && concept.versions">
-          <div *m-card-header class="tw-items-between">
+        <m-card class="m-card-inside" *ngIf="concept && concept.versions">
+          <div *m-card-header class="m-items-between">
             <div class="m-card-title">{{'entities.code-system-concept.versions' | translate}}</div>
-            <m-button [routerLink]="['../versions/add']">
-              <m-icon mCode="plus"></m-icon>&nbsp; {{'web.code-system-concept.form.versions.add-version' | translate}}</m-button>
+            <twa-add-button [routerLink]="['../versions/add']">
+              {{'web.code-system-concept.form.versions.add-version' | translate}}
+            </twa-add-button>
           </div>
 
           <m-table [mData]="concept.versions" mEnablePagination mHideOnSinglePage>
@@ -25,14 +26,14 @@
               <th>{{'entities.code-system-entity-version.created' | translate}}</th>
               <th>{{'entities.code-system-entity-version.description' | translate}}</th>
               <th>{{'entities.code-system-entity-version.status' | translate}}</th>
-              <th class="tw-table-actions">{{'web.code-system-concept-version.list.operations' | translate}}</th>
+              <th class="tw-table-actions"></th>
             </tr>
 
             <tr *mTableRow="let version">
               <td><a [routerLink]="['../versions', version.id, 'edit']">{{version.id}}</a></td>
               <td>{{version.created | localDateTime}}</td>
               <td>{{version.description}}</td>
-              <td>
+              <td class="tw-table-min-width">
                 <twa-status-tag [status]="version.status"></twa-status-tag>
               </td>
               <td class="tw-table-actions">

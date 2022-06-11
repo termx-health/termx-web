@@ -1,9 +1,9 @@
-<m-card class="tw-card-inner">
-  <div *m-card-header class="tw-items-between">
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-    <m-button [routerLink]="['../concepts/add']">
-      <m-icon mCode="plus"></m-icon> &nbsp; {{'web.code-system.form.concepts.add-concept' | translate}}
-    </m-button>
+    <twa-add-button [routerLink]="['../concepts/add']">
+      {{'web.code-system.form.concepts.add-concept' | translate}}
+    </twa-add-button>
   </div>
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading" mSize="small">

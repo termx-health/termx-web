@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemEntityVersion} from 'lib/src/resources';
+import {CodeSystemEntityVersion} from 'terminology-lib/resources';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
 import {MuiDestroyService} from '@kodality-health/marina-ui';
@@ -34,7 +34,8 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
         </twa-finder-menu-item>
       </twa-finder-menu>
     </twa-finder-wrapper>
-  `
+  `,
+  providers: [MuiDestroyService]
 })
 export class FinderCodeSystemConceptVersionViewComponent implements OnInit {
   public conceptVersion?: CodeSystemEntityVersion;

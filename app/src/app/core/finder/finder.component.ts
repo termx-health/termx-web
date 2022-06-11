@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation} from '@angular/core';
 import {BooleanInput, NumberInput} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
-import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
-import {MuiDestroyService} from '@kodality-health/marina-ui';
-import {takeUntil} from 'rxjs';
+import {BreakpointState} from '@angular/cdk/layout';
+import {MuiBreakpointService} from '@kodality-health/marina-ui';
 import {Location} from '@angular/common';
 
 
@@ -16,7 +15,7 @@ import {Location} from '@angular/common';
     </div>
 
 
-    <div *ngIf="navigate" class="tw-items-between">
+    <div *ngIf="navigate" class="m-items-between">
       <a [routerLink]="navigate" routerLinkActive="tw-finder-menu-item-active">
         <ng-container *ngTemplateOutlet="contentTpl"></ng-container>
       </a>
@@ -49,7 +48,7 @@ export class FinderMenuItemComponent {
           <m-icon [mCode]="open ? 'folder-open' : 'folder'"></m-icon>
         </m-button>
         {{title
-          
+
           | toString | translate}}
       </div>
 
@@ -116,10 +115,9 @@ export class FinderWrapperComponent {
   public constructor(
     public location: Location,
     private route: ActivatedRoute,
-    breakpointObserver: BreakpointObserver,
-    destroy$: MuiDestroyService
+    breakpointService: MuiBreakpointService
   ) {
-    breakpointObserver.observe(['(max-width: 768px)']).pipe(takeUntil(destroy$)).subscribe((state: BreakpointState) => this.isMobile = state.matches);
+    breakpointService.observe().subscribe((state: BreakpointState) => this.isMobile = state.matches);
   }
 
   public get isDisplayed(): boolean {

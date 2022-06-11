@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemVersion} from 'lib/src/resources';
+import {CodeSystemVersion} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {forkJoin, takeUntil} from 'rxjs';
@@ -9,7 +9,8 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
 
 
 @Component({
-  templateUrl: 'code-system-version-view.component.html'
+  templateUrl: 'code-system-version-view.component.html',
+  providers: [MuiDestroyService]
 })
 export class FinderCodeSystemVersionViewComponent implements OnInit {
   public version?: CodeSystemVersion;

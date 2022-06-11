@@ -2,7 +2,7 @@
   <div *mFormCol>
     <m-spinner [mLoading]="isLoading">
       <m-card>
-        <div *m-card-header class="tw-items-middle">
+        <div *m-card-header class="m-items-middle">
           <div class="m-card-title">{{(mode === 'edit' ? 'web.code-system-concept-version.form.edit-header' : 'web.code-system-concept-version.form.add-header') | translate}}</div>
           <twa-status-tag *ngIf="conceptVersion?.status" [status]="conceptVersion.status"></twa-status-tag>
         </div>
@@ -14,11 +14,12 @@
         </form>
 
 
-        <m-card class="tw-card-inner">
-          <div *m-card-header class="tw-items-between">
+        <m-card class="m-card-inside">
+          <div *m-card-header class="m-items-between">
             <div class="m-card-title">{{'entities.code-system-entity-version.designations' | translate}}</div>
-            <m-button (click)="openDesignationModal()">
-              <m-icon mCode="plus"></m-icon>&nbsp; {{'web.code-system-concept-version.designation-modal.add-designation' | translate}}</m-button>
+            <twa-add-button (click)="openDesignationModal()">
+              {{'web.code-system-concept-version.designation-modal.add-designation' | translate}}
+            </twa-add-button>
           </div>
 
           <m-table [mData]="designations | keys" mEnablePagination mHideOnSinglePage>
@@ -37,7 +38,7 @@
                   <a (click)="openDesignationModal({key, index})">{{designation.name.slice(0, 40)}}</a>
                 </td>
                 <td>{{designation.language}}</td>
-                <td>
+                <td class="tw-table-min-width">
                   <twa-status-tag [status]="designation.status"></twa-status-tag>
                 </td>
                 <td class="tw-table-actions">
@@ -62,12 +63,12 @@
         </m-card>
 
 
-        <m-card class="tw-card-inner">
-          <div *m-card-header class="tw-items-between">
+        <m-card class="m-card-inside">
+          <div *m-card-header class="m-items-between">
             <div class="m-card-title">{{'entities.code-system-entity-version.property-values' | translate}}</div>
-            <m-button (click)="openPropertyValueModal()">
-              <m-icon mCode="plus"></m-icon>&nbsp;{{'web.code-system-concept-version.property-modal.add-property' | translate}}
-            </m-button>
+            <twa-add-button (click)="openPropertyValueModal()">
+              {{'web.code-system-concept-version.property-modal.add-property' | translate}}
+            </twa-add-button>
           </div>
 
           <m-table [mData]="propertyValues | keys" mEnablePagination mHideOnSinglePage>
@@ -122,7 +123,8 @@
             placeholder="marina.ui.inputs.search.placeholder"
             name="propertyModalProperty"
             [(ngModel)]="propertyValueModalData.propertyValue.entityPropertyId"
-            required>
+            required
+        >
           <m-option *ngFor="let prop of entityProperties | values" [value]="prop.id" [label]="prop.name"></m-option>
         </m-select>
       </m-form-item>
@@ -154,7 +156,8 @@
             placeholder="marina.ui.inputs.search.placeholder"
             name="designationModalType"
             [(ngModel)]="designationModalData.designation.designationTypeId"
-            required>
+            required
+        >
           <m-option *ngFor="let prop of entityProperties | values" [value]="prop.id" [label]="prop.name"></m-option>
         </m-select>
       </m-form-item>

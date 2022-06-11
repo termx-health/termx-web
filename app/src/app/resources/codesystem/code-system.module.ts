@@ -14,7 +14,6 @@ import {CodeSystemConceptsListComponent} from './containers/edit/code-system-con
 import {CodeSystemConceptEditComponent} from './containers/concept/code-system-concept-edit.component';
 import {CodeSystemEntityVersionService} from './services/code-system-entity-version.service';
 import {CodeSystemVersionDuplicateModalComponent} from './containers/edit/code-system-version-duplicate-modal.component';
-import {ContactLibModule} from 'terminology-lib/resources/contact/contact-lib.module';
 import {CodeSystemVersionEntityVersionsListComponent} from './containers/version/code-system-version-entity-versions-list.component';
 import {CodeSystemConceptVersionEditComponent} from './containers/concept/code-system-concept-version-edit.component';
 import {CodeSystemEntityService} from './services/code-system-entity.service';
@@ -24,6 +23,7 @@ import {FinderCodeSystemVersionViewComponent} from './containers-finder/version/
 import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/code-system-concept-view.component';
 import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
 import {FinderModule} from '../../core/finder/finder.module';
+import {ContactModule} from '../contact/contact.module';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -55,7 +55,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     SharedModule,
     FinderModule,
     CodeSystemLibModule,
-    ContactLibModule
+    ContactModule
   ],
   declarations: [
     CodeSystemListComponent,

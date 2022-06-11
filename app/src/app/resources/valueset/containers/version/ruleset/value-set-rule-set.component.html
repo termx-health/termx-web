@@ -1,13 +1,13 @@
-<m-card class="tw-card-inner">
-  <div *m-card-header class="tw-items-between">
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
     <div class="m-card-title">{{'web.value-set-version.form.rule-set' | translate}} &nbsp;
       <m-button (click)="expand()" mSize="small">
         <m-icon mCode="eye"></m-icon>
       </m-button>
     </div>
-    <m-button (click)="addRule()">
-      <m-icon mCode="plus"></m-icon>&nbsp; <span>{{'web.value-set-rule-set.form.add-rule-set' | translate}}</span>
-    </m-button>
+    <twa-add-button (click)="addRule()">
+      {{'web.value-set-rule-set.form.add-rule-set' | translate}}
+    </twa-add-button>
   </div>
 
   <form #form="ngForm" *ngIf="ruleSet">

@@ -1,28 +1,27 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {ContactDetail} from 'lib/src/resources/contact/model/contact-detail';
+import {ContactDetail} from 'terminology-lib/resources/contact/model/contact-detail';
 import {NgForm} from '@angular/forms';
 import {copyDeep, isDefined} from '@kodality-web/core-util';
 
 
 @Component({
-  selector: 'twl-contact-list',
+  selector: 'twa-contact-list',
   templateUrl: './contact-list.component.html',
   styles: [`
-      .tw-cs-contact-collapse ::ng-deep {
+    .tw-cs-contact-collapse ::ng-deep {
 
       .ant-collapse-header {
-          align-items: center;
+        align-items: center;
       }
 
       .ant-collapse-content-box {
-          padding: 0;
+        padding: 0;
       }
 
       .m-table {
-          border-radius: 0 0 4px 4px;
+        border-radius: 0 0 4px 4px;
       }
-
-      }
+    }
   `]
 })
 export class ContactListComponent {

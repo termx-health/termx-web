@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {ValueSetLibService, ValueSetRule, ValueSetVersion} from 'lib/src/resources';
+import {ValueSetLibService, ValueSetRule, ValueSetVersion} from 'terminology-lib/resources';
 import {BooleanInput, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 
