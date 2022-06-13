@@ -16,7 +16,7 @@
 
       <ng-container *mTableRow="let key">
         <tr *ngFor="let property of propertyValuesMap[key | toNumber]; let isFirst = first; let index = index;">
-          <td *ngIf="isFirst && entityProperties" [rowSpan]="propertyValuesMap[key].length">{{entityProperties[property.entityPropertyId]?.name}}</td>
+          <td *ngIf="isFirst" [rowSpan]="propertyValuesMap[key].length">{{entityProperties?.[property.entityPropertyId]?.name}}</td>
           <td>
             <a *ngIf="!viewMode" (click)="openPropertyValueModal({key, index})">{{property.value | abbreviate:40}}</a>
             <div *ngIf="viewMode">{{property.value | abbreviate:40}}</div>

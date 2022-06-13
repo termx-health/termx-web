@@ -12,10 +12,14 @@
             <m-textarea name="description" [(ngModel)]="version.description"></m-textarea>
           </m-form-item>
 
-          <twa-code-system-concept-version-designation-table [(designations)]="version.designations"
-              [codeSystemId]="codeSystemId"></twa-code-system-concept-version-designation-table>
-          <twa-code-system-concept-version-property-value-table [(propertyValues)]="version.propertyValues"
-              [codeSystemId]="codeSystemId"></twa-code-system-concept-version-property-value-table>
+          <twa-code-system-concept-version-designation-table
+              [(designations)]="version.designations"
+              [codeSystemId]="codeSystemId"
+          ></twa-code-system-concept-version-designation-table>
+          <twa-code-system-concept-version-property-value-table
+              [(propertyValues)]="version.propertyValues"
+              [codeSystemId]="codeSystemId"
+          ></twa-code-system-concept-version-property-value-table>
         </form>
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="save()" [mLoading]="isLoading" [disabled]="isLoading">

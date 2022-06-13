@@ -37,6 +37,11 @@
             <twa-value-set-version-concept-list [concepts]="concepts" viewMode></twa-value-set-version-concept-list>
           </m-form-item>
         </div>
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" (click)="back()" [mLoading]="loading" [disabled]="loading">
+            {{'core.back' | translate}}
+          </m-button>
+        </ng-container>
       </m-card>
     </m-spinner>
   </div>

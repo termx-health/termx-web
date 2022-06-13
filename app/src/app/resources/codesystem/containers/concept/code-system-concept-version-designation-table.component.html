@@ -18,7 +18,7 @@
 
       <ng-container *mTableRow="let key;">
         <tr *ngFor="let designation of designationMap[key]; let isFirst = first; let index = index">
-          <td *ngIf="isFirst && entityProperties" [rowSpan]="designationMap[key].length">{{entityProperties[designation.designationTypeId]?.name}}</td>
+          <td *ngIf="isFirst" [rowSpan]="designationMap[key].length">{{entityProperties?.[designation.designationTypeId]?.name}}</td>
           <td>
             <a *ngIf="!viewMode" (click)="openDesignationModal({key, index})">{{designation.name | abbreviate:35}}</a>
             <div *ngIf="viewMode">{{designation.name | abbreviate:35}}</div>

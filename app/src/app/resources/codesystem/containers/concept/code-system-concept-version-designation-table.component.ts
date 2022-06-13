@@ -34,8 +34,13 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
 
 
   public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['codeSystemId']) {
+      this.entityProperties = {};
+      if (this.codeSystemId) {
+        this.loadProperties(this.codeSystemId);
+      }
+    }
     if (changes['designations']) {
-      this.loadProperties(this.codeSystemId!);
       this.designationMap = collect(this.designations || [], d => d.designationTypeId!);
     }
   }
@@ -44,23 +49,21 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
     if (!validateForm(this.designationForm)) {
       return;
     }
-    const designation = this.designationModalData.designation;
-    designation!.preferred = this.designationModalData!.designation?.preferred || false;
+    const designation = this.designationModalData.designation!;
+    designation.preferred = designation.preferred || false;
     if (isDefined(this.designationModalData.editKey) && isDefined(this.designationModalData.editIndex)) {
       this.deleteDesignation(this.designationModalData.editKey, this.designationModalData.editIndex);
     }
-    this.designationMap![designation!.designationTypeId!] = [...(this.designationMap![designation?.designationTypeId!] || []), designation!];
+    this.designationMap![designation.designationTypeId!] = [...(this.designationMap![designation.designationTypeId!] || []), designation];
     this.designationMap = {...this.designationMap};
-    this.designations = Object.values(this.designationMap || []).flat();
-    this.designationsChange.emit(this.designations);
+    this.fireOnChange();
     this.designationModalData.visible = false;
   }
 
   public deleteDesignation(key: string, index: number): void {
     this.designationMap![key].splice(index, 1);
     this.designationMap = {...this.designationMap};
-    this.designations = Object.values(this.designationMap || []).flat();
-    this.designationsChange.emit(this.designations);
+    this.fireOnChange();
   }
 
   public openDesignationModal(options: {key?: string, index?: number} = {}): void {
@@ -85,4 +88,8 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
     return Object.values(this.loading).some(Boolean);
   }
 
+  private fireOnChange(): void {
+    this.designations = Object.values(this.designationMap || []).flat();
+    this.designationsChange.emit(this.designations);
+  }
 }

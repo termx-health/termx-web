@@ -33,10 +33,16 @@ export class CodeSystemConceptVersionPropertyValueTableComponent implements OnCh
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['codeSystemId']) {
+      this.entityProperties = {};
+      if (this.codeSystemId) {
+        this.loadProperties(this.codeSystemId);
+      }
+    }
     if (changes['propertyValues']) {
-      this.loadProperties(this.codeSystemId!);
       this.propertyValuesMap = collect(this.propertyValues || [], pv => pv.entityPropertyId!);
     }
+
   }
 
   public savePropertyValue(): void {
@@ -51,16 +57,14 @@ export class CodeSystemConceptVersionPropertyValueTableComponent implements OnCh
 
     this.propertyValuesMap![propertyValue!.entityPropertyId!] = [...(this.propertyValuesMap![propertyValue?.entityPropertyId!] || []), propertyValue!];
     this.propertyValuesMap = {...this.propertyValuesMap};
-    this.propertyValues = Object.values(this.propertyValuesMap || []).flat();
-    this.propertyValuesChange.emit(this.propertyValues);
+    this.fireOnChange();
     this.propertyValueModalData.visible = false;
   }
 
   public deletePropertyValue(key: number, index: number): void {
     this.propertyValuesMap![key].splice(index, 1);
     this.propertyValuesMap = {...this.propertyValuesMap};
-    this.propertyValues = Object.values(this.propertyValuesMap || []).flat();
-    this.propertyValuesChange.emit(this.propertyValues);
+    this.fireOnChange();
   }
 
   public openPropertyValueModal(options: {key?: number, index?: number} = {}): void {
@@ -83,5 +87,10 @@ export class CodeSystemConceptVersionPropertyValueTableComponent implements OnCh
 
   public get isLoading(): boolean {
     return Object.values(this.loading).some(Boolean);
+  }
+
+  private fireOnChange(): void {
+    this.propertyValues = Object.values(this.propertyValuesMap || []).flat();
+    this.propertyValuesChange.emit(this.propertyValues);
   }
 }
