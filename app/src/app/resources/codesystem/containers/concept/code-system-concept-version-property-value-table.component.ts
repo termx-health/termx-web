@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {BooleanInput, collect, copyDeep, group, isDefined, validateForm} from '@kodality-web/core-util';
 import {EntityProperty, EntityPropertyValue} from 'terminology-lib/resources';
 import {NgForm} from '@angular/forms';
@@ -9,7 +9,7 @@ import {EntityPropertyLibService} from 'terminology-lib/resources/codesystem/ser
   selector: 'twa-code-system-concept-version-property-value-table',
   templateUrl: './code-system-concept-version-property-value-table.component.html',
 })
-export class CodeSystemConceptVersionPropertyValueTableComponent implements OnChanges, OnInit {
+export class CodeSystemConceptVersionPropertyValueTableComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode?: string | boolean = false;
   @Input() public codeSystemId?: string;
   @Input() public propertyValues?: EntityPropertyValue[];
@@ -32,12 +32,11 @@ export class CodeSystemConceptVersionPropertyValueTableComponent implements OnCh
     public entityPropertyService: EntityPropertyLibService,
   ) { }
 
-  public ngOnInit(): void {
-    this.loadProperties(this.codeSystemId!);
-  }
-
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['propertyValues']) {
+      if (this.codeSystemId){
+        this.loadProperties(this.codeSystemId!);
+      }
       this.propertyValuesMap = collect(this.propertyValues || [], pv => pv.entityPropertyId!);
     }
   }

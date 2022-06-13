@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {Designation, EntityProperty} from 'terminology-lib/resources';
 import {BooleanInput, collect, copyDeep, group, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
@@ -9,7 +9,7 @@ import {EntityPropertyLibService} from 'terminology-lib/resources/codesystem/ser
   selector: 'twa-code-system-concept-version-designation-table',
   templateUrl: './code-system-concept-version-designation-table.component.html',
 })
-export class CodeSystemConceptVersionDesignationTableComponent implements OnInit, OnChanges {
+export class CodeSystemConceptVersionDesignationTableComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: string | boolean = false;
   @Input() public codeSystemId?: string;
   @Input() public designations?: Designation[] = [];
@@ -32,12 +32,12 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnInit
     public entityPropertyService: EntityPropertyLibService,
   ) {}
 
-  public ngOnInit(): void {
-    this.loadProperties(this.codeSystemId!);
-  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['designations']) {
+      if (this.codeSystemId){
+        this.loadProperties(this.codeSystemId!);
+      }
       this.designationMap = collect(this.designations || [], d => d.designationTypeId!);
     }
   }

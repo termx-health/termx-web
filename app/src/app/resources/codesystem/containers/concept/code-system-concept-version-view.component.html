@@ -11,14 +11,13 @@
           <m-form-item mLabel="entities.code-system-entity-version.description">
             {{version.description}}
           </m-form-item>
+
+        <twa-code-system-concept-version-designation-table [(designations)]="version.designations"
+            viewMode></twa-code-system-concept-version-designation-table>
+        <twa-code-system-concept-version-property-value-table [(propertyValues)]="version.propertyValues"
+            viewMode></twa-code-system-concept-version-property-value-table>
         </form>
 
-        <twa-code-system-concept-version-designation-table *ngIf="version?.designations"
-            [(designations)]="version.designations"
-            viewMode></twa-code-system-concept-version-designation-table>
-        <twa-code-system-concept-version-property-value-table *ngIf="version?.propertyValues"
-            [(propertyValues)]="version.propertyValues"
-            viewMode></twa-code-system-concept-version-property-value-table>
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="back()" [mLoading]="isLoading" [disabled]="isLoading">
             {{'core.back' | translate}}
