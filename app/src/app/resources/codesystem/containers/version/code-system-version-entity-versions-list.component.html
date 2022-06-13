@@ -21,7 +21,7 @@
     </tr>
     <tr *mTableRow="let entityVersion">
       <td>{{entityVersion.code}}</td>
-      <td>{{entityVersion.description}}</td>
+      <td>{{entityVersion.description?.slice(0, 50)}}</td>
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="delete(entityVersion)">
