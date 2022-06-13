@@ -24,6 +24,9 @@ import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/
 import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
 import {FinderModule} from '../../core/finder/finder.module';
 import {ContactModule} from '../contact/contact.module';
+import {CodeSystemConceptVersionDesignationTableComponent} from './containers/concept/code-system-concept-version-designation-table.component';
+import {CodeSystemConceptVersionPropertyValueTableComponent} from './containers/concept/code-system-concept-version-property-value-table.component';
+import {CodeSystemConceptVersionViewComponent} from './containers/concept/code-system-concept-version-view.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -33,6 +36,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/concepts/:concept/edit', component: CodeSystemConceptEditComponent},
   {path: ':id/concepts/:concept/versions/add', component: CodeSystemConceptVersionEditComponent},
   {path: ':id/concepts/:concept/versions/:conceptVersion/edit', component: CodeSystemConceptVersionEditComponent},
+  {path: ':id/concepts/:concept/versions/:conceptVersion/view', component: CodeSystemConceptVersionViewComponent},
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:version/edit', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:version/view', component: CodeSystemVersionViewComponent},
@@ -72,12 +76,15 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemConceptEditComponent,
     CodeSystemVersionEntityVersionsListComponent,
     CodeSystemConceptVersionEditComponent,
+    CodeSystemConceptVersionViewComponent,
+    CodeSystemConceptVersionDesignationTableComponent,
+    CodeSystemConceptVersionPropertyValueTableComponent,
 
     FinderCodeSystemListComponent,
     FinderCodeSystemViewComponent,
     FinderCodeSystemVersionViewComponent,
     FinderCodeSystemConceptViewComponent,
-    FinderCodeSystemConceptVersionViewComponent
+    FinderCodeSystemConceptVersionViewComponent,
   ],
   exports: [
     CodeSystemListComponent

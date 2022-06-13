@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {MapSetVersion} from 'terminology-lib/resources';
 import {ActivatedRoute} from '@angular/router';
 import {MapSetService} from '../../services/map-set-service';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -14,6 +15,7 @@ export class MapSetVersionViewComponent implements OnInit {
   public constructor(
     private mapSetService: MapSetService,
     private route: ActivatedRoute,
+    private location: Location,
   ) {}
 
   public ngOnInit(): void {
@@ -25,5 +27,9 @@ export class MapSetVersionViewComponent implements OnInit {
   private loadVersion(id: string, version: string): void {
     this.loading = true;
     this.mapSetService.loadVersion(id, version).subscribe(v => this.version = v).add(() => this.loading = false);
+  }
+
+  public back(): void {
+    this.location.back();
   }
 }
