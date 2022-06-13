@@ -1,0 +1,94 @@
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Designation, EntityProperty} from 'terminology-lib/resources';
+import {BooleanInput, collect, copyDeep, group, isDefined, validateForm} from '@kodality-web/core-util';
+import {NgForm} from '@angular/forms';
+import {EntityPropertySearchParams} from 'terminology-lib/resources/codesystem/model/entity-property-search-params';
+import {ActivatedRoute} from '@angular/router';
+import {EntityPropertyLibService} from 'terminology-lib/resources/codesystem/services/entity-property-lib.service';
+
+@Component({
+  selector: 'twa-code-system-concept-version-designation-table',
+  templateUrl: './code-system-concept-version-designation-table.component.html',
+})
+export class CodeSystemConceptVersionDesignationTableComponent implements OnInit, OnChanges {
+  @Input() @BooleanInput() public view: string | boolean = false;
+  @Input() public designations?: Designation[];
+  @Output() public designationsChange = new EventEmitter<Designation[]>();
+
+  @ViewChild("designationForm") public designationForm?: NgForm;
+
+  private loading: {[key: string]: boolean} = {};
+  public entityProperties?: {[id: number]: EntityProperty};
+  public designationMap?: {[id: string]: Designation[]} = {};
+
+  public designationModalData: {
+    visible?: boolean;
+    editKey?: string;
+    editIndex?: number;
+    designation?: Designation
+  } = {};
+
+  public constructor(
+    public entityPropertyService: EntityPropertyLibService,
+    private route: ActivatedRoute,
+  ) {}
+
+  public ngOnInit(): void {
+    const codeSystemId = this.route.snapshot.paramMap.get('id');
+    if (codeSystemId) {
+      this.loadProperties(codeSystemId);
+    }
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['designations']) {
+      this.designationMap = collect(this.designations || [], d => d.designationTypeId!);
+    }
+  }
+
+  public saveDesignation(): void {
+    if (!validateForm(this.designationForm)) {
+      return;
+    }
+    const designation = this.designationModalData.designation;
+    designation!.preferred = this.designationModalData!.designation?.preferred || false;
+    if (isDefined(this.designationModalData.editKey) && isDefined(this.designationModalData.editIndex)) {
+      this.deleteDesignation(this.designationModalData.editKey, this.designationModalData.editIndex);
+    }
+    this.designationMap![designation!.designationTypeId!] = [...(this.designationMap![designation?.designationTypeId!] || []), designation!];
+    this.designationMap = {...this.designationMap};
+    this.designations = Object.values(this.designationMap || []).flat();
+    this.designationsChange.emit(this.designations);
+    this.designationModalData.visible = false;
+  }
+
+  public deleteDesignation(key: string, index: number): void {
+    this.designationMap![key].splice(index, 1);
+    this.designationMap = {...this.designationMap};
+    this.designations = Object.values(this.designationMap || []).flat();
+    this.designationsChange.emit(this.designations);
+  }
+
+  public openDesignationModal(options: {key?: string, index?: number} = {}): void {
+    const {key, index} = options;
+    this.designationModalData = {
+      visible: true,
+      editKey: key,
+      editIndex: index,
+      designation: (key && isDefined(index)) ? copyDeep(this.designationMap![key][index]) : new Designation()
+    };
+  }
+
+  private loadProperties(codeSystem: string): void {
+    const q = new EntityPropertySearchParams();
+    q.codeSystem = codeSystem;
+    q.limit = 1000;
+    this.loading['load'] = true;
+    this.entityPropertyService.search(q).subscribe(ep => this.entityProperties = group(ep.data, p => p.id!)).add(() => this.loading['load'] = false);
+  }
+
+  public get isLoading(): boolean {
+    return Object.values(this.loading).some(Boolean);
+  }
+
+}

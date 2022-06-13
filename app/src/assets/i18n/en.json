@@ -36,11 +36,9 @@
         "retire": "Retire"
       }
     },
-
     "app": {
       "header": "Terminology"
     },
-
     "entity-property": {
       "form": {
         "edit-header": "Edit property",
@@ -65,7 +63,6 @@
         "map-sets": "Map sets"
       }
     },
-
     "code-system": {
       "list": {
         "add-code-system": "Add code system",
@@ -128,7 +125,8 @@
     "code-system-concept-version": {
       "form": {
         "add-header": "Add version",
-        "edit-header": "Edit version"
+        "edit-header": "Edit version",
+        "view-header": "View version"
       },
       "list": {
         "operations": "Operations"
@@ -143,8 +141,6 @@
         "edit-property": "Edit property"
       }
     },
-
-
     "value-set": {
       "entity": {
         "id": "Identifier",
@@ -232,7 +228,6 @@
         "value": "Value"
       }
     },
-
     "map-set": {
       "entity": {
         "id": "Identifier",
@@ -285,7 +280,6 @@
         "associations": "Associations"
       }
     },
-
     "integration": {
       "fhir": {
         "sync": {
