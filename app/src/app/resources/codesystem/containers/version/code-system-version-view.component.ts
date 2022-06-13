@@ -10,7 +10,6 @@ import {Location} from '@angular/common';
 export class CodeSystemVersionViewComponent implements OnInit {
   public codeSystemId?: string | null;
   public version?: CodeSystemVersion;
-  public codeSystemId?: string | null;
   public loading = false;
 
   public constructor(
