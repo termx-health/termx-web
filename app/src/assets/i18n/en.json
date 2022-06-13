@@ -14,23 +14,11 @@
   },
   "web": {
     "case-sensitive-options": {
-      "ics": "initial character sensitive",
-      "cs": "case sensitive",
-      "ci": "case insensitive"
-    },
-    "content-options": {
-      "complete": "complete",
-      "not-present": "not-present",
-      "example": "example",
-      "fragment": "fragment",
-      "supplement": "supplement"
+      "ics": "Initial character sensitive",
+      "cs": "Case sensitive",
+      "ci": "Case insensitive"
     },
     "publication-status": {
-      "statuses": {
-        "active": "Active",
-        "retired": "Retired",
-        "draft": "Draft"
-      },
       "operations": {
         "activate": "Activate",
         "retire": "Retire"

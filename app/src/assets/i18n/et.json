@@ -21,13 +21,6 @@
       "cs": "tõstutundlik",
       "ci": "tõstutundetu"
     },
-    "content-options": {
-      "complete": "täielik",
-      "not-present": "puudulik",
-      "example": "näidis",
-      "fragment": "katkend",
-      "supplement": "lisand"
-    },
     "code-system-version": {
       "entity": {
         "id": "Identifikaator",
@@ -278,11 +271,6 @@
       }
     },
     "publication-status": {
-      "statuses": {
-        "active": "Aktiivne",
-        "retired": "Kõrvaldatud",
-        "draft": "Mustand"
-      },
       "operations": {
         "activate": "Aktiveeri",
         "retire": "Kõrvalda"

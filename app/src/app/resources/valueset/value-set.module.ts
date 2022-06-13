@@ -11,7 +11,6 @@ import {ValueSetVersionsListComponent} from './containers/edit/value-set-version
 import {ValueSetVersionViewComponent} from './containers/version/value-set-version-view.component';
 import {ValueSetRuleSetComponent} from './containers/version/ruleset/value-set-rule-set.component';
 import {ValueSetRuleSetRuleComponent} from './containers/version/ruleset/value-set-rule-set-rule.component';
-import {ValueSetRuleSetValueSetRuleComponent} from './containers/version/ruleset/value-set-rule-set-value-set-rule.component';
 import {ValueSetRuleFilterListComponent} from './containers/version/ruleset/value-set-rule-filter-list.component';
 import {ValueSetVersionConceptModalComponent} from './containers/version/concepts/value-set-version-concept-modal.component';
 import {ContactModule} from '../contact/contact.module';
@@ -43,7 +42,6 @@ export const VALUE_SET_ROUTES: Routes = [
     ValueSetVersionConceptModalComponent,
     ValueSetRuleSetComponent,
     ValueSetRuleSetRuleComponent,
-    ValueSetRuleSetValueSetRuleComponent,
     ValueSetRuleFilterListComponent
   ],
   exports: [

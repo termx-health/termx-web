@@ -10,6 +10,7 @@ import {MapSetVersionsListComponent} from './containers/edit/map-set-versions-li
 import {MapSetVersionEditComponent} from './containers/version/map-set-version-edit.component';
 import {MapSetVersionViewComponent} from './containers/version/map-set-version-view.component';
 import {MapSetAssociationListComponent} from './containers/edit/map-set-association-list.component';
+import {CodeSystemLibModule, ValueSetLibModule} from 'terminology-lib/resources';
 
 
 export const MAP_SET_ROUTES: Routes = [
@@ -23,7 +24,9 @@ export const MAP_SET_ROUTES: Routes = [
 @NgModule({
   imports: [
     SharedModule,
-    MapSetLibModule
+    MapSetLibModule,
+    ValueSetLibModule,
+    CodeSystemLibModule
   ],
   exports: [
     MapSetListComponent

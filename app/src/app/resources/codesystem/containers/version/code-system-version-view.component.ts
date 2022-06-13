@@ -8,6 +8,7 @@ import {Location} from '@angular/common';
   templateUrl: 'code-system-version-view.component.html',
 })
 export class CodeSystemVersionViewComponent implements OnInit {
+  public codeSystemId?: string | null;
   public version?: CodeSystemVersion;
   public codeSystemId?: string | null;
   public loading = false;

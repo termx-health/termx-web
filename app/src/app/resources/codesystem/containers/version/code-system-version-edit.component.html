@@ -17,21 +17,14 @@
           </m-form-item>
 
           <m-form-item mName="preferredLanguage" mLabel="entities.code-system-version.preferred-language">
-            <m-select name="preferredLanguage" [(ngModel)]="version.preferredLanguage">
-              <!-- FIXME: concept-select -->
-              <m-option [label]="'et'" value="et"></m-option>
-              <m-option [label]="'en'" value="en"></m-option>
-              <m-option [label]="'la'" value="la"></m-option>
-            </m-select>
+            <twl-value-set-concept-select name="preferredLanguage" [(ngModel)]="version.preferredLanguage" valueSet="languages"></twl-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="supportedLanguages" mLabel="entities.code-system-version.supported-languages">
-            <m-select name="supportedLanguages" [(ngModel)]="version.supportedLanguages" multiple>
-              <!-- FIXME: concept-select -->
-              <m-option [label]="'et'" value="et"></m-option>
-              <m-option [label]="'en'" value="en"></m-option>
-              <m-option [label]="'la'" value="la"></m-option>
-            </m-select>
+            <twl-value-set-concept-select name="supportedLanguages"
+                [(ngModel)]="version.supportedLanguages"
+                valueSet="languages"
+                multiple></twl-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="entities.code-system-version.description">

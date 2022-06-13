@@ -1,2 +1,1 @@
-<m-tag [mColor]="statusMap[status]" [mLabel]="'web.publication-status.statuses.' + status">
-</m-tag>
+<m-tag [mColor]="statusMap[status]" [mLabel]="status | localizedConceptName: {valueSet: 'publication-status'} | async"></m-tag>

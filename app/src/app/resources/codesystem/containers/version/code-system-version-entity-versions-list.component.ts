@@ -15,6 +15,7 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public codeSystemId?: string;
   @Input() public version?: string;
+  @Input() @BooleanInput() public viewMode: string | boolean = false;
 
   public loading: {[key: string]: boolean} = {};
 

@@ -16,12 +16,10 @@
           </m-form-item>
 
           <m-form-item mName="supportedLanguages" mLabel="web.map-set-version.entity.supported-languages">
-            <m-select name="supportedLanguages" [(ngModel)]="version.supportedLanguages" multiple>
-              <!-- FIXME: concept-select -->
-              <m-option [label]="'et'" value="et"></m-option>
-              <m-option [label]="'en'" value="en"></m-option>
-              <m-option [label]="'la'" value="la"></m-option>
-            </m-select>
+            <twl-value-set-concept-select name="supportedLanguages"
+                [(ngModel)]="version.supportedLanguages"
+                valueSet="languages"
+                multiple></twl-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="web.map-set-version.entity.description">

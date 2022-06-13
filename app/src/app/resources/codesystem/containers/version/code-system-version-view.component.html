@@ -16,11 +16,11 @@
           </m-form-item>
 
           <m-form-item mLabel="entities.code-system-version.preferred-language">
-            {{version.preferredLanguage}}
+            {{version.preferredLanguage | localizedConceptName: {valueSet: 'languages'} | async}}
           </m-form-item>
 
           <m-form-item mLabel="entities.code-system-version.supported-languages">
-            {{version.supportedLanguages}}
+            <label *ngFor="let sLang of version.supportedLanguages; let isFirst = first;">{{isFirst ? "" : ", "}}{{sLang | localizedConceptName: {valueSet: 'languages'} | async}}</label>
           </m-form-item>
 
           <m-form-item mLabel="entities.code-system-version.description">

@@ -7,6 +7,8 @@ import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {ValueSetVersionSelectComponent} from './containers/value-set-version-select.component';
 import {ValueSetVersionLibService} from './services/value-set-version-lib.service';
+import {ValueSetConceptSelectComponent} from './containers/value-set-concept-select.component';
+import {CodeSystemLibModule} from '../codesystem';
 
 
 @NgModule({
@@ -14,7 +16,8 @@ import {ValueSetVersionLibService} from './services/value-set-version-lib.servic
     CommonModule,
     MarinaUiModule,
     FormsModule,
-    CoreUtilModule
+    CoreUtilModule,
+    CodeSystemLibModule
   ],
   providers: [
     ValueSetLibService,
@@ -22,11 +25,13 @@ import {ValueSetVersionLibService} from './services/value-set-version-lib.servic
   ],
   declarations: [
     ValueSetSearchComponent,
-    ValueSetVersionSelectComponent
+    ValueSetVersionSelectComponent,
+    ValueSetConceptSelectComponent
   ],
   exports: [
     ValueSetSearchComponent,
-    ValueSetVersionSelectComponent
+    ValueSetVersionSelectComponent,
+    ValueSetConceptSelectComponent
   ]
 })
 export class ValueSetLibModule {
