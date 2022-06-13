@@ -4,7 +4,6 @@ import {DesignationLibService} from '../../services/designation-lib.service';
 import {DesignationSearchParams} from '../../model/designation-search-params';
 import {Designation} from '../../model/designation';
 import {BooleanInput, group, isNil} from '@kodality-web/core-util';
-import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'twl-designation-select',
@@ -56,9 +55,8 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
       return;
     }
     this.loading = true;
-    // todo: add 'ids' param
-    forkJoin(ids.map(id => this.designationService.load(id))).subscribe(resp => {
-      resp.forEach(d => this.data = {...this.data, [d.id!]: d});
+    this.designationService.search({id: ids.join(",")}).subscribe(resp => {
+      resp.data.forEach(d => this.data = {...this.data, [d.id!]: d});
     }).add(() => this.loading = false);
   }
 

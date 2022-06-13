@@ -42,7 +42,7 @@
               {{cs.uri}}
             </m-form-item>
             <m-form-item *ngIf="cs.content" mLabel="entities.code-system.content">
-              {{'web.content-options.' + cs.content | translate}}
+              {{cs.content | localizedConceptName: {valueSet: 'codesystem-content-mode'} | async}}
             </m-form-item>
             <m-form-item *ngIf="cs.caseSensitive" mLabel="entities.code-system.case-sensitivity">
               {{'web.case-sensitive-options.' + cs.caseSensitive | translate}}

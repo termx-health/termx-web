@@ -37,7 +37,7 @@
                 <td>
                   <a (click)="openDesignationModal({key, index})">{{designation.name.slice(0, 40)}}</a>
                 </td>
-                <td>{{designation.language}}</td>
+                <td>{{designation.language | localizedConceptName: {valueSet: 'languages'} | async}}</td>
                 <td class="tw-table-min-width">
                   <twa-status-tag [status]="designation.status"></twa-status-tag>
                 </td>
@@ -123,8 +123,7 @@
             placeholder="marina.ui.inputs.search.placeholder"
             name="propertyModalProperty"
             [(ngModel)]="propertyValueModalData.propertyValue.entityPropertyId"
-            required
-        >
+            required>
           <m-option *ngFor="let prop of entityProperties | values" [value]="prop.id" [label]="prop.name"></m-option>
         </m-select>
       </m-form-item>
@@ -156,8 +155,7 @@
             placeholder="marina.ui.inputs.search.placeholder"
             name="designationModalType"
             [(ngModel)]="designationModalData.designation.designationTypeId"
-            required
-        >
+            required>
           <m-option *ngFor="let prop of entityProperties | values" [value]="prop.id" [label]="prop.name"></m-option>
         </m-select>
       </m-form-item>
@@ -167,11 +165,9 @@
       </m-form-item>
 
       <m-form-item mLabel="entities.designation.language">
-        <m-select name="designationModalLanguage" [(ngModel)]="designationModalData.designation.language">
-          <m-option [label]="'la'" value="la"></m-option>
-          <m-option [label]="'en'" value="en"></m-option>
-          <m-option [label]="'et'" value="et"></m-option>
-        </m-select>
+        <twl-value-set-concept-select name="designationModalLanguage"
+            [(ngModel)]="designationModalData.designation.language"
+            valueSet="languages"></twl-value-set-concept-select>
       </m-form-item>
 
       <m-form-item mLabel="entities.designation.designation-kind">
@@ -183,9 +179,9 @@
 
       <m-form-item mName="designationModalCaseSignificance" mLabel="entities.designation.case-significance" required>
         <m-select name="designationModalCaseSignificance" [(ngModel)]="designationModalData.designation.caseSignificance" required>
-          <m-option [label]="'ics'" value="ics"></m-option>
-          <m-option [label]="'cs'" value="cs"></m-option>
-          <m-option [label]="'ci'" value="ci"></m-option>
+          <m-option label="web.case-sensitive-options.ci" value="ci"></m-option>
+          <m-option label="web.case-sensitive-options.cs" value="cs"></m-option>
+          <m-option label="web.case-sensitive-options.ics" value="ics"></m-option>
         </m-select>
       </m-form-item>
 
@@ -194,11 +190,9 @@
       </m-form-item>
 
       <m-form-item mName="designationModalStatus" mLabel="entities.designation.status" required>
-        <m-select name="designationModalStatus" [(ngModel)]="designationModalData.designation.status" required>
-          <m-option [label]="'web.publication-status.statuses.active'" value="active"></m-option>
-          <m-option [label]="'web.publication-status.statuses.draft'" value="draft"></m-option>
-          <m-option [label]="'web.publication-status.statuses.retired'" value="retired"></m-option>
-        </m-select>
+        <twl-value-set-concept-select name="designationModalStatus"
+            [(ngModel)]="designationModalData.designation.status"
+            valueSet="publication-status"></twl-value-set-concept-select>
       </m-form-item>
     </form>
   </ng-container>

@@ -14,33 +14,19 @@
   },
   "web": {
     "case-sensitive-options": {
-      "ics": "initial character sensitive",
-      "cs": "case sensitive",
-      "ci": "case insensitive"
-    },
-    "content-options": {
-      "complete": "complete",
-      "not-present": "not-present",
-      "example": "example",
-      "fragment": "fragment",
-      "supplement": "supplement"
+      "ics": "Initial character sensitive",
+      "cs": "Case sensitive",
+      "ci": "Case insensitive"
     },
     "publication-status": {
-      "statuses": {
-        "active": "Active",
-        "retired": "Retired",
-        "draft": "Draft"
-      },
       "operations": {
         "activate": "Activate",
         "retire": "Retire"
       }
     },
-
     "app": {
       "header": "Terminology"
     },
-
     "entity-property": {
       "form": {
         "edit-header": "Edit property",
@@ -65,7 +51,6 @@
         "map-sets": "Map sets"
       }
     },
-
     "code-system": {
       "list": {
         "add-code-system": "Add code system",
@@ -139,8 +124,6 @@
         "edit-property": "Edit property"
       }
     },
-
-
     "value-set": {
       "entity": {
         "id": "Identifier",
@@ -231,7 +214,6 @@
         "value": "Value"
       }
     },
-
     "map-set": {
       "entity": {
         "id": "Identifier",
@@ -284,7 +266,6 @@
         "associations": "Associations"
       }
     },
-
     "integration": {
       "fhir": {
         "sync": {

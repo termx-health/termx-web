@@ -16,11 +16,11 @@
           </m-form-item>
 
           <m-form-item mLabel="entities.code-system-version.preferred-language">
-            {{version.preferredLanguage}}
+            {{version.preferredLanguage | localizedConceptName: {valueSet: 'languages'} | async}}
           </m-form-item>
 
           <m-form-item mLabel="entities.code-system-version.supported-languages">
-            {{version.supportedLanguages}}
+            <label *ngFor="let sLang of version.supportedLanguages; let isFirst = first;">{{isFirst ? "" : ", "}}{{sLang | localizedConceptName: {valueSet: 'languages'} | async}}</label>
           </m-form-item>
 
           <m-form-item mLabel="entities.code-system-version.description">
@@ -34,6 +34,8 @@
           <m-form-item mLabel="entities.code-system-version.expiration-date">
             {{version.expirationDate | localDate}}
           </m-form-item>
+
+          <twa-code-system-version-entity-version-list [codeSystemId]="codeSystemId" [version]="version.version" viewMode></twa-code-system-version-entity-version-list>
         </div>
       </m-card>
     </m-spinner>

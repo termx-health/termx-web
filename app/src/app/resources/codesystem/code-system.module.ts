@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {CodeSystemListComponent} from './containers/list/code-system-list.component';
-import {CodeSystemLibModule} from 'terminology-lib/resources';
+import {CodeSystemLibModule, ValueSetLibModule} from 'terminology-lib/resources';
 import {CodeSystemPropertiesListComponent} from './containers/edit/code-system-properties-list.component';
 import {CodeSystemVersionsListComponent} from './containers/edit/code-system-versions-list.component';
 import {CodeSystemEditComponent} from './containers/edit/code-system-edit.component';
@@ -55,6 +55,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     SharedModule,
     FinderModule,
     CodeSystemLibModule,
+    ValueSetLibModule,
     ContactModule
   ],
   declarations: [

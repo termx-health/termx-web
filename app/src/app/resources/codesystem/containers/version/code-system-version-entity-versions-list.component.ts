@@ -1,6 +1,6 @@
 import {CodeSystemEntityVersion} from 'terminology-lib/resources';
 import {debounceTime, distinctUntilChanged, finalize, Observable, of, Subject, switchMap} from 'rxjs';
-import {copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../services/code-system.service';
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {CodeSystemEntityVersionQueryParams} from 'terminology-lib/resources/codesystem/model/code-system-entity-version-search-params';
@@ -14,6 +14,7 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
 export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
   @Input() public codeSystemId?: string;
   @Input() public version?: string;
+  @Input() @BooleanInput() public viewMode: string | boolean = false;
 
   public loading: {[key: string]: boolean} = {};
 

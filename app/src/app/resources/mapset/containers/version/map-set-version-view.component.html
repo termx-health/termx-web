@@ -17,7 +17,7 @@
           </m-form-item>
 
           <m-form-item mLabel="web.map-set-version.entity.supported-languages">
-            {{version.supportedLanguages}}
+            <label *ngFor="let sLang of version.supportedLanguages; let isFirst = first;">{{isFirst ? "" : ", "}}{{sLang | localizedConceptName: {valueSet: 'languages'} | async}}</label>
           </m-form-item>
 
           <m-form-item mLabel="web.map-set-version.entity.description">

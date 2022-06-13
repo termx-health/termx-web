@@ -25,9 +25,9 @@
 
       <m-table [mData]="contact.telecoms" [mOutlined]="false" mSize="small">
         <tr *mTableRow="let telecom">
-          <td>{{telecom.system}}</td>
+          <td>{{telecom.system | localizedConceptName: {valueSet: 'contact-point-system'} | async}}</td>
           <td>{{telecom.value}}</td>
-          <td>{{telecom.use}}</td>
+          <td>{{telecom.use | localizedConceptName: {valueSet: 'contact-point-use'} | async}}</td>
         </tr>
         <tr *mTableNoData>
           <td>
@@ -61,15 +61,9 @@
           <tr *mTableRow="let telecom; let index = index">
             <td>
               <m-form-control>
-                <m-select name="system-{{index}}" [(ngModel)]="telecom.system">
-                  <m-option value="phone" label="phone"></m-option>
-                  <m-option value="fax" label="fax"></m-option>
-                  <m-option value="email" label="email"></m-option>
-                  <m-option value="pager" label="pager"></m-option>
-                  <m-option value="url" label="url"></m-option>
-                  <m-option value="sms" label="sms"></m-option>
-                  <m-option value="other" label="other"></m-option>
-                </m-select>
+                <twl-value-set-concept-select name="system-{{index}}"
+                    [(ngModel)]="telecom.system"
+                    valueSet="contact-point-system"></twl-value-set-concept-select>
               </m-form-control>
             </td>
             <td>
@@ -79,13 +73,9 @@
             </td>
             <td>
               <m-form-control>
-                <m-select name="use-{{index}}" [(ngModel)]="telecom.use">
-                  <m-option value="home" label="home"></m-option>
-                  <m-option value="work" label="work"></m-option>
-                  <m-option value="temp" label="temp"></m-option>
-                  <m-option value="old" label="old"></m-option>
-                  <m-option value="mobile" label="mobile"></m-option>
-                </m-select>
+                <twl-value-set-concept-select name="use-{{index}}"
+                    [(ngModel)]="telecom.use"
+                    valueSet="contact-point-use"></twl-value-set-concept-select>
               </m-form-control>
             </td>
             <td class="tw-table-actions">

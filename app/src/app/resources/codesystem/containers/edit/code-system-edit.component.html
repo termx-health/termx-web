@@ -17,13 +17,10 @@
           </m-form-item>
 
           <m-form-item mName="content" mLabel="entities.code-system.content" required>
-            <m-select name="content" [(ngModel)]="codeSystem.content" required>
-              <m-option label="web.content-options.complete" value="complete"></m-option>
-              <m-option label="web.content-options.not-present" value="not-present"></m-option>
-              <m-option label="web.content-options.example" value="example"></m-option>
-              <m-option label="web.content-options.fragment" value="fragment"></m-option>
-              <m-option label="web.content-options.supplement" value="supplement"></m-option>
-            </m-select>
+            <twl-value-set-concept-select name="content"
+                [(ngModel)]="codeSystem.content"
+                valueSet="codesystem-content-mode"
+                required></twl-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="caseSensitive" mLabel="entities.code-system.case-sensitivity">
