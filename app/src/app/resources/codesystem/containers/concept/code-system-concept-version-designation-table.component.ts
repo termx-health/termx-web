@@ -35,9 +35,7 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['designations']) {
-      if (this.codeSystemId){
-        this.loadProperties(this.codeSystemId!);
-      }
+      this.loadProperties(this.codeSystemId!);
       this.designationMap = collect(this.designations || [], d => d.designationTypeId!);
     }
   }

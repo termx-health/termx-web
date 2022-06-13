@@ -34,9 +34,7 @@ export class CodeSystemConceptVersionPropertyValueTableComponent implements OnCh
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['propertyValues']) {
-      if (this.codeSystemId){
-        this.loadProperties(this.codeSystemId!);
-      }
+      this.loadProperties(this.codeSystemId!);
       this.propertyValuesMap = collect(this.propertyValues || [], pv => pv.entityPropertyId!);
     }
   }
