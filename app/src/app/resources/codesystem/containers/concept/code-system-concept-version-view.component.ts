@@ -9,6 +9,7 @@ import {Location} from '@angular/common';
   templateUrl: './code-system-concept-version-view.component.html',
 })
 export class CodeSystemConceptVersionViewComponent implements OnInit {
+  public codeSystemId?: string | null;
   public version?: CodeSystemEntityVersion;
 
   private loading: {[key: string]: boolean} = {};
@@ -22,6 +23,7 @@ export class CodeSystemConceptVersionViewComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
+    this.codeSystemId = this.route.snapshot.paramMap.get('id');
     const versionId = this.route.snapshot.paramMap.get('conceptVersion');
     this.loadVersion(Number(versionId));
   }

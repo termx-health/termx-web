@@ -12,10 +12,12 @@
             {{version.description}}
           </m-form-item>
 
-        <twa-code-system-concept-version-designation-table [(designations)]="version.designations"
-            viewMode></twa-code-system-concept-version-designation-table>
-        <twa-code-system-concept-version-property-value-table [(propertyValues)]="version.propertyValues"
-            viewMode></twa-code-system-concept-version-property-value-table>
+          <twa-code-system-concept-version-designation-table [(designations)]="version.designations"
+              [codeSystemId]="codeSystemId"
+              viewMode></twa-code-system-concept-version-designation-table>
+          <twa-code-system-concept-version-property-value-table [(propertyValues)]="version.propertyValues"
+              [codeSystemId]="codeSystemId"
+              viewMode></twa-code-system-concept-version-property-value-table>
         </form>
 
         <ng-container *m-card-footer>
