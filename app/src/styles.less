@@ -23,37 +23,8 @@ html {
 
 // MUI tweaks
 
-.tw-card-inner {
-  box-shadow: none;
-
-  .m-card-header, .m-card-footer {
-    padding-left: 0;
-    padding-right: 0;
-  }
-
-  .m-card-header {
-    border-bottom: 0;
-
-    &.m-card-title-container {
-      padding-bottom: 1rem;
-    }
-  }
-
-  .m-card-content {
-    padding: 0;
-  }
-}
-
-.tw-items-between {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.tw-items-middle {
-  display: flex;
-  gap: 0.5em;
-  align-items: center
+.tw-table-min-width {
+  width: 0;
 }
 
 .tw-table-actions {
@@ -69,40 +40,3 @@ html {
 }
 
 
-.layout {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  height: calc(100vh - 4rem - 1px);
-
-  &--sidebar {
-    z-index: 1;
-  }
-
-  &--content {
-    overflow: auto;
-    padding: 4rem;
-  }
-}
-
-
-@media only screen and (max-width: 768px) {
-  .layout {
-    display: flex;
-    flex-direction: column;
-
-    &--sidebar {
-      .m-menu {
-        display: flex;
-        overflow: auto;
-      }
-
-      .m-menu-item-label {
-        display: none;
-      }
-    }
-
-    &--content {
-      padding: 0.5rem;
-    }
-  }
-}

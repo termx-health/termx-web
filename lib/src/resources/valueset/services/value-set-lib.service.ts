@@ -31,6 +31,14 @@ export class ValueSetLibService {
     return this.http.get<ValueSetConcept[]>(`${this.baseUrl}/${valueSetId}/versions/${versionVersion}/concepts`);
   }
 
+  public expand(valueSetId: string): Observable<ValueSetConcept[]> {
+    return this.http.get<ValueSetConcept[]>(`${this.baseUrl}/${valueSetId}/expand`);
+  }
+
+  public expandByVersion(valueSetId: string, versionVersion: string): Observable<ValueSetConcept[]> {
+    return this.http.get<ValueSetConcept[]>(`${this.baseUrl}/${valueSetId}/versions/${versionVersion}/expand`);
+  }
+
   public search(params: ValueSetSearchParams = {}): Observable<SearchResult<ValueSet>> {
     return this.http.get<SearchResult<ValueSet>>(this.baseUrl, {params: SearchHttpParams.build(params)});
   }

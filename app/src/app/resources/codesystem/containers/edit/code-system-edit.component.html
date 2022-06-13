@@ -40,7 +40,7 @@
 
           <m-form-item mName="narrative" [mLabel]="narrativeHeader">
             <ng-template #narrativeHeader>
-              <div class="tw-items-between">
+              <div class="m-items-between">
                 <div>{{'entities.code-system.narrative' | translate}}</div>&nbsp;
                 <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
                   <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
@@ -55,7 +55,7 @@
 
         <twa-code-system-versions-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-versions-list>
         <twa-code-system-properties-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-properties-list>
-        <twl-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></twl-contact-list>
+        <twa-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></twa-contact-list>
 
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">

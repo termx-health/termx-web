@@ -50,7 +50,8 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
     }
     this.version.status = 'draft';
     this.loading['save'] = true;
-    this.codeSystemEntityService.saveVersion(Number(this.conceptId), this.version).subscribe(() => this.location.back())
+    this.codeSystemEntityService.saveVersion(Number(this.conceptId), this.version)
+      .subscribe(() => this.location.back())
       .add(() => this.loading['save'] = false);
   }
 

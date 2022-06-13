@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemConcept, CodeSystemConceptLibService} from 'lib/src/resources';
+import {CodeSystemConcept, CodeSystemConceptLibService} from 'terminology-lib/resources';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
 import {MuiDestroyService} from '@kodality-health/marina-ui';
@@ -24,7 +24,8 @@ import {isNil} from '@kodality-web/core-util';
         </twa-finder-menu-item>
       </twa-finder-menu>
     </twa-finder-wrapper>
-  `
+  `,
+  providers: [MuiDestroyService]
 })
 export class FinderCodeSystemConceptViewComponent implements OnInit {
   public concept?: CodeSystemConcept;
@@ -39,7 +40,6 @@ export class FinderCodeSystemConceptViewComponent implements OnInit {
   public ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
       const codeSystemConceptId = params.get('conceptId');
-
       if (isNil(codeSystemConceptId)) {
         this.concept = undefined;
         return;

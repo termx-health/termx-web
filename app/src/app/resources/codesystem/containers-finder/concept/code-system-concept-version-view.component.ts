@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemEntityVersion} from 'lib/src/resources';
+import {CodeSystemEntityVersion} from 'terminology-lib/resources';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
 import {MuiDestroyService} from '@kodality-health/marina-ui';
@@ -12,7 +12,7 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
     <twa-finder-wrapper [loading]="loading" title="CODE SYSTEM CONCEPT VERSION">
       <div class="tw-finder-view-form">
         <m-form-item mLabel="entities.code-system-entity-version.status">
-          {{conceptVersion?.status || '-'}}
+          <twa-status-tag [status]="conceptVersion?.status"></twa-status-tag>
         </m-form-item>
         <m-form-item mLabel="entities.code-system-entity-version.description">
           {{conceptVersion?.description || '-'}}
@@ -34,7 +34,8 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
         </twa-finder-menu-item>
       </twa-finder-menu>
     </twa-finder-wrapper>
-  `
+  `,
+  providers: [MuiDestroyService]
 })
 export class FinderCodeSystemConceptVersionViewComponent implements OnInit {
   public conceptVersion?: CodeSystemEntityVersion;
@@ -49,7 +50,6 @@ export class FinderCodeSystemConceptVersionViewComponent implements OnInit {
   public ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
       const conceptVersionId = params.get('versionId');
-
       if (isNil(conceptVersionId)) {
         this.conceptVersion = undefined;
         return;

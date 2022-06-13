@@ -1,9 +1,9 @@
-<m-card class="tw-card-inner">
-  <div *m-card-header class="tw-items-between">
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
     <div class="m-card-title">{{'entities.code-system-version.entities' | translate}}</div>
-    <m-button (click)="modalVisible = true">
-      <m-icon mCode="plus"></m-icon> &nbsp; {{'web.code-system-version.form.entities.add-entity' | translate}}
-    </m-button>
+    <twa-add-button (click)="modalVisible = true">
+      {{'web.code-system-version.form.entities.add-entity' | translate}}
+    </twa-add-button>
   </div>
   <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
 
@@ -17,7 +17,7 @@
     <tr *mTableHead>
       <th mColumnKey="code">{{'entities.code-system-entity-version.code' | translate}}</th>
       <th mColumnKey="description">{{'entities.code-system-entity-version.description' | translate}}</th>
-      <th class="tw-table-actions">{{'web.code-system-version.form.entities.add-entity' | translate}}</th>
+      <th class="tw-table-actions"></th>
     </tr>
     <tr *mTableRow="let entityVersion">
       <td>{{entityVersion.code}}</td>

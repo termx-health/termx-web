@@ -176,6 +176,9 @@
         "concept": "Kontsept",
         "display": "Kuva",
         "additional-designations": "Lisa tähendused"
+      },
+      "modal": {
+        "header": "Tulemuse eelvaade"
       }
     },
     "value-set-rule-set": {
@@ -202,7 +205,7 @@
         "rule": "Reegel",
         "include": "Kaasatud",
         "exclude": "Välistatud",
-        "edit-header": "Muuda reeglit"
+        "edit-header": "Reegel"
       }
     },
     "value-set-rule-filter": {

@@ -6,6 +6,7 @@ import {DesignationModule} from './designation/designation.module';
 import {ResourcesTabsetComponent} from './tabs/resources-tabset.component';
 import {SharedModule} from '../core/shared/shared.module';
 import {MAP_SET_ROUTES, MapSetModule} from './mapset/map-set.module';
+import {ContactModule} from './contact/contact.module';
 
 
 export const RESOURCES_ROUTES: Routes = [
@@ -24,7 +25,8 @@ const resourceModules = [
   CodeSystemModule,
   ValueSetModule,
   DesignationModule,
-  MapSetModule
+  MapSetModule,
+  ContactModule
 ];
 
 @NgModule({

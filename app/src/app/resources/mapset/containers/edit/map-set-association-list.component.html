@@ -1,4 +1,4 @@
-<m-card [mTitle]="'web.map-set-association.list.associations'" class="tw-card-inner">
+<m-card [mTitle]="'web.map-set-association.list.associations'" class="m-card-inside">
   <m-table [mData]="data | keys" [mLoading]="loading" mHideOnSinglePage mEnablePagination>
     <ng-container *mTableHead>
       <tr>
@@ -23,7 +23,7 @@
         <td>{{association.target.code}}</td>
         <td>{{association.target.codeSystem}}</td>
         <td>{{association.associationType}}</td>
-        <td><twa-status-tag [status]="association.status"></twa-status-tag></td>
+        <td class="tw-table-min-width"><twa-status-tag [status]="association.status"></twa-status-tag></td>
         <td class="tw-table-actions">
           <m-dropdown>
             <a *mDropdownItemIf="association.status === 'active'" (click)="retireAssociation()">

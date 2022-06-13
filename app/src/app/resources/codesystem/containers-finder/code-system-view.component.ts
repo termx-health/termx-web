@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystem} from 'lib/src/resources';
+import {CodeSystem} from 'terminology-lib/resources';
 import {CodeSystemService} from '../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {forkJoin, takeUntil} from 'rxjs';
@@ -8,7 +8,8 @@ import {isNil} from '@kodality-web/core-util';
 
 
 @Component({
-  templateUrl: 'code-system-view.component.html'
+  templateUrl: 'code-system-view.component.html',
+  providers: [MuiDestroyService]
 })
 export class FinderCodeSystemViewComponent implements OnInit {
   public codeSystem?: CodeSystem;
