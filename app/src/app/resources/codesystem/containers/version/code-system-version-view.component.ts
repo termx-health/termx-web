@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CodeSystemVersion} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: 'code-system-version-view.component.html',
@@ -14,6 +15,7 @@ export class CodeSystemVersionViewComponent implements OnInit {
   public constructor(
     private codeSystemService: CodeSystemService,
     private route: ActivatedRoute,
+    private location: Location,
   ) {}
 
   public ngOnInit(): void {
@@ -25,5 +27,9 @@ export class CodeSystemVersionViewComponent implements OnInit {
   private loadVersion(id: string, version: string): void {
     this.loading = true;
     this.codeSystemService.loadVersion(id, version).subscribe(v => this.version = v).add(() => this.loading = false);
+  }
+
+  public back(): void {
+    this.location.back();
   }
 }
