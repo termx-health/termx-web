@@ -11,15 +11,16 @@ import {EntityPropertyLibService} from 'terminology-lib/resources/codesystem/ser
 })
 export class CodeSystemConceptVersionDesignationTableComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: string | boolean = false;
+
   @Input() public codeSystemId?: string;
   @Input() public designations?: Designation[] = [];
   @Output() public designationsChange = new EventEmitter<Designation[]>();
 
   @ViewChild("designationForm") public designationForm?: NgForm;
 
-  private loading: {[key: string]: boolean} = {};
   public entityProperties?: {[id: number]: EntityProperty};
   public designationMap?: {[id: string]: Designation[]} = {};
+  private loading: {[key: string]: boolean} = {};
 
   public designationModalData: {
     visible?: boolean;

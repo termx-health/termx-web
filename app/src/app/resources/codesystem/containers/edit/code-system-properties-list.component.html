@@ -9,7 +9,9 @@
     <tr *mTableRow="let property">
       <td>{{property.name}}</td>
       <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
-      <td class="tw-table-min-width"><twa-status-tag [status]="property.status"></twa-status-tag></td>
+      <td class="tw-table-min-width">
+        <twa-status-tag [status]="property.status"></twa-status-tag>
+      </td>
     </tr>
 
     <tr *mTableNoData>

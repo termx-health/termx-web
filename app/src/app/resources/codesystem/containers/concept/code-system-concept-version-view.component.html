@@ -6,8 +6,8 @@
           <div class="m-card-title">{{('web.code-system-concept-version.form.view-header') | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
-        <form #conceptVersionForm="ngForm" *ngIf="version">
 
+        <form #conceptVersionForm="ngForm" *ngIf="version">
           <m-form-item mLabel="entities.code-system-entity-version.description">
             {{version.description}}
           </m-form-item>

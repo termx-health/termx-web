@@ -20,7 +20,6 @@
           </m-form-item>
 
           <twa-value-set-versions-list *ngIf="mode === 'edit'" [valueSetId]="valueSetId"></twa-value-set-versions-list>
-
           <twa-contact-list *ngIf="valueSet" [(contacts)]="valueSet.contacts"></twa-contact-list>
 
           <ng-container *m-card-footer>

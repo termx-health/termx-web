@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {MapSetListComponent} from './containers/map-set-list.component';
 import {SharedModule} from '../../core/shared/shared.module';
-import {MapSetLibModule} from 'terminology-lib/resources/mapset';
 import {Routes} from '@angular/router';
 import {MapSetService} from './services/map-set-service';
 import {MapSetEditComponent} from './containers/edit/map-set-edit.component';
@@ -10,7 +9,7 @@ import {MapSetVersionsListComponent} from './containers/edit/map-set-versions-li
 import {MapSetVersionEditComponent} from './containers/version/map-set-version-edit.component';
 import {MapSetVersionViewComponent} from './containers/version/map-set-version-view.component';
 import {MapSetAssociationListComponent} from './containers/edit/map-set-association-list.component';
-import {CodeSystemLibModule, ValueSetLibModule} from 'terminology-lib/resources';
+import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
 
 
 export const MAP_SET_ROUTES: Routes = [
@@ -24,9 +23,7 @@ export const MAP_SET_ROUTES: Routes = [
 @NgModule({
   imports: [
     SharedModule,
-    MapSetLibModule,
-    ValueSetLibModule,
-    CodeSystemLibModule
+    ResourcesLibModule
   ],
   exports: [
     MapSetListComponent

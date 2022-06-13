@@ -45,14 +45,17 @@
     <ng-container *mModalContent>
       <form #propertyForm="ngForm">
         <m-form-item mName="propertyModalProperty" mLabel="entities.entity-property.name" required>
-          <m-select icon="search"
-              placeholder="marina.ui.inputs.search.placeholder"
+          <m-select
               name="propertyModalProperty"
               [(ngModel)]="propertyValueModalData.propertyValue.entityPropertyId"
-              required>
+              placeholder="marina.ui.inputs.search.placeholder"
+              icon="search"
+              required
+          >
             <m-option *ngFor="let prop of entityProperties | values" [value]="prop.id" [label]="prop.name"></m-option>
           </m-select>
         </m-form-item>
+
         <m-form-item mName="propertyModalValue" mLabel="entities.entity-property.value" required>
           <m-input name="propertyModalValue" [(ngModel)]="propertyValueModalData.propertyValue.value" required></m-input>
         </m-form-item>

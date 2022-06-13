@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import {EMPTY, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.service';
@@ -17,7 +17,7 @@ export class LocalizedConceptNamePipe implements PipeTransform {
 
   public transform(code: string, resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
     if (!code || !resource || (!resource.codeSystem && !resource.valueSet)) {
-      return of();
+      return EMPTY;
     }
     return this.conceptService.search({
       code: code,
@@ -33,7 +33,7 @@ export class LocalizedConceptNamePipe implements PipeTransform {
     if (!concept.versions) {
       return concept.code!;
     }
-    const conceptVersion  = concept.versions.find(v => v.status === 'active');
+    const conceptVersion = concept.versions.find(v => v.status === 'active');
     if (!conceptVersion || !conceptVersion.designations) {
       return concept.code!;
     }

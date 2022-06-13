@@ -58,10 +58,6 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
     this.search().subscribe(resp => this.searchResult = resp);
   }
 
-  public delete(entity: CodeSystemEntityVersion): void {
-    this.codeSystemService.unlinkEntityVersion(this.codeSystemId!, this.version!, entity.id!).subscribe(() => this.loadData());
-  }
-
   public save(): void {
     if (!validateForm(this.form)) {
       return;
@@ -71,6 +67,10 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
       this.loadData();
       this.modalVisible = false;
     }).add(() => this.loading['save'] = false);
+  }
+
+  public delete(entity: CodeSystemEntityVersion): void {
+    this.codeSystemService.unlinkEntityVersion(this.codeSystemId!, this.version!, entity.id!).subscribe(() => this.loadData());
   }
 
   public get isLoading(): boolean {

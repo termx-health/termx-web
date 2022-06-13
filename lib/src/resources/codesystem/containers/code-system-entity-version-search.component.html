@@ -4,6 +4,10 @@
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
     [autoUnselect]="false"
-    [loading]="isLoading">
-  <m-option *ngFor="let key of (data | keys)" [value]="data[key]?.id" [label]="data[key]?.code + ' ' + (data[key]?.created | localDateTime) + ' ' + (('web.publication-status.statuses.' + data[key]?.status) | translate) "></m-option>
+    [loading]="isLoading"
+>
+  <m-option *ngFor="let key of (data | keys)"
+      [value]="data[key]?.id"
+      [label]="data[key]?.code + ' ' + (data[key]?.created | localDateTime) + ' ' + (data[key]?.status | localizedConceptName: {valueSet: 'publication-status'} | async) "
+  ></m-option>
 </m-select>
