@@ -12,9 +12,9 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
   templateUrl: './code-system-version-entity-versions-list.component.html',
 })
 export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public codeSystemId?: string;
   @Input() public version?: string;
-  @Input() @BooleanInput() public viewMode: string | boolean = false;
 
   public loading: {[key: string]: boolean} = {};
 
