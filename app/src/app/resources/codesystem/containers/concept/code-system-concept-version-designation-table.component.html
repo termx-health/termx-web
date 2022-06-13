@@ -1,8 +1,10 @@
 <m-spinner [mLoading]="isLoading">
-  <m-card class="tw-card-inner">
-    <div *m-card-header class="tw-items-between">
+  <m-card class="m-card-inside">
+    <div *m-card-header class="m-items-between">
       <div class="m-card-title">{{'entities.code-system-entity-version.designations' | translate}}</div>
-      <m-button *ngIf="!view" mLabel="web.code-system-concept-version.designation-modal.add-designation" (click)="openDesignationModal()"></m-button>
+      <twa-add-button *ngIf="!viewMode" (click)="openDesignationModal()">
+        {{'web.code-system-concept-version.designation-modal.add-designation' | translate}}
+      </twa-add-button>
     </div>
 
     <m-table [mData]="designationMap | keys" mEnablePagination mHideOnSinglePage>
@@ -18,23 +20,23 @@
         <tr *ngFor="let designation of designationMap[key]; let isFirst = first; let index = index">
           <td *ngIf="isFirst && entityProperties" [rowSpan]="designationMap[key].length">{{entityProperties[designation.designationTypeId]?.name}}</td>
           <td>
-            <a *ngIf="!view" (click)="openDesignationModal({key, index})">{{designation.name.slice(0, 40)}}</a>
-            <div *ngIf="view">{{designation.name.slice(0, 40)}}</div>
+            <a *ngIf="!viewMode" (click)="openDesignationModal({key, index})">{{designation.name | abbreviate:35}}</a>
+            <div *ngIf="viewMode">{{designation.name | abbreviate:35}}</div>
           </td>
           <td>{{designation.language}}</td>
-          <td>
+          <td class="tw-table-min-width">
             <twa-status-tag [status]="designation.status"></twa-status-tag>
           </td>
           <td class="tw-table-actions">
-            <m-button mDisplay="text" mShape="circle" *ngIf="!view" (click)="designation.preferred = !designation.preferred">
+            <m-button mDisplay="text" mShape="circle" *ngIf="!viewMode" (click)="designation.preferred = !designation.preferred">
               <m-icon [mOptions]="{nzTheme : designation.preferred? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
             </m-button>
-            <m-dropdown *ngIf="!view">
+            <m-dropdown *ngIf="!viewMode">
               <a *m-dropdown-item (click)="deleteDesignation(key, index)">
                 {{'web.code-system-concept-version.designation-modal.delete-designation' | translate}}
               </a>
             </m-dropdown>
-            <m-icon *ngIf="view" [mOptions]="{nzTheme : designation.preferred? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
+            <m-icon *ngIf="viewMode" [mOptions]="{nzTheme : designation.preferred? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
           </td>
         </tr>
       </ng-container>

@@ -11,6 +11,7 @@ import {Location} from '@angular/common';
   templateUrl: './code-system-concept-version-edit.component.html',
 })
 export class CodeSystemConceptVersionEditComponent implements OnInit {
+  public codeSystemId?: string | null;
   private conceptId?: string | null;
   public version?: CodeSystemEntityVersion;
 
@@ -28,7 +29,7 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    const codeSystemId = this.route.snapshot.paramMap.get('id');
+    this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.conceptId = this.route.snapshot.paramMap.get('concept');
     const versionId = this.route.snapshot.paramMap.get('conceptVersion');
     this.mode = versionId ? 'edit' : 'add';
@@ -38,7 +39,7 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
     } else {
       this.version = new CodeSystemEntityVersion();
       this.version.status = 'draft';
-      this.version.codeSystem = codeSystemId!;
+      this.version.codeSystem = this.codeSystemId!;
       this.loading['code'] = true;
       this.codeSystemConceptLibService.load(Number(this.conceptId)).subscribe(c => this.version!.code = c.code).add(() => this.loading['code'] = false);
     }

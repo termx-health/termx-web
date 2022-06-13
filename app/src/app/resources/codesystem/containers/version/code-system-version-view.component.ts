@@ -8,6 +8,7 @@ import {CodeSystemService} from '../../services/code-system.service';
 })
 export class CodeSystemVersionViewComponent implements OnInit {
   public version?: CodeSystemVersion;
+  public codeSystemId?: string | null;
   public loading = false;
 
   public constructor(
@@ -16,9 +17,9 @@ export class CodeSystemVersionViewComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    const codeSystemId = this.route.snapshot.paramMap.get('id');
+    this.codeSystemId = this.route.snapshot.paramMap.get('id');
     const codeSystemVersion = this.route.snapshot.paramMap.get('version');
-    this.loadVersion(codeSystemId!, codeSystemVersion!);
+    this.loadVersion(this.codeSystemId!, codeSystemVersion!);
   }
 
   private loadVersion(id: string, version: string): void {

@@ -3,7 +3,6 @@ import {Designation, EntityProperty} from 'terminology-lib/resources';
 import {BooleanInput, collect, copyDeep, group, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {EntityPropertySearchParams} from 'terminology-lib/resources/codesystem/model/entity-property-search-params';
-import {ActivatedRoute} from '@angular/router';
 import {EntityPropertyLibService} from 'terminology-lib/resources/codesystem/services/entity-property-lib.service';
 
 @Component({
@@ -11,8 +10,9 @@ import {EntityPropertyLibService} from 'terminology-lib/resources/codesystem/ser
   templateUrl: './code-system-concept-version-designation-table.component.html',
 })
 export class CodeSystemConceptVersionDesignationTableComponent implements OnInit, OnChanges {
-  @Input() @BooleanInput() public view: string | boolean = false;
-  @Input() public designations?: Designation[];
+  @Input() @BooleanInput() public viewMode: string | boolean = false;
+  @Input() public codeSystemId?: string;
+  @Input() public designations?: Designation[] = [];
   @Output() public designationsChange = new EventEmitter<Designation[]>();
 
   @ViewChild("designationForm") public designationForm?: NgForm;
@@ -30,14 +30,10 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnInit
 
   public constructor(
     public entityPropertyService: EntityPropertyLibService,
-    private route: ActivatedRoute,
   ) {}
 
   public ngOnInit(): void {
-    const codeSystemId = this.route.snapshot.paramMap.get('id');
-    if (codeSystemId) {
-      this.loadProperties(codeSystemId);
-    }
+    this.loadProperties(this.codeSystemId!);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

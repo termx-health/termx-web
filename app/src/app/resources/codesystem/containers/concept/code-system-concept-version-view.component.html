@@ -2,19 +2,23 @@
   <div *mFormCol>
     <m-spinner [mLoading]="isLoading">
       <m-card>
-        <div *m-card-header class="tw-items-middle">
+        <div *m-card-header class="m-items-middle">
           <div class="m-card-title">{{('web.code-system-concept-version.form.view-header') | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
         <form #conceptVersionForm="ngForm" *ngIf="version">
 
-          <m-form-item mName="description" mLabel="entities.code-system-entity-version.description">
+          <m-form-item mLabel="entities.code-system-entity-version.description">
             {{version.description}}
           </m-form-item>
         </form>
 
-        <twa-code-system-concept-version-designation-table *ngIf="version?.designations" [(designations)]="version.designations" view></twa-code-system-concept-version-designation-table>
-        <twa-code-system-concept-version-property-value-table *ngIf="version?.propertyValues" [(propertyValues)]="version.propertyValues" view></twa-code-system-concept-version-property-value-table>
+        <twa-code-system-concept-version-designation-table *ngIf="version?.designations"
+            [(designations)]="version.designations"
+            viewMode></twa-code-system-concept-version-designation-table>
+        <twa-code-system-concept-version-property-value-table *ngIf="version?.propertyValues"
+            [(propertyValues)]="version.propertyValues"
+            viewMode></twa-code-system-concept-version-property-value-table>
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="back()" [mLoading]="isLoading" [disabled]="isLoading">
             {{'core.back' | translate}}

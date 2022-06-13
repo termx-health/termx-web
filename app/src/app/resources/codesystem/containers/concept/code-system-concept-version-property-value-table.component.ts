@@ -4,17 +4,16 @@ import {EntityProperty, EntityPropertyValue} from 'terminology-lib/resources';
 import {NgForm} from '@angular/forms';
 import {EntityPropertySearchParams} from 'terminology-lib/resources/codesystem/model/entity-property-search-params';
 import {EntityPropertyLibService} from 'terminology-lib/resources/codesystem/services/entity-property-lib.service';
-import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'twa-code-system-concept-version-property-value-table',
   templateUrl: './code-system-concept-version-property-value-table.component.html',
 })
 export class CodeSystemConceptVersionPropertyValueTableComponent implements OnChanges, OnInit {
-  @Input() @BooleanInput() public view?: string | boolean = false;
+  @Input() @BooleanInput() public viewMode?: string | boolean = false;
+  @Input() public codeSystemId?: string;
   @Input() public propertyValues?: EntityPropertyValue[];
   @Output() public propertyValuesChange = new EventEmitter<EntityPropertyValue[]>();
-
 
   private loading: {[key: string]: boolean} = {};
   public propertyValuesMap?: {[id: number]: EntityPropertyValue[]} = {};
@@ -31,14 +30,10 @@ export class CodeSystemConceptVersionPropertyValueTableComponent implements OnCh
 
   public constructor(
     public entityPropertyService: EntityPropertyLibService,
-    private route: ActivatedRoute,
   ) { }
 
   public ngOnInit(): void {
-    const codeSystemId = this.route.snapshot.paramMap.get('id');
-    if (codeSystemId) {
-      this.loadProperties(codeSystemId);
-    }
+    this.loadProperties(this.codeSystemId!);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

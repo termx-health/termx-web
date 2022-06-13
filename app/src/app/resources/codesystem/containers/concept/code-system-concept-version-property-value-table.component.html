@@ -1,25 +1,27 @@
 <m-spinner [mLoading]="isLoading">
-  <m-card class="tw-card-inner">
-    <div *m-card-header class="tw-items-between">
+  <m-card class="m-card-inside">
+    <div *m-card-header class="m-items-between">
       <div class="m-card-title">{{'entities.code-system-entity-version.property-values' | translate}}</div>
-      <m-button *ngIf="!view" mLabel="web.code-system-concept-version.property-modal.add-property" (click)="openPropertyValueModal()"></m-button>
+      <twa-add-button *ngIf="!viewMode" (click)="openPropertyValueModal()">
+        {{'web.code-system-concept-version.property-modal.add-property' | translate}}
+      </twa-add-button>
     </div>
 
     <m-table [mData]="propertyValuesMap | keys" mEnablePagination mHideOnSinglePage>
       <tr *mTableHead>
         <th>{{'entities.entity-property.name' | translate}}</th>
         <th>{{'entities.entity-property.value' | translate}}</th>
-        <th class="tw-table-actions" *ngIf="!view"></th>
+        <th class="tw-table-actions" *ngIf="!viewMode"></th>
       </tr>
 
       <ng-container *mTableRow="let key">
         <tr *ngFor="let property of propertyValuesMap[key | toNumber]; let isFirst = first; let index = index;">
           <td *ngIf="isFirst && entityProperties" [rowSpan]="propertyValuesMap[key].length">{{entityProperties[property.entityPropertyId]?.name}}</td>
           <td>
-            <a *ngIf="!view" (click)="openPropertyValueModal({key, index})">{{property.value.slice(0, 40)}}</a>
-            <div *ngIf="view">{{property.value.slice(0, 40)}}</div>
+            <a *ngIf="!viewMode" (click)="openPropertyValueModal({key, index})">{{property.value | abbreviate:40}}</a>
+            <div *ngIf="viewMode">{{property.value | abbreviate:40}}</div>
           </td>
-          <td class="tw-table-actions" *ngIf="!view">
+          <td class="tw-table-actions" *ngIf="!viewMode">
             <m-button mSize="small" (click)="deletePropertyValue(key, index)">
               <m-icon [mCode]="'close'"></m-icon>
             </m-button>
