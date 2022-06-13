@@ -112,7 +112,8 @@
     "code-system-concept-version": {
       "form": {
         "add-header": "Add version",
-        "edit-header": "Edit version"
+        "edit-header": "Edit version",
+        "view-header": "View version"
       },
       "designation-modal": {
         "add-designation": "Add designation",

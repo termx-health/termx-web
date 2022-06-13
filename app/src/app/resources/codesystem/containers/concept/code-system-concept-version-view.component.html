@@ -3,27 +3,30 @@
     <m-spinner [mLoading]="isLoading">
       <m-card>
         <div *m-card-header class="m-items-middle">
-          <div class="m-card-title">{{(mode === 'edit' ? 'web.code-system-concept-version.form.edit-header' : 'web.code-system-concept-version.form.add-header') | translate}}</div>
+          <div class="m-card-title">{{('web.code-system-concept-version.form.view-header') | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
         <form #conceptVersionForm="ngForm" *ngIf="version">
 
-          <m-form-item mName="description" mLabel="entities.code-system-entity-version.description">
-            <m-textarea name="description" [(ngModel)]="version.description"></m-textarea>
+          <m-form-item mLabel="entities.code-system-entity-version.description">
+            {{version.description}}
           </m-form-item>
 
           <twa-code-system-concept-version-designation-table
               [(designations)]="version.designations"
               [codeSystemId]="codeSystemId"
+              viewMode
           ></twa-code-system-concept-version-designation-table>
           <twa-code-system-concept-version-property-value-table
               [(propertyValues)]="version.propertyValues"
               [codeSystemId]="codeSystemId"
+              viewMode
           ></twa-code-system-concept-version-property-value-table>
         </form>
+
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" (click)="save()" [mLoading]="isLoading" [disabled]="isLoading">
-            {{'core.btn.save' | translate}}
+          <m-button mDisplay="primary" (click)="back()" [mLoading]="isLoading" [disabled]="isLoading">
+            {{'core.back' | translate}}
           </m-button>
         </ng-container>
       </m-card>

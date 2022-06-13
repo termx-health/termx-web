@@ -37,6 +37,11 @@
 
           <twa-code-system-version-entity-version-list [codeSystemId]="codeSystemId" [version]="version.version" viewMode></twa-code-system-version-entity-version-list>
         </div>
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" (click)="back()" [mLoading]="loading" [disabled]="loading">
+            {{'core.back' | translate}}
+          </m-button>
+        </ng-container>
       </m-card>
     </m-spinner>
   </div>

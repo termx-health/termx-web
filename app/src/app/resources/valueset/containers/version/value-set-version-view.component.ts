@@ -3,6 +3,7 @@ import {ValueSetConcept, ValueSetVersion} from 'terminology-lib/resources';
 import {ActivatedRoute} from '@angular/router';
 import {ValueSetService} from '../../services/value-set.service';
 import {forkJoin} from 'rxjs';
+import {Location} from '@angular/common';
 
 @Component({
   templateUrl: 'value-set-version-view.component.html',
@@ -16,6 +17,7 @@ export class ValueSetVersionViewComponent implements OnInit {
   public constructor(
     private valueSetService: ValueSetService,
     private route: ActivatedRoute,
+    private location: Location,
   ) {}
 
   public ngOnInit(): void {
@@ -33,5 +35,9 @@ export class ValueSetVersionViewComponent implements OnInit {
       this.version = version;
       this.concepts = concepts;
     }).add(() => this.loading = false);
+  }
+
+  public back(): void {
+    this.location.back();
   }
 }
