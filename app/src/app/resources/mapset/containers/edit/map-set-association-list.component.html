@@ -26,10 +26,10 @@
         <td class="tw-table-min-width"><twa-status-tag [status]="association.status"></twa-status-tag></td>
         <td class="tw-table-actions">
           <m-dropdown>
-            <a *mDropdownItemIf="association.status === 'active'" (click)="retireAssociation()">
+            <a *mDropdownItemIf="association.status !== 'retired'" (click)="retireAssociation()">
               {{'web.publication-status.operations.retire' | translate}}
             </a>
-            <a *mDropdownItemIf="association.status !== 'active'" (click)="activateAssociation()">
+            <a *mDropdownItemIf="association.status === 'draft'" (click)="activateAssociation()">
               {{'web.publication-status.operations.activate' | translate}}
             </a>
           </m-dropdown>

@@ -38,10 +38,10 @@
               </td>
               <td class="tw-table-actions">
                 <m-dropdown>
-                  <a *mDropdownItemIf="version.status === 'active'" (click)="retireVersion(version)">
+                  <a *mDropdownItemIf="version.status !== 'retired'" (click)="retireVersion(version)">
                     {{'web.publication-status.operations.retire' | translate}}
                   </a>
-                  <a *mDropdownItemIf="version.status !== 'active'" (click)="activateVersion(version)">
+                  <a *mDropdownItemIf="version.status === 'draft'" (click)="activateVersion(version)">
                     {{'web.publication-status.operations.activate' | translate}}
                   </a>
                 </m-dropdown>
