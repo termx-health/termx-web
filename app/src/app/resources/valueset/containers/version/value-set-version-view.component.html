@@ -22,7 +22,7 @@
 
           <m-form-item mName="expirationDate" mLabel="web.value-set-version.entity.expiration-date">
             <nz-date-picker *ngIf="version.status === 'active'" name="expirationDate" [(ngModel)]="version.expirationDate"></nz-date-picker>
-            <div *ngIf="version.status === 'retired'">
+            <div *ngIf="version.status !== 'active'">
               {{version.expirationDate | localDate}}
             </div>
           </m-form-item>
@@ -42,10 +42,12 @@
           </m-form-item>
         </form>
 
-        <div *m-card-footer>
-          <m-button *ngIf="version.status === 'active'" mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
-            {{'core.btn.save' | translate}}
-          </m-button>
+        <div *ngIf="version.status === 'active'">
+          <ng-container *m-card-footer>
+            <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
+              {{'core.btn.save' | translate}}
+            </m-button>
+          </ng-container>
         </div>
       </m-card>
     </m-spinner>
