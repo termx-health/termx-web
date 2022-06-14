@@ -1,5 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {CodeSystemService} from '../../services/code-system.service';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {EntityProperty} from 'terminology-lib/resources';
 import {copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
@@ -9,16 +8,13 @@ import {NgForm} from '@angular/forms';
   selector: 'twa-code-system-properties-list',
   templateUrl: './code-system-properties-list.component.html',
 })
-export class CodeSystemPropertiesListComponent implements OnChanges {
-  @Input() public codeSystemId?: string;
+export class CodeSystemPropertiesListComponent {
+  @Input() public properties: EntityProperty[] = [];
   @Output() public propertiesChange = new EventEmitter<EntityProperty[]>();
-
-  public properties: EntityProperty[] = [];
   public loading = false;
 
   @ViewChild("propertyForm") public propertyForm?: NgForm;
 
-  public constructor(private codeSystemService: CodeSystemService) {}
 
   public propertyModalData: {
     visible?: boolean;
@@ -27,23 +23,6 @@ export class CodeSystemPropertiesListComponent implements OnChanges {
   } = {};
 
   public propertyTypes = ['string', 'code', 'coding', 'boolean', 'dateTime', 'decimal'];
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["codeSystemId"]?.currentValue) {
-      this.loadProperties();
-    }
-  }
-
-  private loadProperties(): void {
-    if (!this.codeSystemId) {
-      return;
-    }
-    this.loading = true;
-    this.codeSystemService.loadProperties(this.codeSystemId)
-      .subscribe(properties => this.properties = properties)
-      .add(() => this.loading = false);
-  }
-
 
   public saveProperty(): void {
     if (!validateForm(this.propertyForm)) {
