@@ -4,8 +4,7 @@ import {map} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.service';
 import {CodeSystemConcept} from '../model/code-system-concept';
-import {compareValues} from '@kodality-web/core-util';
-import {CacheService} from '../../../util';
+import {compareValues, HttpCacheService} from '@kodality-web/core-util';
 
 @Pipe({
   name: 'localizedConceptName'
@@ -13,7 +12,7 @@ import {CacheService} from '../../../util';
 export class LocalizedConceptNamePipe implements PipeTransform {
 
   public constructor(
-    private cacheService: CacheService,
+    private cacheService: HttpCacheService,
     private translateService: TranslateService,
     private conceptService: CodeSystemConceptLibService) {}
 
