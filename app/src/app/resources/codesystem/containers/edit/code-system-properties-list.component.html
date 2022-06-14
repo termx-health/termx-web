@@ -1,23 +1,78 @@
-<m-card [mTitle]="'entities.code-system.properties'" class="m-card-inside">
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
+    <div class="m-card-title">{{'entities.code-system.properties' | translate}}</div>
+    <twa-add-button (click)="openPropertyModal()">
+      {{'web.code-system.list.property.add-property' | translate}}
+    </twa-add-button>
+  </div>
   <m-table [mData]="properties" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
     <tr *mTableHead>
-      <th>{{'entities.entity-property.name' | translate}}</th><!--Add router to edit when editing becomes available-->
+      <th>{{'entities.entity-property.name' | translate}}</th>
       <th>{{'entities.entity-property.type' | translate}}</th>
+      <th>{{'entities.entity-property.description' | translate}}</th>
       <th>{{'entities.entity-property.status' | translate}}</th>
+      <th class="tw-table-actions"></th>
     </tr>
 
-    <tr *mTableRow="let property">
-      <td>{{property.name}}</td>
+    <tr *mTableRow="let property; let index = index">
+      <td><a (click)="openPropertyModal(index)">{{property.name}}</a></td>
       <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
+      <td>{{property.description | abbreviate: 40}}</td>
       <td class="tw-table-min-width">
         <twa-status-tag [status]="property.status"></twa-status-tag>
+      </td>
+      <td class="tw-table-actions">
+        <m-dropdown>
+          <a *m-dropdown-item (click)="deleteProperty(index)">
+            {{'web.code-system.list.property.delete-property' | translate}}
+          </a>
+        </m-dropdown>
       </td>
     </tr>
 
     <tr *mTableNoData>
-      <td colspan="3">
+      <td colspan="5">
         <m-no-data></m-no-data>
       </td>
     </tr>
   </m-table>
 </m-card>
+
+
+<m-modal [(mVisible)]="propertyModalData.visible" (mClose)="propertyModalData = {visible: false}">
+  <ng-container *mModalHeader>
+    {{(propertyModalData.editIndex ? 'web.code-system.property-modal.edit-property' : 'web.code-system.property-modal.add-property') | translate}}
+  </ng-container>
+
+  <ng-container *mModalContent>
+    <form #propertyForm="ngForm">
+      <m-form-item mName="propertyModalName" mLabel="entities.entity-property.name" required>
+        <m-input name="propertyModalName" [(ngModel)]="propertyModalData.property.name"></m-input>
+      </m-form-item>
+      <m-form-item mName="propertyModalType" mLabel="entities.entity-property.type" required>
+        <twl-value-set-concept-select name="propertyModalType"
+            [(ngModel)]="propertyModalData.property.type"
+            valueSet="concept-property-type"
+            required></twl-value-set-concept-select>
+      </m-form-item>
+      <m-form-item mName="propertyModalStatus" mLabel="entities.entity-property.status" required>
+        <twl-value-set-concept-select name="designationModalStatus"
+            [(ngModel)]="propertyModalData.property.status"
+            valueSet="publication-status"
+            required></twl-value-set-concept-select>
+      </m-form-item>
+      <m-form-item mName="propertyModalDescription" mLabel="entities.entity-property.description">
+        <m-textarea name="propertyModalDescription" [(ngModel)]="propertyModalData.property.description"></m-textarea>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="tw-button-group">
+    <m-button (click)="propertyModalData.visible = false">
+      {{'core.back' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" [mLoading]="isLoading" (click)="saveProperty()">
+      {{(propertyModalData.editIndex ? 'core.btn.confirm' : 'core.btn.add') | translate}}
+    </m-button>
+  </div>
+</m-modal>
