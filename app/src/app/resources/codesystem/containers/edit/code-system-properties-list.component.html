@@ -50,13 +50,10 @@
         <m-input name="propertyModalName" [(ngModel)]="propertyModalData.property.name"></m-input>
       </m-form-item>
       <m-form-item mName="propertyModalType" mLabel="entities.entity-property.type" required>
-        <m-select icon="search"
-            placeholder="marina.ui.inputs.search.placeholder"
-            name="propertyModalType"
+        <twl-value-set-concept-select name="content"
             [(ngModel)]="propertyModalData.property.type"
-            required>
-          <m-option *ngFor="let type of propertyTypes" [value]="type" [label]="type"></m-option>
-        </m-select>
+            valueSet="concept-property-type"
+            required></twl-value-set-concept-select>
       </m-form-item>
       <m-form-item mLabel="entities.entity-property.status" required>
         <twl-value-set-concept-select name="designationModalStatus"
