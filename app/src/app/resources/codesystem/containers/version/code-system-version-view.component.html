@@ -6,6 +6,7 @@
           <div class="m-card-title">{{'web.code-system-version.form.view-header' | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
+
         <div *ngIf="version">
           <m-form-item mLabel="entities.code-system-version.version">
             {{version.version}}
@@ -35,8 +36,13 @@
             {{version.expirationDate | localDate}}
           </m-form-item>
 
-          <twa-code-system-version-entity-version-list [codeSystemId]="codeSystemId" [version]="version.version" viewMode></twa-code-system-version-entity-version-list>
+          <twa-code-system-version-entity-version-list
+              [codeSystemId]="codeSystemId"
+              [version]="version.version"
+              viewMode
+          ></twa-code-system-version-entity-version-list>
         </div>
+
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="back()" [mLoading]="loading" [disabled]="loading">
             {{'core.back' | translate}}

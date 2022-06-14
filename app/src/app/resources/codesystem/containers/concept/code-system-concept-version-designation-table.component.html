@@ -50,6 +50,7 @@
   </m-card>
 </m-spinner>
 
+
 <m-modal [(mVisible)]="designationModalData.visible" (mClose)="designationModalData = {visible: false}">
   <ng-container *mModalHeader>
     {{(designationModalData.editKey ? 'web.code-system-concept-version.designation-modal.edit-designation' : 'web.code-system-concept-version.designation-modal.add-designation') | translate}}
@@ -58,11 +59,13 @@
   <ng-container *mModalContent>
     <form #designationForm="ngForm">
       <m-form-item mName="designationModalType" mLabel="entities.designation.type" required>
-        <m-select icon="search"
-            placeholder="marina.ui.inputs.search.placeholder"
+        <m-select
             name="designationModalType"
             [(ngModel)]="designationModalData.designation.designationTypeId"
-            required>
+            placeholder="marina.ui.inputs.search.placeholder"
+            icon="search"
+            required
+        >
           <m-option *ngFor="let prop of entityProperties | values" [value]="prop.id" [label]="prop.name"></m-option>
         </m-select>
       </m-form-item>
@@ -103,6 +106,7 @@
             name="designationModalStatus"
             [(ngModel)]="designationModalData.designation.status"
             valueSet="publication-status"
+            required
         ></twl-value-set-concept-select>
       </m-form-item>
     </form>

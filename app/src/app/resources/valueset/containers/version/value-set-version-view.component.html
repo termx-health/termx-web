@@ -6,6 +6,7 @@
           <div class="m-card-title">{{'web.value-set-version.form.view-header' | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
+
         <div *ngIf="version">
           <m-form-item mLabel="web.value-set-version.entity.version">
             {{version.version}}
@@ -37,6 +38,7 @@
             <twa-value-set-version-concept-list [concepts]="concepts" viewMode></twa-value-set-version-concept-list>
           </m-form-item>
         </div>
+
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="back()" [mLoading]="loading" [disabled]="loading">
             {{'core.back' | translate}}

@@ -16,10 +16,12 @@
           </m-form-item>
 
           <m-form-item mName="supportedLanguages" mLabel="web.map-set-version.entity.supported-languages">
-            <twl-value-set-concept-select name="supportedLanguages"
+            <twl-value-set-concept-select
+                name="supportedLanguages"
                 [(ngModel)]="version.supportedLanguages"
                 valueSet="languages"
-                multiple></twl-value-set-concept-select>
+                multiple
+            ></twl-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="web.map-set-version.entity.description">

@@ -6,6 +6,7 @@
           <div class="m-card-title">{{(mode === 'edit' ? 'web.value-set-version.form.edit-header' : 'web.value-set-version.form.add-header') | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
+
         <form #form="ngForm" *ngIf="version">
           <m-form-item mName="version" mLabel="web.value-set-version.entity.version" required>
             <m-input name="version" [(ngModel)]="version.version" required></m-input>
@@ -24,10 +25,12 @@
           </m-form-item>
 
           <m-form-item mName="supportedLanguages" mLabel="web.value-set-version.entity.supported-languages">
-            <twl-value-set-concept-select name="supportedLanguages"
+            <twl-value-set-concept-select
+                name="supportedLanguages"
                 [(ngModel)]="version.supportedLanguages"
                 valueSet="languages"
-                multiple></twl-value-set-concept-select>
+                multiple
+            ></twl-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="web.value-set-version.entity.description">

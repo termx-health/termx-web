@@ -19,6 +19,7 @@
       <th mColumnKey="description">{{'entities.code-system-entity-version.description' | translate}}</th>
       <th class="tw-table-actions" *ngIf="!viewMode"></th>
     </tr>
+
     <tr *mTableRow="let entityVersion">
       <td>{{entityVersion.code}}</td>
       <td>{{entityVersion.description | abbreviate:50}}</td>
@@ -32,7 +33,7 @@
     </tr>
 
     <tr *mTableNoData>
-      <td colspan="3">
+      <td [colSpan]="viewMode ? 2 : 3">
         <m-no-data></m-no-data>
       </td>
     </tr>
@@ -43,6 +44,7 @@
   <ng-container *mModalHeader>
     {{'web.code-system-version.form.entities.modal.add-header' | translate}}
   </ng-container>
+
   <ng-container *mModalContent>
     <form #form="ngForm">
       <m-form-item mName="modalData" mLabel="entities.code-system-entity-version.code" required>
@@ -54,6 +56,7 @@
       </m-form-item>
     </form>
   </ng-container>
+
   <ng-container *mModalFooter>
     <m-button mStyle="margin-right: 0.5em" [disabled]="isLoading" (click)="modalVisible = false">{{'core.btn.close' | translate}}</m-button>
     <m-button mDisplay="primary" [disabled]="isLoading" [mLoading]="isLoading" (click)="save()">{{'core.btn.add' | translate}}</m-button>

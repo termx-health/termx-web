@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {CodeSystemListComponent} from './containers/list/code-system-list.component';
-import {CodeSystemLibModule, ValueSetLibModule} from 'terminology-lib/resources';
 import {CodeSystemPropertiesListComponent} from './containers/edit/code-system-properties-list.component';
 import {CodeSystemVersionsListComponent} from './containers/edit/code-system-versions-list.component';
 import {CodeSystemEditComponent} from './containers/edit/code-system-edit.component';
@@ -27,6 +26,7 @@ import {ContactModule} from '../contact/contact.module';
 import {CodeSystemConceptVersionDesignationTableComponent} from './containers/concept/code-system-concept-version-designation-table.component';
 import {CodeSystemConceptVersionPropertyValueTableComponent} from './containers/concept/code-system-concept-version-property-value-table.component';
 import {CodeSystemConceptVersionViewComponent} from './containers/concept/code-system-concept-version-view.component';
+import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -58,8 +58,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
   imports: [
     SharedModule,
     FinderModule,
-    CodeSystemLibModule,
-    ValueSetLibModule,
+    ResourcesLibModule,
     ContactModule
   ],
   declarations: [

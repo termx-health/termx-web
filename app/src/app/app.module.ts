@@ -8,7 +8,7 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/h
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
-import {MarinaUiModule, MUI_CONFIG, MuiConfig} from '@kodality-health/marina-ui';
+import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiHttpErrorHandler} from '@kodality-health/marina-ui';
 import {CoreI18nService, CoreI18nTranslationHandler, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
@@ -18,7 +18,6 @@ import {IntegrationModule} from './integration/integration.module';
 import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
 import {IntegrationLibModule} from 'terminology-lib/integration/integration-lib.module';
 import {JobLibModule} from 'terminology-lib/job/job-lib.module';
-import {ErrorHandler} from './core/http/error-handler';
 
 
 registerLocaleData(et);
@@ -80,10 +79,10 @@ export function MarinaUiConfigFactory(): MuiConfig {
     JobLibModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorHandler, multi: true},
-    {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
     {provide: LOCALE_ID, useValue: 'en'},
+    {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
     {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},
+    {provide: HTTP_INTERCEPTORS, useClass: MuiHttpErrorHandler, multi: true},
     {provide: MUI_CONFIG, useFactory: MarinaUiConfigFactory}
   ],
   bootstrap: [AppComponent]

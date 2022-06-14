@@ -59,7 +59,8 @@
               [includeRule]="rule.include"
               [excludeRule]="rule.exclude"
               [inactiveConcepts]="ruleSet.inactive"
-              viewMode></twa-value-set-code-system-rule>
+              viewMode
+          ></twa-value-set-code-system-rule>
         </nz-collapse-panel>
       </nz-collapse>
     </m-form-item>
@@ -76,9 +77,9 @@
           [lockedDate]="ruleSet.lockedDate"
           [includeRule]="modalData.rule.include"
           [excludeRule]="modalData.rule.exclude"
-          [inactiveConcepts]="ruleSet.inactive"></twa-value-set-code-system-rule>
+          [inactiveConcepts]="ruleSet.inactive"
+      ></twa-value-set-code-system-rule>
     </ng-container>
-
 
     <div *m-modal-footer class="tw-button-group">
       <m-button (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>

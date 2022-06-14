@@ -7,8 +7,12 @@
         <span>{{'web.code-system.form.versions.list.add-version' | translate}}</span> &nbsp;
         <m-icon mCode="down" mSize="10"></m-icon>
       </m-button>
-      <a *m-dropdown-item [routerLink]="['../versions/add']">{{'web.code-system.form.versions.list.add-new-version' | translate}}</a>
-      <a *m-dropdown-item (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId})">{{'web.code-system.form.versions.list.duplicate-version' | translate}}</a>
+      <a *m-dropdown-item [routerLink]="['../versions/add']">
+        {{'web.code-system.form.versions.list.add-new-version' | translate}}
+      </a>
+      <a *m-dropdown-item (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId})">
+        {{'web.code-system.form.versions.list.duplicate-version' | translate}}
+      </a>
     </m-dropdown>
   </div>
 
@@ -27,7 +31,9 @@
       <td>{{version.source}}</td>
       <td>{{version.releaseDate | localDate}}</td>
       <td>{{version.expirationDate | localDate}}</td>
-      <td class="tw-table-min-width"><twa-status-tag [status]="version.status"></twa-status-tag></td>
+      <td class="tw-table-min-width">
+        <twa-status-tag [status]="version.status"></twa-status-tag>
+      </td>
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId, sourceCodeSystem: codeSystemId, sourceVersion: version})">

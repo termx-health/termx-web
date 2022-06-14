@@ -6,8 +6,8 @@
           <div class="m-card-title">{{(mode === 'edit' ? 'web.code-system-concept-version.form.edit-header' : 'web.code-system-concept-version.form.add-header') | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
-        <form #conceptVersionForm="ngForm" *ngIf="version">
 
+        <form #conceptVersionForm="ngForm" *ngIf="version">
           <m-form-item mName="description" mLabel="entities.code-system-entity-version.description">
             <m-textarea name="description" [(ngModel)]="version.description"></m-textarea>
           </m-form-item>
@@ -21,6 +21,7 @@
               [codeSystemId]="codeSystemId"
           ></twa-code-system-concept-version-property-value-table>
         </form>
+
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="save()" [mLoading]="isLoading" [disabled]="isLoading">
             {{'core.btn.save' | translate}}

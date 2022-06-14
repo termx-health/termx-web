@@ -1,14 +1,13 @@
 import {NgModule} from '@angular/core';
 import {ContactListComponent} from './containers/contact-list.component';
 import {SharedModule} from '../../core/shared/shared.module';
-import {CodeSystemLibModule, ValueSetLibModule} from 'terminology-lib/resources';
+import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
 
 
 @NgModule({
   imports: [
     SharedModule,
-    CodeSystemLibModule,
-    ValueSetLibModule
+    ResourcesLibModule
   ],
   declarations: [
     ContactListComponent
