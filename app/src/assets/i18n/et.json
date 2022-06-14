@@ -9,8 +9,7 @@
       "confirm": "Kinnita",
       "add": "Lisa"
     },
-    "no-data": "Andmed puuduvad",
-    "back": "Tagasi"
+    "no-data": "Andmed puuduvad"
   },
   "web": {
     "app": {
