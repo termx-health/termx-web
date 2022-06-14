@@ -3,7 +3,7 @@
     <div *m-card-header class="m-items-between">
       <div class="m-card-title">{{'entities.code-system-entity-version.property-values' | translate}}</div>
       <twa-add-button *ngIf="!viewMode" (click)="openPropertyValueModal()">
-        {{'web.code-system-concept-version.property-modal.add-property' | translate}}
+        {{'web.code-system-concept-version.property-value.add-property-value' | translate}}
       </twa-add-button>
     </div>
 
@@ -22,9 +22,11 @@
             <div *ngIf="viewMode">{{property.value | abbreviate:40}}</div>
           </td>
           <td class="tw-table-actions" *ngIf="!viewMode">
-            <m-button mSize="small" (click)="deletePropertyValue(key, index)">
-              <m-icon [mCode]="'close'"></m-icon>
-            </m-button>
+            <m-dropdown *ngIf="!viewMode">
+              <a *m-dropdown-item (click)="deletePropertyValue(key, index)">
+                {{'web.code-system-concept-version.property-value.delete-property-value' | translate}}
+              </a>
+            </m-dropdown>
           </td>
         </tr>
       </ng-container>
@@ -39,7 +41,7 @@
 
   <m-modal [(mVisible)]="propertyValueModalData.visible" (mClose)="propertyValueModalData = {visible: false}">
     <ng-container *mModalHeader>
-      {{(propertyValueModalData.editKey ? 'web.code-system-concept-version.property-modal.edit-property' : 'web.code-system-concept-version.property-modal.add-property') | translate}}
+      {{(propertyValueModalData.editKey ? 'web.code-system-concept-version.property-value.modal.edit-property-value' : 'web.code-system-concept-version.property-value.modal.add-property-value') | translate}}
     </ng-container>
 
     <ng-container *mModalContent>

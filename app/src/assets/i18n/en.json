@@ -58,6 +58,10 @@
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}",
+        "property": {
+          "add-property": "Add property",
+          "delete-property": "Delete property"
+        },
         "duplicate": {
           "header": "Create duplicate code system",
           "source-code-system": "Source code system:",
@@ -85,6 +89,10 @@
             "export-fhir": "Export FHIR json"
           }
         }
+      },
+      "property-modal": {
+        "add-property": "Add property",
+        "edit-property": "Edit property"
       }
     },
     "code-system-version": {
@@ -120,9 +128,13 @@
         "delete-designation": "Delete designation",
         "edit-designation": "Edit designation"
       },
-      "property-modal": {
-        "add-property": "Add property",
-        "edit-property": "Edit property"
+      "property-value": {
+        "add-property-value": "Add property value",
+        "delete-property-value": "Delete property value",
+        "modal": {
+          "add-property-value": "Add property value",
+          "edit-property-value": "Edit property value"
+        }
       }
     },
     "value-set": {
