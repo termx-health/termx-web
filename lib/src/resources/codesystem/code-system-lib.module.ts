@@ -15,6 +15,7 @@ import {CodeSystemEntityVersionSearchComponent} from './containers/code-system-e
 import {TranslateModule} from '@ngx-translate/core';
 import {CodeSystemEntityLibService} from './services/code-system-entity-lib.service';
 import {LocalizedConceptNamePipe} from './pipe/localized-concept-name-pipe';
+import {UtilLibModule} from '../../util';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import {LocalizedConceptNamePipe} from './pipe/localized-concept-name-pipe';
     MarinaUiModule,
     FormsModule,
     CoreUtilModule,
-    TranslateModule
+    TranslateModule,
+    UtilLibModule
   ],
   providers: [
     CodeSystemLibService,
