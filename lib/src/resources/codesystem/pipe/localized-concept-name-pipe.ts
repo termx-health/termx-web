@@ -14,16 +14,14 @@ export class LocalizedConceptNamePipe implements PipeTransform {
   public constructor(
     private cacheService: HttpCacheService,
     private translateService: TranslateService,
-    private conceptService: CodeSystemConceptLibService) {}
+    private conceptService: CodeSystemConceptLibService
+  ) {}
 
   public transform(code: string, resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
     if (!code || !resource || (!resource.codeSystem && !resource.valueSet)) {
       return EMPTY;
     }
 
-    const key = `${code || '-'}` +
-      `#${resource.codeSystem || '-'}#${resource.codeSystemVersion || '-'}` +
-      `#${resource.valueSet || '-'}#${resource.valueSetVersion || '-'}`;
     const request = this.conceptService.search({
       code: code,
       codeSystem: resource.codeSystem,
@@ -31,10 +29,15 @@ export class LocalizedConceptNamePipe implements PipeTransform {
       valueSet: resource.valueSet,
       valueSetVersion: resource.valueSetVersion,
       limit: 1
-    });
+    }).pipe(map(resp => {
+      return resp.data[0] ? this.getName(resp.data[0], this.translateService.currentLang) : code;
+    }));
 
-    return this.cacheService.getCachedResponse(key, request)
-      .pipe(map(resp => resp.data[0] ? this.getName(resp.data[0], this.translateService.currentLang) : code));
+    const key = `${code || '-'}` +
+      `#${resource.codeSystem || '-'}#${resource.codeSystemVersion || '-'}` +
+      `#${resource.valueSet || '-'}#${resource.valueSetVersion || '-'}`;
+
+    return this.cacheService.getCachedResponse(key, request);
   }
 
   private getName(concept: CodeSystemConcept, lang: string): string {
