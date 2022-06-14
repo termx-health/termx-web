@@ -7,7 +7,7 @@
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
 
-        <div *ngIf="version">
+        <form #form *ngIf="version">
           <m-form-item mLabel="web.value-set-version.entity.version">
             {{version.version}}
           </m-form-item>
@@ -20,8 +20,11 @@
             {{version.releaseDate | localDate}}
           </m-form-item>
 
-          <m-form-item mLabel="web.value-set-version.entity.expiration-date">
-            {{version.expirationDate | localDate}}
+          <m-form-item mName="expirationDate" mLabel="web.value-set-version.entity.expiration-date">
+            <nz-date-picker *ngIf="version.status === 'active'" name="expirationDate" [(ngModel)]="version.expirationDate"></nz-date-picker>
+            <div *ngIf="version.status !== 'active'">
+              {{version.expirationDate | localDate}}
+            </div>
           </m-form-item>
 
           <m-form-item mLabel="web.value-set-version.entity.supported-languages">
@@ -37,13 +40,15 @@
           <m-form-item mName="concepts" mLabel="web.value-set-version.entity.concepts">
             <twa-value-set-version-concept-list [concepts]="concepts" viewMode></twa-value-set-version-concept-list>
           </m-form-item>
-        </div>
+        </form>
 
-        <ng-container *m-card-footer>
-          <m-button mDisplay="primary" (click)="back()" [mLoading]="loading" [disabled]="loading">
-            {{'core.back' | translate}}
-          </m-button>
-        </ng-container>
+        <div *ngIf="version.status === 'active'">
+          <ng-container *m-card-footer>
+            <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
+              {{'core.btn.save' | translate}}
+            </m-button>
+          </ng-container>
+        </div>
       </m-card>
     </m-spinner>
   </div>

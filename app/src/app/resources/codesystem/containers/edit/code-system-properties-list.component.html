@@ -69,7 +69,7 @@
 
   <div *m-modal-footer class="tw-button-group">
     <m-button (click)="propertyModalData.visible = false">
-      {{'core.back' | translate}}
+      {{'core.btn.cancel' | translate}}
     </m-button>
     <m-button mDisplay="primary" [mLoading]="isLoading" (click)="saveProperty()">
       {{(propertyModalData.editIndex ? 'core.btn.confirm' : 'core.btn.add') | translate}}
