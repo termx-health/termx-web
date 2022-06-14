@@ -22,18 +22,14 @@ export class CodeSystemPropertiesListComponent {
     property?: EntityProperty
   } = {};
 
-  public propertyTypes = ['string', 'code', 'coding', 'boolean', 'dateTime', 'decimal'];
-
   public saveProperty(): void {
     if (!validateForm(this.propertyForm)) {
       return;
     }
-    const property = this.propertyModalData.property;
-
     if (isDefined(this.propertyModalData.editIndex)) {
       this.deleteProperty(this.propertyModalData.editIndex);
     }
-
+    const property = this.propertyModalData.property;
     this.properties = [...this.properties, property!];
     this.propertiesChange.emit(this.properties);
     this.propertyModalData.visible = false;

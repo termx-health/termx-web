@@ -50,12 +50,12 @@
         <m-input name="propertyModalName" [(ngModel)]="propertyModalData.property.name"></m-input>
       </m-form-item>
       <m-form-item mName="propertyModalType" mLabel="entities.entity-property.type" required>
-        <twl-value-set-concept-select name="content"
+        <twl-value-set-concept-select name="propertyModalType"
             [(ngModel)]="propertyModalData.property.type"
             valueSet="concept-property-type"
             required></twl-value-set-concept-select>
       </m-form-item>
-      <m-form-item mLabel="entities.entity-property.status" required>
+      <m-form-item mName="propertyModalStatus" mLabel="entities.entity-property.status" required>
         <twl-value-set-concept-select name="designationModalStatus"
             [(ngModel)]="propertyModalData.property.status"
             valueSet="publication-status"

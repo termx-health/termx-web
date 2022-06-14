@@ -41,7 +41,7 @@
 
   <m-modal [(mVisible)]="propertyValueModalData.visible" (mClose)="propertyValueModalData = {visible: false}">
     <ng-container *mModalHeader>
-      {{(propertyValueModalData.editKey ? 'web.code-system-concept-version.property-value-modal.edit-property-value' : 'web.code-system-concept-version.property-value-modal.add-property-value') | translate}}
+      {{(propertyValueModalData.editKey ? 'web.code-system-concept-version.property-value.modal.edit-property-value' : 'web.code-system-concept-version.property-value.modal.add-property-value') | translate}}
     </ng-container>
 
     <ng-container *mModalContent>

@@ -130,11 +130,11 @@
       },
       "property-value": {
         "add-property-value": "Add property value",
-        "delete-property-value": "Delete property value"
-      },
-      "property-value-modal": {
-        "add-property-value": "Add property value",
-        "edit-property-value": "Edit property value"
+        "delete-property-value": "Delete property value",
+        "modal": {
+          "add-property-value": "Add property value",
+          "edit-property-value": "Edit property value"
+        }
       }
     },
     "value-set": {
