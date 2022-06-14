@@ -3,7 +3,6 @@ import {CodeSystemEntityVersion} from 'terminology-lib/resources';
 import {NgForm} from '@angular/forms';
 import {CodeSystemEntityVersionService} from '../../services/code-system-entity-version.service';
 import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
 
 @Component({
   templateUrl: './code-system-concept-version-view.component.html',
@@ -19,17 +18,12 @@ export class CodeSystemConceptVersionViewComponent implements OnInit {
   public constructor(
     public codeSystemEntityVersionService: CodeSystemEntityVersionService,
     private route: ActivatedRoute,
-    private location: Location,
   ) { }
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     const versionId = this.route.snapshot.paramMap.get('conceptVersion');
     this.loadVersion(Number(versionId));
-  }
-
-  public back(): void {
-    this.location.back();
   }
 
   private loadVersion(versionId: number): void {

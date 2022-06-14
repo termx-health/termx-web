@@ -1,9 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ValueSetConcept, ValueSetVersion} from 'terminology-lib/resources';
 import {ActivatedRoute} from '@angular/router';
 import {ValueSetService} from '../../services/value-set.service';
 import {forkJoin} from 'rxjs';
 import {Location} from '@angular/common';
+import {validateForm} from '@kodality-web/core-util';
+import {NgForm} from '@angular/forms';
 
 @Component({
   templateUrl: 'value-set-version-view.component.html',
@@ -13,6 +15,8 @@ export class ValueSetVersionViewComponent implements OnInit {
   public version?: ValueSetVersion;
   public concepts?: ValueSetConcept[];
   public loading = false;
+
+  @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private valueSetService: ValueSetService,
@@ -37,7 +41,13 @@ export class ValueSetVersionViewComponent implements OnInit {
     }).add(() => this.loading = false);
   }
 
-  public back(): void {
-    this.location.back();
+  public save(): void {
+    if (!validateForm(this.form)) {
+      return;
+    }
+    this.loading = true;
+    this.valueSetService.saveVersion(this.valueSetId!, this.version!)
+      .subscribe(() => this.location.back())
+      .add(() => this.loading = false);
   }
 }

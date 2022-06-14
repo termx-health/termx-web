@@ -28,15 +28,21 @@
             {{version.releaseDate | localDate}}
           </m-form-item>
 
-          <m-form-item mLabel="web.map-set-version.entity.expiration-date">
-            {{version.expirationDate | localDate}}
+          <m-form-item mName="expirationDate" mLabel="web.map-set-version.entity.expiration-date">
+            <nz-date-picker *ngIf="version.status === 'active'" name="expirationDate" [(ngModel)]="version.expirationDate"></nz-date-picker>
+            <div *ngIf="version.status !== 'active'">
+              {{version.expirationDate | localDate}}
+            </div>
           </m-form-item>
         </div>
-        <ng-container *m-card-footer>
-          <m-button mDisplay="primary" (click)="back()" [mLoading]="loading" [disabled]="loading">
-            {{'core.back' | translate}}
-          </m-button>
-        </ng-container>
+
+        <div *ngIf="version.status === 'active'">
+          <ng-container *m-card-footer>
+            <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
+              {{'core.btn.save' | translate}}
+            </m-button>
+          </ng-container>
+        </div>
       </m-card>
     </m-spinner>
   </div>
