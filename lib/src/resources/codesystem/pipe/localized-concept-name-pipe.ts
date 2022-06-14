@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.service';
 import {CodeSystemConcept} from '../model/code-system-concept';
-import {compareValues} from '@kodality-web/core-util';
+import {compareValues, HttpCacheService} from '@kodality-web/core-util';
 
 @Pipe({
   name: 'localizedConceptName'
@@ -12,21 +12,29 @@ import {compareValues} from '@kodality-web/core-util';
 export class LocalizedConceptNamePipe implements PipeTransform {
 
   public constructor(
-    private conceptService: CodeSystemConceptLibService,
-    private translateService: TranslateService) {}
+    private cacheService: HttpCacheService,
+    private translateService: TranslateService,
+    private conceptService: CodeSystemConceptLibService) {}
 
   public transform(code: string, resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
     if (!code || !resource || (!resource.codeSystem && !resource.valueSet)) {
       return EMPTY;
     }
-    return this.conceptService.search({
+
+    const key = `${code || '-'}` +
+      `#${resource.codeSystem || '-'}#${resource.codeSystemVersion || '-'}` +
+      `#${resource.valueSet || '-'}#${resource.valueSetVersion || '-'}`;
+    const request = this.conceptService.search({
       code: code,
       codeSystem: resource.codeSystem,
       codeSystemVersion: resource.codeSystemVersion,
       valueSet: resource.valueSet,
       valueSetVersion: resource.valueSetVersion,
       limit: 1
-    }).pipe(map(resp => resp.data[0] ? this.getName(resp.data[0], this.translateService.currentLang) : code));
+    });
+
+    return this.cacheService.getCachedResponse(key, request)
+      .pipe(map(resp => resp.data[0] ? this.getName(resp.data[0], this.translateService.currentLang) : code));
   }
 
   private getName(concept: CodeSystemConcept, lang: string): string {
