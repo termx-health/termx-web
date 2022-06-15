@@ -1,6 +1,4 @@
-import {QueryParams} from '@kodality-web/core-util';
-
-export class FhirCsLookupParams extends QueryParams {
+export class FhirCsLookupParams {
   public code?: any;
   public system?: any;
   public version?: any;

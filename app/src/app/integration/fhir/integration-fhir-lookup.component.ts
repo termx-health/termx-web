@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {IntegrationFhirService} from '../services/integration-fhir-service';
 import {ActivatedRoute} from '@angular/router';
 import {FhirCsLookupParams} from 'terminology-lib/integration';
-import {QueryParams, serializeDate} from '@kodality-web/core-util';
+import {serializeDate} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {ClipboardService} from 'ngx-clipboard';
 
@@ -26,7 +26,6 @@ export class IntegrationFhirLookupComponent implements OnInit {
 
   public result?: any;
   public issues: string[] = [];
-  public response?: QueryParams;
 
   @ViewChild("form") public form?: NgForm;
 
