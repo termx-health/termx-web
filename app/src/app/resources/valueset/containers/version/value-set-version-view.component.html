@@ -42,7 +42,7 @@
           </m-form-item>
         </form>
 
-        <div *ngIf="version.status === 'active'">
+        <div *ngIf="version?.status === 'active'">
           <ng-container *m-card-footer>
             <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
               {{'core.btn.save' | translate}}

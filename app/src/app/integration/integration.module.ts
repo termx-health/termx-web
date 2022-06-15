@@ -6,7 +6,6 @@ import {FhirLibModule} from 'terminology-lib/fhir/fhir-lib.module';
 import {Routes} from '@angular/router';
 import {JobLibModule} from 'terminology-lib/job/job-lib.module';
 import {FhirCodeSystemLookupComponent} from './fhir/code-system/fhir-code-system-lookup.component';
-import {ClipboardModule} from 'ngx-clipboard';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -22,7 +21,6 @@ export const INTEGRATION_ROUTES: Routes = [
     SharedModule,
     FhirLibModule,
     JobLibModule,
-    ClipboardModule
   ],
   declarations: [
     IntegrationDashboardComponent,

@@ -1,8 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {FhirCodeSystemLibService, FhirCodeSystemLookupParams} from 'lib/src/fhir';
-import {serializeDate} from '@kodality-web/core-util';
+import {ClipboardService, serializeDate} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
-import {ClipboardService} from 'ngx-clipboard';
 
 
 @Component({
