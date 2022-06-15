@@ -4,7 +4,10 @@
       <nz-divider nzOrientation="left" nzText="FHIR"></nz-divider>
       <nz-collapse nzGhost>
         <nz-collapse-panel nzHeader="CodeSystem">
-          <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'CodeSystem'}">$sync</m-button>
+          <div style="display: grid">
+            <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'CodeSystem'}">$sync</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$lookup'">$lookup</m-button>
+          </div>
         </nz-collapse-panel>
       </nz-collapse>
 
