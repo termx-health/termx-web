@@ -7,7 +7,6 @@ import {JobLog} from 'terminology-lib/job';
 
 
 @Component({
-  selector: 'twa-integration-fhir-sync',
   templateUrl: './integration-fhir-sync.component.html',
 })
 export class IntegrationFhirSyncComponent implements OnInit {
@@ -62,7 +61,6 @@ export class IntegrationFhirSyncComponent implements OnInit {
       );
     }, 5000);
   }
-
 
   private setJobResponse(jobResp: JobLog): void {
     if (jobResp.errors) {

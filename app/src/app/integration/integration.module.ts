@@ -7,11 +7,14 @@ import {IntegrationFhirService} from './services/integration-fhir-service';
 import {IntegrationService} from './services/integration-service';
 import {Routes} from '@angular/router';
 import {JobLibModule} from 'terminology-lib/job/job-lib.module';
+import {IntegrationFhirLookupComponent} from './fhir/integration-fhir-lookup.component';
+import {ClipboardModule} from 'ngx-clipboard';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
     path: '', component: IntegrationDashboardComponent, children: [
-      {path: 'fhir/$sync', component: IntegrationFhirSyncComponent}
+      {path: 'fhir/$sync', component: IntegrationFhirSyncComponent},
+      {path: 'fhir/$lookup', component: IntegrationFhirLookupComponent}
     ]
   }
 ];
@@ -20,11 +23,13 @@ export const INTEGRATION_ROUTES: Routes = [
   imports: [
     SharedModule,
     IntegrationLibModule,
-    JobLibModule
+    JobLibModule,
+    ClipboardModule
   ],
   declarations: [
     IntegrationDashboardComponent,
-    IntegrationFhirSyncComponent
+    IntegrationFhirSyncComponent,
+    IntegrationFhirLookupComponent
   ],
   providers: [
     IntegrationFhirService,
