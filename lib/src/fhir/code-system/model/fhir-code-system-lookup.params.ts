@@ -1,4 +1,4 @@
-export class FhirCsLookupParams {
+export class FhirCodeSystemLookupParams {
   public code?: any;
   public system?: any;
   public version?: any;

@@ -1,16 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {IntegrationFhirService} from '../services/integration-fhir-service';
 import {ActivatedRoute} from '@angular/router';
-import {FhirCsLookupParams} from 'terminology-lib/integration';
+import {FhirCodeSystemLibService, FhirCodeSystemLookupParams} from 'lib/src/fhir';
 import {serializeDate} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {ClipboardService} from 'ngx-clipboard';
 
 
 @Component({
-  templateUrl: './integration-fhir-lookup.component.html',
+  templateUrl: './fhir-code-system-lookup.component.html',
 })
-export class IntegrationFhirLookupComponent implements OnInit {
+export class FhirCodeSystemLookupComponent implements OnInit {
   public source?: string | null;
   public loading: boolean = false;
 
@@ -30,7 +29,7 @@ export class IntegrationFhirLookupComponent implements OnInit {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
-    private integrationFhirService: IntegrationFhirService,
+    private integrationFhirService: FhirCodeSystemLibService,
     private clipboardService: ClipboardService,
     private route: ActivatedRoute,
   ) {}
@@ -43,7 +42,7 @@ export class IntegrationFhirLookupComponent implements OnInit {
   }
 
   public lookUp(): void {
-    const sp = new FhirCsLookupParams();
+    const sp = new FhirCodeSystemLookupParams();
     sp.code = this.input.code;
     sp.system = this.input.system;
     sp.version = this.input.version;
