@@ -12,7 +12,7 @@ export const INTEGRATION_ROUTES: Routes = [
   {
     path: '', component: IntegrationDashboardComponent, children: [
       {path: 'fhir/$sync', component: IntegrationFhirSyncComponent},
-      {path: 'fhir/$lookup', component: FhirCodeSystemLookupComponent}
+      {path: 'fhir/CodeSystem/$lookup', component: FhirCodeSystemLookupComponent}
     ]
   }
 ];

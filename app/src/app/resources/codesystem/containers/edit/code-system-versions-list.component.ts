@@ -47,7 +47,7 @@ export class CodeSystemVersionsListComponent implements OnChanges {
   }
 
   public exportFhirFormatVersion(id: number): void {
-    this.integrationFhirLibService.getCodeSystem(id).subscribe(fhirCs => {
+    this.integrationFhirLibService.loadCodeSystem(id).subscribe(fhirCs => {
       saveAs(new Blob([JSON.stringify(fhirCs, null, 2)], {type: 'application/json'}), `${fhirCs.id}.json`);
     });
   }

@@ -6,7 +6,7 @@
         <nz-collapse-panel nzHeader="CodeSystem">
           <div style="display: grid">
             <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'CodeSystem'}">$sync</m-button>
-            <m-button mDisplay="link" [routerLink]="'./fhir/$lookup'" [queryParams]="{ source: 'CodeSystem'}">$lookup</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$lookup'">$lookup</m-button>
           </div>
         </nz-collapse-panel>
       </nz-collapse>

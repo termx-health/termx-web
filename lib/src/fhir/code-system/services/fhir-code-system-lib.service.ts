@@ -15,7 +15,7 @@ export class FhirCodeSystemLibService {
     this.baseUrl = `${api}/fhir/CodeSystem`;
   }
 
-  public getCodeSystem(id: number): Observable<any> {
+  public loadCodeSystem(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
   }
 

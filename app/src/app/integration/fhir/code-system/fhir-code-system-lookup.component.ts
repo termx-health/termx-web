@@ -1,5 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {Component, ViewChild} from '@angular/core';
 import {FhirCodeSystemLibService, FhirCodeSystemLookupParams} from 'lib/src/fhir';
 import {serializeDate} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
@@ -9,68 +8,65 @@ import {ClipboardService} from 'ngx-clipboard';
 @Component({
   templateUrl: './fhir-code-system-lookup.component.html',
 })
-export class FhirCodeSystemLookupComponent implements OnInit {
-  public source?: string | null;
-  public loading: boolean = false;
+export class FhirCodeSystemLookupComponent {
+  public response?: any;
+  public error?: any;
 
-  public property?: string;
-
-  public input: {
+  public data: {
     code?: string,
     system?: string,
     version?: string,
     date?: Date,
+    propertyInput?: string,
     properties?: string[]
   } = {};
 
-  public result?: any;
-  public issues: string[] = [];
+  public loading: boolean = false;
 
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private integrationFhirService: FhirCodeSystemLibService,
     private clipboardService: ClipboardService,
-    private route: ActivatedRoute,
   ) {}
-
-  public ngOnInit(): void {
-    this.route.queryParamMap.subscribe(queryParamMap => {
-      this.source = queryParamMap.get('source');
-    });
-
-  }
 
   public lookUp(): void {
     const sp = new FhirCodeSystemLookupParams();
-    sp.code = this.input.code;
-    sp.system = this.input.system;
-    sp.version = this.input.version;
-    sp.date = serializeDate(this.input.date);
-    sp.properties = this.input.properties?.join(',');
+    sp.code = this.data.code;
+    sp.system = this.data.system;
+    sp.version = this.data.version;
+    sp.date = serializeDate(this.data.date);
+    sp.properties = this.data.properties?.join(',');
 
     this.loading = true;
-    this.issues = [];
+    this.error = undefined;
+    this.response = undefined;
 
-    this.integrationFhirService.lookup(sp).subscribe(r => this.result = r, error => {
-      error.error.issue.forEach((issue: {details: {text: string;};}) => this.issues.push(issue.details.text));
-      return this.result = error;
+    // this.integrationFhirService.lookup(sp).subscribe(r => this.result = r, error => {
+    //   error.error.issue.forEach((issue: {details: {text: string;};}) => this.issues.push(issue.details.text));
+    //   return this.result = error;
+    // }).add(() => this.loading = false);
+
+    this.integrationFhirService.lookup(sp).subscribe({
+      next: r => this.response = r,
+      error: err => this.error = err.error
     }).add(() => this.loading = false);
   }
 
   public addProperty(): void {
-    if (this.property) {
-      this.input.properties = [...(this.input.properties || []), this.property];
-      this.property = '';
+    if (this.data.propertyInput) {
+      this.data.properties = [...(this.data.properties || []), this.data.propertyInput];
+      this.data.propertyInput = '';
     }
   }
 
   public removeProperty(index: number): void {
-    this.input.properties?.splice(index, 1);
-    this.input.properties = [...this.input.properties!];
+    this.data.properties?.splice(index, 1);
+    this.data.properties = [...this.data.properties!];
+    this.data.properties.length === 0 ? this.data.properties = undefined : '';
   }
 
   public copyResult(): void { /*TODO add ngx-clipboard to utils*/
-    this.clipboardService.copy(JSON.stringify(this.result));
+    this.clipboardService.copy(JSON.stringify(this.response || this.error));
   }
 }
