@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
-import {IntegrationFhirService} from '../services/integration-fhir-service';
 import {JobLibService} from 'terminology-lib/job/services/job-lib-service';
 import {ActivatedRoute} from '@angular/router';
-import {filter} from 'rxjs';
+import {filter, Observable} from 'rxjs';
 import {JobLog} from 'terminology-lib/job';
+import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirSyncParameters, FhirValueSetLibService} from 'terminology-lib/fhir';
 
 
 @Component({
-  selector: 'twa-integration-fhir-sync',
   templateUrl: './integration-fhir-sync.component.html',
 })
 export class IntegrationFhirSyncComponent implements OnInit {
@@ -19,7 +18,9 @@ export class IntegrationFhirSyncComponent implements OnInit {
   public urls: string[] = [];
 
   public constructor(
-    private integrationFhirService: IntegrationFhirService,
+    private fhirCodeSystemService: FhirCodeSystemLibService,
+    private fhirValueSetLibService: FhirValueSetLibService,
+    private fhirConceptMapLibService: FhirConceptMapLibService,
     private jobService: JobLibService,
     private route: ActivatedRoute,
   ) {}
@@ -40,7 +41,12 @@ export class IntegrationFhirSyncComponent implements OnInit {
     this.jobResponse = undefined;
     this.loading = true;
     const fhirSyncParameters = {parameter: this.urls.map(url => ({"name": "url", "valueString": url}))};
-    this.integrationFhirService.import(this.source!, fhirSyncParameters).subscribe(resp => {
+    const importRequestMap: {[k: string]: Observable<FhirSyncParameters>} = {
+      'CodeSystem': this.fhirCodeSystemService.import(fhirSyncParameters),
+      'ValueSet': this.fhirValueSetLibService.import(fhirSyncParameters),
+      'ConceptMap': this.fhirConceptMapLibService.import(fhirSyncParameters),
+    };
+    importRequestMap[this.source!].subscribe(resp => {
         const jobIdParameter = resp.parameter?.find(p => p.name === 'jobId');
         if (jobIdParameter?.valueDecimal) {
           this.pollJobStatus(jobIdParameter.valueDecimal);
@@ -62,7 +68,6 @@ export class IntegrationFhirSyncComponent implements OnInit {
       );
     }, 5000);
   }
-
 
   private setJobResponse(jobResp: JobLog): void {
     if (jobResp.errors) {

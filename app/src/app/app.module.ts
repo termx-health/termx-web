@@ -16,7 +16,7 @@ import {ResourcesModule} from './resources/resources.module';
 import {MarinaUtilModule} from '@kodality-health/marina-util';
 import {IntegrationModule} from './integration/integration.module';
 import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
-import {IntegrationLibModule} from 'terminology-lib/integration/integration-lib.module';
+import {FhirLibModule} from 'terminology-lib/fhir/fhir-lib.module';
 import {JobLibModule} from 'terminology-lib/job/job-lib.module';
 
 
@@ -73,7 +73,7 @@ export function MarinaUiConfigFactory(): MuiConfig {
     ResourcesLibModule,
     ResourcesModule,
 
-    IntegrationLibModule,
+    FhirLibModule,
     IntegrationModule,
 
     JobLibModule

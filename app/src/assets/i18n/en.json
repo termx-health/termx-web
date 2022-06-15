@@ -280,9 +280,15 @@
       }
     },
     "integration": {
+      "send-request": "Send request",
+      "response": "Response",
       "fhir": {
-        "sync": {
-          "send-request": "Send request"
+        "lookup": {
+          "code": "Code",
+          "system": "System",
+          "version": "Version",
+          "date": "Date",
+          "properties": "Properties"
         }
       }
     }
