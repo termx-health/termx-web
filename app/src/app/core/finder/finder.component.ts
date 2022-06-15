@@ -81,7 +81,7 @@ export class FinderMenuComponent {
   styleUrls: ['finder.component.less'],
   encapsulation: ViewEncapsulation.None,
   template: `
-    <m-card class="tw-finder-wrapper-inner" *ngIf="isDisplayed">
+    <m-card class="tw-finder-wrapper-inner" m-scrollable *ngIf="isDisplayed">
       <ng-container *ngIf="title || isMobile">
         <ng-container *m-card-header>
           <a *ngIf="isMobile" (click)="location.back()" class="tw-finder-wrapper-header-navigation tw-finder-title">
