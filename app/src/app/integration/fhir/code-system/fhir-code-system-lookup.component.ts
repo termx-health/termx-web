@@ -42,11 +42,6 @@ export class FhirCodeSystemLookupComponent {
     this.error = undefined;
     this.response = undefined;
 
-    // this.integrationFhirService.lookup(sp).subscribe(r => this.result = r, error => {
-    //   error.error.issue.forEach((issue: {details: {text: string;};}) => this.issues.push(issue.details.text));
-    //   return this.result = error;
-    // }).add(() => this.loading = false);
-
     this.integrationFhirService.lookup(sp).subscribe({
       next: r => this.response = r,
       error: err => this.error = err.error
