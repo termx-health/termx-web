@@ -60,7 +60,7 @@ export class FhirCodeSystemLookupComponent {
     this.data.properties.length === 0 ? this.data.properties = undefined : '';
   }
 
-  public copyResult(): void { /*TODO add ngx-clipboard to utils*/
+  public copyResult(): void {
     this.clipboardService.copy(JSON.stringify(this.response || this.error));
   }
 }

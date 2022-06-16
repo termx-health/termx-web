@@ -5,6 +5,7 @@ import {Observable} from 'rxjs';
 import {FhirCodeSystemLookupParams} from '../model/fhir-code-system-lookup.params';
 import {SearchHttpParams} from '@kodality-web/core-util';
 import {FhirSyncParameters} from '../../model/fhir-sync-parameters';
+import {FhirCodeSystemValidateCodeParams} from '../model/fhir-code-system-validate-code.params';
 
 
 @Injectable()
@@ -25,5 +26,8 @@ export class FhirCodeSystemLibService {
 
   public lookup(params: FhirCodeSystemLookupParams): Observable<FhirCodeSystemLookupParams> {
     return this.http.get<FhirCodeSystemLookupParams>(`${this.baseUrl}/$lookup`, {params: SearchHttpParams.build(params)});
+  }
+  public validateCode(params: FhirCodeSystemValidateCodeParams): Observable<FhirCodeSystemValidateCodeParams> {
+    return this.http.get<FhirCodeSystemValidateCodeParams>(`${this.baseUrl}/$validate-code`, {params: SearchHttpParams.build(params)});
   }
 }
