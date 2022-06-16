@@ -6,9 +6,21 @@ import {MapSetService} from '../mapset/services/map-set-service';
 @Component({
   selector: 'twa-tabset',
   templateUrl: './resources-tabset.component.html',
+  styles: [`
+    .tw-tab-total-tag {
+      border-radius: 1.4rem;
+      color: #999;
+ 
+      font-size: 0.8rem;
+      line-height: 1.4rem;
+ 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+  `]
 })
 export class ResourcesTabsetComponent implements OnInit {
-  public badgeStyle = {backgroundColor: '#fff', color: '#999', boxShadow: '0 0 0 1px #d9d9d9 inset'};
   public codeSystemTotal?: number;
   public valueSetTotal?: number;
   public mapSetTotal?: number;
