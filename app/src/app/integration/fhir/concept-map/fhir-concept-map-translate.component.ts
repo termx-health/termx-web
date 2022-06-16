@@ -1,5 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {Component} from '@angular/core';
 import {FhirConceptMapLibService, FhirConceptMapTranslateParams} from 'lib/src/fhir';
 import {ClipboardService} from '@kodality-web/core-util';
 
@@ -13,8 +12,6 @@ export class FhirConceptMapTranslateComponent {
   public data = new FhirConceptMapTranslateParams();
 
   public loading: boolean = false;
-
-  @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private fhirConceptMapLibService: FhirConceptMapLibService,

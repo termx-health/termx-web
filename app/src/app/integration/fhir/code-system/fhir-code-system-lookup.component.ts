@@ -1,7 +1,6 @@
-import {Component, ViewChild} from '@angular/core';
+import {Component} from '@angular/core';
 import {FhirCodeSystemLibService, FhirCodeSystemLookupParams} from 'lib/src/fhir';
 import {ClipboardService, serializeDate} from '@kodality-web/core-util';
-import {NgForm} from '@angular/forms';
 
 
 @Component({
@@ -21,8 +20,6 @@ export class FhirCodeSystemLookupComponent {
   } = {};
 
   public loading: boolean = false;
-
-  @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private fhirCodeSystemLibService: FhirCodeSystemLibService,

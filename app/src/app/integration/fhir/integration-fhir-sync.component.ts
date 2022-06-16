@@ -3,7 +3,7 @@ import {JobLibService} from 'terminology-lib/job/services/job-lib-service';
 import {ActivatedRoute} from '@angular/router';
 import {filter, Observable} from 'rxjs';
 import {JobLog} from 'terminology-lib/job';
-import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirSyncParameters, FhirValueSetLibService} from 'terminology-lib/fhir';
+import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from 'terminology-lib/fhir';
 
 
 @Component({
@@ -41,7 +41,7 @@ export class IntegrationFhirSyncComponent implements OnInit {
     this.jobResponse = undefined;
     this.loading = true;
     const fhirSyncParameters = {parameter: this.urls.map(url => ({"name": "url", "valueString": url}))};
-    const importRequestMap: {[k: string]: Observable<FhirSyncParameters>} = {
+    const importRequestMap: {[k: string]: Observable<FhirParameters>} = {
       'CodeSystem': this.fhirCodeSystemService.import(fhirSyncParameters),
       'ValueSet': this.fhirValueSetLibService.import(fhirSyncParameters),
       'ConceptMap': this.fhirConceptMapLibService.import(fhirSyncParameters),

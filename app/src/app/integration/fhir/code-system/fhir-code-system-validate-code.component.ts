@@ -1,5 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {Component} from '@angular/core';
 import {FhirCodeSystemLibService, FhirCodeSystemValidateCodeParams} from 'terminology-lib/fhir';
 import {ClipboardService} from '@kodality-web/core-util';
 
@@ -13,8 +12,6 @@ export class FhirCodeSystemValidateCodeComponent {
   public data = new FhirCodeSystemValidateCodeParams();
 
   public loading: boolean = false;
-
-  @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private fhirCodeSystemLibService: FhirCodeSystemLibService,
