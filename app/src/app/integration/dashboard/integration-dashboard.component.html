@@ -20,7 +20,10 @@
 
       <nz-collapse nzGhost>
         <nz-collapse-panel nzHeader="ConceptMap">
-          <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ConceptMap'}">$sync</m-button>
+          <div style="display: grid">
+            <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ConceptMap'}">$sync</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/ConceptMap/$translate'">$translate</m-button>
+          </div>
         </nz-collapse-panel>
       </nz-collapse>
 

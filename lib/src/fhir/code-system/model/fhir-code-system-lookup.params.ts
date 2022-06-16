@@ -1,7 +1,7 @@
 export class FhirCodeSystemLookupParams {
-  public code?: any;
-  public system?: any;
-  public version?: any;
-  public date?: any;
-  public properties?: any;
+  public code?: string;
+  public system?: string;
+  public version?: string;
+  public date?: string;
+  public properties?: string;
 }

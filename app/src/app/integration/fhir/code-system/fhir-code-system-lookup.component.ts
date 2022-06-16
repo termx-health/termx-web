@@ -25,15 +25,15 @@ export class FhirCodeSystemLookupComponent {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
-    private integrationFhirService: FhirCodeSystemLibService,
+    private fhirCodeSystemLibService: FhirCodeSystemLibService,
     private clipboardService: ClipboardService,
   ) {}
 
   public lookUp(): void {
     const sp = new FhirCodeSystemLookupParams();
-    sp.code = this.data.code || null;
-    sp.system = this.data.system || null;
-    sp.version = this.data.version || null;
+    sp.code = this.data.code || undefined;
+    sp.system = this.data.system || undefined;
+    sp.version = this.data.version || undefined;
     sp.date = serializeDate(this.data.date);
     sp.properties = this.data.properties?.join(',');
 
@@ -41,7 +41,7 @@ export class FhirCodeSystemLookupComponent {
     this.error = undefined;
     this.response = undefined;
 
-    this.integrationFhirService.lookup(sp).subscribe({
+    this.fhirCodeSystemLibService.lookup(sp).subscribe({
       next: r => this.response = r,
       error: err => this.error = err.error
     }).add(() => this.loading = false);

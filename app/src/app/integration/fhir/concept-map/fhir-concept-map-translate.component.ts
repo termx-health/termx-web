@@ -1,36 +1,39 @@
 import {Component, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {FhirCodeSystemLibService, FhirCodeSystemValidateCodeParams} from 'terminology-lib/fhir';
+import {FhirConceptMapLibService, FhirConceptMapTranslateParams} from 'lib/src/fhir';
 import {ClipboardService} from '@kodality-web/core-util';
 
 @Component({
-  templateUrl: './fhir-code-system-validate-code.component.html',
+  templateUrl: './fhir-concept-map-translate.component.html',
 })
-export class FhirCodeSystemValidateCodeComponent {
+export class FhirConceptMapTranslateComponent {
   public response?: any;
   public error?: any;
 
-  public data = new FhirCodeSystemValidateCodeParams();
+  public data = new FhirConceptMapTranslateParams();
 
   public loading: boolean = false;
 
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
-    private fhirCodeSystemLibService: FhirCodeSystemLibService,
+    private fhirConceptMapLibService: FhirConceptMapLibService,
     private clipboardService: ClipboardService,
   ) {}
 
-  public validateCode(): void {
+  public translate(): void {
+    this.data.uri = this.data.uri || undefined;
+    this.data.conceptMapVersion = this.data.conceptMapVersion || undefined;
     this.data.code = this.data.code || undefined;
     this.data.system = this.data.system || undefined;
-    this.data.display = this.data.display || undefined;
     this.data.version = this.data.version || undefined;
+    this.data.targetSystem = this.data.targetSystem || undefined;
+
     this.loading = true;
     this.error = undefined;
     this.response = undefined;
 
-    this.fhirCodeSystemLibService.validateCode(this.data).subscribe({
+    this.fhirConceptMapLibService.translate(this.data).subscribe({
       next: r => this.response = r,
       error: err => this.error = err.error
     }).add(() => this.loading = false);
