@@ -289,6 +289,12 @@
           "version": "Version",
           "date": "Date",
           "properties": "Properties"
+        },
+        "validate-code": {
+          "code": "Code",
+          "version": "Version",
+          "system": "System(URL)",
+          "display": "Display"
         }
       }
     }

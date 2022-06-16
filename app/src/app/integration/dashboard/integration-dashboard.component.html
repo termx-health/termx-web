@@ -7,6 +7,7 @@
           <div style="display: grid">
             <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'CodeSystem'}">$sync</m-button>
             <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$lookup'">$lookup</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$validate-code'">$validate-code</m-button>
           </div>
         </nz-collapse-panel>
       </nz-collapse>

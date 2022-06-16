@@ -6,12 +6,14 @@ import {FhirLibModule} from 'terminology-lib/fhir/fhir-lib.module';
 import {Routes} from '@angular/router';
 import {JobLibModule} from 'terminology-lib/job/job-lib.module';
 import {FhirCodeSystemLookupComponent} from './fhir/code-system/fhir-code-system-lookup.component';
+import {FhirCodeSystemValidateCodeComponent} from './fhir/code-system/fhir-code-system-validate-code.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
     path: '', component: IntegrationDashboardComponent, children: [
       {path: 'fhir/$sync', component: IntegrationFhirSyncComponent},
-      {path: 'fhir/CodeSystem/$lookup', component: FhirCodeSystemLookupComponent}
+      {path: 'fhir/CodeSystem/$lookup', component: FhirCodeSystemLookupComponent},
+      {path: 'fhir/CodeSystem/$validate-code', component: FhirCodeSystemValidateCodeComponent}
     ]
   }
 ];
@@ -25,7 +27,8 @@ export const INTEGRATION_ROUTES: Routes = [
   declarations: [
     IntegrationDashboardComponent,
     IntegrationFhirSyncComponent,
-    FhirCodeSystemLookupComponent
+    FhirCodeSystemLookupComponent,
+    FhirCodeSystemValidateCodeComponent
   ],
 })
 export class IntegrationModule {
