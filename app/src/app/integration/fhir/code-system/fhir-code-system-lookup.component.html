@@ -13,17 +13,21 @@
       <m-form-item mName="code" mLabel="web.integration.fhir.lookup.code">
         <m-input name="code" [(ngModel)]="data.code"></m-input>
       </m-form-item>
+
       <m-form-item mName="system" mLabel="web.integration.fhir.lookup.system">
         <m-input name="system" [(ngModel)]="data.system"></m-input>
       </m-form-item>
+
       <m-form-item mName="version" mLabel="web.integration.fhir.lookup.version">
         <m-input name="version" [(ngModel)]="data.version"></m-input>
       </m-form-item>
+
       <m-form-item mName="date" mLabel="web.integration.fhir.lookup.date">
         <nz-date-picker name="date" [(ngModel)]="data.date"></nz-date-picker>
       </m-form-item>
+
       <m-form-item mName="properties" mLabel="web.integration.fhir.lookup.properties">
-        <div style="display: flex">
+        <div class="m-items-middle">
           <m-input name="properties" [(ngModel)]="data.propertyInput"></m-input>
           <m-button (click)="addProperty()">
             <m-icon [mCode]="'plus'"></m-icon>
@@ -31,7 +35,7 @@
         </div>
       </m-form-item>
       <div style="display:flex" *ngFor="let property of data.properties; let index = index">
-        <p>{{property}}</p> &nbsp;
+        <p>{{property}}</p>&nbsp;
         <m-button mSize="small" (click)="removeProperty(index)">
           <m-icon [mCode]="'delete'"></m-icon>
         </m-button>
@@ -51,8 +55,6 @@
           {{issue?.details?.text}}
         </m-alert>
       </div>
-
     </m-card>
-
   </m-spinner>
 </m-card>

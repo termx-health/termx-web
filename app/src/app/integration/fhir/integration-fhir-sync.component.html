@@ -9,41 +9,47 @@
       <m-button (click)="importUrls()">{{'web.integration.send-request' | translate}}</m-button>
     </div>
 
-    <label>
-      <p>URL
-        <m-icon mCode="info-circle" [nz-popover]="source +  ' resource JSON url'" [nzPopoverContent]="info"></m-icon>
-      </p>
-      <ng-template #info>
-        <p *ngIf="source === 'CodeSystem'">Example: <a href="https://www.hl7.org/fhir/codesystem-days-of-week.json">codesystem-days-of-week</a></p>
-        <p *ngIf="source === 'ValueSet'" style="display: flex; flex-direction: column">
-          <label>Example: <a href="https://www.hl7.org/fhir/valueset-marital-status.json">valueset-marital-status</a></label>
-          <label>&nbsp;</label>
-          <label>First you need import CodeSystem resources used for value set</label>
-          <label><a href="https://www.hl7.org/fhir/v3/MaritalStatus/v3-MaritalStatus.cs.json">v3-MaritalStatus.cs</a></label>
-          <label><a href="https://www.hl7.org/fhir/v3/NullFlavor/v3-NullFlavor.cs.json">v3-NullFlavor.cs</a></label>
-        </p>
-        <p *ngIf="source === 'ConceptMap'" style="display: flex; flex-direction: column">
-          <label>Example: <a href="https://www.hl7.org/fhir/sc-valueset-publication-status.json">sc-valueset-publication-status</a></label>
-          <label>&nbsp;</label>
-          <label>First you need import CodeSystem resources used for value set</label>
-          <label><a href="https://www.hl7.org/fhir/codesystem-publication-status.json">codesystem-publication-status</a></label>
-          <label><a href="http://hl7.org/fhir/R4/codesystem-resource-status.json">codesystem-resource-status</a></label>
-        </p>
+    <m-form-item [mLabel]="label">
+      <ng-template #label>
+        URL:&nbsp;
+        <m-icon mCode="info-circle" [nz-popover]="source + ' resource JSON url'" [nzPopoverContent]="info"></m-icon>
+        <ng-template #info>
+          <div *ngIf="source === 'CodeSystem'">
+            Example: <a href="https://www.hl7.org/fhir/codesystem-days-of-week.json">codesystem-days-of-week</a>
+          </div>
+          <div *ngIf="source === 'ValueSet'" style="display: flex; flex-direction: column">
+            <label>Example: <a href="https://www.hl7.org/fhir/valueset-marital-status.json">valueset-marital-status</a></label>
+            <label>&nbsp;</label>
+            <label>First you need import CodeSystem resources used for value set</label>
+            <label><a href="https://www.hl7.org/fhir/v3/MaritalStatus/v3-MaritalStatus.cs.json">v3-MaritalStatus.cs</a></label>
+            <label><a href="https://www.hl7.org/fhir/v3/NullFlavor/v3-NullFlavor.cs.json">v3-NullFlavor.cs</a></label>
+          </div>
+          <div *ngIf="source === 'ConceptMap'" style="display: flex; flex-direction: column">
+            <label>Example: <a href="https://www.hl7.org/fhir/sc-valueset-publication-status.json">sc-valueset-publication-status</a></label>
+            <label>&nbsp;</label>
+            <label>First you need import CodeSystem resources used for value set</label>
+            <label><a href="https://www.hl7.org/fhir/codesystem-publication-status.json">codesystem-publication-status</a></label>
+            <label><a href="http://hl7.org/fhir/R4/codesystem-resource-status.json">codesystem-resource-status</a></label>
+          </div>
+        </ng-template>
       </ng-template>
-    </label>
+
+      <div class="m-items-middle">
+        <m-input [(ngModel)]="input"></m-input>
+        <m-button (click)="addUrl()">
+          <m-icon [mCode]="'plus'"></m-icon>
+        </m-button>
+      </div>
+    </m-form-item>
     <div style="display:flex" *ngFor="let url of urls; let index = index">
-      <p>{{url}}</p> &nbsp;
+      <p>{{url}}</p>&nbsp;
       <m-button mSize="small" (click)="removeUrl(index)">
         <m-icon [mCode]="'delete'"></m-icon>
       </m-button>
     </div>
 
-    <div style="display: flex">
-      <m-input [(ngModel)]="input"></m-input>
-      <m-button (click)="addUrl()">
-        <m-icon [mCode]="'plus'"></m-icon>
-      </m-button>
-    </div>
-    <m-alert *ngIf="jobResponse" [mType]="jobResponse.type" mShowIcon>{{jobResponse.message}}</m-alert>
+    <m-alert *ngIf="jobResponse" [mType]="jobResponse.type" mShowIcon>
+      {{jobResponse.message}}
+    </m-alert>
   </m-spinner>
 </m-card>
