@@ -31,9 +31,9 @@ export class FhirCodeSystemLookupComponent {
 
   public lookUp(): void {
     const sp = new FhirCodeSystemLookupParams();
-    sp.code = this.data.code || undefined;
-    sp.system = this.data.system || undefined;
-    sp.version = this.data.version || undefined;
+    sp.code = this.data.code || null;
+    sp.system = this.data.system || null;
+    sp.version = this.data.version || null;
     sp.date = serializeDate(this.data.date);
     sp.properties = this.data.properties?.join(',');
 

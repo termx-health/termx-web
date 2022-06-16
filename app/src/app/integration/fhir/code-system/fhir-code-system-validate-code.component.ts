@@ -22,10 +22,10 @@ export class FhirCodeSystemValidateCodeComponent {
   ) {}
 
   public validateCode(): void {
-    this.data.code = this.data.code || undefined;
-    this.data.system = this.data.system || undefined;
-    this.data.display = this.data.display || undefined;
-    this.data.version = this.data.version || undefined;
+    this.data.code = this.data.code || null;
+    this.data.system = this.data.system || null;
+    this.data.display = this.data.display || null;
+    this.data.version = this.data.version || null;
     this.loading = true;
     this.error = undefined;
     this.response = undefined;
