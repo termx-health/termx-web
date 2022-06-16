@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {TERMINOLOGY_API} from '../../../terminology-lib.token';
 import {HttpClient} from '@angular/common/http';
-import {FhirSyncParameters} from '../../model/fhir-sync-parameters';
+import {FhirParameters} from '../../model/fhir-parameters';
 import {Observable} from 'rxjs';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class FhirValueSetLibService {
     this.baseUrl = `${api}/fhir/ValueSet`;
   }
 
-  public import(urls: FhirSyncParameters): Observable<FhirSyncParameters> {
-    return this.http.post<FhirSyncParameters>(`${this.baseUrl}/$sync`, urls);
+  public import(urls: FhirParameters): Observable<FhirParameters> {
+    return this.http.post<FhirParameters>(`${this.baseUrl}/$sync`, urls);
   }
 }

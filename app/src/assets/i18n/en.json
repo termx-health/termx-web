@@ -283,18 +283,30 @@
       "send-request": "Send request",
       "response": "Response",
       "fhir": {
-        "lookup": {
-          "code": "Code",
-          "system": "System",
-          "version": "Version",
-          "date": "Date",
-          "properties": "Properties"
+        "code-system": {
+          "lookup": {
+            "code": "Code",
+            "system": "System",
+            "version": "Version",
+            "date": "Date",
+            "properties": "Properties"
+          },
+          "validate-code": {
+            "code": "Code",
+            "version": "Version",
+            "system": "System(URL)",
+            "display": "Display"
+          }
         },
-        "validate-code": {
-          "code": "Code",
-          "version": "Version",
-          "system": "System(URL)",
-          "display": "Display"
+        "concept-map": {
+          "translate": {
+            "uri": "URL",
+            "concept-map-version": "ConceptMapVersion",
+            "code": "Code",
+            "system": "System(URL)",
+            "version": "Version",
+            "target-system": "TargetSystem"
+          }
         }
       }
     }
