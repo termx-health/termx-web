@@ -10,23 +10,55 @@
     </div>
 
     <form #form="ngForm">
-      <m-form-item mName="code" mLabel="web.integration.fhir.lookup.code">
+      <m-form-item mName="code" [mLabel]="code">
+        <ng-template #code>
+          <div>{{'web.integration.fhir.lookup.code' | translate}}&nbsp;</div>
+          <m-icon mCode="info-circle" nz-popover nzPopoverContent="The code that is to be located. If a code is provided, a system must be provided"></m-icon>
+        </ng-template>
         <m-input name="code" [(ngModel)]="data.code"></m-input>
       </m-form-item>
 
-      <m-form-item mName="system" mLabel="web.integration.fhir.lookup.system">
+      <m-form-item mName="system" [mLabel]="system">
+        <ng-template #system>
+          <div>{{'web.integration.fhir.lookup.system' | translate}}&nbsp;</div>
+          <m-icon mCode="info-circle" nz-popover nzPopoverContent="The system for the code that is to be located"></m-icon>
+        </ng-template>
         <m-input name="system" [(ngModel)]="data.system"></m-input>
       </m-form-item>
 
-      <m-form-item mName="version" mLabel="web.integration.fhir.lookup.version">
+      <m-form-item mName="version" [mLabel]="version">
+        <ng-template #version>
+          <div>{{'web.integration.fhir.lookup.version' | translate}}&nbsp;</div>
+          <m-icon mCode="info-circle" nz-popover nzPopoverContent="The version of the system, if one was provided in the source data"></m-icon>
+        </ng-template>
         <m-input name="version" [(ngModel)]="data.version"></m-input>
       </m-form-item>
 
-      <m-form-item mName="date" mLabel="web.integration.fhir.lookup.date">
+      <m-form-item mName="date" [mLabel]="date">
+        <ng-template #date>
+          <div>{{'web.integration.fhir.lookup.date' | translate}}&nbsp;</div>
+          <m-icon mCode="info-circle" nz-popover [nzPopoverContent]="dateContent"></m-icon>
+          <ng-template #dateContent>
+            The date for which the information should be returned. Normally, this is the current conditions (which is the default value) but under some circumstances,<br>
+            systems need to acccess this information as it would have been in the past.<br>
+            A typical example of this would be where code selection is constrained to the set of codes that were available when the patient was treated,<br>
+            not when the record is being edited. Note that which date is appropriate is a matter for implementation policy.
+          </ng-template>
+        </ng-template>
         <nz-date-picker name="date" [(ngModel)]="data.date"></nz-date-picker>
       </m-form-item>
 
-      <m-form-item mName="properties" mLabel="web.integration.fhir.lookup.properties">
+      <m-form-item mName="properties" [mLabel]="properties">
+        <ng-template #properties>
+          <div>{{'web.integration.fhir.lookup.properties' | translate}}&nbsp;</div>
+          <m-icon mCode="info-circle" nz-popover [nzPopoverContent]="propertiesContent"></m-icon>
+          <ng-template #propertiesContent>
+            A property that the client wishes to be returned in the output. If no properties are specified, the server chooses what to return.<br>
+            The following properties are defined for all code systems: url, name, version (code system info) and code information:<br>
+            display, definition, designation, parent and child, and for designations, lang.X where X is a designation language code.<br>
+            Some of the properties are returned explicit in named parameters (when the names match), and the rest (except for lang.X) in the property parameter group
+          </ng-template>
+        </ng-template>
         <div class="m-items-middle">
           <m-input name="properties" [(ngModel)]="data.propertyInput"></m-input>
           <m-button (click)="addProperty()">
