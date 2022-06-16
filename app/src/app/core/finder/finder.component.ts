@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation} from '@angular/core';
 import {BooleanInput, NumberInput} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
 import {BreakpointState} from '@angular/cdk/layout';
@@ -106,7 +106,7 @@ export class FinderMenuComponent {
     '[class.tw-finder-wrapper]': `true`
   }
 })
-export class FinderWrapperComponent {
+export class FinderWrapperComponent implements AfterViewInit {
   @Input() public title?: string;
   @Input() @BooleanInput() public loading: string | boolean = false;
 
@@ -115,6 +115,7 @@ export class FinderWrapperComponent {
   public constructor(
     public location: Location,
     private route: ActivatedRoute,
+    private elRef: ElementRef,
     breakpointService: MuiBreakpointService
   ) {
     breakpointService.observe().subscribe((state: BreakpointState) => this.isMobile = state.matches);
@@ -122,5 +123,11 @@ export class FinderWrapperComponent {
 
   public get isDisplayed(): boolean {
     return this.isMobile ? !this.route.firstChild : true;
+  }
+
+  public ngAfterViewInit(): void {
+    if (!this.route.firstChild) {
+      (this.elRef.nativeElement as HTMLElement).scrollIntoView({behavior: 'smooth'});
+    }
   }
 }
