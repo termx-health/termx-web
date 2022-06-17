@@ -48,8 +48,17 @@
       </m-button>
     </div>
 
-    <m-alert *ngIf="jobResponse" [mType]="jobResponse.type" mShowIcon>
-      {{jobResponse.message}}
-    </m-alert>
+    <div *ngIf="jobResponse">
+      <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
+        {{error}}
+      </m-alert>
+      <m-alert *ngFor="let warning of jobResponse.warnings" mType="warning" mShowIcon>
+        {{warning}}
+      </m-alert>
+      <m-alert *ngFor="let success of jobResponse.successes" mType="success" mShowIcon>
+        {{success}}
+      </m-alert>
+    </div>
+
   </m-spinner>
 </m-card>
