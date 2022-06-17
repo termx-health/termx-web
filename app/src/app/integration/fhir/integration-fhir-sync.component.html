@@ -49,20 +49,14 @@
     </div>
 
     <div *ngIf="jobResponse">
-      <m-alert *ngIf="jobResponse.errors" mType="error" mShowIcon>
-        <div *ngFor="let error of jobResponse.errors">
-          {{error}}
-        </div>
+      <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
+        {{error}}
       </m-alert>
-      <m-alert *ngIf="jobResponse.warnings" mType="warning" mShowIcon>
-        <div *ngFor="let warning of jobResponse.warnings">
-          {{warning}}
-        </div>
+      <m-alert *ngFor="let warning of jobResponse.warnings" mType="warning" mShowIcon>
+        {{warning}}
       </m-alert>
-      <m-alert *ngIf="jobResponse.successes" mType="success" mShowIcon>
-        <div *ngFor="let success of jobResponse.successes">
-          {{success}}
-        </div>
+      <m-alert *ngFor="let success of jobResponse.successes" mType="success" mShowIcon>
+        {{success}}
       </m-alert>
     </div>
 
