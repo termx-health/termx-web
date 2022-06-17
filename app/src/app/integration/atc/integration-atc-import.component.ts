@@ -9,7 +9,7 @@ import {filter} from 'rxjs';
   templateUrl: './integration-atc-import.component.html',
 })
 export class IntegrationAtcImportComponent implements OnInit {
-  public atcLanguage?: string;
+  public edition?: string;
 
   public data = new IntegrationImportConfiguration();
   public jobResponse?: JobLog;
@@ -25,7 +25,7 @@ export class IntegrationAtcImportComponent implements OnInit {
   public ngOnInit(): void {
     this.route.queryParamMap.subscribe(queryParamMap => {
       this.data = new IntegrationImportConfiguration();
-      this.atcLanguage = queryParamMap.get('language') || undefined;
+      this.edition = queryParamMap.get('edition') || undefined;
     });
   }
 
@@ -42,8 +42,13 @@ export class IntegrationAtcImportComponent implements OnInit {
     this.jobResponse = undefined;
     this.loading = true;
 
-    this.integrationAtcLibService.import(this.data).subscribe(resp => {
-        this.pollJobStatus(resp.jobId!);
+    this.integrationAtcLibService.import(this.data, this.edition).subscribe({
+        next: resp => this.pollJobStatus(resp.jobId!),
+        error: err => {
+          this.jobResponse = new JobLog();
+          this.jobResponse.errors = [err.message];
+          this.loading = false;
+        }
       }
     );
   }
@@ -61,10 +66,6 @@ export class IntegrationAtcImportComponent implements OnInit {
   }
 
   public setDefaultData(): void {
-    if (this.atcLanguage === 'est') {
-      this.data.defaultAtcEst();
-      return;
-    }
-    this.data.defaultAtcInt();
+    this.data = IntegrationImportConfiguration.getDefaultConfigurations(this.edition!);
   }
 }

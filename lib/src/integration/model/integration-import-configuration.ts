@@ -11,27 +11,22 @@ export class IntegrationImportConfiguration {
   public codeSystemDescription?: string;
   public codeSystemVersionDescription?: string;
 
-  public defaultAtcInt(): void {
-    this.uri = 'http://www.whocc.no/atc';
-    this.source = 'WHO';
-    this.codeSystem = 'atc-int';
-    this.codeSystemName = {'et': 'Rahvusvaheline ATC', 'en': 'International ATC'};
-    this.codeSystemDescription = 'Anatomical Therapeutic Chemical Classification System';
-    this.validFrom = undefined;
-    this.validTo = undefined;
-    this.codeSystemVersionDescription = undefined;
-    this.version = undefined;
-  }
 
-  public defaultAtcEst(): void {
-    this.uri = 'https://www.ravimiregister.ee';
-    this.source = 'Ravimiregister';
-    this.codeSystem = 'atc-est';
-    this.codeSystemName = {'et': 'Eesti ATC', 'en': 'Estonian ATC'};
-    this.codeSystemDescription = 'Eesti ATC (Anatomical Therapeutic Chemical Classification System)';
-    this.validFrom = undefined;
-    this.validTo = undefined;
-    this.codeSystemVersionDescription = undefined;
-    this.version = undefined;
+  public static getDefaultConfigurations(edition: string): IntegrationImportConfiguration {
+    const int = {
+      uri: 'http://www.whocc.no/atc',
+      source: 'WHO',
+      codeSystem: 'atc-int',
+      codeSystemName: {'et': 'Rahvusvaheline ATC', 'en': 'International ATC'},
+      codeSystemDescription: 'Anatomical Therapeutic Chemical Classification System',
+    };
+    const est = {
+      uri: 'https://www.ravimiregister.ee',
+      source: 'Ravimiregister',
+      codeSystem: 'atc-est',
+      codeSystemName: {'et': 'Eesti ATC', 'en': 'Estonian ATC'},
+      codeSystemDescription: 'Eesti ATC (Anatomical Therapeutic Chemical Classification System)',
+    };
+    return {'int': int, 'est': est}[edition] as any;
   }
 }
