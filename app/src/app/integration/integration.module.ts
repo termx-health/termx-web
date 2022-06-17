@@ -8,6 +8,8 @@ import {JobLibModule} from 'terminology-lib/job/job-lib.module';
 import {FhirCodeSystemLookupComponent} from './fhir/code-system/fhir-code-system-lookup.component';
 import {FhirCodeSystemValidateCodeComponent} from './fhir/code-system/fhir-code-system-validate-code.component';
 import {FhirConceptMapTranslateComponent} from './fhir/concept-map/fhir-concept-map-translate.component';
+import {IntegrationAtcImportComponent} from './atc/integration-atc-import.component';
+import {IntegrationLibModule} from 'terminology-lib/integration/integration-lib.module';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -15,7 +17,8 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'fhir/$sync', component: IntegrationFhirSyncComponent},
       {path: 'fhir/CodeSystem/$lookup', component: FhirCodeSystemLookupComponent},
       {path: 'fhir/CodeSystem/$validate-code', component: FhirCodeSystemValidateCodeComponent},
-      {path: 'fhir/ConceptMap/$translate', component: FhirConceptMapTranslateComponent}
+      {path: 'fhir/ConceptMap/$translate', component: FhirConceptMapTranslateComponent},
+      {path: 'atc/$import', component: IntegrationAtcImportComponent}
     ]
   }
 ];
@@ -25,13 +28,15 @@ export const INTEGRATION_ROUTES: Routes = [
     SharedModule,
     FhirLibModule,
     JobLibModule,
+    IntegrationLibModule
   ],
   declarations: [
     IntegrationDashboardComponent,
     IntegrationFhirSyncComponent,
     FhirCodeSystemLookupComponent,
     FhirCodeSystemValidateCodeComponent,
-    FhirConceptMapTranslateComponent
+    FhirConceptMapTranslateComponent,
+    IntegrationAtcImportComponent
   ],
 })
 export class IntegrationModule {

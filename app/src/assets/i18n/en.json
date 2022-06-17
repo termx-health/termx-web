@@ -308,6 +308,19 @@
             "target-system": "TargetSystem"
           }
         }
+      },
+      "atc": {
+        "set-default-data": "Set default data",
+        "import": {
+          "uri": "Uri",
+          "source": "Source",
+          "version": "Version",
+          "valid": "Valid",
+          "code-system": "CodeSystem",
+          "code-system-name": "CodeSystem name",
+          "code-system-description": "CodeSystem description",
+          "code-system-version-description": "CodeSystem version description"
+        }
       }
     }
   },

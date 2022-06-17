@@ -6,7 +6,7 @@
         <nz-breadcrumb-item>ConceptMap</nz-breadcrumb-item>
         <nz-breadcrumb-item>$validate-code</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <m-button (click)="translate()">{{'web.integration.send-request' | translate}}</m-button>
+      <m-button mDisplay="primary" [disabled]="!data.code || !data.system" (click)="translate()">{{'web.integration.send-request' | translate}}</m-button>
     </div>
 
     <m-form-item [mLabel]="url">
