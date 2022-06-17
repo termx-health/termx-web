@@ -7,6 +7,10 @@ export class JobLog {
   public errors?: string[];
 }
 
+export class JobLogResponse {
+  public jobId? : number;
+}
+
 class JobDefinition {
   public type?: string;
   public source?: string;

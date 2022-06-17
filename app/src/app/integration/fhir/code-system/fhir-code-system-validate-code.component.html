@@ -6,7 +6,7 @@
         <nz-breadcrumb-item>CodeSystem</nz-breadcrumb-item>
         <nz-breadcrumb-item>$validate-code</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <m-button (click)="validateCode()">{{'web.integration.send-request' | translate}}</m-button>
+      <m-button mDisplay="primary" [disabled]="!data.code || !data.system" (click)="validateCode()">{{'web.integration.send-request' | translate}}</m-button>
     </div>
 
     <m-form-item [mLabel]="code">
