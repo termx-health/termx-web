@@ -14,7 +14,7 @@ export class IntegrationFhirSyncComponent implements OnInit {
 
   public input: string = "";
   public loading: boolean = false;
-  public jobResponse?: {type: string, message: string};
+  public jobResponse?: JobLog;
   public urls: string[] = [];
 
   public constructor(
@@ -60,23 +60,13 @@ export class IntegrationFhirSyncComponent implements OnInit {
       this.jobService.getLog(jobId).pipe(filter(resp => resp.execution?.status !== 'running')).subscribe(jobResp => {
           clearInterval(i);
           this.loading = false;
-          this.setJobResponse(jobResp);
-          if (this.jobResponse?.type === 'success') {
-            this.urls = [];
+          if (!jobResp.errors && !jobResp.warnings){
+              this.urls = [];
           }
+          this.jobResponse = jobResp;
         }
       );
     }, 5000);
-  }
-
-  private setJobResponse(jobResp: JobLog): void {
-    if (jobResp.errors) {
-      this.jobResponse = {type: 'danger', message: jobResp.errors.errors};
-    } else if (jobResp.warnings) {
-      this.jobResponse = {type: 'warning', message: jobResp.warnings.warnings};
-    } else {
-      this.jobResponse = {type: 'success', message: 'Completed'};
-    }
   }
 
   public removeUrl(index: number): void {
