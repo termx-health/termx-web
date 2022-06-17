@@ -28,6 +28,10 @@
       </nz-collapse>
 
       <nz-divider nzOrientation="left" nzText="ATC"></nz-divider>
+      <div style="display: grid">
+        <m-button mDisplay="link" [routerLink]="'./atc/$import'" [queryParams]="{edition: 'int'}">ATC int import</m-button>
+        <m-button mDisplay="link" [routerLink]="'./atc/$import'" [queryParams]="{edition: 'est'}">ATC est import</m-button>
+      </div>
       <nz-divider nzOrientation="left" nzText="ICD-10"></nz-divider>
     </m-card>
   </div>

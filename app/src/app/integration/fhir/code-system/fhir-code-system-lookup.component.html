@@ -6,7 +6,7 @@
         <nz-breadcrumb-item>CodeSystem</nz-breadcrumb-item>
         <nz-breadcrumb-item>$lookup</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <m-button (click)="lookUp()">{{'web.integration.send-request' | translate}}</m-button>
+      <m-button mDisplay="primary" [disabled]="!data.code || !data.system" (click)="lookUp()">{{'web.integration.send-request' | translate}}</m-button>
     </div>
 
     <m-form-item [mLabel]="code">
