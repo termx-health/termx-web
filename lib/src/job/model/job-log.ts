@@ -2,8 +2,9 @@ export class JobLog {
   public id?: number;
   public definition?: JobDefinition;
   public execution?: JobExecution;
-  public warnings?: {[key: string]: any};
-  public errors?: {[key: string]: any};
+  public warnings?: string[];
+  public successes?: string[];
+  public errors?: string[];
 }
 
 class JobDefinition {
