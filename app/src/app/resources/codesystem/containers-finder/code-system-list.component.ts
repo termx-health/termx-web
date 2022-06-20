@@ -9,16 +9,24 @@ import {Router} from '@angular/router';
   template: `
     <div style="max-height: 100%; width: 100%; height: 100%; padding: 0 0 1rem 0;">
       <twa-finder-wrapper [loading]="loading">
-        <twa-finder-menu title="CODE SYSTEMS" [length]="searchResult.meta.total">
+        <twa-finder-menu title="CODE SYSTEMS" [length]="searchResult.data.length">
           <twa-finder-menu-item *ngFor="let cs of searchResult.data" [navigate]="[cs.id]" (view)="openResource(cs)">
             {{(cs.names | localName) || cs.id}}
           </twa-finder-menu-item>
+
+          <twa-finder-load-more-item
+              *ngIf="searchResult.data.length < searchResult.meta.total"
+              (twClick)="loadCodeSystems(searchResult.data.length + DEFAULT_LIMIT)"
+          ></twa-finder-load-more-item>
         </twa-finder-menu>
       </twa-finder-wrapper>
+
     </div>
   `
 })
 export class FinderCodeSystemListComponent implements OnInit {
+  public readonly DEFAULT_LIMIT = 50;
+
   public searchResult = new SearchResult<CodeSystem>();
   public loading = false;
 
@@ -28,10 +36,14 @@ export class FinderCodeSystemListComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.loadCodeSystems();
+  }
+
+  public loadCodeSystems(limit: number = this.DEFAULT_LIMIT): void {
     this.loading = true;
-    this.codeSystemService.search({limit: -1}).subscribe(resp => {
-      return this.searchResult = resp;
-    }).add(() => this.loading = false);
+    this.codeSystemService.search({limit: limit})
+      .subscribe(css => this.searchResult = css)
+      .add(() => this.loading = false);
   }
 
   public openResource(cs: CodeSystem): void {

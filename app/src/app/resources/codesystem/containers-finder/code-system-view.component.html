@@ -1,4 +1,4 @@
-<twa-finder-wrapper [loading]="loading" title="CODE SYSTEM">
+<twa-finder-wrapper [loading]="isLoading" title="CODE SYSTEM">
   <div class="tw-finder-view-form">
     <m-form-row mFull>
       <div *mFormCol>
@@ -53,17 +53,26 @@
     </twa-finder-menu-item>
   </twa-finder-menu>
 
-  <twa-finder-menu title="entities.code-system.versions" [length]="codeSystem?.versions?.length">
-    <twa-finder-menu-item *ngFor="let v of codeSystem?.versions" [navigate]="['versions', v.version]">
+
+  <!-- Versions -->
+  <twa-finder-menu title="entities.code-system.versions" [length]="versions.length">
+    <twa-finder-menu-item *ngFor="let v of versions" [navigate]="['versions', v.version]">
       {{v.version}} - {{v.source}}
     </twa-finder-menu-item>
   </twa-finder-menu>
 
-  <twa-finder-menu title="entities.code-system.concepts" [length]="codeSystem?.concepts?.length">
-    <twa-finder-menu-item *ngFor="let c of codeSystem?.concepts" [navigate]="['concepts', c.id]">
+  <!-- Concepts -->
+  <twa-finder-menu title="entities.code-system.concepts" [length]="conceptResult.data.length">
+    <twa-finder-menu-item *ngFor="let c of conceptResult.data" [navigate]="['concepts', c.id]">
       {{c.code}}
     </twa-finder-menu-item>
+
+    <twa-finder-load-more-item
+        *ngIf="conceptResult.data.length < conceptResult.meta.total"
+        (twClick)="loadConcepts(codeSystem.id, conceptResult.data.length + DEFAULT_CONCEPT_LIMIT)">
+    </twa-finder-load-more-item>
   </twa-finder-menu>
+
 
   <twa-finder-menu title="entities.code-system.contacts" [length]="codeSystem?.contacts?.length">
     <twa-finder-menu-item *ngFor="let c of codeSystem?.contacts">
