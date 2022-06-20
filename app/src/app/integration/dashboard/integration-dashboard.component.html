@@ -33,6 +33,10 @@
         <m-button mDisplay="link" [routerLink]="'./atc/$import'" [queryParams]="{edition: 'est'}">ATC est import</m-button>
       </div>
       <nz-divider nzOrientation="left" nzText="ICD-10"></nz-divider>
+      <div style="display: grid">
+        <m-button mDisplay="link" [routerLink]="'./icd-10/$import'" [queryParams]="{edition: 'int'}">ICD-10 int import</m-button>
+        <m-button mDisplay="link" [routerLink]="'./icd-10/$import'" [queryParams]="{edition: 'est'}">ICD-10 est import</m-button>
+      </div>
     </m-card>
   </div>
   <div nz-col [nzMd]="18" [nzXs]="24">
