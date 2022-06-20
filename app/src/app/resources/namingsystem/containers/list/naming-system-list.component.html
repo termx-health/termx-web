@@ -1,0 +1,74 @@
+<m-card>
+  <div *m-card-header class="m-items-between">
+    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <div class="m-items-middle">
+      <twa-add-button>
+        {{'web.naming-system.list.add-naming-system' | translate}}
+      </twa-add-button>
+    </div>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+    <tr *mTableHead>
+      <th></th>
+      <th mColumnKey="codeSystem">{{'web.naming-system.list.naming-system' | translate}}</th>
+      <th mColumnKey="name">{{'entities.naming-system.name' | translate}}</th>
+      <th mColumnKey="source">{{'entities.naming-system.source' | translate}}</th>
+      <th mColumnKey="type">{{'entities.naming-system.type' | translate}}</th>
+      <th mColumnKey="status">{{'entities.naming-system.status' | translate}}</th>
+      <th class="tw-table-actions"></th>
+    </tr>
+
+    <tr *mTableRow="let ns">
+      <td m-table-expand [mItem]="ns"></td>
+      <td><a [routerLink]="['naming-systems',ns.id,'edit']">{{ns.id}}</a></td>
+      <td>{{ns.names | localName}}</td>
+      <td>{{ns.source}}</td>
+      <td>{{ns.kind}}</td>
+      <td class="tw-table-min-width">
+        <twa-status-tag [status]="ns.status"></twa-status-tag>
+      </td>
+      <td class="tw-table-actions">
+        <m-dropdown>
+          <a *mDropdownItemIf="ns.status !== 'retired'">
+            {{'web.publication-status.operations.retire' | translate}}
+          </a>
+          <a *mDropdownItemIf="ns.status === 'draft'">
+            {{'web.publication-status.operations.activate' | translate}}
+          </a>
+        </m-dropdown>
+      </td>
+    </tr>
+
+    <tr *mTableRowExpand="let ns" class="m-table-expanded-row">
+      <td colspan="7">
+        <m-form-row mFull>
+          <div *mFormCol>
+            <m-form-item *ngIf="ns.description" mLabel="entities.naming-system.description">
+              {{ns.description}}
+            </m-form-item>
+
+            <m-form-item *ngIf="ns.identifiers.length > 0" mLabel="entities.naming-system.identifiers">
+              <div style="display: grid; grid-template-columns: repeat(3, auto) 1fr; column-gap: 1rem">
+                <ng-container *ngFor="let identifier of ns.identifiers">
+                  <div>
+                    <m-icon *ngIf="identifier.preferred" [mOptions]="{nzTheme : 'fill'}" mCode="star"></m-icon>
+                  </div>
+                  <span>{{identifier.type}}</span>
+                  <span>|</span>
+                  <span>{{identifier.value}}</span>
+                </ng-container>
+              </div>
+            </m-form-item>
+          </div>
+        </m-form-row>
+      </td>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="7">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>

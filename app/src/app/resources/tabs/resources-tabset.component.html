@@ -20,4 +20,11 @@
     </a>
     <twa-map-set-list></twa-map-set-list>
   </nz-tab>
+  <nz-tab>
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'naming-systems' }" class="m-items-middle">
+      {{'web.resources.tabset.naming-systems' | translate}}
+      <m-tag class="tw-tab-total-tag">{{namingSystemTotal}}</m-tag>
+    </a>
+    <twa-naming-system-list></twa-naming-system-list>
+  </nz-tab>
 </nz-tabset>
