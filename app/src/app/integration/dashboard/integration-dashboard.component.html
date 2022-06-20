@@ -28,7 +28,7 @@
       </nz-collapse>
 
       <nz-divider nzOrientation="left" nzText="ATC"></nz-divider>
-      <div style="display: grid"><!--        <td><a [routrLink]="['../versions', version.id, version.status === 'active'? 'view' : 'edit']">{{version.id}}</a></td>-->
+      <div style="display: grid">
         <m-button mDisplay="link" [routerLink]="'./atc/$import'" [queryParams]="{edition: 'int'}">ATC int import</m-button>
         <m-button mDisplay="link" [routerLink]="'./atc/$import'" [queryParams]="{edition: 'est'}">ATC est import</m-button>
       </div>
