@@ -1,6 +1,6 @@
 import {CodeSystemEntityVersion} from 'terminology-lib/resources';
 import {debounceTime, distinctUntilChanged, finalize, Observable, of, Subject, switchMap} from 'rxjs';
-import {copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../services/code-system.service';
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {CodeSystemEntityVersionQueryParams} from 'terminology-lib/resources/codesystem/model/code-system-entity-version-search-params';
@@ -12,6 +12,7 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
   templateUrl: './code-system-version-entity-versions-list.component.html',
 })
 export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public codeSystemId?: string;
   @Input() public version?: string;
 
@@ -57,10 +58,6 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
     this.search().subscribe(resp => this.searchResult = resp);
   }
 
-  public delete(entity: CodeSystemEntityVersion): void {
-    this.codeSystemService.unlinkEntityVersion(this.codeSystemId!, this.version!, entity.id!).subscribe(() => this.loadData());
-  }
-
   public save(): void {
     if (!validateForm(this.form)) {
       return;
@@ -70,6 +67,10 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
       this.loadData();
       this.modalVisible = false;
     }).add(() => this.loading['save'] = false);
+  }
+
+  public delete(entity: CodeSystemEntityVersion): void {
+    this.codeSystemService.unlinkEntityVersion(this.codeSystemId!, this.version!, entity.id!).subscribe(() => this.loadData());
   }
 
   public get isLoading(): boolean {

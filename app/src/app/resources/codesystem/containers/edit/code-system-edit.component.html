@@ -1,5 +1,5 @@
-<div nz-row [nzGutter]="12" nzJustify="center">
-  <div nz-col [nzMd]="12" [nzXs]="24">
+<div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
+  <div nz-col [nzLg]="12" [nzMd]="18" [nzXs]="24">
     <m-spinner [mLoading]="loading">
       <m-card [mTitle]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'">
         <form #form="ngForm" *ngIf="codeSystem">
@@ -17,13 +17,11 @@
           </m-form-item>
 
           <m-form-item mName="content" mLabel="entities.code-system.content" required>
-            <m-select name="content" [(ngModel)]="codeSystem.content" required>
-              <m-option label="web.content-options.complete" value="complete"></m-option>
-              <m-option label="web.content-options.not-present" value="not-present"></m-option>
-              <m-option label="web.content-options.example" value="example"></m-option>
-              <m-option label="web.content-options.fragment" value="fragment"></m-option>
-              <m-option label="web.content-options.supplement" value="supplement"></m-option>
-            </m-select>
+            <twl-value-set-concept-select name="content"
+                [(ngModel)]="codeSystem.content"
+                valueSet="codesystem-content-mode"
+                required
+            ></twl-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="caseSensitive" mLabel="entities.code-system.case-sensitivity">
@@ -40,8 +38,8 @@
 
           <m-form-item mName="narrative" [mLabel]="narrativeHeader">
             <ng-template #narrativeHeader>
-              <div class="tw-items-between">
-                <div>{{'entities.code-system.narrative' | translate}}</div>&nbsp;
+              <div class="m-items-between">
+                <div>{{'entities.code-system.narrative' | translate}}</div>
                 <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
                   <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
                 </m-button>
@@ -54,8 +52,8 @@
         </form>
 
         <twa-code-system-versions-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-versions-list>
-        <twa-code-system-properties-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-properties-list>
-        <twl-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></twl-contact-list>
+        <twa-code-system-properties-list *ngIf="(mode === 'edit') && codeSystem" [(properties)]="codeSystem.properties"></twa-code-system-properties-list>
+        <twa-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></twa-contact-list>
 
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
@@ -66,7 +64,7 @@
     </m-spinner>
   </div>
 
-  <div nz-col [nzMd]="6" [nzXs]="24" style="height: min-content" *ngIf="mode === 'edit'">
+  <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content" *ngIf="mode === 'edit'">
     <m-card [mTitle]="'entities.code-system.concepts'">
       <twa-code-system-concepts-list [codeSystemId]="codeSystemId"></twa-code-system-concepts-list>
     </m-card>

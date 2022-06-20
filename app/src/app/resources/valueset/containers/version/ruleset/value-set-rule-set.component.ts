@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {ValueSetRule, ValueSetRuleSet} from 'lib/src/resources';
+import {ValueSetRule, ValueSetRuleSet} from 'terminology-lib/resources';
 import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {ValueSetRuleSetRuleComponent} from './value-set-rule-set-rule.component';

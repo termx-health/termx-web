@@ -1,5 +1,5 @@
-<m-card class="tw-card-inner">
-  <div *m-card-header class="tw-items-between">
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
     <div class="m-card-title">{{'entities.code-system.versions' | translate}}</div>
 
     <m-dropdown>
@@ -7,8 +7,12 @@
         <span>{{'web.code-system.form.versions.list.add-version' | translate}}</span> &nbsp;
         <m-icon mCode="down" mSize="10"></m-icon>
       </m-button>
-      <a *m-dropdown-item [routerLink]="['../versions/add']">{{'web.code-system.form.versions.list.add-new-version' | translate}}</a>
-      <a *m-dropdown-item (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId})">{{'web.code-system.form.versions.list.duplicate-version' | translate}}</a>
+      <a *m-dropdown-item [routerLink]="['../versions/add']">
+        {{'web.code-system.form.versions.list.add-new-version' | translate}}
+      </a>
+      <a *m-dropdown-item (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId})">
+        {{'web.code-system.form.versions.list.duplicate-version' | translate}}
+      </a>
     </m-dropdown>
   </div>
 
@@ -23,11 +27,13 @@
     </tr>
 
     <tr *mTableRow="let version">
-      <td><a [routerLink]="['../versions', version.version, version.status === 'active'? 'view' : 'edit']">{{version.version}}</a></td>
+      <td><a [routerLink]="['../versions', version.version, version.status === 'draft'? 'edit' : 'view']">{{version.version}}</a></td>
       <td>{{version.source}}</td>
       <td>{{version.releaseDate | localDate}}</td>
       <td>{{version.expirationDate | localDate}}</td>
-      <td><twa-status-tag [status]="version.status"></twa-status-tag></td>
+      <td class="tw-table-min-width">
+        <twa-status-tag [status]="version.status"></twa-status-tag>
+      </td>
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId, sourceCodeSystem: codeSystemId, sourceVersion: version})">
@@ -36,10 +42,10 @@
           <a *m-dropdown-item (click)="exportFhirFormatVersion(version.id)">
             {{'web.code-system.form.versions.list.export-fhir' | translate}}
           </a>
-          <a *mDropdownItemIf="version.status === 'active'" (click)="retireVersion(version)">
+          <a *mDropdownItemIf="version.status !== 'retired'" (click)="retireVersion(version)">
             {{'web.publication-status.operations.retire' | translate}}
           </a>
-          <a *mDropdownItemIf="version.status !== 'active'" (click)="activateVersion(version)">
+          <a *mDropdownItemIf="version.status === 'draft'" (click)="activateVersion(version)">
             {{'web.publication-status.operations.activate' | translate}}
           </a>
         </m-dropdown>

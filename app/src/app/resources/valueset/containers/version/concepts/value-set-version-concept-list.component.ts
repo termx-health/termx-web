@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ValueSetConcept} from 'lib/src/resources';
+import {ValueSetConcept} from 'terminology-lib/resources';
 import {BooleanInput} from '@kodality-web/core-util';
 
 @Component({

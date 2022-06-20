@@ -55,6 +55,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.codeSystemConceptLibService.load(conceptId).subscribe(c => this.concept = c).add(() => this.loading = false);
   }
 
+
   public activateVersion(version: CodeSystemEntityVersion): void {
     this.loading = true;
     this.codeSystemEntityVersionService.activateVersion(version.id!).subscribe(() => version.status = 'active').add(() => this.loading = false);

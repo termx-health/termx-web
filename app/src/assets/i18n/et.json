@@ -9,8 +9,7 @@
       "confirm": "Kinnita",
       "add": "Lisa"
     },
-    "no-data": "Andmed puuduvad",
-    "back": "Tagasi"
+    "no-data": "Andmed puuduvad"
   },
   "web": {
     "app": {
@@ -20,13 +19,6 @@
       "ics": "esitähe tõstutundlik",
       "cs": "tõstutundlik",
       "ci": "tõstutundetu"
-    },
-    "content-options": {
-      "complete": "täielik",
-      "not-present": "puudulik",
-      "example": "näidis",
-      "fragment": "katkend",
-      "supplement": "lisand"
     },
     "code-system-version": {
       "entity": {
@@ -278,11 +270,6 @@
       }
     },
     "publication-status": {
-      "statuses": {
-        "active": "Aktiivne",
-        "retired": "Kõrvaldatud",
-        "draft": "Mustand"
-      },
       "operations": {
         "activate": "Aktiveeri",
         "retire": "Kõrvalda"

@@ -1,12 +1,12 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="loading">
-
       <m-card>
-        <div *m-card-header class="tw-items-middle">
+        <div *m-card-header class="m-items-middle">
           <div class="m-card-title">{{(mode === 'edit' ? 'web.code-system-version.form.edit-header' : 'web.code-system-version.form.add-header') | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
+
         <form #form="ngForm" *ngIf="version">
           <m-form-item mName="version" mLabel="entities.code-system-version.version" required>
             <m-input name="version" [(ngModel)]="version.version" required></m-input>
@@ -17,21 +17,15 @@
           </m-form-item>
 
           <m-form-item mName="preferredLanguage" mLabel="entities.code-system-version.preferred-language">
-            <m-select name="preferredLanguage" [(ngModel)]="version.preferredLanguage">
-              <!-- FIXME: concept-select -->
-              <m-option [label]="'et'" value="et"></m-option>
-              <m-option [label]="'en'" value="en"></m-option>
-              <m-option [label]="'la'" value="la"></m-option>
-            </m-select>
+            <twl-value-set-concept-select name="preferredLanguage" [(ngModel)]="version.preferredLanguage" valueSet="languages"></twl-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="supportedLanguages" mLabel="entities.code-system-version.supported-languages">
-            <m-select name="supportedLanguages" [(ngModel)]="version.supportedLanguages" multiple>
-              <!-- FIXME: concept-select -->
-              <m-option [label]="'et'" value="et"></m-option>
-              <m-option [label]="'en'" value="en"></m-option>
-              <m-option [label]="'la'" value="la"></m-option>
-            </m-select>
+            <twl-value-set-concept-select name="supportedLanguages"
+                [(ngModel)]="version.supportedLanguages"
+                valueSet="languages"
+                multiple
+            ></twl-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="entities.code-system-version.description">
@@ -46,7 +40,10 @@
             <nz-date-picker name="expirationDate" [(ngModel)]="version.expirationDate"></nz-date-picker>
           </m-form-item>
 
-          <twa-code-system-version-entity-version-list [codeSystemId]="codeSystemId" [version]="version.version"></twa-code-system-version-entity-version-list>
+          <twa-code-system-version-entity-version-list *ngIf="version.id"
+              [codeSystemId]="codeSystemId"
+              [version]="version.version"
+          ></twa-code-system-version-entity-version-list>
 
           <ng-container *m-card-footer>
             <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">

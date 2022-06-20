@@ -14,6 +14,7 @@ import {EntityPropertyLibService} from './services/entity-property-lib.service';
 import {CodeSystemEntityVersionSearchComponent} from './containers/code-system-entity-version-search.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {CodeSystemEntityLibService} from './services/code-system-entity-lib.service';
+import {LocalizedConceptNamePipe} from './pipe/localized-concept-name-pipe';
 
 
 @NgModule({
@@ -37,12 +38,16 @@ import {CodeSystemEntityLibService} from './services/code-system-entity-lib.serv
     ConceptSearchComponent,
     CodeSystemVersionSelectComponent,
     CodeSystemEntityVersionSearchComponent,
+
+    LocalizedConceptNamePipe
   ],
   exports: [
     CodeSystemSearchComponent,
     ConceptSearchComponent,
     CodeSystemVersionSelectComponent,
-    CodeSystemEntityVersionSearchComponent
+    CodeSystemEntityVersionSearchComponent,
+
+    LocalizedConceptNamePipe
   ]
 })
 export class CodeSystemLibModule {

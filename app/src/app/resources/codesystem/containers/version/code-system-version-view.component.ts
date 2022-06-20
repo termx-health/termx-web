@@ -1,28 +1,45 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {CodeSystemVersion} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
+import {Location} from '@angular/common';
+import {validateForm} from '@kodality-web/core-util';
+import {NgForm} from '@angular/forms';
 
 @Component({
   templateUrl: 'code-system-version-view.component.html',
 })
 export class CodeSystemVersionViewComponent implements OnInit {
+  public codeSystemId?: string | null;
   public version?: CodeSystemVersion;
   public loading = false;
+
+  @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private codeSystemService: CodeSystemService,
     private route: ActivatedRoute,
+    private location: Location,
   ) {}
 
   public ngOnInit(): void {
-    const codeSystemId = this.route.snapshot.paramMap.get('id');
+    this.codeSystemId = this.route.snapshot.paramMap.get('id');
     const codeSystemVersion = this.route.snapshot.paramMap.get('version');
-    this.loadVersion(codeSystemId!, codeSystemVersion!);
+    this.loadVersion(this.codeSystemId!, codeSystemVersion!);
   }
 
   private loadVersion(id: string, version: string): void {
     this.loading = true;
     this.codeSystemService.loadVersion(id, version).subscribe(v => this.version = v).add(() => this.loading = false);
+  }
+
+  public save(): void {
+    if (!validateForm(this.form)) {
+      return;
+    }
+    this.loading = true;
+    this.codeSystemService.saveVersion(this.codeSystemId!, this.version!)
+      .subscribe(() => this.location.back())
+      .add(() => this.loading = false);
   }
 }

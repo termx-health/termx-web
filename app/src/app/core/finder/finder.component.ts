@@ -1,11 +1,25 @@
-import {Component, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation} from '@angular/core';
 import {BooleanInput, NumberInput} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
-import {BreakpointObserver, BreakpointState} from '@angular/cdk/layout';
-import {MuiDestroyService} from '@kodality-health/marina-ui';
-import {takeUntil} from 'rxjs';
+import {BreakpointState} from '@angular/cdk/layout';
+import {MuiBreakpointService} from '@kodality-health/marina-ui';
 import {Location} from '@angular/common';
 
+
+@Component({
+  selector: 'twa-finder-load-more-item',
+  encapsulation: ViewEncapsulation.None,
+  template: `
+    <twa-finder-menu-item>
+      <a class="tw-finder-load-more" (click)="twClick.emit()">
+        Load more
+      </a>
+    </twa-finder-menu-item>
+  `
+})
+export class FinderLoadMoreItemComponent {
+  @Output() public twClick = new EventEmitter<void>();
+}
 
 @Component({
   selector: 'twa-finder-menu-item',
@@ -16,7 +30,7 @@ import {Location} from '@angular/common';
     </div>
 
 
-    <div *ngIf="navigate" class="tw-items-between">
+    <div *ngIf="navigate" class="m-items-between">
       <a [routerLink]="navigate" routerLinkActive="tw-finder-menu-item-active">
         <ng-container *ngTemplateOutlet="contentTpl"></ng-container>
       </a>
@@ -49,7 +63,7 @@ export class FinderMenuItemComponent {
           <m-icon [mCode]="open ? 'folder-open' : 'folder'"></m-icon>
         </m-button>
         {{title
-          
+
           | toString | translate}}
       </div>
 
@@ -82,7 +96,7 @@ export class FinderMenuComponent {
   styleUrls: ['finder.component.less'],
   encapsulation: ViewEncapsulation.None,
   template: `
-    <m-card class="tw-finder-wrapper-inner" *ngIf="isDisplayed">
+    <m-card class="tw-finder-wrapper-inner" m-scrollable *ngIf="isDisplayed">
       <ng-container *ngIf="title || isMobile">
         <ng-container *m-card-header>
           <a *ngIf="isMobile" (click)="location.back()" class="tw-finder-wrapper-header-navigation tw-finder-title">
@@ -107,7 +121,7 @@ export class FinderMenuComponent {
     '[class.tw-finder-wrapper]': `true`
   }
 })
-export class FinderWrapperComponent {
+export class FinderWrapperComponent implements AfterViewInit {
   @Input() public title?: string;
   @Input() @BooleanInput() public loading: string | boolean = false;
 
@@ -116,13 +130,19 @@ export class FinderWrapperComponent {
   public constructor(
     public location: Location,
     private route: ActivatedRoute,
-    breakpointObserver: BreakpointObserver,
-    destroy$: MuiDestroyService
+    private elRef: ElementRef,
+    breakpointService: MuiBreakpointService
   ) {
-    breakpointObserver.observe(['(max-width: 768px)']).pipe(takeUntil(destroy$)).subscribe((state: BreakpointState) => this.isMobile = state.matches);
+    breakpointService.observe().subscribe((state: BreakpointState) => this.isMobile = state.matches);
   }
 
   public get isDisplayed(): boolean {
     return this.isMobile ? !this.route.firstChild : true;
+  }
+
+  public ngAfterViewInit(): void {
+    if (!this.route.firstChild) {
+      (this.elRef.nativeElement as HTMLElement).scrollIntoView({behavior: 'smooth'});
+    }
   }
 }

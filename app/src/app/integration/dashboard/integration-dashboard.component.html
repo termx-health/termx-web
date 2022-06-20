@@ -1,10 +1,14 @@
-<div nz-row nzGutter="12">
+<div nz-row nzGutter="12" class="m-row">
   <div nz-col [nzMd]="6" [nzXs]="24">
     <m-card>
       <nz-divider nzOrientation="left" nzText="FHIR"></nz-divider>
       <nz-collapse nzGhost>
         <nz-collapse-panel nzHeader="CodeSystem">
-          <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'CodeSystem'}">$sync</m-button>
+          <div style="display: grid">
+            <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'CodeSystem'}">$sync</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$lookup'">$lookup</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$validate-code'">$validate-code</m-button>
+          </div>
         </nz-collapse-panel>
       </nz-collapse>
 
@@ -16,11 +20,18 @@
 
       <nz-collapse nzGhost>
         <nz-collapse-panel nzHeader="ConceptMap">
-          <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ConceptMap'}">$sync</m-button>
+          <div style="display: grid">
+            <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ConceptMap'}">$sync</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/ConceptMap/$translate'">$translate</m-button>
+          </div>
         </nz-collapse-panel>
       </nz-collapse>
 
       <nz-divider nzOrientation="left" nzText="ATC"></nz-divider>
+      <div style="display: grid">
+        <m-button mDisplay="link" [routerLink]="'./atc/$import'" [queryParams]="{edition: 'int'}">ATC int import</m-button>
+        <m-button mDisplay="link" [routerLink]="'./atc/$import'" [queryParams]="{edition: 'est'}">ATC est import</m-button>
+      </div>
       <nz-divider nzOrientation="left" nzText="ICD-10"></nz-divider>
     </m-card>
   </div>

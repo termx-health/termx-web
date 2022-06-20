@@ -1,19 +1,22 @@
 <nz-tabset nzLinkRouter>
   <nz-tab>
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'code-systems' }">{{'web.resources.tabset.code-systems' | translate}}
-      <nz-badge nzStandalone [nzCount]="codeSystemTotal" [nzStyle]="badgeStyle"></nz-badge>
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'code-systems' }" class="m-items-middle">
+      {{'web.resources.tabset.code-systems' | translate}}
+      <m-tag class="tw-tab-total-tag">{{codeSystemTotal}}</m-tag>
     </a>
     <twa-code-system-list></twa-code-system-list>
   </nz-tab>
   <nz-tab>
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'value-sets' }">{{'web.resources.tabset.value-sets' | translate}}
-      <nz-badge nzStandalone [nzCount]="valueSetTotal" [nzStyle]="badgeStyle"></nz-badge>
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'value-sets' }" class="m-items-middle">
+      {{'web.resources.tabset.value-sets' | translate}}
+      <m-tag class="tw-tab-total-tag">{{valueSetTotal}}</m-tag>
     </a>
     <twa-value-set-list></twa-value-set-list>
   </nz-tab>
   <nz-tab>
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'map-sets' }">{{'web.resources.tabset.map-sets' | translate}}
-      <nz-badge nzStandalone [nzCount]="mapSetTotal" [nzStyle]="badgeStyle"></nz-badge>
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'map-sets' }" class="m-items-middle">
+      {{'web.resources.tabset.map-sets' | translate}}
+      <m-tag class="tw-tab-total-tag">{{mapSetTotal}}</m-tag>
     </a>
     <twa-map-set-list></twa-map-set-list>
   </nz-tab>
