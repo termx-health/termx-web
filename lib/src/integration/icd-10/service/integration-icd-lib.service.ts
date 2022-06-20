@@ -15,7 +15,7 @@ export class IntegrationIcdLibService {
   }
 
   public import(params: IntegrationImportConfiguration, edition: string, url: string): Observable<JobLogResponse> {
-    const postUrl = this.getEditionUrl(edition);
+    const postUrl = this.getEditionBaseUrl(edition);
     return this.http.post<JobLogResponse>(`${postUrl}/import`, params, {
       params: SearchHttpParams.build({
         url: url
@@ -23,7 +23,7 @@ export class IntegrationIcdLibService {
     });
   }
 
-  public getEditionUrl(edition: string): string {
+  private getEditionBaseUrl(edition: string): string {
     if (edition === 'int') {
       return this.baseUrl;
     }

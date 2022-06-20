@@ -15,18 +15,15 @@ export class IntegrationAtcLibService {
   }
 
   public import(params: IntegrationImportConfiguration, edition: string, url?: string): Observable<JobLogResponse> {
-    const postUrl = this.getEditionUrl(edition);
-    if (url) {
-      return this.http.post<JobLogResponse>(`${postUrl}/import`, params, {
-        params: SearchHttpParams.build({
-          url: url
-        })
-      });
-    }
-    return this.http.post<JobLogResponse>(`${postUrl}/import`, params);
+    const postUrl = this.getEditionBaseUrl(edition);
+    return this.http.post<JobLogResponse>(`${postUrl}/import`, params, {
+      params: SearchHttpParams.build({
+        url: url
+      })
+    });
   }
 
-  public getEditionUrl(edition: string): string {
+  private getEditionBaseUrl(edition: string): string {
     if (edition === 'int') {
       return this.baseUrl;
     }
