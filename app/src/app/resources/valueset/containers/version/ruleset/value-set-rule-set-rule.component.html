@@ -1,86 +1,97 @@
 <form #form="ngForm">
-  <m-form-item mName="codeSystem" mLabel="web.value-set-rule-set.entity.rule.code-system" [required]="!viewMode && !includeRule.valueSet">
+  <m-form-item mName="codeSystem" mLabel="entities.value-set-rule-set.rule.code-system" [required]="!viewMode && !includeRule.valueSet">
     <twl-code-system-search *ngIf="!viewMode"
         name="codeSystem"
         [(ngModel)]="codeSystem"
         (ngModelChange)="codeSystemChange($event)"
         valuePrimitive
-        [required]="!includeRule.valueSet"></twl-code-system-search>
-    <label *ngIf="viewMode">{{codeSystem}}</label>
+        [required]="!includeRule.valueSet"
+    ></twl-code-system-search>
+    <label *ngIf="viewMode">
+      {{codeSystem}}
+    </label>
   </m-form-item>
 
-  <m-form-item mName="codeSystemVersion" mLabel="web.value-set-rule-set.entity.rule.code-system-version" [required]="!viewMode && codeSystem && !lockedDate">
+  <m-form-item mName="codeSystemVersion" mLabel="entities.value-set-rule-set.rule.code-system-version" [required]="!viewMode && codeSystem && !lockedDate">
     <twl-code-system-version-select *ngIf="!viewMode"
         name="codeSystemVersion"
         [(ngModel)]="codeSystemVersion"
         (ngModelChange)="codeSystemVersionChange($event)"
         [codeSystemId]="codeSystem"
-        [required]="!lockedDate && codeSystem"></twl-code-system-version-select>
-    <label *ngIf="viewMode">{{codeSystemVersion?.version}}</label>
+        [required]="!lockedDate && codeSystem"
+    ></twl-code-system-version-select>
+    <label *ngIf="viewMode">
+      {{codeSystemVersion?.version}}
+    </label>
   </m-form-item>
 </form>
 
 
 <ng-container *ngIf="codeSystem">
-  <nz-divider [nzText]="'web.value-set-rule-set.form.include' | translate" nzOrientation="left"></nz-divider>
-  <m-form-item mLabel="web.value-set-rule-set.entity.rule.concepts">
+  <nz-divider [nzText]="'entities.value-set-rule-set.include' | translate" nzOrientation="left"></nz-divider>
+  <m-form-item mLabel="entities.value-set-rule-set.rule.concepts">
     <twa-value-set-version-concept-list [codeSystem]="codeSystem"
         [codeSystemVersion]="codeSystemVersion?.version"
         [lockedDate]="lockedDate"
         [concepts]="includeRule.concepts"
         [inactiveConcepts]="inactiveConcepts"
         [viewMode]="viewMode"
-        (conceptsChange)="includeRule.concepts = $event"></twa-value-set-version-concept-list>
+        (conceptsChange)="includeRule.concepts = $event"
+    ></twa-value-set-version-concept-list>
   </m-form-item>
 
-  <m-form-item mLabel="web.value-set-rule-set.entity.rule.filters">
+  <m-form-item mLabel="entities.value-set-rule-set.rule.filters">
     <twa-value-set-rule-filter-list [codeSystem]="codeSystem"
         [filters]="includeRule.filters"
         [viewMode]="viewMode"
-        (filtersChange)="includeRule.filters = $event"></twa-value-set-rule-filter-list>
+        (filtersChange)="includeRule.filters = $event"
+    ></twa-value-set-rule-filter-list>
   </m-form-item>
 </ng-container>
 
-<m-form-item mName="valueSet" mLabel="web.value-set-rule-set.entity.rule.value-set" [required]="!viewMode && !codeSystem">
+<m-form-item mName="valueSet" mLabel="entities.value-set-rule-set.rule.value-set" [required]="!viewMode && !codeSystem">
   <twl-value-set-search *ngIf="!viewMode" name="valueSet" [(ngModel)]="includeRule.valueSet" valuePrimitive [required]="!codeSystem"></twl-value-set-search>
   <label *ngIf="viewMode">{{includeRule.valueSet}}</label>
 </m-form-item>
 
-<m-form-item mName="valueSetVersion" mLabel="web.value-set-rule-set.entity.rule.value-set-version" [required]="!viewMode && !!includeRule.valueSet">
+<m-form-item mName="valueSetVersion" mLabel="entities.value-set-rule-set.rule.value-set-version" [required]="!viewMode && !!includeRule.valueSet">
   <twl-value-set-version-select *ngIf="!viewMode"
       name="valueSetVersion"
       [(ngModel)]="valueSetVersion"
       (ngModelChange)="includeRule.valueSetVersion = $event?.version"
       [valueSetId]="includeRule.valueSet"
-      [required]="!!includeRule.valueSet"></twl-value-set-version-select>
+      [required]="!!includeRule.valueSet"
+  ></twl-value-set-version-select>
   <label *ngIf="viewMode">{{valueSetVersion?.version}}</label>
 </m-form-item>
+
 
 <ng-container *ngIf="codeSystem">
   <nz-divider [nzText]="exclude" nzOrientation="left">
     <ng-template #exclude>
-      <label>{{'web.value-set-rule-set.form.exclude' | translate}}</label> &nbsp;
+      <label>{{'entities.value-set-rule-set.exclude' | translate}}</label> &nbsp;
       <nz-switch [(ngModel)]="excludeRuleOn" (ngModelChange)="switchExcludeRule($event)" [disabled]="!!viewMode"></nz-switch>
     </ng-template>
   </nz-divider>
 
   <ng-container *ngIf="excludeRuleOn && excludeRule">
-
-    <m-form-item mLabel="web.value-set-rule-set.entity.rule.concepts" *ngIf="codeSystem">
+    <m-form-item mLabel="entities.value-set-rule-set.rule.concepts" *ngIf="codeSystem">
       <twa-value-set-version-concept-list [codeSystem]="codeSystem"
           [codeSystemVersion]="codeSystemVersion?.version"
           [lockedDate]="lockedDate"
           [concepts]="excludeRule.concepts"
           [inactiveConcepts]="inactiveConcepts"
           [viewMode]="viewMode"
-          (conceptsChange)="excludeRule.concepts = $event"></twa-value-set-version-concept-list>
+          (conceptsChange)="excludeRule.concepts = $event"
+      ></twa-value-set-version-concept-list>
     </m-form-item>
 
-    <m-form-item mLabel="web.value-set-rule-set.entity.rule.filters" *ngIf="codeSystem">
+    <m-form-item mLabel="entities.value-set-rule-set.rule.filters" *ngIf="codeSystem">
       <twa-value-set-rule-filter-list [codeSystem]="codeSystem"
           [filters]="excludeRule.filters"
           [viewMode]="viewMode"
-          (filtersChange)="excludeRule.filters = $event"></twa-value-set-rule-filter-list>
+          (filtersChange)="excludeRule.filters = $event"
+      ></twa-value-set-rule-filter-list>
     </m-form-item>
   </ng-container>
 </ng-container>

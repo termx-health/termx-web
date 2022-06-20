@@ -1,33 +1,37 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-items-between">
-    <div class="m-card-title">{{'web.value-set-version.form.rule-set' | translate}} &nbsp;
+    <div class="m-card-title">{{'entities.value-set-version.rule-set' | translate}} &nbsp;
       <m-button (click)="expand()" mSize="small">
         <m-icon mCode="eye"></m-icon>
       </m-button>
     </div>
     <twa-add-button (click)="addRule()" *ngIf="!viewMode">
-      {{'web.value-set-rule-set.form.add-rule-set' | translate}}
+      {{'web.value-set-version.form.rule-set.add-rule-set' | translate}}
     </twa-add-button>
   </div>
 
   <form #form="ngForm" *ngIf="ruleSet">
-    <m-form-item mName="lockedDate" mLabel="web.value-set-rule-set.entity.locked-date">
+    <m-form-item mName="lockedDate" mLabel="entities.value-set-rule-set.locked-date">
       <nz-date-picker *ngIf="!viewMode" name="lockedDate" [(ngModel)]="ruleSet.lockedDate"></nz-date-picker>
       <label *ngIf="viewMode">{{ruleSet.lockedDate | localDate}}</label>
     </m-form-item>
 
-    <m-form-item mName="inactive" mLabel="web.value-set-rule-set.entity.inactive" [required]="!viewMode">
+    <m-form-item mName="inactive" mLabel="entities.value-set-rule-set.inactive" [required]="!viewMode">
       <nz-radio-group name="inactive" [(ngModel)]="ruleSet.inactive" [disabled]="!!viewMode">
-        <label nz-radio-button [nzValue]="true">{{'web.value-set-rule-set.form.inactive' | translate}}</label>
-        <label nz-radio-button [nzValue]="undefined">{{'web.value-set-rule-set.form.all' | translate}}</label>
-        <label nz-radio-button [nzValue]="false">{{'web.value-set-rule-set.form.active' | translate}}</label>
+        <label nz-radio-button [nzValue]="true">{{'web.value-set-version.form.rule-set.inactive' | translate}}</label>
+        <label nz-radio-button [nzValue]="undefined">{{'web.value-set-version.form.rule-set.all' | translate}}</label>
+        <label nz-radio-button [nzValue]="false">{{'web.value-set-version.form.rule-set.active' | translate}}</label>
       </nz-radio-group>
     </m-form-item>
 
-    <m-form-item mName="rules" mLabel="web.value-set-rule-set.entity.rules">
+    <m-form-item mName="rules" mLabel="entities.value-set-rule-set.rules">
       <m-no-data *ngIf="!rules?.length"></m-no-data>
       <nz-collapse class="tw-cs-contact-collapse" *ngIf="rules?.length">
-        <nz-collapse-panel *ngFor="let rule of rules; let i = index" [nzHeader]="header" [nzExtra]="!viewMode && edit">
+        <nz-collapse-panel
+            *ngFor="let rule of rules; let i = index"
+            [nzHeader]="header"
+            [nzExtra]="!viewMode && edit"
+        >
           <ng-template #header>
             <m-icon *ngIf="!rule.include?.codeSystem && !rule.include?.valueSet" [mCode]="'file-text'"></m-icon>
             <label *ngIf="rule.include?.codeSystem">
@@ -69,7 +73,7 @@
 
   <m-modal #modal [(mVisible)]="modalData.visible" (close)="toggleModal()" mStyle="width: 900px">
     <ng-container *m-modal-header>
-      {{'web.value-set-rule-set.form.edit-header' | translate}}
+      {{'web.value-set-version.form.rule-set.modal.edit-header' | translate}}
     </ng-container>
 
     <ng-container *m-modal-content>

@@ -1,0 +1,72 @@
+<twa-finder-wrapper [loading]="loading" title="VALUE SET VERSION">
+  <m-alert mType="warning" mTitle="Work In Progress" mShowIcon style="margin-top: 0">
+    TODO: Rule set & VSV Concepts
+  </m-alert>
+
+  <div class="tw-finder-view-form">
+    <m-form-item mLabel="entities.value-set-version.status">
+      <twa-status-tag [status]="version?.status"></twa-status-tag>
+    </m-form-item>
+
+    <m-form-row mFull>
+      <div *mFormCol>
+        <m-form-item mLabel="entities.value-set-version.version">
+          {{version?.version || '-'}}
+        </m-form-item>
+      </div>
+
+      <div *mFormCol>
+        <m-form-item mLabel="entities.value-set-version.source">
+          {{version?.source || '-'}}
+        </m-form-item>
+      </div>
+    </m-form-row>
+
+    <m-form-row mFull>
+      <div *mFormCol>
+        <m-form-item mLabel="entities.value-set-version.release-date">
+          {{(version?.releaseDate | localDate) || '-'}}
+        </m-form-item>
+      </div>
+
+      <div *mFormCol>
+        <m-form-item mLabel="entities.value-set-version.expiration-date">
+          {{(version?.expirationDate | localDate) || '-'}}
+        </m-form-item>
+      </div>
+    </m-form-row>
+
+    <m-form-item mLabel="entities.value-set-version.description">
+      {{version?.description || '-'}}
+    </m-form-item>
+  </div>
+
+  <twa-finder-menu title="entities.value-set-version.rule-set" [length]="1">
+    <twa-finder-menu-item>
+      {{(version?.ruleSet?.lockedDate | localDate) || '-'}}
+      {{version?.ruleSet?.inactive || '-'}}
+    </twa-finder-menu-item>
+
+    <twa-finder-menu-item>
+      <twa-finder-menu title="entities.value-set-rule-set.include" [length]="version?.ruleSet?.includeRules?.length">
+        <twa-finder-menu-item *ngFor="let r of version?.ruleSet?.includeRules">
+          {{r.codeSystem}}
+        </twa-finder-menu-item>
+      </twa-finder-menu>
+    </twa-finder-menu-item>
+
+    <twa-finder-menu-item>
+      <twa-finder-menu title="entities.value-set-rule-set.exclude" [length]="version?.ruleSet?.excludeRules?.length">
+        <twa-finder-menu-item *ngFor="let r of version?.ruleSet?.excludeRules">
+          {{r.codeSystem}}
+        </twa-finder-menu-item>
+      </twa-finder-menu>
+    </twa-finder-menu-item>
+  </twa-finder-menu>
+
+  <twa-finder-menu title="entities.value-set-version.concepts" [length]="version?.concepts?.length">
+    <twa-finder-menu-item *ngFor="let c of version?.concepts">
+      {{c.concept?.code}} - {{c.display?.name}} - {{c.additionalDesignations | map:'name' | join:', '}}
+    </twa-finder-menu-item>
+  </twa-finder-menu>
+</twa-finder-wrapper>
