@@ -2,41 +2,45 @@
   <m-spinner [mLoading]=loading>
     <div *m-card-header class="m-items-between">
       <nz-breadcrumb>
-        <nz-breadcrumb-item>ATC</nz-breadcrumb-item>
-        <nz-breadcrumb-item>ATC {{edition}} import</nz-breadcrumb-item>
+        <nz-breadcrumb-item>{{system}}</nz-breadcrumb-item>
+        <nz-breadcrumb-item>{{system}} {{edition}} import</nz-breadcrumb-item>
       </nz-breadcrumb>
       <div class="m-items-between">
-        <m-button (click)="setDefaultData()">{{'web.integration.atc.set-default-data' | translate}}</m-button>
-        <m-button mDisplay="primary" [disabled]="!data.uri" (click)="import()">{{'web.integration.send-request' | translate}}</m-button>
+        <m-button (click)="setDefaultData()" [disabled]="loading">{{'web.integration.set-default-data' | translate}}</m-button>
+        <m-button mDisplay="primary"
+            [disabled]="!data.uri || ((system !== 'atc' || edition !== 'int')? !zipSourceUrl : false) || loading"
+            (click)="import()">{{'web.integration.send-request' | translate}}</m-button>
       </div>
     </div>
 
-    <m-form-item mLabel="web.integration.atc.import.uri">
+    <m-form-item *ngIf="system !== 'atc' || edition !== 'int'" mLabel="web.integration.import.zip-source-url" required>
+      <m-input [(ngModel)]="zipSourceUrl"></m-input>
+    </m-form-item>
+    <m-form-item mLabel="web.integration.import.uri" required>
       <m-input [(ngModel)]="data.uri"></m-input>
     </m-form-item>
-    <m-form-item mLabel="web.integration.atc.import.source">
+    <m-form-item mLabel="web.integration.import.source">
       <m-input [(ngModel)]="data.source"></m-input>
     </m-form-item>
-    <m-form-item mLabel="web.integration.atc.import.version">
+    <m-form-item mLabel="web.integration.import.version">
       <m-input [(ngModel)]="data.version"></m-input>
     </m-form-item>
-    <m-form-item mLabel="web.integration.atc.import.valid">
+    <m-form-item mLabel="web.integration.import.valid">
       <nz-date-picker [(ngModel)]="data.validFrom"></nz-date-picker>
       <nz-date-picker [(ngModel)]="data.validTo"></nz-date-picker>
     </m-form-item>
-    <m-form-item mLabel="web.integration.atc.import.code-system">
+    <m-form-item mLabel="web.integration.import.code-system">
       <m-input [(ngModel)]="data.codeSystem"></m-input>
     </m-form-item>
-    <m-form-item mLabel="web.integration.atc.import.code-system-name">
+    <m-form-item mLabel="web.integration.import.code-system-name">
       <m-multi-language-input [(ngModel)]="data.codeSystemName"></m-multi-language-input>
     </m-form-item>
-    <m-form-item mLabel="web.integration.atc.import.code-system-description">
+    <m-form-item mLabel="web.integration.import.code-system-description">
       <m-textarea [(ngModel)]="data.codeSystemDescription"></m-textarea>
     </m-form-item>
-    <m-form-item mLabel="web.integration.atc.import.code-system-version-description">
+    <m-form-item mLabel="web.integration.import.code-system-version-description">
       <m-textarea [(ngModel)]="data.codeSystemVersionDescription"></m-textarea>
     </m-form-item>
-
 
     <div *ngIf="jobResponse">
       <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
