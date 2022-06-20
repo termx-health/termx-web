@@ -17,7 +17,7 @@ export class ValueSetVersionsListComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["valueSetId"]?.currentValue) {
-      this.loadVersions()
+      this.loadVersions();
     }
   }
 

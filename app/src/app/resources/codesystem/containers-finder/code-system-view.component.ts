@@ -40,9 +40,9 @@ export class FinderCodeSystemViewComponent implements OnInit {
       }
 
       this.loading['general'] = true;
-      this.codeSystemService.load(id).subscribe(cs => {
-        this.codeSystem = cs;
-      }).add(() => this.loading['general'] = false);
+      this.codeSystemService.load(id)
+        .subscribe(cs => this.codeSystem = cs)
+        .add(() => this.loading['general'] = false);
 
       this.loadVersions(id);
       this.loadConcepts(id);
