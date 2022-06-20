@@ -228,6 +228,7 @@
     },
     "integration": {
       "send-request": "Send request",
+      "set-default-data": "Set default data",
       "response": "Response",
       "fhir": {
         "code-system": {
@@ -256,18 +257,16 @@
           }
         }
       },
-      "atc": {
-        "set-default-data": "Set default data",
-        "import": {
-          "uri": "Uri",
-          "source": "Source",
-          "version": "Version",
-          "valid": "Valid",
-          "code-system": "CodeSystem",
-          "code-system-name": "CodeSystem name",
-          "code-system-description": "CodeSystem description",
-          "code-system-version-description": "CodeSystem version description"
-        }
+      "import": {
+        "uri": "Uri",
+        "zip-source-url": "ZIP source URL",
+        "source": "Source",
+        "version": "Version",
+        "valid": "Valid",
+        "code-system": "CodeSystem",
+        "code-system-name": "CodeSystem name",
+        "code-system-description": "CodeSystem description",
+        "code-system-version-description": "CodeSystem version description"
       }
     }
   },

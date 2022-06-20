@@ -7,14 +7,14 @@ import {JobLogResponse} from '../../../job';
 import {SearchHttpParams} from '@kodality-web/core-util';
 
 @Injectable()
-export class IntegrationAtcLibService {
+export class IntegrationIcdLibService {
   protected baseUrl;
 
   public constructor(@Inject(TERMINOLOGY_API) api: string, protected http: HttpClient) {
-    this.baseUrl = `${api}/atc`;
+    this.baseUrl = `${api}/icd10`;
   }
 
-  public import(params: IntegrationImportConfiguration, edition: string, url?: string): Observable<JobLogResponse> {
+  public import(params: IntegrationImportConfiguration, edition: string, url: string): Observable<JobLogResponse> {
     const postUrl = this.getEditionBaseUrl(edition);
     return this.http.post<JobLogResponse>(`${postUrl}/import`, params, {
       params: SearchHttpParams.build({
