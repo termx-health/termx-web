@@ -1,7 +1,10 @@
 import {Component} from '@angular/core';
 import {IntegrationImportConfiguration} from 'lib/src/integration';
-import {JobLog} from 'lib/src/job';
+import {JobLibService, JobLogResponse} from 'lib/src/job';
 import {IntegrationImportComponent} from '../integration-import.component';
+import {Observable} from 'rxjs';
+import {IntegrationAtcLibService} from 'terminology-lib/integration/atc/service/integration-atc-lib.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   templateUrl: '../integration-import.component.html',
@@ -9,23 +12,19 @@ import {IntegrationImportComponent} from '../integration-import.component';
 export class IntegrationAtcImportComponent extends IntegrationImportComponent {
   public system = 'atc';
 
-  public import(): void {
-    this.cleanData();
+  public constructor(
+    private integrationAtcLibService: IntegrationAtcLibService,
+    route: ActivatedRoute,
+    jobService: JobLibService,
+  ) {
+    super(route, jobService);
+  };
 
-    this.jobResponse = undefined;
-    this.loading = true;
-    this.integrationAtcLibService.import(this.data, this.edition!, this.zipSourceUrl).subscribe({
-        next: resp => this.pollJobStatus(resp.jobId!),
-        error: err => {
-          this.jobResponse = new JobLog();
-          this.jobResponse.errors = [err.message];
-          this.loading = false;
-        }
-      }
-    );
+  public composeImportRequest(): Observable<JobLogResponse> {
+    return this.integrationAtcLibService.import(this.data, this.edition!, this.zipSourceUrl);
   }
 
   public setDefaultData(): void {
-    this.data = IntegrationImportConfiguration.getDefaultConfigurations(this.system!, this.edition!);
+    this.data = IntegrationImportConfiguration.getDefaultAtcConfigurations(this.edition!);
   }
 }

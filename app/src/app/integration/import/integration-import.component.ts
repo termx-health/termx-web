@@ -1,25 +1,22 @@
 import {Directive, OnInit} from '@angular/core';
 import {IntegrationImportConfiguration} from 'terminology-lib/integration';
-import {JobLibService, JobLog} from 'terminology-lib/job';
+import {JobLibService, JobLog, JobLogResponse} from 'terminology-lib/job';
 import {ActivatedRoute} from '@angular/router';
-import {filter} from 'rxjs';
-import {IntegrationAtcLibService} from 'terminology-lib/integration/atc/service/integration-atc-lib.service';
-import {IntegrationIcdLibService} from 'terminology-lib/integration/icd-10/service/integration-icd-lib.service';
+import {filter, Observable} from 'rxjs';
 
 @Directive()
 export abstract class IntegrationImportComponent implements OnInit {
   public edition?: string;
   public zipSourceUrl?: string;
+  public abstract system: string;
 
   public data = new IntegrationImportConfiguration();
   public jobResponse?: JobLog;
 
   public loading = false;
 
-  public constructor(
+  protected constructor(
     private route: ActivatedRoute,
-    public integrationAtcLibService: IntegrationAtcLibService,
-    public integrationIcdLibService: IntegrationIcdLibService,
     private jobService: JobLibService,
   ) { }
 
@@ -30,7 +27,11 @@ export abstract class IntegrationImportComponent implements OnInit {
     });
   }
 
-  public cleanData(): void {
+  public abstract composeImportRequest(): Observable<JobLogResponse>
+
+  public abstract setDefaultData(): void;
+
+  public import(): void {
     this.data.uri = this.data.uri || undefined;
     this.zipSourceUrl = this.zipSourceUrl || undefined;
     this.data.version = this.data.version || undefined;
@@ -40,6 +41,18 @@ export abstract class IntegrationImportComponent implements OnInit {
     this.data.codeSystemName = this.data.codeSystemName || undefined;
     this.data.codeSystemDescription = this.data.codeSystemDescription || undefined;
     this.data.codeSystemVersionDescription = this.data.codeSystemVersionDescription || undefined;
+
+    this.jobResponse = undefined;
+    this.loading = true;
+    this.composeImportRequest().subscribe({
+        next: resp => this.pollJobStatus(resp.jobId!),
+        error: err => {
+          this.jobResponse = new JobLog();
+          this.jobResponse.errors = [err.message];
+          this.loading = false;
+        }
+      }
+    );
   }
 
   public pollJobStatus(jobId: number): void {

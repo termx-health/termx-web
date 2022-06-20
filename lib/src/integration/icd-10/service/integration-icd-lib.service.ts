@@ -15,17 +15,18 @@ export class IntegrationIcdLibService {
   }
 
   public import(params: IntegrationImportConfiguration, edition: string, url: string): Observable<JobLogResponse> {
-    if (edition === 'est') {
-      return this.http.post<JobLogResponse>(`${this.baseUrl}-${edition}/import`, params, {
-        params: SearchHttpParams.build({
-          url: url
-        })
-      });
-    }
-    return this.http.post<JobLogResponse>(`${this.baseUrl}/import`, params, {
+    const postUrl = this.getEditionUrl(edition);
+    return this.http.post<JobLogResponse>(`${postUrl}/import`, params, {
       params: SearchHttpParams.build({
         url: url
       })
     });
+  }
+
+  public getEditionUrl(edition: string): string {
+    if (edition === 'int') {
+      return this.baseUrl;
+    }
+    return this.baseUrl + '-' + edition;
   }
 }
