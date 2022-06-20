@@ -7,6 +7,21 @@ import {Location} from '@angular/common';
 
 
 @Component({
+  selector: 'twa-finder-load-more-item',
+  encapsulation: ViewEncapsulation.None,
+  template: `
+    <twa-finder-menu-item>
+      <a class="tw-finder-load-more" (click)="twClick.emit()">
+        Load more
+      </a>
+    </twa-finder-menu-item>
+  `
+})
+export class FinderLoadMoreItemComponent {
+  @Output() public twClick = new EventEmitter<void>();
+}
+
+@Component({
   selector: 'twa-finder-menu-item',
   encapsulation: ViewEncapsulation.None,
   template: `

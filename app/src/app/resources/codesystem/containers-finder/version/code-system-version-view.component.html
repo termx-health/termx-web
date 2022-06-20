@@ -1,4 +1,4 @@
-<twa-finder-wrapper [loading]="loading" title="CODE SYSTEM VERSION">
+<twa-finder-wrapper [loading]="isLoading" title="CODE SYSTEM VERSION">
   <div class="tw-finder-view-form">
     <m-form-item mLabel="entities.code-system-version.status">
       <twa-status-tag [status]="version?.status"></twa-status-tag>
@@ -51,9 +51,15 @@
     </m-form-row>
   </div>
 
-  <twa-finder-menu title="entities.code-system-version.entities" [length]="version?.entities?.length">
-    <twa-finder-menu-item *ngFor="let e of version?.entities">
+  <!-- Entity versions -->
+  <twa-finder-menu title="entities.code-system-version.entities" [length]="entityVersionResult.data.length">
+    <twa-finder-menu-item *ngFor="let e of entityVersionResult.data">
       {{e.code}}
     </twa-finder-menu-item>
+
+    <twa-finder-load-more-item
+        *ngIf="entityVersionResult.data.length < entityVersionResult.meta.total"
+        (twClick)="loadEntities(version.codeSystem, version.version,entityVersionResult.data.length + DEFAULT_ENTITY_VERSION_LIMIT)"
+    ></twa-finder-load-more-item>
   </twa-finder-menu>
 </twa-finder-wrapper>

@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemVersion} from 'terminology-lib/resources';
+import {CodeSystemEntityVersion, CodeSystemVersion} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
-import {forkJoin, takeUntil} from 'rxjs';
+import {takeUntil} from 'rxjs';
 import {MuiDestroyService} from '@kodality-health/marina-ui';
-import {isNil} from '@kodality-web/core-util';
+import {isNil, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemEntityVersionService} from '../../services/code-system-entity-version.service';
 
 
@@ -13,8 +13,12 @@ import {CodeSystemEntityVersionService} from '../../services/code-system-entity-
   providers: [MuiDestroyService]
 })
 export class FinderCodeSystemVersionViewComponent implements OnInit {
+  public readonly DEFAULT_ENTITY_VERSION_LIMIT = 100;
+
   public version?: CodeSystemVersion;
-  public loading = false;
+  public entityVersionResult: SearchResult<CodeSystemEntityVersion> = SearchResult.empty();
+
+  private loading: {[k: string]: boolean} = {};
 
 
   public constructor(
@@ -23,6 +27,7 @@ export class FinderCodeSystemVersionViewComponent implements OnInit {
     private route: ActivatedRoute,
     private destroy$: MuiDestroyService
   ) {}
+
 
   public ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
@@ -35,18 +40,29 @@ export class FinderCodeSystemVersionViewComponent implements OnInit {
         return;
       }
 
-      this.loading = true;
-      forkJoin([
-        this.codeSystemService.loadVersion(codeSystemId, codeSystemVersionCode),
-        this.codeSystemEntityVersionService.search({
-          codeSystem: codeSystemId,
-          codeSystemVersion: codeSystemVersionCode,
-          limit: -1
-        })
-      ]).subscribe(([version, entities]) => {
-        this.version = version;
-        this.version.entities = entities.data;
-      }).add(() => this.loading = false);
+      this.loading['version'] = true;
+      this.codeSystemService.loadVersion(codeSystemId, codeSystemVersionCode)
+        .subscribe(version => this.version = version)
+        .add(() => this.loading['version'] = false);
+
+      this.loadEntities(codeSystemId, codeSystemVersionCode);
     });
+  }
+
+
+  public loadEntities(id: string, version: string, limit: number = this.DEFAULT_ENTITY_VERSION_LIMIT): void {
+    this.loading['entities'] = true;
+    this.codeSystemEntityVersionService.search({
+      codeSystem: id,
+      codeSystemVersion: version,
+      limit: limit
+    })
+      .subscribe(concepts => this.entityVersionResult = concepts)
+      .add(() => this.loading['entities'] = false);
+  }
+
+
+  public get isLoading(): boolean {
+    return Object.values(this.loading).some(Boolean);
   }
 }

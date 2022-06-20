@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystem} from 'terminology-lib/resources';
+import {CodeSystem, CodeSystemConcept, CodeSystemVersion} from 'terminology-lib/resources';
 import {CodeSystemService} from '../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
-import {forkJoin, takeUntil} from 'rxjs';
+import {takeUntil} from 'rxjs';
 import {MuiDestroyService} from '@kodality-health/marina-ui';
-import {isNil} from '@kodality-web/core-util';
+import {isNil, SearchResult} from '@kodality-web/core-util';
 
 
 @Component({
@@ -12,8 +12,13 @@ import {isNil} from '@kodality-web/core-util';
   providers: [MuiDestroyService]
 })
 export class FinderCodeSystemViewComponent implements OnInit {
+  public readonly DEFAULT_CONCEPT_LIMIT = 100;
+
   public codeSystem?: CodeSystem;
-  public loading = false;
+  public versions: CodeSystemVersion[] = [];
+  public conceptResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
+
+  private loading: {[k: string]: boolean} = {};
   public narrativeVisible = false;
 
 
@@ -22,6 +27,7 @@ export class FinderCodeSystemViewComponent implements OnInit {
     private route: ActivatedRoute,
     private destroy$: MuiDestroyService
   ) {}
+
 
   public ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
@@ -33,16 +39,32 @@ export class FinderCodeSystemViewComponent implements OnInit {
         return;
       }
 
-      this.loading = true;
-      forkJoin([
-        this.codeSystemService.load(id),
-        this.codeSystemService.loadVersions(id),
-        this.codeSystemService.searchConcepts(id, {limit: -1}),
-      ]).subscribe(([cs, versions, concepts]) => {
+      this.loading['general'] = true;
+      this.codeSystemService.load(id).subscribe(cs => {
         this.codeSystem = cs;
-        this.codeSystem.versions = versions;
-        this.codeSystem.concepts = concepts.data;
-      }).add(() => this.loading = false);
+      }).add(() => this.loading['general'] = false);
+
+      this.loadVersions(id);
+      this.loadConcepts(id);
     });
+  }
+
+
+  public loadVersions(id: string): void {
+    this.loading['versions'] = true;
+    this.codeSystemService.loadVersions(id)
+      .subscribe(concepts => this.versions = concepts)
+      .add(() => this.loading['versions'] = false);
+  }
+
+  public loadConcepts(id: string, limit: number = this.DEFAULT_CONCEPT_LIMIT): void {
+    this.loading['concepts'] = true;
+    this.codeSystemService.searchConcepts(id, {limit: limit})
+      .subscribe(concepts => this.conceptResult = concepts)
+      .add(() => this.loading['concepts'] = false);
+  }
+
+  public get isLoading(): boolean {
+    return Object.values(this.loading).some(Boolean);
   }
 }
