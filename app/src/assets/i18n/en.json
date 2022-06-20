@@ -48,7 +48,8 @@
       "tabset": {
         "code-systems": "Code systems",
         "value-sets": "Value sets",
-        "map-sets": "Map sets"
+        "map-sets": "Map sets",
+        "naming-systems": "Naming systems"
       }
     },
     "code-system": {
@@ -135,6 +136,12 @@
           "add-property-value": "Add property value",
           "edit-property-value": "Edit property value"
         }
+      }
+    },
+    "naming-system": {
+      "list": {
+        "add-naming-system": "Add NamingSystem",
+        "naming-system": "NamingSystem"
       }
     },
     "value-set": {
@@ -324,6 +331,15 @@
       "property-values": "Property values",
       "designations": "Designations",
       "associations": "Associations"
+    },
+    "naming-system": {
+      "code-system": "CodeSystem",
+      "name": "Name",
+      "source": "Source",
+      "type": "Type",
+      "status": "Status",
+      "description": "Description",
+      "identifiers": "Identifiers"
     },
     "entity-property": {
       "name": "Name",

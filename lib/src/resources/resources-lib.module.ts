@@ -4,6 +4,7 @@ import {DesignationLibModule} from './designation';
 import {ValueSetLibModule} from './valueset';
 import {MapSetLibModule} from './mapset';
 import {ContactLibModule} from './contact';
+import {NamingSystemLibModule} from './namingsystem/naming-system-lib.module';
 
 @NgModule({
   declarations: [],
@@ -12,14 +13,16 @@ import {ContactLibModule} from './contact';
     MapSetLibModule,
     DesignationLibModule,
     ValueSetLibModule,
-    ContactLibModule
+    ContactLibModule,
+    NamingSystemLibModule
   ],
   exports: [
     CodeSystemLibModule,
     MapSetLibModule,
     DesignationLibModule,
     ValueSetLibModule,
-    ContactLibModule
+    ContactLibModule,
+    NamingSystemLibModule
   ]
 })
 export class ResourcesLibModule {
