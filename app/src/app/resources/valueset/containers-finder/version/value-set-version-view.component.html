@@ -1,4 +1,8 @@
-<twa-finder-wrapper [loading]="loading" title="CODE SYSTEM VERSION">
+<twa-finder-wrapper [loading]="loading" title="VALUE SET VERSION">
+  <m-alert mType="warning" mTitle="Work In Progress" mShowIcon style="margin-top: 0">
+    TODO: Rule set & VSV Concepts
+  </m-alert>
+
   <div class="tw-finder-view-form">
     <m-form-item mLabel="entities.value-set-version.status">
       <twa-status-tag [status]="version?.status"></twa-status-tag>
@@ -37,14 +41,14 @@
     </m-form-item>
   </div>
 
-  <twa-finder-menu title="entities.value-set-version.rules-sets" [length]="1">
+  <twa-finder-menu title="entities.value-set-version.rule-set" [length]="1">
     <twa-finder-menu-item>
       {{(version?.ruleSet?.lockedDate | localDate) || '-'}}
       {{version?.ruleSet?.inactive || '-'}}
     </twa-finder-menu-item>
 
     <twa-finder-menu-item>
-      <twa-finder-menu title="entities.value-set-rule-set.include-rules" [length]="version?.ruleSet?.includeRules?.length">
+      <twa-finder-menu title="entities.value-set-rule-set.include" [length]="version?.ruleSet?.includeRules?.length">
         <twa-finder-menu-item *ngFor="let r of version?.ruleSet?.includeRules">
           {{r.codeSystem}}
         </twa-finder-menu-item>
@@ -52,7 +56,7 @@
     </twa-finder-menu-item>
 
     <twa-finder-menu-item>
-      <twa-finder-menu title="entities.value-set-rule-set.exclude-rules" [length]="version?.ruleSet?.excludeRules?.length">
+      <twa-finder-menu title="entities.value-set-rule-set.exclude" [length]="version?.ruleSet?.excludeRules?.length">
         <twa-finder-menu-item *ngFor="let r of version?.ruleSet?.excludeRules">
           {{r.codeSystem}}
         </twa-finder-menu-item>

@@ -8,23 +8,23 @@
         </div>
 
         <form #form="ngForm" *ngIf="version">
-          <m-form-item mName="version" mLabel="web.value-set-version.entity.version" required>
+          <m-form-item mName="version" mLabel="entities.value-set-version.version" required>
             <m-input name="version" [(ngModel)]="version.version" required></m-input>
           </m-form-item>
 
-          <m-form-item mName="source" mLabel="web.value-set-version.entity.source">
+          <m-form-item mName="source" mLabel="entities.value-set-version.source">
             <m-input name="source" [(ngModel)]="version.source"></m-input>
           </m-form-item>
 
-          <m-form-item mName="releaseDate" mLabel="web.value-set-version.entity.release-date" required>
+          <m-form-item mName="releaseDate" mLabel="entities.value-set-version.release-date" required>
             <nz-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" required></nz-date-picker>
           </m-form-item>
 
-          <m-form-item mName="expirationDate" mLabel="web.value-set-version.entity.expiration-date">
+          <m-form-item mName="expirationDate" mLabel="entities.value-set-version.expiration-date">
             <nz-date-picker name="expirationDate" [(ngModel)]="version.expirationDate"></nz-date-picker>
           </m-form-item>
 
-          <m-form-item mName="supportedLanguages" mLabel="web.value-set-version.entity.supported-languages">
+          <m-form-item mName="supportedLanguages" mLabel="entities.value-set-version.supported-languages">
             <twl-value-set-concept-select
                 name="supportedLanguages"
                 [(ngModel)]="version.supportedLanguages"
@@ -33,13 +33,13 @@
             ></twl-value-set-concept-select>
           </m-form-item>
 
-          <m-form-item mName="description" mLabel="web.value-set-version.entity.description">
+          <m-form-item mName="description" mLabel="entities.value-set-version.description">
             <m-textarea [(ngModel)]="version.description" name="description"></m-textarea>
           </m-form-item>
 
           <twa-value-set-rule-set #ruleSetComponent [ruleSet]="version.ruleSet"></twa-value-set-rule-set>
 
-          <m-form-item mName="concepts" mLabel="web.value-set-version.entity.concepts">
+          <m-form-item mName="concepts" mLabel="entities.value-set-version.concepts">
             <twa-value-set-version-concept-list [concepts]="concepts" (conceptsChange)="concepts = $event"></twa-value-set-version-concept-list>
           </m-form-item>
 

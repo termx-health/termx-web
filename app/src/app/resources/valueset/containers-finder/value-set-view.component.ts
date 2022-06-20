@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ValueSet, ValueSetVersion} from 'lib/src/resources';
 import {ActivatedRoute} from '@angular/router';
-import {takeUntil} from 'rxjs';
+import {forkJoin, takeUntil} from 'rxjs';
 import {MuiDestroyService} from '@kodality-health/marina-ui';
 import {isNil} from '@kodality-web/core-util';
 import {ValueSetService} from '../services/value-set.service';
@@ -15,7 +15,7 @@ export class FinderValueSetViewComponent implements OnInit {
   public valueSet?: ValueSet;
   public versions: ValueSetVersion[] = [];
 
-  private loading: {[k: string]: boolean} = {};
+  public loading = false;
 
   public constructor(
     private valueSetService: ValueSetService,
@@ -31,22 +31,15 @@ export class FinderValueSetViewComponent implements OnInit {
         return;
       }
 
-      this.loading['general'] = true;
-      this.valueSetService.load(id).subscribe(cs => {
+      this.loading = true;
+      forkJoin([
+        this.valueSetService.load(id),
+        this.valueSetService.loadVersions(id),
+      ]).subscribe(([cs, versions]) => {
         this.valueSet = cs;
-      }).add(() => this.loading['general'] = false);
+        this.versions = versions;
+      }).add(() => this.loading = false);
     });
   }
 
-  public loadVersions(id: string): void {
-    this.loading['versions'] = true;
-    this.valueSetService.loadVersions(id)
-      .subscribe(concepts => this.versions = concepts)
-      .add(() => this.loading['versions'] = false);
-  }
-
-
-  public get isLoading(): boolean {
-    return Object.values(this.loading).some(Boolean);
-  }
 }

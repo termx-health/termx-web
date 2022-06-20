@@ -27,7 +27,6 @@
     "app": {
       "header": "Terminology"
     },
-
     "entity-property": {
       "form": {
         "edit-header": "Edit property",
@@ -52,7 +51,6 @@
         "map-sets": "Map sets"
       }
     },
-
     "code-system": {
       "list": {
         "add-code-system": "Add code system",
@@ -88,7 +86,7 @@
           }
         },
         "properties": {
-          "add-property": "Add property" ,
+          "add-property": "Add property",
           "delete-property": "Delete property",
           "modal": {
             "add-property": "Add property",
@@ -139,7 +137,6 @@
         }
       }
     },
-
     "value-set": {
       "list": {
         "add-value-set": "Add value set",
@@ -163,14 +160,9 @@
         "view-header": "View version",
         "rule-set": {
           "add-rule-set": "Add rule",
-          "code-system-rule": "Code system rule",
-          "value-set-rule": "Value set rule",
           "inactive": "Inactive",
           "all": "All",
           "active": "Active",
-          "rule": "Rule",
-          "include": "Include",
-          "exclude": "Exclude",
           "modal": {
             "edit-header": "Rule"
           }
@@ -182,8 +174,6 @@
         }
       }
     },
-
-
     "map-set": {
       "entity": {
         "id": "Identifier",
@@ -236,7 +226,6 @@
         "associations": "Associations"
       }
     },
-
     "integration": {
       "send-request": "Send request",
       "response": "Response",

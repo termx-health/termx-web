@@ -1,4 +1,4 @@
-<twa-finder-wrapper [loading]="isLoading" title="VALUE SET">
+<twa-finder-wrapper [loading]="loading" title="VALUE SET">
   <div class="tw-finder-view-form">
     <m-form-item mLabel="entities.value-set.id">
       {{valueSet?.id || '-'}}
@@ -17,8 +17,8 @@
     </m-form-item>
   </div>
 
-  <twa-finder-menu title="entities.value-set.versions" [length]="valueSet?.versions?.length">
-    <twa-finder-menu-item *ngFor="let v of valueSet?.versions" [navigate]="['versions', v.version]">
+  <twa-finder-menu title="entities.value-set.versions" [length]="versions.length">
+    <twa-finder-menu-item *ngFor="let v of versions" [navigate]="['versions', v.version]">
       {{v.version}} - {{v.source}}
     </twa-finder-menu-item>
   </twa-finder-menu>
