@@ -8,7 +8,8 @@ import {ValueSetService} from '../../services/value-set.service';
 
 
 @Component({
-  templateUrl: 'value-set-version-view.component.html'
+  templateUrl: 'value-set-version-view.component.html',
+  providers: [MuiDestroyService]
 })
 export class FinderValueSetVersionViewComponent implements OnInit {
   public version?: ValueSetVersion;
