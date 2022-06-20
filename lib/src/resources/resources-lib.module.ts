@@ -3,7 +3,7 @@ import {CodeSystemLibModule} from './codesystem';
 import {DesignationLibModule} from './designation';
 import {ValueSetLibModule} from './valueset';
 import {MapSetLibModule} from './mapset';
-import {ContactLibModule} from './contact/contact-lib.module';
+import {ContactLibModule} from './contact';
 
 @NgModule({
   declarations: [],

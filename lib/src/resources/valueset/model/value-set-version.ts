@@ -44,5 +44,5 @@ export class ValueSetConcept {
   public id?: number;
   public concept?: CodeSystemConcept;
   public display?: Designation;
-  public additionalDesignations?: Designation;
+  public additionalDesignations?: Designation[];
 }

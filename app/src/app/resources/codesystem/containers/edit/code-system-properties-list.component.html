@@ -2,7 +2,7 @@
   <div *m-card-header class="m-items-between">
     <div class="m-card-title">{{'entities.code-system.properties' | translate}}</div>
     <twa-add-button (click)="openPropertyModal()">
-      {{'web.code-system.list.property.add-property' | translate}}
+      {{'web.code-system.form.properties.add-property' | translate}}
     </twa-add-button>
   </div>
   <m-table [mData]="properties" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
@@ -24,7 +24,7 @@
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="deleteProperty(index)">
-            {{'web.code-system.list.property.delete-property' | translate}}
+            {{'web.code-system.form.properties.delete-property' | translate}}
           </a>
         </m-dropdown>
       </td>
@@ -41,7 +41,7 @@
 
 <m-modal [(mVisible)]="propertyModalData.visible" (mClose)="propertyModalData = {visible: false}">
   <ng-container *mModalHeader>
-    {{(propertyModalData.editIndex ? 'web.code-system.property-modal.edit-property' : 'web.code-system.property-modal.add-property') | translate}}
+    {{(propertyModalData.editIndex ? 'web.code-system.form.properties.modal.edit-property' : 'web.code-system.form.properties.modal.add-property') | translate}}
   </ng-container>
 
   <ng-container *mModalContent>

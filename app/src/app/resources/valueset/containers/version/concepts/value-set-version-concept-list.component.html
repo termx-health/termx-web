@@ -1,8 +1,8 @@
 <m-table [mData]="concepts" mHideOnSinglePage>
   <tr *mTableHead>
-    <th>{{'web.value-set-version-concept.entity.concept' | translate}}</th>
-    <th>{{'web.value-set-version-concept.entity.display' | translate}}</th>
-    <th>{{'web.value-set-version-concept.entity.additional-designations' | translate}}</th>
+    <th>{{'entities.value-set-version-concept.concept' | translate}}</th>
+    <th>{{'entities.value-set-version-concept.display' | translate}}</th>
+    <th>{{'entities.value-set-version-concept.additional-designations' | translate}}</th>
     <th *ngIf="!viewMode" class="tw-table-actions"></th>
   </tr>
 
@@ -10,7 +10,7 @@
     <ng-container *ngIf="viewMode">
       <tr *ngFor="let ad of item.additionalDesignations; let isFirst = first">
         <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
-         <div *ngIf="viewMode">{{item.concept?.code}}</div>
+          <div *ngIf="viewMode">{{item.concept?.code}}</div>
         </td>
         <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
           <div *ngIf="viewMode">{{item.display?.name}}</div>
@@ -18,6 +18,7 @@
         <td>{{ad.language}} | {{ad.name}}</td>
       </tr>
     </ng-container>
+
     <tr *ngIf="!(item.additionalDesignations?.length > 0) || !viewMode">
       <td>
         <twl-concept-search *ngIf="!viewMode"
@@ -27,8 +28,11 @@
             [codeSystemVersion]="codeSystemVersion"
             [codeSystemVersionReleaseDateLe]="lockedDate"
             [codeSystemVersionExpirationDateGe]="lockedDate"
-            [entityVersionStatus]="inactiveConcepts === true ? 'retired' : inactiveConcepts === false ? 'active' : undefined"></twl-concept-search>
-        <div *ngIf="viewMode">{{item.concept?.code}}</div>
+            [entityVersionStatus]="inactiveConcepts === true ? 'retired' : inactiveConcepts === false ? 'active' : undefined"
+        ></twl-concept-search>
+        <div *ngIf="viewMode">
+          {{item.concept?.code}}
+        </div>
       </td>
       <td>
         <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.display"></twl-designation-select>

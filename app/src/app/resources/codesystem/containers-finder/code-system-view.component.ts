@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CodeSystem, CodeSystemConcept, CodeSystemVersion} from 'terminology-lib/resources';
 import {CodeSystemService} from '../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
-import {takeUntil} from 'rxjs';
+import {forkJoin, takeUntil} from 'rxjs';
 import {MuiDestroyService} from '@kodality-health/marina-ui';
 import {isNil, SearchResult} from '@kodality-web/core-util';
 
@@ -40,22 +40,18 @@ export class FinderCodeSystemViewComponent implements OnInit {
       }
 
       this.loading['general'] = true;
-      this.codeSystemService.load(id).subscribe(cs => {
+      forkJoin([
+        this.codeSystemService.load(id),
+        this.codeSystemService.loadVersions(id)
+      ]).subscribe(([cs, versions]) => {
         this.codeSystem = cs;
+        this.versions = versions;
       }).add(() => this.loading['general'] = false);
 
-      this.loadVersions(id);
       this.loadConcepts(id);
     });
   }
 
-
-  public loadVersions(id: string): void {
-    this.loading['versions'] = true;
-    this.codeSystemService.loadVersions(id)
-      .subscribe(concepts => this.versions = concepts)
-      .add(() => this.loading['versions'] = false);
-  }
 
   public loadConcepts(id: string, limit: number = this.DEFAULT_CONCEPT_LIMIT): void {
     this.loading['concepts'] = true;
