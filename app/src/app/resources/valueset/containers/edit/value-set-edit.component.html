@@ -3,19 +3,19 @@
     <m-card [mTitle]="mode === 'edit' ? 'web.value-set.form.edit-header' : 'web.value-set.form.add-header'">
       <m-spinner [mLoading]="loading">
         <form #form="ngForm" *ngIf="valueSet">
-          <m-form-item mName="id" mLabel="web.value-set.entity.id" required>
+          <m-form-item mName="id" mLabel="entities.value-set.id" required>
             <m-input name="id" [(ngModel)]="valueSet.id" [disabled]="mode === 'edit'" required></m-input>
           </m-form-item>
 
-          <m-form-item mLabel="web.value-set.entity.names">
+          <m-form-item mLabel="entities.value-set.name">
             <m-multi-language-input name="names" [(ngModel)]="valueSet.names"></m-multi-language-input>
           </m-form-item>
 
-          <m-form-item mName="uri" mLabel="web.value-set.entity.uri" required>
+          <m-form-item mName="uri" mLabel="entities.value-set.uri" required>
             <m-input name="uri" [(ngModel)]="valueSet.uri" required></m-input>
           </m-form-item>
 
-          <m-form-item mName="description" mLabel="web.value-set.entity.description">
+          <m-form-item mName="description" mLabel="entities.value-set.description">
             <m-textarea name="description" [(ngModel)]="valueSet.description"></m-textarea>
           </m-form-item>
 

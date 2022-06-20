@@ -1,18 +1,18 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-items-between">
-    <div class="m-card-title">{{'web.value-set.list.versions' | translate}}</div>
+    <div class="m-card-title">{{'entities.value-set.versions' | translate}}</div>
     <twa-add-button [routerLink]="['../versions/add']">
-      {{'web.value-set-version.form.add-header' | translate}}
+      {{'web.value-set.form.versions.add-version' | translate}}
     </twa-add-button>
   </div>
 
   <m-table [mData]="versions" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
     <tr *mTableHead>
-      <th>{{'web.value-set-version.entity.version' | translate}}</th>
-      <th>{{'web.value-set-version.entity.source' | translate}}</th>
-      <th>{{'web.value-set-version.entity.release-date' | translate}}</th>
-      <th>{{'web.value-set-version.entity.expiration-date' | translate}}</th>
-      <th>{{'web.value-set-version.entity.status' | translate}}</th>
+      <th>{{'entities.value-set-version.version' | translate}}</th>
+      <th>{{'entities.value-set-version.source' | translate}}</th>
+      <th>{{'entities.value-set-version.release-date' | translate}}</th>
+      <th>{{'entities.value-set-version.expiration-date' | translate}}</th>
+      <th>{{'entities.value-set-version.status' | translate}}</th>
       <th class="tw-table-actions"></th>
     </tr>
 

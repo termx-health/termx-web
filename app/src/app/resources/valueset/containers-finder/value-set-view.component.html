@@ -1,0 +1,36 @@
+<twa-finder-wrapper [loading]="loading" title="VALUE SET">
+  <div class="tw-finder-view-form">
+    <m-form-item mLabel="entities.value-set.id">
+      {{valueSet?.id || '-'}}
+    </m-form-item>
+
+    <m-form-item mLabel="entities.value-set.name">
+      {{(valueSet?.names | localName) || '-'}}
+    </m-form-item>
+
+    <m-form-item mLabel="entities.value-set.uri-short">
+      {{valueSet?.uri || '-'}}
+    </m-form-item>
+
+    <m-form-item mLabel="entities.value-set.description">
+      {{valueSet?.description || '-'}}
+    </m-form-item>
+  </div>
+
+  <twa-finder-menu title="entities.value-set.versions" [length]="versions.length">
+    <twa-finder-menu-item *ngFor="let v of versions" [navigate]="['versions', v.version]">
+      {{v.version}} - {{v.source}}
+    </twa-finder-menu-item>
+  </twa-finder-menu>
+
+
+  <twa-finder-menu title="entities.value-set.contacts" [length]="valueSet?.contacts?.length">
+    <twa-finder-menu-item *ngFor="let c of valueSet?.contacts">
+      <twa-finder-menu [title]="c.name || 'Unknown'" [open]="false" [length]="c?.telecoms?.length">
+        <twa-finder-menu-item *ngFor="let t of c.telecoms">
+          {{t.system}} {{t.use ? '(' + t.use + ')' : ''}} - {{t.value}}
+        </twa-finder-menu-item>
+      </twa-finder-menu>
+    </twa-finder-menu-item>
+  </twa-finder-menu>
+</twa-finder-wrapper>

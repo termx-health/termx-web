@@ -58,10 +58,6 @@
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}",
-        "property": {
-          "add-property": "Add property",
-          "delete-property": "Delete property"
-        },
         "duplicate": {
           "header": "Create duplicate code system",
           "source-code-system": "Source code system:",
@@ -88,11 +84,15 @@
             "duplicate-version": "Duplicate version",
             "export-fhir": "Export FHIR json"
           }
+        },
+        "properties": {
+          "add-property": "Add property",
+          "delete-property": "Delete property",
+          "modal": {
+            "add-property": "Add property",
+            "edit-property": "Edit property"
+          }
         }
-      },
-      "property-modal": {
-        "add-property": "Add property",
-        "edit-property": "Edit property"
       }
     },
     "code-system-version": {
@@ -138,93 +138,40 @@
       }
     },
     "value-set": {
-      "entity": {
-        "id": "Identifier",
-        "uri": "Uniform resource identifier (URI)",
-        "name": "Name",
-        "names": "Names",
-        "description": "Description"
-      },
-      "form": {
-        "add-header": "Create a new value set",
-        "edit-header": "Edit value set"
-      },
       "list": {
-        "properties": "Properties",
+        "add-value-set": "Add value set",
         "domain": "Domain",
-        "header": "Value set list",
-        "operations": "Operations",
-        "versions": "Versions",
-        "add-version": "Add version",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}"
+      },
+      "form": {
+        "add-header": "Create a new value set",
+        "edit-header": "Edit value set",
+        "versions": {
+          "add-version": "Add version"
+        }
       }
     },
     "value-set-version": {
-      "entity": {
-        "id": "Identifier",
-        "version": "Version",
-        "source": "Source",
-        "supported-languages": "Supported languages",
-        "description": "Description",
-        "release-date": "Release date",
-        "expiration-date": "Expiration date",
-        "status": "Status",
-        "concepts": "Concepts"
-      },
       "form": {
         "edit-header": "Edit version",
         "add-header": "Add version",
         "view-header": "View version",
-        "rule-set": "Rule set"
-      },
-      "list": {
-        "operations": "Operations"
-      }
-    },
-    "value-set-version-concept": {
-      "entity": {
-        "concept": "Concept",
-        "display": "Display",
-        "additional-designations": "Additional designations"
-      },
-      "modal": {
-        "header": "Preview of result concepts"
-      }
-    },
-    "value-set-rule-set": {
-      "entity": {
-        "locked-date": "Locked date",
-        "inactive": "Inactive concepts",
-        "rules": "Rules",
-        "rule": {
-          "code-system": "Code system",
-          "code-system-version": "Code system version",
-          "value-set": "Value set",
-          "value-set-version": "Value set version",
-          "concepts": "Concepts",
-          "filters": "Filters"
+        "rule-set": {
+          "add-rule-set": "Add rule",
+          "inactive": "Inactive",
+          "all": "All",
+          "active": "Active",
+          "modal": {
+            "edit-header": "Rule"
+          }
+        },
+        "concepts": {
+          "modal": {
+            "header": "Preview of result concepts"
+          }
         }
-      },
-      "form": {
-        "add-rule-set": "Add rule",
-        "code-system-rule": "Code system rule",
-        "value-set-rule": "Value set rule",
-        "inactive": "Inactive",
-        "all": "All",
-        "active": "Active",
-        "rule": "Rule",
-        "include": "Include",
-        "exclude": "Exclude",
-        "edit-header": "Rule"
-      }
-    },
-    "value-set-rule-filter": {
-      "entity": {
-        "property": "Property",
-        "operator": "Operator",
-        "value": "Value"
       }
     },
     "map-set": {
@@ -405,6 +352,54 @@
         "value": "Value",
         "use": "Use"
       }
+    },
+    "value-set": {
+      "id": "Identifier",
+      "name": "Name",
+      "uri": "Uniform resource identifier (URI)",
+      "uri-short": "URI",
+      "description": "Description",
+      "status": "Status",
+      "versions": "Versions",
+      "contacts": "Contacts"
+    },
+    "value-set-version": {
+      "id": "Identifier",
+      "version": "Version",
+      "source": "Source",
+      "supported-languages": "Supported languages",
+      "description": "Description",
+      "status": "Status",
+      "release-date": "Release date",
+      "expiration-date": "Expiration date",
+      "created": "Created",
+      "rule-set": "Rule set",
+      "concepts": "Concepts"
+    },
+    "value-set-rule-set": {
+      "locked-date": "Locked date",
+      "inactive": "Inactive concepts",
+      "rules": "Rules",
+      "include": "Include",
+      "exclude": "Exclude",
+      "rule": {
+        "code-system": "Code system",
+        "concepts": "Concepts",
+        "filters": "Filters",
+        "value-set": "Value set",
+        "value-set-version": "Value set version",
+        "code-system-version": "Code system version"
+      }
+    },
+    "value-set-rule-filter": {
+      "property": "Property",
+      "operator": "Operator",
+      "value": "Value"
+    },
+    "value-set-version-concept": {
+      "concept": "Concept",
+      "display": "Display",
+      "additional-designations": "Additional designations"
     }
   }
 }
