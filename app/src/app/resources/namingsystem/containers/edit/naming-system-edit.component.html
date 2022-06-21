@@ -1,0 +1,45 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-card>
+      <div *m-card-header class="m-items-middle">
+        <div class="m-card-title">{{(mode === 'edit' ? 'web.naming-system.form.edit-header' : 'web.naming-system.form.add-header') | translate}}</div>
+        <twa-status-tag *ngIf="namingSystem?.status" [status]="namingSystem.status"></twa-status-tag>
+      </div>
+      <m-spinner [mLoading]="loading">
+        <form #form="ngForm" *ngIf="namingSystem">
+          <m-form-item mName="id" mLabel="entities.naming-system.id" required>
+            <m-input name="id" [(ngModel)]="namingSystem.id" [disabled]="mode === 'edit'" required></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.naming-system.name" required>
+            <m-multi-language-input name="names" [(ngModel)]="namingSystem.names" required></m-multi-language-input>
+          </m-form-item>
+
+          <m-form-item mName="kind" mLabel="entities.naming-system.kind" required>
+            <twl-value-set-concept-select name="kind" valueSet="namingsystem-type" [(ngModel)]="namingSystem.kind" required></twl-value-set-concept-select>
+          </m-form-item>
+
+          <m-form-item mName="codeSystem" *ngIf="namingSystem.kind === 'codesystem'" mLabel="entities.naming-system.code-system" required>
+            <twl-code-system-search name="codeSystem" [(ngModel)]="namingSystem.codeSystem" valuePrimitive required></twl-code-system-search>
+          </m-form-item>
+
+          <m-form-item mName="source" mLabel="entities.naming-system.source">
+            <m-input name="source" [(ngModel)]="namingSystem.source"></m-input>
+          </m-form-item>
+
+          <m-form-item mName="description" mLabel="entities.naming-system.description">
+            <m-textarea name="description" [(ngModel)]="namingSystem.description"></m-textarea>
+          </m-form-item>
+
+          <twa-naming-system-identifier-form #identifiers [(identifiers)]="namingSystem.identifiers"></twa-naming-system-identifier-form>
+
+          <ng-container *m-card-footer>
+            <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
+              {{'core.btn.save' | translate}}
+            </m-button>
+          </ng-container>
+        </form>
+      </m-spinner>
+    </m-card>
+  </div>
+</m-form-row>
