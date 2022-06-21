@@ -43,7 +43,7 @@ export class NamingSystemEditComponent implements OnInit {
   }
 
   public save(): void {
-    if (!validateForm(this.form) || !this.identifiers?.validate()) {
+    if (![validateForm(this.form), this.identifiers?.validate()].every(Boolean)) {
       return;
     }
     this.loading = true;

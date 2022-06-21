@@ -1,45 +1,47 @@
 <form #form="ngForm">
-  <div class="ant-form-item-label"> {{'entities.naming-system.identifiers' | translate}}</div>
-  <m-table [mData]="identifiers" mSize="small">
-    <tr *mTableHead>
-      <th></th>
-      <th>{{'entities.naming-system-identifier.type' | translate}}</th>
-      <th>{{'entities.naming-system-identifier.value' | translate}}</th>
-      <th class="tw-table-actions"></th>
-    </tr>
+  <m-form-item mLabel="entities.naming-system.identifiers">
+    <m-table [mData]="identifiers" mSize="small">
+      <tr *mTableHead>
+        <th class="tw-table-min-width"></th>
+        <th>{{'entities.naming-system-identifier.type' | translate}}</th>
+        <th>{{'entities.naming-system-identifier.value' | translate}}</th>
+        <th class="tw-table-actions" *ngIf="identifiers.length > 1"></th>
+      </tr>
 
-    <tr *mTableRow="let identifier, let index = index">
-      <td>
-        <m-button mDisplay="text" mShape="circle" (click)="identifier.preferred = !identifier.preferred">
-          <m-icon [mOptions]="{nzTheme : identifier.preferred? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
-        </m-button>
-      </td>
-      <td>
-        <m-form-control mName="type-{{index}}">
-          <twl-value-set-concept-select [name]="'type-'+ index"
-              [(ngModel)]="identifier.type"
-              valueSet="namingsystem-identifier-type"
-              required></twl-value-set-concept-select>
-        </m-form-control>
-      </td>
-      <td>
-        <m-form-control mName="value-{{index}}">
-          <m-input name="value-{{index}}" [(ngModel)]="identifier.value" required></m-input>
-        </m-form-control>
-      </td>
-      <td class="tw-table-actions">
-        <m-button *ngIf="index !== 0" (click)="removeIdentifier(index)">
-          <m-icon [mCode]="'delete'"></m-icon>
-        </m-button>
-      </td>
-    </tr>
+      <tr *mTableRow="let identifier, let index = index">
+        <td class="tw-table-min-width">
+          <m-button mDisplay="text" mShape="circle" (click)="identifier.preferred = !identifier.preferred">
+            <m-icon [mOptions]="{nzTheme : identifier.preferred? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
+          </m-button>
+        </td>
+        <td>
+          <m-form-control mName="type-{{index}}" [mShowExplain]="false">
+            <twl-value-set-concept-select name="type-{{index}}"
+                [(ngModel)]="identifier.type"
+                valueSet="namingsystem-identifier-type"
+                required
+            ></twl-value-set-concept-select>
+          </m-form-control>
+        </td>
+        <td>
+          <m-form-control mName="value-{{index}}" [mShowExplain]="false">
+            <m-input name="value-{{index}}" [(ngModel)]="identifier.value" required></m-input>
+          </m-form-control>
+        </td>
+        <td class="tw-table-actions" *ngIf="identifiers.length > 1">
+          <m-button (click)="removeIdentifier(index)">
+            <m-icon [mCode]="'delete'"></m-icon>
+          </m-button>
+        </td>
+      </tr>
 
-    <tr>
-      <td colspan="4" style="padding: 0">
-        <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addIdentifier()">
-          <m-icon [mCode]="'plus'"></m-icon>
-        </m-button>
-      </td>
-    </tr>
-  </m-table>
+      <tr>
+        <td colspan="4" style="padding: 0">
+          <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addIdentifier()">
+            <m-icon [mCode]="'plus'"></m-icon>
+          </m-button>
+        </td>
+      </tr>
+    </m-table>
+  </m-form-item>
 </form>

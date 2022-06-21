@@ -15,7 +15,7 @@ export class NamingSystemIdentifierFormComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this.identifiers) {
-      this.addIdentifier();
+      setTimeout(() => this.addIdentifier());
     }
   }
 
@@ -34,8 +34,7 @@ export class NamingSystemIdentifierFormComponent implements OnInit {
     this.identifiersChange!.emit(this.identifiers);
   }
 
-
   public validate(): boolean {
-    return (validateForm(this.form));
+    return validateForm(this.form);
   }
 }
