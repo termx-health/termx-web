@@ -15,7 +15,7 @@ export class NamingSystemIdentifierFormComponent implements OnInit {
 
   public ngOnInit(): void {
     if (!this.identifiers) {
-      this.identifiers = [new NamingSystemIdentifier()];
+      this.addIdentifier();
     }
   }
 

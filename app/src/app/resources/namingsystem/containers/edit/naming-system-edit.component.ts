@@ -11,7 +11,6 @@ import {NamingSystemIdentifierFormComponent} from './naming-system-identifier-fo
   templateUrl: './naming-system-edit.component.html',
 })
 export class NamingSystemEditComponent implements OnInit {
-  public namingSystemId?: string | null;
   public namingSystem?: NamingSystem;
 
   public mode: 'add' | 'edit' = 'add';
@@ -27,11 +26,11 @@ export class NamingSystemEditComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.namingSystemId = this.route.snapshot.paramMap.get('id');
-    this.mode = this.namingSystemId ? 'edit' : 'add';
+    const namingSystemId = this.route.snapshot.paramMap.get('id');
+    this.mode = namingSystemId ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadNamingSystem(this.namingSystemId!);
+      this.loadNamingSystem(namingSystemId!);
     } else {
       this.namingSystem = new NamingSystem();
       this.namingSystem.status = 'draft';
