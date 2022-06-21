@@ -6,10 +6,12 @@ import {NgModule} from '@angular/core';
 import {NamingSystemEditComponent} from './containers/edit/naming-system-edit.component';
 import {NamingSystemService} from './services/naming-system-service';
 import {NamingSystemIdentifierFormComponent} from './containers/edit/naming-system-identifier-form.component';
+import {NamingSystemViewComponent} from './containers/view/naming-system-view.component';
 
 export const NAMING_SYSTEM_ROUTES: Routes = [
   {path: 'add', component: NamingSystemEditComponent},
   {path: ':id/edit', component: NamingSystemEditComponent},
+  {path: ':id/view', component: NamingSystemViewComponent},
 ];
 
 @NgModule({
@@ -20,7 +22,8 @@ export const NAMING_SYSTEM_ROUTES: Routes = [
   declarations: [
     NamingSystemListComponent,
     NamingSystemEditComponent,
-    NamingSystemIdentifierFormComponent
+    NamingSystemIdentifierFormComponent,
+    NamingSystemViewComponent
   ],
   exports: [
     NamingSystemListComponent

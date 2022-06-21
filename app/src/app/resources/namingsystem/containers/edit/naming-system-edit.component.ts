@@ -3,7 +3,7 @@ import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {validateForm} from '@kodality-web/core-util';
-import {NamingSystem} from 'terminology-lib/resources/namingsystem/model/naming-system';
+import {NamingSystem, NamingSystemIdentifier} from 'terminology-lib/resources/namingsystem/model/naming-system';
 import {NamingSystemService} from '../../services/naming-system-service';
 import {NamingSystemIdentifierFormComponent} from './naming-system-identifier-form.component';
 
@@ -34,6 +34,7 @@ export class NamingSystemEditComponent implements OnInit {
     } else {
       this.namingSystem = new NamingSystem();
       this.namingSystem.status = 'draft';
+      this.namingSystem.identifiers = [new NamingSystemIdentifier()];
     }
   }
 
