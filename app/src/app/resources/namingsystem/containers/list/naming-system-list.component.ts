@@ -4,6 +4,7 @@ import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switc
 import {NamingSystemSearchParams} from 'terminology-lib/resources/namingsystem/model/naming-system-search-params';
 import {NamingSystem} from 'terminology-lib/resources/namingsystem/model/naming-system';
 import {NamingSystemService} from '../../services/naming-system-service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'twa-naming-system-list',
@@ -19,6 +20,7 @@ export class NamingSystemListComponent implements OnInit {
 
   public constructor(
     private namingSystemService: NamingSystemService,
+    private translateService: TranslateService
   ) {}
 
   public ngOnInit(): void {
@@ -33,6 +35,7 @@ export class NamingSystemListComponent implements OnInit {
 
   private search(): Observable<SearchResult<NamingSystem>> {
     const q = copyDeep(this.query);
+    q.lang = this.translateService.currentLang;
     q.textContains = this.searchInput;
     this.loading = true;
     return this.namingSystemService.search(q).pipe(finalize(() => this.loading = false));
@@ -40,5 +43,15 @@ export class NamingSystemListComponent implements OnInit {
 
   public loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
+  }
+
+  public retire(ns: NamingSystem): void {
+    this.loading = true;
+    this.namingSystemService.retire(ns.id!).subscribe(() => ns.status = 'retired').add(() => this.loading = false);
+  }
+
+  public activate(ns: NamingSystem): void {
+    this.loading = true;
+    this.namingSystemService.activate(ns.id!).subscribe(() => ns.status = 'active').add(() => this.loading = false);
   }
 }

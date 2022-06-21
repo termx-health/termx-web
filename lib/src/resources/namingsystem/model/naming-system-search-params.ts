@@ -15,6 +15,7 @@ export class NamingSystemSearchParams extends QueryParams {
   public descriptionContains?: string;
   public codeSystem?: string;
   public codeSystemContains?: string;
+  public lang?: string;
 
   public text?: string;
   public textContains?: string;

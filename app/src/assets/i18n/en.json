@@ -146,7 +146,8 @@
       },
       "form": {
         "add-header": "Create a new naming system",
-        "edit-header": "Edit naming system"
+        "edit-header": "Edit naming system",
+        "view-header": "View naming system"
       }
     },
     "value-set": {
