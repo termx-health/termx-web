@@ -13,7 +13,7 @@ export class NamingSystem {
   public identifiers?: NamingSystemIdentifier[];
 }
 
-class NamingSystemIdentifier {
+export class NamingSystemIdentifier {
   public type?: string;
   public value?: string;
   public preferred?: boolean;

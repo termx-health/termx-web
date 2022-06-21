@@ -3,8 +3,13 @@ import {SharedModule} from '../../core/shared/shared.module';
 import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
 import {NamingSystemListComponent} from './containers/list/naming-system-list.component';
 import {NgModule} from '@angular/core';
+import {NamingSystemEditComponent} from './containers/edit/naming-system-edit.component';
+import {NamingSystemService} from './services/naming-system-service';
+import {NamingSystemIdentifierFormComponent} from './containers/edit/naming-system-identifier-form.component';
 
 export const NAMING_SYSTEM_ROUTES: Routes = [
+  {path: 'add', component: NamingSystemEditComponent},
+  {path: ':id/edit', component: NamingSystemEditComponent},
 ];
 
 @NgModule({
@@ -13,10 +18,15 @@ export const NAMING_SYSTEM_ROUTES: Routes = [
     ResourcesLibModule,
   ],
   declarations: [
-    NamingSystemListComponent
+    NamingSystemListComponent,
+    NamingSystemEditComponent,
+    NamingSystemIdentifierFormComponent
   ],
   exports: [
     NamingSystemListComponent
+  ],
+  providers: [
+    NamingSystemService
   ]
 })
 export class NamingSystemModule {

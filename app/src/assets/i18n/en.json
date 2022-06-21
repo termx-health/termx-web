@@ -141,7 +141,12 @@
     "naming-system": {
       "list": {
         "add-naming-system": "Add NamingSystem",
-        "naming-system": "NamingSystem"
+        "naming-system": "NamingSystem",
+        "type": "Type"
+      },
+      "form": {
+        "add-header": "Create a new naming system",
+        "edit-header": "Edit naming system"
       }
     },
     "value-set": {
@@ -333,13 +338,18 @@
       "associations": "Associations"
     },
     "naming-system": {
+      "id": "Id",
       "code-system": "CodeSystem",
       "name": "Name",
       "source": "Source",
-      "type": "Type",
+      "kind": "Kind",
       "status": "Status",
       "description": "Description",
       "identifiers": "Identifiers"
+    },
+    "naming-system-identifier": {
+      "type": "Type",
+      "value": "Value"
     },
     "entity-property": {
       "name": "Name",
