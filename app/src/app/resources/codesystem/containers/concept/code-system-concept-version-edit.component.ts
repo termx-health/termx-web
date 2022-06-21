@@ -1,11 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemConceptLibService, CodeSystemEntityVersion} from 'terminology-lib/resources';
+import {CodeSystemConceptLibService, CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from 'terminology-lib/resources';
 import {NgForm} from '@angular/forms';
-import {CodeSystemEntityVersionService} from '../../services/code-system-entity-version.service';
 import {ActivatedRoute} from '@angular/router';
 import {validateForm} from '@kodality-web/core-util';
-import {CodeSystemEntityService} from '../../services/code-system-entity.service';
 import {Location} from '@angular/common';
+import {CodeSystemService} from '../../services/code-system.service';
 
 @Component({
   templateUrl: './code-system-concept-version-edit.component.html',
@@ -21,8 +20,8 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
   @ViewChild("conceptVersionForm") public conceptVersionForm?: NgForm;
 
   public constructor(
-    public codeSystemEntityService: CodeSystemEntityService,
-    public codeSystemEntityVersionService: CodeSystemEntityVersionService,
+    public codeSystemService: CodeSystemService,
+    public codeSystemEntityVersionService: CodeSystemEntityVersionLibService,
     public codeSystemConceptLibService: CodeSystemConceptLibService,
     private route: ActivatedRoute,
     private location: Location,
@@ -51,7 +50,7 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
     }
     this.version.status = 'draft';
     this.loading['save'] = true;
-    this.codeSystemEntityService.saveVersion(Number(this.conceptId), this.version)
+    this.codeSystemService.saveEntityVersion(this.codeSystemId!, Number(this.conceptId), this.version)
       .subscribe(() => this.location.back())
       .add(() => this.loading['save'] = false);
   }

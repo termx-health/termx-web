@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {CodeSystem, CodeSystemConcept, CodeSystemLibService, CodeSystemVersion} from 'terminology-lib/resources';
+import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, CodeSystemVersion} from 'terminology-lib/resources';
 
 @Injectable()
 export class CodeSystemService extends CodeSystemLibService {
@@ -33,6 +33,21 @@ export class CodeSystemService extends CodeSystemLibService {
 
   public saveConcept(codeSystemId: string, concept: CodeSystemConcept): Observable<CodeSystemConcept> {
     return this.http.post(`${this.baseUrl}/${codeSystemId}/concepts`, concept);
+  }
+
+  public saveEntityVersion(codeSystemId: string, entityId: number, entityVersion: CodeSystemEntityVersion): Observable<CodeSystemEntityVersion> {
+    if (entityVersion.id) {
+      return this.http.put(`${this.baseUrl}/${codeSystemId}/entities/${entityId}/versions/${entityVersion.id}`, entityVersion);
+    }
+    return this.http.post(`${this.baseUrl}/${codeSystemId}/entities/${entityId}/versions`, entityVersion);
+  }
+
+  public activateEntityVersion(codeSystemId: string, id: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/activate`, {});
+  }
+
+  public retireEntityVersion(codeSystemId: string, id: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/retire`, {});
   }
 
   public unlinkEntityVersion(codeSystemId: string, version: string, entityVersionId: number): Observable<void> {

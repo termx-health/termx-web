@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {EntityProperty, ValueSetRuleFilter} from 'terminology-lib/resources';
+import {CodeSystemLibService, EntityProperty, ValueSetRuleFilter} from 'terminology-lib/resources';
 import {BooleanInput} from '@kodality-web/core-util';
-import {EntityPropertyLibService} from 'terminology-lib/resources/codesystem/services/entity-property-lib.service';
 import {EntityPropertySearchParams} from 'terminology-lib/resources/codesystem/model/entity-property-search-params';
 
 @Component({
@@ -9,7 +8,6 @@ import {EntityPropertySearchParams} from 'terminology-lib/resources/codesystem/m
   templateUrl: 'value-set-rule-filter-list.component.html',
 })
 export class ValueSetRuleFilterListComponent implements OnChanges {
-  @Input() public valueSet?: string;
   @Input() public codeSystem?: string;
 
   @Input() public filters: ValueSetRuleFilter[] = [];
@@ -21,12 +19,14 @@ export class ValueSetRuleFilterListComponent implements OnChanges {
   public loading = false;
   public properties: EntityProperty[] = [];
 
-  public constructor(private entityPropertyService: EntityPropertyLibService) { }
+  public constructor(private codeSystemService: CodeSystemLibService) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    this.properties = [];
-    if (changes["valueSet"]?.currentValue || changes["codeSystem"]?.currentValue) {
-      this.loadEntityProperties();
+    if (changes["codeSystem"]) {
+      this.properties = [];
+      if (this.codeSystem) {
+        this.loadEntityProperties(this.codeSystem);
+      }
     }
   }
 
@@ -42,13 +42,12 @@ export class ValueSetRuleFilterListComponent implements OnChanges {
     this.filtersChange.emit(this.filters);
   }
 
-  private loadEntityProperties(): void {
+  private loadEntityProperties(codeSystem: string): void {
     const q = new EntityPropertySearchParams();
-    q.codeSystem = this.codeSystem;
-    q.valueSet = this.valueSet;
+    q.codeSystem = codeSystem;
     q.limit = 10_000;
     this.loading = true;
-    this.entityPropertyService.search(q)
+    this.codeSystemService.searchProperties(codeSystem, q)
       .subscribe(properties => this.properties = properties.data)
       .add(() => this.loading = false);
   }

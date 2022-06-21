@@ -1,11 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemEntityVersion} from 'terminology-lib/resources';
+import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from 'terminology-lib/resources';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
 import {MuiDestroyService} from '@kodality-health/marina-ui';
 import {isNil} from '@kodality-web/core-util';
-import {CodeSystemEntityVersionService} from '../../services/code-system-entity-version.service';
-
 
 @Component({
   template: `
@@ -42,7 +40,7 @@ export class FinderCodeSystemConceptVersionViewComponent implements OnInit {
   public loading = false;
 
   public constructor(
-    public codeSystemEntityVersionService: CodeSystemEntityVersionService,
+    public codeSystemEntityVersionService: CodeSystemEntityVersionLibService,
     private route: ActivatedRoute,
     private destroy$: MuiDestroyService
   ) {}

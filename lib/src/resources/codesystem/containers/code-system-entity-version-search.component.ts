@@ -6,6 +6,7 @@ import {CodeSystemEntityVersion} from '../model/code-system-entity';
 import {CodeSystemEntityVersionQueryParams} from '../model/code-system-entity-version-search-params';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CodeSystemEntityVersionLibService} from '../services/code-system-entity-version-lib.service';
+import {CodeSystemLibService} from '../services/code-system-lib.service';
 
 @Component({
   selector: 'twl-code-system-entity-version-search',
@@ -27,6 +28,7 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
 
   public constructor(
     private codeSystemEntityVersionLibService: CodeSystemEntityVersionLibService,
+    private codeSystemService: CodeSystemLibService
   ) {}
 
   public ngOnInit(): void {
@@ -50,7 +52,7 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
     q.codeSystem = this.codeSystemId;
     q.limit = 10_000;
     this.loading['search'] = true;
-    return this.codeSystemEntityVersionLibService.search(q).pipe(
+    return this.codeSystemService.searchEntityVersions(this.codeSystemId, q).pipe(
       map(cseva => ({...this.data, ...group(cseva.data, csev => csev.id!)})),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)

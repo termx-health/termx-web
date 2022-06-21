@@ -1,9 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {Designation, EntityProperty} from 'terminology-lib/resources';
+import {CodeSystemLibService, Designation, EntityProperty} from 'terminology-lib/resources';
 import {BooleanInput, collect, copyDeep, group, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {EntityPropertySearchParams} from 'terminology-lib/resources/codesystem/model/entity-property-search-params';
-import {EntityPropertyLibService} from 'terminology-lib/resources/codesystem/services/entity-property-lib.service';
 
 @Component({
   selector: 'twa-code-system-concept-version-designation-table',
@@ -30,7 +29,7 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
   } = {};
 
   public constructor(
-    public entityPropertyService: EntityPropertyLibService,
+    public codeSystemService: CodeSystemLibService,
   ) {}
 
 
@@ -82,7 +81,7 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
     q.codeSystem = codeSystem;
     q.limit = 1000;
     this.loading['load'] = true;
-    this.entityPropertyService.search(q).subscribe(ep => this.entityProperties = group(ep.data, p => p.id!)).add(() => this.loading['load'] = false);
+    this.codeSystemService.searchProperties(codeSystem, q).subscribe(ep => this.entityProperties = group(ep.data, p => p.id!)).add(() => this.loading['load'] = false);
   }
 
   public get isLoading(): boolean {

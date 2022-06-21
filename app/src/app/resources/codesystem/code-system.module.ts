@@ -11,11 +11,9 @@ import {CodeSystemVersionViewComponent} from './containers/version/code-system-v
 import {CodeSystemDuplicateModalComponent} from './containers/list/code-system-duplicate-modal.component';
 import {CodeSystemConceptsListComponent} from './containers/edit/code-system-concepts-list.component';
 import {CodeSystemConceptEditComponent} from './containers/concept/code-system-concept-edit.component';
-import {CodeSystemEntityVersionService} from './services/code-system-entity-version.service';
 import {CodeSystemVersionDuplicateModalComponent} from './containers/edit/code-system-version-duplicate-modal.component';
 import {CodeSystemVersionEntityVersionsListComponent} from './containers/version/code-system-version-entity-versions-list.component';
 import {CodeSystemConceptVersionEditComponent} from './containers/concept/code-system-concept-version-edit.component';
-import {CodeSystemEntityService} from './services/code-system-entity.service';
 import {FinderCodeSystemListComponent} from './containers-finder/code-system-list.component';
 import {FinderCodeSystemViewComponent} from './containers-finder/code-system-view.component';
 import {FinderCodeSystemVersionViewComponent} from './containers-finder/version/code-system-version-view.component';
@@ -89,9 +87,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemListComponent
   ],
   providers: [
-    CodeSystemService,
-    CodeSystemEntityVersionService,
-    CodeSystemEntityService
+    CodeSystemService
   ]
 })
 export class CodeSystemModule {

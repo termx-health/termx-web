@@ -5,7 +5,6 @@ import {CodeSystemService} from '../../services/code-system.service';
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {CodeSystemEntityVersionQueryParams} from 'terminology-lib/resources/codesystem/model/code-system-entity-version-search-params';
 import {NgForm} from '@angular/forms';
-import {CodeSystemEntityVersionService} from '../../services/code-system-entity-version.service';
 
 @Component({
   selector: 'twa-code-system-version-entity-version-list',
@@ -29,7 +28,6 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
-    private codeSystemEntityVersionService: CodeSystemEntityVersionService,
     private codeSystemService: CodeSystemService
   ) { }
 
@@ -51,7 +49,7 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
     q.codeSystem = this.codeSystemId;
     q.codeSystemVersion = this.version;
     this.loading['search'] = true;
-    return this.codeSystemEntityVersionService.search(q).pipe(finalize(() => this.loading['search'] = false));
+    return this.codeSystemService.searchEntityVersions(this.codeSystemId, q).pipe(finalize(() => this.loading['search'] = false));
   }
 
   public loadData(): void {

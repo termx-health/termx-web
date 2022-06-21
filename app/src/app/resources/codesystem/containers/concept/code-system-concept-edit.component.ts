@@ -5,7 +5,6 @@ import {ActivatedRoute} from '@angular/router';
 import {validateForm} from '@kodality-web/core-util';
 import {Location} from '@angular/common';
 import {CodeSystemService} from '../../services/code-system.service';
-import {CodeSystemEntityVersionService} from '../../services/code-system-entity-version.service';
 
 @Component({
   selector: 'twa-code-system-concept-edit',
@@ -23,7 +22,6 @@ export class CodeSystemConceptEditComponent implements OnInit {
   public constructor(
     public codeSystemConceptLibService: CodeSystemConceptLibService,
     public codeSystemService: CodeSystemService,
-    public codeSystemEntityVersionService: CodeSystemEntityVersionService,
     private route: ActivatedRoute,
     private location: Location
   ) { }
@@ -58,12 +56,12 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   public activateVersion(version: CodeSystemEntityVersion): void {
     this.loading = true;
-    this.codeSystemEntityVersionService.activateVersion(version.id!).subscribe(() => version.status = 'active').add(() => this.loading = false);
+    this.codeSystemService.activateEntityVersion(this.codeSystemId!, version.id!).subscribe(() => version.status = 'active').add(() => this.loading = false);
   }
 
   public retireVersion(version: CodeSystemEntityVersion): void {
     this.loading = true;
-    this.codeSystemEntityVersionService.retireVersion(version.id!).subscribe(() => version.status = 'retired').add(() => this.loading = false);
+    this.codeSystemService.retireEntityVersion(this.codeSystemId!, version.id!).subscribe(() => version.status = 'retired').add(() => this.loading = false);
   }
 
 }

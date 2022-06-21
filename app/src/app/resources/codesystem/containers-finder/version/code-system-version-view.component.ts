@@ -5,8 +5,6 @@ import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
 import {MuiDestroyService} from '@kodality-health/marina-ui';
 import {isNil, SearchResult} from '@kodality-web/core-util';
-import {CodeSystemEntityVersionService} from '../../services/code-system-entity-version.service';
-
 
 @Component({
   templateUrl: 'code-system-version-view.component.html',
@@ -23,7 +21,6 @@ export class FinderCodeSystemVersionViewComponent implements OnInit {
 
   public constructor(
     private codeSystemService: CodeSystemService,
-    private codeSystemEntityVersionService: CodeSystemEntityVersionService,
     private route: ActivatedRoute,
     private destroy$: MuiDestroyService
   ) {}
@@ -52,7 +49,7 @@ export class FinderCodeSystemVersionViewComponent implements OnInit {
 
   public loadEntities(id: string, version: string, limit: number = this.DEFAULT_ENTITY_VERSION_LIMIT): void {
     this.loading['entities'] = true;
-    this.codeSystemEntityVersionService.search({
+    this.codeSystemService.searchEntityVersions(id, {
       codeSystem: id,
       codeSystemVersion: version,
       limit: limit

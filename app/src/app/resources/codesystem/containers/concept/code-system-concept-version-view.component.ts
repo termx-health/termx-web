@@ -1,7 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemEntityVersion} from 'terminology-lib/resources';
+import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from 'terminology-lib/resources';
 import {NgForm} from '@angular/forms';
-import {CodeSystemEntityVersionService} from '../../services/code-system-entity-version.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -16,7 +15,7 @@ export class CodeSystemConceptVersionViewComponent implements OnInit {
   @ViewChild("conceptVersionForm") public conceptVersionForm?: NgForm;
 
   public constructor(
-    public codeSystemEntityVersionService: CodeSystemEntityVersionService,
+    public codeSystemEntityVersionService: CodeSystemEntityVersionLibService,
     private route: ActivatedRoute,
   ) { }
 

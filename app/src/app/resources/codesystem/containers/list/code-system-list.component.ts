@@ -5,7 +5,6 @@ import {CodeSystemService} from '../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 
-
 @Component({
   selector: 'twa-code-system-list',
   templateUrl: 'code-system-list.component.html'

@@ -8,7 +8,7 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/h
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
-import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiHttpErrorHandler} from '@kodality-health/marina-ui';
+import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiHttpErrorHandler, MuiOauthHttpInterceptor} from '@kodality-health/marina-ui';
 import {CoreI18nService, CoreI18nTranslationHandler, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
@@ -46,7 +46,13 @@ export function MarinaUiConfigFactory(): MuiConfig {
     },
     supportedLangs: {
       en: true
-    }
+    },
+    users: [
+      {name: "Kodality viewer", accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcml2aWxlZ2VzIjpbImtvZGFsaXR5LmNvZGUtc3lzdGVtLnZpZXciLCJrb2RhbGl0eS52YWx1ZS1zZXQudmlldyIsImtvZGFsaXR5Lm1hcC1zZXQudmlldyIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0udmlldyJdfQ.igl1qqS2SCV9ODjFj3nyepwcPHS_iXXB4MVgs8bsmj8"},
+      {name: "Kodality editor", accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcml2aWxlZ2VzIjpbImtvZGFsaXR5LmNvZGUtc3lzdGVtLnZpZXciLCJrb2RhbGl0eS5jb2RlLXN5c3RlbS5lZGl0Iiwia29kYWxpdHkudmFsdWUtc2V0LnZpZXciLCJrb2RhbGl0eS52YWx1ZS1zZXQuZWRpdCIsImtvZGFsaXR5Lm1hcC1zZXQudmlldyIsImtvZGFsaXR5Lm1hcC1zZXQuZWRpdCIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0udmlldyIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0uZWRpdCJdfQ.8aOAQzBZeZjf2v2Lo0ubjVCH2L9X1lFygA6SUH7w8Uk"},
+      {name: "Kodality publisher", accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcml2aWxlZ2VzIjpbImtvZGFsaXR5LmNvZGUtc3lzdGVtLnZpZXciLCJrb2RhbGl0eS5jb2RlLXN5c3RlbS5wdWJsaXNoZXIiLCJrb2RhbGl0eS52YWx1ZS1zZXQudmlldyIsImtvZGFsaXR5LnZhbHVlLXNldC5wdWJsaXNoZXIiLCJrb2RhbGl0eS5tYXAtc2V0LnZpZXciLCJrb2RhbGl0eS5tYXAtc2V0LnB1Ymxpc2hlciIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0udmlldyIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0ucHVibGlzaGVyIl19.SLSNcSHPT4vnNiFq3e3_EvropNgIe_C3JJzRxxcreEs"},
+      {name: "Admin", accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcml2aWxlZ2VzIjpbImFkbWluIl19.ByZ0vl71zfIXtpt-PkPTi3icPAaupqoo746jnP3cDkQ"}
+    ]
   };
 
 }
@@ -82,6 +88,7 @@ export function MarinaUiConfigFactory(): MuiConfig {
     {provide: LOCALE_ID, useValue: 'en'},
     {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
     {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},
+    {provide: HTTP_INTERCEPTORS, useClass: MuiOauthHttpInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: MuiHttpErrorHandler, multi: true},
     {provide: MUI_CONFIG, useFactory: MarinaUiConfigFactory}
   ],
