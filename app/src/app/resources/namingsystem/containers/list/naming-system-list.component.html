@@ -14,14 +14,14 @@
       <th mColumnKey="id">{{'web.naming-system.list.naming-system' | translate}}</th>
       <th mColumnKey="name">{{'entities.naming-system.name' | translate}}</th>
       <th mColumnKey="source">{{'entities.naming-system.source' | translate}}</th>
-      <th mColumnKey="type">{{'web.naming-system.list.type' | translate}}</th>
+      <th mColumnKey="kind">{{'web.naming-system.list.type' | translate}}</th>
       <th mColumnKey="status">{{'entities.naming-system.status' | translate}}</th>
       <th class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let ns">
       <td m-table-expand [mItem]="ns"></td>
-      <td><a [routerLink]="['naming-systems',ns.id,'edit']">{{ns.id}}</a></td>
+      <td><a [routerLink]="['naming-systems',ns.id, ns.status ==='draft'? 'edit': 'view']">{{ns.id}}</a></td>
       <td>{{ns.names | localName}}</td>
       <td>{{ns.source}}</td>
       <td>{{ns.kind}}</td>
@@ -30,10 +30,10 @@
       </td>
       <td class="tw-table-actions">
         <m-dropdown>
-          <a *mDropdownItemIf="ns.status !== 'retired'">
+          <a *mDropdownItemIf="ns.status !== 'retired'" (click)="retire(ns)">
             {{'web.publication-status.operations.retire' | translate}}
           </a>
-          <a *mDropdownItemIf="ns.status === 'draft'">
+          <a *mDropdownItemIf="ns.status === 'draft'" (click)="activate(ns)">
             {{'web.publication-status.operations.activate' | translate}}
           </a>
         </m-dropdown>
