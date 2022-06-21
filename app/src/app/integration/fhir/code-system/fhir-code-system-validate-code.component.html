@@ -12,21 +12,21 @@
     <m-form-item [mLabel]="code">
       <ng-template #code>
         <div>{{'web.integration.fhir.code-system.validate-code.code' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" nz-popover nzPopoverContent="The code that is to be validated"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="The code that is to be validated"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.code"></m-input>
     </m-form-item>
     <m-form-item [mLabel]="version">
       <ng-template #version>
         <div>{{'web.integration.fhir.code-system.validate-code.version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" nz-popover nzPopoverContent="The version of the code system, if one was provided in the source data"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="The version of the code system, if one was provided in the source data"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.version"></m-input>
     </m-form-item>
     <m-form-item [mLabel]="system">
       <ng-template #system>
         <div>{{'web.integration.fhir.code-system.validate-code.system' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" nz-popover [nzPopoverContent]="systemContent"></m-icon>
+        <m-icon mCode="info-circle" m-popover [mContent]="systemContent"></m-icon>
         <ng-template #systemContent>
           CodeSystem URL. The server must know the code system (e.g. it is defined explicitly in the servers code systems, or it is known implicitly by the
           server)
@@ -37,7 +37,7 @@
     <m-form-item [mLabel]="display">
       <ng-template #display>
         <div>{{'web.integration.fhir.code-system.validate-code.display' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" nz-popover [nzPopoverContent]="displayContent"></m-icon>
+        <m-icon mCode="info-circle" m-popover [mContent]="displayContent"></m-icon>
         <ng-template #displayContent>
           The display associated with the code, if provided. If a display is provided a code must be provided. <br>
           If no display is provided, the server cannot validate the display value, but may choose to return a recommended display name in an extension in the

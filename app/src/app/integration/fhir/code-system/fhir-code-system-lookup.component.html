@@ -12,7 +12,7 @@
     <m-form-item [mLabel]="code">
       <ng-template #code>
         <div>{{'web.integration.fhir.code-system.lookup.code' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" nz-popover nzPopoverContent="The code that is to be located. If a code is provided, a system must be provided"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="The code that is to be located. If a code is provided, a system must be provided"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.code"></m-input>
     </m-form-item>
@@ -20,7 +20,7 @@
     <m-form-item [mLabel]="system">
       <ng-template #system>
         <div>{{'web.integration.fhir.code-system.lookup.system' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" nz-popover nzPopoverContent="The system for the code that is to be located"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="The system for the code that is to be located"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.system"></m-input>
     </m-form-item>
@@ -28,7 +28,7 @@
     <m-form-item [mLabel]="version">
       <ng-template #version>
         <div>{{'web.integration.fhir.code-system.lookup.version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" nz-popover nzPopoverContent="The version of the system, if one was provided in the source data"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="The version of the system, if one was provided in the source data"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.version"></m-input>
     </m-form-item>
@@ -36,7 +36,7 @@
     <m-form-item [mLabel]="date">
       <ng-template #date>
         <div>{{'web.integration.fhir.code-system.lookup.date' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" nz-popover [nzPopoverContent]="dateContent"></m-icon>
+        <m-icon mCode="info-circle" m-popover [mContent]="dateContent"></m-icon>
         <ng-template #dateContent>
           The date for which the information should be returned. Normally, this is the current conditions (which is the default value) but under some
           circumstances,<br>
@@ -51,7 +51,7 @@
     <m-form-item [mLabel]="properties">
       <ng-template #properties>
         <div>{{'web.integration.fhir.code-system.lookup.properties' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" nz-popover [nzPopoverContent]="propertiesContent"></m-icon>
+        <m-icon mCode="info-circle" m-popover [mContent]="propertiesContent"></m-icon>
         <ng-template #propertiesContent>
           A property that the client wishes to be returned in the output. If no properties are specified, the server chooses what to return.<br>
           The following properties are defined for all code systems: url, name, version (code system info) and code information:<br>

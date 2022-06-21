@@ -12,7 +12,7 @@
     <m-form-item [mLabel]="label">
       <ng-template #label>
         URL:&nbsp;
-        <m-icon mCode="info-circle" [nz-popover]="source + ' resource JSON url'" [nzPopoverContent]="info"></m-icon>
+        <m-icon mCode="info-circle" m-popover [mTitle]="source + ' resource JSON url'" [mContent]="info"></m-icon>
         <ng-template #info>
           <div *ngIf="source === 'CodeSystem'">
             Example: <a href="https://www.hl7.org/fhir/codesystem-days-of-week.json">codesystem-days-of-week</a>
