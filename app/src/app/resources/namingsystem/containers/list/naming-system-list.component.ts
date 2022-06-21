@@ -3,7 +3,7 @@ import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 import {NamingSystemSearchParams} from 'terminology-lib/resources/namingsystem/model/naming-system-search-params';
 import {NamingSystem} from 'terminology-lib/resources/namingsystem/model/naming-system';
-import {NamingSystemLibService} from 'terminology-lib/resources/namingsystem/services/naming-system-lib.service';
+import {NamingSystemService} from '../../services/naming-system-service';
 
 @Component({
   selector: 'twa-naming-system-list',
@@ -18,7 +18,7 @@ export class NamingSystemListComponent implements OnInit {
   public searchUpdate = new Subject<string>();
 
   public constructor(
-    private namingSystemLibService: NamingSystemLibService,
+    private namingSystemService: NamingSystemService,
   ) {}
 
   public ngOnInit(): void {
@@ -33,10 +33,9 @@ export class NamingSystemListComponent implements OnInit {
 
   private search(): Observable<SearchResult<NamingSystem>> {
     const q = copyDeep(this.query);
-    q.name = this.searchInput;
-    q.codeSystem = this.searchInput;
+    q.textContains = this.searchInput;
     this.loading = true;
-    return this.namingSystemLibService.search(q).pipe(finalize(() => this.loading = false));
+    return this.namingSystemService.search(q).pipe(finalize(() => this.loading = false));
   }
 
   public loadData(): void {
