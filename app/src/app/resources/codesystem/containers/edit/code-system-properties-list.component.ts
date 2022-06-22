@@ -1,55 +1,38 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {EntityProperty} from 'terminology-lib/resources';
-import {copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
-import {NgForm} from '@angular/forms';
+import {CodeSystemService} from '../../services/code-system.service';
+import {ActivatedRoute} from '@angular/router';
+import {EntityPropertySearchParams} from 'terminology-lib/resources/codesystem/model/entity-property-search-params';
+import {copyDeep} from '@kodality-web/core-util';
 
 
 @Component({
   selector: 'twa-code-system-properties-list',
   templateUrl: './code-system-properties-list.component.html',
 })
-export class CodeSystemPropertiesListComponent {
+export class CodeSystemPropertiesListComponent implements OnInit {
   @Input() public properties: EntityProperty[] = [];
-  @Output() public propertiesChange = new EventEmitter<EntityProperty[]>();
+  public codeSystemId?: string | null;
+  public query = new EntityPropertySearchParams();
   public loading = false;
 
-  @ViewChild("propertyForm") public propertyForm?: NgForm;
+  public constructor(
+    private codeSystemService: CodeSystemService,
+    private route: ActivatedRoute,
+  ) {}
 
-
-  public propertyModalData: {
-    visible?: boolean;
-    editIndex?: number;
-    property?: EntityProperty
-  } = {};
-
-  public saveProperty(): void {
-    if (!validateForm(this.propertyForm)) {
-      return;
-    }
-    if (isDefined(this.propertyModalData.editIndex)) {
-      this.deleteProperty(this.propertyModalData.editIndex);
-    }
-    const property = this.propertyModalData.property;
-    this.properties = [...this.properties, property!];
-    this.propertiesChange.emit(this.properties);
-    this.propertyModalData.visible = false;
+  public ngOnInit(): void {
+    this.codeSystemId = this.route.snapshot.paramMap.get('id');
   }
 
-  public deleteProperty(index: number): void {
-    this.properties!.splice(index, 1);
-    this.properties = [...this.properties];
-    this.propertiesChange.emit(this.properties);
+  public deleteProperty(propertyId: number): void {
+    this.codeSystemService.deleteEntityProperty(this.codeSystemId!, propertyId).subscribe(() => this.loadData());
   }
 
-  public openPropertyModal(index?: number): void {
-    this.propertyModalData = {
-      visible: true,
-      editIndex: index,
-      property: isDefined(index) ? copyDeep(this.properties![index]) : new EntityProperty()
-    };
-  }
-
-  public get isLoading(): boolean {
-    return Object.values(this.loading).some(Boolean);
+  public loadData(): void {
+    const q = copyDeep(this.query);
+    q.codeSystem = this.codeSystemId!;
+    this.loading = true;
+    this.codeSystemService.searchProperties(this.codeSystemId!, q).subscribe(ep => this.properties = ep.data).add(() => this.loading = false);
   }
 }

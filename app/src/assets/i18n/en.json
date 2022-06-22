@@ -33,6 +33,13 @@
         "add-header": "Add property"
       }
     },
+    "supplement": {
+      "form": {
+        "edit-header": "Edit supplement",
+        "add-header": "Add supplement",
+        "description": "Supplement description"
+      }
+    },
     "contacts": {
       "list": {
         "header": "Contacts",
@@ -88,11 +95,9 @@
         },
         "properties": {
           "add-property": "Add property",
+          "add-supplement": "Add supplement",
           "delete-property": "Delete property",
-          "modal": {
-            "add-property": "Add property",
-            "edit-property": "Edit property"
-          }
+          "delete-supplement": "Delete supplement"
         }
       }
     },

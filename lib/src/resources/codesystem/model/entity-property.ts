@@ -5,10 +5,14 @@ export class EntityProperty {
   public description?: string;
   public status?: string;
   public created?: Date;
+
+  public supplementId?: number;
 }
 
 export class EntityPropertyValue {
   public id?: number;
   public value?: string;
   public entityPropertyId?: number;
+
+  public supplementId?: number;
 }
