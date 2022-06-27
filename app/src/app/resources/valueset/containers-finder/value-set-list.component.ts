@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchResult} from '@kodality-web/core-util';
-import {ValueSet} from 'lib/src/resources';
+import {ValueSet} from 'terminology-lib/resources';
 import {Router} from '@angular/router';
 import {ValueSetService} from '../services/value-set.service';
 

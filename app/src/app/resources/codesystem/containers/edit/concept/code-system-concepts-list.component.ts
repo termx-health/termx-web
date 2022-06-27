@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {CodeSystemConcept, ConceptSearchParams} from 'terminology-lib/resources';
 import {debounceTime, distinctUntilChanged, finalize, Observable, of, Subject, switchMap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
-import {CodeSystemService} from '../../services/code-system.service';
+import {CodeSystemService} from '../../../services/code-system.service';
 
 @Component({
   selector: 'twa-code-system-concepts-list',

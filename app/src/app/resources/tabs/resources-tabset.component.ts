@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {CodeSystemService} from '../codesystem/services/code-system.service';
 import {ValueSetService} from '../valueset/services/value-set.service';
 import {MapSetService} from '../mapset/services/map-set-service';
-import {NamingSystemLibService} from 'terminology-lib/resources/namingsystem/services/naming-system-lib.service';
+import {NamingSystemLibService} from 'terminology-lib/resources';
+
 
 @Component({
   selector: 'twa-tabset',

@@ -1,0 +1,12 @@
+<m-form-item mName="propertyName" mLabel="entities.entity-property.name" required>
+  <m-input name="propertyName" [(ngModel)]="property.name" required></m-input>
+</m-form-item>
+<m-form-item mName="propertyType" mLabel="entities.entity-property.type" required>
+  <twl-value-set-concept-select name="propertyType" [(ngModel)]="property.type" valueSet="concept-property-type" required></twl-value-set-concept-select>
+</m-form-item>
+<m-form-item mName="propertyStatus" mLabel="entities.entity-property.status" required>
+  <twl-value-set-concept-select name="propertyStatus" [(ngModel)]="property.status" valueSet="publication-status" required></twl-value-set-concept-select>
+</m-form-item>
+<m-form-item mName="propertyDescription" mLabel="entities.entity-property.description">
+  <m-textarea name="propertyDescription" [(ngModel)]="property.description"></m-textarea>
+</m-form-item>

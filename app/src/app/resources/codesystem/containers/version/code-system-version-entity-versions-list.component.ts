@@ -1,10 +1,10 @@
-import {CodeSystemEntityVersion} from 'terminology-lib/resources';
+import {CodeSystemEntityVersion, CodeSystemEntityVersionQueryParams} from 'terminology-lib/resources';
 import {debounceTime, distinctUntilChanged, finalize, Observable, of, Subject, switchMap} from 'rxjs';
 import {BooleanInput, copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../services/code-system.service';
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemEntityVersionQueryParams} from 'terminology-lib/resources/codesystem/model/code-system-entity-version-search-params';
 import {NgForm} from '@angular/forms';
+
 
 @Component({
   selector: 'twa-code-system-version-entity-version-list',

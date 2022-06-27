@@ -9,4 +9,6 @@ export class Designation {
   public designationKind?: string;
   public description?: string;
   public status?: string;
+
+  public supplementId?: number;
 }

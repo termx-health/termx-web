@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ValueSet, ValueSetVersion} from 'lib/src/resources';
+import {ValueSet, ValueSetVersion} from 'terminology-lib/resources';
 import {ActivatedRoute} from '@angular/router';
 import {forkJoin, takeUntil} from 'rxjs';
 import {MuiDestroyService} from '@kodality-health/marina-ui';

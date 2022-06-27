@@ -1,17 +1,17 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {CodeSystemListComponent} from './containers/list/code-system-list.component';
-import {CodeSystemPropertiesListComponent} from './containers/edit/code-system-properties-list.component';
-import {CodeSystemVersionsListComponent} from './containers/edit/code-system-versions-list.component';
+import {CodeSystemPropertiesListComponent} from './containers/edit/property/code-system-properties-list.component';
+import {CodeSystemVersionsListComponent} from './containers/edit/version/code-system-versions-list.component';
 import {CodeSystemEditComponent} from './containers/edit/code-system-edit.component';
 import {CodeSystemVersionEditComponent} from './containers/version/code-system-version-edit.component';
 import {SharedModule} from '../../core/shared/shared.module';
 import {CodeSystemService} from './services/code-system.service';
 import {CodeSystemVersionViewComponent} from './containers/version/code-system-version-view.component';
 import {CodeSystemDuplicateModalComponent} from './containers/list/code-system-duplicate-modal.component';
-import {CodeSystemConceptsListComponent} from './containers/edit/code-system-concepts-list.component';
+import {CodeSystemConceptsListComponent} from './containers/edit/concept/code-system-concepts-list.component';
 import {CodeSystemConceptEditComponent} from './containers/concept/code-system-concept-edit.component';
-import {CodeSystemVersionDuplicateModalComponent} from './containers/edit/code-system-version-duplicate-modal.component';
+import {CodeSystemVersionDuplicateModalComponent} from './containers/edit/version/code-system-version-duplicate-modal.component';
 import {CodeSystemVersionEntityVersionsListComponent} from './containers/version/code-system-version-entity-versions-list.component';
 import {CodeSystemConceptVersionEditComponent} from './containers/concept/code-system-concept-version-edit.component';
 import {FinderCodeSystemListComponent} from './containers-finder/code-system-list.component';
@@ -24,7 +24,10 @@ import {ContactModule} from '../contact/contact.module';
 import {CodeSystemConceptVersionDesignationTableComponent} from './containers/concept/code-system-concept-version-designation-table.component';
 import {CodeSystemConceptVersionPropertyValueTableComponent} from './containers/concept/code-system-concept-version-property-value-table.component';
 import {CodeSystemConceptVersionViewComponent} from './containers/concept/code-system-concept-version-view.component';
-import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
+import {ResourcesLibModule} from 'terminology-lib/resources';
+import {CodeSystemPropertyEditComponent} from './containers/property/code-system-property-edit.component';
+import {CodeSystemPropertyFormComponent} from './containers/property/code-system-property-form.component';
+import {CodeSystemSupplementEditComponent} from './containers/supplement/code-system-supplement-edit.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -35,6 +38,10 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/concepts/:concept/versions/add', component: CodeSystemConceptVersionEditComponent},
   {path: ':id/concepts/:concept/versions/:conceptVersion/edit', component: CodeSystemConceptVersionEditComponent},
   {path: ':id/concepts/:concept/versions/:conceptVersion/view', component: CodeSystemConceptVersionViewComponent},
+  {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent},
+  {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent},
+  {path: ':id/supplements/add', component: CodeSystemSupplementEditComponent},
+  {path: ':id/supplements/:supplementId/edit', component: CodeSystemSupplementEditComponent},
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:version/edit', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:version/view', component: CodeSystemVersionViewComponent},
@@ -82,6 +89,9 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     FinderCodeSystemVersionViewComponent,
     FinderCodeSystemConceptViewComponent,
     FinderCodeSystemConceptVersionViewComponent,
+    CodeSystemPropertyFormComponent,
+    CodeSystemPropertyEditComponent,
+    CodeSystemSupplementEditComponent,
   ],
   exports: [
     CodeSystemListComponent

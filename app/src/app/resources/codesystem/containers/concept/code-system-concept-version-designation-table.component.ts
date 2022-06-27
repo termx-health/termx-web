@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {CodeSystemLibService, Designation, EntityProperty} from 'terminology-lib/resources';
+import {CodeSystemLibService, Designation, EntityProperty, EntityPropertySearchParams} from 'terminology-lib/resources';
 import {BooleanInput, collect, copyDeep, group, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
-import {EntityPropertySearchParams} from 'terminology-lib/resources/codesystem/model/entity-property-search-params';
 
 @Component({
   selector: 'twa-code-system-concept-version-designation-table',

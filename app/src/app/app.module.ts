@@ -15,9 +15,9 @@ import et from '@angular/common/locales/et';
 import {ResourcesModule} from './resources/resources.module';
 import {MarinaUtilModule} from '@kodality-health/marina-util';
 import {IntegrationModule} from './integration/integration.module';
-import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
-import {FhirLibModule} from 'terminology-lib/fhir/fhir-lib.module';
-import {JobLibModule} from 'terminology-lib/job/job-lib.module';
+import {ResourcesLibModule} from 'terminology-lib/resources';
+import {FhirLibModule} from 'terminology-lib/fhir';
+import {JobLibModule} from 'terminology-lib/job';
 
 
 registerLocaleData(et);
