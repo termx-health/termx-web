@@ -35,8 +35,10 @@
     },
     "supplement": {
       "form": {
-        "edit-header": "Edit supplement",
-        "add-header": "Add supplement",
+        "property-value": {
+          "edit-header": "Edit property supplement",
+          "add-header": "Add property supplement"
+        },
         "description": "Supplement description"
       }
     },

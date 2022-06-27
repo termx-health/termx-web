@@ -1,7 +1,7 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit'? 'web.supplement.form.edit-header' : 'web.supplement.form.add-header'">
+      <m-card [mTitle]="mode === 'edit'? 'web.supplement.form.property-value.edit-header' : 'web.supplement.form.property-value.add-header'">
         <form #form="ngForm" *ngIf="supplement">
           <twa-code-system-property-edit *ngIf="supplement.targetType === 'EntityProperty'" [(property)]="supplement.target"></twa-code-system-property-edit>
           <m-form-item mName="supplementDescription" mLabel="web.supplement.form.description">
