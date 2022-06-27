@@ -1,11 +1,10 @@
 import {NgForm} from '@angular/forms';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemSupplement} from 'lib/src/resources/codesystem/model/code-system-supplement';
+import {CodeSystemSupplement, EntityProperty} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {validateForm} from '@kodality-web/core-util';
 import {Location} from '@angular/common';
-import {EntityProperty} from 'lib/src/resources';
 
 
 @Component({

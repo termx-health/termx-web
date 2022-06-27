@@ -24,7 +24,7 @@ import {ContactModule} from '../contact/contact.module';
 import {CodeSystemConceptVersionDesignationTableComponent} from './containers/concept/code-system-concept-version-designation-table.component';
 import {CodeSystemConceptVersionPropertyValueTableComponent} from './containers/concept/code-system-concept-version-property-value-table.component';
 import {CodeSystemConceptVersionViewComponent} from './containers/concept/code-system-concept-version-view.component';
-import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
+import {ResourcesLibModule} from 'terminology-lib/resources';
 import {CodeSystemPropertyEditComponent} from './containers/property/code-system-property-edit.component';
 import {CodeSystemPropertyFormComponent} from './containers/property/code-system-property-form.component';
 import {CodeSystemSupplementEditComponent} from './containers/supplement/code-system-supplement-edit.component';

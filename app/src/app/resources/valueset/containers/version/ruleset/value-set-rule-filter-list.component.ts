@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {CodeSystemLibService, EntityProperty, ValueSetRuleFilter} from 'terminology-lib/resources';
+import {CodeSystemLibService, EntityProperty, EntityPropertySearchParams, ValueSetRuleFilter} from 'terminology-lib/resources';
 import {BooleanInput} from '@kodality-web/core-util';
-import {EntityPropertySearchParams} from 'terminology-lib/resources/codesystem/model/entity-property-search-params';
+
 
 @Component({
   selector: 'twa-value-set-rule-filter-list',

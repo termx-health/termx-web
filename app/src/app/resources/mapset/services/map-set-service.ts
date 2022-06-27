@@ -1,7 +1,7 @@
-import {MapSetLibService} from 'terminology-lib/resources/mapset/services/map-set-lib.service';
+import {MapSet, MapSetLibService, MapSetVersion} from 'terminology-lib/resources';
 import {Injectable} from '@angular/core';
-import {MapSet, MapSetVersion} from 'terminology-lib/resources';
 import {Observable} from 'rxjs';
+
 
 @Injectable()
 export class MapSetService extends MapSetLibService {

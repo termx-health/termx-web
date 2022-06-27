@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {EntityProperty} from 'lib/src/resources';
+import {EntityProperty, EntityPropertySearchParams} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../../services/code-system.service';
-import {EntityPropertySearchParams} from 'lib/src/resources/codesystem/model/entity-property-search-params';
 import {SearchResult} from '@kodality-web/core-util';
 
 

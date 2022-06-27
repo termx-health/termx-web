@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {EntityProperty} from 'lib/src/resources';
+import {EntityProperty} from 'terminology-lib/resources';
 
 @Component({
   selector: 'twa-code-system-property-form',

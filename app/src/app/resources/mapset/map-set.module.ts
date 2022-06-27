@@ -9,7 +9,7 @@ import {MapSetVersionsListComponent} from './containers/edit/map-set-versions-li
 import {MapSetVersionEditComponent} from './containers/version/map-set-version-edit.component';
 import {MapSetVersionViewComponent} from './containers/version/map-set-version-view.component';
 import {MapSetAssociationListComponent} from './containers/edit/map-set-association-list.component';
-import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
+import {ResourcesLibModule} from 'terminology-lib/resources';
 
 
 export const MAP_SET_ROUTES: Routes = [
