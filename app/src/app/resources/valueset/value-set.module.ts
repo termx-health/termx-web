@@ -13,7 +13,7 @@ import {ValueSetRuleSetRuleComponent} from './containers/version/ruleset/value-s
 import {ValueSetRuleFilterListComponent} from './containers/version/ruleset/value-set-rule-filter-list.component';
 import {ValueSetVersionConceptModalComponent} from './containers/version/concepts/value-set-version-concept-modal.component';
 import {ContactModule} from '../contact/contact.module';
-import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
+import {ResourcesLibModule} from 'terminology-lib/resources';
 import {FinderValueSetListComponent} from './containers-finder/value-set-list.component';
 import {FinderModule} from '../../core/finder/finder.module';
 import {FinderValueSetViewComponent} from './containers-finder/value-set-view.component';

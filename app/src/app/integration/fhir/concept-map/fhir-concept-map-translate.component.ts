@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
-import {FhirConceptMapLibService, FhirConceptMapTranslateParams} from 'lib/src/fhir';
+import {FhirConceptMapLibService, FhirConceptMapTranslateParams} from 'terminology-lib/fhir';
 import {ClipboardService} from '@kodality-web/core-util';
+
 
 @Component({
   templateUrl: './fhir-concept-map-translate.component.html',

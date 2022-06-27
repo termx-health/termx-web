@@ -1,7 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {NamingSystem} from 'terminology-lib/resources/namingsystem/model/naming-system';
+import {NamingSystem} from 'terminology-lib/resources';
 import {NamingSystemService} from '../../services/naming-system-service';
 import {ActivatedRoute} from '@angular/router';
+
 
 @Component({
   templateUrl: './naming-system-view.component.html',

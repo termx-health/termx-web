@@ -1,0 +1,51 @@
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
+    <div class="m-card-title">{{'entities.code-system.properties' | translate}}</div>
+    <div class="tw-button-group">
+      <twa-add-button [routerLink]="['../supplements/add']" [queryParams]="{targetType: 'EntityProperty'}">
+        {{'web.code-system.form.properties.add-supplement' | translate}}
+      </twa-add-button>
+      <twa-add-button [routerLink]="['../entity-properties/add']">
+        {{'web.code-system.form.properties.add-property' | translate}}
+      </twa-add-button>
+    </div>
+
+  </div>
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+    <tr *mTableHead>
+      <th>{{'entities.entity-property.name' | translate}}</th>
+      <th>{{'entities.entity-property.type' | translate}}</th>
+      <th>{{'entities.entity-property.description' | translate}}</th>
+      <th>{{'entities.entity-property.status' | translate}}</th>
+      <th></th>
+      <th class="tw-table-actions"></th>
+    </tr>
+
+    <tr *mTableRow="let property">
+      <td>
+        <a [routerLink]="property.supplementId? ['../supplements/', property.supplementId, 'edit'] : ['../entity-properties/', property.id, 'edit']">{{property.name}}</a>
+      </td>
+      <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
+      <td>{{property.description | abbreviate: 40}}</td>
+      <td class="tw-table-min-width">
+        <twa-status-tag [status]="property.status"></twa-status-tag>
+      </td>
+      <td>
+        <m-icon *ngIf="property.supplementId" [mCode]="'block'"></m-icon> <!--todo better icon for supplement-->
+      </td>
+      <td class="tw-table-actions">
+        <m-dropdown>
+          <a *m-dropdown-item (click)="deleteProperty(property.id)">
+            {{'web.code-system.form.properties.delete-property' | translate}}
+          </a>
+        </m-dropdown>
+      </td>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="6">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>

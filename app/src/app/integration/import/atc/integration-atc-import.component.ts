@@ -1,10 +1,10 @@
 import {Component} from '@angular/core';
-import {IntegrationImportConfiguration} from 'lib/src/integration';
-import {JobLibService, JobLogResponse} from 'lib/src/job';
+import {IntegrationAtcLibService, IntegrationImportConfiguration} from 'terminology-lib/integration';
+import {JobLibService, JobLogResponse} from 'terminology-lib/job';
 import {IntegrationImportComponent} from '../integration-import.component';
 import {Observable} from 'rxjs';
-import {IntegrationAtcLibService} from 'terminology-lib/integration/atc/service/integration-atc-lib.service';
 import {ActivatedRoute} from '@angular/router';
+
 
 @Component({
   templateUrl: '../integration-import.component.html',

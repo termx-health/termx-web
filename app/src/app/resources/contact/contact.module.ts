@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {ContactListComponent} from './containers/contact-list.component';
 import {SharedModule} from '../../core/shared/shared.module';
-import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
+import {ResourcesLibModule} from 'terminology-lib/resources';
 
 
 @NgModule({

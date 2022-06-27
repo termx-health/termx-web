@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {CodeSystemService} from '../../services/code-system.service';
+import {CodeSystemService} from '../../../services/code-system.service';
 import {CodeSystemVersion} from 'terminology-lib/resources';
 import {FhirCodeSystemLibService} from 'terminology-lib/fhir';
 import {saveAs} from 'file-saver';

@@ -4,3 +4,4 @@ export * from './designation';
 export * from './mapset';
 export * from './resources-lib.module';
 export * from './valueset';
+export * from './namingsystem';
