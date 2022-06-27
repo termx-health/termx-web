@@ -29,18 +29,16 @@ export class CodeSystemSupplementFormComponent implements OnInit {
     const supplementId = this.route.snapshot.paramMap.get('supplementId');
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.mode = supplementId ? 'edit' : 'add';
-    if (this.mode === 'add') {
-      this.supplement = new CodeSystemSupplement();
-      this.route.queryParamMap.subscribe(queryParam => {
-        this.supplement!.targetType = queryParam.get('targetType')!;
-        this.setTarget();
-      });
-    } else {
+    if (this.mode === 'edit') {
       this.loadSupplement(Number(supplementId));
+    } else {
+      this.supplement = new CodeSystemSupplement();
+      this.supplement!.targetType = this.route.snapshot.queryParamMap.get('targetType') || undefined;
+      this.setTarget();
     }
   }
 
-  public loadSupplement(supplementId: number): void {
+  private loadSupplement(supplementId: number): void {
     this.loading = true;
     this.codeSystemService.loadSupplement(this.codeSystemId!, supplementId).subscribe(s => this.supplement = s).add(() => this.loading = false);
   }
@@ -53,7 +51,7 @@ export class CodeSystemSupplementFormComponent implements OnInit {
     this.codeSystemService.saveSupplement(this.codeSystemId!, this.supplement!).subscribe(() => this.location.back()).add(() => this.loading = false);
   }
 
-  public setTarget(): void {
+  private setTarget(): void {
     if (this.supplement?.targetType === 'EntityProperty') {
       this.supplement.target = new EntityProperty();
     }

@@ -25,8 +25,8 @@ import {CodeSystemConceptVersionDesignationTableComponent} from './containers/co
 import {CodeSystemConceptVersionPropertyValueTableComponent} from './containers/concept/code-system-concept-version-property-value-table.component';
 import {CodeSystemConceptVersionViewComponent} from './containers/concept/code-system-concept-version-view.component';
 import {ResourcesLibModule} from 'terminology-lib/resources/resources-lib.module';
-import {CodeSystemPropertyFormComponent} from './containers/edit/code-system-property-form.component';
 import {CodeSystemPropertyEditComponent} from './containers/edit/code-system-property-edit.component';
+import {CodeSystemPropertyFormComponent} from './containers/edit/code-system-property-form.component';
 import {CodeSystemSupplementFormComponent} from './containers/edit/code-system-supplement-form.component';
 
 
@@ -38,10 +38,10 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/concepts/:concept/versions/add', component: CodeSystemConceptVersionEditComponent},
   {path: ':id/concepts/:concept/versions/:conceptVersion/edit', component: CodeSystemConceptVersionEditComponent},
   {path: ':id/concepts/:concept/versions/:conceptVersion/view', component: CodeSystemConceptVersionViewComponent},
-  {path: ':id/entity-properties/add', component: CodeSystemPropertyFormComponent},
-  {path: ':id/entity-properties/:propertyId', component: CodeSystemPropertyFormComponent},
+  {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent},
+  {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent},
   {path: ':id/supplements/add', component: CodeSystemSupplementFormComponent},
-  {path: ':id/supplements/:supplementId', component: CodeSystemSupplementFormComponent},
+  {path: ':id/supplements/:supplementId/edit', component: CodeSystemSupplementFormComponent},
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:version/edit', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:version/view', component: CodeSystemVersionViewComponent},

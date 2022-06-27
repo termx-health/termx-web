@@ -35,7 +35,7 @@
     },
     "supplement": {
       "form": {
-        "property-value": {
+        "property": {
           "edit-header": "Edit property supplement",
           "add-header": "Add property supplement"
         },

@@ -22,7 +22,7 @@
     </tr>
 
     <tr *mTableRow="let property">
-      <td><a [routerLink]="property.supplementId? ['../supplements/', property.supplementId] : ['../entity-properties/', property.id]">{{property.name}}</a>
+      <td><a [routerLink]="property.supplementId? ['../supplements/', property.supplementId, 'edit'] : ['../entity-properties/', property.id, 'edit']">{{property.name}}</a>
       </td>
       <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
       <td>{{property.description | abbreviate: 40}}</td>
