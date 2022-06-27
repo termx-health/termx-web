@@ -5,7 +5,36 @@
       "et": "Ressursid"
     },
     "icon": "unordered-list",
-    "link": "resources?tab=code-systems"
+    "link": "resources?tab=code-systems",
+    "items": [
+      {
+        "label": {
+          "en": "Code systems",
+          "et": "Koodisüsteemid"
+        },
+        "link": "resources?tab=code-systems"
+      },
+      {
+        "label": {
+          "en": "Value sets",
+          "et": "Väärtuste kogumid"
+        },
+        "link": "resources?tab=value-sets"
+      },
+      {
+        "label": {
+          "en": "Map sets",
+          "et": "Kaardistus kogumid"
+        },
+        "link": "resources?tab=map-sets"
+      },
+      {
+        "label": {
+          "en": "Naming systems"
+        },
+        "link": "resources?tab=naming-systems"
+      }
+    ]
   },
   {
     "label": {
