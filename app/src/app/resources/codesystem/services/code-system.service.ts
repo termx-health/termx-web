@@ -1,6 +1,14 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, CodeSystemVersion} from 'terminology-lib/resources';
+import {
+  CodeSystem,
+  CodeSystemConcept,
+  CodeSystemEntityVersion,
+  CodeSystemLibService,
+  CodeSystemSupplement,
+  CodeSystemVersion,
+  EntityProperty
+} from 'terminology-lib/resources';
 
 @Injectable()
 export class CodeSystemService extends CodeSystemLibService {
@@ -56,5 +64,23 @@ export class CodeSystemService extends CodeSystemLibService {
 
   public linkEntityVersion(codeSystemId: string, version: string, entityVersionId: number): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/entity-versions/${entityVersionId}/membership`, {});
+  }
+
+  public saveEntityProperty(codeSystemId: string, property: EntityProperty): Observable<EntityProperty> {
+    if (property.id) {
+      return this.http.put<EntityProperty>(`${this.baseUrl}/${codeSystemId}/entity-properties/${property.id}`, property);
+    }
+    return this.http.post<EntityProperty>(`${this.baseUrl}/${codeSystemId}/entity-properties/`, property);
+  }
+
+  public deleteEntityProperty(codeSystemId: string, propertyId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/entity-properties/${propertyId}`);
+  }
+
+  public saveSupplement(codeSystemId: string, supplement: CodeSystemSupplement): Observable<CodeSystemSupplement> {
+    if (supplement.id) {
+      return this.http.put<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/supplements/${supplement.id}`, supplement);
+    }
+    return this.http.post<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/supplements/`, supplement);
   }
 }

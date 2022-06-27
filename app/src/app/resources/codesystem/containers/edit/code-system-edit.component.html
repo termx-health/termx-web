@@ -52,7 +52,7 @@
         </form>
 
         <twa-code-system-versions-list *ngIf="mode === 'edit'" [codeSystemId]="codeSystemId"></twa-code-system-versions-list>
-        <twa-code-system-properties-list *ngIf="(mode === 'edit') && codeSystem" [(properties)]="codeSystem.properties"></twa-code-system-properties-list>
+        <twa-code-system-properties-list *ngIf="(mode === 'edit') && codeSystem" [codeSystemId]="codeSystemId"></twa-code-system-properties-list>
         <twa-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></twa-contact-list>
 
         <ng-container *m-card-footer>

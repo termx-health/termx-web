@@ -2,14 +2,14 @@ import {NgModule} from '@angular/core';
 import {SharedModule} from '../core/shared/shared.module';
 import {IntegrationDashboardComponent} from './dashboard/integration-dashboard.component';
 import {IntegrationFhirSyncComponent} from './fhir/integration-fhir-sync.component';
-import {FhirLibModule} from 'terminology-lib/fhir/fhir-lib.module';
+import {FhirLibModule} from 'terminology-lib/fhir';
 import {Routes} from '@angular/router';
-import {JobLibModule} from 'terminology-lib/job/job-lib.module';
+import {JobLibModule} from 'terminology-lib/job';
 import {FhirCodeSystemLookupComponent} from './fhir/code-system/fhir-code-system-lookup.component';
 import {FhirCodeSystemValidateCodeComponent} from './fhir/code-system/fhir-code-system-validate-code.component';
 import {FhirConceptMapTranslateComponent} from './fhir/concept-map/fhir-concept-map-translate.component';
 import {IntegrationAtcImportComponent} from './import/atc/integration-atc-import.component';
-import {IntegrationLibModule} from 'terminology-lib/integration/integration-lib.module';
+import {IntegrationLibModule} from 'terminology-lib/integration';
 import {IntegrationIcdImportComponent} from './import/icd-10/integration-icd-import.component';
 
 export const INTEGRATION_ROUTES: Routes = [

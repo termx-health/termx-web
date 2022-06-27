@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {JobLibService} from 'terminology-lib/job/services/job-lib-service';
+import {JobLibService, JobLog} from 'terminology-lib/job';
 import {ActivatedRoute} from '@angular/router';
 import {filter, Observable} from 'rxjs';
-import {JobLog} from 'terminology-lib/job';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from 'terminology-lib/fhir';
 
 
@@ -60,8 +59,8 @@ export class IntegrationFhirSyncComponent implements OnInit {
       this.jobService.getLog(jobId).pipe(filter(resp => resp.execution?.status !== 'running')).subscribe(jobResp => {
           clearInterval(i);
           this.loading = false;
-          if (!jobResp.errors && !jobResp.warnings){
-              this.urls = [];
+          if (!jobResp.errors && !jobResp.warnings) {
+            this.urls = [];
           }
           this.jobResponse = jobResp;
         }
