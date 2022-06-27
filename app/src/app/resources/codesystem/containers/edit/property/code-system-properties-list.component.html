@@ -11,7 +11,7 @@
     </div>
 
   </div>
-  <m-table [mData]="properties" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
       <th>{{'entities.entity-property.name' | translate}}</th>
       <th>{{'entities.entity-property.type' | translate}}</th>
@@ -22,7 +22,8 @@
     </tr>
 
     <tr *mTableRow="let property">
-      <td><a [routerLink]="property.supplementId? ['../supplements/', property.supplementId, 'edit'] : ['../entity-properties/', property.id, 'edit']">{{property.name}}</a>
+      <td>
+        <a [routerLink]="property.supplementId? ['../supplements/', property.supplementId, 'edit'] : ['../entity-properties/', property.id, 'edit']">{{property.name}}</a>
       </td>
       <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
       <td>{{property.description | abbreviate: 40}}</td>
@@ -46,5 +47,5 @@
         <m-no-data></m-no-data>
       </td>
     </tr>
-  </m-table>
+  </m-backend-table>
 </m-card>

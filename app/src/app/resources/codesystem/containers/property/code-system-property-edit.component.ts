@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {EntityProperty} from 'terminology-lib/resources';
+import {EntityProperty} from 'lib/src/resources';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';

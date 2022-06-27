@@ -1,7 +1,8 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {EntityProperty} from 'terminology-lib/resources';
-import {CodeSystemService} from '../../services/code-system.service';
-import {EntityPropertySearchParams} from 'terminology-lib/resources/codesystem/model/entity-property-search-params';
+import {EntityProperty} from 'lib/src/resources';
+import {CodeSystemService} from '../../../services/code-system.service';
+import {EntityPropertySearchParams} from 'lib/src/resources/codesystem/model/entity-property-search-params';
+import {SearchResult} from '@kodality-web/core-util';
 
 
 @Component({
@@ -9,8 +10,9 @@ import {EntityPropertySearchParams} from 'terminology-lib/resources/codesystem/m
   templateUrl: './code-system-properties-list.component.html',
 })
 export class CodeSystemPropertiesListComponent implements OnChanges {
-  @Input() public properties: EntityProperty[] = [];
   @Input() public codeSystemId?: string | null;
+  public searchResult = new SearchResult<EntityProperty>();
+
   public query = new EntityPropertySearchParams();
   public loading = false;
 
@@ -19,7 +21,7 @@ export class CodeSystemPropertiesListComponent implements OnChanges {
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["codeSystemId"]){
+    if (changes["codeSystemId"]) {
       this.loadData();
     }
   }
@@ -31,6 +33,6 @@ export class CodeSystemPropertiesListComponent implements OnChanges {
   public loadData(): void {
     this.query.codeSystem = this.codeSystemId!;
     this.loading = true;
-    this.codeSystemService.searchProperties(this.codeSystemId!, this.query).subscribe(ep => this.properties = ep.data).add(() => this.loading = false);
+    this.codeSystemService.searchProperties(this.codeSystemId!, this.query).subscribe(resp => this.searchResult = resp).add(() => this.loading = false);
   }
 }
