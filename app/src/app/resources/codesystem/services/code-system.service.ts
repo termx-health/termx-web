@@ -7,6 +7,7 @@ import {
   CodeSystemLibService,
   CodeSystemSupplement,
   CodeSystemVersion,
+  Designation,
   EntityProperty
 } from 'terminology-lib/resources';
 
@@ -77,10 +78,28 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/entity-properties/${propertyId}`);
   }
 
-  public saveSupplement(codeSystemId: string, supplement: CodeSystemSupplement): Observable<CodeSystemSupplement> {
+  public saveSupplement(codeSystemId: string, supplement: CodeSystemSupplement, conceptVersion?: number): Observable<CodeSystemSupplement> {
+    if (conceptVersion) {
+      if (supplement.id) {
+        return this.http.put<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/entities/versions/${conceptVersion}/supplements/${supplement.id}`,
+          supplement);
+      }
+      return this.http.post<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/entities/versions/${conceptVersion}/supplements`, supplement);
+    }
     if (supplement.id) {
       return this.http.put<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/supplements/${supplement.id}`, supplement);
     }
     return this.http.post<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/supplements/`, supplement);
+  }
+
+  public saveDesignation(codeSystemId: string, conceptVersionId: number, designation: Designation): Observable<Designation> {
+    if (designation.id) {
+      return this.http.put<Designation>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/designations/${designation.id}`, designation);
+    }
+    return this.http.post<Designation>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/designations`, designation);
+  }
+
+  public deleteDesignation(codeSystemId: string, designationId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/designations/${designationId}`);
   }
 }

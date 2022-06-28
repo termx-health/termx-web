@@ -1,8 +1,8 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit'? 'web.entity-property.form.edit-header' : 'web.entity-property.form.add-header'">
-        <twa-code-system-property-form #propertyForm [property]="property"></twa-code-system-property-form>
+      <m-card [mTitle]="mode === 'edit'? 'web.code-system-concept-version.designation.edit-designation' : 'web.code-system-concept-version.designation.add-designation'">
+        <twa-code-system-designation-form #designationForm [designation]="designation" [codeSystemId]="codeSystemId"></twa-code-system-designation-form>
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
             {{'core.btn.save' | translate}}

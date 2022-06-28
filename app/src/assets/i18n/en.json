@@ -39,6 +39,10 @@
           "edit-header": "Edit property supplement",
           "add-header": "Add property supplement"
         },
+        "designation": {
+          "edit-header": "Edit designation supplement",
+          "add-header": "Add designation supplement"
+        },
         "description": "Supplement description"
       }
     },
@@ -131,7 +135,8 @@
         "edit-header": "Edit version",
         "view-header": "View version"
       },
-      "designation-modal": {
+      "designation": {
+        "add-supplement": "Add supplement",
         "add-designation": "Add designation",
         "delete-designation": "Delete designation",
         "edit-designation": "Edit designation"

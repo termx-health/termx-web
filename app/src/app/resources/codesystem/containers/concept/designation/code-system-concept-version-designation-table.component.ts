@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {CodeSystemLibService, Designation, EntityProperty, EntityPropertySearchParams} from 'terminology-lib/resources';
-import {BooleanInput, collect, copyDeep, group, isDefined, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, collect, group} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'twa-code-system-concept-version-designation-table',
@@ -9,31 +10,26 @@ import {NgForm} from '@angular/forms';
 })
 export class CodeSystemConceptVersionDesignationTableComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: string | boolean = false;
-
   @Input() public codeSystemId?: string;
   @Input() public designations?: Designation[] = [];
   @Output() public designationsChange = new EventEmitter<Designation[]>();
 
   @ViewChild("designationForm") public designationForm?: NgForm;
 
+  public conceptVersionId?: string | null;
   public entityProperties?: {[id: number]: EntityProperty};
   public designationMap?: {[id: string]: Designation[]} = {};
   private loading: {[key: string]: boolean} = {};
 
-  public designationModalData: {
-    visible?: boolean;
-    editKey?: string;
-    editIndex?: number;
-    designation?: Designation
-  } = {};
-
   public constructor(
     public codeSystemService: CodeSystemLibService,
+    private route: ActivatedRoute,
   ) {}
 
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['codeSystemId']) {
+      this.conceptVersionId = this.route.snapshot.paramMap.get('conceptVersion');
       this.entityProperties = {};
       if (this.codeSystemId) {
         this.loadProperties(this.codeSystemId);
@@ -44,35 +40,10 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
     }
   }
 
-  public saveDesignation(): void {
-    if (!validateForm(this.designationForm)) {
-      return;
-    }
-    const designation = this.designationModalData.designation!;
-    designation.preferred = designation.preferred || false;
-    if (isDefined(this.designationModalData.editKey) && isDefined(this.designationModalData.editIndex)) {
-      this.deleteDesignation(this.designationModalData.editKey, this.designationModalData.editIndex);
-    }
-    this.designationMap![designation.designationTypeId!] = [...(this.designationMap![designation.designationTypeId!] || []), designation];
-    this.designationMap = {...this.designationMap};
-    this.fireOnChange();
-    this.designationModalData.visible = false;
-  }
-
   public deleteDesignation(key: string, index: number): void {
     this.designationMap![key].splice(index, 1);
     this.designationMap = {...this.designationMap};
     this.fireOnChange();
-  }
-
-  public openDesignationModal(options: {key?: string, index?: number} = {}): void {
-    const {key, index} = options;
-    this.designationModalData = {
-      visible: true,
-      editKey: key,
-      editIndex: index,
-      designation: (key && isDefined(index)) ? copyDeep(this.designationMap![key][index]) : new Designation()
-    };
   }
 
   private loadProperties(codeSystem: string): void {

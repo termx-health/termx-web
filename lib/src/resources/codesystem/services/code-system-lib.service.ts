@@ -13,6 +13,7 @@ import {EntityProperty} from '../model/entity-property';
 import {CodeSystemEntityVersionQueryParams} from '../model/code-system-entity-version-search-params';
 import {CodeSystemEntityVersion} from '../model/code-system-entity';
 import {CodeSystemSupplement} from '../model/code-system-supplement';
+import {Designation} from '../../designation';
 
 @Injectable()
 export class CodeSystemLibService {
@@ -40,6 +41,10 @@ export class CodeSystemLibService {
 
   public loadEntityProperty(codeSystemId: string, entityPropertyId: number): Observable<EntityProperty> {
     return this.http.get<EntityProperty>(`${this.baseUrl}/${codeSystemId}/entity-properties/${entityPropertyId}`);
+  }
+
+  public loadDesignation(codeSystemId: string, designationId: number): Observable<Designation> {
+    return this.http.get<Designation>(`${this.baseUrl}/${codeSystemId}/designations/${designationId}`);
   }
 
   public loadSupplement(codeSystemId: string, supplementId: number): Observable<CodeSystemSupplement> {

@@ -1,22 +1,20 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {EntityProperty} from 'terminology-lib/resources';
-import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {CodeSystemService} from '../../services/code-system.service';
-import {validateForm} from '@kodality-web/core-util';
+import {CodeSystemPropertyFormComponent} from './code-system-property-form.component';
 
 @Component({
   templateUrl: './code-system-property-edit.component.html',
 })
 export class CodeSystemPropertyEditComponent implements OnInit {
+  @ViewChild("propertyForm") public propertyForm!: CodeSystemPropertyFormComponent;
+
   public property?: EntityProperty;
   public codeSystemId?: string | null;
   public loading = false;
   public mode?: 'edit' | 'add';
-
-
-  @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -41,7 +39,7 @@ export class CodeSystemPropertyEditComponent implements OnInit {
   }
 
   public save(): void {
-    if (!validateForm(this.form)) {
+    if (!this.propertyForm.validate()) {
       return;
     }
     this.loading = true;
