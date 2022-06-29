@@ -26,7 +26,7 @@ import {ValueSetService} from '../services/value-set.service';
 export class FinderValueSetListComponent implements OnInit {
   public readonly DEFAULT_LIMIT = 50;
 
-  public searchResult = new SearchResult<ValueSet>();
+  public searchResult: SearchResult<ValueSet> = SearchResult.empty();
   public loading = false;
 
   public constructor(

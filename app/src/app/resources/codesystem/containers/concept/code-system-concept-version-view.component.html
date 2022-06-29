@@ -15,13 +15,13 @@
           <twa-code-system-concept-version-designation-table
               [(designations)]="conceptVersion.designations"
               [codeSystemId]="codeSystemId"
-              [conceptVersionId]="conceptVersionId"
+              [conceptVersionId]="conceptVersion.id"
               viewMode
           ></twa-code-system-concept-version-designation-table>
           <twa-code-system-concept-version-property-value-table
               [(propertyValues)]="conceptVersion.propertyValues"
               [codeSystemId]="codeSystemId"
-              [conceptVersionId]="conceptVersionId"
+              [conceptVersionId]="conceptVersion.id"
               viewMode
           ></twa-code-system-concept-version-property-value-table>
         </form>

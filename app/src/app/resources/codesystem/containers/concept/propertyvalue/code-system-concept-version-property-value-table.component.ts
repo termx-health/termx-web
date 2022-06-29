@@ -11,7 +11,7 @@ export class CodeSystemConceptVersionPropertyValueTableComponent implements OnCh
   @Input() @BooleanInput() public viewMode?: string | boolean = false;
   @Input() public codeSystemId?: string;
   @Input() public propertyValues?: EntityPropertyValue[];
-  @Input() public conceptVersionId?: string;
+  @Input() public conceptVersionId?: number;
   @Output() public propertyValuesChange = new EventEmitter<EntityPropertyValue[]>();
 
   @ViewChild("propertyForm") public propertyForm?: NgForm;

@@ -14,7 +14,7 @@ export class CodeSystemDesignationFormComponent implements OnChanges {
   @ViewChild("form") public form?: NgForm;
 
   public loading = false;
-  public entityProperties = new SearchResult<EntityProperty>();
+  public entityProperties: SearchResult<EntityProperty> = SearchResult.empty();
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -22,8 +22,8 @@ export class CodeSystemDesignationFormComponent implements OnChanges {
 
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['codeSystemId']) {
-      this.loadProperties(this.codeSystemId!);
+    if (changes['codeSystemId'] && this.codeSystemId) {
+      this.loadProperties(this.codeSystemId);
     }
   }
 

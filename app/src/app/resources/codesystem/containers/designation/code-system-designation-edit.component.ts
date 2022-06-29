@@ -45,7 +45,8 @@ export class CodeSystemDesignationEditComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.codeSystemService.saveDesignation(this.codeSystemId!, this.conceptVersionId!, this.designation!).subscribe(() => this.location.back())
+    this.codeSystemService.saveDesignation(this.codeSystemId!, this.conceptVersionId!, this.designation!)
+      .subscribe(() => this.location.back())
       .add(() => this.loading = false);
   }
 }

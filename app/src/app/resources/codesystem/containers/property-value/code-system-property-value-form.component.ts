@@ -14,7 +14,7 @@ export class CodeSystemPropertyValueFormComponent implements OnChanges{
   @ViewChild("form") public form?: NgForm;
 
   public loading = false;
-  public entityProperties = new SearchResult<EntityProperty>();
+  public entityProperties: SearchResult<EntityProperty> = SearchResult.empty();
 
 
   public constructor(
@@ -22,8 +22,8 @@ export class CodeSystemPropertyValueFormComponent implements OnChanges{
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['codeSystemId']) {
-      this.loadProperties(this.codeSystemId!);
+    if (changes['codeSystemId'] && this.codeSystemId) {
+      this.loadProperties(this.codeSystemId);
     }
   }
 

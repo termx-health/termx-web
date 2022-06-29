@@ -27,7 +27,7 @@ import {Router} from '@angular/router';
 export class FinderCodeSystemListComponent implements OnInit {
   public readonly DEFAULT_LIMIT = 50;
 
-  public searchResult = new SearchResult<CodeSystem>();
+  public searchResult: SearchResult<CodeSystem> = SearchResult.empty();
   public loading = false;
 
   public constructor(

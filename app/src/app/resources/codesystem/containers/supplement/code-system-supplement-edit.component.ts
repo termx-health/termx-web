@@ -53,12 +53,15 @@ export class CodeSystemSupplementEditComponent implements OnInit {
   }
 
   private setTarget(): void {
-    if (this.supplement?.targetType === 'EntityProperty') {
-      this.supplement.target = new EntityProperty();
-    } else if (this.supplement?.targetType === 'Designation') {
-      this.supplement.target = new Designation();
-    } else if (this.supplement?.targetType === 'EntityPropertyValue') {
-      this.supplement.target = new EntityPropertyValue();
+    switch (this.supplement?.targetType) {
+      case 'Designation':
+        this.supplement.target = new Designation();
+        break;
+      case 'EntityProperty':
+        this.supplement.target = new EntityProperty();
+        break;
+      case 'EntityPropertyValue':
+        this.supplement.target = new EntityPropertyValue();
     }
   }
 
@@ -70,4 +73,8 @@ export class CodeSystemSupplementEditComponent implements OnInit {
     };
     return headers[targetType];
   };
+
+  public hasInvalidTarget(): boolean {
+    return !['EntityProperty', 'Designation', 'EntityPropertyValue'].includes(this.supplement!.targetType!);
+  }
 }

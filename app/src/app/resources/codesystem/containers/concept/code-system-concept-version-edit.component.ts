@@ -11,7 +11,6 @@ import {CodeSystemService} from '../../services/code-system.service';
 })
 export class CodeSystemConceptVersionEditComponent implements OnInit {
   public codeSystemId?: string | null;
-  public versionId?: string | null;
   private conceptId?: string | null;
   public conceptVersion?: CodeSystemEntityVersion;
 
@@ -31,11 +30,11 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.conceptId = this.route.snapshot.paramMap.get('conceptId');
-    this.versionId = this.route.snapshot.paramMap.get('conceptVersionId');
-    this.mode = this.versionId ? 'edit' : 'add';
+    const conceptVersionId = this.route.snapshot.paramMap.get('conceptVersionId');
+    this.mode = conceptVersionId ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadConceptVersion(Number(this.versionId));
+      this.loadConceptVersion(Number(conceptVersionId));
     } else {
       this.conceptVersion = new CodeSystemEntityVersion();
       this.conceptVersion.status = 'draft';
@@ -56,9 +55,9 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
       .add(() => this.loading['save'] = false);
   }
 
-  private loadConceptVersion(ConceptVersionId: number): void {
+  private loadConceptVersion(conceptVersionId: number): void {
     this.loading['load'] = true;
-    this.codeSystemEntityVersionService.load(ConceptVersionId).subscribe(v => this.conceptVersion = v).add(() => this.loading['load'] = false);
+    this.codeSystemEntityVersionService.load(conceptVersionId).subscribe(v => this.conceptVersion = v).add(() => this.loading['load'] = false);
   }
 
   public get isLoading(): boolean {

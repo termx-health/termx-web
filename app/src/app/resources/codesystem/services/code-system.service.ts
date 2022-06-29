@@ -86,12 +86,9 @@ export class CodeSystemService extends CodeSystemLibService {
   }
 
   public saveSupplement(codeSystemId: string, supplement: CodeSystemSupplement, conceptVersionId?: number): Observable<CodeSystemSupplement> {
-    let url = `${this.baseUrl}/${codeSystemId}`;
-
+    let url = `${this.baseUrl}/${codeSystemId}/supplements`;
     if (conceptVersionId) {
-      url = url + `/entities/versions/${conceptVersionId}/supplements`;
-    } else {
-      url = url + `/supplements`;
+      url = `${this.baseUrl}/${codeSystemId}/entities/versions/${conceptVersionId}/supplements`;
     }
     if (supplement.id) {
       return this.http.put<CodeSystemSupplement>(`${url}/${supplement.id}`, supplement);

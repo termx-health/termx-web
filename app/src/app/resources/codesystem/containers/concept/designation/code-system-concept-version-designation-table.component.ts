@@ -11,7 +11,7 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
   @Input() @BooleanInput() public viewMode: string | boolean = false;
   @Input() public codeSystemId?: string;
   @Input() public designations?: Designation[] = [];
-  @Input() public conceptVersionId?: string;
+  @Input() public conceptVersionId?: number;
   @Output() public designationsChange = new EventEmitter<Designation[]>();
 
   @ViewChild("designationForm") public designationForm?: NgForm;
