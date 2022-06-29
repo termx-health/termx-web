@@ -11,7 +11,7 @@ import {MapSetService} from '../services/map-set-service';
   templateUrl: 'map-set-list.component.html'
 })
 export class MapSetListComponent implements OnInit {
-  public searchResult = new SearchResult<MapSet>();
+  public searchResult: SearchResult<MapSet> = SearchResult.empty();
   public query = new MapSetSearchParams();
   public loading: boolean = false;
   public searchInput: string = "";

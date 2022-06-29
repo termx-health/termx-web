@@ -4,22 +4,20 @@
       <m-card>
         <div *m-card-header class="m-items-middle">
           <div class="m-card-title">{{(mode === 'edit' ? 'web.code-system-concept-version.form.edit-header' : 'web.code-system-concept-version.form.add-header') | translate}}</div>
-          <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
+          <twa-status-tag *ngIf="conceptVersion?.status" [status]="conceptVersion.status"></twa-status-tag>
         </div>
-
-        <form #conceptVersionForm="ngForm" *ngIf="version">
+        <form #conceptVersionForm="ngForm" *ngIf="conceptVersion">
           <m-form-item mName="description" mLabel="entities.code-system-entity-version.description">
-            <m-textarea name="description" [(ngModel)]="version.description"></m-textarea>
+            <m-textarea name="description" [(ngModel)]="conceptVersion.description"></m-textarea>
           </m-form-item>
-
-          <twa-code-system-concept-version-designation-table
-              [(designations)]="version.designations"
-              [codeSystemId]="codeSystemId"
-          ></twa-code-system-concept-version-designation-table>
-          <twa-code-system-concept-version-property-value-table
-              [(propertyValues)]="version.propertyValues"
-              [codeSystemId]="codeSystemId"
-          ></twa-code-system-concept-version-property-value-table>
+          <div *ngIf="conceptVersion.id">
+            <twa-code-system-concept-version-designation-table [(designations)]="conceptVersion.designations"
+                [codeSystemId]="codeSystemId"
+                [conceptVersionId]="conceptVersion.id"></twa-code-system-concept-version-designation-table>
+            <twa-code-system-concept-version-property-value-table [(propertyValues)]="conceptVersion.propertyValues"
+                [codeSystemId]="codeSystemId"
+                [conceptVersionId]="conceptVersion.id"></twa-code-system-concept-version-property-value-table>
+          </div>
         </form>
 
         <ng-container *m-card-footer>

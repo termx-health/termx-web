@@ -1,0 +1,48 @@
+<form #form="ngForm" *ngIf="designation">
+  <m-form-item mName="designationType" mLabel="entities.designation.type" required>
+    <m-select
+        [loading]="loading"
+        name="designationType"
+        [(ngModel)]="designation.designationTypeId"
+        placeholder="marina.ui.inputs.search.placeholder"
+        icon="search"
+        required
+    >
+      <m-option *ngFor="let prop of entityProperties.data" [value]="prop.id" [label]="prop.name"></m-option>
+    </m-select>
+  </m-form-item>
+
+  <m-form-item mName="designationModalName" mLabel="entities.designation.name" required>
+    <m-input name="designationModalName" [(ngModel)]="designation.name" required></m-input>
+  </m-form-item>
+
+  <m-form-item mLabel="entities.designation.language">
+    <twl-value-set-concept-select name="designationModalLanguage" [(ngModel)]="designation.language" valueSet="languages"></twl-value-set-concept-select>
+  </m-form-item>
+
+  <m-form-item mLabel="entities.designation.designation-kind">
+    <m-select name="designationModalKind" [(ngModel)]="designation.designationKind">
+      <m-option [label]="'text'" value="text"></m-option>
+      <m-option [label]="'blob'" value="blob"></m-option>
+    </m-select>
+  </m-form-item>
+
+  <m-form-item mName="designationModalCaseSignificance" mLabel="entities.designation.case-significance" required>
+    <m-select name="designationModalCaseSignificance" [(ngModel)]="designation.caseSignificance" required>
+      <m-option label="web.case-sensitive-options.ci" value="ci"></m-option>
+      <m-option label="web.case-sensitive-options.cs" value="cs"></m-option>
+      <m-option label="web.case-sensitive-options.ics" value="ics"></m-option>
+    </m-select>
+  </m-form-item>
+
+  <m-form-item mLabel="entities.designation.description">
+    <m-textarea name="designationModalDescription" [(ngModel)]="designation.description"></m-textarea>
+  </m-form-item>
+
+  <m-form-item mName="designationModalStatus" mLabel="entities.designation.status" required>
+    <twl-value-set-concept-select name="designationModalStatus"
+        [(ngModel)]="designation.status"
+        valueSet="publication-status"
+        required></twl-value-set-concept-select>
+  </m-form-item>
+</form>

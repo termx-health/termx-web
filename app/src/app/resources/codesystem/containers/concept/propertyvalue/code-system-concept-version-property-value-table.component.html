@@ -1,0 +1,59 @@
+<m-spinner [mLoading]="loading">
+  <m-card class="m-card-inside">
+    <div *m-card-header class="m-items-between">
+      <div class="m-card-title">{{'entities.code-system-entity-version.property-values' | translate}}</div>
+      <div class="tw-button-group">
+        <twa-add-button
+            *ngIf="!viewMode"
+            [routerLink]="['/resources/code-systems/', codeSystemId, 'supplements', 'add']"
+            [queryParams]="{targetType: 'EntityPropertyValue', conceptVersionId: conceptVersionId}"
+        >
+          {{'web.code-system-concept-version.property-value.add-supplement' | translate}}
+        </twa-add-button>
+        <twa-add-button *ngIf="!viewMode" [routerLink]="['../entity-property-value/add']">
+          {{'web.code-system-concept-version.property-value.add-property-value' | translate}}
+        </twa-add-button>
+      </div>
+    </div>
+
+    <m-table [mData]="propertyValuesMap | keys" mEnablePagination mHideOnSinglePage>
+      <tr *mTableHead>
+        <th>{{'entities.entity-property.name' | translate}}</th>
+        <th>{{'entities.entity-property.value' | translate}}</th>
+        <th></th>
+        <th class="tw-table-actions" *ngIf="!viewMode"></th>
+      </tr>
+
+      <ng-container *mTableRow="let key">
+        <tr *ngFor="let propertyValue of propertyValuesMap[key]; let isFirst = first; let index = index;">
+          <td *ngIf="isFirst" [rowSpan]="propertyValuesMap[key].length">{{entityProperties?.[propertyValue.entityPropertyId]?.name}}</td>
+          <td>
+            <a *ngIf="!viewMode"
+                [routerLink]="propertyValue.supplementId? ['/resources/code-systems/', codeSystemId, 'supplements', propertyValue.supplementId, 'edit'] : ['../entity-property-value/', propertyValue.id, 'edit']"
+                [queryParams]="{conceptVersionId: conceptVersionId}"
+            >
+              {{propertyValue.value | abbreviate:40}}
+            </a>
+            <div *ngIf="viewMode">{{propertyValue.value | abbreviate:40}}</div>
+          </td>
+          <td class="tw-table-min-width">
+            <m-icon *ngIf="propertyValue.supplementId" [mCode]="'block'"></m-icon> <!--todo better icon for supplement-->
+          </td>
+          <td class="tw-table-actions" *ngIf="!viewMode">
+            <m-dropdown *ngIf="!viewMode">
+              <a *m-dropdown-item (click)="deletePropertyValue(key, index)">
+                {{'web.code-system-concept-version.property-value.delete-property-value' | translate}}
+              </a>
+            </m-dropdown>
+          </td>
+        </tr>
+      </ng-container>
+
+      <tr *mTableNoData>
+        <td colspan="4">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
+</m-spinner>

@@ -12,7 +12,7 @@ import {CodeSystemService} from '../../services/code-system.service';
 export class CodeSystemConceptVersionEditComponent implements OnInit {
   public codeSystemId?: string | null;
   private conceptId?: string | null;
-  public version?: CodeSystemEntityVersion;
+  public conceptVersion?: CodeSystemEntityVersion;
 
   private loading: {[key: string]: boolean} = {};
   public mode: 'add' | 'edit' = 'add';
@@ -29,35 +29,35 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    this.conceptId = this.route.snapshot.paramMap.get('concept');
-    const versionId = this.route.snapshot.paramMap.get('conceptVersion');
-    this.mode = versionId ? 'edit' : 'add';
+    this.conceptId = this.route.snapshot.paramMap.get('conceptId');
+    const conceptVersionId = this.route.snapshot.paramMap.get('conceptVersionId');
+    this.mode = conceptVersionId ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadVersion(Number(versionId));
+      this.loadConceptVersion(Number(conceptVersionId));
     } else {
-      this.version = new CodeSystemEntityVersion();
-      this.version.status = 'draft';
-      this.version.codeSystem = this.codeSystemId!;
+      this.conceptVersion = new CodeSystemEntityVersion();
+      this.conceptVersion.status = 'draft';
+      this.conceptVersion.codeSystem = this.codeSystemId!;
       this.loading['code'] = true;
-      this.codeSystemConceptLibService.load(Number(this.conceptId)).subscribe(c => this.version!.code = c.code).add(() => this.loading['code'] = false);
+      this.codeSystemConceptLibService.load(Number(this.conceptId)).subscribe(c => this.conceptVersion!.code = c.code).add(() => this.loading['code'] = false);
     }
   }
 
   public save(): void {
-    if (!validateForm(this.conceptVersionForm) || !this.version) {
+    if (!validateForm(this.conceptVersionForm) || !this.conceptVersion) {
       return;
     }
-    this.version.status = 'draft';
+    this.conceptVersion.status = 'draft';
     this.loading['save'] = true;
-    this.codeSystemService.saveEntityVersion(this.codeSystemId!, Number(this.conceptId), this.version)
+    this.codeSystemService.saveEntityVersion(this.codeSystemId!, Number(this.conceptId), this.conceptVersion)
       .subscribe(() => this.location.back())
       .add(() => this.loading['save'] = false);
   }
 
-  private loadVersion(versionId: number): void {
+  private loadConceptVersion(conceptVersionId: number): void {
     this.loading['load'] = true;
-    this.codeSystemEntityVersionService.load(versionId).subscribe(v => this.version = v).add(() => this.loading['load'] = false);
+    this.codeSystemEntityVersionService.load(conceptVersionId).subscribe(v => this.conceptVersion = v).add(() => this.loading['load'] = false);
   }
 
   public get isLoading(): boolean {

@@ -24,13 +24,13 @@ export class CodeSystemVersionViewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    const codeSystemVersion = this.route.snapshot.paramMap.get('version');
-    this.loadVersion(this.codeSystemId!, codeSystemVersion!);
+    const codeSystemVersionId = this.route.snapshot.paramMap.get('versionId');
+    this.loadVersion(this.codeSystemId!, codeSystemVersionId!);
   }
 
-  private loadVersion(id: string, version: string): void {
+  private loadVersion(id: string, versionId: string): void {
     this.loading = true;
-    this.codeSystemService.loadVersion(id, version).subscribe(v => this.version = v).add(() => this.loading = false);
+    this.codeSystemService.loadVersion(id, versionId).subscribe(v => this.version = v).add(() => this.loading = false);
   }
 
   public save(): void {
