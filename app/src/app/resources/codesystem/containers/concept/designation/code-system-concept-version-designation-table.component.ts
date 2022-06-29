@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewCh
 import {CodeSystemLibService, Designation, EntityProperty, EntityPropertySearchParams} from 'terminology-lib/resources';
 import {BooleanInput, collect, group} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'twa-code-system-concept-version-designation-table',
@@ -12,24 +11,22 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
   @Input() @BooleanInput() public viewMode: string | boolean = false;
   @Input() public codeSystemId?: string;
   @Input() public designations?: Designation[] = [];
+  @Input() public conceptVersionId?: string;
   @Output() public designationsChange = new EventEmitter<Designation[]>();
 
   @ViewChild("designationForm") public designationForm?: NgForm;
 
-  public conceptVersionId?: string | null;
   public entityProperties?: {[id: number]: EntityProperty};
   public designationMap?: {[id: string]: Designation[]} = {};
-  private loading: {[key: string]: boolean} = {};
+  public loading = false;
 
   public constructor(
     public codeSystemService: CodeSystemLibService,
-    private route: ActivatedRoute,
   ) {}
 
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['codeSystemId']) {
-      this.conceptVersionId = this.route.snapshot.paramMap.get('conceptVersion');
       this.entityProperties = {};
       if (this.codeSystemId) {
         this.loadProperties(this.codeSystemId);
@@ -49,9 +46,9 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
   private loadProperties(codeSystem: string): void {
     const q = new EntityPropertySearchParams();
     q.codeSystem = codeSystem;
-    q.limit = 1000;
-    this.loading['load'] = true;
-    this.codeSystemService.searchProperties(codeSystem, q).subscribe(ep => this.entityProperties = group(ep.data, p => p.id!)).add(() => this.loading['load'] = false);
+    q.limit = -1;
+    this.loading = true;
+    this.codeSystemService.searchProperties(codeSystem, q).subscribe(ep => this.entityProperties = group(ep.data, p => p.id!)).add(() => this.loading = false);
   }
 
   public get isLoading(): boolean {

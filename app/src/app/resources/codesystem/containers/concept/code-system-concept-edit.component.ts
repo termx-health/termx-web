@@ -28,7 +28,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    const conceptId = this.route.snapshot.paramMap.get('concept');
+    const conceptId = this.route.snapshot.paramMap.get('conceptId');
     this.mode = this.codeSystemId && conceptId ? 'edit' : 'add';
 
     if (this.mode === 'edit') {

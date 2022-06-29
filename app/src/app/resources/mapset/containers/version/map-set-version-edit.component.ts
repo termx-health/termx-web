@@ -28,7 +28,7 @@ export class MapSetVersionEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.mapSetId = this.route.snapshot.paramMap.get('id');
-    this.mapSetVersion = this.route.snapshot.paramMap.get('version');
+    this.mapSetVersion = this.route.snapshot.paramMap.get('versionId');
     this.mode = this.mapSetId && this.mapSetVersion ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
