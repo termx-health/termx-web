@@ -51,8 +51,8 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/supplements/add', component: CodeSystemSupplementEditComponent},
   {path: ':id/supplements/:supplementId/edit', component: CodeSystemSupplementEditComponent},
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent},
-  {path: ':id/versions/:version/edit', component: CodeSystemVersionEditComponent},
-  {path: ':id/versions/:version/view', component: CodeSystemVersionViewComponent},
+  {path: ':id/versions/:versionId/edit', component: CodeSystemVersionEditComponent},
+  {path: ':id/versions/:versionId/view', component: CodeSystemVersionViewComponent},
 ];
 
 export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
