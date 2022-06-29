@@ -10,13 +10,13 @@ import {SearchResult} from '@kodality-web/core-util';
 })
 export class CodeSystemPropertiesListComponent implements OnChanges {
   @Input() public codeSystemId?: string | null;
-  public searchResult: SearchResult<EntityProperty> = SearchResult.empty();
 
+  public searchResult: SearchResult<EntityProperty> = SearchResult.empty();
   public query = new EntityPropertySearchParams();
   public loading = false;
 
   public constructor(
-    private codeSystemService: CodeSystemService,
+    private codeSystemService: CodeSystemService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {

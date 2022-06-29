@@ -19,7 +19,7 @@ import {isNil} from '@kodality-web/core-util';
 
       <twa-finder-menu title="entities.code-system-entity-version.designations" [length]="conceptVersion?.designations?.length">
         <twa-finder-menu-item *ngFor="let d of conceptVersion?.designations">
-          <div style="display: flex; gap: 0.5rem">
+          <div class="m-items-middle">
             <m-icon mCode="star" [mOptions]="{nzTheme: d.preferred ? 'fill' : 'outline'}"></m-icon>
             <div>{{d.name}}</div>
           </div>

@@ -9,13 +9,14 @@ import {CodeSystemDesignationFormComponent} from './code-system-designation-form
   templateUrl: './code-system-designation-edit.component.html',
 })
 export class CodeSystemDesignationEditComponent implements OnInit {
-  @ViewChild("designationForm") public designationForm?: CodeSystemDesignationFormComponent;
-
-  public designation?: Designation;
   public codeSystemId?: string | null;
   public conceptVersionId?: number;
+  public designation?: Designation;
+
   public loading = false;
   public mode?: 'edit' | 'add';
+
+  @ViewChild("designationForm") public designationForm?: CodeSystemDesignationFormComponent;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -24,10 +25,11 @@ export class CodeSystemDesignationEditComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    const designationId = this.route.snapshot.paramMap.get('designation');
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.conceptVersionId = Number(this.route.snapshot.paramMap.get('conceptVersionId'));
+    const designationId = this.route.snapshot.paramMap.get('designation');
     this.mode = designationId ? 'edit' : 'add';
+
     if (this.mode === 'edit') {
       this.loadDesignation(Number(designationId));
     } else {

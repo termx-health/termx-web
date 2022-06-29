@@ -3,10 +3,10 @@
     <div class="m-card-title">{{'entities.code-system.versions' | translate}}</div>
 
     <m-dropdown>
-      <m-button *m-dropdown-container>
-        <span>{{'web.code-system.form.versions.list.add-version' | translate}}</span> &nbsp;
-        <m-icon mCode="down" mSize="10"></m-icon>
-      </m-button>
+      <twa-add-button *m-dropdown-container icon="down" placement="right">
+        {{'web.code-system.form.versions.list.add-version' | translate}}
+      </twa-add-button>
+
       <a *m-dropdown-item [routerLink]="['../versions/add']">
         {{'web.code-system.form.versions.list.add-new-version' | translate}}
       </a>

@@ -11,14 +11,16 @@ import {CodeSystemService} from '../../../services/code-system.service';
 export class CodeSystemConceptsListComponent implements OnInit {
   @Input() public codeSystemId?: string;
 
-  public searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
   public query = new ConceptSearchParams();
-  public loading = false;
-
   public searchInput: string = "";
   public searchUpdate = new Subject<string>();
+  public searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
 
-  public constructor(private codeSystemService: CodeSystemService) { }
+  public loading = false;
+
+  public constructor(
+    private codeSystemService: CodeSystemService
+  ) {}
 
   public ngOnInit(): void {
     this.loadData();

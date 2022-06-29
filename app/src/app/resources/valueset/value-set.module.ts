@@ -24,8 +24,8 @@ export const VALUE_SET_ROUTES: Routes = [
   {path: 'add', component: ValueSetEditComponent},
   {path: ':id/edit', component: ValueSetEditComponent},
   {path: ':id/versions/add', component: ValueSetVersionEditComponent},
-  {path: ':id/versions/:version/edit', component: ValueSetVersionEditComponent},
-  {path: ':id/versions/:version/view', component: ValueSetVersionViewComponent},
+  {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent},
+  {path: ':id/versions/:versionCode/view', component: ValueSetVersionViewComponent},
 ];
 
 export const VALUE_SET_FINDER_ROUTES: Routes = [{

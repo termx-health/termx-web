@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {MuiBreakpointService} from '@kodality-health/marina-ui';
 
 @Component({
@@ -6,6 +6,10 @@ import {MuiBreakpointService} from '@kodality-health/marina-ui';
   templateUrl: 'add-button.component.html'
 })
 export class AddButtonComponent {
+  @Input() public icon: string = 'plus';
+  @Input() public placement: 'left' | 'right' = 'left';
+  @Input() public size: number = 12;
+
   public isDesktop = true;
 
   public constructor(breakpointService: MuiBreakpointService) {

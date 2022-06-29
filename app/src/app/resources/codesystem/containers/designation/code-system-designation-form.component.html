@@ -40,9 +40,11 @@
   </m-form-item>
 
   <m-form-item mName="designationModalStatus" mLabel="entities.designation.status" required>
-    <twl-value-set-concept-select name="designationModalStatus"
+    <twl-value-set-concept-select
+        name="designationModalStatus"
         [(ngModel)]="designation.status"
         valueSet="publication-status"
-        required></twl-value-set-concept-select>
+        required
+    ></twl-value-set-concept-select>
   </m-form-item>
 </form>

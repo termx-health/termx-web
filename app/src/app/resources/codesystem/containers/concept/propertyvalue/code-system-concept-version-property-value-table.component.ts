@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {BooleanInput, collect, group} from '@kodality-web/core-util';
-import {CodeSystemLibService, EntityProperty, EntityPropertySearchParams, EntityPropertyValue} from 'lib/src/resources';
+import {CodeSystemLibService, EntityProperty, EntityPropertyValue} from 'lib/src/resources';
 import {NgForm} from '@angular/forms';
 
 @Component({
@@ -10,8 +10,8 @@ import {NgForm} from '@angular/forms';
 export class CodeSystemConceptVersionPropertyValueTableComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode?: string | boolean = false;
   @Input() public codeSystemId?: string;
-  @Input() public propertyValues?: EntityPropertyValue[];
   @Input() public conceptVersionId?: number;
+  @Input() public propertyValues?: EntityPropertyValue[];
   @Output() public propertyValuesChange = new EventEmitter<EntityPropertyValue[]>();
 
   @ViewChild("propertyForm") public propertyForm?: NgForm;
@@ -43,11 +43,10 @@ export class CodeSystemConceptVersionPropertyValueTableComponent implements OnCh
   }
 
   private loadProperties(codeSystem: string): void {
-    const q = new EntityPropertySearchParams();
-    q.codeSystem = codeSystem;
-    q.limit = -1;
     this.loading = true;
-    this.codeSystemService.searchProperties(codeSystem, q).subscribe(ep => this.entityProperties = group(ep.data, p => p.id!)).add(() => this.loading = false);
+    this.codeSystemService.searchProperties(codeSystem, {limit: -1})
+      .subscribe(ep => this.entityProperties = group(ep.data, p => p.id!))
+      .add(() => this.loading = false);
   }
 
   private fireOnChange(): void {

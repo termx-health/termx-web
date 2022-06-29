@@ -1,16 +1,23 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-items-between">
-    <div class="m-card-title">{{'entities.code-system.properties' | translate}}</div>
-    <div class="tw-button-group">
-      <twa-add-button [routerLink]="['../supplements/add']" [queryParams]="{targetType: 'EntityProperty'}">
-        {{'web.code-system.form.properties.add-supplement' | translate}}
-      </twa-add-button>
-      <twa-add-button [routerLink]="['../entity-properties/add']">
-        {{'web.code-system.form.properties.add-property' | translate}}
-      </twa-add-button>
+    <div class="m-card-title">
+      {{'entities.code-system.properties' | translate}}
     </div>
 
+    <m-dropdown>
+      <twa-add-button *m-dropdown-container icon="down" placement="right">
+        {{'web.code-system.form.properties.add-property' | translate}}
+      </twa-add-button>
+
+      <a *m-dropdown-item [routerLink]="['../entity-properties/add']">
+        {{'web.code-system.form.properties.add-property' | translate}}
+      </a>
+      <a *m-dropdown-item [routerLink]="['../supplements/add']" [queryParams]="{targetType: 'EntityProperty'}">
+        {{'web.code-system.form.properties.add-supplement' | translate}}
+      </a>
+    </m-dropdown>
   </div>
+
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
       <th>{{'entities.entity-property.name' | translate}}</th>
