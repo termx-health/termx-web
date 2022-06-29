@@ -23,7 +23,7 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
   public query = new CodeSystemEntityVersionQueryParams();
   public searchInput: string = "";
   public searchUpdate = new Subject<string>();
-  public searchResult = new SearchResult<CodeSystemEntityVersion>();
+  public searchResult: SearchResult<CodeSystemEntityVersion> = SearchResult.empty();
 
   @ViewChild("form") public form?: NgForm;
 

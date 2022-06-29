@@ -11,7 +11,7 @@ import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switc
   templateUrl: 'value-set-list.component.html',
 })
 export class ValueSetListComponent implements OnInit {
-  public searchResult = new SearchResult<ValueSet>();
+  public searchResult: SearchResult<ValueSet> = SearchResult.empty();
   public query = new ValueSetSearchParams();
   public loading = false;
   public searchInput: string = "";

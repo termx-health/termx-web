@@ -10,7 +10,7 @@ import {SearchResult} from '@kodality-web/core-util';
 })
 export class CodeSystemPropertiesListComponent implements OnChanges {
   @Input() public codeSystemId?: string | null;
-  public searchResult = new SearchResult<EntityProperty>();
+  public searchResult: SearchResult<EntityProperty> = SearchResult.empty();
 
   public query = new EntityPropertySearchParams();
   public loading = false;

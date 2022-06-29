@@ -7,7 +7,8 @@ import {
   CodeSystemLibService,
   CodeSystemSupplement,
   CodeSystemVersion,
-  EntityProperty
+  Designation,
+  EntityProperty, EntityPropertyValue
 } from 'terminology-lib/resources';
 
 @Injectable()
@@ -73,14 +74,36 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<EntityProperty>(`${this.baseUrl}/${codeSystemId}/entity-properties/`, property);
   }
 
+  public saveEntityPropertyValue(codeSystemId: string, conceptVersionId: number, propertyValue: EntityPropertyValue): Observable<EntityPropertyValue> {
+    if (propertyValue.id) {
+      return this.http.put<EntityPropertyValue>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/entity-property-values/${propertyValue.id}`, propertyValue);
+    }
+    return this.http.post<EntityPropertyValue>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/entity-property-values/`, propertyValue);
+  }
+
   public deleteEntityProperty(codeSystemId: string, propertyId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/entity-properties/${propertyId}`);
   }
 
-  public saveSupplement(codeSystemId: string, supplement: CodeSystemSupplement): Observable<CodeSystemSupplement> {
-    if (supplement.id) {
-      return this.http.put<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/supplements/${supplement.id}`, supplement);
+  public saveSupplement(codeSystemId: string, supplement: CodeSystemSupplement, conceptVersionId?: number): Observable<CodeSystemSupplement> {
+    let url = `${this.baseUrl}/${codeSystemId}/supplements`;
+    if (conceptVersionId) {
+      url = `${this.baseUrl}/${codeSystemId}/entities/versions/${conceptVersionId}/supplements`;
     }
-    return this.http.post<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/supplements/`, supplement);
+    if (supplement.id) {
+      return this.http.put<CodeSystemSupplement>(`${url}/${supplement.id}`, supplement);
+    }
+    return this.http.post<CodeSystemSupplement>(`${url}`, supplement);
+  }
+
+  public saveDesignation(codeSystemId: string, conceptVersionId: number, designation: Designation): Observable<Designation> {
+    if (designation.id) {
+      return this.http.put<Designation>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/designations/${designation.id}`, designation);
+    }
+    return this.http.post<Designation>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/designations`, designation);
+  }
+
+  public deleteDesignation(codeSystemId: string, designationId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/designations/${designationId}`);
   }
 }

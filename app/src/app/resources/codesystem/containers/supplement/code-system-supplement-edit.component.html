@@ -1,15 +1,19 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit'? 'web.supplement.form.property.edit-header' : 'web.supplement.form.property.add-header'">
-        <form #form="ngForm" *ngIf="supplement">
-          <twa-code-system-property-form *ngIf="supplement.targetType === 'EntityProperty'" [property]="supplement.target"></twa-code-system-property-form>
+      <m-card *ngIf="supplement" [ngSwitch]="supplement.targetType" [mTitle]="supplement.targetType | apply: getHeader:mode">
+          <twa-code-system-property-form #form *ngSwitchCase="'EntityProperty'" [property]="supplement.target"></twa-code-system-property-form>
+          <twa-code-system-designation-form #form *ngSwitchCase="'Designation'" [designation]="supplement.target" [codeSystemId]="codeSystemId"></twa-code-system-designation-form>
+          <twa-code-system-property-value-form #form *ngSwitchCase="'EntityPropertyValue'" [propertyValue]="supplement.target" [codeSystemId]="codeSystemId"></twa-code-system-property-value-form>
           <m-form-item mName="supplementDescription" mLabel="web.supplement.form.description">
             <m-textarea name="supplementDescription" [(ngModel)]="supplement.description"></m-textarea>
           </m-form-item>
-        </form>
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading || supplement.targetType !== 'EntityProperty'" (click)="save()">
+          <m-button mDisplay="primary"
+              [mLoading]="loading"
+              [disabled]="loading || hasInvalidTarget()"
+              (click)="save()"
+          >
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>

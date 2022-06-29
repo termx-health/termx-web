@@ -1,5 +1,7 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {EntityProperty} from 'terminology-lib/resources';
+import {NgForm} from '@angular/forms';
+import {isDefined, validateForm} from '@kodality-web/core-util';
 
 @Component({
   selector: 'twa-code-system-property-form',
@@ -7,4 +9,9 @@ import {EntityProperty} from 'terminology-lib/resources';
 })
 export class CodeSystemPropertyFormComponent {
   @Input() public property?: EntityProperty;
+  @ViewChild("form") public form?: NgForm;
+
+  public validate(): boolean {
+    return isDefined(this.form) && validateForm(this.form);
+  }
 }

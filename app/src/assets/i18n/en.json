@@ -39,6 +39,14 @@
           "edit-header": "Edit property supplement",
           "add-header": "Add property supplement"
         },
+        "property-value": {
+          "edit-header": "Edit property value supplement",
+          "add-header": "Add property value supplement"
+        },
+        "designation": {
+          "edit-header": "Edit designation supplement",
+          "add-header": "Add designation supplement"
+        },
         "description": "Supplement description"
       }
     },
@@ -131,18 +139,17 @@
         "edit-header": "Edit version",
         "view-header": "View version"
       },
-      "designation-modal": {
+      "designation": {
+        "add-supplement": "Add supplement",
         "add-designation": "Add designation",
         "delete-designation": "Delete designation",
         "edit-designation": "Edit designation"
       },
       "property-value": {
+        "add-supplement": "Add supplement",
         "add-property-value": "Add property value",
         "delete-property-value": "Delete property value",
-        "modal": {
-          "add-property-value": "Add property value",
-          "edit-property-value": "Edit property value"
-        }
+        "edit-property-value": "Edit property value"
       }
     },
     "naming-system": {
