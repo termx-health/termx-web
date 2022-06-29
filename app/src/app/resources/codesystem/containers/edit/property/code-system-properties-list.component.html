@@ -33,7 +33,7 @@
         <a [routerLink]="property.supplementId? ['../supplements/', property.supplementId, 'edit'] : ['../entity-properties/', property.id, 'edit']">{{property.name}}</a>
       </td>
       <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
-      <td>{{property.description | abbreviate: 40}}</td>
+      <td><m-abbreviate [mValue]="property.description" [mLength]="40"></m-abbreviate></td>
       <td class="tw-table-min-width">
         <m-icon *ngIf="property.supplementId" [mCode]="'block'"></m-icon> <!--todo better icon for supplement-->
       </td>

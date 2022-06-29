@@ -22,7 +22,7 @@
 
     <tr *mTableRow="let entityVersion">
       <td>{{entityVersion.code}}</td>
-      <td>{{entityVersion.description | abbreviate:50}}</td>
+      <td><m-abbreviate [mValue]="entityVersion.description" [mLength]="50"></m-abbreviate></td>
       <td class="tw-table-actions" *ngIf="!viewMode">
         <m-dropdown>
           <a *m-dropdown-item (click)="delete(entityVersion)">

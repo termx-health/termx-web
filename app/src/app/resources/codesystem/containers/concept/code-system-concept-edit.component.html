@@ -32,7 +32,7 @@
             <tr *mTableRow="let version">
               <td><a [routerLink]="['../versions', version.id, version.status === 'active'? 'view' : 'edit']">{{version.id}}</a></td>
               <td>{{version.created | localDateTime}}</td>
-              <td>{{version.description | abbreviate:35}}</td>
+              <td><m-abbreviate [mValue]="version.description" [mLength]="35"></m-abbreviate></td>
               <td class="tw-table-min-width">
                 <twa-status-tag [status]="version.status"></twa-status-tag>
               </td>

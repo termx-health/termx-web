@@ -40,9 +40,11 @@
                 [routerLink]="designation.supplementId? ['/resources/code-systems/', codeSystemId, 'supplements', designation.supplementId, 'edit'] : ['../designations/', designation.id, 'edit']"
                 [queryParams]="{conceptVersionId: conceptVersionId}"
             >
-              {{designation.name | abbreviate:35}}
+              <m-abbreviate [mValue]="designation.name" [mLength]="35"></m-abbreviate>
             </a>
-            <div *ngIf="viewMode">{{designation.name | abbreviate:35}}</div>
+            <div *ngIf="viewMode">
+              <m-abbreviate [mValue]="designation.name" [mLength]="35"></m-abbreviate>
+            </div>
           </td>
           <td>{{designation.language | localizedConceptName: {valueSet: 'languages'} | async}}</td>
           <td class="tw-table-min-width">

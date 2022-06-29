@@ -40,9 +40,11 @@
                 [routerLink]="propertyValue.supplementId? ['/resources/code-systems/', codeSystemId, 'supplements', propertyValue.supplementId, 'edit'] : ['../entity-property-value/', propertyValue.id, 'edit']"
                 [queryParams]="{conceptVersionId: conceptVersionId}"
             >
-              {{propertyValue.value | abbreviate:40}}
+              <m-abbreviate [mValue]="propertyValue.value" [mLength]="40"></m-abbreviate>
             </a>
-            <div *ngIf="viewMode">{{propertyValue.value | abbreviate:40}}</div>
+            <div *ngIf="viewMode">
+              <m-abbreviate [mValue]="propertyValue.value" [mLength]="40"></m-abbreviate>
+            </div>
           </td>
           <td class="tw-table-min-width">
             <m-icon *ngIf="propertyValue.supplementId" [mCode]="'block'"></m-icon> <!--todo better icon for supplement-->
