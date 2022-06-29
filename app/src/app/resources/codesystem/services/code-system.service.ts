@@ -8,7 +8,7 @@ import {
   CodeSystemSupplement,
   CodeSystemVersion,
   Designation,
-  EntityProperty
+  EntityProperty, EntityPropertyValue
 } from 'terminology-lib/resources';
 
 @Injectable()
@@ -74,22 +74,29 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<EntityProperty>(`${this.baseUrl}/${codeSystemId}/entity-properties/`, property);
   }
 
+  public saveEntityPropertyValue(codeSystemId: string, conceptVersionId: number, propertyValue: EntityPropertyValue): Observable<EntityPropertyValue> {
+    if (propertyValue.id) {
+      return this.http.put<EntityPropertyValue>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/entity-property-values/${propertyValue.id}`, propertyValue);
+    }
+    return this.http.post<EntityPropertyValue>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/entity-property-values/`, propertyValue);
+  }
+
   public deleteEntityProperty(codeSystemId: string, propertyId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/entity-properties/${propertyId}`);
   }
 
-  public saveSupplement(codeSystemId: string, supplement: CodeSystemSupplement, conceptVersion?: number): Observable<CodeSystemSupplement> {
-    if (conceptVersion) {
-      if (supplement.id) {
-        return this.http.put<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/entities/versions/${conceptVersion}/supplements/${supplement.id}`,
-          supplement);
-      }
-      return this.http.post<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/entities/versions/${conceptVersion}/supplements`, supplement);
+  public saveSupplement(codeSystemId: string, supplement: CodeSystemSupplement, conceptVersionId?: number): Observable<CodeSystemSupplement> {
+    let url = `${this.baseUrl}/${codeSystemId}`;
+
+    if (conceptVersionId) {
+      url = url + `/entities/versions/${conceptVersionId}/supplements`;
+    } else {
+      url = url + `/supplements`;
     }
     if (supplement.id) {
-      return this.http.put<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/supplements/${supplement.id}`, supplement);
+      return this.http.put<CodeSystemSupplement>(`${url}/${supplement.id}`, supplement);
     }
-    return this.http.post<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/supplements/`, supplement);
+    return this.http.post<CodeSystemSupplement>(`${url}`, supplement);
   }
 
   public saveDesignation(codeSystemId: string, conceptVersionId: number, designation: Designation): Observable<Designation> {

@@ -26,7 +26,7 @@ export class CodeSystemDesignationEditComponent implements OnInit {
   public ngOnInit(): void {
     const designationId = this.route.snapshot.paramMap.get('designation');
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    this.conceptVersionId = Number(this.route.snapshot.paramMap.get('conceptVersion'));
+    this.conceptVersionId = Number(this.route.snapshot.paramMap.get('conceptVersionId'));
     this.mode = designationId ? 'edit' : 'add';
     if (this.mode === 'edit') {
       this.loadDesignation(Number(designationId));

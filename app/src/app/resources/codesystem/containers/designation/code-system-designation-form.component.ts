@@ -13,10 +13,8 @@ export class CodeSystemDesignationFormComponent implements OnChanges {
   @Input() public codeSystemId?: string;
   @ViewChild("form") public form?: NgForm;
 
-  private loading: {[key: string]: boolean} = {};
-
+  public loading = false;
   public entityProperties = new SearchResult<EntityProperty>();
-
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -32,8 +30,9 @@ export class CodeSystemDesignationFormComponent implements OnChanges {
   private loadProperties(codeSystem: string): void {
     const q = new EntityPropertySearchParams();
     q.codeSystem = codeSystem;
-    this.loading['load'] = true;
-    this.codeSystemService.searchProperties(codeSystem, q).subscribe(result => this.entityProperties = result).add(() => this.loading['load'] = false);
+    q.limit = -1;
+    this.loading = true;
+    this.codeSystemService.searchProperties(codeSystem, q).subscribe(result => this.entityProperties = result).add(() => this.loading = false);
   }
 
   public validate(): boolean {

@@ -1,18 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemSupplement, Designation, EntityProperty} from 'terminology-lib/resources';
+import {CodeSystemSupplement, Designation, EntityProperty, EntityPropertyValue} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {CodeSystemPropertyFormComponent} from '../property/code-system-property-form.component';
-import {CodeSystemDesignationFormComponent} from '../designation/code-system-designation-form.component';
 
 
 @Component({
   templateUrl: './code-system-supplement-edit.component.html',
 })
 export class CodeSystemSupplementEditComponent implements OnInit {
-  @ViewChild("propertyForm") public propertyForm!: CodeSystemPropertyFormComponent;
-  @ViewChild("designationForm") public designationForm!: CodeSystemDesignationFormComponent;
+  @ViewChild("form") public form!: {validate: () => false};
 
   public loading = false;
   public supplement?: CodeSystemSupplement;
@@ -29,6 +26,7 @@ export class CodeSystemSupplementEditComponent implements OnInit {
   public ngOnInit(): void {
     const supplementId = this.route.snapshot.paramMap.get('supplementId');
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
+    this.conceptVersionId = Number(this.route.snapshot.queryParamMap.get('conceptVersionId'));
     this.mode = supplementId ? 'edit' : 'add';
     if (this.mode === 'edit') {
       this.loadSupplement(Number(supplementId));
@@ -45,10 +43,7 @@ export class CodeSystemSupplementEditComponent implements OnInit {
   }
 
   public save(): void {
-    if (this.supplement?.targetType === 'EntityProperty' && !this.propertyForm.validate()) {
-      return;
-    }
-    if (this.supplement?.targetType === 'Designation' && !this.designationForm.validate()) {
+    if (!this.form.validate()) {
       return;
     }
     this.loading = true;
@@ -60,18 +55,19 @@ export class CodeSystemSupplementEditComponent implements OnInit {
   private setTarget(): void {
     if (this.supplement?.targetType === 'EntityProperty') {
       this.supplement.target = new EntityProperty();
-    }
-    if (this.supplement?.targetType === 'Designation') {
-      this.conceptVersionId = Number(this.route.snapshot.queryParamMap.get('conceptVersion'));
+    } else if (this.supplement?.targetType === 'Designation') {
       this.supplement.target = new Designation();
+    } else if (this.supplement?.targetType === 'EntityPropertyValue') {
+      this.supplement.target = new EntityPropertyValue();
     }
   }
 
   public getHeader = (targetType: string, mode: string): string => {
-    const a: {[prop: string]: string} = {
+    const headers: {[prop: string]: string} = {
       'EntityProperty': `web.supplement.form.property.${mode}-header`,
+      'EntityPropertyValue': `web.supplement.form.property-value.${mode}-header`,
       'Designation': `web.supplement.form.designation.${mode}-header`,
     };
-    return a[targetType];
+    return headers[targetType];
   };
 }

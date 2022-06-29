@@ -25,7 +25,7 @@ export class MapSetVersionViewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.mapSetId = this.route.snapshot.paramMap.get('id');
-    const mapSetVersion = this.route.snapshot.paramMap.get('version');
+    const mapSetVersion = this.route.snapshot.paramMap.get('versionId');
     this.loadVersion(this.mapSetId!, mapSetVersion!);
   }
 

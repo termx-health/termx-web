@@ -16,8 +16,8 @@
       <th>{{'entities.entity-property.name' | translate}}</th>
       <th>{{'entities.entity-property.type' | translate}}</th>
       <th>{{'entities.entity-property.description' | translate}}</th>
-      <th>{{'entities.entity-property.status' | translate}}</th>
       <th></th>
+      <th>{{'entities.entity-property.status' | translate}}</th>
       <th class="tw-table-actions"></th>
     </tr>
 
@@ -28,10 +28,10 @@
       <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
       <td>{{property.description | abbreviate: 40}}</td>
       <td class="tw-table-min-width">
-        <twa-status-tag [status]="property.status"></twa-status-tag>
-      </td>
-      <td>
         <m-icon *ngIf="property.supplementId" [mCode]="'block'"></m-icon> <!--todo better icon for supplement-->
+      </td>
+      <td class="tw-table-min-width">
+        <twa-status-tag [status]="property.status"></twa-status-tag>
       </td>
       <td class="tw-table-actions">
         <m-dropdown>
