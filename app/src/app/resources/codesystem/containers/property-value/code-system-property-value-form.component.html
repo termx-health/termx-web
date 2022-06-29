@@ -1,0 +1,18 @@
+<form #form="ngForm" *ngIf="propertyValue">
+  <m-form-item mName="propertyProperty" mLabel="entities.entity-property.name" required>
+    <m-select
+        name="propertyProperty"
+        [(ngModel)]="propertyValue.entityPropertyId"
+        placeholder="marina.ui.inputs.search.placeholder"
+        icon="search"
+        [loading]="loading"
+        required
+    >
+      <m-option *ngFor="let prop of entityProperties.data" [value]="prop.id" [label]="prop.name"></m-option>
+    </m-select>
+  </m-form-item>
+
+  <m-form-item mName="propertyValue" mLabel="entities.entity-property.value" required>
+    <m-input name="propertyValue" [(ngModel)]="propertyValue.value" required></m-input>
+  </m-form-item>
+</form>
