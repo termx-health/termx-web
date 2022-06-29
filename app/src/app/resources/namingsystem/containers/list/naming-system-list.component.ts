@@ -11,7 +11,7 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './naming-system-list.component.html',
 })
 export class NamingSystemListComponent implements OnInit {
-  public searchResult = new SearchResult<NamingSystem>();
+  public searchResult: SearchResult<NamingSystem> = SearchResult.empty();
   public query = new NamingSystemSearchParams();
   public loading = false;
 

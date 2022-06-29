@@ -8,7 +8,7 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class CodeSystemConceptVersionViewComponent implements OnInit {
   public codeSystemId?: string | null;
-  public version?: CodeSystemEntityVersion;
+  public conceptVersion?: CodeSystemEntityVersion;
 
   private loading: {[key: string]: boolean} = {};
 
@@ -21,14 +21,14 @@ export class CodeSystemConceptVersionViewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    const versionId = this.route.snapshot.paramMap.get('conceptVersion');
-    this.loadVersion(Number(versionId));
+    const conceptVersionId = this.route.snapshot.paramMap.get('conceptVersionId');
+    this.loadConceptVersion(Number(conceptVersionId));
   }
 
-  private loadVersion(versionId: number): void {
+  private loadConceptVersion(conceptVersionId: number): void {
     this.loading['load'] = true;
-    this.codeSystemEntityVersionService.load(versionId).subscribe(v => {
-      this.version = v;
+    this.codeSystemEntityVersionService.load(conceptVersionId).subscribe(v => {
+      this.conceptVersion = v;
     }).add(() => this.loading['load'] = false);
   }
 

@@ -11,7 +11,7 @@ import {CodeSystemService} from '../../../services/code-system.service';
 export class CodeSystemConceptsListComponent implements OnInit {
   @Input() public codeSystemId?: string;
 
-  public searchResult = new SearchResult<CodeSystemConcept>();
+  public searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
   public query = new ConceptSearchParams();
   public loading = false;
 
