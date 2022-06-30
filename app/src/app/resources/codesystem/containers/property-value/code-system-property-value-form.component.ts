@@ -1,16 +1,17 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {isDefined, SearchResult, validateForm} from '@kodality-web/core-util';
-import {EntityProperty, EntityPropertySearchParams, EntityPropertyValue} from 'terminology-lib/resources';
+import {EntityProperty, EntityPropertyValue} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
 
 @Component({
   selector: 'twa-code-system-property-value-form',
   templateUrl: './code-system-property-value-form.component.html',
 })
-export class CodeSystemPropertyValueFormComponent implements OnChanges{
-  @Input() public propertyValue?: EntityPropertyValue;
+export class CodeSystemPropertyValueFormComponent implements OnChanges {
   @Input() public codeSystemId?: string;
+  @Input() public propertyValue?: EntityPropertyValue;
+
   @ViewChild("form") public form?: NgForm;
 
   public loading = false;
@@ -22,17 +23,17 @@ export class CodeSystemPropertyValueFormComponent implements OnChanges{
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['codeSystemId'] && this.codeSystemId) {
-      this.loadProperties(this.codeSystemId);
+    if (changes['codeSystemId']) {
+      this.entityProperties = SearchResult.empty();
+      if (this.codeSystemId) {
+        this.loadProperties(this.codeSystemId);
+      }
     }
   }
 
   private loadProperties(codeSystem: string): void {
-    const q = new EntityPropertySearchParams();
-    q.codeSystem = codeSystem;
-    q.limit = -1;
     this.loading = true;
-    this.codeSystemService.searchProperties(codeSystem, q).subscribe(result => this.entityProperties = result).add(() => this.loading = false);
+    this.codeSystemService.searchProperties(codeSystem, {limit: -1}).subscribe(result => this.entityProperties = result).add(() => this.loading = false);
   }
 
   public validate(): boolean {

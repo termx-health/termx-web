@@ -31,7 +31,7 @@ export class ValueSetVersionEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.valueSetId = this.route.snapshot.paramMap.get('id');
-    this.valueSetVersion = this.route.snapshot.paramMap.get('versionId');
+    this.valueSetVersion = this.route.snapshot.paramMap.get('versionCode');
     this.mode = this.valueSetId && this.valueSetVersion ? 'edit' : 'add';
 
     if (this.mode === 'edit') {

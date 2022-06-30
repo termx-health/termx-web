@@ -15,8 +15,9 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
   @Input() public codeSystemId?: string;
   @Input() public version?: string;
 
-  public loading: {[key: string]: boolean} = {};
+  @ViewChild("form") public form?: NgForm;
 
+  public loading: {[key: string]: boolean} = {};
   public modalVisible = false;
   public modalData?: CodeSystemEntityVersion;
 
@@ -25,7 +26,6 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
   public searchUpdate = new Subject<string>();
   public searchResult: SearchResult<CodeSystemEntityVersion> = SearchResult.empty();
 
-  @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private codeSystemService: CodeSystemService

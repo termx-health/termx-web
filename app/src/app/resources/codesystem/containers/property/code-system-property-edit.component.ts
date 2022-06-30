@@ -9,12 +9,13 @@ import {CodeSystemPropertyFormComponent} from './code-system-property-form.compo
   templateUrl: './code-system-property-edit.component.html',
 })
 export class CodeSystemPropertyEditComponent implements OnInit {
-  @ViewChild("propertyForm") public propertyForm!: CodeSystemPropertyFormComponent;
-
-  public property?: EntityProperty;
   public codeSystemId?: string | null;
+  public property?: EntityProperty;
+
   public loading = false;
   public mode?: 'edit' | 'add';
+
+  @ViewChild("propertyForm") public propertyForm!: CodeSystemPropertyFormComponent;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -23,13 +24,14 @@ export class CodeSystemPropertyEditComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    const propertyId = this.route.snapshot.paramMap.get('propertyId');
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
+    const propertyId = this.route.snapshot.paramMap.get('propertyId');
     this.mode = propertyId ? 'edit' : 'add';
-    if (this.mode === 'add') {
-      this.property = new EntityProperty();
-    } else {
+
+    if (this.mode === 'edit') {
       this.loadProperty(Number(propertyId));
+    } else {
+      this.property = new EntityProperty();
     }
   }
 

@@ -27,11 +27,11 @@ export class CodeSystemVersionEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    const versionId = this.route.snapshot.paramMap.get('versionId');
-    this.mode = this.codeSystemId && versionId ? 'edit' : 'add';
+    const versionCode = this.route.snapshot.paramMap.get('versionCode');
+    this.mode = this.codeSystemId && versionCode ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadVersion(this.codeSystemId!, versionId!);
+      this.loadVersion(this.codeSystemId!, versionCode!);
     } else {
       this.version = new CodeSystemVersion();
       this.version.status = 'draft';

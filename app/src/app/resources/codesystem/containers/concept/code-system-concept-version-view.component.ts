@@ -9,7 +9,6 @@ import {ActivatedRoute} from '@angular/router';
 export class CodeSystemConceptVersionViewComponent implements OnInit {
   public codeSystemId?: string | null;
   public conceptVersion?: CodeSystemEntityVersion;
-
   private loading: {[key: string]: boolean} = {};
 
   @ViewChild("conceptVersionForm") public conceptVersionForm?: NgForm;

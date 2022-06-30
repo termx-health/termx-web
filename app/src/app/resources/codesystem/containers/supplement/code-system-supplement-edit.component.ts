@@ -9,13 +9,14 @@ import {Location} from '@angular/common';
   templateUrl: './code-system-supplement-edit.component.html',
 })
 export class CodeSystemSupplementEditComponent implements OnInit {
-  @ViewChild("form") public form!: {validate: () => false};
+  public codeSystemId?: string | null;
+  public conceptVersionId?: number;
+  public supplement?: CodeSystemSupplement;
 
   public loading = false;
-  public supplement?: CodeSystemSupplement;
-  public conceptVersionId?: number;
-  public codeSystemId?: string | null;
   public mode?: 'edit' | 'add';
+
+  @ViewChild("form") public form!: {validate: () => false};
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -24,10 +25,11 @@ export class CodeSystemSupplementEditComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    const supplementId = this.route.snapshot.paramMap.get('supplementId');
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.conceptVersionId = Number(this.route.snapshot.queryParamMap.get('conceptVersionId'));
+    const supplementId = this.route.snapshot.paramMap.get('supplementId');
     this.mode = supplementId ? 'edit' : 'add';
+
     if (this.mode === 'edit') {
       this.loadSupplement(Number(supplementId));
     } else {
@@ -74,7 +76,7 @@ export class CodeSystemSupplementEditComponent implements OnInit {
     return headers[targetType];
   };
 
-  public hasInvalidTarget(): boolean {
+  public get hasInvalidTarget(): boolean {
     return !['EntityProperty', 'Designation', 'EntityPropertyValue'].includes(this.supplement!.targetType!);
   }
 }

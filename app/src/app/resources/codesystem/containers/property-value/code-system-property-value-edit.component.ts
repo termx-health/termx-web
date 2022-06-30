@@ -9,13 +9,14 @@ import {CodeSystemPropertyValueFormComponent} from './code-system-property-value
   templateUrl: './code-system-property-value-edit.component.html'
 })
 export class CodeSystemPropertyValueEditComponent implements OnInit {
-  @ViewChild("propertyValueForm") public propertyValueForm!: CodeSystemPropertyValueFormComponent;
-
-  public propertyValue?: EntityPropertyValue;
   public codeSystemId?: string | null;
   public conceptVersionId?: number;
+  public propertyValue?: EntityPropertyValue;
+
   public loading = false;
   public mode?: 'edit' | 'add';
+
+  @ViewChild("propertyValueForm") public propertyValueForm!: CodeSystemPropertyValueFormComponent;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -24,10 +25,11 @@ export class CodeSystemPropertyValueEditComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    const propertyValueId = this.route.snapshot.paramMap.get('propertyValueId');
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.conceptVersionId = Number(this.route.snapshot.paramMap.get('conceptVersionId'));
+    const propertyValueId = this.route.snapshot.paramMap.get('propertyValueId');
     this.mode = propertyValueId ? 'edit' : 'add';
+
     if (this.mode === 'edit') {
       this.loadPropertyValue(Number(propertyValueId));
     } else {

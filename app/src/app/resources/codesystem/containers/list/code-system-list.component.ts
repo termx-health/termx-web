@@ -10,12 +10,11 @@ import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switc
   templateUrl: 'code-system-list.component.html'
 })
 export class CodeSystemListComponent implements OnInit {
-  public searchResult: SearchResult<CodeSystem> = SearchResult.empty();
   public query = new CodeSystemSearchParams();
-  public loading = false;
-
   public searchInput?: string;
   public searchUpdate = new Subject<string>();
+  public searchResult: SearchResult<CodeSystem> = SearchResult.empty();
+  public loading = false;
 
   public constructor(
     private codeSystemService: CodeSystemService,

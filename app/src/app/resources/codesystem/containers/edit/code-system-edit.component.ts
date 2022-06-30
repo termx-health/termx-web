@@ -12,10 +12,10 @@ import {isDefined, validateForm} from '@kodality-web/core-util';
 })
 export class CodeSystemEditComponent implements OnInit {
   public codeSystemId?: string | null;
-
-  public loading = false;
   public codeSystem?: CodeSystem;
+
   public narrativeRaw = false;
+  public loading = false;
   public mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
@@ -29,6 +29,7 @@ export class CodeSystemEditComponent implements OnInit {
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.mode = this.codeSystemId ? 'edit' : 'add';
+
     if (this.mode === 'add') {
       this.codeSystem = new CodeSystem();
       this.codeSystem.names = {};

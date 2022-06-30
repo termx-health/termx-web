@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {CodeSystemLibService, Designation, EntityProperty, EntityPropertySearchParams} from 'terminology-lib/resources';
+import {CodeSystemLibService, Designation, EntityProperty} from 'terminology-lib/resources';
 import {BooleanInput, collect, group} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 
@@ -10,8 +10,8 @@ import {NgForm} from '@angular/forms';
 export class CodeSystemConceptVersionDesignationTableComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: string | boolean = false;
   @Input() public codeSystemId?: string;
-  @Input() public designations?: Designation[] = [];
   @Input() public conceptVersionId?: number;
+  @Input() public designations?: Designation[] = [];
   @Output() public designationsChange = new EventEmitter<Designation[]>();
 
   @ViewChild("designationForm") public designationForm?: NgForm;
@@ -23,7 +23,6 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
   public constructor(
     public codeSystemService: CodeSystemLibService,
   ) {}
-
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['codeSystemId']) {
@@ -44,11 +43,10 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
   }
 
   private loadProperties(codeSystem: string): void {
-    const q = new EntityPropertySearchParams();
-    q.codeSystem = codeSystem;
-    q.limit = -1;
     this.loading = true;
-    this.codeSystemService.searchProperties(codeSystem, q).subscribe(ep => this.entityProperties = group(ep.data, p => p.id!)).add(() => this.loading = false);
+    this.codeSystemService.searchProperties(codeSystem, {limit: -1})
+      .subscribe(ep => this.entityProperties = group(ep.data, p => p.id!))
+      .add(() => this.loading = false);
   }
 
   public get isLoading(): boolean {
