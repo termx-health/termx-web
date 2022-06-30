@@ -1,11 +1,14 @@
-<m-select icon="search"
-    placeholder="marina.ui.inputs.search.placeholder"
+<m-select
+    icon="select"
+    placeholder="marina.ui.inputs.select.placeholder"
     [(ngModel)]="value"
     (mChange)="fireOnChange()"
+    [loading]="isLoading"
     [autoUnselect]="false"
-    [loading]="loading"
-    [multiple]="multiple">
-  <m-option *ngFor="let key of (data | keys)"
+    [multiple]="multiple"
+>
+  <m-option *ngFor="let key of data | keys"
       [value]="key"
-      [label]="data[key]?.display ? data[key]?.display?.name : (key | localizedConceptName: {valueSet: valueSet, valueSetVersion: valueSetVersion} | async)"></m-option>
+      [label]="data[key]?.display ? data[key]?.display?.name : (key | localizedConceptName: {valueSet: valueSet, valueSetVersion: valueSetVersion} | async)"
+  ></m-option>
 </m-select>

@@ -17,12 +17,14 @@
     <tr *mTableHead>
       <th mColumnKey="code">{{'entities.code-system-entity-version.code' | translate}}</th>
       <th mColumnKey="description">{{'entities.code-system-entity-version.description' | translate}}</th>
+      <th class="tw-table-min-width">{{'entities.code-system-entity-version.status' | translate}}</th>
       <th class="tw-table-actions" *ngIf="!viewMode"></th>
     </tr>
 
     <tr *mTableRow="let entityVersion">
       <td>{{entityVersion.code}}</td>
       <td><m-abbreviate [mValue]="entityVersion.description" [mLength]="50"></m-abbreviate></td>
+      <td class="tw-table-min-width"><twa-status-tag [status]="entityVersion.status"></twa-status-tag></td>
       <td class="tw-table-actions" *ngIf="!viewMode">
         <m-dropdown>
           <a *m-dropdown-item (click)="delete(entityVersion)">
