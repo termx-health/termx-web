@@ -1,5 +1,6 @@
 <m-table [mData]="concepts" mHideOnSinglePage>
   <tr *mTableHead>
+    <th></th>
     <th>{{'entities.value-set-version-concept.concept' | translate}}</th>
     <th>{{'entities.value-set-version-concept.display' | translate}}</th>
     <th>{{'entities.value-set-version-concept.additional-designations' | translate}}</th>
@@ -9,6 +10,12 @@
   <ng-container *mTableRow="let item; let i = index">
     <ng-container *ngIf="viewMode">
       <tr *ngFor="let ad of item.additionalDesignations; let isFirst = first">
+        <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
+          <m-icon *ngIf="!(item.concept | apply:hasActiveVersion)"
+              mCode="warning"
+              m-popover
+              mContent="{{'web.value-set-version.form.concepts.modal.warning' | translate}}"></m-icon>
+        </td>
         <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
           <div *ngIf="viewMode">{{item.concept?.code}}</div>
         </td>
@@ -21,6 +28,12 @@
 
     <tr *ngIf="!(item.additionalDesignations?.length > 0) || !viewMode">
       <td>
+        <m-icon *ngIf="!(item.concept | apply:hasActiveVersion)"
+            mCode="warning"
+            m-popover
+            mContent="{{'web.value-set-version.form.concepts.modal.warning' | translate}}"></m-icon>
+      </td>
+      <td>
         <twl-concept-search *ngIf="!viewMode"
             [(ngModel)]="item.concept"
             (ngModelChange)="item.designation = undefined"
@@ -28,8 +41,7 @@
             [codeSystemVersion]="codeSystemVersion"
             [codeSystemVersionReleaseDateLe]="lockedDate"
             [codeSystemVersionExpirationDateGe]="lockedDate"
-            [entityVersionStatus]="inactiveConcepts === true ? 'retired' : inactiveConcepts === false ? 'active' : undefined"
-        ></twl-concept-search>
+            [entityVersionStatus]="inactiveConcepts === true ? 'retired' : inactiveConcepts === false ? 'active' : undefined"></twl-concept-search>
         <div *ngIf="viewMode">
           {{item.concept?.code}}
         </div>

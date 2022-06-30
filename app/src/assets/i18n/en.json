@@ -196,7 +196,8 @@
         },
         "concepts": {
           "modal": {
-            "header": "Preview of result concepts"
+            "header": "Preview of result concepts",
+            "warning": "Concept has no active versions"
           }
         }
       }
