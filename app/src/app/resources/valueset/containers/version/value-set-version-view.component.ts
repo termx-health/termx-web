@@ -26,8 +26,8 @@ export class ValueSetVersionViewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.valueSetId = this.route.snapshot.paramMap.get('id');
-    const valueSetVersion = this.route.snapshot.paramMap.get('versionCode');
-    this.loadVersion(this.valueSetId!, valueSetVersion!);
+    const valueSetVersionId = this.route.snapshot.paramMap.get('versionId');
+    this.loadVersion(this.valueSetId!, valueSetVersionId!);
   }
 
   private loadVersion(id: string, version: string): void {

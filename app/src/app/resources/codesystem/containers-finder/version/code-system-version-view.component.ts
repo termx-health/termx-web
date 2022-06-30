@@ -30,19 +30,19 @@ export class FinderCodeSystemVersionViewComponent implements OnInit {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
       const parentParams = this.route.snapshot.parent?.paramMap;
       const codeSystemId = parentParams?.get('id');
-      const codeSystemVersionCode = params.get('versionCode');
+      const codeSystemVersionId = params.get('versionId');
 
-      if (isNil(codeSystemId) || isNil(codeSystemVersionCode)) {
+      if (isNil(codeSystemId) || isNil(codeSystemVersionId)) {
         this.version = undefined;
         return;
       }
 
       this.loading['version'] = true;
-      this.codeSystemService.loadVersion(codeSystemId, codeSystemVersionCode)
+      this.codeSystemService.loadVersion(codeSystemId, codeSystemVersionId)
         .subscribe(version => this.version = version)
         .add(() => this.loading['version'] = false);
 
-      this.loadEntities(codeSystemId, codeSystemVersionCode);
+      this.loadEntities(codeSystemId, codeSystemVersionId);
     });
   }
 

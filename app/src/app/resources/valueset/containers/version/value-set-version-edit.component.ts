@@ -13,7 +13,7 @@ import {forkJoin, mergeMap, of} from 'rxjs';
 })
 export class ValueSetVersionEditComponent implements OnInit {
   public valueSetId?: string | null;
-  public valueSetVersion?: string | null;
+  public valueSetVersionId?: string | null;
   public version?: ValueSetVersion;
   public concepts: ValueSetConcept[] = [];
 
@@ -31,11 +31,11 @@ export class ValueSetVersionEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.valueSetId = this.route.snapshot.paramMap.get('id');
-    this.valueSetVersion = this.route.snapshot.paramMap.get('versionCode');
-    this.mode = this.valueSetId && this.valueSetVersion ? 'edit' : 'add';
+    this.valueSetVersionId = this.route.snapshot.paramMap.get('versionId');
+    this.mode = this.valueSetId && this.valueSetVersionId ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadVersion(this.valueSetId!, this.valueSetVersion!);
+      this.loadVersion(this.valueSetId!, this.valueSetVersionId!);
     } else {
       this.version = new CodeSystemVersion();
     }

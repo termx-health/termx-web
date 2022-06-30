@@ -22,9 +22,7 @@ import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/c
 import {FinderModule} from '../../core/finder/finder.module';
 import {ContactModule} from '../contact/contact.module';
 import {CodeSystemConceptVersionDesignationTableComponent} from './containers/concept/designation/code-system-concept-version-designation-table.component';
-import {
-  CodeSystemConceptVersionPropertyValueTableComponent
-} from './containers/concept/propertyvalue/code-system-concept-version-property-value-table.component';
+import {CodeSystemConceptVersionPropertyValueTableComponent} from './containers/concept/propertyvalue/code-system-concept-version-property-value-table.component';
 import {CodeSystemConceptVersionViewComponent} from './containers/concept/code-system-concept-version-view.component';
 import {ResourcesLibModule} from 'terminology-lib/resources';
 import {CodeSystemPropertyEditComponent} from './containers/property/code-system-property-edit.component';
@@ -53,14 +51,14 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/supplements/add', component: CodeSystemSupplementEditComponent},
   {path: ':id/supplements/:supplementId/edit', component: CodeSystemSupplementEditComponent},
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent},
-  {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent},
-  {path: ':id/versions/:versionCode/view', component: CodeSystemVersionViewComponent},
+  {path: ':id/versions/:versionId/edit', component: CodeSystemVersionEditComponent},
+  {path: ':id/versions/:versionId/view', component: CodeSystemVersionViewComponent},
 ];
 
 export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
   path: '', component: FinderCodeSystemListComponent, children: [{
     path: ':id', component: FinderCodeSystemViewComponent, children: [{
-      path: 'versions/:versionCode', component: FinderCodeSystemVersionViewComponent
+      path: 'versions/:versionId', component: FinderCodeSystemVersionViewComponent
     }, {
       path: 'concepts/:conceptId', component: FinderCodeSystemConceptViewComponent, children: [{
         path: 'versions/:versionId', component: FinderCodeSystemConceptVersionViewComponent

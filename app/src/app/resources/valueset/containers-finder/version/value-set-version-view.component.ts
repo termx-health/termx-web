@@ -26,17 +26,17 @@ export class FinderValueSetVersionViewComponent implements OnInit {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
       const parentParams = this.route.snapshot.parent?.paramMap;
       const valueSetId = parentParams?.get('id');
-      const valueSetVersionCode = params.get('versionCode');
+      const valueSetVersionId = params.get('versionId');
 
-      if (isNil(valueSetId) || isNil(valueSetVersionCode)) {
+      if (isNil(valueSetId) || isNil(valueSetVersionId)) {
         this.version = undefined;
         return;
       }
 
       this.loading = true;
       forkJoin([
-        this.valueSetService.loadVersion(valueSetId, valueSetVersionCode),
-        this.valueSetService.loadConcepts(valueSetId, valueSetVersionCode),
+        this.valueSetService.loadVersion(valueSetId, valueSetVersionId),
+        this.valueSetService.loadConcepts(valueSetId, valueSetVersionId),
       ]).subscribe(([version, concepts]) => {
         this.version = version;
         this.version.concepts = concepts;
