@@ -3,6 +3,7 @@
     [(ngModel)]="value"
     (mChange)="fireOnChange()"
     [autoUnselect]="false"
-    [loading]="loading">
-  <m-option *ngFor="let key of (data | keys)" [value]="key" [label]="data[key]?.version"></m-option>
+    [loading]="isLoading"
+>
+  <m-option *ngFor="let key of data | keys" [value]="key" [label]="data[key]?.version"></m-option>
 </m-select>

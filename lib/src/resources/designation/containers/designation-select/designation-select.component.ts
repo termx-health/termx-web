@@ -17,7 +17,7 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
 
   public data: {[id: string]: Designation} = {};
   public value?: number | number[];
-  public loading: boolean = false;
+  private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
@@ -32,7 +32,8 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
     }
   }
 
-  public loadSelectData(): void {
+
+  private loadSelectData(): void {
     if (!this.conceptId) {
       this.data = {};
       this.value = undefined;
@@ -43,22 +44,24 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
     q.conceptId = this.conceptId;
     q.limit = 10_000;
 
-    this.loading = true;
+    this.loading['select'] = true;
     this.designationService.search(q).subscribe(da => {
       this.data = group(da.data, designation => designation.id!);
-    }).add(() => this.loading = false);
+    }).add(() => this.loading['select'] = false);
   }
 
-  public loadDesignations(ids: number[]): void {
+  private loadDesignations(ids: number[]): void {
     ids = ids.filter(id => !this.data[id]);
     if (ids.length === 0) {
       return;
     }
-    this.loading = true;
-    this.designationService.search({id: ids.join(",")}).subscribe(resp => {
+
+    this.loading['load'] = true;
+    this.designationService.search({id: ids.join(","), limit: ids.length}).subscribe(resp => {
       resp.data.forEach(d => this.data = {...this.data, [d.id!]: d});
-    }).add(() => this.loading = false);
+    }).add(() => this.loading['load'] = false);
   }
+
 
   public writeValue(obj: Designation | Designation[] | number | number[]): void {
     if (isNil(obj)) {
@@ -96,4 +99,8 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
     this.onTouched = fn;
   }
 
+
+  public get isLoading(): boolean {
+    return Object.values(this.loading).some(Boolean);
+  }
 }

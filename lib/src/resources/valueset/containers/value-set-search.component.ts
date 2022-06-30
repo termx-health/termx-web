@@ -16,10 +16,9 @@ import {ValueSetSearchParams} from '../model/value-set-search-params';
 export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
 
-  public searchUpdate = new Subject<string>();
-
   public data: {[id: string]: ValueSet} = {};
   public value?: string;
+  public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any) => x;
@@ -41,7 +40,7 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
     this.searchUpdate.next(text);
   }
 
-  public searchValueSets(text: string): Observable<{[id: string]: ValueSet}> {
+  private searchValueSets(text: string): Observable<{[id: string]: ValueSet}> {
     if (!text || text.length < 1) {
       return of(this.data);
     }
@@ -62,6 +61,7 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
       this.valueSetService.load(id).subscribe(c => this.data = {...(this.data || {}), [c.id!]: c}).add(() => this.loading['load'] = false);
     }
   }
+
 
   public writeValue(obj: ValueSet | string): void {
     this.value = (typeof obj === 'object' ? obj?.id : obj);
@@ -84,8 +84,8 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
+
   public get isLoading(): boolean {
     return Object.values(this.loading).some(Boolean);
   }
-
 }

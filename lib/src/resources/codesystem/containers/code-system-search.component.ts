@@ -16,10 +16,9 @@ import {CodeSystemSearchParams} from '../model/code-system-search-params';
 export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
 
-  public searchUpdate = new Subject<string>();
-
   public data: {[id: string]: CodeSystem} = {};
   public value?: string;
+  public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any) => x;
@@ -41,13 +40,15 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
     this.searchUpdate.next(text);
   }
 
-  public searchCodeSystems(text: string): Observable<{[id: string]: CodeSystem}> {
+  private searchCodeSystems(text: string): Observable<{[id: string]: CodeSystem}> {
     if (!text || text.length < 1) {
       return of(this.data);
     }
+
     const q = new CodeSystemSearchParams();
     q.textContains = text;
     q.limit = 10_000;
+
     this.loading['search'] = true;
     return this.codeSystemService.search(q).pipe(
       map(ca => ({...this.data, ...group(ca.data, c => c.id!)})),
@@ -59,12 +60,15 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   private loadCodeSystem(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.codeSystemService.load(id).subscribe(c => this.data = {...(this.data || {}), [c.id!]: c}).add(() => this.loading['load'] = false);
+      this.codeSystemService.load(id).subscribe(c => {
+        this.data = {...(this.data || {}), [c.id!]: c};
+      }).add(() => this.loading['load'] = false);
     }
   }
 
+
   public writeValue(obj: CodeSystem | string): void {
-    this.value = (typeof obj === 'object' ? obj?.id : obj);
+    this.value = typeof obj === 'object' ? obj?.id : obj;
     this.loadCodeSystem(this.value);
   }
 
@@ -84,8 +88,8 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
+
   public get isLoading(): boolean {
     return Object.values(this.loading).some(Boolean);
   }
-
 }

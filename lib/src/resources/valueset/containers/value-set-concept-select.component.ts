@@ -18,12 +18,15 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
 
   public data: {[conceptCode: string]: ValueSetConcept} = {};
   public value?: string | string[];
-  public loading: boolean = false;
+  private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
 
-  public constructor(private valueSetService: ValueSetLibService, private conceptService: CodeSystemConceptLibService) {}
+  public constructor(
+    private valueSetService: ValueSetLibService,
+    private conceptService: CodeSystemConceptLibService
+  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["valueSet"] || changes["valueSetVersion"]) {
@@ -31,32 +34,35 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
     }
   }
 
-  public loadConcepts(): void {
+  private loadConcepts(): void {
     if (!this.valueSet) {
       this.value = undefined;
       this.data = {};
       return;
     }
 
-    this.loading = true;
-    const request = !this.valueSetVersion ? this.valueSetService.expand(this.valueSet) :
-      this.valueSetService.expandByVersion(this.valueSet, this.valueSetVersion);
+    const request = !this.valueSetVersion
+      ? this.valueSetService.expand(this.valueSet)
+      : this.valueSetService.expandByVersion(this.valueSet, this.valueSetVersion);
+
+    this.loading['select'] = true;
     request.subscribe(concepts => {
       this.data = group(concepts, c => c.concept!.code!);
-    }).add(() => this.loading = false);
+    }).add(() => this.loading['select'] = false);
   }
 
-  public loadConcept(codes: string[]): void {
+  private loadConcept(codes: string[]): void {
     codes = codes.filter(code => !this.data[code]);
     if (codes.length === 0) {
       return;
     }
-    this.loading = true;
+
+    this.loading['load'] = true;
     this.conceptService.search({code: codes.join(","), limit: 1}).subscribe(r => {
       r.data.forEach(c => this.data[c.code!] = {concept: c});
-    }).add(() => this.loading = false);
-
+    }).add(() => this.loading['load'] = false);
   }
+
 
   public writeValue(obj: CodeSystemConcept | CodeSystemConcept[] | string | string[]): void {
     if (isNil(obj)) {
@@ -94,4 +100,8 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
     this.onTouched = fn;
   }
 
+
+  public get isLoading(): boolean {
+    return Object.values(this.loading).some(Boolean);
+  }
 }

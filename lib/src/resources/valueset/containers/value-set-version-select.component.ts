@@ -16,7 +16,7 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
 
   public data: {[version: string]: ValueSetVersion} = {};
   public value?: string;
-  public loading: boolean = false;
+  private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
@@ -29,27 +29,28 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
     }
   }
 
-  public loadVersions(): void {
+  private loadVersions(): void {
     if (!this.valueSetId) {
       this.value = undefined;
       this.data = {};
       return;
     }
 
-    this.loading = true;
+    this.loading['select'] = true;
     this.valueSetService.loadVersions(this.valueSetId).subscribe(versions => {
       this.data = group(versions, v => v.version!);
-    }).add(() => this.loading = false);
+    }).add(() => this.loading['select'] = false);
   }
 
-  public loadVersion(id?: string): void {
+  private loadVersion(id?: string): void {
     if (isDefined(id) && isDefined(this.valueSetId)) {
-      this.loading = true;
+      this.loading['load'] = true;
       this.valueSetService.loadVersion(this.valueSetId, id).subscribe(v => {
         this.data[v.version!] = v;
-      }).add(() => this.loading = false);
+      }).add(() => this.loading['load'] = false);
     }
   }
+
 
   public writeValue(obj: ValueSetVersion | string): void {
     this.value = (typeof obj === 'object' ? obj?.version : obj);
@@ -72,4 +73,8 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
     this.onTouched = fn;
   }
 
+
+  public get isLoading(): boolean {
+    return Object.values(this.loading).some(Boolean);
+  }
 }

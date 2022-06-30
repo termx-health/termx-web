@@ -17,10 +17,9 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() public codeSystemId?: string;
 
-  public searchUpdate = new Subject<string>();
-
   public data: {[id: string]: CodeSystemEntityVersion} = {};
   public value?: number;
+  public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any) => x;
@@ -43,14 +42,16 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
     this.searchUpdate.next(text);
   }
 
-  public searchEntities(text: string): Observable<{[id: string]: CodeSystemEntityVersion}> {
+  private searchEntities(text: string): Observable<{[id: string]: CodeSystemEntityVersion}> {
     if (!text || text.length === 1 || !this.codeSystemId) {
       return of(this.data);
     }
+
     const q = new CodeSystemEntityVersionQueryParams();
     q.textContains = text;
     q.codeSystem = this.codeSystemId;
     q.limit = 10_000;
+
     this.loading['search'] = true;
     return this.codeSystemService.searchEntityVersions(this.codeSystemId, q).pipe(
       map(cseva => ({...this.data, ...group(cseva.data, csev => csev.id!)})),
@@ -67,6 +68,7 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
         .add(() => this.loading['load'] = false);
     }
   }
+
 
   public writeValue(obj: CodeSystemEntityVersion | number): void {
     this.value = (typeof obj === 'object' ? obj?.id : obj);
@@ -88,6 +90,7 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
+
 
   public get isLoading(): boolean {
     return Object.values(this.loading).some(Boolean);

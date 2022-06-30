@@ -17,7 +17,7 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
 
   public data: {[version: string]: CodeSystemVersion} = {};
   public value?: number;
-  public loading: boolean = false;
+  private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
@@ -33,25 +33,28 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
     }
   }
 
-  public loadSelectData(): void {
+  private loadSelectData(): void {
     if (!this.codeSystemId) {
       this.data = {};
       this.value = undefined;
       return;
     }
 
-    this.loading = true;
+    this.loading['select'] = true;
     this.codeSystemService.loadVersions(this.codeSystemId).subscribe(versions => {
       this.data = group(versions, v => v.id!);
-    }).add(() => this.loading = false);
+    }).add(() => this.loading['select'] = false);
   }
 
-  public loadVersion(id?: number): void {
+  private loadVersion(id?: number): void {
     if (isDefined(id)) {
-      this.loading = true;
-      this.codeSystemVersionService.load(id).subscribe(v => this.data[v.version!] = v).add(() => this.loading = false);
+      this.loading['load'] = true;
+      this.codeSystemVersionService.load(id).subscribe(v => {
+        this.data[v.version!] = v;
+      }).add(() => this.loading['load'] = false);
     }
   }
+
 
   public writeValue(obj: CodeSystemVersion | number): void {
     this.value = (typeof obj === 'object' ? obj?.id : obj);
@@ -74,4 +77,8 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
     this.onTouched = fn;
   }
 
+
+  public get isLoading(): boolean {
+    return Object.values(this.loading).some(Boolean);
+  }
 }
