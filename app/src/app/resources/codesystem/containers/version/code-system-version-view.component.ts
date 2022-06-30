@@ -24,8 +24,8 @@ export class CodeSystemVersionViewComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    const versionCode = this.route.snapshot.paramMap.get('versionCode');
-    this.loadVersion(this.codeSystemId!, versionCode!);
+    const versionId = this.route.snapshot.paramMap.get('versionId');
+    this.loadVersion(this.codeSystemId!, versionId!);
   }
 
   private loadVersion(id: string, versionId: string): void {
