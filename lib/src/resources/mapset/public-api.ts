@@ -1,4 +1,5 @@
 export * from './map-set-lib.module';
+export * from './containers/map-set-search.component';
 export * from './model/map-set';
 export * from './model/map-set-association';
 export * from './model/map-set-association-search-params';

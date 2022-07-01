@@ -18,6 +18,8 @@ import {IntegrationModule} from './integration/integration.module';
 import {ResourcesLibModule} from 'terminology-lib/resources';
 import {FhirLibModule} from 'terminology-lib/fhir';
 import {JobLibModule} from 'terminology-lib/job';
+import {PrivilegeLibModule} from 'terminology-lib/privileges';
+import {PrivilegesModule} from './privileges/privileges.module';
 
 
 registerLocaleData(et);
@@ -48,9 +50,18 @@ export function MarinaUiConfigFactory(): MuiConfig {
       en: true
     },
     users: [
-      {name: "Viewer", accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcml2aWxlZ2VzIjpbImtvZGFsaXR5LmNvZGUtc3lzdGVtLnZpZXciLCJrb2RhbGl0eS52YWx1ZS1zZXQudmlldyIsImtvZGFsaXR5Lm1hcC1zZXQudmlldyIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0udmlldyJdfQ.igl1qqS2SCV9ODjFj3nyepwcPHS_iXXB4MVgs8bsmj8"},
-      {name: "Editor", accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcml2aWxlZ2VzIjpbImtvZGFsaXR5LmNvZGUtc3lzdGVtLnZpZXciLCJrb2RhbGl0eS5jb2RlLXN5c3RlbS5lZGl0Iiwia29kYWxpdHkudmFsdWUtc2V0LnZpZXciLCJrb2RhbGl0eS52YWx1ZS1zZXQuZWRpdCIsImtvZGFsaXR5Lm1hcC1zZXQudmlldyIsImtvZGFsaXR5Lm1hcC1zZXQuZWRpdCIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0udmlldyIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0uZWRpdCJdfQ.8aOAQzBZeZjf2v2Lo0ubjVCH2L9X1lFygA6SUH7w8Uk"},
-      {name: "Publisher", accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcml2aWxlZ2VzIjpbImtvZGFsaXR5LmNvZGUtc3lzdGVtLnZpZXciLCJrb2RhbGl0eS5jb2RlLXN5c3RlbS5wdWJsaXNoIiwia29kYWxpdHkudmFsdWUtc2V0LnZpZXciLCJrb2RhbGl0eS52YWx1ZS1zZXQucHVibGlzaCIsImtvZGFsaXR5Lm1hcC1zZXQudmlldyIsImtvZGFsaXR5Lm1hcC1zZXQucHVibGlzaCIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0udmlldyIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0ucHVibGlzaCJdfQ.z8HnmAyCEwQ0pkrQ1O2wnoCUwJxyP5Mbrptj3jctM08"},
+      {
+        name: "Viewer",
+        accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcml2aWxlZ2VzIjpbImtvZGFsaXR5LmNvZGUtc3lzdGVtLnZpZXciLCJrb2RhbGl0eS52YWx1ZS1zZXQudmlldyIsImtvZGFsaXR5Lm1hcC1zZXQudmlldyIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0udmlldyJdfQ.igl1qqS2SCV9ODjFj3nyepwcPHS_iXXB4MVgs8bsmj8"
+      },
+      {
+        name: "Editor",
+        accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcml2aWxlZ2VzIjpbImtvZGFsaXR5LmNvZGUtc3lzdGVtLnZpZXciLCJrb2RhbGl0eS5jb2RlLXN5c3RlbS5lZGl0Iiwia29kYWxpdHkudmFsdWUtc2V0LnZpZXciLCJrb2RhbGl0eS52YWx1ZS1zZXQuZWRpdCIsImtvZGFsaXR5Lm1hcC1zZXQudmlldyIsImtvZGFsaXR5Lm1hcC1zZXQuZWRpdCIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0udmlldyIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0uZWRpdCJdfQ.8aOAQzBZeZjf2v2Lo0ubjVCH2L9X1lFygA6SUH7w8Uk"
+      },
+      {
+        name: "Publisher",
+        accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcml2aWxlZ2VzIjpbImtvZGFsaXR5LmNvZGUtc3lzdGVtLnZpZXciLCJrb2RhbGl0eS5jb2RlLXN5c3RlbS5wdWJsaXNoIiwia29kYWxpdHkudmFsdWUtc2V0LnZpZXciLCJrb2RhbGl0eS52YWx1ZS1zZXQucHVibGlzaCIsImtvZGFsaXR5Lm1hcC1zZXQudmlldyIsImtvZGFsaXR5Lm1hcC1zZXQucHVibGlzaCIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0udmlldyIsImtvZGFsaXR5Lm5hbWluZy1zeXN0ZW0ucHVibGlzaCJdfQ.z8HnmAyCEwQ0pkrQ1O2wnoCUwJxyP5Mbrptj3jctM08"
+      },
       {name: "Admin", accessToken: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJwcml2aWxlZ2VzIjpbImFkbWluIl19.ByZ0vl71zfIXtpt-PkPTi3icPAaupqoo746jnP3cDkQ"}
     ]
   };
@@ -82,7 +93,10 @@ export function MarinaUiConfigFactory(): MuiConfig {
     FhirLibModule,
     IntegrationModule,
 
-    JobLibModule
+    JobLibModule,
+
+    PrivilegesModule,
+    PrivilegeLibModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},
