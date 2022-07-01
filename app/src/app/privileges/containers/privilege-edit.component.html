@@ -103,7 +103,7 @@
   </ng-container>
 
   <div *m-modal-footer class="tw-button-group">
-    <m-button (click)="resourceModalData.visible = false">
+    <m-button mDisplay="text" (click)="resourceModalData.visible = false">
       {{'core.btn.cancel' | translate}}
     </m-button>
     <m-button mDisplay="primary" (click)="saveResource()">

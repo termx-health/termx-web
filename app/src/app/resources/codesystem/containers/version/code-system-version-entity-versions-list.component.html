@@ -43,11 +43,11 @@
 </m-card>
 
 <m-modal [(mVisible)]="modalVisible" (mClose)="modalVisible = false; modalData = undefined">
-  <ng-container *mModalHeader>
+  <ng-container *m-modal-header>
     {{'web.code-system-version.form.entities.modal.add-header' | translate}}
   </ng-container>
 
-  <ng-container *mModalContent>
+  <ng-container *m-modal-content>
     <form #form="ngForm">
       <m-form-item mName="modalData" mLabel="entities.code-system-entity-version.code" required>
         <twl-code-system-entity-version-search name="modalData"
@@ -59,8 +59,8 @@
     </form>
   </ng-container>
 
-  <ng-container *mModalFooter>
-    <m-button mStyle="margin-right: 0.5em" [disabled]="isLoading" (click)="modalVisible = false">{{'core.btn.close' | translate}}</m-button>
+  <ng-container *m-modal-footer>
+    <m-button mDisplay="text" mStyle="margin-right: 0.5em" [disabled]="isLoading" (click)="modalVisible = false">{{'core.btn.close' | translate}}</m-button>
     <m-button mDisplay="primary" [disabled]="isLoading" [mLoading]="isLoading" (click)="save()">{{'core.btn.add' | translate}}</m-button>
   </ng-container>
 </m-modal>
