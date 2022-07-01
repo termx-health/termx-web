@@ -3,20 +3,20 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
-import {ValueSet} from '../model/value-set';
-import {ValueSetLibService} from '../services/value-set-lib.service';
-import {ValueSetSearchParams} from '../model/value-set-search-params';
+import {MapSet} from '../model/map-set';
+import {MapSetSearchParams} from '../model/map-set-search-params';
+import {MapSetLibService} from '../services/map-set-lib.service';
 
 
 @Component({
-  selector: 'twl-value-set-search',
-  templateUrl: './value-set-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetSearchComponent), multi: true}]
+  selector: 'twl-map-set-search',
+  templateUrl: './map-set-search.component.html',
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MapSetSearchComponent), multi: true}]
 })
-export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
+export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
 
-  public data: {[id: string]: ValueSet} = {};
+  public data: {[id: string]: MapSet} = {};
   public value?: string;
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
@@ -25,14 +25,14 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
   public onTouched = (x: any) => x;
 
   public constructor(
-    private valueSetService: ValueSetLibService,
+    private mapSetLibService: MapSetLibService,
   ) {}
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(
       debounceTime(250),
       distinctUntilChanged(),
-      switchMap(text => this.searchValueSets(text)),
+      switchMap(text => this.searchMapSets(text)),
     ).subscribe(data => this.data = data);
   }
 
@@ -40,34 +40,35 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
     this.searchUpdate.next(text);
   }
 
-  private searchValueSets(text: string): Observable<{[id: string]: ValueSet}> {
+  private searchMapSets(text: string): Observable<{[id: string]: MapSet}> {
     if (!text || text.length < 1) {
       return of(this.data);
     }
-    const q = new ValueSetSearchParams();
+
+    const q = new MapSetSearchParams();
     q.textContains = text;
     q.limit = 10_000;
+
     this.loading['search'] = true;
-    return this.valueSetService.search(q).pipe(
+    return this.mapSetLibService.search(q).pipe(
       map(ca => ({...this.data, ...group(ca.data, c => c.id!)})),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
     );
   }
 
-  private loadValueSet(id?: string): void {
+  private loadMapSet(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.valueSetService.load(id).subscribe(c => {
+      this.mapSetLibService.load(id).subscribe(c => {
         this.data = {...(this.data || {}), [c.id!]: c};
       }).add(() => this.loading['load'] = false);
     }
   }
 
-
-  public writeValue(obj: ValueSet | string): void {
+  public writeValue(obj: MapSet | string): void {
     this.value = typeof obj === 'object' ? obj?.id : obj;
-    this.loadValueSet(this.value);
+    this.loadMapSet(this.value);
   }
 
   public fireOnChange(): void {
