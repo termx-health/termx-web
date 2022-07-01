@@ -3,20 +3,20 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
-import {ValueSet} from '../model/value-set';
-import {ValueSetLibService} from '../services/value-set-lib.service';
-import {ValueSetSearchParams} from '../model/value-set-search-params';
+import {NamingSystem} from '../model/naming-system';
+import {NamingSystemLibService} from '../services/naming-system-lib.service';
+import {NamingSystemSearchParams} from '../model/naming-system-search-params';
 
 
 @Component({
-  selector: 'twl-value-set-search',
-  templateUrl: './value-set-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetSearchComponent), multi: true}]
+  selector: 'twl-naming-system-search',
+  templateUrl: './naming-system-search.component.html',
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NamingSystemSearchComponent), multi: true}]
 })
-export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
+export class NamingSystemSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
 
-  public data: {[id: string]: ValueSet} = {};
+  public data: {[id: string]: NamingSystem} = {};
   public value?: string;
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
@@ -25,14 +25,14 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
   public onTouched = (x: any) => x;
 
   public constructor(
-    private valueSetService: ValueSetLibService,
+    private namingSystemLibService: NamingSystemLibService,
   ) {}
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(
       debounceTime(250),
       distinctUntilChanged(),
-      switchMap(text => this.searchValueSets(text)),
+      switchMap(text => this.searchNamingSystems(text)),
     ).subscribe(data => this.data = data);
   }
 
@@ -40,34 +40,36 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
     this.searchUpdate.next(text);
   }
 
-  private searchValueSets(text: string): Observable<{[id: string]: ValueSet}> {
+  private searchNamingSystems(text: string): Observable<{[id: string]: NamingSystem}> {
     if (!text || text.length < 1) {
       return of(this.data);
     }
-    const q = new ValueSetSearchParams();
+
+    const q = new NamingSystemSearchParams();
     q.textContains = text;
     q.limit = 10_000;
+
     this.loading['search'] = true;
-    return this.valueSetService.search(q).pipe(
+    return this.namingSystemLibService.search(q).pipe(
       map(ca => ({...this.data, ...group(ca.data, c => c.id!)})),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
     );
   }
 
-  private loadValueSet(id?: string): void {
+  private loadNamingSystem(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.valueSetService.load(id).subscribe(c => {
+      this.namingSystemLibService.load(id).subscribe(c => {
         this.data = {...(this.data || {}), [c.id!]: c};
       }).add(() => this.loading['load'] = false);
     }
   }
 
 
-  public writeValue(obj: ValueSet | string): void {
+  public writeValue(obj: NamingSystem | string): void {
     this.value = typeof obj === 'object' ? obj?.id : obj;
-    this.loadValueSet(this.value);
+    this.loadNamingSystem(this.value);
   }
 
   public fireOnChange(): void {

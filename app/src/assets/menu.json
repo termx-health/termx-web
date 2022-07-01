@@ -43,5 +43,13 @@
     },
     "icon": "interaction",
     "link": "integration"
+  },
+  {
+    "label": {
+      "en": "Privileges",
+      "et": "Privileegid"
+    },
+    "icon": "key",
+    "link": "privileges"
   }
 ]
