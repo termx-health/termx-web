@@ -1,11 +1,3 @@
-<m-page-header class="m-raised" mTitle="web.app.header" (mLangChange)="onLangChange($event)"></m-page-header>
-
-<div class="m-page-layout">
-  <div class="m-page-layout--sidebar">
-    <m-menu [mMenuItems]="menu" class="m-raised"></m-menu>
-  </div>
-  <div class="m-page-layout--content" m-scrollable>
-    <router-outlet></router-outlet>
-  </div>
-</div>
-
+<m-page-layout mTitle="web.app.header" [menu]="menu" (mLangChange)="onLangChange($event)">
+  <router-outlet></router-outlet>
+</m-page-layout>
