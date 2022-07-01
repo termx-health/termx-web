@@ -296,6 +296,36 @@
         "code-system-description": "CodeSystem description",
         "code-system-version-description": "CodeSystem version description"
       }
+    },
+    "privileges": {
+      "privileges": "Privileges",
+      "table": {
+        "add-privilege": "Add privilege",
+        "delete-privilege": "Delete privilege"
+      },
+      "list": {
+      },
+      "add-header": "Add privilege",
+      "edit-header": "Edit privilege",
+      "resources": {
+        "table": {
+          "add-resource": "Add resource",
+          "delete-resource": "Delete resource",
+          "head": "Resources"
+        },
+        "modal": {
+          "add-header": "Add resource",
+          "edit-header": "Edit resource",
+          "resource-type": "Type",
+          "resource-id": "Resource",
+          "type": {
+            "code-system": "CodeSystem",
+            "value-set": "ValueSet",
+            "map-set": "MapSet",
+            "naming-system": "NamingSystem"
+          }
+        }
+      }
     }
   },
   "entities": {
@@ -441,6 +471,15 @@
       "concept": "Concept",
       "display": "Display",
       "additional-designations": "Additional designations"
+    },
+    "privilege": {
+      "code": "Code",
+      "name": "Name",
+      "resources": "Resources"
+    },
+    "privilege-resource": {
+      "type": "Type",
+      "resource-id": "Resource"
     }
   }
 }

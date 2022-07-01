@@ -1,0 +1,114 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading">
+      <m-card [mTitle]="mode === 'edit' ? 'web.privileges.edit-header' : 'web.privileges.add-header'">
+        <form #form="ngForm" *ngIf="privilege">
+          <m-form-item mName="code" mLabel="entities.privilege.code" required>
+            <m-input name="code" [(ngModel)]="privilege.code" required></m-input>
+          </m-form-item>
+          <m-form-item mName="name" mLabel="entities.privilege.name">
+            <m-multi-language-input name="name" [(ngModel)]="privilege.names"></m-multi-language-input>
+          </m-form-item>
+        </form>
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+
+        <m-card class="m-card-inside">
+          <div *m-card-header class="m-items-between">
+            <div class="m-card-title">
+              {{'web.privileges.resources.table.head' | translate}}
+            </div>
+            <twa-add-button (click)="openResourceModal()">
+              {{'web.privileges.resources.table.add-resource' | translate}}
+            </twa-add-button>
+          </div>
+          <m-table [mData]="resourceMap | keys">
+            <tr *mTableHead>
+              <th>{{'entities.privilege-resource.type' | translate}}</th>
+              <th>{{'entities.privilege-resource.resource-id' | translate}}</th>
+              <th class="tw-table-actions"></th>
+            </tr>
+            <ng-container *mTableRow="let key;">
+              <tr *ngFor="let resource of resourceMap[key]; let isFirst = first; let index = index">
+                <td *ngIf="isFirst" class="tw-table-min-width" [rowSpan]="resourceMap[key].length">{{resource.resourceType}}</td>
+                <td>
+                  <a (click)="openResourceModal({key, index})">
+                    <m-abbreviate [mValue]="resource.resourceId" [mLength]="35"></m-abbreviate>
+                  </a>
+                </td>
+                <td class="tw-table-actions">
+                  <m-dropdown>
+                    <a *m-dropdown-item (click)="deleteResource(key, index)">
+                      {{'web.privileges.resources.table.delete-resource' | translate}}
+                    </a>
+                  </m-dropdown>
+                </td>
+
+              </tr>
+            </ng-container>
+
+            <tr *mTableNoData>
+              <td colspan="3">
+                <m-no-data></m-no-data>
+              </td>
+            </tr>
+            <pre>{{this.resourceMap | json}}</pre>
+          </m-table>
+        </m-card>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>
+
+<m-modal [(mVisible)]="resourceModalData.visible" (mClose)="resourceModalData = {visible: false}">
+  <ng-container *mModalHeader>
+    {{(resourceModalData.editKey ? 'web.privileges.resources.modal.edit-header' : 'web.privileges.resources.modal.add-header') | translate}}
+  </ng-container>
+
+  <ng-container *mModalContent>
+    <form #resourceForm="ngForm">
+      <m-form-item mName="resourceType" mLabel="web.privileges.resources.modal.resource-type" required>
+        <m-select name="resourceType" [(ngModel)]="resourceModalData.resource.resourceType" required>
+          <m-option label="web.privileges.resources.modal.type.code-system" value="CodeSystem"></m-option>
+          <m-option label="web.privileges.resources.modal.type.value-set" value="ValueSet"></m-option>
+          <m-option label="web.privileges.resources.modal.type.map-set" value="MapSet"></m-option>
+          <m-option label="web.privileges.resources.modal.type.naming-system" value="NamingSystem"></m-option>
+        </m-select>
+      </m-form-item>
+      <m-form-item *ngIf="resourceModalData.resource.resourceType" mName="resourceId" mLabel="web.privileges.resources.modal.resource-id" required>
+        <twl-code-system-search name="resourceId"
+            *ngIf="resourceModalData.resource.resourceType === 'CodeSystem'"
+            [(ngModel)]="resourceModalData.resource.resourceId"
+            valuePrimitive
+            required></twl-code-system-search>
+        <twl-value-set-search name="resourceId"
+            *ngIf="resourceModalData.resource.resourceType === 'ValueSet'"
+            [(ngModel)]="resourceModalData.resource.resourceId"
+            valuePrimitive
+            required></twl-value-set-search>
+        <twl-map-set-search name="resourceId"
+            *ngIf="resourceModalData.resource.resourceType === 'MapSet'"
+            [(ngModel)]="resourceModalData.resource.resourceId"
+            valuePrimitive
+            required></twl-map-set-search>
+        <twl-naming-system-search name="resourceId"
+            *ngIf="resourceModalData.resource.resourceType === 'NamingSystem'"
+            [(ngModel)]="resourceModalData.resource.resourceId"
+            valuePrimitive
+            required></twl-naming-system-search>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="tw-button-group">
+    <m-button (click)="resourceModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="saveResource()">
+      {{(resourceModalData.editKey ? 'core.btn.confirm' : 'core.btn.add') | translate}}
+    </m-button>
+  </div>
+</m-modal>
