@@ -11,7 +11,7 @@ import {collect, copyDeep, isDefined, validateForm} from '@kodality-web/core-uti
 })
 export class PrivilegeEditComponent implements OnInit {
   public privilege?: Privilege;
-  public resourceMap?: {[id: string]: PrivilegeResource[]} = {};
+  public resourceMap?: {[type: string]: PrivilegeResource[]} = {};
 
   public resourceModalData: {
     resource?: PrivilegeResource;
@@ -45,10 +45,10 @@ export class PrivilegeEditComponent implements OnInit {
 
   private loadPrivilege(privilegeId: number): void {
     this.loading = true;
-    this.privilegeService.load(privilegeId).subscribe(c => this.privilege = c).add(() => {
+    this.privilegeService.load(privilegeId).subscribe(c => {
+      this.privilege = c;
       this.resourceMap = collect(this.privilege?.resources || [], p => p.resourceType!);
-      this.loading = false;
-    });
+    }).add(() => this.loading = false);
   }
 
   public save(): void {
@@ -78,6 +78,9 @@ export class PrivilegeEditComponent implements OnInit {
   public deleteResource(key: string, index: number): void {
     this.resourceMap![key].splice(index, 1);
     this.resourceMap = {...this.resourceMap};
+    if (this.resourceMap[key].length === 0) {
+      delete this.resourceMap[key];
+    }
     this.fireOnChange();
   }
 
