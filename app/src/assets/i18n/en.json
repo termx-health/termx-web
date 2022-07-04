@@ -176,7 +176,8 @@
         "add-header": "Create a new value set",
         "edit-header": "Edit value set",
         "versions": {
-          "add-version": "Add version"
+          "add-version": "Add version",
+          "export-fhir": "Export FHIR json"
         }
       }
     },
@@ -429,6 +430,7 @@
       "name": "Name",
       "uri": "Uniform resource identifier (URI)",
       "uri-short": "URI",
+      "narrative": "Narrative",
       "description": "Description",
       "status": "Status",
       "versions": "Versions",

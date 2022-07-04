@@ -1,4 +1,4 @@
-import {CodeSystemEntityVersion, CodeSystemEntityVersionQueryParams} from 'terminology-lib/resources';
+import {CodeSystemEntityVersion, CodeSystemEntityVersionSearchParams} from 'terminology-lib/resources';
 import {debounceTime, distinctUntilChanged, finalize, Observable, of, Subject, switchMap} from 'rxjs';
 import {BooleanInput, copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../services/code-system.service';
@@ -21,7 +21,7 @@ export class CodeSystemVersionEntityVersionsListComponent implements OnInit {
   public modalVisible = false;
   public modalData?: CodeSystemEntityVersion;
 
-  public query = new CodeSystemEntityVersionQueryParams();
+  public query = new CodeSystemEntityVersionSearchParams();
   public searchInput: string = "";
   public searchUpdate = new Subject<string>();
   public searchResult: SearchResult<CodeSystemEntityVersion> = SearchResult.empty();

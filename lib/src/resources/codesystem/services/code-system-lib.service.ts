@@ -10,10 +10,11 @@ import {CodeSystemConcept} from '../model/code-system-concept';
 import {ConceptSearchParams} from '../model/concept-search-params';
 import {EntityPropertySearchParams} from '../model/entity-property-search-params';
 import {EntityProperty, EntityPropertyValue} from '../model/entity-property';
-import {CodeSystemEntityVersionQueryParams} from '../model/code-system-entity-version-search-params';
+import {CodeSystemEntityVersionSearchParams} from '../model/code-system-entity-version-search-params';
 import {CodeSystemEntityVersion} from '../model/code-system-entity';
 import {CodeSystemSupplement} from '../model/code-system-supplement';
 import {Designation} from '../../designation';
+import {CodeSystemVersionSearchParams} from '../model/code-system-version-search-params';
 
 @Injectable()
 export class CodeSystemLibService {
@@ -23,16 +24,12 @@ export class CodeSystemLibService {
     this.baseUrl = `${api}/ts/code-systems`;
   }
 
-  public load(codeSystemId: string): Observable<CodeSystem> {
-    return this.http.get<CodeSystem>(`${this.baseUrl}/${codeSystemId}`);
+  public load(codeSystemId: string, decorate?: boolean): Observable<CodeSystem> {
+    return this.http.get<CodeSystem>(`${this.baseUrl}/${codeSystemId}?decorate=${decorate}`);
   }
 
   public loadVersion(codeSystemId: string, version: string): Observable<CodeSystemVersion> {
     return this.http.get<CodeSystemVersion>(`${this.baseUrl}/${codeSystemId}/versions/${version}`);
-  }
-
-  public loadVersions(codeSystemId: string): Observable<CodeSystemVersion[]> {
-    return this.http.get<CodeSystemVersion[]>(`${this.baseUrl}/${codeSystemId}/versions`);
   }
 
   public loadConcept(codeSystemId: string, conceptCode: string): Observable<CodeSystemConcept> {
@@ -59,6 +56,10 @@ export class CodeSystemLibService {
     return this.http.get<SearchResult<CodeSystem>>(this.baseUrl, {params: SearchHttpParams.build(params)});
   }
 
+  public searchVersions(codeSystemId: string, params: CodeSystemVersionSearchParams = {}): Observable<SearchResult<CodeSystemVersion>> {
+    return this.http.get<SearchResult<CodeSystemVersion>>(`${this.baseUrl}/${codeSystemId}/versions`, {params: SearchHttpParams.build(params)});
+  }
+
   public searchConcepts(codeSystemId: string, params: ConceptSearchParams): Observable<SearchResult<CodeSystemConcept>> {
     return this.http.get<SearchResult<CodeSystemConcept>>(`${this.baseUrl}/${codeSystemId}/concepts`, {params: SearchHttpParams.build(params)});
   }
@@ -67,7 +68,7 @@ export class CodeSystemLibService {
     return this.http.get<SearchResult<EntityProperty>>(`${this.baseUrl}/${codeSystemId}/entity-properties`, {params: SearchHttpParams.build(params)});
   }
 
-  public searchEntityVersions(codeSystemId: string, params: CodeSystemEntityVersionQueryParams = {}): Observable<SearchResult<CodeSystemEntityVersion>> {
+  public searchEntityVersions(codeSystemId: string, params: CodeSystemEntityVersionSearchParams = {}): Observable<SearchResult<CodeSystemEntityVersion>> {
     return this.http.get<SearchResult<CodeSystemEntityVersion>>(`${this.baseUrl}/${codeSystemId}/entity-versions`, {params: SearchHttpParams.build(params)});
   }
 }

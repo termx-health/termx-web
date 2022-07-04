@@ -42,10 +42,10 @@ export class FinderCodeSystemViewComponent implements OnInit {
       this.loading['general'] = true;
       forkJoin([
         this.codeSystemService.load(id),
-        this.codeSystemService.loadVersions(id)
+        this.codeSystemService.searchVersions(id, {limit: -1})
       ]).subscribe(([cs, versions]) => {
         this.codeSystem = cs;
-        this.versions = versions;
+        this.versions = versions.data;
       }).add(() => this.loading['general'] = false);
 
       this.loadConcepts(id);

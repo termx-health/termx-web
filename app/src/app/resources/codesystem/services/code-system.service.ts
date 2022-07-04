@@ -41,6 +41,9 @@ export class CodeSystemService extends CodeSystemLibService {
   }
 
   public saveConcept(codeSystemId: string, concept: CodeSystemConcept): Observable<CodeSystemConcept> {
+    if (concept.id) {
+      return this.http.put(`${this.baseUrl}/${codeSystemId}/concepts/${concept.id}`, concept);
+    }
     return this.http.post(`${this.baseUrl}/${codeSystemId}/concepts`, concept);
   }
 

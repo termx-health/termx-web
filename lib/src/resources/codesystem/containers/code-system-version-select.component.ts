@@ -41,8 +41,8 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
     }
 
     this.loading['select'] = true;
-    this.codeSystemService.loadVersions(this.codeSystemId).subscribe(versions => {
-      this.data = group(versions, v => v.id!);
+    this.codeSystemService.searchVersions(this.codeSystemId, {limit: -1}).subscribe(versions => {
+      this.data = group(versions.data, v => v.id!);
     }).add(() => this.loading['select'] = false);
   }
 
