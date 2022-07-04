@@ -95,6 +95,12 @@ export class PrivilegeEditComponent implements OnInit {
     };
   }
 
+  public filter = (resource: {id?: string}) => {
+    const resourceType = this.resourceModalData.resource!.resourceType!;
+    const resourceIds = (this.resourceMap?.[resourceType] || []).map(r => r.resourceId);
+    return !resourceIds.includes(resource.id);
+  };
+
   private fireOnChange(): void {
     this.privilege!.resources = Object.values(this.resourceMap || []).flat();
   }
