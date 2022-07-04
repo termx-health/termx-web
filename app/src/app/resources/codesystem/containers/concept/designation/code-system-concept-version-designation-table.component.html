@@ -48,7 +48,7 @@
           </td>
           <td>{{designation.language | localizedConceptName: {valueSet: 'languages'} | async}}</td>
           <td class="tw-table-min-width">
-            <m-icon *ngIf="designation.supplementId" [mCode]="'block'" m-popover mContent="Supplement"></m-icon> <!--todo better icon for supplement-->
+            <m-icon *ngIf="designation.supplementId" [mCode]="'block'" m-popover [mContent]="'web.supplement.supplement' | translate"></m-icon> <!--todo better icon for supplement-->
           </td>
           <td class="tw-table-min-width">
             <twa-status-tag [status]="designation.status"></twa-status-tag>

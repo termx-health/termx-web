@@ -16,7 +16,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 })
 export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
-  @Input() public filter?: (resource: {id?: string}) => boolean;
+  @Input() public filter?: (resource: MapSet) => boolean;
 
   public data: {[id: string]: MapSet} = {};
   public value?: string;
@@ -53,7 +53,7 @@ export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
 
     this.loading['search'] = true;
     return this.mapSetLibService.search(q).pipe(
-      map(ca => ({...group(ca.data, c => c.id!)})),
+      map(ca => group(ca.data, c => c.id!)),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
     );
@@ -89,8 +89,8 @@ export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  public _filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean =>  {
-    return  !this.filter || this.filter(this.data[nzValue]);
+  public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
+    return !this.filter || this.filter(this.data[nzValue]);
   };
 
 

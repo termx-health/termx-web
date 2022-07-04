@@ -16,7 +16,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 })
 export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
-  @Input() public filter?: (resource: {id?: string}) => boolean;
+  @Input() public filter?: (resource: ValueSet) => boolean;
 
   public data: {[id: string]: ValueSet} = {};
   public value?: string;
@@ -51,7 +51,7 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
     q.limit = 10_000;
     this.loading['search'] = true;
     return this.valueSetService.search(q).pipe(
-      map(ca => ({...group(ca.data, c => c.id!)})),
+      map(ca => group(ca.data, c => c.id!)),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
     );
@@ -88,7 +88,7 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  public _filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
+  public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
     return !this.filter || this.filter(this.data[nzValue]);
   };
 

@@ -16,7 +16,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 })
 export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
-  @Input() public filter?: (resource: {id?: string}) => boolean;
+  @Input() public filter?: (resource: CodeSystem) => boolean;
 
   public data: {[id: string]: CodeSystem} = {};
   public value?: string;
@@ -53,7 +53,7 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
 
     this.loading['search'] = true;
     return this.codeSystemService.search(q).pipe(
-      map(ca => ({...group(ca.data, c => c.id!)})),
+      map(ca => group(ca.data, c => c.id!)),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
     );
@@ -90,8 +90,8 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  public _filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean =>  {
-    return  !this.filter || this.filter(this.data[nzValue]);
+  public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
+    return !this.filter || this.filter(this.data[nzValue]);
   };
 
 
