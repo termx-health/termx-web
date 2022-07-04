@@ -81,21 +81,25 @@
         <twl-code-system-search name="resourceId"
             *ngIf="resourceModalData.resource.resourceType === 'CodeSystem'"
             [(ngModel)]="resourceModalData.resource.resourceId"
+            [filter]="filter"
             valuePrimitive
             required></twl-code-system-search>
         <twl-value-set-search name="resourceId"
             *ngIf="resourceModalData.resource.resourceType === 'ValueSet'"
             [(ngModel)]="resourceModalData.resource.resourceId"
+            [filter]="filter"
             valuePrimitive
             required></twl-value-set-search>
         <twl-map-set-search name="resourceId"
             *ngIf="resourceModalData.resource.resourceType === 'MapSet'"
             [(ngModel)]="resourceModalData.resource.resourceId"
+            [filter]="filter"
             valuePrimitive
             required></twl-map-set-search>
         <twl-naming-system-search name="resourceId"
             *ngIf="resourceModalData.resource.resourceType === 'NamingSystem'"
             [(ngModel)]="resourceModalData.resource.resourceId"
+            [filter]="filter"
             valuePrimitive
             required></twl-naming-system-search>
       </m-form-item>

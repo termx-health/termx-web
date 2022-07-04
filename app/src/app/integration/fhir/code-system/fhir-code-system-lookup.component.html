@@ -9,7 +9,7 @@
       <m-button mDisplay="primary" [disabled]="!data.code || !data.system" (click)="lookUp()">{{'web.integration.send-request' | translate}}</m-button>
     </div>
 
-    <m-form-item [mLabel]="code">
+    <m-form-item [mLabel]="code" required>
       <ng-template #code>
         <div>{{'web.integration.fhir.code-system.lookup.code' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The code that is to be located. If a code is provided, a system must be provided"></m-icon>
@@ -17,7 +17,7 @@
       <m-input [(ngModel)]="data.code"></m-input>
     </m-form-item>
 
-    <m-form-item [mLabel]="system">
+    <m-form-item [mLabel]="system" required>
       <ng-template #system>
         <div>{{'web.integration.fhir.code-system.lookup.system' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The system for the code that is to be located"></m-icon>

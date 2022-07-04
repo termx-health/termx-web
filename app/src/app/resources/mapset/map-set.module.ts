@@ -16,8 +16,8 @@ export const MAP_SET_ROUTES: Routes = [
   {path: 'add', component: MapSetEditComponent},
   {path: ':id/edit', component: MapSetEditComponent},
   {path: ':id/versions/add', component: MapSetVersionEditComponent},
-  {path: ':id/versions/:version/edit', component: MapSetVersionEditComponent},
-  {path: ':id/versions/:version/view', component: MapSetVersionViewComponent},
+  {path: ':id/versions/:versionId/edit', component: MapSetVersionEditComponent},
+  {path: ':id/versions/:versionId/view', component: MapSetVersionViewComponent},
 ];
 
 @NgModule({
