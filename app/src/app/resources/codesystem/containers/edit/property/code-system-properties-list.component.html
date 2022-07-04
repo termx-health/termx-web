@@ -3,7 +3,6 @@
     <div class="m-card-title">
       {{'entities.code-system.properties' | translate}}
     </div>
-
     <m-dropdown>
       <twa-add-button *m-dropdown-container icon="down" placement="right">
         {{'web.code-system.form.properties.add-property' | translate}}
@@ -18,7 +17,7 @@
     </m-dropdown>
   </div>
 
-  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+  <m-table [mData]="properties" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
     <tr *mTableHead>
       <th>{{'entities.entity-property.name' | translate}}</th>
       <th>{{'entities.entity-property.type' | translate}}</th>
@@ -54,5 +53,5 @@
         <m-no-data></m-no-data>
       </td>
     </tr>
-  </m-backend-table>
+  </m-table>
 </m-card>

@@ -3,10 +3,10 @@ import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
 import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {CodeSystemEntityVersion} from '../model/code-system-entity';
-import {CodeSystemEntityVersionQueryParams} from '../model/code-system-entity-version-search-params';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CodeSystemEntityVersionLibService} from '../services/code-system-entity-version-lib.service';
 import {CodeSystemLibService} from '../services/code-system-lib.service';
+import {CodeSystemEntityVersionSearchParams} from '../model/code-system-entity-version-search-params';
 
 @Component({
   selector: 'twl-code-system-entity-version-search',
@@ -47,7 +47,7 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
       return of(this.data);
     }
 
-    const q = new CodeSystemEntityVersionQueryParams();
+    const q = new CodeSystemEntityVersionSearchParams();
     q.textContains = text;
     q.codeSystem = this.codeSystemId;
     q.limit = 10_000;

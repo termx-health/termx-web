@@ -12,6 +12,10 @@ export class FhirValueSetLibService {
     this.baseUrl = `${api}/fhir/ValueSet`;
   }
 
+  public loadValueSet(id: number): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`);
+  }
+
   public import(urls: FhirParameters): Observable<FhirParameters> {
     return this.http.post<FhirParameters>(`${this.baseUrl}/$sync`, urls);
   }

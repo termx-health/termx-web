@@ -24,6 +24,9 @@
       <td class="tw-table-min-width"><twa-status-tag [status]="version.status"></twa-status-tag></td>
       <td class="tw-table-actions">
         <m-dropdown>
+          <a *m-dropdown-item (click)="exportFhirFormatVersion(version.id)">
+            {{'web.value-set.form.versions.export-fhir' | translate}}
+          </a>
           <a *mDropdownItemIf="version.status !== 'retired'" (click)="retireVersion(version)">
             {{'web.publication-status.operations.retire' | translate}}
           </a>

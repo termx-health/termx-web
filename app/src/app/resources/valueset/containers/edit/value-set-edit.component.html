@@ -19,6 +19,20 @@
             <m-textarea name="description" [(ngModel)]="valueSet.description"></m-textarea>
           </m-form-item>
 
+          <m-form-item mName="narrative" [mLabel]="narrativeHeader">
+            <ng-template #narrativeHeader>
+              <div class="m-items-between">
+                <div>{{'entities.value-set.narrative' | translate}}</div>
+                <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
+                  <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
+                </m-button>
+              </div>
+            </ng-template>
+
+            <m-rich-text-editor *ngIf="!narrativeRaw" [(ngModel)]="valueSet.narrative" name="narrative"></m-rich-text-editor>
+            <m-textarea *ngIf="narrativeRaw" [(ngModel)]="valueSet.narrative" name="narrative"></m-textarea>
+          </m-form-item>
+
           <twa-value-set-versions-list *ngIf="mode === 'edit'" [valueSetId]="valueSetId"></twa-value-set-versions-list>
           <twa-contact-list *ngIf="valueSet" [(contacts)]="valueSet.contacts"></twa-contact-list>
 

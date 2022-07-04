@@ -10,6 +10,7 @@ export * from './model/code-system-entity';
 export * from './model/code-system-entity-version-search-params';
 export * from './model/code-system-search-params';
 export * from './model/code-system-version';
+export * from './model/code-system-version-search-params';
 export * from './model/concept-search-params';
 export * from './model/entity-property';
 export * from './model/entity-property-search-params';

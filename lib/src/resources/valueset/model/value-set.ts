@@ -7,6 +7,7 @@ export class ValueSet {
   public names?: LocalizedName;
   public uri?: string;
   public description?: string;
+  public narrative?: string;
   public status?: string;
   public versions?: ValueSetVersion[];
   public contacts?: ContactDetail[];

@@ -37,7 +37,7 @@ export class CodeSystemEditComponent implements OnInit {
 
     if (this.mode === 'edit') {
       this.loading = true;
-      this.codeSystemService.load(this.codeSystemId!).subscribe(cs => this.codeSystem = cs).add(() => this.loading = false);
+      this.codeSystemService.load(this.codeSystemId!, true).subscribe(cs => this.codeSystem = cs).add(() => this.loading = false);
     }
   }
 

@@ -16,6 +16,7 @@ export class ValueSetEditComponent implements OnInit {
 
   public mode: 'add' | 'edit' = 'add';
   public loading = false;
+  public narrativeRaw = false;
 
   @ViewChild("form") public form?: NgForm;
 

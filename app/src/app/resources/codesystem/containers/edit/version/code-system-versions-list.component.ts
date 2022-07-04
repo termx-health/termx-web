@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {CodeSystemVersion} from 'terminology-lib/resources';
 import {FhirCodeSystemLibService} from 'terminology-lib/fhir';
@@ -9,10 +9,9 @@ import {saveAs} from 'file-saver';
   selector: 'twa-code-system-versions-list',
   templateUrl: 'code-system-versions-list.component.html',
 })
-export class CodeSystemVersionsListComponent implements OnChanges {
+export class CodeSystemVersionsListComponent {
   @Input() public codeSystemId?: string;
-
-  public versions: CodeSystemVersion[] = [];
+  @Input() public versions: CodeSystemVersion[] = [];
   public loading = false;
 
   public constructor(
@@ -20,19 +19,13 @@ export class CodeSystemVersionsListComponent implements OnChanges {
     private integrationFhirLibService: FhirCodeSystemLibService
   ) {}
 
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["codeSystemId"]?.currentValue) {
-      this.loadVersions();
-    }
-  }
-
   public loadVersions(): void {
     if (!this.codeSystemId) {
       return;
     }
     this.loading = true;
-    this.codeSystemService.loadVersions(this.codeSystemId)
-      .subscribe(versions => this.versions = versions)
+    this.codeSystemService.searchVersions(this.codeSystemId, {limit: -1})
+      .subscribe(versions => this.versions = versions.data)
       .add(() => this.loading = false);
   }
 

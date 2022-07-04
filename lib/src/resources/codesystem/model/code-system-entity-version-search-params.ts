@@ -1,6 +1,6 @@
 import {QueryParams} from '@kodality-web/core-util';
 
-export class CodeSystemEntityVersionQueryParams extends QueryParams {
+export class CodeSystemEntityVersionSearchParams extends QueryParams {
   public code?: string;
   public codeContains?: string;
   public descriptionContains?: string;
