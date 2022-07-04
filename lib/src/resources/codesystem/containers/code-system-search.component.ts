@@ -6,6 +6,7 @@ import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
 import {CodeSystem} from '../model/code-system';
 import {CodeSystemLibService} from '../services/code-system-lib.service';
 import {CodeSystemSearchParams} from '../model/code-system-search-params';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 
 @Component({
@@ -15,6 +16,7 @@ import {CodeSystemSearchParams} from '../model/code-system-search-params';
 })
 export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() public filter?: (resource: CodeSystem) => boolean;
 
   public data: {[id: string]: CodeSystem} = {};
   public value?: string;
@@ -51,7 +53,7 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
 
     this.loading['search'] = true;
     return this.codeSystemService.search(q).pipe(
-      map(ca => ({...this.data, ...group(ca.data, c => c.id!)})),
+      map(ca => group(ca.data, c => c.id!)),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
     );
@@ -87,6 +89,10 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
+
+  public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
+    return !this.filter || this.filter(this.data[nzValue]);
+  };
 
 
   public get isLoading(): boolean {

@@ -34,6 +34,7 @@
       }
     },
     "supplement": {
+      "supplement": "Supplement",
       "form": {
         "property": {
           "edit-header": "Edit property supplement",

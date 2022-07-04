@@ -9,7 +9,7 @@
       <m-button mDisplay="primary" [disabled]="urls.length === 0" (click)="importUrls()">{{'web.integration.send-request' | translate}}</m-button>
     </div>
 
-    <m-form-item [mLabel]="label">
+    <m-form-item [mLabel]="label" required>
       <ng-template #label>
         URL:&nbsp;
         <m-icon mCode="info-circle" m-popover [mTitle]="source + ' resource JSON url'" [mContent]="info"></m-icon>
