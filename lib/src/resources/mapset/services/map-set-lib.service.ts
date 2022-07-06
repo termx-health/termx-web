@@ -34,6 +34,10 @@ export class MapSetLibService {
     return this.http.get<MapSetVersion[]>(`${this.baseUrl}/${mapSetId}/versions`);
   }
 
+  public loadAssociation(mapSetId: string, associationId: number): Observable<MapSetAssociation> {
+    return this.http.get<MapSetAssociation>(`${this.baseUrl}/${mapSetId}/associations/${associationId}`);
+  }
+
   public searchAssociations(mapSetId: string, params: MapSetAssociationSearchParams = {}): Observable<SearchResult<MapSetAssociation>> {
     return this.http.get<SearchResult<MapSetAssociation>>(`${this.baseUrl}/${mapSetId}/associations`, {params: SearchHttpParams.build(params)});
   }
