@@ -10,6 +10,7 @@ import {MapSetVersionEditComponent} from './containers/version/map-set-version-e
 import {MapSetVersionViewComponent} from './containers/version/map-set-version-view.component';
 import {MapSetAssociationListComponent} from './containers/edit/map-set-association-list.component';
 import {ResourcesLibModule} from 'terminology-lib/resources';
+import {MapSetAssociationEditComponent} from './containers/association/map-set-association-edit.component';
 
 
 export const MAP_SET_ROUTES: Routes = [
@@ -18,6 +19,8 @@ export const MAP_SET_ROUTES: Routes = [
   {path: ':id/versions/add', component: MapSetVersionEditComponent},
   {path: ':id/versions/:versionId/edit', component: MapSetVersionEditComponent},
   {path: ':id/versions/:versionId/view', component: MapSetVersionViewComponent},
+  {path: ':id/associations/add', component: MapSetAssociationEditComponent},
+  {path: ':id/associations/:associationId/edit', component: MapSetAssociationEditComponent},
 ];
 
 @NgModule({
@@ -35,7 +38,8 @@ export const MAP_SET_ROUTES: Routes = [
     MapSetVersionsListComponent,
     MapSetVersionEditComponent,
     MapSetVersionViewComponent,
-    MapSetAssociationListComponent
+    MapSetAssociationListComponent,
+    MapSetAssociationEditComponent
   ],
   providers: [
     MapSetService

@@ -250,10 +250,39 @@
         "status": "Status",
         "concept": "Concept"
       },
+      "form": {
+        "add-header": "Add association",
+        "edit-header": "Edit association",
+        "source-system": "Source code system",
+        "source-concept": "Source concept",
+        "target-system": "Target code system",
+        "target-concept": "Target concept",
+        "type": "Association type",
+        "status": "Status",
+        "version": {
+          "table": {
+            "versions": "Versions",
+            "add-version": "Add version",
+            "id": "Id",
+            "created-at": "Created at",
+            "description": "Description",
+            "status": "Status",
+            "activate": "Activate version",
+            "retire": "Retire version"
+          },
+          "modal": {
+            "edit-header": "Edit entity version",
+            "add-header": "Add entity version",
+            "description": "Description"
+          }
+
+        }
+      },
       "list": {
         "code-system": "Code System",
         "operations": "Operations",
-        "associations": "Associations"
+        "associations": "Associations",
+        "add-association": "Add association"
       }
     },
     "integration": {
