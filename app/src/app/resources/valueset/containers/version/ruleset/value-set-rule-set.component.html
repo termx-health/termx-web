@@ -71,7 +71,7 @@
   </form>
 
 
-  <m-modal #modal [(mVisible)]="modalData.visible" (close)="toggleModal()" mStyle="width: 900px">
+  <m-modal #modal [(mVisible)]="modalData.visible" (mClose)="toggleModal()" mStyle="width: 900px">
     <ng-container *m-modal-header>
       {{'web.value-set-version.form.rule-set.modal.edit-header' | translate}}
     </ng-container>

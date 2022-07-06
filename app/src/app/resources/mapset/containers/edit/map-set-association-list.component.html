@@ -1,4 +1,13 @@
-<m-card [mTitle]="'web.map-set-association.list.associations'" class="m-card-inside">
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
+    <div class="m-card-title">
+      {{'web.map-set-association.list.associations' | translate}}
+    </div>
+    <twa-add-button [routerLink]="['../associations/add']">
+      {{'web.map-set-association.list.add-association' | translate}}
+    </twa-add-button>
+  </div>
+
   <m-table [mData]="data | keys" [mLoading]="loading" mHideOnSinglePage mEnablePagination>
     <ng-container *mTableHead>
       <tr>
@@ -6,7 +15,6 @@
         <th colSpan="2">{{'web.map-set-association.entity.target' | translate}}</th>
         <th rowSpan="2">{{'web.map-set-association.entity.type' | translate}}</th>
         <th rowSpan="2">{{'web.map-set-association.entity.status' | translate}}</th>
-        <th rowSpan="2" class="tw-table-actions"></th>
       </tr>
       <tr>
         <th>{{'web.map-set-association.list.code-system' | translate}}</th>
@@ -19,26 +27,18 @@
     <ng-container *mTableRow="let key;">
       <tr *ngFor="let association of data[key]; let isFirst = first;">
         <td *ngIf="isFirst" [rowSpan]="data[key].length">{{association.source.codeSystem}}</td>
-        <td>{{association.source.code}}</td>
+        <td><a [routerLink]="['../associations/', association.id, 'edit']">{{association.source.code}}</a></td>
         <td>{{association.target.code}}</td>
         <td>{{association.target.codeSystem}}</td>
         <td>{{association.associationType}}</td>
-        <td class="tw-table-min-width"><twa-status-tag [status]="association.status"></twa-status-tag></td>
-        <td class="tw-table-actions">
-          <m-dropdown>
-            <a *mDropdownItemIf="association.status !== 'retired'" (click)="retireAssociation()">
-              {{'web.publication-status.operations.retire' | translate}}
-            </a>
-            <a *mDropdownItemIf="association.status === 'draft'" (click)="activateAssociation()">
-              {{'web.publication-status.operations.activate' | translate}}
-            </a>
-          </m-dropdown>
+        <td class="tw-table-min-width">
+          <twa-status-tag [status]="association.status"></twa-status-tag>
         </td>
       </tr>
     </ng-container>
 
     <tr *mTableNoData>
-      <td colspan="7">
+      <td colspan="6">
         <m-no-data></m-no-data>
       </td>
     </tr>
