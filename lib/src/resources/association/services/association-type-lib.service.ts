@@ -7,7 +7,7 @@ import {AssociationTypeSearchParams} from '../model/association-type-search-para
 import {AssociationType} from '../model/association-type';
 
 @Injectable()
-export class AssociationLibService {
+export class AssociationTypeLibService {
   protected baseUrl;
 
   public constructor(@Inject(TERMINOLOGY_API) api: string, protected http: HttpClient) {

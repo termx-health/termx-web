@@ -242,6 +242,29 @@
         "view-header": "View version"
       }
     },
+    "map-set-entity": {
+      "entity": {
+        "id": "Id",
+        "versions": "Versions"
+      }
+    },
+    "map-set-entity-version": {
+      "entity": {
+        "id": "Id",
+        "created-at": "Created at",
+        "description": "Description",
+        "status": "Status"
+      },
+      "modal": {
+        "edit-header": "Edit entity version",
+        "add-header": "Add entity version"
+      },
+      "table": {
+        "add-version": "Add version",
+        "activate": "Activate version",
+        "retire": "Retire version"
+      }
+    },
     "map-set-association": {
       "entity": {
         "source": "Source",
@@ -258,25 +281,7 @@
         "target-system": "Target code system",
         "target-concept": "Target concept",
         "type": "Association type",
-        "status": "Status",
-        "version": {
-          "table": {
-            "versions": "Versions",
-            "add-version": "Add version",
-            "id": "Id",
-            "created-at": "Created at",
-            "description": "Description",
-            "status": "Status",
-            "activate": "Activate version",
-            "retire": "Retire version"
-          },
-          "modal": {
-            "edit-header": "Edit entity version",
-            "add-header": "Add entity version",
-            "description": "Description"
-          }
-
-        }
+        "status": "Status"
       },
       "list": {
         "code-system": "Code System",

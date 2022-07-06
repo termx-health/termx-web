@@ -52,18 +52,18 @@
 
         <m-card class="m-card-inside">
           <div *m-card-header class="m-items-between">
-            <div class="m-card-title">{{'web.map-set-association.form.version.table.versions' | translate}}</div>
+            <div class="m-card-title">{{'web.map-set-entity.entity.versions' | translate}}</div>
             <twa-add-button (click)="openEntityVersionModal()">
-              {{'web.map-set-association.form.version.table.add-version' | translate}}
+              {{'web.map-set-entity-version.table.add-version' | translate}}
             </twa-add-button>
           </div>
 
           <m-table [mData]="association.versions" mEnablePagination mHideOnSinglePage>
             <tr *mTableHead>
-              <th>{{'web.map-set-association.form.version.table.id' | translate}}</th>
-              <th>{{'web.map-set-association.form.version.table.created-at' | translate}}</th>
-              <th>{{'web.map-set-association.form.version.table.description' | translate}}</th>
-              <th>{{'web.map-set-association.form.version.table.status' | translate}}</th>
+              <th>{{'web.map-set-entity-version.entity.id' | translate}}</th>
+              <th>{{'web.map-set-entity-version.entity.created-at' | translate}}</th>
+              <th>{{'web.map-set-entity-version.entity.description' | translate}}</th>
+              <th>{{'web.map-set-entity-version.entity.status' | translate}}</th>
               <th class="tw-table-actions"></th>
             </tr>
 
@@ -80,10 +80,10 @@
                 <td class="tw-table-actions">
                   <m-dropdown>
                     <a *m-dropdown-item (click)="entityVersion.status = 'active'">
-                      {{'web.map-set-association.form.version.table.activate' | translate}}
+                      {{'web.map-set-entity-version.table.activate' | translate}}
                     </a>
                     <a *m-dropdown-item (click)="entityVersion.status = 'retired'">
-                      {{'web.map-set-association.form.version.table.retire' | translate}}
+                      {{'web.map-set-entity-version.table.retire' | translate}}
                     </a>
                   </m-dropdown>
                 </td>
@@ -109,12 +109,12 @@
 
 <m-modal [(mVisible)]="entityVersionModalData.visible" (close)="closeEntityVersionModal()">
   <ng-container *m-modal-header>
-    {{(entityVersionModalData.editIndex ? 'web.map-set-association.form.version.modal.edit-header' : 'web.map-set-association.form.version.modal.add-header') | translate}}
+    {{(entityVersionModalData.editIndex >= 0 ? 'web.map-set-entity-version.modal.edit-header' : 'web.map-set-entity-version.modal.add-header') | translate}}
   </ng-container>
 
   <ng-container *m-modal-content>
     <form #form="ngForm" *ngIf="entityVersionModalData.entityVersion">
-      <m-form-item mName="entityVersionDescription" mLabel="web.map-set-association.form.version.modal.description" required>
+      <m-form-item mName="entityVersionDescription" mLabel="web.map-set-entity-version.entity.description" required>
         <m-textarea name="entityVersionDescription" [(ngModel)]="entityVersionModalData.entityVersion.description"></m-textarea>
       </m-form-item>
     </form>

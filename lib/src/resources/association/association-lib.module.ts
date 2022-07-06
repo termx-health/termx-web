@@ -3,7 +3,7 @@ import {MuiComponentsModule} from '@kodality-health/marina-ui';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {CoreUtilModule} from '@kodality-web/core-util';
-import {AssociationLibService} from './services/association-lib.service';
+import {AssociationTypeLibService} from './services/association-type-lib.service';
 import {AssociationTypeSearchComponent} from './containers/association-type-search.component';
 
 @NgModule({
@@ -14,7 +14,7 @@ import {AssociationTypeSearchComponent} from './containers/association-type-sear
     CoreUtilModule
   ],
   providers: [
-    AssociationLibService,
+    AssociationTypeLibService,
   ],
   declarations: [
     AssociationTypeSearchComponent,
