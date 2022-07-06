@@ -27,5 +27,5 @@ export class MapSetAssociationListComponent implements OnChanges {
       .subscribe(a => this.data = collect(a.data, a => a.source?.codeSystem!))
       .add(() => this.loading = false);
   }
-  
+
 }
