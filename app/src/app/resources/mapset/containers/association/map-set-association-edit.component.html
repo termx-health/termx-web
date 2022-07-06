@@ -113,9 +113,9 @@
   </ng-container>
 
   <ng-container *m-modal-content>
-    <form #form="ngForm" *ngIf="entityVersionModalData.entityVersion">
+    <form #modalForm="ngForm" *ngIf="entityVersionModalData.entityVersion">
       <m-form-item mName="entityVersionDescription" mLabel="web.map-set-entity-version.entity.description" required>
-        <m-textarea name="entityVersionDescription" [(ngModel)]="entityVersionModalData.entityVersion.description"></m-textarea>
+        <m-textarea name="entityVersionDescription" [(ngModel)]="entityVersionModalData.entityVersion.description" required></m-textarea>
       </m-form-item>
     </form>
   </ng-container>
