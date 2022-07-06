@@ -34,7 +34,7 @@
       <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
       <td><m-abbreviate [mValue]="property.description" [mLength]="40"></m-abbreviate></td>
       <td class="tw-table-min-width">
-        <m-icon *ngIf="property.supplementId" [mCode]="'block'" m-popover [mContent]="'web.supplement.supplement' | translate"></m-icon> <!--todo better icon for supplement-->
+        <m-icon *ngIf="property.supplementId" [mCode]="'block'" m-tooltip [mTitle]="'web.supplement.supplement' | translate"></m-icon> <!--todo better icon for supplement-->
       </td>
       <td class="tw-table-min-width">
         <twa-status-tag [status]="property.status"></twa-status-tag>

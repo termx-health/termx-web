@@ -1,7 +1,7 @@
 <div nz-row nzGutter="12" class="m-row">
   <div nz-col [nzMd]="6" [nzXs]="24">
     <m-card>
-      <nz-divider nzOrientation="left" nzText="FHIR"></nz-divider>
+      <m-divider mText="FHIR"></m-divider>
       <nz-collapse nzGhost>
         <nz-collapse-panel nzHeader="CodeSystem">
           <div style="display: grid">
@@ -27,12 +27,12 @@
         </nz-collapse-panel>
       </nz-collapse>
 
-      <nz-divider nzOrientation="left" nzText="ATC"></nz-divider>
+      <m-divider mText="ATC"></m-divider>
       <div style="display: grid">
         <m-button mDisplay="link" [routerLink]="'./atc/$import'" [queryParams]="{edition: 'int'}">ATC int import</m-button>
         <m-button mDisplay="link" [routerLink]="'./atc/$import'" [queryParams]="{edition: 'est'}">ATC est import</m-button>
       </div>
-      <nz-divider nzOrientation="left" nzText="ICD-10"></nz-divider>
+      <m-divider mText="ICD-10"></m-divider>
       <div style="display: grid">
         <m-button mDisplay="link" [routerLink]="'./icd-10/$import'" [queryParams]="{edition: 'int'}">ICD-10 int import</m-button>
         <m-button mDisplay="link" [routerLink]="'./icd-10/$import'" [queryParams]="{edition: 'est'}">ICD-10 est import</m-button>

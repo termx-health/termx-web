@@ -38,18 +38,35 @@
   },
   {
     "label": {
-      "en": "Integration",
-      "et": "Integratsioon"
+      "en": "Management",
+      "et": "Haldus"
     },
-    "icon": "interaction",
-    "link": "integration"
-  },
-  {
-    "label": {
-      "en": "Privileges",
-      "et": "Privileegid"
-    },
-    "icon": "key",
-    "link": "privileges"
+    "icon": "tool",
+    "items": [
+      {
+        "label": {
+          "en": "Integration",
+          "et": "Integratsioon"
+        },
+        "icon": "interaction",
+        "link": "integration"
+      },
+      {
+        "label": {
+          "en": "Privileges",
+          "et": "Privileegid"
+        },
+        "icon": "key",
+        "link": "privileges"
+      },
+      {
+        "label": {
+          "en": "Terminology service API",
+          "et": "Terminoloogi teenuse API"
+        },
+        "icon": "cloud",
+        "link": "tools/terminology-service-api"
+      }
+    ]
   }
 ]

@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {TERMINOLOGY_API} from '../../terminology-lib.token';
+import {TERMINOLOGY_API} from '../../../terminology-lib.token';
 import {HttpClient} from '@angular/common/http';
 import {PrivilegeSearchParams} from '../model/privilege-search-params';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';

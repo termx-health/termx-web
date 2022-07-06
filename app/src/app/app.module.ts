@@ -18,8 +18,9 @@ import {IntegrationModule} from './integration/integration.module';
 import {ResourcesLibModule} from 'terminology-lib/resources';
 import {FhirLibModule} from 'terminology-lib/fhir';
 import {JobLibModule} from 'terminology-lib/job';
-import {PrivilegeLibModule} from 'terminology-lib/privileges';
 import {PrivilegesModule} from './privileges/privileges.module';
+import {AuthLibModule} from 'terminology-lib/auth/auth-lib.module';
+import {ToolsModule} from './tools/tools.module';
 
 
 registerLocaleData(et);
@@ -96,7 +97,9 @@ export function MarinaUiConfigFactory(): MuiConfig {
     JobLibModule,
 
     PrivilegesModule,
-    PrivilegeLibModule
+    AuthLibModule,
+
+    ToolsModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},
