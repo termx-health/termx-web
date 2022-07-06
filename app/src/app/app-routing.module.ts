@@ -3,11 +3,13 @@ import {RouterModule, Routes} from '@angular/router';
 import {RESOURCES_ROUTES} from './resources/resources.module';
 import {INTEGRATION_ROUTES} from './integration/integration.module';
 import {PRIVILEGES_ROUTES} from './privileges/privileges.module';
+import {TOOLS_ROUTES} from './tools/tools.module';
 
 const routes: Routes = [
   {path: 'resources', children: RESOURCES_ROUTES},
   {path: 'integration', children: INTEGRATION_ROUTES},
-  {path: 'privileges', children: PRIVILEGES_ROUTES}
+  {path: 'privileges', children: PRIVILEGES_ROUTES},
+  {path: 'tools', children: TOOLS_ROUTES}
 ];
 
 @NgModule({

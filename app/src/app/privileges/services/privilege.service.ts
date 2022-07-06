@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {PrivilegeLibService} from 'terminology-lib/privileges';
-import {Privilege} from 'terminology-lib/privileges';
+import {PrivilegeLibService} from 'terminology-lib/auth/privileges';
+import {Privilege} from 'terminology-lib/auth/privileges';
 import {Observable} from 'rxjs';
 
 @Injectable()

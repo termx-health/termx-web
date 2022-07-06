@@ -3,7 +3,7 @@ import {ResourcesLibModule} from './resources';
 import {FhirLibModule} from './fhir';
 import {JobLibModule} from './job';
 import {IntegrationLibModule} from './integration';
-import {PrivilegeLibModule} from './privileges';
+import {AuthLibModule} from './auth/auth-lib.module';
 
 @NgModule({
   imports: [
@@ -11,14 +11,14 @@ import {PrivilegeLibModule} from './privileges';
     IntegrationLibModule,
     ResourcesLibModule,
     JobLibModule,
-    PrivilegeLibModule
+    AuthLibModule
   ],
   exports: [
     FhirLibModule,
     IntegrationLibModule,
     ResourcesLibModule,
     JobLibModule,
-    PrivilegeLibModule
+    AuthLibModule
   ]
 })
 export class TerminologyLibModule {

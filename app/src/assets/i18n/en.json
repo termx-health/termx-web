@@ -328,6 +328,13 @@
           }
         }
       }
+    },
+    "tools": {
+      "terminology-service-api": {
+        "header": "Terminology Service API",
+        "content": "Terminology Service APIs enable automated exchange of clinical terminology content and resources.",
+        "button": "Terminology Service API"
+      }
     }
   },
   "entities": {

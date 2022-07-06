@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
         return items.map(i => ({
           label: i.label?.[this.translateService.currentLang],
           icon: i.icon,
-          click: () => this.router.navigateByUrl(i.link),
+          click: () => i.link ? this.router.navigateByUrl(i.link) : undefined,
           items: createMenu(i.items)
         }));
       };

@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {Privilege, PrivilegeResource} from 'terminology-lib/privileges';
+import {Privilege, PrivilegeResource} from 'terminology-lib/auth/privileges';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {PrivilegeService} from '../services/privilege.service';
