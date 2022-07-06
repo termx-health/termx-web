@@ -1,0 +1,127 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading">
+      <m-card [mTitle]="mode === 'edit'? 'web.map-set-association.form.edit-header' : 'web.map-set-association.form.add-header'" *ngIf="association">
+        <form #form="ngForm">
+          <m-form-item mName="sourceCodeSystem" mLabel="web.map-set-association.form.source-system" required>
+            <twl-code-system-search
+                [(ngModel)]="sourceCodeSystem"
+                name="sourceCodeSystem"
+                valuePrimitive
+                required
+            ></twl-code-system-search>
+          </m-form-item>
+          <m-form-item *ngIf="sourceCodeSystem" mName="sourceConcept" mLabel="web.map-set-association.form.source-concept" required>
+            <twl-code-system-entity-version-search
+                [codeSystemId]="sourceCodeSystem"
+                [(ngModel)]="association.source"
+                name="sourceConcept"
+            ></twl-code-system-entity-version-search>
+          </m-form-item>
+          <m-form-item mName="targetCodeSystem" mLabel="web.map-set-association.form.target-system" required>
+            <twl-code-system-search
+                [(ngModel)]="targetCodeSystem"
+                name="targetCodeSystem"
+                valuePrimitive
+                required
+            ></twl-code-system-search>
+          </m-form-item>
+          <m-form-item *ngIf="targetCodeSystem" mName="targetConcept" mLabel="web.map-set-association.form.target-concept" required>
+            <twl-code-system-entity-version-search
+                [codeSystemId]="targetCodeSystem"
+                [(ngModel)]="association.target"
+                name="targetConcept"
+            ></twl-code-system-entity-version-search>
+          </m-form-item>
+          <m-form-item mName="associationType" mLabel="web.map-set-association.form.type" required>
+            <twl-association-type-search
+                [(ngModel)]="association.associationType"
+                name="associationType"
+                valuePrimitive
+                required
+            ></twl-association-type-search>
+          </m-form-item>
+
+          <m-form-item mName="associationStatus" mLabel="web.map-set-association.form.status" required>
+            <twl-value-set-concept-select name="associationStatus"
+                [(ngModel)]="association.status"
+                valueSet="publication-status"
+                required></twl-value-set-concept-select>
+          </m-form-item>
+        </form>
+
+        <m-card class="m-card-inside">
+          <div *m-card-header class="m-items-between">
+            <div class="m-card-title">{{'web.map-set-entity.entity.versions' | translate}}</div>
+            <twa-add-button (click)="openEntityVersionModal()">
+              {{'web.map-set-entity-version.table.add-version' | translate}}
+            </twa-add-button>
+          </div>
+
+          <m-table [mData]="association.versions" mEnablePagination mHideOnSinglePage>
+            <tr *mTableHead>
+              <th>{{'web.map-set-entity-version.entity.id' | translate}}</th>
+              <th>{{'web.map-set-entity-version.entity.created-at' | translate}}</th>
+              <th>{{'web.map-set-entity-version.entity.description' | translate}}</th>
+              <th>{{'web.map-set-entity-version.entity.status' | translate}}</th>
+              <th class="tw-table-actions"></th>
+            </tr>
+
+            <ng-container *mTableRow="let entityVersion; let index = index">
+              <tr>
+                <td><a (click)="openEntityVersionModal(index)">{{entityVersion.id || 'edit'}}</a></td>
+                <td>{{entityVersion.created | localDateTime}}</td>
+                <td>
+                  <m-abbreviate [mValue]="entityVersion.description" [mLength]="60"></m-abbreviate>
+                </td>
+                <td class="tw-table-min-width">
+                  <twa-status-tag [status]="entityVersion.status"></twa-status-tag>
+                </td>
+                <td class="tw-table-actions">
+                  <m-dropdown>
+                    <a *m-dropdown-item (click)="entityVersion.status = 'active'">
+                      {{'web.map-set-entity-version.table.activate' | translate}}
+                    </a>
+                    <a *m-dropdown-item (click)="entityVersion.status = 'retired'">
+                      {{'web.map-set-entity-version.table.retire' | translate}}
+                    </a>
+                  </m-dropdown>
+                </td>
+              </tr>
+            </ng-container>
+
+            <tr *mTableNoData>
+              <td colspan="5">
+                <m-no-data></m-no-data>
+              </td>
+            </tr>
+          </m-table>
+        </m-card>
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>
+
+<m-modal [(mVisible)]="entityVersionModalData.visible" (mClose)="closeEntityVersionModal()">
+  <ng-container *m-modal-header>
+    {{(entityVersionModalData.editIndex >= 0 ? 'web.map-set-entity-version.modal.edit-header' : 'web.map-set-entity-version.modal.add-header') | translate}}
+  </ng-container>
+
+  <ng-container *m-modal-content>
+    <form #modalForm="ngForm" *ngIf="entityVersionModalData.entityVersion">
+      <m-form-item mName="entityVersionDescription" mLabel="web.map-set-entity-version.entity.description" required>
+        <m-textarea name="entityVersionDescription" [(ngModel)]="entityVersionModalData.entityVersion.description" required></m-textarea>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="tw-button-group">
+    <m-button mDisplay="text" (click)="closeEntityVersionModal()">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="saveEntityVersionModal()">{{'core.btn.save' | translate}}</m-button>
+  </div>
+</m-modal>

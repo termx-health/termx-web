@@ -1,4 +1,4 @@
-import {MapSet, MapSetLibService, MapSetVersion} from 'terminology-lib/resources';
+import {MapSet, MapSetAssociation, MapSetLibService, MapSetVersion} from 'terminology-lib/resources';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
@@ -23,5 +23,12 @@ export class MapSetService extends MapSetLibService {
 
   public retireVersion(mapSetId: string, version: string): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/${mapSetId}/versions/${version}/retire`, {});
+  }
+
+  public saveAssociation(mapSetId: string, association: MapSetAssociation): Observable<MapSetAssociation> {
+    if (association.id) {
+      return this.http.put(`${this.baseUrl}/${mapSetId}/associations/${association.id}`, association);
+    }
+    return this.http.post(`${this.baseUrl}/${mapSetId}/associations`, association);
   }
 }
