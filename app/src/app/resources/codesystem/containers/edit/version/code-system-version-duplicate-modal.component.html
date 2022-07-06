@@ -1,4 +1,4 @@
-<m-modal #modal [(mVisible)]="modalVisible" (close)="this.toggleModal()">
+<m-modal #modal [(mVisible)]="modalVisible" (mClose)="this.toggleModal()">
   <ng-container *m-modal-header>
     {{'web.code-system.form.versions.duplicate.duplicate-header' | translate}}
   </ng-container>
