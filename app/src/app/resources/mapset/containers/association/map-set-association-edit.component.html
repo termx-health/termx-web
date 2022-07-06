@@ -107,7 +107,7 @@
   </div>
 </m-form-row>
 
-<m-modal [(mVisible)]="entityVersionModalData.visible" (close)="closeEntityVersionModal()">
+<m-modal [(mVisible)]="entityVersionModalData.visible" (mClose)="closeEntityVersionModal()">
   <ng-container *m-modal-header>
     {{(entityVersionModalData.editIndex >= 0 ? 'web.map-set-entity-version.modal.edit-header' : 'web.map-set-entity-version.modal.add-header') | translate}}
   </ng-container>
