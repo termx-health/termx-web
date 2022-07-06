@@ -28,7 +28,7 @@
 
 
 <ng-container *ngIf="codeSystem">
-  <nz-divider [nzText]="'entities.value-set-rule-set.include' | translate" nzOrientation="left"></nz-divider>
+  <m-divider [mText]="'entities.value-set-rule-set.include' | translate"></m-divider>
   <m-form-item mLabel="entities.value-set-rule-set.rule.concepts">
     <twa-value-set-version-concept-list [codeSystem]="codeSystem"
         [codeSystemVersion]="codeSystemVersion?.version"
@@ -67,12 +67,12 @@
 
 
 <ng-container *ngIf="codeSystem">
-  <nz-divider [nzText]="exclude" nzOrientation="left">
-    <ng-template #exclude>
-      <label>{{'entities.value-set-rule-set.exclude' | translate}}</label> &nbsp;
-      <nz-switch [(ngModel)]="excludeRuleOn" (ngModelChange)="switchExcludeRule($event)" [disabled]="!!viewMode"></nz-switch>
-    </ng-template>
-  </nz-divider>
+  <m-divider>
+    <div class="m-items-between">
+      <label>{{'entities.value-set-rule-set.exclude' | translate}}</label>
+      <m-checkbox [(ngModel)]="excludeRuleOn" (ngModelChange)="switchExcludeRule($event)" [disabled]="!!viewMode"></m-checkbox>
+    </div>
+  </m-divider>
 
   <ng-container *ngIf="excludeRuleOn && excludeRule">
     <m-form-item mLabel="entities.value-set-rule-set.rule.concepts" *ngIf="codeSystem">

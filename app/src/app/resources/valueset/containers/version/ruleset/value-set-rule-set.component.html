@@ -12,7 +12,7 @@
 
   <form #form="ngForm" *ngIf="ruleSet">
     <m-form-item mName="lockedDate" mLabel="entities.value-set-rule-set.locked-date">
-      <nz-date-picker *ngIf="!viewMode" name="lockedDate" [(ngModel)]="ruleSet.lockedDate"></nz-date-picker>
+      <m-date-picker *ngIf="!viewMode" name="lockedDate" [(ngModel)]="ruleSet.lockedDate"></m-date-picker>
       <label *ngIf="viewMode">{{ruleSet.lockedDate | localDate}}</label>
     </m-form-item>
 

@@ -21,7 +21,7 @@
           </m-form-item>
 
           <m-form-item mName="expirationDate" mLabel="entities.value-set-version.expiration-date">
-            <nz-date-picker *ngIf="version.status === 'active'" name="expirationDate" [(ngModel)]="version.expirationDate"></nz-date-picker>
+            <m-date-picker *ngIf="version.status === 'active'" name="expirationDate" [(ngModel)]="version.expirationDate"></m-date-picker>
             <div *ngIf="version.status !== 'active'">
               {{version.expirationDate | localDate}}
             </div>
