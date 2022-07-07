@@ -32,14 +32,14 @@
       </ng-template>
       <m-input [(ngModel)]="data.conceptMapVersion"></m-input>
     </m-form-item>
-    <m-form-item [mLabel]="code">
+    <m-form-item [mLabel]="code" required>
       <ng-template #code>
         <div>{{'web.integration.fhir.concept-map.translate.code' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The code that is to be translated. If a code is provided, a system must be provided"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.code"></m-input>
     </m-form-item>
-    <m-form-item [mLabel]="system">
+    <m-form-item [mLabel]="system" required>
       <ng-template #system>
         <div>{{'web.integration.fhir.concept-map.translate.system' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The system for the code that is to be translated"></m-icon>

@@ -15,13 +15,13 @@ import {FormsModule} from '@angular/forms';
     CoreUtilModule
   ],
   providers: [
-    MapSetLibService
+    MapSetLibService,
   ],
   declarations: [
-    MapSetSearchComponent
+    MapSetSearchComponent,
   ],
   exports: [
-    MapSetSearchComponent
+    MapSetSearchComponent,
   ]
 })
 export class MapSetLibModule {

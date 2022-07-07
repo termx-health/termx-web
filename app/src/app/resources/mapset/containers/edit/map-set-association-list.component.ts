@@ -28,12 +28,4 @@ export class MapSetAssociationListComponent implements OnChanges {
       .add(() => this.loading = false);
   }
 
-  public activateAssociation(): void {
-// TODO when backend supports
-  }
-
-  public retireAssociation(): void {
-// TODO when backend supports
-  }
-
 }
