@@ -150,7 +150,8 @@
         "add-supplement": "Add supplement",
         "add-property-value": "Add property value",
         "delete-property-value": "Delete property value",
-        "edit-property-value": "Edit property value"
+        "edit-property-value": "Edit property value",
+        "coding-value-system": "Coding value system"
       }
     },
     "naming-system": {
