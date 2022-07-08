@@ -46,7 +46,7 @@ export class MapSetVersionEntityVersionTableComponent implements OnInit {
     const q = copyDeep(this.query);
     q.mapSet = this.mapSetId!;
     q.mapSetVersion = this.mapSetVersion!;
-    q.descriptionContains = this.searchInput;
+    q.descriptionContains = this.searchInput || undefined;
     this.loading = true;
     return this.mapSetService.searchEntityVersions(this.mapSetId!, q).pipe(finalize(() => this.loading = false));
   }
@@ -75,6 +75,7 @@ export class MapSetVersionEntityVersionTableComponent implements OnInit {
   }
 
   public unlinkEntityVersion(entityVersionId: number): void {
+    this.loading = true;
     this.mapSetService.unlinkEntityVersion(this.mapSetId!, this.mapSetVersion!, entityVersionId).subscribe(() =>
       this.loadEntityVersionData()).add(() => this.loading = false);
   }
