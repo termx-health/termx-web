@@ -28,8 +28,8 @@ export class ValueSetVersionsListComponent implements OnChanges {
       return;
     }
     this.loading = true;
-    this.valueSetService.loadVersions(this.valueSetId)
-      .subscribe(versions => this.versions = versions)
+    this.valueSetService.searchVersions(this.valueSetId, {limit: -1})
+      .subscribe(versions => this.versions = versions.data)
       .add(() => this.loading = false);
   }
 

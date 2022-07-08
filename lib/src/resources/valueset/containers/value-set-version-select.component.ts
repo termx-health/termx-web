@@ -37,8 +37,8 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
     }
 
     this.loading['select'] = true;
-    this.valueSetService.loadVersions(this.valueSetId).subscribe(versions => {
-      this.data = group(versions, v => v.version!);
+    this.valueSetService.searchVersions(this.valueSetId, {limit: -1}).subscribe(versions => {
+      this.data = group(versions.data, v => v.version!);
     }).add(() => this.loading['select'] = false);
   }
 

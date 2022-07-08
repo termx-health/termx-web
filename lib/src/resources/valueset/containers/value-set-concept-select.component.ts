@@ -40,13 +40,8 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
       this.data = {};
       return;
     }
-
-    const request = !this.valueSetVersion
-      ? this.valueSetService.expand(this.valueSet)
-      : this.valueSetService.expandByVersion(this.valueSet, this.valueSetVersion);
-
     this.loading['select'] = true;
-    request.subscribe(concepts => {
+    this.valueSetService.expand({valueSet: this.valueSet, valueSetVersion: this.valueSetVersion}).subscribe(concepts => {
       this.data = group(concepts, c => c.concept!.code!);
     }).add(() => this.loading['select'] = false);
   }

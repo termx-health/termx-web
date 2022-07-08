@@ -34,10 +34,10 @@ export class FinderValueSetViewComponent implements OnInit {
       this.loading = true;
       forkJoin([
         this.valueSetService.load(id),
-        this.valueSetService.loadVersions(id),
+        this.valueSetService.searchVersions(id, {limit: -1}),
       ]).subscribe(([cs, versions]) => {
         this.valueSet = cs;
-        this.versions = versions;
+        this.versions = versions.data;
       }).add(() => this.loading = false);
     });
   }

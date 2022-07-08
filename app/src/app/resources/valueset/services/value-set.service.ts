@@ -1,4 +1,4 @@
-import {ValueSet, ValueSetConcept, ValueSetLibService, ValueSetRuleSet, ValueSetVersion} from 'terminology-lib/resources';
+import {ValueSet, ValueSetConcept, ValueSetLibService, ValueSetVersion} from 'terminology-lib/resources';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
@@ -25,9 +25,5 @@ export class ValueSetService extends ValueSetLibService {
 
   public saveConcepts(valueSetId: string, version: string, concepts: ValueSetConcept[]): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/concepts`, {concepts});
-  }
-
-  public expandByRuleSet(ruleSet: ValueSetRuleSet): Observable<ValueSetConcept[]> {
-    return this.http.post<ValueSetConcept[]>(`${this.baseUrl}/expand`, ruleSet);
   }
 }

@@ -1,9 +1,8 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {ValueSetRule, ValueSetRuleSet} from 'terminology-lib/resources';
+import {ValueSetLibService, ValueSetRule, ValueSetRuleSet} from 'terminology-lib/resources';
 import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {ValueSetRuleSetRuleComponent} from './value-set-rule-set-rule.component';
-import {ValueSetService} from '../../../services/value-set.service';
 import {ValueSetVersionConceptModalComponent} from '../concepts/value-set-version-concept-modal.component';
 
 @Component({
@@ -21,7 +20,7 @@ export class ValueSetRuleSetComponent implements OnChanges {
   public rules: {include: ValueSetRule, exclude?: ValueSetRule}[] = [];
   public modalData: {visible?: boolean, ruleIndex?: number, rule?: {include: ValueSetRule, exclude?: ValueSetRule}} = {};
 
-  public constructor(private valueSetService: ValueSetService) {}
+  public constructor(private valueSetService: ValueSetLibService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["ruleSet"]) {
@@ -106,7 +105,7 @@ export class ValueSetRuleSetComponent implements OnChanges {
         ruleSet.excludeRules = [rule.exclude];
       }
     }
-    this.valueSetService.expandByRuleSet(ruleSet).subscribe(vsConcepts => {
+    this.valueSetService.expand({ruleSet: ruleSet}).subscribe(vsConcepts => {
       this.conceptModal?.toggleModal(vsConcepts);
     });
   }
