@@ -31,4 +31,12 @@ export class MapSetService extends MapSetLibService {
     }
     return this.http.post(`${this.baseUrl}/${mapSetId}/associations`, association);
   }
+
+  public linkEntityVersion(mapSetId: string, version: string, entityVersionId: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${mapSetId}/versions/${version}/entity-versions/${entityVersionId}/membership`, {});
+  }
+
+  public unlinkEntityVersion(mapSetId: string, version: string, entityVersionId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${mapSetId}/versions/${version}/entity-versions/${entityVersionId}/membership`);
+  }
 }

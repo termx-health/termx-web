@@ -7,41 +7,41 @@
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
         <form #form="ngForm" *ngIf="version">
-          <m-form-item mName="version" mLabel="web.map-set-version.entity.version" required>
+          <m-form-item mName="version" mLabel="entities.map-set-version.version" required>
             <m-input name="version" [(ngModel)]="version.version" required></m-input>
           </m-form-item>
 
-          <m-form-item mName="source" mLabel="web.map-set-version.entity.source">
+          <m-form-item mName="source" mLabel="entities.map-set-version.source">
             <m-input name="source" [(ngModel)]="version.source"></m-input>
           </m-form-item>
 
-          <m-form-item mName="supportedLanguages" mLabel="web.map-set-version.entity.supported-languages">
-            <twl-value-set-concept-select
-                name="supportedLanguages"
+          <m-form-item mName="supportedLanguages" mLabel="entities.map-set-version.supported-languages">
+            <twl-value-set-concept-select name="supportedLanguages"
                 [(ngModel)]="version.supportedLanguages"
                 valueSet="languages"
-                multiple
-            ></twl-value-set-concept-select>
+                multiple></twl-value-set-concept-select>
           </m-form-item>
 
-          <m-form-item mName="description" mLabel="web.map-set-version.entity.description">
+          <m-form-item mName="description" mLabel="entities.map-set-version.description">
             <m-textarea name="description" [(ngModel)]="version.description"></m-textarea>
           </m-form-item>
 
-          <m-form-item mName="releaseDate" mLabel="web.map-set-version.entity.release-date" required>
+          <m-form-item mName="releaseDate" mLabel="entities.map-set-version.release-date" required>
             <m-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" required></m-date-picker>
           </m-form-item>
 
-          <m-form-item mName="expirationDate" mLabel="web.map-set-version.entity.expiration-date">
+          <m-form-item mName="expirationDate" mLabel="entities.map-set-version.expiration-date">
             <m-date-picker name="expirationDate" [(ngModel)]="version.expirationDate"></m-date-picker>
           </m-form-item>
-
-          <ng-container *m-card-footer>
-            <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
-              {{'core.btn.save' | translate}}
-            </m-button>
-          </ng-container>
         </form>
+
+        <twa-map-set-version-entity-version-table [mapSetId]="mapSetId" [mapSetVersion]="mapSetVersion"></twa-map-set-version-entity-version-table>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
       </m-card>
     </m-spinner>
   </div>

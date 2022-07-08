@@ -52,7 +52,7 @@
 
         <m-card class="m-card-inside">
           <div *m-card-header class="m-items-between">
-            <div class="m-card-title">{{'web.map-set-entity.entity.versions' | translate}}</div>
+            <div class="m-card-title">{{'entities.map-set-entity.versions' | translate}}</div>
             <twa-add-button (click)="openEntityVersionModal()">
               {{'web.map-set-entity-version.table.add-version' | translate}}
             </twa-add-button>
@@ -60,10 +60,10 @@
 
           <m-table [mData]="association.versions" mEnablePagination mHideOnSinglePage>
             <tr *mTableHead>
-              <th>{{'web.map-set-entity-version.entity.id' | translate}}</th>
-              <th>{{'web.map-set-entity-version.entity.created-at' | translate}}</th>
-              <th>{{'web.map-set-entity-version.entity.description' | translate}}</th>
-              <th>{{'web.map-set-entity-version.entity.status' | translate}}</th>
+              <th>{{'entities.map-set-entity-version.id' | translate}}</th>
+              <th>{{'entities.map-set-entity-version.created-at' | translate}}</th>
+              <th>{{'entities.map-set-entity-version.description' | translate}}</th>
+              <th>{{'entities.map-set-entity-version.status' | translate}}</th>
               <th class="tw-table-actions"></th>
             </tr>
 
@@ -114,7 +114,7 @@
 
   <ng-container *m-modal-content>
     <form #modalForm="ngForm" *ngIf="entityVersionModalData.entityVersion">
-      <m-form-item mName="entityVersionDescription" mLabel="web.map-set-entity-version.entity.description" required>
+      <m-form-item mName="entityVersionDescription" mLabel="entities.map-set-entity-version.description" required>
         <m-textarea name="entityVersionDescription" [(ngModel)]="entityVersionModalData.entityVersion.description" required></m-textarea>
       </m-form-item>
     </form>

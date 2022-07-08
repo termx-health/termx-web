@@ -11,6 +11,7 @@ import {MapSetVersionViewComponent} from './containers/version/map-set-version-v
 import {MapSetAssociationListComponent} from './containers/edit/map-set-association-list.component';
 import {ResourcesLibModule} from 'terminology-lib/resources';
 import {MapSetAssociationEditComponent} from './containers/association/map-set-association-edit.component';
+import { MapSetVersionEntityVersionTableComponent } from './containers/version/map-set-version-entity-version-table.component';
 
 
 export const MAP_SET_ROUTES: Routes = [
@@ -39,7 +40,8 @@ export const MAP_SET_ROUTES: Routes = [
     MapSetVersionEditComponent,
     MapSetVersionViewComponent,
     MapSetAssociationListComponent,
-    MapSetAssociationEditComponent
+    MapSetAssociationEditComponent,
+    MapSetVersionEntityVersionTableComponent
   ],
   providers: [
     MapSetService
