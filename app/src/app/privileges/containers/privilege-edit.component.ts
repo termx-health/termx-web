@@ -61,13 +61,19 @@ export class PrivilegeEditComponent implements OnInit {
       .add(() => this.loading = false);
   }
 
-  public saveResource(): void {
+  public deletePrivilege(id: number): void {
+    this.loading = true;
+    this.privilegeService.delete(id).subscribe(() => this.location.back()).add(() => this.loading = false);
+  }
+
+
+  public confirmResource(): void {
     if (!validateForm(this.resourceForm)) {
       return;
     }
     const resource = this.resourceModalData.resource!;
     if (isDefined(this.resourceModalData.editKey) && isDefined(this.resourceModalData.editIndex)) {
-      this.deleteResource(this.resourceModalData.editKey, this.resourceModalData.editIndex);
+      this.removeResource(this.resourceModalData.editKey, this.resourceModalData.editIndex);
     }
     this.resourceMap![resource.resourceType!] = [...(this.resourceMap![resource.resourceType!] || []), resource];
     this.resourceMap = {...this.resourceMap};
@@ -75,13 +81,17 @@ export class PrivilegeEditComponent implements OnInit {
     this.resourceModalData.visible = false;
   }
 
-  public deleteResource(key: string, index: number): void {
+  public removeResource(key: string, index: number): void {
     this.resourceMap![key].splice(index, 1);
     this.resourceMap = {...this.resourceMap};
     if (this.resourceMap[key].length === 0) {
       delete this.resourceMap[key];
     }
     this.fireOnChange();
+  }
+
+  private fireOnChange(): void {
+    this.privilege!.resources = Object.values(this.resourceMap || []).flat();
   }
 
 
@@ -95,13 +105,9 @@ export class PrivilegeEditComponent implements OnInit {
     };
   }
 
-  public filter = (resource: {id?: string}) => {
+  public filter = (resource: {id?: string}): boolean => {
     const resourceType = this.resourceModalData.resource!.resourceType!;
     const resourceIds = (this.resourceMap?.[resourceType] || []).map(r => r.resourceId);
     return !resourceIds.includes(resource.id);
   };
-
-  private fireOnChange(): void {
-    this.privilege!.resources = Object.values(this.resourceMap || []).flat();
-  }
 }

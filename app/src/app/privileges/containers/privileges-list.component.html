@@ -14,7 +14,6 @@
       <th mColumnKey="code">{{'entities.privilege.code' | translate}}</th>
       <th mColumnKey="name">{{'entities.privilege.name' | translate}}</th>
       <th mColumnKey="resources">{{'entities.privilege.resources' | translate}}</th>
-      <th class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let privilege">
@@ -30,13 +29,6 @@
             {{resource.resourceId}}
           </div>
         </div>
-      </td>
-      <td class="tw-table-actions">
-        <m-dropdown>
-          <a *m-dropdown-item (click)="deletePrivilege(privilege.id)">
-            {{'web.privileges.table.delete-privilege' | translate}}
-          </a>
-        </m-dropdown>
       </td>
     </tr>
 

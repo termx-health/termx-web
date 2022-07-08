@@ -11,7 +11,7 @@
 
     <m-form-item [mLabel]="label" required>
       <ng-template #label>
-        URL:&nbsp;
+        URL&nbsp;
         <m-icon mCode="info-circle" m-popover [mTitle]="source + ' resource JSON url'" [mContent]="info"></m-icon>
         <ng-template #info>
           <div *ngIf="source === 'CodeSystem'">
