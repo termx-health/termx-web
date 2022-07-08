@@ -10,6 +10,7 @@ import {MapSetAssociationSearchParams} from '../model/map-set-association-search
 import {MapSetAssociation} from '../model/map-set-association';
 import {MapSetEntityVersion} from '../model/map-set-entity-version';
 import {MapSetEntityVersionSearchParams} from '../model/map-set-entity-version-search-params';
+import {MapSetVersionSearchParams} from '../model/map-set-version-search-params';
 
 
 @Injectable()
@@ -28,12 +29,12 @@ export class MapSetLibService {
     return this.http.get<SearchResult<MapSet>>(this.baseUrl, {params: SearchHttpParams.build(params)});
   }
 
-  public loadVersions(mapSetId: string): Observable<MapSetVersion[]> {
-    return this.http.get<MapSetVersion[]>(`${this.baseUrl}/${mapSetId}/versions`);
-  }
-
   public loadVersion(mapSetId: string, versionId: string): Observable<MapSetVersion> {
     return this.http.get<MapSetVersion>(`${this.baseUrl}/${mapSetId}/versions/${versionId}`);
+  }
+
+  public searchVersions(mapSetId: string, params: MapSetVersionSearchParams = {}): Observable<SearchResult<MapSetVersion>> {
+    return this.http.get<SearchResult<MapSetVersion>>(`${this.baseUrl}/${mapSetId}/versions`, {params: SearchHttpParams.build(params)});
   }
 
   public searchEntityVersions(mapSetId: string, params: MapSetEntityVersionSearchParams): Observable<SearchResult<MapSetEntityVersion>> {
