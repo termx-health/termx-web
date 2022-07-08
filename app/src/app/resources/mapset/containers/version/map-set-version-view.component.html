@@ -8,32 +8,34 @@
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
         <div *ngIf="version">
-          <m-form-item mLabel="web.map-set-version.entity.version">
+          <m-form-item mLabel="entities.map-set-version.version">
             {{version.version}}
           </m-form-item>
 
-          <m-form-item mName="source" mLabel="web.map-set-version.entity.source">
+          <m-form-item mName="source" mLabel="entities.map-set-version.source">
             {{version.source}}
           </m-form-item>
 
-          <m-form-item mLabel="web.map-set-version.entity.supported-languages">
+          <m-form-item mLabel="entities.map-set-version.supported-languages">
             <label *ngFor="let sLang of version.supportedLanguages; let isFirst = first;">{{isFirst ? "" : ", "}}{{sLang | localizedConceptName: {valueSet: 'languages'} | async}}</label>
           </m-form-item>
 
-          <m-form-item mLabel="web.map-set-version.entity.description">
+          <m-form-item mLabel="entities.map-set-version.description">
             {{version.description}}
           </m-form-item>
 
-          <m-form-item mLabel="web.map-set-version.entity.release-date">
+          <m-form-item mLabel="entities.map-set-version.release-date">
             {{version.releaseDate | localDate}}
           </m-form-item>
 
-          <m-form-item mName="expirationDate" mLabel="web.map-set-version.entity.expiration-date">
+          <m-form-item mName="expirationDate" mLabel="entities.map-set-version.expiration-date">
             <m-date-picker *ngIf="version.status === 'active'" name="expirationDate" [(ngModel)]="version.expirationDate"></m-date-picker>
             <div *ngIf="version.status !== 'active'">
               {{version.expirationDate | localDate}}
             </div>
           </m-form-item>
+
+          <twa-map-set-version-entity-version-table [mapSetId]="mapSetId" [mapSetVersion]="version.version" viewMode></twa-map-set-version-entity-version-table>
         </div>
 
         <div *ngIf="version?.status === 'active'">

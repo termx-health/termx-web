@@ -207,13 +207,6 @@
       }
     },
     "map-set": {
-      "entity": {
-        "id": "Identifier",
-        "uri": "Uniform resource identifier (URI)",
-        "name": "Name",
-        "domain": "Domain",
-        "description": "Description"
-      },
       "form": {
         "add-header": "Create a new map set",
         "edit-header": "Edit map set"
@@ -228,53 +221,28 @@
       }
     },
     "map-set-version": {
-      "entity": {
-        "id": "Identifier",
-        "version": "Version",
-        "source": "Source",
-        "supported-languages": "Supported languages",
-        "description": "Description",
-        "release-date": "Release date",
-        "expiration-date": "Expiration date",
-        "status": "Status"
-      },
       "form": {
         "edit-header": "Edit version",
         "add-header": "Add version",
         "view-header": "View version"
       }
     },
-    "map-set-entity": {
-      "entity": {
-        "id": "Id",
-        "versions": "Versions"
-      }
-    },
     "map-set-entity-version": {
-      "entity": {
-        "id": "Id",
-        "created-at": "Created at",
-        "description": "Description",
-        "status": "Status"
-      },
       "modal": {
         "edit-header": "Edit entity version",
-        "add-header": "Add entity version"
+        "add-header": "Add entity version",
+        "link-header": "Link entity version",
+        "entity-version": "Entity version"
       },
       "table": {
         "add-version": "Add version",
+        "link-version": "Link version",
         "activate": "Activate version",
-        "retire": "Retire version"
+        "retire": "Retire version",
+        "header": "Entity versions"
       }
     },
     "map-set-association": {
-      "entity": {
-        "source": "Source",
-        "target": "Target",
-        "type": "Type",
-        "status": "Status",
-        "concept": "Concept"
-      },
       "form": {
         "add-header": "Add association",
         "edit-header": "Edit association",
@@ -374,6 +342,40 @@
     }
   },
   "entities": {
+    "map-set": {
+      "id": "Identifier",
+      "uri": "Uniform resource identifier (URI)",
+      "name": "Name",
+      "domain": "Domain",
+      "description": "Description"
+    },
+    "map-set-entity": {
+      "id": "Id",
+      "versions": "Versions"
+    },
+    "map-set-association": {
+      "source": "Source",
+      "target": "Target",
+      "type": "Type",
+      "status": "Status",
+      "concept": "Concept"
+    },
+    "map-set-version": {
+      "id": "Identifier",
+      "version": "Version",
+      "source": "Source",
+      "supported-languages": "Supported languages",
+      "description": "Description",
+      "release-date": "Release date",
+      "expiration-date": "Expiration date",
+      "status": "Status"
+    },
+    "map-set-entity-version": {
+      "id": "Id",
+      "created-at": "Created at",
+      "description": "Description",
+      "status": "Status"
+    },
     "code-system": {
       "id": "Identifier",
       "uri": "Uniform resource identifier (URI)",
