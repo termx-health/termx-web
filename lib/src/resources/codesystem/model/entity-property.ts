@@ -11,7 +11,7 @@ export class EntityProperty {
 
 export class EntityPropertyValue {
   public id?: number;
-  public value?: string;
+  public value?: any;
   public entityPropertyId?: number;
 
   public supplementId?: number;

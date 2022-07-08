@@ -16,6 +16,7 @@ export class CodeSystemPropertyValueFormComponent implements OnChanges {
 
   public loading = false;
   public entityProperties: SearchResult<EntityProperty> = SearchResult.empty();
+  public codingSystemId?: string;
 
 
   public constructor(
@@ -23,6 +24,9 @@ export class CodeSystemPropertyValueFormComponent implements OnChanges {
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['propertyValue']) {
+      this.codingSystemId = this.propertyValue?.value?.codeSystem;
+    }
     if (changes['codeSystemId']) {
       this.entityProperties = SearchResult.empty();
       if (this.codeSystemId) {
@@ -39,4 +43,8 @@ export class CodeSystemPropertyValueFormComponent implements OnChanges {
   public validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
   }
+
+  public checkPropertyType = (type: string): boolean => {
+    return !!this.entityProperties.data.find(p => this.propertyValue?.entityPropertyId === p.id && p.type && type.split(',').includes(p.type));
+  };
 }

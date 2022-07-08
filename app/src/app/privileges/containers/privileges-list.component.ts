@@ -34,10 +34,6 @@ export class PrivilegesListComponent implements OnInit {
     return this.privilegeService.search(q).pipe(finalize(() => this.loading = false));
   }
 
-  public deletePrivilege(id: number): void {
-    this.privilegeService.delete(id).subscribe(() => this.loadData());
-  }
-
   public loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
   }

@@ -1,7 +1,15 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit' ? 'web.privileges.edit-header' : 'web.privileges.add-header'">
+      <m-card>
+        <div *m-card-header class="m-items-between">
+          <div class="m-card-title">
+            {{(mode === 'edit' ? 'web.privileges.edit-header' : 'web.privileges.add-header') | translate}}
+          </div>
+          <m-button mDisplay="text" mShape="circle" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deletePrivilege(privilege.id)" mPosition="leftTop">
+            <m-icon mCode="delete"></m-icon>
+          </m-button>
+        </div>
         <form #form="ngForm" *ngIf="privilege">
           <m-form-item mName="code" mLabel="entities.privilege.code" required>
             <m-input name="code" [(ngModel)]="privilege.code" required></m-input>
@@ -41,7 +49,7 @@
                 </td>
                 <td class="tw-table-actions">
                   <m-dropdown>
-                    <a *m-dropdown-item (click)="deleteResource(key, index)">
+                    <a *m-dropdown-item (click)="removeResource(key, index)">
                       {{'web.privileges.resources.table.delete-resource' | translate}}
                     </a>
                   </m-dropdown>
@@ -83,25 +91,29 @@
             [(ngModel)]="resourceModalData.resource.resourceId"
             [filter]="filter"
             valuePrimitive
-            required></twl-code-system-search>
+            required
+        ></twl-code-system-search>
         <twl-value-set-search name="resourceId"
             *ngIf="resourceModalData.resource.resourceType === 'ValueSet'"
             [(ngModel)]="resourceModalData.resource.resourceId"
             [filter]="filter"
             valuePrimitive
-            required></twl-value-set-search>
+            required
+        ></twl-value-set-search>
         <twl-map-set-search name="resourceId"
             *ngIf="resourceModalData.resource.resourceType === 'MapSet'"
             [(ngModel)]="resourceModalData.resource.resourceId"
             [filter]="filter"
             valuePrimitive
-            required></twl-map-set-search>
+            required
+        ></twl-map-set-search>
         <twl-naming-system-search name="resourceId"
             *ngIf="resourceModalData.resource.resourceType === 'NamingSystem'"
             [(ngModel)]="resourceModalData.resource.resourceId"
             [filter]="filter"
             valuePrimitive
-            required></twl-naming-system-search>
+            required
+        ></twl-naming-system-search>
       </m-form-item>
     </form>
   </ng-container>
@@ -110,7 +122,7 @@
     <m-button mDisplay="text" (click)="resourceModalData.visible = false">
       {{'core.btn.cancel' | translate}}
     </m-button>
-    <m-button mDisplay="primary" (click)="saveResource()">
+    <m-button mDisplay="primary" (click)="confirmResource()">
       {{(resourceModalData.editKey ? 'core.btn.confirm' : 'core.btn.add') | translate}}
     </m-button>
   </div>
