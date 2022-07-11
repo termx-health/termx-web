@@ -43,7 +43,7 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
   }
 
   private searchEntities(text: string): Observable<{[id: string]: CodeSystemEntityVersion}> {
-    if (!text || text.length === 1 || !this.codeSystemId) {
+    if (!text || !this.codeSystemId) {
       return of(this.data);
     }
 
