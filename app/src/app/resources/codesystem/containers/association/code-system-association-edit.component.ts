@@ -3,7 +3,8 @@ import {CodeSystemAssociation} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {CodeSystemAssociationFormComponent} from './code-system-association-form.component';
+import {NgForm} from '@angular/forms';
+import {isDefined, validateForm} from '@kodality-web/core-util';
 
 @Component({
   templateUrl: './code-system-association-edit.component.html',
@@ -16,7 +17,7 @@ export class CodeSystemAssociationEditComponent implements OnInit {
   public loading = false;
   public mode?: 'edit' | 'add';
 
-  @ViewChild("associationForm") public associationForm?: CodeSystemAssociationFormComponent;
+  @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -34,6 +35,7 @@ export class CodeSystemAssociationEditComponent implements OnInit {
       this.loadAssociation(Number(associationId));
     } else {
       this.association = new CodeSystemAssociation();
+      this.association.codeSystem = this.codeSystemId!;
     }
   }
 
@@ -43,7 +45,7 @@ export class CodeSystemAssociationEditComponent implements OnInit {
   }
 
   public save(): void {
-    if (!this.associationForm?.validate()) {
+    if (!(isDefined(this.form) && validateForm(this.form))) {
       return;
     }
     this.loading = true;

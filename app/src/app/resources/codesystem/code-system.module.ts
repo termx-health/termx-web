@@ -36,7 +36,6 @@ import {CodeSystemPropertyValueFormComponent} from './containers/property-value/
 import {CodeSystemPropertyValueEditComponent} from './containers/property-value/code-system-property-value-edit.component';
 import {CodeSystemConceptVersionAssociationTableComponent} from './containers/concept/association/code-system-concept-version-association-table.component';
 import {CodeSystemAssociationEditComponent} from './containers/association/code-system-association-edit.component';
-import {CodeSystemAssociationFormComponent} from './containers/association/code-system-association-form.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -112,8 +111,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemPropertyValueEditComponent,
     CodeSystemPropertyValueFormComponent,
     CodeSystemConceptVersionAssociationTableComponent,
-    CodeSystemAssociationEditComponent,
-    CodeSystemAssociationFormComponent
+    CodeSystemAssociationEditComponent
   ],
   exports: [
     CodeSystemListComponent
