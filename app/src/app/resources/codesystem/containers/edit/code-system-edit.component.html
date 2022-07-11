@@ -36,19 +36,20 @@
             <m-textarea name="description" [(ngModel)]="codeSystem.description"></m-textarea>
           </m-form-item>
 
-          <m-form-item mName="narrative" [mLabel]="narrativeHeader">
-            <ng-template #narrativeHeader>
-              <div class="m-items-between">
-                <div>{{'entities.code-system.narrative' | translate}}</div>
-                <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
-                  <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
-                </m-button>
-              </div>
-            </ng-template>
+<!--          <m-form-item mName="narrative" [mLabel]="narrativeHeader">-->
+<!--            <ng-template #narrativeHeader>-->
+<!--              <div class="m-items-between">-->
+<!--                <div>{{'entities.code-system.narrative' | translate}}</div>-->
+<!--                <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">-->
+<!--                  <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>-->
+<!--                </m-button>-->
+<!--              </div>-->
+<!--            </ng-template>-->
+<!--            <m-rich-text-editor *ngIf="!narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-rich-text-editor>-->
+<!--            <m-textarea *ngIf="narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-textarea>-->
+<!--          </m-form-item>-->
 
-            <m-rich-text-editor *ngIf="!narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-rich-text-editor>
-            <m-textarea *ngIf="narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-textarea>
-          </m-form-item>
+
         </form>
 
         <twa-code-system-versions-list *ngIf="(mode === 'edit') && codeSystem" [codeSystemId]="codeSystemId" [versions]="codeSystem.versions"></twa-code-system-versions-list>
