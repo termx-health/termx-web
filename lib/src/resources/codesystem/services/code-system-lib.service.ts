@@ -15,6 +15,7 @@ import {CodeSystemEntityVersion} from '../model/code-system-entity';
 import {CodeSystemSupplement} from '../model/code-system-supplement';
 import {Designation} from '../../designation';
 import {CodeSystemVersionSearchParams} from '../model/code-system-version-search-params';
+import {CodeSystemAssociation} from '../model/code-system-association';
 
 @Injectable()
 export class CodeSystemLibService {
@@ -46,6 +47,10 @@ export class CodeSystemLibService {
 
   public loadDesignation(codeSystemId: string, designationId: number): Observable<Designation> {
     return this.http.get<Designation>(`${this.baseUrl}/${codeSystemId}/designations/${designationId}`);
+  }
+
+  public loadAssociation(codeSystemId: string, associationId: number): Observable<CodeSystemAssociation> {
+    return this.http.get<Designation>(`${this.baseUrl}/${codeSystemId}/associations/${associationId}`);
   }
 
   public loadSupplement(codeSystemId: string, supplementId: number): Observable<CodeSystemSupplement> {

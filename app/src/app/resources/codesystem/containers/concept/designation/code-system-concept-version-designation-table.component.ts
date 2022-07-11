@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {CodeSystemLibService, Designation, EntityProperty} from 'terminology-lib/resources';
 import {BooleanInput, collect, group} from '@kodality-web/core-util';
-import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'twa-code-system-concept-version-designation-table',
@@ -14,7 +13,6 @@ export class CodeSystemConceptVersionDesignationTableComponent implements OnChan
   @Input() public designations?: Designation[] = [];
   @Output() public designationsChange = new EventEmitter<Designation[]>();
 
-  @ViewChild("designationForm") public designationForm?: NgForm;
 
   public entityProperties?: {[id: number]: EntityProperty};
   public designationMap?: {[id: string]: Designation[]} = {};
