@@ -17,23 +17,24 @@ export class LocalizedConceptNamePipe implements PipeTransform {
     private conceptService: CodeSystemConceptLibService
   ) {}
 
-  public transform(code: string, resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
-    if (!code || !resource || (!resource.codeSystem && !resource.valueSet)) {
+  public transform(identifier: string | number, resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
+    if (!identifier || !resource || (!resource.codeSystem && !resource.valueSet)) {
       return EMPTY;
     }
 
     const request = this.conceptService.search({
-      code: code,
+      ...(typeof identifier === 'string') && {code: identifier},
+      ...(typeof identifier === 'number') && {codeSystemEntityVersionId: identifier},
       codeSystem: resource.codeSystem,
       codeSystemVersion: resource.codeSystemVersion,
       valueSet: resource.valueSet,
       valueSetVersion: resource.valueSetVersion,
       limit: 1
     }).pipe(map(resp => {
-      return resp.data[0] ? this.getName(resp.data[0], this.translateService.currentLang) : code;
+      return resp.data[0] ? this.getName(resp.data[0], this.translateService.currentLang) : identifier;
     }));
 
-    const key = `${code || '-'}` +
+    const key = `${identifier || '-'}` +
       `#${resource.codeSystem || '-'}#${resource.codeSystemVersion || '-'}` +
       `#${resource.valueSet || '-'}#${resource.valueSetVersion || '-'}`;
 

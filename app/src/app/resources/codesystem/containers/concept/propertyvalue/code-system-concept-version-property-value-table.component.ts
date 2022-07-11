@@ -1,7 +1,6 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {BooleanInput, collect, group} from '@kodality-web/core-util';
 import {CodeSystemLibService, EntityProperty, EntityPropertyValue} from 'lib/src/resources';
-import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'twa-code-system-concept-version-property-value-table',
@@ -13,8 +12,6 @@ export class CodeSystemConceptVersionPropertyValueTableComponent implements OnCh
   @Input() public conceptVersionId?: number;
   @Input() public propertyValues?: EntityPropertyValue[];
   @Output() public propertyValuesChange = new EventEmitter<EntityPropertyValue[]>();
-
-  @ViewChild("propertyForm") public propertyForm?: NgForm;
 
   public entityProperties?: {[id: number]: EntityProperty};
   public propertyValuesMap?: {[id: number]: EntityPropertyValue[]} = {};

@@ -21,6 +21,10 @@
                 [codeSystemId]="codeSystemId"
                 [conceptVersionId]="conceptVersion.id"
             ></twa-code-system-concept-version-property-value-table>
+            <twa-code-system-concept-version-association-table
+                [(associations)]="conceptVersion.associations"
+                [codeSystemId]="codeSystemId"
+            ></twa-code-system-concept-version-association-table>
           </div>
         </form>
 

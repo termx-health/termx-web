@@ -34,6 +34,9 @@ import {CodeSystemDesignationEditComponent} from './containers/designation/code-
 import {CodeSystemDesignationFormComponent} from './containers/designation/code-system-designation-form.component';
 import {CodeSystemPropertyValueFormComponent} from './containers/property-value/code-system-property-value-form.component';
 import {CodeSystemPropertyValueEditComponent} from './containers/property-value/code-system-property-value-edit.component';
+import {CodeSystemConceptVersionAssociationTableComponent} from './containers/concept/association/code-system-concept-version-association-table.component';
+import {CodeSystemAssociationEditComponent} from './containers/association/code-system-association-edit.component';
+import {CodeSystemAssociationFormComponent} from './containers/association/code-system-association-form.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -48,6 +51,8 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/concepts/:conceptId/versions/:conceptVersionId/entity-property-value/:propertyValueId/edit', component: CodeSystemPropertyValueEditComponent},
   {path: ':id/concepts/:conceptId/versions/:conceptVersionId/designations/add', component: CodeSystemDesignationEditComponent},
   {path: ':id/concepts/:conceptId/versions/:conceptVersionId/designations/:designation/edit', component: CodeSystemDesignationEditComponent},
+  {path: ':id/concepts/:conceptId/versions/:conceptVersionId/associations/add', component: CodeSystemAssociationEditComponent},
+  {path: ':id/concepts/:conceptId/versions/:conceptVersionId/associations/:association/edit', component: CodeSystemAssociationEditComponent},
   {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent},
   {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent},
   {path: ':id/supplements/add', component: CodeSystemSupplementEditComponent},
@@ -105,7 +110,10 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemDesignationEditComponent,
     CodeSystemDesignationFormComponent,
     CodeSystemPropertyValueEditComponent,
-    CodeSystemPropertyValueFormComponent
+    CodeSystemPropertyValueFormComponent,
+    CodeSystemConceptVersionAssociationTableComponent,
+    CodeSystemAssociationEditComponent,
+    CodeSystemAssociationFormComponent
   ],
   exports: [
     CodeSystemListComponent
