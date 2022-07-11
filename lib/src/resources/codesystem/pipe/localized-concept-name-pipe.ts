@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.service';
 import {CodeSystemConcept} from '../model/code-system-concept';
-import {compareValues, HttpCacheService} from '@kodality-web/core-util';
+import {compareValues, HttpCacheService, isDefined} from '@kodality-web/core-util';
 
 @Pipe({
   name: 'localizedConceptName'
@@ -17,34 +17,35 @@ export class LocalizedConceptNamePipe implements PipeTransform {
     private conceptService: CodeSystemConceptLibService
   ) {}
 
-  public transform(code: string, resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
-    if (!code || !resource || (!resource.codeSystem && !resource.valueSet)) {
+  public transform(identifier: string | number, resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
+    if (!identifier || !resource || (!resource.codeSystem && !resource.valueSet)) {
       return EMPTY;
     }
 
     const request = this.conceptService.search({
-      code: code,
+      ...(typeof identifier === 'string') && {code: identifier},
+      ...(typeof identifier === 'number') && {codeSystemEntityVersionId: identifier},
       codeSystem: resource.codeSystem,
       codeSystemVersion: resource.codeSystemVersion,
       valueSet: resource.valueSet,
       valueSetVersion: resource.valueSetVersion,
       limit: 1
     }).pipe(map(resp => {
-      return resp.data[0] ? this.getName(resp.data[0], this.translateService.currentLang) : code;
+      return resp.data[0] ? this.getName(resp.data[0], this.translateService.currentLang, typeof identifier === 'number' ? identifier : undefined) : identifier;
     }));
 
-    const key = `${code || '-'}` +
+    const key = `${identifier || '-'}` +
       `#${resource.codeSystem || '-'}#${resource.codeSystemVersion || '-'}` +
       `#${resource.valueSet || '-'}#${resource.valueSetVersion || '-'}`;
 
     return this.cacheService.getCachedResponse(key, request);
   }
 
-  private getName(concept: CodeSystemConcept, lang: string): string {
+  private getName(concept: CodeSystemConcept, lang: string, codeSystemEntityId?: number): string {
     if (!concept.versions) {
       return concept.code!;
     }
-    const conceptVersion = concept.versions.find(v => v.status === 'active');
+    const conceptVersion = concept.versions.find(v => isDefined(codeSystemEntityId) ? v.id === codeSystemEntityId : v.status === 'active');
     if (!conceptVersion || !conceptVersion.designations) {
       return concept.code!;
     }
