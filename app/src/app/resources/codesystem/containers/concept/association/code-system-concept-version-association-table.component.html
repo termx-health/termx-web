@@ -23,10 +23,10 @@
           <td *ngIf="isFirst" class="tw-table-min-width" [rowSpan]="associationMap[key].length">{{association.associationType}}</td>
           <td>
             <a *ngIf="!viewMode" [routerLink]="['../associations/', association.id, 'edit']">
-              <m-abbreviate [mValue]="association.targetId | localizedConceptName: {codeSystem: codeSystemId} | async" [mLength]="35"></m-abbreviate>
+              <m-abbreviate [mValue]="association.targetId | localizedConceptName: {codeSystem: association.codeSystem} | async" [mLength]="35"></m-abbreviate>
             </a>
             <div *ngIf="viewMode">
-              <m-abbreviate [mValue]="association.targetId | localizedConceptName: {codeSystem: codeSystemId} | async" [mLength]="35"></m-abbreviate>
+              <m-abbreviate [mValue]="association.targetId | localizedConceptName: {codeSystem: association.codeSystem} | async" [mLength]="35"></m-abbreviate>
             </div>
           </td>
           <td class="tw-table-min-width">

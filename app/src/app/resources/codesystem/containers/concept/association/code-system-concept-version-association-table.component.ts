@@ -9,10 +9,9 @@ import {CodeSystemAssociation, CodeSystemLibService} from 'terminology-lib/resou
 export class CodeSystemConceptVersionAssociationTableComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: string | boolean = false;
   @Input() public associations?: CodeSystemAssociation[] = [];
-  @Input() public codeSystemId?: string;
   @Output() public associationsChange = new EventEmitter<CodeSystemAssociation[]>();
 
-  public associationMap?: {[id: string]: CodeSystemAssociation[]} = {};
+  public associationMap?: {[type: string]: CodeSystemAssociation[]} = {};
   public loading = false;
 
   public constructor(

@@ -1,5 +1,5 @@
 <form #form="ngForm" *ngIf="association">
-  <m-form-item mName="associationType" mLabel="entities.designation.type" required>
+  <m-form-item mName="associationType" mLabel="entities.code-system-association.type" required>
     <twl-association-type-search
         [(ngModel)]="association.associationType"
         name="associationType"
@@ -18,7 +18,7 @@
     ></twl-code-system-entity-version-search>
   </m-form-item>
 
-  <m-form-item mName="associationStatus" mLabel="web.map-set-association.form.status" required>
+  <m-form-item mName="associationStatus" mLabel="entities.code-system-association.status" required>
     <twl-value-set-concept-select name="associationStatus"
         [(ngModel)]="association.status"
         valueSet="publication-status"
