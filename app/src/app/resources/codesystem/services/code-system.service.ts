@@ -2,13 +2,15 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {
   CodeSystem,
+  CodeSystemAssociation,
   CodeSystemConcept,
   CodeSystemEntityVersion,
   CodeSystemLibService,
   CodeSystemSupplement,
   CodeSystemVersion,
   Designation,
-  EntityProperty, EntityPropertyValue
+  EntityProperty,
+  EntityPropertyValue
 } from 'terminology-lib/resources';
 
 @Injectable()
@@ -79,7 +81,8 @@ export class CodeSystemService extends CodeSystemLibService {
 
   public saveEntityPropertyValue(codeSystemId: string, conceptVersionId: number, propertyValue: EntityPropertyValue): Observable<EntityPropertyValue> {
     if (propertyValue.id) {
-      return this.http.put<EntityPropertyValue>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/entity-property-values/${propertyValue.id}`, propertyValue);
+      return this.http.put<EntityPropertyValue>(
+        `${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/entity-property-values/${propertyValue.id}`, propertyValue);
     }
     return this.http.post<EntityPropertyValue>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/entity-property-values/`, propertyValue);
   }
@@ -108,5 +111,12 @@ export class CodeSystemService extends CodeSystemLibService {
 
   public deleteDesignation(codeSystemId: string, designationId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/designations/${designationId}`);
+  }
+
+  public saveAssociation(codeSystemId: string, conceptVersionId: number, association: CodeSystemAssociation): Observable<CodeSystemAssociation> {
+    if (association.id) {
+      return this.http.put<Designation>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/associations/${association.id}`, association);
+    }
+    return this.http.post<Designation>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/associations`, association);
   }
 }

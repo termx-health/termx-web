@@ -153,6 +153,16 @@
         "delete-property-value": "Delete property value",
         "edit-property-value": "Edit property value",
         "coding-value-system": "Coding value system"
+      },
+      "association": {
+        "add-association": "Add association",
+        "edit-association": "Edit association",
+        "delete-association": "Delete association"
+      }
+    },
+    "code-system-association": {
+      "form": {
+        "target": "Target"
       }
     },
     "naming-system": {

@@ -1,0 +1,40 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading">
+      <m-card [mTitle]="mode === 'edit'? 'web.code-system-concept-version.association.edit-association' : 'web.code-system-concept-version.association.add-association'">
+        <form #form="ngForm" *ngIf="association">
+          <m-form-item mName="associationType" mLabel="entities.code-system-association.type" required>
+            <twl-association-type-search
+                [(ngModel)]="association.associationType"
+                name="associationType"
+                valuePrimitive
+                required
+            ></twl-association-type-search>
+          </m-form-item>
+
+          <m-form-item *ngIf="codeSystemId" mName="targetConcept" mLabel="web.code-system-association.form.target" required>
+            <twl-code-system-entity-version-search [codeSystemId]="codeSystemId"
+                [(ngModel)]="association.targetId"
+                name="targetConcept"
+                valuePrimitive
+                required
+            ></twl-code-system-entity-version-search>
+          </m-form-item>
+
+          <m-form-item mName="associationStatus" mLabel="entities.code-system-association.status" required>
+            <twl-value-set-concept-select name="associationStatus"
+                [(ngModel)]="association.status"
+                valueSet="publication-status"
+                required
+            ></twl-value-set-concept-select>
+          </m-form-item>
+        </form>
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>
