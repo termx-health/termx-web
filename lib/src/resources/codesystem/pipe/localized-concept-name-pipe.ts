@@ -4,7 +4,7 @@ import {map} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.service';
 import {CodeSystemConcept} from '../model/code-system-concept';
-import {compareValues, HttpCacheService} from '@kodality-web/core-util';
+import {compareValues, HttpCacheService, isDefined} from '@kodality-web/core-util';
 
 @Pipe({
   name: 'localizedConceptName'
@@ -31,7 +31,7 @@ export class LocalizedConceptNamePipe implements PipeTransform {
       valueSetVersion: resource.valueSetVersion,
       limit: 1
     }).pipe(map(resp => {
-      return resp.data[0] ? this.getName(resp.data[0], this.translateService.currentLang) : identifier;
+      return resp.data[0] ? this.getName(resp.data[0], this.translateService.currentLang, typeof identifier === 'number' ? identifier : undefined) : identifier;
     }));
 
     const key = `${identifier || '-'}` +
@@ -41,11 +41,11 @@ export class LocalizedConceptNamePipe implements PipeTransform {
     return this.cacheService.getCachedResponse(key, request);
   }
 
-  private getName(concept: CodeSystemConcept, lang: string): string {
+  private getName(concept: CodeSystemConcept, lang: string, codeSystemEntityId?: number): string {
     if (!concept.versions) {
       return concept.code!;
     }
-    const conceptVersion = concept.versions.find(v => v.status === 'active');
+    const conceptVersion = concept.versions.find(v => isDefined(codeSystemEntityId) ? v.id === codeSystemEntityId : v.status === 'active');
     if (!conceptVersion || !conceptVersion.designations) {
       return concept.code!;
     }
