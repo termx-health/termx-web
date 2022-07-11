@@ -26,8 +26,8 @@ export class MapSetVersionsListComponent implements OnChanges {
       return;
     }
     this.loading = true;
-    this.mapSetService.loadVersions(this.mapSetId)
-      .subscribe(versions => this.versions = versions)
+    this.mapSetService.searchVersions(this.mapSetId, {limit: -1})
+      .subscribe(versions => this.versions = versions.data)
       .add(() => this.loading = false);
   }
 

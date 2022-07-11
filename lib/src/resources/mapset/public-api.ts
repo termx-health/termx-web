@@ -8,4 +8,5 @@ export * from './model/map-set-entity';
 export * from './model/map-set-search-params';
 export * from './model/map-set-version';
 export * from './model/map-set-entity-version-search-params';
+export * from './model/map-set-version-search-params';
 export * from './services/map-set-lib.service';
