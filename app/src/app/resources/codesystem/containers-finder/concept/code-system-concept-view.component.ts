@@ -2,8 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CodeSystemConcept, CodeSystemConceptLibService} from 'terminology-lib/resources';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
-import {MuiDestroyService} from '@kodality-health/marina-ui';
-import {isNil} from '@kodality-web/core-util';
+import {DestroyService, isNil} from '@kodality-web/core-util';
 
 
 @Component({
@@ -25,7 +24,7 @@ import {isNil} from '@kodality-web/core-util';
       </twa-finder-menu>
     </twa-finder-wrapper>
   `,
-  providers: [MuiDestroyService]
+  providers: [DestroyService]
 })
 export class FinderCodeSystemConceptViewComponent implements OnInit {
   public concept?: CodeSystemConcept;
@@ -34,7 +33,7 @@ export class FinderCodeSystemConceptViewComponent implements OnInit {
   public constructor(
     private codeSystemConceptService: CodeSystemConceptLibService,
     private route: ActivatedRoute,
-    private destroy$: MuiDestroyService
+    private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {

@@ -1,15 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {forkJoin, takeUntil} from 'rxjs';
-import {MuiDestroyService} from '@kodality-health/marina-ui';
-import {isNil} from '@kodality-web/core-util';
+import {DestroyService, isNil} from '@kodality-web/core-util';
 import {ValueSetVersion} from 'terminology-lib/resources';
 import {ValueSetService} from '../../services/value-set.service';
 
 
 @Component({
   templateUrl: 'value-set-version-view.component.html',
-  providers: [MuiDestroyService]
+  providers: [DestroyService]
 })
 export class FinderValueSetVersionViewComponent implements OnInit {
   public version?: ValueSetVersion;
@@ -19,7 +18,7 @@ export class FinderValueSetVersionViewComponent implements OnInit {
   public constructor(
     private valueSetService: ValueSetService,
     private route: ActivatedRoute,
-    private destroy$: MuiDestroyService
+    private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {

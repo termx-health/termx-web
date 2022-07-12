@@ -3,12 +3,11 @@ import {CodeSystemEntityVersion, CodeSystemVersion} from 'terminology-lib/resour
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
-import {MuiDestroyService} from '@kodality-health/marina-ui';
-import {isNil, SearchResult} from '@kodality-web/core-util';
+import {DestroyService, isNil, SearchResult} from '@kodality-web/core-util';
 
 @Component({
   templateUrl: 'code-system-version-view.component.html',
-  providers: [MuiDestroyService]
+  providers: [DestroyService]
 })
 export class FinderCodeSystemVersionViewComponent implements OnInit {
   public readonly DEFAULT_ENTITY_VERSION_LIMIT = 100;
@@ -22,7 +21,7 @@ export class FinderCodeSystemVersionViewComponent implements OnInit {
   public constructor(
     private codeSystemService: CodeSystemService,
     private route: ActivatedRoute,
-    private destroy$: MuiDestroyService
+    private destroy$: DestroyService
   ) {}
 
 
