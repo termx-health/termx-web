@@ -27,6 +27,9 @@
           <a *m-dropdown-item (click)="exportFhirFormatVersion(version.id)">
             {{'web.value-set.form.versions.export-fhir' | translate}}
           </a>
+          <a *m-dropdown-item (click)="exportFhirFormatVersionExpansion(valueSetUri, version.version)">
+            {{'web.value-set.form.versions.export-fhir-expansion' | translate}}
+          </a>
           <a *mDropdownItemIf="version.status !== 'retired'" (click)="retireVersion(version)">
             {{'web.publication-status.operations.retire' | translate}}
           </a>

@@ -190,7 +190,8 @@
         "edit-header": "Edit value set",
         "versions": {
           "add-version": "Add version",
-          "export-fhir": "Export FHIR json"
+          "export-fhir": "Export FHIR json",
+          "export-fhir-expansion": "Export FHIR json with expansion"
         }
       }
     },
