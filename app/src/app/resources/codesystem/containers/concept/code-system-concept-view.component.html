@@ -1,0 +1,42 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading">
+      <m-card [mTitle]="'web.code-system-concept.form.view-header'" *ngIf="concept">
+        <m-form-item mLabel="entities.code-system-concept.code" required>
+          {{concept.code}}
+        </m-form-item>
+
+        <m-form-item mLabel="entities.code-system-concept.description">
+          {{concept.description}}
+        </m-form-item>
+
+        <m-card class="m-card-inside" [mTitle]="'entities.code-system-concept.versions'" *ngIf="concept.versions">
+          <m-table [mData]="concept.versions" mEnablePagination mHideOnSinglePage>
+            <tr *mTableHead>
+              <th>{{'entities.code-system-entity-version.id' | translate}}</th>
+              <th>{{'entities.code-system-entity-version.created' | translate}}</th>
+              <th>{{'entities.code-system-entity-version.description' | translate}}</th>
+              <th>{{'entities.code-system-entity-version.status' | translate}}</th>
+            </tr>
+
+            <tr *mTableRow="let version">
+              <td><a [routerLink]="['../versions', version.id, 'view']">{{version.id}}</a></td>
+              <td>{{version.created | localDateTime}}</td>
+              <td>
+                <m-abbreviate [mValue]="version.description" [mLength]="35"></m-abbreviate>
+              </td>
+              <td class="tw-table-min-width">
+                <twa-status-tag [status]="version.status"></twa-status-tag>
+              </td>
+            </tr>
+            <tr *mTableNoData>
+              <td colspan="4">
+                <m-no-data></m-no-data>
+              </td>
+            </tr>
+          </m-table>
+        </m-card>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>
