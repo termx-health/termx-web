@@ -17,7 +17,8 @@ export class LocalizedConceptNamePipe implements PipeTransform {
     private conceptService: CodeSystemConceptLibService
   ) {}
 
-  public transform(identifier: string | number, resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
+  public transform(identifier: string | number,
+    resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
     if (!identifier || !resource || (!resource.codeSystem && !resource.valueSet)) {
       return EMPTY;
     }
@@ -41,14 +42,25 @@ export class LocalizedConceptNamePipe implements PipeTransform {
     return this.cacheService.getCachedResponse(key, request);
   }
 
-  private getName(concept: CodeSystemConcept, lang: string, codeSystemEntityId?: number): string {
+  private getName(concept: CodeSystemConcept, lang: string, codeSystemEntityVersionId?: number): string {
     if (!concept.versions) {
       return concept.code!;
     }
-    const conceptVersion = concept.versions.find(v => isDefined(codeSystemEntityId) ? v.id === codeSystemEntityId : v.status === 'active');
+
+    let conceptVersion;
+    if (isDefined(codeSystemEntityVersionId)) {
+      conceptVersion = concept.versions.find(v => v.id === codeSystemEntityVersionId);
+    }
+    if (!isDefined(codeSystemEntityVersionId)) {
+      conceptVersion = concept.versions.find(v => v.status === 'active');
+    }
+    if (!isDefined(codeSystemEntityVersionId) && !conceptVersion) {
+      conceptVersion = concept.versions.find(v => v.status === 'draft');
+    }
     if (!conceptVersion || !conceptVersion.designations) {
       return concept.code!;
     }
+
     const filteredByLang = conceptVersion.designations.filter(d => d.language === lang);
     const designations = filteredByLang?.length > 0 ? filteredByLang : conceptVersion.designations;
 

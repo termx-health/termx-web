@@ -120,8 +120,10 @@
         "view-header": "View version",
         "entities": {
           "add-entity": "Add entity",
+          "entity-version": "Entity version",
           "modal": {
-            "add-header": "Add entity"
+            "add-header": "Add entity",
+            "entity-version": "Entity version"
           }
         }
       }

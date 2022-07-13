@@ -9,6 +9,7 @@
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading" mSize="small">
     <tr *mTableRow="let concept">
       <td><a [routerLink]="['../concepts/', concept.id, 'edit']">{{concept.code}}</a></td>
+      <td>{{concept.code | localizedConceptName: {codeSystem: codeSystemId} | async}}</td>
     </tr>
 
     <tr *mTableNoData>

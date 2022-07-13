@@ -36,7 +36,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
       return of(this.searchResult);
     }
     const q = copyDeep(this.query);
-    q.codeContains = this.searchInput;
+    q.textContains = this.searchInput;
     this.loading = true;
     return this.codeSystemService.searchConcepts(this.codeSystemId, q).pipe(finalize(() => this.loading = false));
   }
