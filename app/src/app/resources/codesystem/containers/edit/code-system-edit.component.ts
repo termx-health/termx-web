@@ -15,6 +15,8 @@ export class CodeSystemEditComponent implements OnInit {
   public codeSystem?: CodeSystem;
 
   public narrativeRaw = false;
+  public viewNarrative = false;
+  public viewConcept = true;
   public loading = false;
   public mode: 'edit' | 'add' = 'add';
 
@@ -29,6 +31,7 @@ export class CodeSystemEditComponent implements OnInit {
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.mode = this.codeSystemId ? 'edit' : 'add';
+    this.viewNarrative = !!this.route.snapshot.queryParamMap.get('tab');
 
     if (this.mode === 'add') {
       this.codeSystem = new CodeSystem();

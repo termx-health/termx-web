@@ -1,14 +1,14 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-items-between">
     <div class="m-card-title">{{'web.contacts.list.header' | translate}}</div>
-    <twa-add-button (click)="addContact()">
+    <twa-add-button *ngIf="!viewMode" (click)="addContact()">
       {{'web.contacts.list.add-contact' | translate}}
     </twa-add-button>
   </div>
 
   <m-no-data *ngIf="!contacts?.length"></m-no-data>
   <nz-collapse class="tw-cs-contact-collapse" *ngIf="contacts?.length">
-    <nz-collapse-panel *ngFor="let contact of contacts; let index = index" [nzHeader]="header" [nzExtra]="edit">
+    <nz-collapse-panel *ngFor="let contact of contacts; let index = index" [nzHeader]="header" [nzExtra]="!viewMode? edit: ''">
       <ng-template #header>
         <m-icon *ngIf="!contact.name" [mCode]="'user'"></m-icon>
         <div *ngIf="contact.name">{{contact.name}}</div>

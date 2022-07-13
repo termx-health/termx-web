@@ -3,7 +3,7 @@
     <div class="m-card-title">
       {{'entities.code-system.properties' | translate}}
     </div>
-    <m-dropdown>
+    <m-dropdown *ngIf="!viewMode">
       <twa-add-button *m-dropdown-container icon="down" placement="right">
         {{'web.code-system.form.properties.add-property' | translate}}
       </twa-add-button>
@@ -24,12 +24,17 @@
       <th>{{'entities.entity-property.description' | translate}}</th>
       <th></th>
       <th>{{'entities.entity-property.status' | translate}}</th>
-      <th class="tw-table-actions"></th>
+      <th class="tw-table-actions" *ngIf="!viewMode"></th>
     </tr>
 
     <tr *mTableRow="let property">
       <td>
-        <a [routerLink]="property.supplementId? ['../supplements/', property.supplementId, 'edit'] : ['../entity-properties/', property.id, 'edit']">{{property.name}}</a>
+        <div *ngIf="viewMode">
+          {{property.name}}
+        </div>
+        <a *ngIf="!viewMode" [routerLink]="property.supplementId? ['../supplements/', property.supplementId, 'edit'] : ['../entity-properties/', property.id, 'edit']">
+          {{property.name}}
+        </a>
       </td>
       <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
       <td><m-abbreviate [mValue]="property.description" [mLength]="40"></m-abbreviate></td>
@@ -39,7 +44,7 @@
       <td class="tw-table-min-width">
         <twa-status-tag [status]="property.status"></twa-status-tag>
       </td>
-      <td class="tw-table-actions">
+      <td class="tw-table-actions" *ngIf="!viewMode">
         <m-dropdown>
           <a *m-dropdown-item (click)="deleteProperty(property.id)">
             {{'web.code-system.form.properties.delete-property' | translate}}

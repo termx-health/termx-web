@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {ContactDetail} from 'terminology-lib/resources';
 import {NgForm} from '@angular/forms';
-import {copyDeep, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, copyDeep, isDefined} from '@kodality-web/core-util';
 
 
 @Component({
@@ -25,6 +25,7 @@ import {copyDeep, isDefined} from '@kodality-web/core-util';
   `]
 })
 export class ContactListComponent {
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public contacts!: ContactDetail[];
   @Output() public contactsChange: EventEmitter<ContactDetail[]> = new EventEmitter<ContactDetail[]>();
 

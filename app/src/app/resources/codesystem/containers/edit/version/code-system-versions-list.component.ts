@@ -3,6 +3,7 @@ import {CodeSystemService} from '../../../services/code-system.service';
 import {CodeSystemVersion} from 'terminology-lib/resources';
 import {FhirCodeSystemLibService} from 'terminology-lib/fhir';
 import {saveAs} from 'file-saver';
+import {BooleanInput} from '@kodality-web/core-util';
 
 
 @Component({
@@ -10,6 +11,7 @@ import {saveAs} from 'file-saver';
   templateUrl: 'code-system-versions-list.component.html',
 })
 export class CodeSystemVersionsListComponent {
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public codeSystemId?: string;
   @Input() public versions: CodeSystemVersion[] = [];
   public loading = false;
