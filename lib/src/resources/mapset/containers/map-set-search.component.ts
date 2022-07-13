@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {MapSet} from '../model/map-set';
 import {MapSetSearchParams} from '../model/map-set-search-params';
 import {MapSetLibService} from '../services/map-set-lib.service';
@@ -12,7 +12,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 @Component({
   selector: 'twl-map-set-search',
   templateUrl: './map-set-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MapSetSearchComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MapSetSearchComponent), multi: true}, DestroyService]
 })
 export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
@@ -28,6 +28,7 @@ export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
 
   public constructor(
     private mapSetLibService: MapSetLibService,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {
@@ -53,6 +54,7 @@ export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
 
     this.loading['search'] = true;
     return this.mapSetLibService.search(q).pipe(
+      takeUntil(this.destroy$),
       map(ca => group(ca.data, c => c.id!)),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
@@ -62,7 +64,7 @@ export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
   private loadMapSet(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.mapSetLibService.load(id).subscribe(c => {
+      this.mapSetLibService.load(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
         this.data = {...(this.data || {}), [c.id!]: c};
       }).add(() => this.loading['load'] = false);
     }

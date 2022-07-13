@@ -1,14 +1,15 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, group, isNil} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isNil} from '@kodality-web/core-util';
 import {ValueSetConcept} from '../model/value-set-version';
 import {ValueSetLibService} from '../services/value-set-lib.service';
 import {CodeSystemConcept, CodeSystemConceptLibService} from '../../codesystem';
+import {takeUntil} from 'rxjs';
 
 @Component({
   selector: 'twl-value-set-concept-select',
   templateUrl: './value-set-concept-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetConceptSelectComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetConceptSelectComponent), multi: true}, DestroyService]
 })
 export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAccessor {
   @Input() public valueSet!: string;
@@ -25,7 +26,8 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
 
   public constructor(
     private valueSetService: ValueSetLibService,
-    private conceptService: CodeSystemConceptLibService
+    private conceptService: CodeSystemConceptLibService,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -41,7 +43,7 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
       return;
     }
     this.loading['select'] = true;
-    this.valueSetService.expand({valueSet: this.valueSet, valueSetVersion: this.valueSetVersion}).subscribe(concepts => {
+    this.valueSetService.expand({valueSet: this.valueSet, valueSetVersion: this.valueSetVersion}).pipe(takeUntil(this.destroy$)).subscribe(concepts => {
       this.data = group(concepts, c => c.concept!.code!);
     }).add(() => this.loading['select'] = false);
   }
@@ -53,7 +55,7 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
     }
 
     this.loading['load'] = true;
-    this.conceptService.search({code: codes.join(","), limit: 1}).subscribe(r => {
+    this.conceptService.search({code: codes.join(","), limit: 1}).pipe(takeUntil(this.destroy$)).subscribe(r => {
       r.data.forEach(c => this.data[c.code!] = {concept: c});
     }).add(() => this.loading['load'] = false);
   }

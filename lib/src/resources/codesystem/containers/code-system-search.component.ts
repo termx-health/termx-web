@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {CodeSystem} from '../model/code-system';
 import {CodeSystemLibService} from '../services/code-system-lib.service';
 import {CodeSystemSearchParams} from '../model/code-system-search-params';
@@ -12,7 +12,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 @Component({
   selector: 'twl-code-system-search',
   templateUrl: './code-system-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemSearchComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemSearchComponent), multi: true}, DestroyService]
 })
 export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
@@ -28,6 +28,7 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
 
   public constructor(
     private codeSystemService: CodeSystemLibService,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {
@@ -53,6 +54,7 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
 
     this.loading['search'] = true;
     return this.codeSystemService.search(q).pipe(
+      takeUntil(this.destroy$),
       map(ca => group(ca.data, c => c.id!)),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
@@ -62,7 +64,7 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   private loadCodeSystem(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.codeSystemService.load(id).subscribe(c => {
+      this.codeSystemService.load(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
         this.data = {...(this.data || {}), [c.id!]: c};
       }).add(() => this.loading['load'] = false);
     }

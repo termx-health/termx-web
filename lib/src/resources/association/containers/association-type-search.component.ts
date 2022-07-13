@@ -1,20 +1,19 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {AssociationTypeLibService} from '../services/association-type-lib.service';
 import {AssociationTypeSearchParams} from '../model/association-type-search-params';
 import {AssociationType} from '../model/association-type';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'twl-association-type-search',
   templateUrl: './association-type-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AssociationTypeSearchComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AssociationTypeSearchComponent), multi: true}, DestroyService]
 })
 export class AssociationTypeSearchComponent implements OnInit {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
-
 
   public data?: {[code: string]: AssociationType} = {};
   public value?: string;
@@ -25,7 +24,8 @@ export class AssociationTypeSearchComponent implements OnInit {
   public onTouched = (x: any) => x;
 
   public constructor(
-    private associationTypeService: AssociationTypeLibService
+    private associationTypeService: AssociationTypeLibService,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {
@@ -51,6 +51,7 @@ export class AssociationTypeSearchComponent implements OnInit {
 
     this.loading['search'] = true;
     return this.associationTypeService.searchTypes(q).pipe(
+      takeUntil(this.destroy$),
       map(tr => group(tr.data, t => t.code!)),
       catchError(() => of(this.data!)),
       finalize(() => this.loading['search'] = false)
@@ -60,7 +61,7 @@ export class AssociationTypeSearchComponent implements OnInit {
   private loadAssociationType(code?: string): void {
     if (isDefined(code)) {
       this.loading['load'] = true;
-      this.associationTypeService.load(code).subscribe(a => {
+      this.associationTypeService.load(code).pipe(takeUntil(this.destroy$)).subscribe(a => {
         this.data = {[a.code!]: a};
       }).add(() => this.loading['load'] = false);
     }

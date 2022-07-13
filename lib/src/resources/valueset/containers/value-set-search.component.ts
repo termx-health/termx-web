@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {ValueSet} from '../model/value-set';
 import {ValueSetLibService} from '../services/value-set-lib.service';
 import {ValueSetSearchParams} from '../model/value-set-search-params';
@@ -28,6 +28,7 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
 
   public constructor(
     private valueSetService: ValueSetLibService,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {
@@ -46,11 +47,14 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
     if (!text || text.length < 1) {
       return of(this.data);
     }
+
     const q = new ValueSetSearchParams();
     q.textContains = text;
     q.limit = 10_000;
+
     this.loading['search'] = true;
     return this.valueSetService.search(q).pipe(
+      takeUntil(this.destroy$),
       map(ca => group(ca.data, c => c.id!)),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
@@ -60,7 +64,7 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
   private loadValueSet(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.valueSetService.load(id).subscribe(c => {
+      this.valueSetService.load(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
         this.data = {...(this.data || {}), [c.id!]: c};
       }).add(() => this.loading['load'] = false);
     }

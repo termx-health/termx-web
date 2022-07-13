@@ -14,7 +14,8 @@
           <m-icon *ngIf="!(item.concept | apply:hasActiveVersion)"
               mCode="warning"
               m-popover
-              mContent="{{'web.value-set-version.form.concepts.modal.warning' | translate}}"></m-icon>
+              [mContent]="'web.value-set-version.form.concepts.modal.warning' | translate"
+          ></m-icon>
         </td>
         <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
           <div *ngIf="viewMode">{{item.concept?.code}}</div>
@@ -31,7 +32,8 @@
         <m-icon *ngIf="!(item.concept | apply:hasActiveVersion)"
             mCode="warning"
             m-popover
-            mContent="{{'web.value-set-version.form.concepts.modal.warning' | translate}}"></m-icon>
+            [mContent]="'web.value-set-version.form.concepts.modal.warning' | translate"
+        ></m-icon>
       </td>
       <td>
         <twl-concept-search *ngIf="!viewMode"
@@ -46,11 +48,11 @@
           {{item.concept?.code}}
         </div>
       </td>
-      <td>
+      <td style="max-width: 20rem;">
         <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.display"></twl-designation-select>
         <div *ngIf="viewMode">{{item.display?.name}}</div>
       </td>
-      <td>
+      <td style="max-width: 20rem;">
         <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.additionalDesignations" multiple></twl-designation-select>
       </td>
       <td *ngIf="!viewMode" class="tw-table-actions">

@@ -1,15 +1,16 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {CodeSystemLibService} from '../services/code-system-lib.service';
 import {CodeSystemVersion} from '../model/code-system-version';
 import {CodeSystemVersionLibService} from '../services/code-system-version-lib.service';
+import {takeUntil} from 'rxjs';
 
 
 @Component({
   selector: 'twl-code-system-version-select',
   templateUrl: './code-system-version-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemVersionSelectComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemVersionSelectComponent), multi: true}, DestroyService]
 })
 export class CodeSystemVersionSelectComponent implements OnChanges, ControlValueAccessor {
   @Input() public codeSystemId?: string;
@@ -24,7 +25,8 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
 
   public constructor(
     private codeSystemService: CodeSystemLibService,
-    private codeSystemVersionService: CodeSystemVersionLibService
+    private codeSystemVersionService: CodeSystemVersionLibService,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -41,7 +43,7 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
     }
 
     this.loading['select'] = true;
-    this.codeSystemService.searchVersions(this.codeSystemId, {limit: -1}).subscribe(versions => {
+    this.codeSystemService.searchVersions(this.codeSystemId, {limit: -1}).pipe(takeUntil(this.destroy$)).subscribe(versions => {
       this.data = group(versions.data, v => v.id!);
     }).add(() => this.loading['select'] = false);
   }
@@ -49,7 +51,7 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
   private loadVersion(id?: number): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.codeSystemVersionService.load(id).subscribe(v => {
+      this.codeSystemVersionService.load(id).pipe(takeUntil(this.destroy$)).subscribe(v => {
         this.data[v.version!] = v;
       }).add(() => this.loading['load'] = false);
     }

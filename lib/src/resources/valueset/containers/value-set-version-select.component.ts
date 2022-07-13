@@ -1,14 +1,15 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {ValueSetVersion} from '../model/value-set-version';
 import {ValueSetLibService} from '../services/value-set-lib.service';
+import {takeUntil} from 'rxjs';
 
 
 @Component({
   selector: 'twl-value-set-version-select',
   templateUrl: './value-set-version-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetVersionSelectComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetVersionSelectComponent), multi: true}, DestroyService]
 })
 export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAccessor {
   @Input() public valueSetId!: string;
@@ -21,7 +22,10 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
 
-  public constructor(private valueSetService: ValueSetLibService) {}
+  public constructor(
+    private valueSetService: ValueSetLibService,
+    private destroy$: DestroyService
+  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["valueSetId"]) {
@@ -37,7 +41,7 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
     }
 
     this.loading['select'] = true;
-    this.valueSetService.searchVersions(this.valueSetId, {limit: -1}).subscribe(versions => {
+    this.valueSetService.searchVersions(this.valueSetId, {limit: -1}).pipe(takeUntil(this.destroy$)).subscribe(versions => {
       this.data = group(versions.data, v => v.version!);
     }).add(() => this.loading['select'] = false);
   }
@@ -45,7 +49,7 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
   private loadVersion(id?: string): void {
     if (isDefined(id) && isDefined(this.valueSetId)) {
       this.loading['load'] = true;
-      this.valueSetService.loadVersion(this.valueSetId, id).subscribe(v => {
+      this.valueSetService.loadVersion(this.valueSetId, id).pipe(takeUntil(this.destroy$)).subscribe(v => {
         this.data[v.version!] = v;
       }).add(() => this.loading['load'] = false);
     }
