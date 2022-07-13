@@ -1,10 +1,17 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit'? 'web.code-system-concept-version.property-value.edit-property-value' : 'web.code-system-concept-version.property-value.add-property-value'">
-        <twa-code-system-property-value-form #propertyValueForm [propertyValue]="propertyValue" [codeSystemId]="codeSystemId"></twa-code-system-property-value-form>
+    <m-spinner [mLoading]="isLoading">
+      <m-card
+          [mTitle]="'web.code-system-concept-version.property-value.' + (mode === 'edit' ? 'edit-property-value' : 'add-property-value')"
+          [mShowSkeleton]="loading['init']"
+      >
+        <twa-code-system-property-value-form #propertyValueForm
+            [propertyValue]="propertyValue"
+            [codeSystemId]="codeSystemId"
+        ></twa-code-system-property-value-form>
+
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>

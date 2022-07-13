@@ -1,29 +1,32 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card *ngIf="supplement" [ngSwitch]="supplement.targetType" [mTitle]="supplement.targetType | apply: getHeader:mode">
-        <twa-code-system-property-form #form
-            *ngSwitchCase="'EntityProperty'"
-            [property]="supplement.target"
-        ></twa-code-system-property-form>
-        <twa-code-system-designation-form #form
-            *ngSwitchCase="'Designation'"
-            [designation]="supplement.target"
-            [codeSystemId]="codeSystemId"
-        ></twa-code-system-designation-form>
-        <twa-code-system-property-value-form #form
-            *ngSwitchCase="'EntityPropertyValue'"
-            [propertyValue]="supplement.target"
-            [codeSystemId]="codeSystemId"
-        ></twa-code-system-property-value-form>
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mTitle]="supplement?.targetType | apply: getHeader:mode" [mShowSkeleton]="loading['init']">
+        <div *ngIf="supplement" [ngSwitch]="supplement.targetType">
+          <twa-code-system-property-form #form
+              *ngSwitchCase="'EntityProperty'"
+              [property]="supplement.target"
+          ></twa-code-system-property-form>
+          <twa-code-system-designation-form #form
+              *ngSwitchCase="'Designation'"
+              [designation]="supplement.target"
+              [codeSystemId]="codeSystemId"
+          ></twa-code-system-designation-form>
+          <twa-code-system-property-value-form #form
+              *ngSwitchCase="'EntityPropertyValue'"
+              [propertyValue]="supplement.target"
+              [codeSystemId]="codeSystemId"
+          ></twa-code-system-property-value-form>
 
-        <m-form-item mName="supplementDescription" mLabel="web.supplement.form.description">
-          <m-textarea name="supplementDescription" [(ngModel)]="supplement.description"></m-textarea>
-        </m-form-item>
+          <m-form-item mName="supplementDescription" mLabel="web.supplement.form.description">
+            <m-textarea name="supplementDescription" [(ngModel)]="supplement.description"></m-textarea>
+          </m-form-item>
+        </div>
+
         <ng-container *m-card-footer>
           <m-button mDisplay="primary"
-              [mLoading]="loading"
-              [disabled]="loading || hasInvalidTarget"
+              [mLoading]="loading['save']"
+              [disabled]="loading['save'] || hasInvalidTarget || isLoading"
               (click)="save()"
           >
             {{'core.btn.save' | translate}}

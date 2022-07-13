@@ -15,7 +15,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   public conceptId?: number | undefined;
   public concept?: CodeSystemConcept;
 
-  public loading = false;
+  public loading: {[k: string]: boolean} = {};
   public mode: 'add' | 'edit' = 'add';
 
   @ViewChild("form") public form?: NgForm;
@@ -43,30 +43,40 @@ export class CodeSystemConceptEditComponent implements OnInit {
     if (!validateForm(this.form)) {
       return;
     }
-    this.loading = true;
+    this.loading['save'] = true;
     this.codeSystemService.saveConcept(this.codeSystemId!, this.concept!)
       .subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+      .add(() => this.loading['save'] = false);
   }
 
   private loadConcept(conceptId: number): void {
-    this.loading = true;
-    this.codeSystemConceptLibService.load(conceptId).subscribe(c => this.concept = c).add(() => this.loading = false);
+    this.loading['init'] = true;
+    this.codeSystemConceptLibService.load(conceptId).subscribe(c => this.concept = c).add(() => this.loading['init'] = false);
   }
 
 
   public activateVersion(version: CodeSystemEntityVersion): void {
-    this.loading = true;
-    this.codeSystemService.activateEntityVersion(this.codeSystemId!, version.id!).subscribe(() => version.status = 'active').add(() => this.loading = false);
+    this.loading['activate'] = true;
+    this.codeSystemService.activateEntityVersion(this.codeSystemId!, version.id!).subscribe(() => {
+      version.status = 'active';
+    }).add(() => this.loading['activate'] = false);
   }
 
   public retireVersion(version: CodeSystemEntityVersion): void {
-    this.loading = true;
-    this.codeSystemService.retireEntityVersion(this.codeSystemId!, version.id!).subscribe(() => version.status = 'retired').add(() => this.loading = false);
+    this.loading['retire'] = true;
+    this.codeSystemService.retireEntityVersion(this.codeSystemId!, version.id!).subscribe(() => {
+      version.status = 'retired';
+    }).add(() => this.loading['retire'] = false);
   }
 
   public duplicateVersion(version: CodeSystemEntityVersion): void {
-    this.loading = true;
-    this.codeSystemService.duplicateEntityVersion(this.codeSystemId!, this.conceptId!, version.id!).subscribe(() => this.loadConcept(this.conceptId!)).add(() => this.loading = false);
+    this.loading['duplicate'] = true;
+    this.codeSystemService.duplicateEntityVersion(this.codeSystemId!, this.conceptId!, version.id!).subscribe(() => {
+      this.loadConcept(this.conceptId!);
+    }).add(() => this.loading['duplicate'] = false);
+  }
+
+  public get isLoading():boolean{
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }

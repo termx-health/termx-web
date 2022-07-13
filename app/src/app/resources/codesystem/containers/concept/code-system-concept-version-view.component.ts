@@ -9,7 +9,7 @@ import {ActivatedRoute} from '@angular/router';
 export class CodeSystemConceptVersionViewComponent implements OnInit {
   public codeSystemId?: string | null;
   public conceptVersion?: CodeSystemEntityVersion;
-  private loading: {[key: string]: boolean} = {};
+  public loading: boolean = false;
 
   @ViewChild("conceptVersionForm") public conceptVersionForm?: NgForm;
 
@@ -25,14 +25,9 @@ export class CodeSystemConceptVersionViewComponent implements OnInit {
   }
 
   private loadConceptVersion(conceptVersionId: number): void {
-    this.loading['load'] = true;
+    this.loading = true;
     this.codeSystemEntityVersionService.load(conceptVersionId).subscribe(v => {
       this.conceptVersion = v;
-    }).add(() => this.loading['load'] = false);
+    }).add(() => this.loading = false);
   }
-
-  public get isLoading(): boolean {
-    return Object.values(this.loading).some(Boolean);
-  }
-
 }

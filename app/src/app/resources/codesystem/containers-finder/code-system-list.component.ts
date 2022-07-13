@@ -20,7 +20,6 @@ import {Router} from '@angular/router';
           ></twa-finder-load-more-item>
         </twa-finder-menu>
       </twa-finder-wrapper>
-
     </div>
   `
 })
