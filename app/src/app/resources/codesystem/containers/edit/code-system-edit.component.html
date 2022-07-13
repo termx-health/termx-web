@@ -1,73 +1,101 @@
-<div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
-  <div nz-col [nzLg]="12" [nzMd]="18" [nzXs]="24">
-    <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'">
-        <form #form="ngForm" *ngIf="codeSystem">
+<div nz-row nzJustify="center">
+  <div nz-col [nzLg]="18" [nzXs]="24">
+    <nz-tabset nzLinkRouter>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" class="m-items-middle">
+          {{'web.code-system.tabs.code-system' | translate}}
+        </a>
+        <div nz-row [nzGutter]="12" class="m-row">
+          <div nz-col [nzMd]="18" [nzXs]="24">
+            <m-spinner [mLoading]="loading">
 
-          <m-form-item mName="id" mLabel="entities.code-system.id" required>
-            <m-input name="id" [(ngModel)]="codeSystem.id" [disabled]="mode === 'edit'" required></m-input>
-          </m-form-item>
+              <m-card [mTitle]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'">
+                <form #form="ngForm" *ngIf="codeSystem">
 
-          <m-form-item mLabel="entities.code-system.name">
-            <m-multi-language-input name="name" [(ngModel)]="codeSystem.names"></m-multi-language-input>
-          </m-form-item>
+                  <m-form-item mName="id" mLabel="entities.code-system.id" required>
+                    <m-input name="id" [(ngModel)]="codeSystem.id" [disabled]="mode === 'edit'" required></m-input>
+                  </m-form-item>
 
-          <m-form-item mName="uri" mLabel="entities.code-system.uri" required>
-            <m-input name="uri" [(ngModel)]="codeSystem.uri" required></m-input>
-          </m-form-item>
+                  <m-form-item mLabel="entities.code-system.name">
+                    <m-multi-language-input name="name" [(ngModel)]="codeSystem.names"></m-multi-language-input>
+                  </m-form-item>
 
-          <m-form-item mName="content" mLabel="entities.code-system.content" required>
-            <twl-value-set-concept-select name="content"
-                [(ngModel)]="codeSystem.content"
-                valueSet="codesystem-content-mode"
-                required
-            ></twl-value-set-concept-select>
-          </m-form-item>
+                  <m-form-item mName="uri" mLabel="entities.code-system.uri" required>
+                    <div class="m-items-middle">
+                      <m-input style="width: 100%" name="uri" [(ngModel)]="codeSystem.uri" required></m-input>
+                      <a [href]="codeSystem.uri" target="_blank">
+                        <m-button>
+                          <m-icon mCode="eye"></m-icon>
+                        </m-button>
+                      </a>
+                    </div>
+                  </m-form-item>
 
-          <m-form-item mName="caseSensitive" mLabel="entities.code-system.case-sensitivity">
-            <m-select name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive">
-              <m-option label="web.case-sensitive-options.ci" value="ci"></m-option>
-              <m-option label="web.case-sensitive-options.cs" value="cs"></m-option>
-              <m-option label="web.case-sensitive-options.ics" value="ics"></m-option>
-            </m-select>
-          </m-form-item>
+                  <m-form-item mName="content" mLabel="entities.code-system.content" required>
+                    <twl-value-set-concept-select name="content"
+                        [(ngModel)]="codeSystem.content"
+                        valueSet="codesystem-content-mode"
+                        required></twl-value-set-concept-select>
+                  </m-form-item>
 
-          <m-form-item mName="description" mLabel="entities.code-system.description">
-            <m-textarea name="description" [(ngModel)]="codeSystem.description"></m-textarea>
-          </m-form-item>
+                  <m-form-item mName="caseSensitive" mLabel="entities.code-system.case-sensitivity">
+                    <m-select name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive">
+                      <m-option label="web.case-sensitive-options.ci" value="ci"></m-option>
+                      <m-option label="web.case-sensitive-options.cs" value="cs"></m-option>
+                      <m-option label="web.case-sensitive-options.ics" value="ics"></m-option>
+                    </m-select>
+                  </m-form-item>
 
-<!--          <m-form-item mName="narrative" [mLabel]="narrativeHeader">-->
-<!--            <ng-template #narrativeHeader>-->
-<!--              <div class="m-items-between">-->
-<!--                <div>{{'entities.code-system.narrative' | translate}}</div>-->
-<!--                <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">-->
-<!--                  <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>-->
-<!--                </m-button>-->
-<!--              </div>-->
-<!--            </ng-template>-->
-<!--            <m-rich-text-editor *ngIf="!narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-rich-text-editor>-->
-<!--            <m-textarea *ngIf="narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-textarea>-->
-<!--          </m-form-item>-->
+                  <m-form-item mName="description" mLabel="entities.code-system.description">
+                    <m-textarea name="description" [(ngModel)]="codeSystem.description"></m-textarea>
+                  </m-form-item>
+                </form>
 
+                <twa-code-system-versions-list *ngIf="(mode === 'edit') && codeSystem"
+                    [codeSystemId]="codeSystemId"
+                    [versions]="codeSystem.versions"></twa-code-system-versions-list>
+                <twa-code-system-properties-list *ngIf="(mode === 'edit') && codeSystem"
+                    [codeSystemId]="codeSystemId"
+                    [properties]="codeSystem.properties"></twa-code-system-properties-list>
+                <twa-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></twa-contact-list>
 
-        </form>
+                <ng-container *m-card-footer>
+                  <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
+                    {{'core.btn.save' | translate}}
+                  </m-button>
+                </ng-container>
+              </m-card>
+            </m-spinner>
+          </div>
 
-        <twa-code-system-versions-list *ngIf="(mode === 'edit') && codeSystem" [codeSystemId]="codeSystemId" [versions]="codeSystem.versions"></twa-code-system-versions-list>
-        <twa-code-system-properties-list *ngIf="(mode === 'edit') && codeSystem" [codeSystemId]="codeSystemId" [properties]="codeSystem.properties"></twa-code-system-properties-list>
-        <twa-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></twa-contact-list>
-
-        <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
-            {{'core.btn.save' | translate}}
-          </m-button>
-        </ng-container>
-      </m-card>
-    </m-spinner>
-  </div>
-
-  <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content" *ngIf="mode === 'edit'">
-    <m-card [mTitle]="'entities.code-system.concepts'">
-      <twa-code-system-concepts-list [codeSystemId]="codeSystemId"></twa-code-system-concepts-list>
-    </m-card>
+          <div nz-col [nzMd]="6" [nzXs]="24" style="height: min-content">
+            <m-card [mTitle]="'entities.code-system.concepts'">
+              <twa-code-system-concepts-list [codeSystemId]="codeSystemId"></twa-code-system-concepts-list>
+            </m-card>
+          </div>
+        </div>
+      </nz-tab>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'narrative' }">
+          {{'web.code-system.tabs.narrative' | translate}}
+        </a>
+        <ng-template nz-tab>
+          <m-card *ngIf="codeSystem">
+            <m-form-item mName="narrative" [mLabel]="narrativeHeader">
+              <ng-template #narrativeHeader>
+                <div class="m-items-between">
+                  <div class="m-card-title">{{'entities.code-system.narrative' | translate}}</div>
+                  <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
+                    <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
+                  </m-button>
+                </div>
+              </ng-template>
+              <m-rich-text-editor *ngIf="!narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-rich-text-editor>
+              <m-textarea *ngIf="narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-textarea>
+            </m-form-item>
+          </m-card>
+        </ng-template>
+      </nz-tab>
+    </nz-tabset>
   </div>
 </div>
