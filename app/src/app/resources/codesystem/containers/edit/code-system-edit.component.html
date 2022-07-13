@@ -2,7 +2,7 @@
   <div nz-col [nzLg]="18" [nzXs]="24">
     <nz-tabset nzLinkRouter>
       <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" (click)="viewConcept = true" class="m-items-middle">
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" class="m-items-middle">
           {{'web.code-system.tabs.code-system' | translate}}
         </a>
         <div nz-row [nzGutter]="12" class="m-row">
@@ -68,7 +68,7 @@
             </m-spinner>
           </div>
 
-          <div nz-col [nzMd]="6" [nzXs]="24" style="height: min-content" *ngIf="viewConcept">
+          <div nz-col [nzMd]="6" [nzXs]="24" style="height: min-content">
             <m-card [mTitle]="'entities.code-system.concepts'">
               <twa-code-system-concepts-list [codeSystemId]="codeSystemId"></twa-code-system-concepts-list>
             </m-card>
@@ -76,28 +76,25 @@
         </div>
       </nz-tab>
       <nz-tab>
-        <a *nzTabLink
-            nz-tab-link
-            [routerLink]="['.']"
-            [queryParams]="{ tab: 'narrative' }"
-            (click)="viewNarrative = true; viewConcept = false"
-            class="m-items-middle">
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'narrative' }">
           {{'web.code-system.tabs.narrative' | translate}}
         </a>
-        <m-card>
-          <m-form-item *ngIf="viewNarrative && codeSystem" mName="narrative" [mLabel]="narrativeHeader">
-            <ng-template #narrativeHeader>
-              <div class="m-items-between">
-                <div class="m-card-title">{{'entities.code-system.narrative' | translate}}</div>
-                <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
-                  <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
-                </m-button>
-              </div>
-            </ng-template>
-            <m-rich-text-editor *ngIf="!narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-rich-text-editor>
-            <m-textarea *ngIf="narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-textarea>
-          </m-form-item>
-        </m-card>
+        <ng-template nz-tab>
+          <m-card *ngIf="codeSystem">
+            <m-form-item mName="narrative" [mLabel]="narrativeHeader">
+              <ng-template #narrativeHeader>
+                <div class="m-items-between">
+                  <div class="m-card-title">{{'entities.code-system.narrative' | translate}}</div>
+                  <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
+                    <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
+                  </m-button>
+                </div>
+              </ng-template>
+              <m-rich-text-editor *ngIf="!narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-rich-text-editor>
+              <m-textarea *ngIf="narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-textarea>
+            </m-form-item>
+          </m-card>
+        </ng-template>
       </nz-tab>
     </nz-tabset>
   </div>

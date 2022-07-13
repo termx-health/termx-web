@@ -8,12 +8,9 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './code-system-view.component.html',
 })
 export class CodeSystemViewComponent implements OnInit {
-  public codeSystemId?: string | null;
   public codeSystem?: CodeSystem;
 
   public narrativeRaw = false;
-  public viewNarrative = false;
-  public viewConcept = true;
   public loading = false;
 
   @ViewChild("form") public form?: NgForm;
@@ -24,11 +21,10 @@ export class CodeSystemViewComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.codeSystemId = this.route.snapshot.paramMap.get('id');
+    const codeSystemId = this.route.snapshot.paramMap.get('id');
     this.loading = true;
-    this.codeSystemService.load(this.codeSystemId!, true).subscribe(cs => {
+    this.codeSystemService.load(codeSystemId!, true).subscribe(cs => {
       this.codeSystem = cs;
-      this.viewNarrative = !!this.route.snapshot.queryParamMap.get('tab');
     }).add(() => this.loading = false);
   }
 }
