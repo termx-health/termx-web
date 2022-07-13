@@ -33,11 +33,11 @@
           {{item.concept?.code}}
         </div>
       </td>
-      <td>
+      <td style="max-width: 20rem;">
         <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.display"></twl-designation-select>
         <div *ngIf="viewMode">{{item.display?.name}}</div>
       </td>
-      <td>
+      <td style="max-width: 20rem;">
         <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.additionalDesignations" multiple></twl-designation-select>
       </td>
       <td *ngIf="!viewMode" class="tw-table-actions">

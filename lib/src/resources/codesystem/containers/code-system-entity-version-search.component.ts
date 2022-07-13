@@ -1,6 +1,6 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
-import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {CodeSystemEntityVersion} from '../model/code-system-entity';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -11,7 +11,7 @@ import {CodeSystemEntityVersionSearchParams} from '../model/code-system-entity-v
 @Component({
   selector: 'twl-code-system-entity-version-search',
   templateUrl: './code-system-entity-version-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemEntityVersionSearchComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemEntityVersionSearchComponent), multi: true}, DestroyService]
 })
 export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
@@ -27,7 +27,8 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
 
   public constructor(
     private codeSystemEntityVersionLibService: CodeSystemEntityVersionLibService,
-    private codeSystemService: CodeSystemLibService
+    private codeSystemService: CodeSystemLibService,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {
@@ -54,6 +55,7 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
 
     this.loading['search'] = true;
     return this.codeSystemService.searchEntityVersions(this.codeSystemId, q).pipe(
+      takeUntil(this.destroy$),
       map(cseva => ({...this.data, ...group(cseva.data, csev => csev.id!)})),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
@@ -64,6 +66,7 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
     if (isDefined(id)) {
       this.loading['load'] = true;
       this.codeSystemEntityVersionLibService.load(id)
+        .pipe(takeUntil(this.destroy$))
         .subscribe(csev => this.data = {...(this.data || {}), [csev.id!]: csev})
         .add(() => this.loading['load'] = false);
     }

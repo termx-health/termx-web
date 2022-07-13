@@ -1,7 +1,7 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
-import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {MapSetEntityVersion} from '../model/map-set-entity-version';
 import {MapSetEntityVersionSearchParams} from '../model/map-set-entity-version-search-params';
@@ -11,7 +11,7 @@ import {MapSetEntityVersionLibService} from '../services/map-set-entity-version-
 @Component({
   selector: 'twl-map-set-entity-version-search',
   templateUrl: './map-set-entity-version-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MapSetEntityVersionSearchComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MapSetEntityVersionSearchComponent), multi: true}, DestroyService]
 })
 export class MapSetEntityVersionSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
@@ -28,6 +28,7 @@ export class MapSetEntityVersionSearchComponent implements OnInit, ControlValueA
   public constructor(
     private mapSetService: MapSetLibService,
     private mapSetEntityVersionService: MapSetEntityVersionLibService,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {
@@ -54,6 +55,7 @@ export class MapSetEntityVersionSearchComponent implements OnInit, ControlValueA
 
     this.loading['search'] = true;
     return this.mapSetService.searchEntityVersions(this.mapSetId, q).pipe(
+      takeUntil(this.destroy$),
       map(msev => group(msev.data, ev => ev.id!.toString())),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
@@ -63,7 +65,7 @@ export class MapSetEntityVersionSearchComponent implements OnInit, ControlValueA
   private loadMapSetEntityVersion(id?: number): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.mapSetEntityVersionService.load(id).subscribe(c => {
+      this.mapSetEntityVersionService.load(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
         this.data = {...(this.data || {}), [c.id!]: c};
       }).add(() => this.loading['load'] = false);
     }

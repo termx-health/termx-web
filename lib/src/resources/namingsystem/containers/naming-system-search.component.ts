@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {NamingSystem} from '../model/naming-system';
 import {NamingSystemLibService} from '../services/naming-system-lib.service';
 import {NamingSystemSearchParams} from '../model/naming-system-search-params';
@@ -12,7 +12,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 @Component({
   selector: 'twl-naming-system-search',
   templateUrl: './naming-system-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NamingSystemSearchComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NamingSystemSearchComponent), multi: true}, DestroyService]
 })
 export class NamingSystemSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
@@ -28,6 +28,7 @@ export class NamingSystemSearchComponent implements OnInit, ControlValueAccessor
 
   public constructor(
     private namingSystemLibService: NamingSystemLibService,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {
@@ -53,6 +54,7 @@ export class NamingSystemSearchComponent implements OnInit, ControlValueAccessor
 
     this.loading['search'] = true;
     return this.namingSystemLibService.search(q).pipe(
+      takeUntil(this.destroy$),
       map(ca => group(ca.data, c => c.id!)),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
@@ -62,7 +64,7 @@ export class NamingSystemSearchComponent implements OnInit, ControlValueAccessor
   private loadNamingSystem(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.namingSystemLibService.load(id).subscribe(c => {
+      this.namingSystemLibService.load(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
         this.data = {...(this.data || {}), [c.id!]: c};
       }).add(() => this.loading['load'] = false);
     }

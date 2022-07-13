@@ -3,12 +3,13 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DesignationLibService} from '../../services/designation-lib.service';
 import {DesignationSearchParams} from '../../model/designation-search-params';
 import {Designation} from '../../model/designation';
-import {BooleanInput, group, isNil} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isNil} from '@kodality-web/core-util';
+import {takeUntil} from 'rxjs';
 
 @Component({
   selector: 'twl-designation-select',
   templateUrl: './designation-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => DesignationSelectComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => DesignationSelectComponent), multi: true}, DestroyService]
 })
 export class DesignationSelectComponent implements OnChanges, ControlValueAccessor {
   @Input() public conceptId?: number;
@@ -23,7 +24,8 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
   public onTouched = (x: any): void => x;
 
   public constructor(
-    private designationService: DesignationLibService
+    private designationService: DesignationLibService,
+    private destroy$: DestroyService
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -45,7 +47,7 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
     q.limit = 10_000;
 
     this.loading['select'] = true;
-    this.designationService.search(q).subscribe(da => {
+    this.designationService.search(q).pipe(takeUntil(this.destroy$)).subscribe(da => {
       this.data = group(da.data, designation => designation.id!);
     }).add(() => this.loading['select'] = false);
   }
@@ -57,7 +59,7 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
     }
 
     this.loading['load'] = true;
-    this.designationService.search({id: ids.join(","), limit: ids.length}).subscribe(resp => {
+    this.designationService.search({id: ids.join(","), limit: ids.length}).pipe(takeUntil(this.destroy$)).subscribe(resp => {
       resp.data.forEach(d => this.data = {...this.data, [d.id!]: d});
     }).add(() => this.loading['load'] = false);
   }

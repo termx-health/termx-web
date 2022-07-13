@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, finalize, map, Observable, of, Subject} from 'rxjs';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {BooleanInput, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {CodeSystemConcept} from '../model/code-system-concept';
 import {ConceptSearchParams} from '../model/concept-search-params';
 import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.service';
@@ -10,7 +10,7 @@ import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.s
 @Component({
   selector: 'twl-concept-search',
   templateUrl: './concept-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}, DestroyService]
 })
 export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
   @Input() public codeSystem?: string;
@@ -30,6 +30,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
 
   public constructor(
     private conceptService: CodeSystemConceptLibService,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {
@@ -48,7 +49,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
       || changes["entityVersionStatus"]
     ) {
       this.data = {};
-      this.searchConcepts().subscribe(data => this.data = data);
+      this.searchUpdate.next('');
     }
   }
 
@@ -72,6 +73,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
 
     this.loading['search'] = true;
     return this.conceptService.search(q).pipe(
+      takeUntil(this.destroy$),
       map(ca => ({...this.data, ...group(ca.data, c => c.id!)})),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
@@ -81,7 +83,9 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   private loadConcept(id?: number): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.conceptService.load(id).subscribe(c => this.data = {...(this.data || {}), [c.id!]: c}).add(() => this.loading['load'] = false);
+      this.conceptService.load(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
+        this.data = {...(this.data || {}), [c.id!]: c};
+      }).add(() => this.loading['load'] = false);
     }
   }
 
