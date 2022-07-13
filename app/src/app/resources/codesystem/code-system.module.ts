@@ -36,13 +36,17 @@ import {CodeSystemPropertyValueFormComponent} from './containers/property-value/
 import {CodeSystemPropertyValueEditComponent} from './containers/property-value/code-system-property-value-edit.component';
 import {CodeSystemConceptVersionAssociationTableComponent} from './containers/concept/association/code-system-concept-version-association-table.component';
 import {CodeSystemAssociationEditComponent} from './containers/association/code-system-association-edit.component';
+import {CodeSystemViewComponent} from './containers/edit/code-system-view.component';
+import {CodeSystemConceptViewComponent} from './containers/concept/code-system-concept-view.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
   {path: 'add', component: CodeSystemEditComponent},
   {path: ':id/edit', component: CodeSystemEditComponent},
+  {path: ':id/view', component: CodeSystemViewComponent},
   {path: ':id/concepts/add', component: CodeSystemConceptEditComponent},
   {path: ':id/concepts/:conceptId/edit', component: CodeSystemConceptEditComponent},
+  {path: ':id/concepts/:conceptId/view', component: CodeSystemConceptViewComponent},
   {path: ':id/concepts/:conceptId/versions/add', component: CodeSystemConceptVersionEditComponent},
   {path: ':id/concepts/:conceptId/versions/:conceptVersionId/edit', component: CodeSystemConceptVersionEditComponent},
   {path: ':id/concepts/:conceptId/versions/:conceptVersionId/view', component: CodeSystemConceptVersionViewComponent},
@@ -54,8 +58,10 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/concepts/:conceptId/versions/:conceptVersionId/associations/:association/edit', component: CodeSystemAssociationEditComponent},
   {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent},
   {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent},
+  {path: ':id/entity-properties/:propertyId/view', component: CodeSystemPropertyEditComponent},
   {path: ':id/supplements/add', component: CodeSystemSupplementEditComponent},
   {path: ':id/supplements/:supplementId/edit', component: CodeSystemSupplementEditComponent},
+  {path: ':id/supplements/:supplementId/view', component: CodeSystemSupplementEditComponent},
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent},
   {path: ':id/versions/:versionCode/view', component: CodeSystemVersionViewComponent},
@@ -111,7 +117,9 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemPropertyValueEditComponent,
     CodeSystemPropertyValueFormComponent,
     CodeSystemConceptVersionAssociationTableComponent,
-    CodeSystemAssociationEditComponent
+    CodeSystemAssociationEditComponent,
+    CodeSystemViewComponent,
+    CodeSystemConceptViewComponent
   ],
   exports: [
     CodeSystemListComponent

@@ -85,9 +85,14 @@
           "target-uri": "Target URI:"
         }
       },
+      "tabs": {
+        "code-system": "Code system",
+        "narrative": "Narrative"
+      },
       "form": {
         "add-header": "Create a new code system",
         "edit-header": "Edit code system",
+        "view-header": "View code system",
         "concepts": {
           "add-concept": "Add concept"
         },
@@ -132,6 +137,7 @@
       "form": {
         "add-header": "Add concept",
         "edit-header": "Edit concept",
+        "view-header": "View concept",
         "versions": {
           "add-version": "Add version"
         }

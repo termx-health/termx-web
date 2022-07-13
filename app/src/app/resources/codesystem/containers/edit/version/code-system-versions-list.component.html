@@ -2,7 +2,7 @@
   <div *m-card-header class="m-items-between">
     <div class="m-card-title">{{'entities.code-system.versions' | translate}}</div>
 
-    <m-dropdown>
+    <m-dropdown *ngIf="!viewMode">
       <twa-add-button *m-dropdown-container icon="down" placement="right">
         {{'web.code-system.form.versions.list.add-version' | translate}}
       </twa-add-button>
@@ -36,16 +36,16 @@
       </td>
       <td class="tw-table-actions">
         <m-dropdown>
-          <a *m-dropdown-item (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId, sourceCodeSystem: codeSystemId, sourceVersion: version})">
+          <a *mDropdownItemIf="!viewMode" (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId, sourceCodeSystem: codeSystemId, sourceVersion: version})">
             {{'core.btn.duplicate' | translate}}
           </a>
           <a *m-dropdown-item (click)="exportFhirFormatVersion(version.id)">
             {{'web.code-system.form.versions.list.export-fhir' | translate}}
           </a>
-          <a *mDropdownItemIf="version.status !== 'retired'" (click)="retireVersion(version)">
+          <a *mDropdownItemIf="version.status !== 'retired' && !viewMode" (click)="retireVersion(version)">
             {{'web.publication-status.operations.retire' | translate}}
           </a>
-          <a *mDropdownItemIf="version.status === 'draft'" (click)="activateVersion(version)">
+          <a *mDropdownItemIf="version.status === 'draft' && !viewMode" (click)="activateVersion(version)">
             {{'web.publication-status.operations.activate' | translate}}
           </a>
         </m-dropdown>

@@ -1,14 +1,14 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-items-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-    <twa-add-button [routerLink]="['../concepts/add']">
+    <twa-add-button *ngIf="!viewMode" [routerLink]="['../concepts/add']">
       {{'web.code-system.form.concepts.add-concept' | translate}}
     </twa-add-button>
   </div>
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading" mSize="small">
     <tr *mTableRow="let concept">
-      <td><a [routerLink]="['../concepts/', concept.id, 'edit']">{{concept.code}}</a></td>
+      <td><a [routerLink]="['../concepts/', concept.id, !viewMode? 'edit' : 'view']">{{concept.code}}</a></td>
       <td>{{concept.code | localizedConceptName: {codeSystem: codeSystemId} | async}}</td>
     </tr>
 
