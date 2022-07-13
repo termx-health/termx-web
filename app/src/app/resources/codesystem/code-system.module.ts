@@ -36,7 +36,7 @@ import {CodeSystemPropertyValueFormComponent} from './containers/property-value/
 import {CodeSystemPropertyValueEditComponent} from './containers/property-value/code-system-property-value-edit.component';
 import {CodeSystemConceptVersionAssociationTableComponent} from './containers/concept/association/code-system-concept-version-association-table.component';
 import {CodeSystemAssociationEditComponent} from './containers/association/code-system-association-edit.component';
-import {CodeSystemViewComponent} from './containers/view/code-system-view.component';
+import {CodeSystemViewComponent} from './containers/edit/code-system-view.component';
 import {CodeSystemConceptViewComponent} from './containers/concept/code-system-concept-view.component';
 
 
