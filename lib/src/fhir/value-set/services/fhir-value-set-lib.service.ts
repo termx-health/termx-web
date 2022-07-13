@@ -3,6 +3,8 @@ import {TERMINOLOGY_API} from '../../../terminology-lib.token';
 import {HttpClient} from '@angular/common/http';
 import {FhirParameters} from '../../model/fhir-parameters';
 import {Observable} from 'rxjs';
+import {SearchHttpParams} from '@kodality-web/core-util';
+import {FhirValueSetExpandParams} from '../model/fhir-value-set-expand.params';
 
 @Injectable()
 export class FhirValueSetLibService {
@@ -14,6 +16,10 @@ export class FhirValueSetLibService {
 
   public loadValueSet(id: number): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}`);
+  }
+
+  public expand(params: FhirValueSetExpandParams): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/$expand`, {params: SearchHttpParams.build(params)});
   }
 
   public import(urls: FhirParameters): Observable<FhirParameters> {

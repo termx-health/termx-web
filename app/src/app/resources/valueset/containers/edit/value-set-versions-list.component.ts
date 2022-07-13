@@ -11,6 +11,7 @@ import {FhirValueSetLibService} from 'terminology-lib/fhir';
 })
 export class ValueSetVersionsListComponent implements OnChanges {
   @Input() public valueSetId?: string;
+  @Input() public valueSetUri?: string;
 
   public versions: ValueSetVersion[] = [];
   public loading = false;
@@ -45,6 +46,12 @@ export class ValueSetVersionsListComponent implements OnChanges {
 
   public exportFhirFormatVersion(id: number): void {
     this.integrationFhirLibService.loadValueSet(id).subscribe(fhirVs => {
+      saveAs(new Blob([JSON.stringify(fhirVs, null, 2)], {type: 'application/json'}), `${fhirVs.id}.json`);
+    });
+  }
+
+  public exportFhirFormatVersionExpansion(uri: string, version: string): void {
+    this.integrationFhirLibService.expand({url: uri, valueSetVersion: version}).subscribe(fhirVs => {
       saveAs(new Blob([JSON.stringify(fhirVs, null, 2)], {type: 'application/json'}), `${fhirVs.id}.json`);
     });
   }
