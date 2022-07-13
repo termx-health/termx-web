@@ -22,7 +22,6 @@
 
           <m-table [mData]="concept.versions" mEnablePagination mHideOnSinglePage>
             <tr *mTableHead>
-              <th>{{'entities.code-system-entity-version.id' | translate}}</th>
               <th>{{'entities.code-system-entity-version.created' | translate}}</th>
               <th>{{'entities.code-system-entity-version.description' | translate}}</th>
               <th>{{'entities.code-system-entity-version.status' | translate}}</th>
@@ -30,14 +29,16 @@
             </tr>
 
             <tr *mTableRow="let version">
-              <td><a [routerLink]="['../versions', version.id, version.status === 'active'? 'view' : 'edit']">{{version.id}}</a></td>
-              <td>{{version.created | localDateTime}}</td>
+              <td><a [routerLink]="['../versions', version.id, version.status === 'active'? 'view' : 'edit']">{{version.created | localDateTime}}</a></td>
               <td><m-abbreviate [mValue]="version.description" [mLength]="35"></m-abbreviate></td>
               <td class="tw-table-min-width">
                 <twa-status-tag [status]="version.status"></twa-status-tag>
               </td>
               <td class="tw-table-actions">
                 <m-dropdown>
+                  <a *m-dropdown-item (click)="duplicateVersion(version)">
+                    <m-icon [mCode]="'copy'"></m-icon>&nbsp; {{'core.btn.duplicate' | translate}}
+                  </a>
                   <a *mDropdownItemIf="version.status !== 'retired'" (click)="retireVersion(version)">
                     {{'web.publication-status.operations.retire' | translate}}
                   </a>

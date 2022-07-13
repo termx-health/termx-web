@@ -12,6 +12,7 @@ import {CodeSystemService} from '../../services/code-system.service';
 })
 export class CodeSystemConceptEditComponent implements OnInit {
   public codeSystemId?: string | null;
+  public conceptId?: number | undefined;
   public concept?: CodeSystemConcept;
 
   public loading = false;
@@ -28,11 +29,11 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    const conceptId = this.route.snapshot.paramMap.get('conceptId');
-    this.mode = this.codeSystemId && conceptId ? 'edit' : 'add';
+    this.conceptId = this.route.snapshot.paramMap.get('conceptId') ? Number(this.route.snapshot.paramMap.get('conceptId')) : undefined;
+    this.mode = this.codeSystemId && this.conceptId ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadConcept(Number(conceptId));
+      this.loadConcept(this.conceptId!);
     } else {
       this.concept = new CodeSystemConcept();
     }
@@ -64,4 +65,8 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.codeSystemService.retireEntityVersion(this.codeSystemId!, version.id!).subscribe(() => version.status = 'retired').add(() => this.loading = false);
   }
 
+  public duplicateVersion(version: CodeSystemEntityVersion): void {
+    this.loading = true;
+    this.codeSystemService.duplicateEntityVersion(this.codeSystemId!, this.conceptId!, version.id!).subscribe(() => this.loadConcept(this.conceptId!)).add(() => this.loading = false);
+  }
 }
