@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {CodeSystemConcept, ValueSetConcept} from 'terminology-lib/resources';
+import {ValueSetConcept} from 'terminology-lib/resources';
 import {BooleanInput} from '@kodality-web/core-util';
 
 @Component({
@@ -31,8 +31,4 @@ export class ValueSetVersionConceptListComponent {
     this.concepts = [...this.concepts];
     this.conceptsChange.emit(this.concepts);
   }
-
-  public hasActiveVersion = (concept: CodeSystemConcept): boolean => {
-    return !!concept && !!concept.versions && !!concept.versions.find(v => v.status === 'active');
-  };
 }

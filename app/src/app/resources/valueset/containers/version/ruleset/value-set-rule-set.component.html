@@ -1,4 +1,4 @@
-<m-card class="m-card-inside">
+<m-card>
   <div *m-card-header class="m-items-between">
     <div class="m-card-title">{{'entities.value-set-version.rule-set' | translate}} &nbsp;
       <m-button (click)="expand()" mSize="small">
@@ -11,7 +11,7 @@
   </div>
 
   <form #form="ngForm" *ngIf="ruleSet">
-    <m-form-item mName="lockedDate" mLabel="entities.value-set-rule-set.locked-date">
+    <m-form-item *ngIf="!viewMode || ruleSet.lockedDate" mName="lockedDate" mLabel="entities.value-set-rule-set.locked-date">
       <m-date-picker *ngIf="!viewMode" name="lockedDate" [(ngModel)]="ruleSet.lockedDate"></m-date-picker>
       <label *ngIf="viewMode">{{ruleSet.lockedDate | localDate}}</label>
     </m-form-item>
@@ -30,7 +30,7 @@
         <nz-collapse-panel
             *ngFor="let rule of rules; let i = index"
             [nzHeader]="header"
-            [nzExtra]="!viewMode && edit"
+            [nzExtra]="edit"
         >
           <ng-template #header>
             <m-icon *ngIf="!rule.include?.codeSystem && !rule.include?.valueSet" [mCode]="'file-text'"></m-icon>
@@ -50,10 +50,10 @@
               <m-button (click)="$event.stopPropagation();expand(rule)" mSize="small">
                 <m-icon [mCode]="'eye'"></m-icon>
               </m-button>
-              <m-button (click)="$event.stopPropagation();toggleModal(rule, i)" mSize="small">
+              <m-button *ngIf="!viewMode" (click)="$event.stopPropagation();toggleModal(rule, i)" mSize="small">
                 <m-icon [mCode]="'edit'"></m-icon>
               </m-button>
-              <m-button (click)="$event.stopPropagation();deleteRule(i)" mSize="small">
+              <m-button *ngIf="!viewMode" (click)="$event.stopPropagation();deleteRule(i)" mSize="small">
                 <m-icon [mCode]="'delete'"></m-icon>
               </m-button>
             </div>

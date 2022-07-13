@@ -1,5 +1,5 @@
-<m-form-row>
-  <div *mFormCol>
+<div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
+  <div nz-col [nzLg]="10" [nzMd]="18" [nzXs]="24">
     <m-spinner [mLoading]="loading">
       <m-card>
         <div *m-card-header class="m-items-middle">
@@ -35,8 +35,6 @@
             {{version.description }}
           </m-form-item>
 
-          <twa-value-set-rule-set [ruleSet]="version.ruleSet" viewMode></twa-value-set-rule-set>
-
           <m-form-item mName="concepts" mLabel="entities.value-set-version.concepts">
             <twa-value-set-version-concept-list [concepts]="concepts" viewMode></twa-value-set-version-concept-list>
           </m-form-item>
@@ -52,4 +50,7 @@
       </m-card>
     </m-spinner>
   </div>
-</m-form-row>
+  <div nz-col [nzLg]="8" [nzMd]="6" [nzXs]="24" style="height: min-content">
+    <twa-value-set-rule-set *ngIf="version" [ruleSet]="version.ruleSet" viewMode></twa-value-set-rule-set>
+  </div>
+</div>
