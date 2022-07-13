@@ -1,15 +1,34 @@
 <m-form-row>
   <div *mFormCol>
-    <m-card [mTitle]="mode === 'edit' ? 'web.map-set.form.edit-header' : 'web.map-set.form.add-header'">
-      <twa-map-set-form #mapSetForm [mode]="mode" [mapSetId]="mapSetId"></twa-map-set-form>
-      <twa-map-set-versions-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></twa-map-set-versions-list>
-      <twa-map-set-association-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></twa-map-set-association-list>
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mTitle]="mode === 'edit' ? 'web.map-set.form.edit-header' : 'web.map-set.form.add-header'" [mShowSkeleton]="loading['init']">
+        <form #form="ngForm" *ngIf="mapSet">
+          <m-form-item mName="id" mLabel="entities.map-set.id" required>
+            <m-input name="id" [(ngModel)]="mapSet.id" [disabled]="mode === 'edit'" required></m-input>
+          </m-form-item>
 
-      <ng-container *m-card-footer>
-        <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading || mapSetForm.loading" (click)="save()">
-          {{'core.btn.save' | translate}}
-        </m-button>
-      </ng-container>
-    </m-card>
+          <m-form-item mLabel="entities.map-set.name">
+            <m-multi-language-input name="name" [(ngModel)]="mapSet.names"></m-multi-language-input>
+          </m-form-item>
+
+          <m-form-item mName="uri" mLabel="entities.map-set.uri" required>
+            <m-input name="uri" [(ngModel)]="mapSet.uri" required></m-input>
+          </m-form-item>
+
+          <m-form-item mName="description" mLabel="entities.map-set.description">
+            <m-textarea name="description" [(ngModel)]="mapSet.description"></m-textarea>
+          </m-form-item>
+        </form>
+
+        <twa-map-set-versions-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></twa-map-set-versions-list>
+        <twa-map-set-association-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></twa-map-set-association-list>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" (click)="save()" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
   </div>
 </m-form-row>

@@ -1,7 +1,7 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card>
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mShowSkeleton]="loading['init']">
         <div *m-card-header class="m-items-middle">
           <div class="m-card-title">{{(mode === 'edit' ? 'web.value-set-version.form.edit-header' : 'web.value-set-version.form.add-header') | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
@@ -42,13 +42,13 @@
           <m-form-item mName="concepts" mLabel="entities.value-set-version.concepts">
             <twa-value-set-version-concept-list [concepts]="concepts" (conceptsChange)="concepts = $event"></twa-value-set-version-concept-list>
           </m-form-item>
-
-          <ng-container *m-card-footer>
-            <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
-              {{'core.btn.save' | translate}}
-            </m-button>
-          </ng-container>
         </form>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
       </m-card>
     </m-spinner>
   </div>

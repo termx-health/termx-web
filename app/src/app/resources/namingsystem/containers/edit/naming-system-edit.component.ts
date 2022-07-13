@@ -14,8 +14,8 @@ import {NamingSystemIdentifierFormComponent} from './naming-system-identifier-fo
 export class NamingSystemEditComponent implements OnInit {
   public namingSystem?: NamingSystem;
 
+  public loading: {[k: string]: boolean} = {};
   public mode: 'add' | 'edit' = 'add';
-  public loading = false;
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("identifiers") public identifiers?: NamingSystemIdentifierFormComponent;
@@ -40,18 +40,22 @@ export class NamingSystemEditComponent implements OnInit {
   }
 
   private loadNamingSystem(id: string): void {
-    this.loading = true;
-    this.namingSystemService.load(id).subscribe(ns => this.namingSystem = ns).add(() => this.loading = false);
+    this.loading['init'] = true;
+    this.namingSystemService.load(id).subscribe(ns => this.namingSystem = ns).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
     if (![validateForm(this.form), this.identifiers?.validate()].every(Boolean)) {
       return;
     }
-    this.loading = true;
+    this.loading['save'] = true;
     this.namingSystemService.save(this.namingSystem!)
       .subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+      .add(() => this.loading['save'] = false);
+  }
+
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }
 

@@ -18,7 +18,7 @@ export class ValueSetVersionEditComponent implements OnInit {
   public concepts: ValueSetConcept[] = [];
 
   public mode: 'add' | 'edit' = 'add';
-  public loading = false;
+  public loading: {[k: string]: boolean} = {};
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("ruleSetComponent") public ruleSetComponent?: ValueSetRuleSetComponent;
@@ -42,26 +42,30 @@ export class ValueSetVersionEditComponent implements OnInit {
   }
 
   private loadVersion(id: string, version: string): void {
-    this.loading = true;
+    this.loading['init'] = true;
     forkJoin([
       this.valueSetService.loadVersion(id, version),
       this.valueSetService.loadConcepts(id, version)
     ]).subscribe(([version, concepts]) => {
       this.version = version;
       this.concepts = concepts;
-    }).add(() => this.loading = false);
+    }).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
     if (!validateForm(this.form)) {
       return;
     }
-    this.loading = true;
+    this.loading['save'] = true;
     this.version!.status = 'draft';
     this.version!.ruleSet = this.ruleSetComponent?.getRuleSet();
     this.valueSetService.saveVersion(this.valueSetId!, this.version!).pipe(mergeMap(resp => forkJoin([
       of(resp),
       this.valueSetService.saveConcepts(this.valueSetId!, resp.version!, this.concepts),
-    ]))).subscribe(() => this.location.back()).add(() => this.loading = false);
+    ]))).subscribe(() => this.location.back()).add(() => this.loading['save'] = false);
+  }
+
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }
