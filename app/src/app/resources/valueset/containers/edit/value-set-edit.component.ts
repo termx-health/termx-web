@@ -15,7 +15,7 @@ export class ValueSetEditComponent implements OnInit {
   public valueSet?: ValueSet;
 
   public mode: 'add' | 'edit' = 'add';
-  public loading = false;
+  public loading: {[k: string]: boolean} = {};
   public narrativeRaw = false;
 
   @ViewChild("form") public form?: NgForm;
@@ -38,17 +38,19 @@ export class ValueSetEditComponent implements OnInit {
   }
 
   private loadValueSet(id: string): void {
-    this.loading = true;
-    this.valueSetService.load(id).subscribe(v => this.valueSet = v).add(() => this.loading = false);
+    this.loading['init'] = true;
+    this.valueSetService.load(id).subscribe(v => this.valueSet = v).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
     if (!validateForm(this.form)) {
       return;
     }
-    this.loading = true;
-    this.valueSetService.save(this.valueSet!)
-      .subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+    this.loading['save'] = true;
+    this.valueSetService.save(this.valueSet!).subscribe(() => this.location.back()).add(() => this.loading['save'] = false);
+  }
+
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }

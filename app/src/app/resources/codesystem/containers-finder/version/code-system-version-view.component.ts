@@ -14,9 +14,7 @@ export class FinderCodeSystemVersionViewComponent implements OnInit {
 
   public version?: CodeSystemVersion;
   public entityVersionResult: SearchResult<CodeSystemEntityVersion> = SearchResult.empty();
-
-  private loading: {[k: string]: boolean} = {};
-
+  public loading: {[k: string]: boolean} = {};
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -55,10 +53,5 @@ export class FinderCodeSystemVersionViewComponent implements OnInit {
     })
       .subscribe(concepts => this.entityVersionResult = concepts)
       .add(() => this.loading['entities'] = false);
-  }
-
-
-  public get isLoading(): boolean {
-    return Object.values(this.loading).some(Boolean);
   }
 }

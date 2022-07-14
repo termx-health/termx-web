@@ -14,7 +14,7 @@ export class CodeSystemAssociationEditComponent implements OnInit {
   public conceptVersionId?: number;
   public association?: CodeSystemAssociation;
 
-  public loading = false;
+  public loading: {[k: string]: boolean} = {};
   public mode?: 'edit' | 'add';
 
   @ViewChild("form") public form?: NgForm;
@@ -40,17 +40,21 @@ export class CodeSystemAssociationEditComponent implements OnInit {
   }
 
   public loadAssociation(associationId: number): void {
-    this.loading = true;
-    this.codeSystemService.loadAssociation(this.codeSystemId!, associationId).subscribe(a => this.association = a).add(() => this.loading = false);
+    this.loading['init'] = true;
+    this.codeSystemService.loadAssociation(this.codeSystemId!, associationId).subscribe(a => this.association = a).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
     if (!(isDefined(this.form) && validateForm(this.form))) {
       return;
     }
-    this.loading = true;
+    this.loading['save'] = true;
     this.codeSystemService.saveAssociation(this.codeSystemId!, this.conceptVersionId!, this.association!)
       .subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+      .add(() => this.loading['save'] = false);
+  }
+
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }

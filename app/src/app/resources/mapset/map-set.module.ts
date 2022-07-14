@@ -4,7 +4,6 @@ import {SharedModule} from '../../core/shared/shared.module';
 import {Routes} from '@angular/router';
 import {MapSetService} from './services/map-set-service';
 import {MapSetEditComponent} from './containers/edit/map-set-edit.component';
-import {MapSetFormComponent} from './containers/edit/map-set-form.component';
 import {MapSetVersionsListComponent} from './containers/edit/map-set-versions-list.component';
 import {MapSetVersionEditComponent} from './containers/version/map-set-version-edit.component';
 import {MapSetVersionViewComponent} from './containers/version/map-set-version-view.component';
@@ -35,7 +34,6 @@ export const MAP_SET_ROUTES: Routes = [
   declarations: [
     MapSetListComponent,
     MapSetEditComponent,
-    MapSetFormComponent,
     MapSetVersionsListComponent,
     MapSetVersionEditComponent,
     MapSetVersionViewComponent,

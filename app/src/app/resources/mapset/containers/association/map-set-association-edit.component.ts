@@ -16,7 +16,7 @@ export class MapSetAssociationEditComponent implements OnInit {
   public sourceCodeSystem?: string;
   public targetCodeSystem?: string;
 
-  public loading = false;
+  public loading: {[key: string]: boolean} = {};
   public mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form!: NgForm;
@@ -46,23 +46,23 @@ export class MapSetAssociationEditComponent implements OnInit {
   }
 
   public loadAssociation(associationId: number): void {
-    this.loading = true;
+    this.loading['init'] = true;
     this.mapSetService.loadAssociation(this.mapSetId!, associationId).subscribe(a => {
       this.association = a;
       this.sourceCodeSystem = a.source?.codeSystem;
       this.targetCodeSystem = a.target?.codeSystem;
-    }).add(() => this.loading = false);
+    }).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
     if (!validateForm(this.form)) {
       return;
     }
-    this.loading = true;
-    this.mapSetService.saveAssociation(this.mapSetId!, this.association!).subscribe(() => this.location.back()).add(() => this.loading = false);
+    this.loading['save'] = true;
+    this.mapSetService.saveAssociation(this.mapSetId!, this.association!).subscribe(() => this.location.back()).add(() => this.loading['save'] = false);
   }
 
-  public openEntityVersionModal(index?: number): void {
+  public openModal(index?: number): void {
     if (isDefined(index)) {
       this.entityVersionModalData.entityVersion = copyDeep(this.association!.versions![index]);
       this.entityVersionModalData.editIndex = index;
@@ -73,11 +73,11 @@ export class MapSetAssociationEditComponent implements OnInit {
     this.entityVersionModalData.visible = true;
   }
 
-  public closeEntityVersionModal(): void {
+  public closeModal(): void {
     this.entityVersionModalData = {};
   }
 
-  public saveEntityVersionModal(): void {
+  public confirmModal(): void {
     if (!validateForm(this.modalForm)) {
       return;
     }
@@ -87,6 +87,10 @@ export class MapSetAssociationEditComponent implements OnInit {
       this.association!.versions = [...(this.association!.versions || []), this.entityVersionModalData.entityVersion!];
     }
     this.association!.versions! = [...this.association?.versions!];
-    this.closeEntityVersionModal();
+    this.closeModal();
+  }
+
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }

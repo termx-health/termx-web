@@ -1,7 +1,7 @@
 <m-form-row>
   <div *mFormCol>
-    <m-card [mTitle]="mode === 'edit' ? 'web.value-set.form.edit-header' : 'web.value-set.form.add-header'">
-      <m-spinner [mLoading]="loading">
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mTitle]="mode === 'edit' ? 'web.value-set.form.edit-header' : 'web.value-set.form.add-header'" [mShowSkeleton]="loading['init']">
         <form #form="ngForm" *ngIf="valueSet">
           <m-form-item mName="id" mLabel="entities.value-set.id" required>
             <m-input name="id" [(ngModel)]="valueSet.id" [disabled]="mode === 'edit'" required></m-input>
@@ -35,14 +35,14 @@
 
           <twa-value-set-versions-list *ngIf="mode === 'edit'" [valueSetId]="valueSetId" [valueSetUri]="valueSet?.uri"></twa-value-set-versions-list>
           <twa-contact-list *ngIf="valueSet" [(contacts)]="valueSet.contacts"></twa-contact-list>
-
-          <ng-container *m-card-footer>
-            <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
-              {{'core.btn.save' | translate}}
-            </m-button>
-          </ng-container>
         </form>
-      </m-spinner>
-    </m-card>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
   </div>
 </m-form-row>

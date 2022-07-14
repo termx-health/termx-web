@@ -17,7 +17,7 @@ export class FinderCodeSystemViewComponent implements OnInit {
   public versions: CodeSystemVersion[] = [];
   public conceptResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
 
-  private loading: {[k: string]: boolean} = {};
+  public loading: {[k: string]: boolean} = {};
   public narrativeVisible = false;
 
 
@@ -57,9 +57,5 @@ export class FinderCodeSystemViewComponent implements OnInit {
     this.codeSystemService.searchConcepts(id, {limit: limit})
       .subscribe(concepts => this.conceptResult = concepts)
       .add(() => this.loading['concepts'] = false);
-  }
-
-  public get isLoading(): boolean {
-    return Object.values(this.loading).some(Boolean);
   }
 }

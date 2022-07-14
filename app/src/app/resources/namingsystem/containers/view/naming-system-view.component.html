@@ -1,52 +1,53 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card *ngIf="namingSystem">
+      <m-card [mShowSkeleton]="loading">
         <div *m-card-header class="m-items-middle">
           <div class="m-card-title">{{'web.naming-system.form.view-header' | translate}}</div>
           <twa-status-tag *ngIf="namingSystem?.status" [status]="namingSystem.status"></twa-status-tag>
         </div>
-        <m-form-item mLabel="entities.naming-system.id">
-          {{namingSystem.id}}
-        </m-form-item>
 
-        <m-form-item mLabel="entities.naming-system.name">
-          <m-multi-language-input name="names" [(ngModel)]="namingSystem.names" disabled></m-multi-language-input>
-        </m-form-item>
+        <div *ngIf="namingSystem">
+          <m-form-item mLabel="entities.naming-system.id">
+            {{namingSystem.id}}
+          </m-form-item>
 
-        <m-form-item mLabel="entities.naming-system.kind">
-          {{namingSystem.kind}}
-        </m-form-item>
+          <m-form-item mLabel="entities.naming-system.name">
+            <m-multi-language-input name="names" [(ngModel)]="namingSystem.names" disabled></m-multi-language-input>
+          </m-form-item>
 
-        <m-form-item *ngIf="namingSystem.kind === 'codesystem'" mLabel="entities.naming-system.code-system">
-          {{namingSystem.codeSystem}}
-        </m-form-item>
+          <m-form-item mLabel="entities.naming-system.kind">
+            {{namingSystem.kind}}
+          </m-form-item>
 
-        <m-form-item mLabel="entities.naming-system.source">
-          {{namingSystem.source}}
-        </m-form-item>
+          <m-form-item *ngIf="namingSystem.kind === 'codesystem'" mLabel="entities.naming-system.code-system">
+            {{namingSystem.codeSystem}}
+          </m-form-item>
 
-        <m-form-item mLabel="entities.naming-system.description">
-          {{namingSystem.description}}
-        </m-form-item>
+          <m-form-item mLabel="entities.naming-system.source">
+            {{namingSystem.source}}
+          </m-form-item>
 
-        <m-form-item mLabel="entities.naming-system.identifiers">
-          <m-table [mData]="namingSystem.identifiers">
-            <tr *mTableHead>
-              <th></th>
-              <th>{{'entities.naming-system-identifier.type' | translate}}</th>
-              <th>{{'entities.naming-system-identifier.value' | translate}}</th>
-            </tr>
-            <tr *mTableRow="let identifier">
-              <td>
-                <m-icon *ngIf="identifier.preferred" [mOptions]="{nzTheme : 'fill'}" mCode="star"></m-icon>
-              </td>
-              <td>{{identifier.type}}</td>
-              <td>{{identifier.value}}</td>
-            </tr>
-          </m-table>
-        </m-form-item>
+          <m-form-item mLabel="entities.naming-system.description">
+            {{namingSystem.description}}
+          </m-form-item>
+
+          <m-form-item mLabel="entities.naming-system.identifiers">
+            <m-table [mData]="namingSystem.identifiers">
+              <tr *mTableHead>
+                <th></th>
+                <th>{{'entities.naming-system-identifier.type' | translate}}</th>
+                <th>{{'entities.naming-system-identifier.value' | translate}}</th>
+              </tr>
+              <tr *mTableRow="let identifier">
+                <td>
+                  <m-icon *ngIf="identifier.preferred" [mOptions]="{nzTheme : 'fill'}" mCode="star"></m-icon>
+                </td>
+                <td>{{identifier.type}}</td>
+                <td>{{identifier.value}}</td>
+              </tr>
+            </m-table>
+          </m-form-item>
+        </div>
       </m-card>
-    </m-spinner>
   </div>
 </m-form-row>

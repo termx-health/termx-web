@@ -1,10 +1,17 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit'? 'web.code-system-concept-version.designation.edit-designation' : 'web.code-system-concept-version.designation.add-designation'">
-        <twa-code-system-designation-form #designationForm [designation]="designation" [codeSystemId]="codeSystemId"></twa-code-system-designation-form>
+    <m-spinner [mLoading]="isLoading">
+      <m-card
+          [mTitle]="'web.code-system-concept-version.designation.' + (mode === 'edit' ? 'edit-designation' : 'add-designation')"
+          [mShowSkeleton]="loading['init']"
+      >
+        <twa-code-system-designation-form #designationForm
+            [designation]="designation"
+            [codeSystemId]="codeSystemId"
+        ></twa-code-system-designation-form>
+
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>

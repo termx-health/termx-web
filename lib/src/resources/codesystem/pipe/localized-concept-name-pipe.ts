@@ -17,8 +17,7 @@ export class LocalizedConceptNamePipe implements PipeTransform {
     private conceptService: CodeSystemConceptLibService
   ) {}
 
-  public transform(identifier: string | number,
-    resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
+  public transform(identifier: string | number, resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
     if (!identifier || !resource || (!resource.codeSystem && !resource.valueSet)) {
       return EMPTY;
     }
@@ -42,7 +41,7 @@ export class LocalizedConceptNamePipe implements PipeTransform {
     return this.cacheService.getCachedResponse(key, request);
   }
 
-  private getName(concept: CodeSystemConcept, lang: string, codeSystemEntityVersionId?: number): string {
+  private getName(concept: CodeSystemConcept, lang: string, codeSystemEntityVersionId?: number): string | undefined {
     if (!concept.versions) {
       return concept.code!;
     }
@@ -64,6 +63,6 @@ export class LocalizedConceptNamePipe implements PipeTransform {
     const filteredByLang = conceptVersion.designations.filter(d => d.language === lang);
     const designations = filteredByLang?.length > 0 ? filteredByLang : conceptVersion.designations;
 
-    return designations.sort((a, b) => compareValues(a.preferred, b.preferred))[0].name!;
+    return designations.sort((a, b) => compareValues(a.preferred, b.preferred))[0]?.name;
   }
 }

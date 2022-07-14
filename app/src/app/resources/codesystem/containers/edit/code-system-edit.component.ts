@@ -15,7 +15,7 @@ export class CodeSystemEditComponent implements OnInit {
   public codeSystem?: CodeSystem;
 
   public narrativeRaw = false;
-  public loading = false;
+  public loading: {[k: string]: boolean} = {};
   public mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
@@ -36,8 +36,8 @@ export class CodeSystemEditComponent implements OnInit {
     }
 
     if (this.mode === 'edit') {
-      this.loading = true;
-      this.codeSystemService.load(this.codeSystemId!, true).subscribe(cs => this.codeSystem = cs).add(() => this.loading = false);
+      this.loading ['init'] = true;
+      this.codeSystemService.load(this.codeSystemId!, true).subscribe(cs => this.codeSystem = cs).add(() => this.loading ['init'] = false);
     }
   }
 
@@ -45,10 +45,10 @@ export class CodeSystemEditComponent implements OnInit {
     if (!this.validate()) {
       return;
     }
-    this.loading = true;
+    this.loading['save'] = true;
     this.codeSystemService.save(this.codeSystem!)
       .subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+      .add(() => this.loading['save'] = false);
   }
 
   public validate(): boolean {

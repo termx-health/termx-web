@@ -8,6 +8,7 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './code-system-view.component.html',
 })
 export class CodeSystemViewComponent implements OnInit {
+  public codeSystemId?: string | null;
   public codeSystem?: CodeSystem;
 
   public narrativeRaw = false;
@@ -21,9 +22,9 @@ export class CodeSystemViewComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    const codeSystemId = this.route.snapshot.paramMap.get('id');
+    this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.loading = true;
-    this.codeSystemService.load(codeSystemId!, true).subscribe(cs => {
+    this.codeSystemService.load(this.codeSystemId!, true).subscribe(cs => {
       this.codeSystem = cs;
     }).add(() => this.loading = false);
   }

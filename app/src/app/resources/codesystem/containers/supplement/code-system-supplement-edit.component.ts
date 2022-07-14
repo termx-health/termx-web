@@ -13,7 +13,7 @@ export class CodeSystemSupplementEditComponent implements OnInit {
   public conceptVersionId?: number;
   public supplement?: CodeSystemSupplement;
 
-  public loading = false;
+  public loading: {[k: string]: boolean} = {};
   public mode?: 'edit' | 'add';
 
   @ViewChild("form") public form!: {validate: () => false};
@@ -40,18 +40,20 @@ export class CodeSystemSupplementEditComponent implements OnInit {
   }
 
   private loadSupplement(supplementId: number): void {
-    this.loading = true;
-    this.codeSystemService.loadSupplement(this.codeSystemId!, supplementId).subscribe(s => this.supplement = s).add(() => this.loading = false);
+    this.loading['init'] = true;
+    this.codeSystemService.loadSupplement(this.codeSystemId!, supplementId).subscribe(s => {
+      this.supplement = s;
+    }).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
     if (!this.form.validate()) {
       return;
     }
-    this.loading = true;
+    this.loading['save'] = true;
     this.codeSystemService.saveSupplement(this.codeSystemId!, this.supplement!, this.conceptVersionId)
       .subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+      .add(() => this.loading['save'] = false);
   }
 
   private setTarget(): void {
@@ -77,6 +79,10 @@ export class CodeSystemSupplementEditComponent implements OnInit {
   };
 
   public get hasInvalidTarget(): boolean {
-    return !['EntityProperty', 'Designation', 'EntityPropertyValue'].includes(this.supplement!.targetType!);
+    return !['EntityProperty', 'Designation', 'EntityPropertyValue'].includes(this.supplement?.targetType!);
+  }
+
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }

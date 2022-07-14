@@ -1,7 +1,10 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit'? 'web.code-system-concept-version.association.edit-association' : 'web.code-system-concept-version.association.add-association'">
+    <m-spinner [mLoading]="isLoading">
+      <m-card
+          [mTitle]="'web.code-system-concept-version.association.' + (mode === 'edit' ? 'edit-association' : 'add-association')"
+          [mShowSkeleton]="loading['init']"
+      >
         <form #form="ngForm" *ngIf="association">
           <m-form-item mName="associationType" mLabel="entities.code-system-association.type" required>
             <twl-association-type-search
@@ -29,8 +32,9 @@
             ></twl-value-set-concept-select>
           </m-form-item>
         </form>
+
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>

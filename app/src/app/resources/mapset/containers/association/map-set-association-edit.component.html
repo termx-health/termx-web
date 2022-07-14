@@ -1,8 +1,8 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit'? 'web.map-set-association.form.edit-header' : 'web.map-set-association.form.add-header'" *ngIf="association">
-        <form #form="ngForm">
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mTitle]="mode === 'edit'? 'web.map-set-association.form.edit-header' : 'web.map-set-association.form.add-header'" [mShowSkeleton]="loading['init']">
+        <form #form="ngForm" *ngIf="association">
           <m-form-item mName="sourceCodeSystem" mLabel="web.map-set-association.form.source-system" required>
             <twl-code-system-search
                 [(ngModel)]="sourceCodeSystem"
@@ -50,10 +50,10 @@
           </m-form-item>
         </form>
 
-        <m-card class="m-card-inside">
+        <m-card class="m-card-inside" *ngIf="association">
           <div *m-card-header class="m-items-between">
             <div class="m-card-title">{{'entities.map-set-entity.versions' | translate}}</div>
-            <twa-add-button (click)="openEntityVersionModal()">
+            <twa-add-button (click)="openModal()">
               {{'web.map-set-entity-version.table.add-version' | translate}}
             </twa-add-button>
           </div>
@@ -69,7 +69,7 @@
 
             <ng-container *mTableRow="let entityVersion; let index = index">
               <tr>
-                <td><a (click)="openEntityVersionModal(index)">{{entityVersion.id || 'edit'}}</a></td>
+                <td><a (click)="openModal(index)">{{entityVersion.id || 'edit'}}</a></td>
                 <td>{{entityVersion.created | localDateTime}}</td>
                 <td>
                   <m-abbreviate [mValue]="entityVersion.description" [mLength]="60"></m-abbreviate>
@@ -97,8 +97,9 @@
             </tr>
           </m-table>
         </m-card>
+
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
+          <m-button mDisplay="primary" (click)="save()" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>
@@ -107,7 +108,8 @@
   </div>
 </m-form-row>
 
-<m-modal [(mVisible)]="entityVersionModalData.visible" (mClose)="closeEntityVersionModal()">
+
+<m-modal [(mVisible)]="entityVersionModalData.visible" (mClose)="closeModal()">
   <ng-container *m-modal-header>
     {{(entityVersionModalData.editIndex >= 0 ? 'web.map-set-entity-version.modal.edit-header' : 'web.map-set-entity-version.modal.add-header') | translate}}
   </ng-container>
@@ -121,7 +123,7 @@
   </ng-container>
 
   <div *m-modal-footer class="tw-button-group">
-    <m-button mDisplay="text" (click)="closeEntityVersionModal()">{{'core.btn.close' | translate}}</m-button>
-    <m-button mDisplay="primary" (click)="saveEntityVersionModal()">{{'core.btn.save' | translate}}</m-button>
+    <m-button mDisplay="text" (click)="closeModal()">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="confirmModal()">{{'core.btn.save' | translate}}</m-button>
   </div>
 </m-modal>

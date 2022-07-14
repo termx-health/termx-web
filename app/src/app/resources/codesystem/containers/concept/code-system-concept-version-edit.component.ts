@@ -14,7 +14,7 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
   private conceptId?: string | null;
   public conceptVersion?: CodeSystemEntityVersion;
 
-  private loading: {[key: string]: boolean} = {};
+  public loading: {[key: string]: boolean} = {};
   public mode: 'add' | 'edit' = 'add';
 
   @ViewChild("conceptVersionForm") public conceptVersionForm?: NgForm;
@@ -44,6 +44,11 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
     }
   }
 
+  private loadConceptVersion(conceptVersionId: number): void {
+    this.loading['init'] = true;
+    this.codeSystemEntityVersionService.load(conceptVersionId).subscribe(v => this.conceptVersion = v).add(() => this.loading['init'] = false);
+  }
+
   public save(): void {
     if (!validateForm(this.conceptVersionForm) || !this.conceptVersion) {
       return;
@@ -55,13 +60,7 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
       .add(() => this.loading['save'] = false);
   }
 
-  private loadConceptVersion(conceptVersionId: number): void {
-    this.loading['load'] = true;
-    this.codeSystemEntityVersionService.load(conceptVersionId).subscribe(v => this.conceptVersion = v).add(() => this.loading['load'] = false);
-  }
-
   public get isLoading(): boolean {
-    return Object.values(this.loading).some(Boolean);
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
-
 }

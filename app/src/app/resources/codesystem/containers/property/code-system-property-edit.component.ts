@@ -12,7 +12,7 @@ export class CodeSystemPropertyEditComponent implements OnInit {
   public codeSystemId?: string | null;
   public property?: EntityProperty;
 
-  public loading = false;
+  public loading: {[k: string]: boolean} = {};
   public mode?: 'edit' | 'add';
 
   @ViewChild("propertyForm") public propertyForm!: CodeSystemPropertyFormComponent;
@@ -36,15 +36,20 @@ export class CodeSystemPropertyEditComponent implements OnInit {
   }
 
   private loadProperty(propertyId: number): void {
-    this.loading = true;
-    this.codeSystemService.loadEntityProperty(this.codeSystemId!, propertyId).subscribe(ep => this.property = ep).add(() => this.loading = false);
+    this.loading['init'] = true;
+    this.codeSystemService.loadEntityProperty(this.codeSystemId!, propertyId).subscribe(ep => this.property = ep).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
     if (!this.propertyForm.validate()) {
       return;
     }
-    this.loading = true;
-    this.codeSystemService.saveEntityProperty(this.codeSystemId!, this.property!).subscribe(() => this.location.back()).add(() => this.loading = false);
+    this.loading['save'] = true;
+    this.codeSystemService.saveEntityProperty(this.codeSystemId!, this.property!).subscribe(() => this.location.back()).add(() => this.loading['save'] = false);
+  }
+
+
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }

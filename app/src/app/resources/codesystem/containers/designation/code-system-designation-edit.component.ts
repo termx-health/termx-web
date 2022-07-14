@@ -13,7 +13,7 @@ export class CodeSystemDesignationEditComponent implements OnInit {
   public conceptVersionId?: number;
   public designation?: Designation;
 
-  public loading = false;
+  public loading: {[k: string]: boolean} = {};
   public mode?: 'edit' | 'add';
 
   @ViewChild("designationForm") public designationForm?: CodeSystemDesignationFormComponent;
@@ -38,17 +38,23 @@ export class CodeSystemDesignationEditComponent implements OnInit {
   }
 
   public loadDesignation(designationId: number): void {
-    this.loading = true;
-    this.codeSystemService.loadDesignation(this.codeSystemId!, designationId).subscribe(d => this.designation = d).add(() => this.loading = false);
+    this.loading['init'] = true;
+    this.codeSystemService.loadDesignation(this.codeSystemId!, designationId).subscribe(d => {
+      this.designation = d;
+    }).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
     if (!this.designationForm?.validate()) {
       return;
     }
-    this.loading = true;
-    this.codeSystemService.saveDesignation(this.codeSystemId!, this.conceptVersionId!, this.designation!)
-      .subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+    this.loading['save'] = true;
+    this.codeSystemService.saveDesignation(this.codeSystemId!, this.conceptVersionId!, this.designation!).subscribe(() => {
+      this.location.back();
+    }).add(() => this.loading['save'] = false);
+  }
+
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }

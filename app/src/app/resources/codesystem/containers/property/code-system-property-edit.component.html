@@ -1,10 +1,11 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit'? 'web.entity-property.form.edit-header' : 'web.entity-property.form.add-header'">
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mTitle]="mode === 'edit'? 'web.entity-property.form.edit-header' : 'web.entity-property.form.add-header'" [mShowSkeleton]="loading['init']">
         <twa-code-system-property-form #propertyForm [property]="property"></twa-code-system-property-form>
+
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>

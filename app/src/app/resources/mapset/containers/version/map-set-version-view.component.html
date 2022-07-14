@@ -1,12 +1,12 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-
-      <m-card>
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mShowSkeleton]="loading['init']">
         <div *m-card-header class="m-items-middle">
           <div class="m-card-title">{{'web.map-set-version.form.view-header' | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
+
         <div *ngIf="version">
           <m-form-item mLabel="entities.map-set-version.version">
             {{version.version}}
@@ -40,7 +40,7 @@
 
         <div *ngIf="version?.status === 'active'">
           <ng-container *m-card-footer>
-            <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
+            <m-button mDisplay="primary" (click)="save()" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading">
               {{'core.btn.save' | translate}}
             </m-button>
           </ng-container>

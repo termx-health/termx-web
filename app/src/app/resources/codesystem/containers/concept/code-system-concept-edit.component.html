@@ -1,7 +1,7 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="mode === 'edit' ? 'web.code-system-concept.form.edit-header' : 'web.code-system-concept.form.add-header'">
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mTitle]="mode === 'edit' ? 'web.code-system-concept.form.edit-header' : 'web.code-system-concept.form.add-header'" [mShowSkeleton]="loading['init']">
         <form #form="ngForm" *ngIf="concept">
           <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>
             <m-input name="code" [(ngModel)]="concept.code" required></m-input>
@@ -57,7 +57,7 @@
         </m-card>
 
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>
