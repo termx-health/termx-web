@@ -6,7 +6,7 @@ import {PRIVILEGES_ROUTES} from './privileges/privileges.module';
 import {TOOLS_ROUTES} from './tools/tools.module';
 
 const routes: Routes = [
-  {path: 'resources', children: RESOURCES_ROUTES},
+  {path: 'resources', children: RESOURCES_ROUTES, data: {privilege: ['*.view']}},
   {path: 'integration', children: INTEGRATION_ROUTES},
   {path: 'privileges', children: PRIVILEGES_ROUTES},
   {path: 'tools', children: TOOLS_ROUTES}
