@@ -1,13 +1,8 @@
 <m-page-layout mTitle="web.app.header" [menu]="menu" (mLangChange)="onLangChange($event)">
-  <div *ngIf="privileges; else noAuthentication">
-    <ng-container *ngIf="authContext.hasAnyPrivilege(privileges); else noPrivilege">
-      <router-outlet></router-outlet>
-    </ng-container>
-    <ng-template #noPrivilege>
-      <twa-no-privilege [privileges]="privileges"></twa-no-privilege>
-    </ng-template>
-  </div>
-  <ng-template #noAuthentication>
+  <ng-container *ngIf="!activeRoutePrivileges || (activeRoutePrivileges | hasAnyPrivilege); else accessError">
     <router-outlet></router-outlet>
+  </ng-container>
+  <ng-template #accessError>
+    <twa-no-privilege [privileges]="activeRoutePrivileges"></twa-no-privilege>
   </ng-template>
 </m-page-layout>

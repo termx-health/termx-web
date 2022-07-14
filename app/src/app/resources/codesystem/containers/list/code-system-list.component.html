@@ -17,7 +17,7 @@
       <th mColumnKey="id">{{'entities.code-system.id' | translate}}</th>
       <th mColumnKey="name">{{'entities.code-system.name' | translate}}</th>
       <th mColumnKey="uri">{{'web.code-system.list.domain' | translate}}</th>
-      <th *ngIf="'*.code-system.edit' | hasPrivilege" class="tw-table-actions"></th>
+      <th *mPrivileged="'*.code-system.edit'" class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let cs">
@@ -30,7 +30,7 @@
       </td>
       <td>{{cs.names | localName}}</td>
       <td>{{cs.uri | apply: parseDomain}}</td>
-      <td *ngIf="'*.code-system.edit' | hasPrivilege" class="tw-table-actions">
+      <td *mPrivileged="'*.code-system.edit'" class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="duplicateModal.toggleModal({sourceCodeSystem: cs.id})">
             <m-icon [mCode]="'copy'"></m-icon>&nbsp; {{'core.btn.duplicate' | translate}}
@@ -74,7 +74,7 @@
     </tr>
 
     <tr *mTableNoData>
-      <td colspan="5">
+      <td colspan="100%">
         <m-no-data></m-no-data>
       </td>
     </tr>

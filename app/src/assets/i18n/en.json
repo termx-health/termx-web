@@ -12,10 +12,10 @@
     "no-privilege": {
       "error": "401 Unauthorized",
       "privileges": {
-        "plural": "You lack the privileges: ",
-        "singular": "You lack the privilege: "
+        "plural": "You lack the privileges: {{privileges}}",
+        "singular": "You lack the privilege: {{privilege}}"
       },
-      "access": "To access: "
+      "access": "To access: {{path}}"
     },
     "no-data": "No data",
     "back": "Back",

@@ -12,7 +12,7 @@ import {filter} from 'rxjs';
 })
 export class AppComponent implements OnInit {
   public menu: MuiPageMenuItem[] = [];
-  public privileges?: string[];
+  public activeRoutePrivileges?: string[];
 
   public constructor(
     private router: Router,
@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
       return r.firstChild ? getLastChild(r.firstChild) : r;
     };
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
-      this.privileges = getLastChild(this.route.snapshot.firstChild!).data['privilege'];
+      this.activeRoutePrivileges = getLastChild(this.route.snapshot.firstChild!).data['privilege'];
     });
   }
 
