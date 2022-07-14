@@ -14,13 +14,13 @@ import {MapSetVersionEntityVersionTableComponent} from './containers/version/map
 
 
 export const MAP_SET_ROUTES: Routes = [
-  {path: 'add', component: MapSetEditComponent},
-  {path: ':id/edit', component: MapSetEditComponent},
-  {path: ':id/versions/add', component: MapSetVersionEditComponent},
-  {path: ':id/versions/:versionId/edit', component: MapSetVersionEditComponent},
+  {path: 'add', component: MapSetEditComponent, data: {privilege: ['*.map-set.edit']}},
+  {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['*.map-set.edit']}},
+  {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['*.map-set.edit']}},
+  {path: ':id/versions/:versionId/edit', component: MapSetVersionEditComponent, data: {privilege: ['*.map-set.edit']}},
   {path: ':id/versions/:versionId/view', component: MapSetVersionViewComponent},
-  {path: ':id/associations/add', component: MapSetAssociationEditComponent},
-  {path: ':id/associations/:associationId/edit', component: MapSetAssociationEditComponent},
+  {path: ':id/associations/add', component: MapSetAssociationEditComponent, data: {privilege: ['*.map-set.edit']}},
+  {path: ':id/associations/:associationId/edit', component: MapSetAssociationEditComponent, data: {privilege: ['*.map-set.edit']}},
 ];
 
 @NgModule({

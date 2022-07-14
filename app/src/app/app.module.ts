@@ -21,6 +21,7 @@ import {JobLibModule} from 'terminology-lib/job';
 import {PrivilegesModule} from './privileges/privileges.module';
 import {AuthLibModule} from 'terminology-lib/auth/auth-lib.module';
 import {ToolsModule} from './tools/tools.module';
+import {NoPrivilegeModule} from './core/no-privilege/no-privilege.module';
 
 
 registerLocaleData(et);
@@ -99,7 +100,8 @@ export function MarinaUiConfigFactory(): MuiConfig {
     PrivilegesModule,
     AuthLibModule,
 
-    ToolsModule
+    ToolsModule,
+    NoPrivilegeModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},

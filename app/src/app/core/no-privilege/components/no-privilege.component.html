@@ -1,0 +1,12 @@
+<div style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: calc(100vh - 4rem - 8rem); font-size: x-large">
+  <h1>{{'core.no-privilege.error' | translate}}</h1>
+  <div *ngIf="privileges.length > 1">
+    {{'core.no-privilege.privileges.plural' | translate: ({privileges: privileges.join('; ')})}}
+  </div>
+  <div *ngIf="privileges.length < 2">
+    {{'core.no-privilege.privileges.singular' | translate: ({privilege: privileges})}}
+  </div>
+  <div>
+    {{'core.no-privilege.access' | translate: ({path: path})}}
+  </div>
+</div>

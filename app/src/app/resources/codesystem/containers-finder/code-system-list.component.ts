@@ -3,6 +3,7 @@ import {SearchResult} from '@kodality-web/core-util';
 import {CodeSystem} from 'terminology-lib/resources';
 import {CodeSystemService} from '../services/code-system.service';
 import {Router} from '@angular/router';
+import {MuiAuthContext} from '@kodality-health/marina-ui';
 
 
 @Component({
@@ -31,7 +32,8 @@ export class FinderCodeSystemListComponent implements OnInit {
 
   public constructor(
     private codeSystemService: CodeSystemService,
-    private router: Router
+    private router: Router,
+    private authContext: MuiAuthContext
   ) {}
 
   public ngOnInit(): void {
@@ -46,6 +48,10 @@ export class FinderCodeSystemListComponent implements OnInit {
   }
 
   public openResource(cs: CodeSystem): void {
-    this.router.navigate(['/resources/code-systems/', cs.id, 'edit']);
+    if (this.authContext.hasPrivilege('*.code-system.edit')){
+      this.router.navigate(['/resources/code-systems/', cs.id, 'edit']);
+    } else {
+      this.router.navigate(['/resources/code-systems/', cs.id, 'view']);
+    }
   }
 }
