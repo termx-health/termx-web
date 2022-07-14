@@ -21,10 +21,10 @@ import {FinderValueSetVersionViewComponent} from './containers-finder/version/va
 
 
 export const VALUE_SET_ROUTES: Routes = [
-  {path: 'add', component: ValueSetEditComponent},
-  {path: ':id/edit', component: ValueSetEditComponent},
-  {path: ':id/versions/add', component: ValueSetVersionEditComponent},
-  {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent},
+  {path: 'add', component: ValueSetEditComponent, data: {privilege: ['*.value-set.edit']}},
+  {path: ':id/edit', component: ValueSetEditComponent, data: {privilege: ['*.value-set.edit']}},
+  {path: ':id/versions/add', component: ValueSetVersionEditComponent, data: {privilege: ['*.value-set.edit']}},
+  {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent, data: {privilege: ['*.value-set.edit']}},
   {path: ':id/versions/:versionCode/view', component: ValueSetVersionViewComponent},
 ];
 
