@@ -9,6 +9,14 @@
       "confirm": "Confirm",
       "add": "Add"
     },
+    "no-privilege": {
+      "error": "401 Unauthorized",
+      "privileges": {
+        "plural": "You lack the privileges: {{privileges}}",
+        "singular": "You lack the privilege: {{privilege}}"
+      },
+      "access": "To access: {{path}}"
+    },
     "no-data": "No data",
     "back": "Back",
     "delete-confirm": "Are you sure you want to delete?"
