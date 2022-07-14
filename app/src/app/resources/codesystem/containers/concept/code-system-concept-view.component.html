@@ -1,7 +1,7 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card [mTitle]="'web.code-system-concept.form.view-header'" *ngIf="concept">
+    <m-card [mTitle]="'web.code-system-concept.form.view-header'" [mShowSkeleton]="loading">
+      <div *ngIf="concept">
         <m-form-item mLabel="entities.code-system-concept.code" required>
           {{concept.code}}
         </m-form-item>
@@ -36,7 +36,7 @@
             </tr>
           </m-table>
         </m-card>
-      </m-card>
-    </m-spinner>
+      </div>
+    </m-card>
   </div>
 </m-form-row>

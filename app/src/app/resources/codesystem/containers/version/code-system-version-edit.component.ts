@@ -14,7 +14,7 @@ export class CodeSystemVersionEditComponent implements OnInit {
   public codeSystemId?: string | null;
   public version?: CodeSystemVersion;
 
-  public loading = false;
+  public loading: {[k: string]: boolean} = {};
   public mode: 'add' | 'edit' = 'add';
 
   @ViewChild("form") public form?: NgForm;
@@ -39,17 +39,21 @@ export class CodeSystemVersionEditComponent implements OnInit {
   }
 
   private loadVersion(id: string, versionId: string): void {
-    this.loading = true;
-    this.codeSystemService.loadVersion(id, versionId).subscribe(v => this.version = v).add(() => this.loading = false);
+    this.loading['init'] = true;
+    this.codeSystemService.loadVersion(id, versionId).subscribe(v => this.version = v).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
     if (!validateForm(this.form)) {
       return;
     }
-    this.loading = true;
+    this.loading['save'] = true;
     this.codeSystemService.saveVersion(this.codeSystemId!, this.version!)
       .subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+      .add(() => this.loading['save'] = false);
+  }
+
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }

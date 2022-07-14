@@ -1,4 +1,4 @@
-<twa-finder-wrapper [loading]="isLoading" title="CODE SYSTEM">
+<twa-finder-wrapper [loading]="loading['general']" title="CODE SYSTEM">
   <div class="tw-finder-view-form">
     <m-form-row mFull>
       <div *mFormCol>
@@ -55,14 +55,14 @@
 
 
   <!-- Versions -->
-  <twa-finder-menu title="entities.code-system.versions" [length]="versions.length">
+  <twa-finder-menu title="entities.code-system.versions"  [length]="versions.length">
     <twa-finder-menu-item *ngFor="let v of versions" [navigate]="['versions', v.version]">
       {{v.version}} - {{v.source}}
     </twa-finder-menu-item>
   </twa-finder-menu>
 
   <!-- Concepts -->
-  <twa-finder-menu title="entities.code-system.concepts" [length]="conceptResult.data.length">
+  <twa-finder-menu title="entities.code-system.concepts" [loading]="loading['concepts']" [length]="conceptResult.data.length">
     <twa-finder-menu-item *ngFor="let c of conceptResult.data" [navigate]="['concepts', c.id]">
       {{c.code}}
     </twa-finder-menu-item>

@@ -13,8 +13,8 @@ import {NgForm} from '@angular/forms';
 export class MapSetVersionViewComponent implements OnInit {
   public mapSetId?: string | null;
   public version?: MapSetVersion;
-  public loading = false;
 
+  public loading: {[key: string]: boolean} = {};
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
@@ -30,17 +30,20 @@ export class MapSetVersionViewComponent implements OnInit {
   }
 
   private loadVersion(id: string, version: string): void {
-    this.loading = true;
-    this.mapSetService.loadVersion(id, version).subscribe(v => this.version = v).add(() => this.loading = false);
+    this.loading['init'] = true;
+    this.mapSetService.loadVersion(id, version).subscribe(v => this.version = v).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
     if (!validateForm(this.form)) {
       return;
     }
-    this.loading = true;
+    this.loading['save'] = true;
     this.mapSetService.saveVersion(this.mapSetId!, this.version!)
       .subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+      .add(() => this.loading['save'] = false);
+  }
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }

@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {MuiPageMenuItem} from '@kodality-health/marina-ui';
-import {Router} from '@angular/router';
+import {MuiAuthContext, MuiPageMenuItem} from '@kodality-health/marina-ui';
+import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {LocalizedName} from '@kodality-health/marina-util';
+import {filter} from 'rxjs';
 
 @Component({
   selector: 'twa-root',
@@ -11,15 +12,25 @@ import {LocalizedName} from '@kodality-health/marina-util';
 })
 export class AppComponent implements OnInit {
   public menu: MuiPageMenuItem[] = [];
+  public activeRoutePrivileges?: string[];
 
   public constructor(
     private router: Router,
     private http: HttpClient,
-    private translateService: TranslateService
+    private route: ActivatedRoute,
+    private translateService: TranslateService,
+    public authContext: MuiAuthContext
   ) {}
 
   public ngOnInit(): void {
     this.loadMenu();
+
+    const getLastChild = (r: ActivatedRouteSnapshot): ActivatedRouteSnapshot => {
+      return r.firstChild ? getLastChild(r.firstChild) : r;
+    };
+    this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
+      this.activeRoutePrivileges = getLastChild(this.route.snapshot.firstChild!).data['privilege'];
+    });
   }
 
   private loadMenu(): void {

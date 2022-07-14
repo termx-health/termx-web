@@ -62,9 +62,7 @@ export class FinderMenuItemComponent {
         <m-button (click)="toggleOpen()" mSize="small" mDisplay="text" mShape="circle">
           <m-icon [mCode]="open ? 'folder-open' : 'folder'"></m-icon>
         </m-button>
-        {{title
-
-          | toString | translate}}
+        {{title | toString | translate}}
       </div>
 
       <div *ngIf="open">
@@ -96,7 +94,7 @@ export class FinderMenuComponent {
   styleUrls: ['finder.component.less'],
   encapsulation: ViewEncapsulation.None,
   template: `
-    <m-card class="tw-finder-wrapper-inner" m-scrollable *ngIf="isDisplayed">
+    <m-card class="tw-finder-wrapper-inner" style="height: min-content" m-scrollable *ngIf="isDisplayed">
       <ng-container *ngIf="title || isMobile">
         <ng-container *m-card-header>
           <a *ngIf="isMobile" (click)="location.back()" class="tw-finder-wrapper-header-navigation tw-finder-title">
@@ -108,11 +106,11 @@ export class FinderMenuComponent {
         </ng-container>
       </ng-container>
 
-      <m-spinner [mLoading]="loading" style="display: block">
+      <m-card [mShowSkeleton]="loading" class="m-card-inside">
         <div class="tw-finder-outlet">
           <ng-content></ng-content>
         </div>
-      </m-spinner>
+      </m-card>
     </m-card>
 
     <router-outlet></router-outlet>

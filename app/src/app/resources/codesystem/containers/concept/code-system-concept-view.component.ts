@@ -9,7 +9,6 @@ import {ActivatedRoute} from '@angular/router';
 export class CodeSystemConceptViewComponent implements OnInit {
   public codeSystemId?: string | null;
   public concept?: CodeSystemConcept;
-
   public loading = false;
 
   public constructor(

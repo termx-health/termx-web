@@ -1,7 +1,7 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card>
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mShowSkeleton]="loading['init']">
         <div *m-card-header class="m-items-middle">
           <div class="m-card-title">{{(mode === 'edit' ? 'web.naming-system.form.edit-header' : 'web.naming-system.form.add-header') | translate}}</div>
           <twa-status-tag *ngIf="namingSystem?.status" [status]="namingSystem.status"></twa-status-tag>
@@ -32,13 +32,13 @@
           </m-form-item>
 
           <twa-naming-system-identifier-form #identifiers [(identifiers)]="namingSystem.identifiers"></twa-naming-system-identifier-form>
-
-          <ng-container *m-card-footer>
-            <m-button mDisplay="primary" [mLoading]="loading" [disabled]="loading" (click)="save()">
-              {{'core.btn.save' | translate}}
-            </m-button>
-          </ng-container>
         </form>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
       </m-card>
     </m-spinner>
   </div>

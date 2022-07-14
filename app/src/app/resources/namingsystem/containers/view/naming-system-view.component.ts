@@ -9,7 +9,6 @@ import {ActivatedRoute} from '@angular/router';
 })
 export class NamingSystemViewComponent implements OnInit {
   public namingSystem?: NamingSystem;
-
   public loading = false;
 
   public constructor(

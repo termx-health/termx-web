@@ -13,7 +13,7 @@ export class CodeSystemPropertyValueEditComponent implements OnInit {
   public conceptVersionId?: number;
   public propertyValue?: EntityPropertyValue;
 
-  public loading = false;
+  public loading: {[k: string]: boolean} = {};
   public mode?: 'edit' | 'add';
 
   @ViewChild("propertyValueForm") public propertyValueForm!: CodeSystemPropertyValueFormComponent;
@@ -38,16 +38,23 @@ export class CodeSystemPropertyValueEditComponent implements OnInit {
   }
 
   public loadPropertyValue(propertyValueId: number): void {
-    this.loading = true;
-    this.codeSystemService.loadEntityPropertyValue(this.codeSystemId!, propertyValueId).subscribe(pv => this.propertyValue = pv).add(() => this.loading = false);
+    this.loading['init'] = true;
+    this.codeSystemService.loadEntityPropertyValue(this.codeSystemId!, propertyValueId).subscribe(pv => {
+      this.propertyValue = pv;
+    }).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
     if (!this.propertyValueForm?.validate()) {
       return;
     }
-    this.loading = true;
-    this.codeSystemService.saveEntityPropertyValue(this.codeSystemId!, this.conceptVersionId!, this.propertyValue!).subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+    this.loading['save'] = true;
+    this.codeSystemService.saveEntityPropertyValue(this.codeSystemId!, this.conceptVersionId!, this.propertyValue!).subscribe(() => {
+      this.location.back();
+    }).add(() => this.loading['save'] = false);
+  }
+
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
   }
 }

@@ -10,14 +10,14 @@ import {NAMING_SYSTEM_ROUTES, NamingSystemModule} from './namingsystem/naming-sy
 
 export const RESOURCES_ROUTES: Routes = [
   {path: '', component: ResourcesTabsetComponent},
-  {path: 'code-systems', children: CODE_SYSTEM_ROUTES},
-  {path: 'value-sets', children: VALUE_SET_ROUTES},
-  {path: 'map-sets', children: MAP_SET_ROUTES},
+  {path: 'code-systems', children: CODE_SYSTEM_ROUTES, data: {privilege: ['*.code-system.view']}},
+  {path: 'value-sets', children: VALUE_SET_ROUTES, data: {privilege: ['*.value-set.view']}},
+  {path: 'map-sets', children: MAP_SET_ROUTES, data: {privilege: ['*.map-set.view']}},
   {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES},
   {
     path: 'finder', children: [
-      {path: 'code-systems', children: CODE_SYSTEM_FINDER_ROUTES},
-      {path: 'value-sets', children: VALUE_SET_FINDER_ROUTES},
+      {path: 'code-systems', children: CODE_SYSTEM_FINDER_ROUTES, data: {privilege: ['*.code-system.view']}},
+      {path: 'value-sets', children: VALUE_SET_FINDER_ROUTES, data: {privilege: ['*.value-set.view']}},
     ]
   },
 ];

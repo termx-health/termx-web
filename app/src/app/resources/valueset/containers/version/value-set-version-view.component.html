@@ -1,54 +1,52 @@
 <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
   <div nz-col [nzLg]="10" [nzMd]="18" [nzXs]="24">
-    <m-spinner [mLoading]="loading">
-      <m-card>
-        <div *m-card-header class="m-items-middle">
-          <div class="m-card-title">{{'web.value-set-version.form.view-header' | translate}}</div>
-          <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
-        </div>
+    <m-card [mShowSkeleton]="loading">
+      <div *m-card-header class="m-items-middle">
+        <div class="m-card-title">{{'web.value-set-version.form.view-header' | translate}}</div>
+        <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
+      </div>
 
-        <form #form *ngIf="version">
-          <m-form-item mLabel="entities.value-set-version.version">
-            {{version.version}}
-          </m-form-item>
+      <form #form *ngIf="version">
+        <m-form-item mLabel="entities.value-set-version.version">
+          {{version.version}}
+        </m-form-item>
 
-          <m-form-item mLabel="entities.value-set-version.source">
-            {{version.source}}
-          </m-form-item>
+        <m-form-item mLabel="entities.value-set-version.source">
+          {{version.source}}
+        </m-form-item>
 
-          <m-form-item mLabel="entities.value-set-version.release-date">
-            {{version.releaseDate | localDate}}
-          </m-form-item>
+        <m-form-item mLabel="entities.value-set-version.release-date">
+          {{version.releaseDate | localDate}}
+        </m-form-item>
 
-          <m-form-item mName="expirationDate" mLabel="entities.value-set-version.expiration-date">
-            <m-date-picker *ngIf="version.status === 'active'" name="expirationDate" [(ngModel)]="version.expirationDate"></m-date-picker>
-            <div *ngIf="version.status !== 'active'">
-              {{version.expirationDate | localDate}}
-            </div>
-          </m-form-item>
+        <m-form-item mName="expirationDate" mLabel="entities.value-set-version.expiration-date">
+          <m-date-picker *ngIf="version.status === 'active'" name="expirationDate" [(ngModel)]="version.expirationDate"></m-date-picker>
+          <div *ngIf="version.status !== 'active'">
+            {{version.expirationDate | localDate}}
+          </div>
+        </m-form-item>
 
-          <m-form-item mLabel="entities.value-set-version.supported-languages">
-            <label *ngFor="let sLang of version.supportedLanguages; let isFirst = first;">{{isFirst ? "" : ", "}}{{sLang | localizedConceptName: {valueSet: 'languages'} | async}}</label>
-          </m-form-item>
+        <m-form-item mLabel="entities.value-set-version.supported-languages">
+          <label *ngFor="let sLang of version.supportedLanguages; let isFirst = first;">{{isFirst ? "" : ", "}}{{sLang | localizedConceptName: {valueSet: 'languages'} | async}}</label>
+        </m-form-item>
 
-          <m-form-item mLabel="entities.value-set-version.description">
-            {{version.description }}
-          </m-form-item>
+        <m-form-item mLabel="entities.value-set-version.description">
+          {{version.description }}
+        </m-form-item>
 
-          <m-form-item mName="concepts" mLabel="entities.value-set-version.concepts">
-            <twa-value-set-version-concept-list [concepts]="concepts" viewMode></twa-value-set-version-concept-list>
-          </m-form-item>
-        </form>
+        <m-form-item mName="concepts" mLabel="entities.value-set-version.concepts">
+          <twa-value-set-version-concept-list [concepts]="concepts" viewMode></twa-value-set-version-concept-list>
+        </m-form-item>
+      </form>
 
-        <div *ngIf="version?.status === 'active'">
-          <ng-container *m-card-footer>
-            <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
-              {{'core.btn.save' | translate}}
-            </m-button>
-          </ng-container>
-        </div>
-      </m-card>
-    </m-spinner>
+      <div *ngIf="version?.status === 'active'">
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </div>
+    </m-card>
   </div>
   <div nz-col [nzLg]="8" [nzMd]="6" [nzXs]="24" style="height: min-content">
     <twa-value-set-rule-set *ngIf="version" [ruleSet]="version.ruleSet" viewMode></twa-value-set-rule-set>
