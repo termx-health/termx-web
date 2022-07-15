@@ -19,7 +19,7 @@ export const RESOURCES_ROUTES: Routes = [
   {
     path: 'finder', children: [
       {path: 'code-systems', children: CODE_SYSTEM_FINDER_ROUTES, data: {privilege: ['*.code-system.view']}},
-      {path: 'value-sets', children: VALUE_SET_FINDER_ROUTES},
+      {path: 'value-sets', children: VALUE_SET_FINDER_ROUTES, data: {privilege: ['*.value-set.view']}},
     ]
   },
 ];
