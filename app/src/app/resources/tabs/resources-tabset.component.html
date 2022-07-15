@@ -27,4 +27,11 @@
     </a>
     <twa-naming-system-list></twa-naming-system-list>
   </nz-tab>
+  <nz-tab>
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'association-types' }" class="m-items-middle">
+      {{'web.resources.tabset.association-types' | translate}}
+      <m-tag class="tw-tab-total-tag">{{associationTypeTotal}}</m-tag>
+    </a>
+    <twa-association-type-list></twa-association-type-list>
+  </nz-tab>
 </nz-tabset>

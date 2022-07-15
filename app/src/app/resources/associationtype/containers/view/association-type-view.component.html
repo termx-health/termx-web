@@ -1,0 +1,34 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading">
+      <m-card [mTitle]="'web.association-type.form.view-header'" [mShowSkeleton]="loading">
+        <div *ngIf="association">
+          <m-form-item mLabel="entities.association-type.code">
+            {{association.code}}
+          </m-form-item>
+
+          <m-form-item mLabel="entities.association-type.kind" required>
+            {{association.associationKind}}
+          </m-form-item>
+
+          <m-form-item mLabel="entities.association-type.forward-name">
+            {{association.forwardName}}
+          </m-form-item>
+
+          <m-form-item mLabel="entities.association-type.reverse-name">
+            {{association.reverseName}}
+          </m-form-item>
+
+          <m-form-item mLabel="entities.association-type.description">
+            {{association.description}}
+          </m-form-item>
+
+          <m-form-item [mLabel]="checkBox"></m-form-item>
+          <ng-template #checkBox>
+            <m-checkbox [(ngModel)]="association.directed" disabled>{{'entities.association-type.directed' | translate}}</m-checkbox>
+          </ng-template>
+        </div>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

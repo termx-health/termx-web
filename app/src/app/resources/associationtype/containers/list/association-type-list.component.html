@@ -1,0 +1,56 @@
+<m-card>
+  <div *m-card-header class="m-items-between">
+    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <div class="m-items-middle">
+      <twa-add-button [routerLink]="['association-types/add']">
+        {{'web.association-type.list.add-association-type' | translate}}
+      </twa-add-button>
+    </div>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+    <tr *mTableHead>
+      <th *ngIf="searchResult | apply : haveDescriptions"></th>
+      <th mColumnKey="associationType">{{'entities.association-type.code' | translate}}</th>
+      <th mColumnKey="associationKind">{{'entities.association-type.kind' | translate}}</th>
+      <th mColumnKey="forwardName">{{'entities.association-type.forward-name' | translate}}</th>
+      <th mColumnKey="reverseName">{{'entities.association-type.reverse-name' | translate}}</th>
+      <th mColumnKey="directed">{{'entities.association-type.directed' | translate}}</th>
+    </tr>
+
+    <tr *mTableRow="let at">
+      <td *ngIf="at.description" m-table-expand [mItem]="at"></td>
+      <td *ngIf="!at.description && (searchResult | apply : haveDescriptions)"></td>
+      <td>
+        <a *ngIf="'*.edit' | hasPrivilege; else view" [routerLink]="['association-types',at.code,'edit']">{{at.code}}</a> <!--TODO association type privilege-->
+        <ng-template #view>
+          <a [routerLink]="['association-types',at.code,'view']">{{at.code}}</a>
+        </ng-template>
+      </td>
+      <td>{{at.associationKind}}</td>
+      <td>{{at.forwardName}}</td>
+      <td>{{at.reverseName}}</td>
+      <td>
+        <m-icon *ngIf="at.directed" mCode="check"></m-icon>
+      </td>
+    </tr>
+
+    <tr *mTableRowExpand="let at" class="m-table-expanded-row">
+      <td colspan="100%">
+        <m-form-row mFull>
+          <div *mFormCol>
+            <m-form-item mLabel="entities.association-type.description">
+              {{at.description}}
+            </m-form-item>
+          </div>
+        </m-form-row>
+      </td>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>
