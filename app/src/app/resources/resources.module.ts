@@ -6,6 +6,7 @@ import {ResourcesTabsetComponent} from './tabs/resources-tabset.component';
 import {SharedModule} from '../core/shared/shared.module';
 import {MAP_SET_ROUTES, MapSetModule} from './mapset/map-set.module';
 import {NAMING_SYSTEM_ROUTES, NamingSystemModule} from './namingsystem/naming-system.module';
+import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './associationtype/association-type.module';
 
 
 export const RESOURCES_ROUTES: Routes = [
@@ -14,6 +15,7 @@ export const RESOURCES_ROUTES: Routes = [
   {path: 'value-sets', children: VALUE_SET_ROUTES, data: {privilege: ['*.value-set.view']}},
   {path: 'map-sets', children: MAP_SET_ROUTES, data: {privilege: ['*.map-set.view']}},
   {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES},
+  {path: 'association-types', children: ASSOCIATION_TYPE_ROUTES},
   {
     path: 'finder', children: [
       {path: 'code-systems', children: CODE_SYSTEM_FINDER_ROUTES, data: {privilege: ['*.code-system.view']}},
@@ -29,7 +31,8 @@ export const RESOURCES_ROUTES: Routes = [
     ValueSetModule,
     MapSetModule,
     SharedModule,
-    NamingSystemModule
+    NamingSystemModule,
+    AssociationTypeModule
   ],
   declarations: [
     ResourcesTabsetComponent,

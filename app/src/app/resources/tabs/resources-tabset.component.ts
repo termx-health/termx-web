@@ -3,6 +3,7 @@ import {CodeSystemService} from '../codesystem/services/code-system.service';
 import {ValueSetService} from '../valueset/services/value-set.service';
 import {MapSetService} from '../mapset/services/map-set-service';
 import {NamingSystemLibService} from 'terminology-lib/resources';
+import {AssociationTypeService} from '../associationtype/services/association-type.service';
 
 
 @Component({
@@ -27,12 +28,14 @@ export class ResourcesTabsetComponent implements OnInit {
   public valueSetTotal?: number;
   public mapSetTotal?: number;
   public namingSystemTotal?: number;
+  public associationTypeTotal?: number;
 
   public constructor(
     private codeSystemService: CodeSystemService,
     private valueSetService: ValueSetService,
     private mapSetService: MapSetService,
     private namingSystemLibService: NamingSystemLibService,
+    private associationTypeService: AssociationTypeService
   ) { }
 
   public ngOnInit(): void {
@@ -40,9 +43,10 @@ export class ResourcesTabsetComponent implements OnInit {
   }
 
   public loadTotals(): void {
-    this.codeSystemService.search({limit: 0}).subscribe(cs => this.codeSystemTotal = cs.meta?.total).add();
-    this.valueSetService.search({limit: 0}).subscribe(vs => this.valueSetTotal = vs.meta?.total).add();
-    this.mapSetService.search({limit: 0}).subscribe(ms => this.mapSetTotal = ms.meta?.total).add();
-    this.namingSystemLibService.search({limit: 0}).subscribe(ns => this.namingSystemTotal = ns.meta?.total).add();
+    this.codeSystemService.search({limit: 0}).subscribe(cs => this.codeSystemTotal = cs.meta?.total);
+    this.valueSetService.search({limit: 0}).subscribe(vs => this.valueSetTotal = vs.meta?.total);
+    this.mapSetService.search({limit: 0}).subscribe(ms => this.mapSetTotal = ms.meta?.total);
+    this.namingSystemLibService.search({limit: 0}).subscribe(ns => this.namingSystemTotal = ns.meta?.total);
+    this.associationTypeService.search({limit: 0}).subscribe(at => this.associationTypeTotal = at.meta?.total);
   }
 }

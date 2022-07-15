@@ -18,7 +18,7 @@ export class AssociationTypeLibService {
     return this.http.get<AssociationType>(`${this.baseUrl}/${code}`);
   }
 
-  public searchTypes(params: AssociationTypeSearchParams = {}): Observable<SearchResult<AssociationType>> {
+  public search(params: AssociationTypeSearchParams = {}): Observable<SearchResult<AssociationType>> {
     return this.http.get<SearchResult<AssociationType>>(`${this.baseUrl}`, {params: SearchHttpParams.build(params)});
   }
 }

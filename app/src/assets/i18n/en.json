@@ -76,7 +76,18 @@
         "code-systems": "Code systems",
         "value-sets": "Value sets",
         "map-sets": "Map sets",
-        "naming-systems": "Naming systems"
+        "naming-systems": "Naming systems",
+        "association-types": "Association types"
+      }
+    },
+    "association-type": {
+      "list": {
+        "add-association-type": "Add association type"
+      },
+      "form": {
+        "add-header": "Add association type",
+        "edit-header": "Edit association type",
+        "view-header": "View association type"
       }
     },
     "code-system": {
@@ -369,6 +380,14 @@
     }
   },
   "entities": {
+    "association-type": {
+      "code": "Code",
+      "kind": "Kind",
+      "forward-name": "Forward name",
+      "reverse-name": "Reverse name",
+      "directed": "Directed",
+      "description": "Description"
+    },
     "map-set": {
       "id": "Identifier",
       "uri": "Uniform resource identifier (URI)",

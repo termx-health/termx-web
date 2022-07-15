@@ -1,0 +1,42 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mTitle]="mode === 'edit' ? 'web.association-type.form.edit-header' : 'web.association-type.form.add-header'" [mShowSkeleton]="loading['init']">
+        <form #form="ngForm" *ngIf="association">
+          <m-form-item mName="code" mLabel="entities.association-type.code" required>
+            <m-input name="code" [(ngModel)]="association.code" [disabled]="mode === 'edit'" required></m-input>
+          </m-form-item>
+
+          <m-form-item mName="associationKind" mLabel="entities.association-type.kind" required>
+            <m-select name="associationKind" [(ngModel)]="association.associationKind" required>
+              <m-option label="'equivalent'" [value]="'equivalent'"></m-option>
+              <m-option label="'code-system-hierarchy'" [value]="'code-system-hierarchy'"></m-option>
+            </m-select>
+          </m-form-item>
+
+          <m-form-item mName="forwardName" mLabel="entities.association-type.forward-name">
+            <m-input name="forwardName" [(ngModel)]="association.forwardName"></m-input>
+          </m-form-item>
+
+          <m-form-item mName="reverseName" mLabel="entities.association-type.reverse-name">
+            <m-input name="reverseName" [(ngModel)]="association.reverseName"></m-input>
+          </m-form-item>
+
+          <m-form-item mName="description" mLabel="entities.association-type.description">
+            <m-textarea name="description" [(ngModel)]="association.description"></m-textarea>
+          </m-form-item>
+
+          <m-form-item mName="directed" [mLabel]="checkBox"></m-form-item>
+          <ng-template #checkBox>
+            <m-checkbox name="directed" [(ngModel)]="association.directed">{{'entities.association-type.directed' | translate}}</m-checkbox>
+          </ng-template>
+        </form>
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>
