@@ -32,31 +32,33 @@
       <ng-container *mTableRow="let key">
         <tr *ngFor="let propertyValue of propertyValuesMap[key]; let isFirst = first; let index = index;">
           <td *ngIf="isFirst" class="tw-table-min-width" [rowSpan]="propertyValuesMap[key].length">
-            <a *ngIf="!viewMode"
-                [routerLink]="propertyValue.supplementId? ['/resources/code-systems/', codeSystemId, 'supplements', propertyValue.supplementId, 'edit'] : ['../entity-property-value/', propertyValue.id, 'edit']"
-                [queryParams]="{conceptVersionId: conceptVersionId}">
-              {{entityProperties?.[propertyValue.entityPropertyId]?.name}}
-            </a>
-            <label *ngIf="viewMode">
+            <label>
               {{entityProperties?.[propertyValue.entityPropertyId]?.name}}
             </label>
           </td>
           <td>
-            <div *ngIf="['string'] | includes:entityProperties?.[propertyValue.entityPropertyId]?.type">
-              <m-abbreviate [mValue]="propertyValue.value" [mLength]="40"></m-abbreviate>
-            </div>
-            <div *ngIf="['decimal', 'integer'] | includes:entityProperties?.[propertyValue.entityPropertyId]?.type">
-              {{propertyValue.value}}
-            </div>
-            <div *ngIf="['dateTime'] | includes:entityProperties?.[propertyValue.entityPropertyId]?.type">
-              {{propertyValue.value | localDate}}
-            </div>
-            <div *ngIf="['boolean'] | includes:entityProperties?.[propertyValue.entityPropertyId]?.type">
-              <m-checkbox [(ngModel)]="propertyValue.value" disabled></m-checkbox>
-            </div>
-            <div *ngIf="['code', 'Coding'] | includes:entityProperties?.[propertyValue.entityPropertyId]?.type">
-              {{propertyValue.value?.code}}
-            </div>
+            <a *ngIf="!viewMode; else type"
+                [routerLink]="propertyValue.supplementId? ['/resources/code-systems/', codeSystemId, 'supplements', propertyValue.supplementId, 'edit'] : ['../entity-property-value/', propertyValue.id, 'edit']"
+                [queryParams]="{conceptVersionId: conceptVersionId}">
+              <ng-template [ngTemplateOutlet]="type"></ng-template>
+            </a>
+            <ng-template #type>
+              <div *ngIf="['string'] | includes:entityProperties?.[propertyValue.entityPropertyId]?.type">
+                <m-abbreviate [mValue]="propertyValue.value" [mLength]="40"></m-abbreviate>
+              </div>
+              <div *ngIf="['decimal', 'integer'] | includes:entityProperties?.[propertyValue.entityPropertyId]?.type">
+                {{propertyValue.value}}
+              </div>
+              <div *ngIf="['dateTime'] | includes:entityProperties?.[propertyValue.entityPropertyId]?.type">
+                {{propertyValue.value | localDate}}
+              </div>
+              <div *ngIf="['boolean'] | includes:entityProperties?.[propertyValue.entityPropertyId]?.type">
+                <m-checkbox [(ngModel)]="propertyValue.value" disabled></m-checkbox>
+              </div>
+              <div *ngIf="['code', 'Coding'] | includes:entityProperties?.[propertyValue.entityPropertyId]?.type">
+                {{propertyValue.value?.code}}
+              </div>
+            </ng-template>
           </td>
           <td class="tw-table-min-width">
             <m-icon *ngIf="propertyValue.supplementId" [mCode]="'block'" m-tooltip [mTitle]="'web.supplement.supplement' | translate"></m-icon>

@@ -21,7 +21,7 @@
                   <m-form-item mName="uri" mLabel="entities.code-system.uri" required>
                     <div class="m-items-middle">
                       <m-input style="width: 100%" name="uri" [(ngModel)]="codeSystem.uri" required></m-input>
-                      <a [href]="codeSystem.uri" target="_blank">
+                      <a *ngIf="codeSystem.uri | validateUrl" [href]="codeSystem.uri" target="_blank">
                         <m-button>
                           <m-icon mCode="eye"></m-icon>
                         </m-button>

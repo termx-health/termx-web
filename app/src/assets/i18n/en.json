@@ -215,11 +215,16 @@
       "form": {
         "add-header": "Create a new value set",
         "edit-header": "Edit value set",
+        "view-header": "View value set",
         "versions": {
           "add-version": "Add version",
           "export-fhir": "Export FHIR json",
           "export-fhir-expansion": "Export FHIR json with expansion"
         }
+      },
+      "tabs": {
+        "value-set": "Value set",
+        "narrative": "Narrative"
       }
     },
     "value-set-version": {

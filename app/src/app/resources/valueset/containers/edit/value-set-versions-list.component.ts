@@ -3,6 +3,7 @@ import {ValueSetVersion} from 'terminology-lib/resources';
 import {ValueSetService} from '../../services/value-set.service';
 import {saveAs} from 'file-saver';
 import {FhirValueSetLibService} from 'terminology-lib/fhir';
+import {BooleanInput} from '@kodality-web/core-util';
 
 
 @Component({
@@ -10,6 +11,7 @@ import {FhirValueSetLibService} from 'terminology-lib/fhir';
   templateUrl: 'value-set-versions-list.component.html',
 })
 export class ValueSetVersionsListComponent implements OnChanges {
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public valueSetId?: string;
   @Input() public valueSetUri?: string;
 

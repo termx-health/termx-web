@@ -9,6 +9,7 @@ import {MarinaUtilModule} from '@kodality-health/marina-util';
 import {StatusTagComponent} from './components/publication-status-tag/status-tag.component';
 import {AddButtonComponent} from './components/add-button/add-button.component';
 import {CodeSystemLibModule} from 'terminology-lib/resources';
+import {ValidateUrlPipe} from './pipes/validate-url.pipe';
 
 
 const commonModules = [
@@ -26,14 +27,20 @@ const components = [
   AddButtonComponent
 ];
 
+const pipes = [
+  ValidateUrlPipe
+];
+
 @NgModule({
   imports: [...commonModules, CodeSystemLibModule],
   exports: [
     ...commonModules,
-    ...components
+    ...components,
+    ...pipes
   ],
   declarations: [
-    ...components
+    ...components,
+    ...pipes
   ]
 })
 export class SharedModule {
