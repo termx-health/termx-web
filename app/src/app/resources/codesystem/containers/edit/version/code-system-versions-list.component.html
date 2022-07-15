@@ -27,7 +27,7 @@
     </tr>
 
     <tr *mTableRow="let version">
-      <td><a [routerLink]="['../versions', version.version, version.status === 'draft'? 'edit' : 'view']">{{version.version}}</a></td>
+      <td><a [routerLink]="['../versions', version.version, (version.status === 'draft' && !viewMode)? 'edit' : 'view']">{{version.version}}</a></td>
       <td>{{version.source}}</td>
       <td>{{version.releaseDate | localDate}}</td>
       <td>{{version.expirationDate | localDate}}</td>
