@@ -33,6 +33,12 @@
           "en": "Naming systems"
         },
         "link": "resources?tab=naming-systems"
+      },
+      {
+        "label": {
+          "en": "Association types"
+        },
+        "link": "resources?tab=association-types"
       }
     ]
   },

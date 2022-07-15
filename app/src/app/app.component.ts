@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
       return r.firstChild ? getLastChild(r.firstChild) : r;
     };
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
-      this.activeRoutePrivileges = getLastChild(this.route.snapshot.firstChild!).data['privilege'];
+      this.activeRoutePrivileges = getLastChild(this.route.snapshot).data['privilege'];
     });
   }
 
