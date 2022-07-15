@@ -13,7 +13,9 @@
               </m-form-item>
 
               <m-form-item mLabel="entities.value-set.name">
-                <m-multi-language-input name="names" [(ngModel)]="valueSet.names"></m-multi-language-input>
+                <div *ngFor="let language of valueSet.names | keys">
+                  {{language}} - {{valueSet.names[language]}}
+                </div>
               </m-form-item>
 
               <m-form-item mLabel="entities.value-set.uri" class="m-items-middle">
@@ -25,8 +27,8 @@
                 </a>
               </m-form-item>
 
-              <m-form-item mName="description" mLabel="entities.value-set.description">
-                <m-textarea name="description" [(ngModel)]="valueSet.description"></m-textarea>
+              <m-form-item mLabel="entities.value-set.description">
+                {{valueSet.description}}
               </m-form-item>
 
               <twa-value-set-versions-list [valueSetId]="valueSetId" [valueSetUri]="valueSet?.uri" viewMode></twa-value-set-versions-list>
