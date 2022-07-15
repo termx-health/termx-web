@@ -50,7 +50,7 @@ export class AssociationTypeSearchComponent implements OnInit {
     q.limit = 10_000;
 
     this.loading['search'] = true;
-    return this.associationTypeService.searchTypes(q).pipe(
+    return this.associationTypeService.search(q).pipe(
       takeUntil(this.destroy$),
       map(tr => group(tr.data, t => t.code!)),
       catchError(() => of(this.data!)),
