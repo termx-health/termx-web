@@ -18,11 +18,13 @@ import {FinderValueSetListComponent} from './containers-finder/value-set-list.co
 import {FinderModule} from '../../core/finder/finder.module';
 import {FinderValueSetViewComponent} from './containers-finder/value-set-view.component';
 import {FinderValueSetVersionViewComponent} from './containers-finder/version/value-set-version-view.component';
+import {ValueSetViewComponent} from './containers/edit/value-set-view.component';
 
 
 export const VALUE_SET_ROUTES: Routes = [
   {path: 'add', component: ValueSetEditComponent, data: {privilege: ['*.value-set.edit']}},
   {path: ':id/edit', component: ValueSetEditComponent, data: {privilege: ['*.value-set.edit']}},
+  {path: ':id/view', component: ValueSetViewComponent},
   {path: ':id/versions/add', component: ValueSetVersionEditComponent, data: {privilege: ['*.value-set.edit']}},
   {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent, data: {privilege: ['*.value-set.edit']}},
   {path: ':id/versions/:versionCode/view', component: ValueSetVersionViewComponent},
@@ -58,7 +60,8 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
 
     FinderValueSetListComponent,
     FinderValueSetViewComponent,
-    FinderValueSetVersionViewComponent
+    FinderValueSetVersionViewComponent,
+    ValueSetViewComponent
   ],
   exports: [
     ValueSetListComponent

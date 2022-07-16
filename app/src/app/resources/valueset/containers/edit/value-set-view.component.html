@@ -1,0 +1,63 @@
+<div nz-row nzJustify="center">
+  <div nz-col [nzLg]="18" [nzXs]="24">
+    <nz-tabset nzLinkRouter>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" class="m-items-middle">
+          {{'web.value-set.tabs.value-set' | translate}}
+        </a>
+        <m-spinner [mLoading]="loading">
+          <m-card [mTitle]="'web.value-set.form.view-header'" [mShowSkeleton]="loading">
+            <div *ngIf="valueSet">
+              <m-form-item mLabel="entities.value-set.id">
+                {{valueSet.id}}
+              </m-form-item>
+
+              <m-form-item mLabel="entities.value-set.name">
+                <div *ngFor="let language of valueSet.names | keys">
+                  {{language}} - {{valueSet.names[language]}}
+                </div>
+              </m-form-item>
+
+              <m-form-item mLabel="entities.value-set.uri" class="m-items-middle">
+                {{valueSet.uri}}
+                <a *ngIf="valueSet.uri | validateUrl" [href]="valueSet.uri" target="_blank">
+                  <m-button mSize="small">
+                    <m-icon mCode="eye"></m-icon>
+                  </m-button>
+                </a>
+              </m-form-item>
+
+              <m-form-item mLabel="entities.value-set.description">
+                {{valueSet.description}}
+              </m-form-item>
+
+              <twa-value-set-versions-list [valueSetId]="valueSetId" [valueSetUri]="valueSet?.uri" viewMode></twa-value-set-versions-list>
+              <twa-contact-list *ngIf="valueSet" [(contacts)]="valueSet.contacts" viewMode></twa-contact-list>
+            </div>
+          </m-card>
+        </m-spinner>
+      </nz-tab>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'narrative' }">
+          {{'web.value-set.tabs.narrative' | translate}}
+        </a>
+        <ng-template nz-tab>
+          <m-card>
+            <m-form-item mName="narrative" [mLabel]="narrativeHeader">
+              <ng-template #narrativeHeader>
+                <div class="m-items-between">
+                  <div class="m-card-title">{{'entities.value-set.narrative' | translate}}</div>
+                  <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
+                    <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
+                  </m-button>
+                </div>
+              </ng-template>
+              <m-rich-text-editor *ngIf="!narrativeRaw" [(ngModel)]="valueSet.narrative" name="narrative" mViewMode></m-rich-text-editor>
+              <div *ngIf="narrativeRaw">{{valueSet.narrative}}</div>
+            </m-form-item>
+          </m-card>
+        </ng-template>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>

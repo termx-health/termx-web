@@ -22,7 +22,7 @@
 
                 <m-form-item mLabel="entities.code-system.uri" class="m-items-middle">
                   {{codeSystem.uri}}
-                  <a [href]="codeSystem.uri" target="_blank">
+                  <a *ngIf="codeSystem.uri | validateUrl" [href]="codeSystem.uri" target="_blank">
                     <m-button mSize="small">
                       <m-icon mCode="eye"></m-icon>
                     </m-button>
@@ -42,11 +42,7 @@
                 </m-form-item>
 
                 <twa-code-system-versions-list [codeSystemId]="codeSystem.id" [versions]="codeSystem.versions" viewMode></twa-code-system-versions-list>
-                <twa-code-system-properties-list
-                    [codeSystemId]="codeSystem.id"
-                    [properties]="codeSystem.properties"
-                    viewMode
-                ></twa-code-system-properties-list>
+                <twa-code-system-properties-list [codeSystemId]="codeSystem.id" [properties]="codeSystem.properties" viewMode></twa-code-system-properties-list>
                 <twa-contact-list [(contacts)]="codeSystem.contacts" viewMode></twa-contact-list>
               </div>
             </m-card>

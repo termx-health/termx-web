@@ -20,7 +20,7 @@
         </m-form-item>
 
         <m-form-item mName="expirationDate" mLabel="entities.value-set-version.expiration-date">
-          <m-date-picker *ngIf="version.status === 'active'" name="expirationDate" [(ngModel)]="version.expirationDate"></m-date-picker>
+          <m-date-picker *ngIf="version.status === 'active'" name="expirationDate" [(ngModel)]="version.expirationDate" [disabled]="!('*.value-set.edit' | hasPrivilege)"></m-date-picker>
           <div *ngIf="version.status !== 'active'">
             {{version.expirationDate | localDate}}
           </div>
@@ -39,7 +39,7 @@
         </m-form-item>
       </form>
 
-      <div *ngIf="version?.status === 'active'">
+      <div *ngIf="version?.status === 'active' && '*.value-set.edit' | hasPrivilege">
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
             {{'core.btn.save' | translate}}
