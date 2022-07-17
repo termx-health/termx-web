@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {forkJoin, takeUntil} from 'rxjs';
+import {takeUntil} from 'rxjs';
 import {DestroyService, isNil} from '@kodality-web/core-util';
 import {ValueSetVersion} from 'terminology-lib/resources';
 import {ValueSetService} from '../../services/value-set.service';
@@ -33,13 +33,7 @@ export class FinderValueSetVersionViewComponent implements OnInit {
       }
 
       this.loading = true;
-      forkJoin([
-        this.valueSetService.loadVersion(valueSetId, valueSetVersionCode),
-        this.valueSetService.loadConcepts(valueSetId, valueSetVersionCode),
-      ]).subscribe(([version, concepts]) => {
-        this.version = version;
-        this.version.concepts = concepts;
-      }).add(() => this.loading = false);
+      this.valueSetService.loadVersion(valueSetId, valueSetVersionCode).subscribe(version => this.version = version).add(() => this.loading = false);
     });
   }
 }

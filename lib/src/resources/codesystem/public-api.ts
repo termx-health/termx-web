@@ -16,6 +16,7 @@ export * from './model/entity-property';
 export * from './model/entity-property-search-params';
 export * from './model/code-system-supplement';
 export * from './pipe/localized-concept-name-pipe';
+export * from './pipe/code-system-version-code-pipe';
 export * from './services/code-system-concept-lib.service';
 export * from './services/code-system-entity-version-lib.service';
 export * from './services/code-system-lib.service';

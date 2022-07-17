@@ -12,7 +12,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 @Component({
   selector: 'twl-value-set-search',
   templateUrl: './value-set-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetSearchComponent), multi: true}]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetSearchComponent), multi: true}, DestroyService]
 })
 export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;

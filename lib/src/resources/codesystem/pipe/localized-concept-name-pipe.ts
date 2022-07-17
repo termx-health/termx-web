@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {EMPTY, Observable} from 'rxjs';
+import {EMPTY, Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {TranslateService} from '@ngx-translate/core';
 import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.service';
@@ -19,7 +19,7 @@ export class LocalizedConceptNamePipe implements PipeTransform {
 
   public transform(identifier: string | number, resource: {codeSystem?: string, codeSystemVersion?: string, valueSet?: string, valueSetVersion?: string}): Observable<string> {
     if (!identifier || !resource || (!resource.codeSystem && !resource.valueSet)) {
-      return EMPTY;
+      return identifier ? of(String(identifier)) : EMPTY;
     }
 
     const request = this.conceptService.search({

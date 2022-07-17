@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {CodeSystemConcept, ValueSetConcept} from 'terminology-lib/resources';
+import {CodeSystemConcept, ValueSetVersionConcept} from 'terminology-lib/resources';
 
 
 @Component({
@@ -8,11 +8,11 @@ import {CodeSystemConcept, ValueSetConcept} from 'terminology-lib/resources';
 })
 export class ValueSetVersionConceptModalComponent {
   public modalVisible = false;
-  public concepts?: ValueSetConcept[];
+  public concepts?: ValueSetVersionConcept[];
 
   public constructor() {}
 
-  public toggleModal(concepts?: ValueSetConcept[]): void {
+  public toggleModal(concepts?: ValueSetVersionConcept[]): void {
     this.modalVisible = !!concepts;
     this.concepts = concepts;
   }

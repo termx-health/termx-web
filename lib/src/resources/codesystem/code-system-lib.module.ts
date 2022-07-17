@@ -13,7 +13,7 @@ import {CodeSystemVersionSelectComponent} from './containers/code-system-version
 import {CodeSystemEntityVersionSearchComponent} from './containers/code-system-entity-version-search.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {LocalizedConceptNamePipe} from './pipe/localized-concept-name-pipe';
-
+import {CodeSystemVersionCodePipe} from './pipe/code-system-version-code-pipe';
 
 @NgModule({
   imports: [
@@ -35,7 +35,8 @@ import {LocalizedConceptNamePipe} from './pipe/localized-concept-name-pipe';
     CodeSystemVersionSelectComponent,
     CodeSystemEntityVersionSearchComponent,
 
-    LocalizedConceptNamePipe
+    LocalizedConceptNamePipe,
+    CodeSystemVersionCodePipe
   ],
   exports: [
     CodeSystemSearchComponent,
@@ -43,7 +44,8 @@ import {LocalizedConceptNamePipe} from './pipe/localized-concept-name-pipe';
     CodeSystemVersionSelectComponent,
     CodeSystemEntityVersionSearchComponent,
 
-    LocalizedConceptNamePipe
+    LocalizedConceptNamePipe,
+    CodeSystemVersionCodePipe
   ]
 })
 export class CodeSystemLibModule {

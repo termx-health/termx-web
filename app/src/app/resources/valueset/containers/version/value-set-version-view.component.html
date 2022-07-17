@@ -4,6 +4,9 @@
       <div *m-card-header class="m-items-middle">
         <div class="m-card-title">{{'web.value-set-version.form.view-header' | translate}}</div>
         <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
+        <m-button (click)="expand()" mSize="small">
+          <m-icon mCode="eye"></m-icon>
+        </m-button>
       </div>
 
       <form #form *ngIf="version">
@@ -34,9 +37,7 @@
           {{version.description }}
         </m-form-item>
 
-        <m-form-item mName="concepts" mLabel="entities.value-set-version.concepts">
-          <twa-value-set-version-concept-list [concepts]="concepts" viewMode></twa-value-set-version-concept-list>
-        </m-form-item>
+        <twa-value-set-version-concept-list *ngIf="version.id" [concepts]="version.concepts" viewMode></twa-value-set-version-concept-list>
       </form>
 
       <div *ngIf="version?.status === 'active' && '*.value-set.edit' | hasPrivilege">
@@ -49,6 +50,7 @@
     </m-card>
   </div>
   <div nz-col [nzLg]="8" [nzMd]="6" [nzXs]="24" style="height: min-content">
-    <twa-value-set-rule-set *ngIf="version" [ruleSet]="version.ruleSet" viewMode></twa-value-set-rule-set>
+    <twa-value-set-rule-set *ngIf="version" [ruleSet]="version.ruleSet" [valueSetId]="valueSetId" viewMode></twa-value-set-rule-set>
   </div>
 </div>
+<twa-value-set-version-concept-modal #conceptModal></twa-value-set-version-concept-modal>

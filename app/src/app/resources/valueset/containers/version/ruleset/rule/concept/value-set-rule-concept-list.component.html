@@ -1,0 +1,89 @@
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
+    <div class="m-card-title">
+      {{'entities.value-set-rule-set.rule.concepts' | translate}}
+    </div>
+    <twa-add-button *ngIf="!viewMode" (click)="addRow()">
+      {{'web.value-set-version-rule.form.concept.add-concept' | translate}}
+    </twa-add-button>
+  </div>
+
+  <m-table [mData]="concepts" mHideOnSinglePage>
+    <tr *mTableHead>
+      <th>{{'entities.value-set-version-concept.concept' | translate}}</th>
+      <th>{{'entities.value-set-version-concept.display' | translate}}</th>
+      <th>{{'entities.value-set-version-concept.additional-designations' | translate}}</th>
+      <th *ngIf="!viewMode" class="tw-table-actions"></th>
+    </tr>
+
+    <ng-container *mTableRow="let item; let i = index">
+      <tr *ngFor="let ad of item.additionalDesignations; let isFirst = first">
+        <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
+          <a (click)="toggleModal(item, i)" *ngIf="!viewMode">{{item.concept?.code}}</a>
+          <div *ngIf="viewMode">{{item.concept?.code}}</div>
+        </td>
+        <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
+          {{item.display?.name}}
+        </td>
+        <td>{{ad.language}} | {{ad.name}}</td>
+        <td *ngIf="isFirst && !viewMode" [rowSpan]="item.additionalDesignations?.length" class="tw-table-actions">
+          <m-button mDisplay="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
+        </td>
+      </tr>
+
+      <tr *ngIf="!(item.additionalDesignations?.length > 0)">
+        <td>
+          <a (click)="toggleModal(item, i)" *ngIf="!viewMode">{{item.concept?.code}}</a>
+          <div *ngIf="viewMode">{{item.concept?.code}}</div>
+        </td>
+        <td style="max-width: 20rem;">
+          {{item.display?.name}}
+        </td>
+        <td style="max-width: 20rem;"></td>
+        <td *ngIf="!viewMode" class="tw-table-actions">
+          <m-button mDisplay="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
+        </td>
+      </tr>
+    </ng-container>
+
+    <tr *mTableNoData>
+      <td colspan="4">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-table>
+</m-card>
+
+<m-modal #modal [(mVisible)]="modalData.visible" (mClose)="toggleModal()">
+  <ng-container *m-modal-header>
+    {{'web.value-set-version-rule.form.concept.modal-header' | translate}}
+  </ng-container>
+
+  <ng-container *m-modal-content>
+    <form #form="ngForm" *ngIf="modalData.concept">
+      <m-form-item mName="concept" mLabel="entities.value-set-version-concept.concept" required>
+        <twl-concept-search name="concept"
+            [(ngModel)]="modalData.concept.concept"
+            [codeSystem]="codeSystem"
+            [codeSystemVersionId]="codeSystemVersionId"
+            [codeSystemVersionReleaseDateLe]="lockedDate"
+            [codeSystemVersionExpirationDateGe]="lockedDate"
+            [entityVersionStatus]="inactiveConcepts ? 'active' : inactiveConcepts === false ? 'rtired': null "
+            required></twl-concept-search>
+      </m-form-item>
+
+      <m-form-item mName="display" mLabel="entities.value-set-version-concept.display" *ngIf="modalData.concept?.concept?.id">
+        <twl-designation-select name="display" [(ngModel)]="modalData.concept.display" [conceptId]="modalData.concept.concept.id"></twl-designation-select>
+      </m-form-item>
+
+      <m-form-item mName="additionalDesignations" mLabel="entities.value-set-version-concept.additional-designations" *ngIf="modalData.concept?.concept?.id">
+        <twl-designation-select name="additionalDesignations" [(ngModel)]="modalData.concept.additionalDesignations" [conceptId]="modalData.concept.concept.id" multiple></twl-designation-select>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="tw-button-group">
+    <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="confirmModalConcept()">{{'core.btn.confirm' | translate}}</m-button>
+  </div>
+</m-modal>

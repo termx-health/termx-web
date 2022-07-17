@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {CodeSystemLibService, EntityProperty, EntityPropertySearchParams, ValueSetRuleFilter} from 'terminology-lib/resources';
-import {BooleanInput} from '@kodality-web/core-util';
+import {CodeSystemLibService, EntityProperty, EntityPropertySearchParams, ValueSetRuleFilter} from 'lib/src/resources';
+import {BooleanInput, copyDeep, isDefined} from '@kodality-web/core-util';
 
 
 @Component({
@@ -9,15 +9,19 @@ import {BooleanInput} from '@kodality-web/core-util';
 })
 export class ValueSetRuleFilterListComponent implements OnChanges {
   @Input() public codeSystem?: string;
-
   @Input() public filters: ValueSetRuleFilter[] = [];
-
   @Input() @BooleanInput() public viewMode: string | boolean = false;
 
   @Output() public filtersChange: EventEmitter<ValueSetRuleFilter[]> = new EventEmitter<ValueSetRuleFilter[]>();
 
   public loading = false;
   public properties: EntityProperty[] = [];
+
+  public modalData: {
+    visible?: boolean,
+    index?: number,
+    filter?: ValueSetRuleFilter
+  } = {};
 
   public constructor(private codeSystemService: CodeSystemLibService) { }
 
@@ -31,15 +35,34 @@ export class ValueSetRuleFilterListComponent implements OnChanges {
   }
 
   public addRow(): void {
-    this.filters.push(new ValueSetRuleFilter());
-    this.filters = [...this.filters];
-    this.filtersChange.emit(this.filters);
+    this.filters = [...this.filters || []];
+    this.toggleModal({});
   }
 
   public removeRow(index: number): void {
     this.filters.splice(index, 1);
     this.filters = [...this.filters];
     this.filtersChange.emit(this.filters);
+  }
+
+  public toggleModal(filter?: ValueSetRuleFilter, index?: number): void {
+    this.modalData = {
+      visible: !!filter,
+      filter: copyDeep(filter),
+      index: index,
+    };
+  }
+
+  public confirmModalFilter(): void {
+    if (isDefined(this.modalData.index)) {
+      this.filters[this.modalData.index!] = this.modalData.filter!;
+      this.filters = [...this.filters];
+    } else {
+      this.filters = [...this.filters, this.modalData.filter!];
+    }
+
+    this.filtersChange.emit(this.filters);
+    this.modalData.visible = false;
   }
 
   private loadEntityProperties(codeSystem: string): void {

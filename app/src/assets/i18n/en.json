@@ -231,6 +231,7 @@
       "form": {
         "edit-header": "Edit version",
         "add-header": "Add version",
+        "add-concept": "Add concept",
         "view-header": "View version",
         "rule-set": {
           "add-rule-set": "Add rule",
@@ -239,6 +240,10 @@
           "active": "Active",
           "modal": {
             "edit-header": "Rule"
+          },
+          "rule": {
+            "include": "Include",
+            "exclude": "Exclude"
           }
         },
         "concepts": {
@@ -246,6 +251,28 @@
             "header": "Preview of result concepts",
             "warning": "Concept has no active versions"
           }
+        }
+      }
+    },
+    "value-set-version-concept": {
+      "form": {
+        "edit-header": "Edit concept",
+        "add-header": "Add concept",
+        "designation-name": "Name",
+        "designation-language": "Language"
+      }
+    },
+    "value-set-version-rule": {
+      "form": {
+        "edit-header": "Edit rule",
+        "add-header": "Add rule",
+        "concept": {
+          "add-concept": "Add concept",
+          "modal-header": "Concept"
+        },
+        "filter": {
+          "add-filter": "Add filter",
+          "modal-header": "Filter"
         }
       }
     },
@@ -553,6 +580,7 @@
       "include": "Include",
       "exclude": "Exclude",
       "rule": {
+        "type": "Type",
         "code-system": "Code system",
         "concepts": "Concepts",
         "filters": "Filters",

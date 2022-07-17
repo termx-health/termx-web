@@ -5,6 +5,9 @@
         <div *m-card-header class="m-items-middle">
           <div class="m-card-title">{{(mode === 'edit' ? 'web.value-set-version.form.edit-header' : 'web.value-set-version.form.add-header') | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
+          <m-button (click)="expand()" mSize="small">
+            <m-icon mCode="eye"></m-icon>
+          </m-button>
         </div>
 
         <form #form="ngForm" *ngIf="version">
@@ -25,21 +28,17 @@
           </m-form-item>
 
           <m-form-item mName="supportedLanguages" mLabel="entities.value-set-version.supported-languages">
-            <twl-value-set-concept-select
-                name="supportedLanguages"
+            <twl-value-set-concept-select name="supportedLanguages"
                 [(ngModel)]="version.supportedLanguages"
                 valueSet="languages"
-                multiple
-            ></twl-value-set-concept-select>
+                multiple></twl-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="entities.value-set-version.description">
             <m-textarea [(ngModel)]="version.description" name="description"></m-textarea>
           </m-form-item>
 
-          <m-form-item mName="concepts" mLabel="entities.value-set-version.concepts">
-            <twa-value-set-version-concept-list [concepts]="concepts" (conceptsChange)="concepts = $event"></twa-value-set-version-concept-list>
-          </m-form-item>
+          <twa-value-set-version-concept-list *ngIf="version.id" [concepts]="version.concepts"></twa-value-set-version-concept-list>
         </form>
 
         <ng-container *m-card-footer>
@@ -51,6 +50,8 @@
     </m-spinner>
   </div>
   <div nz-col [nzLg]="8" [nzMd]="6" [nzXs]="24" style="height: min-content">
-    <twa-value-set-rule-set #ruleSetComponent [ruleSet]="version.ruleSet"></twa-value-set-rule-set>
+    <twa-value-set-rule-set *ngIf="version" #ruleSetComponent [ruleSet]="version.ruleSet" [valueSetId]="valueSetId"></twa-value-set-rule-set>
   </div>
 </div>
+
+<twa-value-set-version-concept-modal #conceptModal></twa-value-set-version-concept-modal>

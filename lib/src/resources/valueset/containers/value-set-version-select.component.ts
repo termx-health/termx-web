@@ -4,6 +4,7 @@ import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core
 import {ValueSetVersion} from '../model/value-set-version';
 import {ValueSetLibService} from '../services/value-set-lib.service';
 import {takeUntil} from 'rxjs';
+import {ValueSetVersionLibService} from '../services/value-set-version-lib.service';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
 
   public data: {[version: string]: ValueSetVersion} = {};
-  public value?: string;
+  public value?: number;
   private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any): void => x;
@@ -24,6 +25,7 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
 
   public constructor(
     private valueSetService: ValueSetLibService,
+    private valueSetVersionService: ValueSetVersionLibService,
     private destroy$: DestroyService
   ) {}
 
@@ -46,18 +48,18 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
     }).add(() => this.loading['select'] = false);
   }
 
-  private loadVersion(id?: string): void {
-    if (isDefined(id) && isDefined(this.valueSetId)) {
+  private loadVersion(id?: number): void {
+    if (isDefined(id)) {
       this.loading['load'] = true;
-      this.valueSetService.loadVersion(this.valueSetId, id).pipe(takeUntil(this.destroy$)).subscribe(v => {
+      this.valueSetVersionService.load(id).pipe(takeUntil(this.destroy$)).subscribe(v => {
         this.data[v.version!] = v;
       }).add(() => this.loading['load'] = false);
     }
   }
 
 
-  public writeValue(obj: ValueSetVersion | string): void {
-    this.value = (typeof obj === 'object' ? obj?.version : obj);
+  public writeValue(obj: ValueSetVersion | number): void {
+    this.value = (typeof obj === 'object' ? obj?.id : obj);
     this.loadVersion(this.value);
   }
 

@@ -1,0 +1,79 @@
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
+    <div class="m-card-title">
+      {{'entities.value-set-rule-set.rule.filters' | translate}}
+    </div>
+    <twa-add-button *ngIf="!viewMode" (click)="addRow()">
+      {{'web.value-set-version-rule.form.filter.add-filter' | translate}}
+    </twa-add-button>
+  </div>
+
+  <m-table [mData]="filters" [mLoading]="loading" mHideOnSinglePage>
+    <tr *mTableHead>
+      <th>{{'entities.value-set-rule-filter.property' | translate}}</th>
+      <th>{{'entities.value-set-rule-filter.operator' | translate}}</th>
+      <th>{{'entities.value-set-rule-filter.value' | translate}}</th>
+      <th *ngIf="!viewMode" class="tw-table-actions"></th>
+    </tr>
+
+    <tr *mTableRow="let item; let i = index">
+      <td>
+        <a *ngIf="!viewMode" (click)="toggleModal(item, i)">{{item.property?.name}}</a>
+        <div *ngIf="viewMode">{{item.property?.name}}</div>
+      </td>
+      <td>
+        <div>=</div>
+      </td>
+      <td>
+        {{item.value}}
+      </td>
+      <td class="tw-table-actions" *ngIf="!viewMode">
+        <m-button mDisplay="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
+      </td>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="4">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-table>
+</m-card>
+
+<m-modal #modal [(mVisible)]="modalData.visible" (mClose)="toggleModal()">
+  <ng-container *m-modal-header>
+    {{'web.value-set-version-rule.form.filter.modal-header' | translate}}
+  </ng-container>
+
+  <ng-container *m-modal-content>
+    <form #form="ngForm" *ngIf="modalData.filter">
+      <m-form-item mName="property" mLabel="entities.value-set-rule-filter.property">
+        <m-select *ngIf="!viewMode" name="property" [(ngModel)]="modalData.filter.property" [compareWith]="'id'">
+          <m-option *ngFor="let property of properties" [label]="property.name" [value]="property"></m-option>
+        </m-select>
+      </m-form-item>
+
+      <m-form-item mName="operator" mLabel="entities.value-set-rule-filter.operator">
+        = <!--TODO add operation types-->
+      </m-form-item>
+
+      <m-form-item *ngIf="modalData.filter.property?.type" mName="propertyValue" mLabel="entities.value-set-rule-filter.value">
+        <m-input *ngIf="modalData.filter.property?.type === 'string'" name="propertyValue" [(ngModel)]="modalData.filter.value"></m-input>
+        <m-checkbox *ngIf="modalData.filter.property?.type === 'boolean'" name="propertyValue" [(ngModel)]="modalData.filter.value"></m-checkbox>
+        <m-date-picker *ngIf="modalData.filter.property?.type === 'dateTime'" name="propertyValue" [(ngModel)]="modalData.filter.value"></m-date-picker>
+        <m-number-input *ngIf="['decimal','integer'].includes(modalData.filter.property?.type)"
+            name="propertyValue"
+            [(ngModel)]="modalData.filter.value"></m-number-input>
+        <twl-concept-search *ngIf="['code','Coding'].includes(modalData.filter.property?.type)"
+            name="propertyValue"
+            [(ngModel)]="modalData.filter.value"></twl-concept-search>
+      </m-form-item>
+
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="tw-button-group">
+    <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="confirmModalFilter()">{{'core.btn.confirm' | translate}}</m-button>
+  </div>
+</m-modal>

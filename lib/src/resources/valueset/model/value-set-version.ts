@@ -1,5 +1,5 @@
-import {Designation} from '../../designation';
-import {CodeSystemConcept, EntityProperty} from '../../codesystem';
+import {ValueSetVersionRuleSet} from './value-set-version-rule-set';
+import {ValueSetVersionConcept} from './value-set-version-concept';
 
 export class ValueSetVersion {
   public id?: number;
@@ -13,36 +13,6 @@ export class ValueSetVersion {
   public expirationDate?: Date;
   public created?: Date;
 
-  public ruleSet?: ValueSetRuleSet;
-  public concepts?: ValueSetConcept[];
-}
-
-export class ValueSetRuleSet {
-  public lockedDate?: Date;
-  public inactive?: Boolean;
-  public includeRules?: ValueSetRule[];
-  public excludeRules?: ValueSetRule[];
-}
-
-export class ValueSetRule {
-  public codeSystem?: string;
-  public codeSystemVersion?: string;
-  public concepts?: ValueSetConcept[];
-  public filters?: ValueSetRuleFilter[];
-
-  public valueSet?: string;
-  public valueSetVersion?: string;
-}
-
-export class ValueSetRuleFilter {
-  public property?: EntityProperty;
-  public operator?: string;
-  public value?: string;
-}
-
-export class ValueSetConcept {
-  public id?: number;
-  public concept?: CodeSystemConcept;
-  public display?: Designation;
-  public additionalDesignations?: Designation[];
+  public ruleSet?: ValueSetVersionRuleSet;
+  public concepts?: ValueSetVersionConcept[];
 }

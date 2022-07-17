@@ -1,62 +1,56 @@
-<m-table [mData]="concepts" mHideOnSinglePage>
-  <tr *mTableHead>
-    <th>{{'entities.value-set-version-concept.concept' | translate}}</th>
-    <th>{{'entities.value-set-version-concept.display' | translate}}</th>
-    <th>{{'entities.value-set-version-concept.additional-designations' | translate}}</th>
-    <th *ngIf="!viewMode" class="tw-table-actions"></th>
-  </tr>
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
+    <div class="m-card-title">
+      {{'entities.value-set-version.concepts' | translate}}
+    </div>
+    <twa-add-button *ngIf="!viewMode" [routerLink]="['../concepts/add']">
+      {{'web.value-set-version.form.add-concept' | translate}}
+    </twa-add-button>
+  </div>
 
-  <ng-container *mTableRow="let item; let i = index">
-    <ng-container *ngIf="viewMode">
+  <m-table [mData]="concepts" mHideOnSinglePage>
+    <tr *mTableHead>
+      <th>{{'entities.value-set-version-concept.concept' | translate}}</th>
+      <th>{{'entities.value-set-version-concept.display' | translate}}</th>
+      <th>{{'entities.value-set-version-concept.additional-designations' | translate}}</th>
+      <th *ngIf="!viewMode" class="tw-table-actions"></th>
+    </tr>
+
+    <ng-container *mTableRow="let item; let i = index">
       <tr *ngFor="let ad of item.additionalDesignations; let isFirst = first">
         <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
-          <div *ngIf="viewMode">{{item.concept?.code}}</div>
+          <a *ngIf="!viewMode && ('*.value-set.edit' | hasPrivilege); else view" [routerLink]="['../concepts',item.id,'edit']">{{item.concept?.code}}</a>
+          <ng-template #view>
+            {{item.concept?.code}}
+          </ng-template>
         </td>
         <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
-          <div *ngIf="viewMode">{{item.display?.name}}</div>
+          {{item.display?.name}}
         </td>
         <td>{{ad.language}} | {{ad.name}}</td>
       </tr>
+
+      <tr *ngIf="!(item.additionalDesignations?.length > 0)">
+        <td>
+          <a *ngIf="!viewMode && ('*.value-set.edit' | hasPrivilege); else view" [routerLink]="['../concepts',item.id,'edit']">{{item.concept?.code}}</a>
+          <ng-template #view>
+            {{item.concept?.code}}
+          </ng-template>
+        </td>
+        <td style="max-width: 20rem;">
+          {{item.display?.name}}
+        </td>
+        <td style="max-width: 20rem;"></td>
+        <td *ngIf="!viewMode" class="tw-table-actions">
+          <m-button mDisplay="link" (click)="deleteConcept(item.id)">{{'core.btn.delete' | translate}}</m-button>
+        </td>
+      </tr>
     </ng-container>
 
-    <tr *ngIf="!(item.additionalDesignations?.length > 0) || !viewMode">
-      <td>
-        <twl-concept-search *ngIf="!viewMode"
-            [(ngModel)]="item.concept"
-            (ngModelChange)="item.designation = undefined"
-            [codeSystem]="codeSystem"
-            [codeSystemVersion]="codeSystemVersion"
-            [codeSystemVersionReleaseDateLe]="lockedDate"
-            [codeSystemVersionExpirationDateGe]="lockedDate"
-            [entityVersionStatus]="inactiveConcepts === true ? 'retired' : inactiveConcepts === false ? 'active' : undefined"></twl-concept-search>
-        <div *ngIf="viewMode">
-          {{item.concept?.code}}
-        </div>
-      </td>
-      <td style="max-width: 20rem;">
-        <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.display"></twl-designation-select>
-        <div *ngIf="viewMode">{{item.display?.name}}</div>
-      </td>
-      <td style="max-width: 20rem;">
-        <twl-designation-select *ngIf="!viewMode" [conceptId]="item.concept?.id" [(ngModel)]="item.additionalDesignations" multiple></twl-designation-select>
-      </td>
-      <td *ngIf="!viewMode" class="tw-table-actions">
-        <m-button mDisplay="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
+    <tr *mTableNoData>
+      <td colspan="4">
+        <m-no-data></m-no-data>
       </td>
     </tr>
-  </ng-container>
-
-  <tr *ngIf="!viewMode">
-    <td colspan="4" style="padding: 0">
-      <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addRow()">
-        <m-icon [mCode]="'plus'"></m-icon>
-      </m-button>
-    </td>
-  </tr>
-
-  <tr *mTableNoData>
-    <td colspan="4">
-      <m-no-data></m-no-data>
-    </td>
-  </tr>
-</m-table>
+  </m-table>
+</m-card>

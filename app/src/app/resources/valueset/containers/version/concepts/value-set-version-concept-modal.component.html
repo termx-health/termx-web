@@ -16,7 +16,7 @@
         <ng-container>
           <tr *ngFor="let ad of item.additionalDesignations; let isFirst = first">
             <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
-              <m-icon *ngIf="!(item.concept | apply:hasActiveVersion)"
+              <m-icon *ngIf="!item.id && !(item.concept | apply:hasActiveVersion)"
                   mCode="warning"
                   m-popover
                   mContent="{{'web.value-set-version.form.concepts.modal.warning' | translate}}"></m-icon>
@@ -25,7 +25,7 @@
               {{item.concept?.code}}
             </td>
             <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
-              {{item.display?.name ? item.display.name : (item.concept.code | localizedConceptName : {codeSystem: item.concept.codeSystem} | async)}}
+              {{item.display?.name ? item.display.name : (item.concept.code | localizedConceptName : {codeSystem: item.concept?.codeSystem} | async)}}
             </td>
             <td>{{ad.language}} | {{ad.name}}</td>
           </tr>
@@ -33,7 +33,7 @@
 
         <tr *ngIf="!(item.additionalDesignations?.length > 0)">
           <td>
-            <m-icon *ngIf="!(item.concept | apply:hasActiveVersion)"
+            <m-icon *ngIf="!item.id && !(item.concept | apply:hasActiveVersion)"
                 mCode="warning"
                 m-popover
                 mContent="{{'web.value-set-version.form.concepts.modal.warning' | translate}}"></m-icon>
@@ -42,7 +42,7 @@
             {{item.concept?.code}}
           </td>
           <td>
-            {{item.display?.name ? item.display.name : (item.concept.code | localizedConceptName : {codeSystem: item.concept.codeSystem} | async)}}
+            {{item.display?.name ? item.display.name : (item.concept.code | localizedConceptName : {codeSystem: item.concept?.codeSystem} | async)}}
           </td>
         </tr>
       </ng-container>

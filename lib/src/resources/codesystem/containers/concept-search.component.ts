@@ -15,6 +15,7 @@ import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.s
 export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
   @Input() public codeSystem?: string;
   @Input() public codeSystemVersion?: string;
+  @Input() public codeSystemVersionId?: number;
   @Input() public codeSystemVersionReleaseDateLe?: Date;
   @Input() public codeSystemVersionExpirationDateGe?: Date;
   @Input() public entityVersionStatus?: string;
@@ -58,7 +59,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   }
 
   private searchConcepts(text?: string): Observable<{[id: string]: CodeSystemConcept}> {
-    if ((!text || text.length < 1) && !this.codeSystem && !this.codeSystemVersion) {
+    if ((!text || text.length < 1) && !this.codeSystem && !this.codeSystemVersion ) {
       return of(this.data);
     }
 
@@ -66,6 +67,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     q.codeContains = text;
     q.codeSystem = this.codeSystem;
     q.codeSystemVersion = this.codeSystemVersion;
+    q.codeSystemVersionId = this.codeSystemVersionId;
     q.codeSystemVersionReleaseDateLe = this.codeSystemVersionReleaseDateLe;
     q.codeSystemVersionExpirationDateGe = this.codeSystemVersionExpirationDateGe;
     q.codeSystemEntityStatus = this.entityVersionStatus;

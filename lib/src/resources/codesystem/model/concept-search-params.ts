@@ -7,6 +7,7 @@ export class ConceptSearchParams extends QueryParams {
   public codeSystem?: string;
   public codeSystemUri?: string;
   public codeSystemVersion?: string;
+  public codeSystemVersionId?: number;
   public codeSystemVersionReleaseDateLe?: Date;
   public codeSystemVersionReleaseDateGe?: Date;
   public codeSystemVersionExpirationDateLe?: Date;

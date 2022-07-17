@@ -48,17 +48,9 @@
     </twa-finder-menu-item>
 
     <twa-finder-menu-item>
-      <twa-finder-menu title="entities.value-set-rule-set.include" [length]="version?.ruleSet?.includeRules?.length">
-        <twa-finder-menu-item *ngFor="let r of version?.ruleSet?.includeRules">
-          {{r.codeSystem}}
-        </twa-finder-menu-item>
-      </twa-finder-menu>
-    </twa-finder-menu-item>
-
-    <twa-finder-menu-item>
-      <twa-finder-menu title="entities.value-set-rule-set.exclude" [length]="version?.ruleSet?.excludeRules?.length">
-        <twa-finder-menu-item *ngFor="let r of version?.ruleSet?.excludeRules">
-          {{r.codeSystem}}
+      <twa-finder-menu title="entities.value-set-rule-set.include" [length]="version?.ruleSet?.rules?.length">
+        <twa-finder-menu-item *ngFor="let r of version?.ruleSet?.rules">
+          {{r.codeSystem}} {{r.type}}
         </twa-finder-menu-item>
       </twa-finder-menu>
     </twa-finder-menu-item>

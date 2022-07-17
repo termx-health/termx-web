@@ -1,7 +1,7 @@
-import {ValueSetRuleSet} from './value-set-version';
+import {ValueSetVersionRuleSet} from './value-set-version-rule-set';
 
 export class ValueSetExpandRequest {
   public valueSet?: string;
   public valueSetVersion?: string;
-  public ruleSet?: ValueSetRuleSet;
+  public ruleSet?: ValueSetVersionRuleSet;
 }

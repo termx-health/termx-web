@@ -1,10 +1,10 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput, DestroyService, group, isNil} from '@kodality-web/core-util';
-import {ValueSetConcept} from '../model/value-set-version';
 import {ValueSetLibService} from '../services/value-set-lib.service';
 import {CodeSystemConcept, CodeSystemConceptLibService} from '../../codesystem';
 import {takeUntil} from 'rxjs';
+import {ValueSetVersionConcept} from '../model/value-set-version-concept';
 
 @Component({
   selector: 'twl-value-set-concept-select',
@@ -17,7 +17,7 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
   @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
   @Input() @BooleanInput() public multiple: string | boolean = false;
 
-  public data: {[conceptCode: string]: ValueSetConcept} = {};
+  public data: {[conceptCode: string]: ValueSetVersionConcept} = {};
   public value?: string | string[];
   private loading: {[key: string]: boolean} = {};
 
