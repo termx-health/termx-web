@@ -22,6 +22,8 @@ import {PrivilegesModule} from './privileges/privileges.module';
 import {AuthLibModule} from 'terminology-lib/auth/auth-lib.module';
 import {ToolsModule} from './tools/tools.module';
 import {NoPrivilegeModule} from './core/no-privilege/no-privilege.module';
+import {MeasurementUnitLibModule} from 'terminology-lib/measurementunit';
+import {MeasurementUnitModule} from './measurementunit/measurement-unit.module';
 
 
 registerLocaleData(et);
@@ -101,7 +103,10 @@ export function MarinaUiConfigFactory(): MuiConfig {
     AuthLibModule,
 
     ToolsModule,
-    NoPrivilegeModule
+    NoPrivilegeModule,
+
+    MeasurementUnitLibModule,
+    MeasurementUnitModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},

@@ -4,6 +4,7 @@ import {FhirLibModule} from './fhir';
 import {JobLibModule} from './job';
 import {IntegrationLibModule} from './integration';
 import {AuthLibModule} from './auth/auth-lib.module';
+import {MeasurementUnitLibModule} from './measurementunit';
 
 @NgModule({
   imports: [
@@ -11,14 +12,16 @@ import {AuthLibModule} from './auth/auth-lib.module';
     IntegrationLibModule,
     ResourcesLibModule,
     JobLibModule,
-    AuthLibModule
+    AuthLibModule,
+    MeasurementUnitLibModule
   ],
   exports: [
     FhirLibModule,
     IntegrationLibModule,
     ResourcesLibModule,
     JobLibModule,
-    AuthLibModule
+    AuthLibModule,
+    MeasurementUnitLibModule
   ]
 })
 export class TerminologyLibModule {
