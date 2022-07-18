@@ -8,8 +8,8 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/h
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
-import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiHttpErrorHandler, MuiOauthHttpInterceptor} from '@kodality-health/marina-ui';
-import {CoreI18nService, CoreI18nTranslationHandler, TRANSLATION_HANDLER} from '@kodality-web/core-util';
+import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiHttpErrorHandler} from '@kodality-health/marina-ui';
+import {CoreI18nService, CoreI18nTranslationHandler, CoreUtilModule, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
 import {ResourcesModule} from './resources/resources.module';
@@ -22,6 +22,9 @@ import {PrivilegesModule} from './privileges/privileges.module';
 import {AuthLibModule} from 'terminology-lib/auth/auth-lib.module';
 import {ToolsModule} from './tools/tools.module';
 import {NoPrivilegeModule} from './core/no-privilege/no-privilege.module';
+import {AuthConfigModule} from './auth/auth-config.module';
+import {OauthInterceptor} from './auth/oauth-interceptor';
+import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 
 registerLocaleData(et);
@@ -101,14 +104,16 @@ export function MarinaUiConfigFactory(): MuiConfig {
     AuthLibModule,
 
     ToolsModule,
-    NoPrivilegeModule
+    NoPrivilegeModule,
+    AuthConfigModule,
+    CoreUtilModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},
     {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
     {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},
-    {provide: HTTP_INTERCEPTORS, useClass: MuiOauthHttpInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: MuiHttpErrorHandler, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: OauthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: MuiHttpErrorHandler, multi: true, deps: [OidcSecurityService]},
     {provide: MUI_CONFIG, useFactory: MarinaUiConfigFactory}
   ],
   bootstrap: [AppComponent]
