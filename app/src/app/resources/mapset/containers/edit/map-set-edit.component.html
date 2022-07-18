@@ -12,7 +12,14 @@
           </m-form-item>
 
           <m-form-item mName="uri" mLabel="entities.map-set.uri" required>
-            <m-input name="uri" [(ngModel)]="mapSet.uri" required></m-input>
+            <div class="m-items-middle">
+              <m-input style="width: 100%" name="uri" [(ngModel)]="mapSet.uri" required></m-input>
+              <a *ngIf="mapSet.uri | validateUrl" [href]="mapSet.uri" target="_blank">
+                <m-button>
+                  <m-icon mCode="eye"></m-icon>
+                </m-button>
+              </a>
+            </div>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="entities.map-set.description">

@@ -3,7 +3,7 @@
     <div class="m-card-title">
       {{'web.map-set-association.list.associations' | translate}}
     </div>
-    <twa-add-button [routerLink]="['../associations/add']">
+    <twa-add-button *ngIf="!viewMode" [routerLink]="['../associations/add']">
       {{'web.map-set-association.list.add-association' | translate}}
     </twa-add-button>
   </div>
@@ -27,7 +27,7 @@
     <ng-container *mTableRow="let key;">
       <tr *ngFor="let association of data[key]; let isFirst = first;">
         <td *ngIf="isFirst" [rowSpan]="data[key].length">{{association.source.codeSystem}}</td>
-        <td><a [routerLink]="['../associations/', association.id, 'edit']">{{association.source.code}}</a></td>
+        <td><a [routerLink]="['../associations/', association.id, viewMode? 'view' : 'edit']">{{association.source.code}}</a></td>
         <td>{{association.target.code}}</td>
         <td>{{association.target.codeSystem}}</td>
         <td>{{association.associationType}}</td>

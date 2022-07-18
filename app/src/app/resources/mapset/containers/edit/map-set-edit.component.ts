@@ -7,7 +7,6 @@ import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 
 @Component({
-  selector: 'twa-map-set-edit',
   templateUrl: './map-set-edit.component.html',
 })
 export class MapSetEditComponent implements OnInit {
@@ -50,6 +49,6 @@ export class MapSetEditComponent implements OnInit {
   }
 
   public get isLoading(): boolean {
-    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
   }
 }

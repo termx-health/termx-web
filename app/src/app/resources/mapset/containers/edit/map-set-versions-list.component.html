@@ -1,7 +1,7 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-items-between">
     <div class="m-card-title">{{'web.map-set.list.versions' | translate}}</div>
-    <twa-add-button [routerLink]="['../versions/add']">
+    <twa-add-button *ngIf="!viewMode" [routerLink]="['../versions/add']">
       {{'web.map-set.list.add-version' | translate}}
     </twa-add-button>
   </div>
@@ -13,16 +13,18 @@
       <th>{{'entities.map-set-version.release-date' | translate}}</th>
       <th>{{'entities.map-set-version.expiration-date' | translate}}</th>
       <th>{{'entities.map-set-version.status' | translate}}</th>
-      <th class="tw-table-actions"></th>
+      <th *ngIf="!viewMode" class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let version">
-      <td><a [routerLink]="['../versions', version.version, version.status === 'draft'? 'edit' : 'view']">{{version.version}}</a></td>
+      <td><a [routerLink]="['../versions', version.version, (version.status === 'draft' && !viewMode)? 'edit' : 'view']">{{version.version}}</a></td>
       <td>{{version.source}}</td>
       <td>{{version.releaseDate | localDate}}</td>
       <td>{{version.expirationDate | localDate}}</td>
-      <td class="tw-table-min-width"><twa-status-tag [status]="version.status"></twa-status-tag></td>
-      <td class="tw-table-actions">
+      <td class="tw-table-min-width">
+        <twa-status-tag [status]="version.status"></twa-status-tag>
+      </td>
+      <td *ngIf="!viewMode" class="tw-table-actions">
         <m-dropdown>
           <a *mDropdownItemIf="version.status !== 'retired'" (click)="retireVersion(version)">
             {{'web.publication-status.operations.retire' | translate}}
@@ -35,7 +37,7 @@
     </tr>
 
     <tr *mTableNoData>
-      <td colspan="5">
+      <td colspan="100%">
         <m-no-data></m-no-data>
       </td>
     </tr>

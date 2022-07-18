@@ -1,0 +1,36 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading">
+      <m-card [mTitle]="'web.map-set.form.view-header'" [mShowSkeleton]="loading">
+        <div *ngIf="mapSet">
+          <m-form-item mLabel="entities.map-set.id">
+            {{mapSet.id}}
+          </m-form-item>
+
+          <m-form-item mLabel="entities.map-set.name">
+            <div *ngFor="let language of mapSet.names | keys">
+              {{language}} - {{mapSet.names[language]}}
+            </div>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.map-set.uri" class="m-items-middle">
+            {{mapSet.uri}}
+            <a *ngIf="mapSet.uri | validateUrl" [href]="mapSet.uri" target="_blank">
+              <m-button mSize="small">
+                <m-icon mCode="eye"></m-icon>
+              </m-button>
+            </a>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.map-set.description">
+            {{mapSet.description}}
+          </m-form-item>
+        </div>
+
+        <twa-map-set-versions-list [mapSetId]="mapSetId" viewMode></twa-map-set-versions-list>
+        <twa-map-set-association-list [mapSetId]="mapSetId" viewMode></twa-map-set-association-list>
+
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>
