@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {MapSetService} from '../../services/map-set-service';
-import {collect} from '@kodality-web/core-util';
+import {BooleanInput, collect} from '@kodality-web/core-util';
 import {MapSetAssociation} from 'terminology-lib/resources';
 
 @Component({
@@ -8,6 +8,7 @@ import {MapSetAssociation} from 'terminology-lib/resources';
   templateUrl: './map-set-association-list.component.html',
 })
 export class MapSetAssociationListComponent implements OnChanges {
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public mapSetId?: string;
 
   public data: {[id: string]: MapSetAssociation[]} = {};

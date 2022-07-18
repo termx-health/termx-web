@@ -279,7 +279,8 @@
     "map-set": {
       "form": {
         "add-header": "Create a new map set",
-        "edit-header": "Edit map set"
+        "edit-header": "Edit map set",
+        "view-header": "View map set"
       },
       "list": {
         "operations": "Operations",
@@ -316,6 +317,7 @@
       "form": {
         "add-header": "Add association",
         "edit-header": "Edit association",
+        "view-header": "View association",
         "source-system": "Source code system",
         "source-concept": "Source concept",
         "target-system": "Target code system",
