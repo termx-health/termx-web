@@ -11,16 +11,20 @@ import {MapSetAssociationListComponent} from './containers/edit/map-set-associat
 import {ResourcesLibModule} from 'terminology-lib/resources';
 import {MapSetAssociationEditComponent} from './containers/association/map-set-association-edit.component';
 import {MapSetVersionEntityVersionTableComponent} from './containers/version/map-set-version-entity-version-table.component';
+import {MapSetViewComponent} from './containers/edit/map-set-view.component';
+import {MapSetAssociationViewComponent} from './containers/association/map-set-association-view.component';
 
 
 export const MAP_SET_ROUTES: Routes = [
   {path: 'add', component: MapSetEditComponent, data: {privilege: ['*.map-set.edit']}},
   {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['*.map-set.edit']}},
+  {path: ':id/view', component: MapSetViewComponent},
   {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['*.map-set.edit']}},
   {path: ':id/versions/:versionId/edit', component: MapSetVersionEditComponent, data: {privilege: ['*.map-set.edit']}},
   {path: ':id/versions/:versionId/view', component: MapSetVersionViewComponent},
   {path: ':id/associations/add', component: MapSetAssociationEditComponent, data: {privilege: ['*.map-set.edit']}},
   {path: ':id/associations/:associationId/edit', component: MapSetAssociationEditComponent, data: {privilege: ['*.map-set.edit']}},
+  {path: ':id/associations/:associationId/view', component: MapSetAssociationViewComponent},
 ];
 
 @NgModule({
@@ -39,7 +43,9 @@ export const MAP_SET_ROUTES: Routes = [
     MapSetVersionViewComponent,
     MapSetAssociationListComponent,
     MapSetAssociationEditComponent,
-    MapSetVersionEntityVersionTableComponent
+    MapSetVersionEntityVersionTableComponent,
+    MapSetViewComponent,
+    MapSetAssociationViewComponent
   ],
   providers: [
     MapSetService

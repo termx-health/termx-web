@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {MapSetVersion} from 'terminology-lib/resources';
 import {MapSetService} from '../../services/map-set-service';
+import {BooleanInput} from '@kodality-web/core-util';
 
 
 @Component({
@@ -8,6 +9,7 @@ import {MapSetService} from '../../services/map-set-service';
   templateUrl: './map-set-versions-list.component.html',
 })
 export class MapSetVersionsListComponent implements OnChanges {
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public mapSetId?: string;
 
   public versions: MapSetVersion[] = [];
