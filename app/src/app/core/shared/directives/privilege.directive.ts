@@ -16,11 +16,13 @@ export class PrivilegeDirective implements OnChanges {
   }
 
   public ngOnChanges(): void {
-    if (this.hasRequiredPrivileges()) {
-      this.viewContainer.createEmbeddedView(this.templateRef);
-    } else {
-      this.viewContainer.clear();
-    }
+    this.hasRequiredPrivileges().subscribe(hasPrivileges => {
+      if (hasPrivileges) {
+        this.viewContainer.createEmbeddedView(this.templateRef);
+      } else {
+        this.viewContainer.clear();
+      }
+    });
   }
 
   private hasRequiredPrivileges(): Observable<boolean> {

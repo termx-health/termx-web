@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {AbstractSecurityStorage, AuthModule} from 'angular-auth-oidc-client';
+import {AbstractSecurityStorage, AuthModule, LogLevel} from 'angular-auth-oidc-client';
 import {OauthStorageService} from './oauth-storage.service';
 import {environment} from '../../environments/environment';
 
@@ -16,6 +16,8 @@ import {environment} from '../../environments/environment';
       silentRenew: true,
       useRefreshToken: true,
       renewTimeBeforeTokenExpiresInSeconds: 30,
+      ignoreNonceAfterRefresh: true,
+      logLevel: LogLevel.Debug
     }
   })],
   providers: [{provide: AbstractSecurityStorage, useClass: OauthStorageService}],

@@ -5,6 +5,8 @@ import {map, Observable} from 'rxjs';
 @Injectable({providedIn: 'root'})
 export class AuthService {
 
+  private ADMIN = 'admin'; //FIXME: this is wrong, privilege name may change
+
   public constructor(
     private oidcSecurityService: OidcSecurityService
   ) {
@@ -16,14 +18,38 @@ export class AuthService {
     }));
   }
 
+  private includesPrivilege(privileges: string[], privilege: string): boolean {
+    if (!privilege) {
+      return false;
+    }
+    if (!privileges) {
+      return false;
+    }
+
+    if (privilege.indexOf('*') === privilege.length - 1) {
+      return privileges.some(p => p.startsWith(privilege.substring(0, privilege.length - 1)));
+    }
+    if (privilege.indexOf('*') === 0) {
+      return privileges.some(p => p.endsWith(privilege.substring(1, privilege.length)));
+    }
+    return privileges.includes(privilege);
+  }
+
   public hasPrivilege(privilege: string): Observable<boolean> {
     return this.getUserPrivileges().pipe(map(privileges => {
-      return privileges.indexOf(privilege) !== -1;
+      return this.includesPrivilege(privileges, this.ADMIN) || this.includesPrivilege(privileges, privilege);
     }));
   }
+
+  public hasAllPrivileges(privileges: string[]): Observable<boolean> {
+    return this.getUserPrivileges().pipe(map(userPrivileges => {
+      return this.includesPrivilege(userPrivileges, this.ADMIN) || privileges.every(p => this.includesPrivilege(userPrivileges, p));
+    }));
+  }
+
   public hasAnyPrivilege(privileges: string[]): Observable<boolean> {
     return this.getUserPrivileges().pipe(map(userPrivileges => {
-      return privileges.some(k => userPrivileges.indexOf(k) !== -1);
+      return this.includesPrivilege(userPrivileges, this.ADMIN) || privileges.some(p => this.includesPrivilege(userPrivileges, p));
     }));
   }
 }

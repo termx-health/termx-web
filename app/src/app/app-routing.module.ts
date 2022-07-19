@@ -7,11 +7,11 @@ import {TOOLS_ROUTES} from './tools/tools.module';
 import {AutoLoginAllRoutesGuard} from 'angular-auth-oidc-client';
 
 const routes: Routes = [
-  {path: "**", redirectTo: 'resources'},
   {path: 'resources', children: RESOURCES_ROUTES, data: {privilege: ['*.view']}, canActivate: [AutoLoginAllRoutesGuard]},
   {path: 'integration', children: INTEGRATION_ROUTES, canActivate: [AutoLoginAllRoutesGuard]},
   {path: 'privileges', children: PRIVILEGES_ROUTES, canActivate: [AutoLoginAllRoutesGuard]},
-  {path: 'tools', children: TOOLS_ROUTES, canActivate: [AutoLoginAllRoutesGuard]}
+  {path: 'tools', children: TOOLS_ROUTES, canActivate: [AutoLoginAllRoutesGuard]},
+  {path: "**", redirectTo: 'resources'},
 ];
 
 @NgModule({

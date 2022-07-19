@@ -4,7 +4,7 @@ import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class OauthInterceptor implements HttpInterceptor {
+export class OauthHttpInterceptor implements HttpInterceptor {
 
   public constructor(
     private oidcSecurityService: OidcSecurityService

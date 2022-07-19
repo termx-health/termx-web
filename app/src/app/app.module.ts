@@ -23,7 +23,7 @@ import {AuthLibModule} from 'terminology-lib/auth/auth-lib.module';
 import {ToolsModule} from './tools/tools.module';
 import {NoPrivilegeModule} from './core/no-privilege/no-privilege.module';
 import {OauthConfigModule} from './auth/oauth-config.module';
-import {OauthInterceptor} from './auth/oauth-interceptor';
+import {OauthHttpInterceptor} from './auth/oauth-http-interceptor.service';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {SharedModule} from './core/shared/shared.module';
 
@@ -99,8 +99,8 @@ export function MarinaUiConfigFactory(): MuiConfig {
     {provide: LOCALE_ID, useValue: 'en'},
     {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
     {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},
-    {provide: HTTP_INTERCEPTORS, useClass: OauthInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: MuiHttpErrorHandler, multi: true, deps: [OidcSecurityService]},
+    {provide: HTTP_INTERCEPTORS, useClass: OauthHttpInterceptor, multi: true, deps: [OidcSecurityService]},
+    {provide: HTTP_INTERCEPTORS, useClass: MuiHttpErrorHandler, multi: true},
     {provide: MUI_CONFIG, useFactory: MarinaUiConfigFactory}
   ],
   bootstrap: [AppComponent]

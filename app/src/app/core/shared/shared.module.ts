@@ -44,7 +44,8 @@ const directives = [
   exports: [
     ...commonModules,
     ...components,
-    ...pipes
+    ...pipes,
+    ...directives
   ],
   declarations: [
     ...components,
