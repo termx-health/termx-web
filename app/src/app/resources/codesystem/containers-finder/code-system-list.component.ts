@@ -3,8 +3,7 @@ import {SearchResult} from '@kodality-web/core-util';
 import {CodeSystem} from 'terminology-lib/resources';
 import {CodeSystemService} from '../services/code-system.service';
 import {Router} from '@angular/router';
-import {MuiAuthContext} from '@kodality-health/marina-ui';
-
+import {AuthService} from '../../../auth/auth.service';
 
 @Component({
   template: `
@@ -15,10 +14,8 @@ import {MuiAuthContext} from '@kodality-health/marina-ui';
             {{(cs.names | localName) || cs.id}}
           </twa-finder-menu-item>
 
-          <twa-finder-load-more-item
-              *ngIf="searchResult.data.length < searchResult.meta.total"
-              (twClick)="loadCodeSystems(searchResult.data.length + DEFAULT_LIMIT)"
-          ></twa-finder-load-more-item>
+          <twa-finder-load-more-item *ngIf="searchResult.data.length < searchResult.meta.total"
+              (twClick)="loadCodeSystems(searchResult.data.length + DEFAULT_LIMIT)"></twa-finder-load-more-item>
         </twa-finder-menu>
       </twa-finder-wrapper>
     </div>
@@ -33,7 +30,7 @@ export class FinderCodeSystemListComponent implements OnInit {
   public constructor(
     private codeSystemService: CodeSystemService,
     private router: Router,
-    private authContext: MuiAuthContext
+    private authService: AuthService
   ) {}
 
   public ngOnInit(): void {
@@ -48,10 +45,12 @@ export class FinderCodeSystemListComponent implements OnInit {
   }
 
   public openResource(cs: CodeSystem): void {
-    if (this.authContext.hasPrivilege('*.code-system.edit')){
-      this.router.navigate(['/resources/code-systems/', cs.id, 'edit']);
-    } else {
-      this.router.navigate(['/resources/code-systems/', cs.id, 'view']);
-    }
+    this.authService.getUserPrivileges().subscribe(privileges => {
+      if (privileges.indexOf('*.code-system.edit') !== -1) {
+        this.router.navigate(['/resources/code-systems/', cs.id, 'edit']);
+      } else {
+        this.router.navigate(['/resources/code-systems/', cs.id, 'view']);
+      }
+    });
   }
 }

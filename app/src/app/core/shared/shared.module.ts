@@ -10,6 +10,8 @@ import {StatusTagComponent} from './components/publication-status-tag/status-tag
 import {AddButtonComponent} from './components/add-button/add-button.component';
 import {CodeSystemLibModule} from 'terminology-lib/resources';
 import {ValidateUrlPipe} from './pipes/validate-url.pipe';
+import {HasAnyPrivilegePipe} from './pipes/has-any-privilege.pipe';
+import {PrivilegeDirective} from './directives/privilege.directive';
 
 
 const commonModules = [
@@ -28,7 +30,13 @@ const components = [
 ];
 
 const pipes = [
-  ValidateUrlPipe
+  ValidateUrlPipe,
+  HasAnyPrivilegePipe
+];
+
+const directives = [
+  ValidateUrlPipe,
+  PrivilegeDirective
 ];
 
 @NgModule({
@@ -40,7 +48,8 @@ const pipes = [
   ],
   declarations: [
     ...components,
-    ...pipes
+    ...pipes,
+    ...directives
   ]
 })
 export class SharedModule {

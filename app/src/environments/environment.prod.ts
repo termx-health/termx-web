@@ -1,4 +1,8 @@
+import {dynamicEnv} from './dynamic-env';
+
 export const environment = {
   production: true,
-  terminologyApi: ''
+  terminologyApi: '',
+  oauthIssuer: dynamicEnv.oauthIssuer,
+  oauthClientId: dynamicEnv.oauthClientId
 };

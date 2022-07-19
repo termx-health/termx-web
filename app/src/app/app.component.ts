@@ -14,9 +14,6 @@ import {OidcSecurityService} from 'angular-auth-oidc-client';
 export class AppComponent implements OnInit {
   public menu: MuiPageMenuItem[] = [];
   public activeRoutePrivileges?: string[];
-  public user: any;
-
-  public userRoles: string[] = [];
 
   public constructor(
     private router: Router,
@@ -35,21 +32,6 @@ export class AppComponent implements OnInit {
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
       this.activeRoutePrivileges = getLastChild(this.route.snapshot).data['privilege'];
     });
-
-    this.oidcSecurityService.checkAuth().subscribe((auth) => {
-      this.user = auth;
-      if (auth?.userData?.roles) {
-        this.userRoles = auth?.userData?.roles as string[];
-      }
-    });
-  }
-
-  public itHasAnyPrivilege = (privileges: string[]): boolean => {
-    return !!this.userRoles.find(ur => privileges.indexOf(ur) !== -1);
-  };
-
-  public login(): void {
-    this.oidcSecurityService.authorize();
   }
 
   public logout(): void {

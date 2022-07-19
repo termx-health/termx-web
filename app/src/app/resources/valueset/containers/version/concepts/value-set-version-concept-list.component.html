@@ -19,7 +19,7 @@
     <ng-container *mTableRow="let item; let i = index">
       <tr *ngFor="let ad of item.additionalDesignations; let isFirst = first">
         <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
-          <a *ngIf="!viewMode && ('*.value-set.edit' | hasPrivilege); else view" [routerLink]="['../concepts',item.id,'edit']">{{item.concept?.code}}</a>
+          <a *ngIf="!viewMode && ('*.value-set.edit' | twaHasAnyPrivilege); else view" [routerLink]="['../concepts',item.id,'edit']">{{item.concept?.code}}</a>
           <ng-template #view>
             {{item.concept?.code}}
           </ng-template>
@@ -32,7 +32,7 @@
 
       <tr *ngIf="!(item.additionalDesignations?.length > 0)">
         <td>
-          <a *ngIf="!viewMode && ('*.value-set.edit' | hasPrivilege); else view" [routerLink]="['../concepts',item.id,'edit']">{{item.concept?.code}}</a>
+          <a *ngIf="!viewMode && ('*.value-set.edit' | twaHasAnyPrivilege); else view" [routerLink]="['../concepts',item.id,'edit']">{{item.concept?.code}}</a>
           <ng-template #view>
             {{item.concept?.code}}
           </ng-template>
