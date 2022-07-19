@@ -1,10 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {MuiAuthContext, MuiPageMenuItem} from '@kodality-health/marina-ui';
+import {MuiPageMenuItem} from '@kodality-health/marina-ui';
 import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {LocalizedName} from '@kodality-health/marina-util';
 import {filter} from 'rxjs';
+import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'twa-root',
@@ -19,7 +20,7 @@ export class AppComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private translateService: TranslateService,
-    public authContext: MuiAuthContext
+    private oidcSecurityService: OidcSecurityService
   ) {}
 
   public ngOnInit(): void {
@@ -31,6 +32,10 @@ export class AppComponent implements OnInit {
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
       this.activeRoutePrivileges = getLastChild(this.route.snapshot).data['privilege'];
     });
+  }
+
+  public logout(): void {
+    this.oidcSecurityService.logoff();
   }
 
   private loadMenu(): void {
