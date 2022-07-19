@@ -1,5 +1,5 @@
-<m-page-layout mTitle="web.app.header" [menu]="menu" (mLangChange)="onLangChange($event)">
-  <ng-container *ngIf="!activeRoutePrivileges || (activeRoutePrivileges | hasAnyPrivilege); else accessError">
+<m-page-layout mTitle="web.app.header" [menu]="menu" (mLangChange)="onLangChange($event)" (mLogout)="logout()">
+  <ng-container *ngIf="!activeRoutePrivileges || (activeRoutePrivileges | twaHasAnyPrivilege | async); else accessError">
     <router-outlet></router-outlet>
   </ng-container>
   <ng-template #accessError>

@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
-import {PrivilegeLibService} from 'terminology-lib/auth/privileges';
-import {Privilege} from 'terminology-lib/auth/privileges';
+import {Privilege, PrivilegeLibService} from 'terminology-lib/auth/privileges';
 import {Observable} from 'rxjs';
 
 @Injectable()
@@ -15,4 +14,5 @@ export class PrivilegeService extends PrivilegeLibService {
   public delete(id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${id}`);
   }
+
 }
