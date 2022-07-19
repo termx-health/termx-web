@@ -22,7 +22,7 @@
       <td *ngIf="at.description" m-table-expand [mItem]="at"></td>
       <td *ngIf="!at.description && (searchResult | apply : haveDescriptions)"></td>
       <td>
-        <a *ngIf="'*.edit' | hasPrivilege; else view" [routerLink]="['association-types',at.code,'edit']">{{at.code}}</a> <!--TODO association type privilege-->
+        <a *ngIf="'*.edit' | twaHasAnyPrivilege; else view" [routerLink]="['association-types',at.code,'edit']">{{at.code}}</a> <!--TODO association type privilege-->
         <ng-template #view>
           <a [routerLink]="['association-types',at.code,'view']">{{at.code}}</a>
         </ng-template>
