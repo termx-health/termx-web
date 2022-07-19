@@ -25,7 +25,7 @@ build:
     - echo "@kodality-health:registry=https://kexus.kodality.com/repository/npm-health/" >> ~/.npmrc
   script:
     - npm install --cache .npm --prefer-offline
-    - ng build --base-href /kts/ -c production
+    - ng build -c production
   artifacts:
     paths:
       - "**/dist"
