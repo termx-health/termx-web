@@ -1,0 +1,167 @@
+<m-card [mTitle]="'Target CodeSystem'">
+  <form #form="ngForm">
+    <!-- Code system info -->
+    <ng-container>
+      <!-- View -->
+      <ng-container *ngIf="!data.codeSystem?.['_new']">
+        <m-form-item mName="targetCodeSystem" [mLabel]="'Resource ID'" required>
+          <twl-code-system-search
+              name="targetCodeSystem"
+              [(ngModel)]="data.codeSystem"
+          ></twl-code-system-search>
+          <div style="margin-top: 0.5rem" (click)="initCodeSystem()">Not found? <a>Create a new</a></div>
+        </m-form-item>
+
+        <m-card mDisplay="bordered" *ngIf="data.codeSystem.id">
+          <m-form-item mLabel="entities.code-system.uri-short">
+            {{data.codeSystem?.uri || '-'}}
+          </m-form-item>
+
+          <m-form-item mLabel="entities.code-system.name">
+            {{(data.codeSystem?.names | localName) || '-'}}
+          </m-form-item>
+
+          <m-form-item mLabel="entities.code-system.description">
+            {{data.codeSystem?.description || '-'}}
+          </m-form-item>
+        </m-card>
+      </ng-container>
+
+
+      <!-- Edit -->
+      <ng-container *ngIf="data.codeSystem?.['_new']">
+        <m-form-item mName="id" [mLabel]="'Resource ID'" required>
+          <m-input name="id" [(ngModel)]="data.codeSystem.id" required></m-input>
+        </m-form-item>
+
+        <m-card mDisplay="bordered">
+          <m-form-item mName="uri" mLabel="entities.code-system.uri">
+            <div class="m-items-middle">
+              <m-input name="uri" [(ngModel)]="data.codeSystem.uri"></m-input>
+            </div>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.code-system.name">
+            <m-multi-language-input name="name" [(ngModel)]="data.codeSystem.names"></m-multi-language-input>
+          </m-form-item>
+
+          <m-form-item mName="description" mLabel="entities.code-system.description">
+            <m-textarea name="description" [(ngModel)]="data.codeSystem.description"></m-textarea>
+          </m-form-item>
+        </m-card>
+      </ng-container>
+    </ng-container>
+
+    <div style="height: 1rem"></div>
+
+    <!-- Do generate value set? -->
+    <m-form-item mName="generateValueSet" [mLabel]="chkbx">
+      <ng-template #chkbx>
+        <m-checkbox name="generateValueSet" [(ngModel)]="data.generateValueSet">Generate ValueSet too</m-checkbox>
+      </ng-template>
+    </m-form-item>
+
+
+    <!-- New CS version info -->
+    <m-form-item mName="csVersion" mLabel="entities.code-system-version.version" required>
+      <m-input name="csVersion" [(ngModel)]="data.version.version" required></m-input>
+    </m-form-item>
+
+
+    <m-form-item mName="csStatus" mLabel="entities.code-system-version.status" required>
+      <twl-value-set-concept-select
+          name="csStatus"
+          [(ngModel)]="data.version.status"
+          valueSet="publication-status"
+          required
+      ></twl-value-set-concept-select>
+    </m-form-item>
+
+
+    <m-form-item mName="csReleaseDate" mLabel="entities.code-system-version.release-date" required>
+      <m-date-picker name="csReleaseDate" [(ngModel)]="data.version.releaseDate" required></m-date-picker>
+    </m-form-item>
+  </form>
+</m-card>
+
+
+<m-card [mTitle]="'Source'" style="margin-top: 1rem">
+  <div style="margin-bottom: 1rem">
+    <m-select [(ngModel)]="data.template">
+      <m-option [value]="'pub.e-tervis'" [label]="'pub.e-tervis'"></m-option>
+    </m-select>
+  </div>
+
+  <m-form-item mName="sourceImportType">
+    <div class="m-items-middle">
+
+      <nz-radio-group name="sourceImportType" [(ngModel)]="data.source.type" (ngModelChange)="data.source.file = undefined" required>
+        <label nz-radio-button [nzValue]="'link'">{{'Link'}}</label>
+        <label nz-radio-button [nzValue]="'file'">{{'File'}}</label>
+      </nz-radio-group>
+
+      <ng-container [ngSwitch]="data.source.type">
+        <m-input *ngSwitchCase="'link'" name="sourceImportFile" [(ngModel)]="data.source.file" style="flex: 1" required></m-input>
+        <input *ngSwitchCase="'file'" id="fileInput" #fileInput name="sourceImportFile" [(ngModel)]="data.source.file" type="file" required>
+      </ng-container>
+    </div>
+  </m-form-item>
+
+  <m-form-item mName="sourceImportMode" [mLabel]="'File format'" required>
+    <nz-radio-group name="sourceImportMode" [(ngModel)]="data.source.mode" required>
+      <label nz-radio nzValue="csv">CSV</label>
+      <label nz-radio nzValue="tsv">TSV</label>
+    </nz-radio-group>
+  </m-form-item>
+
+  <m-button *m-card-footer (click)="analyze()" [mLoading]="loading['analyze']" [disabled]="!data.source.file || !data.template">Analyze</m-button>
+</m-card>
+
+
+<m-card [mTitle]="'Properties'" style="margin-top: 1rem">
+  <m-table [mData]="analyzeResponse.properties">
+    <tr *mTableHead>
+      <th>CSV column</th>
+      <th>KTS property</th>
+      <th>Type</th>
+      <th>Format</th>
+      <th>Lang</th>
+      <th>Import</th>
+    </tr>
+
+    <tr *mTableRow="let item">
+      <td>{{item.columnName}}</td>
+      <td>{{item.mappedProperty}}</td>
+      <td>
+        <m-select [(ngModel)]="item.propertyType" (ngModelChange)="item.typeFormat = undefined">
+          <m-option [value]="'text'" [label]="'text'"></m-option>
+          <m-option [value]="'integer'" [label]="'integer'"></m-option>
+          <m-option [value]="'boolean'" [label]="'boolean'"></m-option>
+          <m-option [value]="'date'" [label]="'date'"></m-option>
+        </m-select>
+      </td>
+      <td>
+        <m-select [(ngModel)]="item.typeFormat" *ngIf="item.propertyType === 'date'">
+          <m-option [value]="'yyyy-MM-dd'" [label]="'yyyy-MM-dd'"></m-option>
+          <m-option [value]="'dd.MM.yy'" [label]="'dd.MM.yy'"></m-option>
+          <m-option [value]="'dd.MM.yyyy'" [label]="'dd.MM.yyyy'"></m-option>
+          <m-option [value]="'MM/dd/yyyy'" [label]="'MM/dd/yyyy'"></m-option>
+        </m-select>
+      </td>
+      <td>
+        <twl-value-set-concept-select [(ngModel)]="item.lang" valueSet="languages"></twl-value-set-concept-select>
+      </td>
+      <td>
+        <m-checkbox [(mChecked)]="item.import"></m-checkbox>
+      </td>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-table>
+
+  <m-button *m-card-footer (click)="process()" [mLoading]="loading['Process']" [disabled]="form.invalid">Process</m-button>
+</m-card>
