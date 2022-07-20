@@ -119,11 +119,12 @@ export class FileImportComponent {
 
     this.loading['analyze'] = true;
     this.http.post<FileAnalysisResponse>(`${environment.terminologyApi}/file-importer/analyze`, req).subscribe(resp => {
+      this.validationErrors = [];
       this.analyzeResponse = {
         request: copyDeep(req),
         properties: (resp.properties || []).map(p => ({
           columnName: p.columnName,
-          mappedProperty: p.mappedProperty,
+          mappedProperty: this.ktsProps.includes(p.mappedProperty!) ? p.mappedProperty : undefined,
           propertyType: p.propertyType,
           typeFormat: p.typeFormat,
           import: !!p.hasValues
@@ -137,8 +138,13 @@ export class FileImportComponent {
       return;
     }
 
-
     const req: FileProcessingRequest = {
+      // request
+      link: this.analyzeResponse.request?.link!,
+      type: this.analyzeResponse.request?.type!,
+      template: this.analyzeResponse.request?.template!,
+      properties: this.analyzeResponse.properties?.filter(p => p.import),
+
       // meta
       codeSystem: {
         id: this.data.codeSystem.id,
@@ -154,43 +160,36 @@ export class FileImportComponent {
         releaseDate: this.data.version.releaseDate
       },
       generateValueSet: this.data.generateValueSet,
-
-      // request
-      link: this.analyzeResponse.request?.link!,
-      type: this.analyzeResponse.request?.type!,
-      template: this.analyzeResponse.request?.template!,
-      properties: this.analyzeResponse.properties?.filter(p => p.import)
     };
 
+
     this.loading['process'] = true;
-    this.http.post<any>(`${environment.terminologyApi}/file-importer/process`, req)
-      .subscribe(console.log)
-      .add(() => this.loading['process'] = false);
+    this.http.post<void>(`${environment.terminologyApi}/file-importer/process`, req).subscribe(() => {
+      console.log("success")
+    }).add(() => this.loading['process'] = false);
   }
 
   private validate(): string[] {
     const errors: string[] = [];
+    const props = this.analyzeResponse.properties.filter(p => p.import);
+    const propMap = collect(props, p => p.mappedProperty!);
 
-    if (this.analyzeResponse.properties.filter(p => isNil(p.mappedProperty)).length) {
+    if (props.filter(p => isNil(p.mappedProperty)).length) {
       errors.push(`Please specify code system properties`);
     }
-
-    const propMap = collect(this.analyzeResponse.properties, p => p.mappedProperty!);
     const duplicateProperties = Object.keys(propMap).filter(p => propMap[p].length > 1).filter(Boolean);
-    if (duplicateProperties.length > 0) {
-      errors.push(`Duplicate KTS properties found: ${join(duplicateProperties, ', ')}`);
-    }
-
     if (duplicateProperties.filter(p => p === 'identifier').length) {
       errors.push(`Code system may have only one identifier`);
     }
-
-    if (this.analyzeResponse.properties.filter(p => p.propertyType === 'date' && isNil(p.typeFormat)).length) {
+    if (duplicateProperties.length > 0) {
+      errors.push(`Duplicate KTS properties found: ${join(duplicateProperties, ', ')}`);
+    }
+    if (props.filter(p => p.propertyType === 'date' && isNil(p.typeFormat)).length) {
       errors.push(`Please select date type property format`);
     }
-
     return errors;
   }
+
 
   public get ktsProps(): string[] {
     return KTS_PROPERTIS;
