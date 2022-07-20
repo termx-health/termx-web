@@ -44,6 +44,14 @@
   },
   {
     "label": {
+      "en": "Global search",
+      "et": "Globaalne otsing"
+    },
+    "icon": "search",
+    "link": "global-search"
+  },
+  {
+    "label": {
       "en": "Management",
       "et": "Haldus"
     },

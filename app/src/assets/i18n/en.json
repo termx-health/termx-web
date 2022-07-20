@@ -446,6 +446,15 @@
         "content": "Terminology Service APIs enable automated exchange of clinical terminology content and resources.",
         "button": "Terminology Service API"
       }
+    },
+    "global-search": {
+      "dashboard": {
+        "header": "Search",
+        "concepts": "Concepts",
+        "code-systems": "CodeSystems",
+        "value-sets": "ValueSets",
+        "map-sets": "MapSets"
+      }
     }
   },
   "entities": {
@@ -522,6 +531,7 @@
       "type": "Type",
       "code": "Code",
       "description": "Description",
+      "code-system": "Code system",
       "versions": "Concept versions"
     },
     "code-system-association": {

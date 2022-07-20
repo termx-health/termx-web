@@ -155,7 +155,8 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
   ],
   exports: [
     CodeSystemListComponent,
-    CodeSystemPropertyValueFormComponent
+    CodeSystemPropertyValueFormComponent,
+    CodeSystemConceptsListComponent
   ],
   providers: [
     CodeSystemService
