@@ -97,7 +97,7 @@
 
       <nz-radio-group name="sourceImportType" [(ngModel)]="data.source.type" (ngModelChange)="data.source.file = undefined" required>
         <label nz-radio-button [nzValue]="'link'">{{'Link'}}</label>
-        <label nz-radio-button [nzValue]="'file'">{{'File'}}</label>
+        <!--        <label nz-radio-button [nzValue]="'file'">{{'File'}}</label>-->
       </nz-radio-group>
 
       <ng-container [ngSwitch]="data.source.type">
@@ -119,6 +119,12 @@
 
 
 <m-card [mTitle]="'Properties'" style="margin-top: 1rem">
+  <m-alert *ngIf="validationErrors.length" mType="error">
+    <ul style="margin-bottom: 0; padding-left: 1.5rem">
+      <li *ngFor="let msg of validationErrors">{{msg}}</li>
+    </ul>
+  </m-alert>
+
   <m-table [mData]="analyzeResponse.properties">
     <tr *mTableHead>
       <th>CSV column</th>
@@ -131,7 +137,11 @@
 
     <tr *mTableRow="let item">
       <td>{{item.columnName}}</td>
-      <td>{{item.mappedProperty}}</td>
+      <td>
+        <m-select [(ngModel)]="item.mappedProperty">
+          <m-option *ngFor="let prop of ktsProps" [value]="prop" [label]="prop"></m-option>
+        </m-select>
+      </td>
       <td>
         <m-select [(ngModel)]="item.propertyType" (ngModelChange)="item.typeFormat = undefined">
           <m-option [value]="'text'" [label]="'text'"></m-option>

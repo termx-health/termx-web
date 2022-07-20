@@ -2,10 +2,29 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {CodeSystem} from 'terminology-lib/resources';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {copyDeep} from '@kodality-web/core-util';
+import {collect, copyDeep, isNil, join} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {LocalizedName} from '@kodality-health/marina-util';
 
+// @ts-ignore
+const IMPORT_TEMPLATES = {
+  'pub.e-tervis': {}
+};
+
+
+const KTS_PROPERTIS = [
+  "identifier",
+  "alias",
+  "display",
+  "designation",
+  "parent",
+  "level",
+  "validFrom",
+  "validTo",
+  "status",
+  "description",
+  "modifiedAt"
+]
 
 // analysis
 interface FileAnalysisRequest {
@@ -68,6 +87,7 @@ export class FileImportComponent {
   };
 
   public loading: {[k: string]: boolean} = {};
+  public validationErrors: string[] = [];
 
   public data: any = {
     codeSystem: {},
@@ -97,13 +117,6 @@ export class FileImportComponent {
       template: this.data.template
     };
 
-    const formData = new FormData();
-    formData.append('request', JSON.stringify(req));
-
-    if (this.data.source.type === 'file') {
-      // formData.append('file', this.fileInput?.nativeElement?.files?.[0] as Blob);
-    }
-
     this.loading['analyze'] = true;
     this.http.post<FileAnalysisResponse>(`${environment.terminologyApi}/file-importer/analyze`, req).subscribe(resp => {
       this.analyzeResponse = {
@@ -120,6 +133,11 @@ export class FileImportComponent {
   }
 
   public process(): void {
+    if ((this.validationErrors = this.validate()).length) {
+      return;
+    }
+
+
     const req: FileProcessingRequest = {
       // meta
       codeSystem: {
@@ -148,5 +166,33 @@ export class FileImportComponent {
     this.http.post<any>(`${environment.terminologyApi}/file-importer/process`, req)
       .subscribe(console.log)
       .add(() => this.loading['process'] = false);
+  }
+
+  private validate(): string[] {
+    const errors: string[] = [];
+
+    if (this.analyzeResponse.properties.filter(p => isNil(p.mappedProperty)).length) {
+      errors.push(`Please specify code system properties`);
+    }
+
+    const propMap = collect(this.analyzeResponse.properties, p => p.mappedProperty!);
+    const duplicateProperties = Object.keys(propMap).filter(p => propMap[p].length > 1).filter(Boolean);
+    if (duplicateProperties.length > 0) {
+      errors.push(`Duplicate KTS properties found: ${join(duplicateProperties, ', ')}`);
+    }
+
+    if (duplicateProperties.filter(p => p === 'identifier').length) {
+      errors.push(`Code system may have only one identifier`);
+    }
+
+    if (this.analyzeResponse.properties.filter(p => p.propertyType === 'date' && isNil(p.typeFormat)).length) {
+      errors.push(`Please select date type property format`);
+    }
+
+    return errors;
+  }
+
+  public get ktsProps(): string[] {
+    return KTS_PROPERTIS;
   }
 }
