@@ -6,6 +6,7 @@ import {FhirCodeSystemLookupParams} from '../model/fhir-code-system-lookup.param
 import {SearchHttpParams} from '@kodality-web/core-util';
 import {FhirParameters} from '../../model/fhir-parameters';
 import {FhirCodeSystemValidateCodeParams} from '../model/fhir-code-system-validate-code.params';
+import {FhirCodeSystemSubsumesParams} from '../model/fhir-code-system-subsumes.params';
 
 
 @Injectable()
@@ -30,5 +31,13 @@ export class FhirCodeSystemLibService {
 
   public validateCode(params: FhirCodeSystemValidateCodeParams): Observable<FhirParameters> {
     return this.http.get<FhirParameters>(`${this.baseUrl}/$validate-code`, {params: SearchHttpParams.build(params)});
+  }
+
+  public subsumes(params: FhirCodeSystemSubsumesParams): Observable<FhirParameters> {
+    return this.http.get<FhirParameters>(`${this.baseUrl}/$subsumes`, {params: SearchHttpParams.build(params)});
+  }
+
+  public findMatches(params: FhirParameters): Observable<FhirParameters> {
+    return this.http.post<FhirParameters>(`${this.baseUrl}/$find-matches`, params);
   }
 }

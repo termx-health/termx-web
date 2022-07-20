@@ -8,13 +8,19 @@
             <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'CodeSystem'}">$sync</m-button>
             <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$lookup'">$lookup</m-button>
             <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$validate-code'">$validate-code</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$subsumes'">$subsumes</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$find-matches'">$find-matches</m-button>
           </div>
         </nz-collapse-panel>
       </nz-collapse>
 
       <nz-collapse nzGhost>
         <nz-collapse-panel nzHeader="ValueSet">
-          <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ValueSet'}">$sync</m-button>
+          <div style="display: grid">
+            <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ValueSet'}">$sync</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/ValueSet/$expand'">$expand</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/ValueSet/$validate-code'">$validate-code</m-button>
+          </div>
         </nz-collapse-panel>
       </nz-collapse>
 
@@ -23,6 +29,7 @@
           <div style="display: grid">
             <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ConceptMap'}">$sync</m-button>
             <m-button mDisplay="link" [routerLink]="'./fhir/ConceptMap/$translate'">$translate</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/ConceptMap/$closure'">$closure</m-button>
           </div>
         </nz-collapse-panel>
       </nz-collapse>

@@ -21,7 +21,7 @@ export class IntegrationAtcImportComponent extends IntegrationImportComponent {
   };
 
   public composeImportRequest(): Observable<JobLogResponse> {
-    return this.integrationAtcLibService.import(this.data, this.edition!, this.zipSourceUrl);
+    return this.integrationAtcLibService.import(this.data, this.edition!, this.data.zipSourceUrl);
   }
 
   public setDefaultData(): void {

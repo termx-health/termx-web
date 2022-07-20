@@ -1,6 +1,7 @@
 import {LocalizedName} from '@kodality-health/marina-util';
 
 export class IntegrationImportConfiguration {
+  public zipSourceUrl?: string;
   public uri?: string;
   public source?: string;
   public version?: string;
@@ -21,6 +22,7 @@ export class IntegrationImportConfiguration {
         codeSystemDescription: 'Anatomical Therapeutic Chemical Classification System',
       };
       const est = {
+        zipSourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/est-atc.csv',
         uri: 'https://www.ravimiregister.ee',
         source: 'Ravimiregister',
         codeSystem: 'atc-est',
@@ -32,18 +34,20 @@ export class IntegrationImportConfiguration {
 
   public static getDefaultIcdConfigurations(edition: string): IntegrationImportConfiguration {
     const int = {
-      uri: 'https://ftp.cdc.gov/pub/Health_Statistics/NCHS/Publications/ICD10CM/2022/',
+      zipSourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/int-icd10en.zip',
+      uri: 'http://hl7.org/fhir/sid/icd-10',
       source: 'World Health organization',
       version: '10',
-      codeSystem: 'icd-10-int',
+      codeSystem: 'icd10',
       codeSystemName: {'en': 'ICD-10 WHO Edition'},
       codeSystemDescription: 'International Statistical Classification of Diseases and Related Health Problems 10th Revision',
     };
     const est = {
+      zipSourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/icd10_v8.zip',
       uri: 'https://pub.e-tervis.ee/classifications/RHK-10/8',
       source: 'Ministry of Social Affairs of Estonia',
       version: '8',
-      codeSystem: 'icd-10-est',
+      codeSystem: 'icd10-est',
       codeSystemName: {'et': 'Eesti ICD-10', 'en': 'Estonian ICD-10'},
       codeSystemDescription: ' RHK-10 on rahvusvaheline haiguste ja nendega seotud terviseprobleemide statistiline klassifikatsioon, mille sisu haldaja on Sotsiaalministeerium. Täiendus- ja muudatusettepanekud edastada info@sm.ee.',
       codeSystemVersionDescription: '22.04.2021 on 8. versiooni lisatud järgmised uued koodid:\n' +

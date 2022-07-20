@@ -5,6 +5,7 @@ import {FhirParameters} from '../../model/fhir-parameters';
 import {Observable} from 'rxjs';
 import {SearchHttpParams} from '@kodality-web/core-util';
 import {FhirValueSetExpandParams} from '../model/fhir-value-set-expand.params';
+import {FhirValueSetValidateCodeParams} from '../model/fhir-value-set-validate-code.params';
 
 @Injectable()
 export class FhirValueSetLibService {
@@ -20,6 +21,10 @@ export class FhirValueSetLibService {
 
   public expand(params: FhirValueSetExpandParams): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/$expand`, {params: SearchHttpParams.build(params)});
+  }
+
+  public validateCode(params: FhirValueSetValidateCodeParams): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/$validate-code`, {params: SearchHttpParams.build(params)});
   }
 
   public import(urls: FhirParameters): Observable<FhirParameters> {

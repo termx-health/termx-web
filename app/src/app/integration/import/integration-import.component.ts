@@ -7,7 +7,6 @@ import {filter, Observable} from 'rxjs';
 @Directive()
 export abstract class IntegrationImportComponent implements OnInit {
   public edition?: string;
-  public zipSourceUrl?: string;
   public abstract system: string;
 
   public data = new IntegrationImportConfiguration();
@@ -32,8 +31,8 @@ export abstract class IntegrationImportComponent implements OnInit {
   public abstract setDefaultData(): void;
 
   public import(): void {
+    this.data.zipSourceUrl = this.data.zipSourceUrl || undefined;
     this.data.uri = this.data.uri || undefined;
-    this.zipSourceUrl = this.zipSourceUrl || undefined;
     this.data.version = this.data.version || undefined;
     this.data.validFrom = this.data.validFrom || undefined;
     this.data.validFrom = this.data.validTo || undefined;

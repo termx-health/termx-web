@@ -350,6 +350,34 @@
             "version": "Version",
             "system": "System(URL)",
             "display": "Display"
+          },
+          "subsumes": {
+            "code-a": "CodeA",
+            "code-b": "CodeB",
+            "system": "System",
+            "version": "Version"
+          },
+          "find-matches": {
+            "system": "System",
+            "version": "Version",
+            "properties": "Properties",
+            "property-name": "Name",
+            "property-value": "Value",
+            "exact": "Exact"
+          }
+        },
+        "value-set": {
+          "expand": {
+            "url": "URL",
+            "value-set-version": "ValueSetVersion"
+          },
+          "validate-code": {
+            "url": "URL",
+            "value-set-version": "ValueSetVersion",
+            "code": "Code",
+            "system": "System",
+            "system-version": "SystemVersion",
+            "display": "Display"
           }
         },
         "concept-map": {
@@ -360,6 +388,13 @@
             "system": "System(URL)",
             "version": "Version",
             "target-system": "TargetSystem"
+          },
+          "closure": {
+            "name": "Name",
+            "version": "Version",
+            "concepts": "Concepts",
+            "system": "System",
+            "code": "Code"
           }
         }
       },

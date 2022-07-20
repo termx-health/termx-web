@@ -10,7 +10,7 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: '../integration-import.component.html',
 })
 export class IntegrationIcdImportComponent extends IntegrationImportComponent {
-  public system = 'icd-10';
+  public system = 'icd10';
 
   public constructor(
     private integrationIcdLibService: IntegrationIcdLibService,
@@ -22,7 +22,7 @@ export class IntegrationIcdImportComponent extends IntegrationImportComponent {
 
 
   public composeImportRequest(): Observable<JobLogResponse> {
-    return this.integrationIcdLibService.import(this.data, this.edition!, this.zipSourceUrl!);
+    return this.integrationIcdLibService.import(this.data, this.edition!, this.data.zipSourceUrl!);
   }
 
   public setDefaultData(): void {

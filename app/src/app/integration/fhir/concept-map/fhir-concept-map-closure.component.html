@@ -1,0 +1,63 @@
+<m-card>
+  <m-spinner [mLoading]="loading">
+    <div *m-card-header class="m-items-between">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>FHIR</nz-breadcrumb-item>
+        <nz-breadcrumb-item>ConceptMap</nz-breadcrumb-item>
+        <nz-breadcrumb-item>$closure</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <m-button mDisplay="primary" [disabled]="!data.name" (click)="closure()">{{'web.integration.send-request' | translate}}</m-button>
+    </div>
+
+    <m-form-item [mLabel]="name" required>
+      <ng-template #name>
+        <div>{{'web.integration.fhir.concept-map.closure.name' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="The name that defines the particular context for the subsumption based closure table"></m-icon>
+      </ng-template>
+      <m-input [(ngModel)]="data.name"></m-input>
+    </m-form-item>
+
+    <m-form-item [mLabel]="version">
+      <ng-template #version>
+        <div>{{'web.integration.fhir.concept-map.closure.version' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="A request to resynchronise - request to send all new entries since the nominated version was sent by the server"></m-icon>
+      </ng-template>
+      <m-input [(ngModel)]="data.version"></m-input>
+    </m-form-item>
+
+    <m-form-item [mLabel]="concepts">
+      <ng-template #concepts>
+        <div>{{'web.integration.fhir.concept-map.closure.concepts' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="Concepts to add to the closure table"></m-icon>
+      </ng-template>
+      <div class="m-items-middle">
+        <m-input [(ngModel)]="conceptInput.system" placeholder="web.integration.fhir.concept-map.closure.system"></m-input>
+        <m-input [(ngModel)]="conceptInput.code" placeholder="web.integration.fhir.concept-map.closure.code"></m-input>
+        <m-button (click)="addConcept()">
+          <m-icon [mCode]="'plus'"></m-icon>
+        </m-button>
+      </div>
+    </m-form-item>
+    <div style="display:flex" *ngFor="let concept of data.concepts; let index = index">
+      <p>{{concept.system}} {{concept.code}}</p>&nbsp;
+      <m-button mSize="small" (click)="removeConcept(index)">
+        <m-icon [mCode]="'delete'"></m-icon>
+      </m-button>
+    </div>
+
+    <m-card *ngIf="response || error" class="m-card-inside">
+      <div *m-card-header class="m-items-middle">
+        <div class="m-card-title">{{'web.integration.response' | translate}}</div>
+        <m-button (click)="copyResult()">
+          <m-icon mCode="copy"></m-icon>
+        </m-button>
+      </div>
+      <pre *ngIf="response">{{response | json}}</pre>
+      <div *ngFor="let issue of error?.issue">
+        <m-alert [mType]="issue.severity" mShowIcon>
+          {{issue?.details?.text}}
+        </m-alert>
+      </div>
+    </m-card>
+  </m-spinner>
+</m-card>
