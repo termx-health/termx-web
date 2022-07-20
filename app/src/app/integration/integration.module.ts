@@ -11,6 +11,11 @@ import {FhirConceptMapTranslateComponent} from './fhir/concept-map/fhir-concept-
 import {IntegrationAtcImportComponent} from './import/atc/integration-atc-import.component';
 import {IntegrationLibModule} from 'terminology-lib/integration';
 import {IntegrationIcdImportComponent} from './import/icd-10/integration-icd-import.component';
+import {FhirCodeSystemSubsumesComponent} from './fhir/code-system/fhir-code-system-subsumes.component';
+import {FhirConceptMapClosureComponent} from './fhir/concept-map/fhir-concept-map-closure.component';
+import {FhirValueSetExpandComponent} from './fhir/value-set/fhir-value-set-expand.component';
+import {FhirValueSetValidateCodeComponent} from './fhir/value-set/fhir-value-set-validate-code.component';
+import {FhirCodeSystemFindMatchesComponent} from './fhir/code-system/fhir-code-system-find-matches.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -18,7 +23,12 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'fhir/$sync', component: IntegrationFhirSyncComponent},
       {path: 'fhir/CodeSystem/$lookup', component: FhirCodeSystemLookupComponent},
       {path: 'fhir/CodeSystem/$validate-code', component: FhirCodeSystemValidateCodeComponent},
+      {path: 'fhir/CodeSystem/$subsumes', component: FhirCodeSystemSubsumesComponent},
+      {path: 'fhir/CodeSystem/$find-matches', component: FhirCodeSystemFindMatchesComponent},
+      {path: 'fhir/ValueSet/$expand', component: FhirValueSetExpandComponent},
+      {path: 'fhir/ValueSet/$validate-code', component: FhirValueSetValidateCodeComponent},
       {path: 'fhir/ConceptMap/$translate', component: FhirConceptMapTranslateComponent},
+      {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent},
       {path: 'atc/$import', component: IntegrationAtcImportComponent},
       {path: 'icd-10/$import', component: IntegrationIcdImportComponent}
     ]
@@ -36,8 +46,13 @@ export const INTEGRATION_ROUTES: Routes = [
     IntegrationDashboardComponent,
     IntegrationFhirSyncComponent,
     FhirCodeSystemLookupComponent,
+    FhirCodeSystemSubsumesComponent,
+    FhirCodeSystemFindMatchesComponent,
     FhirCodeSystemValidateCodeComponent,
+    FhirValueSetExpandComponent,
+    FhirValueSetValidateCodeComponent,
     FhirConceptMapTranslateComponent,
+    FhirConceptMapClosureComponent,
     IntegrationAtcImportComponent,
     IntegrationIcdImportComponent
   ],
