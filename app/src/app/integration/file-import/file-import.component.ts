@@ -1,52 +1,50 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
-import {CodeSystem} from 'terminology-lib/resources';
+import {CodeSystem, CodeSystemLibService, EntityProperty} from 'terminology-lib/resources';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {collect, copyDeep, isNil, join} from '@kodality-web/core-util';
+import {collect, copyDeep, isNil} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {LocalizedName} from '@kodality-health/marina-util';
+import {MuiNotificationService} from '@kodality-health/marina-ui';
 
 // @ts-ignore
-const IMPORT_TEMPLATES = {
-  'pub.e-tervis': {}
+const IMPORT_TEMPLATES: {
+  [p: string]: FileImportPropertyRow[]
+} = {
+  'pub.e-tervis': [
+    {
+      columnName: 'Kood',
+      propertyName: 'identifier',
+      lang: 'et',
+      import: true
+    }
+  ]
 };
 
-
-const KTS_PROPERTIS = [
-  "identifier",
-  "alias",
-  "display",
-  "designation",
-  "parent",
-  "level",
-  "validFrom",
-  "validTo",
-  "status",
-  "description",
-  "modifiedAt"
-]
 
 // analysis
 interface FileAnalysisRequest {
   link: string;
   type: string;
-  template: string;
 }
 
 interface FileAnalysisResponse {
-  properties?: FileAnalysisResponseProperty[];
+  properties?: {
+    columnName?: string;
+    columnType?: string;
+    columnTypeFormat?: string;
+    hasValues?: boolean;
+  }[];
 }
 
-interface FileAnalysisResponseProperty {
-  columnName?: string;
-  mappedProperty?: string;
-  propertyType?: string;
-  typeFormat?: string;
-  hasValues?: boolean;
-}
 
 // processing
 interface FileProcessingRequest {
+  link: string;
+  type: string;
+  properties?: FileProcessingRequestProperty[];
+  generateValueSet?: boolean;
+
   codeSystem?: {
     id: string;
     uri?: string;
@@ -58,21 +56,18 @@ interface FileProcessingRequest {
     status: string;
     releaseDate: Date;
   };
-  generateValueSet?: boolean;
-
-  link: string;
-  type: string;
-  template: string;
-  properties?: FileProcessingRequestProperty[];
 }
 
 interface FileProcessingRequestProperty {
   columnName?: string;
-  mappedProperty?: string;
+  propertyName?: string;
   propertyType?: string;
-  typeFormat?: string;
+  propertyTypeFormat?: string;
+  preferred?: boolean;
   lang?: string;
 }
+
+type FileImportPropertyRow = FileProcessingRequestProperty & {import: boolean}
 
 
 @Component({
@@ -80,14 +75,11 @@ interface FileProcessingRequestProperty {
 })
 export class FileImportComponent {
   public analyzeResponse: {
-    properties: (FileAnalysisResponseProperty & {import: boolean})[],
+    properties: FileImportPropertyRow[],
     request?: FileAnalysisRequest
   } = {
     properties: []
   };
-
-  public loading: {[k: string]: boolean} = {};
-  public validationErrors: string[] = [];
 
   public data: any = {
     codeSystem: {},
@@ -100,10 +92,18 @@ export class FileImportComponent {
     }
   };
 
+  public loading: {[k: string]: boolean} = {};
+  public validationErrors: string[] = [];
+
+
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('form') public form?: NgForm;
 
-  public constructor(private http: HttpClient) {}
+  public constructor(
+    private http: HttpClient,
+    private notificationService: MuiNotificationService,
+    private codeSystemLibService: CodeSystemLibService
+  ) {}
 
   public initCodeSystem(): void {
     this.data.codeSystem = new CodeSystem();
@@ -112,9 +112,8 @@ export class FileImportComponent {
 
   public analyze(): void {
     const req: FileAnalysisRequest = {
-      link: this.data.source.file,
       type: this.data.source.mode,
-      template: this.data.template
+      link: this.data.source.file
     };
 
     this.loading['analyze'] = true;
@@ -124,9 +123,8 @@ export class FileImportComponent {
         request: copyDeep(req),
         properties: (resp.properties || []).map(p => ({
           columnName: p.columnName,
-          mappedProperty: this.ktsProps.includes(p.mappedProperty!) ? p.mappedProperty : undefined,
-          propertyType: p.propertyType,
-          typeFormat: p.typeFormat,
+          propertyType: p.columnType,
+          propertyTypeFormat: p.columnTypeFormat,
           import: !!p.hasValues
         }))
       };
@@ -142,8 +140,8 @@ export class FileImportComponent {
       // request
       link: this.analyzeResponse.request?.link!,
       type: this.analyzeResponse.request?.type!,
-      template: this.analyzeResponse.request?.template!,
       properties: this.analyzeResponse.properties?.filter(p => p.import),
+      generateValueSet: this.data.generateValueSet,
 
       // meta
       codeSystem: {
@@ -159,39 +157,75 @@ export class FileImportComponent {
         status: this.data.version.status,
         releaseDate: this.data.version.releaseDate
       },
-      generateValueSet: this.data.generateValueSet,
     };
 
 
     this.loading['process'] = true;
     this.http.post<void>(`${environment.terminologyApi}/file-importer/process`, req).subscribe(() => {
-      console.log("success")
+      this.notificationService.success("File processing is finished");
     }).add(() => this.loading['process'] = false);
+  }
+
+  public applyTemplate(): void {
+    const tpl = IMPORT_TEMPLATES[this.data.template];
+    if (!tpl) {
+      return;
+    }
+    this.analyzeResponse.properties.forEach(ap => {
+      const tplProp = tpl.find(tp => tp.columnName === ap.columnName);
+      if (tplProp) {
+        ap.propertyName = tplProp.propertyName;
+        ap.propertyType = tplProp.propertyType;
+        ap.propertyTypeFormat = tplProp.propertyTypeFormat;
+        ap.import = tplProp.import;
+      }
+    });
+  }
+
+
+  public loadCodeSystem(id: string): void {
+    this.data.loadedCodeSystem = undefined;
+    if (id) {
+      this.loading['cs'] = true;
+      this.codeSystemLibService.load(id, true).subscribe(cs => {
+        this.data.loadedCodeSystem = cs;
+      }).add(() => this.loading['cs'] = false);
+    }
   }
 
   private validate(): string[] {
     const errors: string[] = [];
-    const props = this.analyzeResponse.properties.filter(p => p.import);
-    const propMap = collect(props, p => p.mappedProperty!);
+    const props = this.analyzeResponse.properties.filter(p => p.import).filter(p => p.propertyName);
+    const propMap = collect(props, p => p.propertyName!);
 
-    if (props.filter(p => isNil(p.mappedProperty)).length) {
-      errors.push(`Please specify code system properties`);
-    }
     const duplicateProperties = Object.keys(propMap).filter(p => propMap[p].length > 1).filter(Boolean);
     if (duplicateProperties.filter(p => p === 'identifier').length) {
       errors.push(`Code system may have only one identifier`);
     }
-    if (duplicateProperties.length > 0) {
-      errors.push(`Duplicate KTS properties found: ${join(duplicateProperties, ', ')}`);
-    }
-    if (props.filter(p => p.propertyType === 'date' && isNil(p.typeFormat)).length) {
+    if (props.filter(p => p.propertyType === 'date' && isNil(p.propertyTypeFormat)).length) {
       errors.push(`Please select date type property format`);
     }
     return errors;
   }
 
 
-  public get ktsProps(): string[] {
-    return KTS_PROPERTIS;
+  public onPropertyNameChange(item: FileImportPropertyRow): void {
+    const properties: EntityProperty[] = [...this.data.loadedCodeSystem?.properties || []];
+    properties.push({name: 'concept-code', type: 'string'});
+
+    item.propertyType = properties.find(p => p.name === item.propertyName)?.type;
+    this.onPropertyTypeChange(item);
+  }
+
+  public onPropertyTypeChange(item: FileImportPropertyRow): void {
+    item.propertyTypeFormat = undefined;
+  }
+
+  public onPreferredChange(item: FileImportPropertyRow): void {
+    this.analyzeResponse.properties.filter(p => p !== item).forEach(p => p.preferred = false);
+  }
+
+  public get hasAnyIdentifierRow(): boolean {
+    return this.analyzeResponse.properties.filter(p => p.propertyName === 'concept-code').length > 1;
   }
 }

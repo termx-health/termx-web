@@ -7,22 +7,24 @@
         <m-form-item mName="targetCodeSystem" [mLabel]="'Resource ID'" required>
           <twl-code-system-search
               name="targetCodeSystem"
-              [(ngModel)]="data.codeSystem"
+              [(ngModel)]="data.codeSystem.id"
+              (ngModelChange)="loadCodeSystem($event)"
+              valuePrimitive
           ></twl-code-system-search>
           <div style="margin-top: 0.5rem" (click)="initCodeSystem()">Not found? <a>Create a new</a></div>
         </m-form-item>
 
         <m-card mDisplay="bordered" *ngIf="data.codeSystem.id">
           <m-form-item mLabel="entities.code-system.uri-short">
-            {{data.codeSystem?.uri || '-'}}
+            {{data.loadedCodeSystem?.uri || '-'}}
           </m-form-item>
 
           <m-form-item mLabel="entities.code-system.name">
-            {{(data.codeSystem?.names | localName) || '-'}}
+            {{(data.loadedCodeSystem?.names | localName) || '-'}}
           </m-form-item>
 
           <m-form-item mLabel="entities.code-system.description">
-            {{data.codeSystem?.description || '-'}}
+            {{data.loadedCodeSystem?.description || '-'}}
           </m-form-item>
         </m-card>
       </ng-container>
@@ -86,18 +88,11 @@
 
 
 <m-card [mTitle]="'Source'" style="margin-top: 1rem">
-  <div style="margin-bottom: 1rem">
-    <m-select [(ngModel)]="data.template">
-      <m-option [value]="'pub.e-tervis'" [label]="'pub.e-tervis'"></m-option>
-    </m-select>
-  </div>
-
   <m-form-item mName="sourceImportType">
     <div class="m-items-middle">
-
       <nz-radio-group name="sourceImportType" [(ngModel)]="data.source.type" (ngModelChange)="data.source.file = undefined" required>
-        <label nz-radio-button [nzValue]="'link'">{{'Link'}}</label>
-        <!--        <label nz-radio-button [nzValue]="'file'">{{'File'}}</label>-->
+        <label nz-radio-button [nzValue]="'link'">Link</label>
+        <!--        <label nz-radio-button [nzValue]="'file'">File</label>-->
       </nz-radio-group>
 
       <ng-container [ngSwitch]="data.source.type">
@@ -114,7 +109,7 @@
     </nz-radio-group>
   </m-form-item>
 
-  <m-button *m-card-footer (click)="analyze()" [mLoading]="loading['analyze']" [disabled]="!data.source.file || !data.template">Analyze</m-button>
+  <m-button *m-card-footer (click)="analyze()" [mLoading]="loading['analyze']" [disabled]="!data.source.file">Analyze</m-button>
 </m-card>
 
 
@@ -125,10 +120,17 @@
     </ul>
   </m-alert>
 
+  <div style="margin-bottom: 1rem">
+    <m-select [(ngModel)]="data.template" (ngModelChange)="applyTemplate()">
+      <m-option [value]="'pub.e-tervis'" [label]="'pub.e-tervis'"></m-option>
+    </m-select>
+  </div>
+
   <m-table [mData]="analyzeResponse.properties">
     <tr *mTableHead>
       <th>CSV column</th>
       <th>KTS property</th>
+      <th *ngIf="hasAnyIdentifierRow">Preferred</th>
       <th>Type</th>
       <th>Format</th>
       <th>Lang</th>
@@ -136,33 +138,65 @@
     </tr>
 
     <tr *mTableRow="let item">
-      <td>{{item.columnName}}</td>
       <td>
-        <m-select [(ngModel)]="item.mappedProperty">
-          <m-option *ngFor="let prop of ktsProps" [value]="prop" [label]="prop"></m-option>
-        </m-select>
+        {{item.columnName}}
       </td>
+
       <td>
-        <m-select [(ngModel)]="item.propertyType" (ngModelChange)="item.typeFormat = undefined">
-          <m-option [value]="'text'" [label]="'text'"></m-option>
-          <m-option [value]="'integer'" [label]="'integer'"></m-option>
-          <m-option [value]="'boolean'" [label]="'boolean'"></m-option>
-          <m-option [value]="'date'" [label]="'date'"></m-option>
+        <m-select
+            *ngIf="!item['_newProp'] && !data.codeSystem?.['_new']"
+            [(ngModel)]="item.propertyName"
+            (ngModelChange)="onPropertyNameChange(item)"
+            style="flex: 1"
+        >
+          <m-option [value]="'concept-code'" [label]="'concept-code'"></m-option>
+          <m-option
+              *ngFor="let prop of data.loadedCodeSystem?.properties"
+              [value]="prop.name" [label]="prop.name"
+          ></m-option>
+          <m-select-button label="ADD NEW" (mClick)="item['_newProp'] = true"></m-select-button>
         </m-select>
+
+        <m-input *ngIf="item['_newProp'] || data.codeSystem?.['_new']" [(ngModel)]="item.propertyName" style="flex: 1"></m-input>
+
       </td>
+
+      <td *ngIf="hasAnyIdentifierRow">
+        <m-checkbox *ngIf="item.propertyName === 'concept-code'" [(ngModel)]="item.preferred" (ngModelChange)="onPreferredChange(item)"></m-checkbox>
+      </td>
+
       <td>
-        <m-select [(ngModel)]="item.typeFormat" *ngIf="item.propertyType === 'date'">
+        <ng-container *ngIf="!item['_newProp']">
+          {{item.propertyType}}
+        </ng-container>
+
+        <twl-value-set-concept-select
+            *ngIf="item['_newProp']"
+            [(ngModel)]="item.propertyType"
+            (ngModelChange)="onPropertyTypeChange(item)"
+            valueSet="concept-property-type"
+        ></twl-value-set-concept-select>
+      </td>
+
+      <td>
+        <m-select [(ngModel)]="item.typeFormat" *ngIf="item.propertyType === 'dateTime'">
           <m-option [value]="'yyyy-MM-dd'" [label]="'yyyy-MM-dd'"></m-option>
           <m-option [value]="'dd.MM.yy'" [label]="'dd.MM.yy'"></m-option>
           <m-option [value]="'dd.MM.yyyy'" [label]="'dd.MM.yyyy'"></m-option>
           <m-option [value]="'MM/dd/yyyy'" [label]="'MM/dd/yyyy'"></m-option>
         </m-select>
       </td>
+
       <td>
-        <twl-value-set-concept-select [(ngModel)]="item.lang" valueSet="languages"></twl-value-set-concept-select>
+        <twl-value-set-concept-select
+            *ngIf="item.propertyType === 'string' && item.propertyName !== 'concept-code'"
+            [(ngModel)]="item.lang"
+            valueSet="languages"
+        ></twl-value-set-concept-select>
       </td>
+
       <td>
-        <m-checkbox [(mChecked)]="item.import"></m-checkbox>
+        <m-checkbox [(ngModel)]="item.import"></m-checkbox>
       </td>
     </tr>
 
@@ -173,5 +207,7 @@
     </tr>
   </m-table>
 
-  <m-button *m-card-footer (click)="process()" [mLoading]="loading['Process']" [disabled]="form.invalid">Process</m-button>
+  <m-button *m-card-footer (click)="process()" [mLoading]="loading['Process']" [disabled]="form.invalid || !analyzeResponse?.properties?.length">
+    Process
+  </m-button>
 </m-card>
