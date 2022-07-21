@@ -11,11 +11,14 @@ import {FhirConceptMapTranslateComponent} from './fhir/concept-map/fhir-concept-
 import {IntegrationAtcImportComponent} from './import/atc/integration-atc-import.component';
 import {IntegrationLibModule} from 'terminology-lib/integration';
 import {IntegrationIcdImportComponent} from './import/icd-10/integration-icd-import.component';
+import {ResourcesLibModule} from 'terminology-lib/resources';
 import {FhirCodeSystemSubsumesComponent} from './fhir/code-system/fhir-code-system-subsumes.component';
 import {FhirConceptMapClosureComponent} from './fhir/concept-map/fhir-concept-map-closure.component';
 import {FhirValueSetExpandComponent} from './fhir/value-set/fhir-value-set-expand.component';
 import {FhirValueSetValidateCodeComponent} from './fhir/value-set/fhir-value-set-validate-code.component';
 import {FhirCodeSystemFindMatchesComponent} from './fhir/code-system/fhir-code-system-find-matches.component';
+import {CodeSystemFileImportComponent} from './file-import/code-system/code-system-file-import.component';
+import {ConceptMapFileImportComponent} from './file-import/concept-map/concept-map-file-import.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -30,7 +33,9 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'fhir/ConceptMap/$translate', component: FhirConceptMapTranslateComponent},
       {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent},
       {path: 'atc/$import', component: IntegrationAtcImportComponent},
-      {path: 'icd-10/$import', component: IntegrationIcdImportComponent}
+      {path: 'icd-10/$import', component: IntegrationIcdImportComponent},
+      {path: 'file-import/code-system', component: CodeSystemFileImportComponent},
+      {path: 'file-import/concept-map', component: ConceptMapFileImportComponent},
     ]
   }
 ];
@@ -40,7 +45,8 @@ export const INTEGRATION_ROUTES: Routes = [
     SharedModule,
     FhirLibModule,
     JobLibModule,
-    IntegrationLibModule
+    IntegrationLibModule,
+    ResourcesLibModule
   ],
   declarations: [
     IntegrationDashboardComponent,
@@ -54,7 +60,9 @@ export const INTEGRATION_ROUTES: Routes = [
     FhirConceptMapTranslateComponent,
     FhirConceptMapClosureComponent,
     IntegrationAtcImportComponent,
-    IntegrationIcdImportComponent
+    IntegrationIcdImportComponent,
+    CodeSystemFileImportComponent,
+    ConceptMapFileImportComponent
   ],
 })
 export class IntegrationModule {
