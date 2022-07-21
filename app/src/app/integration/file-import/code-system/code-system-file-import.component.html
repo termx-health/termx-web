@@ -12,7 +12,7 @@
               valuePrimitive
               required
           ></twl-code-system-search>
-          <div style="margin-top: 0.5rem" (click)="initCodeSystem()">Not found? <a>Create a new</a></div>
+          <div style="margin-top: 0.5rem" (click)="initCodeSystem()">Not found? <a>Create new</a></div>
         </m-form-item>
 
         <m-card mDisplay="bordered" *ngIf="data.codeSystem.id">
@@ -210,7 +210,7 @@
     </tr>
   </m-table>
 
-  <m-button *m-card-footer (click)="process()" [mLoading]="loading['Process']" [disabled]="form.invalid || !analyzeResponse?.properties?.length">
+  <m-button *m-card-footer (click)="process()" [mLoading]="loading['process']" [disabled]="form.invalid || !analyzeResponse?.properties?.length">
     Process
   </m-button>
 </m-card>

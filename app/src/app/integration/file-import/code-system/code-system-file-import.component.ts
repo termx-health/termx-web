@@ -1,13 +1,12 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {CodeSystem, CodeSystemLibService, EntityProperty} from 'terminology-lib/resources';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
+import {environment} from '../../../../environments/environment';
 import {collect, copyDeep, group, isNil} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {LocalizedName} from '@kodality-health/marina-util';
 import {MuiNotificationService} from '@kodality-health/marina-ui';
 
-// @ts-ignore
 const IMPORT_TEMPLATES: {
   [p: string]: FileImportPropertyRow[]
 } = {
@@ -23,21 +22,21 @@ const IMPORT_TEMPLATES: {
       columnName: 'Lühinimetus',
       propertyName: 'alias',
       propertyType: 'string',
-      lang: 'est',
+      lang: 'et',
       import: false
     },
     {
       columnName: 'Nimetus',
       propertyName: 'display',
       propertyType: 'string',
-      lang: 'est',
+      lang: 'et',
       import: true
     },
     {
       columnName: 'Pikk_nimetus',
       propertyName: 'designation',
       propertyType: 'string',
-      lang: 'est',
+      lang: 'et',
       import: true
     },
     {
@@ -69,22 +68,21 @@ const IMPORT_TEMPLATES: {
     {
       columnName: 'Viimane_muudatus_kpv',
       propertyName: 'modifiedAt',
-      propertyType: 'string',
+      propertyType: 'dateTime',
       propertyTypeFormat: 'dd.MM.yyyy',
       import: true
     },
     {
       columnName: 'Staatus',
       propertyName: 'status',
-      propertyType: 'string',
-      lang: 'est',
+      propertyType: 'boolean',
       import: true
     },
     {
       columnName: 'Selgitus',
       propertyName: 'description',
       propertyType: 'string',
-      lang: 'est',
+      lang: 'et',
       import: false
     }
   ]
@@ -147,9 +145,9 @@ type FileImportPropertyRow = FileProcessingRequestProperty & {import: boolean}
 
 
 @Component({
-  templateUrl: 'file-import.component.html'
+  templateUrl: 'code-system-file-import.component.html'
 })
-export class FileImportComponent {
+export class CodeSystemFileImportComponent {
   public analyzeResponse: {
     properties: FileImportPropertyRow[],
     request?: FileAnalysisRequest
@@ -194,7 +192,7 @@ export class FileImportComponent {
     };
 
     this.loading['analyze'] = true;
-    this.http.post<FileAnalysisResponse>(`${environment.terminologyApi}/file-importer/analyze`, req).subscribe(resp => {
+    this.http.post<FileAnalysisResponse>(`${environment.terminologyApi}/file-importer/code-system/analyze`, req).subscribe(resp => {
       this.validationErrors = [];
       this.data.template = undefined;
       this.analyzeResponse = {
@@ -239,7 +237,7 @@ export class FileImportComponent {
 
 
     this.loading['process'] = true;
-    this.http.post<void>(`${environment.terminologyApi}/file-importer/process`, req).subscribe(() => {
+    this.http.post<void>(`${environment.terminologyApi}/file-importer/code-system/process`, req).subscribe(() => {
       this.notificationService.success("File processing is finished");
     }).add(() => this.loading['process'] = false);
   }
@@ -259,6 +257,7 @@ export class FileImportComponent {
         ap.propertyType = tplProp.propertyType;
         ap.propertyTypeFormat = tplProp.propertyTypeFormat;
         ap.preferred = tplProp.preferred;
+        ap.lang = tplProp.lang;
         ap.import = tplProp.import;
         (ap as any)['_newProp'] = !existingProperties.includes(tplProp.propertyName);
         this.onPreferredChange(ap);
