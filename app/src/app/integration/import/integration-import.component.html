@@ -8,13 +8,13 @@
       <div class="m-items-between">
         <m-button (click)="setDefaultData()" [disabled]="loading">{{'web.integration.set-default-data' | translate}}</m-button>
         <m-button mDisplay="primary"
-            [disabled]="!data.uri || ((system !== 'atc' || edition !== 'int')? !zipSourceUrl : false) || loading"
+            [disabled]="!data.uri || ((system !== 'atc' || edition !== 'int')? !data.zipSourceUrl : false) || loading"
             (click)="import()">{{'web.integration.send-request' | translate}}</m-button>
       </div>
     </div>
 
     <m-form-item *ngIf="system !== 'atc' || edition !== 'int'" mLabel="web.integration.import.zip-source-url" required>
-      <m-input [(ngModel)]="zipSourceUrl"></m-input>
+      <m-input [(ngModel)]="data.zipSourceUrl"></m-input>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.uri" required>
       <m-input [(ngModel)]="data.uri"></m-input>

@@ -26,6 +26,7 @@ import {OauthConfigModule} from './auth/oauth-config.module';
 import {OauthHttpInterceptor} from './auth/oauth-http-interceptor.service';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {SharedModule} from './core/shared/shared.module';
+import {GlobalSearchModule} from './globalsearch/global-search.module';
 
 
 registerLocaleData(et);
@@ -88,6 +89,8 @@ export function MarinaUiConfigFactory(): MuiConfig {
 
     PrivilegesModule,
     AuthLibModule,
+
+    GlobalSearchModule,
 
     ToolsModule,
     NoPrivilegeModule,

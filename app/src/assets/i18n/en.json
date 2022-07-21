@@ -350,6 +350,34 @@
             "version": "Version",
             "system": "System(URL)",
             "display": "Display"
+          },
+          "subsumes": {
+            "code-a": "CodeA",
+            "code-b": "CodeB",
+            "system": "System",
+            "version": "Version"
+          },
+          "find-matches": {
+            "system": "System",
+            "version": "Version",
+            "properties": "Properties",
+            "property-name": "Name",
+            "property-value": "Value",
+            "exact": "Exact"
+          }
+        },
+        "value-set": {
+          "expand": {
+            "url": "URL",
+            "value-set-version": "ValueSetVersion"
+          },
+          "validate-code": {
+            "url": "URL",
+            "value-set-version": "ValueSetVersion",
+            "code": "Code",
+            "system": "System",
+            "system-version": "SystemVersion",
+            "display": "Display"
           }
         },
         "concept-map": {
@@ -360,6 +388,13 @@
             "system": "System(URL)",
             "version": "Version",
             "target-system": "TargetSystem"
+          },
+          "closure": {
+            "name": "Name",
+            "version": "Version",
+            "concepts": "Concepts",
+            "system": "System",
+            "code": "Code"
           }
         }
       },
@@ -410,6 +445,15 @@
         "header": "Terminology Service API",
         "content": "Terminology Service APIs enable automated exchange of clinical terminology content and resources.",
         "button": "Terminology Service API"
+      }
+    },
+    "global-search": {
+      "dashboard": {
+        "header": "Search",
+        "concepts": "Concepts",
+        "code-systems": "CodeSystems",
+        "value-sets": "ValueSets",
+        "map-sets": "MapSets"
       }
     }
   },
@@ -487,6 +531,7 @@
       "type": "Type",
       "code": "Code",
       "description": "Description",
+      "code-system": "Code system",
       "versions": "Concept versions"
     },
     "code-system-association": {

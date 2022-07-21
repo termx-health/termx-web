@@ -21,4 +21,8 @@ export class FhirConceptMapLibService {
   public translate(params: FhirConceptMapTranslateParams): Observable<FhirParameters> {
     return this.http.get<FhirParameters>(`${this.baseUrl}/$translate`, {params: SearchHttpParams.build(params)});
   }
+
+  public closure(params: FhirParameters): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}/$closure`, params);
+  }
 }
