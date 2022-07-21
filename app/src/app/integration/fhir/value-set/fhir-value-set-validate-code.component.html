@@ -1,0 +1,91 @@
+<m-card>
+  <m-spinner [mLoading]="loading">
+    <div *m-card-header class="m-items-between">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>FHIR</nz-breadcrumb-item>
+        <nz-breadcrumb-item>ValueSet</nz-breadcrumb-item>
+        <nz-breadcrumb-item>$validate-code</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <m-button mDisplay="primary" [disabled]="!data.url || !data.valueSetVersion || !data.code" (click)="validateCode()">{{'web.integration.send-request' | translate}}</m-button>
+    </div>
+
+    <m-form-item [mLabel]="url" required>
+      <ng-template #url>
+        <div>{{'web.integration.fhir.value-set.validate-code.url' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover [mContent]="urlContent"></m-icon>
+        <ng-template #urlContent>
+          Value set Canonical URL. The server must know the value set (e.g. it is defined explicitly in the server's value sets, or it is defined implicitly by
+          some code system known to the server
+        </ng-template>
+      </ng-template>
+      <m-input [(ngModel)]="data.url"></m-input>
+    </m-form-item>
+    <m-form-item [mLabel]="conceptMapVersion" required>
+      <ng-template #conceptMapVersion>
+        <div>{{'web.integration.fhir.value-set.validate-code.value-set-version' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover [mContent]="conceptMapVersion"></m-icon>
+        <ng-template #conceptMapVersion>
+          The identifier that is used to identify a specific version of the value set to be used when validating the code. This is an arbitrary value managed
+          by the value set author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is
+          not available.
+        </ng-template>
+      </ng-template>
+      <m-input [(ngModel)]="data.valueSetVersion"></m-input>
+    </m-form-item>
+
+    <m-form-item [mLabel]="code" required>
+      <ng-template #code>
+        <div>{{'web.integration.fhir.value-set.validate-code.code' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover [mContent]="code"></m-icon>
+        <ng-template #code>
+          The code that is to be validated. If a code is provided, a system or a context must be provided (if a context is provided, then the server SHALL
+          ensure that the code is not ambiguous without a system)
+        </ng-template>
+      </ng-template>
+      <m-input [(ngModel)]="data.code"></m-input>
+    </m-form-item>
+
+    <m-form-item [mLabel]="system">
+      <ng-template #system>
+        <div>{{'web.integration.fhir.value-set.validate-code.system' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="The system for the code that is to be validated"></m-icon>
+      </ng-template>
+      <m-input [(ngModel)]="data.system"></m-input>
+    </m-form-item>
+
+    <m-form-item [mLabel]="systemVersion">
+      <ng-template #systemVersion>
+        <div>{{'web.integration.fhir.value-set.validate-code.system-version' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="The version of the system, if one was provided in the source data"></m-icon>
+      </ng-template>
+      <m-input [(ngModel)]="data.systemVersion"></m-input>
+    </m-form-item>
+
+    <m-form-item [mLabel]="display">
+      <ng-template #display>
+        <div>{{'web.integration.fhir.value-set.validate-code.display' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover [mContent]="display"></m-icon>
+        <ng-template #display>The display associated with the code, if provided. If a display is provided a code must be provided. If no display is provided,
+          the server cannot validate the display value, but may choose to return a recommended display name using the display parameter in the outcome.
+          Whether displays are case sensitive is code system dependent</ng-template>
+      </ng-template>
+      <m-input [(ngModel)]="data.display"></m-input>
+    </m-form-item>
+
+    <m-card *ngIf="response || error" class="m-card-inside">
+      <div *m-card-header class="m-items-middle">
+        <div class="m-card-title">{{'web.integration.response' | translate}}</div>
+        <m-button (click)="copyResult()">
+          <m-icon mCode="copy"></m-icon>
+        </m-button>
+      </div>
+      <pre *ngIf="response">{{response | json}}</pre>
+      <div *ngFor="let issue of error?.issue">
+        <m-alert [mType]="issue.severity" mShowIcon>
+          {{issue?.details?.text}}
+        </m-alert>
+      </div>
+    </m-card>
+
+  </m-spinner>
+</m-card>

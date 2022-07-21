@@ -15,5 +15,7 @@ export class ConceptSearchParams extends QueryParams {
   public codeSystemEntityStatus?: string;
   public valueSet?: string;
   public valueSetVersion?: string;
+  public propertyValues?: string;
+  public propertyValuesPartial?: string;
 }
 

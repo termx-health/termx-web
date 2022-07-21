@@ -1,0 +1,59 @@
+<m-card>
+  <m-spinner [mLoading]="loading">
+    <div *m-card-header class="m-items-between">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>FHIR</nz-breadcrumb-item>
+        <nz-breadcrumb-item>CodeSystem</nz-breadcrumb-item>
+        <nz-breadcrumb-item>$subsumes</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <m-button mDisplay="primary" [disabled]="!data.codeA || !data.codeB || !data.system" (click)="subsumes()">{{'web.integration.send-request' | translate}}</m-button>
+    </div>
+
+    <m-form-item [mLabel]="codeA" required>
+      <ng-template #codeA>
+        <div>{{'web.integration.fhir.code-system.subsumes.code-a' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="The 'A' code that is to be tested. If a code is provided, a system must be provided"></m-icon>
+      </ng-template>
+      <m-input [(ngModel)]="data.codeA"></m-input>
+    </m-form-item>
+
+    <m-form-item [mLabel]="codeB" required>
+      <ng-template #codeB>
+        <div>{{'web.integration.fhir.code-system.subsumes.code-b' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="The 'B' code that is to be tested. If a code is provided, a system must be provided"></m-icon>
+      </ng-template>
+      <m-input [(ngModel)]="data.codeB"></m-input>
+    </m-form-item>
+
+    <m-form-item [mLabel]="system" required>
+      <ng-template #system>
+        <div>{{'web.integration.fhir.code-system.subsumes.system' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="The code system in which subsumption testing is to be performed. This must be provided unless the operation is invoked on a code system instance"></m-icon>
+      </ng-template>
+      <m-input [(ngModel)]="data.system"></m-input>
+    </m-form-item>
+
+    <m-form-item [mLabel]="version">
+      <ng-template #version>
+        <div>{{'web.integration.fhir.code-system.subsumes.version' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover mContent="The version of the code system, if one was provided in the source data"></m-icon>
+      </ng-template>
+      <m-input [(ngModel)]="data.version"></m-input>
+    </m-form-item>
+
+    <m-card *ngIf="response || error" class="m-card-inside">
+      <div *m-card-header class="m-items-middle">
+        <div class="m-card-title">{{'web.integration.response' | translate}}</div>
+        <m-button (click)="copyResult()">
+          <m-icon mCode="copy"></m-icon>
+        </m-button>
+      </div>
+      <pre *ngIf="response">{{response | json}}</pre>
+      <div *ngFor="let issue of error?.issue">
+        <m-alert [mType]="issue.severity" mShowIcon>
+          {{issue?.details?.text}}
+        </m-alert>
+      </div>
+    </m-card>
+  </m-spinner>
+</m-card>

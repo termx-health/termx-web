@@ -1,0 +1,52 @@
+<m-card>
+  <m-spinner [mLoading]="loading">
+    <div *m-card-header class="m-items-between">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>FHIR</nz-breadcrumb-item>
+        <nz-breadcrumb-item>ValueSet</nz-breadcrumb-item>
+        <nz-breadcrumb-item>$expand</nz-breadcrumb-item>
+      </nz-breadcrumb>
+      <m-button mDisplay="primary" [disabled]="!data.url || !data.valueSetVersion" (click)="expand()">{{'web.integration.send-request' | translate}}</m-button>
+    </div>
+
+    <m-form-item [mLabel]="url" required>
+      <ng-template #url>
+        <div>{{'web.integration.fhir.value-set.expand.url' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover [mContent]="urlContent"></m-icon>
+        <ng-template #urlContent>
+          A canonical reference to a value set. The server must know the value set (e.g. it is defined explicitly in the server's value sets, or it is defined
+          implicitly by some code system known to the server
+        </ng-template>
+      </ng-template>
+      <m-input [(ngModel)]="data.url"></m-input>
+    </m-form-item>
+    <m-form-item [mLabel]="conceptMapVersion" required>
+      <ng-template #conceptMapVersion>
+        <div>{{'web.integration.fhir.value-set.expand.value-set-version' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover [mContent]="conceptMapVersion"></m-icon>
+        <ng-template #conceptMapVersion>
+          The identifier that is used to identify a specific version of the value set to be used when generating the expansion. This is an arbitrary value
+          managed by the value set author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version
+          is not available.
+        </ng-template>
+      </ng-template>
+      <m-input [(ngModel)]="data.valueSetVersion"></m-input>
+    </m-form-item>
+
+    <m-card *ngIf="response || error" class="m-card-inside">
+      <div *m-card-header class="m-items-middle">
+        <div class="m-card-title">{{'web.integration.response' | translate}}</div>
+        <m-button (click)="copyResult()">
+          <m-icon mCode="copy"></m-icon>
+        </m-button>
+      </div>
+      <pre *ngIf="response">{{response | json}}</pre>
+      <div *ngFor="let issue of error?.issue">
+        <m-alert [mType]="issue.severity" mShowIcon>
+          {{issue?.details?.text}}
+        </m-alert>
+      </div>
+    </m-card>
+
+  </m-spinner>
+</m-card>
