@@ -44,6 +44,11 @@
         <m-button mDisplay="link" [routerLink]="'./icd-10/$import'" [queryParams]="{edition: 'int'}">ICD-10 int import</m-button>
         <m-button mDisplay="link" [routerLink]="'./icd-10/$import'" [queryParams]="{edition: 'est'}">ICD-10 est import</m-button>
       </div>
+
+      <m-divider mText="File import"></m-divider>
+      <div style="display: grid">
+        <m-button mDisplay="link" [routerLink]="'./file-import'">Code system file import</m-button>
+      </div>
     </m-card>
   </div>
   <div nz-col [nzMd]="18" [nzXs]="24">
