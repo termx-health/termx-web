@@ -1,4 +1,4 @@
-import {CodeName, LocalizedName} from '@kodality-health/marina-util';
+import {LocalizedName} from '@kodality-health/marina-util';
 import {MeasurementUnitMapping} from './measurement-unit-mapping';
 import {DateRange} from '@kodality-web/core-util';
 
@@ -10,7 +10,7 @@ export class MeasurementUnit {
   public period?: DateRange;
   public ordering?: number;
   public rounding?: number;
-  public kind?: CodeName;
+  public kind?: string;
   public definitionUnit?: string;
   public definitionValue?: string;
 

@@ -27,6 +27,8 @@ import {SharedModule} from './core/shared/shared.module';
 import {GlobalSearchModule} from './globalsearch/global-search.module';
 import {MeasurementUnitLibModule} from 'terminology-lib/measurementunit';
 import {MeasurementUnitModule} from './measurementunit/measurement-unit.module';
+import {OidcSecurityService} from 'angular-auth-oidc-client';
+import {OauthHttpInterceptor} from './auth/oauth-http-interceptor.service';
 
 
 registerLocaleData(et);

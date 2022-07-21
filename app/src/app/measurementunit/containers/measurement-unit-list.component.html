@@ -2,37 +2,37 @@
   <div *m-card-header class="m-items-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div class="m-items-middle">
-      <twa-add-button *mPrivileged="'*.code-system.edit'" [routerLink]="['code-systems/add']">
-        {{'web.code-system.list.add-code-system' | translate}}
+      <twa-add-button *twaPrivileged="'*.edit'" [routerLink]="['add']">
+        {{'web.measurement-unit.form.add-header' | translate}}
       </twa-add-button>
-      <m-button [routerLink]="'finder/code-systems'">
-        <m-icon mCode="layout"></m-icon>
-      </m-button>
     </div>
   </div>
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
       <th></th>
-      <th mColumnKey="id">{{'gode' | translate}}</th>
-      <th mColumnKey="name">{{'neim' | translate}}</th>
-      <th mColumnKey="alias">{{'aliaz' | translate}}</th>
-      <th mColumnKey="rounding">{{'runding' | translate}}</th>
-      <th mColumnKey="kind">{{'kid' | translate}}</th>
-      <th mColumnKey="base unit">{{'based junit' | translate}}</th>
-      <th mColumnKey="base unit coeficient">{{'based junit coefic' | translate}}</th>
-      <th mColumnKey="period">{{'perod' | translate}}</th>
+      <th mColumnKey="code">{{'entities.measurement-unit.code' | translate}}></th>
+      <th mColumnKey="name">{{'entities.measurement-unit.name' | translate}}</th>
+      <th mColumnKey="alias">{{'entities.measurement-unit.alias' | translate}}</th>
+      <th mColumnKey="rounding">{{'entities.measurement-unit.rounding' | translate}}</th>
+      <th mColumnKey="kind">{{'entities.measurement-unit.kind' | translate}}</th>
+      <th mColumnKey="definition unit">{{'entities.measurement-unit.definitionUnit' | translate}}</th>
+      <th mColumnKey="definition unit coeficient">{{'entities.measurement-unit.definitionValue' | translate}}</th>
+      <th mColumnKey="period">{{'entities.measurement-unit.period' | translate}}</th>
     </tr>
 
     <tr *mTableRow="let mu">
       <td>
-        <a [routerLink]="['measurement-units', mu.id,'edit']">{{mu.id}}</a>
+        <a [routerLink]="[mu.id, 'edit']">{{mu.id}}</a>
       </td>
+      <td>{{mu.code}}</td>
       <td>{{mu.names | localName}}</td>
       <td>{{mu.alias | localName}}</td>
       <td>{{mu.rounding}}</td>
-      <td>{{mu.kind.names | localName}}</td>
-      <!--TODO when we have sample data and know where in the object the values will be -->
+      <td>{{mu.kind | localName}}</td>
+      <td>{{mu.definitionUnit}}</td>
+      <td>{{mu.definitionValue}}</td>
+      <td>{{mu.period.lower}}-{{mu.period.upper}}</td>
     </tr>
 
 

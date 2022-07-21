@@ -1,0 +1,56 @@
+<div nz-row nzJustify="center">
+  <div nz-col [nzLg]="18" [nzXs]="24">
+    <m-spinner [mLoading]="loading['save']">
+      <m-card [mTitle]="'web.measurement-unit.form.view-header'" [mShowSkeleton]="loading['init']">
+        <form #form="ngForm" *ngIf="measurementUnit">
+          <m-form-item mLabel="entities.measurement-unit.code">
+            {{measurementUnit.code}}
+          </m-form-item>
+          <m-form-item mLabel="entities.measurement-unit.name">
+            <div *ngFor="let language of measurementUnit.names | keys">
+              {{language}} - {{measurementUnit.names[language]}}
+            </div>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.measurement-unit.alias">
+            <div *ngFor="let language of measurementUnit.alias | keys">
+              {{language}} - {{measurementUnit.alias[language]}}
+            </div>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.measurement-unit.period" class="m-bold">
+            {{'web.measurement-unit.form.from' | translate}}
+            {{measurementUnit.period.lower | localDate}}
+            {{'web.measurement-unit.form.to' | translate}}
+            <div *ngIf="'*.edit' | twaHasAnyPrivilege; else view">
+              <m-date-picker [(ngModel)]="measurementUnit.period.upper"></m-date-picker>
+            </div>
+            <ng-template #view>{{measurementUnit.period.upper | localDate}}</ng-template>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.measurement-unit.rounding">
+            {{measurementUnit.rounding}}
+          </m-form-item>
+
+          <m-form-item mLabel="entities.measurement-unit.kind">
+            {{measurementUnit.kind}}
+          </m-form-item>
+          <m-form-item mLabel="entities.measurement-unit.definitionUnit">
+            {{measurementUnit.definitionUnit}}
+          </m-form-item>
+          <m-form-item mLabel="entities.measurement-unit.definitionValue">
+            {{measurementUnit.definitionValue}}
+          </m-form-item>
+        </form>
+
+        <div *twaPrivileged="'*.edit'">
+          <ng-container *m-card-footer>
+            <m-button mDisplay="primary" *twaPrivileged="'*.edit'" [mLoading]="loading['save']" [disabled]="!!measurementUnit.period.upper" (click)="save()">
+              {{'core.btn.save' | translate}}
+            </m-button>
+          </ng-container>
+        </div>
+      </m-card>
+    </m-spinner>
+  </div>
+</div>
