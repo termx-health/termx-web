@@ -150,9 +150,8 @@
             (ngModelChange)="onPropertyNameChange(item)"
             style="flex: 1"
         >
-          <m-option [value]="'concept-code'" [label]="'concept-code'"></m-option>
           <m-option
-              *ngFor="let prop of data.loadedCodeSystem?.properties"
+              *ngFor="let prop of data.loadedCodeSystem?.properties | apply: decorateWithDefaultProperties"
               [value]="prop.name" [label]="prop.name"
           ></m-option>
           <m-select-button label="ADD NEW" (mClick)="item['_newProp'] = true"></m-select-button>

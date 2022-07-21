@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {CodeSystem, CodeSystemLibService, EntityProperty} from 'terminology-lib/resources';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
-import {collect, copyDeep, isNil} from '@kodality-web/core-util';
+import {collect, copyDeep, group, isNil} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {LocalizedName} from '@kodality-health/marina-util';
 import {MuiNotificationService} from '@kodality-health/marina-ui';
@@ -14,12 +14,21 @@ const IMPORT_TEMPLATES: {
   'pub.e-tervis': [
     {
       columnName: 'Kood',
-      propertyName: 'identifier',
+      propertyName: 'concept-code',
+      propertyType: 'string',
+      preferred: true,
       lang: 'et',
       import: true
     }
   ]
 };
+
+const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
+  {name: 'concept-code', type: 'string'},
+  {name: 'description', type: 'string'},
+  {name: 'definition', type: 'string'},
+  {name: 'display', type: 'string'}
+];
 
 
 // analysis
@@ -178,7 +187,9 @@ export class FileImportComponent {
         ap.propertyName = tplProp.propertyName;
         ap.propertyType = tplProp.propertyType;
         ap.propertyTypeFormat = tplProp.propertyTypeFormat;
+        ap.preferred = tplProp.preferred;
         ap.import = tplProp.import;
+        this.onPreferredChange(ap);
       }
     });
   }
@@ -211,8 +222,7 @@ export class FileImportComponent {
 
 
   public onPropertyNameChange(item: FileImportPropertyRow): void {
-    const properties: EntityProperty[] = [...this.data.loadedCodeSystem?.properties || []];
-    properties.push({name: 'concept-code', type: 'string'});
+    const properties: EntityProperty[] = this.decorateWithDefaultProperties(this.data.loadedCodeSystem?.properties)
 
     item.propertyType = properties.find(p => p.name === item.propertyName)?.type;
     this.onPropertyTypeChange(item);
@@ -228,5 +238,12 @@ export class FileImportComponent {
 
   public get hasAnyIdentifierRow(): boolean {
     return this.analyzeResponse.properties.filter(p => p.propertyName === 'concept-code').length > 1;
+  }
+
+  public decorateWithDefaultProperties(entityProperties: EntityProperty[]): EntityProperty[] {
+    return Object.values({
+      ...group(DEFAULT_KTS_PROPERTIES, e => e.name!),
+      ...group(entityProperties || [], e => e.name!),
+    });
   }
 }
