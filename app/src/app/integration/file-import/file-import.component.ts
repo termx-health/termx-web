@@ -117,6 +117,7 @@ export class FileImportComponent {
   public initCodeSystem(): void {
     this.data.codeSystem = new CodeSystem();
     this.data.codeSystem['_new'] = true;
+    this.data.loadedCodeSystem = undefined;
   }
 
   public analyze(): void {

@@ -10,6 +10,7 @@
               [(ngModel)]="data.codeSystem.id"
               (ngModelChange)="loadCodeSystem($event)"
               valuePrimitive
+              required
           ></twl-code-system-search>
           <div style="margin-top: 0.5rem" (click)="initCodeSystem()">Not found? <a>Create a new</a></div>
         </m-form-item>
@@ -43,8 +44,8 @@
             </div>
           </m-form-item>
 
-          <m-form-item mLabel="entities.code-system.name">
-            <m-multi-language-input name="name" [(ngModel)]="data.codeSystem.names"></m-multi-language-input>
+          <m-form-item mName="name" mLabel="entities.code-system.name" required>
+            <m-multi-language-input name="name" [(ngModel)]="data.codeSystem.names" required></m-multi-language-input>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="entities.code-system.description">
@@ -167,12 +168,12 @@
 
       <td>
         <!-- Property type -->
-        <ng-container *ngIf="!item['_newProp']">
+        <ng-container *ngIf="!item['_newProp'] && item.propertyName">
           {{item.propertyType}}
         </ng-container>
 
         <twl-value-set-concept-select
-            *ngIf="item['_newProp']"
+            *ngIf="item['_newProp'] || !item.propertyName"
             [(ngModel)]="item.propertyType"
             (ngModelChange)="onPropertyTypeChange(item)"
             valueSet="concept-property-type"
