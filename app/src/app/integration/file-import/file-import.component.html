@@ -181,7 +181,7 @@
 
       <td>
         <!-- Property format -->
-        <m-select [(ngModel)]="item.typeFormat" *ngIf="item.propertyType === 'dateTime'">
+        <m-select [(ngModel)]="item.propertyTypeFormat" *ngIf="item.propertyType === 'dateTime'">
           <m-option [value]="'yyyy-MM-dd'" [label]="'yyyy-MM-dd'"></m-option>
           <m-option [value]="'dd.MM.yy'" [label]="'dd.MM.yy'"></m-option>
           <m-option [value]="'dd.MM.yyyy'" [label]="'dd.MM.yyyy'"></m-option>
