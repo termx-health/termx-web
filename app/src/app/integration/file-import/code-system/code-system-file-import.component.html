@@ -93,12 +93,12 @@
     <div class="m-items-middle">
       <nz-radio-group name="sourceImportType" [(ngModel)]="data.source.type" (ngModelChange)="data.source.file = undefined" required>
         <label nz-radio-button [nzValue]="'link'">Link</label>
-        <!--        <label nz-radio-button [nzValue]="'file'">File</label>-->
+        <label nz-radio-button [nzValue]="'file'">File</label>
       </nz-radio-group>
 
       <ng-container [ngSwitch]="data.source.type">
         <m-input *ngSwitchCase="'link'" name="sourceImportFile" [(ngModel)]="data.source.file" style="flex: 1" required></m-input>
-        <input *ngSwitchCase="'file'" id="fileInput" #fileInput name="sourceImportFile" [(ngModel)]="data.source.file" type="file" required>
+        <input *ngSwitchCase="'file'" #fileInput id="fileInput" name="sourceImportFile" type="file" [(ngModel)]="data.source.file" required>
       </ng-container>
     </div>
   </m-form-item>

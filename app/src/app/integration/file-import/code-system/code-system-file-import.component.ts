@@ -191,8 +191,14 @@ export class CodeSystemFileImportComponent {
       link: this.data.source.file
     };
 
+    const formData = new FormData();
+    formData.append('request', JSON.stringify(req));
+    if (this.data.source.type === 'file') {
+      formData.append('file', this.fileInput?.nativeElement?.files?.[0] as Blob, 'files');
+    }
+
     this.loading['analyze'] = true;
-    this.http.post<FileAnalysisResponse>(`${environment.terminologyApi}/file-importer/code-system/analyze`, req).subscribe(resp => {
+    this.http.post<FileAnalysisResponse>(`${environment.terminologyApi}/file-importer/code-system/analyze`, formData).subscribe(resp => {
       this.validationErrors = [];
       this.data.template = undefined;
       this.analyzeResponse = {
@@ -235,9 +241,14 @@ export class CodeSystemFileImportComponent {
       },
     };
 
+    const formData = new FormData();
+    formData.append('request', JSON.stringify(req));
+    if (this.data.source.type === 'file') {
+      formData.append('file', this.fileInput?.nativeElement?.files?.[0] as Blob, 'files');
+    }
 
     this.loading['process'] = true;
-    this.http.post<void>(`${environment.terminologyApi}/file-importer/code-system/process`, req).subscribe(() => {
+    this.http.post<void>(`${environment.terminologyApi}/file-importer/code-system/process`, formData).subscribe(() => {
       this.notificationService.success("File processing is finished");
     }).add(() => this.loading['process'] = false);
   }
