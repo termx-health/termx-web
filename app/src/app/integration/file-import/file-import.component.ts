@@ -163,7 +163,7 @@ export class FileImportComponent {
     generateValueSet: false,
     source: {
       type: 'link',
-      file: 'https://pub.e-tervis.ee/classifications/Diagnoosi%20liik/3/3.csv',
+      file: undefined,
       mode: 'csv'
     }
   };
