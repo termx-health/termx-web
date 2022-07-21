@@ -38,9 +38,9 @@
         </m-form-item>
 
         <m-card mDisplay="bordered">
-          <m-form-item mName="uri" mLabel="entities.code-system.uri">
+          <m-form-item mName="uri" mLabel="entities.code-system.uri" required>
             <div class="m-items-middle">
-              <m-input name="uri" [(ngModel)]="data.codeSystem.uri"></m-input>
+              <m-input name="uri" [(ngModel)]="data.codeSystem.uri" required></m-input>
             </div>
           </m-form-item>
 

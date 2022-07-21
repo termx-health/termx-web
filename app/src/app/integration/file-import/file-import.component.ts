@@ -17,8 +17,75 @@ const IMPORT_TEMPLATES: {
       propertyName: 'concept-code',
       propertyType: 'string',
       preferred: true,
-      lang: 'et',
       import: true
+    },
+    {
+      columnName: 'Lühinimetus',
+      propertyName: 'alias',
+      propertyType: 'string',
+      lang: 'est',
+      import: false
+    },
+    {
+      columnName: 'Nimetus',
+      propertyName: 'display',
+      propertyType: 'string',
+      lang: 'est',
+      import: true
+    },
+    {
+      columnName: 'Pikk_nimetus',
+      propertyName: 'designation',
+      propertyType: 'string',
+      lang: 'est',
+      import: true
+    },
+    {
+      columnName: 'Vanem_kood',
+      propertyName: 'parent',
+      propertyType: 'string',
+      import: false
+    },
+    {
+      columnName: 'Hierarhia_aste',
+      propertyName: 'level',
+      propertyType: 'integer',
+      import: false
+    },
+    {
+      columnName: 'Kehtivuse_alguse_kpv',
+      propertyName: 'validFrom',
+      propertyType: 'dateTime',
+      propertyTypeFormat: 'dd.MM.yyyy',
+      import: true
+    },
+    {
+      columnName: 'Kehtivuse_lõpu_kpv',
+      propertyName: 'validTo',
+      propertyType: 'dateTime',
+      propertyTypeFormat: 'dd.MM.yyyy',
+      import: true
+    },
+    {
+      columnName: 'Viimane_muudatus_kpv',
+      propertyName: 'modifiedAt',
+      propertyType: 'string',
+      propertyTypeFormat: 'dd.MM.yyyy',
+      import: true
+    },
+    {
+      columnName: 'Staatus',
+      propertyName: 'status',
+      propertyType: 'string',
+      lang: 'est',
+      import: true
+    },
+    {
+      columnName: 'Selgitus',
+      propertyName: 'description',
+      propertyType: 'string',
+      lang: 'est',
+      import: false
     }
   ]
 };
@@ -129,6 +196,7 @@ export class FileImportComponent {
     this.loading['analyze'] = true;
     this.http.post<FileAnalysisResponse>(`${environment.terminologyApi}/file-importer/analyze`, req).subscribe(resp => {
       this.validationErrors = [];
+      this.data.template = undefined;
       this.analyzeResponse = {
         request: copyDeep(req),
         properties: (resp.properties || []).map(p => ({
@@ -182,6 +250,8 @@ export class FileImportComponent {
     if (!tpl) {
       return;
     }
+    const existingProperties = this.decorateWithDefaultProperties(this.data.loadedCodeSystem?.properties).map(p => p.name);
+
     this.analyzeResponse.properties.forEach(ap => {
       const tplProp = tpl.find(tp => tp.columnName === ap.columnName);
       if (tplProp) {
@@ -190,6 +260,7 @@ export class FileImportComponent {
         ap.propertyTypeFormat = tplProp.propertyTypeFormat;
         ap.preferred = tplProp.preferred;
         ap.import = tplProp.import;
+        (ap as any)['_newProp'] = !existingProperties.includes(tplProp.propertyName);
         this.onPreferredChange(ap);
       }
     });
@@ -223,7 +294,7 @@ export class FileImportComponent {
 
 
   public onPropertyNameChange(item: FileImportPropertyRow): void {
-    const properties: EntityProperty[] = this.decorateWithDefaultProperties(this.data.loadedCodeSystem?.properties)
+    const properties: EntityProperty[] = this.decorateWithDefaultProperties(this.data.loadedCodeSystem?.properties);
 
     item.propertyType = properties.find(p => p.name === item.propertyName)?.type;
     this.onPropertyTypeChange(item);
