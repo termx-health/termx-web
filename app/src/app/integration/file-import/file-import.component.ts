@@ -166,6 +166,7 @@ export class FileImportComponent {
     }).add(() => this.loading['process'] = false);
   }
 
+
   public applyTemplate(): void {
     const tpl = IMPORT_TEMPLATES[this.data.template];
     if (!tpl) {
