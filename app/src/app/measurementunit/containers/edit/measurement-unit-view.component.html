@@ -46,7 +46,7 @@
 
         <ng-container *twaPrivileged="'*.edit'">
           <ng-container *m-card-footer>
-            <m-button mDisplay="primary" *twaPrivileged="'*.edit'" [mLoading]="loading['save']" [disabled]="!measurementUnit?.period?.upper" (click)="save()">
+            <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="!measurementUnit?.period?.upper" (click)="save()">
               {{'core.btn.save' | translate}}
             </m-button>
           </ng-container>
