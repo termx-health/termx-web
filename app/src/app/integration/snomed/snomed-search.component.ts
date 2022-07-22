@@ -2,6 +2,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService, SnomedRefsetSearchParams} from 'terminology-lib/integration';
 import {debounceTime, distinctUntilChanged, EMPTY, finalize, forkJoin, Observable, Subject, switchMap, tap} from 'rxjs';
 import {isDefined, SearchResult} from '@kodality-web/core-util';
+import {MuiNotificationService} from '@kodality-health/marina-ui';
 
 @Component({
   selector: 'twa-snomed-search',
@@ -29,7 +30,8 @@ export class SnomedSearchComponent implements OnInit {
   @Output() public conceptSelected: EventEmitter<string> = new EventEmitter<string>();
 
   public constructor(
-    private snomedService: SnomedLibService
+    private snomedService: SnomedLibService,
+    private notificationService: MuiNotificationService
   ) {}
 
   public ngOnInit(): void {
@@ -104,5 +106,12 @@ export class SnomedSearchComponent implements OnInit {
     this.snomedService.findConcepts(this.eclParams).subscribe(concepts => {
       this.eclConcepts = {data: concepts.items || [], meta: {total: concepts.total, offset: concepts.offset}};
     }).add(() => this.loading['ecl-concepts'] = false);
+  }
+
+  public importRefsetConcepts(referenceSet: string): void {
+    this.loading['concept-import'] = true;
+    this.snomedService.importConcepts({refsetId: referenceSet})
+      .subscribe(() => this.notificationService.success("Refset concepts import started."))
+      .add(() => this.loading['concept-import'] = false);
   }
 }

@@ -485,7 +485,8 @@
         "taxonomy": "Taxonomy",
         "refsets": "Refsets",
         "ecl": "ECL",
-        "ecl-placeholder": "ECL expression"
+        "ecl-placeholder": "ECL expression",
+        "import-refset-concepts": "Import refset concepts"
       }
     }
   },

@@ -1,5 +1,5 @@
 import {SnomedDescription} from '../description/snomed-description';
-import {SnomedRelationship} from '../snomed-relationship';
+import {SnomedRelationship} from '../relationship/snomed-relationship';
 
 export class SnomedConcept {
   public id?: string;

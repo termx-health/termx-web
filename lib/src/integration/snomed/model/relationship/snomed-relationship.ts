@@ -1,4 +1,4 @@
-import {SnomedConcept} from './concept/snomed-concept';
+import {SnomedConcept} from '../concept/snomed-concept';
 
 export class SnomedRelationship {
   public id?: string;

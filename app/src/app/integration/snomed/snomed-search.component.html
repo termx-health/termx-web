@@ -33,11 +33,11 @@
       <ng-template nz-tab>
         <m-spinner [mLoading]="loading['refsets']">
           <m-select name="refSet" [(ngModel)]="refsetParams.referenceSet" (ngModelChange)="loadRefsetConcepts()" style="display: block; margin-bottom: 1em">
-            <m-option *ngFor="let refSet of refsets"
-                [label]="refSet | snomedConceptName | async"
-                [value]="refSet.id"
-            ></m-option>
+            <m-option *ngFor="let refSet of refsets" [label]="refSet | snomedConceptName | async" [value]="refSet.id"></m-option>
           </m-select>
+
+          <m-button (click)="importRefsetConcepts(refsetParams.referenceSet)"
+              style="display: block; margin-bottom: 1em">{{'web.snomed.search.import-refset-concepts' | translate}}</m-button>
 
           <m-backend-table [mResult]="refsetConcepts" [(mQuery)]="refsetParams" (mQueryChange)="loadRefsetConcepts()" [mLoading]="loading['refset-concepts']">
             <tr *mTableHead>
@@ -66,9 +66,7 @@
             [(ngModel)]="eclParams.ecl"
             (keydown.enter)="loadEclConcepts()"
             [placeholder]="'web.snomed.search.ecl-placeholder'"
-            style="display: block; margin-bottom: 1em"
-        ></m-input>
-
+            style="display: block; margin-bottom: 1em"></m-input>
         <m-backend-table [mResult]="eclConcepts" [(mQuery)]="eclParams" (mQueryChange)="loadEclConcepts()" [mLoading]="loading['ecl-concepts']">
           <tr *mTableHead>
             <th>{{'entities.snomed-concept.term' | translate}}</th>
