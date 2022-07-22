@@ -13,7 +13,6 @@ export class MeasurementUnitViewComponent implements OnInit {
   public measurementUnit?: MeasurementUnit;
 
   public loading: {[k: string]: boolean} = {};
-  public mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
 
