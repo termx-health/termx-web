@@ -5,55 +5,44 @@
         <a *nzTabLink nz-tab-link [routerLink]="['.']" class="m-items-middle">
           {{'web.code-system.tabs.code-system' | translate}}
         </a>
+        <m-card [mTitle]="'web.code-system.form.view-header'" [mShowSkeleton]="loading">
+          <div *ngIf="codeSystem">
+            <m-form-item mLabel="entities.code-system.id">
+              {{codeSystem.id}}
+            </m-form-item>
 
-        <div nz-row [nzGutter]="12" class="m-row">
-          <div nz-col [nzMd]="18" [nzXs]="24">
-            <m-card [mTitle]="'web.code-system.form.view-header'" [mShowSkeleton]="loading">
-              <div *ngIf="codeSystem">
-                <m-form-item mLabel="entities.code-system.id">
-                  {{codeSystem.id}}
-                </m-form-item>
-
-                <m-form-item mLabel="entities.code-system.name">
-                  <div *ngFor="let language of codeSystem.names | keys">
-                    {{language}} - {{codeSystem.names[language]}}
-                  </div>
-                </m-form-item>
-
-                <m-form-item mLabel="entities.code-system.uri" class="m-items-middle">
-                  {{codeSystem.uri}}
-                  <a *ngIf="codeSystem.uri | validateUrl" [href]="codeSystem.uri" target="_blank">
-                    <m-button mSize="small">
-                      <m-icon mCode="eye"></m-icon>
-                    </m-button>
-                  </a>
-                </m-form-item>
-
-                <m-form-item mLabel="entities.code-system.content">
-                  {{codeSystem.content}}
-                </m-form-item>
-
-                <m-form-item mLabel="entities.code-system.case-sensitivity">
-                  {{codeSystem.caseSensitive}}
-                </m-form-item>
-
-                <m-form-item mLabel="entities.code-system.description">
-                  {{codeSystem.description}}
-                </m-form-item>
-
-                <twa-code-system-versions-list [codeSystemId]="codeSystem.id" [versions]="codeSystem.versions" viewMode></twa-code-system-versions-list>
-                <twa-code-system-properties-list [codeSystemId]="codeSystem.id" [properties]="codeSystem.properties" viewMode></twa-code-system-properties-list>
-                <twa-contact-list [(contacts)]="codeSystem.contacts" viewMode></twa-contact-list>
+            <m-form-item mLabel="entities.code-system.name">
+              <div *ngFor="let language of codeSystem.names | keys">
+                {{language}} - {{codeSystem.names[language]}}
               </div>
-            </m-card>
-          </div>
+            </m-form-item>
 
-          <div nz-col [nzMd]="6" [nzXs]="24" style="height: min-content">
-            <m-card [mTitle]="'entities.code-system.concepts'" [mShowSkeleton]="loading">
-              <twa-code-system-concepts-list [codeSystemId]="codeSystemId" viewMode></twa-code-system-concepts-list>
-            </m-card>
+            <m-form-item mLabel="entities.code-system.uri" class="m-items-middle">
+              {{codeSystem.uri}}
+              <a *ngIf="codeSystem.uri | validateUrl" [href]="codeSystem.uri" target="_blank">
+                <m-button mSize="small">
+                  <m-icon mCode="eye"></m-icon>
+                </m-button>
+              </a>
+            </m-form-item>
+
+            <m-form-item mLabel="entities.code-system.content">
+              {{codeSystem.content}}
+            </m-form-item>
+
+            <m-form-item mLabel="entities.code-system.case-sensitivity">
+              {{codeSystem.caseSensitive}}
+            </m-form-item>
+
+            <m-form-item mLabel="entities.code-system.description">
+              {{codeSystem.description}}
+            </m-form-item>
+
+            <twa-code-system-versions-list [codeSystemId]="codeSystem.id" [versions]="codeSystem.versions" viewMode></twa-code-system-versions-list>
+            <twa-code-system-properties-list [codeSystemId]="codeSystem.id" [properties]="codeSystem.properties" viewMode></twa-code-system-properties-list>
+            <twa-contact-list [(contacts)]="codeSystem.contacts" viewMode></twa-contact-list>
           </div>
-        </div>
+        </m-card>
       </nz-tab>
 
       <nz-tab>
@@ -76,6 +65,17 @@
             </m-form-item>
           </m-card>
         </ng-template>
+      </nz-tab>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'concepts' }">
+          {{'entities.code-system.concepts' | translate}}
+        </a>
+        <m-card [mTitle]="'entities.code-system.concepts'" *ngIf="codeSystem">
+          <twa-code-system-concepts-list [codeSystemId]="codeSystemId"
+              [codeSystemVersions]="codeSystem.versions"
+              [properties]="codeSystem.properties"
+              viewMode></twa-code-system-concepts-list>
+        </m-card>
       </nz-tab>
     </nz-tabset>
   </div>

@@ -1,20 +1,22 @@
 import {Component, OnInit} from '@angular/core';
 import {JobLibService, JobLog} from 'terminology-lib/job';
 import {ActivatedRoute} from '@angular/router';
-import {filter, Observable} from 'rxjs';
+import {filter, merge, Observable, Subject, switchMap, takeUntil, timer} from 'rxjs';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from 'terminology-lib/fhir';
+import {DestroyService} from '@kodality-web/core-util';
 
 
 @Component({
   templateUrl: './integration-fhir-sync.component.html',
+  providers: [DestroyService]
 })
 export class IntegrationFhirSyncComponent implements OnInit {
   public source?: string | null;
 
   public input: string = "";
-  public loading: boolean = false;
   public jobResponse?: JobLog;
   public urls: string[] = [];
+  public loading: {[k: string]: boolean} = {};
 
   public constructor(
     private fhirCodeSystemService: FhirCodeSystemLibService,
@@ -22,6 +24,7 @@ export class IntegrationFhirSyncComponent implements OnInit {
     private fhirConceptMapLibService: FhirConceptMapLibService,
     private jobService: JobLibService,
     private route: ActivatedRoute,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {
@@ -37,35 +40,40 @@ export class IntegrationFhirSyncComponent implements OnInit {
     if (this.urls.length === 0) {
       return;
     }
-    this.jobResponse = undefined;
-    this.loading = true;
+
     const fhirSyncParameters = {parameter: this.urls.map(url => ({"name": "url", "valueString": url}))};
     const importRequestMap: {[k: string]: Observable<FhirParameters>} = {
       'CodeSystem': this.fhirCodeSystemService.import(fhirSyncParameters),
       'ValueSet': this.fhirValueSetLibService.import(fhirSyncParameters),
       'ConceptMap': this.fhirConceptMapLibService.import(fhirSyncParameters),
     };
+
+    this.jobResponse = undefined;
+    this.loading['import'] = true;
     importRequestMap[this.source!].subscribe(resp => {
         const jobIdParameter = resp.parameter?.find(p => p.name === 'jobId');
         if (jobIdParameter?.valueDecimal) {
           this.pollJobStatus(jobIdParameter.valueDecimal);
         }
       }
-    );
+    ).add(() => this.loading['import'] = false);
   }
 
   private pollJobStatus(jobId: number): void {
-    const i = setInterval(() => {
-      this.jobService.getLog(jobId).pipe(filter(resp => resp.execution?.status !== 'running')).subscribe(jobResp => {
-          clearInterval(i);
-          this.loading = false;
-          if (!jobResp.errors && !jobResp.warnings) {
-            this.urls = [];
-          }
-          this.jobResponse = jobResp;
-        }
-      );
-    }, 5000);
+    const stopPolling$ = new Subject<void>();
+
+    this.loading['polling'] = true;
+    timer(0, 3000).pipe(
+      takeUntil(merge(this.destroy$, stopPolling$)),
+      switchMap(() => this.jobService.getLog(jobId)),
+      filter(resp => resp.execution?.status !== 'running')
+    ).subscribe(jobResp => {
+      stopPolling$.next();
+      if (!jobResp.errors && !jobResp.warnings) {
+        this.urls = [];
+      }
+      this.jobResponse = jobResp;
+    }).add(() => this.loading['polling'] = false);
   }
 
   public removeUrl(index: number): void {
