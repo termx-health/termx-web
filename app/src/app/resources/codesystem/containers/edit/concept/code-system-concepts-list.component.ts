@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CodeSystemConcept, CodeSystemVersion, ConceptSearchParams, EntityProperty} from 'terminology-lib/resources';
-import {debounceTime, distinctUntilChanged, finalize, Observable, of, Subject, switchMap} from 'rxjs';
+import {debounceTime, finalize, Observable, of, Subject, switchMap} from 'rxjs';
 import {BooleanInput, copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 
@@ -14,16 +14,12 @@ export class CodeSystemConceptsListComponent implements OnInit {
   @Input() public codeSystemVersions?: CodeSystemVersion[];
   @Input() public properties?: EntityProperty[];
 
-  public filter = false;
 
   public query = new ConceptSearchParams();
+  public filter: {open: boolean, languages?: string[], version?: CodeSystemVersion, propertyName?: string, propertyValue?: string} = {open: false};
   public searchInput: string = "";
-  public searchVersion?: CodeSystemVersion;
-  public searchPropertyName?: string;
-  public searchPropertyValue?: string;
-  public searchUpdate = new Subject<string>();
+  public searchUpdate = new Subject<void>();
   public searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
-  public filterLanguages: string[] = [];
 
   public loading = false;
 
@@ -35,7 +31,6 @@ export class CodeSystemConceptsListComponent implements OnInit {
     this.loadData();
     this.searchUpdate.pipe(
       debounceTime(250),
-      distinctUntilChanged(),
       switchMap(() => this.search()),
     ).subscribe(data => this.searchResult = data);
   }
@@ -46,9 +41,9 @@ export class CodeSystemConceptsListComponent implements OnInit {
     }
     const q = copyDeep(this.query);
     q.textContains = this.searchInput;
-    q.codeSystemVersion = this.searchVersion?.version;
-    if (this.searchPropertyName && this.searchPropertyValue){
-      q.propertyValues = this.searchPropertyName + '|' + this.searchPropertyValue;
+    q.codeSystemVersion = this.filter.version?.version;
+    if (this.filter.propertyName && this.filter.propertyValue){
+      q.propertyValues = this.filter['propertyName'] + '|' + this.filter['propertyValue'];
     }
     this.loading = true;
     return this.codeSystemService.searchConcepts(this.codeSystemId, q).pipe(finalize(() => this.loading = false));
@@ -58,12 +53,13 @@ export class CodeSystemConceptsListComponent implements OnInit {
     this.search().subscribe(resp => this.searchResult = resp);
   }
 
-  public initFilterLanguages(supportedLanguages: string[] = []): void {
+  public initFilterLanguages(supportedLanguages: string[]): void {
     if (!supportedLanguages) {
+      this.filter.languages = undefined;
       return;
     }
-    this.filterLanguages = supportedLanguages.includes('en') ? ['en'] : [supportedLanguages[0]];
-    this.filterLanguages = [...this.filterLanguages];
+    this.filter.languages = supportedLanguages.includes('en') ? ['en'] : [supportedLanguages[0]];
+    this.filter.languages = [...this.filter.languages];
   }
 
 
