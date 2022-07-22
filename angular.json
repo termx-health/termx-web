@@ -80,6 +80,11 @@
             ],
             "styles": [
               "node_modules/@kodality-health/marina-ui/mui.styles.css",
+              {
+                "input": "node_modules/@kodality-health/marina-ui/mui-contrast.styles.css",
+                "bundleName": "contrast",
+                "inject": false
+              },
               "app/src/styles.less"
             ],
             "preserveSymlinks": true,
