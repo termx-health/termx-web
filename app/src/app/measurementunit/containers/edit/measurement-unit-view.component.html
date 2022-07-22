@@ -23,7 +23,7 @@
           </m-form-item>
 
           <m-form-item mName="periodUpper" mLabel="web.measurement-unit.form.to">
-            <div *ngIf="'*.edit' | twaHasAnyPrivilege | async; else view">
+            <div *ngIf="'*.edit' | twaHasAnyPrivilege; else view">
               <m-date-picker name="periodUpper" [(ngModel)]="measurementUnit.period.upper"></m-date-picker>
             </div>
             <ng-template #view>{{measurementUnit.period.upper | localDate}}</ng-template>

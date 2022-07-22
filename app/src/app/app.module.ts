@@ -1,4 +1,4 @@
-import {LOCALE_ID, NgModule} from '@angular/core';
+import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
 import {AppRoutingModule} from './app-routing.module';
@@ -29,7 +29,8 @@ import {MeasurementUnitLibModule} from 'terminology-lib/measurementunit';
 import {MeasurementUnitModule} from './measurementunit/measurement-unit.module';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {OauthHttpInterceptor} from './auth/oauth-http-interceptor.service';
-
+import {AuthService} from './auth/auth.service';
+import {Observable} from 'rxjs';
 
 registerLocaleData(et);
 
@@ -40,6 +41,10 @@ export function HttpLoaderFactory(http: HttpClient): TranslateLoader {
 
 export function TranslationHandlerFactory(translateService: TranslateService): CoreI18nTranslationHandler {
   return (key, params) => translateService.instant(key, params);
+}
+
+export function preloadAuth(authService: AuthService): () => Observable<any> {
+  return () => authService.refresh();
 }
 
 export function MarinaUiConfigFactory(): MuiConfig {
@@ -59,7 +64,6 @@ export function MarinaUiConfigFactory(): MuiConfig {
       en: true
     }
   };
-
 }
 
 @NgModule({
@@ -80,18 +84,13 @@ export function MarinaUiConfigFactory(): MuiConfig {
 
     MarinaUiModule,
     MarinaUtilModule,
-
     ResourcesLibModule,
     ResourcesModule,
-
     FhirLibModule,
     IntegrationModule,
-
     JobLibModule,
-
     PrivilegesModule,
     AuthLibModule,
-
     GlobalSearchModule,
 
     ToolsModule,
@@ -109,7 +108,8 @@ export function MarinaUiConfigFactory(): MuiConfig {
     {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},
     {provide: HTTP_INTERCEPTORS, useClass: OauthHttpInterceptor, multi: true, deps: [OidcSecurityService]},
     {provide: HTTP_INTERCEPTORS, useClass: MuiHttpErrorHandler, multi: true},
-    {provide: MUI_CONFIG, useFactory: MarinaUiConfigFactory}
+    {provide: MUI_CONFIG, useFactory: MarinaUiConfigFactory},
+    {provide: APP_INITIALIZER, useFactory: preloadAuth, deps: [AuthService], multi: true}
   ],
   bootstrap: [AppComponent]
 })

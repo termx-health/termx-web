@@ -15,7 +15,8 @@ import {AuthService} from '../../../auth/auth.service';
           </twa-finder-menu-item>
 
           <twa-finder-load-more-item *ngIf="searchResult.data.length < searchResult.meta.total"
-              (twClick)="loadCodeSystems(searchResult.data.length + DEFAULT_LIMIT)"></twa-finder-load-more-item>
+              (twClick)="loadCodeSystems(searchResult.data.length + DEFAULT_LIMIT)"
+          ></twa-finder-load-more-item>
         </twa-finder-menu>
       </twa-finder-wrapper>
     </div>
@@ -45,12 +46,10 @@ export class FinderCodeSystemListComponent implements OnInit {
   }
 
   public openResource(cs: CodeSystem): void {
-    this.authService.getUserPrivileges().subscribe(privileges => {
-      if (privileges.indexOf('*.code-system.edit') !== -1) {
-        this.router.navigate(['/resources/code-systems/', cs.id, 'edit']);
-      } else {
-        this.router.navigate(['/resources/code-systems/', cs.id, 'view']);
-      }
-    });
+    if (this.authService.hasPrivilege('*.code-system.edit')) {
+      this.router.navigate(['/resources/code-systems/', cs.id, 'edit']);
+    } else {
+      this.router.navigate(['/resources/code-systems/', cs.id, 'view']);
+    }
   }
 }

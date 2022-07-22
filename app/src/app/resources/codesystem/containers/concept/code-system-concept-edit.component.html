@@ -1,6 +1,6 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="isLoading">
+    <m-spinner [mLoading]="isLoading" autoselect>
       <m-card [mTitle]="mode === 'edit' ? 'web.code-system-concept.form.edit-header' : 'web.code-system-concept.form.add-header'" [mShowSkeleton]="loading['init']">
         <form #form="ngForm" *ngIf="concept">
           <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>

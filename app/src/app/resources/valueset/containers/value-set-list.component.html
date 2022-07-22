@@ -23,7 +23,7 @@
     <tr *mTableRow="let vs">
       <td m-table-expand [mItem]="vs"></td>
       <td>
-        <a *ngIf="'*.value-set.edit' | twaHasAnyPrivilege | async; else view" [routerLink]="['value-sets',vs.id, 'edit']">{{vs.id}}</a>
+        <a *ngIf="'*.value-set.edit' | twaHasAnyPrivilege; else view" [routerLink]="['value-sets',vs.id, 'edit']">{{vs.id}}</a>
         <ng-template #view>
           <a [routerLink]="['value-sets',vs.id, 'view']">{{vs.id}}</a>
         </ng-template>

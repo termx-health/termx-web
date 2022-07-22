@@ -26,7 +26,7 @@
           <m-date-picker *ngIf="version.status === 'active'"
               name="expirationDate"
               [(ngModel)]="version.expirationDate"
-              [disabled]="!('*.value-set.edit' | twaHasAnyPrivilege | async)"
+              [disabled]="!('*.value-set.edit' | twaHasAnyPrivilege)"
           ></m-date-picker>
           <div *ngIf="version.status !== 'active'">
             {{version.expirationDate | localDate}}
@@ -44,7 +44,7 @@
         <twa-value-set-version-concept-list *ngIf="version.id" [concepts]="version.concepts" viewMode></twa-value-set-version-concept-list>
       </form>
 
-      <div *ngIf="version?.status === 'active' && '*.value-set.edit' | twaHasAnyPrivilege | async">
+      <div *ngIf="version?.status === 'active' && '*.value-set.edit' | twaHasAnyPrivilege">
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
             {{'core.btn.save' | translate}}

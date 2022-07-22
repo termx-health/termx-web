@@ -1,22 +1,37 @@
 import {Injectable} from '@angular/core';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
-import {map, Observable} from 'rxjs';
+import {map, Observable, tap} from 'rxjs';
+
+interface UserInfo {
+  roles: string[]
+}
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-
   private ADMIN = 'admin'; //FIXME: this is wrong, privilege name may change
+  public user?: UserInfo;
 
   public constructor(
     private oidcSecurityService: OidcSecurityService
   ) {
   }
 
-  public getUserPrivileges(): Observable<string[]> {
+
+  public refresh(): Observable<UserInfo> {
+    return this.refreshUserInfo().pipe(tap(u => this.user = u));
+  }
+
+  private refreshUserInfo(): Observable<UserInfo> {
     return this.oidcSecurityService.checkAuth().pipe(map(lr => {
-      return lr.userData?.roles || [];
+      if (!lr.isAuthenticated) {
+        return null as any;
+      }
+      return {
+        roles: lr.userData?.roles || []
+      };
     }));
   }
+
 
   private includesPrivilege(privileges: string[], privilege: string): boolean {
     if (!privilege) {
@@ -35,21 +50,25 @@ export class AuthService {
     return privileges.includes(privilege);
   }
 
-  public hasPrivilege(privilege: string): Observable<boolean> {
-    return this.getUserPrivileges().pipe(map(privileges => {
-      return this.includesPrivilege(privileges, this.ADMIN) || this.includesPrivilege(privileges, privilege);
-    }));
+  public hasPrivilege(privilege: string): boolean {
+    if (!this.user) {
+      return false;
+    }
+    return this.includesPrivilege(this.user.roles, this.ADMIN) || this.includesPrivilege(this.user!.roles, privilege);
   }
 
-  public hasAllPrivileges(privileges: string[]): Observable<boolean> {
-    return this.getUserPrivileges().pipe(map(userPrivileges => {
-      return this.includesPrivilege(userPrivileges, this.ADMIN) || privileges.every(p => this.includesPrivilege(userPrivileges, p));
-    }));
+
+  public hasAllPrivileges(privileges: string[]): boolean {
+    if (!this.user) {
+      return false;
+    }
+    return this.includesPrivilege(this.user.roles, this.ADMIN) || privileges.every(p => this.includesPrivilege(this.user!.roles, p));
   }
 
-  public hasAnyPrivilege(privileges: string[]): Observable<boolean> {
-    return this.getUserPrivileges().pipe(map(userPrivileges => {
-      return this.includesPrivilege(userPrivileges, this.ADMIN) || privileges.some(p => this.includesPrivilege(userPrivileges, p));
-    }));
+  public hasAnyPrivilege(privileges: string[]): boolean {
+    if (!this.user) {
+      return false;
+    }
+    return this.includesPrivilege(this.user.roles, this.ADMIN) || privileges.some(p => this.includesPrivilege(this.user!.roles, p));
   }
 }
