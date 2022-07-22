@@ -27,8 +27,10 @@
         "edit-header": "Edit measurement unit",
         "add-header": "Add measurement unit",
         "view-header": "View measurement unit",
-        "from": "From",
-        "to": "To"
+        "select-kind": "Select kind",
+        "add-kind": "Add kind",
+        "from": "Period from",
+        "to": "Period to"
       }
     },
     "case-sensitive-options": {

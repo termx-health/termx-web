@@ -10,8 +10,8 @@ import {MeasurementUnitViewComponent} from './containers/edit/measurement-unit-v
 
 export const MEASUREMENT_UNIT_ROUTES: Routes = [
   {path: '', component: MeasurementUnitListComponent},
-  {path: 'add', component: MeasurementUnitEditComponent},
-  {path: ':id/edit', component: MeasurementUnitEditComponent},
+  {path: 'add', data: {privilege: ['*.edit']}, component: MeasurementUnitEditComponent},
+  {path: ':id/edit', data: {privilege: ['*.edit']}, component: MeasurementUnitEditComponent},
   {path: ':id/view', component: MeasurementUnitViewComponent},
 ];
 

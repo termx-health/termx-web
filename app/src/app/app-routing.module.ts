@@ -14,7 +14,7 @@ const routes: Routes = [
   {path: 'integration', children: INTEGRATION_ROUTES, canActivate: [AutoLoginAllRoutesGuard]},
   {path: 'privileges', children: PRIVILEGES_ROUTES, canActivate: [AutoLoginAllRoutesGuard]},
   {path: 'tools', children: TOOLS_ROUTES, canActivate: [AutoLoginAllRoutesGuard]},
-  {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, canActivate: [AutoLoginAllRoutesGuard]},
+  {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['*.view']}, canActivate: [AutoLoginAllRoutesGuard]},
   {path: "**", redirectTo: 'resources'},
 ];
 

@@ -18,6 +18,10 @@ export class MeasurementUnitLibService {
     return this.http.get<MeasurementUnit>(`${this.baseUrl}/${id}`);
   }
 
+  public loadKinds(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/kinds`);
+  }
+
   public search(params: MeasurementUnitSearchParams = {}): Observable<SearchResult<MeasurementUnit>> {
     return this.http.get<SearchResult<MeasurementUnit>>(this.baseUrl, {params: SearchHttpParams.build(params)});
   }

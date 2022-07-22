@@ -18,7 +18,7 @@
     <tr *mTableRow="let ms">
       <td m-table-expand [mItem]="ms"></td>
       <td>
-        <a *ngIf="'*.map-set.edit' | twaHasAnyPrivilege; else view" [routerLink]="['map-sets', ms.id, 'edit']">{{ms.id}}</a>
+        <a *ngIf="'*.map-set.edit' | twaHasAnyPrivilege | async; else view" [routerLink]="['map-sets', ms.id, 'edit']">{{ms.id}}</a>
         <ng-template #view>
           <a [routerLink]="['map-sets',ms.id,'view']">{{ms.id}}</a>
         </ng-template>

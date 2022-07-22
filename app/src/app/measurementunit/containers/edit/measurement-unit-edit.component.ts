@@ -12,6 +12,8 @@ import {MeasurementUnit} from 'lib/src/measurementunit';
 export class MeasurementUnitEditComponent implements OnInit {
   public measurementUnitId?: number;
   public measurementUnit?: MeasurementUnit;
+  public kinds?: string[];
+  public newKind = false;
 
   public loading: {[k: string]: boolean} = {};
   public mode: 'edit' | 'add' = 'add';
@@ -27,6 +29,8 @@ export class MeasurementUnitEditComponent implements OnInit {
   public ngOnInit(): void {
     this.measurementUnitId = Number(this.route.snapshot.paramMap.get('id'));
     this.mode = this.measurementUnitId ? 'edit' : 'add';
+    this.loading['kinds'] = true;
+    this.measurementUnitService.loadKinds().subscribe(kinds => this.kinds = kinds).add(() => this.loading['kinds'] = false);
 
     if (this.mode === 'add') {
       this.measurementUnit = new MeasurementUnit();

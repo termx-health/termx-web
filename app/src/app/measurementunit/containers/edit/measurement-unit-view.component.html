@@ -18,12 +18,13 @@
             </div>
           </m-form-item>
 
-          <m-form-item mLabel="entities.measurement-unit.period" class="m-bold">
-            {{'web.measurement-unit.form.from' | translate}}
+          <m-form-item mName="periodLower" mLabel="web.measurement-unit.form.from">
             {{measurementUnit.period.lower | localDate}}
-            {{'web.measurement-unit.form.to' | translate}}
-            <div *ngIf="'*.edit' | twaHasAnyPrivilege; else view">
-              <m-date-picker [(ngModel)]="measurementUnit.period.upper"></m-date-picker>
+          </m-form-item>
+
+          <m-form-item mName="periodUpper" mLabel="web.measurement-unit.form.to" class="m-bold">
+            <div *ngIf="'*.edit' | twaHasAnyPrivilege | async; else view">
+              <m-date-picker name="periodUpper" [(ngModel)]="measurementUnit.period.upper"></m-date-picker>
             </div>
             <ng-template #view>{{measurementUnit.period.upper | localDate}}</ng-template>
           </m-form-item>
@@ -45,7 +46,7 @@
 
         <div *twaPrivileged="'*.edit'">
           <ng-container *m-card-footer>
-            <m-button mDisplay="primary" *twaPrivileged="'*.edit'" [mLoading]="loading['save']" [disabled]="!!measurementUnit.period.upper" (click)="save()">
+            <m-button mDisplay="primary" *twaPrivileged="'*.edit'" [mLoading]="loading['save']" [disabled]="!measurementUnit?.period?.upper" (click)="save()">
               {{'core.btn.save' | translate}}
             </m-button>
           </ng-container>
