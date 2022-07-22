@@ -71,6 +71,7 @@
       <th>{{'entities.designation.name' | translate}}</th>
     </tr>
     <tr *mTableRow="let concept">
+      <td m-table-expand [mItem]="concept"></td>
       <td><a [routerLink]="['../concepts/', concept.id, !viewMode? 'edit' : 'view']">{{concept.code}}</a></td>
       <td>
         <ng-container *ngFor="let language of filter.languages">
