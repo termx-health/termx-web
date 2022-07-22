@@ -13,6 +13,7 @@ image: registry.gitlab.com/kodality-public/gitlab-builders/ng
 stages:
   - build
   - publish
+  - release
 
 
 build:
