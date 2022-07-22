@@ -37,7 +37,7 @@ build:
 
 publish:
   stage: publish
-  image: docker:20.10.16
+  image: docker:stable
   before_script:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
   script:
@@ -46,3 +46,17 @@ publish:
   only:
     - main
 
+release:
+  stage: release
+  image: docker:stable
+  before_script:
+    - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
+  script:
+    - export APP_VERSION="$CI_COMMIT_REF_NAME"
+
+    - docker build -t docker.kodality.com/terminology-web:$APP_VERSION --build-arg APP_VERSION=$APP_VERSION .
+    - docker push docker.kodality.com/terminology-web:$APP_VERSION
+  only:
+    - /^\d*\.\d*\.\d*$/
+  except:
+    - branches
