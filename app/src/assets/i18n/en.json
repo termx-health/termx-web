@@ -160,6 +160,19 @@
         "versions": {
           "add-version": "Add version"
         }
+      },
+      "filter": {
+        "select-version-placeholder": "Select code system version",
+        "select-language-placeholder": "Select language",
+        "select-property-placeholder": "Select property",
+        "search-property-value-placeholder": "Search property name",
+        "version-filter": "Version filter",
+        "language-filter": "Language filter",
+        "property-filter": "Property filter",
+        "property-name-filter": "Property name filter"
+      },
+      "list": {
+        "concept-version-id": "Concept version ID: {{versionId}}"
       }
     },
     "code-system-concept-version": {
