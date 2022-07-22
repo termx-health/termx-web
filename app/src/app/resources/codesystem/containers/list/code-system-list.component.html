@@ -23,7 +23,7 @@
     <tr *mTableRow="let cs">
       <td m-table-expand [mItem]="cs"></td>
       <td>
-        <a *ngIf="'*.code-system.edit' | twaHasAnyPrivilege; else view" [routerLink]="['code-systems',cs.id,'edit']">{{cs.id}}</a>
+        <a *ngIf="'*.code-system.edit' | twaHasAnyPrivilege | async; else view" [routerLink]="['code-systems',cs.id,'edit']">{{cs.id}}</a>
         <ng-template #view>
           <a [routerLink]="['code-systems',cs.id,'view']">{{cs.id}}</a>
         </ng-template>

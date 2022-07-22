@@ -30,7 +30,7 @@
 
           <m-form-item mName="expirationDate" mLabel="entities.map-set-version.expiration-date">
             <m-date-picker *ngIf="version.status === 'active'"
-                [disabled]="!('*.map-set.edit' | twaHasAnyPrivilege)"
+                [disabled]="!('*.map-set.edit' | twaHasAnyPrivilege | async)"
                 name="expirationDate"
                 [(ngModel)]="version.expirationDate"></m-date-picker>
             <div *ngIf="version.status !== 'active'">
@@ -41,7 +41,7 @@
           <twa-map-set-version-entity-version-table [mapSetId]="mapSetId" [mapSetVersion]="version.version" viewMode></twa-map-set-version-entity-version-table>
         </div>
 
-        <div *ngIf="version?.status === 'active' && '*.map-set.edit' | twaHasAnyPrivilege">
+        <div *ngIf="version?.status === 'active' && '*.map-set.edit' | twaHasAnyPrivilege | async">
           <ng-container *m-card-footer>
             <m-button mDisplay="primary" (click)="save()" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading">
               {{'core.btn.save' | translate}}

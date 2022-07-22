@@ -1,0 +1,56 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading['save']">
+      <m-card [mTitle]="mode === 'edit' ? 'web.measurement-unit.form.edit-header' : 'web.measurement-unit.form.add-header'" [mShowSkeleton]="loading['init']">
+        <form #form="ngForm" *ngIf="measurementUnit">
+          <m-form-item mName="code" mLabel="entities.measurement-unit.code" required>
+            <m-input name="code" [(ngModel)]="measurementUnit.code" required></m-input>
+          </m-form-item>
+          <m-form-item mLabel="entities.measurement-unit.name" required>
+            <m-multi-language-input name="name" [(ngModel)]="measurementUnit.names" required></m-multi-language-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.measurement-unit.alias" required>
+            <m-multi-language-input name="alias" [(ngModel)]="measurementUnit.alias" required></m-multi-language-input>
+          </m-form-item>
+
+          <m-form-item mName="periodLower" mLabel="web.measurement-unit.form.from" required>
+            <m-date-picker name="periodLower" [(ngModel)]="measurementUnit.period.lower" required></m-date-picker>
+          </m-form-item>
+
+          <m-form-item mName="periodUpper" mLabel="web.measurement-unit.form.to">
+            <m-date-picker name="periodUpper" [(ngModel)]="measurementUnit.period.upper"></m-date-picker>
+          </m-form-item>
+
+          <m-form-item mName="rounding" mLabel="entities.measurement-unit.rounding">
+            <m-number-input name="rounding" [(ngModel)]="measurementUnit.rounding"></m-number-input>
+          </m-form-item>
+
+          <m-form-item mName="kind" mLabel="entities.measurement-unit.kind" required>
+            <m-select *ngIf="!newKind" [(ngModel)]="measurementUnit.kind" name="kind" required>
+              <m-option *ngFor="let kind of kinds " [value]="kind" [label]="kind"></m-option>
+            </m-select>
+            <m-input *ngIf="newKind" [(ngModel)]="measurementUnit.kind" name="kind" required></m-input>
+          </m-form-item>
+          <m-button (click)="newKind? measurementUnit.kind = undefined: ''; newKind = !newKind">
+            {{(newKind ? 'web.measurement-unit.form.select-kind' : 'web.measurement-unit.form.add-kind') | translate}}
+          </m-button>
+
+          <m-form-item mName="definitionUnit" mLabel="entities.measurement-unit.definitionUnit">
+            <m-input name="definitionUnit" [(ngModel)]="measurementUnit.definitionUnit"></m-input>
+          </m-form-item>
+
+          <m-form-item mName="definitionValue" mLabel="entities.measurement-unit.definitionValue">
+            <m-input name="definitionValue" [(ngModel)]="measurementUnit.definitionValue"></m-input>
+          </m-form-item>
+        </form>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>
