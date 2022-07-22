@@ -6,7 +6,8 @@
       </a>
       <ng-template nz-tab>
         <m-spinner [mLoading]="loading['taxonomy']">
-          <m-input [(ngModel)]="searchText" name="searchText" (ngModelChange)="searchUpdate.next($event)"></m-input>
+          <m-input name="searchText" [(ngModel)]="searchText" (ngModelChange)="searchUpdate.next($event)" style="display: block; margin-bottom: 1em"></m-input>
+
           <nz-breadcrumb style="margin: 1rem 0 1rem 0">
             <nz-breadcrumb-item *ngFor="let parent of parents; let index = index">
               <a (click)="loadTaxonomyTree(parent.conceptId);selectConcept(parent.conceptId, index)">{{parent | snomedConceptName | async}}</a>
@@ -31,11 +32,13 @@
       </a>
       <ng-template nz-tab>
         <m-spinner [mLoading]="loading['refsets']">
-          <m-select [(ngModel)]="refsetParams.referenceSet" (ngModelChange)="loadRefsetConcepts()" name="refSet">
+          <m-select name="refSet" [(ngModel)]="refsetParams.referenceSet" (ngModelChange)="loadRefsetConcepts()" style="display: block; margin-bottom: 1em">
             <m-option *ngFor="let refSet of refsets"
                 [label]="refSet | snomedConceptName | async"
-                [value]="refSet.id"></m-option>
+                [value]="refSet.id"
+            ></m-option>
           </m-select>
+
           <m-backend-table [mResult]="refsetConcepts" [(mQuery)]="refsetParams" (mQueryChange)="loadRefsetConcepts()" [mLoading]="loading['refset-concepts']">
             <tr *mTableHead>
               <th>{{'entities.snomed-concept.term' | translate}}</th>
@@ -59,7 +62,13 @@
         {{'web.snomed.search.ecl' | translate}}
       </a>
       <ng-template nz-tab>
-        <m-input [(ngModel)]="eclParams.ecl" (keydown.enter)="loadEclConcepts()" name="ecl" [placeholder]="'web.snomed.search.ecl-placeholder' | translate"></m-input>
+        <m-input name="ecl"
+            [(ngModel)]="eclParams.ecl"
+            (keydown.enter)="loadEclConcepts()"
+            [placeholder]="'web.snomed.search.ecl-placeholder'"
+            style="display: block; margin-bottom: 1em"
+        ></m-input>
+
         <m-backend-table [mResult]="eclConcepts" [(mQuery)]="eclParams" (mQueryChange)="loadEclConcepts()" [mLoading]="loading['ecl-concepts']">
           <tr *mTableHead>
             <th>{{'entities.snomed-concept.term' | translate}}</th>

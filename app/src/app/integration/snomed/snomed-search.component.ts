@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService, SnomedRefsetSearchParams} from 'terminology-lib/integration';
-import {debounceTime, distinctUntilChanged, EMPTY, forkJoin, Observable, Subject, switchMap, tap} from 'rxjs';
+import {debounceTime, distinctUntilChanged, EMPTY, finalize, forkJoin, Observable, Subject, switchMap, tap} from 'rxjs';
 import {isDefined, SearchResult} from '@kodality-web/core-util';
 
 @Component({
@@ -82,10 +82,10 @@ export class SnomedSearchComponent implements OnInit {
     }
     this.parents = [];
     this.loading['taxonomy'] = true;
-    return this.snomedService.findDescriptions({term: searchText}).pipe(tap(res => {
-      this.children = res.items!.map(i => i.concept);
-      this.loading['taxonomy'] = false;
-    }));
+    return this.snomedService.findDescriptions({term: searchText}).pipe(
+      tap(res => this.children = res.items!.map(i => i.concept)),
+      finalize(() => this.loading['taxonomy'] = false)
+    );
   }
 
   public loadRefsetConcepts(): void {
@@ -95,14 +95,14 @@ export class SnomedSearchComponent implements OnInit {
     }
     this.loading['refset-concepts'] = true;
     this.snomedService.findRefsetMembers(this.refsetParams).subscribe(members => {
-      this.refsetConcepts = {meta: {total: members.total} , data: members.items!.map(i => i.referencedComponent!)};
+      this.refsetConcepts = {meta: {total: members.total}, data: members.items!.map(i => i.referencedComponent!)};
     }).add(() => this.loading['refset-concepts'] = false);
   }
 
   public loadEclConcepts(): void {
     this.loading['ecl-concepts'] = true;
     this.snomedService.findConcepts(this.eclParams).subscribe(concepts => {
-      this.eclConcepts = {data:concepts.items, meta: {total: concepts.total, offset: concepts.offset}};
+      this.eclConcepts = {data: concepts.items || [], meta: {total: concepts.total, offset: concepts.offset}};
     }).add(() => this.loading['ecl-concepts'] = false);
   }
 }
