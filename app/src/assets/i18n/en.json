@@ -22,6 +22,17 @@
     "delete-confirm": "Are you sure you want to delete?"
   },
   "web": {
+    "measurement-unit": {
+      "form": {
+        "edit-header": "Edit measurement unit",
+        "add-header": "Add measurement unit",
+        "view-header": "View measurement unit",
+        "select-kind": "Select kind",
+        "add-kind": "Add kind",
+        "from": "Period from",
+        "to": "Period to"
+      }
+    },
     "case-sensitive-options": {
       "ics": "Initial character sensitive",
       "cs": "Case sensitive",
@@ -471,6 +482,17 @@
     }
   },
   "entities": {
+    "measurement-unit": {
+      "id": "Id",
+      "code": "Code",
+      "name": "Name",
+      "alias": "Alias",
+      "period": "Period",
+      "rounding": "Rounding",
+      "kind": "Kind",
+      "definitionUnit": "Base unit",
+      "definitionValue": "Base value"
+    },
     "association-type": {
       "code": "Code",
       "kind": "Kind",
