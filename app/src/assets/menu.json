@@ -82,5 +82,13 @@
         "link": "tools/terminology-service-api"
       }
     ]
+  },
+  {
+    "label": {
+      "en": "Measurement units",
+      "et": "Mõõtühikud"
+    },
+    "icon": "control",
+    "link": "measurement-units"
   }
 ]

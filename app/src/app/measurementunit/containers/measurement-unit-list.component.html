@@ -1,0 +1,43 @@
+<m-card>
+  <div *m-card-header class="m-items-between">
+    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <div class="m-items-middle">
+      <twa-add-button *twaPrivileged="'*.edit'" [routerLink]="['add']">
+        {{'web.measurement-unit.form.add-header' | translate}}
+      </twa-add-button>
+    </div>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+    <tr *mTableHead>
+      <th mColumnKey="code">{{'entities.measurement-unit.code' | translate}}</th>
+      <th mColumnKey="name">{{'entities.measurement-unit.name' | translate}}</th>
+      <th mColumnKey="alias">{{'entities.measurement-unit.alias' | translate}}</th>
+      <th mColumnKey="rounding">{{'entities.measurement-unit.rounding' | translate}}</th>
+      <th mColumnKey="kind">{{'entities.measurement-unit.kind' | translate}}</th>
+      <th mColumnKey="definitionUnit">{{'entities.measurement-unit.definitionUnit' | translate}}</th>
+      <th mColumnKey="definitionValue">{{'entities.measurement-unit.definitionValue' | translate}}</th>
+      <th mColumnKey="period">{{'entities.measurement-unit.period' | translate}}</th>
+    </tr>
+
+    <tr *mTableRow="let mu">
+      <td><a [routerLink]="[mu.id, ('*.edit' | twaHasAnyPrivilege | async)? 'edit': 'view']">{{mu.code}}</a>
+      </td>
+      <td>{{mu.names | localName}}</td>
+      <td>{{mu.alias | localName}}</td>
+      <td>{{mu.rounding}}</td>
+      <td>{{mu.kind | localName}}</td>
+      <td>{{mu.definitionUnit}}</td>
+      <td>{{mu.definitionValue}}</td>
+      <td>{{mu.period.lower}}-{{mu.period.upper}}</td>
+    </tr>
+
+
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>
+

@@ -23,10 +23,12 @@ import {AuthLibModule} from 'terminology-lib/auth/auth-lib.module';
 import {ToolsModule} from './tools/tools.module';
 import {NoPrivilegeModule} from './core/no-privilege/no-privilege.module';
 import {OauthConfigModule} from './auth/oauth-config.module';
-import {OauthHttpInterceptor} from './auth/oauth-http-interceptor.service';
-import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {SharedModule} from './core/shared/shared.module';
 import {GlobalSearchModule} from './globalsearch/global-search.module';
+import {MeasurementUnitLibModule} from 'terminology-lib/measurementunit';
+import {MeasurementUnitModule} from './measurementunit/measurement-unit.module';
+import {OidcSecurityService} from 'angular-auth-oidc-client';
+import {OauthHttpInterceptor} from './auth/oauth-http-interceptor.service';
 
 
 registerLocaleData(et);
@@ -96,7 +98,10 @@ export function MarinaUiConfigFactory(): MuiConfig {
     NoPrivilegeModule,
     OauthConfigModule,
     CoreUtilModule,
-    SharedModule
+    SharedModule,
+
+    MeasurementUnitLibModule,
+    MeasurementUnitModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},
