@@ -44,26 +44,34 @@
   },
   {
     "label": {
-      "en": "Search",
-      "et": "Otsing"
+      "en": "CodeSystems",
+      "et": "Koodisüsteemid"
     },
-    "icon": "search",
+    "icon": "table",
     "items": [
       {
         "label": {
-          "en": "Global search",
-          "et": "Globaalne otsing"
+          "en": "SNOMED CT",
+          "et": "SNOMED CT"
         },
-        "link": "global-search"
+        "link": "integration/snomed"
       },
       {
         "label": {
-          "en": "SNOMED CT search",
-          "et": "SNOMED CT otsing"
+          "en": "Measurement units",
+          "et": "Mõõtühikud"
         },
-        "link": "integration/snomed"
+        "link": "measurement-units"
       }
     ]
+  },
+  {
+    "label": {
+      "en": "Global search",
+      "et": "Globaalne otsing"
+    },
+    "link": "global-search",
+    "icon": "search"
   },
   {
     "label": {
@@ -97,13 +105,5 @@
         "link": "tools/terminology-service-api"
       }
     ]
-  },
-  {
-    "label": {
-      "en": "Measurement units",
-      "et": "Mõõtühikud"
-    },
-    "icon": "control",
-    "link": "measurement-units"
   }
 ]

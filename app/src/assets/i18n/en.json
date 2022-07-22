@@ -484,7 +484,8 @@
       "search": {
         "taxonomy": "Taxonomy",
         "refsets": "Refsets",
-        "ecl": "ECL"
+        "ecl": "ECL",
+        "ecl-placeholder": "ECL expression"
       }
     }
   },
