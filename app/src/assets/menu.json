@@ -44,11 +44,26 @@
   },
   {
     "label": {
-      "en": "Global search",
-      "et": "Globaalne otsing"
+      "en": "Search",
+      "et": "Otsing"
     },
     "icon": "search",
-    "link": "global-search"
+    "items": [
+      {
+        "label": {
+          "en": "Global search",
+          "et": "Globaalne otsing"
+        },
+        "link": "global-search"
+      },
+      {
+        "label": {
+          "en": "SNOMED CT search",
+          "et": "SNOMED CT otsing"
+        },
+        "link": "integration/snomed"
+      }
+    ]
   },
   {
     "label": {
