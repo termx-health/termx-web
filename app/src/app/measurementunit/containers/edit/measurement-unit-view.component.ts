@@ -4,13 +4,12 @@ import {NgForm} from '@angular/forms';
 import {MeasurementUnitService} from '../../services/measurement-unit.service';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {DateRange, isDefined, validateForm} from '@kodality-web/core-util';
+import {isDefined, validateForm} from '@kodality-web/core-util';
 
 @Component({
   templateUrl: './measurement-unit-view.component.html',
 })
 export class MeasurementUnitViewComponent implements OnInit {
-  public measurementUnitId?: number;
   public measurementUnit?: MeasurementUnit;
 
   public loading: {[k: string]: boolean} = {};
@@ -25,18 +24,9 @@ export class MeasurementUnitViewComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.measurementUnitId = Number(this.route.snapshot.paramMap.get('id'));
-    this.mode = this.measurementUnitId ? 'edit' : 'add';
-
-    if (this.mode === 'add') {
-      this.measurementUnit = new MeasurementUnit();
-      this.measurementUnit.period = new DateRange();
-    }
-
-    if (this.mode === 'edit') {
-      this.loading['init'] = true;
-      this.measurementUnitService.load(this.measurementUnitId!).subscribe(mu => this.measurementUnit = mu).add(() => this.loading['init'] = false);
-    }
+    const measurementUnitId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loading['init'] = true;
+    this.measurementUnitService.load(measurementUnitId).subscribe(mu => this.measurementUnit = mu).add(() => this.loading['init'] = false);
   }
 
   public save(): void {

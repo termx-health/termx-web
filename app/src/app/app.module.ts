@@ -99,7 +99,6 @@ export function MarinaUiConfigFactory(): MuiConfig {
     OauthConfigModule,
     CoreUtilModule,
     SharedModule,
-    NoPrivilegeModule,
 
     MeasurementUnitLibModule,
     MeasurementUnitModule
