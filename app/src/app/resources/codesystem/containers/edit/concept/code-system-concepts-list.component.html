@@ -1,19 +1,106 @@
 <m-card class="m-card-inside">
-  <div *m-card-header class="m-items-between">
-    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-    <twa-add-button *ngIf="!viewMode" [routerLink]="['../concepts/add']">
-      {{'web.code-system.form.concepts.add-concept' | translate}}
-    </twa-add-button>
+  <div *m-card-header>
+    <div class="m-items-between">
+      <div class="m-items-middle">
+        <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next()" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+        <m-button (click)="filter.open = !filter.open">
+          <m-icon mCode="filter"></m-icon>
+        </m-button>
+      </div>
+
+      <twa-add-button *ngIf="!viewMode" [routerLink]="['../concepts/add']">
+        {{'web.code-system.form.concepts.add-concept' | translate}}
+      </twa-add-button>
+    </div>
+
+    <m-card *ngIf="filter.open" mDisplay="bordered" style="margin-top: 1rem">
+      <m-form-row mGutter="12">
+
+        <div *m-form-col>
+          <m-form-item mLabel="web.code-system-concept.filter.version-filter">
+            <m-select [(ngModel)]="filter.version"
+                (ngModelChange)="initFilterLanguages(filter.version?.supportedLanguages)"
+                (mChange)="searchUpdate.next()"
+                [placeholder]="'web.code-system-concept.filter.select-version-placeholder' | translate"
+            >
+              <m-option *ngFor="let version of codeSystemVersions" [label]="version.version" [value]="version"></m-option>
+            </m-select>
+          </m-form-item>
+        </div>
+
+        <div *m-form-col>
+          <m-form-item mLabel="web.code-system-concept.filter.language-filter">
+            <m-select [autoUnselect]="false"
+                [disabled]="!filter.version?.supportedLanguages.length"
+                [(ngModel)]="filter['languages']"
+                multiple
+                [placeholder]="'web.code-system-concept.filter.select-language-placeholder' | translate">
+              <m-option *ngFor="let language of filter.version?.supportedLanguages"
+                  [label]="language | localizedConceptName:{valueSet: 'languages'} | async"
+                  [value]="language"
+              ></m-option>
+            </m-select>
+          </m-form-item>
+        </div>
+
+        <div *m-form-col>
+          <m-form-item mLabel="web.code-system-concept.filter.property-filter">
+            <m-select [(ngModel)]="filter.propertyName" (ngModelChange)="filter.propertyValue = undefined" [placeholder]="'web.code-system-concept.filter.select-property-placeholder' | translate" (mChange)="searchUpdate.next()">
+              <m-option *ngFor="let property of properties" [label]="property.name" [value]="property.name"></m-option>
+            </m-select>
+          </m-form-item>
+        </div>
+
+        <div *m-form-col>
+          <m-form-item mLabel="web.code-system-concept.filter.property-name-filter">
+            <m-input [disabled]="!filter.propertyName"
+                [(ngModel)]="filter.propertyValue"
+                [placeholder]="'web.code-system-concept.filter.search-property-value-placeholder' | translate"
+                (mChange)="searchUpdate.next()"
+            ></m-input>
+          </m-form-item>
+        </div>
+      </m-form-row>
+    </m-card>
   </div>
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading" mSize="small">
+    <tr *mTableHead>
+      <th></th>
+      <th>{{'entities.code-system-concept.code' | translate}}</th>
+      <th>{{'entities.designation.name' | translate}}</th>
+    </tr>
     <tr *mTableRow="let concept">
+      <td m-table-expand [mItem]="concept"></td>
       <td><a [routerLink]="['../concepts/', concept.id, !viewMode? 'edit' : 'view']">{{concept.code}}</a></td>
-      <td>{{concept.code | localizedConceptName: {codeSystem: codeSystemId} | async}}</td>
+      <td>
+        <ng-container *ngFor="let language of filter.languages">
+          <div *ngIf="getConceptName(concept, language)">
+            {{concept | apply: getConceptName: language}}
+            <br>
+          </div>
+        </ng-container>
+        {{(!filter.languages || filter.languages?.length === 0) ? (concept.code | localizedConceptName: {codeSystem: codeSystemId} | async) : undefined}}</td>
     </tr>
 
+    <ng-container *mTableRowExpand="let concept">
+      <ng-container *ngFor="let version of concept.versions">
+        <tr *ngIf="version.status === 'active'" class="m-table-expanded-row">
+          <td colspan="100%">
+            <div class="m-bold">
+              {{'web.code-system-concept.list.concept-version-id' | translate: ({versionId: version.id})}}
+            </div>
+            <div *ngFor="let designation of version.designations">
+              {{designation.name}} ({{designation.language}})
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+
+    </ng-container>
+
     <tr *mTableNoData>
-      <td>
+      <td colspan="100%">
         <m-no-data></m-no-data>
       </td>
     </tr>
