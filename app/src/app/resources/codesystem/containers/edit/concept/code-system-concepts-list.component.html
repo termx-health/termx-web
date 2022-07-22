@@ -80,7 +80,7 @@
             <br>
           </div>
         </ng-container>
-        {{!filter.languages ? (concept.code | localizedConceptName: {codeSystem: codeSystemId} | async) : undefined}}</td>
+        {{(!filter.languages || filter.languages?.length === 0) ? (concept.code | localizedConceptName: {codeSystem: codeSystemId} | async) : undefined}}</td>
     </tr>
 
     <ng-container *mTableRowExpand="let concept">
