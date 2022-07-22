@@ -479,6 +479,13 @@
         "value-sets": "ValueSets",
         "map-sets": "MapSets"
       }
+    },
+    "snomed": {
+      "search": {
+        "taxonomy": "Taxonomy",
+        "refsets": "Refsets",
+        "ecl": "ECL"
+      }
     }
   },
   "entities": {
@@ -689,6 +696,28 @@
     "privilege-resource": {
       "type": "Type",
       "resource-id": "Resource"
+    },
+    "snomed-concept": {
+      "term": "Term",
+      "descriptions": "Descriptions",
+      "relationships": "Relationships",
+      "refsets": "Refsets"
+    },
+    "snomed-description": {
+      "refset": "Refset",
+      "concept-id": "Concept id",
+      "lang": "Language",
+      "term": "Term",
+      "type": "Type",
+      "acceptability": "Acceptability"
+    },
+    "snomed-relationship": {
+      "target": "Target",
+      "type": "Type"
+    },
+    "snomed-refset": {
+      "target": "Target",
+      "type": "Type"
     }
   }
 }

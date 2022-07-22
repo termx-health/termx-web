@@ -1,0 +1,80 @@
+<m-card>
+
+  <m-card class="m-card-inside">
+    <div *m-card-header class="m-items-between">
+      <div class="m-card-title">
+        {{'entities.snomed-concept.descriptions' | translate}}
+      </div>
+    </div>
+    <m-table [mData]="descriptions | keys" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
+      <tr *mTableHead>
+        <th>{{'entities.snomed-description.refset' | translate}}</th>
+        <th>{{'entities.snomed-description.concept-id' | translate}}</th>
+        <th>{{'entities.snomed-description.lang' | translate}}</th>
+        <th>{{'entities.snomed-description.term' | translate}}</th>
+        <th>{{'entities.snomed-description.type' | translate}}</th>
+        <th>{{'entities.snomed-description.acceptability' | translate}}</th>
+      </tr>
+      <tr *mTableRow="let dk">
+        <td>{{dk | snomedConceptName | async}}</td>
+        <td><div *ngFor="let description of descriptions[dk]">{{description.conceptId}}</div></td>
+        <td><div *ngFor="let description of descriptions[dk]">{{description.lang}}</div></td>
+        <td><div *ngFor="let description of descriptions[dk]">{{description.term}}</div></td>
+        <td><div *ngFor="let description of descriptions[dk]">{{description.typeId | snomedConceptName | async}}</div></td>
+        <td><div *ngFor="let description of descriptions[dk]">{{description.acceptabilityMap[dk]}}</div></td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="100%">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
+
+  <m-card class="m-card-inside">
+    <div *m-card-header class="m-items-between">
+      <div class="m-card-title">
+        {{'entities.snomed-concept.relationships' | translate}}
+      </div>
+    </div>
+    <m-table [mData]="relationships" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
+      <tr *mTableHead>
+        <th>{{'entities.snomed-relationship.type' | translate}}</th>
+        <th>{{'entities.snomed-relationship.target' | translate}}</th>
+      </tr>
+      <tr *mTableRow="let relationship">
+        <td>{{relationship.type.fsn.term}}</td>
+        <td>{{relationship.target.fsn.term}}</td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="100%">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
+
+  <m-card class="m-card-inside">
+    <div *m-card-header class="m-items-between">
+      <div class="m-card-title">
+        {{'entities.snomed-concept.refsets' | translate}}
+      </div>
+    </div>
+    <m-table [mData]="refsets" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
+      <tr *mTableHead>
+        <th>{{'entities.snomed-refset.type' | translate}}</th>
+        <th>{{'entities.snomed-refset.target' | translate}}</th>
+      </tr>
+      <tr *mTableRow="let refset">
+        <td>{{refset.pt.term}}</td>
+        <td>{{refset.target}}</td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="100%">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
+
+</m-card>

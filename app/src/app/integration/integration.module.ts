@@ -19,6 +19,9 @@ import {FhirValueSetValidateCodeComponent} from './fhir/value-set/fhir-value-set
 import {FhirCodeSystemFindMatchesComponent} from './fhir/code-system/fhir-code-system-find-matches.component';
 import {CodeSystemFileImportComponent} from './file-import/code-system/code-system-file-import.component';
 import {ConceptMapFileImportComponent} from './file-import/concept-map/concept-map-file-import.component';
+import {SnomedDashboardComponent} from './snomed/snomed-dashboard.component';
+import {SnomedSearchComponent} from './snomed/snomed-search.component';
+import {SnomedConceptInfoComponent} from './snomed/snomed-concept-info.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -37,6 +40,9 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent},
     ]
+  },
+  {
+    path: 'snomed', component: SnomedDashboardComponent
   }
 ];
 
@@ -62,7 +68,11 @@ export const INTEGRATION_ROUTES: Routes = [
     IntegrationAtcImportComponent,
     IntegrationIcdImportComponent,
     CodeSystemFileImportComponent,
-    ConceptMapFileImportComponent
+    ConceptMapFileImportComponent,
+
+    SnomedDashboardComponent,
+    SnomedSearchComponent,
+    SnomedConceptInfoComponent
   ],
 })
 export class IntegrationModule {

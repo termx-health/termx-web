@@ -58,7 +58,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     this.searchUpdate.next(text);
   }
 
-  private searchConcepts(text?: string): Observable<{[id: string]: CodeSystemConcept}> {
+  public searchConcepts(text?: string): Observable<{[id: string]: CodeSystemConcept}> {
     if ((!text || text.length < 1) && !this.codeSystem && !this.codeSystemVersion ) {
       return of(this.data);
     }

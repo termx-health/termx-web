@@ -1,0 +1,79 @@
+<m-card>
+  <nz-tabset nzLinkRouter>
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" class="m-items-middle">
+        {{'web.snomed.search.taxonomy' | translate}}
+      </a>
+      <ng-template nz-tab>
+        <m-spinner [mLoading]="loading['taxonomy']">
+          <m-input [(ngModel)]="searchText" name="searchText" (ngModelChange)="searchUpdate.next($event)"></m-input>
+          <nz-breadcrumb style="margin: 1rem 0 1rem 0">
+            <nz-breadcrumb-item *ngFor="let parent of parents; let index = index">
+              <a (click)="loadTaxonomyTree(parent.conceptId);selectConcept(parent.conceptId, index)">{{parent | snomedConceptName | async}}</a>
+            </nz-breadcrumb-item>
+          </nz-breadcrumb>
+          <div style="display: grid">
+            <label *ngFor="let child of children">
+              <m-icon *ngIf="!child.isLeafInferred" (click)="loadTaxonomyTree(child.conceptId)" mCode="down"></m-icon>
+              <a (click)="selectConcept(child.conceptId)">
+                <m-icon *ngIf="child.isLeafInferred" mCode="minus"></m-icon> &nbsp;{{child | snomedConceptName | async}}
+              </a>
+            </label>
+          </div>
+        </m-spinner>
+      </ng-template>
+    </nz-tab>
+
+
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'refset' }">
+        {{'web.snomed.search.refsets' | translate}}
+      </a>
+      <ng-template nz-tab>
+        <m-spinner [mLoading]="loading['refsets']">
+          <m-select [(ngModel)]="refsetParams.referenceSet" (ngModelChange)="loadRefsetConcepts()" name="refSet">
+            <m-option *ngFor="let refSet of refsets"
+                [label]="refSet | snomedConceptName | async"
+                [value]="refSet.id"></m-option>
+          </m-select>
+          <m-backend-table [mResult]="refsetConcepts" [(mQuery)]="refsetParams" (mQueryChange)="loadRefsetConcepts()" [mLoading]="loading['refset-concepts']">
+            <tr *mTableHead>
+              <th>{{'entities.snomed-concept.term' | translate}}</th>
+            </tr>
+            <tr *mTableRow="let concept">
+              <td><a (click)="conceptSelected.emit(concept.id)">{{concept | snomedConceptName | async}}</a></td>
+            </tr>
+            <tr *mTableNoData>
+              <td colspan="100%">
+                <m-no-data></m-no-data>
+              </td>
+            </tr>
+          </m-backend-table>
+        </m-spinner>
+      </ng-template>
+    </nz-tab>
+
+
+    <nz-tab>
+      <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'ecl' }">
+        {{'web.snomed.search.ecl' | translate}}
+      </a>
+      <ng-template nz-tab>
+        <m-input [(ngModel)]="eclParams.ecl" (keydown.enter)="loadEclConcepts()" name="ecl" [placeholder]="'web.snomed.search.ecl-placeholder' | translate"></m-input>
+        <m-backend-table [mResult]="eclConcepts" [(mQuery)]="eclParams" (mQueryChange)="loadEclConcepts()" [mLoading]="loading['ecl-concepts']">
+          <tr *mTableHead>
+            <th>{{'entities.snomed-concept.term' | translate}}</th>
+          </tr>
+          <tr *mTableRow="let concept">
+            <td><a (click)="conceptSelected.emit(concept.id)">{{concept | snomedConceptName | async}}</a></td>
+          </tr>
+          <tr *mTableNoData>
+            <td colspan="100%">
+              <m-no-data></m-no-data>
+            </td>
+          </tr>
+        </m-backend-table>
+      </ng-template>
+    </nz-tab>
+  </nz-tabset>
+</m-card>
