@@ -69,7 +69,9 @@
             [codeSystemVersionReleaseDateLe]="lockedDate"
             [codeSystemVersionExpirationDateGe]="lockedDate"
             [entityVersionStatus]="inactiveConcepts ? 'active' : inactiveConcepts === false ? 'rtired': null "
-            required></twl-concept-search>
+            autofocus
+            required
+        ></twl-concept-search>
       </m-form-item>
 
       <m-form-item mName="display" mLabel="entities.value-set-version-concept.display" *ngIf="modalData.concept?.concept?.id">

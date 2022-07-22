@@ -48,7 +48,7 @@
   <ng-container *m-modal-content>
     <form #form="ngForm" *ngIf="modalData.filter">
       <m-form-item mName="property" mLabel="entities.value-set-rule-filter.property">
-        <m-select *ngIf="!viewMode" name="property" [(ngModel)]="modalData.filter.property" [compareWith]="'id'">
+        <m-select *ngIf="!viewMode" name="property" [(ngModel)]="modalData.filter.property" [compareWith]="'id'" autofocus>
           <m-option *ngFor="let property of properties" [label]="property.name" [value]="property"></m-option>
         </m-select>
       </m-form-item>

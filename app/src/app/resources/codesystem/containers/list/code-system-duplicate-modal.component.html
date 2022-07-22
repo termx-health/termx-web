@@ -6,7 +6,7 @@
   <ng-container *m-modal-content>
     <form #form="ngForm" *ngIf="params">
       <m-form-item mName="sourceCodeSystem" mLabel="web.code-system.list.duplicate.source-code-system" required>
-        <twl-code-system-search name="sourceCodeSystem" [(ngModel)]="params.sourceCodeSystem" valuePrimitive required></twl-code-system-search>
+        <twl-code-system-search name="sourceCodeSystem" [(ngModel)]="params.sourceCodeSystem" valuePrimitive autofocus required></twl-code-system-search>
       </m-form-item>
       <m-form-item mName="targetCodeSystem" mLabel="web.code-system.list.duplicate.target-code-system" required>
         <m-input name="targetCodeSystem" [(ngModel)]="params.targetCodeSystem" required></m-input>

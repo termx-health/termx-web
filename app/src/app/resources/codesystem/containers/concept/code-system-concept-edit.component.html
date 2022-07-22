@@ -1,10 +1,10 @@
 <m-form-row>
   <div *mFormCol>
-    <m-spinner [mLoading]="isLoading" autoselect>
+    <m-spinner [mLoading]="isLoading">
       <m-card [mTitle]="mode === 'edit' ? 'web.code-system-concept.form.edit-header' : 'web.code-system-concept.form.add-header'" [mShowSkeleton]="loading['init']">
         <form #form="ngForm" *ngIf="concept">
           <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>
-            <m-input name="code" [(ngModel)]="concept.code" required></m-input>
+            <m-input name="code" [(ngModel)]="concept.code" autofocus required></m-input>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="entities.code-system-concept.description">

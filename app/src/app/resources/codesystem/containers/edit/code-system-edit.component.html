@@ -6,8 +6,8 @@
           {{'web.code-system.tabs.code-system' | translate}}
         </a>
         <m-spinner [mLoading]="loading['save']">
-          <m-card [mTitle]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'" [mShowSkeleton]="loading['init']">
-            <form #form="ngForm" *ngIf="codeSystem" autoselect>
+          <m-card [mTitle]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'" [mShowSkeleton]="loading['init']" autofocus>
+            <form #form="ngForm" *ngIf="codeSystem">
               <m-form-item mName="id" mLabel="entities.code-system.id" required>
                 <m-input name="id" [(ngModel)]="codeSystem.id" [disabled]="mode === 'edit'" required></m-input>
               </m-form-item>

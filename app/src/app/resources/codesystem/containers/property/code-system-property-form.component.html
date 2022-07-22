@@ -1,6 +1,6 @@
 <form #form="ngForm" *ngIf="property">
   <m-form-item mName="propertyName" mLabel="entities.entity-property.name" required>
-    <m-input name="propertyName" [(ngModel)]="property.name" required></m-input>
+    <m-input name="propertyName" [(ngModel)]="property.name" autofocus required></m-input>
   </m-form-item>
   <m-form-item mName="propertyType" mLabel="entities.entity-property.type" required>
     <twl-value-set-concept-select name="propertyType" [(ngModel)]="property.type" valueSet="concept-property-type" required></twl-value-set-concept-select>

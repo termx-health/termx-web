@@ -9,7 +9,7 @@
 
         <form #conceptVersionForm="ngForm" *ngIf="conceptVersion">
           <m-form-item mName="description" mLabel="entities.code-system-entity-version.description">
-            <m-textarea name="description" [(ngModel)]="conceptVersion.description"></m-textarea>
+            <m-textarea name="description" [(ngModel)]="conceptVersion.description" autofocus></m-textarea>
           </m-form-item>
 
           <div *ngIf="conceptVersion.id">

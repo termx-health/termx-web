@@ -9,7 +9,7 @@
 
         <form #form="ngForm" *ngIf="version">
           <m-form-item mName="version" mLabel="entities.code-system-version.version" required>
-            <m-input name="version" [(ngModel)]="version.version" required></m-input>
+            <m-input name="version" [(ngModel)]="version.version" autofocus required></m-input>
           </m-form-item>
 
           <m-form-item mName="source" mLabel="entities.code-system-version.source">

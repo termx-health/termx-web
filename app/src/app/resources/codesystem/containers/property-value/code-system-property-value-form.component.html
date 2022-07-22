@@ -7,6 +7,7 @@
         placeholder="marina.ui.inputs.search.placeholder"
         icon="search"
         [loading]="loading"
+        autofocus
         required
     >
       <m-option *ngFor="let prop of entityProperties.data" [value]="prop.id" [label]="prop.name"></m-option>
