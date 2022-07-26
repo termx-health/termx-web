@@ -2,8 +2,9 @@
   <m-spinner [mLoading]=loading>
     <div *m-card-header class="m-items-between">
       <nz-breadcrumb>
-        <nz-breadcrumb-item>{{system}}</nz-breadcrumb-item>
-        <nz-breadcrumb-item>{{system}} {{edition}} import</nz-breadcrumb-item>
+        <nz-breadcrumb-item *ngIf="edition !== 'orpha'">{{system}}</nz-breadcrumb-item>
+        <nz-breadcrumb-item *ngIf="edition !== 'orpha'">{{system}} {{edition}} import</nz-breadcrumb-item>
+        <nz-breadcrumb-item *ngIf="edition === 'orpha'">{{edition}} import</nz-breadcrumb-item>
       </nz-breadcrumb>
       <div class="m-items-between">
         <m-button (click)="setDefaultData()" [disabled]="loading">{{'web.integration.set-default-data' | translate}}</m-button>
