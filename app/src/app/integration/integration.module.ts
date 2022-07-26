@@ -39,6 +39,8 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'icd-10/$import', component: IntegrationIcdImportComponent},
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent},
+      {path: 'file-import/concept-map', component: ConceptMapFileImportComponent},
+      {path: 'orphanet-import/rare-diseases', component: IntegrationIcdImportComponent},
     ]
   },
   {

@@ -71,6 +71,15 @@ export class IntegrationImportConfiguration {
         '\n' +
         'Muudatus- ja täiendusettepanekud edastada klassifikaatori sisu haldajale, Sotsiaalministeeriumile aadressil info@sm.ee.Publitseeritud failidega seotud küsimused edastage palun andmekorraldus@tehik.ee.'
     };
-    return {'int': int, 'est': est}[edition] as any;
+    const orpha = {
+      zipSourceUrl: 'https://www.orphadata.com/data/xml/en_product3_182.xml',
+      uri: 'https://www.orphadata.com/classifications/rare-allergic-disease',
+      source: 'Orphadata',
+      version: '2022-07',
+      codeSystem: 'rare-allergic-disease',
+      codeSystemName: {'en': 'Rare allergic disease'},
+      codeSystemDescription: '',
+    };
+    return {'int': int, 'est': est, 'orpha': orpha}[edition] as any;
   }
 }
