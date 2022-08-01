@@ -2,10 +2,12 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {CodeSystem, CodeSystemLibService, EntityProperty} from 'terminology-lib/resources';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
-import {collect, copyDeep, group, isNil} from '@kodality-web/core-util';
+import {collect, copyDeep, DestroyService, group, isNil} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {LocalizedName} from '@kodality-health/marina-util';
 import {MuiNotificationService} from '@kodality-health/marina-ui';
+import {filter, merge, Subject, switchMap, takeUntil, timer} from 'rxjs';
+import {JobLibService, JobLog, JobLogResponse} from 'terminology-lib/job';
 
 const IMPORT_TEMPLATES: {
   [p: string]: FileImportPropertyRow[]
@@ -145,7 +147,8 @@ type FileImportPropertyRow = FileProcessingRequestProperty & {import: boolean}
 
 
 @Component({
-  templateUrl: 'code-system-file-import.component.html'
+  templateUrl: 'code-system-file-import.component.html',
+  providers: [DestroyService]
 })
 export class CodeSystemFileImportComponent {
   public analyzeResponse: {
@@ -169,14 +172,17 @@ export class CodeSystemFileImportComponent {
   public loading: {[k: string]: boolean} = {};
   public validationErrors: string[] = [];
 
-
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('form') public form?: NgForm;
+
+  public jobResponse: JobLog | null = null;
 
   public constructor(
     private http: HttpClient,
     private notificationService: MuiNotificationService,
-    private codeSystemLibService: CodeSystemLibService
+    private codeSystemLibService: CodeSystemLibService,
+    private jobService: JobLibService,
+    private destroy$: DestroyService
   ) {}
 
   public initCodeSystem(): void {
@@ -246,12 +252,31 @@ export class CodeSystemFileImportComponent {
     if (this.data.source.type === 'file') {
       formData.append('file', this.fileInput?.nativeElement?.files?.[0] as Blob, 'files');
     }
-
+    this.jobResponse = null;
     this.loading['process'] = true;
-    this.http.post<void>(`${environment.terminologyApi}/file-importer/code-system/process`, formData).subscribe(() => {
-      this.notificationService.success("File processing is finished");
+    this.http.post<JobLogResponse>(`${environment.terminologyApi}/file-importer/code-system/process`, formData)
+      .subscribe({
+        next: (resp) => {
+          this.pollJobStatus(resp.jobId as number);
+        }, error: () => this.loading['process'] = false
+      });
+  }
+
+  private pollJobStatus(jobId: number): void {
+    const stopPolling$ = new Subject<void>();
+    timer(0, 3000).pipe(
+      takeUntil(merge(this.destroy$, stopPolling$)),
+      switchMap(() => this.jobService.getLog(jobId)),
+      filter(resp => resp.execution?.status !== 'running')
+    ).subscribe(jobResp => {
+      stopPolling$.next();
+      if (!jobResp.errors && !jobResp.warnings) {
+        this.notificationService.success("File processing is finished", undefined, {duration: 0, closable: true});
+      }
+      this.jobResponse = jobResp;
     }).add(() => this.loading['process'] = false);
   }
+
 
 
   public applyTemplate(): void {

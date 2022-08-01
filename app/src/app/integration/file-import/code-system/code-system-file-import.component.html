@@ -213,4 +213,15 @@
   <m-button *m-card-footer (click)="process()" [mLoading]="loading['process']" [disabled]="form.invalid || !analyzeResponse?.properties?.length">
     Process
   </m-button>
+  <div *ngIf="jobResponse">
+    <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
+      {{error}}
+    </m-alert>
+    <m-alert *ngFor="let warning of jobResponse.warnings" mType="warning" mShowIcon>
+      {{warning}}
+    </m-alert>
+    <m-alert *ngFor="let success of jobResponse.successes" mType="success" mShowIcon>
+      {{success}}
+    </m-alert>
+  </div>
 </m-card>
