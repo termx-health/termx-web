@@ -31,7 +31,7 @@ export class PrivilegesListComponent implements OnInit {
     if (!actions) {
       return '';
     }
-    return Object.keys(actions).join(', ');
+    return Object.keys(actions).filter(key => !!(actions as any)[key]).join(', ');
   };
 
   private search(): Observable<SearchResult<Privilege>> {
