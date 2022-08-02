@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
-import {Privilege, PrivilegeSearchParams} from 'terminology-lib/auth/privileges';
+import {Privilege, PrivilegeResourceActions, PrivilegeSearchParams} from 'terminology-lib/auth/privileges';
 import {PrivilegeService} from '../services/privilege.service';
 
 @Component({
@@ -26,6 +26,13 @@ export class PrivilegesListComponent implements OnInit {
       switchMap(() => this.search()),
     ).subscribe(data => this.searchResult = data);
   }
+
+  public toPlainString = (actions: PrivilegeResourceActions): string => {
+    if (!actions) {
+      return '';
+    }
+    return Object.keys(actions).join(', ');
+  };
 
   private search(): Observable<SearchResult<Privilege>> {
     const q = copyDeep(this.query);

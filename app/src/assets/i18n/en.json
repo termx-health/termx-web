@@ -455,7 +455,14 @@
           "edit-header": "Edit resource",
           "resource-type": "Type",
           "resource-id": "Resource",
+          "actions": {
+            "view": "View",
+            "edit": "Edit",
+            "publish": "Publish"
+          },
           "type": {
+            "any": "Any resource",
+            "admin": "Admin",
             "code-system": "CodeSystem",
             "value-set": "ValueSet",
             "map-set": "MapSet",
@@ -693,11 +700,16 @@
     "privilege": {
       "code": "Code",
       "name": "Name",
-      "resources": "Resources"
+      "resources": "Resources",
+      "kind": "Kind",
+      "actions": "Actions"
     },
     "privilege-resource": {
       "type": "Type",
-      "resource-id": "Resource"
+      "resource-id": "Resource",
+      "view": "View",
+      "edit": "Edit",
+      "publish": "Publish"
     },
     "snomed-concept": {
       "term": "Term",

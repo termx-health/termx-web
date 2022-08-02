@@ -13,7 +13,9 @@
     <tr *mTableHead>
       <th mColumnKey="code">{{'entities.privilege.code' | translate}}</th>
       <th mColumnKey="name">{{'entities.privilege.name' | translate}}</th>
+      <th mColumnKey="kind">{{'entities.privilege.kind' | translate}}</th>
       <th mColumnKey="resources">{{'entities.privilege.resources' | translate}}</th>
+      <th mColumnKey="actions">{{'entities.privilege.actions' | translate}}</th>
     </tr>
 
     <tr *mTableRow="let privilege">
@@ -24,16 +26,23 @@
       </td>
       <td>{{privilege.names | localName}}</td>
       <td>
-        <div *ngFor="let resource of privilege.resources">
-          <div>
-            {{resource.resourceId}}
-          </div>
+        <div *ngFor="let res of privilege.resources">
+          {{res.resourceType}}
+        </div>
+      </td>
+      <td>
+        <div *ngFor="let res of privilege.resources">
+          {{res.resourceId}}
+        </div>
+      </td>
+      <td>
+        <div *ngFor="let res of privilege.resources">
+          {{res.actions | apply:toPlainString}}
         </div>
       </td>
     </tr>
-
     <tr *mTableNoData>
-      <td colspan="4">
+      <td colspan="5">
         <m-no-data></m-no-data>
       </td>
     </tr>

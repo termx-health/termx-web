@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {Privilege, PrivilegeResource} from 'terminology-lib/auth/privileges';
+import {Privilege, PrivilegeResource, PrivilegeResourceActions} from 'terminology-lib/auth/privileges';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {PrivilegeService} from '../services/privilege.service';
@@ -13,7 +13,7 @@ export class PrivilegeEditComponent implements OnInit {
   public privilege?: Privilege;
   public resourceMap?: {[type: string]: PrivilegeResource[]} = {};
 
-  public resourceModalData: {
+  public modalData: {
     resource?: PrivilegeResource;
     visible?: boolean;
     editKey?: string;
@@ -71,14 +71,14 @@ export class PrivilegeEditComponent implements OnInit {
     if (!validateForm(this.resourceForm)) {
       return;
     }
-    const resource = this.resourceModalData.resource!;
-    if (isDefined(this.resourceModalData.editKey) && isDefined(this.resourceModalData.editIndex)) {
-      this.removeResource(this.resourceModalData.editKey, this.resourceModalData.editIndex);
+    const resource = this.modalData.resource!;
+    if (isDefined(this.modalData.editKey) && isDefined(this.modalData.editIndex)) {
+      this.removeResource(this.modalData.editKey, this.modalData.editIndex);
     }
     this.resourceMap![resource.resourceType!] = [...(this.resourceMap![resource.resourceType!] || []), resource];
     this.resourceMap = {...this.resourceMap};
     this.fireOnChange();
-    this.resourceModalData.visible = false;
+    this.modalData.visible = false;
   }
 
   public removeResource(key: string, index: number): void {
@@ -97,16 +97,20 @@ export class PrivilegeEditComponent implements OnInit {
 
   public openResourceModal(options: {key?: string, index?: number} = {}): void {
     const {key, index} = options;
-    this.resourceModalData = {
+    let resource = (key && isDefined(index)) ? copyDeep(this.resourceMap![key][index]) : new PrivilegeResource();
+    if (!resource.actions) {
+      resource.actions = new PrivilegeResourceActions();
+    }
+    this.modalData = {
       visible: true,
       editKey: key,
       editIndex: index,
-      resource: (key && isDefined(index)) ? copyDeep(this.resourceMap![key][index]) : new PrivilegeResource()
+      resource: resource
     };
   }
 
   public filter = (resource: {id?: string}): boolean => {
-    const resourceType = this.resourceModalData.resource!.resourceType!;
+    const resourceType = this.modalData.resource!.resourceType!;
     const resourceIds = (this.resourceMap?.[resourceType] || []).map(r => r.resourceId);
     return !resourceIds.includes(resource.id);
   };
