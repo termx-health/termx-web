@@ -22,6 +22,7 @@ import {ConceptMapFileImportComponent} from './file-import/concept-map/concept-m
 import {SnomedDashboardComponent} from './snomed/snomed-dashboard.component';
 import {SnomedSearchComponent} from './snomed/snomed-search.component';
 import {SnomedConceptInfoComponent} from './snomed/snomed-concept-info.component';
+import {OrphanetImportComponent} from './import/orphanet/orphanet-import-component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -40,7 +41,7 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent},
-      {path: 'orphanet-import/rare-diseases', component: IntegrationIcdImportComponent},
+      {path: 'orphanet-import/rare-diseases', component: OrphanetImportComponent},
     ]
   },
   {
@@ -71,7 +72,7 @@ export const INTEGRATION_ROUTES: Routes = [
     IntegrationIcdImportComponent,
     CodeSystemFileImportComponent,
     ConceptMapFileImportComponent,
-
+    OrphanetImportComponent,
     SnomedDashboardComponent,
     SnomedSearchComponent,
     SnomedConceptInfoComponent

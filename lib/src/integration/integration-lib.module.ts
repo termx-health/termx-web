@@ -4,6 +4,7 @@ import {IntegrationAtcLibService} from './atc/service/integration-atc-lib.servic
 import {IntegrationIcdLibService} from './icd-10/service/integration-icd-lib.service';
 import {SnomedLibService} from './snomed/services/snomed-lib.service';
 import {SnomedConceptNamePipe} from './snomed/pipe/snomed-concept-name-pipe';
+import {IntegrationOrphanetLibService} from './orphanet/service/integration-orphanet-lib.service';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import {SnomedConceptNamePipe} from './snomed/pipe/snomed-concept-name-pipe';
   providers: [
     IntegrationAtcLibService,
     IntegrationIcdLibService,
+    IntegrationOrphanetLibService,
     SnomedLibService
   ],
   declarations: [
