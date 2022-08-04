@@ -2,7 +2,7 @@
   <div *m-card-header class="m-items-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twaPrivileged="'*.value-set.edit'" [routerLink]="'value-sets/add'">
+      <twa-add-button *twaPrivileged="'*.ValueSet.edit'" [routerLink]="'value-sets/add'">
         {{'web.value-set.list.add-value-set' | translate}}
       </twa-add-button>
       <m-button [routerLink]="'finder/value-sets'">
@@ -17,20 +17,20 @@
       <th mColumnKey="id">{{'entities.value-set.id' | translate}}</th>
       <th mColumnKey="name">{{'entities.value-set.name' | translate}}</th>
       <th mColumnKey="uri">{{'web.value-set.list.domain' | translate}}</th>
-      <th *twaPrivileged="'*.value-set.edit'" class="tw-table-actions"></th>
+      <th *twaPrivileged="'*.ValueSet.edit'" class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let vs">
       <td m-table-expand [mItem]="vs"></td>
       <td>
-        <a *ngIf="'*.value-set.edit' | twaHasAnyPrivilege; else view" [routerLink]="['value-sets',vs.id, 'edit']">{{vs.id}}</a>
+        <a *ngIf="'*.ValueSet.edit' | twaHasAnyPrivilege; else view" [routerLink]="['value-sets',vs.id, 'edit']">{{vs.id}}</a>
         <ng-template #view>
           <a [routerLink]="['value-sets',vs.id, 'view']">{{vs.id}}</a>
         </ng-template>
       </td>
       <td>{{vs.names | localName}}</td>
       <td>{{vs.uri | apply: parseDomain}}</td>
-      <td *twaPrivileged="'*.value-set.edit'" class="tw-table-actions">
+      <td *twaPrivileged="'*.ValueSet.edit'" class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item>{{'core.btn.delete' | translate}}</a>
         </m-dropdown>

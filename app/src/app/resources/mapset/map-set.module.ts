@@ -16,14 +16,14 @@ import {MapSetAssociationViewComponent} from './containers/association/map-set-a
 
 
 export const MAP_SET_ROUTES: Routes = [
-  {path: 'add', component: MapSetEditComponent, data: {privilege: ['*.map-set.edit']}},
-  {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['*.map-set.edit']}},
+  {path: 'add', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
   {path: ':id/view', component: MapSetViewComponent},
-  {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['*.map-set.edit']}},
-  {path: ':id/versions/:versionId/edit', component: MapSetVersionEditComponent, data: {privilege: ['*.map-set.edit']}},
+  {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  {path: ':id/versions/:versionId/edit', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
   {path: ':id/versions/:versionId/view', component: MapSetVersionViewComponent},
-  {path: ':id/associations/add', component: MapSetAssociationEditComponent, data: {privilege: ['*.map-set.edit']}},
-  {path: ':id/associations/:associationId/edit', component: MapSetAssociationEditComponent, data: {privilege: ['*.map-set.edit']}},
+  {path: ':id/associations/add', component: MapSetAssociationEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  {path: ':id/associations/:associationId/edit', component: MapSetAssociationEditComponent, data: {privilege: ['*.MapSet.edit']}},
   {path: ':id/associations/:associationId/view', component: MapSetAssociationViewComponent},
 ];
 

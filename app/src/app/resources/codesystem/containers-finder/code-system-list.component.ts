@@ -46,7 +46,7 @@ export class FinderCodeSystemListComponent implements OnInit {
   }
 
   public openResource(cs: CodeSystem): void {
-    if (this.authService.hasPrivilege('*.code-system.edit')) {
+    if (this.authService.hasPrivilege('*.CodeSystem.edit')) {
       this.router.navigate(['/resources/code-systems/', cs.id, 'edit']);
     } else {
       this.router.navigate(['/resources/code-systems/', cs.id, 'view']);

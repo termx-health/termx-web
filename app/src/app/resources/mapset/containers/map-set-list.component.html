@@ -1,7 +1,7 @@
 <m-card>
   <div *m-card-header class="m-items-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-    <twa-add-button *twaPrivileged="'*.map-set.edit'" [routerLink]="'map-sets/add'">
+    <twa-add-button *twaPrivileged="'*.MapSet.edit'" [routerLink]="'map-sets/add'">
       {{'web.map-set.form.add-header' | translate}}
     </twa-add-button>
   </div>
@@ -12,20 +12,20 @@
       <th mColumnKey="id">{{'entities.map-set.id' | translate}}</th>
       <th mColumnKey="name">{{'entities.map-set.name' | translate}}</th>
       <th mColumnKey="uri">{{'entities.map-set.domain' | translate}}</th>
-      <th *twaPrivileged="'*.map-set.edit'" class="tw-table-actions"></th>
+      <th *twaPrivileged="'*.MapSet.edit'" class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let ms">
       <td m-table-expand [mItem]="ms"></td>
       <td>
-        <a *ngIf="'*.map-set.edit' | twaHasAnyPrivilege; else view" [routerLink]="['map-sets', ms.id, 'edit']">{{ms.id}}</a>
+        <a *ngIf="'*.MapSet.edit' | twaHasAnyPrivilege; else view" [routerLink]="['map-sets', ms.id, 'edit']">{{ms.id}}</a>
         <ng-template #view>
           <a [routerLink]="['map-sets',ms.id,'view']">{{ms.id}}</a>
         </ng-template>
       </td>
       <td>{{ms.names | localName}}</td>
       <td>{{ms.uri | apply: parseDomain}}</td>
-      <td *twaPrivileged="'*.map-set.edit'" class="tw-table-actions">
+      <td *twaPrivileged="'*.MapSet.edit'" class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item>{{'core.btn.delete' | translate}}</a>
         </m-dropdown>

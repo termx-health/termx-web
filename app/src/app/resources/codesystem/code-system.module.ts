@@ -41,61 +41,61 @@ import {CodeSystemConceptViewComponent} from './containers/concept/code-system-c
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
-  {path: 'add', component: CodeSystemEditComponent, data: {privilege: ['*.code-system.edit']}},
-  {path: ':id/edit', component: CodeSystemEditComponent, data: {privilege: ['*.code-system.edit']}},
+  {path: 'add', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/edit', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/view', component: CodeSystemViewComponent},
 
-  {path: ':id/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.code-system.edit']}},
-  {path: ':id/concepts/:conceptId/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.code-system.edit']}},
+  {path: ':id/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/concepts/:conceptId/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/concepts/:conceptId/view', component: CodeSystemConceptViewComponent},
-  {path: ':id/concepts/:conceptId/versions/add', component: CodeSystemConceptVersionEditComponent, data: {privilege: ['*.code-system.edit']}},
+  {path: ':id/concepts/:conceptId/versions/add', component: CodeSystemConceptVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {
     path: ':id/concepts/:conceptId/versions/:conceptVersionId/edit',
     component: CodeSystemConceptVersionEditComponent,
-    data: {privilege: ['*.code-system.edit']}
+    data: {privilege: ['*.CodeSystem.edit']}
   },
   {path: ':id/concepts/:conceptId/versions/:conceptVersionId/view', component: CodeSystemConceptVersionViewComponent},
   {
     path: ':id/concepts/:conceptId/versions/:conceptVersionId/entity-property-value/add',
     component: CodeSystemPropertyValueEditComponent,
-    data: {privilege: ['*.code-system.edit']}
+    data: {privilege: ['*.CodeSystem.edit']}
   },
   {
     path: ':id/concepts/:conceptId/versions/:conceptVersionId/entity-property-value/:propertyValueId/edit',
     component: CodeSystemPropertyValueEditComponent,
-    data: {privilege: ['*.code-system.edit']}
+    data: {privilege: ['*.CodeSystem.edit']}
   },
   {
     path: ':id/concepts/:conceptId/versions/:conceptVersionId/designations/add',
     component: CodeSystemDesignationEditComponent,
-    data: {privilege: ['*.code-system.edit']}
+    data: {privilege: ['*.CodeSystem.edit']}
   },
   {
     path: ':id/concepts/:conceptId/versions/:conceptVersionId/designations/:designation/edit',
     component: CodeSystemDesignationEditComponent,
-    data: {privilege: ['*.code-system.edit']}
+    data: {privilege: ['*.CodeSystem.edit']}
   },
   {
     path: ':id/concepts/:conceptId/versions/:conceptVersionId/associations/add',
     component: CodeSystemAssociationEditComponent,
-    data: {privilege: ['*.code-system.edit']}
+    data: {privilege: ['*.CodeSystem.edit']}
   },
   {
     path: ':id/concepts/:conceptId/versions/:conceptVersionId/associations/:association/edit',
     component: CodeSystemAssociationEditComponent,
-    data: {privilege: ['*.code-system.edit']}
+    data: {privilege: ['*.CodeSystem.edit']}
   },
 
-  {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.code-system.edit']}},
-  {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.code-system.edit']}},
+  {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/entity-properties/:propertyId/view', component: CodeSystemPropertyEditComponent},
 
-  {path: ':id/supplements/add', component: CodeSystemSupplementEditComponent, data: {privilege: ['*.code-system.edit']}},
-  {path: ':id/supplements/:supplementId/edit', component: CodeSystemSupplementEditComponent, data: {privilege: ['*.code-system.edit']}},
+  {path: ':id/supplements/add', component: CodeSystemSupplementEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/supplements/:supplementId/edit', component: CodeSystemSupplementEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/supplements/:supplementId/view', component: CodeSystemSupplementEditComponent},
 
-  {path: ':id/versions/add', component: CodeSystemVersionEditComponent, data: {privilege: ['*.code-system.edit']}},
-  {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: {privilege: ['*.code-system.edit']}},
+  {path: ':id/versions/add', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/view', component: CodeSystemVersionViewComponent},
 ];
 

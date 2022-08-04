@@ -107,46 +107,45 @@
       </m-form-item>
       <m-form-item *ngIf="modalData.resource.resourceType && modalData.resource.resourceType !== 'Any' && modalData.resource.resourceType !== 'Admin'"
           mName="resourceId"
-          mLabel="web.privileges.resources.modal.resource-id"
-          required>
+          mLabel="web.privileges.resources.modal.resource-id">
         <twl-code-system-search name="resourceId"
             *ngIf="modalData.resource.resourceType === 'CodeSystem'"
             [(ngModel)]="modalData.resource.resourceId"
             [filter]="filter"
-            valuePrimitive
-            required></twl-code-system-search>
+            valuePrimitive></twl-code-system-search>
         <twl-value-set-search name="resourceId"
             *ngIf="modalData.resource.resourceType === 'ValueSet'"
             [(ngModel)]="modalData.resource.resourceId"
             [filter]="filter"
-            valuePrimitive
-            required></twl-value-set-search>
+            valuePrimitive></twl-value-set-search>
         <twl-map-set-search name="resourceId"
             *ngIf="modalData.resource.resourceType === 'MapSet'"
             [(ngModel)]="modalData.resource.resourceId"
             [filter]="filter"
-            valuePrimitive
-            required></twl-map-set-search>
+            valuePrimitive></twl-map-set-search>
         <twl-naming-system-search name="resourceId"
             *ngIf="modalData.resource.resourceType === 'NamingSystem'"
             [(ngModel)]="modalData.resource.resourceId"
             [filter]="filter"
-            valuePrimitive
-            required></twl-naming-system-search>
+            valuePrimitive></twl-naming-system-search>
       </m-form-item>
-      <m-form-item [mLabel]="view"></m-form-item>
-      <ng-template #view>
-        <m-checkbox name="action-view" [(ngModel)]="modalData.resource.actions.view">{{'web.privileges.resources.modal.actions.view' | translate}}</m-checkbox>
-      </ng-template>
-      <m-form-item [mLabel]="edit"></m-form-item>
-      <ng-template #edit>
-        <m-checkbox name="action-edit" [(ngModel)]="modalData.resource.actions.edit">{{'web.privileges.resources.modal.actions.edit' | translate}}</m-checkbox>
-      </ng-template>
-      <m-form-item [mLabel]="publish"></m-form-item>
-      <ng-template #publish>
-        <m-checkbox name="action-publish"
-            [(ngModel)]="modalData.resource.actions.publish">{{'web.privileges.resources.modal.actions.publish' | translate}}</m-checkbox>
-      </ng-template>
+      <ng-container *ngIf="modalData.resource.resourceType !== 'Admin'">
+        <m-form-item [mLabel]="view"></m-form-item>
+        <ng-template #view>
+          <m-checkbox name="action-view"
+              [(ngModel)]="modalData.resource.actions.view">{{'web.privileges.resources.modal.actions.view' | translate}}</m-checkbox>
+        </ng-template>
+        <m-form-item [mLabel]="edit"></m-form-item>
+        <ng-template #edit>
+          <m-checkbox name="action-edit"
+              [(ngModel)]="modalData.resource.actions.edit">{{'web.privileges.resources.modal.actions.edit' | translate}}</m-checkbox>
+        </ng-template>
+        <m-form-item [mLabel]="publish"></m-form-item>
+        <ng-template #publish>
+          <m-checkbox name="action-publish"
+              [(ngModel)]="modalData.resource.actions.publish">{{'web.privileges.resources.modal.actions.publish' | translate}}</m-checkbox>
+        </ng-template>
+      </ng-container>
     </form>
   </ng-container>
 

@@ -11,15 +11,15 @@ import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './associationtype/
 
 export const RESOURCES_ROUTES: Routes = [
   {path: '', component: ResourcesTabsetComponent},
-  {path: 'code-systems', children: CODE_SYSTEM_ROUTES, data: {privilege: ['*.code-system.view']}},
-  {path: 'value-sets', children: VALUE_SET_ROUTES, data: {privilege: ['*.value-set.view']}},
-  {path: 'map-sets', children: MAP_SET_ROUTES, data: {privilege: ['*.map-set.view']}},
+  {path: 'code-systems', children: CODE_SYSTEM_ROUTES, data: {privilege: ['*.CodeSystem.view']}},
+  {path: 'value-sets', children: VALUE_SET_ROUTES, data: {privilege: ['*.ValueSet.view']}},
+  {path: 'map-sets', children: MAP_SET_ROUTES, data: {privilege: ['*.MapSet.view']}},
   {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES},
   {path: 'association-types', children: ASSOCIATION_TYPE_ROUTES},
   {
     path: 'finder', children: [
-      {path: 'code-systems', children: CODE_SYSTEM_FINDER_ROUTES, data: {privilege: ['*.code-system.view']}},
-      {path: 'value-sets', children: VALUE_SET_FINDER_ROUTES, data: {privilege: ['*.value-set.view']}},
+      {path: 'code-systems', children: CODE_SYSTEM_FINDER_ROUTES, data: {privilege: ['*.CodeSystem.view']}},
+      {path: 'value-sets', children: VALUE_SET_FINDER_ROUTES, data: {privilege: ['*.ValueSet.view']}},
     ]
   },
 ];

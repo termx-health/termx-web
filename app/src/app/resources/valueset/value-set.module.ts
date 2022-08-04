@@ -25,16 +25,16 @@ import {ValueSetRuleEditComponent} from './containers/version/ruleset/rule/value
 
 
 export const VALUE_SET_ROUTES: Routes = [
-  {path: 'add', component: ValueSetEditComponent, data: {privilege: ['*.value-set.edit']}},
-  {path: ':id/edit', component: ValueSetEditComponent, data: {privilege: ['*.value-set.edit']}},
+  {path: 'add', component: ValueSetEditComponent, data: {privilege: ['*.ValueSet.edit']}},
+  {path: ':id/edit', component: ValueSetEditComponent, data: {privilege: ['*.ValueSet.edit']}},
   {path: ':id/view', component: ValueSetViewComponent},
-  {path: ':id/versions/add', component: ValueSetVersionEditComponent, data: {privilege: ['*.value-set.edit']}},
-  {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent, data: {privilege: ['*.value-set.edit']}},
+  {path: ':id/versions/add', component: ValueSetVersionEditComponent, data: {privilege: ['*.ValueSet.edit']}},
+  {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent, data: {privilege: ['*.ValueSet.edit']}},
   {path: ':id/versions/:versionCode/view', component: ValueSetVersionViewComponent},
-  {path: ':id/versions/:versionCode/concepts/add', component: ValueSetVersionConceptEditComponent, data: {privilege: ['*.value-set.edit']}},
-  {path: ':id/versions/:versionCode/concepts/:conceptId/edit', component: ValueSetVersionConceptEditComponent, data: {privilege: ['*.value-set.edit']}},
-  {path: ':id/versions/:versionCode/rule-sets/:ruleSetId/rules/add', component: ValueSetRuleEditComponent, data: {privilege: ['*.value-set.edit']}},
-  {path: ':id/versions/:versionCode/rule-sets/:ruleSetId/rules/:ruleId/edit', component: ValueSetRuleEditComponent, data: {privilege: ['*.value-set.edit']}},
+  {path: ':id/versions/:versionCode/concepts/add', component: ValueSetVersionConceptEditComponent, data: {privilege: ['*.ValueSet.edit']}},
+  {path: ':id/versions/:versionCode/concepts/:conceptId/edit', component: ValueSetVersionConceptEditComponent, data: {privilege: ['*.ValueSet.edit']}},
+  {path: ':id/versions/:versionCode/rule-sets/:ruleSetId/rules/add', component: ValueSetRuleEditComponent, data: {privilege: ['*.ValueSet.edit']}},
+  {path: ':id/versions/:versionCode/rule-sets/:ruleSetId/rules/:ruleId/edit', component: ValueSetRuleEditComponent, data: {privilege: ['*.ValueSet.edit']}},
 ];
 
 export const VALUE_SET_FINDER_ROUTES: Routes = [{

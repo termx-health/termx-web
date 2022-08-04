@@ -1,19 +1,28 @@
-import {Injectable} from '@angular/core';
+import {Inject, Injectable} from '@angular/core';
+import {mergeMap, Observable, of, tap} from 'rxjs';
+import {HttpClient} from '@angular/common/http';
+import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
-import {map, Observable, tap} from 'rxjs';
 
 interface UserInfo {
-  roles: string[]
+  username: string;
+  privileges: string[];
 }
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-  private ADMIN = 'admin'; //FIXME: this is wrong, privilege name may change
+
+  private ADMIN = 'admin';
   public user?: UserInfo;
 
+  protected baseUrl;
+
   public constructor(
+    @Inject(TERMINOLOGY_API) api: string,
+    protected http: HttpClient,
     private oidcSecurityService: OidcSecurityService
   ) {
+    this.baseUrl = `${api}/auth`;
   }
 
 
@@ -22,13 +31,12 @@ export class AuthService {
   }
 
   private refreshUserInfo(): Observable<UserInfo> {
-    return this.oidcSecurityService.checkAuth().pipe(map(lr => {
+    return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
       if (!lr.isAuthenticated) {
-        return null as any;
+        return of(null as any);
+      } else {
+        return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`);
       }
-      return {
-        roles: lr.userData?.roles || []
-      };
     }));
   }
 
@@ -54,7 +62,7 @@ export class AuthService {
     if (!this.user) {
       return false;
     }
-    return this.includesPrivilege(this.user.roles, this.ADMIN) || this.includesPrivilege(this.user!.roles, privilege);
+    return this.includesPrivilege(this.user.privileges, this.ADMIN) || this.includesPrivilege(this.user!.privileges, privilege);
   }
 
 
@@ -62,13 +70,13 @@ export class AuthService {
     if (!this.user) {
       return false;
     }
-    return this.includesPrivilege(this.user.roles, this.ADMIN) || privileges.every(p => this.includesPrivilege(this.user!.roles, p));
+    return this.includesPrivilege(this.user.privileges, this.ADMIN) || privileges.every(p => this.includesPrivilege(this.user!.privileges, p));
   }
 
   public hasAnyPrivilege(privileges: string[]): boolean {
     if (!this.user) {
       return false;
     }
-    return this.includesPrivilege(this.user.roles, this.ADMIN) || privileges.some(p => this.includesPrivilege(this.user!.roles, p));
+    return this.includesPrivilege(this.user.privileges, this.ADMIN) || privileges.some(p => this.includesPrivilege(this.user!.privileges, p));
   }
 }

@@ -2,7 +2,7 @@
   <div *m-card-header class="m-items-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twaPrivileged="'*.code-system.edit'" [routerLink]="['code-systems/add']">
+      <twa-add-button *twaPrivileged="'*.CodeSystem.edit'" [routerLink]="['code-systems/add']">
         {{'web.code-system.list.add-code-system' | translate}}
       </twa-add-button>
       <m-button [routerLink]="'finder/code-systems'">
@@ -17,20 +17,20 @@
       <th mColumnKey="id">{{'entities.code-system.id' | translate}}</th>
       <th mColumnKey="name">{{'entities.code-system.name' | translate}}</th>
       <th mColumnKey="uri">{{'web.code-system.list.domain' | translate}}</th>
-      <th *twaPrivileged="'*.code-system.edit'" class="tw-table-actions"></th>
+      <th *twaPrivileged="'*.CodeSystem.edit'" class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let cs">
       <td m-table-expand [mItem]="cs"></td>
       <td>
-        <a *ngIf="'*.code-system.edit' | twaHasAnyPrivilege; else view" [routerLink]="['code-systems',cs.id,'edit']">{{cs.id}}</a>
+        <a *ngIf="'*.CodeSystem.edit' | twaHasAnyPrivilege; else view" [routerLink]="['code-systems',cs.id,'edit']">{{cs.id}}</a>
         <ng-template #view>
           <a [routerLink]="['code-systems',cs.id,'view']">{{cs.id}}</a>
         </ng-template>
       </td>
       <td>{{cs.names | localName}}</td>
       <td>{{cs.uri | apply: parseDomain}}</td>
-      <td *twaPrivileged="'*.code-system.edit'" class="tw-table-actions">
+      <td *twaPrivileged="'*.CodeSystem.edit'" class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="duplicateModal.toggleModal({sourceCodeSystem: cs.id})">
             <m-icon [mCode]="'copy'"></m-icon>&nbsp; {{'core.btn.duplicate' | translate}}

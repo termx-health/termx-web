@@ -461,7 +461,7 @@
             "publish": "Publish"
           },
           "type": {
-            "any": "Any resource",
+            "any": "Any",
             "admin": "Admin",
             "code-system": "CodeSystem",
             "value-set": "ValueSet",
