@@ -40,23 +40,34 @@ export class AuthService {
     }));
   }
 
-
-  private includesPrivilege(privileges: string[], privilege: string): boolean {
-    if (!privilege) {
+  private includesPrivilege(userPrivileges: string[], authPrivilege: string): boolean {
+    if (!authPrivilege) {
       return false;
     }
-    if (!privileges) {
+    if (!userPrivileges) {
       return false;
     }
 
-    if (privilege.indexOf('*') === privilege.length - 1) {
-      return privileges.some(p => p.startsWith(privilege.substring(0, privilege.length - 1)));
+    if (authPrivilege === this.ADMIN) {
+      return userPrivileges.includes(this.ADMIN);
     }
-    if (privilege.indexOf('*') === 0) {
-      return privileges.some(p => p.endsWith(privilege.substring(1, privilege.length)));
-    }
-    return privileges.includes(privilege);
+
+    return userPrivileges.some(up => {
+      const upParts = up.split(".");
+      let cpParts = authPrivilege.split(".");
+      if (cpParts.length === 2 && cpParts[0] === '*') { // handle special case like '*.view'
+        cpParts = ['*'].concat(cpParts);
+      }
+
+      if (upParts.length !== 3 && cpParts.length !== 3) {
+        return false;
+      }
+      return this.match(upParts[0], cpParts[0]) && this.match(upParts[1], cpParts[1]) && this.match(upParts[2], cpParts[2]);
+    });
   }
+
+  private match = (upPart: string, apPart: string): boolean => upPart === apPart || upPart === '*';
+
 
   public hasPrivilege(privilege: string): boolean {
     if (!this.user) {
@@ -64,7 +75,6 @@ export class AuthService {
     }
     return this.includesPrivilege(this.user.privileges, this.ADMIN) || this.includesPrivilege(this.user!.privileges, privilege);
   }
-
 
   public hasAllPrivileges(privileges: string[]): boolean {
     if (!this.user) {

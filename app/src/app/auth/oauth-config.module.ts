@@ -17,7 +17,7 @@ import {environment} from '../../environments/environment';
       useRefreshToken: true,
       renewTimeBeforeTokenExpiresInSeconds: 30,
       ignoreNonceAfterRefresh: true,
-      logLevel: LogLevel.Debug
+      logLevel: LogLevel.Warn
     }
   })],
   providers: [{provide: AbstractSecurityStorage, useClass: OauthStorageService}],
