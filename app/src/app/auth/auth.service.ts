@@ -52,17 +52,23 @@ export class AuthService {
       return userPrivileges.includes(this.ADMIN);
     }
 
-    return userPrivileges.some(up => {
-      const upParts = up.split(".");
-      let cpParts = authPrivilege.split(".");
-      if (cpParts.length === 2 && cpParts[0] === '*') { // handle special case like '*.view'
-        cpParts = ['*'].concat(cpParts);
+    return userPrivileges.some(userPrivilege => {
+      if (authPrivilege === this.ADMIN) {
+        return userPrivilege === this.ADMIN;
+      }
+      let upParts = userPrivilege.split(".");
+      let apParts = authPrivilege.split(".");
+      if (apParts.length === 2 && apParts[0] === '*') { // handle special case like '*.view'
+        apParts = ['*'].concat(apParts);
+      }
+      if (upParts.length === 2 && upParts[0] === '*') { // handle special case like '*.view'
+        upParts = ['*'].concat(upParts);
       }
 
-      if (upParts.length !== 3 && cpParts.length !== 3) {
+      if (upParts.length !== 3 && apParts.length !== 3) {
         return false;
       }
-      return this.match(upParts[0], cpParts[0]) && this.match(upParts[1], cpParts[1]) && this.match(upParts[2], cpParts[2]);
+      return this.match(upParts[0], apParts[0]) && this.match(upParts[1], apParts[1]) && this.match(upParts[2], apParts[2]);
     });
   }
 
