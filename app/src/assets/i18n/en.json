@@ -434,7 +434,7 @@
       "import": {
         "uri": "Uri",
         "source-url": "Source URL",
-        "source": "Source",
+        "source": "Publisher",
         "version": "Version",
         "valid-from": "Valid from",
         "valid-to": "Valid to",
@@ -554,7 +554,7 @@
     "map-set-version": {
       "id": "Identifier",
       "version": "Version",
-      "source": "Source",
+      "source": "Publisher",
       "supported-languages": "Supported languages",
       "description": "Description",
       "release-date": "Release date",
@@ -584,7 +584,7 @@
     "code-system-version": {
       "id": "Identifier",
       "version": "Version",
-      "source": "Source",
+      "source": "Publisher",
       "preferred-language": "Preferred language",
       "supported-languages": "Supported languages",
       "description": "Description",
@@ -626,7 +626,7 @@
       "id": "Id",
       "code-system": "CodeSystem",
       "name": "Name",
-      "source": "Source",
+      "source": "Publisher",
       "kind": "Kind",
       "status": "Status",
       "description": "Description",
@@ -677,7 +677,7 @@
     "value-set-version": {
       "id": "Identifier",
       "version": "Version",
-      "source": "Source",
+      "source": "Publisher",
       "supported-languages": "Supported languages",
       "description": "Description",
       "status": "Status",
