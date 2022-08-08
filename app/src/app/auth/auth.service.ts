@@ -72,7 +72,7 @@ export class AuthService {
     });
   }
 
-  private match = (upPart: string, apPart: string): boolean => upPart === apPart || upPart === '*';
+  private match = (upPart: string, apPart: string): boolean => upPart === apPart || upPart === '*' || apPart === '*';
 
 
   public hasPrivilege(privilege: string): boolean {
