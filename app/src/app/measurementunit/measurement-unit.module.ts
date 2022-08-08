@@ -6,6 +6,7 @@ import {MeasurementUnitListComponent} from './containers/measurement-unit-list.c
 import {Routes} from '@angular/router';
 import {MeasurementUnitEditComponent} from './containers/edit/measurement-unit-edit.component';
 import {MeasurementUnitViewComponent} from './containers/edit/measurement-unit-view.component';
+import {MeasurementUnitMappingListComponent} from './containers/mapping/measurement-unit-mapping-list.component';
 
 
 export const MEASUREMENT_UNIT_ROUTES: Routes = [
@@ -20,6 +21,7 @@ export const MEASUREMENT_UNIT_ROUTES: Routes = [
     MeasurementUnitListComponent,
     MeasurementUnitEditComponent,
     MeasurementUnitViewComponent,
+    MeasurementUnitMappingListComponent,
   ],
   imports: [
     SharedModule,
