@@ -44,6 +44,8 @@
           </m-form-item>
         </form>
 
+        <twa-measurement-unit-mapping-list *ngIf="measurementUnit" [(mappings)]="measurementUnit.mappings" viewMode></twa-measurement-unit-mapping-list>
+
         <ng-container *twaPrivileged="'*.edit'">
           <ng-container *m-card-footer>
             <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="!measurementUnit?.period?.upper" (click)="save()">
