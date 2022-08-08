@@ -41,7 +41,7 @@
 
   <m-modal #modal [(mVisible)]="modalData.visible" (mClose)="toggleModal()">
     <ng-container *m-modal-header>
-      {{'web.contacts.modal.edit-header' | translate}}
+      {{(modalData.contactIndex > -1 ? 'web.contacts.modal.edit-header' : 'web.contacts.modal.add-header') | translate}}
     </ng-container>
 
     <ng-container *m-modal-content>

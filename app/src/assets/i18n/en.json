@@ -31,6 +31,15 @@
         "add-kind": "Add kind",
         "from": "Period from",
         "to": "Period to"
+      },
+      "mapping": {
+        "list": {
+          "add-mapping": "Add mapping"
+        },
+        "modal": {
+          "edit-header": "Edit mapping",
+          "add-header": "Add mapping"
+        }
       }
     },
     "case-sensitive-options": {
@@ -79,7 +88,7 @@
       "modal": {
         "name": "Name",
         "edit-header": "Edit contact",
-        "operations": "Operations"
+        "add-header": "Add contact"
       }
     },
     "resources": {
@@ -507,7 +516,13 @@
       "rounding": "Rounding",
       "kind": "Kind",
       "definitionUnit": "Base unit",
-      "definitionValue": "Base value"
+      "definitionValue": "Base value",
+      "mappings": "Mappings"
+    },
+    "measurement-unit-mapping": {
+      "system": "System",
+      "system-unit": "System unit",
+      "system-value": "System value"
     },
     "association-type": {
       "code": "Code",
