@@ -22,7 +22,7 @@ export class OrphanetImportComponent extends IntegrationImportComponent {
 
 
   public composeImportRequest(): Observable<JobLogResponse> {
-    return this.orphanetLibService.import(this.data, this.data.zipSourceUrl!);
+    return this.orphanetLibService.import(this.data, this.data.sourceUrl!);
   }
 
   public setDefaultData(): void {

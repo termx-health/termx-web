@@ -433,10 +433,11 @@
       },
       "import": {
         "uri": "Uri",
-        "zip-source-url": "ZIP source URL",
+        "source-url": "Source URL",
         "source": "Source",
         "version": "Version",
-        "valid": "Valid",
+        "valid-from": "Valid from",
+        "valid-to": "Valid to",
         "code-system": "CodeSystem",
         "code-system-name": "CodeSystem name",
         "code-system-description": "CodeSystem description",
