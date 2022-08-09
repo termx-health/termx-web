@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {PrivilegeLibModule} from './privileges';
-import {AuthLibService} from './auth/services/auth-lib.service';
 
 @NgModule({
   declarations: [],
@@ -11,7 +10,6 @@ import {AuthLibService} from './auth/services/auth-lib.service';
     PrivilegeLibModule
   ],
   providers: [
-    AuthLibService
   ]
 })
 export class AuthLibModule {
