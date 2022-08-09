@@ -5,6 +5,7 @@
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
     [loading]="isLoading"
+    [filterOption]="filterOption"
     [autoUnselect]="false"
 >
   <m-option *ngFor="let key of data | keys"

@@ -729,6 +729,7 @@
     },
     "snomed-concept": {
       "term": "Term",
+      "concept-id": "Concept ID",
       "descriptions": "Descriptions",
       "relationships": "Relationships",
       "refsets": "Refsets"
