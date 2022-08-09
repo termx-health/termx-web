@@ -2,9 +2,9 @@
   <m-spinner [mLoading]=loading>
     <div *m-card-header class="m-items-between">
       <nz-breadcrumb>
-        <nz-breadcrumb-item *ngIf="edition !== 'orpha'">{{system}}</nz-breadcrumb-item>
-        <nz-breadcrumb-item *ngIf="edition !== 'orpha'">{{system}} {{edition}} import</nz-breadcrumb-item>
-        <nz-breadcrumb-item *ngIf="edition === 'orpha'">{{edition}} import</nz-breadcrumb-item>
+        <nz-breadcrumb-item>{{system}}</nz-breadcrumb-item>
+        <nz-breadcrumb-item *ngIf="edition !== 'Rare diseases'">{{system}} {{edition}} import</nz-breadcrumb-item>
+        <nz-breadcrumb-item *ngIf="edition === 'Rare diseases'">{{edition}} import</nz-breadcrumb-item>
       </nz-breadcrumb>
       <div class="m-items-between">
         <m-button (click)="setDefaultData()" [disabled]="loading">{{'web.integration.set-default-data' | translate}}</m-button>
@@ -43,14 +43,6 @@
     <m-form-item mLabel="web.integration.import.code-system-version-description">
       <m-textarea [(ngModel)]="data.codeSystemVersionDescription" name="codeSystemVersionDescription"></m-textarea>
     </m-form-item>
-    <div *ngIf="jobResponse">
-      <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
-        {{error}}
-      </m-alert>
-      <m-alert *ngIf="!jobResponse.errors" mType="success" mShowIcon>
-        Success
-      </m-alert>
-    </div>
 
   </m-spinner>
 </m-card>
