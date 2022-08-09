@@ -7,6 +7,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CodeSystemEntityVersionLibService} from '../services/code-system-entity-version-lib.service';
 import {CodeSystemLibService} from '../services/code-system-lib.service';
 import {CodeSystemEntityVersionSearchParams} from '../model/code-system-entity-version-search-params';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 @Component({
   selector: 'twl-code-system-entity-version-search',
@@ -94,8 +95,11 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
     this.onTouched = fn;
   }
 
-
   public get isLoading(): boolean {
     return Object.values(this.loading).some(Boolean);
   }
+
+  public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
+    return this.data[nzValue].code?.includes(_input) || !!this.data[nzValue].designations?.find(d => d.name?.includes(_input));
+  };
 }
