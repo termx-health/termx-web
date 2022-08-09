@@ -24,6 +24,7 @@ export abstract class IntegrationImportComponent implements OnInit {
     this.route.queryParamMap.subscribe(queryParamMap => {
       this.data = new IntegrationImportConfiguration();
       this.edition = queryParamMap.get('edition') || undefined;
+      this.loading = false;
     });
   }
 
@@ -64,15 +65,8 @@ export abstract class IntegrationImportComponent implements OnInit {
               this.notificationService.error('Import failed!', error, {duration: 0, closable: true});
             }
           }
-          if (jobResp.warnings) {
-            for (let warning of jobResp.warnings) {
-              this.notificationService.warning('Import failed!', warning, {duration: 0, closable: true});
-            }
-          }
-          if (jobResp.successes) {
-            for (let success of jobResp.successes) {
-              this.notificationService.success('Import successful!', success, {duration: 0, closable: true});
-            }
+          else {
+              this.notificationService.success(`Import from ${jobResp.definition?.type} completed!`, undefined, {duration: 0, closable: true});
           }
         }
       );
