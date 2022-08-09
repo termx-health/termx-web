@@ -24,8 +24,11 @@
       <td class="tw-table-min-width"><twa-status-tag [status]="version.status"></twa-status-tag></td>
       <td class="tw-table-actions">
         <m-dropdown>
-          <a *m-dropdown-item (click)="exportFhirFormatVersion(version.id)">
-            {{'web.value-set.form.versions.export-fhir' | translate}}
+          <a *m-dropdown-item (click)="exportFhirFormatVersion(version.id, 'json')">
+            {{'web.value-set.form.versions.export-fhir-json' | translate}}
+          </a>
+          <a *m-dropdown-item (click)="exportFhirFormatVersion(version.id, 'xml')">
+            {{'web.value-set.form.versions.export-fhir-xml' | translate}}
           </a>
           <a *m-dropdown-item (click)="exportFhirFormatVersionExpansion(valueSetUri, version.version)">
             {{'web.value-set.form.versions.export-fhir-expansion' | translate}}

@@ -4,6 +4,7 @@ import {CodeSystemVersion} from 'terminology-lib/resources';
 import {FhirCodeSystemLibService} from 'terminology-lib/fhir';
 import {saveAs} from 'file-saver';
 import {BooleanInput} from '@kodality-web/core-util';
+import {Fhir} from 'fhir/fhir';
 
 
 @Component({
@@ -41,9 +42,11 @@ export class CodeSystemVersionsListComponent {
     this.codeSystemService.retireVersion(version.codeSystem!, version.version!).subscribe(() => version.status = 'retired').add(() => this.loading = false);
   }
 
-  public exportFhirFormatVersion(id: number): void {
+  public exportFhirFormatVersion(id: number, type: 'json' | 'xml'): void {
     this.integrationFhirLibService.loadCodeSystem(id).subscribe(fhirCs => {
-      saveAs(new Blob([JSON.stringify(fhirCs, null, 2)], {type: 'application/json'}), `${fhirCs.id}.json`);
+      const json = JSON.stringify(fhirCs, null, 2);
+      const xml = new Fhir().jsonToXml(json);
+      saveAs(new Blob([type === 'json' ? json : xml], {type: 'application/' + type}), `${fhirCs.id}.${type}`);
     });
   }
 }

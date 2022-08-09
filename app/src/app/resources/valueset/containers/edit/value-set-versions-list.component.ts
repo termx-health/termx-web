@@ -4,6 +4,7 @@ import {ValueSetService} from '../../services/value-set.service';
 import {saveAs} from 'file-saver';
 import {FhirValueSetLibService} from 'terminology-lib/fhir';
 import {BooleanInput} from '@kodality-web/core-util';
+import {Fhir} from 'fhir/fhir';
 
 
 @Component({
@@ -46,9 +47,11 @@ export class ValueSetVersionsListComponent implements OnChanges {
     this.valueSetService.retireVersion(version.valueSet!, version.version!).subscribe(() => version.status = 'retired').add(() => this.loading = false);
   }
 
-  public exportFhirFormatVersion(id: number): void {
+  public exportFhirFormatVersion(id: number, type: 'json' | 'xml'): void {
     this.integrationFhirLibService.loadValueSet(id).subscribe(fhirVs => {
-      saveAs(new Blob([JSON.stringify(fhirVs, null, 2)], {type: 'application/json'}), `${fhirVs.id}.json`);
+      const json = JSON.stringify(fhirVs, null, 2);
+      const xml = new Fhir().jsonToXml(json);
+      saveAs(new Blob([type === 'json' ? json : xml], {type: 'application/' + type}), `${fhirVs.id}.${type}`);
     });
   }
 

@@ -47,7 +47,7 @@
         "add-version": "Lisa versioon",
         "add-new-version": "Lisa uus versioon",
         "duplicate-version": "Loo versiooni duplikaat",
-        "export-fhir": "Ekspordi FHIR json"
+        "export-fhir-json": "Ekspordi FHIR json"
       }
     },
     "entity-property": {

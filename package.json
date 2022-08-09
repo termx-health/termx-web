@@ -25,6 +25,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
     "angular-auth-oidc-client": "14.0.2",
+    "fhir": "^4.11.1",
     "file-saver": "^2.0.5",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
