@@ -87,6 +87,108 @@ const IMPORT_TEMPLATES: {
       lang: 'et',
       import: false
     }
+  ],
+  'icf': [
+    {
+      columnName: 'Foundation URI',
+      propertyName: 'foundationUri',
+      propertyType: 'string',
+      import: true
+    },
+    {
+      columnName: 'Linearization (release) URI',
+      propertyName: 'linearizationUri',
+      propertyType: 'string',
+      import: true
+    },
+    {
+      columnName: 'Code',
+      propertyName: 'concept-code',
+      propertyType: 'string',
+      preferred: true,
+      import: true
+    },
+    {
+      columnName: 'BlockId',
+      propertyName: 'concept-code',
+      propertyType: 'string',
+      preferred: false,
+      import: true
+    },
+    {
+      columnName: 'Title',
+      propertyName: 'display',
+      propertyType: 'string',
+      lang: 'en',
+      import: true
+    },
+    {
+      columnName: 'Title',
+      propertyName: 'display',
+      propertyType: 'string',
+      lang: 'en',
+      import: true
+    },
+    {
+      columnName: 'ClassKind',
+      propertyName: 'classKind',
+      propertyType: 'string',
+      import: false
+    },
+    {
+      columnName: 'DepthInKind',
+      propertyName: 'level',
+      propertyType: 'integer',
+      import: false
+    },
+    {
+      columnName: 'IsResidual',
+      propertyName: 'residual',
+      propertyType: 'boolean',
+      import: true
+    },
+    {
+      columnName: 'isLeaf',
+      propertyName: 'leaf',
+      propertyType: 'boolean',
+      import: true
+    },
+    {
+      columnName: 'PrimaryLocation',
+      propertyName: 'primaryLocation',
+      propertyType: 'boolean',
+      import: true
+    },
+    {
+      columnName: 'ChapterNo',
+      propertyName: 'chapterNo',
+      propertyType: 'integer',
+      import: false
+    },
+    {
+      columnName: 'ChapterNo',
+      propertyName: 'chapterNo',
+      propertyType: 'integer',
+      import: false
+    },
+    {
+      columnName: 'BrowserLink',
+      propertyName: 'browserLink',
+      propertyType: 'string',
+      import: false
+    },
+    {
+      columnName: 'iCatLink',
+      propertyName: 'iCatLink',
+      propertyType: 'string',
+      import: false
+    },
+    {
+      columnName: 'noOfNonResidualChildren',
+      propertyName: 'nonResidualChildrenNumber',
+      propertyType: 'integer',
+      import: false
+    }
   ]
 };
 
@@ -297,7 +399,9 @@ export class CodeSystemFileImportComponent {
         ap.lang = tplProp.lang;
         ap.import = tplProp.import;
         (ap as any)['_newProp'] = !existingProperties.includes(tplProp.propertyName);
-        this.onPreferredChange(ap);
+        if (ap.preferred) {
+          this.onPreferredChange(ap);
+        }
       }
     });
   }
