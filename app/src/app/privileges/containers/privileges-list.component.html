@@ -13,9 +13,11 @@
     <tr *mTableHead>
       <th mColumnKey="code">{{'entities.privilege.code' | translate}}</th>
       <th mColumnKey="name">{{'entities.privilege.name' | translate}}</th>
-      <th mColumnKey="kind">{{'entities.privilege.kind' | translate}}</th>
-      <th mColumnKey="resources">{{'entities.privilege.resources' | translate}}</th>
-      <th mColumnKey="actions">{{'entities.privilege.actions' | translate}}</th>
+      <th colSpan="3" style="display: flex; text-align: left; padding: 0">
+        <div style="flex: 1; padding: 0.8rem">{{'entities.privilege.kind' | translate}}</div>
+        <div style="flex: 1; padding: 0.8rem">{{'entities.privilege.resources' | translate}}</div>
+        <div style="flex: 1; padding: 0.8rem">{{'entities.privilege.actions' | translate}}</div>
+      </th>
     </tr>
 
     <tr *mTableRow="let privilege">
@@ -25,20 +27,8 @@
         </a>
       </td>
       <td>{{privilege.names | localName}}</td>
-      <td>
-        <div *ngFor="let res of privilege.resources">
-          {{res.resourceType}}
-        </div>
-      </td>
-      <td>
-        <div *ngFor="let res of privilege.resources">
-          {{res.resourceId}}
-        </div>
-      </td>
-      <td>
-        <div *ngFor="let res of privilege.resources">
-          {{res.actions | apply:toPlainString}}
-        </div>
+      <td style="padding: 0.8rem 0">
+        <div *ngTemplateOutlet="nestedTable; context: {privilege: privilege}"></div>
       </td>
     </tr>
     <tr *mTableNoData>
@@ -48,3 +38,19 @@
     </tr>
   </m-backend-table>
 </m-card>
+
+<ng-template #nestedTable let-privilege="privilege">
+  <m-table mOutlined="false" [mData]="privilege.resources">
+    <tr *mTableRow="let resource" style="display: flex; justify-content: space-between">
+      <td style="flex: 1">
+        {{resource.resourceType}}
+      </td>
+      <td style="flex: 1; word-wrap: anywhere">
+        <m-abbreviate [mValue]="resource.resourceId" [mLength]="50"></m-abbreviate>
+      </td>
+      <td style="flex: 1">
+        {{resource.actions | apply:toPlainString}}
+      </td>
+    </tr>
+  </m-table>
+</ng-template>

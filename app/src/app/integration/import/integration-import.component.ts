@@ -31,11 +31,11 @@ export abstract class IntegrationImportComponent implements OnInit {
   public abstract setDefaultData(): void;
 
   public import(): void {
-    this.data.zipSourceUrl = this.data.zipSourceUrl || undefined;
+    this.data.sourceUrl = this.data.sourceUrl || undefined;
     this.data.uri = this.data.uri || undefined;
     this.data.version = this.data.version || undefined;
     this.data.validFrom = this.data.validFrom || undefined;
-    this.data.validFrom = this.data.validTo || undefined;
+    this.data.validTo = this.data.validTo || undefined;
     this.data.codeSystem = this.data.codeSystem || undefined;
     this.data.codeSystemName = this.data.codeSystemName || undefined;
     this.data.codeSystemDescription = this.data.codeSystemDescription || undefined;

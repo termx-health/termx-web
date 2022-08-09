@@ -31,6 +31,15 @@
         "add-kind": "Add kind",
         "from": "Period from",
         "to": "Period to"
+      },
+      "mapping": {
+        "list": {
+          "add-mapping": "Add mapping"
+        },
+        "modal": {
+          "edit-header": "Edit mapping",
+          "add-header": "Add mapping"
+        }
       }
     },
     "case-sensitive-options": {
@@ -79,7 +88,7 @@
       "modal": {
         "name": "Name",
         "edit-header": "Edit contact",
-        "operations": "Operations"
+        "add-header": "Add contact"
       }
     },
     "resources": {
@@ -424,10 +433,11 @@
       },
       "import": {
         "uri": "Uri",
-        "zip-source-url": "ZIP source URL",
-        "source": "Source",
+        "source-url": "Source URL",
+        "source": "Publisher",
         "version": "Version",
-        "valid": "Valid",
+        "valid-from": "Valid from",
+        "valid-to": "Valid to",
         "code-system": "CodeSystem",
         "code-system-name": "CodeSystem name",
         "code-system-description": "CodeSystem description",
@@ -507,7 +517,13 @@
       "rounding": "Rounding",
       "kind": "Kind",
       "definitionUnit": "Base unit",
-      "definitionValue": "Base value"
+      "definitionValue": "Base value",
+      "mappings": "Mappings"
+    },
+    "measurement-unit-mapping": {
+      "system": "System",
+      "system-unit": "System unit",
+      "system-value": "System value"
     },
     "association-type": {
       "code": "Code",
@@ -538,7 +554,7 @@
     "map-set-version": {
       "id": "Identifier",
       "version": "Version",
-      "source": "Source",
+      "source": "Publisher",
       "supported-languages": "Supported languages",
       "description": "Description",
       "release-date": "Release date",
@@ -568,7 +584,7 @@
     "code-system-version": {
       "id": "Identifier",
       "version": "Version",
-      "source": "Source",
+      "source": "Publisher",
       "preferred-language": "Preferred language",
       "supported-languages": "Supported languages",
       "description": "Description",
@@ -610,7 +626,7 @@
       "id": "Id",
       "code-system": "CodeSystem",
       "name": "Name",
-      "source": "Source",
+      "source": "Publisher",
       "kind": "Kind",
       "status": "Status",
       "description": "Description",
@@ -661,7 +677,7 @@
     "value-set-version": {
       "id": "Identifier",
       "version": "Version",
-      "source": "Source",
+      "source": "Publisher",
       "supported-languages": "Supported languages",
       "description": "Description",
       "status": "Status",

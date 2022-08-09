@@ -44,7 +44,7 @@ const IMPORT_TEMPLATES: {
     {
       columnName: 'Vanem_kood',
       propertyName: 'parent',
-      propertyType: 'string',
+      propertyType: 'code',
       import: false
     },
     {
@@ -94,7 +94,8 @@ const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
   {name: 'concept-code', type: 'string'},
   {name: 'description', type: 'string'},
   {name: 'definition', type: 'string'},
-  {name: 'display', type: 'string'}
+  {name: 'display', type: 'string'},
+  {name: 'parent', type: 'code'}
 ];
 
 

@@ -1,7 +1,7 @@
 import {LocalizedName} from '@kodality-health/marina-util';
 
 export class IntegrationImportConfiguration {
-  public zipSourceUrl?: string;
+  public sourceUrl?: string;
   public uri?: string;
   public source?: string;
   public version?: string;
@@ -15,16 +15,21 @@ export class IntegrationImportConfiguration {
 
   public static getDefaultAtcConfigurations(edition: string): IntegrationImportConfiguration {
       const int = {
+        sourceUrl: 'https://www.whocc.no/atc_ddd_index/?code=ATC+code&name=%%%&namesearchtype=containing',
         uri: 'http://www.whocc.no/atc',
         source: 'WHO',
+        version: '1',
+        validFrom: new Date(),
         codeSystem: 'atc-int',
         codeSystemName: {'et': 'Rahvusvaheline ATC', 'en': 'International ATC'},
         codeSystemDescription: 'Anatomical Therapeutic Chemical Classification System',
       };
       const est = {
-        zipSourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/est-atc.csv',
+        sourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/est-atc.csv',
         uri: 'https://www.ravimiregister.ee',
         source: 'Ravimiregister',
+        version: '1',
+        validFrom: new Date(),
         codeSystem: 'atc-est',
         codeSystemName: {'et': 'Eesti ATC', 'en': 'Estonian ATC'},
         codeSystemDescription: 'Eesti ATC (Anatomical Therapeutic Chemical Classification System)',
@@ -34,19 +39,21 @@ export class IntegrationImportConfiguration {
 
   public static getDefaultIcdConfigurations(edition: string): IntegrationImportConfiguration {
     const int = {
-      zipSourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/int-icd10en.zip',
+      sourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/int-icd10en.zip',
       uri: 'http://hl7.org/fhir/sid/icd-10',
       source: 'World Health organization',
       version: '10',
+      validFrom: new Date(),
       codeSystem: 'icd10',
       codeSystemName: {'en': 'ICD-10 WHO Edition'},
       codeSystemDescription: 'International Statistical Classification of Diseases and Related Health Problems 10th Revision',
     };
     const est = {
-      zipSourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/icd10_v8.zip',
+      sourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/icd10_v8.zip',
       uri: 'https://pub.e-tervis.ee/classifications/RHK-10/8',
       source: 'Ministry of Social Affairs of Estonia',
       version: '8',
+      validFrom: new Date(),
       codeSystem: 'icd10-est',
       codeSystemName: {'et': 'Eesti ICD-10', 'en': 'Estonian ICD-10'},
       codeSystemDescription: ' RHK-10 on rahvusvaheline haiguste ja nendega seotud terviseprobleemide statistiline klassifikatsioon, mille sisu haldaja on Sotsiaalministeerium. Täiendus- ja muudatusettepanekud edastada info@sm.ee.',
@@ -76,10 +83,11 @@ export class IntegrationImportConfiguration {
 
   public static getOrphanetConfigurations(): IntegrationImportConfiguration {
     return {
-      zipSourceUrl: 'https://www.orphadata.com/data/xml/en_product3_182.xml',
+      sourceUrl: 'https://www.orphadata.com/data/xml/en_product3_182.xml',
       uri: 'https://www.orphadata.com/classifications/rare-allergic-disease',
       source: 'Orphadata',
       version: '2022-07',
+      validFrom: new Date(),
       codeSystem: 'rare-allergic-disease',
       codeSystemName: {'en': 'Rare allergic disease'},
       codeSystemDescription: '',
