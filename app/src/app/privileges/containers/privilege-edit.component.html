@@ -6,7 +6,9 @@
           <div class="m-card-title">
             {{(mode === 'edit' ? 'web.privileges.edit-header' : 'web.privileges.add-header') | translate}}
           </div>
-          <m-button mDisplay="text"
+          <m-button
+              *ngIf="mode === 'edit'"
+              mDisplay="text"
               mShape="circle"
               m-popconfirm
               mPopconfirmTitle="core.delete-confirm"
