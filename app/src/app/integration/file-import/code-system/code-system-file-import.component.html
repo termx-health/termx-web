@@ -206,7 +206,7 @@
   </m-table>
 
   <m-button *m-card-footer (click)="process()" [mLoading]="loading['process']" [disabled]="form.invalid || !analyzeResponse?.properties?.length">
-    {{'web.integration.file-import.code-system.process' | translate}}
+    {{'web.integration.file-import.process' | translate}}
   </m-button>
   <div *ngIf="jobResponse">
     <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>

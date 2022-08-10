@@ -2,7 +2,7 @@
   <div nz-col [nzLg]="18" [nzXs]="24">
     <nz-tabset nzLinkRouter>
       <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" class="m-items-middle">
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" class="m-items-middle">
           {{'web.code-system.tabs.code-system' | translate}}
         </a>
         <m-spinner [mLoading]="loading['save']">
@@ -65,7 +65,7 @@
       </nz-tab>
 
       <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'narrative' }">
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" [queryParams]="{ tab: 'narrative' }">
           {{'web.code-system.tabs.narrative' | translate}}
         </a>
         <ng-template nz-tab>
@@ -86,7 +86,7 @@
         </ng-template>
       </nz-tab>
       <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'concepts' }">
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" [queryParams]="{ tab: 'concepts' }">
           {{'entities.code-system.concepts' | translate}}
         </a>
         <m-card [mTitle]="'entities.code-system.concepts'" *ngIf="codeSystem">
