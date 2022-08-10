@@ -36,12 +36,12 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'fhir/ValueSet/$validate-code', component: FhirValueSetValidateCodeComponent},
       {path: 'fhir/ConceptMap/$translate', component: FhirConceptMapTranslateComponent},
       {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent},
-      {path: 'atc/$import', component: IntegrationAtcImportComponent},
-      {path: 'icd-10/$import', component: IntegrationIcdImportComponent},
+      {path: 'atc/import', component: IntegrationAtcImportComponent},
+      {path: 'icd-10/import', component: IntegrationIcdImportComponent},
+      {path: 'orphanet/import', component: OrphanetImportComponent},
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent},
-      {path: 'orphanet-import/rare-diseases', component: OrphanetImportComponent},
     ]
   },
   {
