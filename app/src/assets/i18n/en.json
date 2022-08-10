@@ -373,7 +373,7 @@
         "orphanet": "Orphanet",
         "atc": "ATC",
         "icd-10": "ICD-10",
-        "FHIR": "FHIR"
+        "fhir": "FHIR"
       },
       "fhir": {
         "code-system": {
