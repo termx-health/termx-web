@@ -371,6 +371,12 @@
       "send-request": "Send request",
       "set-default-data": "Set default data",
       "response": "Response",
+      "systems": {
+        "orphanet": "Orphanet",
+        "atc": "ATC",
+        "icd-10": "ICD-10",
+        "fhir": "FHIR"
+      },
       "fhir": {
         "code-system": {
           "lookup": {
@@ -434,6 +440,9 @@
         }
       },
       "import": {
+        "atc": "ATC {{edition}} import",
+        "icd-10": "ICD-10 {{edition}} import",
+        "orphanet": "Rare diseases",
         "uri": "Uri",
         "source-url": "Source URL",
         "source": "Publisher",
@@ -444,6 +453,40 @@
         "code-system-name": "CodeSystem name",
         "code-system-description": "CodeSystem description",
         "code-system-version-description": "CodeSystem version description"
+      },
+      "file-import": {
+        "file-import": "File import",
+        "not-found": "Not found?",
+        "create-new": "Create new",
+        "process": "Process",
+        "code-system": {
+          "import": "Code System file import",
+          "resource-id": "Resource ID",
+          "generate-valueset": "Generate ValueSet too",
+          "link": "Link",
+          "file": "File",
+          "source": "Source",
+          "csv": "CSV",
+          "tsv": "TSV",
+          "analyze": "Analyze",
+          "table": {
+            "csv-column": "CSV column",
+            "kts-property": "KTS property",
+            "preferred": "Preferred",
+            "type": "Type",
+            "format": "Format",
+            "lang": "Lang",
+            "import": "Import"
+          }
+        },
+        "concept-map": {
+          "import": "Concept Map file import",
+          "map-id": "Map ID",
+          "map-name": "Map name",
+          "map-version": "Map version",
+          "source-value-set": "Source value set",
+          "target-value-set": "Target value set"
+        }
       }
     },
     "privileges": {

@@ -1,7 +1,7 @@
 <div nz-row nzGutter="12" class="m-row">
   <div nz-col [nzMd]="6" [nzXs]="24">
     <m-card>
-      <m-divider mText="FHIR"></m-divider>
+      <m-divider [mText]="'web.integration.systems.fhir' | translate"></m-divider>
       <nz-collapse nzGhost>
         <nz-collapse-panel nzHeader="CodeSystem">
           <div style="display: grid">
@@ -34,25 +34,33 @@
         </nz-collapse-panel>
       </nz-collapse>
 
-      <m-divider mText="ATC"></m-divider>
+      <m-divider [mText]="'web.integration.systems.atc' | translate"></m-divider>
       <div style="display: grid">
-        <m-button mDisplay="link" [routerLink]="'./atc/$import'" [queryParams]="{edition: 'int'}">ATC int import</m-button>
-        <m-button mDisplay="link" [routerLink]="'./atc/$import'" [queryParams]="{edition: 'est'}">ATC est import</m-button>
+        <m-button mDisplay="link" [routerLink]="'./atc/import'" [queryParams]="{edition: 'int'}">
+          {{'web.integration.import.atc' | translate: ({edition: 'int'})}}
+        </m-button>
+        <m-button mDisplay="link" [routerLink]="'./atc/import'" [queryParams]="{edition: 'est'}">
+          {{'web.integration.import.atc' | translate: ({edition: 'est'})}}
+        </m-button>
       </div>
-      <m-divider mText="ICD-10"></m-divider>
+      <m-divider [mText]="'web.integration.systems.icd-10' | translate"></m-divider>
       <div style="display: grid">
-        <m-button mDisplay="link" [routerLink]="'./icd-10/$import'" [queryParams]="{edition: 'int'}">ICD-10 int import</m-button>
-        <m-button mDisplay="link" [routerLink]="'./icd-10/$import'" [queryParams]="{edition: 'est'}">ICD-10 est import</m-button>
+        <m-button mDisplay="link" [routerLink]="'./icd-10/import'" [queryParams]="{edition: 'int'}">
+          {{'web.integration.import.icd-10' | translate: ({edition: 'int'})}}
+        </m-button>
+        <m-button mDisplay="link" [routerLink]="'./icd-10/import'" [queryParams]="{edition: 'est'}">
+          {{'web.integration.import.icd-10' | translate: ({edition: 'est'})}}</m-button>
       </div>
 
-      <m-divider mText="File import"></m-divider>
+      <m-divider [mText]="'web.integration.systems.orphanet' | translate"></m-divider>
       <div style="display: grid">
-        <m-button mDisplay="link" [routerLink]="'./file-import/code-system'">Code System file import</m-button>
-        <m-button mDisplay="link" [routerLink]="'./file-import/concept-map'">Concept Map file import</m-button>
+        <m-button mDisplay="link" [routerLink]="'./orphanet/import'">{{'web.integration.import.orphanet' | translate}}</m-button>
       </div>
-      <m-divider mText="Orphanet"></m-divider>
+
+      <m-divider [mText]="'web.integration.file-import.file-import' | translate"></m-divider>
       <div style="display: grid">
-        <m-button mDisplay="link" [routerLink]="'./orphanet-import/rare-diseases'" [queryParams]="{edition: 'orpha'}">Rare diseases</m-button>
+        <m-button mDisplay="link" [routerLink]="'./file-import/code-system'">{{'web.integration.file-import.code-system.import' | translate}}</m-button>
+        <m-button mDisplay="link" [routerLink]="'./file-import/concept-map'">{{'web.integration.file-import.concept-map.import' | translate}}</m-button>
       </div>
     </m-card>
   </div>

@@ -5,19 +5,21 @@ import {JobLibService, JobLogResponse} from 'terminology-lib/job';
 import {IntegrationImportConfiguration} from 'terminology-lib/integration';
 import {Observable} from 'rxjs';
 import {IntegrationOrphanetLibService} from 'terminology-lib/integration/orphanet/service/integration-orphanet-lib.service';
+import {MuiNotificationService} from '@kodality-health/marina-ui';
 
 @Component({
   templateUrl: '../integration-import.component.html',
 })
 export class OrphanetImportComponent extends IntegrationImportComponent {
-  public system = 'orphanet';
+  public breadcrumbs = ['web.integration.systems.orphanet', 'web.integration.import.orphanet'];
 
   public constructor(
     private orphanetLibService: IntegrationOrphanetLibService,
     route: ActivatedRoute,
     jobService: JobLibService,
+    notificationService: MuiNotificationService
   ) {
-    super(route, jobService);
+    super(route, jobService, notificationService);
   }
 
 
