@@ -4,6 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {filter, merge, Observable, Subject, switchMap, takeUntil, timer} from 'rxjs';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from 'terminology-lib/fhir';
 import {DestroyService} from '@kodality-web/core-util';
+import {MuiNotificationService} from '@kodality-health/marina-ui';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class IntegrationFhirSyncComponent implements OnInit {
     private fhirCodeSystemService: FhirCodeSystemLibService,
     private fhirValueSetLibService: FhirValueSetLibService,
     private fhirConceptMapLibService: FhirConceptMapLibService,
+    private notificationService: MuiNotificationService,
     private jobService: JobLibService,
     private route: ActivatedRoute,
     private destroy$: DestroyService
@@ -31,6 +33,8 @@ export class IntegrationFhirSyncComponent implements OnInit {
     this.route.queryParamMap.subscribe(queryParamMap => {
       this.source = queryParamMap.get('source');
       this.jobResponse = undefined;
+      this.loading['import'] = false;
+      this.loading['polling'] = false;
       this.input = '';
       this.urls = [];
     });
@@ -48,6 +52,7 @@ export class IntegrationFhirSyncComponent implements OnInit {
       'ConceptMap': this.fhirConceptMapLibService.import(fhirSyncParameters),
     };
 
+    this.notificationService.info('Sync started!');
     this.jobResponse = undefined;
     this.loading['import'] = true;
     importRequestMap[this.source!].subscribe(resp => {
@@ -71,8 +76,11 @@ export class IntegrationFhirSyncComponent implements OnInit {
       stopPolling$.next();
       if (!jobResp.errors && !jobResp.warnings) {
         this.urls = [];
+        jobResp.successes?.forEach(success => this.notificationService.success('Sync successful!', success, {duration: 0, closable: true}));
+        return;
       }
-      this.jobResponse = jobResp;
+      jobResp.errors?.forEach(error => this.notificationService.error('Sync failed!', error, {duration: 0, closable: true}));
+      jobResp.warnings?.forEach(warning => this.notificationService.warning('Sync failed!', warning, {duration: 0, closable: true}));
     }).add(() => this.loading['polling'] = false);
   }
 

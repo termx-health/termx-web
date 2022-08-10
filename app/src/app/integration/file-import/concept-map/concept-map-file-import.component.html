@@ -1,21 +1,18 @@
 <m-card>
-  <div *m-card-header>
-    Concept Map import
+  <div *m-card-header class="m-items-between">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>{{'web.integration.file-import.file-import' | translate}}</nz-breadcrumb-item>
+      <nz-breadcrumb-item>{{'web.integration.file-import.concept-map.import' | translate}}</nz-breadcrumb-item>
+    </nz-breadcrumb>
   </div>
 
   <form #form="ngForm">
     <!--Id -->
-    <m-form-item mName="id" [mLabel]="'Map ID'" required>
+    <m-form-item mName="id" mLabel="web.integration.file-import.concept-map.map-id" required>
       <ng-container *ngIf="!isNewMapSet">
-        <twl-map-set-search
-            name="id"
-            [(ngModel)]="data.map.id"
-            (ngModelChange)="loadMapSet($event)"
-            valuePrimitive
-            required
-        ></twl-map-set-search>
+        <twl-map-set-search name="id" [(ngModel)]="data.map.id" (ngModelChange)="loadMapSet($event)" valuePrimitive required></twl-map-set-search>
         <div style="margin-top: 0.5rem" (click)="iniMapSet()">
-          Not found? <a>Create new</a>
+          {{'web.integration.file-import.not-found' | translate}}<a>{{'web.integration.file-import.create-new' | translate}}</a>
         </div>
       </ng-container>
 
@@ -23,39 +20,39 @@
     </m-form-item>
 
     <!-- Name -->
-    <m-form-item mName="name" [mLabel]="'Map name'" *ngIf="data.map.id">
+    <m-form-item mName="name" mLabel="web.integration.file-import.concept-map.map-name" *ngIf="data.map.id">
       <ng-container *ngIf="!isNewMapSet">{{(data.loadedMapSet?.names | localName) || '-'}}</ng-container>
       <m-input *ngIf="isNewMapSet" name="name" [(ngModel)]="data.map.name"></m-input>
     </m-form-item>
 
     <!-- Version -->
-    <m-form-item mName="version" [mLabel]="'Map version'">
+    <m-form-item mName="version" mLabel="web.integration.file-import.concept-map.map-version">
       <m-input name="version" [(ngModel)]="data.version.version"></m-input>
     </m-form-item>
 
     <!-- Release date -->
-    <m-form-item mName="releaseDate" [mLabel]="'Release date'" required>
+    <m-form-item mName="releaseDate" mLabel="entities.map-set-version.release-date" required>
       <m-date-picker name="releaseDate" [(ngModel)]="data.version.releaseDate" required></m-date-picker>
     </m-form-item>
 
     <!-- Source valueset  -->
-    <m-form-item mName="sourceValueSet" [mLabel]="'Source value set'" required>
+    <m-form-item mName="sourceValueSet" mLabel="web.integration.file-import.concept-map.source-value-set" required>
       <twl-value-set-search name="sourceValueSet" [(ngModel)]="data.sourceValueSet" valuePrimitive required></twl-value-set-search>
     </m-form-item>
 
     <!-- Destination valueset  -->
-    <m-form-item mName="targetValueSet" [mLabel]="'Target value set'" required>
+    <m-form-item mName="targetValueSet" mLabel="web.integration.file-import.concept-map.target-value-set" required>
       <twl-value-set-search name="targetValueSet" [(ngModel)]="data.targetValueSet" valuePrimitive required></twl-value-set-search>
     </m-form-item>
 
     <!-- File-->
-    <m-form-item mName="targetValueSet" [mLabel]="'Target value set'" required>
+    <m-form-item mName="targetValueSet" mLabel="web.integration.file-import.concept-map.target-value-set" required>
       <input #fileInput id="fileInput" name="sourceImportFile" type="file" [(ngModel)]="data.file" required>
     </m-form-item>
 
 
     <m-button *m-card-footer (click)="process()" [mLoading]="loading['processing']" [disabled]="form.invalid">
-      Process
+      {{'web.integration.file-import.process' | translate}}
     </m-button>
   </form>
 </m-card>
