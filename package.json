@@ -19,7 +19,7 @@
     "@angular/platform-browser": "~13.3.0",
     "@angular/platform-browser-dynamic": "~13.3.0",
     "@angular/router": "~13.3.0",
-    "@kodality-health/marina-ui": "^13.0.0-SNAPSHOT.1658504151",
+    "@kodality-health/marina-ui": "^13.0.0-SNAPSHOT",
     "@kodality-health/marina-util": "^13.0.0-SNAPSHOT",
     "@kodality-web/core-util": "^13.0.0-SNAPSHOT",
     "@ngx-translate/core": "^14.0.0",
