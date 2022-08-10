@@ -76,22 +76,11 @@ export class IntegrationFhirSyncComponent implements OnInit {
       stopPolling$.next();
       if (!jobResp.errors && !jobResp.warnings) {
         this.urls = [];
+        jobResp.successes?.forEach(success => this.notificationService.success('Sync successful!', success, {duration: 0, closable: true}));
+        return;
       }
-      if (jobResp.errors) {
-        for (let error of jobResp.errors) {
-          this.notificationService.error('Sync failed!', error, {duration: 0, closable: true});
-        }
-      }
-      if (jobResp.warnings) {
-        for (let warning of jobResp.warnings) {
-          this.notificationService.warning('Sync failed!', warning, {duration: 0, closable: true});
-        }
-      }
-      if (jobResp.successes) {
-        for (let success of jobResp.successes) {
-          this.notificationService.success('Sync successful!', success, {duration: 0, closable: true});
-        }
-      }
+      jobResp.errors?.forEach(error => this.notificationService.error('Sync failed!', error, {duration: 0, closable: true}));
+      jobResp.warnings?.forEach(warning => this.notificationService.warning('Sync failed!', warning, {duration: 0, closable: true}));
     }).add(() => this.loading['polling'] = false);
   }
 

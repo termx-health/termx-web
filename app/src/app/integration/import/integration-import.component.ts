@@ -7,9 +7,8 @@ import {MuiNotificationService} from '@kodality-health/marina-ui';
 
 @Directive()
 export abstract class IntegrationImportComponent implements OnInit {
+  public abstract breadcrumbs: string[];
   public edition?: string;
-  public abstract system: string;
-
   public data = new IntegrationImportConfiguration();
 
   public loading = false;
@@ -28,7 +27,7 @@ export abstract class IntegrationImportComponent implements OnInit {
     });
   }
 
-  public abstract composeImportRequest(): Observable<JobLogResponse>
+  public abstract composeImportRequest(): Observable<JobLogResponse>;
 
   public abstract setDefaultData(): void;
 
@@ -60,13 +59,9 @@ export abstract class IntegrationImportComponent implements OnInit {
       this.jobService.getLog(jobId).pipe(filter(resp => resp.execution?.status !== 'running')).subscribe(jobResp => {
           clearInterval(i);
           this.loading = false;
-          if (jobResp.errors) {
-            for (let error of jobResp.errors) {
-              this.notificationService.error('Import failed!', error, {duration: 0, closable: true});
-            }
-          }
-          else {
-              this.notificationService.success(`Import from ${jobResp.definition?.type} completed!`, undefined, {duration: 0, closable: true});
+          jobResp.errors?.forEach(error => this.notificationService.error('Import failed!', error, {duration: 0, closable: true}));
+          if (!jobResp.errors) {
+            this.notificationService.success(`Import from ${jobResp.definition?.type} completed!`, undefined, {duration: 0, closable: true});
           }
         }
       );

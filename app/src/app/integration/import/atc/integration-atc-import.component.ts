@@ -11,7 +11,7 @@ import {MuiNotificationService} from '@kodality-health/marina-ui';
   templateUrl: '../integration-import.component.html',
 })
 export class IntegrationAtcImportComponent extends IntegrationImportComponent {
-  public system = 'ATC';
+  public breadcrumbs = ['web.integration.systems.atc', 'web.integration.import.atc'];
 
   public constructor(
     private integrationAtcLibService: IntegrationAtcLibService,

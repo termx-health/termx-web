@@ -11,7 +11,7 @@ import {MuiNotificationService} from '@kodality-health/marina-ui';
   templateUrl: '../integration-import.component.html',
 })
 export class IntegrationIcdImportComponent extends IntegrationImportComponent {
-  public system = 'ICD10';
+  public breadcrumbs = ['web.integration.systems.icd-10', 'web.integration.import.icd-10'];
 
   public constructor(
     private integrationIcdLibService: IntegrationIcdLibService,

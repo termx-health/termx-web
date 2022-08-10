@@ -11,7 +11,7 @@ import {MuiNotificationService} from '@kodality-health/marina-ui';
   templateUrl: '../integration-import.component.html',
 })
 export class OrphanetImportComponent extends IntegrationImportComponent {
-  public system = 'Orphanet';
+  public breadcrumbs = ['web.integration.systems.orphanet', 'web.integration.import.orphanet'];
 
   public constructor(
     private orphanetLibService: IntegrationOrphanetLibService,
