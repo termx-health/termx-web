@@ -4,13 +4,17 @@ import {environment} from '../../../../environments/environment';
 import {NgForm} from '@angular/forms';
 import {MuiNotificationService} from '@kodality-health/marina-ui';
 import {MapSet, MapSetLibService} from 'terminology-lib/resources';
+import {LocalizedName} from '@kodality-health/marina-util';
+import {filter, merge, Subject, switchMap, takeUntil, timer} from 'rxjs';
+import {JobLibService, JobLog, JobLogResponse} from 'terminology-lib/job';
+import {DestroyService} from '@kodality-web/core-util';
 
 
 // processing
 interface FileProcessingRequest {
   map: {
     id?: string;
-    name?: string;
+    names?: LocalizedName;
     uri?: string;
   };
   version: {
@@ -24,14 +28,15 @@ interface FileProcessingRequest {
 
 
 @Component({
-  templateUrl: 'concept-map-file-import.component.html'
+  templateUrl: 'concept-map-file-import.component.html',
+  providers: [DestroyService]
 })
 export class ConceptMapFileImportComponent {
   public data: FileProcessingRequest & {file?: string, loadedMapSet?: MapSet} = {
     map: {},
     version: {},
   };
-
+  public jobResponse: JobLog | null = null;
   public isNewMapSet: boolean = false;
   public loading: {[k: string]: boolean} = {};
 
@@ -41,7 +46,9 @@ export class ConceptMapFileImportComponent {
   public constructor(
     private http: HttpClient,
     private notificationService: MuiNotificationService,
-    private mapSetService: MapSetLibService
+    private mapSetService: MapSetLibService,
+    private destroy$: DestroyService,
+    private jobService: JobLibService,
   ) {}
 
   public iniMapSet(): void {
@@ -69,9 +76,27 @@ export class ConceptMapFileImportComponent {
     formData.append('request', JSON.stringify(req));
     formData.append('file', this.fileInput?.nativeElement?.files?.[0] as Blob, 'files');
 
+    this.jobResponse = null;
     this.loading['processing'] = true;
-    this.http.post<void>(`${environment.terminologyApi}/file-importer/map-set/process`, formData).subscribe(() => {
-      this.notificationService.success("File processing is finished");
+    this.http.post<JobLogResponse>(`${environment.terminologyApi}/file-importer/map-set/process`, formData).subscribe({
+      next: (resp) => {
+        this.pollJobStatus(resp.jobId as number);
+      }, error: () => this.loading['processing'] = false
+    });
+  }
+
+  private pollJobStatus(jobId: number): void {
+    const stopPolling$ = new Subject<void>();
+    timer(0, 3000).pipe(
+      takeUntil(merge(this.destroy$, stopPolling$)),
+      switchMap(() => this.jobService.getLog(jobId)),
+      filter(resp => resp.execution?.status !== 'running')
+    ).subscribe(jobResp => {
+      stopPolling$.next();
+      if (!jobResp.errors && !jobResp.warnings) {
+        this.notificationService.success("File processing is finished", undefined, {duration: 0, closable: true});
+      }
+      this.jobResponse = jobResp;
     }).add(() => this.loading['processing'] = false);
   }
 }

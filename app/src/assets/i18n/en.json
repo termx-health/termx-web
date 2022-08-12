@@ -583,7 +583,9 @@
       "uri": "Uniform resource identifier (URI)",
       "name": "Name",
       "domain": "Domain",
-      "description": "Description"
+      "description": "Description",
+      "source-value-set": "Source value set",
+      "target-value-set": "Target value set"
     },
     "map-set-entity": {
       "id": "Id",
