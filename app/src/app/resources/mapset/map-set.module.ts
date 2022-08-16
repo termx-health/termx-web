@@ -24,7 +24,7 @@ export const MAP_SET_ROUTES: Routes = [
   {path: ':id/versions/:versionId/view', component: MapSetVersionViewComponent},
   {path: ':id/associations/add', component: MapSetAssociationEditComponent, data: {privilege: ['*.MapSet.edit']}},
   {path: ':id/associations/:associationId/edit', component: MapSetAssociationEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/associations/:associationId/view', component: MapSetAssociationViewComponent},
+  {path: ':id/associations/:associationId/view', component: MapSetAssociationViewComponent}
 ];
 
 @NgModule({

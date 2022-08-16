@@ -11,8 +11,8 @@ import {MeasurementUnitMappingListComponent} from './containers/mapping/measurem
 
 export const MEASUREMENT_UNIT_ROUTES: Routes = [
   {path: '', component: MeasurementUnitListComponent},
-  {path: 'add', data: {privilege: ['*.edit']}, component: MeasurementUnitEditComponent},
-  {path: ':id/edit', data: {privilege: ['*.edit']}, component: MeasurementUnitEditComponent},
+  {path: 'add', data: {privilege: ['*.MeasurementUnit.edit']}, component: MeasurementUnitEditComponent},
+  {path: ':id/edit', data: {privilege: ['*.MeasurementUnit.edit']}, component: MeasurementUnitEditComponent},
   {path: ':id/view', component: MeasurementUnitViewComponent},
 ];
 

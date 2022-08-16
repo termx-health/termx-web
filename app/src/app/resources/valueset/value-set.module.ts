@@ -41,7 +41,6 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
   path: '', component: FinderValueSetListComponent, children: [{
     path: ':id', component: FinderValueSetViewComponent, children: [{
       path: 'versions/:versionCode', component: FinderValueSetVersionViewComponent
-
     }]
   }]
 }];

@@ -10,12 +10,12 @@ import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './associationtype/
 
 
 export const RESOURCES_ROUTES: Routes = [
-  {path: '', component: ResourcesTabsetComponent},
+  {path: '', component: ResourcesTabsetComponent, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view', '*.NamingSystem.view', '*.AssociationType.view']}},
   {path: 'code-systems', children: CODE_SYSTEM_ROUTES, data: {privilege: ['*.CodeSystem.view']}},
   {path: 'value-sets', children: VALUE_SET_ROUTES, data: {privilege: ['*.ValueSet.view']}},
   {path: 'map-sets', children: MAP_SET_ROUTES, data: {privilege: ['*.MapSet.view']}},
-  {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES},
-  {path: 'association-types', children: ASSOCIATION_TYPE_ROUTES},
+  {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES, data: {privilege: ['*.NamingSystem.view']}},
+  {path: 'association-types', children: ASSOCIATION_TYPE_ROUTES, data: {privilege: ['*.AssociationType.view']}},
   {
     path: 'finder', children: [
       {path: 'code-systems', children: CODE_SYSTEM_FINDER_ROUTES, data: {privilege: ['*.CodeSystem.view']}},

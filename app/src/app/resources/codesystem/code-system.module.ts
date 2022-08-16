@@ -88,11 +88,9 @@ export const CODE_SYSTEM_ROUTES: Routes = [
 
   {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/entity-properties/:propertyId/view', component: CodeSystemPropertyEditComponent},
 
   {path: ':id/supplements/add', component: CodeSystemSupplementEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/supplements/:supplementId/edit', component: CodeSystemSupplementEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/supplements/:supplementId/view', component: CodeSystemSupplementEditComponent},
 
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
