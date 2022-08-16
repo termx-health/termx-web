@@ -2,7 +2,7 @@
   <div *m-card-header class="m-items-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twaPrivileged="'*.edit'" [routerLink]="['add']">
+      <twa-add-button *twaPrivileged="'*.MeasurementUnit.edit'" [routerLink]="['add']">
         {{'web.measurement-unit.form.add-header' | translate}}
       </twa-add-button>
     </div>
@@ -21,7 +21,7 @@
     </tr>
 
     <tr *mTableRow="let mu">
-      <td><a [routerLink]="[mu.id, ('*.edit' | twaHasAnyPrivilege)? 'edit': 'view']">{{mu.code}}</a>
+      <td><a [routerLink]="[mu.id, ('*.MeasurementUnit.edit' | twaHasAnyPrivilege)? 'edit': 'view']">{{mu.code}}</a>
       </td>
       <td>{{mu.names | localName}}</td>
       <td>{{mu.alias | localName}}</td>

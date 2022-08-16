@@ -11,7 +11,6 @@ export class AssociationTypeViewComponent implements OnInit {
   public associationCode?: string | null;
   public association?: AssociationType;
 
-  public mode: 'add' | 'edit' = 'add';
   public loading = false;
 
   @ViewChild("form") public form?: NgForm;
