@@ -106,9 +106,12 @@
           <m-option label="web.privileges.resources.modal.type.map-set" value="MapSet"></m-option>
           <m-option label="web.privileges.resources.modal.type.naming-system" value="NamingSystem"></m-option>
           <m-option label="web.privileges.resources.modal.type.association-type" value="AssociationType"></m-option>
+          <m-option label="web.privileges.resources.modal.type.snomed" value="Snomed"></m-option>
+          <m-option label="web.privileges.resources.modal.type.measurement-unit" value="MeasurementUnit"></m-option>
+          <m-option label="web.privileges.resources.modal.type.privilege" value="Privilege"></m-option>
         </m-select>
       </m-form-item>
-      <m-form-item *ngIf="modalData.resource.resourceType && modalData.resource.resourceType !== 'Any' && modalData.resource.resourceType !== 'Admin'"
+      <m-form-item *ngIf="modalData.resource.resourceType && ['CodeSystem', 'ValueSet', 'MapSet', 'NamingSystem', 'AssociationType'].includes(modalData.resource.resourceType)"
           mName="resourceId"
           mLabel="web.privileges.resources.modal.resource-id">
         <twl-code-system-search name="resourceId"

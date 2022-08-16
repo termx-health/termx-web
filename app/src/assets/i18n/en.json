@@ -522,7 +522,10 @@
             "value-set": "ValueSet",
             "map-set": "MapSet",
             "naming-system": "NamingSystem",
-            "association-type": "AssociationType"
+            "association-type": "AssociationType",
+            "snomed": "Snomed",
+            "measurement-unit": "MeasurementUnit",
+            "privilege": "Privilege"
           }
         }
       }
