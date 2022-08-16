@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {BooleanInput, collect} from '@kodality-web/core-util';
-import {CodeSystemAssociation, CodeSystemLibService} from 'terminology-lib/resources';
+import {CodeSystemAssociation, CodeSystemLibService} from 'lib/src/resources';
 
 @Component({
   selector: 'twa-code-system-concept-version-association-table',

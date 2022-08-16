@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemConcept, CodeSystemConceptLibService, CodeSystemEntityVersion} from 'terminology-lib/resources';
+import {CodeSystemConcept, CodeSystemConceptLibService, CodeSystemEntityVersion} from 'lib/src/resources';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {validateForm} from '@kodality-web/core-util';
 import {Location} from '@angular/common';
-import {CodeSystemService} from '../../services/code-system.service';
+import {CodeSystemService} from '../../../services/code-system.service';
 
 @Component({
   selector: 'twa-code-system-concept-edit',
@@ -76,7 +76,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
     }).add(() => this.loading['duplicate'] = false);
   }
 
-  public get isLoading():boolean{
-    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
   }
 }

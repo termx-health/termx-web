@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {CodeSystemLibService, Designation, EntityProperty} from 'terminology-lib/resources';
+import {CodeSystemLibService, Designation, EntityProperty} from 'lib/src/resources';
 import {BooleanInput, collect, group} from '@kodality-web/core-util';
 
 @Component({

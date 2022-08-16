@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemConceptLibService, CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from 'terminology-lib/resources';
+import {CodeSystemConceptLibService, CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from 'lib/src/resources';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {validateForm} from '@kodality-web/core-util';
 import {Location} from '@angular/common';
-import {CodeSystemService} from '../../services/code-system.service';
+import {CodeSystemService} from '../../../services/code-system.service';
 
 @Component({
   templateUrl: './code-system-concept-version-edit.component.html',
@@ -61,6 +61,6 @@ export class CodeSystemConceptVersionEditComponent implements OnInit {
   }
 
   public get isLoading(): boolean {
-    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
   }
 }

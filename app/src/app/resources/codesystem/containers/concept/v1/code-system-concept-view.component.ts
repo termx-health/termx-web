@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemConcept, CodeSystemConceptLibService} from 'terminology-lib/resources';
-import {CodeSystemService} from '../../services/code-system.service';
+import {CodeSystemConcept, CodeSystemConceptLibService} from 'lib/src/resources';
+import {CodeSystemService} from '../../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({

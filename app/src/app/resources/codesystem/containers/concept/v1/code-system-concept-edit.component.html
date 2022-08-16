@@ -1,7 +1,11 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="isLoading">
-      <m-card [mTitle]="mode === 'edit' ? 'web.code-system-concept.form.edit-header' : 'web.code-system-concept.form.add-header'" [mShowSkeleton]="loading['init']">
+      <m-card [mTitle]="mode === 'edit' ? 'web.code-system-concept.form.edit-header' : 'web.code-system-concept.form.add-header'"
+          [mShowSkeleton]="loading['init']"
+      >
+        <m-button [routerLink]="['./v2']">V2 EDIT
+        </m-button>
         <form #form="ngForm" *ngIf="concept">
           <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>
             <m-input name="code" [(ngModel)]="concept.code" autofocus required></m-input>
@@ -30,7 +34,9 @@
 
             <tr *mTableRow="let version">
               <td><a [routerLink]="['../versions', version.id, version.status === 'active'? 'view' : 'edit']">{{version.created | localDateTime}}</a></td>
-              <td><m-abbreviate [mValue]="version.description" [mLength]="35"></m-abbreviate></td>
+              <td>
+                <m-abbreviate [mValue]="version.description" [mLength]="35"></m-abbreviate>
+              </td>
               <td class="tw-table-min-width">
                 <twa-status-tag [status]="version.status"></twa-status-tag>
               </td>

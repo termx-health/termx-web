@@ -1,0 +1,47 @@
+<form #form="ngForm">
+  <m-form-row>
+    <div *mFormCol>
+      <m-form-item mName="designationType" mLabel="entities.designation.type" style="display: flex" required>
+        <m-select
+            name="designationType"
+            [(ngModel)]="designationTypeId"
+            placeholder="marina.ui.inputs.search.placeholder"
+            icon="search"
+            autofocus
+            required
+        >
+          <m-option *ngFor="let prop of entityProperties" [value]="prop.id" [label]="prop.name"></m-option>
+        </m-select>
+      </m-form-item>
+    </div>
+    <div *mFormCol>
+      <m-form-item mName="name" mLabel="web.code-system-concept-version.designation.term" required>
+        <twl-designation-multi-language-input name="name"
+            [languages]="languages"
+            [requiredLanguages]="requiredLanguages"
+            [(ngModel)]="designationLanguages"
+            required
+        ></twl-designation-multi-language-input>
+      </m-form-item>
+
+      <m-form-item mName="designationKind" mLabel="entities.designation.designation-kind" required>
+        <m-select name="designationKind" [(ngModel)]="designationKind">
+          <m-option [label]="'text'" value="text"></m-option>
+          <m-option [label]="'blob'" value="blob"></m-option>
+        </m-select>
+      </m-form-item>
+
+      <m-form-item mName="designationModalCaseSignificance" mLabel="entities.designation.case-significance" required>
+        <m-select name="designationModalCaseSignificance" [(ngModel)]="caseSignificance" required>
+          <m-option label="web.case-sensitive-options.ci" value="ci"></m-option>
+          <m-option label="web.case-sensitive-options.cs" value="cs"></m-option>
+          <m-option label="web.case-sensitive-options.ics" value="ics"></m-option>
+        </m-select>
+      </m-form-item>
+
+      <!--  <m-form-item mLabel="entities.designation.description">-->
+      <!--    <m-textarea name="designationModalDescription" [(ngModel)]="designation.description"></m-textarea>-->
+      <!--  </m-form-item>-->
+    </div>
+  </m-form-row>
+</form>

@@ -10,10 +10,10 @@ import {CodeSystemService} from './services/code-system.service';
 import {CodeSystemVersionViewComponent} from './containers/version/code-system-version-view.component';
 import {CodeSystemDuplicateModalComponent} from './containers/list/code-system-duplicate-modal.component';
 import {CodeSystemConceptsListComponent} from './containers/edit/concept/code-system-concepts-list.component';
-import {CodeSystemConceptEditComponent} from './containers/concept/code-system-concept-edit.component';
+import {CodeSystemConceptEditComponent} from './containers/concept/v1/code-system-concept-edit.component';
 import {CodeSystemVersionDuplicateModalComponent} from './containers/edit/version/code-system-version-duplicate-modal.component';
 import {CodeSystemVersionEntityVersionsListComponent} from './containers/version/code-system-version-entity-versions-list.component';
-import {CodeSystemConceptVersionEditComponent} from './containers/concept/code-system-concept-version-edit.component';
+import {CodeSystemConceptVersionEditComponent} from './containers/concept/v1/code-system-concept-version-edit.component';
 import {FinderCodeSystemListComponent} from './containers-finder/code-system-list.component';
 import {FinderCodeSystemViewComponent} from './containers-finder/code-system-view.component';
 import {FinderCodeSystemVersionViewComponent} from './containers-finder/version/code-system-version-view.component';
@@ -21,11 +21,11 @@ import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/
 import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
 import {FinderModule} from '../../core/finder/finder.module';
 import {ContactModule} from '../contact/contact.module';
-import {CodeSystemConceptVersionDesignationTableComponent} from './containers/concept/designation/code-system-concept-version-designation-table.component';
+import {CodeSystemConceptVersionDesignationTableComponent} from './containers/concept/v1/designation/code-system-concept-version-designation-table.component';
 import {
   CodeSystemConceptVersionPropertyValueTableComponent
-} from './containers/concept/propertyvalue/code-system-concept-version-property-value-table.component';
-import {CodeSystemConceptVersionViewComponent} from './containers/concept/code-system-concept-version-view.component';
+} from './containers/concept/v1/propertyvalue/code-system-concept-version-property-value-table.component';
+import {CodeSystemConceptVersionViewComponent} from './containers/concept/v1/code-system-concept-version-view.component';
 import {ResourcesLibModule} from 'terminology-lib/resources';
 import {CodeSystemPropertyEditComponent} from './containers/property/code-system-property-edit.component';
 import {CodeSystemPropertyFormComponent} from './containers/property/code-system-property-form.component';
@@ -34,10 +34,13 @@ import {CodeSystemDesignationEditComponent} from './containers/designation/code-
 import {CodeSystemDesignationFormComponent} from './containers/designation/code-system-designation-form.component';
 import {CodeSystemPropertyValueFormComponent} from './containers/property-value/code-system-property-value-form.component';
 import {CodeSystemPropertyValueEditComponent} from './containers/property-value/code-system-property-value-edit.component';
-import {CodeSystemConceptVersionAssociationTableComponent} from './containers/concept/association/code-system-concept-version-association-table.component';
+import {CodeSystemConceptVersionAssociationTableComponent} from './containers/concept/v1/association/code-system-concept-version-association-table.component';
 import {CodeSystemAssociationEditComponent} from './containers/association/code-system-association-edit.component';
 import {CodeSystemViewComponent} from './containers/edit/code-system-view.component';
-import {CodeSystemConceptViewComponent} from './containers/concept/code-system-concept-view.component';
+import {CodeSystemConceptViewComponent} from './containers/concept/v1/code-system-concept-view.component';
+import {CodeSystemConceptEditV2Component} from './containers/concept/v2/code-system-concept-edit-v2.component';
+import {CodeSystemDesignationFormV2Component} from './containers/designation/code-system-designation-form-v2.component';
+import {CodeSystemDesignationEditV2Component} from './containers/designation/code-system-designation-edit-v2.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -46,7 +49,9 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/view', component: CodeSystemViewComponent},
 
   {path: ':id/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/concepts/add/v2', component: CodeSystemConceptEditV2Component, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/concepts/:conceptId/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/concepts/:conceptId/edit/v2', component: CodeSystemConceptEditV2Component, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/concepts/:conceptId/view', component: CodeSystemConceptViewComponent},
   {path: ':id/concepts/:conceptId/versions/add', component: CodeSystemConceptVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {
@@ -151,7 +156,10 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemConceptVersionAssociationTableComponent,
     CodeSystemAssociationEditComponent,
     CodeSystemViewComponent,
-    CodeSystemConceptViewComponent
+    CodeSystemConceptViewComponent,
+    CodeSystemConceptEditV2Component,
+    CodeSystemDesignationFormV2Component,
+    CodeSystemDesignationEditV2Component
   ],
   exports: [
     CodeSystemListComponent,

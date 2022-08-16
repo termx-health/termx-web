@@ -133,7 +133,8 @@
         "edit-header": "Edit code system",
         "view-header": "View code system",
         "concepts": {
-          "add-concept": "Add concept"
+          "add-concept": "Add concept",
+          "concept": "Concept"
         },
         "versions": {
           "duplicate": {
@@ -180,6 +181,16 @@
         "view-header": "View concept",
         "versions": {
           "add-version": "Add version"
+        },
+        "v2": {
+          "concept": "Concept",
+          "version": {
+            "information": "Version information",
+            "release-date": "Release date",
+            "description": "Description",
+            "status": "Status",
+            "code-system-version": "Code System version"
+          }
         }
       },
       "filter": {
@@ -206,7 +217,13 @@
         "add-supplement": "Add supplement",
         "add-designation": "Add designation",
         "delete-designation": "Delete designation",
-        "edit-designation": "Edit designation"
+        "edit-designation": "Edit designation",
+        "designation": "Designation",
+        "term": "Term",
+        "multi-language-input": {
+          "add-translation": "Add translation",
+          "placeholder": "Translation"
+        }
       },
       "property-value": {
         "add-supplement": "Add supplement",

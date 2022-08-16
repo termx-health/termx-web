@@ -1,0 +1,38 @@
+<m-spinner [mLoading]="isLoading">
+  <m-card [mTitle]="mode === 'edit' ? 'web.code-system-concept.form.v2.concept' : 'web.code-system.form.concepts.add-concept'" [mShowSkeleton]="loading['init']">
+    <form #form="ngForm" *ngIf="concept && conceptVersion">
+      <div *ngIf="mode === 'add'">
+        <m-divider [mText]="'web.code-system-concept.form.v2.concept.concept' | translate" mOrientation="middle"></m-divider>
+        <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>
+          <m-input name="code" [(ngModel)]="concept.code" autofocus required></m-input>
+        </m-form-item>
+
+        <m-form-item mName="description" mLabel="entities.code-system-concept.description">
+          <m-textarea name="description" [(ngModel)]="concept.description"></m-textarea>
+        </m-form-item>
+      </div>
+      <m-divider [mText]="'web.code-system-concept.form.v2.version.information' | translate" mOrientation="middle"></m-divider>
+      <m-form-item mName="releaseDate" mLabel="web.code-system-concept.form.v2.version.release-date" required>
+        <m-date-picker name="releaseDate" required></m-date-picker> <!--[(ngModel)]="conceptVersion.releaseDate"-->
+      </m-form-item>
+      <m-form-item mName="versionDescription" mLabel="web.code-system-concept.form.v2.version.description">
+        <m-textarea name="versionDescription" [(ngModel)]="conceptVersion.description"></m-textarea>
+      </m-form-item>
+      <m-form-item mLabel="web.code-system-concept.form.v2.version.status">
+        <twa-status-tag [status]="conceptVersion.status"></twa-status-tag>
+      </m-form-item>
+      <m-form-item mLabel="web.code-system-concept.form.v2.version.code-system-version"> <!--todo does nothing rn-->
+        <m-select *ngIf="conceptVersion.status !== 'active'" name="codeSystemVersion" [(ngModel)]="conceptVersion.codeSystem">
+          <!--todo figure out loading concepts by selected version-->
+          <m-option *ngFor="let version of codeSystemVersionMap | keys" [label]="version" [value]="version"></m-option>
+        </m-select>
+      </m-form-item>
+      <div>
+        <twa-code-system-designation-edit-v2 [codeSystemId]="codeSystemId"
+            [designations]="conceptVersion.designations"
+            [requiredLanguages]="['en']"
+        ></twa-code-system-designation-edit-v2>
+      </div>
+    </form>
+  </m-card>
+</m-spinner>
