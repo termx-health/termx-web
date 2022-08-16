@@ -105,6 +105,7 @@
           <m-option label="web.privileges.resources.modal.type.value-set" value="ValueSet"></m-option>
           <m-option label="web.privileges.resources.modal.type.map-set" value="MapSet"></m-option>
           <m-option label="web.privileges.resources.modal.type.naming-system" value="NamingSystem"></m-option>
+          <m-option label="web.privileges.resources.modal.type.association-type" value="AssociationType"></m-option>
         </m-select>
       </m-form-item>
       <m-form-item *ngIf="modalData.resource.resourceType && modalData.resource.resourceType !== 'Any' && modalData.resource.resourceType !== 'Admin'"
@@ -130,6 +131,12 @@
             [(ngModel)]="modalData.resource.resourceId"
             [filter]="filter"
             valuePrimitive></twl-naming-system-search>
+        <twl-association-type-search name="resourceId"
+            *ngIf="modalData.resource.resourceType === 'AssociationType'"
+            [(ngModel)]="modalData.resource.resourceId"
+            [filter]="filterCode"
+            valuePrimitive>
+        </twl-association-type-search>
       </m-form-item>
       <ng-container *ngIf="modalData.resource.resourceType !== 'Admin'">
         <m-form-item [mLabel]="view"></m-form-item>

@@ -1,9 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemService} from '../codesystem/services/code-system.service';
-import {ValueSetService} from '../valueset/services/value-set.service';
-import {MapSetService} from '../mapset/services/map-set-service';
-import {NamingSystemLibService} from 'terminology-lib/resources';
-import {AssociationTypeService} from '../associationtype/services/association-type.service';
+import {AssociationTypeLibService, CodeSystemLibService, MapSetLibService, NamingSystemLibService, ValueSetLibService} from 'terminology-lib/resources';
+import {AuthService} from '../../auth/auth.service';
 
 
 @Component({
@@ -31,11 +28,12 @@ export class ResourcesTabsetComponent implements OnInit {
   public associationTypeTotal?: number;
 
   public constructor(
-    private codeSystemService: CodeSystemService,
-    private valueSetService: ValueSetService,
-    private mapSetService: MapSetService,
-    private namingSystemLibService: NamingSystemLibService,
-    private associationTypeService: AssociationTypeService
+    private authService: AuthService,
+    private codeSystemService: CodeSystemLibService,
+    private valueSetService: ValueSetLibService,
+    private mapSetService: MapSetLibService,
+    private namingSystemService: NamingSystemLibService,
+    private associationTypeService: AssociationTypeLibService
   ) { }
 
   public ngOnInit(): void {
@@ -43,10 +41,20 @@ export class ResourcesTabsetComponent implements OnInit {
   }
 
   public loadTotals(): void {
-    this.codeSystemService.search({limit: 0}).subscribe(cs => this.codeSystemTotal = cs.meta?.total);
-    this.valueSetService.search({limit: 0}).subscribe(vs => this.valueSetTotal = vs.meta?.total);
-    this.mapSetService.search({limit: 0}).subscribe(ms => this.mapSetTotal = ms.meta?.total);
-    this.namingSystemLibService.search({limit: 0}).subscribe(ns => this.namingSystemTotal = ns.meta?.total);
-    this.associationTypeService.search({limit: 0}).subscribe(at => this.associationTypeTotal = at.meta?.total);
+    if (this.authService.hasPrivilege('*.CodeSystem.view')) {
+      this.codeSystemService.search({limit: 0}).subscribe(cs => this.codeSystemTotal = cs.meta?.total);
+    }
+    if (this.authService.hasPrivilege('*.ValueSet.view')) {
+      this.valueSetService.search({limit: 0}).subscribe(vs => this.valueSetTotal = vs.meta?.total);
+    }
+    if (this.authService.hasPrivilege('*.MapSet.view')) {
+      this.mapSetService.search({limit: 0}).subscribe(ms => this.mapSetTotal = ms.meta?.total);
+    }
+    if (this.authService.hasPrivilege('*.NamingSystem.view')) {
+      this.namingSystemService.search({limit: 0}).subscribe(ns => this.namingSystemTotal = ns.meta?.total);
+    }
+    if (this.authService.hasPrivilege('*.AssociationType.view')) {
+      this.associationTypeService.search({limit: 0}).subscribe(at => this.associationTypeTotal = at.meta?.total);
+    }
   }
 }

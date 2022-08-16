@@ -521,7 +521,8 @@
             "code-system": "CodeSystem",
             "value-set": "ValueSet",
             "map-set": "MapSet",
-            "naming-system": "NamingSystem"
+            "naming-system": "NamingSystem",
+            "association-type": "AssociationType"
           }
         }
       }
