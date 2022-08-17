@@ -36,15 +36,16 @@
             <m-option *ngFor="let refSet of refsets" [label]="refSet | snomedConceptName | async" [value]="refSet.id"></m-option>
           </m-select>
 
-          <m-button (click)="importRefsetConcepts(refsetParams.referenceSet)"
-              style="display: block; margin-bottom: 1em">{{'web.snomed.search.import-refset-concepts' | translate}}</m-button>
+          <m-button (click)="importRefsetConcepts(refsetParams.referenceSet)" style="margin-bottom: 1em" *twaPrivileged="'*.CodeSystem.edit'">
+            {{'web.snomed.search.import-refset-concepts' | translate}}
+          </m-button>
 
           <m-backend-table [mResult]="refsetConcepts" [(mQuery)]="refsetParams" (mQueryChange)="loadRefsetConcepts()" [mLoading]="loading['refset-concepts']">
             <tr *mTableHead>
               <th>{{'entities.snomed-concept.term' | translate}}</th>
             </tr>
             <tr *mTableRow="let concept">
-              <td><a (click)="conceptSelected.emit(concept.id)">{{concept | snomedConceptName | async}}</a></td>
+              <td><a (click)="conceptSelected.emit(concept.conceptId)">{{concept | snomedConceptName | async}}</a></td>
             </tr>
             <tr *mTableNoData>
               <td colspan="100%">
@@ -72,7 +73,7 @@
             <th>{{'entities.snomed-concept.term' | translate}}</th>
           </tr>
           <tr *mTableRow="let concept">
-            <td><a (click)="conceptSelected.emit(concept.id)">{{concept | snomedConceptName | async}}</a></td>
+            <td><a (click)="conceptSelected.emit(concept.conceptId)">{{concept | snomedConceptName | async}}</a></td>
           </tr>
           <tr *mTableNoData>
             <td colspan="100%">

@@ -6,39 +6,45 @@
     },
     "icon": "unordered-list",
     "link": "resources?tab=code-systems",
+    "privileges": ["*.CodeSystem.view", "*.ValueSet.view", "*.MapSet.view", "*.NamingSystem.view", "*.AssociationType.view"],
     "items": [
       {
         "label": {
           "en": "Code systems",
           "et": "Koodisüsteemid"
         },
-        "link": "resources?tab=code-systems"
+        "link": "resources?tab=code-systems",
+        "privileges": ["*.CodeSystem.view"]
       },
       {
         "label": {
           "en": "Value sets",
           "et": "Väärtuste kogumid"
         },
-        "link": "resources?tab=value-sets"
+        "link": "resources?tab=value-sets",
+        "privileges": ["*.ValueSet.view"]
       },
       {
         "label": {
           "en": "Map sets",
           "et": "Kaardistus kogumid"
         },
-        "link": "resources?tab=map-sets"
+        "link": "resources?tab=map-sets",
+        "privileges": ["*.MapSet.view"]
       },
       {
         "label": {
           "en": "Naming systems"
         },
-        "link": "resources?tab=naming-systems"
+        "link": "resources?tab=naming-systems",
+        "privileges": ["*.NamingSystem.view"]
       },
       {
         "label": {
           "en": "Association types"
         },
-        "link": "resources?tab=association-types"
+        "link": "resources?tab=association-types",
+        "privileges": ["*.AssociationType.view"]
       }
     ]
   },
@@ -48,20 +54,23 @@
       "et": "Koodisüsteemid"
     },
     "icon": "table",
+    "privileges": ["*.Snomed.view", "*.MeasurementUnit.view"],
     "items": [
       {
         "label": {
           "en": "SNOMED CT",
           "et": "SNOMED CT"
         },
-        "link": "integration/snomed"
+        "link": "integration/snomed",
+        "privileges": ["*.Snomed.view"]
       },
       {
         "label": {
           "en": "Measurement units",
           "et": "Mõõtühikud"
         },
-        "link": "measurement-units"
+        "link": "measurement-units",
+        "privileges": ["*.MeasurementUnit.view"]
       }
     ]
   },
@@ -71,7 +80,8 @@
       "et": "Globaalne otsing"
     },
     "link": "global-search",
-    "icon": "search"
+    "icon": "search",
+    "privileges": ["*.CodeSystem.view", "*.ValueSet.view", "*.MapSet.view"]
   },
   {
     "label": {
@@ -86,7 +96,8 @@
           "et": "Integratsioon"
         },
         "icon": "interaction",
-        "link": "integration"
+        "link": "integration",
+        "privileges": ["*.CodeSystem.view", "*.ValueSet.view", "*.MapSet.view"]
       },
       {
         "label": {
@@ -94,7 +105,8 @@
           "et": "Privileegid"
         },
         "icon": "key",
-        "link": "privileges"
+        "link": "privileges",
+        "privileges": ["*.Privilege.view"]
       },
       {
         "label": {

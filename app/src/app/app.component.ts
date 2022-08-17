@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {LocalizedName} from '@kodality-health/marina-util';
 import {filter} from 'rxjs';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
+import {AuthService} from './auth/auth.service';
 
 @Component({
   selector: 'twa-root',
@@ -17,6 +18,7 @@ export class AppComponent implements OnInit {
 
   public constructor(
     private router: Router,
+    private authService: AuthService,
     private http: HttpClient,
     private route: ActivatedRoute,
     private translateService: TranslateService,
@@ -41,7 +43,7 @@ export class AppComponent implements OnInit {
   private loadMenu(): void {
     this.http.get<{label?: LocalizedName, icon: string, link: string}[]>("./assets/menu.json").subscribe((menu) => {
       const createMenu = (items: any[] = []): MuiPageMenuItem[] => {
-        return items.map(i => ({
+        return this.filter(items).map(i => ({
           label: i.label?.[this.translateService.currentLang],
           icon: i.icon,
           click: () => i.link ? this.router.navigateByUrl(i.link) : undefined,
@@ -50,6 +52,10 @@ export class AppComponent implements OnInit {
       };
       this.menu = createMenu(menu);
     });
+  }
+
+  private filter(items: any[]): any[] {
+    return items.filter(item => !item.privileges || this.authService.hasAnyPrivilege(item.privileges));
   }
 
   public onLangChange(lang: string): void {

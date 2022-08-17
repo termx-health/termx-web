@@ -22,7 +22,7 @@
     <!-- Name -->
     <m-form-item mName="name" mLabel="web.integration.file-import.concept-map.map-name" *ngIf="data.map.id">
       <ng-container *ngIf="!isNewMapSet">{{(data.loadedMapSet?.names | localName) || '-'}}</ng-container>
-      <m-input *ngIf="isNewMapSet" name="name" [(ngModel)]="data.map.name"></m-input>
+      <m-multi-language-input *ngIf="isNewMapSet" name="names" [(ngModel)]="data.map.names"></m-multi-language-input>
     </m-form-item>
 
     <!-- Version -->
@@ -54,6 +54,17 @@
     <m-button *m-card-footer (click)="process()" [mLoading]="loading['processing']" [disabled]="form.invalid">
       {{'web.integration.file-import.process' | translate}}
     </m-button>
+    <div *ngIf="jobResponse">
+      <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
+        {{error}}
+      </m-alert>
+      <m-alert *ngFor="let warning of jobResponse.warnings" mType="warning" mShowIcon>
+        {{warning}}
+      </m-alert>
+      <m-alert *ngFor="let success of jobResponse.successes" mType="success" mShowIcon>
+        {{success}}
+      </m-alert>
+    </div>
   </form>
 </m-card>
 

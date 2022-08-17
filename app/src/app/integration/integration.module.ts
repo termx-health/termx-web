@@ -27,25 +27,24 @@ import {OrphanetImportComponent} from './import/orphanet/orphanet-import-compone
 export const INTEGRATION_ROUTES: Routes = [
   {
     path: '', component: IntegrationDashboardComponent, children: [
-      {path: 'fhir/$sync', component: IntegrationFhirSyncComponent},
-      {path: 'fhir/CodeSystem/$lookup', component: FhirCodeSystemLookupComponent},
-      {path: 'fhir/CodeSystem/$validate-code', component: FhirCodeSystemValidateCodeComponent},
-      {path: 'fhir/CodeSystem/$subsumes', component: FhirCodeSystemSubsumesComponent},
-      {path: 'fhir/CodeSystem/$find-matches', component: FhirCodeSystemFindMatchesComponent},
-      {path: 'fhir/ValueSet/$expand', component: FhirValueSetExpandComponent},
-      {path: 'fhir/ValueSet/$validate-code', component: FhirValueSetValidateCodeComponent},
-      {path: 'fhir/ConceptMap/$translate', component: FhirConceptMapTranslateComponent},
-      {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent},
-      {path: 'atc/import', component: IntegrationAtcImportComponent},
-      {path: 'icd-10/import', component: IntegrationIcdImportComponent},
-      {path: 'orphanet/import', component: OrphanetImportComponent},
-      {path: 'file-import/code-system', component: CodeSystemFileImportComponent},
-      {path: 'file-import/concept-map', component: ConceptMapFileImportComponent},
-      {path: 'file-import/concept-map', component: ConceptMapFileImportComponent},
+      {path: 'fhir/$sync', component: IntegrationFhirSyncComponent, data: {privilege: ['*.CodeSystem.edit', '*.ValueSet.edit', '*.MapSet.edit']}},
+      {path: 'fhir/CodeSystem/$lookup', component: FhirCodeSystemLookupComponent, data: {privilege: ['*.CodeSystem.view']}},
+      {path: 'fhir/CodeSystem/$validate-code', component: FhirCodeSystemValidateCodeComponent, data: {privilege: ['*.CodeSystem.view']}},
+      {path: 'fhir/CodeSystem/$subsumes', component: FhirCodeSystemSubsumesComponent, data: {privilege: ['*.CodeSystem.view']}},
+      {path: 'fhir/CodeSystem/$find-matches', component: FhirCodeSystemFindMatchesComponent, data: {privilege: ['*.CodeSystem.view']}},
+      {path: 'fhir/ValueSet/$expand', component: FhirValueSetExpandComponent, data: {privilege: ['*.ValueSet.view']}},
+      {path: 'fhir/ValueSet/$validate-code', component: FhirValueSetValidateCodeComponent, data: {privilege: ['*.ValueSet.view']}},
+      {path: 'fhir/ConceptMap/$translate', component: FhirConceptMapTranslateComponent, data: {privilege: ['*.MapSet.view']}},
+      {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent, data: {privilege: ['*.MapSet.edit']}},
+      {path: 'atc/import', component: IntegrationAtcImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
+      {path: 'icd-10/import', component: IntegrationIcdImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
+      {path: 'orphanet/import', component: OrphanetImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
+      {path: 'file-import/code-system', component: CodeSystemFileImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
+      {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.edit']}}
     ]
   },
   {
-    path: 'snomed', component: SnomedDashboardComponent
+    path: 'snomed', component: SnomedDashboardComponent, data: {privilege: ['*.Snomed.view']}
   }
 ];
 

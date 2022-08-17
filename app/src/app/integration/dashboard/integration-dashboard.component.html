@@ -1,11 +1,11 @@
 <div nz-row nzGutter="12" class="m-row">
   <div nz-col [nzMd]="6" [nzXs]="24">
     <m-card>
-      <m-divider [mText]="'web.integration.systems.fhir' | translate"></m-divider>
-      <nz-collapse nzGhost>
+      <m-divider [mText]="'web.integration.systems.fhir' | translate" *twaPrivileged="['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view']"></m-divider>
+      <nz-collapse nzGhost *twaPrivileged="'*.CodeSystem.view'">
         <nz-collapse-panel nzHeader="CodeSystem">
           <div style="display: grid">
-            <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'CodeSystem'}">$sync</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" *twaPrivileged="'*.CodeSystem.edit'" [queryParams]="{ source: 'CodeSystem'}">$sync</m-button>
             <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$lookup'">$lookup</m-button>
             <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$validate-code'">$validate-code</m-button>
             <m-button mDisplay="link" [routerLink]="'./fhir/CodeSystem/$subsumes'">$subsumes</m-button>
@@ -14,28 +14,28 @@
         </nz-collapse-panel>
       </nz-collapse>
 
-      <nz-collapse nzGhost>
+      <nz-collapse nzGhost *twaPrivileged="'*.ValueSet.view'">
         <nz-collapse-panel nzHeader="ValueSet">
           <div style="display: grid">
-            <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ValueSet'}">$sync</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" *twaPrivileged="'*.ValueSet.edit'" [queryParams]="{ source: 'ValueSet'}">$sync</m-button>
             <m-button mDisplay="link" [routerLink]="'./fhir/ValueSet/$expand'">$expand</m-button>
             <m-button mDisplay="link" [routerLink]="'./fhir/ValueSet/$validate-code'">$validate-code</m-button>
           </div>
         </nz-collapse-panel>
       </nz-collapse>
 
-      <nz-collapse nzGhost>
+      <nz-collapse nzGhost *twaPrivileged="'*.MapSet.view'">
         <nz-collapse-panel nzHeader="ConceptMap">
           <div style="display: grid">
-            <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" [queryParams]="{ source: 'ConceptMap'}">$sync</m-button>
+            <m-button mDisplay="link" [routerLink]="'./fhir/$sync'" *twaPrivileged="'*.MapSet.edit'" [queryParams]="{ source: 'ConceptMap'}">$sync</m-button>
             <m-button mDisplay="link" [routerLink]="'./fhir/ConceptMap/$translate'">$translate</m-button>
             <m-button mDisplay="link" [routerLink]="'./fhir/ConceptMap/$closure'">$closure</m-button>
           </div>
         </nz-collapse-panel>
       </nz-collapse>
 
-      <m-divider [mText]="'web.integration.systems.atc' | translate"></m-divider>
-      <div style="display: grid">
+      <m-divider [mText]="'web.integration.systems.atc' | translate" *twaPrivileged="'*.CodeSystem.edit'"></m-divider>
+      <div style="display: grid" *twaPrivileged="'*.CodeSystem.edit'">
         <m-button mDisplay="link" [routerLink]="'./atc/import'" [queryParams]="{edition: 'int'}">
           {{'web.integration.import.atc' | translate: ({edition: 'int'})}}
         </m-button>
@@ -43,8 +43,8 @@
           {{'web.integration.import.atc' | translate: ({edition: 'est'})}}
         </m-button>
       </div>
-      <m-divider [mText]="'web.integration.systems.icd-10' | translate"></m-divider>
-      <div style="display: grid">
+      <m-divider [mText]="'web.integration.systems.icd-10' | translate" *twaPrivileged="'*.CodeSystem.edit'"></m-divider>
+      <div style="display: grid" *twaPrivileged="'*.CodeSystem.edit'">
         <m-button mDisplay="link" [routerLink]="'./icd-10/import'" [queryParams]="{edition: 'int'}">
           {{'web.integration.import.icd-10' | translate: ({edition: 'int'})}}
         </m-button>
@@ -52,15 +52,15 @@
           {{'web.integration.import.icd-10' | translate: ({edition: 'est'})}}</m-button>
       </div>
 
-      <m-divider [mText]="'web.integration.systems.orphanet' | translate"></m-divider>
-      <div style="display: grid">
+      <m-divider [mText]="'web.integration.systems.orphanet' | translate" *twaPrivileged="'*.CodeSystem.edit'"></m-divider>
+      <div style="display: grid" *twaPrivileged="'*.CodeSystem.edit'">
         <m-button mDisplay="link" [routerLink]="'./orphanet/import'">{{'web.integration.import.orphanet' | translate}}</m-button>
       </div>
 
-      <m-divider [mText]="'web.integration.file-import.file-import' | translate"></m-divider>
-      <div style="display: grid">
-        <m-button mDisplay="link" [routerLink]="'./file-import/code-system'">{{'web.integration.file-import.code-system.import' | translate}}</m-button>
-        <m-button mDisplay="link" [routerLink]="'./file-import/concept-map'">{{'web.integration.file-import.concept-map.import' | translate}}</m-button>
+      <m-divider [mText]="'web.integration.file-import.file-import' | translate" *twaPrivileged="['*.CodeSystem.edit', '*.MapSet.edit']"></m-divider>
+      <div style="display: grid" *twaPrivileged="['*.CodeSystem.edit', '*.MapSet.edit']">
+        <m-button mDisplay="link" [routerLink]="'./file-import/code-system'" *twaPrivileged="'*.CodeSystem.edit'">{{'web.integration.file-import.code-system.import' | translate}}</m-button>
+        <m-button mDisplay="link" [routerLink]="'./file-import/concept-map'" *twaPrivileged="'*.MapSet.edit'">{{'web.integration.file-import.concept-map.import' | translate}}</m-button>
       </div>
     </m-card>
   </div>

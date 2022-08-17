@@ -538,7 +538,11 @@
             "code-system": "CodeSystem",
             "value-set": "ValueSet",
             "map-set": "MapSet",
-            "naming-system": "NamingSystem"
+            "naming-system": "NamingSystem",
+            "association-type": "AssociationType",
+            "snomed": "Snomed",
+            "measurement-unit": "MeasurementUnit",
+            "privilege": "Privilege"
           }
         }
       }
@@ -600,7 +604,9 @@
       "uri": "Uniform resource identifier (URI)",
       "name": "Name",
       "domain": "Domain",
-      "description": "Description"
+      "description": "Description",
+      "source-value-set": "Source value set",
+      "target-value-set": "Target value set"
     },
     "map-set-entity": {
       "id": "Id",

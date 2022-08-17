@@ -6,6 +6,7 @@ import {AssociationTypeSearchParams} from '../model/association-type-search-para
 import {AssociationType} from '../model/association-type';
 import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 @Component({
   selector: 'twl-association-type-search',
@@ -14,8 +15,9 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 })
 export class AssociationTypeSearchComponent implements OnInit {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() public filter?: (resource: AssociationType) => boolean;
 
-  public data?: {[code: string]: AssociationType} = {};
+  public data: {[code: string]: AssociationType} = {};
   public value?: string;
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
@@ -88,6 +90,9 @@ export class AssociationTypeSearchComponent implements OnInit {
     this.onTouched = fn;
   }
 
+  public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
+    return !this.filter || this.filter(this.data[nzValue]);
+  };
 
   public get isLoading(): boolean {
     return Object.values(this.loading).some(Boolean);

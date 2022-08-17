@@ -4,7 +4,7 @@
   </div>
   <div class="m-items-between" style="margin-bottom: 1em">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-    <twa-add-button [routerLink]="['./add']">
+    <twa-add-button *twaPrivileged="'*.Privilege.edit'" [routerLink]="['./add']">
       {{'web.privileges.table.add-privilege' | translate}}
     </twa-add-button>
   </div>
@@ -22,9 +22,12 @@
 
     <tr *mTableRow="let privilege">
       <td>
-        <a [routerLink]="['./edit', privilege.id]">
+        <a *ngIf="'*.Privilege.edit' | twaHasAnyPrivilege; else view" [routerLink]="['./edit', privilege.id]">
           {{privilege.code}}
         </a>
+        <ng-template #view>
+          {{privilege.code}}
+        </ng-template>
       </td>
       <td>{{privilege.names | localName}}</td>
       <td style="padding: 0.8rem 0">

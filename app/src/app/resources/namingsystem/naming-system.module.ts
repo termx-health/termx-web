@@ -9,8 +9,8 @@ import {NamingSystemIdentifierFormComponent} from './containers/edit/naming-syst
 import {NamingSystemViewComponent} from './containers/view/naming-system-view.component';
 
 export const NAMING_SYSTEM_ROUTES: Routes = [
-  {path: 'add', component: NamingSystemEditComponent},
-  {path: ':id/edit', component: NamingSystemEditComponent},
+  {path: 'add', component: NamingSystemEditComponent, data: {privilege: ['*.NamingSystem.edit']}},
+  {path: ':id/edit', component: NamingSystemEditComponent, data: {privilege: ['*.NamingSystem.edit']}},
   {path: ':id/view', component: NamingSystemViewComponent},
 ];
 
