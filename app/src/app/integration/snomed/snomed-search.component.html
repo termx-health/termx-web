@@ -45,7 +45,7 @@
               <th>{{'entities.snomed-concept.term' | translate}}</th>
             </tr>
             <tr *mTableRow="let concept">
-              <td><a (click)="conceptSelected.emit(concept.id)">{{concept | snomedConceptName | async}}</a></td>
+              <td><a (click)="conceptSelected.emit(concept.conceptId)">{{concept | snomedConceptName | async}}</a></td>
             </tr>
             <tr *mTableNoData>
               <td colspan="100%">
@@ -73,7 +73,7 @@
             <th>{{'entities.snomed-concept.term' | translate}}</th>
           </tr>
           <tr *mTableRow="let concept">
-            <td><a (click)="conceptSelected.emit(concept.id)">{{concept | snomedConceptName | async}}</a></td>
+            <td><a (click)="conceptSelected.emit(concept.conceptId)">{{concept | snomedConceptName | async}}</a></td>
           </tr>
           <tr *mTableNoData>
             <td colspan="100%">
