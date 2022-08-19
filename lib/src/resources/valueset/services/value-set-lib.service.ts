@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {TERMINOLOGY_API} from '../../../terminology-lib.token';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
+import {HttpCacheService, SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {ValueSet} from '../model/value-set';
 import {ValueSetVersion} from '../model/value-set-version';
 import {ValueSetSearchParams} from '../model/value-set-search-params';
@@ -14,9 +14,11 @@ import {ValueSetVersionRule} from '../model/value-set-version-rule';
 @Injectable()
 export class ValueSetLibService {
   protected baseUrl;
+  private cacheService: HttpCacheService;
 
   public constructor(@Inject(TERMINOLOGY_API) api: string, protected http: HttpClient) {
     this.baseUrl = `${api}/ts/value-sets`;
+    this.cacheService = new HttpCacheService();
   }
 
   public load(valueSetId: string): Observable<ValueSet> {
@@ -40,6 +42,10 @@ export class ValueSetLibService {
   }
 
   public expand(request: ValueSetExpandRequest): Observable<ValueSetVersionConcept[]> {
+    if (request.valueSet) {
+      const key = `${request.valueSet}#${request.valueSetVersion || '-'}`;
+      return this.cacheService.getCachedResponse(key, this.http.post<ValueSetVersionConcept[]>(`${this.baseUrl}/expand`, request));
+    }
     return this.http.post<ValueSetVersionConcept[]>(`${this.baseUrl}/expand`, request);
   }
 
