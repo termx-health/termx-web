@@ -4,13 +4,15 @@ import {DesignationSelectComponent} from './containers/designation-select/design
 import {MarinaUiModule} from '@kodality-health/marina-ui';
 import {CorePipesModule} from '@kodality-web/core-util';
 import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
 
 
 @NgModule({
   imports: [
     MarinaUiModule,
     CorePipesModule,
-    FormsModule
+    FormsModule,
+    CommonModule
   ],
   providers: [
     DesignationLibService
