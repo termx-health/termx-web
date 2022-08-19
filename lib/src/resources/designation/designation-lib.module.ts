@@ -4,31 +4,22 @@ import {DesignationSelectComponent} from './containers/designation-select/design
 import {MarinaUiModule} from '@kodality-health/marina-ui';
 import {CorePipesModule} from '@kodality-web/core-util';
 import {FormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {DesignationMultiLanguageInputComponent} from './containers/designation-multi-language-input/designation-multi-language-input.component';
-import {ValueSetLibModule} from '../valueset';
-import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
   imports: [
     MarinaUiModule,
     CorePipesModule,
-    FormsModule,
-    CommonModule,
-    ValueSetLibModule,
-    TranslateModule
+    FormsModule
   ],
   providers: [
     DesignationLibService
   ],
   declarations: [
-    DesignationSelectComponent,
-    DesignationMultiLanguageInputComponent
+    DesignationSelectComponent
   ],
   exports: [
-    DesignationSelectComponent,
-    DesignationMultiLanguageInputComponent
+    DesignationSelectComponent
   ]
 })
 export class DesignationLibModule {

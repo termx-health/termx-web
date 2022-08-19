@@ -177,20 +177,11 @@
     "code-system-concept": {
       "form": {
         "add-header": "Add concept",
-        "edit-header": "Edit concept",
-        "view-header": "View concept",
-        "versions": {
-          "add-version": "Add version"
-        },
-        "v2": {
-          "concept": "Concept",
-          "version": {
-            "information": "Version information",
-            "release-date": "Release date",
-            "description": "Description",
-            "status": "Status",
-            "code-system-version": "Code System version"
-          }
+        "concept": "Concept",
+        "version": {
+          "information": "Version information",
+          "code-system-version": "Code System version",
+          "new-version": "New version"
         }
       },
       "filter": {
@@ -218,8 +209,6 @@
         "add-designation": "Add designation",
         "delete-designation": "Delete designation",
         "edit-designation": "Edit designation",
-        "designation": "Designation",
-        "term": "Term",
         "multi-language-input": {
           "add-translation": "Add translation",
           "placeholder": "Translation"

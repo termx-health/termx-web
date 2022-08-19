@@ -42,11 +42,11 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/duplicate`, duplicateRequest);
   }
 
-  public saveConcept(codeSystemId: string, concept: CodeSystemConcept): Observable<CodeSystemConcept> {
+  public saveConcept(codeSystemId: string, concept: CodeSystemConcept, full?: boolean): Observable<CodeSystemConcept> {
     if (concept.id) {
-      return this.http.put(`${this.baseUrl}/${codeSystemId}/concepts/${concept.id}`, concept);
+      return this.http.put(`${this.baseUrl}/${codeSystemId}/concepts/${concept.id}?full=${full}`, concept);
     }
-    return this.http.post(`${this.baseUrl}/${codeSystemId}/concepts`, concept);
+    return this.http.post(`${this.baseUrl}/${codeSystemId}/concepts?full=${full}`, concept);
   }
 
   public saveEntityVersion(codeSystemId: string, entityId: number, entityVersion: CodeSystemEntityVersion): Observable<CodeSystemEntityVersion> {
