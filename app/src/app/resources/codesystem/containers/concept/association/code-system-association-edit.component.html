@@ -1,0 +1,43 @@
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
+    <div class="m-card-title">{{'entities.code-system-entity-version.associations' | translate}}</div>
+    <twa-add-button *ngIf="!viewMode" (click)="addAssociation()">{{'web.code-system-concept-version.association.add-association' | translate}}</twa-add-button>
+  </div>
+  <div>
+    <form #form="ngForm">
+      <m-card class="m-card-inside" *ngFor="let association of associations; let index = index">
+        <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
+          <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content">
+            <m-form-item mName="type-{{index}}" required>
+              <twl-association-type-search [(ngModel)]="association.associationType"
+                  name="type-{{index}}"
+                  valuePrimitive
+                  autofocus
+                  required></twl-association-type-search>
+            </m-form-item>
+          </div>
+          <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
+            <div style="display: flex">
+              <m-form-item style="width: 100%" mName="targetConcept-{{index}}" required>
+                <twl-code-system-entity-version-search [codeSystemId]="codeSystemId"
+                    [(ngModel)]="association.targetId"
+                    name="targetConcept-{{index}}"
+                    valuePrimitive
+                    required></twl-code-system-entity-version-search>
+              </m-form-item>
+              <m-form-item mName="status-{{index}}">
+                <twl-value-set-concept-select [(ngModel)]="association.status"
+                    name="status-{{index}}"
+                    valueSet="publication-status"
+                    required></twl-value-set-concept-select>
+              </m-form-item>
+              <m-button *ngIf="!viewMode" mDisplay="text" (click)="removeAssociation(index)">
+                <m-icon [mCode]="'delete'"></m-icon>
+              </m-button>
+            </div>
+          </div>
+        </div>
+      </m-card>
+    </form>
+  </div>
+</m-card>

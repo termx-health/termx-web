@@ -1,11 +1,12 @@
 <m-select
     icon="select"
-    placeholder="marina.ui.inputs.select.placeholder"
+    [placeholder]="placeholder"
     [(ngModel)]="value"
     (mChange)="fireOnChange()"
     [loading]="isLoading"
     [autoUnselect]="false"
     [multiple]="multiple"
+    [disabled]="disabled"
 >
   <m-option *ngFor="let key of data | keys"
       [value]="key"
