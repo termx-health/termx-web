@@ -1,42 +1,53 @@
-<m-form-row>
-  <div *mFormCol>
-    <m-card [mTitle]="'web.code-system-concept.form.view-header'" [mShowSkeleton]="loading">
-      <div *ngIf="concept">
-        <m-form-item mLabel="entities.code-system-concept.code" required>
-          {{concept.code}}
-        </m-form-item>
+<div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
+  <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content" *ngIf="concept?.versions">
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mShowSkeleton]="loading['init']" [mTitle]="'Versions'">
+        <nz-timeline>
+          <nz-timeline-item *ngFor="let version of concept.versions; let index = index"
+              [nzLabel]="versionTemplate"
+              [nzColor]="version.status === 'active' ? 'green' : version.status === 'retired' ? 'red' : 'gray'">
+            <ng-template #versionTemplate>
+              <label *ngIf="version.id === conceptVersion.id" style="font-weight: bold">{{version.created | localDateTime}}</label>
+              <label *ngIf="version.id !== conceptVersion.id" (click)="selectVersion(version)">{{version.created | localDateTime}}</label>
+            </ng-template>
+          </nz-timeline-item>
+        </nz-timeline>
+      </m-card>
+    </m-spinner>
+  </div>
+  <div nz-col [nzLg]="12" [nzMd]="18" [nzXs]="24">
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mTitle]="concept.code" [mShowSkeleton]="loading['init']">
+        <form *ngIf="concept && conceptVersion">
+          <m-divider [mText]="'web.code-system-concept.form.version.information' | translate" mOrientation="left"></m-divider>
+          <m-form-item mLabel="entities.code-system-entity-version.status">
+            <twa-status-tag [status]="conceptVersion.status"></twa-status-tag>
+          </m-form-item>
+          <m-form-item mLabel="entities.code-system-entity-version.created">
+            {{conceptVersion.created | localDateTime}}
+          </m-form-item>
+          <m-form-item mLabel="entities.code-system-entity-version.description">
+            {{conceptVersion.description}}
+          </m-form-item>
+<!--          <m-form-item mLabel="entities.code-system-entity-version.code-system-version">-->
+<!--            todo-->
+<!--          </m-form-item>-->
+        </form>
+      </m-card>
+    </m-spinner>
 
-        <m-form-item mLabel="entities.code-system-concept.description">
-          {{concept.description}}
-        </m-form-item>
+    <m-card style="margin-top: 1rem">
+      <twa-code-system-designation-edit [designations]="conceptVersion?.designations"
+          [requiredLanguages]="['en']"
+          viewMode></twa-code-system-designation-edit>
+    </m-card>
 
-        <m-card class="m-card-inside" [mTitle]="'entities.code-system-concept.versions'" *ngIf="concept.versions">
-          <m-table [mData]="concept.versions" mEnablePagination mHideOnSinglePage>
-            <tr *mTableHead>
-              <th>{{'entities.code-system-entity-version.id' | translate}}</th>
-              <th>{{'entities.code-system-entity-version.created' | translate}}</th>
-              <th>{{'entities.code-system-entity-version.description' | translate}}</th>
-              <th>{{'entities.code-system-entity-version.status' | translate}}</th>
-            </tr>
+    <m-card style="margin-top: 1rem">
+      <twa-code-system-property-value-edit [propertyValues]="conceptVersion?.propertyValues" viewMode></twa-code-system-property-value-edit>
+    </m-card>
 
-            <tr *mTableRow="let version">
-              <td><a [routerLink]="['../versions', version.id, 'view']">{{version.id}}</a></td>
-              <td>{{version.created | localDateTime}}</td>
-              <td>
-                <m-abbreviate [mValue]="version.description" [mLength]="35"></m-abbreviate>
-              </td>
-              <td class="tw-table-min-width">
-                <twa-status-tag [status]="version.status"></twa-status-tag>
-              </td>
-            </tr>
-            <tr *mTableNoData>
-              <td colspan="4">
-                <m-no-data></m-no-data>
-              </td>
-            </tr>
-          </m-table>
-        </m-card>
-      </div>
+    <m-card style="margin-top: 1rem">
+      <twa-code-system-association-edit [associations]="conceptVersion?.associations" viewMode></twa-code-system-association-edit>
     </m-card>
   </div>
-</m-form-row>
+</div>

@@ -1,0 +1,78 @@
+<form #form="ngForm" *ngIf="designationGroup">
+  <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
+    <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content">
+      <m-form-item mName="designationType" mLabel="entities.designation.type" required>
+        <m-select name="designationType"
+            [(ngModel)]="designationGroup.designationTypeId"
+            [disabled]="!!viewMode"
+            placeholder="marina.ui.inputs.search.placeholder"
+            icon="search"
+            autofocus
+            required>
+          <m-option *ngFor="let prop of entityProperties" [value]="prop.id" [label]="prop.name"></m-option>
+        </m-select>
+      </m-form-item>
+    </div>
+    <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
+      <m-form-item mName="designationKind" mLabel="entities.designation.designation-kind" required>
+        <nz-radio-group name="designationKind" [(ngModel)]="designationGroup.designationKind" [disabled]="!!viewMode" required>
+          <label nz-radio nzValue="text">Text</label>
+          <label nz-radio nzValue="blob">Blob</label>
+        </nz-radio-group>
+      </m-form-item>
+
+      <m-form-item mName="term" mLabel="entities.designation.name" required>
+        <div class="m-language-input-group-wrapper">
+          <m-form-control *ngFor="let designation of designationGroup.designations | apply: requiredFirst: requiredLanguages; let index = index"
+              mName="{{index}}-designation"
+              style="display: flex">
+            <nz-input-group class="m-language-input-group"
+                [nzAddOnBefore]="designation.language | localizedConceptName: {valueSet: 'languages'} | async "
+                [nzSuffix]="suffixTemplate">
+              <m-input name="{{index}}-name"
+                  [(ngModel)]="designation.name"
+                  [disabled]="!!viewMode"
+                  [placeholder]="'web.code-system-concept-version.designation.multi-language-input.placeholder'"
+                  required></m-input>
+            </nz-input-group>
+
+            <ng-template #suffixTemplate>
+              <m-button *ngIf="!viewMode && !(designation.language | apply: isRequired: requiredLanguages)"
+                  mDisplay="text"
+                  mShape="circle"
+                  mSize="small"
+                  (click)="removeDesignation(index)">
+                <m-icon mCode="close-circle"></m-icon>
+              </m-button>
+            </ng-template>
+
+            <twl-value-set-concept-select name="{{index}}-status"
+                [(ngModel)]="designation.status"
+                [disabled]="!!viewMode"
+                valueSet="publication-status"
+                required></twl-value-set-concept-select>
+
+            <m-button mDisplay="text" mShape="circle" (click)="designation.preferred = viewMode ? designation.preferred : !designation.preferred">
+              <m-icon [mOptions]="{nzTheme : designation.preferred ? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
+            </m-button>
+          </m-form-control>
+          <twl-value-set-concept-select *ngIf="!viewMode"
+              valueSet="languages"
+              name="language"
+              [(ngModel)]="language"
+              (ngModelChange)="addDesignation($event)"
+              [placeholder]="'web.code-system-concept-version.designation.multi-language-input.add-translation' | translate"
+              style="margin-top: 0.1rem"></twl-value-set-concept-select>
+        </div>
+      </m-form-item>
+
+      <m-form-item mName="designationModalCaseSignificance" mLabel="entities.designation.case-significance" required>
+        <nz-radio-group name="designationModalCaseSignificance" [(ngModel)]="designationGroup.caseSignificance" [disabled]="!!viewMode" required>
+          <label nz-radio nzValue="ci">{{'web.case-sensitive-options.ci' | translate}}</label>
+          <label nz-radio nzValue="cs">{{'web.case-sensitive-options.cs' | translate}}</label>
+          <label nz-radio nzValue="ics">{{'web.case-sensitive-options.ics' | translate}}</label>
+        </nz-radio-group>
+      </m-form-item>
+    </div>
+  </div>
+</form>
