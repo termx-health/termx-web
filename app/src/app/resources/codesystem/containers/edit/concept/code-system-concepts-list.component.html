@@ -21,8 +21,7 @@
             <m-select [(ngModel)]="filter.version"
                 (ngModelChange)="initFilterLanguages(filter.version?.supportedLanguages)"
                 (mChange)="searchUpdate.next()"
-                [placeholder]="'web.code-system-concept.filter.select-version-placeholder' | translate"
-            >
+                [placeholder]="'web.code-system-concept.filter.select-version-placeholder' | translate">
               <m-option *ngFor="let version of codeSystemVersions" [label]="version.version" [value]="version"></m-option>
             </m-select>
           </m-form-item>
@@ -69,6 +68,7 @@
       <th></th>
       <th>{{'entities.code-system-concept.code' | translate}}</th>
       <th>{{'entities.designation.name' | translate}}</th>
+      <th>{{'entities.code-system-concept.description' | translate}}</th>
     </tr>
     <tr *mTableRow="let concept">
       <td m-table-expand [mItem]="concept"></td>
@@ -80,7 +80,9 @@
             <br>
           </div>
         </ng-container>
-        {{(!filter.languages || filter.languages?.length === 0) ? (concept.code | localizedConceptName: {codeSystem: codeSystemId} | async) : undefined}}</td>
+        {{(!filter.languages || filter.languages?.length === 0) ? (concept.code | localizedConceptName: {codeSystem: codeSystemId} | async) : undefined}}
+      </td>
+      <td>{{concept.description}}</td>
     </tr>
 
     <ng-container *mTableRowExpand="let concept">

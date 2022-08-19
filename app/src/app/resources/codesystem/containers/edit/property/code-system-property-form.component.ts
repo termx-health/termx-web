@@ -1,5 +1,5 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import {EntityProperty} from 'terminology-lib/resources';
+import {EntityProperty} from 'lib/src/resources';
 import {NgForm} from '@angular/forms';
 import {isDefined, validateForm} from '@kodality-web/core-util';
 

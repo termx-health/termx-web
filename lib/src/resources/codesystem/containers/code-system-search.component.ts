@@ -17,6 +17,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() public filter?: (resource: CodeSystem) => boolean;
+  @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
 
   public data: {[id: string]: CodeSystem} = {};
   public value?: string;

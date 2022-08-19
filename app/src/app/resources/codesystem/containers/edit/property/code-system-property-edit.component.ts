@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {EntityProperty} from 'terminology-lib/resources';
+import {EntityProperty} from 'lib/src/resources';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {CodeSystemService} from '../../services/code-system.service';
+import {CodeSystemService} from '../../../services/code-system.service';
 import {CodeSystemPropertyFormComponent} from './code-system-property-form.component';
 
 @Component({
