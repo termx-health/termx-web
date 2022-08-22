@@ -14,6 +14,8 @@ import {ValueSetVersionConcept} from '../model/value-set-version-concept';
 export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAccessor {
   @Input() public valueSet!: string;
   @Input() public valueSetVersion!: string;
+  @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
+  @Input() public disabled?: boolean;
   @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
   @Input() @BooleanInput() public multiple: string | boolean = false;
 
