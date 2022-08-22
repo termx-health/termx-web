@@ -459,6 +459,7 @@
         "not-found": "Not found?",
         "create-new": "Create new",
         "process": "Process",
+        "success-message": "File processing is finished",
         "code-system": {
           "import": "Code System file import",
           "resource-id": "Resource ID",

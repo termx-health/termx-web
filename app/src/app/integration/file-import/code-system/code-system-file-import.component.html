@@ -220,3 +220,10 @@
     </m-alert>
   </div>
 </m-card>
+
+<ng-template #successNotificationContent>
+  <a *ngIf="'*.CodeSystem.edit' | twaHasAnyPrivilege; else view" (click)="openCodeSystem(data.codeSystem.id, 'edit')">{{data.codeSystem.id}}</a>
+  <ng-template #view>
+    <a (click)="openCodeSystem(data.codeSystem.id, 'view')">{{data.codeSystem.id}}</a>
+  </ng-template>
+</ng-template>

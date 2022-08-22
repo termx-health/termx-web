@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
 import {CodeSystem, CodeSystemLibService, EntityProperty} from 'terminology-lib/resources';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
@@ -8,6 +8,7 @@ import {LocalizedName} from '@kodality-health/marina-util';
 import {MuiNotificationService} from '@kodality-health/marina-ui';
 import {filter, merge, Subject, switchMap, takeUntil, timer} from 'rxjs';
 import {JobLibService, JobLog, JobLogResponse} from 'terminology-lib/job';
+import {Router} from '@angular/router';
 
 const IMPORT_TEMPLATES: {
   [p: string]: FileImportPropertyRow[]
@@ -277,6 +278,7 @@ export class CodeSystemFileImportComponent {
 
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('form') public form?: NgForm;
+  @ViewChild('successNotificationContent') public successNotificationContent?: TemplateRef<any>;
 
   public jobResponse: JobLog | null = null;
 
@@ -285,7 +287,8 @@ export class CodeSystemFileImportComponent {
     private notificationService: MuiNotificationService,
     private codeSystemLibService: CodeSystemLibService,
     private jobService: JobLibService,
-    private destroy$: DestroyService
+    private destroy$: DestroyService,
+    private router: Router
   ) {}
 
   public initCodeSystem(): void {
@@ -374,7 +377,7 @@ export class CodeSystemFileImportComponent {
     ).subscribe(jobResp => {
       stopPolling$.next();
       if (!jobResp.errors && !jobResp.warnings) {
-        this.notificationService.success("File processing is finished", undefined, {duration: 0, closable: true});
+        this.notificationService.success("web.integration.file-import.success-message", this.successNotificationContent!, {duration: 0, closable: true});
       }
       this.jobResponse = jobResp;
     }).add(() => this.loading['process'] = false);
@@ -457,5 +460,9 @@ export class CodeSystemFileImportComponent {
       ...group(DEFAULT_KTS_PROPERTIES, e => e.name!),
       ...group(entityProperties || [], e => e.name!),
     });
+  }
+
+  public openCodeSystem(id: string, mode: 'edit' | 'view'): void {
+    this.router.navigate(['/resources/code-systems/', id, mode]);
   }
 }

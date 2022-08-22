@@ -1,4 +1,4 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {NgForm} from '@angular/forms';
@@ -8,6 +8,7 @@ import {LocalizedName} from '@kodality-health/marina-util';
 import {filter, merge, Subject, switchMap, takeUntil, timer} from 'rxjs';
 import {JobLibService, JobLog, JobLogResponse} from 'terminology-lib/job';
 import {DestroyService} from '@kodality-web/core-util';
+import {Router} from '@angular/router';
 
 
 // processing
@@ -42,6 +43,8 @@ export class ConceptMapFileImportComponent {
 
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('form') public form?: NgForm;
+  @ViewChild('successNotificationContent') public successNotificationContent?: TemplateRef<any>;
+
 
   public constructor(
     private http: HttpClient,
@@ -49,6 +52,7 @@ export class ConceptMapFileImportComponent {
     private mapSetService: MapSetLibService,
     private destroy$: DestroyService,
     private jobService: JobLibService,
+    private router: Router
   ) {}
 
   public iniMapSet(): void {
@@ -94,9 +98,13 @@ export class ConceptMapFileImportComponent {
     ).subscribe(jobResp => {
       stopPolling$.next();
       if (!jobResp.errors && !jobResp.warnings) {
-        this.notificationService.success("File processing is finished", undefined, {duration: 0, closable: true});
+        this.notificationService.success("web.integration.file-import.success-message", this.successNotificationContent, {duration: 0, closable: true});
       }
       this.jobResponse = jobResp;
     }).add(() => this.loading['processing'] = false);
+  }
+
+  public openMapSet(id: string, mode: 'edit' | 'view'): void {
+    this.router.navigate(['/resources/map-sets/', id, mode]);
   }
 }

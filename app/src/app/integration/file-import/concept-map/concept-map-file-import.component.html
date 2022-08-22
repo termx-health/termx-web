@@ -68,3 +68,10 @@
   </form>
 </m-card>
 
+<ng-template #successNotificationContent>
+  <a *ngIf="'*.MapSet.edit' | twaHasAnyPrivilege; else view" (click)="openMapSet(data.map.id, 'edit')">{{data.map.id}}</a>
+  <ng-template #view>
+    <a (click)="openMapSet(data.map.id, 'view')">{{data.map.id}}</a>
+  </ng-template>
+</ng-template>
+
