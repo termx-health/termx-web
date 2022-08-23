@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemConcept, CodeSystemConceptLibService, CodeSystemEntityVersion, CodeSystemVersion} from 'lib/src/resources';
+import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'lib/src/resources';
 import {NgForm} from '@angular/forms';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
@@ -14,7 +14,7 @@ import {CodeSystemAssociationEditComponent} from './association/code-system-asso
 })
 export class CodeSystemConceptEditComponent implements OnInit {
   public codeSystemId?: string | null;
-  public conceptId?: number | null;
+  public conceptCode?: string | null;
   public concept?: CodeSystemConcept;
   public conceptVersion?: CodeSystemEntityVersion;
 
@@ -34,7 +34,6 @@ export class CodeSystemConceptEditComponent implements OnInit {
   @ViewChild("associationEdit") public associationEdit?: CodeSystemAssociationEditComponent;
 
   public constructor(
-    public codeSystemConceptLibService: CodeSystemConceptLibService,
     public codeSystemService: CodeSystemService,
     private route: ActivatedRoute,
     private location: Location
@@ -42,11 +41,11 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    this.conceptId = this.route.snapshot.paramMap.get('conceptId') ? Number(this.route.snapshot.paramMap.get('conceptId')) : undefined;
-    this.mode = this.codeSystemId && this.conceptId ? 'edit' : 'add';
+    this.conceptCode = this.route.snapshot.paramMap.get('conceptCode') ? this.route.snapshot.paramMap.get('conceptCode') : undefined;
+    this.mode = this.codeSystemId && this.conceptCode ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadConcept(this.conceptId!);
+      this.loadConcept(this.conceptCode!);
     } else {
       this.concept = new CodeSystemConcept();
       this.addVersion();
@@ -77,9 +76,9 @@ export class CodeSystemConceptEditComponent implements OnInit {
     return [codeSystemVersion.preferredLanguage!];
   }
 
-  private loadConcept(conceptId: number): void {
+  private loadConcept(conceptCode: string): void {
     this.loading['init'] = true;
-    this.codeSystemConceptLibService.load(conceptId).subscribe(c => this.concept = c).add(() => {
+    this.codeSystemService.loadConcept(this.codeSystemId!, conceptCode).subscribe(c => this.concept = c).add(() => {
       this.loading['init'] = false;
       this.selectVersion(this.concept?.versions?.[this.concept?.versions?.length - 1]);
       this.conceptEdit = !this.concept?.versions?.find(v => v.status === 'active');
@@ -114,8 +113,8 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   public duplicateVersion(version: CodeSystemEntityVersion): void {
     this.loading['duplicate'] = true;
-    this.codeSystemService.duplicateEntityVersion(this.codeSystemId!, this.conceptId!, version.id!).subscribe(() => {
-      this.loadConcept(this.conceptId!);
+    this.codeSystemService.duplicateEntityVersion(this.codeSystemId!, this.concept!.id!, version.id!).subscribe(() => {
+      this.loadConcept(this.conceptCode!);
     }).add(() => this.loading['duplicate'] = false);
   }
 

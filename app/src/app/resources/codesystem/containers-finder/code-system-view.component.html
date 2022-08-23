@@ -63,7 +63,7 @@
 
   <!-- Concepts -->
   <twa-finder-menu title="entities.code-system.concepts" [loading]="loading['concepts']" [length]="conceptResult.data.length">
-    <twa-finder-menu-item *ngFor="let c of conceptResult.data" [navigate]="['concepts', c.id]">
+    <twa-finder-menu-item *ngFor="let c of conceptResult.data" [navigate]="['concepts', c.code]">
       {{c.code}}
     </twa-finder-menu-item>
 

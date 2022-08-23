@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemConcept, CodeSystemConceptLibService} from 'terminology-lib/resources';
+import {CodeSystemConcept, CodeSystemLibService} from 'terminology-lib/resources';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
 import {DestroyService, isNil} from '@kodality-web/core-util';
@@ -31,21 +31,22 @@ export class FinderCodeSystemConceptViewComponent implements OnInit {
   public loading = false;
 
   public constructor(
-    private codeSystemConceptService: CodeSystemConceptLibService,
+    private codeSystemService: CodeSystemLibService,
     private route: ActivatedRoute,
     private destroy$: DestroyService
   ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
-      const codeSystemConceptId = params.get('conceptId');
-      if (isNil(codeSystemConceptId)) {
+      const codeSystemConceptCode = params.get('conceptCode');
+      const codeSystemId = this.route.parent!.snapshot.paramMap.get('id');
+      if (isNil(codeSystemConceptCode) || isNil(codeSystemId)) {
         this.concept = undefined;
         return;
       }
 
       this.loading = true;
-      this.codeSystemConceptService.load(Number(codeSystemConceptId)).subscribe(version => {
+      this.codeSystemService.loadConcept(codeSystemId, codeSystemConceptCode).subscribe(version => {
         this.concept = version;
       }).add(() => this.loading = false);
     });

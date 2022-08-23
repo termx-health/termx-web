@@ -33,7 +33,7 @@
 
   <div nz-col [nzLg]="12" [nzMd]="18" [nzXs]="24">
     <m-spinner [mLoading]="isLoading">
-      <m-card [mShowSkeleton]="loading['init']" [mTitle]="mode === 'edit' ? concept.code : 'web.code-system-concept.form.add-header'">
+      <m-card [mShowSkeleton]="loading['init']" [mTitle]="mode === 'edit' ? concept?.code : 'web.code-system-concept.form.add-header'">
         <form #form="ngForm" *ngIf="concept && conceptVersion">
 
           <div *ngIf="conceptEdit">
@@ -80,24 +80,24 @@
           [codeSystemId]="codeSystemId"
           [designations]="conceptVersion?.designations"
           [requiredLanguages]="['en']"
-          [viewMode]="conceptVersion.status !== 'draft'"></twa-code-system-designation-edit>
+          [viewMode]="conceptVersion?.status !== 'draft'"></twa-code-system-designation-edit>
     </m-card>
 
     <m-card style="margin-top: 1rem">
       <twa-code-system-property-value-edit #propertyValueEdit
           [codeSystemId]="codeSystemId"
           [propertyValues]="conceptVersion?.propertyValues"
-          [viewMode]="conceptVersion.status !== 'draft'"></twa-code-system-property-value-edit>
+          [viewMode]="conceptVersion?.status !== 'draft'"></twa-code-system-property-value-edit>
     </m-card>
 
     <m-card style="margin-top: 1rem">
       <twa-code-system-association-edit #associationEdit
           [codeSystemId]="codeSystemId"
           [associations]="conceptVersion?.associations"
-          [viewMode]="conceptVersion.status !== 'draft'"></twa-code-system-association-edit>
+          [viewMode]="conceptVersion?.status !== 'draft'"></twa-code-system-association-edit>
     </m-card>
 
-    <m-button *ngIf="conceptVersion.status === 'draft'"
+    <m-button *ngIf="conceptVersion?.status === 'draft'"
         style="width: 100%; margin-top: 1rem"
         mDisplay="primary"
         [mLoading]="loading['save']"

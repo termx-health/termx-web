@@ -195,6 +195,7 @@
         "property-name-filter": "Property name filter"
       },
       "list": {
+        "external": "External",
         "concept-version-id": "Concept version ID: {{versionId}}"
       }
     },
@@ -456,6 +457,7 @@
         "valid-from": "Valid from",
         "valid-to": "Valid to",
         "code-system": "CodeSystem",
+        "base-code-system": "Base CodeSystem",
         "code-system-name": "CodeSystem name",
         "code-system-description": "CodeSystem description",
         "code-system-version-description": "CodeSystem version description"
@@ -637,7 +639,8 @@
       "contacts": "Contacts",
       "concepts": "Concepts",
       "properties": "Properties",
-      "versions": "Versions"
+      "versions": "Versions",
+      "base-code-system": "Base code system"
     },
     "code-system-version": {
       "id": "Identifier",

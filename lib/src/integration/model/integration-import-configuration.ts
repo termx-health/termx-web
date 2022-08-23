@@ -8,6 +8,7 @@ export class IntegrationImportConfiguration {
   public validFrom?: Date;
   public validTo?: Date;
   public codeSystem?: string;
+  public baseCodeSystem?: string;
   public codeSystemName?: LocalizedName;
   public codeSystemDescription?: string;
   public codeSystemVersionDescription?: string;

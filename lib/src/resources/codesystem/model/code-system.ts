@@ -12,6 +12,7 @@ export class CodeSystem {
   public caseSensitive?: string;
   public narrative?: string;
   public description?: string;
+  public baseCodeSystem?: string;
   public contacts?: ContactDetail[];
 
   public concepts?: CodeSystemConcept[];

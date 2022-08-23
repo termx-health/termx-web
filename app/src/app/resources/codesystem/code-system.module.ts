@@ -38,8 +38,8 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/view', component: CodeSystemViewComponent},
 
   {path: ':id/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/concepts/:conceptId/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/concepts/:conceptId/view', component: CodeSystemConceptViewComponent},
+  {path: ':id/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent},
 
   {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
@@ -57,7 +57,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     path: ':id', component: FinderCodeSystemViewComponent, children: [{
       path: 'versions/:versionCode', component: FinderCodeSystemVersionViewComponent
     }, {
-      path: 'concepts/:conceptId', component: FinderCodeSystemConceptViewComponent, children: [{
+      path: 'concepts/:conceptCode', component: FinderCodeSystemConceptViewComponent, children: [{
         path: 'versions/:versionId', component: FinderCodeSystemConceptVersionViewComponent
       }]
     }]

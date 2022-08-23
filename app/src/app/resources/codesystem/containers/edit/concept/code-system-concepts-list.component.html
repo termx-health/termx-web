@@ -69,10 +69,11 @@
       <th>{{'entities.code-system-concept.code' | translate}}</th>
       <th>{{'entities.designation.name' | translate}}</th>
       <th>{{'entities.code-system-concept.description' | translate}}</th>
+      <th>{{'web.code-system-concept.list.external' | translate}}</th>
     </tr>
     <tr *mTableRow="let concept">
       <td m-table-expand [mItem]="concept"></td>
-      <td><a [routerLink]="['../concepts/', concept.id, !viewMode? 'edit' : 'view']">{{concept.code}}</a></td>
+      <td><a [routerLink]="['../concepts/', concept.code, !viewMode? 'edit' : 'view']">{{concept.code}}</a></td>
       <td>
         <ng-container *ngFor="let language of filter.languages">
           <div *ngIf="getConceptName(concept, language)">
@@ -83,6 +84,7 @@
         {{(!filter.languages || filter.languages?.length === 0) ? (concept.code | localizedConceptName: {codeSystem: codeSystemId} | async) : undefined}}
       </td>
       <td>{{concept.description}}</td>
+      <td><m-icon mCode="check" *ngIf="concept.codeSystem !== codeSystemId"></m-icon></td>
     </tr>
 
     <ng-container *mTableRowExpand="let concept">

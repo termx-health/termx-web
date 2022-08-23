@@ -25,7 +25,9 @@ export class CodeSystemConceptsListComponent implements OnInit {
 
   public constructor(
     private codeSystemService: CodeSystemService
-  ) {}
+  ) {
+    this.query.sort = 'code';
+  }
 
   public ngOnInit(): void {
     this.loadData();

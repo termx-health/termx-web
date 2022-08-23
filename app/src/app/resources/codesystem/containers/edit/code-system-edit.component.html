@@ -12,6 +12,10 @@
                 <m-input name="id" [(ngModel)]="codeSystem.id" [disabled]="mode === 'edit'" required></m-input>
               </m-form-item>
 
+              <m-form-item mName="baseCodeSystem" mLabel="entities.code-system.base-code-system">
+                <twl-code-system-search name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive></twl-code-system-search>
+              </m-form-item>
+
               <m-form-item mLabel="entities.code-system.name">
                 <m-multi-language-input name="name" [(ngModel)]="codeSystem.names"></m-multi-language-input>
               </m-form-item>
