@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BooleanInput, copyDeep, isDefined} from '@kodality-web/core-util';
 import {ValueSetVersionConcept} from 'lib/src/resources';
+import {SnomedLibService} from 'terminology-lib/integration';
 
 @Component({
   selector: 'twa-value-set-rule-concept-list',
@@ -22,7 +23,9 @@ export class ValueSetRuleConceptListComponent {
     concept?: ValueSetVersionConcept
   } = {};
 
-  public constructor() { }
+  public constructor(
+    private snomedService: SnomedLibService
+  ) {}
 
   public addRow(): void {
     this.concepts = [...this.concepts || []];
@@ -53,5 +56,18 @@ export class ValueSetRuleConceptListComponent {
 
     this.conceptsChange.emit(this.concepts);
     this.modalData.visible = false;
+  }
+
+  public conceptSelected(conceptId: string): void {
+    if (!conceptId) {
+      return;
+    }
+    this.snomedService.loadConcept(conceptId).subscribe(concept => {
+      this.modalData.concept = {
+        concept: {code: concept.conceptId, codeSystem: this.codeSystem},
+        display: {name: concept.pt?.term, language: concept.pt?.lang}
+      };
+      this.confirmModalConcept();
+    });
   }
 }

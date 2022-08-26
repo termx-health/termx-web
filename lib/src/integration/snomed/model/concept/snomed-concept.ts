@@ -9,8 +9,8 @@ export class SnomedConcept {
 
   public definitionStatus?: string;
   public conceptId?: string;
-  public pt?: any;
-  public fsn?: any;
+  public pt?: {term?: string, lang?: string};
+  public fsn?: {term?: string, lang?: string};
   public descriptions?: SnomedDescription[] = [];
   public relationships?: SnomedRelationship[] = [];
 

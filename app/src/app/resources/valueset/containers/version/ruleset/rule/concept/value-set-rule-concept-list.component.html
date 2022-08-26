@@ -61,31 +61,41 @@
 
   <ng-container *m-modal-content>
     <form #form="ngForm" *ngIf="modalData.concept">
-      <m-form-item mName="concept" mLabel="entities.value-set-version-concept.concept" required>
-        <twl-concept-search name="concept"
-            [(ngModel)]="modalData.concept.concept"
-            [codeSystem]="codeSystem"
-            [codeSystemVersionId]="codeSystemVersionId"
-            [codeSystemVersionReleaseDateLe]="lockedDate"
-            [codeSystemVersionExpirationDateGe]="lockedDate"
-            [entityVersionStatus]="inactiveConcepts ? 'active' : inactiveConcepts === false ? 'rtired': null "
-            autofocus
-            required
-        ></twl-concept-search>
-      </m-form-item>
+      <ng-container *ngIf="codeSystem !== 'snomed-ct'">
+        <m-form-item mName="concept" mLabel="entities.value-set-version-concept.concept" required>
+          <twl-concept-search name="concept"
+              [(ngModel)]="modalData.concept.concept"
+              [codeSystem]="codeSystem"
+              [codeSystemVersionId]="codeSystemVersionId"
+              [codeSystemVersionReleaseDateLe]="lockedDate"
+              [codeSystemVersionExpirationDateGe]="lockedDate"
+              [entityVersionStatus]="inactiveConcepts ? 'active' : inactiveConcepts === false ? 'retired': null "
+              autofocus
+              required
+          ></twl-concept-search>
+        </m-form-item>
 
-      <m-form-item mName="display" mLabel="entities.value-set-version-concept.display" *ngIf="modalData.concept?.concept?.id">
-        <twl-designation-select name="display" [(ngModel)]="modalData.concept.display" [conceptId]="modalData.concept.concept.id"></twl-designation-select>
-      </m-form-item>
+        <m-form-item mName="display" mLabel="entities.value-set-version-concept.display" *ngIf="modalData.concept?.concept?.id">
+          <twl-designation-select name="display" [(ngModel)]="modalData.concept.display" [conceptId]="modalData.concept.concept.id"></twl-designation-select>
+        </m-form-item>
 
-      <m-form-item mName="additionalDesignations" mLabel="entities.value-set-version-concept.additional-designations" *ngIf="modalData.concept?.concept?.id">
-        <twl-designation-select name="additionalDesignations" [(ngModel)]="modalData.concept.additionalDesignations" [conceptId]="modalData.concept.concept.id" multiple></twl-designation-select>
-      </m-form-item>
+        <m-form-item mName="additionalDesignations" mLabel="entities.value-set-version-concept.additional-designations" *ngIf="modalData.concept?.concept?.id">
+          <twl-designation-select name="additionalDesignations" [(ngModel)]="modalData.concept.additionalDesignations" [conceptId]="modalData.concept.concept.id" multiple></twl-designation-select>
+        </m-form-item>
+      </ng-container>
+
+      <ng-container *ngIf="codeSystem === 'snomed-ct'">
+        <m-form-item mName="concept" mLabel="entities.value-set-version-concept.concept" required>
+          <twl-snomed-search (conceptSelected)="conceptSelected($event)"></twl-snomed-search>
+        </m-form-item>
+      </ng-container>
     </form>
   </ng-container>
 
-  <div *m-modal-footer class="tw-button-group">
-    <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
-    <m-button mDisplay="primary" (click)="confirmModalConcept()">{{'core.btn.confirm' | translate}}</m-button>
-  </div>
+  <ng-container *ngIf="codeSystem !== 'snomed-ct'">
+    <div *m-modal-footer class="tw-button-group">
+      <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
+      <m-button mDisplay="primary" (click)="confirmModalConcept()">{{'core.btn.confirm' | translate}}</m-button>
+    </div>
+  </ng-container>
 </m-modal>

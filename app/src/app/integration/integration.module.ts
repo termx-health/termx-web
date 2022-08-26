@@ -20,7 +20,6 @@ import {FhirCodeSystemFindMatchesComponent} from './fhir/code-system/fhir-code-s
 import {CodeSystemFileImportComponent} from './file-import/code-system/code-system-file-import.component';
 import {ConceptMapFileImportComponent} from './file-import/concept-map/concept-map-file-import.component';
 import {SnomedDashboardComponent} from './snomed/snomed-dashboard.component';
-import {SnomedSearchComponent} from './snomed/snomed-search.component';
 import {SnomedConceptInfoComponent} from './snomed/snomed-concept-info.component';
 import {OrphanetImportComponent} from './import/orphanet/orphanet-import-component';
 
@@ -73,9 +72,8 @@ export const INTEGRATION_ROUTES: Routes = [
     ConceptMapFileImportComponent,
     OrphanetImportComponent,
     SnomedDashboardComponent,
-    SnomedSearchComponent,
     SnomedConceptInfoComponent
-  ],
+  ]
 })
 export class IntegrationModule {
 }

@@ -4,7 +4,8 @@
     [(ngModel)]="value"
     (mChange)="fireOnChange()"
     [loading]="isLoading"
-    [autoUnselect]="false"
+    [autoSelect]="true"
+    [autoUnselect]="true"
 >
   <m-option *ngFor="let key of data | keys" [value]="data[key]?.id" [label]="data[key]?.version"></m-option>
 </m-select>

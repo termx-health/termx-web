@@ -1,11 +1,13 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService, SnomedRefsetSearchParams} from 'terminology-lib/integration';
 import {debounceTime, distinctUntilChanged, EMPTY, finalize, forkJoin, Observable, Subject, switchMap, tap} from 'rxjs';
 import {isDefined, SearchResult} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-health/marina-ui';
+import {SnomedConcept} from '../model/concept/snomed-concept';
+import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-params';
+import {SnomedConceptSearchParams} from '../model/concept/snomed-concept-search-params';
+import {SnomedLibService} from '../services/snomed-lib.service';
 
 @Component({
-  selector: 'twa-snomed-search',
+  selector: 'twl-snomed-search',
   templateUrl: './snomed-search.component.html',
 })
 export class SnomedSearchComponent implements OnInit {
@@ -30,8 +32,7 @@ export class SnomedSearchComponent implements OnInit {
   @Output() public conceptSelected: EventEmitter<string> = new EventEmitter<string>();
 
   public constructor(
-    private snomedService: SnomedLibService,
-    private notificationService: MuiNotificationService
+    private snomedService: SnomedLibService
   ) {}
 
   public ngOnInit(): void {
@@ -57,7 +58,7 @@ export class SnomedSearchComponent implements OnInit {
       this.snomedService.findConceptChildren(conceptId),
     ]).subscribe(([concept, children]) => {
       this.parents.push(concept);
-      this.children = children.sort((a, b) => a.fsn.term.localeCompare(b.fsn.term));
+      this.children = children.sort((a, b) => a.fsn!.term!.localeCompare(b.fsn!.term!));
     }).add(() => this.loading['taxonomy'] = false);
   }
 
@@ -65,7 +66,7 @@ export class SnomedSearchComponent implements OnInit {
     this.loading['refsets'] = true;
     this.snomedService.findRefsets({}).subscribe(refsets => {
       this.refsets = Object.values(refsets.referenceSets!).sort(function (a, b) {
-        return a.fsn.term.localeCompare(b.fsn.term);
+        return a.fsn!.term!.localeCompare(b.fsn!.term!);
       });
     }).add(() => this.loading['refsets'] = false);
   }
@@ -106,12 +107,5 @@ export class SnomedSearchComponent implements OnInit {
     this.snomedService.findConcepts(this.eclParams).subscribe(concepts => {
       this.eclConcepts = {data: concepts.items || [], meta: {total: concepts.total, offset: concepts.offset}};
     }).add(() => this.loading['ecl-concepts'] = false);
-  }
-
-  public importRefsetConcepts(referenceSet: string): void {
-    this.loading['concept-import'] = true;
-    this.snomedService.importConcepts({refsetId: referenceSet})
-      .subscribe(() => this.notificationService.success("Refset concepts import started."))
-      .add(() => this.loading['concept-import'] = false);
   }
 }

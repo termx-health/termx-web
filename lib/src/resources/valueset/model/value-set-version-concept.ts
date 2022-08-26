@@ -6,4 +6,5 @@ export class ValueSetVersionConcept {
   public concept?: CodeSystemConcept;
   public display?: Designation;
   public additionalDesignations?: Designation[];
+  public active?: boolean;
 }

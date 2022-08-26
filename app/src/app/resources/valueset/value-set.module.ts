@@ -22,6 +22,7 @@ import {ValueSetViewComponent} from './containers/edit/value-set-view.component'
 import {ValueSetRuleConceptListComponent} from './containers/version/ruleset/rule/concept/value-set-rule-concept-list.component';
 import {ValueSetVersionConceptEditComponent} from './containers/version/concepts/value-set-version-concept-edit.component';
 import {ValueSetRuleEditComponent} from './containers/version/ruleset/rule/value-set-rule-edit.component';
+import {IntegrationLibModule} from 'terminology-lib/integration';
 
 
 export const VALUE_SET_ROUTES: Routes = [
@@ -50,6 +51,7 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
     SharedModule,
     FinderModule,
     ResourcesLibModule,
+    IntegrationLibModule,
     ContactModule
   ],
   declarations: [

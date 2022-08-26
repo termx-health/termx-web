@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {CodeSystemConcept, ValueSetVersionConcept} from 'terminology-lib/resources';
+import {ValueSetVersionConcept} from 'terminology-lib/resources';
 
 
 @Component({
@@ -16,8 +16,4 @@ export class ValueSetVersionConceptModalComponent {
     this.modalVisible = !!concepts;
     this.concepts = concepts;
   }
-
-  public hasActiveVersion = (concept: CodeSystemConcept): boolean => {
-    return !concept || !!concept.versions && !!concept.versions.find(v => v.status === 'active');
-  };
 }

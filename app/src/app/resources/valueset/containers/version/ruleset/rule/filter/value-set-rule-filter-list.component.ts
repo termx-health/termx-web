@@ -26,11 +26,8 @@ export class ValueSetRuleFilterListComponent implements OnChanges {
   public constructor(private codeSystemService: CodeSystemLibService) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes["codeSystem"]) {
-      this.properties = [];
-      if (this.codeSystem) {
-        this.loadEntityProperties(this.codeSystem);
-      }
+    if (changes["codeSystem"] && this.codeSystem) {
+      this.loadEntityProperties(this.codeSystem);
     }
   }
 
@@ -66,6 +63,8 @@ export class ValueSetRuleFilterListComponent implements OnChanges {
   }
 
   private loadEntityProperties(codeSystem: string): void {
+    this.properties = [];
+
     const q = new EntityPropertySearchParams();
     q.codeSystem = codeSystem;
     q.limit = 10_000;

@@ -8,7 +8,6 @@ import {MAP_SET_ROUTES, MapSetModule} from './mapset/map-set.module';
 import {NAMING_SYSTEM_ROUTES, NamingSystemModule} from './namingsystem/naming-system.module';
 import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './associationtype/association-type.module';
 
-
 export const RESOURCES_ROUTES: Routes = [
   {path: '', component: ResourcesTabsetComponent, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view', '*.NamingSystem.view', '*.AssociationType.view']}},
   {path: 'code-systems', children: CODE_SYSTEM_ROUTES, data: {privilege: ['*.CodeSystem.view']}},

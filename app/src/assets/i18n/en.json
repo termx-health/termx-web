@@ -765,8 +765,17 @@
       }
     },
     "value-set-rule-filter": {
-      "property": "Property",
-      "operator": "Operator",
+      "property": {
+        "label": "Property",
+        "concept": "Concept",
+        "constraint": "Constraint"
+      },
+      "operator": {
+        "label": "Operator",
+        "is-a": "Is a",
+        "in": "In",
+        "equal": "="
+      },
       "value": "Value"
     },
     "value-set-version-concept": {

@@ -36,10 +36,6 @@
             <m-option *ngFor="let refSet of refsets" [label]="refSet | snomedConceptName | async" [value]="refSet.id"></m-option>
           </m-select>
 
-          <m-button (click)="importRefsetConcepts(refsetParams.referenceSet)" style="margin-bottom: 1em" *twaPrivileged="'*.CodeSystem.edit'">
-            {{'web.snomed.search.import-refset-concepts' | translate}}
-          </m-button>
-
           <m-backend-table [mResult]="refsetConcepts" [(mQuery)]="refsetParams" (mQueryChange)="loadRefsetConcepts()" [mLoading]="loading['refset-concepts']">
             <tr *mTableHead>
               <th>{{'entities.snomed-concept.term' | translate}}</th>

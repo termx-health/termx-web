@@ -12,8 +12,6 @@ import {SnomedDescriptionSearchResult} from '../model/description/snomed-descrip
 import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-member-search-result';
 import {SnomedConceptSearchParams} from '../model/concept/snomed-concept-search-params';
 import {SnomedSearchResult} from '../model/snomed-search-result';
-import {SnomedImportRequest} from '../model/snomed-import-request';
-import {JobLogResponse} from '../../../job';
 
 @Injectable()
 export class SnomedLibService {
@@ -58,10 +56,6 @@ export class SnomedLibService {
       });
       return refsets;
     }));
-  }
-
-  public importConcepts(request: SnomedImportRequest): Observable<JobLogResponse> {
-    return this.http.post<JobLogResponse>(`${this.baseUrl}/import`, request);
   }
 
 }
