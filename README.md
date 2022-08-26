@@ -17,3 +17,15 @@ npm install
 ```shell
 rm -rf node_modules/@kodality-* package-lock.json && npm i
 ```
+
+## Run
+```shell
+ng serve
+```
+Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+
+## Authentication
+
+### Yupi authentication
+
+Change **yupiEnabled** property to **true** in `enviroment.ts` file. It enables admin mode. 

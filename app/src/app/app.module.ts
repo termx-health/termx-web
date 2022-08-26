@@ -31,6 +31,7 @@ import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {OauthHttpInterceptor} from './auth/oauth-http-interceptor.service';
 import {AuthService} from './auth/auth.service';
 import {Observable} from 'rxjs';
+import {YupiHttpInterceptor} from './auth/yupi-http-interceptor.service';
 
 registerLocaleData(et);
 
@@ -106,6 +107,7 @@ export function MarinaUiConfigFactory(): MuiConfig {
     {provide: LOCALE_ID, useValue: 'en'},
     {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
     {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},
+    {provide: HTTP_INTERCEPTORS, useClass: YupiHttpInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: OauthHttpInterceptor, multi: true, deps: [OidcSecurityService]},
     {provide: HTTP_INTERCEPTORS, useClass: MuiHttpErrorHandler, multi: true},
     {provide: MUI_CONFIG, useFactory: MarinaUiConfigFactory},

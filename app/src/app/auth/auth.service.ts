@@ -3,6 +3,7 @@ import {mergeMap, Observable, of, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
+import {environment} from '../../environments/environment';
 
 interface UserInfo {
   username: string;
@@ -27,6 +28,9 @@ export class AuthService {
 
 
   public refresh(): Observable<UserInfo> {
+    if (environment.yupiEnabled) {
+      return of({username: 'yupi', privileges: [this.ADMIN]}).pipe(tap(u => this.user = u));
+    }
     return this.refreshUserInfo().pipe(tap(u => this.user = u));
   }
 
