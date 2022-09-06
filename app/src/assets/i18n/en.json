@@ -552,7 +552,9 @@
         "concepts": "Concepts",
         "code-systems": "CodeSystems",
         "value-sets": "ValueSets",
-        "map-sets": "MapSets"
+        "map-sets": "MapSets",
+        "snomed": "SNOMED",
+        "measurement-unit": "Measurement unit"
       }
     },
     "snomed": {
@@ -802,7 +804,9 @@
       "concept-id": "Concept ID",
       "descriptions": "Descriptions",
       "relationships": "Relationships",
-      "refsets": "Refsets"
+      "refsets": "Refsets",
+      "fsn": "Fully Specified Name (FSN)",
+      "pt": "Preferred term (PT)"
     },
     "snomed-description": {
       "refset": "Refset",

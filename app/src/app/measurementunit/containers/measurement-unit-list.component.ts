@@ -30,7 +30,7 @@ export class MeasurementUnitListComponent implements OnInit {
 
   private search(): Observable<SearchResult<MeasurementUnit>> {
     const q = copyDeep(this.query);
-    q.searchText = this.searchInput;
+    q.textContains = this.searchInput;
     this.loading = true;
     return this.measurementUnitService.search(q).pipe(finalize(() => this.loading = false));
   }

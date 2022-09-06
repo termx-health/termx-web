@@ -85,3 +85,40 @@
   </m-table>
 </m-card>
 
+<m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.measurement-unit'" *ngIf="measurementUnits?.length > 0">
+  <m-table [mData]="measurementUnits" [mLoading]="loading['measurement-unit']" mHideOnSinglePage>
+    <tr *mTableHead>
+      <th>{{'entities.measurement-unit.code' | translate}}</th>
+      <th>{{'entities.measurement-unit.name' | translate}}</th>
+    </tr>
+    <tr *mTableRow="let unit">
+      <td><a (click)="openMeasurementUnit(unit.id)">{{unit.code}}</a></td>
+      <td>{{unit.names | localName}}</td>
+    </tr>
+    <tr *mTableNoData>
+      <td colspan="6">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-table>
+</m-card>
+
+<m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.snomed'" *ngIf="snomedConcepts?.length > 0">
+  <m-table [mData]="snomedConcepts" [mLoading]="loading['snomed']" mHideOnSinglePage>
+    <tr *mTableHead>
+      <th>{{'entities.snomed-concept.concept-id' | translate}}</th>
+      <th>{{'entities.snomed-concept.pt' | translate}}</th>
+      <th>{{'entities.snomed-concept.fsn' | translate}}</th>
+    </tr>
+    <tr *mTableRow="let concept">
+      <td>{{concept.conceptId}}</td>
+      <td>{{concept.pt?.term}}</td>
+      <td>{{concept.fsn?.term}}</td>
+    </tr>
+    <tr *mTableNoData>
+      <td colspan="6">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-table>
+</m-card>
