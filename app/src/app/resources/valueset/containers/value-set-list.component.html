@@ -32,7 +32,9 @@
       <td>{{vs.uri | apply: parseDomain}}</td>
       <td *twaPrivileged="'*.ValueSet.edit'" class="tw-table-actions">
         <m-dropdown>
-          <a *m-dropdown-item>{{'core.btn.delete' | translate}}</a>
+          <ng-container *twaPrivileged="'*.ValueSet.publish'">
+            <a *m-dropdown-item (click)="deleteValueSet(vs.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
+          </ng-container>
         </m-dropdown>
       </td>
     </tr>

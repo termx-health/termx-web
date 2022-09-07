@@ -56,4 +56,8 @@ export class ValueSetListComponent implements OnInit {
   public parseDomain(uri: string): string {
     return uri?.split('//')[1]?.split('/')[0];
   }
+
+  public deleteValueSet(valueSetId: string): void {
+    this.valueSetService.delete(valueSetId).subscribe(() => this.loadData());
+  }
 }

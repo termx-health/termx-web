@@ -4,8 +4,13 @@ import {Observable} from 'rxjs';
 
 @Injectable()
 export class ValueSetService extends ValueSetLibService {
+
   public save(valueSet: ValueSet): Observable<ValueSet> {
     return this.http.post(this.baseUrl, valueSet);
+  }
+
+  public delete(valueSetId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${valueSetId}`);
   }
 
   public saveVersion(valueSetId: string, version: ValueSetVersion): Observable<ValueSetVersion> {
