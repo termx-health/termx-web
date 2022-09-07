@@ -15,8 +15,13 @@ import {
 
 @Injectable()
 export class CodeSystemService extends CodeSystemLibService {
+
   public save(cs: CodeSystem): Observable<CodeSystem> {
     return this.http.post(this.baseUrl, cs);
+  }
+
+  public delete(codeSystemId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}`);
   }
 
   public saveVersion(codeSystemId: string, version: CodeSystemVersion): Observable<CodeSystemVersion> {

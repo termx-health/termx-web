@@ -57,4 +57,8 @@ export class CodeSystemListComponent implements OnInit {
   public parseDomain(uri: string): string {
     return uri?.split('//')[1]?.split('/')[0];
   }
+
+  public deleteCodeSystem(codeSystemId: string): void {
+    this.codeSystemService.delete(codeSystemId).subscribe(() => this.loadData());
+  }
 }

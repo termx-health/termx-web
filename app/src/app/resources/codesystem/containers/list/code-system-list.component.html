@@ -35,6 +35,9 @@
           <a *m-dropdown-item (click)="duplicateModal.toggleModal({sourceCodeSystem: cs.id})">
             <m-icon [mCode]="'copy'"></m-icon>&nbsp; {{'core.btn.duplicate' | translate}}
           </a>
+          <ng-container *twaPrivileged="'*.CodeSystem.publish'">
+            <a *m-dropdown-item (click)="deleteCodeSystem(cs.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
+          </ng-container>
         </m-dropdown>
       </td>
     </tr>
