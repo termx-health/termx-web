@@ -16,4 +16,8 @@ export class NamingSystemService extends NamingSystemLibService {
   public retire(id: string): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/${id}/retire`, {});
   }
+
+  public delete(id: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${id}`);
+  }
 }

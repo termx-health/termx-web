@@ -54,4 +54,8 @@ export class NamingSystemListComponent implements OnInit {
     this.loading = true;
     this.namingSystemService.activate(ns.id!).subscribe(() => ns.status = 'active').add(() => this.loading = false);
   }
+
+  public deleteNamingSystem(namingSystemId: string): void {
+    this.namingSystemService.delete(namingSystemId).subscribe(() => this.loadData());
+  }
 }

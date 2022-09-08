@@ -41,6 +41,9 @@
           <a *mDropdownItemIf="ns.status === 'draft'" (click)="activate(ns)">
             {{'web.publication-status.operations.activate' | translate}}
           </a>
+          <ng-container *twaPrivileged="'*.NamingSystem.publish'">
+            <a *m-dropdown-item (click)="deleteNamingSystem(ns.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
+          </ng-container>
         </m-dropdown>
       </td>
     </tr>
