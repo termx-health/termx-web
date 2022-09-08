@@ -46,4 +46,7 @@ export class AssociationTypeListComponent implements OnInit {
     return searchResult.data.filter(at => at.description).length > 0;
   }
 
+  public deleteAssociationType(code: string): void {
+    this.associationTypeService.delete(code).subscribe(() => this.loadData());
+  }
 }

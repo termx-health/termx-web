@@ -16,6 +16,7 @@
       <th mColumnKey="forwardName">{{'entities.association-type.forward-name' | translate}}</th>
       <th mColumnKey="reverseName">{{'entities.association-type.reverse-name' | translate}}</th>
       <th mColumnKey="directed">{{'entities.association-type.directed' | translate}}</th>
+      <th class="tw-table-actions" *twaPrivileged="'*.AssociationType.edit'"></th>
     </tr>
 
     <tr *mTableRow="let at">
@@ -32,6 +33,13 @@
       <td>{{at.reverseName}}</td>
       <td>
         <m-icon *ngIf="at.directed" mCode="check"></m-icon>
+      </td>
+      <td class="tw-table-actions" *twaPrivileged="'*.AssociationType.edit'">
+        <m-dropdown>
+          <ng-container *twaPrivileged="'*.AssociationType.publish'">
+            <a *m-dropdown-item (click)="deleteAssociationType(at.code)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
+          </ng-container>
+        </m-dropdown>
       </td>
     </tr>
 
