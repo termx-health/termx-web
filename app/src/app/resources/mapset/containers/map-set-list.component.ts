@@ -58,4 +58,7 @@ export class MapSetListComponent implements OnInit {
     return uri?.split('//')[1]?.split('/')[0];
   }
 
+  public deleteMapSet(mapSetId: string): void {
+    this.mapSetService.delete(mapSetId).subscribe(() => this.loadData());
+  }
 }

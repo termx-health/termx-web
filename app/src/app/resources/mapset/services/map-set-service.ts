@@ -10,6 +10,10 @@ export class MapSetService extends MapSetLibService {
     return this.http.post(this.baseUrl, ms);
   }
 
+  public delete(mapSetId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${mapSetId}`);
+  }
+
   public saveVersion(mapSetId: string, version: MapSetVersion): Observable<MapSetVersion> {
     if (version.id && version.version) {
       return this.http.put(`${this.baseUrl}/${mapSetId}/versions/${version.id}`, version);
