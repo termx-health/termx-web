@@ -32,7 +32,7 @@ export class ValueSetVersionConceptEditComponent implements OnInit {
     this.mode = this.valueSetId && conceptId ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadConcept(this.valueSetId!, Number(conceptId));
+      this.loadConcept(this.valueSetId!, this.valueSetVersion!, Number(conceptId));
     } else {
       this.concept = new ValueSetVersionConcept();
       this.concept.concept = new CodeSystemConcept();
@@ -41,9 +41,9 @@ export class ValueSetVersionConceptEditComponent implements OnInit {
     }
   }
 
-  private loadConcept(valueSetId: string, conceptId: number): void {
+  private loadConcept(valueSetId: string, valueSetVersion: string, conceptId: number): void {
     this.loading['init'] = true;
-    this.valueSetService.loadConcept(valueSetId, conceptId).subscribe(concept => this.concept = concept).add(() => this.loading['init'] = false);
+    this.valueSetService.loadConcept(valueSetId, valueSetVersion, conceptId).subscribe(concept => this.concept = concept).add(() => this.loading['init'] = false);
   }
 
   public save(): void {
