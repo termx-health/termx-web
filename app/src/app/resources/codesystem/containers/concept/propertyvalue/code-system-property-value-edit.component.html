@@ -26,11 +26,11 @@
                 <twl-code-system-search name="propertyValueCodeSystem-{{index}}" [(ngModel)]="codingSystemId" placeholder="web.code-system-concept-version.property-value.coding-value-system" valuePrimitive required></twl-code-system-search>
               </m-form-item>
               <m-form-item style="width: 100%" *ngIf="propertyValue.entityPropertyId" mName="propertyValue-{{index}}" required>
-                <m-input *ngIf="checkPropertyType('string', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" required></m-input>
+                <m-input *ngIf="checkPropertyType('string,code,Coding', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" required></m-input>
                 <m-checkbox *ngIf="checkPropertyType('boolean', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" required></m-checkbox>
                 <m-date-picker *ngIf="checkPropertyType('dateTime', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" required></m-date-picker>
                 <m-number-input *ngIf="checkPropertyType('decimal,integer', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" required></m-number-input>
-                <twl-concept-search *ngIf="checkPropertyType('code,Coding', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" [codeSystem]="codingSystemId || codeSystemId" required></twl-concept-search>
+<!--                <twl-concept-search *ngIf="checkPropertyType('code,Coding', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" [codeSystem]="codingSystemId || codeSystemId" required></twl-concept-search>-->
               </m-form-item>
               <m-button *ngIf="!viewMode" mDisplay="text" (click)="removePropertyValue(index)">
                 <m-icon [mCode]="'delete'"></m-icon>
