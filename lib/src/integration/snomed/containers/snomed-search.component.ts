@@ -83,6 +83,9 @@ export class SnomedSearchComponent implements OnInit {
       this.loadTaxonomyRootTree();
       return EMPTY;
     }
+    if (searchText.length < 3) {
+      return EMPTY;
+    }
     this.parents = [];
     this.loading['taxonomy'] = true;
     return this.snomedService.findDescriptions({term: searchText}).pipe(
