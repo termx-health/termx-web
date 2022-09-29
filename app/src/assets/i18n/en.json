@@ -565,6 +565,13 @@
         "ecl-placeholder": "ECL expression",
         "import-refset-concepts": "Import refset concepts"
       }
+    },
+    "thesaurus-page": {
+      "form": {
+        "add-header": "Add page",
+        "edit-header": "Edit page",
+        "content-header": "Add content"
+      }
     }
   },
   "entities": {
@@ -823,6 +830,21 @@
     "snomed-refset": {
       "target": "Target",
       "type": "Type"
+    },
+    "page": {
+      "status": "Status",
+      "contents": "Contents",
+      "relations": "Relations"
+    },
+    "page-content": {
+      "name": "Name",
+      "lang": "Language",
+      "content": "Content"
+    },
+    "page-relation": {
+      "target": "Target",
+      "source": "Source",
+      "order-number": "Order number"
     }
   }
 }

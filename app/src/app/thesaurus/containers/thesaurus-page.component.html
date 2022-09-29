@@ -1,0 +1,57 @@
+<div nz-row nzGutter="12" class="m-row">
+  <div nz-col [nzMd]="6" [nzXs]="24">
+    <twa-thesaurus-sidebar [path]="path"></twa-thesaurus-sidebar>
+  </div>
+
+  <div nz-col [nzMd]="18" [nzXs]="24">
+    <m-spinner [mLoading]="isLoading">
+      <m-card *ngIf="pageId">
+        <div *m-card-header style="display: flex">
+          <m-select *ngIf="pageContents" [(ngModel)]="pageContent" (ngModelChange)="openContent($event)" compareWith="slug">
+            <m-option *ngFor="let content of pageContents" label="{{content.name}} | {{content.lang}}" [value]="content"></m-option>
+          </m-select>
+          <div style="margin-left: auto;">
+            <m-button [routerLink]="'edit'">
+              <m-icon mCode="edit"></m-icon>
+            </m-button>
+            <m-button (click)="openModal()" style="margin-left: 0.5rem">
+              <m-icon mCode="file-add"></m-icon>
+            </m-button>
+          </div>
+        </div>
+        <ng-container *ngIf="pageContent">
+          <m-markdown [mData]="pageContent.content"></m-markdown>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+
+    <m-modal [(mVisible)]="modalData.visible" (mClose)="modalData.visible = false">
+      <ng-container *m-modal-header>
+        {{'web.thesaurus-page.form.content-header' | translate}}
+      </ng-container>
+
+      <ng-container *m-modal-content>
+        <form #form="ngForm" *ngIf="modalData.content">
+          <m-form-item mName="name" mLabel="entities.page-content.name" required>
+            <m-input name="name" [(ngModel)]="modalData.content.name" autofocus required></m-input>
+          </m-form-item>
+
+          <m-form-item mName="lang" mLabel="entities.page-content.lang" required>
+            <m-select name="lang" [(ngModel)]="modalData.content.lang" required>
+              <m-option label="en" [value]="'en'"></m-option>
+              <m-option label="et" [value]="'et'"></m-option>
+            </m-select>
+          </m-form-item>
+        </form>
+      </ng-container>
+
+      <div *m-modal-footer class="tw-button-group">
+        <m-button mDisplay="text" (click)="modalData.visible = false">{{'core.btn.close' | translate}}</m-button>
+        <m-button mDisplay="primary"
+            [mLoading]="loading['save']"
+            [disabled]="loading['init'] || isLoading"
+            (click)="save()">{{'core.btn.save' | translate}}</m-button>
+      </div>
+    </m-modal>
+  </div>
+</div>

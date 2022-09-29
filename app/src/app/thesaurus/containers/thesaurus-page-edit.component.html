@@ -1,0 +1,37 @@
+<m-spinner [mLoading]="isLoading">
+  <m-card>
+    <div *m-card-header style="display: flex">
+      <label>{{pageContent?.name}}</label>
+      <div style="margin-left: auto;">
+        <m-button (click)="save()" mDisplay="primary">
+          <m-icon mCode="check"></m-icon>
+        </m-button>
+        <m-button (click)="modalVisible = true" style="margin-left: 0.5rem">
+          <m-icon mCode="setting"></m-icon>
+        </m-button>
+        <m-button (click)="closeEditMode()" style="margin-left: 0.5rem">
+          <m-icon mCode="close"></m-icon>
+        </m-button>
+      </div>
+    </div>
+
+    <nz-tabset>
+      <nz-tab nzTitle="Markdown">
+        <ng-template nz-tab>
+          <m-textarea *ngIf="pageContent" name="content" [(ngModel)]="pageContent.content" (mChange)="changeHtmlContent($event)" required></m-textarea>
+        </ng-template>
+      </nz-tab>
+      <nz-tab nzTitle="WYSIWYG">
+        <ng-template nz-tab>
+          <m-rich-text-editor name="htmlContent" [(ngModel)]="htmlContent" (ngModelChange)="changeContent($event)"></m-rich-text-editor>
+        </ng-template>
+      </nz-tab>
+    </nz-tabset>
+  </m-card>
+</m-spinner>
+
+<twa-thesaurus-page-modal [modalVisible]="modalVisible"
+    [pageId]="pageContent?.pageId"
+    [contentId]="pageContent?.id"
+    (closed)="modalVisible = false"
+    (saved)="openPageContentEdit($event)"></twa-thesaurus-page-modal>

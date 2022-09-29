@@ -1,0 +1,34 @@
+<m-card>
+  <div *m-card-header class="m-items-between">
+    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <twa-add-button (click)="modalVisible = true"></twa-add-button>
+  </div>
+
+  <m-no-data *ngIf="pages.length === 0"></m-no-data>
+
+  <nz-collapse nzGhost *ngFor="let page of pages" class="tw-page-collapse">
+    <ng-container *ngTemplateOutlet="pageLink; context: {page: page}"></ng-container>
+
+    <ng-template #pageCollapse let-pages="pages">
+      <nz-collapse nzGhost *ngFor="let page of pages" class="tw-page-collapse">
+        <ng-container *ngTemplateOutlet="pageLink; context: {page: page}"></ng-container>
+      </nz-collapse>
+    </ng-template>
+
+    <ng-template #pageLink let-page="page">
+      <m-button *ngIf="page.leaf" mDisplay="link" (click)="openPage(page)" [class]="page | apply:getLinkStyle">
+        {{(page | apply:localizedContent).name}}
+      </m-button>
+      <nz-collapse-panel *ngIf="!page.leaf"
+          [nzHeader]="(page | apply:localizedContent).name"
+          [(nzActive)]="page['active']"
+          (nzActiveChange)="loadPageChildren(page, $event)"
+          [class]="page | apply:getLinkStyle">
+        <ng-container *ngTemplateOutlet="pageCollapse; context: {pages: page.relationPages}"></ng-container>
+      </nz-collapse-panel>
+    </ng-template>
+  </nz-collapse>
+
+</m-card>
+
+<twa-thesaurus-page-modal [modalVisible]="modalVisible" (closed)="modalVisible = false" (saved)="openPageContent($event)"></twa-thesaurus-page-modal>

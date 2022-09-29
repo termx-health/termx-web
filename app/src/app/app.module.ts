@@ -32,6 +32,7 @@ import {OauthHttpInterceptor} from './auth/oauth-http-interceptor.service';
 import {AuthService} from './auth/auth.service';
 import {Observable} from 'rxjs';
 import {YupiHttpInterceptor} from './auth/yupi-http-interceptor.service';
+import {ThesaurusModule} from './thesaurus/thesaurus.module';
 
 registerLocaleData(et);
 
@@ -93,6 +94,7 @@ export function MarinaUiConfigFactory(): MuiConfig {
     PrivilegesModule,
     AuthLibModule,
     GlobalSearchModule,
+    ThesaurusModule,
 
     ToolsModule,
     NoPrivilegeModule,
