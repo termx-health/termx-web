@@ -43,6 +43,10 @@ export class CodeSystemDesignationGroupEditComponent {
     return designations.sort(d => d.language && requiredLanguages?.includes(d.language) ? -1 : 1);
   };
 
+  public getPropertyName = (id: number, properties: EntityProperty[]): string | number => {
+    return properties?.find(p => p.id === id)?.name || id;
+  };
+
   public isRequired = (lang: string, requiredLanguages: string[]): boolean => {
     return isDefined(requiredLanguages) && requiredLanguages.includes(lang);
   };

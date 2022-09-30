@@ -17,5 +17,10 @@ export class ConceptSearchParams extends QueryParams {
   public valueSetVersion?: string;
   public propertyValues?: string;
   public propertyValuesPartial?: string;
+  public propertyRoot?: string;
+  public associationRoot?: string;
+  public propertySource?: string; // property|sourceCode
+  public associationSource?: string; // association|sourceCode
+  public associationType?: string;
 }
 

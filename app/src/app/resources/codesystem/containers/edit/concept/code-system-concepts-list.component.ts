@@ -3,6 +3,8 @@ import {CodeSystemConcept, CodeSystemVersion, ConceptSearchParams, EntityPropert
 import {debounceTime, finalize, Observable, of, Subject, switchMap} from 'rxjs';
 import {BooleanInput, copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
+import {NzTreeNodeOptions} from 'ng-zorro-antd/core/tree/nz-tree-base-node';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'twa-code-system-concepts-list',
@@ -14,16 +16,18 @@ export class CodeSystemConceptsListComponent implements OnInit {
   @Input() public codeSystemVersions?: CodeSystemVersion[];
   @Input() public properties?: EntityProperty[];
 
-
   public query = new ConceptSearchParams();
   public filter: {open: boolean, languages?: string[], version?: CodeSystemVersion, propertyName?: string, propertyValue?: string} = {open: false};
+  public group: {open: boolean, type?: string, association?: string, property?: string} = {open: false};
   public searchInput: string = "";
   public searchUpdate = new Subject<void>();
   public searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
+  public rootConcepts?: NzTreeNodeOptions[];
 
   public loading = false;
 
   public constructor(
+    private router: Router,
     private codeSystemService: CodeSystemService
   ) {
     this.query.sort = 'code';
@@ -31,6 +35,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loadData();
+    this.expandTree();
     this.searchUpdate.pipe(
       debounceTime(250),
       switchMap(() => this.search()),
@@ -43,8 +48,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
     }
     const q = copyDeep(this.query);
     q.textContains = this.searchInput;
-    q.codeSystemVersion = this.filter.version?.version;
-    if (this.filter.propertyName && this.filter.propertyValue){
+     if (this.filter.propertyName && this.filter.propertyValue){
       q.propertyValues = this.filter['propertyName'] + '|' + this.filter['propertyValue'];
     }
     this.loading = true;
@@ -64,10 +68,64 @@ export class CodeSystemConceptsListComponent implements OnInit {
     this.filter.languages = [...this.filter.languages];
   }
 
-
-  public getConceptName(concept: CodeSystemConcept, language: string): string | undefined {
-    const findVersion = concept.versions?.find(version => version.status! === 'active');
-    const findDesignation = findVersion?.designations?.find(designation => designation.status! === 'active' && designation.language! === language);
+  public getConceptName(concept: CodeSystemConcept, language?: string): string | undefined {
+    const findVersion = concept.versions?.find(version => version.status === 'active');
+    const findDesignation = findVersion?.designations?.find(designation => designation.status === 'active' && (!language || designation.language === language));
     return findDesignation?.name;
+  }
+
+  public groupConcepts(groupParam: string): void {
+    if (!this.codeSystemId) {
+      return;
+    }
+    const params = new ConceptSearchParams();
+    params.propertyRoot = this.group.type === 'property' && groupParam || undefined;
+    params.associationRoot = this.group.type === 'association' && groupParam || undefined;
+    params.sort = 'code';
+    params.limit = 1000;
+    this.loading = true;
+    this.codeSystemService.searchConcepts(this.codeSystemId!, params).subscribe(concepts => {
+      this.rootConcepts = concepts.data.map(c => this.mapToNode(c));
+    }).add(() => this.loading = false);
+  }
+
+  public loadChildren(event: any): void {
+    if (event.eventName === 'expand') {
+      const node = event.node;
+      if (node?.getChildren().length === 0 && node?.isExpanded) {
+        const params = new ConceptSearchParams();
+        params.propertySource = this.group.type === 'property' && this.group.property + '|' + event.node.key || undefined;
+        params.associationSource = this.group.type === 'association' && this.group.association + '|' + event.node.key || undefined;
+        params.sort = 'code';
+        params.limit = 1000;
+        this.codeSystemService.searchConcepts(this.codeSystemId!, params).subscribe(concepts => node.addChildren(concepts.data.map(c => this.mapToNode(c))));
+      }
+    }
+  }
+
+  public mapToNode(c: CodeSystemConcept): NzTreeNodeOptions {
+    const name = this.getConceptName(c);
+    return {title: c.code! + (name ? ' - ' + name : ''), key: c.code!, isLeaf: c.leaf};
+  }
+
+  public openConcept(event: any): void {
+    this.router.navigate(['resources/code-systems', this.codeSystemId,'concepts', event.node.key, !this.viewMode? 'edit' : 'view']);
+  }
+
+  private expandTree(): void {
+    if (!this.codeSystemId) {
+      return;
+    }
+    const params = new ConceptSearchParams();
+    params.associationType = 'is-a';
+    params.limit = 1;
+    this.codeSystemService.searchConcepts(this.codeSystemId!, params).subscribe(resp => {
+      if (resp.data.length > 0) {
+        this.group.open = true;
+        this.group.type = 'association';
+        this.group.association = 'is-a';
+        this.groupConcepts(this.group.association);
+      }
+    });
   }
 }

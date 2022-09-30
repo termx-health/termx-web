@@ -52,4 +52,8 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   public valid(): boolean {
     return validateForm(this.form);
   }
+
+  public getPropertyName = (id: number, properties: EntityProperty[]): string | number => {
+    return properties?.find(p => p.id === id)?.name || id;
+  };
 }

@@ -9,28 +9,32 @@
         <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
           <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content">
             <m-form-item mName="property-{{index}}" required>
-              <m-select name="property-{{index}}"
+              <m-select *ngIf="!viewMode" name="property-{{index}}"
                   [(ngModel)]="propertyValue.entityPropertyId"
-                  [disabled]="!!viewMode"
                   placeholder="entities.entity-property.type"
                   icon="search"
-                  autofocus
                   required>
                 <m-option *ngFor="let prop of entityProperties" [value]="prop.id" [label]="prop.name"></m-option>
               </m-select>
+              <label *ngIf="viewMode">{{propertyValue.entityPropertyId | apply:getPropertyName:entityProperties}}</label>
             </m-form-item>
           </div>
           <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
             <div style="display: flex">
-              <m-form-item *ngIf="checkPropertyType('Coding', propertyValue)"  style="width: 100%" mName="propertyValueCodeSystem-{{index}}" required>
-                <twl-code-system-search name="propertyValueCodeSystem-{{index}}" [(ngModel)]="codingSystemId" placeholder="web.code-system-concept-version.property-value.coding-value-system" valuePrimitive required></twl-code-system-search>
-              </m-form-item>
               <m-form-item style="width: 100%" *ngIf="propertyValue.entityPropertyId" mName="propertyValue-{{index}}" required>
-                <m-input *ngIf="checkPropertyType('string,code,Coding', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" required></m-input>
+                <ng-container *ngIf="checkPropertyType('string,code,Coding', propertyValue)">
+                  <m-input *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" required></m-input>
+                  <label *ngIf="viewMode">{{propertyValue.value}}</label>
+                </ng-container>
+                <ng-container *ngIf="checkPropertyType('dateTime', propertyValue)">
+                  <m-date-picker *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" required></m-date-picker>
+                  <label *ngIf="viewMode">{{propertyValue.value | localDate}}</label>
+                </ng-container>
+                <ng-container *ngIf="checkPropertyType('decimal,integer', propertyValue)">
+                  <m-number-input *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" required></m-number-input>
+                  <label *ngIf="viewMode">{{propertyValue.value}}</label>
+                </ng-container>
                 <m-checkbox *ngIf="checkPropertyType('boolean', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" required></m-checkbox>
-                <m-date-picker *ngIf="checkPropertyType('dateTime', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" required></m-date-picker>
-                <m-number-input *ngIf="checkPropertyType('decimal,integer', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" required></m-number-input>
-<!--                <twl-concept-search *ngIf="checkPropertyType('code,Coding', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode" [codeSystem]="codingSystemId || codeSystemId" required></twl-concept-search>-->
               </m-form-item>
               <m-button *ngIf="!viewMode" mDisplay="text" (click)="removePropertyValue(index)">
                 <m-icon [mCode]="'delete'"></m-icon>

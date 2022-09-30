@@ -194,6 +194,11 @@
         "property-filter": "Property filter",
         "property-name-filter": "Property name filter"
       },
+      "group": {
+        "association": "Association",
+        "property": "Property",
+        "type": "Type"
+      },
       "list": {
         "external": "External",
         "concept-version-id": "Concept version ID: {{versionId}}"

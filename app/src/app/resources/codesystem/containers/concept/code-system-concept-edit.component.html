@@ -66,11 +66,6 @@
             <m-textarea *ngIf="conceptVersion.status === 'draft'" name="versionDescription" [(ngModel)]="conceptVersion.description"></m-textarea>
             <label *ngIf="conceptVersion.status !== 'draft'">{{conceptVersion.description}}</label>
           </m-form-item>
-<!--          <m-form-item mLabel="entities.code-system-entity-version.code-system-version">-->
-<!--            todo-->
-<!--          </m-form-item>-->
-
-
         </form>
       </m-card>
     </m-spinner>
