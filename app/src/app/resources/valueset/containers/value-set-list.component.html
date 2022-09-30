@@ -23,9 +23,9 @@
     <tr *mTableRow="let vs">
       <td m-table-expand [mItem]="vs"></td>
       <td>
-        <a *ngIf="'*.ValueSet.edit' | twaHasAnyPrivilege; else view" [routerLink]="['value-sets',vs.id, 'edit']">{{vs.id}}</a>
+        <a *ngIf="'*.ValueSet.edit' | twaHasAnyPrivilege; else view" [routerLink]="['value-sets',vs.id, 'edit']" [queryParams]="{ tab: 'concepts' }">{{vs.id}}</a>
         <ng-template #view>
-          <a [routerLink]="['value-sets',vs.id, 'view']">{{vs.id}}</a>
+          <a [routerLink]="['value-sets',vs.id, 'view']" [queryParams]="{ tab: 'concepts' }">{{vs.id}}</a>
         </ng-template>
       </td>
       <td>{{vs.names | localName}}</td>

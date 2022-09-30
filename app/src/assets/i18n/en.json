@@ -747,7 +747,8 @@
       "description": "Description",
       "status": "Status",
       "versions": "Versions",
-      "contacts": "Contacts"
+      "contacts": "Contacts",
+      "concepts": "Concepts"
     },
     "value-set-version": {
       "id": "Identifier",

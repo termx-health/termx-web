@@ -23,6 +23,7 @@ import {ValueSetRuleConceptListComponent} from './containers/version/ruleset/rul
 import {ValueSetVersionConceptEditComponent} from './containers/version/concepts/value-set-version-concept-edit.component';
 import {ValueSetRuleEditComponent} from './containers/version/ruleset/rule/value-set-rule-edit.component';
 import {IntegrationLibModule} from 'terminology-lib/integration';
+import {ValueSetConceptListComponent} from './containers/edit/concept/value-set-concept-list.component';
 
 
 export const VALUE_SET_ROUTES: Routes = [
@@ -57,6 +58,7 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
   declarations: [
     ValueSetListComponent,
     ValueSetEditComponent,
+    ValueSetViewComponent,
     ValueSetVersionsListComponent,
     ValueSetVersionEditComponent,
     ValueSetVersionViewComponent,
@@ -68,11 +70,11 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
     ValueSetRuleEditComponent,
     ValueSetRuleFilterListComponent,
     ValueSetRuleConceptListComponent,
+    ValueSetConceptListComponent,
 
     FinderValueSetListComponent,
     FinderValueSetViewComponent,
-    FinderValueSetVersionViewComponent,
-    ValueSetViewComponent
+    FinderValueSetVersionViewComponent
   ],
   exports: [
     ValueSetListComponent

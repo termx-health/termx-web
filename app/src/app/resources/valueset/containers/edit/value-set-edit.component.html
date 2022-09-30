@@ -64,6 +64,14 @@
           </m-card>
         </ng-template>
       </nz-tab>
+      <nz-tab>
+        <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" [queryParams]="{ tab: 'concepts' }">
+          {{'entities.value-set.concepts' | translate}}
+        </a>
+        <m-card [mTitle]="'entities.code-system.concepts'" *ngIf="valueSet">
+          <twa-value-set-concept-list [valueSet]="valueSet.id"></twa-value-set-concept-list>
+        </m-card>
+      </nz-tab>
     </nz-tabset>
   </div>
 </div>

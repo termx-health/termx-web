@@ -25,7 +25,7 @@
       <td>
         <a *ngIf="'*.CodeSystem.edit' | twaHasAnyPrivilege; else view" [routerLink]="['code-systems',cs.id,'edit']" [queryParams]="{ tab: 'concepts' }">{{cs.id}}</a>
         <ng-template #view>
-          <a [routerLink]="['code-systems',cs.id,'view']">{{cs.id}}</a>
+          <a [routerLink]="['code-systems',cs.id,'view']" [queryParams]="{ tab: 'concepts' }">{{cs.id}}</a>
         </ng-template>
       </td>
       <td>{{cs.names | localName}}</td>
