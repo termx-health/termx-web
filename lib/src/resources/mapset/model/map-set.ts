@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-health/marina-util';
+import {LocalizedName} from '@kodality-web/marina-util';
 import {MapSetVersion} from './map-set-version';
 import {MapSetAssociation} from './map-set-association';
 

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ValueSetLibService} from './services/value-set-lib.service';
 import {ValueSetSearchComponent} from './containers/value-set-search.component';
-import {MarinaUiModule} from '@kodality-health/marina-ui';
+import {MarinaUiModule} from '@kodality-web/marina-ui';
 import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {ValueSetVersionSelectComponent} from './containers/value-set-version-select.component';

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {MuiPageMenuItem} from '@kodality-health/marina-ui';
+import {MuiPageMenuItem} from '@kodality-web/marina-ui';
 import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
-import {LocalizedName} from '@kodality-health/marina-util';
+import {LocalizedName} from '@kodality-web/marina-util';
 import {filter} from 'rxjs';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {AuthService} from './auth/auth.service';

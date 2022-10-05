@@ -74,14 +74,14 @@
               "app/src/assets",
               {
                 "glob": "**/*",
-                "input": "./node_modules/@kodality-health/marina-ui/src/icons",
+                "input": "./node_modules/@kodality-web/marina-ui/src/icons",
                 "output": "/assets/"
               }
             ],
             "styles": [
-              "node_modules/@kodality-health/marina-ui/mui.styles.css",
+              "node_modules/@kodality-web/marina-ui/mui.styles.css",
               {
-                "input": "node_modules/@kodality-health/marina-ui/mui-contrast.styles.css",
+                "input": "node_modules/@kodality-web/marina-ui/mui-contrast.styles.css",
                 "bundleName": "contrast",
                 "inject": false
               },

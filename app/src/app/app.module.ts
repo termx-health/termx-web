@@ -8,12 +8,12 @@ import {HTTP_INTERCEPTORS, HttpClient, HttpClientModule} from '@angular/common/h
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import {environment} from '../environments/environment';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
-import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiHttpErrorHandler} from '@kodality-health/marina-ui';
+import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiHttpErrorHandler} from '@kodality-web/marina-ui';
 import {CoreI18nService, CoreI18nTranslationHandler, CoreUtilModule, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
 import {ResourcesModule} from './resources/resources.module';
-import {MarinaUtilModule} from '@kodality-health/marina-util';
+import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {IntegrationModule} from './integration/integration.module';
 import {ResourcesLibModule} from 'terminology-lib/resources';
 import {FhirLibModule} from 'terminology-lib/fhir';

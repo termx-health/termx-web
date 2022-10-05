@@ -4,7 +4,7 @@ import {JobLibService, JobLogResponse} from 'terminology-lib/job';
 import {IntegrationImportComponent} from '../integration-import.component';
 import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
-import {MuiNotificationService} from '@kodality-health/marina-ui';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 
 @Component({

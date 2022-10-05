@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-health/marina-util';
+import {LocalizedName} from '@kodality-web/marina-util';
 import {PrivilegeResource} from './privilege-resource';
 
 export class Privilege {

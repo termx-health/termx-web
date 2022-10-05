@@ -3,7 +3,7 @@ import {IntegrationImportConfiguration} from 'terminology-lib/integration';
 import {JobLibService, JobLogResponse} from 'terminology-lib/job';
 import {ActivatedRoute} from '@angular/router';
 import {filter, Observable} from 'rxjs';
-import {MuiNotificationService} from '@kodality-health/marina-ui';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Directive()
 export abstract class IntegrationImportComponent implements OnInit {

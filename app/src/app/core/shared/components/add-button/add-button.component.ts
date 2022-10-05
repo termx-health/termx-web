@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {MuiBreakpointService} from '@kodality-health/marina-ui';
+import {MuiBreakpointService} from '@kodality-web/marina-ui';
 
 @Component({
   selector: 'twa-add-button',

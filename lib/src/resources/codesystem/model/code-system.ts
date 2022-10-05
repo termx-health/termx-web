@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-health/marina-util';
+import {LocalizedName} from '@kodality-web/marina-util';
 import {EntityProperty} from './entity-property';
 import {CodeSystemVersion} from './code-system-version';
 import {CodeSystemConcept} from './code-system-concept';

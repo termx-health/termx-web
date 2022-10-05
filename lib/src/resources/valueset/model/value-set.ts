@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-health/marina-util';
+import {LocalizedName} from '@kodality-web/marina-util';
 import {ValueSetVersion} from './value-set-version';
 import {ContactDetail} from '../../contact';
 

@@ -6,7 +6,7 @@ import {SnomedLibService} from './snomed/services/snomed-lib.service';
 import {SnomedConceptNamePipe} from './snomed/pipe/snomed-concept-name-pipe';
 import {IntegrationOrphanetLibService} from './orphanet/service/integration-orphanet-lib.service';
 import {SnomedSearchComponent} from './snomed/containers/snomed-search.component';
-import {MarinaUiModule} from '@kodality-health/marina-ui';
+import {MarinaUiModule} from '@kodality-web/marina-ui';
 import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {TranslateModule} from '@ngx-translate/core';
