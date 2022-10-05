@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {MuiComponentsModule} from '@kodality-health/marina-ui';
+import {MuiComponentsModule} from '@kodality-web/marina-ui';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {CoreUtilModule} from '@kodality-web/core-util';

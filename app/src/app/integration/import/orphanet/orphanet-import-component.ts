@@ -5,7 +5,7 @@ import {JobLibService, JobLogResponse} from 'terminology-lib/job';
 import {IntegrationImportConfiguration} from 'terminology-lib/integration';
 import {Observable} from 'rxjs';
 import {IntegrationOrphanetLibService} from 'terminology-lib/integration/orphanet/service/integration-orphanet-lib.service';
-import {MuiNotificationService} from '@kodality-health/marina-ui';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Component({
   templateUrl: '../integration-import.component.html',

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {CodeSystemLibService} from './services/code-system-lib.service';
 import {CodeSystemSearchComponent} from './containers/code-system-search.component';
-import {MarinaUiModule} from '@kodality-health/marina-ui';
+import {MarinaUiModule} from '@kodality-web/marina-ui';
 import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {CodeSystemEntityVersionLibService} from './services/code-system-entity-version-lib.service';

@@ -1,4 +1,4 @@
-image: registry.gitlab.com/kodality-public/gitlab-builders/ng
+image: registry.gitlab.com/kodality/gitlab-builders/ng
 
 .dependencies_cache:
   cache:
@@ -22,8 +22,6 @@ build:
   before_script:
     - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
     - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
-    - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
-    - echo "@kodality-health:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
   script:
     - npm install --cache .npm --prefer-offline
     - ng build -c production

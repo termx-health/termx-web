@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {filter, merge, Observable, Subject, switchMap, takeUntil, timer} from 'rxjs';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from 'terminology-lib/fhir';
 import {DestroyService} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-health/marina-ui';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 
 @Component({
