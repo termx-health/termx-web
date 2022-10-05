@@ -18,12 +18,14 @@
     <nz-tabset>
       <nz-tab nzTitle="Markdown">
         <ng-template nz-tab>
-          <m-textarea *ngIf="pageContent" name="content" [(ngModel)]="pageContent.content" (mChange)="changeHtmlContent($event)" required></m-textarea>
+          <twa-thesaurus-textarea *ngIf="pageContent" [(ngModel)]="pageContent.content" (keyup)="togglePopup($event, 'markdown')" name="content" (ngModelChange)="changeHtmlContent($event)" autofocus></twa-thesaurus-textarea>
+          <twa-thesaurus-textarea-popup #markdownPopup [editorType]="'markdown'" (res)="insertPopupResult($event, 'markdown')"></twa-thesaurus-textarea-popup>
         </ng-template>
       </nz-tab>
       <nz-tab nzTitle="WYSIWYG">
         <ng-template nz-tab>
-          <m-rich-text-editor name="htmlContent" [(ngModel)]="htmlContent" (ngModelChange)="changeContent($event)"></m-rich-text-editor>
+          <m-rich-text-editor name="wysiwygContent" [(ngModel)]="htmlContent" (ngModelChange)="changeContent($event)" (keyup)="togglePopup($event, 'wysiwyg')" autofocus></m-rich-text-editor>
+          <twa-thesaurus-textarea-popup #wysiwygPopup [editorType]="'wysiwyg'" (res)="insertPopupResult($event, 'wysiwyg')"></twa-thesaurus-textarea-popup>
         </ng-template>
       </nz-tab>
     </nz-tabset>

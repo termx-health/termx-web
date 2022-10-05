@@ -7,6 +7,8 @@ import {ThesaurusPageComponent} from './containers/thesaurus-page.component';
 import {ThesaurusPageEditComponent} from './containers/thesaurus-page-edit.component';
 import {ThesaurusLibModule} from 'terminology-lib/thesaurus';
 import {ThesaurusPageModalComponent} from './containers/thesaurus-page-modal.component';
+import {ThesaurusTextareaComponent} from './containers/textarea/thesaurus-textarea.component';
+import {ThesaurusTextareaPopupComponent} from './containers/textarea/thesaurus-textarea-popup.component';
 
 export const THESAURUS_ROUTES: Routes = [
   {path: '', component: ThesaurusPageComponent},
@@ -23,7 +25,9 @@ export const THESAURUS_ROUTES: Routes = [
     ThesaurusSidebarComponent,
     ThesaurusPageComponent,
     ThesaurusPageEditComponent,
-    ThesaurusPageModalComponent
+    ThesaurusPageModalComponent,
+    ThesaurusTextareaComponent,
+    ThesaurusTextareaPopupComponent
   ],
   providers: [
     ThesaurusService
