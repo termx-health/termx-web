@@ -5,4 +5,5 @@ export class PageContent {
   public slug?: string;
   public lang?: string;
   public content?: string;
+  public contentType?: 'markdown' | 'html';
 }

@@ -575,7 +575,8 @@
       "form": {
         "add-header": "Add page",
         "edit-header": "Edit page",
-        "content-header": "Add content"
+        "content-header": "Add content",
+        "content-type-tooltip": "Changing the content type can change the content value"
       }
     }
   },
@@ -845,7 +846,8 @@
     "page-content": {
       "name": "Name",
       "lang": "Language",
-      "content": "Content"
+      "content": "Content",
+      "content-type": "Content type"
     },
     "page-relation": {
       "target": "Target",

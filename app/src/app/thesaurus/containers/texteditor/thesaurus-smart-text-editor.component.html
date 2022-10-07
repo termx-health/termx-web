@@ -1,0 +1,25 @@
+<div class="input-wrapper">
+  <div #dropreference id="textarea">
+    <twa-thesaurus-textarea
+        *ngIf="valueType === 'markdown'"
+        [(ngModel)]="value"
+        (click)="hideDropdown()"
+        (keydown)="onKeyDown($event)"
+        (keyup)="onKeyUp($event)"
+        (blur)="onTouched()"
+        (ngModelChange)="fireOnChange($event)"></twa-thesaurus-textarea>
+    <m-rich-text-editor
+        *ngIf="valueType === 'html'"
+        [(ngModel)]="value"
+        (click)="hideDropdown()"
+        (keydown)="onKeyDown($event)"
+        (keyup)="onKeyUp($event)"
+        (blur)="onTouched()"
+        (ngModelChange)="fireOnChange($event)"></m-rich-text-editor>
+  </div>
+  <twa-dropdown [reference]="dropreference">
+    <div class="dropdown-options-container" id="options-container">
+      <twa-dropdown-option [item]="item" *ngFor="let item of popupItems" (click)="selectOption(item)"></twa-dropdown-option>
+    </div>
+  </twa-dropdown>
+</div>

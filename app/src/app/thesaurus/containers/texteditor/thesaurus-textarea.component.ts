@@ -1,11 +1,10 @@
 import {Component, forwardRef} from '@angular/core';
-import {DestroyService} from '@kodality-web/core-util';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
   selector: 'twa-thesaurus-textarea',
   template: `
-    <div id="textarea" class="tw-textarea" contenteditable (input)="fireOnChange($event.target)">{{value}}</div>
+    <div class="tw-textarea" contenteditable (input)="fireOnChange($event.target)" [innerText]="value"></div>
   `,
   styles: [`
     .tw-textarea {
@@ -26,7 +25,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
       }
     }
   `],
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ThesaurusTextareaComponent), multi: true}, DestroyService]
+  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ThesaurusTextareaComponent), multi: true}]
 })
 export class ThesaurusTextareaComponent implements ControlValueAccessor {
   public value?: string;
@@ -34,8 +33,8 @@ export class ThesaurusTextareaComponent implements ControlValueAccessor {
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
 
-  public writeValue(text: string): void {
-    this.value = text;
+  public writeValue(val: string): void {
+    this.value = val;
   }
 
   public registerOnChange(fn: any): void {

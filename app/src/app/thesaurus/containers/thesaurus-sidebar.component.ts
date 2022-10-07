@@ -107,7 +107,7 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
 
   public openPageContent(content: PageContent): void {
     this.modalVisible = false;
-    this.router.navigate(['/thesaurus/', content.slug]);
+    this.router.navigate(['/thesaurus/', content.slug, 'edit']);
   }
 
   private expandPath(path: number[], pages: Page[]): void {

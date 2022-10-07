@@ -23,6 +23,17 @@
         </m-select>
       </m-form-item>
 
+      <m-form-item mName="type" [mLabel]="contentTypeLabel" required>
+        <ng-template #contentTypeLabel>
+            <label>{{'entities.page-content.content-type' | translate}}</label>
+            <m-icon mCode="exclamation-circle" style="margin-left: 0.5rem"  m-tooltip mTitle="web.thesaurus-page.form.content-type-tooltip"></m-icon>
+        </ng-template>
+        <m-select name="type" [(ngModel)]="content.contentType" required>
+          <m-option label="WYSIWYG" [value]="'html'"></m-option>
+          <m-option label="Markdown" [value]="'markdown'"></m-option>
+        </m-select>
+      </m-form-item>
+
       <m-form-item mLabel="entities.page.relations">
         <m-table [mData]="page.relations" mSize="small">
           <tr *mTableHead>

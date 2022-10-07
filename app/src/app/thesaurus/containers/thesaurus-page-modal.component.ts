@@ -29,7 +29,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
     this.page = new Page();
     this.page.status = 'draft';
     this.page.relations = [];
-    this.content = new PageContent();
+    this.content = {contentType: 'markdown'};
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

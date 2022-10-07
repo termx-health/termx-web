@@ -7,8 +7,11 @@ import {ThesaurusPageComponent} from './containers/thesaurus-page.component';
 import {ThesaurusPageEditComponent} from './containers/thesaurus-page-edit.component';
 import {ThesaurusLibModule} from 'terminology-lib/thesaurus';
 import {ThesaurusPageModalComponent} from './containers/thesaurus-page-modal.component';
-import {ThesaurusTextareaComponent} from './containers/textarea/thesaurus-textarea.component';
-import {ThesaurusTextareaPopupComponent} from './containers/textarea/thesaurus-textarea-popup.component';
+import {ThesaurusTextareaComponent} from './containers/texteditor/thesaurus-textarea.component';
+import {ThesaurusDropdownComponent} from './containers/texteditor/thesaurus-dropdown.component';
+import {PortalModule} from '@angular/cdk/portal';
+import {ThesaurusDropdownOptionComponent} from './containers/texteditor/thesaurus-dropdown-option.component';
+import {ThesaurusSmartTextEditorComponent} from './containers/texteditor/thesaurus-smart-text-editor.component';
 
 export const THESAURUS_ROUTES: Routes = [
   {path: '', component: ThesaurusPageComponent},
@@ -19,7 +22,9 @@ export const THESAURUS_ROUTES: Routes = [
 @NgModule({
   imports: [
     SharedModule,
-    ThesaurusLibModule
+    ThesaurusLibModule,
+
+    PortalModule
   ],
   declarations: [
     ThesaurusSidebarComponent,
@@ -27,11 +32,12 @@ export const THESAURUS_ROUTES: Routes = [
     ThesaurusPageEditComponent,
     ThesaurusPageModalComponent,
     ThesaurusTextareaComponent,
-    ThesaurusTextareaPopupComponent
+
+    ThesaurusDropdownComponent,
+    ThesaurusDropdownOptionComponent,
+    ThesaurusSmartTextEditorComponent
   ],
-  providers: [
-    ThesaurusService
-  ]
+  providers: [ThesaurusService]
 })
 export class ThesaurusModule {
 }
