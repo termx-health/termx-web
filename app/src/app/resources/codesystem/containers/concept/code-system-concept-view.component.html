@@ -17,7 +17,7 @@
   </div>
   <div nz-col [nzLg]="12" [nzMd]="18" [nzXs]="24">
     <m-spinner [mLoading]="isLoading">
-      <m-card [mTitle]="concept.code" [mShowSkeleton]="loading['init']">
+      <m-card [mTitle]="concept?.code" [mShowSkeleton]="loading['init']">
         <form *ngIf="concept && conceptVersion">
           <m-divider [mText]="'web.code-system-concept.form.version.information' | translate" mOrientation="left"></m-divider>
           <m-form-item mLabel="entities.code-system-entity-version.status">

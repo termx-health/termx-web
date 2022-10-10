@@ -1,0 +1,119 @@
+import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {validateForm} from '@kodality-web/core-util';
+import {Location} from '@angular/common';
+import {CodeSystemConcept} from 'terminology-lib/resources';
+
+
+@Component({
+  selector: 'twa-link-modal',
+  template: `
+    <m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal(false)">
+      <ng-container *m-modal-header>
+        {{'web.thesaurus-page.link-modal.header' | translate}}
+      </ng-container>
+
+      <ng-container *m-modal-content>
+        <form #form="ngForm" *ngIf="data">
+          <m-form-item mName="linkName" mLabel="web.thesaurus-page.link-modal.link-name">
+            <m-input [(ngModel)]="data.name" name="linkName"></m-input>
+          </m-form-item>
+          <m-form-item *ngIf="!data.resourceLink" mName="link" mLabel="web.thesaurus-page.link-modal.link" required>
+            <m-input [(ngModel)]="data.link" name="link" required></m-input>
+          </m-form-item>
+          <m-form-item mName="resourceLink" mLabel="web.thesaurus-page.link-modal.resource-link">
+            <m-checkbox [(ngModel)]="data.resourceLink" name="link"></m-checkbox>
+          </m-form-item>
+          <ng-container *ngIf="data.resourceLink">
+            <m-form-item mName="resource" mLabel="web.thesaurus-page.link-modal.resource-type" required>
+              <m-select [(ngModel)]="data.resourceType" name="resource" required>
+                <m-option label="CodeSystem" [value]="'code-systems'"></m-option>
+                <m-option label="ValueSet" [value]="'value-sets'"></m-option>
+                <m-option label="MapSet" [value]="'map-sets'"></m-option>
+                <m-option label="Concept" [value]="'concepts'"></m-option>
+              </m-select>
+            </m-form-item>
+
+            <m-form-item *ngIf="data.resourceType === 'code-systems'" mName="codeSystem" mLabel="web.thesaurus-page.link-modal.code-system" required>
+              <twl-code-system-search [(ngModel)]="data.resource" name="codeSystem" valuePrimitive required></twl-code-system-search>
+            </m-form-item>
+            <m-form-item *ngIf="data.resourceType === 'value-sets'" mName="valueSet" mLabel="web.thesaurus-page.link-modal.value-set" required>
+              <twl-value-set-search [(ngModel)]="data.resource" name="valueSet" valuePrimitive required></twl-value-set-search>
+            </m-form-item>
+            <m-form-item *ngIf="data.resourceType === 'map-sets'" mName="mapSet" mLabel="web.thesaurus-page.link-modal.map-set" required>
+              <twl-map-set-search [(ngModel)]="data.resource" name="mapSet" valuePrimitive required></twl-map-set-search>
+            </m-form-item>
+            <m-form-item *ngIf="data.resourceType === 'concepts'" mName="conceptCodeSystem" mLabel="web.thesaurus-page.link-modal.concept-code-system" required>
+              <twl-code-system-search [(ngModel)]="data.conceptCodeSystem" name="conceptCodeSystem" valuePrimitive required></twl-code-system-search>
+            </m-form-item>
+            <m-form-item *ngIf="data.resourceType === 'concepts' && data.conceptCodeSystem" mName="concept" mLabel="web.thesaurus-page.link-modal.concept" required>
+              <twl-concept-search [(ngModel)]="data.resource" [codeSystem]="data.conceptCodeSystem" name="concept" required></twl-concept-search>
+            </m-form-item>
+          </ng-container>
+          
+        </form>
+      </ng-container>
+
+      <div *m-modal-footer class="tw-button-group">
+        <m-button mDisplay="text" (click)="toggleModal(false)">{{'core.btn.close' | translate}}</m-button>
+        <m-button mDisplay="primary" (click)="confirm()">{{'core.btn.confirm' | translate}}</m-button>
+      </div>
+    </m-modal>
+  `
+})
+export class ThesaurusLinkModalComponent {
+  @Output() public linkComposed: EventEmitter<string> = new EventEmitter();
+
+  public modalVisible = false;
+  public data?: {
+    name?: string,
+    link?: string,
+    resourceLink?: boolean
+    resourceType?: string
+    resource?: string | CodeSystemConcept,
+    conceptCodeSystem?: string
+  };
+
+  @ViewChild("form") public form?: NgForm;
+
+  public constructor(public location: Location) { }
+
+  public toggleModal(visible: boolean): void {
+    this.modalVisible = visible;
+
+    if (!this.modalVisible) {
+      this.linkComposed.emit();
+    }
+
+    if (this.modalVisible) {
+      this.data = {};
+    }
+  }
+
+  public confirm(): void {
+    if (!validateForm(this.form)) {
+      return;
+    }
+
+    const link = this.composeLink(this.data!);
+    this.linkComposed.emit(this.data!.name ? '[' + this.data!.name + '](' + link + ')' : link);
+    this.modalVisible = false;
+  }
+
+  private composeLink(data: any): string | undefined {
+    if (data.link) {
+      return data.link;
+    }
+
+    const path = this.location.path();
+    const url = window.location.href.replace(path, '');
+    if (data.resourceType && ['code-systems', 'value-sets', 'map-sets'].includes(data.resourceType)) {
+      return url + '/resources/' + data.resourceType + '/' + data.resource + '/view';
+    }
+
+    if ('concepts' === data.resourceType) {
+      return url + '/resources/code-systems/' + data.conceptCodeSystem + '/' + data.resourceType + '/' + data.resource.code + '/view';
+    }
+
+  }
+}

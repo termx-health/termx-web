@@ -577,6 +577,18 @@
         "edit-header": "Edit page",
         "content-header": "Add content",
         "content-type-tooltip": "Changing the content type can change the content value"
+      },
+      "link-modal": {
+        "header": "Compose link",
+        "link-name": "Link name",
+        "link": "URL",
+        "resource-link": "Link from resource",
+        "resource-type": "Resource type",
+        "code-system": "CodeSystem",
+        "value-set": "ValueSet",
+        "map-set": "MapSet",
+        "concept-code-system": "Concept's CodeSystem",
+        "concept": "Concept"
       }
     }
   },

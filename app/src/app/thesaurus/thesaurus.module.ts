@@ -12,6 +12,8 @@ import {ThesaurusDropdownComponent} from './containers/texteditor/thesaurus-drop
 import {PortalModule} from '@angular/cdk/portal';
 import {ThesaurusDropdownOptionComponent} from './containers/texteditor/thesaurus-dropdown-option.component';
 import {ThesaurusSmartTextEditorComponent} from './containers/texteditor/thesaurus-smart-text-editor.component';
+import {ThesaurusLinkModalComponent} from './containers/texteditor/thesaurus-link-modal.component';
+import {ResourcesLibModule} from 'terminology-lib/resources';
 
 export const THESAURUS_ROUTES: Routes = [
   {path: '', component: ThesaurusPageComponent},
@@ -24,7 +26,8 @@ export const THESAURUS_ROUTES: Routes = [
     SharedModule,
     ThesaurusLibModule,
 
-    PortalModule
+    PortalModule,
+    ResourcesLibModule
   ],
   declarations: [
     ThesaurusSidebarComponent,
@@ -32,7 +35,7 @@ export const THESAURUS_ROUTES: Routes = [
     ThesaurusPageEditComponent,
     ThesaurusPageModalComponent,
     ThesaurusTextareaComponent,
-
+    ThesaurusLinkModalComponent,
     ThesaurusDropdownComponent,
     ThesaurusDropdownOptionComponent,
     ThesaurusSmartTextEditorComponent

@@ -4,6 +4,7 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ThesaurusDropdownOptionComponent, OptionItem} from './thesaurus-dropdown-option.component';
 import {ThesaurusDropdownComponent} from './thesaurus-dropdown.component';
 import {isDefined} from '@kodality-web/core-util';
+import {ThesaurusLinkModalComponent} from './thesaurus-link-modal.component';
 
 @Component({
   selector: 'twa-smart-text-editor',
@@ -29,7 +30,7 @@ export class ThesaurusSmartTextEditorComponent implements AfterViewInit, Control
   public value?: string;
   public range?: Range;
   public popupItems: OptionItem[] = [
-    {id: 'link', name: 'Link', icon: 'link', description: 'Insert a link', result: '[text](link)'},
+    {id: 'link', name: 'Link', icon: 'link', description: 'Insert a link'},
     {id: 'bullet-list', name: 'Bullet list', icon: 'unordered-list', description: 'Create an unordered list', result: '\n* '},
     {id: 'numbered-list', name: 'Numbered list', icon: 'ordered-list', description: 'Create an ordered list', result: '\n1. '},
     {id: 'divider', name: 'Divider', icon: 'line', description: 'Separate content with horizontal line', result: '\n*** '},
@@ -38,6 +39,7 @@ export class ThesaurusSmartTextEditorComponent implements AfterViewInit, Control
     {id: 'heading-2', name: 'Heading 2', icon: 'font-size', description: 'Sections', result: '\n## '}
   ];
 
+  @ViewChild("linkModal") public linkModal?: ThesaurusLinkModalComponent;
   @ViewChild(ThesaurusDropdownComponent) public dropdown?: ThesaurusDropdownComponent;
   @ViewChildren(ThesaurusDropdownOptionComponent) public options?: QueryList<ThesaurusDropdownOptionComponent>;
 
@@ -97,15 +99,22 @@ export class ThesaurusSmartTextEditorComponent implements AfterViewInit, Control
 
   public selectOption(item: OptionItem): void {
     this.hideDropdown();
-    this.insertOption(item);
+    if (isDefined(item.result)) {
+      this.insertOption(item.result);
+    } else {
+      this.handleAction(item.id!);
+    }
   }
 
-  public insertOption(item: OptionItem): void {
+  public insertOption(result: string): void {
+    if (!result) {
+      result = "";
+    }
     const selection = window.getSelection();
     if (selection && this.range) {
       const currentText = document.getElementById("textarea")?.innerText;
       this.range.deleteContents();
-      this.range.insertNode(document.createTextNode(item.result!));
+      this.range.insertNode(document.createTextNode(result));
       selection.removeAllRanges();
       selection.addRange(this.range);
 
@@ -116,6 +125,12 @@ export class ThesaurusSmartTextEditorComponent implements AfterViewInit, Control
       }
       this.value = newText;
       this.fireOnChange(newText || "");
+    }
+  }
+
+  private handleAction(itemId: string): void {
+    if (itemId === 'link') {
+      this.linkModal?.toggleModal(true);
     }
   }
 
