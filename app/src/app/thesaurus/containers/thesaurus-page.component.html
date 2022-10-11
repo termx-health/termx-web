@@ -7,15 +7,24 @@
     <m-spinner [mLoading]="isLoading">
       <m-card *ngIf="pageId">
         <div *m-card-header style="display: flex">
-          <m-select *ngIf="pageContents" [(ngModel)]="pageContent" (ngModelChange)="openContent($event)" compareWith="slug">
-            <m-option *ngFor="let content of pageContents" label="{{content.name}} | {{content.lang}}" [value]="content"></m-option>
-          </m-select>
+          <label>{{pageContent?.name}}</label>
           <div style="margin-left: auto;">
-            <m-button [routerLink]="'edit'">
+            <m-dropdown>
+              <m-button *mDropdownContainer>
+                {{pageContent?.lang | apply: flagIcon}}
+              </m-button>
+              <ng-container *ngFor="let content of (pageContents | apply: filterContents: pageContent?.lang)">
+                <a *m-dropdown-item (click)="openContent(content)">{{content.lang | apply: flagIcon}} {{content.name}}</a>
+              </ng-container>
+              <ng-container *ngFor="let lang of ['en', 'et', 'ru'] | apply: filterLanguages: pageContent?.lang: pageContents">
+                <a *m-dropdown-item (click)="openContentModal(lang)">{{lang | apply: flagIcon}}</a>
+              </ng-container>
+            </m-dropdown>
+            <m-button [routerLink]="'edit'" style="margin-left: 0.5rem">
               <m-icon mCode="edit"></m-icon>
             </m-button>
-            <m-button (click)="openModal()" style="margin-left: 0.5rem">
-              <m-icon mCode="file-add"></m-icon>
+            <m-button style="margin-left: 0.5rem">
+              <m-icon (click)="openRelationModal(pageRelations)" mCode="file-add"></m-icon>
             </m-button>
           </div>
         </div>
@@ -25,34 +34,63 @@
         </ng-container>
       </m-card>
     </m-spinner>
-
-    <m-modal [(mVisible)]="modalData.visible" (mClose)="modalData.visible = false">
-      <ng-container *m-modal-header>
-        {{'web.thesaurus-page.form.content-header' | translate}}
-      </ng-container>
-
-      <ng-container *m-modal-content>
-        <form #form="ngForm" *ngIf="modalData.content">
-          <m-form-item mName="name" mLabel="entities.page-content.name" required>
-            <m-input name="name" [(ngModel)]="modalData.content.name" autofocus required></m-input>
-          </m-form-item>
-
-          <m-form-item mName="lang" mLabel="entities.page-content.lang" required>
-            <m-select name="lang" [(ngModel)]="modalData.content.lang" required>
-              <m-option label="en" [value]="'en'"></m-option>
-              <m-option label="et" [value]="'et'"></m-option>
-            </m-select>
-          </m-form-item>
-        </form>
-      </ng-container>
-
-      <div *m-modal-footer class="tw-button-group">
-        <m-button mDisplay="text" (click)="modalData.visible = false">{{'core.btn.close' | translate}}</m-button>
-        <m-button mDisplay="primary"
-            [mLoading]="loading['save']"
-            [disabled]="loading['init'] || isLoading"
-            (click)="save()">{{'core.btn.save' | translate}}</m-button>
-      </div>
-    </m-modal>
   </div>
 </div>
+
+
+<m-modal [(mVisible)]="contentModalData.visible" (mClose)="contentModalData.visible = false">
+  <ng-container *m-modal-header>{{'web.thesaurus-page.form.content-header' | translate}}</ng-container>
+  <ng-container *m-modal-content>
+    <form #contentForm="ngForm" *ngIf="contentModalData.content">
+      <m-form-item mName="name" mLabel="entities.page-content.name" required>
+        <m-input name="name" [(ngModel)]="contentModalData.content.name" autofocus required></m-input>
+      </m-form-item>
+      <m-form-item mName="type" mLabel="entities.page-content.content-type" required>
+        <m-select name="type" [(ngModel)]="contentModalData.content.contentType" required>
+          <m-option label="WYSIWYG" [value]="'html'"></m-option>
+          <m-option label="Markdown" [value]="'markdown'"></m-option>
+        </m-select>
+      </m-form-item>
+    </form>
+  </ng-container>
+  <div *m-modal-footer class="tw-button-group">
+    <m-button mDisplay="text" (click)="contentModalData.visible = false">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary"
+        [mLoading]="loading['save']"
+        [disabled]="loading['init'] || isLoading"
+        (click)="saveContent()">{{'core.btn.save' | translate}}</m-button>
+  </div>
+</m-modal>
+
+<m-modal [(mVisible)]="relationModalData.visible" (mClose)="relationModalData.visible = false">
+  <ng-container *m-modal-header>{{'web.thesaurus-page.form.relation-header' | translate}}</ng-container>
+  <ng-container *m-modal-content>
+    <form #relationForm="ngForm">
+      <m-table [mData]="relationModalData.relations" mSize="small">
+        <tr *mTableHead>
+          <th>{{'entities.page-relation.source' | translate}}</th>
+          <th>{{'entities.page-relation.order-number' | translate}}</th>
+          <th class="tw-table-actions"></th>
+        </tr>
+        <tr *mTableRow="let relation; let index = index">
+          <td><twl-page-select name="source-{{index}}" [(ngModel)]="relation.sourceId" [idNe]="pageId" required></twl-page-select></td>
+          <td><m-number-input name="orderNumber-{{index}}" [(ngModel)]="relation.orderNumber"></m-number-input></td>
+          <td class="tw-table-actions"><m-button mDisplay="link" (click)="deleteRelation(index)"><m-icon mCode="delete"></m-icon></m-button></td>
+        </tr>
+        <tr>
+          <td colspan="3" style="padding: 0">
+            <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addRelation()"><m-icon [mCode]="'plus'"></m-icon></m-button>
+          </td>
+        </tr>
+        <tr *mTableNoData><td colspan="3"><m-no-data></m-no-data></td></tr>
+      </m-table>
+    </form>
+  </ng-container>
+  <div *m-modal-footer class="tw-button-group">
+    <m-button mDisplay="text" (click)="relationModalData.visible = false">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary"
+        [mLoading]="loading['save']"
+        [disabled]="loading['init'] || isLoading"
+        (click)="saveRelations()">{{'core.btn.save' | translate}}</m-button>
+  </div>
+</m-modal>

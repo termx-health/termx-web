@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ThesaurusLibService} from 'terminology-lib/thesaurus/services/thesaurus-lib.service';
 import {Observable} from 'rxjs';
 import {isDefined} from '@kodality-web/core-util';
-import {Page, PageContent} from 'terminology-lib/thesaurus';
+import {Page, PageContent, PageRelation} from 'terminology-lib/thesaurus';
 
 @Injectable()
 export class ThesaurusService extends ThesaurusLibService {
@@ -19,5 +19,9 @@ export class ThesaurusService extends ThesaurusLibService {
       return this.http.put(`${this.baseUrl}/pages/${pageId}/contents/${content.id}`, content);
     }
     return this.http.post(`${this.baseUrl}/pages/${pageId}/contents`, content);
+  }
+
+  public savePageRelations(relations: PageRelation[], pageId: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/pages/${pageId}/relations`, relations);
   }
 }

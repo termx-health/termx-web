@@ -576,6 +576,7 @@
         "add-header": "Add page",
         "edit-header": "Edit page",
         "content-header": "Add content",
+        "relation-header": "Page relations",
         "content-type-tooltip": "Changing the content type can change the content value"
       },
       "link-modal": {

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {Page, PageContent, PageRelation} from 'terminology-lib/thesaurus';
+import {Page, PageContent} from 'terminology-lib/thesaurus';
 import {ThesaurusService} from '../services/thesaurus.service';
 
 @Component({
@@ -55,18 +55,6 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
     this.thesaurusService.savePage(this.page!, this.content!)
       .subscribe(page => this.saved.emit(page.contents?.find(c => c.name === this.content!.name)))
       .add(() => this.loading['save'] = false);
-  }
-
-  public addRelation(): void {
-    this.page!.relations!.push(new PageRelation());
-    this.page!.relations = [...this.page!.relations!];
-  }
-
-  public deleteRelation(index: number): void {
-    if (this.page?.relations) {
-      this.page.relations.splice(index, 1);
-      this.page.relations = [...this.page.relations || []];
-    }
   }
 
   public get isLoading(): boolean {
