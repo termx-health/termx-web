@@ -12,6 +12,7 @@ export class ThesaurusPageEditComponent implements OnInit {
   public pageId?: number;
   public pageContent?: PageContent;
   public modalVisible?: boolean = false;
+  public showPreview?: boolean = false;
   public loading: {[k: string]: boolean} = {};
 
   @ViewChild("form") public form?: NgForm;

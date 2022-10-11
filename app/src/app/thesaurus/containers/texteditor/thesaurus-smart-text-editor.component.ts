@@ -27,6 +27,7 @@ import {ThesaurusLinkModalComponent} from './thesaurus-link-modal.component';
 })
 export class ThesaurusSmartTextEditorComponent implements AfterViewInit, ControlValueAccessor {
   @Input() public valueType?: 'html' | 'markdown';
+  @Input() public showPreview:boolean = false;
   public value?: string;
   public range?: Range;
   public popupItems: OptionItem[] = [
