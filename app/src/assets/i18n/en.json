@@ -582,8 +582,9 @@
       "link-modal": {
         "header": "Compose link",
         "link-name": "Link name",
-        "link": "URL",
-        "resource-link": "Link from resource",
+        "url": "URL",
+        "page": "Page",
+        "resource": "Resource",
         "resource-type": "Resource type",
         "code-system": "CodeSystem",
         "value-set": "ValueSet",

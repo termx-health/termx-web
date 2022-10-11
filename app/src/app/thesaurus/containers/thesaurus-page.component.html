@@ -38,7 +38,7 @@
 </div>
 
 
-<m-modal [(mVisible)]="contentModalData.visible" (mClose)="contentModalData.visible = false">
+<m-modal [(mVisible)]="contentModalData.visible" (mClose)="contentModalData.visible = false" [mMaskClosable]="false">
   <ng-container *m-modal-header>{{'web.thesaurus-page.form.content-header' | translate}}</ng-container>
   <ng-container *m-modal-content>
     <form #contentForm="ngForm" *ngIf="contentModalData.content">
@@ -62,7 +62,7 @@
   </div>
 </m-modal>
 
-<m-modal [(mVisible)]="relationModalData.visible" (mClose)="relationModalData.visible = false">
+<m-modal [(mVisible)]="relationModalData.visible" (mClose)="relationModalData.visible = false" [mMaskClosable]="false">
   <ng-container *m-modal-header>{{'web.thesaurus-page.form.relation-header' | translate}}</ng-container>
   <ng-container *m-modal-content>
     <form #relationForm="ngForm">

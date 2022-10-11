@@ -2,13 +2,14 @@ import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {Location} from '@angular/common';
-import {CodeSystemConcept} from 'terminology-lib/resources';
+import {Page} from 'terminology-lib/thesaurus';
+import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
   selector: 'twa-link-modal',
   template: `
-    <m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal(false)">
+    <m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal(false)" [mMaskClosable]="false">
       <ng-container *m-modal-header>
         {{'web.thesaurus-page.link-modal.header' | translate}}
       </ng-container>
@@ -18,13 +19,20 @@ import {CodeSystemConcept} from 'terminology-lib/resources';
           <m-form-item mName="linkName" mLabel="web.thesaurus-page.link-modal.link-name">
             <m-input [(ngModel)]="data.name" name="linkName"></m-input>
           </m-form-item>
-          <m-form-item *ngIf="!data.resourceLink" mName="link" mLabel="web.thesaurus-page.link-modal.link" required>
+          <m-form-item mName="type">
+            <nz-radio-group name="type" [(ngModel)]="data.linkType">
+              <label nz-radio-button nzValue="url">{{'web.thesaurus-page.link-modal.url' | translate}}</label>
+              <label nz-radio-button nzValue="page">{{'web.thesaurus-page.link-modal.page' | translate}}</label>
+              <label nz-radio-button nzValue="resource">{{'web.thesaurus-page.link-modal.resource' | translate}}</label>
+            </nz-radio-group>
+          </m-form-item>
+          <m-form-item *ngIf="data.linkType === 'url'" mName="link" mLabel="web.thesaurus-page.link-modal.url" required>
             <m-input [(ngModel)]="data.link" name="link" required></m-input>
           </m-form-item>
-          <m-form-item mName="resourceLink" mLabel="web.thesaurus-page.link-modal.resource-link">
-            <m-checkbox [(ngModel)]="data.resourceLink" name="link"></m-checkbox>
+          <m-form-item *ngIf="data.linkType === 'page'" mName="page" mLabel="web.thesaurus-page.link-modal.page" required>
+            <twl-page-select [(ngModel)]="data.page" name="page" [valuePrimitive]="false"></twl-page-select>
           </m-form-item>
-          <ng-container *ngIf="data.resourceLink">
+          <ng-container *ngIf="data.linkType === 'resource'">
             <m-form-item mName="resource" mLabel="web.thesaurus-page.link-modal.resource-type" required>
               <m-select [(ngModel)]="data.resourceType" name="resource" required>
                 <m-option label="CodeSystem" [value]="'code-systems'"></m-option>
@@ -33,7 +41,6 @@ import {CodeSystemConcept} from 'terminology-lib/resources';
                 <m-option label="Concept" [value]="'concepts'"></m-option>
               </m-select>
             </m-form-item>
-
             <m-form-item *ngIf="data.resourceType === 'code-systems'" mName="codeSystem" mLabel="web.thesaurus-page.link-modal.code-system" required>
               <twl-code-system-search [(ngModel)]="data.resource" name="codeSystem" valuePrimitive required></twl-code-system-search>
             </m-form-item>
@@ -65,18 +72,11 @@ export class ThesaurusLinkModalComponent {
   @Output() public linkComposed: EventEmitter<string> = new EventEmitter();
 
   public modalVisible = false;
-  public data?: {
-    name?: string,
-    link?: string,
-    resourceLink?: boolean
-    resourceType?: string
-    resource?: string | CodeSystemConcept,
-    conceptCodeSystem?: string
-  };
+  public data?: LinkModalData;
 
   @ViewChild("form") public form?: NgForm;
 
-  public constructor(public location: Location) { }
+  public constructor(public location: Location, public translateService: TranslateService) { }
 
   public toggleModal(visible: boolean): void {
     this.modalVisible = visible;
@@ -86,7 +86,7 @@ export class ThesaurusLinkModalComponent {
     }
 
     if (this.modalVisible) {
-      this.data = {};
+      this.data = {linkType: 'url'};
     }
   }
 
@@ -100,20 +100,37 @@ export class ThesaurusLinkModalComponent {
     this.modalVisible = false;
   }
 
-  private composeLink(data: any): string | undefined {
-    if (data.link) {
+  private composeLink(data: LinkModalData): string | undefined {
+    if (data.linkType === 'url') {
       return data.link;
     }
 
     const path = this.location.path();
     const url = window.location.href.replace(path, '');
-    if (data.resourceType && ['code-systems', 'value-sets', 'map-sets'].includes(data.resourceType)) {
-      return url + '/resources/' + data.resourceType + '/' + data.resource + '/view';
+
+    if (data.linkType === 'page') {
+      const content = data.page?.contents?.find(c => c.lang === this.translateService.currentLang) || data.page?.contents?.[0];
+      return url + '/thesaurus/' + content!.slug;
     }
 
-    if ('concepts' === data.resourceType) {
-      return url + '/resources/code-systems/' + data.conceptCodeSystem + '/' + data.resourceType + '/' + data.resource.code + '/view';
+    if (data.linkType === 'resource') {
+      if (data.resourceType && ['code-systems', 'value-sets', 'map-sets'].includes(data.resourceType)) {
+        return url + '/resources/' + data.resourceType + '/' + data.resource + '/view';
+      }
+      if ('concepts' === data.resourceType) {
+        return url + '/resources/code-systems/' + data.conceptCodeSystem + '/' + data.resourceType + '/' + data.resource!.code! + '/view';
+      }
     }
-
   }
+
+}
+
+export class LinkModalData {
+  public name?: string;
+  public linkType?: 'url' | 'resource' | 'page';
+  public link?: string;
+  public page?: Page;
+  public resourceType?: string;
+  public resource?: any;
+  public conceptCodeSystem?: string;
 }

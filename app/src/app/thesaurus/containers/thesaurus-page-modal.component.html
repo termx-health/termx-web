@@ -1,4 +1,4 @@
-<m-modal [(mVisible)]="modalVisible" (mClose)="closed.emit()">
+<m-modal [(mVisible)]="modalVisible" (mClose)="closed.emit()" [mMaskClosable]="false">
   <ng-container *m-modal-header>
     {{(pageId ? 'web.thesaurus-page.form.edit-header' : 'web.thesaurus-page.form.add-header') | translate}}
   </ng-container>
