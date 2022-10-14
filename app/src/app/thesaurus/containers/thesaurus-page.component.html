@@ -23,8 +23,8 @@
             <m-button [routerLink]="'edit'" style="margin-left: 0.5rem">
               <m-icon mCode="edit"></m-icon>
             </m-button>
-            <m-button style="margin-left: 0.5rem">
-              <m-icon (click)="openRelationModal(pageRelations)" mCode="file-add"></m-icon>
+            <m-button (click)="newPageModalVisible = true" style="margin-left: 0.5rem">
+              <m-icon mCode="file-add"></m-icon>
             </m-button>
           </div>
         </div>
@@ -36,7 +36,6 @@
     </m-spinner>
   </div>
 </div>
-
 
 <m-modal [(mVisible)]="contentModalData.visible" (mClose)="contentModalData.visible = false" [mMaskClosable]="false">
   <ng-container *m-modal-header>{{'web.thesaurus-page.form.content-header' | translate}}</ng-container>
@@ -62,35 +61,4 @@
   </div>
 </m-modal>
 
-<m-modal [(mVisible)]="relationModalData.visible" (mClose)="relationModalData.visible = false" [mMaskClosable]="false">
-  <ng-container *m-modal-header>{{'web.thesaurus-page.form.relation-header' | translate}}</ng-container>
-  <ng-container *m-modal-content>
-    <form #relationForm="ngForm">
-      <m-table [mData]="relationModalData.relations" mSize="small">
-        <tr *mTableHead>
-          <th>{{'entities.page-relation.source' | translate}}</th>
-          <th>{{'entities.page-relation.order-number' | translate}}</th>
-          <th class="tw-table-actions"></th>
-        </tr>
-        <tr *mTableRow="let relation; let index = index">
-          <td><twl-page-select name="source-{{index}}" [(ngModel)]="relation.sourceId" [idNe]="pageId" required></twl-page-select></td>
-          <td><m-number-input name="orderNumber-{{index}}" [(ngModel)]="relation.orderNumber"></m-number-input></td>
-          <td class="tw-table-actions"><m-button mDisplay="link" (click)="deleteRelation(index)"><m-icon mCode="delete"></m-icon></m-button></td>
-        </tr>
-        <tr>
-          <td colspan="3" style="padding: 0">
-            <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addRelation()"><m-icon [mCode]="'plus'"></m-icon></m-button>
-          </td>
-        </tr>
-        <tr *mTableNoData><td colspan="3"><m-no-data></m-no-data></td></tr>
-      </m-table>
-    </form>
-  </ng-container>
-  <div *m-modal-footer class="tw-button-group">
-    <m-button mDisplay="text" (click)="relationModalData.visible = false">{{'core.btn.close' | translate}}</m-button>
-    <m-button mDisplay="primary"
-        [mLoading]="loading['save']"
-        [disabled]="loading['init'] || isLoading"
-        (click)="saveRelations()">{{'core.btn.save' | translate}}</m-button>
-  </div>
-</m-modal>
+<twa-thesaurus-page-modal [modalVisible]="newPageModalVisible" [parentPageId]="pageId" (closed)="newPageModalVisible = false" (saved)="openPageContent($event)"></twa-thesaurus-page-modal>

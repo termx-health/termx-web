@@ -15,18 +15,13 @@ export class ThesaurusPageComponent implements OnInit {
   public pageRelations: PageRelation[] = [];
   public path?: number[];
   public loading: {[k: string]: boolean} = {};
+  public newPageModalVisible: boolean = false;
   public contentModalData: {
     visible?: boolean,
     content?: PageContent
   } = {};
 
-  public relationModalData: {
-    visible?: boolean,
-    relations?: PageRelation[]
-  } = {};
-
   @ViewChild("contentForm") public contentFrom?: NgForm;
-  @ViewChild("relationForm") public relationForm?: NgForm;
 
   public constructor(
     private router: Router,
@@ -82,42 +77,9 @@ export class ThesaurusPageComponent implements OnInit {
       .add(() => this.loading['save'] = false);
   }
 
-
-  public openRelationModal(pageRelations: PageRelation[]): void {
-    this.relationModalData = {
-      visible: true,
-      relations: pageRelations
-    };
-  }
-
-  public saveRelations(): void {
-    if (!validateForm(this.relationForm)) {
-      return;
-    }
-    this.loading['save'] = true;
-    this.thesaurusService.savePageRelations(this.relationModalData.relations!, this.pageId!)
-      .subscribe(() => {
-        this.relationModalData.visible = false;
-        this.thesaurusService.loadPage(this.pageId!).subscribe(page => this.init(page, this.route.snapshot.paramMap.get('slug')));
-      })
-      .add(() => this.loading['save'] = false);
-  }
-
   public openContent(content: PageContent): void {
     if (isDefined(content)) {
       this.router.navigate(['/thesaurus/', content.slug]);
-    }
-  }
-
-  public addRelation(): void {
-    this.relationModalData!.relations!.push(new PageRelation());
-    this.relationModalData!.relations = [...this.relationModalData!.relations!];
-  }
-
-  public deleteRelation(index: number): void {
-    if (this.relationModalData?.relations) {
-      this.relationModalData.relations.splice(index, 1);
-      this.relationModalData.relations = [...this.relationModalData.relations || []];
     }
   }
 
@@ -138,6 +100,11 @@ export class ThesaurusPageComponent implements OnInit {
   public filterLanguages = (langs: string[], lang: string, contents: PageContent[]): string[] => {
     return langs.filter(l => l !== lang && !contents.find(c => c.lang === l));
   };
+
+  public openPageContent(content: PageContent): void {
+    this.newPageModalVisible = false;
+    this.router.navigate(['/thesaurus/', content.slug, 'edit']);
+  }
 
   public get isLoading(): boolean {
     return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
