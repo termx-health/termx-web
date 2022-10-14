@@ -4,8 +4,9 @@ import {PageContent} from 'terminology-lib/thesaurus/model/page-content';
 import {TranslateService} from '@ngx-translate/core';
 import {ThesaurusService} from '../services/thesaurus.service';
 import {catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap} from 'rxjs';
-import {PageSearchParams} from 'terminology-lib/thesaurus';
+import {PageRelation, PageSearchParams} from 'terminology-lib/thesaurus';
 import {Router} from '@angular/router';
+import {compareValues} from '@kodality-web/core-util';
 
 @Component({
   selector: 'twa-thesaurus-sidebar',
@@ -85,7 +86,15 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
     if (!loadChildren) {
       return;
     }
-    this.searchChildren(page.id!).subscribe(pages => page.relationPages = pages);
+    this.searchChildren(page.id!)
+      .subscribe(pages => page.relationPages = pages.sort((p1, p2) =>
+        compareValues(this.findOrderNumber(p1.relations!, page.id!), this.findOrderNumber(p2.relations!, page.id!))));
+  }
+
+  private findOrderNumber(relations: PageRelation[], pageId: number): number {
+    const n = relations!.find(r => r.sourceId === pageId)?.orderNumber || -1;
+    console.log(n)
+    return n;
   }
 
   public searchChildren(rootId: number): Observable<Page[]> {
@@ -122,7 +131,7 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
       this.expandPath(path, page.relationPages);
     } else {
       this.searchChildren(page.id!).subscribe(children => {
-        page.relationPages = children;
+        page.relationPages = children.sort((p1, p2) => compareValues(this.findOrderNumber(p1.relations!, page.id!), this.findOrderNumber(p2.relations!, page.id!)));
         this.expandPath(path, page.relationPages);
       });
     }
