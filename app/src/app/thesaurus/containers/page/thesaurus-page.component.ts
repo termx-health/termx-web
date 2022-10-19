@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Page, PageContent, PageRelation} from 'terminology-lib/thesaurus';
-import {ThesaurusService} from '../services/thesaurus.service';
+import {Page, PageContent, PageLink} from 'lib/src/thesaurus';
+import {ThesaurusService} from '../../services/thesaurus.service';
 import {isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 
@@ -12,7 +12,7 @@ export class ThesaurusPageComponent implements OnInit {
   public pageId?: number;
   public pageContent?: PageContent;
   public pageContents: PageContent[] = [];
-  public pageRelations: PageRelation[] = [];
+  public pageLinks: PageLink[] = [];
   public path?: number[];
   public loading: {[k: string]: boolean} = {};
   public newPageModalVisible: boolean = false;
@@ -39,7 +39,7 @@ export class ThesaurusPageComponent implements OnInit {
         this.thesaurusService.searchPages({slug: slug, limit: 1}).subscribe(pages => {
           const page = pages.data[0];
           if (!page) {
-            this.router.navigate(['/thesaurus']);
+            this.router.navigate(['/thesaurus/pages']);
           } else {
             this.init(page, slug);
           }
@@ -52,7 +52,7 @@ export class ThesaurusPageComponent implements OnInit {
     this.pageId = page && page.id || undefined;
     this.pageContent = page && page.contents!.find(c => c.slug === slug) || undefined;
     this.pageContents = page && page.contents || [];
-    this.pageRelations = page && page.relations || [];
+    this.pageLinks = page && page.links || [];
     this.path = [];
 
     if (page) {
@@ -73,13 +73,13 @@ export class ThesaurusPageComponent implements OnInit {
     }
     this.loading['save'] = true;
     this.thesaurusService.savePageContent(this.contentModalData.content!, this.pageId!)
-      .subscribe(content => this.router.navigate(['/thesaurus/', content.slug, 'edit']))
+      .subscribe(content => this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']))
       .add(() => this.loading['save'] = false);
   }
 
   public openContent(content: PageContent): void {
     if (isDefined(content)) {
-      this.router.navigate(['/thesaurus/', content.slug]);
+      this.router.navigate(['/thesaurus/pages/', content.slug]);
     }
   }
 
@@ -103,7 +103,7 @@ export class ThesaurusPageComponent implements OnInit {
 
   public openPageContent(content: PageContent): void {
     this.newPageModalVisible = false;
-    this.router.navigate(['/thesaurus/', content.slug, 'edit']);
+    this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']);
   }
 
   public get isLoading(): boolean {

@@ -7,6 +7,8 @@ import {PageSearchParams} from '../model/page-search-params';
 import {PageContentSearchParams} from '../model/page-content-search-params';
 import {PageContent} from '../model/page-content';
 import {TERMINOLOGY_API} from '../../terminology-lib.token';
+import {StructureDefinition} from '../model/structure-definition';
+import {StructureDefinitionSearchParams} from '../model/structure-definition-search-params';
 
 @Injectable()
 export class ThesaurusLibService {
@@ -30,5 +32,13 @@ export class ThesaurusLibService {
 
   public getPath(pageId: number): Observable<number[]> {
     return this.http.get<number[]>(`${this.baseUrl}/pages/${pageId}/path`);
+  }
+
+  public loadStructureDefinition(id: number): Observable<StructureDefinition> {
+    return this.http.get<StructureDefinition>(`${this.baseUrl}/structure-definitions/${id}`);
+  }
+
+  public searchStructureDefinitions(params: StructureDefinitionSearchParams = {}): Observable<SearchResult<StructureDefinition>> {
+    return this.http.get<SearchResult<StructureDefinition>>(`${this.baseUrl}/structure-definitions`, {params: SearchHttpParams.build(params)});
   }
 }

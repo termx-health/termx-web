@@ -1,10 +1,10 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Page} from 'terminology-lib/thesaurus/model/page';
-import {PageContent} from 'terminology-lib/thesaurus/model/page-content';
+import {Page} from 'lib/src/thesaurus/model/page';
+import {PageContent} from 'lib/src/thesaurus/model/page-content';
 import {TranslateService} from '@ngx-translate/core';
-import {ThesaurusService} from '../services/thesaurus.service';
+import {ThesaurusService} from '../../services/thesaurus.service';
 import {catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap} from 'rxjs';
-import {PageRelation, PageSearchParams} from 'terminology-lib/thesaurus';
+import {PageLink, PageSearchParams} from 'lib/src/thesaurus';
 import {Router} from '@angular/router';
 import {compareValues} from '@kodality-web/core-util';
 
@@ -81,20 +81,18 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
   }
 
   public loadPageChildren(page: Page, loadChildren: boolean): void {
-    this.router.navigate(['/thesaurus/', this.localizedContent(page)?.slug]);
+    this.router.navigate(['/thesaurus/pages/', this.localizedContent(page)?.slug]);
 
     if (!loadChildren) {
       return;
     }
     this.searchChildren(page.id!)
-      .subscribe(pages => page.relationPages = pages.sort((p1, p2) =>
-        compareValues(this.findOrderNumber(p1.relations!, page.id!), this.findOrderNumber(p2.relations!, page.id!))));
+      .subscribe(pages => page.linkPages = pages.sort((p1, p2) =>
+        compareValues(this.findOrderNumber(p1.links!, page.id!), this.findOrderNumber(p2.links!, page.id!))));
   }
 
-  private findOrderNumber(relations: PageRelation[], pageId: number): number {
-    const n = relations!.find(r => r.sourceId === pageId)?.orderNumber || -1;
-    console.log(n)
-    return n;
+  private findOrderNumber(links: PageLink[], pageId: number): number {
+    return links!.find(l => l.sourceId === pageId)?.orderNumber || -1;
   }
 
   public searchChildren(rootId: number): Observable<Page[]> {
@@ -111,12 +109,12 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
   public openPage(page: Page): void {
     const content = this.localizedContent(page);
     this.modalVisible = false;
-    this.router.navigate(['/thesaurus/', content!.slug]);
+    this.router.navigate(['/thesaurus/pages/', content!.slug]);
   }
 
   public openPageContent(content: PageContent): void {
     this.modalVisible = false;
-    this.router.navigate(['/thesaurus/', content.slug, 'edit']);
+    this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']);
   }
 
   private expandPath(path: number[], pages: Page[]): void {
@@ -127,12 +125,12 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
 
     page.active = page.active || path.length > 1;
     path.shift();
-    if (page.relationPages) {
-      this.expandPath(path, page.relationPages);
+    if (page.linkPages) {
+      this.expandPath(path, page.linkPages);
     } else {
       this.searchChildren(page.id!).subscribe(children => {
-        page.relationPages = children.sort((p1, p2) => compareValues(this.findOrderNumber(p1.relations!, page.id!), this.findOrderNumber(p2.relations!, page.id!)));
-        this.expandPath(path, page.relationPages);
+        page.linkPages = children.sort((p1, p2) => compareValues(this.findOrderNumber(p1.links!, page.id!), this.findOrderNumber(p2.links!, page.id!)));
+        this.expandPath(path, page.linkPages);
       });
     }
   }

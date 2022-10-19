@@ -2,8 +2,8 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PageContent} from 'terminology-lib/thesaurus';
-import {ThesaurusService} from '../services/thesaurus.service';
+import {PageContent} from 'lib/src/thesaurus';
+import {ThesaurusService} from '../../services/thesaurus.service';
 
 @Component({
   templateUrl: 'thesaurus-page-edit.component.html'
@@ -40,7 +40,7 @@ export class ThesaurusPageEditComponent implements OnInit {
   }
 
   public closeEditMode(): void {
-    this.router.navigate(['/thesaurus/', this.route.snapshot.paramMap.get('slug')]);
+    this.router.navigate(['/thesaurus/pages/', this.route.snapshot.paramMap.get('slug')]);
   }
 
   public get isLoading(): boolean {
@@ -52,7 +52,7 @@ export class ThesaurusPageEditComponent implements OnInit {
     this.thesaurusService.searchPageContents({slug: slug, limit: 1}).subscribe(contents => {
       const content = contents.data[0];
       if (!content) {
-        this.router.navigate(['/thesaurus']);
+        this.router.navigate(['/thesaurus/pages']);
       } else {
         this.pageContent = content;
         this.pageId = content.pageId;
@@ -68,6 +68,6 @@ export class ThesaurusPageEditComponent implements OnInit {
       this.pageContent = content;
       this.loading['update'] = false;
     }, 200);
-    this.router.navigate(['/thesaurus/', content.slug, 'edit']);
+    this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']);
   }
 }

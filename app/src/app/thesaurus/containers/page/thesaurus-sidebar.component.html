@@ -24,7 +24,7 @@
           [(nzActive)]="page['active']"
           (nzActiveChange)="loadPageChildren(page, $event)"
           [class]="page | apply:getLinkStyle">
-        <ng-container *ngTemplateOutlet="pageCollapse; context: {pages: page.relationPages}"></ng-container>
+        <ng-container *ngTemplateOutlet="pageCollapse; context: {pages: page.linkPages}"></ng-container>
       </nz-collapse-panel>
     </ng-template>
   </nz-collapse>

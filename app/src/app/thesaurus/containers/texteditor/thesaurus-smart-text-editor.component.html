@@ -1,4 +1,4 @@
-<div class="input-wrapper">
+<div class="input-wrapper" *ngIf="!viewMode">
   <div #dropreference id="textarea">
     <div style="display: flex">
       <ng-container *ngIf="valueType === 'markdown'">
@@ -9,9 +9,6 @@
             (keyup)="onKeyUp($event)"
             (blur)="onTouched()"
             (ngModelChange)="fireOnChange($event)"></twa-thesaurus-textarea>
-        <m-card *ngIf="showPreview" style="width: 100%; margin-left: 1rem; background: #f7f7f7; box-shadow: none;">
-          <m-markdown [mData]="value"></m-markdown>
-        </m-card>
       </ng-container>
 
       <ng-container *ngIf="valueType === 'html'">
@@ -22,10 +19,11 @@
             (keyup)="onKeyUp($event)"
             (blur)="onTouched()"
             (ngModelChange)="fireOnChange($event)"></m-rich-text-editor>
-        <m-card *ngIf="showPreview" style="width: 100%; margin-left: 1rem; background: #f7f7f7; box-shadow: none;">
-          <m-rich-text-editor style="width: 100%" [(ngModel)]="value" mViewMode></m-rich-text-editor>
-        </m-card>
       </ng-container>
+
+      <m-card *ngIf="showPreview" style="width: 100%; margin-left: 1rem; background: #f7f7f7; box-shadow: none;">
+        <twa-smart-text-editor-view [value]="value" [valueType]="valueType"></twa-smart-text-editor-view>
+      </m-card>
     </div>
   </div>
   <twa-dropdown [reference]="dropreference">
@@ -36,3 +34,6 @@
 </div>
 
 <twa-link-modal #linkModal (linkComposed)="insertOption($event)"></twa-link-modal>
+<twa-structure-definition-modal #structureDefinitionModal (structureDefinitionComposed)="insertOption($event)"></twa-structure-definition-modal>
+
+<twa-smart-text-editor-view *ngIf="viewMode" [value]="value" [valueType]="valueType"></twa-smart-text-editor-view>

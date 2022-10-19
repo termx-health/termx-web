@@ -1,0 +1,34 @@
+<div nz-row nzJustify="center">
+  <div nz-col [nzLg]="18" [nzXs]="24">
+    <m-spinner [mLoading]="loading['save']">
+      <m-card [mTitle]="mode === 'edit' ? 'web.structure-definition.form.edit-header' : 'web.structure-definition.form.add-header'" [mShowSkeleton]="loading['init']" autofocus>
+        <form #form="ngForm" *ngIf="structureDefinition">
+          <m-form-item mName="code" mLabel="entities.structure-definition.code" required>
+            <m-input name="code" [(ngModel)]="structureDefinition.code" required></m-input>
+          </m-form-item>
+
+          <m-form-item mName="url" mLabel="entities.structure-definition.url" required>
+            <m-input name="url" [(ngModel)]="structureDefinition.url" required></m-input>
+          </m-form-item>
+
+          <m-form-item mName="contentType" mLabel="entities.structure-definition.content-type" required>
+            {{structureDefinition.contentType}}
+          </m-form-item>
+
+          <m-form-item mName="contentFormat" mLabel="entities.structure-definition.content-format" required>
+            {{structureDefinition.contentFormat}}
+          </m-form-item>
+
+          <m-form-item mName="content" mLabel="entities.structure-definition.content" required>
+            <m-textarea name="content" [(ngModel)]="structureDefinition.content" required></m-textarea>
+          </m-form-item>
+        </form>
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</div>

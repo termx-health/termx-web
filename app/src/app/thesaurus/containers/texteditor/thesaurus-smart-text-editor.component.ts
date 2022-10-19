@@ -3,8 +3,9 @@ import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ThesaurusDropdownOptionComponent, OptionItem} from './thesaurus-dropdown-option.component';
 import {ThesaurusDropdownComponent} from './thesaurus-dropdown.component';
-import {isDefined} from '@kodality-web/core-util';
-import {ThesaurusLinkModalComponent} from './thesaurus-link-modal.component';
+import {BooleanInput, isDefined} from '@kodality-web/core-util';
+import {ThesaurusLinkModalComponent} from './modal/thesaurus-link-modal.component';
+import {ThesaurusStructureDefinitionModalComponent} from './modal/thesaurus-structure-definition-modal.component';
 
 @Component({
   selector: 'twa-smart-text-editor',
@@ -26,12 +27,14 @@ import {ThesaurusLinkModalComponent} from './thesaurus-link-modal.component';
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ThesaurusSmartTextEditorComponent), multi: true}]
 })
 export class ThesaurusSmartTextEditorComponent implements AfterViewInit, ControlValueAccessor {
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public valueType?: 'html' | 'markdown';
   @Input() public showPreview:boolean = false;
   public value?: string;
   public range?: Range;
   public popupItems: OptionItem[] = [
     {id: 'link', name: 'Link', icon: 'link', description: 'Insert a link'},
+    {id: 'structure-definition', name: 'Structure definition', icon: 'file-text', description: 'Insert structure definition'},
     {id: 'bullet-list', name: 'Bullet list', icon: 'unordered-list', description: 'Create an unordered list', result: '\n* '},
     {id: 'numbered-list', name: 'Numbered list', icon: 'ordered-list', description: 'Create an ordered list', result: '\n1. '},
     {id: 'divider', name: 'Divider', icon: 'line', description: 'Separate content with horizontal line', result: '\n*** '},
@@ -41,6 +44,7 @@ export class ThesaurusSmartTextEditorComponent implements AfterViewInit, Control
   ];
 
   @ViewChild("linkModal") public linkModal?: ThesaurusLinkModalComponent;
+  @ViewChild("structureDefinitionModal") public structureDefinitionModal?: ThesaurusStructureDefinitionModalComponent;
   @ViewChild(ThesaurusDropdownComponent) public dropdown?: ThesaurusDropdownComponent;
   @ViewChildren(ThesaurusDropdownOptionComponent) public options?: QueryList<ThesaurusDropdownOptionComponent>;
 
@@ -132,6 +136,10 @@ export class ThesaurusSmartTextEditorComponent implements AfterViewInit, Control
   private handleAction(itemId: string): void {
     if (itemId === 'link') {
       this.linkModal?.toggleModal(true);
+    }
+
+    if (itemId === 'structure-definition') {
+      this.structureDefinitionModal?.toggleModal(true);
     }
   }
 

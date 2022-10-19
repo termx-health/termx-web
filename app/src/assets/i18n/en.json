@@ -591,6 +591,22 @@
         "map-set": "MapSet",
         "concept-code-system": "Concept's CodeSystem",
         "concept": "Concept"
+      },
+      "structure-definition-modal": {
+        "header": "Choose template",
+        "simplifier": "Simplifier",
+        "structure-definition": "Structure definition",
+        "url": "Simplifier definition URL",
+        "base-definition-url": "Base definition URL"
+      }
+    },
+    "structure-definition": {
+      "list": {
+        "add-structure-definition": "Add structure definition"
+      },
+      "form": {
+        "add-header": "Add structure definition",
+        "edit-header": "Edit structure definition"
       }
     }
   },
@@ -855,7 +871,7 @@
     "page": {
       "status": "Status",
       "contents": "Contents",
-      "relations": "Relations"
+      "links": "Parent pages"
     },
     "page-content": {
       "name": "Name",
@@ -863,10 +879,17 @@
       "content": "Content",
       "content-type": "Content type"
     },
-    "page-relation": {
+    "page-link": {
       "target": "Target",
       "source": "Source",
       "order-number": "Order number"
+    },
+    "structure-definition": {
+      "url": "URL",
+      "code": "Code",
+      "content": "Content",
+      "content-type": "Content type",
+      "content-format": "Content format"
     }
   }
 }

@@ -29,8 +29,7 @@
           </div>
         </div>
         <ng-container *ngIf="pageContent">
-          <m-markdown *ngIf="pageContent.contentType === 'markdown'" [mData]="pageContent.content"></m-markdown>
-          <m-rich-text-editor *ngIf="pageContent.contentType === 'html'" [(ngModel)]="pageContent.content" mViewMode></m-rich-text-editor>
+          <twa-smart-text-editor [(ngModel)]="pageContent.content" [valueType]="pageContent.contentType" viewMode></twa-smart-text-editor>
         </ng-container>
       </m-card>
     </m-spinner>

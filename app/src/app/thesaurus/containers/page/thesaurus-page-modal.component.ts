@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {Page, PageContent, PageRelation} from 'terminology-lib/thesaurus';
-import {ThesaurusService} from '../services/thesaurus.service';
+import {Page, PageContent, PageLink} from 'lib/src/thesaurus';
+import {ThesaurusService} from '../../services/thesaurus.service';
 
 @Component({
   selector: 'twa-thesaurus-page-modal',
@@ -29,7 +29,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
   public ngOnInit(): void {
     this.page = new Page();
     this.page.status = 'draft';
-    this.page.relations = [];
+    this.page.links = [];
     this.content = {contentType: 'markdown'};
   }
 
@@ -39,7 +39,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
       this.loadPage(this.pageId!);
     }
     if (changes['parentPageId'] && this.parentPageId) {
-      this.page!.relations = [{sourceId: this.parentPageId, orderNumber: 1}];
+      this.page!.links = [{sourceId: this.parentPageId, orderNumber: 1}];
     }
   }
 
@@ -61,15 +61,15 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
       .add(() => this.loading['save'] = false);
   }
 
-  public addRelation(): void {
-    this.page!.relations!.push(new PageRelation());
-    this.page!.relations = [...this.page!.relations!];
+  public addLink(): void {
+    this.page!.links!.push(new PageLink());
+    this.page!.links = [...this.page!.links!];
   }
 
-  public deleteRelation(index: number): void {
-    if (this.page?.relations) {
-      this.page.relations.splice(index, 1);
-      this.page.relations = [...this.page.relations || []];
+  public deleteLink(index: number): void {
+    if (this.page?.links) {
+      this.page.links.splice(index, 1);
+      this.page.links = [...this.page.links || []];
     }
   }
 

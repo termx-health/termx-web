@@ -1,0 +1,33 @@
+<ng-container *ngFor="let v of processedValue">
+  <m-markdown *ngIf="v.type === 'text' && valueType === 'markdown'" [mData]="v.value"></m-markdown>
+  <m-rich-text-editor *ngIf="v.type === 'text' && valueType === 'html'" [(ngModel)]="v.value" mViewMode></m-rich-text-editor>
+
+  <ng-container *ngIf="v.type === 'simplifier'">
+
+    <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="v.value">
+      <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodeIndentLine>
+        <nz-tree-node-option>
+            <label>{{ node.name }}</label>
+            <label style="color: grey; margin-left: 1rem">{{ node.description }}</label>
+        </nz-tree-node-option>
+      </nz-tree-node>
+
+      <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodeIndentLine>
+        <nz-tree-node-toggle>
+          <span
+              nz-icon
+              [nzType]="treeControl.isExpanded(node) ? 'minus-square' : 'plus-square'"
+              nzTheme="outline"
+          ></span>
+        </nz-tree-node-toggle>
+        <nz-tree-node-option>
+          <div style="display: flex">
+           <label>{{ node.name }}</label>
+           <label style="color: grey; margin-left: 1rem">{{ node.description }}</label>
+          </div>
+        </nz-tree-node-option>
+      </nz-tree-node>
+    </nz-tree-view>
+
+  </ng-container>
+</ng-container>

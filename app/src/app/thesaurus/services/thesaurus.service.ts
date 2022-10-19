@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {ThesaurusLibService} from 'terminology-lib/thesaurus/services/thesaurus-lib.service';
 import {Observable} from 'rxjs';
 import {isDefined} from '@kodality-web/core-util';
-import {Page, PageContent, PageRelation} from 'terminology-lib/thesaurus';
+import {Page, PageContent, StructureDefinition} from 'terminology-lib/thesaurus';
 
 @Injectable()
 export class ThesaurusService extends ThesaurusLibService {
@@ -21,7 +21,14 @@ export class ThesaurusService extends ThesaurusLibService {
     return this.http.post(`${this.baseUrl}/pages/${pageId}/contents`, content);
   }
 
-  public savePageRelations(relations: PageRelation[], pageId: number): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/pages/${pageId}/relations`, relations);
+  public saveStructureDefinition(structureDefinition: StructureDefinition): Observable<StructureDefinition> {
+    if (isDefined(structureDefinition.id)) {
+      return this.http.put(`${this.baseUrl}/structure-definitions/${structureDefinition.id}`, structureDefinition);
+    }
+    return this.http.post(`${this.baseUrl}/structure-definitions`, structureDefinition);
+  }
+
+  public deleteStructureDefinition(id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/structure-definitions/${id}`);
   }
 }

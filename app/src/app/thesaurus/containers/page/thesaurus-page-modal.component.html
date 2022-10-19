@@ -34,25 +34,25 @@
         </m-select>
       </m-form-item>
 
-      <m-form-item mLabel="entities.page.relations">
-        <m-table [mData]="page.relations" mSize="small">
+      <m-form-item mLabel="entities.page.links">
+        <m-table [mData]="page.links" mSize="small">
           <tr *mTableHead>
-            <th>{{'entities.page-relation.source' | translate}}</th>
-            <th>{{'entities.page-relation.order-number' | translate}}</th>
+            <th>{{'entities.page-link.source' | translate}}</th>
+            <th>{{'entities.page-link.order-number' | translate}}</th>
             <th class="tw-table-actions"></th>
           </tr>
-          <tr *mTableRow="let relation; let index = index">
-            <td><twl-page-select name="source-{{index}}" [(ngModel)]="relation.sourceId" [idNe]="page.id" required></twl-page-select></td>
-            <td><m-number-input name="orderNumber-{{index}}" [(ngModel)]="relation.orderNumber"></m-number-input></td>
+          <tr *mTableRow="let link; let index = index">
+            <td><twl-page-select name="source-{{index}}" [(ngModel)]="link.sourceId" [idNe]="page.id" required></twl-page-select></td>
+            <td><m-number-input name="orderNumber-{{index}}" [(ngModel)]="link.orderNumber"></m-number-input></td>
             <td class="tw-table-actions">
-              <m-button mDisplay="link" (click)="deleteRelation(index)">
+              <m-button mDisplay="link" (click)="deleteLink(index)">
                 <m-icon mCode="delete"></m-icon>
               </m-button>
             </td>
           </tr>
           <tr>
             <td colspan="4" style="padding: 0">
-              <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addRelation()"><m-icon [mCode]="'plus'"></m-icon></m-button>
+              <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addLink()"><m-icon [mCode]="'plus'"></m-icon></m-button>
             </td>
           </tr>
           <tr *mTableNoData><td colspan="5"><m-no-data></m-no-data></td></tr>

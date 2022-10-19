@@ -124,6 +124,27 @@
       "et": "Thesaurus"
     },
     "icon": "file-search",
-    "link": "thesaurus"
+    "privileges": ["*.Thesaurus.view"],
+    "link": "thesaurus/pages",
+    "items": [
+      {
+        "label": {
+          "en": "Thesaurus",
+          "et": "Thesaurus"
+        },
+        "icon": "file-search",
+        "link": "thesaurus/pages",
+        "privileges": ["*.Thesaurus.view"]
+      },
+      {
+        "label": {
+          "en": "Structure definitions",
+          "et": "Struktuuri määratlused"
+        },
+        "icon": "file",
+        "link": "thesaurus/structure-definitions",
+        "privileges": ["*.Thesaurus.view"]
+      }
+    ]
   }
 ]

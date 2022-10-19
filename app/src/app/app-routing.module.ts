@@ -15,7 +15,7 @@ const routes: Routes = [
   {path: 'integration', children: INTEGRATION_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view', '*.Snomed.view']}, canActivate: [AutoLoginAllRoutesGuard]},
   {path: 'privileges', children: PRIVILEGES_ROUTES, data: {privilege: ['*.Privilege.view']}, canActivate: [AutoLoginAllRoutesGuard]},
   {path: 'tools', children: TOOLS_ROUTES, canActivate: [AutoLoginAllRoutesGuard]},
-  {path: 'thesaurus', children: THESAURUS_ROUTES, canActivate: [AutoLoginAllRoutesGuard]},
+  {path: 'thesaurus', children: THESAURUS_ROUTES, data: {privilege: ['*.Thesaurus.view']}, canActivate: [AutoLoginAllRoutesGuard]},
   {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['*.MeasurementUnit.view']}, canActivate: [AutoLoginAllRoutesGuard]},
   {path: "**", redirectTo: 'resources'},
 ];

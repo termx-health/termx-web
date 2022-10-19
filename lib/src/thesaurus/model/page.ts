@@ -1,13 +1,13 @@
 import {PageContent} from './page-content';
-import {PageRelation} from './page-relation';
+import {PageLink} from './page-link';
 
 export class Page {
   public id?: number;
   public status?: string;
   public leaf?: boolean;
   public contents?: PageContent[];
-  public relations?: PageRelation[];
+  public links?: PageLink[];
 
-  public relationPages?: Page[];
+  public linkPages?: Page[];
   public active?: boolean;
 }
