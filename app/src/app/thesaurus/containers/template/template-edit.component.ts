@@ -3,16 +3,16 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgForm} from '@angular/forms';
 import {isDefined, validateForm} from '@kodality-web/core-util';
-import {StructureDefinition} from 'terminology-lib/thesaurus';
-import {StructureDefinitionService} from '../../services/structure-definition.service';
+import {Template} from 'terminology-lib/thesaurus';
+import {TemplateService} from '../../services/template.service';
 
 
 @Component({
-  templateUrl: 'structure-definition-edit.component.html'
+  templateUrl: 'template-edit.component.html'
 })
-export class StructureDefinitionEditComponent implements OnInit {
+export class TemplateEditComponent implements OnInit {
   public id?: number | null;
-  public structureDefinition?: StructureDefinition;
+  public template?: Template;
 
   public loading: {[k: string]: boolean} = {};
   public mode: 'edit' | 'add' = 'add';
@@ -20,7 +20,7 @@ export class StructureDefinitionEditComponent implements OnInit {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
-    private structureDefinitionService: StructureDefinitionService,
+    private templateService: TemplateService,
     private route: ActivatedRoute,
     private location: Location
   ) {}
@@ -30,14 +30,14 @@ export class StructureDefinitionEditComponent implements OnInit {
     this.mode = this.id ? 'edit' : 'add';
 
     if (this.mode === 'add') {
-      this.structureDefinition = new StructureDefinition();
-      this.structureDefinition.contentType = 'profile';
-      this.structureDefinition.contentFormat = 'fsh';
+      this.template = new Template();
+      this.template.contentType = 'markdown';
+      this.template.contents = [{lang: 'en'}, {lang: 'et'}, {lang: 'ru'}];
     }
 
     if (this.mode === 'edit') {
       this.loading ['init'] = true;
-      this.structureDefinitionService.load(this.id!).subscribe(sd => this.structureDefinition = sd).add(() => this.loading ['init'] = false);
+      this.templateService.loadTemplate(this.id!).subscribe(t => this.template = t).add(() => this.loading ['init'] = false);
     }
   }
 
@@ -46,12 +46,22 @@ export class StructureDefinitionEditComponent implements OnInit {
       return;
     }
     this.loading['save'] = true;
-    this.structureDefinitionService.save(this.structureDefinition!)
+    this.templateService.saveTemplate(this.template!)
       .subscribe(() => this.location.back())
       .add(() => this.loading['save'] = false);
   }
 
   public validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
+  }
+
+  public flagIcon(lang?: string): string | undefined {
+    const getEmoji = (countryCode: string): string => {
+      const codePoints = countryCode.toUpperCase().split('').map(char => 127397 + char.charCodeAt(0));
+      return String.fromCodePoint(...codePoints);
+    };
+
+    const langCountryMap: {[key: string]: string} = {'en': 'gb', 'et': 'ee'};
+    return lang ? getEmoji(langCountryMap[lang] || lang) : undefined;
   }
 }

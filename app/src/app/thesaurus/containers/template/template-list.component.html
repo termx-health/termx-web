@@ -1,0 +1,41 @@
+<m-card>
+  <div *m-card-header class="m-items-between">
+    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+    <div class="m-items-middle">
+      <twa-add-button *twaPrivileged="'*.Thesaurus.edit'" [routerLink]="['../templates/add']">
+        {{'web.template.list.add-template' | translate}}
+      </twa-add-button>
+    </div>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+    <tr *mTableHead>
+      <th mColumnKey="code">{{'entities.template.code' | translate}}</th>
+      <th>{{'entities.template.names' | translate}}</th>
+      <th *twaPrivileged="'*.Thesaurus.edit'" class="tw-table-actions"></th>
+    </tr>
+
+    <tr *mTableRow="let temp">
+      <td>
+        <a *ngIf="'*.Thesaurus.edit' | twaHasAnyPrivilege; else view" [routerLink]="['../templates',temp.id,'edit']">{{temp.code}}</a>
+        <ng-template #view>
+          <a [routerLink]="['../templates',temp.id,'view']">{{temp.code}}</a>
+        </ng-template>
+      </td>
+      <td>{{temp.names | localName}}</td>
+      <td *twaPrivileged="'*.Thesaurus.edit'" class="tw-table-actions">
+        <m-dropdown>
+          <ng-container *twaPrivileged="'*.Thesaurus.edit'">
+            <a *m-dropdown-item (click)="deleteTemplate(temp.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
+          </ng-container>
+        </m-dropdown>
+      </td>
+    </tr>
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>
+

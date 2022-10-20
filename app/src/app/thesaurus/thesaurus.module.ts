@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {SharedModule} from '../core/shared/shared.module';
 import {ThesaurusSidebarComponent} from './containers/page/thesaurus-sidebar.component';
-import {ThesaurusService} from './services/thesaurus.service';
+import {PageService} from './services/page.service';
 import {ThesaurusPageComponent} from './containers/page/thesaurus-page.component';
 import {ThesaurusPageEditComponent} from './containers/page/thesaurus-page-edit.component';
 import {ThesaurusLibModule} from 'terminology-lib/thesaurus';
@@ -18,6 +18,11 @@ import {ThesaurusStructureDefinitionModalComponent} from './containers/textedito
 import {ThesaurusSmartTextEditorViewComponent} from './containers/texteditor/thesaurus-smart-text-editor-view.component';
 import {StructureDefinitionListComponent} from './containers/structuredefinition/structure-definition-list.component';
 import {StructureDefinitionEditComponent} from './containers/structuredefinition/structure-definition-edit.component';
+import {StructureDefinitionService} from './services/structure-definition.service';
+import {TemplateService} from './services/template.service';
+import {TemplateListComponent} from './containers/template/template-list.component';
+import {TemplateEditComponent} from './containers/template/template-edit.component';
+import {IntegrationLibModule} from 'terminology-lib/integration';
 
 export const THESAURUS_ROUTES: Routes = [
   {path: 'pages', component: ThesaurusPageComponent},
@@ -25,7 +30,10 @@ export const THESAURUS_ROUTES: Routes = [
   {path: 'pages/:slug/edit', component: ThesaurusPageEditComponent, data: {privilege: ['*.Thesaurus.edit']}},
   {path: 'structure-definitions', component: StructureDefinitionListComponent},
   {path: 'structure-definitions/add', component: StructureDefinitionEditComponent, data: {privilege: ['*.Thesaurus.edit']}},
-  {path: 'structure-definitions/:id/edit', component: StructureDefinitionEditComponent, data: {privilege: ['*.Thesaurus.edit']}}
+  {path: 'structure-definitions/:id/edit', component: StructureDefinitionEditComponent, data: {privilege: ['*.Thesaurus.edit']}},
+  {path: 'templates', component: TemplateListComponent},
+  {path: 'templates/add', component: TemplateEditComponent, data: {privilege: ['*.Thesaurus.edit']}},
+  {path: 'templates/:id/edit', component: TemplateEditComponent, data: {privilege: ['*.Thesaurus.edit']}}
 ];
 
 @NgModule({
@@ -34,7 +42,8 @@ export const THESAURUS_ROUTES: Routes = [
     ThesaurusLibModule,
 
     PortalModule,
-    ResourcesLibModule
+    ResourcesLibModule,
+    IntegrationLibModule
   ],
   declarations: [
     ThesaurusSidebarComponent,
@@ -50,9 +59,12 @@ export const THESAURUS_ROUTES: Routes = [
     ThesaurusSmartTextEditorViewComponent,
 
     StructureDefinitionListComponent,
-    StructureDefinitionEditComponent
+    StructureDefinitionEditComponent,
+
+    TemplateListComponent,
+    TemplateEditComponent
   ],
-  providers: [ThesaurusService]
+  providers: [PageService, StructureDefinitionService, TemplateService]
 })
 export class ThesaurusModule {
 }

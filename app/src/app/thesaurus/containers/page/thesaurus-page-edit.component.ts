@@ -3,7 +3,7 @@ import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageContent} from 'lib/src/thesaurus';
-import {ThesaurusService} from '../../services/thesaurus.service';
+import {PageService} from '../../services/page.service';
 
 @Component({
   templateUrl: 'thesaurus-page-edit.component.html'
@@ -18,7 +18,7 @@ export class ThesaurusPageEditComponent implements OnInit {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
-    private thesaurusService: ThesaurusService,
+    private pageService: PageService,
     private router: Router,
     private route: ActivatedRoute) {}
 
@@ -36,7 +36,7 @@ export class ThesaurusPageEditComponent implements OnInit {
       return;
     }
     this.loading['save'] = true;
-    this.thesaurusService.savePageContent(this.pageContent!, this.pageId!).subscribe(() => this.closeEditMode()).add(() => this.loading['save'] = false);
+    this.pageService.savePageContent(this.pageContent!, this.pageId!).subscribe(() => this.closeEditMode()).add(() => this.loading['save'] = false);
   }
 
   public closeEditMode(): void {
@@ -49,7 +49,7 @@ export class ThesaurusPageEditComponent implements OnInit {
 
   private loadContent(slug: string): void {
     this.loading['init'] = true;
-    this.thesaurusService.searchPageContents({slug: slug, limit: 1}).subscribe(contents => {
+    this.pageService.searchPageContents({slug: slug, limit: 1}).subscribe(contents => {
       const content = contents.data[0];
       if (!content) {
         this.router.navigate(['/thesaurus/pages']);

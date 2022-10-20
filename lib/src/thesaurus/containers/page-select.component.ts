@@ -4,7 +4,7 @@ import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxj
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {Page} from '../model/page';
-import {ThesaurusLibService} from '../services/thesaurus-lib.service';
+import {PageLibService} from '../services/page-lib.service';
 import {PageSearchParams} from '../model/page-search-params';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -28,7 +28,7 @@ export class PageSelectComponent implements OnInit, ControlValueAccessor {
   public onTouched = (x: any) => x;
 
   public constructor(
-    private thesaurusService: ThesaurusLibService,
+    private pageService: PageLibService,
     private translateService: TranslateService,
     private destroy$: DestroyService
   ) {}
@@ -56,7 +56,7 @@ export class PageSelectComponent implements OnInit, ControlValueAccessor {
     q.limit = 100;
 
     this.loading['search'] = true;
-    return this.thesaurusService.searchPages(q).pipe(
+    return this.pageService.searchPages(q).pipe(
       takeUntil(this.destroy$),
       map(ca => group(ca.data, c => c.id!)),
       catchError(() => of(this.data)),
@@ -67,7 +67,7 @@ export class PageSelectComponent implements OnInit, ControlValueAccessor {
   private loadPage(id?: number): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.thesaurusService.loadPage(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
+      this.pageService.loadPage(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
         this.data = {...(this.data || {}), [c.id!]: c};
       }).add(() => this.loading['load'] = false);
     }

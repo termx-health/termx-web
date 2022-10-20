@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core'
 import {Page} from 'lib/src/thesaurus/model/page';
 import {PageContent} from 'lib/src/thesaurus/model/page-content';
 import {TranslateService} from '@ngx-translate/core';
-import {ThesaurusService} from '../../services/thesaurus.service';
+import {PageService} from '../../services/page.service';
 import {catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap} from 'rxjs';
 import {PageLink, PageSearchParams} from 'lib/src/thesaurus';
 import {Router} from '@angular/router';
@@ -50,7 +50,7 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
   public constructor(
     private router: Router,
     private translateService: TranslateService,
-    private thesaurusService: ThesaurusService
+    private pageService: PageService
   ) { }
 
   public ngOnInit(): void {
@@ -77,7 +77,7 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
     q.textContains = this.searchInput || undefined;
     q.root = !this.searchInput || undefined;
     q.limit = this.DEFAULT_CONCEPT_LIMIT;
-    return this.thesaurusService.searchPages(q).pipe(map(r => r.data));
+    return this.pageService.searchPages(q).pipe(map(r => r.data));
   }
 
   public loadPageChildren(page: Page, loadChildren: boolean): void {
@@ -99,7 +99,7 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
     const q = new PageSearchParams();
     q.rootId = rootId;
     q.limit = this.DEFAULT_CONCEPT_LIMIT;
-    return this.thesaurusService.searchPages(q).pipe(map(r => r.data), catchError(() => of([])));
+    return this.pageService.searchPages(q).pipe(map(r => r.data), catchError(() => of([])));
   }
 
   public localizedContent = (page: Page): PageContent | undefined => {

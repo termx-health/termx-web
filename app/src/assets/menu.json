@@ -141,8 +141,17 @@
           "en": "Structure definitions",
           "et": "Struktuuri määratlused"
         },
-        "icon": "file",
+        "icon": "profile",
         "link": "thesaurus/structure-definitions",
+        "privileges": ["*.Thesaurus.view"]
+      },
+      {
+        "label": {
+          "en": "Templates",
+          "et": "Mallid"
+        },
+        "icon": "file-text",
+        "link": "thesaurus/templates",
         "privileges": ["*.Thesaurus.view"]
       }
     ]

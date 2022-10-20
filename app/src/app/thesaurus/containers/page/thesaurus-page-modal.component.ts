@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {Page, PageContent, PageLink} from 'lib/src/thesaurus';
-import {ThesaurusService} from '../../services/thesaurus.service';
+import {Page, PageContent, PageLink, Tag, TagLibService, Template, TemplateLibService} from 'lib/src/thesaurus';
+import {PageService} from '../../services/page.service';
 
 @Component({
   selector: 'twa-thesaurus-page-modal',
@@ -11,6 +11,10 @@ import {ThesaurusService} from '../../services/thesaurus.service';
 export class ThesaurusPageModalComponent implements OnInit, OnChanges {
   public page?: Page;
   public content?: PageContent;
+
+  public tags?: Tag[];
+  public templates?: Template[];
+  public pageTags?: string[];
 
   @Input() public pageId: number | undefined;
   @Input() public contentId: number | undefined;
@@ -24,13 +28,19 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
   public loading: {[k: string]: boolean} = {};
   public mode: 'add' | 'edit' = 'add';
 
-  public constructor(private thesaurusService: ThesaurusService) {}
+  public constructor(
+    private pageService: PageService,
+    private tagService: TagLibService,
+    private templateLibService: TemplateLibService
+  ) {}
 
   public ngOnInit(): void {
     this.page = new Page();
     this.page.status = 'draft';
     this.page.links = [];
     this.content = {contentType: 'markdown'};
+
+    this.initData();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -45,8 +55,9 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
 
   private loadPage(id: number): void {
     this.loading['init'] = true;
-    this.thesaurusService.loadPage(id).subscribe(p => {
+    this.pageService.loadPage(id).subscribe(p => {
       this.page = p;
+      this.pageTags = p.tags?.map(t => t.tag!.text!) || [];
       this.content = this.contentId ? p.contents?.find(c => c.id === this.contentId) : undefined;
     }).add(() => this.loading['init'] = false);
   }
@@ -56,9 +67,37 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
       return;
     }
     this.loading['save'] = true;
-    this.thesaurusService.savePage(this.page!, this.content!)
-      .subscribe(page => this.saved.emit(page.contents?.find(c => c.name === this.content!.name)))
+    this.prepare(this.page!);
+    this.pageService.savePage(this.page!, this.content!)
+      .subscribe(page => {
+        this.saved.emit(page.contents?.find(c => c.name === this.content!.name));
+        this.initData();
+      })
       .add(() => this.loading['save'] = false);
+  }
+
+  private prepare(page: Page): void {
+    page.tags = page.tags || [];
+    page.tags = page.tags.filter(t => this.pageTags!.includes(t.tag!.text!));
+    this.pageTags!.forEach(t => {
+      if (!page.tags!.find(pt => pt.tag!.text === t)) {
+        const newTag = this.tags!.find(tag => tag.text == t);
+        page.tags!.push({tag: newTag ? newTag : {text: t}});
+      }
+    });
+  }
+
+  private initData(): void {
+    this.loadTags();
+    this.loadTemplates();
+  }
+
+  private loadTags(): void {
+    this.tagService.loadAll().subscribe(tags => this.tags = tags);
+  }
+
+  private loadTemplates(): void {
+    this.templateLibService.searchTemplates({limit: 999}).subscribe(templates => this.templates = templates.data);
   }
 
   public addLink(): void {

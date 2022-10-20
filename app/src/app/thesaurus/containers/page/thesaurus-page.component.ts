@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Page, PageContent, PageLink} from 'lib/src/thesaurus';
-import {ThesaurusService} from '../../services/thesaurus.service';
+import {PageService} from '../../services/page.service';
 import {isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 
@@ -26,7 +26,7 @@ export class ThesaurusPageComponent implements OnInit {
   public constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private thesaurusService: ThesaurusService
+    private pageService: PageService
   ) { }
 
   public ngOnInit(): void {
@@ -36,7 +36,7 @@ export class ThesaurusPageComponent implements OnInit {
       const slug = routeParam.get("slug");
       if (slug) {
         this.loading['init'] = true;
-        this.thesaurusService.searchPages({slug: slug, limit: 1}).subscribe(pages => {
+        this.pageService.searchPages({slug: slug, limit: 1}).subscribe(pages => {
           const page = pages.data[0];
           if (!page) {
             this.router.navigate(['/thesaurus/pages']);
@@ -56,7 +56,7 @@ export class ThesaurusPageComponent implements OnInit {
     this.path = [];
 
     if (page) {
-      this.thesaurusService.getPath(page.id!).subscribe(path => this.path = path);
+      this.pageService.getPath(page.id!).subscribe(path => this.path = path);
     }
   }
 
@@ -72,7 +72,7 @@ export class ThesaurusPageComponent implements OnInit {
       return;
     }
     this.loading['save'] = true;
-    this.thesaurusService.savePageContent(this.contentModalData.content!, this.pageId!)
+    this.pageService.savePageContent(this.contentModalData.content!, this.pageId!)
       .subscribe(content => this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']))
       .add(() => this.loading['save'] = false);
   }

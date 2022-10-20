@@ -5,6 +5,18 @@
 
   <ng-container *m-modal-content>
     <form #form="ngForm" *ngIf="page">
+      <m-form-item mName="tag" mLabel="entities.page.tags">
+        <m-select name="tag" [(ngModel)]="pageTags" tags>
+          <m-option *ngFor="let tag of tags" [label]="tag.text" [value]="tag.text"></m-option>
+        </m-select>
+      </m-form-item>
+
+      <m-form-item mName="template" mLabel="entities.page.template">
+        <m-select name="template" [(ngModel)]="page.templateId">
+          <m-option *ngFor="let template of templates" label="{{template.code}} - {{template.names | localName}}" [value]="template.id"></m-option>
+        </m-select>
+      </m-form-item>
+
       <m-form-item mName="status" mLabel="entities.page.status" required>
         <m-select name="status" [(ngModel)]="page.status" required>
           <m-option label="draft" [value]="'draft'"></m-option>
@@ -25,8 +37,8 @@
 
       <m-form-item mName="type" [mLabel]="contentTypeLabel" required>
         <ng-template #contentTypeLabel>
-            <label>{{'entities.page-content.content-type' | translate}}</label>
-            <m-icon mCode="exclamation-circle" style="margin-left: 0.5rem"  m-tooltip mTitle="web.thesaurus-page.form.content-type-tooltip"></m-icon>
+          <label>{{'entities.page-content.content-type' | translate}}</label>
+          <m-icon mCode="exclamation-circle" style="margin-left: 0.5rem" m-tooltip mTitle="web.thesaurus-page.form.content-type-tooltip"></m-icon>
         </ng-template>
         <m-select name="type" [(ngModel)]="content.contentType" required>
           <m-option label="WYSIWYG" [value]="'html'"></m-option>
@@ -42,8 +54,12 @@
             <th class="tw-table-actions"></th>
           </tr>
           <tr *mTableRow="let link; let index = index">
-            <td><twl-page-select name="source-{{index}}" [(ngModel)]="link.sourceId" [idNe]="page.id" required></twl-page-select></td>
-            <td><m-number-input name="orderNumber-{{index}}" [(ngModel)]="link.orderNumber"></m-number-input></td>
+            <td>
+              <twl-page-select name="source-{{index}}" [(ngModel)]="link.sourceId" [idNe]="page.id" required></twl-page-select>
+            </td>
+            <td>
+              <m-number-input name="orderNumber-{{index}}" [(ngModel)]="link.orderNumber"></m-number-input>
+            </td>
             <td class="tw-table-actions">
               <m-button mDisplay="link" (click)="deleteLink(index)">
                 <m-icon mCode="delete"></m-icon>
@@ -52,10 +68,16 @@
           </tr>
           <tr>
             <td colspan="4" style="padding: 0">
-              <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addLink()"><m-icon [mCode]="'plus'"></m-icon></m-button>
+              <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addLink()">
+                <m-icon [mCode]="'plus'"></m-icon>
+              </m-button>
             </td>
           </tr>
-          <tr *mTableNoData><td colspan="5"><m-no-data></m-no-data></td></tr>
+          <tr *mTableNoData>
+            <td colspan="5">
+              <m-no-data></m-no-data>
+            </td>
+          </tr>
         </m-table>
       </m-form-item>
     </form>

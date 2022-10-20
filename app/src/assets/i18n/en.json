@@ -608,6 +608,15 @@
         "add-header": "Add structure definition",
         "edit-header": "Edit structure definition"
       }
+    },
+    "template": {
+      "list": {
+        "add-template": "Add template"
+      },
+      "form": {
+        "add-header": "Add template",
+        "edit-header": "Edit template"
+      }
     }
   },
   "entities": {
@@ -870,6 +879,8 @@
     },
     "page": {
       "status": "Status",
+      "tags": "Tags",
+      "template": "Template",
       "contents": "Contents",
       "links": "Parent pages"
     },
@@ -890,6 +901,12 @@
       "content": "Content",
       "content-type": "Content type",
       "content-format": "Content format"
+    },
+    "template": {
+      "code": "Code",
+      "names": "Names",
+      "content-type": "Content type",
+      "content": "Content"
     }
   }
 }

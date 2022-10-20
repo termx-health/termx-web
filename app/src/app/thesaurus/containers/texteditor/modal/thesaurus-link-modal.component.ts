@@ -54,10 +54,14 @@ import {TranslateService} from '@ngx-translate/core';
               <twl-code-system-search [(ngModel)]="data.conceptCodeSystem" name="conceptCodeSystem" valuePrimitive required></twl-code-system-search>
             </m-form-item>
             <m-form-item *ngIf="data.resourceType === 'concepts' && data.conceptCodeSystem" mName="concept" mLabel="web.thesaurus-page.link-modal.concept" required>
-              <twl-concept-search [(ngModel)]="data.resource" [codeSystem]="data.conceptCodeSystem" name="concept" required></twl-concept-search>
+              <div *ngIf="data.conceptCodeSystem === 'snomed-ct' && data.resource">
+                <label>{{data.resource}}</label><m-icon style="cursor: pointer; margin-left: 0.5rem" mCode="close" (click)="data.resource = null"></m-icon>
+              </div>
+              <twl-snomed-search *ngIf="data.conceptCodeSystem === 'snomed-ct' && !data.resource" (conceptSelected)="data.resource = $event"></twl-snomed-search>
+              <twl-concept-search *ngIf="data.conceptCodeSystem !== 'snomed-ct'" [(ngModel)]="data.resource" [codeSystem]="data.conceptCodeSystem" name="concept" required></twl-concept-search>
             </m-form-item>
           </ng-container>
-          
+
         </form>
       </ng-container>
 
@@ -117,8 +121,11 @@ export class ThesaurusLinkModalComponent {
       if (data.resourceType && ['code-systems', 'value-sets', 'map-sets'].includes(data.resourceType)) {
         return url + '/resources/' + data.resourceType + '/' + data.resource + '/view';
       }
-      if ('concepts' === data.resourceType) {
+      if ('concepts' === data.resourceType && data.conceptCodeSystem !== 'snomed-ct') {
         return url + '/resources/code-systems/' + data.conceptCodeSystem + '/' + data.resourceType + '/' + data.resource!.code! + '/view';
+      }
+      if ('concepts' === data.resourceType && data.conceptCodeSystem === 'snomed-ct') {
+        return url + '/integration/snomed';
       }
     }
   }

@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 import {StructureDefinition, StructureDefinitionSearchParams} from 'terminology-lib/thesaurus';
-import {ThesaurusService} from '../../services/thesaurus.service';
+import {StructureDefinitionService} from '../../services/structure-definition.service';
 
 @Component({
   templateUrl: 'structure-definition-list.component.html'
@@ -14,7 +14,7 @@ export class StructureDefinitionListComponent implements OnInit {
   public searchResult: SearchResult<StructureDefinition> = SearchResult.empty();
   public loading = false;
 
-  public constructor(private thesaurusService: ThesaurusService) {}
+  public constructor(private structureDefinitionService: StructureDefinitionService) {}
 
   public ngOnInit(): void {
     this.loadData();
@@ -29,7 +29,7 @@ export class StructureDefinitionListComponent implements OnInit {
     const q = copyDeep(this.query);
     q.textContains = this.searchInput;
     this.loading = true;
-    return this.thesaurusService.searchStructureDefinitions(q).pipe(finalize(() => this.loading = false));
+    return this.structureDefinitionService.search(q).pipe(finalize(() => this.loading = false));
   }
 
   public loadData(): void {
@@ -37,6 +37,6 @@ export class StructureDefinitionListComponent implements OnInit {
   }
 
   public deleteStructureDefinition(id: number): void {
-    this.thesaurusService.deleteStructureDefinition(id).subscribe(() => this.loadData());
+    this.structureDefinitionService.delete(id).subscribe(() => this.loadData());
   }
 }
