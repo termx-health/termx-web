@@ -54,4 +54,8 @@ export class StructureDefinitionEditComponent implements OnInit {
   public validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
   }
+
+  public handleFormat(contentFormat: 'json' | 'fsh'): void {
+    this.structureDefinition!.contentFormat = contentFormat;
+  }
 }

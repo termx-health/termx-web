@@ -1,4 +1,3 @@
-import {StructureDefinition} from 'fhir/model/structure-definition';
 import {ElementDefinition} from 'fhir/model/element-definition';
 
 export class ThesaurusFhirMapperUtil {
@@ -9,9 +8,9 @@ export class ThesaurusFhirMapperUtil {
     return {};
   }
 
-  private static mapFromStructureDefinition(structureDefinition: StructureDefinition): {[key: string]: any} {
+  private static mapFromStructureDefinition(structureDefinition: any): {[key: string]: any} {
     const res: {[key: string]: any} = {};
-    res[structureDefinition!.type!] = ThesaurusFhirMapperUtil.mapFromElementDefinition(structureDefinition.differential!.element);
+    res[structureDefinition!.name!] = ThesaurusFhirMapperUtil.mapFromElementDefinition(structureDefinition.differential!.element);
     return res;
   }
 
@@ -20,17 +19,17 @@ export class ThesaurusFhirMapperUtil {
     element.forEach(el => {
       const ids = el.id!.split(/\.|:/);
       ids.shift();
-      res = Object.assign(res, ThesaurusFhirMapperUtil.appendKey(ids, el.type?.[0].code));
+      res = Object.assign(res, ThesaurusFhirMapperUtil.appendKey(ids, el));
     });
     return res;
   }
 
-  private static appendKey(array: string[], type?: string): {[key: string]: any} {
+  private static appendKey(array: string[], el: any): {[key: string]: any} {
     const res: {[key: string]: any} = {};
     if (array.length === 1) {
-      res[array[0]] = {description: type};
+      res[array[0]] = {type: el.type?.[0].code, cardinality: el.min && el.max ? el.min + '..' + el.max : '', description: el.short};
     } else if (array.length > 1) {
-      res[array.shift()!] = Object.assign(res[array.shift()!] || {} , ThesaurusFhirMapperUtil.appendKey(array, type));
+      res[array.shift()!] = Object.assign(res[array.shift()!] || {} , ThesaurusFhirMapperUtil.appendKey(array, el));
     }
     return res;
   }

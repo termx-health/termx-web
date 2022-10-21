@@ -19,7 +19,7 @@
 
     <tr *mTableRow="let def">
       <td>
-        <a *ngIf="'*.Thesaurus.edit' | twaHasAnyPrivilege; else view" [routerLink]="['../structure-definitions',def.id,'edit']">{{def.code}}</a>
+        <a *ngIf="'*.Thesaurus.edit' | twaHasAnyPrivilege; else view" [routerLink]="['../structure-definitions',def.id,'edit']" [queryParams]="{tab: def.contentFormat}">{{def.code}}</a>
         <ng-template #view>
           <a [routerLink]="['../structure-definitions',def.id,'view']">{{def.code}}</a>
         </ng-template>

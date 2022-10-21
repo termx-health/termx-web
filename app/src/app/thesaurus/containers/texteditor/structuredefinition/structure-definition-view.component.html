@@ -1,0 +1,26 @@
+<nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource">
+  <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodeIndentLine>
+    <nz-tree-node-option>
+      <ng-container *ngTemplateOutlet="option; context: {node: node}"></ng-container>
+    </nz-tree-node-option>
+  </nz-tree-node>
+
+  <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodeIndentLine>
+    <nz-tree-node-toggle>
+          <span nz-icon [nzType]="treeControl.isExpanded(node) ? 'minus-square' : 'plus-square'" nzTheme="outline"></span>
+    </nz-tree-node-toggle>
+    <nz-tree-node-option>
+      <ng-container *ngTemplateOutlet="option; context: {node: node}"></ng-container>
+    </nz-tree-node-option>
+  </nz-tree-node>
+</nz-tree-view>
+
+
+<ng-template #option let-node="node">
+  <div style="display: flex; width: 50rem">
+    <label style="flex: 2">{{ node.name }}</label>
+    <label style="color: grey; flex: 1">{{ node.cardinality }}</label>
+    <label style="color: grey; flex: 2">{{ node.type }}</label>
+    <label style="color: grey; flex: 5">{{ node.description }}</label>
+  </div>
+</ng-template>

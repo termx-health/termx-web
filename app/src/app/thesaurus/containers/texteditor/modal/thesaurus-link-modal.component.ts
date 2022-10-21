@@ -109,23 +109,20 @@ export class ThesaurusLinkModalComponent {
       return data.link;
     }
 
-    const path = this.location.path();
-    const url = window.location.href.replace(path, '');
-
     if (data.linkType === 'page') {
       const content = data.page?.contents?.find(c => c.lang === this.translateService.currentLang) || data.page?.contents?.[0];
-      return url + '/thesaurus/' + content!.slug;
+      return '/thesaurus/' + content!.slug;
     }
 
     if (data.linkType === 'resource') {
       if (data.resourceType && ['code-systems', 'value-sets', 'map-sets'].includes(data.resourceType)) {
-        return url + '/resources/' + data.resourceType + '/' + data.resource + '/view';
+        return '/resources/' + data.resourceType + '/' + data.resource + '/view';
       }
       if ('concepts' === data.resourceType && data.conceptCodeSystem !== 'snomed-ct') {
-        return url + '/resources/code-systems/' + data.conceptCodeSystem + '/' + data.resourceType + '/' + data.resource!.code! + '/view';
+        return '/resources/code-systems/' + data.conceptCodeSystem + '/' + data.resourceType + '/' + data.resource!.code! + '/view';
       }
       if ('concepts' === data.resourceType && data.conceptCodeSystem === 'snomed-ct') {
-        return url + '/integration/snomed';
+        return '/integration/snomed';
       }
     }
   }

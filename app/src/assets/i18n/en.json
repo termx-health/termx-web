@@ -606,7 +606,10 @@
       },
       "form": {
         "add-header": "Add structure definition",
-        "edit-header": "Edit structure definition"
+        "edit-header": "Edit structure definition",
+        "fsh-header": "FSH",
+        "json-header": "JSON",
+        "element-header": "Elements"
       }
     },
     "template": {

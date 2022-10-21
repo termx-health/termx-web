@@ -7,7 +7,7 @@
     <m-spinner [mLoading]="isLoading">
       <m-card *ngIf="pageId">
         <div *m-card-header style="display: flex">
-          <label>{{pageContent?.name}}</label>
+          <label class="m-card-title">{{pageContent?.name}}</label>
           <div style="margin-left: auto;">
             <m-dropdown>
               <m-button *mDropdownContainer>

@@ -1,8 +1,8 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {Location} from '@angular/common';
 import {TranslateService} from '@ngx-translate/core';
+import {StructureDefinition, StructureDefinitionLibService} from 'terminology-lib/thesaurus';
 
 
 @Component({
@@ -17,8 +17,8 @@ import {TranslateService} from '@ngx-translate/core';
         <form #form="ngForm" *ngIf="data">
           <m-form-item mName="type" required>
             <nz-radio-group name="type" [(ngModel)]="data.sourceType" required>
-              <label nz-radio-button nzValue="simplifier">{{'web.thesaurus-page.structure-definition-modal.simplifier' | translate}}</label>
               <label nz-radio-button nzValue="structure-definition">{{'web.thesaurus-page.structure-definition-modal.structure-definition' | translate}}</label>
+              <label nz-radio-button nzValue="simplifier">{{'web.thesaurus-page.structure-definition-modal.simplifier' | translate}}</label>
             </nz-radio-group>
           </m-form-item>
           <m-form-item *ngIf="data.sourceType === 'simplifier'" mName="url" mLabel="web.thesaurus-page.structure-definition-modal.url" required>
@@ -28,7 +28,9 @@ import {TranslateService} from '@ngx-translate/core';
             <m-input [(ngModel)]="data.baseDefinitionUrl" name="baseDefinitionUrl"></m-input>
           </m-form-item>
           <m-form-item *ngIf="data.sourceType" mName="structure-definition" mLabel="web.thesaurus-page.structure-definition-modal.structure-definition" [required]="data.sourceType === 'structure-definition'">
-            <m-input [(ngModel)]="data.structureDefinitionCode" name="structure-definition"></m-input>
+            <m-select [(ngModel)]="data.structureDefinitionCode" name="structure-definition">
+              <m-option *ngFor="let sd of structureDefinitions" [label]="sd.code" [value]="sd.code"></m-option>
+            </m-select>
           </m-form-item>
         </form>
       </ng-container>
@@ -40,15 +42,23 @@ import {TranslateService} from '@ngx-translate/core';
     </m-modal>
   `
 })
-export class ThesaurusStructureDefinitionModalComponent {
+export class ThesaurusStructureDefinitionModalComponent implements OnInit {
   @Output() public structureDefinitionComposed: EventEmitter<string> = new EventEmitter();
 
   public modalVisible = false;
+  public structureDefinitions?: StructureDefinition[];
   public data?: LinkModalData;
 
   @ViewChild("form") public form?: NgForm;
 
-  public constructor(public location: Location, public translateService: TranslateService) { }
+  public constructor(
+    public translateService: TranslateService,
+    public structureDefinitionService: StructureDefinitionLibService
+  ) {}
+
+  public ngOnInit(): void {
+    this.loadStructureDefinitions();
+  }
 
   public toggleModal(visible: boolean): void {
     if (this.modalVisible === visible) {
@@ -61,7 +71,7 @@ export class ThesaurusStructureDefinitionModalComponent {
     }
 
     if (this.modalVisible) {
-      this.data = {sourceType: 'simplifier'};
+      this.data = {sourceType: 'structure-definition'};
     }
   }
 
@@ -76,15 +86,18 @@ export class ThesaurusStructureDefinitionModalComponent {
 
   private composeStructureDefinition(data: LinkModalData): string | undefined {
     if (data.sourceType === 'simplifier') {
-      const source = data.baseDefinitionUrl ? "|baseDefinitionUrl:" + data.baseDefinitionUrl : data.structureDefinitionCode ? "|structureDefinition:" + data.structureDefinitionCode : "";
+      const source = data.baseDefinitionUrl ? "|base-definitionUrl:" + data.baseDefinitionUrl : data.structureDefinitionCode ? "|structure-definition:" + data.structureDefinitionCode : "";
       return "{{simplifier:" + data.url + source +"}}";
     }
     if (data.sourceType === 'structure-definition') {
-      return "{{structureDefinition:" + data.structureDefinitionCode +"}}";
+      return "{{structure-definition:" + data.structureDefinitionCode +"}}";
     }
     return;
   }
 
+  private loadStructureDefinitions(): void {
+    this.structureDefinitionService.search({limit: 999}).subscribe(sd => this.structureDefinitions = sd.data);
+  }
 }
 
 export class LinkModalData {

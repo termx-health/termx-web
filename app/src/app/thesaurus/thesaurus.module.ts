@@ -23,6 +23,7 @@ import {TemplateService} from './services/template.service';
 import {TemplateListComponent} from './containers/template/template-list.component';
 import {TemplateEditComponent} from './containers/template/template-edit.component';
 import {IntegrationLibModule} from 'terminology-lib/integration';
+import {StructureDefinitionViewComponent} from './containers/texteditor/structuredefinition/structure-definition-view.component';
 
 export const THESAURUS_ROUTES: Routes = [
   {path: 'pages', component: ThesaurusPageComponent},
@@ -60,6 +61,7 @@ export const THESAURUS_ROUTES: Routes = [
 
     StructureDefinitionListComponent,
     StructureDefinitionEditComponent,
+    StructureDefinitionViewComponent,
 
     TemplateListComponent,
     TemplateEditComponent
