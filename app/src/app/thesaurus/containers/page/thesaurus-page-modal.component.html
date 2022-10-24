@@ -5,10 +5,9 @@
 
   <ng-container *m-modal-content>
     <form #form="ngForm" *ngIf="page">
-      <m-form-item mName="tag" mLabel="entities.page.tags">
-        <m-select name="tag" [(ngModel)]="pageTags" tags>
-          <m-option *ngFor="let tag of tags" [label]="tag.text" [value]="tag.text"></m-option>
-        </m-select>
+
+      <m-form-item mName="name" mLabel="entities.page-content.name" required>
+        <m-input name="name" [(ngModel)]="content.name" autofocus required></m-input>
       </m-form-item>
 
       <m-form-item mName="template" mLabel="entities.page.template">
@@ -17,15 +16,17 @@
         </m-select>
       </m-form-item>
 
+      <m-form-item mName="tag" mLabel="entities.page.tags">
+        <m-select name="tag" [(ngModel)]="pageTags" tags>
+          <m-option *ngFor="let tag of tags" [label]="tag.text" [value]="tag.text"></m-option>
+        </m-select>
+      </m-form-item>
+
       <m-form-item mName="status" mLabel="entities.page.status" required>
         <m-select name="status" [(ngModel)]="page.status" required>
           <m-option label="draft" [value]="'draft'"></m-option>
           <m-option label="active" [value]="'active'"></m-option>
         </m-select>
-      </m-form-item>
-
-      <m-form-item mName="name" mLabel="entities.page-content.name" required>
-        <m-input name="name" [(ngModel)]="content.name" autofocus required></m-input>
       </m-form-item>
 
       <m-form-item mName="lang" mLabel="entities.page-content.lang" required>

@@ -3,6 +3,7 @@ import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {Page, PageContent, PageLink, Tag, TagLibService, Template, TemplateLibService} from 'lib/src/thesaurus';
 import {PageService} from '../../services/page.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'twa-thesaurus-page-modal',
@@ -31,6 +32,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
   public constructor(
     private pageService: PageService,
     private tagService: TagLibService,
+    private translateService: TranslateService,
     private templateLibService: TemplateLibService
   ) {}
 
@@ -38,7 +40,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
     this.page = new Page();
     this.page.status = 'draft';
     this.page.links = [];
-    this.content = {contentType: 'markdown'};
+    this.content = {contentType: 'markdown', lang: this.translateService.currentLang};
 
     this.initData();
   }
@@ -79,7 +81,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
   private prepare(page: Page): void {
     page.tags = page.tags || [];
     page.tags = page.tags.filter(t => this.pageTags!.includes(t.tag!.text!));
-    this.pageTags!.forEach(t => {
+    this.pageTags?.forEach(t => {
       if (!page.tags!.find(pt => pt.tag!.text === t)) {
         const newTag = this.tags!.find(tag => tag.text == t);
         page.tags!.push({tag: newTag ? newTag : {text: t}});
