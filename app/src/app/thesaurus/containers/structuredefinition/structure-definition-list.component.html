@@ -2,7 +2,7 @@
   <div *m-card-header class="m-items-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twaPrivileged="'*.Thesaurus.edit'" [routerLink]="['../structure-definitions/add']">
+      <twa-add-button *twaPrivileged="'*.Thesaurus.edit'" [routerLink]="['../structure-definitions/add']" [queryParams]="{tab: 'json'}">
         {{'web.structure-definition.list.add-structure-definition' | translate}}
       </twa-add-button>
     </div>
@@ -21,7 +21,7 @@
       <td>
         <a *ngIf="'*.Thesaurus.edit' | twaHasAnyPrivilege; else view" [routerLink]="['../structure-definitions',def.id,'edit']" [queryParams]="{tab: def.contentFormat}">{{def.code}}</a>
         <ng-template #view>
-          <a [routerLink]="['../structure-definitions',def.id,'view']">{{def.code}}</a>
+          <a [routerLink]="['../structure-definitions',def.id,'view']" [queryParams]="{tab: def.contentFormat}">{{def.code}}</a>
         </ng-template>
       </td>
       <td>{{def.url}}</td>
