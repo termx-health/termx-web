@@ -38,8 +38,8 @@ export class StructureDefinitionViewComponent implements OnChanges {
     if (!(object instanceof Object)) {
       return undefined;
     }
-    return Object.keys(object).filter(key => !['type', 'cardinality', 'description'].includes(key)).map(key => {
-      return {name: key, type: object[key]['type'], cardinality: object[key]['cardinality'], description: object[key]['description'], children: this.mapToTreeNode(object[key])};
+    return Object.keys(object).filter(key => !['type', 'fixed', 'cardinality', 'description'].includes(key)).map(key => {
+      return {name: key, type: object[key]['type'], fixed: object[key]['fixed'], cardinality: object[key]['cardinality'], description: object[key]['description'], children: this.mapToTreeNode(object[key])};
     });
   }
 
@@ -68,6 +68,7 @@ export class StructureDefinitionViewComponent implements OnChanges {
   private transformer = (node: TreeNode, level: number): FlatNode => ({
     expandable: !!node.children && node.children.length > 0,
     type: node.type,
+    fixed: node.fixed,
     cardinality: node.cardinality,
     description: node.description,
     name: node.name,
@@ -83,6 +84,7 @@ export class StructureDefinitionViewComponent implements OnChanges {
 interface TreeNode {
   name: string;
   type?: string;
+  fixed?: string;
   cardinality?: string;
   description?: string;
   children?: TreeNode[];
@@ -92,6 +94,7 @@ interface FlatNode {
   expandable: boolean;
   name: string;
   type?: string;
+  fixed?: string;
   cardinality?: string;
   description?: string;
   level: number;

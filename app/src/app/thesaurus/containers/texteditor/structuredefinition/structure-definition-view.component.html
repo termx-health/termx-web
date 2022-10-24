@@ -17,10 +17,13 @@
 
 
 <ng-template #option let-node="node">
-  <div style="display: flex; width: 50rem">
-    <label style="flex: 2">{{ node.name }}</label>
+  <div style="display: flex; width: 60rem">
+    <label style="flex: 4; white-space: pre-line; display: grid">
+      <label>{{ node.name }}</label>
+      <label *ngIf="node.fixed" style="color: grey"><m-abbreviate [mValue]="node.fixed" [mLength]="30"></m-abbreviate></label>
+    </label>
     <label style="color: grey; flex: 1">{{ node.cardinality }}</label>
-    <label style="color: grey; flex: 2">{{ node.type }}</label>
-    <label style="color: grey; flex: 5">{{ node.description }}</label>
+    <label style="color: grey; flex: 3">{{ node.type }}</label>
+    <label style="color: grey; flex: 10; white-space: pre-line">{{ node.description }}</label>
   </div>
 </ng-template>
