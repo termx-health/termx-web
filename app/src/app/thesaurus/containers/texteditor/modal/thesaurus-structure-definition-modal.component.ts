@@ -86,11 +86,11 @@ export class ThesaurusStructureDefinitionModalComponent implements OnInit {
 
   private composeStructureDefinition(data: LinkModalData): string | undefined {
     if (data.sourceType === 'simplifier') {
-      const source = data.baseDefinitionUrl ? "|base-definitionUrl:" + data.baseDefinitionUrl : data.structureDefinitionCode ? "|structure-definition:" + data.structureDefinitionCode : "";
+      const source = data.baseDefinitionUrl ? "|base-definitionUrl:" + data.baseDefinitionUrl : data.structureDefinitionCode ? "|def:" + data.structureDefinitionCode : "";
       return "{{simplifier:" + data.url + source +"}}";
     }
     if (data.sourceType === 'structure-definition') {
-      return "{{structure-definition:" + data.structureDefinitionCode +"}}";
+      return "{{def:" + data.structureDefinitionCode +"}}";
     }
     return;
   }

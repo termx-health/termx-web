@@ -19,10 +19,9 @@ export class StructureDefinitionViewComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['processedValue'] && this.processedValue) {
       if (this.processedValue.type === 'simplifier') {
-        console.log('here')
         this.processSimplifier(this.processedValue.value);
       }
-      if (this.processedValue.type === 'structure-definition') {
+      if (this.processedValue.type === 'def') {
         this.processStructureDefinition(this.processedValue.value);
       }
     }
@@ -61,6 +60,7 @@ export class StructureDefinitionViewComponent implements OnChanges {
   private initDataSource(treeNodes: TreeNode[]): void {
     this.dataSource = new NzTreeFlatDataSource(this.treeControl, new NzTreeFlattener(this.transformer, node => node.level, node => node.expandable, node => node.children));
     this.dataSource.setData(treeNodes);
+    this.treeControl.expandAll();
   }
 
   public hasChild = (_: number, node: FlatNode): boolean => node.expandable;
