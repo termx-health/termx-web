@@ -32,7 +32,7 @@ export class StructureDefinitionEditComponent implements OnInit {
     if (this.mode === 'add') {
       this.structureDefinition = new StructureDefinition();
       this.structureDefinition.contentType = 'profile';
-      this.structureDefinition.contentFormat = 'fsh';
+      this.structureDefinition.contentFormat = 'json';
     }
 
     if (this.mode === 'edit') {
