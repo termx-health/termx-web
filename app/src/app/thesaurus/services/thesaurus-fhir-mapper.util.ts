@@ -30,9 +30,14 @@ export class ThesaurusFhirMapperUtil {
     if (array.length === 1) {
       res[array[0]] = {
         type: el.type?.[0].code,
+        targetProfiles: el.type?.[0].targetProfile,
         fixed: el.fixedUri,
         cardinality: isDefined(el.min) || isDefined(el.max) ? (isDefined(el.min) ? el.min : '*') + '..' + (isDefined(el.max) ? el.max : '*') : '',
-        description: el.short + (isDefined(el.definition) && el.definition !== el.short ? '\n' + el.definition : '') + (isDefined(el.binding) ? '\n' +  el.binding.valueSet + ' (' + el.binding.strength + ')' : '')};
+        short: el.short,
+        definition: isDefined(el.definition) && el.definition !== el.short ? el.definition : undefined,
+        binding: isDefined(el.binding) ? el.binding.valueSet : undefined,
+        bindingStrength: isDefined(el.binding) ?  el.binding.strength : undefined
+      };
     } else if (array.length > 1) {
       res[array.shift()!] = Object.assign(res[array.shift()!] || {} , ThesaurusFhirMapperUtil.appendKey(array, el));
     }

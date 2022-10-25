@@ -1,15 +1,15 @@
 <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource">
-  <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodeIndentLine>
-    <nz-tree-node-option>
+  <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodeIndentLine style="width: 100%">
+    <nz-tree-node-option style="width: 100%">
       <ng-container *ngTemplateOutlet="option; context: {node: node}"></ng-container>
     </nz-tree-node-option>
   </nz-tree-node>
 
-  <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodeIndentLine>
+  <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodeIndentLine style="width: 100%">
     <nz-tree-node-toggle>
           <span nz-icon [nzType]="treeControl.isExpanded(node) ? 'minus-square' : 'plus-square'" nzTheme="outline"></span>
     </nz-tree-node-toggle>
-    <nz-tree-node-option>
+    <nz-tree-node-option style="width: 100%">
       <ng-container *ngTemplateOutlet="option; context: {node: node}"></ng-container>
     </nz-tree-node-option>
   </nz-tree-node>
@@ -17,13 +17,29 @@
 
 
 <ng-template #option let-node="node">
-  <div style="display: flex; width: 60rem">
-    <label style="flex: 4; white-space: pre-line; display: grid">
-      <label>{{ node.name }}</label>
-      <label *ngIf="node.fixed" style="color: grey"><m-abbreviate [mValue]="node.fixed" [mLength]="30"></m-abbreviate></label>
-    </label>
-    <label style="color: grey; flex: 1">{{ node.cardinality }}</label>
-    <label style="color: grey; flex: 3">{{ node.type }}</label>
-    <label style="color: grey; flex: 10; white-space: pre-line">{{ node.description }}</label>
-  </div>
+    <div style="display: flex">
+      <label style="flex: 2; display: grid">
+        <label>{{ node.name }}</label>
+        <label *ngIf="node.fixed" style="color: grey">
+          {{'web.structure-definition.view.fixed' | translate}}:
+          <a [href]="node.fixed">{{node.fixed | apply:lastWordFromUrl}}</a>
+        </label>
+      </label>
+      <label style="flex: 1">{{ node.cardinality }}</label>
+      <label style="flex: 5">
+        <label>{{ node.type }}</label>
+        <label *ngIf="node.targetProfiles">
+          (<a *ngFor="let profile of node.targetProfiles; let index = index" [href]="profile">{{index !== 0 ? ' | ' : ''}}{{profile | apply:lastWordFromUrl}}</a>)
+        </label>
+      </label>
+      <label style="flex: 10; display: grid">
+        <label>{{ node.short }}</label>
+        <label *ngIf="node.definition" style="color: grey">{{ node.definition }}</label>
+        <label *ngIf="node.binding" style="color: grey">
+          {{'web.structure-definition.view.binding' | translate}}:
+          <a [href]="node.binding">{{node.binding | apply:lastWordFromUrl}}</a>
+          ({{node.bindingStrength}})
+        </label>
+      </label>
+    </div>
 </ng-template>

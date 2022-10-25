@@ -38,8 +38,18 @@ export class StructureDefinitionViewComponent implements OnChanges {
     if (!(object instanceof Object)) {
       return undefined;
     }
-    return Object.keys(object).filter(key => !['type', 'fixed', 'cardinality', 'description'].includes(key)).map(key => {
-      return {name: key, type: object[key]['type'], fixed: object[key]['fixed'], cardinality: object[key]['cardinality'], description: object[key]['description'], children: this.mapToTreeNode(object[key])};
+    return Object.keys(object).filter(key => !['type', 'targetProfiles', 'fixed', 'cardinality', 'short', 'definition', 'binding', 'bindingStrength'].includes(key)).map(key => {
+      return {
+        name: key,
+        type: object[key]['type'],
+        targetProfiles: object[key]['targetProfiles'],
+        fixed: object[key]['fixed'],
+        cardinality: object[key]['cardinality'],
+        short: object[key]['short'],
+        definition: object[key]['definition'],
+        binding: object[key]['binding'],
+        bindingStrength: object[key]['bindingStrength'],
+        children: this.mapToTreeNode(object[key])};
     });
   }
 
@@ -67,11 +77,15 @@ export class StructureDefinitionViewComponent implements OnChanges {
 
   private transformer = (node: TreeNode, level: number): FlatNode => ({
     expandable: !!node.children && node.children.length > 0,
-    type: node.type,
-    fixed: node.fixed,
-    cardinality: node.cardinality,
-    description: node.description,
     name: node.name,
+    fixed: node.fixed,
+    type: node.type,
+    targetProfiles: node.targetProfiles,
+    cardinality: node.cardinality,
+    short: node.short,
+    definition: node.definition,
+    binding: node.binding,
+    bindingStrength: node.bindingStrength,
     level
   });
 
@@ -79,23 +93,26 @@ export class StructureDefinitionViewComponent implements OnChanges {
     node => node.level,
     node => node.expandable
   );
+
+  public lastWordFromUrl = (url: string): string | undefined => {
+    return url.split('/').pop();
+  };
 }
 
 interface TreeNode {
   name: string;
-  type?: string;
   fixed?: string;
+  type?: string;
+  targetProfiles?: string[];
   cardinality?: string;
-  description?: string;
+  short?: string;
+  definition?: string;
+  binding?: string;
+  bindingStrength?: string;
   children?: TreeNode[];
 }
 
-interface FlatNode {
+interface FlatNode extends TreeNode {
   expandable: boolean;
-  name: string;
-  type?: string;
-  fixed?: string;
-  cardinality?: string;
-  description?: string;
   level: number;
 }
