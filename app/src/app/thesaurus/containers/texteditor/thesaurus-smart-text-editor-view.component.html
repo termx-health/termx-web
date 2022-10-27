@@ -1,5 +1,5 @@
 <ng-container *ngFor="let v of processedValue">
   <m-markdown *ngIf="v.type === 'text' && valueType === 'markdown'" [mData]="v.value"></m-markdown>
   <m-rich-text-editor *ngIf="v.type === 'text' && valueType === 'html'" [(ngModel)]="v.value" mViewMode></m-rich-text-editor>
-  <twa-structure-definition-view *ngIf="v.type === 'simplifier' || v.type === 'def'" [processedValue]="v"></twa-structure-definition-view>
+  <twa-structure-definition-tree *ngIf="v.type === 'def'" [defCode]="v.value"></twa-structure-definition-tree>
 </ng-container>

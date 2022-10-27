@@ -6,8 +6,12 @@
       </div>
       <div style="margin-left: auto; margin-right: auto;">
         <nz-radio-group name="sourceImportType" [(ngModel)]="showPreview">
-          <label nz-radio-button [nzValue]="false"><m-icon mCode="pic-center"></m-icon></label>
-          <label nz-radio-button [nzValue]="true"><m-icon mCode="pic-left"></m-icon></label>
+          <label nz-radio-button [nzValue]="false">
+            <m-icon mCode="pic-center"></m-icon>
+          </label>
+          <label nz-radio-button [nzValue]="true">
+            <m-icon mCode="pic-left"></m-icon>
+          </label>
         </nz-radio-group>
       </div>
       <div style="margin-left: auto;">
@@ -23,7 +27,23 @@
       </div>
     </div>
 
-    <twa-smart-text-editor *ngIf="pageContent" [(ngModel)]="pageContent.content" [valueType]="pageContent.contentType" [showPreview]="showPreview" name="content"></twa-smart-text-editor>
+    <m-button *ngIf="pageContent?.slug"
+        m-popover
+        mTrigger="click"
+        [mContent]="confirmTemplate">{{'web.thesaurus-page.form.add-structure-definition' | translate}}</m-button>
+    <ng-template #confirmTemplate>
+      <label>{{'core.data-lost-warning' | translate}}</label>
+      <div style="display: flex; margin-top: 1rem">
+        <m-button (click)="openStructureDefinition()">{{'web.thesaurus-page.form.proceed-without-saving' | translate}}</m-button>
+        <m-button mDisplay="primary" (click)="saveAndOpenStructureDefinition()" style="margin-left: 0.5rem">{{'web.thesaurus-page.form.save-and-proceed' | translate}}</m-button>
+      </div>
+    </ng-template>
+
+    <twa-smart-text-editor *ngIf="pageContent"
+        [(ngModel)]="pageContent.content"
+        [valueType]="pageContent.contentType"
+        [showPreview]="showPreview"
+        name="content"></twa-smart-text-editor>
 
   </m-card>
 </m-spinner>

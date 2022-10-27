@@ -7,6 +7,7 @@
       "close": "Close",
       "duplicate": "Duplicate",
       "confirm": "Confirm",
+      "proceed": "Proceed",
       "add": "Add"
     },
     "no-privilege": {
@@ -19,7 +20,8 @@
     },
     "no-data": "No data",
     "back": "Back",
-    "delete-confirm": "Are you sure you want to delete?"
+    "delete-confirm": "Are you sure you want to delete?",
+    "data-lost-warning": "Your changes wouldn't be saved!"
   },
   "web": {
     "measurement-unit": {
@@ -578,7 +580,9 @@
         "add-structure-definition": "Open structure definition form",
         "content-header": "Add content",
         "relation-header": "Page relations",
-        "content-type-tooltip": "Changing the content type can change the content value"
+        "content-type-tooltip": "Changing the content type can change the content value",
+        "save-and-proceed": "Save and proceed",
+        "proceed-without-saving": "Proceed without saving"
       },
       "link-modal": {
         "header": "Compose link",
@@ -608,13 +612,54 @@
       "form": {
         "add-header": "Add structure definition",
         "edit-header": "Edit structure definition",
+        "add-element": "Add element",
         "fsh-header": "FSH",
         "json-header": "JSON",
-        "element-header": "Elements"
+        "element-header": "Elements",
+        "name": "Name",
+        "path": "Path",
+        "cardinality": "Cardinality",
+        "fixed-uri": "Fixed URI",
+        "fixed-coding": "Fixed coding",
+        "code": "Code",
+        "system": "System",
+        "display": "Display",
+        "short-description": "Short description",
+        "definition": "Definition"
       },
       "view": {
         "binding": "Binding",
         "fixed": "Fixed"
+      }
+    },
+    "structure-definition-type": {
+      "list": {
+        "header": "Type(s)",
+        "add-type": "Add type"
+      },
+      "modal": {
+        "edit-header": "Edit type",
+        "add-header": "Add type",
+        "code": "Code",
+        "target-profile": "Target profile"
+      }
+    },
+    "structure-definition-constraint": {
+      "list": {
+        "header": "Constraint(s)",
+        "add-constraint": "Add constraint"
+      },
+      "modal": {
+        "edit-header": "Edit constraint",
+        "add-header": "Add constraint",
+        "key": "Key",
+        "requirements": "Requirements",
+        "severity": "Severity",
+        "human": "Human",
+        "expression": "Expression",
+        "source": "Source",
+        "error": "Error",
+        "warning": "Warning"
       }
     },
     "template": {

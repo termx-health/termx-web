@@ -5,22 +5,86 @@
         <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'fsh' }" (click)="handleFormat('fsh')" [replaceUrl]="true" class="m-items-middle">
           {{'web.structure-definition.form.fsh-header' | translate}}
         </a>
-        <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
+        <ng-template nz-tab>
+          <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
+        </ng-template>
       </nz-tab>
 
       <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'json' }" (click)="handleFormat('json')" [replaceUrl]="true" class="m-items-middle">
+        <a *nzTabLink
+            nz-tab-link
+            [routerLink]="['.']"
+            [queryParams]="{ tab: 'json' }"
+            (click)="handleFormat('json')"
+            [replaceUrl]="true"
+            class="m-items-middle">
           {{'web.structure-definition.form.json-header' | translate}}
         </a>
-        <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
+        <ng-template nz-tab>
+          <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
+        </ng-template>
       </nz-tab>
 
       <nz-tab>
         <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'elements' }" [replaceUrl]="true" class="m-items-middle">
           {{'web.structure-definition.form.element-header' | translate}}
         </a>
-
-        In progress...
+        <ng-template nz-tab>
+          <div nz-row nzGutter="12" class="m-row">
+            <div nz-col [nzMd]="8" [nzXs]="24">
+              <m-card *ngIf="structureDefinition?.code">
+                <div *m-card-header class="m-items-between">
+                  <label></label>
+                  <twa-add-button (click)="addElement()">{{'web.structure-definition.form.add-element' | translate}}</twa-add-button>
+                </div>
+                <twa-structure-definition-tree #sdTree mode="edit"
+                    [defCode]="structureDefinition.code"
+                    (elementSelected)="openForm($event)"></twa-structure-definition-tree>
+              </m-card>
+            </div>
+            <div nz-col [nzMd]="16" [nzXs]="24">
+              <m-card *ngIf="element">
+                <form #elementForm="ngForm">
+                  <m-form-item mName="path" mLabel="web.structure-definition.form.path" required>
+                    <m-input name="path" [(ngModel)]="element.path" required></m-input>
+                  </m-form-item>
+                  <m-form-item mName="cardinality" mLabel="web.structure-definition.form.cardinality">
+                    <nz-radio-group name="cardinality" [(ngModel)]="element.cardinality">
+                      <label nz-radio-button nzValue="0..0">0..0</label>
+                      <label nz-radio-button nzValue="0..1">0..1</label>
+                      <label nz-radio-button nzValue="0..*">0..*</label>
+                      <label nz-radio-button nzValue="1..1">1..1</label>
+                      <label nz-radio-button nzValue="1..*">1..*</label>
+                    </nz-radio-group>
+                  </m-form-item>
+                  <twa-sd-type-list [types]="element.types" (typesChange)="element.types = $event"></twa-sd-type-list>
+                  <m-form-item mName="fixed" mLabel="web.structure-definition.form.fixed-uri">
+                    <m-input name="fixed" [(ngModel)]="element.fixedUri"></m-input>
+                  </m-form-item>
+                  <m-form-item mName="fixedCoding" mLabel="web.structure-definition.form.fixed-coding">
+                    <div style="display: flex">
+                      <m-input style="width: 100%" name="fixedCodingCode" placeholder="web.structure-definition.form.code" [(ngModel)]="element.fixedCoding.code"></m-input>
+                      <m-input style="width: 100%" name="fixedCodingSystem" placeholder="web.structure-definition.form.system" [(ngModel)]="element.fixedCoding.system"></m-input>
+                      <m-input style="width: 100%" name="fixedCodingDisplay" placeholder="web.structure-definition.form.display" [(ngModel)]="element.fixedCoding.display"></m-input>
+                    </div>
+                  </m-form-item>
+                  <m-form-item mName="short" mLabel="web.structure-definition.form.short-description">
+                    <m-input name="short" [(ngModel)]="element.short"></m-input>
+                  </m-form-item>
+                  <m-form-item mName="definition" mLabel="web.structure-definition.form.definition">
+                    <m-textarea name="definition" [(ngModel)]="element.definition"></m-textarea>
+                  </m-form-item>
+                  <twa-sd-constraint-list [constraints]="element.constraint" (constraintsChange)="element.constraint = $event"></twa-sd-constraint-list>
+                </form>
+                <ng-container *m-card-footer>
+                  <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="saveElement()">
+                    {{'core.btn.save' | translate}}
+                  </m-button>
+                </ng-container>
+              </m-card>
+            </div>
+          </div>
+        </ng-template>
       </nz-tab>
     </nz-tabset>
   </div>
@@ -29,7 +93,8 @@
 
 <ng-template #formTemplate>
   <m-spinner [mLoading]="loading['save']">
-    <m-card [mTitle]="mode === 'edit' ? 'web.structure-definition.form.edit-header' : 'web.structure-definition.form.add-header'" [mShowSkeleton]="loading['init']">
+    <m-card [mTitle]="mode === 'edit' ? 'web.structure-definition.form.edit-header' : 'web.structure-definition.form.add-header'"
+        [mShowSkeleton]="loading['init']">
       <form #form="ngForm" *ngIf="structureDefinition">
         <m-form-item mName="code" mLabel="entities.structure-definition.code" required>
           <m-input name="code" [(ngModel)]="structureDefinition.code" required></m-input>
@@ -44,7 +109,7 @@
         </m-form-item>
 
         <m-form-item mName="content" mLabel="entities.structure-definition.content" required>
-          <m-textarea name="content" [(ngModel)]="structureDefinition.content" autosize [rows]="15" required></m-textarea>
+          <m-textarea name="content" [(ngModel)]="structureDefinition.content" [rows]="10" autosize required></m-textarea>
         </m-form-item>
       </form>
       <ng-container *m-card-footer>

@@ -17,29 +17,37 @@
 
 
 <ng-template #option let-node="node">
-    <div style="display: flex">
-      <label style="flex: 2; display: grid">
+    <div style="display: flex" (click)="selectElement(node.element)">
+
+      <label style="flex: 3; display: grid">
         <label>{{ node.name }}</label>
-        <label *ngIf="node.fixed" style="color: grey">
+        <label *ngIf="node.fixedUri && mode === 'view'" style="color: grey">
           {{'web.structure-definition.view.fixed' | translate}}:
-          <a [href]="node.fixed">{{node.fixed | apply:lastWordFromUrl}}</a>
+          <a [href]="node.fixedUri">{{node.fixedUri | apply:lastWordFromUrl}}</a>
+        </label>
+        <label *ngIf="node.fixedCoding && mode === 'view'" style="color: grey">
+          {{'web.structure-definition.view.fixed' | translate}}: {{node.fixedCoding.code}} | {{node.fixedCoding.system}}
         </label>
       </label>
-      <label style="flex: 1">{{ node.cardinality }}</label>
-      <label style="flex: 5">
+
+      <label style="flex: 1" *ngIf="mode === 'view'">{{ node.cardinality }}</label>
+
+      <label style="flex: 5" *ngIf="mode === 'view'">
         <label>{{ node.type }}</label>
         <label *ngIf="node.targetProfiles">
           (<a *ngFor="let profile of node.targetProfiles; let index = index" [href]="profile">{{index !== 0 ? ' | ' : ''}}{{profile | apply:lastWordFromUrl}}</a>)
         </label>
       </label>
-      <label style="flex: 10; display: grid">
+
+      <label style="flex: 10; display: grid" *ngIf="mode === 'view'">
         <label>{{ node.short }}</label>
         <label *ngIf="node.definition" style="color: grey">{{ node.definition }}</label>
         <label *ngIf="node.binding" style="color: grey">
           {{'web.structure-definition.view.binding' | translate}}:
-          <a [href]="node.binding">{{node.binding | apply:lastWordFromUrl}}</a>
-          ({{node.bindingStrength}})
+          <a [href]="node.binding">{{node.binding.valueSet | apply:lastWordFromUrl}}</a>
+          ({{node.binding.strength}})
         </label>
       </label>
+
     </div>
 </ng-template>

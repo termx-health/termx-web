@@ -1,5 +1,4 @@
 import {ElementDefinition} from 'fhir/model/element-definition';
-import {isDefined} from '@kodality-web/core-util';
 
 export class ThesaurusFhirMapperUtil {
   public static mapToKeyValue(fhirObj: any): {[key: string]: any} {
@@ -17,29 +16,22 @@ export class ThesaurusFhirMapperUtil {
 
   private static mapFromElementDefinition(element: ElementDefinition[]): {[key: string]: any} {
     let res: {[key: string]: any} = {};
-    element.forEach(el => {
+    element?.forEach(el => {
       const ids = el.id!.split(/\.|:/);
       ids.shift();
-      res = Object.assign(res, ThesaurusFhirMapperUtil.appendKey(ids, el));
+      res = Object.assign(res, ThesaurusFhirMapperUtil.appendKey(ids, el, res));
     });
     return res;
   }
 
-  private static appendKey(array: string[], el: any): {[key: string]: any} {
-    const res: {[key: string]: any} = {};
+  private static appendKey(array: string[], el: any, res: {[key: string]: any}): {[key: string]: any} {
     if (array.length === 1) {
-      res[array[0]] = {
-        type: el.type?.[0].code,
-        targetProfiles: el.type?.[0].targetProfile,
-        fixed: el.fixedUri,
-        cardinality: isDefined(el.min) || isDefined(el.max) ? (isDefined(el.min) ? el.min : '*') + '..' + (isDefined(el.max) ? el.max : '*') : '',
-        short: el.short,
-        definition: isDefined(el.definition) && el.definition !== el.short ? el.definition : undefined,
-        binding: isDefined(el.binding) ? el.binding.valueSet : undefined,
-        bindingStrength: isDefined(el.binding) ?  el.binding.strength : undefined
-      };
+      res[array[0]] = res[array[0]] || {element: el};
     } else if (array.length > 1) {
-      res[array.shift()!] = Object.assign(res[array.shift()!] || {} , ThesaurusFhirMapperUtil.appendKey(array, el));
+      const key = array.shift()!;
+      res[key] = res[key] || {element: el};
+      const children = ThesaurusFhirMapperUtil.appendKey(array, el, res[key]);
+      Object.keys(children).forEach(child => res[key][child] = children[child]);
     }
     return res;
   }

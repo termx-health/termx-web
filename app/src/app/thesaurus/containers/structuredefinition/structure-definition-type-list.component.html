@@ -1,0 +1,83 @@
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
+    <div><b>{{'web.structure-definition-type.list.header' | translate}}</b></div>
+    <twa-add-button *ngIf="!viewMode" (click)="addType()">
+      {{'web.structure-definition-type.list.add-type' | translate}}
+    </twa-add-button>
+  </div>
+
+  <m-no-data *ngIf="!types?.length"></m-no-data>
+  <nz-collapse class="tw-sd-type-collapse" *ngIf="types?.length">
+    <nz-collapse-panel *ngFor="let type of types; let index = index" [nzHeader]="header" [nzExtra]="!viewMode? edit: ''">
+      <ng-template #header>
+        <div *ngIf="type.code">{{type.code}}</div>
+      </ng-template>
+
+      <ng-template #edit>
+        <m-button (click)="$event.stopPropagation(); toggleModal(type, index)" mSize="small">
+          <m-icon [mCode]="'edit'"></m-icon>
+        </m-button>
+        <m-button style="margin-left: 0.5em" (click)="$event.stopPropagation();removeType(index)" mSize="small">
+          <m-icon [mCode]="'delete'"></m-icon>
+        </m-button>
+      </ng-template>
+
+      <m-table [mData]="type.targetProfile" [mOutlined]="false" mSize="small">
+        <tr *mTableRow="let profile">
+          <td>{{profile.value}}</td>
+        </tr>
+        <tr *mTableNoData>
+          <td>
+            <m-no-data></m-no-data>
+          </td>
+        </tr>
+      </m-table>
+    </nz-collapse-panel>
+  </nz-collapse>
+
+
+  <m-modal #modal [(mVisible)]="modalData.visible" (mClose)="toggleModal()">
+    <ng-container *m-modal-header>
+      {{(modalData.index > -1 ? 'web.structure-definition-type.modal.edit-header' : 'web.structure-definition-type.modal.add-header') | translate}}
+    </ng-container>
+
+    <ng-container *m-modal-content>
+      <form #form="ngForm" *ngIf="modalData.type">
+        <m-form-item mName="code" mLabel="web.structure-definition-type.modal.code" required>
+          <m-input name="code" [(ngModel)]="modalData.type.code" autofocus required></m-input>
+        </m-form-item>
+
+        <m-table [mData]="modalData.type.targetProfile" mSize="small">
+          <tr *mTableHead>
+            <th>{{'web.structure-definition-type.modal.target-profile' | translate}}</th>
+            <th class="tw-table-actions"></th>
+          </tr>
+
+          <tr *mTableRow="let profile; let index = index">
+            <td>
+              <m-input name="value-{{index}}" [(ngModel)]="profile.value"></m-input>
+            </td>
+            <td class="tw-table-actions">
+              <m-button (click)="removeModalTarget(index)">
+                <m-icon [mCode]="'delete'"></m-icon>
+              </m-button>
+            </td>
+          </tr>
+
+          <tr>
+            <td colspan="4" style="padding: 0">
+              <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addModalTarget()">
+                <m-icon [mCode]="'plus'"></m-icon>
+              </m-button>
+            </td>
+          </tr>
+        </m-table>
+      </form>
+    </ng-container>
+
+    <div *m-modal-footer class="tw-button-group">
+      <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
+      <m-button mDisplay="primary" (click)="confirmModalType()">{{'core.btn.confirm' | translate}}</m-button>
+    </div>
+  </m-modal>
+</m-card>

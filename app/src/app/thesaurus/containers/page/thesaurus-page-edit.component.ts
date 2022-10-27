@@ -2,8 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PageContent} from 'lib/src/thesaurus';
+import {PageContent, StructureDefinition} from 'lib/src/thesaurus';
 import {PageService} from '../../services/page.service';
+import {StructureDefinitionService} from '../../services/structure-definition.service';
 
 @Component({
   templateUrl: 'thesaurus-page-edit.component.html'
@@ -19,8 +20,10 @@ export class ThesaurusPageEditComponent implements OnInit {
 
   public constructor(
     private pageService: PageService,
+    private structureDefinitionService: StructureDefinitionService,
     private router: Router,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute
+  ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe(routeParam => {
@@ -69,5 +72,43 @@ export class ThesaurusPageEditComponent implements OnInit {
       this.loading['update'] = false;
     }, 200);
     this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']);
+  }
+
+  public saveAndOpenStructureDefinition(): void {
+    if (!validateForm(this.form)) {
+      return;
+    }
+    this.loading['save'] = true;
+    this.pageService.savePageContent(this.pageContent!, this.pageId!).subscribe(() => this.openStructureDefinition()).add(() => this.loading['save'] = false);
+  }
+
+  public openStructureDefinition(): void {
+    this.structureDefinitionService.search({code: this.pageContent!.slug, limit: 1}).subscribe(res => {
+      if (res.data?.[0]?.id) {
+        this.router.navigate(['/thesaurus/structure-definitions/', res.data[0].id, 'edit'], {queryParams: {tab: 'elements'}});
+        return;
+      }
+      const fhirSD = {
+        resourceType: 'StructureDefinition',
+        id: this.pageContent!.slug,
+        url: this.pageContent!.slug,
+        name: this.pageContent!.slug,
+        status: 'active',
+        kind: 'logical',
+        abstract: false,
+        baseDefinition: 'http://hl7.org/fhir/StructureDefinition/Element',
+        differential: {}
+      };
+      const structureDefinition: StructureDefinition = {
+        url: this.pageContent!.slug,
+        code: this.pageContent!.slug,
+        content: JSON.stringify(fhirSD, null, 2),
+        contentFormat: 'json',
+        contentType: 'instance'
+      };
+      this.structureDefinitionService.save(structureDefinition).subscribe(sd => {
+        this.router.navigate(['/thesaurus/structure-definitions/', sd.id, 'edit'], {queryParams: {tab: 'elements'}});
+      });
+    });
   }
 }
