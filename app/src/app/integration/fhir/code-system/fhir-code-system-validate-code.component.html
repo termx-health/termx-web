@@ -6,7 +6,7 @@
         <nz-breadcrumb-item>CodeSystem</nz-breadcrumb-item>
         <nz-breadcrumb-item>$validate-code</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <m-button mDisplay="primary" [disabled]="!data.code || !data.system" (click)="validateCode()">{{'web.integration.send-request' | translate}}</m-button>
+      <m-button mDisplay="primary" [disabled]="!data.code || !data.url" (click)="validateCode()">{{'web.integration.send-request' | translate}}</m-button>
     </div>
 
     <m-form-item [mLabel]="code" required>
@@ -23,16 +23,16 @@
       </ng-template>
       <m-input [(ngModel)]="data.version"></m-input>
     </m-form-item>
-    <m-form-item [mLabel]="system" required>
-      <ng-template #system>
-        <div>{{'web.integration.fhir.code-system.validate-code.system' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="systemContent"></m-icon>
-        <ng-template #systemContent>
+    <m-form-item [mLabel]="url" required>
+      <ng-template #url>
+        <div>{{'web.integration.fhir.code-system.validate-code.url' | translate}}&nbsp;</div>
+        <m-icon mCode="info-circle" m-popover [mContent]="urlContent"></m-icon>
+        <ng-template #urlContent>
           CodeSystem URL. The server must know the code system (e.g. it is defined explicitly in the servers code systems, or it is known implicitly by the
           server)
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.system"></m-input>
+      <m-input [(ngModel)]="data.url"></m-input>
     </m-form-item>
     <m-form-item [mLabel]="display">
       <ng-template #display>

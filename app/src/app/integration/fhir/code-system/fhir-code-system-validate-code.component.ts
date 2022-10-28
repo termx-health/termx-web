@@ -20,7 +20,7 @@ export class FhirCodeSystemValidateCodeComponent {
 
   public validateCode(): void {
     this.data.code = this.data.code || undefined;
-    this.data.system = this.data.system || undefined;
+    this.data.url = this.data.url || undefined;
     this.data.display = this.data.display || undefined;
     this.data.version = this.data.version || undefined;
     this.loading = true;
