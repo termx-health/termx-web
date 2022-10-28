@@ -403,7 +403,7 @@
           "validate-code": {
             "code": "Code",
             "version": "Version",
-            "system": "System(URL)",
+            "url": "URL",
             "display": "Display"
           },
           "subsumes": {
