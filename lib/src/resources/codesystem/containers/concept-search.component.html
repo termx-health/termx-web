@@ -7,5 +7,5 @@
     [loading]="isLoading"
     [autoUnselect]="false"
 >
-  <m-option *ngFor="let key of (data | keys)" [value]="data[key]?.id" [label]="data[key]?.code"></m-option>
+  <m-option *ngFor="let key of (data | keys)" [value]="valueType === 'code' ? data[key]?.code : data[key]?.id" [label]="data[key]?.code"></m-option>
 </m-select>

@@ -63,7 +63,7 @@
               [(ngModel)]="modalData.filter.value"></m-number-input>
           <twl-concept-search *ngIf="['code','Coding'].includes(modalData.filter.property?.type)"
               name="propertyValue"
-              valuePrimitive
+              valueType="code"
               [(ngModel)]="modalData.filter.value"></twl-concept-search>
         </m-form-item>
       </ng-container>

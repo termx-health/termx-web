@@ -2,7 +2,7 @@ import {Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@a
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
+import {DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {CodeSystemConcept} from '../model/code-system-concept';
 import {ConceptSearchParams} from '../model/concept-search-params';
 import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.service';
@@ -19,10 +19,10 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   @Input() public codeSystemVersionReleaseDateLe?: Date;
   @Input() public codeSystemVersionExpirationDateGe?: Date;
   @Input() public entityVersionStatus?: string;
-  @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() public valueType: 'id' | 'code' | 'full' = 'full';
 
   public data: {[id: string]: CodeSystemConcept} = {};
-  public value?: number;
+  public value?: number | string;
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
@@ -59,7 +59,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   }
 
   public searchConcepts(text?: string): Observable<{[id: string]: CodeSystemConcept}> {
-    if ((!text || text.length < 1) && !this.codeSystem && !this.codeSystemVersion ) {
+    if ((!text || text.length < 1) && !this.codeSystem && !this.codeSystemVersion) {
       return of(this.data);
     }
 
@@ -76,29 +76,36 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     this.loading['search'] = true;
     return this.conceptService.search(q).pipe(
       takeUntil(this.destroy$),
-      map(ca => ({...this.data, ...group(ca.data, c => c.id!)})),
+      map(ca => ({...this.data, ...group(ca.data, c => this.valueType === 'code' ? c.code! : c.id!)})),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
     );
   }
 
-  private loadConcept(id?: number): void {
-    if (isDefined(id)) {
+  private loadConcept(val?: number | string): void {
+    if (isDefined(val) && typeof val === 'number') {
       this.loading['load'] = true;
-      this.conceptService.load(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
-        this.data = {...(this.data || {}), [c.id!]: c};
+      this.conceptService.load(val).pipe(takeUntil(this.destroy$)).subscribe(c => {
+        this.data = {...(this.data || {}), [this.valueType === 'code' ? c.code! : c.id!]: c};
+      }).add(() => this.loading['load'] = false);
+    }
+
+    if (isDefined(val) && typeof val === 'string') {
+      this.loading['load'] = true;
+      this.conceptService.search({code: val, limit: 1, codeSystem: this.codeSystem}).pipe(takeUntil(this.destroy$)).subscribe(c => {
+        this.data = {...(this.data || {}), [c.data[0].code!]: c.data[0]};
       }).add(() => this.loading['load'] = false);
     }
   }
 
 
-  public writeValue(obj: CodeSystemConcept | number): void {
+  public writeValue(obj: CodeSystemConcept | number | string): void {
     this.value = (typeof obj === 'object' ? obj?.id : obj);
     this.loadConcept(this.value);
   }
 
   public fireOnChange(): void {
-    if (this.valuePrimitive) {
+    if (this.valueType === 'id' || this.valueType === 'code') {
       this.onChange(this.value);
     } else {
       this.onChange(this.data?.[this.value!]);
