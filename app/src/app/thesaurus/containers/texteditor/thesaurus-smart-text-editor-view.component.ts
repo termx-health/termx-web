@@ -72,7 +72,7 @@ export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
     } else if (type === 'concept') {
       const cs = typeValue.split('|')[0];
       const concept = typeValue.split('|')[1];
-      value += cs !== 'snomed-ct' ? '(/resources/code-systems/' + cs + '/concepts/' + concept + '/view)' : '(/integration/snomed)';
+      value += cs !== 'snomed-ct' ? '(/resources/code-systems/' + cs + '/concepts/' + concept + '/view)' : '(/integration/snomed/' + concept + ')';
     } else if (type === 'page') {
       value += '(/thesaurus/pages/' + typeValue + ')';
     } else {

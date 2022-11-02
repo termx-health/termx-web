@@ -42,9 +42,8 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.edit']}}
     ]
   },
-  {
-    path: 'snomed', component: SnomedDashboardComponent, data: {privilege: ['*.Snomed.view']}
-  }
+  {path: 'snomed', component: SnomedDashboardComponent, data: {privilege: ['*.Snomed.view']}},
+  {path: 'snomed/:conceptId', component: SnomedDashboardComponent, data: {privilege: ['*.Snomed.view']}}
 ];
 
 @NgModule({
