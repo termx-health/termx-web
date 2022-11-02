@@ -13,6 +13,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   @Input() public defCode?: string;
   @Input() public mode?: 'edit' | 'view' = 'view';
   @Output() public elementSelected = new EventEmitter<any>();
+  public selectedElement?: any;
   public dataSource?: any;
 
   public constructor(private structureDefinitionService: StructureDefinitionLibService) {}
@@ -84,7 +85,10 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   };
 
   public selectElement(element: any): void {
-    this.elementSelected.emit(element);
+    if (element) {
+      this.selectedElement = element;
+      this.elementSelected.emit(element);
+    }
   }
 }
 

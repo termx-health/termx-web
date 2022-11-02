@@ -1,6 +1,6 @@
 <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource">
   <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodeIndentLine style="width: 100%">
-    <nz-tree-node-option style="width: 100%">
+    <nz-tree-node-option style="width: 100%" [ngStyle]="!!node.element && node.element === selectedElement ? {'background': '#eee'} : {}">
       <ng-container *ngTemplateOutlet="option; context: {node: node}"></ng-container>
     </nz-tree-node-option>
   </nz-tree-node>
@@ -9,7 +9,7 @@
     <nz-tree-node-toggle>
           <span nz-icon [nzType]="treeControl.isExpanded(node) ? 'minus-square' : 'plus-square'" nzTheme="outline"></span>
     </nz-tree-node-toggle>
-    <nz-tree-node-option style="width: 100%">
+    <nz-tree-node-option style="width: 100%" [ngStyle]="!!node.element && node.element === selectedElement ? {'background': '#eee'} : {}">
       <ng-container *ngTemplateOutlet="option; context: {node: node}"></ng-container>
     </nz-tree-node-option>
   </nz-tree-node>
@@ -19,7 +19,7 @@
 <ng-template #option let-node="node">
     <div style="display: flex" (click)="selectElement(node.element)">
 
-      <label style="flex: 3; display: grid">
+      <label style="flex: 3; display: grid;">
         <label>{{ node.name }}</label>
         <label *ngIf="node.fixedUri && mode === 'view'" style="color: grey">
           {{'web.structure-definition.view.fixed' | translate}}:
