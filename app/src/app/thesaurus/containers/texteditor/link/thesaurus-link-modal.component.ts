@@ -35,30 +35,30 @@ import {TranslateService} from '@ngx-translate/core';
           <ng-container *ngIf="data.linkType === 'resource'">
             <m-form-item mName="resource" mLabel="web.thesaurus-page.link-modal.resource-type" required>
               <m-select [(ngModel)]="data.resourceType" name="resource" required>
-                <m-option label="CodeSystem" [value]="'code-systems'"></m-option>
-                <m-option label="ValueSet" [value]="'value-sets'"></m-option>
-                <m-option label="MapSet" [value]="'map-sets'"></m-option>
-                <m-option label="Concept" [value]="'concepts'"></m-option>
+                <m-option label="CodeSystem" [value]="'cs'"></m-option>
+                <m-option label="ValueSet" [value]="'vs'"></m-option>
+                <m-option label="MapSet" [value]="'ms'"></m-option>
+                <m-option label="Concept" [value]="'concept'"></m-option>
               </m-select>
             </m-form-item>
-            <m-form-item *ngIf="data.resourceType === 'code-systems'" mName="codeSystem" mLabel="web.thesaurus-page.link-modal.code-system" required>
+            <m-form-item *ngIf="data.resourceType === 'cs'" mName="codeSystem" mLabel="web.thesaurus-page.link-modal.code-system" required>
               <twl-code-system-search [(ngModel)]="data.resource" name="codeSystem" valuePrimitive required></twl-code-system-search>
             </m-form-item>
-            <m-form-item *ngIf="data.resourceType === 'value-sets'" mName="valueSet" mLabel="web.thesaurus-page.link-modal.value-set" required>
+            <m-form-item *ngIf="data.resourceType === 'vs'" mName="valueSet" mLabel="web.thesaurus-page.link-modal.value-set" required>
               <twl-value-set-search [(ngModel)]="data.resource" name="valueSet" valuePrimitive required></twl-value-set-search>
             </m-form-item>
-            <m-form-item *ngIf="data.resourceType === 'map-sets'" mName="mapSet" mLabel="web.thesaurus-page.link-modal.map-set" required>
+            <m-form-item *ngIf="data.resourceType === 'ms'" mName="mapSet" mLabel="web.thesaurus-page.link-modal.map-set" required>
               <twl-map-set-search [(ngModel)]="data.resource" name="mapSet" valuePrimitive required></twl-map-set-search>
             </m-form-item>
-            <m-form-item *ngIf="data.resourceType === 'concepts'" mName="conceptCodeSystem" mLabel="web.thesaurus-page.link-modal.concept-code-system" required>
+            <m-form-item *ngIf="data.resourceType === 'concept'" mName="conceptCodeSystem" mLabel="web.thesaurus-page.link-modal.concept-code-system" required>
               <twl-code-system-search [(ngModel)]="data.conceptCodeSystem" name="conceptCodeSystem" valuePrimitive required></twl-code-system-search>
             </m-form-item>
-            <m-form-item *ngIf="data.resourceType === 'concepts' && data.conceptCodeSystem" mName="concept" mLabel="web.thesaurus-page.link-modal.concept" required>
+            <m-form-item *ngIf="data.resourceType === 'concept' && data.conceptCodeSystem" mName="concept" mLabel="web.thesaurus-page.link-modal.concept" required>
               <div *ngIf="data.conceptCodeSystem === 'snomed-ct' && data.resource">
                 <label>{{data.resource}}</label><m-icon style="cursor: pointer; margin-left: 0.5rem" mCode="close" (click)="data.resource = null"></m-icon>
               </div>
               <twl-snomed-search *ngIf="data.conceptCodeSystem === 'snomed-ct' && !data.resource" (conceptSelected)="data.resource = $event"></twl-snomed-search>
-              <twl-concept-search *ngIf="data.conceptCodeSystem !== 'snomed-ct'" [(ngModel)]="data.resource" [codeSystem]="data.conceptCodeSystem" name="concept" required></twl-concept-search>
+              <twl-concept-search *ngIf="data.conceptCodeSystem !== 'snomed-ct'" [(ngModel)]="data.resource" [codeSystem]="data.conceptCodeSystem" valueType="code" name="concept" required></twl-concept-search>
             </m-form-item>
           </ng-container>
 
@@ -111,18 +111,15 @@ export class ThesaurusLinkModalComponent {
 
     if (data.linkType === 'page') {
       const content = data.page?.contents?.find(c => c.lang === this.translateService.currentLang) || data.page?.contents?.[0];
-      return '/thesaurus/' + content!.slug;
+      return [data.linkType, content!.slug].join(':');
     }
 
     if (data.linkType === 'resource') {
-      if (data.resourceType && ['code-systems', 'value-sets', 'map-sets'].includes(data.resourceType)) {
-        return '/resources/' + data.resourceType + '/' + data.resource + '/view';
+      if (data.resourceType && ['cs', 'vs', 'ms'].includes(data.resourceType)) {
+        return [data.resourceType, data.resource].join(':');
       }
-      if ('concepts' === data.resourceType && data.conceptCodeSystem !== 'snomed-ct') {
-        return '/resources/code-systems/' + data.conceptCodeSystem + '/' + data.resourceType + '/' + data.resource!.code! + '/view';
-      }
-      if ('concepts' === data.resourceType && data.conceptCodeSystem === 'snomed-ct') {
-        return '/integration/snomed';
+      if ('concept' === data.resourceType) {
+        return [data.resourceType, data.conceptCodeSystem + '|' + data.resource].join(':');
       }
     }
   }

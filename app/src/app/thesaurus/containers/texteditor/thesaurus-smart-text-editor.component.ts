@@ -4,8 +4,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {ThesaurusDropdownOptionComponent, OptionItem} from './thesaurus-dropdown-option.component';
 import {ThesaurusDropdownComponent} from './thesaurus-dropdown.component';
 import {BooleanInput, isDefined} from '@kodality-web/core-util';
-import {ThesaurusLinkModalComponent} from './modal/thesaurus-link-modal.component';
-import {ThesaurusStructureDefinitionModalComponent} from './modal/thesaurus-structure-definition-modal.component';
+import {ThesaurusLinkModalComponent} from './link/thesaurus-link-modal.component';
+import {ThesaurusStructureDefinitionModalComponent} from './structuredefinition/thesaurus-structure-definition-modal.component';
 
 @Component({
   selector: 'twa-smart-text-editor',

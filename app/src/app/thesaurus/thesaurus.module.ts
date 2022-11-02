@@ -12,9 +12,9 @@ import {ThesaurusDropdownComponent} from './containers/texteditor/thesaurus-drop
 import {PortalModule} from '@angular/cdk/portal';
 import {ThesaurusDropdownOptionComponent} from './containers/texteditor/thesaurus-dropdown-option.component';
 import {ThesaurusSmartTextEditorComponent} from './containers/texteditor/thesaurus-smart-text-editor.component';
-import {ThesaurusLinkModalComponent} from './containers/texteditor/modal/thesaurus-link-modal.component';
+import {ThesaurusLinkModalComponent} from './containers/texteditor/link/thesaurus-link-modal.component';
 import {ResourcesLibModule} from 'terminology-lib/resources';
-import {ThesaurusStructureDefinitionModalComponent} from './containers/texteditor/modal/thesaurus-structure-definition-modal.component';
+import {ThesaurusStructureDefinitionModalComponent} from './containers/texteditor/structuredefinition/thesaurus-structure-definition-modal.component';
 import {ThesaurusSmartTextEditorViewComponent} from './containers/texteditor/thesaurus-smart-text-editor-view.component';
 import {StructureDefinitionListComponent} from './containers/structuredefinition/structure-definition-list.component';
 import {StructureDefinitionEditComponent} from './containers/structuredefinition/structure-definition-edit.component';
