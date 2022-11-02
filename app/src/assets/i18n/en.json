@@ -116,6 +116,7 @@
       "list": {
         "add-code-system": "Add code system",
         "domain": "Domain",
+        "uri": "URI",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}",

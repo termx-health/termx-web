@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
-import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'terminology-lib/resources';
+import {CodeSystem, CodeSystemSearchParams} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
@@ -43,16 +43,6 @@ export class CodeSystemListComponent implements OnInit {
   public loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
   }
-
-
-  public getVersionTranslateTokens = (version: CodeSystemVersion, translateOptions: object): string[] => {
-    const tokens = [
-      version.releaseDate ? 'web.code-system.list.versions-release-date' : '',
-      version.expirationDate ? 'web.code-system.list.versions-expiration-date' : '',
-      version.version ? 'web.code-system.list.versions-version' : ''
-    ];
-    return tokens.filter(Boolean).map(t => this.translateService.instant(t, translateOptions));
-  };
 
   public parseDomain(uri: string): string {
     return uri?.split('//')[1]?.split('/')[0];

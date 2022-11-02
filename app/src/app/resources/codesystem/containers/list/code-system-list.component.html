@@ -17,6 +17,7 @@
       <th mColumnKey="id">{{'entities.code-system.id' | translate}}</th>
       <th mColumnKey="name">{{'entities.code-system.name' | translate}}</th>
       <th mColumnKey="uri">{{'web.code-system.list.domain' | translate}}</th>
+      <th mColumnKey="uri">{{'entities.code-system.description' | translate}}</th>
       <th *twaPrivileged="'*.CodeSystem.edit'" class="tw-table-actions"></th>
     </tr>
 
@@ -30,6 +31,7 @@
       </td>
       <td>{{cs.names | localName}}</td>
       <td>{{cs.uri | apply: parseDomain}}</td>
+      <td>{{cs.description}}</td>
       <td *twaPrivileged="'*.CodeSystem.edit'" class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="duplicateModal.toggleModal({sourceCodeSystem: cs.id})">
@@ -44,35 +46,18 @@
 
     <tr *mTableRowExpand="let cs" class="m-table-expanded-row">
       <td colspan="100%">
-        <m-form-row mFull>
-          <div *mFormCol>
-            <m-form-item *ngIf="cs.uri" mLabel="entities.code-system.uri">
-              {{cs.uri}}
-            </m-form-item>
-
-            <m-form-item *ngIf="cs.content" mLabel="entities.code-system.content">
-              {{cs.content | localizedConceptName: {valueSet: 'codesystem-content-mode'} | async}}
-            </m-form-item>
-
-            <m-form-item *ngIf="cs.caseSensitive" mLabel="entities.code-system.case-sensitivity">
-              {{'web.case-sensitive-options.' + cs.caseSensitive | translate}}
-            </m-form-item>
-
-            <m-form-item *ngIf="cs.description" mLabel="entities.code-system.description">
-              {{cs.description}}
-            </m-form-item>
-
-            <m-form-item *ngIf="cs.versions.length > 0" mLabel="entities.code-system.versions">
-              <div *ngFor="let version of cs.versions">{{
-                version | apply: getVersionTranslateTokens: ({
-                  releaseDate: (version.releaseDate | localDate),
-                  expirationDate: (version.expirationDate | localDate),
-                  version: version.version
-                }) | join: ' '}}
-              </div>
-            </m-form-item>
+        <div style="display: grid">
+          <div><label><b>{{'web.code-system.list.uri' | translate}}:</b> {{cs.uri}}</label></div>
+          <div><label><b>{{'entities.code-system.content' | translate}}:</b> {{cs.content | localizedConceptName: {valueSet: 'codesystem-content-mode'} | async}}</label></div>
+          <div *ngIf="cs.caseSensitive"><label><b>{{'entities.code-system.case-sensitivity' | translate}}:</b> {{'web.case-sensitive-options.' + cs.caseSensitive | translate}}</label></div>
+          <div style="display: grid" *ngIf="cs.versions.length > 0">
+            <label><b>{{'entities.code-system.versions' | translate}}</b></label>
+            <label *ngFor="let version of cs.versions">
+              <b style="margin-right: 1rem">{{version.version}}</b>
+              <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
+            </label>
           </div>
-        </m-form-row>
+        </div>
       </td>
     </tr>
 
