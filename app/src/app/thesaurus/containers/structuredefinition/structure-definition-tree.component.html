@@ -21,13 +21,6 @@
 
       <label style="flex: 3; display: grid;">
         <label>{{ node.name }}</label>
-        <label *ngIf="node.fixedUri && mode === 'view'" style="color: grey">
-          {{'web.structure-definition.view.fixed' | translate}}:
-          <a [href]="node.fixedUri">{{node.fixedUri | apply:lastWordFromUrl}}</a>
-        </label>
-        <label *ngIf="node.fixedCoding && mode === 'view'" style="color: grey">
-          {{'web.structure-definition.view.fixed' | translate}}: {{node.fixedCoding.code}} | {{node.fixedCoding.system}}
-        </label>
       </label>
 
       <label style="flex: 1" *ngIf="mode === 'view'">{{ node.cardinality }}</label>
@@ -46,6 +39,13 @@
           {{'web.structure-definition.view.binding' | translate}}:
           <a [href]="node.binding">{{node.binding.valueSet | apply:lastWordFromUrl}}</a>
           ({{node.binding.strength}})
+        </label>
+        <label *ngIf="node.fixedUri && mode === 'view'" style="color: grey">
+          {{'web.structure-definition.view.fixed' | translate}}:
+          <a [href]="node.fixedUri">{{node.fixedUri | apply:lastWordFromUrl}}</a>
+        </label>
+        <label *ngIf="node.fixedCoding && mode === 'view'" style="color: grey">
+          {{'web.structure-definition.view.fixed' | translate}}: {{node.fixedCoding.code}} | {{node.fixedCoding.system}}
         </label>
       </label>
 
