@@ -83,16 +83,19 @@ export class ThesaurusPageEditComponent implements OnInit {
   }
 
   public openStructureDefinition(): void {
-    this.structureDefinitionService.search({code: this.pageContent!.slug, limit: 1}).subscribe(res => {
+    const structureDefinitionCode = this.pageContent!.slug + '-model';
+
+    this.structureDefinitionService.search({code: structureDefinitionCode, limit: 1}).subscribe(res => {
       if (res.data?.[0]?.id) {
         this.router.navigate(['/thesaurus/structure-definitions/', res.data[0].id, 'edit'], {queryParams: {tab: 'elements'}});
         return;
       }
+
       const fhirSD = {
         resourceType: 'StructureDefinition',
-        id: this.pageContent!.slug,
-        url: this.pageContent!.slug,
-        name: this.pageContent!.slug,
+        id: structureDefinitionCode,
+        url: structureDefinitionCode,
+        name: structureDefinitionCode,
         status: 'active',
         kind: 'logical',
         abstract: false,
@@ -100,8 +103,8 @@ export class ThesaurusPageEditComponent implements OnInit {
         differential: {}
       };
       const structureDefinition: StructureDefinition = {
-        url: this.pageContent!.slug,
-        code: this.pageContent!.slug,
+        url: structureDefinitionCode,
+        code: structureDefinitionCode,
         content: JSON.stringify(fhirSD, null, 2),
         contentFormat: 'json',
         contentType: 'instance'
