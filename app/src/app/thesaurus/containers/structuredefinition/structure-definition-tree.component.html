@@ -26,9 +26,8 @@
       <label style="flex: 1" *ngIf="mode === 'view'">{{ node.cardinality }}</label>
 
       <label style="flex: 5" *ngIf="mode === 'view'">
-        <label>{{ node.type }}</label>
-        <label *ngIf="node.targetProfiles">
-          (<a *ngFor="let profile of node.targetProfiles; let index = index" [href]="profile">{{index !== 0 ? ' | ' : ''}}{{profile | apply:lastWordFromUrl}}</a>)
+        <label *ngIf="node.targetProfile">
+          (<a *ngFor="let profile of node.targetProfile; let index = index" [href]="profile">{{index !== 0 ? ' | ' : ''}}{{profile | apply:lastWordFromUrl}}</a>)
         </label>
       </label>
 

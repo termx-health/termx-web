@@ -67,7 +67,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
     type: node.element?.type?.[0]?.code,
     targetProfile: node.element?.type?.[0]?.targetProfile,
     fixedUri: node.element?.fixedUri,
-    fixedCoding: node.element?.fixedCoding ? node.element.fixedCoding.code : undefined,
+    fixedCoding: node.element?.fixedCoding ? node.element.fixedCoding : undefined,
     cardinality: isDefined(node.element?.min) || isDefined(node.element?.max) ? (isDefined(node.element?.min) ? node.element?.min : '*') + '..' + (isDefined(node.element?.max) ? node.element?.max : '*') : '',
     short: node.element?.short,
     definition: isDefined(node.element?.definition) && node.element?.definition !== node.element?.short ? node.element?.definition : undefined,
@@ -95,7 +95,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
 interface TreeNode {
   name: string;
   fixedUri?: string;
-  fixedCoding?: string;
+  fixedCoding?: any;
   type?: string;
   targetProfile?: string[];
   cardinality?: string;
