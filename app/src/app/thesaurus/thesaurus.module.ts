@@ -26,6 +26,8 @@ import {IntegrationLibModule} from 'terminology-lib/integration';
 import {StructureDefinitionTreeComponent} from './containers/structuredefinition/structure-definition-tree.component';
 import {StructureDefinitionTypeListComponent} from './containers/structuredefinition/structure-definition-type-list.component';
 import {StructureDefinitionConstraintListComponent} from './containers/structuredefinition/structure-definition-constraint-list.component';
+import {ThesaurusTemplateModalComponent} from './containers/texteditor/template/thesaurus-template-modal.component';
+import {TemplateViewComponent} from './containers/template/template-view.component';
 
 export const THESAURUS_ROUTES: Routes = [
   {path: 'pages', component: ThesaurusPageComponent},
@@ -56,6 +58,7 @@ export const THESAURUS_ROUTES: Routes = [
     ThesaurusTextareaComponent,
     ThesaurusLinkModalComponent,
     ThesaurusStructureDefinitionModalComponent,
+    ThesaurusTemplateModalComponent,
     ThesaurusDropdownComponent,
     ThesaurusDropdownOptionComponent,
     ThesaurusSmartTextEditorComponent,
@@ -68,7 +71,8 @@ export const THESAURUS_ROUTES: Routes = [
     StructureDefinitionConstraintListComponent,
 
     TemplateListComponent,
-    TemplateEditComponent
+    TemplateEditComponent,
+    TemplateViewComponent
   ],
   providers: [PageService, StructureDefinitionService, TemplateService]
 })

@@ -22,7 +22,7 @@
       </ng-container>
 
       <m-card *ngIf="showPreview" style="width: 100%; margin-left: 1rem; background: #f7f7f7; box-shadow: none;">
-        <twa-smart-text-editor-view [value]="value" [valueType]="valueType"></twa-smart-text-editor-view>
+        <twa-smart-text-editor-view [value]="value" [valueType]="valueType" [lang]="lang"></twa-smart-text-editor-view>
       </m-card>
     </div>
   </div>
@@ -35,5 +35,6 @@
 
 <twa-link-modal #linkModal (linkComposed)="insertOption($event)"></twa-link-modal>
 <twa-structure-definition-modal #structureDefinitionModal (structureDefinitionComposed)="insertOption($event)"></twa-structure-definition-modal>
+<twa-template-modal #templateModal (templateComposed)="insertOption($event)"></twa-template-modal>
 
-<twa-smart-text-editor-view *ngIf="viewMode" [value]="value" [valueType]="valueType"></twa-smart-text-editor-view>
+<twa-smart-text-editor-view *ngIf="viewMode" [value]="value" [valueType]="valueType" [lang]="lang"></twa-smart-text-editor-view>

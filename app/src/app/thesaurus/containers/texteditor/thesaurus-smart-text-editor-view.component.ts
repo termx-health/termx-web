@@ -7,6 +7,7 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
   @Input() public valueType?: 'html' | 'markdown';
   @Input() public value?: string;
+  @Input() public lang?: string;
 
   public processedValue: ProcessedValue[] = [];
 

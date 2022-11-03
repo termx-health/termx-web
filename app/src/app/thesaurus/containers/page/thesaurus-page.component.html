@@ -29,7 +29,7 @@
           </div>
         </div>
         <ng-container *ngIf="pageContent">
-          <twa-smart-text-editor [(ngModel)]="pageContent.content" [valueType]="pageContent.contentType" viewMode></twa-smart-text-editor>
+          <twa-smart-text-editor [(ngModel)]="pageContent.content" [valueType]="pageContent.contentType" [lang]="pageContent.lang" viewMode></twa-smart-text-editor>
         </ng-container>
       </m-card>
     </m-spinner>

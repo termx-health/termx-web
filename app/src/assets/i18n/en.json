@@ -599,11 +599,15 @@
         "concept": "Concept"
       },
       "structure-definition-modal": {
-        "header": "Choose template",
+        "header": "Choose structure definition",
         "simplifier": "Simplifier",
         "structure-definition": "Structure definition",
         "url": "Simplifier definition URL",
         "base-definition-url": "Base definition URL"
+      },
+      "template-modal": {
+        "header": "Choose template",
+        "template": "Template"
       }
     },
     "structure-definition": {

@@ -2,4 +2,5 @@
   <m-markdown *ngIf="v.type === 'text' && valueType === 'markdown'" [mData]="v.value"></m-markdown>
   <m-rich-text-editor *ngIf="v.type === 'text' && valueType === 'html'" [(ngModel)]="v.value" mViewMode></m-rich-text-editor>
   <twa-structure-definition-tree *ngIf="v.type === 'def'" [defCode]="v.value"></twa-structure-definition-tree>
+  <twa-template-view *ngIf="v.type === 'temp'" [lang]="lang" [templateCode]="v.value"></twa-template-view>
 </ng-container>

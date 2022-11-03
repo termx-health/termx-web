@@ -2,22 +2,22 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {StructureDefinition, StructureDefinitionLibService} from 'terminology-lib/thesaurus';
+import {Template, TemplateLibService} from 'terminology-lib/thesaurus';
 
 
 @Component({
-  selector: 'twa-structure-definition-modal',
+  selector: 'twa-template-modal',
   template: `
     <m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal(false)" [mMaskClosable]="false">
       <ng-container *m-modal-header>
-        {{'web.thesaurus-page.structure-definition-modal.header' | translate}}
+        {{'web.thesaurus-page.template-modal.header' | translate}}
       </ng-container>
 
       <ng-container *m-modal-content>
         <form #form="ngForm" *ngIf="data">
-          <m-form-item mName="structure-definition" mLabel="web.thesaurus-page.structure-definition-modal.structure-definition" required>
-            <m-select [(ngModel)]="data.defCode" name="structure-definition" required>
-              <m-option *ngFor="let sd of structureDefinitions" [label]="sd.code" [value]="sd.code"></m-option>
+          <m-form-item mName="template" mLabel="web.thesaurus-page.template-modal.template" required>
+            <m-select [(ngModel)]="data.templateCode" name="template" required>
+              <m-option *ngFor="let template of templates" [label]="template.code" [value]="template.code"></m-option>
             </m-select>
           </m-form-item>
         </form>
@@ -30,22 +30,22 @@ import {StructureDefinition, StructureDefinitionLibService} from 'terminology-li
     </m-modal>
   `
 })
-export class ThesaurusStructureDefinitionModalComponent implements OnInit {
-  @Output() public structureDefinitionComposed: EventEmitter<string> = new EventEmitter();
+export class ThesaurusTemplateModalComponent implements OnInit {
+  @Output() public templateComposed: EventEmitter<string> = new EventEmitter();
 
   public modalVisible = false;
-  public structureDefinitions?: StructureDefinition[];
+  public templates?: Template[];
   public data?: ModalData;
 
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
     public translateService: TranslateService,
-    public structureDefinitionService: StructureDefinitionLibService
+    public templateService: TemplateLibService
   ) {}
 
   public ngOnInit(): void {
-    this.loadStructureDefinitions();
+    this.loadTemplates();
   }
 
   public toggleModal(visible: boolean): void {
@@ -55,10 +55,8 @@ export class ThesaurusStructureDefinitionModalComponent implements OnInit {
     this.modalVisible = visible;
 
     if (!this.modalVisible) {
-      this.structureDefinitionComposed.emit();
-    }
-
-    if (this.modalVisible) {
+      this.templateComposed.emit();
+    } else {
       this.data = {};
     }
   }
@@ -67,20 +65,15 @@ export class ThesaurusStructureDefinitionModalComponent implements OnInit {
     if (!validateForm(this.form)) {
       return;
     }
-
-    this.structureDefinitionComposed.emit(this.composeStructureDefinition(this.data!));
+    this.templateComposed.emit("{{temp:" + this.data!.templateCode +"}}");
     this.modalVisible = false;
   }
 
-  private composeStructureDefinition(data: ModalData): string | undefined {
-    return "{{def:" + data.defCode +"}}";
-  }
-
-  private loadStructureDefinitions(): void {
-    this.structureDefinitionService.search({limit: 999}).subscribe(sd => this.structureDefinitions = sd.data);
+  private loadTemplates(): void {
+    this.templateService.searchTemplates({limit: 999}).subscribe(t => this.templates = t.data);
   }
 }
 
 export class ModalData {
-  public defCode?: string;
+  public templateCode?: string;
 }

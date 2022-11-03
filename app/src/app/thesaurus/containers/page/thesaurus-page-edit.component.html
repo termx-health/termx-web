@@ -42,6 +42,7 @@
     <twa-smart-text-editor *ngIf="pageContent"
         [(ngModel)]="pageContent.content"
         [valueType]="pageContent.contentType"
+        [lang]="pageContent.lang"
         [showPreview]="showPreview"
         name="content"></twa-smart-text-editor>
 
