@@ -55,12 +55,12 @@ export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
   }
 
   private processLinkValue(link: string): string {
-    const split = link.split(/\(|\)/);
+    const split = link.split(']')[1].split(/\(|\)/);
     if (!split[1].includes(':')) {
       return link;
     }
 
-    let value = split[0];
+    let value = link.split(']')[0] + ']';
 
     const type = split[1].split(':')[0];
     const typeValue = split[1].split(':')[1];
