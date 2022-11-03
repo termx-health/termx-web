@@ -18,35 +18,34 @@
 
 <ng-template #option let-node="node">
     <div style="display: flex" (click)="selectElement(node.element)">
-
-      <label style="flex: 3; display: grid;">
+      <label style="display: grid;">
         <label>{{ node.name }}</label>
       </label>
+      <div *ngIf="mode === 'view'" style="width: 45vw; display: flex; margin-left: auto">
+        <label style="flex: 1">{{ node.cardinality }}</label>
 
-      <label style="flex: 1" *ngIf="mode === 'view'">{{ node.cardinality }}</label>
+        <label style="flex: 5">
+          <label *ngIf="node.targetProfile">
+            (<a *ngFor="let profile of node.targetProfile; let index = index" [href]="profile">{{index !== 0 ? ' | ' : ''}}{{profile | apply:lastWordFromUrl}}</a>)
+          </label>
+        </label>
 
-      <label style="flex: 5" *ngIf="mode === 'view'">
-        <label *ngIf="node.targetProfile">
-          (<a *ngFor="let profile of node.targetProfile; let index = index" [href]="profile">{{index !== 0 ? ' | ' : ''}}{{profile | apply:lastWordFromUrl}}</a>)
+        <label style="flex: 10; display: grid">
+          <label>{{ node.short }}</label>
+          <label *ngIf="node.definition" style="color: grey">{{ node.definition }}</label>
+          <label *ngIf="node.binding" style="color: grey">
+            {{'web.structure-definition.view.binding' | translate}}:
+            <a [href]="node.binding">{{node.binding.valueSet | apply:lastWordFromUrl}}</a>
+            ({{node.binding.strength}})
+          </label>
+          <label *ngIf="node.fixedUri" style="color: grey">
+            {{'web.structure-definition.view.fixed' | translate}}:
+            <a [href]="node.fixedUri">{{node.fixedUri | apply:lastWordFromUrl}}</a>
+          </label>
+          <label *ngIf="node.fixedCoding?.code" style="color: grey">
+            {{'web.structure-definition.view.fixed' | translate}}: {{node.fixedCoding.code}} | {{node.fixedCoding.system}}
+          </label>
         </label>
-      </label>
-
-      <label style="flex: 10; display: grid" *ngIf="mode === 'view'">
-        <label>{{ node.short }}</label>
-        <label *ngIf="node.definition" style="color: grey">{{ node.definition }}</label>
-        <label *ngIf="node.binding" style="color: grey">
-          {{'web.structure-definition.view.binding' | translate}}:
-          <a [href]="node.binding">{{node.binding.valueSet | apply:lastWordFromUrl}}</a>
-          ({{node.binding.strength}})
-        </label>
-        <label *ngIf="node.fixedUri && mode === 'view'" style="color: grey">
-          {{'web.structure-definition.view.fixed' | translate}}:
-          <a [href]="node.fixedUri">{{node.fixedUri | apply:lastWordFromUrl}}</a>
-        </label>
-        <label *ngIf="node.fixedCoding && mode === 'view'" style="color: grey">
-          {{'web.structure-definition.view.fixed' | translate}}: {{node.fixedCoding.code}} | {{node.fixedCoding.system}}
-        </label>
-      </label>
-
+      </div>
     </div>
 </ng-template>
