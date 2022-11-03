@@ -32,6 +32,30 @@
           <twa-smart-text-editor [(ngModel)]="pageContent.content" [valueType]="pageContent.contentType" [lang]="pageContent.lang" viewMode></twa-smart-text-editor>
         </ng-container>
       </m-card>
+      <m-card *ngIf="(pageRelations | keys)?.length > 0 || usages?.length > 0" style="margin-top: 1rem">
+        <m-card  *ngIf="(pageRelations | keys)?.length > 0" mTitle="entities.page.relations" class="m-card-inside">
+          <m-table [mData]="pageRelations | keys" [mLoading]="isLoading" mEnablePagination mHideOnSinglePage>
+            <tr *mTableHead>
+              <th>{{'entities.page-relation.type' | translate}}</th>
+              <th>{{'entities.page-relation.target' | translate}}</th>
+            </tr>
+            <ng-container *mTableRow="let key;">
+              <tr *ngFor="let relation of pageRelations[key]; let isFirst = first">
+                <td *ngIf="isFirst" [rowSpan]="pageRelations[key].length">{{key}}</td>
+                <td><a (click)="openTarget(relation)">{{relation.target}}</a></td>
+              </tr>
+            </ng-container>
+            <tr *mTableNoData>
+              <td colspan="6">
+                <m-no-data></m-no-data>
+              </td>
+            </tr>
+          </m-table>
+        </m-card>
+        <m-card *ngIf="usages?.length > 0" mTitle="web.thesaurus-page.form.usages" class="m-card-inside">
+          <a *ngFor="let usage of usages" (click)="openPage(usage)"><m-icon mCode="link"></m-icon> {{usage.content.names | localName}}</a>
+        </m-card>
+      </m-card>
     </m-spinner>
   </div>
 </div>

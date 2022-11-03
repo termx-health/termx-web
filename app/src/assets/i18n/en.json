@@ -583,7 +583,8 @@
         "relation-header": "Page relations",
         "content-type-tooltip": "Changing the content type can change the content value",
         "save-and-proceed": "Save and proceed",
-        "proceed-without-saving": "Proceed without saving"
+        "proceed-without-saving": "Proceed without saving",
+        "usages": "Usages"
       },
       "link-modal": {
         "header": "Compose link",
@@ -940,7 +941,8 @@
       "tags": "Tags",
       "template": "Template",
       "contents": "Contents",
-      "links": "Parent pages"
+      "links": "Parent pages",
+      "relations": "Relations"
     },
     "page-content": {
       "name": "Name",
@@ -952,6 +954,10 @@
       "target": "Target",
       "source": "Source",
       "order-number": "Order number"
+    },
+    "page-relation": {
+      "type": "Type",
+      "target": "Target"
     },
     "structure-definition": {
       "url": "URL",

@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Page, PageContent, PageLink} from 'lib/src/thesaurus';
+import {Page, PageContent, PageLink, PageRelation} from 'lib/src/thesaurus';
 import {PageService} from '../../services/page.service';
-import {isDefined, validateForm} from '@kodality-web/core-util';
+import {collect, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 
 @Component({
@@ -13,6 +13,8 @@ export class ThesaurusPageComponent implements OnInit {
   public pageContent?: PageContent;
   public pageContents: PageContent[] = [];
   public pageLinks: PageLink[] = [];
+  public pageRelations?: {[k: string]: PageRelation[]};
+  public usages?: PageRelation[];
   public path?: number[];
   public loading: {[k: string]: boolean} = {};
   public newPageModalVisible: boolean = false;
@@ -52,11 +54,13 @@ export class ThesaurusPageComponent implements OnInit {
     this.pageId = page && page.id || undefined;
     this.pageContent = page && page.contents!.find(c => c.slug === slug) || undefined;
     this.pageContents = page && page.contents || [];
+    this.pageRelations = collect(page?.relations || [], r => r.type!);
     this.pageLinks = page && page.links || [];
     this.path = [];
 
     if (page) {
       this.pageService.getPath(page.id!).subscribe(path => this.path = path);
+      this.pageService.searchPageRelations({type: 'page', target: page.contents?.map(c => c.slug).join(',')!, limit: 999}).subscribe(resp => this.usages = resp.data);
     }
   }
 
@@ -108,5 +112,29 @@ export class ThesaurusPageComponent implements OnInit {
 
   public get isLoading(): boolean {
     return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
+  }
+
+  public openTarget(relation: PageRelation): void {
+    if (relation.type === 'cs') {
+      this.router.navigate(['/resources/code-systems/', relation.target ,'view']);
+    } else if (relation.type === 'vs') {
+      this.router.navigate(['/resources/value-sets/', relation.target ,'view']);
+    } else if (relation.type === 'ms') {
+      this.router.navigate(['/resources/map-sets/', relation.target ,'view']);
+    } else if (relation.type === 'concept') {
+      const cs = relation.target!.split('|')[0];
+      const concept = relation.target!.split('|')[1];
+      if (cs !== 'snomed-ct') {
+        this.router.navigate(['/resources/code-systems/', cs , 'concepts', concept, 'view']);
+      } else {
+        this.router.navigate(['/integration/snomed/', concept]);
+      }
+    } else if (relation.type === 'page') {
+      this.router.navigate(['/thesaurus/pages/', relation.target]);
+    }
+  }
+
+  public openPage(relation: PageRelation): void {
+    this.router.navigate(['/thesaurus/pages/', relation.content!.code]);
   }
 }

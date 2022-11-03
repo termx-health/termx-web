@@ -16,8 +16,8 @@ import {TranslateService} from '@ngx-translate/core';
 
       <ng-container *m-modal-content>
         <form #form="ngForm" *ngIf="data">
-          <m-form-item mName="linkName" mLabel="web.thesaurus-page.link-modal.link-name">
-            <m-input [(ngModel)]="data.name" name="linkName"></m-input>
+          <m-form-item mName="linkName" mLabel="web.thesaurus-page.link-modal.link-name" required>
+            <m-input [(ngModel)]="data.name" name="linkName" required></m-input>
           </m-form-item>
           <m-form-item mName="type">
             <nz-radio-group name="type" [(ngModel)]="data.linkType">
