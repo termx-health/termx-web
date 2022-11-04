@@ -16,6 +16,7 @@ export class OauthHttpInterceptor implements HttpInterceptor {
     if (environment.yupiEnabled) {
       return next.handle(req);
     }
+
     return this.oidcSecurityService.getAccessToken().pipe(mergeMap(token => {
       if (token) {
         req = req.clone({

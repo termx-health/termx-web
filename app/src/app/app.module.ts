@@ -33,6 +33,8 @@ import {AuthService} from './auth/auth.service';
 import {Observable} from 'rxjs';
 import {YupiHttpInterceptor} from './auth/yupi-http-interceptor.service';
 import {ThesaurusModule} from './thesaurus/thesaurus.module';
+import {SmartAuthService} from './auth/smart-auth.service';
+import {SmartHttpInterceptor} from './auth/smart-http-interceptor.service';
 
 registerLocaleData(et);
 
@@ -110,6 +112,7 @@ export function MarinaUiConfigFactory(): MuiConfig {
     {provide: TERMINOLOGY_API, useValue: environment.terminologyApi},
     {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},
     {provide: HTTP_INTERCEPTORS, useClass: YupiHttpInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: SmartHttpInterceptor, multi: true, deps: [SmartAuthService]},
     {provide: HTTP_INTERCEPTORS, useClass: OauthHttpInterceptor, multi: true, deps: [OidcSecurityService]},
     {provide: HTTP_INTERCEPTORS, useClass: MuiHttpErrorHandler, multi: true},
     {provide: MUI_CONFIG, useFactory: MarinaUiConfigFactory},
