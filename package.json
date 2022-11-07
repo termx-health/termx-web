@@ -30,6 +30,7 @@
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "turndown": "^7.1.1",
+    "uuid": "^9.0.0",
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
@@ -45,6 +46,7 @@
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
     "@types/turndown": "^5.0.1",
+    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "5.17.0",
     "@typescript-eslint/parser": "5.17.0",
     "eslint": "^8.12.0",
