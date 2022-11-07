@@ -78,7 +78,7 @@ export class SmartAuthService {
         client_id: 'terminology',
         response_type: 'code',
         scope: 'system/CodeSystem.read system/ValueSet.read',
-        redirect_uri: 'http://localhost:4200/smart/launch',
+        redirect_uri: window.location.origin,
         state: state,
         aud: iss,
         launch: launch
@@ -98,7 +98,7 @@ export class SmartAuthService {
     const params = new URLSearchParams();
     params.set('cliend_id', 'terminology');
     params.set('grant_type', 'authorization_code');
-    params.set('redirect_uri', 'http://localhost:4200/smart/launch');
+    params.set('redirect_uri', window.location.origin);
     params.set('code', code);
     return this.http.post(conf.iss.tokenUrl, params.toString(), {headers: new HttpHeaders({'Content-Type': 'application/x-www-form-urlencoded'})})
       .pipe(map(resp => {
