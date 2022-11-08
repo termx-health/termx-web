@@ -1,3 +1,11 @@
+<div style="display: grid">
+  <nz-radio-group name="type" [(ngModel)]="type" nzSize="small" style="margin-bottom: 0.5rem; margin-left: auto" (ngModelChange)="onTypeChange($event)">
+    <label nz-radio-button [nzValue]="'diff'">diff</label>
+    <label nz-radio-button [nzValue]="'hybrid'">hybrid</label>
+    <label nz-radio-button [nzValue]="'snap'">snap</label>
+  </nz-radio-group>
+</div>
+
 <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource">
   <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodeIndentLine style="width: 100%">
     <nz-tree-node-option style="width: 100%" [ngStyle]="!!node.element && node.element === selectedElement ? {'background': '#eee'} : {}">
@@ -9,7 +17,7 @@
     <nz-tree-node-toggle>
           <span nz-icon [nzType]="treeControl.isExpanded(node) ? 'minus-square' : 'plus-square'" nzTheme="outline"></span>
     </nz-tree-node-toggle>
-    <nz-tree-node-option style="width: 100%" [ngStyle]="!!node.element && node.element === selectedElement ? {'background': '#eee'} : {}">
+    <nz-tree-node-option style="width: 100%; border: 1px solid #d2d2d2;" [ngStyle]="!!node.element && node.element === selectedElement ? {'background': '#eee'} : {}">
       <ng-container *ngTemplateOutlet="option; context: {node: node}"></ng-container>
     </nz-tree-node-option>
   </nz-tree-node>
@@ -19,20 +27,20 @@
 <ng-template #option let-node="node">
     <div style="display: flex" (click)="selectElement(node.element)">
       <label style="display: grid;">
-        <label>{{ node.name }}</label>
+        <label>{{node.name}}</label>
       </label>
       <div *ngIf="mode === 'view'" style="width: 45vw; display: flex; margin-left: auto">
         <label style="flex: 1">{{ node.cardinality }}</label>
 
         <label style="flex: 5">
-          <label>{{ node.type }}</label>
+          <label>{{node.type}}</label>
           <label *ngIf="node.targetProfile?.length > 0">
             (<a *ngFor="let profile of node.targetProfile; let index = index" [href]="profile">{{index !== 0 ? ' | ' : ''}}{{profile | apply:lastWordFromUrl}}</a>)
           </label>
         </label>
 
         <label style="flex: 10; display: grid">
-          <label>{{ node.short }}</label>
+          <label>{{node.short}}</label>
           <label *ngIf="node.definition" style="color: grey">{{ node.definition }}</label>
           <label *ngIf="node.binding" style="color: grey">
             {{'web.structure-definition.view.binding' | translate}}:

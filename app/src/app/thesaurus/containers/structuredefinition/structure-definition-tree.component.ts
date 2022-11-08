@@ -14,7 +14,9 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   @Input() public mode?: 'edit' | 'view' = 'view';
   @Output() public elementSelected = new EventEmitter<any>();
   public selectedElement?: any;
+  public type?: 'diff' | 'snap' | 'hybrid' = 'hybrid';
   public dataSource?: any;
+  public structureDefinitionValue?: any;
 
   public constructor(private structureDefinitionService: StructureDefinitionLibService) {}
 
@@ -24,7 +26,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
     }
   }
 
-  public reloadTree(): void{
+  public reloadTree(): void {
     if (this.defCode) {
       this.processStructureDefinition(this.defCode);
     }
@@ -34,17 +36,21 @@ export class StructureDefinitionTreeComponent implements OnChanges {
     if (!(object instanceof Object)) {
       return undefined;
     }
-    return Object.keys(object)
-      .filter(key => !['element'].includes(key)).map(key => {
-        return {name: key, element: object[key]['element'], children: this.mapToTreeNode(object[key])};
-      });
+    return Object.keys(object).filter(key => {
+      const notElement = !['diff', 'snap'].includes(key);
+      const correspondsToType = this.type === 'hybrid' || isDefined(object[key][this.type!]) || !isDefined(object[key][this.type === 'diff' ? 'snap' : 'diff']);
+      return notElement && correspondsToType;
+    }).map(key => {
+      return {name: key, diff: object[key]['diff'], snap: object[key]['snap'], children: this.mapToTreeNode(object[key])};
+    });
   }
 
   private processStructureDefinition(value: string): void {
     this.structureDefinitionService.search({code: value, limit: 1}).subscribe(sd => {
       const structureDefinition = sd.data[0]!;
       if (structureDefinition.contentFormat === 'json') {
-        this.initDataSource(this.mapToTreeNode(ThesaurusFhirMapperUtil.mapToKeyValue(JSON.parse(structureDefinition.content!)))!);
+        this.structureDefinitionValue = ThesaurusFhirMapperUtil.mapToKeyValue(JSON.parse(structureDefinition.content!));
+        this.initDataSource(this.mapToTreeNode(this.structureDefinitionValue)!);
       }
       if (structureDefinition.contentFormat === 'fsh') {
         //TODO
@@ -60,20 +66,62 @@ export class StructureDefinitionTreeComponent implements OnChanges {
 
   public hasChild = (_: number, node: FlatNode): boolean => node.expandable;
 
-  private transformer = (node: TreeNode, level: number): FlatNode => ({
-    expandable: !!node.children && node.children.length > 0,
-    name: node.name,
-    element: node.element,
-    type: node.element?.type?.[0]?.code,
-    targetProfile: node.element?.type?.[0]?.targetProfile,
-    fixedUri: node.element?.fixedUri,
-    fixedCoding: node.element?.fixedCoding ? node.element.fixedCoding : undefined,
-    cardinality: isDefined(node.element?.min) || isDefined(node.element?.max) ? (isDefined(node.element?.min) ? node.element?.min : '*') + '..' + (isDefined(node.element?.max) ? node.element?.max : '*') : '',
-    short: node.element?.short,
-    definition: isDefined(node.element?.definition) && node.element?.definition !== node.element?.short ? node.element?.definition : undefined,
-    binding: node.element?.binding,
-    level
-  });
+  private transformer = (node: TreeNode, level: number): FlatNode => {
+    return (this.type === 'snap' ? this.snapTransformer(node, level) : this.type === 'diff' ? this.diffTransformer(node, level) : this.hybridTransformer(node, level));
+  };
+
+  private snapTransformer = (node: TreeNode, level: number): FlatNode => (
+    {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      element: node.snap,
+      type: node.snap?.type?.[0]?.code,
+      targetProfile: node.snap?.type?.[0]?.targetProfile,
+      fixedUri: node.snap?.fixedUri,
+      fixedCoding: node.snap?.fixedCoding ? node.snap.fixedCoding : undefined,
+      cardinality: isDefined(node.snap?.min) || isDefined(node.snap?.max) ? (isDefined(node.snap?.min) ? node.snap?.min : '*') + '..' + (isDefined(node.snap?.max) ? node.snap?.max : '*') : '',
+      short: node.snap?.short,
+      definition: isDefined(node.snap?.definition) && node.snap?.definition !== node.snap?.short ? node.snap?.definition : undefined,
+      binding: node.snap?.binding,
+      level
+    });
+
+  private diffTransformer = (node: TreeNode, level: number): FlatNode => (
+    {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      element: node.diff,
+      type: node.diff?.type?.[0]?.code,
+      targetProfile: node.diff?.type?.[0]?.targetProfile,
+      fixedUri: node.diff?.fixedUri,
+      fixedCoding: node.diff?.fixedCoding ? node.diff.fixedCoding : undefined,
+      cardinality: isDefined(node.diff?.min) || isDefined(node.diff?.max) ? (isDefined(node.diff?.min) ? node.diff?.min : '*') + '..' + (isDefined(node.diff?.max) ? node.diff?.max : '*') : '',
+      short: node.diff?.short,
+      definition: isDefined(node.diff?.definition) && node.diff?.definition !== node.diff?.short ? node.diff?.definition : undefined,
+      binding: node.diff?.binding,
+      level
+    });
+
+  private hybridTransformer = (node: TreeNode, level: number): FlatNode => (
+    {
+      expandable: !!node.children && node.children.length > 0,
+      name: node.name,
+      element: node.diff || node.snap,
+      type: node.diff?.type?.[0]?.code,
+      targetProfile: node.diff?.type?.[0]?.targetProfile,
+      fixedUri: node.diff?.fixedUri,
+      fixedCoding: node.diff?.fixedCoding ? node.diff.fixedCoding : undefined,
+      cardinality: isDefined(node.diff?.min) || isDefined(node.diff?.max) ? (isDefined(node.diff?.min) ? node.diff?.min : '*') + '..' + (isDefined(node.diff?.max) ? node.diff?.max : '*') : '',
+      short: node.diff?.short,
+      definition: isDefined(node.diff?.definition) && node.diff?.definition !== node.diff?.short ? node.diff?.definition : undefined,
+      binding: node.diff?.binding,
+      level
+    });
+
+  public onTypeChange(type: 'diff' | 'snap' | 'hybrid'): void {
+    this.type = type;
+    this.initDataSource(this.mapToTreeNode(this.structureDefinitionValue)!);
+  }
 
   public treeControl = new FlatTreeControl<FlatNode>(
     node => node.level,
@@ -103,6 +151,8 @@ interface TreeNode {
   definition?: string;
   binding?: {valueSet?: string, strength?: string};
   element?: Element;
+  diff?: Element;
+  snap?: Element;
   children?: TreeNode[];
 }
 

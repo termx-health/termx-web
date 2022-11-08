@@ -10,27 +10,51 @@ export class ThesaurusFhirMapperUtil {
 
   private static mapFromStructureDefinition(structureDefinition: any): {[key: string]: any} {
     const res: {[key: string]: any} = {};
-    res[structureDefinition!.name!] = ThesaurusFhirMapperUtil.mapFromElementDefinition(structureDefinition.differential!.element);
+    if (structureDefinition.snapshot) {
+      res[structureDefinition!.name!] = ThesaurusFhirMapperUtil.mapSnapshot(structureDefinition.snapshot.element);
+    } if (structureDefinition.differential) {
+      res[structureDefinition!.name!] = ThesaurusFhirMapperUtil.mapDifferential(structureDefinition.differential.element, res[structureDefinition!.name!]);
+    }
     return res;
   }
 
-  private static mapFromElementDefinition(element: ElementDefinition[]): {[key: string]: any} {
+  private static mapSnapshot(element: ElementDefinition[]): {[key: string]: any} {
     let res: {[key: string]: any} = {};
     element?.forEach(el => {
       const ids = el.id!.split(/\.|:/);
       ids.shift();
-      res = Object.assign(res, ThesaurusFhirMapperUtil.appendKey(ids, el, res));
+      res = Object.assign(res, ThesaurusFhirMapperUtil.appendKey(ids, el, res, 'snap'));
     });
     return res;
   }
 
-  private static appendKey(array: string[], el: any, res: {[key: string]: any}): {[key: string]: any} {
+  private static mapDifferential(element: ElementDefinition[], res: {[key: string]: any}): {[key: string]: any} {
+    res = res || {};
+    element?.forEach(el => {
+      const ids = el.id!.split(/\.|:/);
+      ids.shift();
+      res = Object.assign(res, ThesaurusFhirMapperUtil.appendKey(ids, el, res, 'diff'));
+    });
+    return res;
+  }
+
+  private static appendKey(array: string[], el: any, res: {[key: string]: any}, type: 'snap' | 'diff'): {[key: string]: any} {
     if (array.length === 1) {
-      res[array[0]] = res[array[0]] || {element: el};
+      if (type === 'snap') {
+        res[array[0]] = res[array[0]]?.snap ? res[array[0]] : Object.assign(res[array[0]] || {}, {snap: el});
+      }
+      if (type === 'diff') {
+        res[array[0]] = res[array[0]]?.diff ? res[array[0]] : Object.assign(res[array[0]] || {}, {diff: el});
+      }
     } else if (array.length > 1) {
       const key = array.shift()!;
-      res[key] = res[key] || {element: el};
-      const children = ThesaurusFhirMapperUtil.appendKey(array, el, res[key]);
+      if (type === 'snap') {
+        res[key] = res[key]?.snap ? res[key] : Object.assign(res[key] || {}, {snap: el});
+      }
+      if (type === 'diff') {
+        res[key] = res[key]?.diff ? res[key] : Object.assign(res[key] || {}, {diff: el});
+      }
+      const children = ThesaurusFhirMapperUtil.appendKey(array, el, res[key], type);
       Object.keys(children).forEach(child => res[key][child] = children[child]);
     }
     return res;

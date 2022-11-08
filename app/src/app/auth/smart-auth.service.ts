@@ -85,8 +85,6 @@ export class SmartAuthService {
       };
       const redirect = `${smartState.iss.authUrl}?` + Object.keys(params).map(k => k + '=' + encodeURIComponent(params[k])).join('&');
       window.location.href = redirect;
-      // @ts-ignore
-      const a = 1 / 0;
     });
   }
 
