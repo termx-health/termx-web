@@ -33,6 +33,17 @@ build:
     - branches
     - tags
 
+build_chef:
+  stage: build
+  when: manual
+  before_script:
+    - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
+  script:
+    - cd fsh-chef
+    - docker build -t docker.kodality.com/fsh-chef:latest .
+    - docker push docker.kodality.com/terminology-web:latest
+  only:
+    - main
 
 publish:
   stage: publish
