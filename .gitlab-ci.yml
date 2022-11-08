@@ -41,7 +41,7 @@ build_chef:
   script:
     - cd fsh-chef
     - docker build -t docker.kodality.com/fsh-chef:latest .
-    - docker push docker.kodality.com/terminology-web:latest
+    - docker push docker.kodality.com/fsh-chef:latest
   only:
     - main
 
