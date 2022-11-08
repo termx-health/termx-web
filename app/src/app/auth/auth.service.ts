@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {environment} from '../../environments/environment';
+import {SmartAuthService} from './smart-auth.service';
 
 interface UserInfo {
   username: string;
@@ -21,7 +22,8 @@ export class AuthService {
   public constructor(
     @Inject(TERMINOLOGY_API) api: string,
     protected http: HttpClient,
-    private oidcSecurityService: OidcSecurityService
+    private oidcSecurityService: OidcSecurityService,
+    private smartAuthService: SmartAuthService,
   ) {
     this.baseUrl = `${api}/auth`;
   }
@@ -35,12 +37,17 @@ export class AuthService {
   }
 
   private refreshUserInfo(): Observable<UserInfo> {
-    return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
-      if (!lr.isAuthenticated) {
-        return of(null as any);
-      } else {
+    return this.smartAuthService.checkAuth().pipe(mergeMap(authenticated => {
+      if (authenticated) {
         return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`);
       }
+      return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
+        if (!lr.isAuthenticated) {
+          return of(null as any);
+        } else {
+          return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`);
+        }
+      }));
     }));
   }
 
@@ -60,8 +67,8 @@ export class AuthService {
       if (authPrivilege === this.ADMIN) {
         return userPrivilege === this.ADMIN;
       }
-      let upParts = userPrivilege.split(".");
-      let apParts = authPrivilege.split(".");
+      let upParts = userPrivilege.split('.');
+      let apParts = authPrivilege.split('.');
       if (apParts.length === 2 && apParts[0] === '*') { // handle special case like '*.view'
         apParts = ['*'].concat(apParts);
       }
