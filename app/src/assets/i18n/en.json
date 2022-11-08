@@ -631,7 +631,12 @@
         "system": "System",
         "display": "Display",
         "short-description": "Short description",
-        "definition": "Definition"
+        "definition": "Definition",
+        "modal": {
+          "content": "You have unsaved changes!",
+          "save-proceed": "Save and proceed",
+          "no-save-proceed": "Proceed"
+        }
       },
       "view": {
         "binding": "Binding",

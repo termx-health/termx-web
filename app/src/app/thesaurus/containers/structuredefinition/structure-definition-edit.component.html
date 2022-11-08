@@ -1,34 +1,19 @@
 <div nz-row nzJustify="center">
   <div nz-col [nzLg]="18" [nzXs]="24">
-    <nz-tabset nzLinkRouter>
-      <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'fsh' }" (click)="handleFormat('fsh')" [replaceUrl]="true" class="m-items-middle">
-          {{'web.structure-definition.form.fsh-header' | translate}}
-        </a>
+    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex" (nzSelectedIndexChange)="handleTabChange($event)">
+      <nz-tab [nzTitle]="'web.structure-definition.form.fsh-header' | translate">
         <ng-template nz-tab>
           <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
         </ng-template>
       </nz-tab>
 
-      <nz-tab>
-        <a *nzTabLink
-            nz-tab-link
-            [routerLink]="['.']"
-            [queryParams]="{ tab: 'json' }"
-            (click)="handleFormat('json')"
-            [replaceUrl]="true"
-            class="m-items-middle">
-          {{'web.structure-definition.form.json-header' | translate}}
-        </a>
+      <nz-tab [nzTitle]="'web.structure-definition.form.json-header' | translate">
         <ng-template nz-tab>
           <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
         </ng-template>
       </nz-tab>
 
-      <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'elements' }" [replaceUrl]="true" class="m-items-middle">
-          {{'web.structure-definition.form.element-header' | translate}}
-        </a>
+      <nz-tab [nzTitle]="'web.structure-definition.form.element-header' | translate">
         <ng-template nz-tab>
           <div nz-row nzGutter="12" class="m-row">
             <div nz-col [nzMd]="8" [nzXs]="24">
@@ -39,7 +24,7 @@
                 </div>
                 <twa-structure-definition-tree #sdTree mode="edit"
                     [defCode]="structureDefinition.code"
-                    (elementSelected)="openForm($event)"></twa-structure-definition-tree>
+                    (elementSelected)="openElementForm($event)"></twa-structure-definition-tree>
               </m-card>
             </div>
             <div nz-col [nzMd]="16" [nzXs]="24">
@@ -120,3 +105,15 @@
     </m-card>
   </m-spinner>
 </ng-template>
+
+
+<m-modal [(mVisible)]="modalData.visible" (mClose)="modalData.visible = false">
+  <ng-container *m-modal-content>
+    {{'web.structure-definition.form.modal.content' | translate}}
+  </ng-container>
+
+  <div *m-modal-footer class="tw-button-group">
+    <m-button (click)="proceed()">{{'web.structure-definition.form.modal.no-save-proceed' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="proceed(true)">{{'web.structure-definition.form.modal.save-proceed' | translate}}</m-button>
+  </div>
+</m-modal>
