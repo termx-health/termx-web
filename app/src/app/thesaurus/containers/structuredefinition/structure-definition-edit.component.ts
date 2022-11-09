@@ -7,7 +7,8 @@ import {StructureDefinition} from 'terminology-lib/thesaurus';
 import {StructureDefinitionService} from '../../services/structure-definition.service';
 import {Element, StructureDefinitionTreeComponent} from './structure-definition-tree.component';
 import {StructureDefinitionType} from './structure-definition-type-list.component';
-import {ChefService} from '../../../integration/chef/chef.service';
+import {ChefService} from 'terminology-lib/integration';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Component({
   templateUrl: 'structure-definition-edit.component.html'
@@ -25,6 +26,7 @@ export class StructureDefinitionEditComponent implements OnInit {
 
   public loading: {[k: string]: boolean} = {};
   public modalData: {visible?: boolean, action?: 'addElement' | 'openElement' | 'openJson' | 'openFsh'} = {};
+  public errorModalData: {visible?: boolean, title?: string, messages?: string[], pendingIndex?: number} = {};
   public mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
@@ -33,6 +35,7 @@ export class StructureDefinitionEditComponent implements OnInit {
 
   public constructor(
     private structureDefinitionService: StructureDefinitionService,
+    private notificationService: MuiNotificationService,
     private route: ActivatedRoute,
     private location: Location,
     private chefService: ChefService
@@ -95,20 +98,65 @@ export class StructureDefinitionEditComponent implements OnInit {
       return;
     }
 
-    if (this.pendingTabIndex === 0) {
-      const req = {};
-      this.chefService.fhirToFsh(req).subscribe(resp => {
-        this.structureDefinition!.content = resp.fsh;
-      });
-      this.structureDefinition!.contentFormat = 'fsh';
-    } else {
-      const req = {};
-      this.chefService.fhirToFsh(req).subscribe(resp => {
-        this.structureDefinition!.content = JSON.stringify(resp.fhir);
-      });
-      this.structureDefinition!.contentFormat = 'json';
+    this.selectedTabIndex = isDefined(this.pendingTabIndex) ? this.pendingTabIndex : isDefined(index) ? index : 1;
+    if (this.selectedTabIndex === 0 && this.structureDefinition!.contentFormat !== 'fsh') {
+      if (isDefined(this.structureDefinition!.content)) {
+        this.convertToFsh();
+      } else {
+        this.structureDefinition!.contentFormat = 'fsh';
+      }
     }
-    this.selectedTabIndex = this.pendingTabIndex || index || 1;
+    if (this.selectedTabIndex === 1 && this.structureDefinition!.contentFormat !== 'json') {
+      if (isDefined(this.structureDefinition!.content)) {
+       this.convertToJson();
+      } else {
+        this.structureDefinition!.contentFormat = 'json';
+      }
+    }
+  }
+
+  private convertToFsh(): void {
+    this.loading['content'] = true;
+    this.chefService.fhirToFsh({fhir: [this.structureDefinition!.content]}).subscribe(resp => {
+      resp.warnings?.forEach(w => {
+        this.notificationService.warning(w.message!);
+      });
+      if (resp.errors && resp.errors.length > 0) {
+        this.selectedTabIndex = 1;
+        this.errorModalData.title = 'FHIR to FSH failed';
+        this.errorModalData.messages = resp.errors.map(e => e.message!);
+        this.errorModalData.pendingIndex = 0;
+        this.errorModalData.visible = true;
+        return;
+      }
+      this.structureDefinition!.content = typeof resp.fsh === 'string' ? resp.fsh : JSON.stringify(resp.fsh, null, 2);
+      this.structureDefinition!.contentFormat = 'fsh';
+    }).add(() => this.loading['content'] = false);
+  }
+
+  private convertToJson(): void {
+    this.loading['content'] = true;
+    this.chefService.fshToFhir({fsh: this.structureDefinition!.content!}).subscribe(resp => {
+      resp.warnings?.forEach(w => {
+        this.notificationService.warning(w.message!);
+      });
+      if (resp.errors && resp.errors.length > 0) {
+        this.selectedTabIndex = 0;
+        this.errorModalData.title = 'FSH to FHIR failed';
+        this.errorModalData.messages = resp.errors.map(e => e.message!);
+        this.errorModalData.pendingIndex = 1;
+        this.errorModalData.visible = true;
+        return;
+      }
+      this.structureDefinition!.content = resp.fhir ? JSON.stringify(resp.fhir[0], null, 2) : '';
+      this.structureDefinition!.contentFormat = 'json';
+    }).add(() => this.loading['content'] = false);
+  }
+
+  public proceedAfterError(index: number): void {
+    this.structureDefinition!.content = undefined;
+    this.selectedTabIndex = index;
+    this.errorModalData.visible = false;
   }
 
   public addElement(): void {
