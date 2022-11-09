@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PageContent, StructureDefinition} from 'lib/src/thesaurus';
 import {PageService} from '../../services/page.service';
 import {StructureDefinitionService} from '../../services/structure-definition.service';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
   templateUrl: 'thesaurus-page-edit.component.html'
@@ -21,6 +22,7 @@ export class ThesaurusPageEditComponent implements OnInit {
   public constructor(
     private pageService: PageService,
     private structureDefinitionService: StructureDefinitionService,
+    private clipboard: Clipboard,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -113,5 +115,9 @@ export class ThesaurusPageEditComponent implements OnInit {
         this.router.navigate(['/thesaurus/structure-definitions/', sd.id, 'edit'], {queryParams: {tab: 'elements'}});
       });
     });
+  }
+
+  public copyStructureDefToClipboard(): void {
+    this.clipboard.copy('{{def:' + this.pageContent!.slug + '-model}}');
   }
 }
