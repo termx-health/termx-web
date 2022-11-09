@@ -6,5 +6,6 @@ export const environment = {
   terminologyApi: '/api',
   oauthIssuer: dynamicEnv.oauthIssuer,
   oauthClientId: dynamicEnv.oauthClientId,
-  swaggerUrl: 'https://terminology.kodality.dev/swagger/'
+  swaggerUrl: 'https://terminology.kodality.dev/swagger/',
+  chefUrl: 'https://terminology.kodality.dev/chef',
 };

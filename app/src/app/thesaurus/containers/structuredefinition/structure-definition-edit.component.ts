@@ -7,6 +7,7 @@ import {StructureDefinition} from 'terminology-lib/thesaurus';
 import {StructureDefinitionService} from '../../services/structure-definition.service';
 import {Element, StructureDefinitionTreeComponent} from './structure-definition-tree.component';
 import {StructureDefinitionType} from './structure-definition-type-list.component';
+import {ChefService} from '../../../integration/chef/chef.service';
 
 @Component({
   templateUrl: 'structure-definition-edit.component.html'
@@ -33,14 +34,15 @@ export class StructureDefinitionEditComponent implements OnInit {
   public constructor(
     private structureDefinitionService: StructureDefinitionService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private chefService: ChefService
   ) {}
 
   public ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.has('id') ? Number(this.route.snapshot.paramMap.get('id')) : null;
     this.mode = this.id ? 'edit' : 'add';
 
-    const params =  window.location.href.split('?')[1];
+    const params = window.location.href.split('?')[1];
     if (isDefined(params) && params.includes('element')) {
       this.selectedTabIndex = 2;
     }
@@ -88,11 +90,24 @@ export class StructureDefinitionEditComponent implements OnInit {
     if (this.isChanged(this.element)) {
       setTimeout(() => {
         this.selectedTabIndex = 2;
-        this.modalData = {visible: true, action: this.pendingTabIndex === 0 && 'openFsh' ||'openJson'};
+        this.modalData = {visible: true, action: this.pendingTabIndex === 0 ? 'openFsh' : 'openJson'};
       });
       return;
     }
-    this.structureDefinition!.contentFormat = this.pendingTabIndex === 0 && 'fsh' || 'json';
+
+    if (this.pendingTabIndex === 0) {
+      const req = {};
+      this.chefService.fhirToFsh(req).subscribe(resp => {
+        this.structureDefinition!.content = resp.fsh;
+      });
+      this.structureDefinition!.contentFormat = 'fsh';
+    } else {
+      const req = {};
+      this.chefService.fhirToFsh(req).subscribe(resp => {
+        this.structureDefinition!.content = JSON.stringify(resp.fhir);
+      });
+      this.structureDefinition!.contentFormat = 'json';
+    }
     this.selectedTabIndex = this.pendingTabIndex || index || 1;
   }
 
@@ -111,7 +126,8 @@ export class StructureDefinitionEditComponent implements OnInit {
     this.pendingElement = element ? {
       id: element.id!,
       path: element.path!,
-      cardinality: isDefined(element.min) || isDefined(element.max) ? (isDefined(element.min) ? element.min : '*') + '..' + (isDefined(element.max) ? element.max : '*') : undefined,
+      cardinality: isDefined(element.min) || isDefined(element.max) ?
+        (isDefined(element.min) ? element.min : '*') + '..' + (isDefined(element.max) ? element.max : '*') : undefined,
       short: element.short,
       definition: element.definition,
       types: element.type?.map(t => ({code: t.code, targetProfile: t.targetProfile?.map(p => ({value: p}))})) || [],
@@ -145,7 +161,8 @@ export class StructureDefinitionEditComponent implements OnInit {
 
   private composeElement(formElement: FormElement): Element {
     const element = new Element();
-    const path = formElement.path?.startsWith(this.structureDefinition!.code! + '.') ? formElement.path : this.structureDefinition!.code! + '.' + formElement.path;
+    const path = formElement.path?.startsWith(this.structureDefinition!.code! + '.') ? formElement.path :
+      this.structureDefinition!.code! + '.' + formElement.path;
     element.id = path;
     element.path = path;
     const min = Number(formElement.cardinality?.split('..')[0]);
