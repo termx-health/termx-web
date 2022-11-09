@@ -13,7 +13,7 @@ app.listen(port, () => {
 app.post("/fsh2fhir", (req, res) => {
   res.contentType("application/json")
   sushiClient
-    .fshToFhir(req.body.fsh)
+    .fshToFhir(req.body.fsh, req.body.options)
     .then((results) => {
       if (results.errors?.length > 0) {
         fail(res, results)
@@ -30,11 +30,7 @@ app.post("/fhir2fsh", (req, res) => {
   res.contentType("application/json")
   const params = req.body
   gofshClient
-    .fhirToFsh(params.fhir, {
-      dependencies: params.dependencies || [],
-      style: params.style,
-      logLevel: params.logLevel,
-    })
+    .fhirToFsh(params.fhir, params.options)
     .then((results) => {
       if (results.errors?.length > 0) {
         fail(res, results)
