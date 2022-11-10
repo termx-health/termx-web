@@ -636,6 +636,12 @@
           "content": "You have unsaved changes!",
           "save-proceed": "Save and proceed",
           "no-save-proceed": "Proceed"
+        },
+        "error-modal": {
+          "fsh-to-fhir": "FSH to FHIR conversion failed",
+          "fhir-to-fsh": "FHIR to FSH conversion failed",
+          "delete-content": "Delete content and proceed",
+          "no-save-proceed": "Close"
         }
       },
       "view": {

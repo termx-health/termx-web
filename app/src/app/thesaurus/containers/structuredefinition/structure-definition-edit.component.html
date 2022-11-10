@@ -79,7 +79,7 @@
 <ng-template #formTemplate>
   <m-spinner [mLoading]="loading['save']">
     <m-card [mTitle]="mode === 'edit' ? 'web.structure-definition.form.edit-header' : 'web.structure-definition.form.add-header'"
-        [mShowSkeleton]="loading['init']">
+        [mShowSkeleton]="loading['init'] || loading['content']">
       <form #form="ngForm" *ngIf="structureDefinition">
         <m-form-item mName="code" mLabel="entities.structure-definition.code" required>
           <m-input name="code" [(ngModel)]="structureDefinition.code" required></m-input>
@@ -115,5 +115,22 @@
   <div *m-modal-footer class="tw-button-group">
     <m-button (click)="proceed()">{{'web.structure-definition.form.modal.no-save-proceed' | translate}}</m-button>
     <m-button mDisplay="primary" (click)="proceed(true)">{{'web.structure-definition.form.modal.save-proceed' | translate}}</m-button>
+  </div>
+</m-modal>
+
+
+<m-modal #errorModal [(mVisible)]="errorModalData.visible" (mClose)="errorModalData.visible = false">
+  <ng-container *m-modal-header>{{errorModalData.title | translate}}</ng-container>
+  <ng-container *m-modal-content>
+    <div style="display: grid">
+      <label *ngFor="let msg of errorModalData.messages" style="margin-bottom: 0.5rem">
+        <m-icon mCode="exclamation-circle" style="color: red;margin-right: 0.25rem"></m-icon>
+        {{msg}}
+      </label>
+    </div>
+  </ng-container>
+  <div *m-modal-footer class="tw-button-group">
+    <m-button (click)="proceedAfterError(errorModalData.pendingIndex)">{{'web.structure-definition.form.error-modal.delete-content' | translate}}</m-button>
+    <m-button (click)="errorModal.close()">{{'core.btn.close' | translate}}</m-button>
   </div>
 </m-modal>

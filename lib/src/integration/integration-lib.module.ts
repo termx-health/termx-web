@@ -11,6 +11,7 @@ import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {TranslateModule} from '@ngx-translate/core';
 import {SharedModule} from '../../../app/src/app/core/shared/shared.module';
+import {ChefService} from './chef/services/chef.service';
 
 @NgModule({
   imports: [
@@ -25,7 +26,8 @@ import {SharedModule} from '../../../app/src/app/core/shared/shared.module';
     IntegrationAtcLibService,
     IntegrationIcdLibService,
     IntegrationOrphanetLibService,
-    SnomedLibService
+    SnomedLibService,
+    ChefService
   ],
   declarations: [
     SnomedConceptNamePipe,

@@ -4,6 +4,7 @@ import {NzTreeFlatDataSource, NzTreeFlattener} from 'ng-zorro-antd/tree-view';
 import {ThesaurusFhirMapperUtil} from '../../services/thesaurus-fhir-mapper.util';
 import {StructureDefinitionLibService} from 'lib/src/thesaurus';
 import {isDefined} from '@kodality-web/core-util';
+import {ChefService} from 'terminology-lib/integration';
 
 @Component({
   selector: 'twa-structure-definition-tree',
@@ -18,7 +19,10 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   public dataSource?: any;
   public structureDefinitionValue?: any;
 
-  public constructor(private structureDefinitionService: StructureDefinitionLibService) {}
+  public constructor(
+    private chefService: ChefService,
+    private structureDefinitionService: StructureDefinitionLibService
+  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['defCode'] && this.defCode) {
@@ -53,7 +57,12 @@ export class StructureDefinitionTreeComponent implements OnChanges {
         this.initDataSource(this.mapToTreeNode(this.structureDefinitionValue)!);
       }
       if (structureDefinition.contentFormat === 'fsh') {
-        //TODO
+        this.chefService.fshToFhir({fsh: structureDefinition.content!}).subscribe(resp => {
+          if (!resp.errors || resp.errors.length === 0) {
+            this.structureDefinitionValue = ThesaurusFhirMapperUtil.mapToKeyValue(resp.fhir![0]);
+            this.initDataSource(this.mapToTreeNode(this.structureDefinitionValue)!);
+          }
+        });
       }
     });
   }

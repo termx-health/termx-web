@@ -1,4 +1,4 @@
-<div style="display: grid">
+<div style="display: grid" *ngIf="dataSource">
   <nz-radio-group name="type" [(ngModel)]="type" nzSize="small" style="margin-bottom: 0.5rem; margin-left: auto" (ngModelChange)="onTypeChange($event)">
     <label nz-radio-button [nzValue]="'diff'">diff</label>
     <label nz-radio-button [nzValue]="'hybrid'">hybrid</label>
