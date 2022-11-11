@@ -9,7 +9,8 @@
         <div *m-card-header style="display: flex">
           <label class="m-card-title">{{pageContent?.name}}</label>
           <div style="margin-left: auto;">
-            <m-dropdown>
+            <twa-github-export [title]="pageContent?.name" [prepareExport]="prepareExport"></twa-github-export>
+            <m-dropdown style="margin-left: 0.5rem">
               <m-button *mDropdownContainer>
                 {{pageContent?.lang | apply: flagIcon}}
               </m-button>
