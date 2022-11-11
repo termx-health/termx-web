@@ -1,25 +1,39 @@
 <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
-  <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content" *ngIf="concept?.versions">
+  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
+    <m-card [mShowSkeleton]="loading['init']">
+      <div class="m-items-between">
+        <label class="m-card-title">
+          {{concept?.code}} - {{concept?.code | localizedConceptName: {codeSystem: codeSystemId} | async}}
+        </label>
+      </div>
+    </m-card>
+  </div>
+</div>
+<div nz-row [nzGutter]="12" nzJustify="center" class="m-row" style="margin-top: 1rem">
+  <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
     <m-spinner [mLoading]="isLoading">
-      <m-card [mShowSkeleton]="loading['init']" [mTitle]="'Versions'">
+      <m-card [mShowSkeleton]="loading['init']" mTitle="web.code-system-concept.form.version.header">
         <nz-timeline>
-          <nz-timeline-item *ngFor="let version of concept.versions; let index = index"
-              [nzLabel]="versionTemplate"
-              [nzColor]="version.status === 'active' ? 'green' : version.status === 'retired' ? 'red' : 'gray'">
+          <nz-timeline-item *ngFor="let version of concept.versions; let index = index" [nzLabel]="versionTemplate" [nzColor]="statusColorMap[version.status]">
             <ng-template #versionTemplate>
-              <label *ngIf="version.id === conceptVersion.id" style="font-weight: bold">{{version.created | localDateTime}}</label>
-              <label *ngIf="version.id !== conceptVersion.id" (click)="selectVersion(version)">{{version.created | localDateTime}}</label>
+              <div>
+                <label *ngIf="version.id === conceptVersion.id" style="font-weight: bold">
+                  {{version.created ? (version.created | localDateTime) : 'web.code-system-concept.form.version.new-version' | translate}}
+                </label>
+                <label *ngIf="version.id !== conceptVersion.id" (click)="selectVersion(version)">
+                  {{version.created ? (version.created | localDateTime) : 'web.code-system-concept.form.version.new-version' | translate}}
+                </label>
+              </div>
             </ng-template>
           </nz-timeline-item>
         </nz-timeline>
       </m-card>
     </m-spinner>
   </div>
-  <div nz-col [nzLg]="12" [nzMd]="18" [nzXs]="24">
+  <div nz-col [nzLg]="12" [nzMd]="12" [nzXs]="18">
     <m-spinner [mLoading]="isLoading">
-      <m-card [mTitle]="concept?.code" [mShowSkeleton]="loading['init']">
+      <m-card mTitle="web.code-system-concept.form.version.information" [mShowSkeleton]="loading['init']">
         <form *ngIf="concept && conceptVersion">
-          <m-divider [mText]="'web.code-system-concept.form.version.information' | translate" mOrientation="left"></m-divider>
           <m-form-item mLabel="entities.code-system-entity-version.status">
             <twa-status-tag [status]="conceptVersion.status"></twa-status-tag>
           </m-form-item>
@@ -29,9 +43,6 @@
           <m-form-item mLabel="entities.code-system-entity-version.description">
             {{conceptVersion.description}}
           </m-form-item>
-<!--          <m-form-item mLabel="entities.code-system-entity-version.code-system-version">-->
-<!--            todo-->
-<!--          </m-form-item>-->
         </form>
       </m-card>
     </m-spinner>
@@ -51,3 +62,10 @@
     </m-card>
   </div>
 </div>
+
+<div nz-row [nzGutter]="12" nzJustify="center" class="m-row" style="margin-top: 1rem">
+  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
+    <twa-code-system-concept-relations [concept]="concept"></twa-code-system-concept-relations>
+  </div>
+</div>
+

@@ -1,8 +1,32 @@
 <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
-
-  <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content" *ngIf="concept?.versions">
+  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
+    <m-card [mShowSkeleton]="loading['init']">
+      <div class="m-items-between">
+        <label *ngIf="mode === 'edit'" class="m-card-title">
+          {{concept?.code}} - {{concept?.code | localizedConceptName: {codeSystem: codeSystemId} | async}}
+        </label>
+        <label *ngIf="mode !== 'edit'" class="m-card-title">
+          {{'web.code-system-concept.form.add-header' | translate}}
+        </label>
+        <div class="m-items-middle">
+          <m-button *ngIf="conceptVersion.id && conceptVersion.status === 'draft'" (click)="activateVersion(conceptVersion)">
+            {{'web.publication-status.operations.activate' | translate}}
+          </m-button>
+          <m-button *ngIf="conceptVersion.id && conceptVersion.status !== 'retired'" (click)="retireVersion(conceptVersion)">
+            {{'web.publication-status.operations.retire' | translate}}
+          </m-button>
+          <m-button *ngIf="conceptVersion?.status === 'draft'" mDisplay="primary" [mLoading]="loading['save']" [disabled]="isLoading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </div>
+      </div>
+    </m-card>
+  </div>
+</div>
+<div nz-row [nzGutter]="12" nzJustify="center" class="m-row" style="margin-top: 1rem">
+  <div nz-col [nzLg]="4" [nzMd]="4" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
     <m-spinner [mLoading]="isLoading">
-      <m-card [mShowSkeleton]="loading['init']" [mTitle]="'Versions'">
+      <m-card [mShowSkeleton]="loading['init']" mTitle="web.code-system-concept.form.version.header">
         <nz-timeline>
           <nz-timeline-item *ngFor="let version of concept.versions; let index = index" [nzLabel]="versionTemplate" [nzColor]="statusColorMap[version.status]">
             <a (click)="duplicateVersion(version)" *ngIf="version.id" m-tooltip mTitle="core.btn.duplicate">
@@ -31,41 +55,32 @@
     </m-spinner>
   </div>
 
-  <div nz-col [nzLg]="12" [nzMd]="18" [nzXs]="24">
+  <div nz-col [nzLg]="14" [nzMd]="14" [nzXs]="18">
     <m-spinner [mLoading]="isLoading">
-      <m-card [mShowSkeleton]="loading['init']" [mTitle]="mode === 'edit' ? concept?.code : 'web.code-system-concept.form.add-header'">
+      <m-card [mShowSkeleton]="loading['init']">
         <form #form="ngForm" *ngIf="concept && conceptVersion">
 
-          <div *ngIf="conceptEdit">
-            <m-divider [mText]="'web.code-system-concept.form.concept' | translate" mOrientation="left"></m-divider>
+          <m-card *ngIf="conceptEdit" class="m-card-inside" mTitle="web.code-system-concept.form.concept">
             <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>
               <m-input name="code" [(ngModel)]="concept.code" autofocus required></m-input>
             </m-form-item>
             <m-form-item mName="description" mLabel="entities.code-system-concept.description">
               <m-textarea name="description" [(ngModel)]="concept.description"></m-textarea>
             </m-form-item>
-          </div>
+          </m-card>
 
-          <m-divider [mText]="'web.code-system-concept.form.version.information' | translate" mOrientation="left"></m-divider>
-          <m-form-item mLabel="entities.code-system-entity-version.status">
-            <twa-status-tag [status]="conceptVersion.status"></twa-status-tag>
-            <ng-container *twaPrivileged="'*.CodeSystem.publish'">
-              <a *ngIf="conceptVersion.id && conceptVersion.status === 'draft'" (click)="activateVersion(conceptVersion)">
-                {{'web.publication-status.operations.activate' | translate}}
-              </a>
-              <label *ngIf="conceptVersion.id && conceptVersion.status === 'draft'"> | </label>
-              <a *ngIf="conceptVersion.id && conceptVersion.status !== 'retired'" (click)="retireVersion(conceptVersion)">
-                {{'web.publication-status.operations.retire' | translate}}
-              </a>
-            </ng-container>
-          </m-form-item>
-          <m-form-item mName="created" mLabel="entities.code-system-entity-version.created" *ngIf="conceptVersion.created">
-            {{conceptVersion.created | localDateTime}}
-          </m-form-item>
-          <m-form-item mName="versionDescription" mLabel="entities.code-system-entity-version.description">
-            <m-textarea *ngIf="conceptVersion.status === 'draft'" name="versionDescription" [(ngModel)]="conceptVersion.description"></m-textarea>
-            <label *ngIf="conceptVersion.status !== 'draft'">{{conceptVersion.description}}</label>
-          </m-form-item>
+          <m-card class="m-card-inside" mTitle="web.code-system-concept.form.version.information">
+            <m-form-item mLabel="entities.code-system-entity-version.status">
+              <twa-status-tag [status]="conceptVersion.status"></twa-status-tag>
+            </m-form-item>
+            <m-form-item mName="created" mLabel="entities.code-system-entity-version.created" *ngIf="conceptVersion.created">
+              {{conceptVersion.created | localDateTime}}
+            </m-form-item>
+            <m-form-item mName="versionDescription" mLabel="entities.code-system-entity-version.description">
+              <m-textarea *ngIf="conceptVersion.status === 'draft'" name="versionDescription" [(ngModel)]="conceptVersion.description"></m-textarea>
+              <label *ngIf="conceptVersion.status !== 'draft'">{{conceptVersion.description}}</label>
+            </m-form-item>
+          </m-card>
         </form>
       </m-card>
     </m-spinner>
@@ -91,14 +106,10 @@
           [associations]="conceptVersion?.associations"
           [viewMode]="conceptVersion?.status !== 'draft'"></twa-code-system-association-edit>
     </m-card>
-
-    <m-button *ngIf="conceptVersion?.status === 'draft'"
-        style="width: 100%; margin-top: 1rem"
-        mDisplay="primary"
-        [mLoading]="loading['save']"
-        [disabled]="isLoading"
-        (click)="save()">
-      {{'core.btn.save' | translate}}
-    </m-button>
+  </div>
+</div>
+<div nz-row [nzGutter]="12" nzJustify="center" class="m-row" style="margin-top: 1rem">
+  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
+    <twa-code-system-concept-relations [concept]="concept"></twa-code-system-concept-relations>
   </div>
 </div>

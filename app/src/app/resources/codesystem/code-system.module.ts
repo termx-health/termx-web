@@ -30,6 +30,7 @@ import {CodeSystemDesignationEditComponent} from './containers/concept/designati
 import {CodeSystemPropertyValueEditComponent} from './containers/concept/propertyvalue/code-system-property-value-edit.component';
 import {CodeSystemAssociationEditComponent} from './containers/concept/association/code-system-association-edit.component';
 import {CodeSystemConceptViewComponent} from './containers/concept/code-system-concept-view.component';
+import {CodeSystemConceptRelationsComponent} from './containers/concept/relations/code-system-concept-relations.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -97,6 +98,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemDesignationGroupEditComponent,
     CodeSystemPropertyValueEditComponent,
     CodeSystemAssociationEditComponent,
+    CodeSystemConceptRelationsComponent,
 
     FinderCodeSystemListComponent,
     FinderCodeSystemViewComponent,

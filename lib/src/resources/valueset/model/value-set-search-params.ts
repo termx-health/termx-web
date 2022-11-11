@@ -16,4 +16,7 @@ export class ValueSetSearchParams extends QueryParams {
   public decorated?: boolean;
 
   public lang?: string;
+
+  public codeSystem?: string;
+  public conceptCode?: string;
 }

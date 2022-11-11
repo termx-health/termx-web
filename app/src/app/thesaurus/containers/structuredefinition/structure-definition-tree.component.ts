@@ -176,7 +176,7 @@ export class Element {
   public fixedUri?: string;
   public fixedCoding?: {code?: string, system?: string, display?: string};
   public min?: number;
-  public max?: number;
+  public max?: string;
   public short?: string;
   public definition?: string;
   public binding?: {valueSet?: string, strength?: string};

@@ -14,6 +14,12 @@ export class CodeSystemConceptViewComponent implements OnInit {
 
   public loading: {[k: string]: boolean} = {};
 
+  public statusColorMap: {[status: string]: 'red' | 'green' | 'gray'} = {
+    'active': 'green',
+    'draft': 'gray',
+    'retired': 'red'
+  };
+
   public constructor(
     public codeSystemService: CodeSystemService,
     private route: ActivatedRoute

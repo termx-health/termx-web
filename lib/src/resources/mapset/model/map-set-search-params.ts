@@ -18,7 +18,10 @@ export class MapSetSearchParams extends QueryParams {
   public associationSourceSystem?: string;
   public associationSourceSystemUri?: string;
   public associationSourceSystemVersion?: string;
+  public associationTargetCode?: string;
   public associationTargetSystem?: string;
+  public associationTargetSystemUri?: string;
+  public associationTargetSystemVersion?: string;
   public associationsDecorated?: boolean;
 
   public versionVersion?: string;

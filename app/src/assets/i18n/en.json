@@ -182,9 +182,28 @@
         "add-header": "Add concept",
         "concept": "Concept",
         "version": {
+          "header": "Versions",
           "information": "Version information",
           "code-system-version": "Code System version",
           "new-version": "New version"
+        },
+        "value-sets": {
+          "header": "Related value sets",
+          "value-set": "Value set",
+          "definition": "Definition"
+        },
+        "map-sets": {
+          "header": "Related map sets",
+          "map-set": "Map set",
+          "direction": "Direction",
+          "concept-code": "Concept code",
+          "concept-display": "Concept display",
+          "equivalence": "Equivalence"
+        },
+        "thesaurus": {
+          "header": "Thesaurus",
+          "slug": "Slug",
+          "name": "Name"
         }
       },
       "filter": {
@@ -584,7 +603,8 @@
         "content-type-tooltip": "Changing the content type can change the content value",
         "save-and-proceed": "Save and proceed",
         "proceed-without-saving": "Proceed without saving",
-        "usages": "Usages"
+        "usages": "Usages",
+        "copy-to-clipboard": "Copy {{val}} to clipboard"
       },
       "link-modal": {
         "header": "Compose link",
