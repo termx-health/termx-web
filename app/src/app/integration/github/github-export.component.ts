@@ -1,11 +1,12 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {GithubExportable, GithubService} from './github.service';
+import {concat, toArray} from 'rxjs';
 
 @Component({templateUrl: './github-export.component.html', selector: 'twa-github-export'})
 export class GithubExportComponent implements OnInit {
 
   @Input()
-  public prepareExport!: () => GithubExportable;
+  public prepareExport!: () => GithubExportable[];
   @Input()
   public title!: string;
 
@@ -14,7 +15,7 @@ export class GithubExportComponent implements OnInit {
   public loading!: boolean;
   public commitMessage!: string;
   public repos: any[] = [];
-  public resultUrl!: string;
+  public resultUrls!: string[];
 
   private installationId!: number;
 
@@ -47,10 +48,14 @@ export class GithubExportComponent implements OnInit {
   public export(repoUrl: string): void {
     this.loading = true;
     const exportable = this.prepareExport();
-    const data = {repoUrl: repoUrl, message: this.commitMessage, content: btoa(<string>exportable.content), path: exportable.filename};
-    this.githubService.export(data).subscribe(resp => {
-      this.resultUrl = resp?.content?.html_url;
-    }).add(() => {
+    let observables = exportable.map(e => {
+      const data = {repoUrl: repoUrl, message: this.commitMessage, content: btoa(<string>e.content), path: e.filename};
+      return this.githubService.export(data);
+    });
+    concat(...observables).pipe(toArray())
+      .subscribe((resp: any[]) => {
+        this.resultUrls = resp.filter(r => r?.content?.html_url).map(r => r.content.html_url);
+      }).add(() => {
       this.loading = false;
     });
   }

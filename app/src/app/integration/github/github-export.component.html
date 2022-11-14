@@ -1,8 +1,4 @@
-<m-button
-    [disabled]="!authenticated"
-    (click)="openModal()"
-    style="margin-left: 0.5rem"
-    m-popover [mContent]="!authenticated ? hoverRef: null">
+<m-button [disabled]="!authenticated" (click)="openModal()" style="margin-left: 0.5rem" m-popover [mContent]="!authenticated ? hoverRef: null">
   <m-icon mCode="github" style="margin-right: 0.5rem"></m-icon>
   Export
 </m-button>
@@ -16,7 +12,7 @@
   KTS Github App to use this feature
 </ng-template>
 
-<m-modal [(mVisible)]="modalVisible" (mClose)="modalVisible = false; resultUrl = null">
+<m-modal [(mVisible)]="modalVisible" (mClose)="modalVisible = false; resultUrls = []">
   <ng-container *m-modal-header>
     Export '{{title}}' to Github
   </ng-container>
@@ -31,8 +27,10 @@
         <a (click)="export(r.url)">{{r.name}}</a>
       </div>
     </m-spinner>
-    <m-alert mType="info" *ngIf="resultUrl" mTitle="Successfully exported">
-      <a [href]="resultUrl" target="_blank">{{resultUrl}}</a>
+    <m-alert mType="info" *ngIf="resultUrls && resultUrls.length > 0" mTitle="Successfully exported">
+      <div *ngFor="let url of resultUrls">
+        <a [href]="url" target="_blank">{{url}}</a>
+      </div>
     </m-alert>
   </ng-container>
 </m-modal>

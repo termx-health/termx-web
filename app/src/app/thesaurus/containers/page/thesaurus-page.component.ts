@@ -106,9 +106,9 @@ export class ThesaurusPageComponent implements OnInit {
   public filterLanguages = (langs: string[], lang: string, contents: PageContent[]): string[] => {
     return langs.filter(l => l !== lang && !contents.find(c => c.lang === l));
   };
-  public prepareExport = (): GithubExportable => {
+  public prepareExport = (): GithubExportable[] => {
     let filename = `${this.pageContent?.slug}.${this.pageContent?.contentType === 'markdown' ? 'md' : 'html'}`;
-    return {content: this.pageContent?.content, filename: filename};
+    return [{content: this.pageContent?.content, filename: filename}];
   };
 
   public openPageContent(content: PageContent): void {
