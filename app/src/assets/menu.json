@@ -50,6 +50,32 @@
   },
   {
     "label": {
+      "en": "Developer tools",
+      "et": "Arendaja tööriistad"
+    },
+    "icon": "tool",
+    "privileges": ["*.CodeSystem.view", "*.MapSet.view"],
+    "items": [
+      {
+        "label": {
+          "en": "Code systems",
+          "et": "Koodisüsteemid"
+        },
+        "link": "resources/dev/code-systems",
+        "privileges": ["*.CodeSystem.view"]
+      },
+      {
+        "label": {
+          "en": "Map sets",
+          "et": "Kaardistus kogumid"
+        },
+        "link": "resources/dev/map-sets",
+        "privileges": ["*.MapSet.view"]
+      }
+    ]
+  },
+  {
+    "label": {
       "en": "CodeSystems",
       "et": "Koodisüsteemid"
     },
@@ -88,7 +114,7 @@
       "en": "Management",
       "et": "Haldus"
     },
-    "icon": "tool",
+    "icon": "setting",
     "items": [
       {
         "label": {

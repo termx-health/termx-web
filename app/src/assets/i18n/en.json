@@ -158,7 +158,8 @@
           "add-property": "Add property",
           "add-supplement": "Add supplement",
           "delete-property": "Delete property",
-          "delete-supplement": "Delete supplement"
+          "delete-supplement": "Delete supplement",
+          "often-used": "Often used properties"
         }
       }
     },
@@ -258,6 +259,23 @@
     "code-system-association": {
       "form": {
         "target": "Target"
+      }
+    },
+    "dev-code-system-relation": {
+      "value-set": {
+        "header": "Related value sets",
+        "value-set": "Value set",
+        "generate": "Generate snapshot",
+        "value-set-code": "Value set code",
+        "publisher": "Publisher",
+        "uri": "URI",
+        "code": "Code",
+        "name": "Name"
+      },
+      "map-set": {
+        "header": "Related map sets",
+        "code": "Code",
+        "name": "Name"
       }
     },
     "naming-system": {
@@ -484,7 +502,7 @@
         "valid-from": "Valid from",
         "valid-to": "Valid to",
         "code-system": "CodeSystem",
-        "base-code-system": "Base CodeSystem",
+        "base-code-system": "Parent CodeSystem",
         "code-system-name": "CodeSystem name",
         "code-system-description": "CodeSystem description",
         "code-system-version-description": "CodeSystem version description"
@@ -784,7 +802,7 @@
       "concepts": "Concepts",
       "properties": "Properties",
       "versions": "Versions",
-      "base-code-system": "Base code system"
+      "base-code-system": "Parent code system"
     },
     "code-system-version": {
       "id": "Identifier",
@@ -846,7 +864,10 @@
       "type": "Type",
       "description": "Description",
       "status": "Status",
-      "value": "Value"
+      "value": "Value",
+      "order-number": "Order",
+      "preferred": "Preferred",
+      "required": "Required"
     },
     "designation": {
       "type": "Type",

@@ -7,6 +7,7 @@ import {SharedModule} from '../core/shared/shared.module';
 import {MAP_SET_ROUTES, MapSetModule} from './mapset/map-set.module';
 import {NAMING_SYSTEM_ROUTES, NamingSystemModule} from './namingsystem/naming-system.module';
 import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './associationtype/association-type.module';
+import {DEV_RESOURCES_ROUTES} from './dev/dev-resources.module';
 
 export const RESOURCES_ROUTES: Routes = [
   {path: '', component: ResourcesTabsetComponent, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view', '*.NamingSystem.view', '*.AssociationType.view']}},
@@ -15,6 +16,9 @@ export const RESOURCES_ROUTES: Routes = [
   {path: 'map-sets', children: MAP_SET_ROUTES, data: {privilege: ['*.MapSet.view']}},
   {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES, data: {privilege: ['*.NamingSystem.view']}},
   {path: 'association-types', children: ASSOCIATION_TYPE_ROUTES, data: {privilege: ['*.AssociationType.view']}},
+
+  {path: 'dev', children: DEV_RESOURCES_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.MapSet.view' ]}},
+
   {
     path: 'finder', children: [
       {path: 'code-systems', children: CODE_SYSTEM_FINDER_ROUTES, data: {privilege: ['*.CodeSystem.view']}},

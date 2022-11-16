@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystem, CodeSystemSearchParams} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
@@ -10,6 +10,8 @@ import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switc
   templateUrl: 'code-system-list.component.html'
 })
 export class CodeSystemListComponent implements OnInit {
+  @Input() public dev: boolean = false;
+
   public query = new CodeSystemSearchParams();
   public searchInput?: string;
   public searchUpdate = new Subject<string>();

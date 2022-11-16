@@ -108,7 +108,8 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
   ],
   exports: [
     CodeSystemListComponent,
-    CodeSystemConceptsListComponent
+    CodeSystemConceptsListComponent,
+    CodeSystemConceptRelationsComponent
   ],
   providers: [
     CodeSystemService

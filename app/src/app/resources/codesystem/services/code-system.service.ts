@@ -6,7 +6,7 @@ import {
   CodeSystemConcept,
   CodeSystemEntityVersion,
   CodeSystemLibService,
-  CodeSystemSupplement,
+  CodeSystemSupplement, CodeSystemTransactionRequest,
   CodeSystemVersion,
   Designation,
   EntityProperty,
@@ -18,6 +18,10 @@ export class CodeSystemService extends CodeSystemLibService {
 
   public save(cs: CodeSystem): Observable<CodeSystem> {
     return this.http.post(this.baseUrl, cs);
+  }
+
+  public saveTransaction(request: CodeSystemTransactionRequest): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/transaction`, request);
   }
 
   public delete(codeSystemId: string): Observable<void> {

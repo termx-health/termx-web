@@ -6,6 +6,10 @@ export class EntityProperty {
   public status?: string;
   public created?: Date;
 
+  public orderNumber?: number;
+  public preferred?: boolean;
+  public required?: boolean;
+
   public supplementId?: number;
 }
 

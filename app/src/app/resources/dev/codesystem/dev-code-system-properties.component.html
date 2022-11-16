@@ -1,0 +1,81 @@
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-items-between">
+    <div class="m-card-title">
+      {{'entities.code-system.properties' | translate}}
+    </div>
+    <m-dropdown *ngIf="!viewMode">
+      <twa-add-button *m-dropdown-container icon="down" placement="right">
+        {{'web.code-system.form.properties.often-used' | translate}}
+      </twa-add-button>
+
+      <ng-container *ngFor="let p of defProperties | keys">
+        <ng-container *m-dropdown-item>
+          <m-checkbox [(ngModel)]="defProperties[p].selected" (ngModelChange)="defPropertySelectionChange($event, p)">{{p | translate}}</m-checkbox>
+        </ng-container>
+      </ng-container>
+    </m-dropdown>
+  </div>
+
+  <form #form="ngForm">
+  <m-table [mData]="properties" [mLoading]="loading">
+    <tr *mTableHead>
+      <th>{{'entities.entity-property.name' | translate}}</th>
+      <th>{{'entities.entity-property.type' | translate}}</th>
+      <th>{{'entities.entity-property.required' | translate}}</th>
+      <th>{{'entities.entity-property.preferred' | translate}}</th>
+      <th>{{'entities.entity-property.description' | translate}}</th>
+      <th>{{'entities.entity-property.order-number' | translate}}</th>
+      <th class="tw-table-actions" *ngIf="!viewMode"></th>
+    </tr>
+
+    <tr *mTableRow="let property; let index = index">
+      <ng-container *ngIf="viewMode">
+        <td>{{property.name}}</td>
+        <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
+        <td><m-abbreviate [mValue]="property.description" [mLength]="40"></m-abbreviate></td>
+        <td class="tw-table-min-width">
+          <twa-status-tag [status]="property.status"></twa-status-tag>
+        </td>
+        <td class="tw-table-actions" *ngIf="!viewMode">
+          <m-dropdown>
+            <a *m-dropdown-item (click)="removeProperty(index)">
+              {{'web.code-system.form.properties.delete-property' | translate}}
+            </a>
+          </m-dropdown>
+        </td>
+      </ng-container>
+
+      <ng-container *ngIf="!viewMode">
+        <td><m-input [(ngModel)]="property.name" name="name-{{index}}" required></m-input></td>
+        <td><twl-value-set-concept-select valueSet="concept-property-type" [(ngModel)]="property.type" name="type-{{index}}" required></twl-value-set-concept-select> </td>
+        <td><m-checkbox [(ngModel)]="property.required" name="required-{{index}}"></m-checkbox></td>
+        <td><m-checkbox [(ngModel)]="property.preferred" name="preferred-{{index}}"></m-checkbox></td>
+        <td><m-input [(ngModel)]="property.description" name="description-{{index}}"></m-input></td>
+        <td><m-number-input [(ngModel)]="property.orderNumber" name="order-{{index}}"></m-number-input></td>
+        <td class="tw-table-actions" *ngIf="!viewMode">
+          <m-dropdown>
+            <a *m-dropdown-item (click)="removeProperty(index)">
+              {{'web.code-system.form.properties.delete-property' | translate}}
+            </a>
+          </m-dropdown>
+        </td>
+      </ng-container>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="7">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+
+    <tr *ngIf="!viewMode">
+      <td colspan="7" style="padding: 0">
+        <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addProperty()">
+          <m-icon [mCode]="'plus'"></m-icon>
+        </m-button>
+      </td>
+    </tr>
+  </m-table>
+  </form>
+
+</m-card>
