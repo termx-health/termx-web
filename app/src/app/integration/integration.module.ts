@@ -22,6 +22,7 @@ import {ConceptMapFileImportComponent} from './file-import/concept-map/concept-m
 import {SnomedDashboardComponent} from './snomed/snomed-dashboard.component';
 import {SnomedConceptInfoComponent} from './snomed/snomed-concept-info.component';
 import {OrphanetImportComponent} from './import/orphanet/orphanet-import-component';
+import {GithubExportComponent} from './github/github-export.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -54,6 +55,9 @@ export const INTEGRATION_ROUTES: Routes = [
     IntegrationLibModule,
     ResourcesLibModule
   ],
+  exports: [
+    GithubExportComponent
+  ],
   declarations: [
     IntegrationDashboardComponent,
     IntegrationFhirSyncComponent,
@@ -71,7 +75,8 @@ export const INTEGRATION_ROUTES: Routes = [
     ConceptMapFileImportComponent,
     OrphanetImportComponent,
     SnomedDashboardComponent,
-    SnomedConceptInfoComponent
+    SnomedConceptInfoComponent,
+    GithubExportComponent
   ]
 })
 export class IntegrationModule {

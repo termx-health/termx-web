@@ -28,6 +28,7 @@ import {StructureDefinitionTypeListComponent} from './containers/structuredefini
 import {StructureDefinitionConstraintListComponent} from './containers/structuredefinition/structure-definition-constraint-list.component';
 import {ThesaurusTemplateModalComponent} from './containers/texteditor/template/thesaurus-template-modal.component';
 import {TemplateViewComponent} from './containers/template/template-view.component';
+import {IntegrationModule} from '../integration/integration.module';
 
 export const THESAURUS_ROUTES: Routes = [
   {path: 'pages', component: ThesaurusPageComponent},
@@ -48,7 +49,8 @@ export const THESAURUS_ROUTES: Routes = [
 
     PortalModule,
     ResourcesLibModule,
-    IntegrationLibModule
+    IntegrationLibModule,
+    IntegrationModule
   ],
   declarations: [
     ThesaurusSidebarComponent,

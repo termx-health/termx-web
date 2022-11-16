@@ -7,6 +7,7 @@ import {catchError, debounceTime, distinctUntilChanged, map, Observable, of, Sub
 import {PageLink, PageSearchParams} from 'lib/src/thesaurus';
 import {Router} from '@angular/router';
 import {compareValues} from '@kodality-web/core-util';
+import {GithubExportable} from '../../../integration/github/github.service';
 
 @Component({
   selector: 'twa-thesaurus-sidebar',
@@ -140,5 +141,14 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
       return 'tw-page-active-item';
     }
     return 'tw-page-draft-item';
+  };
+
+  public prepareExport = (): GithubExportable[] => {
+    //FIXME: add sub-pages with filename containing parent page names
+    return this.pages.filter(p => p.contents?.[0].content).map(p => {
+      let content = p.contents?.[0];
+      let filename = `${content?.slug}.${content?.contentType === 'markdown' ? 'md' : 'html'}`;
+      return {content: content?.content, filename: filename};
+    });
   };
 }

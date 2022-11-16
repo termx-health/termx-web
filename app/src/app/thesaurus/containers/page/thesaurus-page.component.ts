@@ -4,6 +4,7 @@ import {Page, PageContent, PageLink, PageRelation} from 'lib/src/thesaurus';
 import {PageService} from '../../services/page.service';
 import {collect, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {GithubExportable} from '../../../integration/github/github.service';
 
 @Component({
   templateUrl: './thesaurus-page.component.html',
@@ -60,7 +61,8 @@ export class ThesaurusPageComponent implements OnInit {
 
     if (page) {
       this.pageService.getPath(page.id!).subscribe(path => this.path = path);
-      this.pageService.searchPageRelations({type: 'page', target: page.contents?.map(c => c.slug).join(',')!, limit: 999}).subscribe(resp => this.usages = resp.data);
+      this.pageService.searchPageRelations({type: 'page', target: page.contents?.map(c => c.slug).join(',')!, limit: 999})
+        .subscribe(resp => this.usages = resp.data);
     }
   }
 
@@ -104,6 +106,10 @@ export class ThesaurusPageComponent implements OnInit {
   public filterLanguages = (langs: string[], lang: string, contents: PageContent[]): string[] => {
     return langs.filter(l => l !== lang && !contents.find(c => c.lang === l));
   };
+  public prepareExport = (): GithubExportable[] => {
+    let filename = `${this.pageContent?.slug}.${this.pageContent?.contentType === 'markdown' ? 'md' : 'html'}`;
+    return [{content: this.pageContent?.content, filename: filename}];
+  };
 
   public openPageContent(content: PageContent): void {
     this.newPageModalVisible = false;
@@ -116,16 +122,16 @@ export class ThesaurusPageComponent implements OnInit {
 
   public openTarget(relation: PageRelation): void {
     if (relation.type === 'cs') {
-      this.router.navigate(['/resources/code-systems/', relation.target ,'view']);
+      this.router.navigate(['/resources/code-systems/', relation.target, 'view']);
     } else if (relation.type === 'vs') {
-      this.router.navigate(['/resources/value-sets/', relation.target ,'view']);
+      this.router.navigate(['/resources/value-sets/', relation.target, 'view']);
     } else if (relation.type === 'ms') {
-      this.router.navigate(['/resources/map-sets/', relation.target ,'view']);
+      this.router.navigate(['/resources/map-sets/', relation.target, 'view']);
     } else if (relation.type === 'concept') {
       const cs = relation.target!.split('|')[0];
       const concept = relation.target!.split('|')[1];
       if (cs !== 'snomed-ct') {
-        this.router.navigate(['/resources/code-systems/', cs , 'concepts', concept, 'view']);
+        this.router.navigate(['/resources/code-systems/', cs, 'concepts', concept, 'view']);
       } else {
         this.router.navigate(['/integration/snomed/', concept]);
       }
