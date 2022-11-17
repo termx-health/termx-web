@@ -85,11 +85,17 @@
                 "bundleName": "contrast",
                 "inject": false
               },
-              "app/src/styles.less"
+              "app/src/styles.less",
+              "node_modules/prismjs/themes/prism-okaidia.css"
             ],
             "preserveSymlinks": true,
             "scripts": [
-              "node_modules/quill/dist/quill.js"
+              "node_modules/quill/dist/quill.js",
+
+              "node_modules/marked/marked.min.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/components/prism-json.js",
+              "node_modules/emoji-toolkit/lib/js/joypixels.min.js"
             ]
           },
           "configurations": {

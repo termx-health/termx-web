@@ -23,6 +23,7 @@ export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
     this.processedValue = [{type: 'text', value: value}];
     this.processedValue = this.processInsertion(this.processedValue);
     this.processedValue = this.processLink(this.processedValue);
+    this.processedValue = this.processFsh(this.processedValue);
   }
 
   private processInsertion(processedValue: ProcessedValue[]): ProcessedValue[] {
@@ -80,6 +81,33 @@ export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
       return link;
     }
     return value;
+  }
+
+  private processFsh(processedValue: ProcessedValue[]): ProcessedValue[] {
+    let processAgain = false;
+    const res: ProcessedValue[] = [];
+    processedValue.forEach(pv => {
+      if (pv.type === 'text') {
+        const matches = pv.value!.match(/```fsh(.*?)```/gs);
+        if (matches && matches.length > 0) {
+          pv.value?.split(matches[0]).forEach((s, i) => {
+            if (i !== 0) {
+              res.push({type: 'fsh', value: matches[0]});
+            }
+            res.push({type: 'text', value: s});
+          });
+        } else {
+          res.push(pv);
+        }
+        processAgain = !!matches && matches.length > 1;
+      } else {
+        res.push(pv);
+      }
+    });
+    if (processAgain) {
+      return this.processFsh(res);
+    }
+    return res;
   }
 }
 

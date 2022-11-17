@@ -12,6 +12,7 @@ import {ChefService} from 'terminology-lib/integration';
 })
 export class StructureDefinitionTreeComponent implements OnChanges {
   @Input() public defCode?: string;
+  @Input() public fsh?: string;
   @Input() public mode?: 'edit' | 'view' = 'view';
   @Output() public elementSelected = new EventEmitter<any>();
   public selectedElement?: any;
@@ -27,6 +28,10 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['defCode'] && this.defCode) {
       this.processStructureDefinition(this.defCode);
+    }
+
+    if (changes['fsh'] && this.fsh) {
+      this.processFsh(this.fsh);
     }
   }
 
@@ -57,11 +62,15 @@ export class StructureDefinitionTreeComponent implements OnChanges {
         this.initDataSource(this.mapToTreeNode(this.structureDefinitionValue)!);
       }
       if (structureDefinition.contentFormat === 'fsh') {
-        this.chefService.fshToFhir({fsh: structureDefinition.content!}).subscribe(resp => {
-          this.structureDefinitionValue = ThesaurusFhirMapperUtil.mapToKeyValue(resp.fhir![0]);
-          this.initDataSource(this.mapToTreeNode(this.structureDefinitionValue)!);
-        });
+        this.processFsh(structureDefinition.content!);
       }
+    });
+  }
+
+  private processFsh(fsh: string): void {
+    this.chefService.fshToFhir({fsh: fsh}).subscribe(resp => {
+      this.structureDefinitionValue = ThesaurusFhirMapperUtil.mapToKeyValue(resp.fhir![0]);
+      this.initDataSource(this.mapToTreeNode(this.structureDefinitionValue)!);
     });
   }
 
