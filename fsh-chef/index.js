@@ -1,6 +1,6 @@
 const express = require("express");
 const app = express();
-app.use(express.json())
+app.use(express.json({limit: '100mb'}));
 const port = 3000;
 
 const {sushiClient} = require('fsh-sushi');
