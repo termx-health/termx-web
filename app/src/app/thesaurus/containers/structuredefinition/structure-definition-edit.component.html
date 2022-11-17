@@ -1,15 +1,22 @@
+<script src="structure-definition-edit.component.ts"></script>
 <div nz-row nzJustify="center">
   <div nz-col [nzLg]="18" [nzXs]="24">
     <nz-tabset [(nzSelectedIndex)]="selectedTabIndex" (nzSelectedIndexChange)="handleTabChange($event)">
-      <nz-tab [nzTitle]="'web.structure-definition.form.fsh-header' | translate">
+      <nz-tab [nzTitle]="'web.structure-definition.form.definition-header' | translate">
         <ng-template nz-tab>
           <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
         </ng-template>
       </nz-tab>
 
+      <nz-tab [nzTitle]="'web.structure-definition.form.fsh-header' | translate">
+        <ng-template nz-tab>
+          <ng-container [ngTemplateOutlet]="fshTemplate"></ng-container>
+        </ng-template>
+      </nz-tab>
+
       <nz-tab [nzTitle]="'web.structure-definition.form.json-header' | translate">
         <ng-template nz-tab>
-          <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
+          <ng-container [ngTemplateOutlet]="jsonTemplate"></ng-container>
         </ng-template>
       </nz-tab>
 
@@ -22,7 +29,8 @@
                   <label></label>
                   <twa-add-button (click)="addElement()">{{'web.structure-definition.form.add-element' | translate}}</twa-add-button>
                 </div>
-                <twa-structure-definition-tree #sdTree mode="edit"
+                <twa-structure-definition-tree #sdTree
+                    mode="edit"
                     [defCode]="structureDefinition.code"
                     (elementSelected)="openElementForm($event)"></twa-structure-definition-tree>
               </m-card>
@@ -48,9 +56,18 @@
                   </m-form-item>
                   <m-form-item mName="fixedCoding" mLabel="web.structure-definition.form.fixed-coding">
                     <div style="display: flex">
-                      <m-input style="width: 100%" name="fixedCodingCode" placeholder="web.structure-definition.form.code" [(ngModel)]="element.fixedCoding.code"></m-input>
-                      <m-input style="width: 100%" name="fixedCodingSystem" placeholder="web.structure-definition.form.system" [(ngModel)]="element.fixedCoding.system"></m-input>
-                      <m-input style="width: 100%" name="fixedCodingDisplay" placeholder="web.structure-definition.form.display" [(ngModel)]="element.fixedCoding.display"></m-input>
+                      <m-input style="width: 100%"
+                          name="fixedCodingCode"
+                          placeholder="web.structure-definition.form.code"
+                          [(ngModel)]="element.fixedCoding.code"></m-input>
+                      <m-input style="width: 100%"
+                          name="fixedCodingSystem"
+                          placeholder="web.structure-definition.form.system"
+                          [(ngModel)]="element.fixedCoding.system"></m-input>
+                      <m-input style="width: 100%"
+                          name="fixedCodingDisplay"
+                          placeholder="web.structure-definition.form.display"
+                          [(ngModel)]="element.fixedCoding.display"></m-input>
                     </div>
                   </m-form-item>
                   <m-form-item mName="short" mLabel="web.structure-definition.form.short-description">
@@ -89,18 +106,74 @@
           <m-input name="url" [(ngModel)]="structureDefinition.url" required></m-input>
         </m-form-item>
 
-        <m-form-item mName="contentType" mLabel="entities.structure-definition.content-type" required>
-          {{structureDefinition.contentType}}
+        <m-form-item mName="format" mLabel="web.structure-definition.form.primary-source" required>
+          <m-select name="format" [(ngModel)]="structureDefinition.contentFormat" (ngModelChange)="contentFormatChanged($event)">
+            <m-option [value]="'json'" [label]="'JSON'"></m-option>
+            <m-option [value]="'fsh'" [label]="'FSH'"></m-option>
+          </m-select>
         </m-form-item>
 
-        <m-form-item mName="content" mLabel="entities.structure-definition.content" required>
-          <m-textarea name="content" [(ngModel)]="structureDefinition.content" [rows]="10" autosize required></m-textarea>
+        <m-form-item mName="contentType" mLabel="entities.structure-definition.content-type" required>
+          <m-select name="contentType" [(ngModel)]="structureDefinition.contentType" required>
+            <m-option [value]="'profile'" [label]="'Profile'"></m-option>
+            <m-option [value]="'logical'" [label]="'Logical'"></m-option>
+            <m-option [value]="'instance'" [label]="'Instance'"></m-option>
+          </m-select>
+        </m-form-item>
+
+        <m-form-item *ngIf="structureDefinition.contentType === 'profile'" mName="parent" mLabel="entities.structure-definition.parent">
+          <m-input name="parent" [(ngModel)]="structureDefinition.parent"></m-input>
+        </m-form-item>
+
+        <m-form-item *ngIf="structureDefinition.contentType === 'profile'" mName="version" mLabel="entities.structure-definition.version">
+          <m-input name="version" [(ngModel)]="structureDefinition.version"></m-input>
         </m-form-item>
       </form>
       <ng-container *m-card-footer>
         <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">
           {{'core.btn.save' | translate}}
         </m-button>
+      </ng-container>
+    </m-card>
+  </m-spinner>
+</ng-template>
+
+
+<ng-template #fshTemplate>
+  <m-spinner [mLoading]="loading['save']">
+    <m-card [mShowSkeleton]="loading['init'] || loading['content']">
+      <form #fshForm="ngForm" *ngIf="structureDefinition">
+        <m-form-item mName="content">
+          <m-textarea *ngIf="structureDefinition.contentFormat === 'fsh'" name="content" [(ngModel)]="structureDefinition.content" [rows]="10" autosize required></m-textarea>
+        </m-form-item>
+        <pre *ngIf="structureDefinition.contentFormat !== 'fsh'">{{structureDefinition.content | fhirToFsh | async}}</pre>
+      </form>
+      <ng-container *ngIf="structureDefinition?.contentFormat === 'fsh'">
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </ng-container>
+    </m-card>
+  </m-spinner>
+</ng-template>
+
+<ng-template #jsonTemplate>
+  <m-spinner [mLoading]="loading['save']">
+    <m-card [mShowSkeleton]="loading['init'] || loading['content']">
+      <form #jsonForm="ngForm" *ngIf="structureDefinition">
+        <m-form-item mName="content">
+          <m-textarea *ngIf="structureDefinition.contentFormat === 'json'" name="content" [(ngModel)]="structureDefinition.content" [rows]="10" autosize required></m-textarea>
+        </m-form-item>
+        <pre *ngIf="structureDefinition.contentFormat !== 'json'">{{structureDefinition.content | fshToFhir | async}}</pre>
+      </form>
+      <ng-container *ngIf="structureDefinition?.contentFormat === 'json'">
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
       </ng-container>
     </m-card>
   </m-spinner>

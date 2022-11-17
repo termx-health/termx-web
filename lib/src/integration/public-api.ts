@@ -5,6 +5,8 @@ export * from './chef/model/fhir-to-fsh-request';
 export * from './chef/model/fhir-to-fsh-response';
 export * from './chef/model/fsh-to-fhir-request';
 export * from './chef/model/fsh-to-fhir-response';
+export * from './chef/pipe/fhir-to-fsh-pipe';
+export * from './chef/pipe/fsh-to-fhir-pipe';
 export * from './chef/services/chef.service';
 export * from './icd-10/service/integration-icd-lib.service';
 export * from './snomed/containers/snomed-search.component';

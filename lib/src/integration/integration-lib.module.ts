@@ -12,6 +12,8 @@ import {CoreUtilModule} from '@kodality-web/core-util';
 import {TranslateModule} from '@ngx-translate/core';
 import {SharedModule} from '../../../app/src/app/core/shared/shared.module';
 import {ChefService} from './chef/services/chef.service';
+import {FhirToFshPipe} from './chef/pipe/fhir-to-fsh-pipe';
+import {FshToFhirPipe} from './chef/pipe/fsh-to-fhir-pipe';
 
 @NgModule({
   imports: [
@@ -31,11 +33,17 @@ import {ChefService} from './chef/services/chef.service';
   ],
   declarations: [
     SnomedConceptNamePipe,
-    SnomedSearchComponent
+    SnomedSearchComponent,
+
+    FhirToFshPipe,
+    FshToFhirPipe
   ],
   exports: [
     SnomedConceptNamePipe,
-    SnomedSearchComponent
+    SnomedSearchComponent,
+
+    FhirToFshPipe,
+    FshToFhirPipe
   ]
 })
 export class IntegrationLibModule {

@@ -109,7 +109,7 @@ export class ThesaurusPageEditComponent implements OnInit {
         code: structureDefinitionCode,
         content: JSON.stringify(fhirSD, null, 2),
         contentFormat: 'json',
-        contentType: 'instance'
+        contentType: 'logical'
       };
       this.structureDefinitionService.save(structureDefinition).subscribe(sd => {
         this.router.navigate(['/thesaurus/structure-definitions/', sd.id, 'edit'], {queryParams: {tab: 'elements'}});

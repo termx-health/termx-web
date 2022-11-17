@@ -58,17 +58,16 @@ export class StructureDefinitionTreeComponent implements OnChanges {
       }
       if (structureDefinition.contentFormat === 'fsh') {
         this.chefService.fshToFhir({fsh: structureDefinition.content!}).subscribe(resp => {
-          if (!resp.errors || resp.errors.length === 0) {
-            this.structureDefinitionValue = ThesaurusFhirMapperUtil.mapToKeyValue(resp.fhir![0]);
-            this.initDataSource(this.mapToTreeNode(this.structureDefinitionValue)!);
-          }
+          this.structureDefinitionValue = ThesaurusFhirMapperUtil.mapToKeyValue(resp.fhir![0]);
+          this.initDataSource(this.mapToTreeNode(this.structureDefinitionValue)!);
         });
       }
     });
   }
 
   private initDataSource(treeNodes: TreeNode[]): void {
-    this.dataSource = new NzTreeFlatDataSource(this.treeControl, new NzTreeFlattener(this.transformer, node => node.level, node => node.expandable, node => node.children));
+    this.dataSource =
+      new NzTreeFlatDataSource(this.treeControl, new NzTreeFlattener(this.transformer, node => node.level, node => node.expandable, node => node.children));
     this.dataSource.setData(treeNodes);
     this.treeControl.expandAll();
   }
@@ -76,7 +75,8 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   public hasChild = (_: number, node: FlatNode): boolean => node.expandable;
 
   private transformer = (node: TreeNode, level: number): FlatNode => {
-    return (this.type === 'snap' ? this.snapTransformer(node, level) : this.type === 'diff' ? this.diffTransformer(node, level) : this.hybridTransformer(node, level));
+    return (this.type === 'snap' ? this.snapTransformer(node, level) :
+      this.type === 'diff' ? this.diffTransformer(node, level) : this.hybridTransformer(node, level));
   };
 
   private snapTransformer = (node: TreeNode, level: number): FlatNode => (
@@ -88,7 +88,8 @@ export class StructureDefinitionTreeComponent implements OnChanges {
       targetProfile: node.snap?.type?.[0]?.targetProfile,
       fixedUri: node.snap?.fixedUri,
       fixedCoding: node.snap?.fixedCoding ? node.snap.fixedCoding : undefined,
-      cardinality: isDefined(node.snap?.min) || isDefined(node.snap?.max) ? (isDefined(node.snap?.min) ? node.snap?.min : '*') + '..' + (isDefined(node.snap?.max) ? node.snap?.max : '*') : '',
+      cardinality: isDefined(node.snap?.min) || isDefined(node.snap?.max) ?
+        (isDefined(node.snap?.min) ? node.snap?.min : '*') + '..' + (isDefined(node.snap?.max) ? node.snap?.max : '*') : '',
       short: node.snap?.short,
       definition: isDefined(node.snap?.definition) && node.snap?.definition !== node.snap?.short ? node.snap?.definition : undefined,
       binding: node.snap?.binding,
@@ -104,7 +105,8 @@ export class StructureDefinitionTreeComponent implements OnChanges {
       targetProfile: node.diff?.type?.[0]?.targetProfile,
       fixedUri: node.diff?.fixedUri,
       fixedCoding: node.diff?.fixedCoding ? node.diff.fixedCoding : undefined,
-      cardinality: isDefined(node.diff?.min) || isDefined(node.diff?.max) ? (isDefined(node.diff?.min) ? node.diff?.min : '*') + '..' + (isDefined(node.diff?.max) ? node.diff?.max : '*') : '',
+      cardinality: isDefined(node.diff?.min) || isDefined(node.diff?.max) ?
+        (isDefined(node.diff?.min) ? node.diff?.min : '*') + '..' + (isDefined(node.diff?.max) ? node.diff?.max : '*') : '',
       short: node.diff?.short,
       definition: isDefined(node.diff?.definition) && node.diff?.definition !== node.diff?.short ? node.diff?.definition : undefined,
       binding: node.diff?.binding,
@@ -120,7 +122,8 @@ export class StructureDefinitionTreeComponent implements OnChanges {
       targetProfile: node.diff?.type?.[0]?.targetProfile,
       fixedUri: node.diff?.fixedUri,
       fixedCoding: node.diff?.fixedCoding ? node.diff.fixedCoding : undefined,
-      cardinality: isDefined(node.diff?.min) || isDefined(node.diff?.max) ? (isDefined(node.diff?.min) ? node.diff?.min : '*') + '..' + (isDefined(node.diff?.max) ? node.diff?.max : '*') : '',
+      cardinality: isDefined(node.diff?.min) || isDefined(node.diff?.max) ?
+        (isDefined(node.diff?.min) ? node.diff?.min : '*') + '..' + (isDefined(node.diff?.max) ? node.diff?.max : '*') : '',
       short: node.diff?.short,
       definition: isDefined(node.diff?.definition) && node.diff?.definition !== node.diff?.short ? node.diff?.definition : undefined,
       binding: node.diff?.binding,
@@ -187,6 +190,7 @@ export class Element {
 export class ElementType {
   public code?: string;
   public targetProfile?: string[];
+  public profile?: string[];
 }
 
 export class ElementConstraint {

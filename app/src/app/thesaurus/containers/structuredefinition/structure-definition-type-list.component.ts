@@ -84,5 +84,6 @@ export class StructureDefinitionTypeListComponent {
 export class StructureDefinitionType {
   public code?: string;
   public targetProfile?: {value: string}[];
+  public profile?: {value: string}[];
 }
 

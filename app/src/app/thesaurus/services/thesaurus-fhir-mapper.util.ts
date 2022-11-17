@@ -1,8 +1,9 @@
 import {ElementDefinition} from 'fhir/model/element-definition';
+import {isDefined} from '@kodality-web/core-util';
 
 export class ThesaurusFhirMapperUtil {
   public static mapToKeyValue(fhirObj: any): {[key: string]: any} {
-    if (fhirObj.resourceType === 'StructureDefinition') {
+    if (fhirObj.resourceType === 'StructureDefinition' && isDefined(fhirObj)) {
       return ThesaurusFhirMapperUtil.mapFromStructureDefinition(fhirObj);
     }
     return {};

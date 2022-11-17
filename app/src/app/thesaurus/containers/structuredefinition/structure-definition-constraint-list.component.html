@@ -14,7 +14,7 @@
     </tr>
     <tr *mTableRow="let constraint; let index = index">
       <td>
-        <a>{{constraint.key}}</a>
+        <a (click)="toggleModal(constraint, index)">{{constraint.key}}</a>
       </td>
       <td class="tw-table-actions">
         <m-button (click)="removeConstraint(index)">
