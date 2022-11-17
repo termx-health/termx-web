@@ -172,7 +172,7 @@ export class StructureDefinitionEditComponent implements OnInit {
       structureDefinition.baseDefinition =  structureDefinition.baseDefinition || 'http://hl7.org/fhir/StructureDefinition/Element';
       structureDefinition.derivation = 'specialization';
       structureDefinition.differential = structureDefinition.differential || {};
-      structureDefinition.differential.element = this.prepareElements(structureDefinition.differential.element, structureDefinition.type || structureDefinition.id, elementToAdd);
+      structureDefinition.differential.element = this.prepareElements(structureDefinition.differential.element, structureDefinition.id, elementToAdd);
       return sd.contentFormat === 'json' ?
         of(JSON.stringify(structureDefinition, null, 2)) :
         this.chefService.fhirToFsh({fhir: [structureDefinition]}).pipe(map(r => r.fsh));
@@ -230,7 +230,8 @@ export class StructureDefinitionEditComponent implements OnInit {
     return this.parseContent(this.structureDefinition).pipe(map(content => {
       const elements: Element[] = content.differential.element || [];
       const currentElement = elements.find(el => el.id === element.id);
-      return !currentElement || JSON.stringify(this.cleanObject(currentElement)) !== JSON.stringify(this.cleanObject(this.composeElement(element, content.type || content.id, currentElement)));
+      const defEl = elements.find(el => el.id && !el.id.includes('.'));
+      return !currentElement || JSON.stringify(this.cleanObject(currentElement)) !== JSON.stringify(this.cleanObject(this.composeElement(element, defEl?.id || content.id, currentElement)));
     }));
   }
 
@@ -274,7 +275,8 @@ export class StructureDefinitionEditComponent implements OnInit {
     if (isDefined(elementToAdd)) {
       const currentElement = elements.find(el => el.id === elementToAdd.id);
       elements = elements.filter(el => el.id !== elementToAdd.id);
-      const element = this.composeElement(elementToAdd, sdId, currentElement);
+      const defEl = elements.find(el => el.id && !el.id.includes('.'));
+      const element = this.composeElement(elementToAdd, defEl?.id || sdId, currentElement);
       elements.push(element);
     }
 
