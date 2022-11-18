@@ -12,7 +12,7 @@
   KTS Github App to use this feature
 </ng-template>
 
-<m-modal [(mVisible)]="modalVisible" (mClose)="modalVisible = false; resultUrls = []">
+<m-modal [(mVisible)]="modalVisible" (mClose)="modalVisible = false; resultUrls = []" [mMaskClosable]="false">
   <ng-container *m-modal-header>
     Export '{{title}}' to Github
   </ng-container>

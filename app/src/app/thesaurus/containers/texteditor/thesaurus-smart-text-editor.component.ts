@@ -38,12 +38,12 @@ export class ThesaurusSmartTextEditorComponent implements AfterViewInit, Control
     {id: 'link', name: 'Link', icon: 'link', description: 'Insert a link'},
     {id: 'structure-definition', name: 'Structure definition', icon: 'profile', description: 'Insert structure definition'},
     {id: 'template', name: 'Template', icon: 'file-text', description: 'Insert template'},
-    {id: 'bullet-list', name: 'Bullet list', icon: 'unordered-list', description: 'Create an unordered list', result: '\n* '},
-    {id: 'numbered-list', name: 'Numbered list', icon: 'ordered-list', description: 'Create an ordered list', result: '\n1. '},
-    {id: 'divider', name: 'Divider', icon: 'line', description: 'Separate content with horizontal line', result: '\n*** '},
-    {id: 'code', name: 'Code', icon: 'code', description: 'Syntax highlight', result: '\n```\n\n``` '},
-    {id: 'heading-1', name: 'Heading 1', icon: 'font-size', description: 'Top level heading', result: '\n# '},
-    {id: 'heading-2', name: 'Heading 2', icon: 'font-size', description: 'Sections', result: '\n## '}
+    {id: 'bullet-list', name: 'Bullet list', icon: 'unordered-list', description: 'Create an unordered list', result: '* '},
+    {id: 'numbered-list', name: 'Numbered list', icon: 'ordered-list', description: 'Create an ordered list', result: '1. '},
+    {id: 'divider', name: 'Divider', icon: 'line', description: 'Separate content with horizontal line', result: '*** '},
+    {id: 'code', name: 'Code', icon: 'code', description: 'Syntax highlight', result: '```\n\n``` '},
+    {id: 'heading-1', name: 'Heading 1', icon: 'font-size', description: 'Top level heading', result: '# '},
+    {id: 'heading-2', name: 'Heading 2', icon: 'font-size', description: 'Sections', result: '## '}
   ];
 
   @ViewChild("linkModal") public linkModal?: ThesaurusLinkModalComponent;
