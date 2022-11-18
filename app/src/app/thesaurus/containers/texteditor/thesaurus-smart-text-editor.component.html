@@ -35,6 +35,6 @@
 
 <twa-link-modal #linkModal (linkComposed)="insertOption($event)"></twa-link-modal>
 <twa-structure-definition-modal #structureDefinitionModal (structureDefinitionComposed)="insertOption($event)"></twa-structure-definition-modal>
-<twa-template-modal #templateModal (templateComposed)="insertOption($event)"></twa-template-modal>
+<twa-template-modal #templateModal (templateComposed)="insertOption($event)" [lang]="lang"></twa-template-modal>
 
 <twa-smart-text-editor-view *ngIf="viewMode" [value]="value" [valueType]="valueType" [lang]="lang"></twa-smart-text-editor-view>

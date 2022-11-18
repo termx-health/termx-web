@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
@@ -16,8 +16,8 @@ import {Template, TemplateLibService} from 'terminology-lib/thesaurus';
       <ng-container *m-modal-content>
         <form #form="ngForm" *ngIf="data">
           <m-form-item mName="template" mLabel="web.thesaurus-page.template-modal.template" required>
-            <m-select [(ngModel)]="data.templateCode" name="template" required>
-              <m-option *ngFor="let template of templates" [label]="template.code" [value]="template.code"></m-option>
+            <m-select [(ngModel)]="data.template" compareWith="id" name="template" required>
+              <m-option *ngFor="let template of templates" [label]="template.code" [value]="template"></m-option>
             </m-select>
           </m-form-item>
         </form>
@@ -31,6 +31,7 @@ import {Template, TemplateLibService} from 'terminology-lib/thesaurus';
   `
 })
 export class ThesaurusTemplateModalComponent implements OnInit {
+  @Input() public lang?: string;
   @Output() public templateComposed: EventEmitter<string> = new EventEmitter();
 
   public modalVisible = false;
@@ -65,7 +66,7 @@ export class ThesaurusTemplateModalComponent implements OnInit {
     if (!validateForm(this.form)) {
       return;
     }
-    this.templateComposed.emit("{{temp:" + this.data!.templateCode +"}}");
+    this.templateComposed.emit(this.data!.template!.contents?.find(c => c.lang === this.lang)?.content);
     this.modalVisible = false;
   }
 
@@ -75,5 +76,5 @@ export class ThesaurusTemplateModalComponent implements OnInit {
 }
 
 export class ModalData {
-  public templateCode?: string;
+  public template?: Template;
 }
