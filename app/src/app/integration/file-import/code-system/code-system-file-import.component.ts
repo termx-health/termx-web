@@ -220,7 +220,7 @@ interface FileAnalysisResponse {
 
 // processing
 interface FileProcessingRequest {
-  link: string;
+  link?: string;
   type: string;
   properties?: FileProcessingRequestProperty[];
   generateValueSet?: boolean;
@@ -277,6 +277,7 @@ export class CodeSystemFileImportComponent {
   public validationErrors: string[] = [];
 
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
+  @ViewChild('jsonFileInput') public jsonFileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('form') public form?: NgForm;
   @ViewChild('successNotificationContent') public successNotificationContent?: TemplateRef<any>;
 
@@ -352,11 +353,17 @@ export class CodeSystemFileImportComponent {
         releaseDate: this.data.version.releaseDate
       },
     };
+    this.processRequest(req);
+  }
 
+  public processRequest(req: FileProcessingRequest): void {
     const formData = new FormData();
     formData.append('request', JSON.stringify(req));
     if (this.data.source.type === 'file') {
       formData.append('file', this.fileInput?.nativeElement?.files?.[0] as Blob, 'files');
+    }
+    if (req.type === 'json') {
+      formData.append('file', this.jsonFileInput?.nativeElement?.files?.[0] as Blob, 'files');
     }
     this.jobResponse = null;
     this.loading['process'] = true;
@@ -382,8 +389,6 @@ export class CodeSystemFileImportComponent {
       this.jobResponse = jobResp;
     }).add(() => this.loading['process'] = false);
   }
-
-
 
   public applyTemplate(): void {
     const tpl = IMPORT_TEMPLATES[this.data.template];
