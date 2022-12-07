@@ -3,6 +3,7 @@
     "btn": {
       "save": "Save",
       "delete": "Delete",
+      "edit": "Edit",
       "cancel": "Cancel",
       "close": "Close",
       "duplicate": "Duplicate",
@@ -132,6 +133,7 @@
         "narrative": "Narrative"
       },
       "form": {
+        "header": "Code system",
         "add-header": "Create a new code system",
         "edit-header": "Edit code system",
         "view-header": "View code system",

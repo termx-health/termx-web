@@ -1,0 +1,36 @@
+<div nz-row nzJustify="center">
+  <div nz-col [nzLg]="18" [nzXs]="24">
+    <m-spinner [mLoading]="loading['save']">
+      <m-card [mShowSkeleton]="loading['init']" autofocus>
+        <div *m-card-header>
+          <div class="m-items-between">
+            <label class="m-card-title">{{('web.code-system.form.header' | translate) + ' ' +  codeSystemId}}</label>
+            <div>
+              <m-button (click)="openEdit()">{{'core.btn.edit' | translate}}</m-button>
+            </div>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="12" class="m-row">
+          <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24">
+            <m-form-item mLabel="entities.code-system.name">
+              {{codeSystem.names | localName}}
+            </m-form-item>
+          </div>
+          <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24">
+            <m-form-item  mLabel="entities.code-system.versions">
+              <label *ngFor="let version of codeSystem.versions">{{version.version}} | {{version.status}}</label>
+            </m-form-item>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="12" class="m-row">
+          <m-form-item  mLabel="entities.code-system.description">
+            {{codeSystem.description}}
+          </m-form-item>
+        </div>
+        <twa-code-system-concepts-list [codeSystemId]="codeSystemId"
+            [codeSystemVersions]="codeSystem.versions"
+            [properties]="codeSystem.properties"></twa-code-system-concepts-list>
+      </m-card>
+    </m-spinner>
+  </div>
+</div>

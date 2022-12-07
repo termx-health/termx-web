@@ -24,7 +24,7 @@
     <tr *mTableRow="let cs">
       <td m-table-expand [mItem]="cs"></td>
       <td>
-        <a *ngIf="'*.CodeSystem.edit' | twaHasAnyPrivilege; else view" [routerLink]="dev ? [cs.id,'edit'] : ['code-systems',cs.id,'edit']" [queryParams]="dev ? {} : { tab: 'concepts' }">{{cs.id}}</a>
+        <a *ngIf="'*.CodeSystem.edit' | twaHasAnyPrivilege; else view" [routerLink]="dev ? [cs.id,'concepts'] : ['code-systems',cs.id,'edit']" [queryParams]="dev ? {} : { tab: 'concepts' }">{{cs.id}}</a>
         <ng-template #view>
           <a [routerLink]="dev ? [cs.id,'view'] : ['code-systems',cs.id,'view']" [queryParams]="dev ? {} : { tab: 'concepts' }">{{cs.id}}</a>
         </ng-template>

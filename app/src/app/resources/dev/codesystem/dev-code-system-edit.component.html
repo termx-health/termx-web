@@ -1,7 +1,7 @@
 <div nz-row nzJustify="center">
   <div nz-col [nzLg]="18" [nzXs]="24">
     <m-spinner [mLoading]="loading['save']">
-      <m-card [mTitle]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'" [mShowSkeleton]="loading['init']" autofocus>
+      <m-card [mTitle]="('web.code-system.form.header' | translate) +  (codeSystemId ? ' ' + codeSystemId : '')" [mShowSkeleton]="loading['init']" autofocus>
         <form #form="ngForm" *ngIf="codeSystem">
           <m-form-item mLabel="entities.code-system.name">
             <m-multi-language-input name="name" [(ngModel)]="codeSystem.names" (ngModelChange)="nameChanged($event)"></m-multi-language-input>

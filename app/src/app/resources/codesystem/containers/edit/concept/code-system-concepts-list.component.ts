@@ -108,8 +108,12 @@ export class CodeSystemConceptsListComponent implements OnInit {
     return {title: c.code! + (name ? ' - ' + name : ''), key: c.code!, isLeaf: c.leaf};
   }
 
-  public openConcept(event: any): void {
-    this.router.navigate(['resources/code-systems', this.codeSystemId,'concepts', event.node.key, !this.viewMode? 'edit' : 'view']);
+  public openConcept(code?: any): void {
+    if (!code) {
+      this.router.navigate(['resources/code-systems', this.codeSystemId, 'concepts', 'add']);
+      return;
+    }
+    this.router.navigate(['resources/code-systems', this.codeSystemId,'concepts', code, !this.viewMode? 'edit' : 'view']);
   }
 
   private expandTree(): void {

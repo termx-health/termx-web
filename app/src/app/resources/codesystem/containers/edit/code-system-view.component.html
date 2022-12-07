@@ -70,7 +70,7 @@
         <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" [queryParams]="{ tab: 'concepts' }">
           {{'entities.code-system.concepts' | translate}}
         </a>
-        <m-card [mTitle]="'entities.code-system.concepts'" *ngIf="codeSystem">
+        <m-card *ngIf="codeSystem">
           <twa-code-system-concepts-list [codeSystemId]="codeSystemId"
               [codeSystemVersions]="codeSystem.versions"
               [properties]="codeSystem.properties"

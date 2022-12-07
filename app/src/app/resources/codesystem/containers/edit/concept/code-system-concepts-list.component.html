@@ -2,6 +2,7 @@
   <div *m-card-header>
     <div class="m-items-between">
       <div class="m-items-middle">
+        <label class="m-card-title">{{'entities.code-system.concepts' | translate}}</label>
         <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next()" placeholder="marina.ui.inputs.search.placeholder" [disabled]="group.open"></m-input>
         <m-button (click)="filter.open = !filter.open"
             [disabled]="group.open"
@@ -13,7 +14,7 @@
         </m-button>
       </div>
 
-      <twa-add-button *ngIf="!viewMode" [routerLink]="['../concepts/add']">
+      <twa-add-button *ngIf="!viewMode" (click)="openConcept()">
         {{'web.code-system.form.concepts.add-concept' | translate}}
       </twa-add-button>
     </div>
@@ -105,7 +106,7 @@
     </tr>
     <tr *mTableRow="let concept">
       <td m-table-expand [mItem]="concept"></td>
-      <td><a [routerLink]="['../concepts/', concept.code, !viewMode? 'edit' : 'view']">{{concept.code}}</a></td>
+      <td><a (click)="openConcept(concept.code)">{{concept.code}}</a></td>
       <td>
         <ng-container *ngFor="let language of filter.languages">
           <div *ngIf="getConceptName(concept, language)">
@@ -143,6 +144,6 @@
     </tr>
   </m-backend-table>
 
-  <nz-tree *ngIf="group.open" [nzData]="rootConcepts" nzAsyncData (nzClick)="openConcept($event)" (nzExpandChange)="loadChildren($event)"></nz-tree>
+  <nz-tree *ngIf="group.open" [nzData]="rootConcepts" nzAsyncData (nzClick)="openConcept($event.node.key)" (nzExpandChange)="loadChildren($event)"></nz-tree>
 
 </m-card>
