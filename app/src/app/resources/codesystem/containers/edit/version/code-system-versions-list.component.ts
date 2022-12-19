@@ -42,6 +42,11 @@ export class CodeSystemVersionsListComponent {
     this.codeSystemService.retireVersion(version.codeSystem!, version.version!).subscribe(() => version.status = 'retired').add(() => this.loading = false);
   }
 
+  public saveAsDraft(version: CodeSystemVersion): void {
+    this.loading = true;
+    this.codeSystemService.saveVersionAsDraft(version.codeSystem!, version.version!).subscribe(() => version.status = 'draft').add(() => this.loading = false);
+  }
+
   public exportFhirFormatVersion(id: number, type: 'json' | 'xml'): void {
     this.integrationFhirLibService.loadCodeSystem(id).subscribe(fhirCs => {
       const json = JSON.stringify(fhirCs, null, 2);

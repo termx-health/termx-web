@@ -15,6 +15,9 @@
           <m-button *ngIf="conceptVersion.id && conceptVersion.status !== 'retired'" (click)="retireVersion(conceptVersion)">
             {{'web.publication-status.operations.retire' | translate}}
           </m-button>
+          <m-button *ngIf="conceptVersion.id && conceptVersion.status !== 'draft'" (click)="saveAsDraft(conceptVersion)">
+            {{'web.publication-status.operations.save-as-draft' | translate}}
+          </m-button>
           <m-button *ngIf="conceptVersion?.status === 'draft'" mDisplay="primary" [mLoading]="loading['save']" [disabled]="isLoading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>

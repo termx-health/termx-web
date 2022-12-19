@@ -53,6 +53,7 @@
     "publication-status": {
       "operations": {
         "activate": "Activate",
+        "save-as-draft": "Make draft",
         "retire": "Retire"
       }
     },

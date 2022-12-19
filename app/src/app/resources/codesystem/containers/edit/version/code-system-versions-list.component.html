@@ -51,6 +51,9 @@
           <a *mDropdownItemIf="version.status === 'draft' && !viewMode" (click)="activateVersion(version)">
             {{'web.publication-status.operations.activate' | translate}}
           </a>
+          <a *mDropdownItemIf="version.status !== 'draft' && !viewMode" (click)="saveAsDraft(version)">
+            {{'web.publication-status.operations.save-as-draft' | translate}}
+          </a>
         </m-dropdown>
       </td>
     </tr>

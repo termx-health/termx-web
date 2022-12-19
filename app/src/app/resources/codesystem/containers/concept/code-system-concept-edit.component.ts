@@ -131,4 +131,11 @@ export class CodeSystemConceptEditComponent implements OnInit {
       version.status = 'retired';
     }).add(() => this.loading['retire'] = false);
   }
+
+  public saveAsDraft(version: CodeSystemEntityVersion): void {
+    this.loading['draft'] = true;
+    this.codeSystemService.saveEntityVersionAsDraft(this.codeSystemId!, version.id!).subscribe(() => {
+      version.status = 'draft';
+    }).add(() => this.loading['draft'] = false);
+  }
 }

@@ -28,6 +28,10 @@ export class ValueSetService extends ValueSetLibService {
     return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/retire`, {});
   }
 
+  public saveVersionAsDraft(valueSetId: string, version: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/draft`, {});
+  }
+
   public saveConcept(valueSetId: string, version: string, concept: ValueSetVersionConcept): Observable<ValueSetVersionConcept> {
     if (concept.id) {
       return this.http.put<ValueSetVersionConcept>(`${this.baseUrl}/${valueSetId}/versions/${version}/concepts/${concept.id}`, concept);
