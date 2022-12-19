@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'lib/src/resources';
+import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'lib/src/resources';
 import {NgForm} from '@angular/forms';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
@@ -15,6 +15,7 @@ import {CodeSystemAssociationEditComponent} from './association/code-system-asso
 export class CodeSystemConceptEditComponent implements OnInit {
   public codeSystemId?: string | null;
   public conceptCode?: string | null;
+  public codeSystem?: CodeSystem;
   public concept?: CodeSystemConcept;
   public conceptVersion?: CodeSystemEntityVersion;
 
@@ -46,6 +47,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
     if (this.mode === 'edit') {
       this.loadConcept(this.conceptCode!);
+      this.codeSystemService.load(this.codeSystemId!).subscribe(cs => this.codeSystem = cs);
     } else {
       this.concept = new CodeSystemConcept();
       this.addVersion();
@@ -70,10 +72,6 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.codeSystemService.saveConcept(this.codeSystemId!, this.concept!, true)
       .subscribe(() => this.location.back())
       .add(() => this.loading['save'] = false);
-  }
-
-  public requiredLanguages(codeSystemVersion: CodeSystemVersion): string[] {
-    return [codeSystemVersion.preferredLanguage!];
   }
 
   private loadConcept(conceptCode: string): void {

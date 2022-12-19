@@ -46,6 +46,13 @@
                 </m-select>
               </m-form-item>
 
+              <m-form-item mName="caseSensitive" mLabel="entities.code-system.supported-languages">
+                <twl-value-set-concept-select name="supportedLanguages"
+                    [(ngModel)]="codeSystem.supportedLanguages"
+                    valueSet="languages"
+                    multiple></twl-value-set-concept-select>
+              </m-form-item>
+
               <m-form-item mName="description" mLabel="entities.code-system.description">
                 <m-textarea name="description" [(ngModel)]="codeSystem.description"></m-textarea>
               </m-form-item>

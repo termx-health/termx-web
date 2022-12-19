@@ -7,7 +7,7 @@
     <m-card class="m-card-inside" *ngFor="let group of designationGroups">
       <twa-code-system-designation-group-edit [viewMode]="viewMode"
           [designationGroup]="group"
-          [requiredLanguages]="requiredLanguages"
+          [supportedLangs]="supportedLangs"
           [entityProperties]="entityProperties"></twa-code-system-designation-group-edit>
     </m-card>
   </div>
@@ -29,33 +29,6 @@
             required>
           <m-option *ngFor="let prop of entityProperties" [value]="prop.id" [label]="prop.name"></m-option>
         </m-select>
-      </m-form-item>
-
-      <m-form-item mName="designationKind" mLabel="entities.designation.designation-kind" required>
-        <nz-radio-group name="designationKind" [(ngModel)]="modalData.designation.designationKind" required>
-          <label nz-radio nzValue="text">Text</label>
-          <label nz-radio nzValue="blob">Blob</label>
-        </nz-radio-group>
-      </m-form-item>
-
-      <m-form-item mName="language" mLabel="entities.designation.language" *ngIf="!loading['languages']" required>
-        <twl-value-set-concept-select name="language" valueSet="languages" [(ngModel)]="modalData.designation.language" required></twl-value-set-concept-select>
-      </m-form-item>
-
-      <m-form-item mName="name" mLabel="entities.designation.name" required>
-        <m-input name="name" [(ngModel)]="modalData.designation.name" required></m-input>
-      </m-form-item>
-
-      <m-form-item mName="status" mLabel="entities.designation.status" required>
-        <twl-value-set-concept-select name="status" valueSet="publication-status" [(ngModel)]="modalData.designation.status" required></twl-value-set-concept-select>
-      </m-form-item>
-
-      <m-form-item mName="designationModalCaseSignificance" mLabel="entities.designation.case-significance" required>
-        <nz-radio-group name="designationModalCaseSignificance" [(ngModel)]="modalData.designation.caseSignificance" required>
-          <label nz-radio nzValue="ci">{{'web.case-sensitive-options.ci' | translate}}</label>
-          <label nz-radio nzValue="cs">{{'web.case-sensitive-options.cs' | translate}}</label>
-          <label nz-radio nzValue="ics">{{'web.case-sensitive-options.ics' | translate}}</label>
-        </nz-radio-group>
       </m-form-item>
     </form>
   </ng-container>

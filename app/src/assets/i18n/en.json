@@ -801,6 +801,7 @@
       "name": "Name",
       "content": "Content",
       "case-sensitivity": "Case sensitivity",
+      "supported-languages": "Supported languages",
       "narrative": "Narrative",
       "description": "Description",
       "contacts": "Contacts",

@@ -2,7 +2,8 @@
   <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
     <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content">
       <m-form-item mName="designationType" mLabel="entities.designation.type" required>
-        <m-select *ngIf="!viewMode" name="designationType"
+        <m-select *ngIf="!viewMode"
+            name="designationType"
             [(ngModel)]="designationGroup.designationTypeId"
             placeholder="marina.ui.inputs.search.placeholder"
             icon="search"
@@ -21,32 +22,29 @@
         <label *ngIf="viewMode">{{designationGroup.designationKind}}</label>
       </m-form-item>
 
-      <m-form-item mName="term" mLabel="entities.designation.name" required>
+      <m-form-item mName="term" mLabel="entities.designation.name">
         <div class="m-language-input-group-wrapper">
-          <m-form-control *ngFor="let designation of designationGroup.designations | apply: requiredFirst: requiredLanguages; let index = index"
+          <m-form-control *ngFor="let designation of designationGroup.designations; let index = index"
               mName="{{index}}-designation"
               style="display: flex">
-            <nz-input-group *ngIf="!viewMode" class="m-language-input-group"
+            <nz-input-group *ngIf="!viewMode"
+                class="m-language-input-group"
                 [nzAddOnBefore]="designation.language | localizedConceptName: {valueSet: 'languages'} | async "
                 [nzSuffix]="suffixTemplate">
               <m-input name="{{index}}-name"
                   [(ngModel)]="designation.name"
-                  [placeholder]="'web.code-system-concept-version.designation.multi-language-input.placeholder'"
-                  required></m-input>
+                  [placeholder]="'web.code-system-concept-version.designation.multi-language-input.placeholder'"></m-input>
             </nz-input-group>
             <label *ngIf="viewMode">{{designation.language + ' | ' + designation.name}}</label>
 
             <ng-template #suffixTemplate>
-              <m-button *ngIf="!viewMode && !(designation.language | apply: isRequired: requiredLanguages)"
-                  mDisplay="text"
-                  mShape="circle"
-                  mSize="small"
-                  (click)="removeDesignation(index)">
+              <m-button *ngIf="!viewMode" mDisplay="text" mShape="circle" mSize="small" (click)="removeDesignation(index)">
                 <m-icon mCode="close-circle"></m-icon>
               </m-button>
             </ng-template>
 
-            <twl-value-set-concept-select *ngIf="!viewMode" name="{{index}}-status"
+            <twl-value-set-concept-select *ngIf="!viewMode"
+                name="{{index}}-status"
                 [(ngModel)]="designation.status"
                 valueSet="publication-status"
                 required></twl-value-set-concept-select>
@@ -69,7 +67,11 @@
       </m-form-item>
 
       <m-form-item mName="designationModalCaseSignificance" mLabel="entities.designation.case-significance" required>
-        <nz-radio-group *ngIf="!viewMode" name="designationModalCaseSignificance" [(ngModel)]="designationGroup.caseSignificance" [disabled]="!!viewMode" required>
+        <nz-radio-group *ngIf="!viewMode"
+            name="designationModalCaseSignificance"
+            [(ngModel)]="designationGroup.caseSignificance"
+            [disabled]="!!viewMode"
+            required>
           <label nz-radio nzValue="ci">{{'web.case-sensitive-options.ci' | translate}}</label>
           <label nz-radio nzValue="cs">{{'web.case-sensitive-options.cs' | translate}}</label>
           <label nz-radio nzValue="ics">{{'web.case-sensitive-options.ics' | translate}}</label>

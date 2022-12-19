@@ -2,7 +2,7 @@ import {Component, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChild
 import {Designation, EntityProperty} from 'lib/src/resources';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {NgForm} from '@angular/forms';
-import {BooleanInput, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {CodeSystemDesignationGroupEditComponent} from './code-system-designation-group-edit.component';
 
 @Component({
@@ -13,7 +13,7 @@ export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public designations?: Designation[];
   @Input() public codeSystemId?: string;
-  @Input() public requiredLanguages?: string[];
+  @Input() public supportedLangs?: string[];
 
   @ViewChild("modalForm") public modalForm?: NgForm;
   @ViewChildren(CodeSystemDesignationGroupEditComponent) public designationForms?: QueryList<CodeSystemDesignationGroupEditComponent>;
@@ -54,12 +54,26 @@ export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {
     designations.forEach(d => {
       this.addDesignationToMap(d);
     });
+    this.designationGroups.forEach(g => {
+      this.supportedLangs?.forEach(lang => {
+        let designation = g.designations?.find(d => d.language === lang);
+        if (!designation) {
+          designation = {
+            language: lang,
+            designationTypeId: g.designationTypeId,
+            designationKind: g.designationKind,
+            caseSignificance: g.caseSignificance,
+            status: 'draft'};
+          g.designations?.push(designation);
+        }
+      });
+    });
   }
 
   public convertFromDesignationMap(): Designation[] {
     let designations: Designation[] = [];
     this.designationGroups.forEach(g => {
-      g.designations?.forEach(d => {
+      g.designations?.filter(d => isDefined(d.name)).forEach(d => {
         d.designationTypeId = g.designationTypeId;
         d.caseSignificance = g.caseSignificance;
         d.designationKind = g.designationKind;
@@ -78,7 +92,14 @@ export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {
 
   public confirmModal(): void {
     if (validateForm(this.modalForm)) {
-      this.addDesignationToMap(this.modalData!.designation);
+      const designations = (this.supportedLangs || ['en']).map(lang => {
+        const designation = copyDeep(this.modalData!.designation);
+        designation.language = lang;
+        return designation;
+      });
+      designations.forEach(d => {
+        this.addDesignationToMap(d);
+      });
       this.newModal();
     }
   }
@@ -86,7 +107,7 @@ export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {
   public newModal(): void {
     this.modalData = {
       visible: false,
-      designation: new Designation()
+      designation: {designationKind: 'text', status: 'draft', caseSignificance: 'ci'}
     };
   }
 

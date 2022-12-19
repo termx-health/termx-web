@@ -92,7 +92,7 @@
       <twa-code-system-designation-edit #designationEdit
           [codeSystemId]="codeSystemId"
           [designations]="conceptVersion?.designations"
-          [requiredLanguages]="['en']"
+          [supportedLangs]="codeSystem?.supportedLanguages"
           [viewMode]="conceptVersion?.status !== 'draft'"></twa-code-system-designation-edit>
     </m-card>
 

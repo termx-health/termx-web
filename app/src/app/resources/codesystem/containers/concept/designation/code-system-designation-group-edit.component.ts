@@ -15,7 +15,7 @@ export class CodeSystemDesignationGroupEditComponent {
     caseSignificance: string,
     designations?: Designation[]
   };
-  @Input() public requiredLanguages?: string[];
+  @Input() public supportedLangs?: string[];
   @Input() public entityProperties?: EntityProperty[];
 
   @ViewChild("form") public form?: NgForm;
@@ -39,15 +39,11 @@ export class CodeSystemDesignationGroupEditComponent {
     this.designationGroup!.designations = [...this.designationGroup!.designations || []];
   }
 
-  public requiredFirst = (designations: Designation[], requiredLanguages: string[]): Designation[] => {
+  public supportedFirst = (designations: Designation[], requiredLanguages: string[]): Designation[] => {
     return designations.sort(d => d.language && requiredLanguages?.includes(d.language) ? -1 : 1);
   };
 
   public getPropertyName = (id: number, properties: EntityProperty[]): string | number => {
     return properties?.find(p => p.id === id)?.name || id;
-  };
-
-  public isRequired = (lang: string, requiredLanguages: string[]): boolean => {
-    return isDefined(requiredLanguages) && requiredLanguages.includes(lang);
   };
 }
