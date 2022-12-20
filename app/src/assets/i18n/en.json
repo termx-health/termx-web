@@ -430,6 +430,7 @@
         "orphanet": "Orphanet",
         "atc": "ATC",
         "icd-10": "ICD-10",
+        "ichi": "ICHI",
         "fhir": "FHIR"
       },
       "fhir": {
@@ -497,6 +498,7 @@
       "import": {
         "atc": "ATC {{edition}} import",
         "icd-10": "ICD-10 {{edition}} import",
+        "ichi": "ICHI {{edition}} import",
         "orphanet": "Rare diseases",
         "uri": "Uri",
         "source-url": "Source URL",

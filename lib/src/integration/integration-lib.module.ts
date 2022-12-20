@@ -14,6 +14,7 @@ import {SharedModule} from '../../../app/src/app/core/shared/shared.module';
 import {ChefService} from './chef/services/chef.service';
 import {FhirToFshPipe} from './chef/pipe/fhir-to-fsh-pipe';
 import {FshToFhirPipe} from './chef/pipe/fsh-to-fhir-pipe';
+import {IntegrationIchiLibService} from './ichi/service/integration-ichi-lib.service';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import {FshToFhirPipe} from './chef/pipe/fsh-to-fhir-pipe';
     IntegrationAtcLibService,
     IntegrationIcdLibService,
     IntegrationOrphanetLibService,
+    IntegrationIchiLibService,
     SnomedLibService,
     ChefService
   ],

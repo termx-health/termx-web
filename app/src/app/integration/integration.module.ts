@@ -23,6 +23,7 @@ import {SnomedDashboardComponent} from './snomed/snomed-dashboard.component';
 import {SnomedConceptInfoComponent} from './snomed/snomed-concept-info.component';
 import {OrphanetImportComponent} from './import/orphanet/orphanet-import-component';
 import {GithubExportComponent} from './github/github-export.component';
+import {IntegrationIchiImportComponent} from './import/ichi/integration-ichi-import.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -38,6 +39,7 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent, data: {privilege: ['*.MapSet.edit']}},
       {path: 'atc/import', component: IntegrationAtcImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'icd-10/import', component: IntegrationIcdImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
+      {path: 'ichi/import', component: IntegrationIchiImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'orphanet/import', component: OrphanetImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.edit']}}
@@ -71,6 +73,7 @@ export const INTEGRATION_ROUTES: Routes = [
     FhirConceptMapClosureComponent,
     IntegrationAtcImportComponent,
     IntegrationIcdImportComponent,
+    IntegrationIchiImportComponent,
     CodeSystemFileImportComponent,
     ConceptMapFileImportComponent,
     OrphanetImportComponent,

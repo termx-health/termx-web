@@ -52,6 +52,13 @@
           {{'web.integration.import.icd-10' | translate: ({edition: 'est'})}}</m-button>
       </div>
 
+      <m-divider [mText]="'web.integration.systems.ichi' | translate" *twaPrivileged="'*.CodeSystem.edit'"></m-divider>
+      <div style="display: grid" *twaPrivileged="'*.CodeSystem.edit'">
+        <m-button mDisplay="link" [routerLink]="'./ichi/import'">
+          {{'web.integration.import.ichi' | translate: ({edition: 'uz'})}}
+        </m-button>
+      </div>
+
       <m-divider [mText]="'web.integration.systems.orphanet' | translate" *twaPrivileged="'*.CodeSystem.edit'"></m-divider>
       <div style="display: grid" *twaPrivileged="'*.CodeSystem.edit'">
         <m-button mDisplay="link" [routerLink]="'./orphanet/import'">{{'web.integration.import.orphanet' | translate}}</m-button>

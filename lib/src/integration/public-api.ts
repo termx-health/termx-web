@@ -9,6 +9,7 @@ export * from './chef/pipe/fhir-to-fsh-pipe';
 export * from './chef/pipe/fsh-to-fhir-pipe';
 export * from './chef/services/chef.service';
 export * from './icd-10/service/integration-icd-lib.service';
+export * from './ichi/service/integration-ichi-lib.service';
 export * from './snomed/containers/snomed-search.component';
 export * from './snomed/services/snomed-lib.service';
 export * from './snomed/model/concept/snomed-concept';

@@ -94,4 +94,17 @@ export class IntegrationImportConfiguration {
       codeSystemDescription: '',
     };
   }
+
+  public static getIchiConfigurations(): IntegrationImportConfiguration {
+    return {
+      sourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/ICHI_classifier_20210721_ver1.0_uzb_latin.csv',
+      uri: 'http://tx.hl7.ee/CodeSystem/ichi-uz',
+      source: 'World Health organization',
+      version: '2021-07',
+      validFrom: new Date(),
+      codeSystem: 'ichi-uz',
+      codeSystemName: {'en': 'International Classification of Health Interventions'},
+      codeSystemDescription: 'The International Classification of Health Interventions (ICHI) is a common tool for reporting and analysing health interventions for clinical and statistical purposes.',
+    };
+  }
 }
