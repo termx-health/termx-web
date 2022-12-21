@@ -1,7 +1,7 @@
 <div nz-row nzJustify="center">
   <div nz-col [nzLg]="18" [nzXs]="24">
     <m-spinner [mLoading]="loading['save']">
-      <m-card [mShowSkeleton]="loading['init']" autofocus>
+      <m-card *ngIf="codeSystem" [mShowSkeleton]="loading['init']" autofocus>
         <div *m-card-header>
           <div class="m-items-between">
             <label class="m-card-title">{{('web.code-system.form.header' | translate) + ' ' +  codeSystemId}}</label>
@@ -27,7 +27,7 @@
             {{codeSystem.description}}
           </m-form-item>
         </div>
-        <twa-code-system-concepts-list [codeSystemId]="codeSystemId"
+        <twa-code-system-concepts-list [dev]="true" [codeSystemId]="codeSystemId"
             [codeSystemVersions]="codeSystem.versions"
             [properties]="codeSystem.properties"></twa-code-system-concepts-list>
       </m-card>

@@ -112,7 +112,7 @@
   </div>
 </div>
 <div nz-row [nzGutter]="12" nzJustify="center" class="m-row" style="margin-top: 1rem">
-  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
+  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" style="height: min-content" *ngIf="concept?.id && concept?.versions">
     <twa-code-system-concept-relations [concept]="concept"></twa-code-system-concept-relations>
   </div>
 </div>

@@ -41,6 +41,8 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent},
+  {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
 
   {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},

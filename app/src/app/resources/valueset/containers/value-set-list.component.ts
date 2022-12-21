@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ValueSetService} from '../services/value-set.service';
-import {copyDeep, SearchResult} from '@kodality-web/core-util';
+import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemVersion, ValueSet, ValueSetSearchParams} from 'terminology-lib/resources';
 import {TranslateService} from '@ngx-translate/core';
-import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
+import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, tap} from 'rxjs';
 
 
 @Component({
@@ -11,22 +11,32 @@ import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switc
   templateUrl: 'value-set-list.component.html',
 })
 export class ValueSetListComponent implements OnInit {
+  protected readonly STORE_KEY = 'value-set-list';
+
   public searchResult: SearchResult<ValueSet> = SearchResult.empty();
   public query = new ValueSetSearchParams();
   public loading = false;
-  public searchInput: string = "";
+  public searchInput?: string;
   public searchUpdate = new Subject<string>();
 
   public constructor(
     private valueSetService: ValueSetService,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private stateStore: ComponentStateStore,
   ) {}
 
   public ngOnInit(): void {
+    const state = this.stateStore.pop(this.STORE_KEY);
+    if (state) {
+      this.query = Object.assign(new QueryParams(), state.query);
+      this.searchInput = this.query.textContains;
+    }
+
     this.loadData();
     this.searchUpdate.pipe(
       debounceTime(250),
       distinctUntilChanged(),
+      tap(() => this.query.offset = 0),
       switchMap(() => this.search()),
     ).subscribe(data => this.searchResult = data);
   }
@@ -36,6 +46,8 @@ export class ValueSetListComponent implements OnInit {
     q.lang = this.translateService.currentLang;
     q.decorated = true;
     q.textContains = this.searchInput || undefined;
+    this.stateStore.put(this.STORE_KEY, {query: q});
+
     this.loading = true;
     return this.valueSetService.search(q).pipe(finalize(() => this.loading = false));
   }

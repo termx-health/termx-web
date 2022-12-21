@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CodeSystemConcept, CodeSystemVersion, ConceptSearchParams, EntityProperty} from 'terminology-lib/resources';
 import {debounceTime, finalize, Observable, of, Subject, switchMap} from 'rxjs';
-import {BooleanInput, copyDeep, SearchResult} from '@kodality-web/core-util';
+import {BooleanInput, compareValues, copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {NzTreeNodeOptions} from 'ng-zorro-antd/core/tree/nz-tree-base-node';
 import {Router} from '@angular/router';
@@ -11,6 +11,7 @@ import {Router} from '@angular/router';
   templateUrl: './code-system-concepts-list.component.html',
 })
 export class CodeSystemConceptsListComponent implements OnInit {
+  @Input() public dev: boolean = false;
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public codeSystemId?: string;
   @Input() public codeSystemVersions?: CodeSystemVersion[];
@@ -109,11 +110,14 @@ export class CodeSystemConceptsListComponent implements OnInit {
   }
 
   public openConcept(code?: any): void {
+    const lastVersionCode = this.dev && this.findLastVersionCode();
     if (!code) {
-      this.router.navigate(['resources/code-systems', this.codeSystemId, 'concepts', 'add']);
+      const path = 'resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/add') : '/concepts/add');
+      this.router.navigate([path]);
       return;
     }
-    this.router.navigate(['resources/code-systems', this.codeSystemId,'concepts', code, !this.viewMode? 'edit' : 'view']);
+    const path = 'resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/') : '/concepts/') + code + (!this.viewMode? '/edit' : '/view');
+    this.router.navigate([path]);
   }
 
   private expandTree(): void {
@@ -131,5 +135,9 @@ export class CodeSystemConceptsListComponent implements OnInit {
         this.groupConcepts(this.group.association);
       }
     });
+  }
+
+  private findLastVersionCode(): string | undefined {
+    return this.codeSystemVersions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.releaseDate, b.releaseDate))?.[0]?.version;
   }
 }

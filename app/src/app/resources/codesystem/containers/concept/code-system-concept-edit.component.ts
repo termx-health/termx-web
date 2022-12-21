@@ -4,7 +4,7 @@ import {NgForm} from '@angular/forms';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {validateForm} from '@kodality-web/core-util';
+import {compareDates, validateForm} from '@kodality-web/core-util';
 import {CodeSystemDesignationEditComponent} from './designation/code-system-designation-edit.component';
 import {CodeSystemPropertyValueEditComponent} from './propertyvalue/code-system-property-value-edit.component';
 import {CodeSystemAssociationEditComponent} from './association/code-system-association-edit.component';
@@ -15,6 +15,7 @@ import {CodeSystemAssociationEditComponent} from './association/code-system-asso
 export class CodeSystemConceptEditComponent implements OnInit {
   public codeSystemId?: string | null;
   public conceptCode?: string | null;
+  public versionCode?: string | null;
   public codeSystem?: CodeSystem;
   public concept?: CodeSystemConcept;
   public conceptVersion?: CodeSystemEntityVersion;
@@ -43,6 +44,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.conceptCode = this.route.snapshot.paramMap.get('conceptCode');
+    this.versionCode = this.route.snapshot.paramMap.get('versionCode');
     this.mode = this.codeSystemId && this.conceptCode ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
@@ -70,7 +72,14 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.concept!.versions = [...(this.concept!.versions || [])?.filter(v => v.id !== this.conceptVersion!.id), this.conceptVersion!];
     this.concept!.versions.forEach(v => v.code = this.concept!.code);
     this.codeSystemService.saveConcept(this.codeSystemId!, this.concept!, true)
-      .subscribe(() => this.location.back())
+      .subscribe(concept => {
+        const version = !!this.versionCode && concept.versions?.find(v => compareDates(new Date(v.created!), new Date(this.conceptVersion!.created!)) === 0)?.id;
+        if (version) {
+          this.codeSystemService.linkEntityVersion(this.codeSystemId!, this.versionCode!, version).subscribe(() => this.location.back());
+          return;
+        }
+        this.location.back();
+      })
       .add(() => this.loading['save'] = false);
   }
 
