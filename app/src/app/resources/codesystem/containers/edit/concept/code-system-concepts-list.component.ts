@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CodeSystemConcept, CodeSystemVersion, ConceptSearchParams, EntityProperty} from 'terminology-lib/resources';
+import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptSearchParams, EntityProperty} from 'terminology-lib/resources';
 import {debounceTime, finalize, Observable, of, Subject, switchMap} from 'rxjs';
-import {BooleanInput, compareValues, copyDeep, SearchResult} from '@kodality-web/core-util';
+import {BooleanInput, compareDates, compareValues, copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {NzTreeNodeOptions} from 'ng-zorro-antd/core/tree/nz-tree-base-node';
 import {Router} from '@angular/router';
@@ -139,5 +139,11 @@ export class CodeSystemConceptsListComponent implements OnInit {
 
   private findLastVersionCode(): string | undefined {
     return this.codeSystemVersions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.releaseDate, b.releaseDate))?.[0]?.version;
+  }
+
+  public findLastVersion(versions: CodeSystemEntityVersion[]): CodeSystemEntityVersion | undefined {
+    return versions
+      .filter(v => ['draft', 'active'].includes(v.status!))
+      .sort((a, b) =>  new Date(a.created!) > new Date(b.created!) ? -1 : new Date(a.created!) > new Date(b.created!) ? 1 : 0)?.[0];
   }
 }

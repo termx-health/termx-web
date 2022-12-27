@@ -98,44 +98,31 @@
 
   <m-backend-table *ngIf="!group.open" [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading" mSize="small">
     <tr *mTableHead>
-      <th></th>
       <th>{{'entities.code-system-concept.code' | translate}}</th>
-      <th>{{'entities.designation.name' | translate}}</th>
+      <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
+      <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
       <th>{{'entities.code-system-concept.description' | translate}}</th>
       <th>{{'web.code-system-concept.list.external' | translate}}</th>
     </tr>
     <tr *mTableRow="let concept">
-      <td m-table-expand [mItem]="concept"></td>
       <td><a (click)="openConcept(concept.code)">{{concept.code}}</a></td>
-      <td>
-        <ng-container *ngFor="let language of filter.languages">
-          <div *ngIf="getConceptName(concept, language)">
-            {{concept | apply: getConceptName: language}}
-            <br>
-          </div>
-        </ng-container>
-        {{(!filter.languages || filter.languages?.length === 0) ? (concept.code | localizedConceptName: {codeSystem: codeSystemId} | async) : undefined}}
+      <td style="width: 40%">
+        <div *ngFor="let designation of (concept.versions | apply:findLastVersion)?.designations" style="display: flex">
+          <label class="m-bold" style="flex: 1">{{designation.language}}</label>
+          <label style="flex: 4">{{designation.name}}</label>
+        </div>
+      </td>
+      <td style="width: 30%">
+        <div *ngFor="let property of (concept.versions | apply:findLastVersion)?.propertyValues" style="display: flex">
+          <label class="m-bold" style="flex: 1">{{property.entityProperty}}</label>
+          <label style="flex: 1">{{property.value | json}}</label>
+        </div>
       </td>
       <td>{{concept.description}}</td>
       <td>
         <m-icon mCode="check" *ngIf="concept.codeSystem !== codeSystemId"></m-icon>
       </td>
     </tr>
-
-    <ng-container *mTableRowExpand="let concept">
-      <ng-container *ngFor="let version of concept.versions">
-        <tr *ngIf="version.status === 'active'" class="m-table-expanded-row">
-          <td colspan="100%">
-            <div class="m-bold">
-              {{'web.code-system-concept.list.concept-version-id' | translate: ({versionId: version.id})}}
-            </div>
-            <div *ngFor="let designation of version.designations">
-              {{designation.name}} ({{designation.language}})
-            </div>
-          </td>
-        </tr>
-      </ng-container>
-    </ng-container>
 
     <tr *mTableNoData>
       <td colspan="100%">

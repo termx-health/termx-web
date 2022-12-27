@@ -227,7 +227,6 @@
       },
       "list": {
         "external": "External",
-        "concept-version-id": "Concept version ID: {{versionId}}"
       }
     },
     "code-system-concept-version": {
