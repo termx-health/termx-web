@@ -226,7 +226,7 @@
         "type": "Type"
       },
       "list": {
-        "external": "External",
+        "external": "External"
       }
     },
     "code-system-concept-version": {
