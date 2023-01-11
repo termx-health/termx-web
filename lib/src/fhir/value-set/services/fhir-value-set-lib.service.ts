@@ -15,8 +15,8 @@ export class FhirValueSetLibService {
     this.baseUrl = `${api}/fhir/ValueSet`;
   }
 
-  public loadValueSet(id: number): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${id}`);
+  public loadValueSet(id: string, version?: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`, {params: SearchHttpParams.build({version: version})});
   }
 
   public expand(params: FhirValueSetExpandParams): Observable<any> {

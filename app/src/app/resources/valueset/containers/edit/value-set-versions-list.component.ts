@@ -52,8 +52,8 @@ export class ValueSetVersionsListComponent implements OnChanges {
     this.valueSetService.saveVersionAsDraft(version.valueSet!, version.version!).subscribe(() => version.status = 'draft').add(() => this.loading = false);
   }
 
-  public exportFhirFormatVersion(id: number, type: 'json' | 'xml'): void {
-    this.integrationFhirLibService.loadValueSet(id).subscribe(fhirVs => {
+  public exportFhirFormatVersion(id: string, version: string, type: 'json' | 'xml'): void {
+    this.integrationFhirLibService.loadValueSet(id, version).subscribe(fhirVs => {
       const json = JSON.stringify(fhirVs, null, 2);
       const xml = new Fhir().jsonToXml(json);
       saveAs(new Blob([type === 'json' ? json : xml], {type: 'application/' + type}), `${fhirVs.id}.${type}`);

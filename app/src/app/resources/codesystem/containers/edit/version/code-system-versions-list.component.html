@@ -39,10 +39,10 @@
           <a *mDropdownItemIf="!viewMode" (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId, sourceCodeSystem: codeSystemId, sourceVersion: version})">
             {{'core.btn.duplicate' | translate}}
           </a>
-          <a *m-dropdown-item (click)="exportFhirFormatVersion(version.id, 'json')">
+          <a *m-dropdown-item (click)="exportFhirFormatVersion(codeSystemId, version.version, 'json')">
             {{'web.code-system.form.versions.list.export-fhir-json' | translate}}
           </a>
-          <a *m-dropdown-item (click)="exportFhirFormatVersion(version.id, 'xml')">
+          <a *m-dropdown-item (click)="exportFhirFormatVersion(codeSystemId, version.version, 'xml')">
             {{'web.code-system.form.versions.list.export-fhir-xml' | translate}}
           </a>
           <a *mDropdownItemIf="version.status !== 'retired' && !viewMode" (click)="retireVersion(version)">
