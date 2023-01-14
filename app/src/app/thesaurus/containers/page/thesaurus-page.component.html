@@ -17,7 +17,7 @@
               <ng-container *ngFor="let content of (pageContents | apply: filterContents: pageContent?.lang)">
                 <a *m-dropdown-item (click)="openContent(content)">{{content.lang | apply: flagIcon}} {{content.name}}</a>
               </ng-container>
-              <ng-container *ngFor="let lang of ['en', 'et', 'ru'] | apply: filterLanguages: pageContent?.lang: pageContents">
+              <ng-container *ngFor="let lang of ['en', 'et'] | apply: filterLanguages: pageContent?.lang: pageContents">
                 <a *m-dropdown-item (click)="openContentModal(lang)">{{lang | apply: flagIcon}}</a>
               </ng-container>
             </m-dropdown>

@@ -44,7 +44,7 @@
           <label *ngIf="node.definition" style="color: grey">{{ node.definition }}</label>
           <label *ngIf="node.binding" style="color: grey">
             {{'web.structure-definition.view.binding' | translate}}:
-            <a [href]="node.binding">{{node.binding.valueSet | apply:lastWordFromUrl}}</a>
+            <a [href]="node.binding.valueSet" target="_blank">{{node.binding.valueSet | apply:lastWordFromUrl}}</a>
             ({{node.binding.strength}})
           </label>
           <label *ngIf="node.fixedUri" style="color: grey">

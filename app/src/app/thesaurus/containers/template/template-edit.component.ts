@@ -32,7 +32,7 @@ export class TemplateEditComponent implements OnInit {
     if (this.mode === 'add') {
       this.template = new Template();
       this.template.contentType = 'markdown';
-      this.template.contents = [{lang: 'en'}, {lang: 'et'}, {lang: 'ru'}];
+      this.template.contents = [{lang: 'en'}, {lang: 'et'}];
     }
 
     if (this.mode === 'edit') {
