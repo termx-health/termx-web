@@ -12,7 +12,6 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
       min-height: 80px;
       border: 1px solid #d2d2d2;
       border-radius: 5px;
-      white-space: pre;
       &:before {
         content: attr(placeholder);
         display: block;
