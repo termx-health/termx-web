@@ -59,9 +59,9 @@
     {{'web.value-set-version-rule.form.concept.modal-header' | translate}}
   </ng-container>
 
-  <ng-container *m-modal-content>
+  <ng-container *m-modal-content [ngSwitch]="codeSystem">
     <form #form="ngForm" *ngIf="modalData.concept">
-      <ng-container *ngIf="codeSystem !== 'snomed-ct'">
+      <ng-container *ngSwitchDefault>
         <m-form-item mName="concept" mLabel="entities.value-set-version-concept.concept" required>
           <twl-concept-search name="concept"
               [(ngModel)]="modalData.concept.concept"
@@ -71,22 +71,28 @@
               [codeSystemVersionExpirationDateGe]="lockedDate"
               [entityVersionStatus]="inactiveConcepts ? 'active' : inactiveConcepts === false ? 'retired': null "
               autofocus
-              required
-          ></twl-concept-search>
+              required></twl-concept-search>
         </m-form-item>
-
         <m-form-item mName="display" mLabel="entities.value-set-version-concept.display" *ngIf="modalData.concept?.concept?.id">
           <twl-designation-select name="display" [(ngModel)]="modalData.concept.display" [conceptId]="modalData.concept.concept.id"></twl-designation-select>
         </m-form-item>
-
         <m-form-item mName="additionalDesignations" mLabel="entities.value-set-version-concept.additional-designations" *ngIf="modalData.concept?.concept?.id">
-          <twl-designation-select name="additionalDesignations" [(ngModel)]="modalData.concept.additionalDesignations" [conceptId]="modalData.concept.concept.id" multiple></twl-designation-select>
+          <twl-designation-select name="additionalDesignations"
+              [(ngModel)]="modalData.concept.additionalDesignations"
+              [conceptId]="modalData.concept.concept.id"
+              multiple></twl-designation-select>
         </m-form-item>
       </ng-container>
 
-      <ng-container *ngIf="codeSystem === 'snomed-ct'">
+      <ng-container *ngSwitchCase="'snomed-ct'">
         <m-form-item mName="concept" mLabel="entities.value-set-version-concept.concept" required>
           <twl-snomed-search (conceptSelected)="conceptSelected($event)"></twl-snomed-search>
+        </m-form-item>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'ucum'">
+        <m-form-item mName="concept" mLabel="entities.value-set-version-concept.concept" required>
+          <twl-measurement-unit-search name="concept" [(ngModel)]="modalData.measurementUnit" (ngModelChange)="measurementUnitSelected($event)"></twl-measurement-unit-search>
         </m-form-item>
       </ng-container>
     </form>

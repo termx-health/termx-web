@@ -24,6 +24,7 @@ import {ValueSetVersionConceptEditComponent} from './containers/version/concepts
 import {ValueSetRuleEditComponent} from './containers/version/ruleset/rule/value-set-rule-edit.component';
 import {IntegrationLibModule} from 'terminology-lib/integration';
 import {ValueSetConceptListComponent} from './containers/edit/concept/value-set-concept-list.component';
+import {MeasurementUnitLibModule} from 'terminology-lib/measurementunit';
 
 
 export const VALUE_SET_ROUTES: Routes = [
@@ -53,6 +54,7 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
     FinderModule,
     ResourcesLibModule,
     IntegrationLibModule,
+    MeasurementUnitLibModule,
     ContactModule
   ],
   declarations: [
