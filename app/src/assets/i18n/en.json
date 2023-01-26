@@ -122,6 +122,7 @@
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}",
+        "open-fhir": "Open FHIR",
         "duplicate": {
           "header": "Create duplicate code system",
           "source-code-system": "Source code system:",
@@ -298,7 +299,8 @@
         "domain": "Domain",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
-        "versions-version": "Version name: {{version}}"
+        "versions-version": "Version name: {{version}}",
+        "open-fhir": "Open FHIR"
       },
       "form": {
         "add-header": "Create a new value set",

@@ -4,6 +4,7 @@ import {CodeSystem, CodeSystemSearchParams} from 'terminology-lib/resources';
 import {CodeSystemService} from '../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, tap} from 'rxjs';
+import {environment} from '../../../../../environments/environment';
 
 @Component({
   selector: 'twa-code-system-list',
@@ -65,5 +66,9 @@ export class CodeSystemListComponent implements OnInit {
   public deleteCodeSystem(codeSystemId: string): void {
     this.loading = true;
     this.codeSystemService.delete(codeSystemId).subscribe(() => this.loadData()).add(() => this.loading = false);
+  }
+
+  public openFhir(id: string): void {
+    window.open(environment.terminologyApi + '/fhir/CodeSystem/' + id, '_blank');
   }
 }

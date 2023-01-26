@@ -4,6 +4,7 @@ import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodalit
 import {CodeSystemVersion, ValueSet, ValueSetSearchParams} from 'terminology-lib/resources';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, tap} from 'rxjs';
+import {environment} from '../../../../environments/environment';
 
 
 @Component({
@@ -71,5 +72,9 @@ export class ValueSetListComponent implements OnInit {
 
   public deleteValueSet(valueSetId: string): void {
     this.valueSetService.delete(valueSetId).subscribe(() => this.loadData());
+  }
+
+  public openFhir(id: string): void {
+    window.open(environment.terminologyApi + '/fhir/ValueSet/' + id, '_blank');
   }
 }
