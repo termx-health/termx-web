@@ -39,10 +39,6 @@ export class CodeSystemDesignationGroupEditComponent {
     this.designationGroup!.designations = [...this.designationGroup!.designations || []];
   }
 
-  public supportedFirst = (designations: Designation[], requiredLanguages: string[]): Designation[] => {
-    return designations.sort(d => d.language && requiredLanguages?.includes(d.language) ? -1 : 1);
-  };
-
   public getPropertyName = (id: number, properties: EntityProperty[]): string | number => {
     return properties?.find(p => p.id === id)?.name || id;
   };

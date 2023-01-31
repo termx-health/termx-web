@@ -47,9 +47,11 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.versionCode = this.route.snapshot.paramMap.get('versionCode');
     this.mode = this.codeSystemId && this.conceptCode ? 'edit' : 'add';
 
+    if (this.codeSystemId) {
+      this.codeSystemService.load(this.codeSystemId).subscribe(cs => this.codeSystem = cs);
+    }
     if (this.mode === 'edit') {
       this.loadConcept(this.conceptCode!);
-      this.codeSystemService.load(this.codeSystemId!).subscribe(cs => this.codeSystem = cs);
     } else {
       this.concept = new CodeSystemConcept();
       this.addVersion();
