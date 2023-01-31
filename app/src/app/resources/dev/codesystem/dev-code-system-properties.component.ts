@@ -20,6 +20,8 @@ export class DevCodeSystemPropertiesComponent implements OnChanges {
   public defProperties: {[key: string]: {selected: boolean, property: EntityProperty}} = {
     "display": {selected: false, property: {name: "display", type: "string", status: "active"}},
     "definition": {selected: false, property: {name: "definition", type: "string", status: "active"}},
+    "alias": {selected: false, property: {name: "alias", type: "string", status: "active"}},
+    "order": {selected: false, property: {name: "order", type: "integer", status: "active"}},
     "synonym": {selected: false, property: {name: "synonym", type: "code", status: "active"}},
     "is-a": {selected: false, property: {name: "is-a", type: "string", status: "active"}},
     "valid-from": {selected: false, property: {name: "valid-from", type: "dateTime", status: "active"}},
