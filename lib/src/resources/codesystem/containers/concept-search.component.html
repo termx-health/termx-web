@@ -1,11 +1,11 @@
-<m-select
-    icon="search"
+<m-select icon="search"
     placeholder="marina.ui.inputs.search.placeholder"
     [(ngModel)]="value"
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
     [loading]="isLoading"
-    [autoUnselect]="false"
->
-  <m-option *ngFor="let key of (data | keys)" [value]="valueType === 'code' ? data[key]?.code : data[key]?.id" [label]="data[key]?.code"></m-option>
+    [autoUnselect]="false">
+  <m-option *ngFor="let key of (data | keys)"
+      [value]="valueType === 'code' ? data[key]?.code : data[key]?.id"
+      label="{{data[key]?.code}} {{data[key]?.code | localizedConceptName:{codeSystem: codeSystem} | async}}"></m-option>
 </m-select>
