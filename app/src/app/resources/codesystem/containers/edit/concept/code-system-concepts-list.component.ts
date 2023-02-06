@@ -5,6 +5,7 @@ import {BooleanInput, compareDates, compareValues, copyDeep, SearchResult} from 
 import {CodeSystemService} from '../../../services/code-system.service';
 import {NzTreeNodeOptions} from 'ng-zorro-antd/core/tree/nz-tree-base-node';
 import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'twa-code-system-concepts-list',
@@ -29,7 +30,8 @@ export class CodeSystemConceptsListComponent implements OnInit {
 
   public constructor(
     private router: Router,
-    private codeSystemService: CodeSystemService
+    private codeSystemService: CodeSystemService,
+    private translateService: TranslateService
   ) {
     this.query.sort = 'code';
   }
@@ -70,8 +72,8 @@ export class CodeSystemConceptsListComponent implements OnInit {
   }
 
   public getConceptName(concept: CodeSystemConcept, language?: string): string | undefined {
-    const findVersion = concept.versions?.find(version => version.status === 'active');
-    const findDesignation = findVersion?.designations?.find(designation => designation.status === 'active' && (!language || designation.language === language));
+    const findVersion = concept.versions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.created, b.created))?.[0];
+    const findDesignation = findVersion?.designations?.find(designation => ['draft', 'active'].includes(designation.status!) && (!language || designation.language === language));
     return findDesignation?.name;
   }
 
@@ -105,7 +107,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
   }
 
   public mapToNode(c: CodeSystemConcept): NzTreeNodeOptions {
-    const name = this.getConceptName(c);
+    const name = this.getConceptName(c, this.translateService.currentLang);
     return {title: c.code! + (name ? ' - ' + name : ''), key: c.code!, isLeaf: c.leaf};
   }
 
