@@ -45,10 +45,10 @@
     {{'web.value-set-version-rule.form.filter.modal-header' | translate}}
   </ng-container>
 
-  <ng-container *m-modal-content>
+  <ng-container *m-modal-content [ngSwitch]="codeSystem">
     <form #form="ngForm" *ngIf="modalData.filter">
 
-      <ng-container *ngIf="codeSystem !== 'snomed-ct'">
+      <ng-container *ngSwitchDefault>
         <m-form-item mName="property" mLabel="entities.value-set-rule-filter.property.label">
           <m-select name="property" [(ngModel)]="modalData.filter.property" [compareWith]="'id'" autofocus>
             <m-option *ngFor="let property of properties" [label]="property.name" [value]="property"></m-option>
@@ -68,7 +68,7 @@
         </m-form-item>
       </ng-container>
 
-      <ng-container *ngIf="codeSystem === 'snomed-ct'">
+      <ng-container *ngSwitchCase="'snomed-ct'">
         <m-form-item mName="property" mLabel="entities.value-set-rule-filter.property.label">
           <m-select name="property" [(ngModel)]="modalData.filter.property" [compareWith]="'name'" autofocus>
             <m-option [label]="'entities.value-set-rule-filter.property.concept' | translate" [value]="{name: 'concept'}"></m-option>
@@ -80,6 +80,17 @@
             <m-option [label]="'entities.value-set-rule-filter.operator.is-a' | translate" value="is-a" *ngIf="modalData.filter.property?.name === 'concept'"></m-option>
             <m-option [label]="'entities.value-set-rule-filter.operator.in' | translate" value="in" *ngIf="modalData.filter.property?.name === 'concept'"></m-option>
             <m-option [label]="'entities.value-set-rule-filter.operator.equal' | translate" value="=" *ngIf="modalData.filter.property?.name === 'constraint'"></m-option>
+          </m-select>
+        </m-form-item>
+        <m-form-item mName="propertyValue" mLabel="entities.value-set-rule-filter.value">
+          <m-input name="propertyValue" [(ngModel)]="modalData.filter.value"></m-input>
+        </m-form-item>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'ucum'">
+        <m-form-item mName="property" mLabel="entities.value-set-rule-filter.property.label">
+          <m-select name="property" [(ngModel)]="modalData.filter.property" [compareWith]="'name'" autofocus>
+            <m-option [label]="'entities.value-set-rule-filter.property.kind' | translate" [value]="{name: 'kind'}"></m-option>
           </m-select>
         </m-form-item>
         <m-form-item mName="propertyValue" mLabel="entities.value-set-rule-filter.value">
