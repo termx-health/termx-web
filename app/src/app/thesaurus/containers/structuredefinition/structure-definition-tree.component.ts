@@ -46,11 +46,11 @@ export class StructureDefinitionTreeComponent implements OnChanges {
       return undefined;
     }
     return Object.keys(object).filter(key => {
-      const notElement = !['diff', 'snap', 'rootProperties'].includes(key);
+      const notElement = !['diff', 'snap', 'el'].includes(key);
       const correspondsToType = this.type === 'hybrid' || isDefined(object[key][this.type!]) || !isDefined(object[key][this.type === 'diff' ? 'snap' : 'diff']);
       return notElement && correspondsToType;
     }).map(key => {
-      return {name: key, mappings: object[key]['rootProperties']?.mapping, diff: object[key]['diff'], snap: object[key]['snap'], children: this.mapToTreeNode(object[key])};
+      return {name: key, mappings: object[key]['el']?.mapping, diff: object[key]['diff'], snap: object[key]['snap'], children: this.mapToTreeNode(object[key])};
     });
   }
 

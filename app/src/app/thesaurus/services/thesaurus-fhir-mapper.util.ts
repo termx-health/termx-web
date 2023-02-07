@@ -16,7 +16,6 @@ export class ThesaurusFhirMapperUtil {
     } if (structureDefinition.differential) {
       res[structureDefinition!.name!] = ThesaurusFhirMapperUtil.mapDifferential(structureDefinition.differential.element, res[structureDefinition!.name!]);
     }
-    res[structureDefinition!.name]['rootProperties'] = {mapping: structureDefinition.mapping};
     return res;
   }
 
@@ -58,6 +57,8 @@ export class ThesaurusFhirMapperUtil {
       }
       const children = ThesaurusFhirMapperUtil.appendKey(array, el, res[key], type);
       Object.keys(children).forEach(child => res[key][child] = children[child]);
+    } else {
+      res['el'] = el;
     }
     return res;
   }
