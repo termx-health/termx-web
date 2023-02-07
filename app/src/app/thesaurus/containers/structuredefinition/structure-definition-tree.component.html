@@ -54,6 +54,10 @@
           <label *ngIf="node.fixedCoding?.code" style="color: grey">
             {{'web.structure-definition.view.fixed' | translate}}: {{node.fixedCoding.code}} | {{node.fixedCoding.system}}
           </label>
+
+          <label *ngFor="let m of node.mappings" style="color: grey">
+            {{m.identity}}: {{m.map || m.uri}}
+          </label>
         </label>
       </div>
     </div>

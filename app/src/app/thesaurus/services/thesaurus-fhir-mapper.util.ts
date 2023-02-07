@@ -16,6 +16,7 @@ export class ThesaurusFhirMapperUtil {
     } if (structureDefinition.differential) {
       res[structureDefinition!.name!] = ThesaurusFhirMapperUtil.mapDifferential(structureDefinition.differential.element, res[structureDefinition!.name!]);
     }
+    res[structureDefinition!.name]['rootProperties'] = {mapping: structureDefinition.mapping};
     return res;
   }
 

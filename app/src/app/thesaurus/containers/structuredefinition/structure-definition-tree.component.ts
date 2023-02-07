@@ -46,11 +46,11 @@ export class StructureDefinitionTreeComponent implements OnChanges {
       return undefined;
     }
     return Object.keys(object).filter(key => {
-      const notElement = !['diff', 'snap'].includes(key);
+      const notElement = !['diff', 'snap', 'rootProperties'].includes(key);
       const correspondsToType = this.type === 'hybrid' || isDefined(object[key][this.type!]) || !isDefined(object[key][this.type === 'diff' ? 'snap' : 'diff']);
       return notElement && correspondsToType;
     }).map(key => {
-      return {name: key, diff: object[key]['diff'], snap: object[key]['snap'], children: this.mapToTreeNode(object[key])};
+      return {name: key, mappings: object[key]['rootProperties']?.mapping, diff: object[key]['diff'], snap: object[key]['snap'], children: this.mapToTreeNode(object[key])};
     });
   }
 
@@ -102,6 +102,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
       short: node.snap?.short,
       definition: isDefined(node.snap?.definition) && node.snap?.definition !== node.snap?.short ? node.snap?.definition : undefined,
       binding: node.snap?.binding,
+      mappings: node.snap?.mapping || node.mappings,
       level
     });
 
@@ -119,6 +120,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
       short: node.diff?.short,
       definition: isDefined(node.diff?.definition) && node.diff?.definition !== node.diff?.short ? node.diff?.definition : undefined,
       binding: node.diff?.binding,
+      mappings: node.diff?.mapping || node.mappings,
       level
     });
 
@@ -136,6 +138,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
       short: node.diff?.short,
       definition: isDefined(node.diff?.definition) && node.diff?.definition !== node.diff?.short ? node.diff?.definition : undefined,
       binding: node.diff?.binding,
+      mappings: node.diff?.mapping || node.mappings,
       level
     });
 
@@ -171,6 +174,7 @@ interface TreeNode {
   short?: string;
   definition?: string;
   binding?: {valueSet?: string, strength?: string};
+  mappings?: {identity?: string, map?: string};
   element?: Element;
   diff?: Element;
   snap?: Element;
@@ -192,6 +196,7 @@ export class Element {
   public short?: string;
   public definition?: string;
   public binding?: {valueSet?: string, strength?: string};
+  public mapping?: {identity?: string, map?: string};
   public type?: ElementType[];
   public constraint?: ElementConstraint[];
 }
