@@ -126,7 +126,7 @@
       <td>
         <m-dropdown>
           <a *m-dropdown-item (click)="openConcept(null, concept.code)">
-            {{'web.code-system-concept.list.add-child-concept' | translate}}
+            {{'web.code-system-concept.list.add-concept-child' | translate}}
           </a>
         </m-dropdown>
       </td>
@@ -145,7 +145,7 @@
         <span (click)="openConcept(node.key)">{{ node.title }}</span>
         <m-dropdown>
           <a *m-dropdown-item (click)="openConcept(null, node.key)">
-            {{'web.code-system-concept.list.add-child-concept' | translate}}
+            {{'web.code-system-concept.list.add-concept-child' | translate}}
           </a>
         </m-dropdown>
       </div>
