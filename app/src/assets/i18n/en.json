@@ -227,7 +227,8 @@
         "type": "Type"
       },
       "list": {
-        "external": "External"
+        "external": "External",
+        "add-concept-child": "Add concept child"
       }
     },
     "code-system-concept-version": {

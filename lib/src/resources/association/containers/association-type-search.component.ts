@@ -1,6 +1,5 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
-import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {catchError, finalize, map, of, takeUntil} from 'rxjs';
 import {AssociationTypeLibService} from '../services/association-type-lib.service';
 import {AssociationTypeSearchParams} from '../model/association-type-search-params';
 import {AssociationType} from '../model/association-type';
@@ -19,7 +18,6 @@ export class AssociationTypeSearchComponent implements OnInit {
 
   public data: {[code: string]: AssociationType} = {};
   public value?: string;
-  public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any) => x;
@@ -31,33 +29,20 @@ export class AssociationTypeSearchComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      switchMap(text => this.searchTypes(text)),
-    ).subscribe(data => this.data = data);
+    this.loadTypes();
   }
 
-  public onSearch(text: string): void {
-    this.searchUpdate.next(text);
-  }
-
-  private searchTypes(text: string): Observable<{[code: string]: AssociationType}> {
-    if (!text || text.length === 1) {
-      return of(this.data!);
-    }
-
+  private loadTypes(): void {
     const q = new AssociationTypeSearchParams();
-    q.codeContains = text;
     q.limit = 10_000;
 
     this.loading['search'] = true;
-    return this.associationTypeService.search(q).pipe(
+    this.associationTypeService.search(q).pipe(
       takeUntil(this.destroy$),
       map(tr => group(tr.data, t => t.code!)),
       catchError(() => of(this.data!)),
       finalize(() => this.loading['search'] = false)
-    );
+    ).subscribe(data => this.data = data);
   }
 
   private loadAssociationType(code?: string): void {

@@ -19,7 +19,7 @@ export class CodeSystemAssociationEditComponent {
   public constructor() {}
 
   public addAssociation(): void {
-    this.associations = [...this.associations || [], {}];
+    this.associations = [...this.associations || [], {status: 'active'}];
   }
 
   public removeAssociation(index: number): void {

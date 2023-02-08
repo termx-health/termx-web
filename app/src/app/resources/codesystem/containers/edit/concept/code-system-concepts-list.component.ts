@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptSearchParams, EntityProperty} from 'terminology-lib/resources';
 import {debounceTime, finalize, Observable, of, Subject, switchMap} from 'rxjs';
-import {BooleanInput, compareDates, compareValues, copyDeep, SearchResult} from '@kodality-web/core-util';
+import {BooleanInput, compareValues, copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {NzTreeNodeOptions} from 'ng-zorro-antd/core/tree/nz-tree-base-node';
 import {Router} from '@angular/router';
@@ -51,7 +51,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
     }
     const q = copyDeep(this.query);
     q.textContains = this.searchInput;
-     if (this.filter.propertyName && this.filter.propertyValue){
+    if (this.filter.propertyName && this.filter.propertyValue) {
       q.propertyValues = this.filter['propertyName'] + '|' + this.filter['propertyValue'];
     }
     this.loading = true;
@@ -73,7 +73,8 @@ export class CodeSystemConceptsListComponent implements OnInit {
 
   public getConceptName(concept: CodeSystemConcept, language?: string): string | undefined {
     const findVersion = concept.versions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.created, b.created))?.[0];
-    const findDesignation = findVersion?.designations?.find(designation => ['draft', 'active'].includes(designation.status!) && (!language || designation.language === language));
+    const findDesignation = findVersion?.designations?.find(
+      designation => ['draft', 'active'].includes(designation.status!) && (!language || designation.language === language));
     return findDesignation?.name;
   }
 
@@ -111,15 +112,16 @@ export class CodeSystemConceptsListComponent implements OnInit {
     return {title: c.code! + (name ? ' - ' + name : ''), key: c.code!, isLeaf: c.leaf};
   }
 
-  public openConcept(code?: any): void {
+  public openConcept(code?: any, parentCode?: string): void {
     const lastVersionCode = this.dev && this.findLastVersionCode();
     if (!code) {
       const path = 'resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/add') : '/concepts/add');
-      this.router.navigate([path]);
+      this.router.navigate([path], {queryParams: {parent: parentCode}});
       return;
     }
-    const path = 'resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/') : '/concepts/') + code + (!this.viewMode? '/edit' : '/view');
-    this.router.navigate([path]);
+    const path = 'resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/') : '/concepts/') + code +
+      (!this.viewMode ? '/edit' : '/view');
+    this.router.navigate([path], {queryParams: {parent: parentCode}});
   }
 
   private expandTree(): void {
@@ -140,12 +142,13 @@ export class CodeSystemConceptsListComponent implements OnInit {
   }
 
   private findLastVersionCode(): string | undefined {
-    return this.codeSystemVersions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.releaseDate, b.releaseDate))?.[0]?.version;
+    return this.codeSystemVersions?.filter(v => ['draft', 'active'].includes(v.status!))
+      .sort((a, b) => compareValues(a.releaseDate, b.releaseDate))?.[0]?.version;
   }
 
   public findLastVersion(versions: CodeSystemEntityVersion[]): CodeSystemEntityVersion | undefined {
     return versions
       .filter(v => ['draft', 'active'].includes(v.status!))
-      .sort((a, b) =>  new Date(a.created!) > new Date(b.created!) ? -1 : new Date(a.created!) > new Date(b.created!) ? 1 : 0)?.[0];
+      .sort((a, b) => new Date(a.created!) > new Date(b.created!) ? -1 : new Date(a.created!) > new Date(b.created!) ? 1 : 0)?.[0];
   }
 }

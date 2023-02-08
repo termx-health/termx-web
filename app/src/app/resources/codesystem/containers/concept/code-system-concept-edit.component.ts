@@ -4,10 +4,11 @@ import {NgForm} from '@angular/forms';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {compareDates, validateForm} from '@kodality-web/core-util';
+import {compareDates, compareValues, validateForm} from '@kodality-web/core-util';
 import {CodeSystemDesignationEditComponent} from './designation/code-system-designation-edit.component';
 import {CodeSystemPropertyValueEditComponent} from './propertyvalue/code-system-property-value-edit.component';
 import {CodeSystemAssociationEditComponent} from './association/code-system-association-edit.component';
+import {of} from 'rxjs';
 
 @Component({
   templateUrl: './code-system-concept-edit.component.html',
@@ -16,6 +17,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   public codeSystemId?: string | null;
   public conceptCode?: string | null;
   public versionCode?: string | null;
+  public parent?: string | null;
   public codeSystem?: CodeSystem;
   public concept?: CodeSystemConcept;
   public conceptVersion?: CodeSystemEntityVersion;
@@ -45,6 +47,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.conceptCode = this.route.snapshot.paramMap.get('conceptCode');
     this.versionCode = this.route.snapshot.paramMap.get('versionCode');
+    this.parent = this.route.snapshot.queryParamMap.get('parent');
     this.mode = this.codeSystemId && this.conceptCode ? 'edit' : 'add';
 
     if (this.codeSystemId) {
@@ -108,8 +111,21 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   public addVersion(): void {
     const newVersion : CodeSystemEntityVersion = {status: 'draft', associations: [], designations: [], propertyValues: []};
-    this.concept!.versions = [...this.concept!.versions || [], newVersion];
-    this.conceptVersion = newVersion;
+    const parentReq = this.codeSystemId && this.parent ? this.codeSystemService.loadConcept(this.codeSystemId, this.parent) : of(new CodeSystemConcept());
+    parentReq.subscribe(parent => {
+      if (parent?.id) {
+        const designations = this.getLastVersion(parent.versions!)?.designations;
+        designations?.forEach(d => d.id = undefined);
+        const properties = this.getLastVersion(parent.versions!)?.propertyValues;
+        properties?.forEach(p => p.id = undefined);
+        newVersion.designations = designations;
+        newVersion.propertyValues = properties;
+        newVersion.associations = [{associationType: 'is-a', status: 'active', targetCode: parent.code, targetId: this.getLastVersion(parent.versions!).id}];
+      }
+      this.concept!.versions = [...this.concept!.versions || [], newVersion];
+      this.conceptVersion = newVersion;
+    });
+
   }
 
   public removeVersion(index: number): void {
@@ -146,5 +162,9 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.codeSystemService.saveEntityVersionAsDraft(this.codeSystemId!, version.id!).subscribe(() => {
       version.status = 'draft';
     }).add(() => this.loading['draft'] = false);
+  }
+
+  private getLastVersion(versions: CodeSystemEntityVersion[]): CodeSystemEntityVersion {
+    return versions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.created, b.created))?.[0];
   }
 }

@@ -100,6 +100,7 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
   }
 
   public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
-    return this.data[nzValue].code?.includes(_input) || !!this.data[nzValue].designations?.find(d => d.name?.includes(_input));
+    const i = _input?.toLowerCase();
+    return this.data[nzValue].code?.toLowerCase()?.includes(i) || !!this.data[nzValue].designations?.find(d => d.name?.toLowerCase()?.includes(i));
   };
 }

@@ -103,6 +103,7 @@
       <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
       <th>{{'entities.code-system-concept.description' | translate}}</th>
       <th>{{'web.code-system-concept.list.external' | translate}}</th>
+      <th></th>
     </tr>
     <tr *mTableRow="let concept">
       <td><a (click)="openConcept(concept.code)">{{concept.code}}</a></td>
@@ -122,6 +123,13 @@
       <td>
         <m-icon mCode="check" *ngIf="concept.codeSystem !== codeSystemId"></m-icon>
       </td>
+      <td>
+        <m-dropdown>
+          <a *m-dropdown-item (click)="openConcept(null, concept.code)">
+            {{'web.code-system-concept.list.add-child-concept' | translate}}
+          </a>
+        </m-dropdown>
+      </td>
     </tr>
 
     <tr *mTableNoData>
@@ -131,6 +139,16 @@
     </tr>
   </m-backend-table>
 
-  <nz-tree *ngIf="group.open" [nzData]="rootConcepts" nzAsyncData (nzClick)="openConcept($event.node.key)" (nzExpandChange)="loadChildren($event)"></nz-tree>
-
+  <nz-tree *ngIf="group.open" [nzData]="rootConcepts" nzAsyncData (nzExpandChange)="loadChildren($event)" [nzTreeTemplate]="treeTemplate">
+    <ng-template #treeTemplate let-node>
+      <div class="m-items-between">
+        <span (click)="openConcept(node.key)">{{ node.title }}</span>
+        <m-dropdown>
+          <a *m-dropdown-item (click)="openConcept(null, node.key)">
+            {{'\'web.code-system-concept.list.add-child-concept' | translate}}
+          </a>
+        </m-dropdown>
+      </div>
+    </ng-template>
+  </nz-tree>
 </m-card>
