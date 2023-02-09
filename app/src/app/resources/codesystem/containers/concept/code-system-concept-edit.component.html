@@ -88,7 +88,7 @@
         </m-card>
         <m-card style="margin-top: 1rem">
           <twa-code-system-designation-edit #designationEdit
-              [codeSystemId]="codeSystemId"
+              [codeSystemId]="codeSystem?.id"
               [designations]="conceptVersion?.designations"
               [supportedLangs]="codeSystem?.supportedLanguages"
               [viewMode]="conceptVersion?.status !== 'draft'"></twa-code-system-designation-edit>

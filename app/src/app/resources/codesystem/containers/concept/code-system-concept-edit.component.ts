@@ -72,7 +72,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.loading['save'] = true;
 
     this.conceptVersion!.designations = this.designationEdit?.getDesignations();
-    this.conceptVersion!.propertyValues = this.propertyValueEdit?.propertyValues;
+    this.conceptVersion!.propertyValues = this.propertyValueEdit?.getPropertyValues();
     this.conceptVersion!.associations = this.associationEdit?.associations;
     this.concept!.versions = [...(this.concept!.versions || [])?.filter(v => v.id !== this.conceptVersion!.id), this.conceptVersion!];
     this.concept!.versions.forEach(v => v.code = this.concept!.code);

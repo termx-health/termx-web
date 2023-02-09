@@ -1,8 +1,9 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {EntityProperty, EntityPropertyValue} from 'lib/src/resources';
 import {NgForm} from '@angular/forms';
-import {BooleanInput, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
+import {finalize, Observable} from 'rxjs';
 
 @Component({
   selector: 'twa-code-system-property-value-edit',
@@ -24,16 +25,17 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['codeSystemId'] && this.codeSystemId) {
-      this.loadProperties(this.codeSystemId);
+    if ((changes['codeSystemId'] || changes['propertyValues']) && this.codeSystemId && this.propertyValues) {
+      this.loadProperties(this.codeSystemId).subscribe(result => {
+        this.entityProperties = result.data;
+        this.addDefProperties(this.entityProperties);
+      });
     }
   }
 
-  private loadProperties(codeSystem: string): void {
+  private loadProperties(codeSystem: string): Observable<any> {
     this.loading['properties'] = true;
-    this.codeSystemService.searchProperties(codeSystem, {limit: -1})
-      .subscribe(result => this.entityProperties = result.data)
-      .add(() => this.loading['properties'] = false);
+    return this.codeSystemService.searchProperties(codeSystem, {limit: -1}).pipe(finalize(() => this.loading['properties'] = false));
   }
 
   public checkPropertyType = (type: string, propertyValue: EntityPropertyValue): boolean => {
@@ -49,6 +51,10 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
     this.propertyValues = [...this.propertyValues!];
   }
 
+  public getPropertyValues(): EntityPropertyValue[] | undefined {
+    return this.propertyValues?.filter(pv => isDefined(pv.value));
+  }
+
   public valid(): boolean {
     return validateForm(this.form);
   }
@@ -56,4 +62,10 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   public getPropertyName = (id: number, properties: EntityProperty[]): string | number => {
     return properties?.find(p => p.id === id)?.name || id;
   };
+
+  private addDefProperties(entityProperties: EntityProperty[]): void {
+    entityProperties.filter(p => !['display', 'definition', 'alias'].includes(p.name!))
+      .filter(p => !this.propertyValues?.find(pv => pv.entityPropertyId === p.id))
+      .forEach(p => this.propertyValues = [...this.propertyValues || [], {entityPropertyId: p.id}]);
+  }
 }

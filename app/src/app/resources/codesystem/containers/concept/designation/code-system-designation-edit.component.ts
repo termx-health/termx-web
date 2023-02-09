@@ -4,6 +4,7 @@ import {CodeSystemService} from '../../../services/code-system.service';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {CodeSystemDesignationGroupEditComponent} from './code-system-designation-group-edit.component';
+import {finalize, Observable} from 'rxjs';
 
 @Component({
   selector: 'twa-code-system-designation-edit',
@@ -41,16 +42,20 @@ export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['codeSystemId'] && this.codeSystemId) {
-      this.loadProperties(this.codeSystemId);
-    }
-    if (changes['designations'] && this.designations) {
-      this.convertToDesignationGroup(this.designations);
+
+    if ((changes['codeSystemId'] ||changes['designations']) && this.codeSystemId && this.designations) {
+      this.loadProperties(this.codeSystemId).subscribe(result => {
+        this.entityProperties = result.data;
+        this.convertToDesignationGroup(this.designations!, this.entityProperties!);
+      });
     }
   }
 
-  public convertToDesignationGroup(designations: Designation[]): void {
+  public convertToDesignationGroup(designations: Designation[], properties: EntityProperty[]): void {
     this.designationGroups = [];
+    properties.filter(p => ['display', 'definition', 'alias'].includes(p.name!))
+      .filter(p => !designations.find(d => d.designationTypeId === p.id))
+      .forEach(p => designations.push({language: 'en', designationTypeId: p.id, designationKind: 'text', status: 'draft', caseSignificance: 'ci'}));
     designations.forEach(d => {
       this.addDesignationToMap(d);
     });
@@ -83,11 +88,9 @@ export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {
     return designations;
   }
 
-  private loadProperties(codeSystem: string): void {
+  private loadProperties(codeSystem: string): Observable<any> {
     this.loading['properties'] = true;
-    this.codeSystemService.searchProperties(codeSystem, {limit: -1})
-      .subscribe(result => this.entityProperties = result.data)
-      .add(() => this.loading['properties'] = false);
+    return this.codeSystemService.searchProperties(codeSystem, {limit: -1}).pipe(finalize(() => this.loading['properties'] = false));
   }
 
   public confirmModal(): void {
