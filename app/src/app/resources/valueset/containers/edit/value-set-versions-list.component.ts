@@ -5,6 +5,7 @@ import {saveAs} from 'file-saver';
 import {FhirValueSetLibService} from 'terminology-lib/fhir';
 import {BooleanInput} from '@kodality-web/core-util';
 import {Fhir} from 'fhir/fhir';
+import {environment} from '../../../../../environments/environment';
 
 
 @Component({
@@ -64,5 +65,9 @@ export class ValueSetVersionsListComponent implements OnChanges {
     this.integrationFhirLibService.expand({url: uri, valueSetVersion: version}).subscribe(fhirVs => {
       saveAs(new Blob([JSON.stringify(fhirVs, null, 2)], {type: 'application/json'}), `${fhirVs.id}.json`);
     });
+  }
+
+  public openFhir(id: string, version: string): void {
+    window.open(environment.terminologyApi + '/fhir/ValueSet/' + id + '?version=' + version, '_blank');
   }
 }

@@ -155,7 +155,8 @@
             "add-new-version": "Add new version",
             "duplicate-version": "Duplicate version",
             "export-fhir-json": "Export FHIR json",
-            "export-fhir-xml": "Export FHIR xml"
+            "export-fhir-xml": "Export FHIR xml",
+            "open-fhir": "Open FHIR"
           }
         },
         "properties": {
@@ -309,6 +310,7 @@
         "view-header": "View value set",
         "versions": {
           "add-version": "Add version",
+          "open-fhir": "Open FHIR",
           "export-fhir-json": "Export FHIR json",
           "export-fhir-xml": "Export FHIR xml",
           "export-fhir-expansion": "Export FHIR json with expansion"

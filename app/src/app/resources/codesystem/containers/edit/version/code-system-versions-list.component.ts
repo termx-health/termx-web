@@ -5,6 +5,7 @@ import {FhirCodeSystemLibService} from 'terminology-lib/fhir';
 import {saveAs} from 'file-saver';
 import {BooleanInput} from '@kodality-web/core-util';
 import {Fhir} from 'fhir/fhir';
+import {environment} from '../../../../../../environments/environment';
 
 
 @Component({
@@ -53,5 +54,9 @@ export class CodeSystemVersionsListComponent {
       const xml = new Fhir().jsonToXml(json);
       saveAs(new Blob([type === 'json' ? json : xml], {type: 'application/' + type}), `${fhirCs.id}.${type}`);
     });
+  }
+
+  public openFhir(id: string, version: string): void {
+    window.open(environment.terminologyApi + '/fhir/CodeSystem/' + id + '?version=' + version, '_blank');
   }
 }

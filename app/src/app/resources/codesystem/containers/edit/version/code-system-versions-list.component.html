@@ -39,6 +39,10 @@
           <a *mDropdownItemIf="!viewMode" (click)="duplicateModal.toggleModal({targetCodeSystem: codeSystemId, sourceCodeSystem: codeSystemId, sourceVersion: version})">
             {{'core.btn.duplicate' | translate}}
           </a>
+          <m-divider></m-divider>
+          <a *m-dropdown-item (click)="openFhir(codeSystemId, version.version)">
+            {{'web.code-system.form.versions.list.open-fhir' | translate}}
+          </a>
           <a *m-dropdown-item (click)="exportFhirFormatVersion(codeSystemId, version.version, 'json')">
             {{'web.code-system.form.versions.list.export-fhir-json' | translate}}
           </a>
