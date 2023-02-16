@@ -19,6 +19,14 @@ export class FhirValueSetLibService {
     return this.http.get<any>(`${this.baseUrl}/${id}`, {params: SearchHttpParams.build({version: version})});
   }
 
+  public search(params: any): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}`, {params: SearchHttpParams.build(params)});
+  }
+
+  public expandValueSet(id: string, params?: FhirValueSetExpandParams): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}/$expand`, {params: SearchHttpParams.build(params)});
+  }
+
   public expand(params: FhirValueSetExpandParams): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/$expand`, {params: SearchHttpParams.build(params)});
   }

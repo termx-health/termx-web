@@ -1,8 +1,16 @@
-<m-page-layout mTitle="web.app.header" [menu]="menu" (mLangChange)="onLangChange($event)" (mLogout)="logout()">
-  <ng-container *ngIf="!activeRoutePrivileges || (activeRoutePrivileges | twaHasAnyPrivilege); else accessError">
+<ng-container [ngSwitch]="pageType">
+  <ng-container *ngSwitchDefault>
+    <m-page-layout mTitle="web.app.header" [menu]="menu" (mLangChange)="onLangChange($event)" (mLogout)="logout()">
+      <ng-container *ngIf="!activeRoutePrivileges || (activeRoutePrivileges | twaHasAnyPrivilege); else accessError">
+        <router-outlet></router-outlet>
+      </ng-container>
+      <ng-template #accessError>
+        <twa-no-privilege [privileges]="activeRoutePrivileges"></twa-no-privilege>
+      </ng-template>
+    </m-page-layout>
+  </ng-container>
+
+  <ng-container *ngSwitchCase="'fhir'">
     <router-outlet></router-outlet>
   </ng-container>
-  <ng-template #accessError>
-    <twa-no-privilege [privileges]="activeRoutePrivileges"></twa-no-privilege>
-  </ng-template>
-</m-page-layout>
+</ng-container>

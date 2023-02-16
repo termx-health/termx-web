@@ -8,6 +8,7 @@ import {GLOBAL_SEARCH_ROUTES} from './globalsearch/global-search.module';
 import {MEASUREMENT_UNIT_ROUTES} from './measurementunit/measurement-unit.module';
 import {THESAURUS_ROUTES} from './thesaurus/thesaurus.module';
 import {AutoLoginGuard} from './auth/autologin.guard';
+import {FHIR_ROUTES} from './fhir/fhir.module';
 
 const routes: Routes = [
   {path: 'resources', children: RESOURCES_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view', '*.NamingSystem.view', '*.AssociationType.view']}, canActivate: [AutoLoginGuard]},
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'tools', children: TOOLS_ROUTES, canActivate: [AutoLoginGuard]},
   {path: 'thesaurus', children: THESAURUS_ROUTES, data: {privilege: ['*.Thesaurus.view']}, canActivate: [AutoLoginGuard]},
   {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['*.MeasurementUnit.view']}, canActivate: [AutoLoginGuard]},
+  {path: 'fhir', children: FHIR_ROUTES, data: {pageType: 'fhir'}},
   {path: "**", redirectTo: 'resources'},
 ];
 

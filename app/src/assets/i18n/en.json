@@ -372,6 +372,7 @@
     },
     "map-set": {
       "form": {
+        "header": "Map set",
         "add-header": "Create a new map set",
         "edit-header": "Edit map set",
         "view-header": "View map set"
@@ -770,6 +771,8 @@
       "name": "Name",
       "domain": "Domain",
       "description": "Description",
+      "versions": "Versions",
+      "associations": "Associations",
       "source-value-set": "Source value set",
       "target-value-set": "Target value set"
     },

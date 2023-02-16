@@ -35,7 +35,7 @@ import {YupiHttpInterceptor} from './auth/yupi-http-interceptor.service';
 import {ThesaurusModule} from './thesaurus/thesaurus.module';
 import {SmartAuthService} from './auth/smart-auth.service';
 import {SmartHttpInterceptor} from './auth/smart-http-interceptor.service';
-
+import {FhirModule} from './fhir/fhir.module';
 registerLocaleData(et);
 
 
@@ -99,6 +99,7 @@ export function MarinaUiConfigFactory(): MuiConfig {
     AuthLibModule,
     GlobalSearchModule,
     ThesaurusModule,
+    FhirModule,
 
     ToolsModule,
     NoPrivilegeModule,

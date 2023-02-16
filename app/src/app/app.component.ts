@@ -15,6 +15,7 @@ import {AuthService} from './auth/auth.service';
 export class AppComponent implements OnInit {
   public menu: MuiPageMenuItem[] = [];
   public activeRoutePrivileges?: string[];
+  public pageType?: string;
 
   public constructor(
     private router: Router,
@@ -33,6 +34,7 @@ export class AppComponent implements OnInit {
     };
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
       this.activeRoutePrivileges = getLastChild(this.route.snapshot).data['privilege'];
+      this.pageType = getLastChild(this.route.snapshot).data['pageType'];
     });
   }
 
