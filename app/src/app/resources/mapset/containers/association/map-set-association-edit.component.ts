@@ -91,6 +91,6 @@ export class MapSetAssociationEditComponent implements OnInit {
   }
 
   public get isLoading(): boolean {
-    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k])
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
   }
 }

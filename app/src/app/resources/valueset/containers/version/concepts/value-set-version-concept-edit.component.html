@@ -3,7 +3,7 @@
     <m-spinner [mLoading]="isLoading">
       <m-card [mShowSkeleton]="loading['init']">
         <div *m-card-header class="m-items-middle">
-          <div class="m-card-title">{{(mode === 'edit' ? 'web.value-set-version-concept.form.edit-header' : 'web.value-set-version-concept.form.add-header') | translate}}</div>
+          <div class="m-card__title">{{(mode === 'edit' ? 'web.value-set-version-concept.form.edit-header' : 'web.value-set-version-concept.form.add-header') | translate}}</div>
         </div>
 
         <form #form="ngForm" *ngIf="concept">

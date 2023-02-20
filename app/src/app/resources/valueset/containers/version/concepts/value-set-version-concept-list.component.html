@@ -1,6 +1,6 @@
 <m-card class="m-card-inside">
-  <div *m-card-header class="m-items-between">
-    <div class="m-card-title">
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">
       {{'entities.value-set-version.concepts' | translate}}
     </div>
     <twa-add-button *ngIf="!viewMode" [routerLink]="['../concepts/add']">
@@ -8,7 +8,7 @@
     </twa-add-button>
   </div>
 
-  <m-table [mData]="concepts" mHideOnSinglePage>
+  <m-table [mData]="concepts">
     <tr *mTableHead>
       <th>{{'entities.value-set-version-concept.concept' | translate}}</th>
       <th>{{'entities.value-set-version-concept.display' | translate}}</th>

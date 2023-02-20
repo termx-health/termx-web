@@ -8,5 +8,5 @@
     [autoUnselect]="false"
     [filterOption]="filterOption"
 >
-  <m-option *ngFor="let key of data | keys" [value]="data[key]?.id" [label]="data[key]?.id"></m-option>
+  <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.id" [mLabel]="data[key]?.id"></m-option>
 </m-select>

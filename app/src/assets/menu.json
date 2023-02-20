@@ -4,9 +4,14 @@
       "en": "Resources",
       "et": "Ressursid"
     },
-    "icon": "unordered-list",
     "link": "resources?tab=code-systems",
-    "privileges": ["*.CodeSystem.view", "*.ValueSet.view", "*.MapSet.view", "*.NamingSystem.view", "*.AssociationType.view"],
+    "privileges": [
+      "*.CodeSystem.view",
+      "*.ValueSet.view",
+      "*.MapSet.view",
+      "*.NamingSystem.view",
+      "*.AssociationType.view"
+    ],
     "items": [
       {
         "label": {
@@ -14,7 +19,9 @@
           "et": "Koodisüsteemid"
         },
         "link": "resources?tab=code-systems",
-        "privileges": ["*.CodeSystem.view"]
+        "privileges": [
+          "*.CodeSystem.view"
+        ]
       },
       {
         "label": {
@@ -22,7 +29,9 @@
           "et": "Väärtuste kogumid"
         },
         "link": "resources?tab=value-sets",
-        "privileges": ["*.ValueSet.view"]
+        "privileges": [
+          "*.ValueSet.view"
+        ]
       },
       {
         "label": {
@@ -30,21 +39,27 @@
           "et": "Kaardistus kogumid"
         },
         "link": "resources?tab=map-sets",
-        "privileges": ["*.MapSet.view"]
+        "privileges": [
+          "*.MapSet.view"
+        ]
       },
       {
         "label": {
           "en": "Naming systems"
         },
         "link": "resources?tab=naming-systems",
-        "privileges": ["*.NamingSystem.view"]
+        "privileges": [
+          "*.NamingSystem.view"
+        ]
       },
       {
         "label": {
           "en": "Association types"
         },
         "link": "resources?tab=association-types",
-        "privileges": ["*.AssociationType.view"]
+        "privileges": [
+          "*.AssociationType.view"
+        ]
       }
     ]
   },
@@ -53,8 +68,10 @@
       "en": "Developer tools",
       "et": "Arendaja tööriistad"
     },
-    "icon": "tool",
-    "privileges": ["*.CodeSystem.view", "*.MapSet.view"],
+    "privileges": [
+      "*.CodeSystem.view",
+      "*.MapSet.view"
+    ],
     "items": [
       {
         "label": {
@@ -62,7 +79,9 @@
           "et": "Koodisüsteemid"
         },
         "link": "resources/dev/code-systems",
-        "privileges": ["*.CodeSystem.view"]
+        "privileges": [
+          "*.CodeSystem.view"
+        ]
       },
       {
         "label": {
@@ -70,7 +89,9 @@
           "et": "Kaardistus kogumid"
         },
         "link": "resources/dev/map-sets",
-        "privileges": ["*.MapSet.view"]
+        "privileges": [
+          "*.MapSet.view"
+        ]
       }
     ]
   },
@@ -79,8 +100,10 @@
       "en": "CodeSystems",
       "et": "Koodisüsteemid"
     },
-    "icon": "table",
-    "privileges": ["*.Snomed.view", "*.MeasurementUnit.view"],
+    "privileges": [
+      "*.Snomed.view",
+      "*.MeasurementUnit.view"
+    ],
     "items": [
       {
         "label": {
@@ -88,7 +111,9 @@
           "et": "SNOMED CT"
         },
         "link": "integration/snomed",
-        "privileges": ["*.Snomed.view"]
+        "privileges": [
+          "*.Snomed.view"
+        ]
       },
       {
         "label": {
@@ -96,25 +121,43 @@
           "et": "Mõõtühikud"
         },
         "link": "measurement-units",
-        "privileges": ["*.MeasurementUnit.view"]
+        "privileges": [
+          "*.MeasurementUnit.view"
+        ]
       }
     ]
   },
   {
     "label": {
-      "en": "Global search",
-      "et": "Globaalne otsing"
+      "en": "Searches",
+      "et": "Otsingud"
     },
-    "link": "global-search",
-    "icon": "search",
-    "privileges": ["*.CodeSystem.view", "*.ValueSet.view", "*.MapSet.view"]
+    "privileges": [
+      "*.CodeSystem.view",
+      "*.ValueSet.view",
+      "*.MapSet.view"
+    ],
+    "items": [
+      {
+        "label": {
+          "en": "Global search",
+          "et": "Globaalne otsing"
+        },
+        "icon": "search",
+        "link": "global-search",
+        "privileges": [
+          "*.CodeSystem.view",
+          "*.ValueSet.view",
+          "*.MapSet.view"
+        ]
+      }
+    ]
   },
   {
     "label": {
       "en": "Management",
       "et": "Haldus"
     },
-    "icon": "setting",
     "items": [
       {
         "label": {
@@ -123,7 +166,11 @@
         },
         "icon": "interaction",
         "link": "integration",
-        "privileges": ["*.CodeSystem.view", "*.ValueSet.view", "*.MapSet.view"]
+        "privileges": [
+          "*.CodeSystem.view",
+          "*.ValueSet.view",
+          "*.MapSet.view"
+        ]
       },
       {
         "label": {
@@ -132,7 +179,9 @@
         },
         "icon": "key",
         "link": "privileges",
-        "privileges": ["*.Privilege.view"]
+        "privileges": [
+          "*.Privilege.view"
+        ]
       },
       {
         "label": {
@@ -149,8 +198,9 @@
       "en": "Thesaurus",
       "et": "Thesaurus"
     },
-    "icon": "file-search",
-    "privileges": ["*.Thesaurus.view"],
+    "privileges": [
+      "*.Thesaurus.view"
+    ],
     "link": "thesaurus/pages",
     "items": [
       {
@@ -160,7 +210,9 @@
         },
         "icon": "file-search",
         "link": "thesaurus/pages",
-        "privileges": ["*.Thesaurus.view"]
+        "privileges": [
+          "*.Thesaurus.view"
+        ]
       },
       {
         "label": {
@@ -169,7 +221,9 @@
         },
         "icon": "profile",
         "link": "thesaurus/structure-definitions",
-        "privileges": ["*.Thesaurus.view"]
+        "privileges": [
+          "*.Thesaurus.view"
+        ]
       },
       {
         "label": {
@@ -178,7 +232,9 @@
         },
         "icon": "file-text",
         "link": "thesaurus/templates",
-        "privileges": ["*.Thesaurus.view"]
+        "privileges": [
+          "*.Thesaurus.view"
+        ]
       }
     ]
   }

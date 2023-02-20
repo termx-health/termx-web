@@ -1,12 +1,12 @@
 <m-card class="m-card-inside">
-  <div *m-card-header class="m-items-between">
-    <div class="m-card-title">{{'entities.value-set.versions' | translate}}</div>
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">{{'entities.value-set.versions' | translate}}</div>
     <twa-add-button *ngIf="!viewMode" [routerLink]="['../versions/add']">
       {{'web.value-set.form.versions.add-version' | translate}}
     </twa-add-button>
   </div>
 
-  <m-table [mData]="versions" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
+  <m-table [mData]="versions" [mLoading]="loading" mEnablePagination>
     <tr *mTableHead>
       <th>{{'entities.value-set-version.version' | translate}}</th>
       <th>{{'entities.value-set-version.source' | translate}}</th>

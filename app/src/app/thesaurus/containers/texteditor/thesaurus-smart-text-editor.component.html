@@ -12,13 +12,13 @@
       </ng-container>
 
       <ng-container *ngIf="valueType === 'html'">
-        <m-rich-text-editor style="display: grid; width: 100%"
+        <m-quill style="display: grid; width: 100%"
             [(ngModel)]="value"
             (click)="hideDropdown()"
             (keydown)="onKeyDown($event)"
             (keyup)="onKeyUp($event)"
             (blur)="onTouched()"
-            (ngModelChange)="fireOnChange($event)"></m-rich-text-editor>
+            (ngModelChange)="fireOnChange($event)"></m-quill>
       </ng-container>
 
       <m-card *ngIf="showPreview" style="width: 100%; margin-left: 1rem; background: #f7f7f7; box-shadow: none;">

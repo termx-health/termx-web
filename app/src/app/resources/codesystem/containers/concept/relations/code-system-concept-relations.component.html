@@ -1,6 +1,6 @@
 <m-card mTitle="Relations">
   <m-card class="m-card-inside" mTitle="web.code-system-concept.form.value-sets.header" [mShowSkeleton]="loading['value-sets']">
-    <m-table [mData]="relatedValueSets" mHideOnSinglePage>
+    <m-table [mData]="relatedValueSets">
       <tr *mTableHead>
         <th>{{'web.code-system-concept.form.value-sets.value-set' | translate}}</th>
         <th>{{'web.code-system-concept.form.value-sets.definition' | translate}}</th>
@@ -17,7 +17,7 @@
     </m-table>
   </m-card>
   <m-card class="m-card-inside" mTitle="web.code-system-concept.form.map-sets.header" [mShowSkeleton]="loading['map-sets']">
-    <m-table [mData]="relatedMapSets" mHideOnSinglePage>
+    <m-table [mData]="relatedMapSets">
       <tr *mTableHead>
         <th>{{'web.code-system-concept.form.map-sets.map-set' | translate}}</th>
         <th>{{'web.code-system-concept.form.map-sets.direction' | translate}}</th>
@@ -40,7 +40,7 @@
     </m-table>
   </m-card>
   <m-card class="m-card-inside" mTitle="web.code-system-concept.form.thesaurus.header" [mShowSkeleton]="loading['pages']">
-    <m-table [mData]="relatedPages" mHideOnSinglePage>
+    <m-table [mData]="relatedPages">
       <tr *mTableHead>
         <th>{{'web.code-system-concept.form.thesaurus.slug' | translate}}</th>
         <th>{{'web.code-system-concept.form.thesaurus.name' | translate}}</th>

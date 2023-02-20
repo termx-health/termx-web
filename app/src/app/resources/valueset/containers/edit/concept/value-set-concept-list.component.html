@@ -1,12 +1,12 @@
 <m-card class="m-card-inside">
   <div *m-card-header>
-    <div class="m-items-between">
+    <div class="m-justify-between">
       <div class="m-items-middle">
         <m-input [(ngModel)]="searchInput" placeholder="marina.ui.inputs.search.placeholder"></m-input>
       </div>
     </div>
   </div>
-  <m-table [mData]="concepts | apply:filterConcepts:searchInput" mHideOnSinglePage>
+  <m-table [mData]="concepts | apply:filterConcepts:searchInput">
     <tr *mTableHead>
       <th></th>
       <th>{{'entities.value-set-version-concept.concept' | translate}}</th>

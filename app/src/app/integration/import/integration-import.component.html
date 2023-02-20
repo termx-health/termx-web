@@ -1,10 +1,10 @@
 <m-card>
   <m-spinner [mLoading]=loading>
-    <div *m-card-header class="m-items-between">
+    <div *m-card-header class="m-justify-between">
       <nz-breadcrumb>
         <nz-breadcrumb-item *ngFor="let crumb of breadcrumbs">{{crumb | translate: ({edition: edition})}}</nz-breadcrumb-item>
       </nz-breadcrumb>
-      <div class="m-items-between">
+      <div class="m-justify-between">
         <m-button (click)="setDefaultData()" [disabled]="loading">{{'web.integration.set-default-data' | translate}}</m-button>
         <m-button mDisplay="primary"
             [disabled]="!data.sourceUrl || ! data.uri || !data.version || !data.validFrom || !data.codeSystem || !data.codeSystemName"

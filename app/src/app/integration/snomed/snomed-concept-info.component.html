@@ -1,8 +1,8 @@
 <m-card>
 
   <m-card class="m-card-inside">
-    <div *m-card-header class="m-items-between">
-      <div class="m-card-title">
+    <div *m-card-header class="m-justify-between">
+      <div class="m-card__title">
         {{'entities.snomed-concept.concept-id' | translate}}
       </div>
     </div>
@@ -10,12 +10,12 @@
   </m-card>
 
   <m-card class="m-card-inside">
-    <div *m-card-header class="m-items-between">
-      <div class="m-card-title">
+    <div *m-card-header class="m-justify-between">
+      <div class="m-card__title">
         {{'entities.snomed-concept.descriptions' | translate}}
       </div>
     </div>
-    <m-table [mData]="descriptions | keys" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
+    <m-table [mData]="descriptions | keys" [mLoading]="loading" mEnablePagination>
       <tr *mTableHead>
         <th>{{'entities.snomed-description.refset' | translate}}</th>
         <th>{{'entities.snomed-description.concept-id' | translate}}</th>
@@ -41,12 +41,12 @@
   </m-card>
 
   <m-card class="m-card-inside">
-    <div *m-card-header class="m-items-between">
-      <div class="m-card-title">
+    <div *m-card-header class="m-justify-between">
+      <div class="m-card__title">
         {{'entities.snomed-concept.relationships' | translate}}
       </div>
     </div>
-    <m-table [mData]="relationships" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
+    <m-table [mData]="relationships" [mLoading]="loading" mEnablePagination>
       <tr *mTableHead>
         <th>{{'entities.snomed-relationship.type' | translate}}</th>
         <th>{{'entities.snomed-relationship.target' | translate}}</th>
@@ -64,12 +64,12 @@
   </m-card>
 
   <m-card class="m-card-inside">
-    <div *m-card-header class="m-items-between">
-      <div class="m-card-title">
+    <div *m-card-header class="m-justify-between">
+      <div class="m-card__title">
         {{'entities.snomed-concept.refsets' | translate}}
       </div>
     </div>
-    <m-table [mData]="refsets" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
+    <m-table [mData]="refsets" [mLoading]="loading" mEnablePagination>
       <tr *mTableHead>
         <th>{{'entities.snomed-refset.type' | translate}}</th>
         <th>{{'entities.snomed-refset.target' | translate}}</th>

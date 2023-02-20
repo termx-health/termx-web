@@ -1,7 +1,7 @@
 <nz-tabset>
   <nz-tab [nzTitle]="'CSV / TSV' | translate">
     <m-card>
-      <div *m-card-header class="m-items-between">
+      <div *m-card-header class="m-justify-between">
         <nz-breadcrumb>
           <nz-breadcrumb-item>{{'web.integration.file-import.file-import' | translate}}</nz-breadcrumb-item>
           <nz-breadcrumb-item>{{'web.integration.file-import.code-system.import' | translate}}</nz-breadcrumb-item>
@@ -94,10 +94,10 @@
     <m-card mTitle="web.integration.file-import.code-system.source" style="margin-top: 1rem">
       <m-form-item mName="sourceImportType">
         <div class="m-items-middle">
-          <nz-radio-group name="sourceImportType" [(ngModel)]="data.source.type" (ngModelChange)="data.source.file = undefined" required>
-            <label nz-radio-button [nzValue]="'link'">{{'web.integration.file-import.code-system.link' | translate}}</label>
-            <label nz-radio-button [nzValue]="'file'">{{'web.integration.file-import.code-system.file' | translate}}</label>
-          </nz-radio-group>
+          <m-radio-group name="sourceImportType" [(ngModel)]="data.source.type" (ngModelChange)="data.source.file = undefined" required>
+            <ng-template m-radio-button [mValue]="'link'" mLabel="web.integration.file-import.code-system.link"></ng-template>
+            <ng-template m-radio-button [mValue]="'file'" mLabel="web.integration.file-import.code-system.file"></ng-template>
+          </m-radio-group>
 
           <ng-container [ngSwitch]="data.source.type">
             <m-input *ngSwitchCase="'link'" name="sourceImportFile" [(ngModel)]="data.source.file" style="flex: 1" required></m-input>
@@ -107,10 +107,10 @@
       </m-form-item>
 
       <m-form-item mName="sourceImportMode" [mLabel]="'File format'" required>
-        <nz-radio-group name="sourceImportMode" [(ngModel)]="data.source.mode" required>
-          <label nz-radio nzValue="csv">{{'web.integration.file-import.code-system.csv' | translate}}</label>
-          <label nz-radio nzValue="tsv">{{'web.integration.file-import.code-system.tsv' | translate}}</label>
-        </nz-radio-group>
+        <m-radio-group name="sourceImportMode" [(ngModel)]="data.source.mode" required>
+          <ng-template m-radio mValue="csv" mLabel="web.integration.file-import.code-system.csv"></ng-template>
+          <ng-template m-radio mValue="tsv" mLabel="web.integration.file-import.code-system.tsv"></ng-template>
+        </m-radio-group>
       </m-form-item>
 
       <m-button *m-card-footer
@@ -129,8 +129,8 @@
 
       <div style="margin-bottom: 1rem">
         <m-select [(ngModel)]="data.template" (ngModelChange)="applyTemplate()">
-          <m-option [value]="'pub.e-tervis'" [label]="'pub.e-tervis'"></m-option>
-          <m-option [value]="'icf'" [label]="'icf'"></m-option>
+          <m-option [mValue]="'pub.e-tervis'" [mLabel]="'pub.e-tervis'"></m-option>
+          <m-option [mValue]="'icf'" [mLabel]="'icf'"></m-option>
         </m-select>
       </div>
 
@@ -154,9 +154,9 @@
             <!-- Mapped KTS property -->
             <m-select *ngIf="!item['_newProp']" [(ngModel)]="item.propertyName" (ngModelChange)="onPropertyNameChange(item)" style="flex: 1">
               <m-option *ngFor="let prop of data.loadedCodeSystem?.properties | apply: decorateWithDefaultProperties"
-                  [value]="prop.name"
-                  [label]="prop.name"></m-option>
-              <m-select-button label="ADD NEW" (mClick)="item['_newProp'] = true"></m-select-button>
+                  [mValue]="prop.name"
+                  [mLabel]="prop.name"></m-option>
+              <m-select-button mLabel="ADD NEW" (mClick)="item['_newProp'] = true"></m-select-button>
             </m-select>
 
             <m-input *ngIf="item['_newProp']" [(ngModel)]="item.propertyName" style="flex: 1"></m-input>
@@ -182,10 +182,10 @@
           <td>
             <!-- Property format -->
             <m-select [(ngModel)]="item.propertyTypeFormat" *ngIf="item.propertyType === 'dateTime'">
-              <m-option [value]="'yyyy-MM-dd'" [label]="'yyyy-MM-dd'"></m-option>
-              <m-option [value]="'dd.MM.yy'" [label]="'dd.MM.yy'"></m-option>
-              <m-option [value]="'dd.MM.yyyy'" [label]="'dd.MM.yyyy'"></m-option>
-              <m-option [value]="'MM/dd/yyyy'" [label]="'MM/dd/yyyy'"></m-option>
+              <m-option [mValue]="'yyyy-MM-dd'" [mLabel]="'yyyy-MM-dd'"></m-option>
+              <m-option [mValue]="'dd.MM.yy'" [mLabel]="'dd.MM.yy'"></m-option>
+              <m-option [mValue]="'dd.MM.yyyy'" [mLabel]="'dd.MM.yyyy'"></m-option>
+              <m-option [mValue]="'MM/dd/yyyy'" [mLabel]="'MM/dd/yyyy'"></m-option>
             </m-select>
           </td>
 

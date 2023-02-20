@@ -5,5 +5,5 @@
     (mChange)="fireOnChange()"
     [loading]="isLoading"
     [autoUnselect]="false">
-  <m-option *ngFor="let code of data | keys" [value]="code" label="{{code}} - {{data[code].names | localName}}"></m-option>
+  <m-option *ngFor="let code of data | keys" [mValue]="code" mLabel="{{code}} - {{data[code].names | localName}}"></m-option>
 </m-select>

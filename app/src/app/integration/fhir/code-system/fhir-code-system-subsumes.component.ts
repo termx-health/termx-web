@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FhirCodeSystemLibService, FhirCodeSystemSubsumesParams} from 'terminology-lib/fhir';
-import {ClipboardService} from '@kodality-web/core-util';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 
 @Component({
@@ -21,7 +21,7 @@ export class FhirCodeSystemSubsumesComponent {
 
   public constructor(
     private fhirCodeSystemLibService: FhirCodeSystemLibService,
-    private clipboardService: ClipboardService,
+    private clipboardService: Clipboard,
   ) {}
 
   public subsumes(): void {

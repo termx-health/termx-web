@@ -8,17 +8,17 @@
             placeholder="marina.ui.inputs.search.placeholder"
             icon="search"
             required>
-          <m-option *ngFor="let prop of entityProperties" [value]="prop.id" [label]="prop.name"></m-option>
+          <m-option *ngFor="let prop of entityProperties" [mValue]="prop.id" [mLabel]="prop.name"></m-option>
         </m-select>
         <label *ngIf="viewMode">{{designationGroup.designationTypeId | apply:getPropertyName: entityProperties}}</label>
       </m-form-item>
     </div>
     <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
       <m-form-item mName="designationKind" mLabel="entities.designation.designation-kind" required>
-        <nz-radio-group *ngIf="!viewMode" name="designationKind" [(ngModel)]="designationGroup.designationKind" required>
-          <label nz-radio nzValue="text">Text</label>
-          <label nz-radio nzValue="blob">Blob</label>
-        </nz-radio-group>
+        <m-radio-group *ngIf="!viewMode" name="designationKind" [(ngModel)]="designationGroup.designationKind" required>
+          <ng-template m-radio mValue="text" mLabel="Text"></ng-template>
+          <ng-template m-radio mValue="blob" mLabel="Blob"></ng-template>
+        </m-radio-group>
         <label *ngIf="viewMode">{{designationGroup.designationKind}}</label>
       </m-form-item>
 
@@ -67,15 +67,15 @@
       </m-form-item>
 
       <m-form-item mName="designationModalCaseSignificance" mLabel="entities.designation.case-significance" required>
-        <nz-radio-group *ngIf="!viewMode"
+        <m-radio-group *ngIf="!viewMode"
             name="designationModalCaseSignificance"
             [(ngModel)]="designationGroup.caseSignificance"
             [disabled]="!!viewMode"
             required>
-          <label nz-radio nzValue="ci">{{'web.case-sensitive-options.ci' | translate}}</label>
-          <label nz-radio nzValue="cs">{{'web.case-sensitive-options.cs' | translate}}</label>
-          <label nz-radio nzValue="ics">{{'web.case-sensitive-options.ics' | translate}}</label>
-        </nz-radio-group>
+          <ng-template m-radio mValue="ci" mLabel="web.case-sensitive-options.ci"></ng-template>
+          <ng-template m-radio mValue="cs" mLabel="web.case-sensitive-options.cs"></ng-template>
+          <ng-template m-radio mValue="ics" mLabel="web.case-sensitive-options.ics"></ng-template>
+        </m-radio-group>
         <label *ngIf="viewMode">{{'web.case-sensitive-options.' + designationGroup.caseSignificance | translate}}</label>
       </m-form-item>
     </div>

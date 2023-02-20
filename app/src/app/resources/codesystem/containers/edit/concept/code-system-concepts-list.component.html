@@ -1,8 +1,8 @@
 <m-card class="m-card-inside">
   <div *m-card-header>
-    <div class="m-items-between">
+    <div class="m-justify-between">
       <div class="m-items-middle">
-        <label class="m-card-title">{{'entities.code-system.concepts' | translate}}</label>
+        <label class="m-card__title">{{'entities.code-system.concepts' | translate}}</label>
         <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next()" placeholder="marina.ui.inputs.search.placeholder" [disabled]="group.open"></m-input>
         <m-button (click)="filter.open = !filter.open"
             [disabled]="group.open"
@@ -20,14 +20,14 @@
     </div>
 
     <m-card *ngIf="filter.open" mDisplay="bordered" style="margin-top: 1rem">
-      <m-form-row mGutter="12">
+      <m-form-row>
         <div *m-form-col>
           <m-form-item mLabel="web.code-system-concept.filter.version-filter">
             <m-select [(ngModel)]="filter.version"
                 (ngModelChange)="initFilterLanguages(filter.version?.supportedLanguages)"
                 (mChange)="searchUpdate.next()"
                 [placeholder]="'web.code-system-concept.filter.select-version-placeholder' | translate">
-              <m-option *ngFor="let version of codeSystemVersions" [label]="version.version" [value]="version"></m-option>
+              <m-option *ngFor="let version of codeSystemVersions" [mLabel]="version.version" [mValue]="version"></m-option>
             </m-select>
           </m-form-item>
         </div>
@@ -40,8 +40,8 @@
                 multiple
                 [placeholder]="'web.code-system-concept.filter.select-language-placeholder' | translate">
               <m-option *ngFor="let language of filter.version?.supportedLanguages"
-                  [label]="language | localizedConceptName:{valueSet: 'languages'} | async"
-                  [value]="language"></m-option>
+                  [mLabel]="language | localizedConceptName:{valueSet: 'languages'} | async"
+                  [mValue]="language"></m-option>
             </m-select>
           </m-form-item>
         </div>
@@ -52,7 +52,7 @@
                 (ngModelChange)="filter.propertyValue = undefined"
                 [placeholder]="'web.code-system-concept.filter.select-property-placeholder' | translate"
                 (mChange)="searchUpdate.next()">
-              <m-option *ngFor="let property of properties" [label]="property.name" [value]="property.name"></m-option>
+              <m-option *ngFor="let property of properties" [mLabel]="property.name" [mValue]="property.name"></m-option>
             </m-select>
           </m-form-item>
         </div>
@@ -69,12 +69,12 @@
     </m-card>
 
     <m-card *ngIf="group.open" mDisplay="bordered" style="margin-top: 1rem">
-      <m-form-row mGutter="12">
+      <m-form-row>
         <div *m-form-col>
           <m-form-item mLabel="web.code-system-concept.group.type">
             <m-select [(ngModel)]="group.type" (ngModelChange)="group.association = null; group.property = null" name="type">
-              <m-option [label]="'Association'" [value]="'association'"></m-option>
-              <m-option [label]="'Property'" [value]="'property'"></m-option>
+              <m-option [mLabel]="'Association'" [mValue]="'association'"></m-option>
+              <m-option [mLabel]="'Property'" [mValue]="'property'"></m-option>
             </m-select>
           </m-form-item>
         </div>
@@ -88,7 +88,7 @@
           </m-form-item>
           <m-form-item *ngIf="group.type === 'property'" mLabel="web.code-system-concept.group.property">
             <m-select [(ngModel)]="group.property" (ngModelChange)="groupConcepts($event)" name="property">
-              <m-option *ngFor="let property of properties" [label]="property.name" [value]="property.id"></m-option>
+              <m-option *ngFor="let property of properties" [mLabel]="property.name" [mValue]="property.id"></m-option>
             </m-select>
           </m-form-item>
         </div>
@@ -141,7 +141,7 @@
 
   <nz-tree *ngIf="group.open" [nzData]="rootConcepts" nzAsyncData (nzExpandChange)="loadChildren($event)" [nzTreeTemplate]="treeTemplate">
     <ng-template #treeTemplate let-node>
-      <div class="m-items-between">
+      <div class="m-justify-between">
         <span (click)="openConcept(node.key)">{{ node.title }}</span>
         <m-dropdown>
           <a *m-dropdown-item (click)="openConcept(null, node.key)">

@@ -3,7 +3,7 @@
     <m-spinner [mLoading]="isLoading">
       <m-card [mShowSkeleton]="loading['init']">
         <div *m-card-header class="m-items-middle">
-          <div class="m-card-title">{{'web.code-system-version.form.view-header' | translate}}</div>
+          <div class="m-card__title">{{'web.code-system-version.form.view-header' | translate}}</div>
           <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         </div>
 

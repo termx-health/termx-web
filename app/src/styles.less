@@ -1,3 +1,16 @@
+@import '../../node_modules/ng-zorro-antd/ng-zorro-antd.less';
+
+@import '../../node_modules/@kodality-web/marina-ui/mui.styles.less';
+@import '../../node_modules/@kodality-web/marina-ui/src/style/themes/default';
+
+
+@primary-color: #1464C0;
+
+:root {
+  --color-table-header-background: #fafafa;
+  --color-table-header-background--sorter: #f9f9f9;
+}
+
 html {
   font-size: 14px;
 }
@@ -5,23 +18,24 @@ html {
 
 // MUI overrides
 
-.m-card-footer {
-  .m-button-wrapper {
-    width: 100%;
-  }
+.m-card__title,
+.ant-form-item-label > label,
+.m-table td > a {
+  font-weight: bold;
 }
 
-.m-modal-footer {
+
+.m-card__footer .m-button-wrapper {
+  width: 100%;
+}
+
+.m-modal__footer {
   display: flex;
   justify-content: flex-end;
 
   .m-button-wrapper {
     width: initial;
   }
-}
-
-.m-table-wrapper-outlined {
-  border-radius: 4px;
 }
 
 
@@ -37,10 +51,16 @@ html {
   white-space: nowrap;
 }
 
-.tw-button-group {
-  display: flex;
-  align-self: center;
-  gap: 0.5rem;
+
+// NG-zorro overrides
+
+.ant-tree-show-line .ant-tree-switcher {
+  // transparent for the containers with colored background
+  background: transparent;
 }
 
-
+.ant-tabs-tabpane {
+  // allows card to have a box shadow inside of zorro's tab
+  padding: 2px;
+  outline: none;
+}

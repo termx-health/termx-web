@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FhirCodeSystemLibService, FhirParameters} from 'terminology-lib/fhir';
-import {ClipboardService} from '@kodality-web/core-util';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 
 @Component({
@@ -23,7 +23,7 @@ export class FhirCodeSystemFindMatchesComponent {
 
   public constructor(
     private fhirCodeSystemLibService: FhirCodeSystemLibService,
-    private clipboardService: ClipboardService,
+    private clipboardService: Clipboard,
   ) {}
 
   public findMatches(): void {

@@ -28,7 +28,7 @@
 
           <m-form-item mName="kind" mLabel="entities.measurement-unit.kind" required>
             <m-select *ngIf="!newKind" [(ngModel)]="measurementUnit.kind" name="kind" required>
-              <m-option *ngFor="let kind of kinds " [value]="kind" [label]="kind"></m-option>
+              <m-option *ngFor="let kind of kinds " [mValue]="kind" [mLabel]="kind"></m-option>
             </m-select>
             <m-input *ngIf="newKind" [(ngModel)]="measurementUnit.kind" name="kind" required></m-input>
           </m-form-item>

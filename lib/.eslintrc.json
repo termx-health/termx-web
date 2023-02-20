@@ -7,17 +7,13 @@
     {
       "files": ["*.ts"],
       "parserOptions": {
-        "project": ["**/tsconfig.app.json", "**/tsconfig.spec.json"],
+        "project": ["**/tsconfig.app.json"],
         "createDefaultProgram": true
       },
       "rules": {
         "@angular-eslint/directive-selector": ["error", {"type": "attribute", "prefix": "twl", "style": "camelCase"}],
         "@angular-eslint/component-selector": ["error", {"type": "element", "prefix": "twl", "style": "kebab-case"}]
       }
-    },
-    {
-      "files": ["*.html"],
-      "rules": {}
     }
   ]
 }

@@ -17,13 +17,13 @@ import {Template, TemplateLibService} from 'terminology-lib/thesaurus';
         <form #form="ngForm" *ngIf="data">
           <m-form-item mName="template" mLabel="web.thesaurus-page.template-modal.template" required>
             <m-select [(ngModel)]="data.template" compareWith="id" name="template" required>
-              <m-option *ngFor="let template of templates" [label]="template.code" [value]="template"></m-option>
+              <m-option *ngFor="let template of templates" [mLabel]="template.code" [mValue]="template"></m-option>
             </m-select>
           </m-form-item>
         </form>
       </ng-container>
 
-      <div *m-modal-footer class="tw-button-group">
+      <div *m-modal-footer class="m-items-middle">
         <m-button mDisplay="text" (click)="toggleModal(false)">{{'core.btn.close' | translate}}</m-button>
         <m-button mDisplay="primary" (click)="confirm()">{{'core.btn.confirm' | translate}}</m-button>
       </div>

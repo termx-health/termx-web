@@ -1,6 +1,6 @@
 <m-card class="m-card-inside">
-  <div *m-card-header class="m-items-between">
-    <div class="m-card-title">
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">
       {{'web.map-set-association.list.associations' | translate}}
     </div>
     <twa-add-button *ngIf="!viewMode" [routerLink]="['../associations/add']">
@@ -8,7 +8,7 @@
     </twa-add-button>
   </div>
 
-  <m-table [mData]="data | keys" [mLoading]="loading" mHideOnSinglePage mEnablePagination>
+  <m-table [mData]="data | keys" [mLoading]="loading" mEnablePagination>
     <ng-container *mTableHead>
       <tr>
         <th colSpan="2">{{'entities.map-set-association.source' | translate}}</th>

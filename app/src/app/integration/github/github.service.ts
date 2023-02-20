@@ -13,7 +13,7 @@ export class GithubService {
   ) {
   }
 
-  public authenticateApp(state: string) {
+  public authenticateApp(state: string): void {
     this.http.post(`${this.baseUrl}/authorize`, {"state": state}).subscribe((resp: any) => {
       window.location.href = resp.redirectUri;
     });

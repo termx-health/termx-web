@@ -20,11 +20,11 @@ import {TranslateService} from '@ngx-translate/core';
             <m-input [(ngModel)]="data.name" name="linkName" required></m-input>
           </m-form-item>
           <m-form-item mName="type">
-            <nz-radio-group name="type" [(ngModel)]="data.linkType">
-              <label nz-radio-button nzValue="url">{{'web.thesaurus-page.link-modal.url' | translate}}</label>
-              <label nz-radio-button nzValue="page">{{'web.thesaurus-page.link-modal.page' | translate}}</label>
-              <label nz-radio-button nzValue="resource">{{'web.thesaurus-page.link-modal.resource' | translate}}</label>
-            </nz-radio-group>
+            <m-radio-group name="type" [(ngModel)]="data.linkType">
+              <ng-template m-radio-button mValue="url" mLabel="web.thesaurus-page.link-modal.url"></ng-template>
+              <ng-template m-radio-button mValue="page" mLabel="web.thesaurus-page.link-modal.page"></ng-template>
+              <ng-template m-radio-button mValue="resource" mLabel="web.thesaurus-page.link-modal.resource"></ng-template>
+            </m-radio-group>
           </m-form-item>
           <m-form-item *ngIf="data.linkType === 'url'" mName="link" mLabel="web.thesaurus-page.link-modal.url" required>
             <m-input [(ngModel)]="data.link" name="link" required></m-input>
@@ -35,10 +35,10 @@ import {TranslateService} from '@ngx-translate/core';
           <ng-container *ngIf="data.linkType === 'resource'">
             <m-form-item mName="resource" mLabel="web.thesaurus-page.link-modal.resource-type" required>
               <m-select [(ngModel)]="data.resourceType" name="resource" required>
-                <m-option label="CodeSystem" [value]="'cs'"></m-option>
-                <m-option label="ValueSet" [value]="'vs'"></m-option>
-                <m-option label="MapSet" [value]="'ms'"></m-option>
-                <m-option label="Concept" [value]="'concept'"></m-option>
+                <m-option mLabel="CodeSystem" [mValue]="'cs'"></m-option>
+                <m-option mLabel="ValueSet" [mValue]="'vs'"></m-option>
+                <m-option mLabel="MapSet" [mValue]="'ms'"></m-option>
+                <m-option mLabel="Concept" [mValue]="'concept'"></m-option>
               </m-select>
             </m-form-item>
             <m-form-item *ngIf="data.resourceType === 'cs'" mName="codeSystem" mLabel="web.thesaurus-page.link-modal.code-system" required>
@@ -65,7 +65,7 @@ import {TranslateService} from '@ngx-translate/core';
         </form>
       </ng-container>
 
-      <div *m-modal-footer class="tw-button-group">
+      <div *m-modal-footer class="m-items-middle">
         <m-button mDisplay="text" (click)="toggleModal(false)">{{'core.btn.close' | translate}}</m-button>
         <m-button mDisplay="primary" (click)="confirm()">{{'core.btn.confirm' | translate}}</m-button>
       </div>

@@ -1,6 +1,12 @@
 <ng-container [ngSwitch]="pageType">
   <ng-container *ngSwitchDefault>
-    <m-page-layout mTitle="web.app.header" [menu]="menu" (mLangChange)="onLangChange($event)" (mLogout)="logout()">
+    <m-page-layout
+        mTitle="web.app.header"
+        [mMenu]="menu"
+        mMenuMode="horizontal"
+        (mLangChange)="onLangChange($event)"
+        (mLogout)="logout()"
+    >
       <ng-container *ngIf="!activeRoutePrivileges || (activeRoutePrivileges | twaHasAnyPrivilege); else accessError">
         <router-outlet></router-outlet>
       </ng-container>

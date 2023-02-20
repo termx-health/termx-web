@@ -9,7 +9,7 @@
     [autoUnselect]="false"
 >
   <m-option *ngFor="let key of data | keys"
-      [value]="data[key]?.id"
-      [label]="data[key]?.code + ' ' + (data[key]?.id | localizedConceptName: {codeSystem: codeSystemId} | async) + ' ' + (data[key]?.created | localDate) + ' ' + (data[key]?.status | localizedConceptName: {valueSet: 'publication-status'} | async) "
+      [mValue]="data[key]?.id"
+      [mLabel]="data[key]?.code + ' ' + (data[key]?.id | localizedConceptName: {codeSystem: codeSystemId} | async) + ' ' + (data[key]?.created | localDate) + ' ' + (data[key]?.status | localizedConceptName: {valueSet: 'publication-status'} | async) "
   ></m-option>
 </m-select>

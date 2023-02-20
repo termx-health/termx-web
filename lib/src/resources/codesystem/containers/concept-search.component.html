@@ -6,6 +6,6 @@
     [loading]="isLoading"
     [autoUnselect]="false">
   <m-option *ngFor="let key of (data | keys)"
-      [value]="valueType === 'code' ? data[key]?.code : data[key]?.id"
-      label="{{data[key]?.code}} {{data[key]?.code | localizedConceptName:{codeSystem: codeSystem} | async}}"></m-option>
+      [mValue]="valueType === 'code' ? data[key]?.code : data[key]?.id"
+      mLabel="{{data[key]?.code}} {{data[key]?.code | localizedConceptName:{codeSystem: codeSystem} | async}}"></m-option>
 </m-select>

@@ -2,8 +2,8 @@
   <div *mFormCol>
     <m-spinner [mLoading]="loading">
       <m-card>
-        <div *m-card-header class="m-items-between">
-          <div class="m-card-title">
+        <div *m-card-header class="m-justify-between">
+          <div class="m-card__title">
             {{(mode === 'edit' ? 'web.privileges.edit-header' : 'web.privileges.add-header') | translate}}
           </div>
           <m-button
@@ -32,8 +32,8 @@
         </ng-container>
 
         <m-card class="m-card-inside">
-          <div *m-card-header class="m-items-between">
-            <div class="m-card-title">
+          <div *m-card-header class="m-justify-between">
+            <div class="m-card__title">
               {{'web.privileges.resources.table.head' | translate}}
             </div>
             <twa-add-button (click)="openResourceModal()">
@@ -99,16 +99,16 @@
     <form #resourceForm="ngForm">
       <m-form-item mName="resourceType" mLabel="web.privileges.resources.modal.resource-type" required>
         <m-select name="resourceType" [(ngModel)]="modalData.resource.resourceType" required>
-          <m-option label="web.privileges.resources.modal.type.any" value="Any"></m-option>
-          <m-option label="web.privileges.resources.modal.type.admin" value="Admin"></m-option>
-          <m-option label="web.privileges.resources.modal.type.code-system" value="CodeSystem"></m-option>
-          <m-option label="web.privileges.resources.modal.type.value-set" value="ValueSet"></m-option>
-          <m-option label="web.privileges.resources.modal.type.map-set" value="MapSet"></m-option>
-          <m-option label="web.privileges.resources.modal.type.naming-system" value="NamingSystem"></m-option>
-          <m-option label="web.privileges.resources.modal.type.association-type" value="AssociationType"></m-option>
-          <m-option label="web.privileges.resources.modal.type.snomed" value="Snomed"></m-option>
-          <m-option label="web.privileges.resources.modal.type.measurement-unit" value="MeasurementUnit"></m-option>
-          <m-option label="web.privileges.resources.modal.type.privilege" value="Privilege"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.any" mValue="Any"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.admin" mValue="Admin"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.code-system" mValue="CodeSystem"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.value-set" mValue="ValueSet"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.map-set" mValue="MapSet"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.naming-system" mValue="NamingSystem"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.association-type" mValue="AssociationType"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.snomed" mValue="Snomed"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.measurement-unit" mValue="MeasurementUnit"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.privilege" mValue="Privilege"></m-option>
         </m-select>
       </m-form-item>
       <m-form-item *ngIf="modalData.resource.resourceType && ['CodeSystem', 'ValueSet', 'MapSet', 'NamingSystem', 'AssociationType'].includes(modalData.resource.resourceType)"
@@ -161,7 +161,7 @@
     </form>
   </ng-container>
 
-  <div *m-modal-footer class="tw-button-group">
+  <div *m-modal-footer class="m-items-middle">
     <m-button mDisplay="text" (click)="modalData.visible = false">
       {{'core.btn.cancel' | translate}}
     </m-button>

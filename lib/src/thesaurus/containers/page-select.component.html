@@ -6,5 +6,5 @@
     (mChange)="fireOnChange()"
     [loading]="isLoading"
     [autoUnselect]="false">
-  <m-option *ngFor="let key of data | keys" [value]="data[key]?.id" [label]="data[key] | apply: localizedContentName"></m-option>
+  <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.id" [mLabel]="data[key] | apply: localizedContentName"></m-option>
 </m-select>

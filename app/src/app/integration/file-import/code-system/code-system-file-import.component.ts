@@ -462,8 +462,8 @@ export class CodeSystemFileImportComponent {
 
   public decorateWithDefaultProperties(entityProperties: EntityProperty[]): EntityProperty[] {
     return Object.values({
-      ...group(DEFAULT_KTS_PROPERTIES, e => e.name!),
-      ...group(entityProperties || [], e => e.name!),
+      ...group<string, EntityProperty>(DEFAULT_KTS_PROPERTIES, e => e.name!),
+      ...group<string, EntityProperty>(entityProperties || [], e => e.name!),
     });
   }
 

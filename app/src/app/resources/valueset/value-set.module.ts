@@ -25,6 +25,7 @@ import {ValueSetRuleEditComponent} from './containers/version/ruleset/rule/value
 import {IntegrationLibModule} from 'terminology-lib/integration';
 import {ValueSetConceptListComponent} from './containers/edit/concept/value-set-concept-list.component';
 import {MeasurementUnitLibModule} from 'terminology-lib/measurementunit';
+import {MarinaQuillModule} from '@kodality-web/marina-quill';
 
 
 export const VALUE_SET_ROUTES: Routes = [
@@ -55,7 +56,8 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
     ResourcesLibModule,
     IntegrationLibModule,
     MeasurementUnitLibModule,
-    ContactModule
+    ContactModule,
+    MarinaQuillModule
   ],
   declarations: [
     ValueSetListComponent,

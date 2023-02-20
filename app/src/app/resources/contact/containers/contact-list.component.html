@@ -1,6 +1,6 @@
 <m-card class="m-card-inside">
-  <div *m-card-header class="m-items-between">
-    <div class="m-card-title">{{'web.contacts.list.header' | translate}}</div>
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">{{'web.contacts.list.header' | translate}}</div>
     <twa-add-button *ngIf="!viewMode" (click)="addContact()">
       {{'web.contacts.list.add-contact' | translate}}
     </twa-add-button>
@@ -95,7 +95,7 @@
       </form>
     </ng-container>
 
-    <div *m-modal-footer class="tw-button-group">
+    <div *m-modal-footer class="m-items-middle">
       <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
       <m-button mDisplay="primary" (click)="confirmModalContact()">{{'core.btn.confirm' | translate}}</m-button>
     </div>

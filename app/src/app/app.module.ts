@@ -36,6 +36,7 @@ import {ThesaurusModule} from './thesaurus/thesaurus.module';
 import {SmartAuthService} from './auth/smart-auth.service';
 import {SmartHttpInterceptor} from './auth/smart-http-interceptor.service';
 import {FhirModule} from './fhir/fhir.module';
+
 registerLocaleData(et);
 
 
@@ -67,7 +68,7 @@ export function MarinaUiConfigFactory(): MuiConfig {
       top: '4em'
     },
     supportedLangs: {
-      en: true
+      en: {label: 'English'}
     }
   };
 }
@@ -90,6 +91,7 @@ export function MarinaUiConfigFactory(): MuiConfig {
 
     MarinaUiModule,
     MarinaUtilModule,
+
     ResourcesLibModule,
     ResourcesModule,
     FhirLibModule,

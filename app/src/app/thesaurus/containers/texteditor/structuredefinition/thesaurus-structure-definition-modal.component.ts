@@ -17,13 +17,13 @@ import {StructureDefinition, StructureDefinitionLibService} from 'terminology-li
         <form #form="ngForm" *ngIf="data">
           <m-form-item mName="structure-definition" mLabel="web.thesaurus-page.structure-definition-modal.structure-definition" required>
             <m-select [(ngModel)]="data.defCode" name="structure-definition" required>
-              <m-option *ngFor="let sd of structureDefinitions" [label]="sd.code" [value]="sd.code"></m-option>
+              <m-option *ngFor="let sd of structureDefinitions" [mLabel]="sd.code" [mValue]="sd.code"></m-option>
             </m-select>
           </m-form-item>
         </form>
       </ng-container>
 
-      <div *m-modal-footer class="tw-button-group">
+      <div *m-modal-footer class="m-items-middle">
         <m-button mDisplay="text" (click)="toggleModal(false)">{{'core.btn.close' | translate}}</m-button>
         <m-button mDisplay="primary" (click)="confirm()">{{'core.btn.confirm' | translate}}</m-button>
       </div>

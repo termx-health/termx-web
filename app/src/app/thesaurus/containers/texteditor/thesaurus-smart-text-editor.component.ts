@@ -1,7 +1,7 @@
 import {AfterViewInit, Component, forwardRef, Input, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {ThesaurusDropdownOptionComponent, OptionItem} from './thesaurus-dropdown-option.component';
+import {OptionItem, ThesaurusDropdownOptionComponent} from './thesaurus-dropdown-option.component';
 import {ThesaurusDropdownComponent} from './thesaurus-dropdown.component';
 import {BooleanInput, isDefined} from '@kodality-web/core-util';
 import {ThesaurusLinkModalComponent} from './link/thesaurus-link-modal.component';
@@ -19,6 +19,7 @@ import {ThesaurusTemplateModalComponent} from './template/thesaurus-template-mod
     }
 
     .dropdown-options-container {
+      width: 100%;
       max-height: 15rem;
       border-radius: 3px;
       box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .24);

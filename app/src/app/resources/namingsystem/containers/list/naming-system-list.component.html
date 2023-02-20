@@ -1,5 +1,5 @@
 <m-card>
-  <div *m-card-header class="m-items-between">
+  <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div class="m-items-middle">
       <twa-add-button *twaPrivileged="'*.NamingSystem.edit'" [routerLink]="['naming-systems/add']">
