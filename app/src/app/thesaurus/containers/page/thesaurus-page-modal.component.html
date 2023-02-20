@@ -12,27 +12,27 @@
 
       <m-form-item mName="template" mLabel="entities.page.template">
         <m-select name="template" [(ngModel)]="page.templateId">
-          <m-option *ngFor="let template of templates" label="{{template.code}} - {{template.names | localName}}" [value]="template.id"></m-option>
+          <m-option *ngFor="let template of templates" mLabel="{{template.code}} - {{template.names | localName}}" [mValue]="template.id"></m-option>
         </m-select>
       </m-form-item>
 
       <m-form-item mName="tag" mLabel="entities.page.tags">
         <m-select name="tag" [(ngModel)]="pageTags" tags>
-          <m-option *ngFor="let tag of tags" [label]="tag.text" [value]="tag.text"></m-option>
+          <m-option *ngFor="let tag of tags" [mLabel]="tag.text" [mValue]="tag.text"></m-option>
         </m-select>
       </m-form-item>
 
       <m-form-item mName="status" mLabel="entities.page.status" required>
         <m-select name="status" [(ngModel)]="page.status" required>
-          <m-option label="draft" [value]="'draft'"></m-option>
-          <m-option label="active" [value]="'active'"></m-option>
+          <m-option mLabel="draft" [mValue]="'draft'"></m-option>
+          <m-option mLabel="active" [mValue]="'active'"></m-option>
         </m-select>
       </m-form-item>
 
       <m-form-item mName="lang" mLabel="entities.page-content.lang" required>
         <m-select name="lang" [(ngModel)]="content.lang" required>
-          <m-option label="en" [value]="'en'"></m-option>
-          <m-option label="et" [value]="'et'"></m-option>
+          <m-option mLabel="en" [mValue]="'en'"></m-option>
+          <m-option mLabel="et" [mValue]="'et'"></m-option>
         </m-select>
       </m-form-item>
 
@@ -42,8 +42,8 @@
           <m-icon mCode="exclamation-circle" style="margin-left: 0.5rem" m-tooltip mTitle="web.thesaurus-page.form.content-type-tooltip"></m-icon>
         </ng-template>
         <m-select name="type" [(ngModel)]="content.contentType" required>
-          <m-option label="WYSIWYG" [value]="'html'"></m-option>
-          <m-option label="Markdown" [value]="'markdown'"></m-option>
+          <m-option mLabel="WYSIWYG" [mValue]="'html'"></m-option>
+          <m-option mLabel="Markdown" [mValue]="'markdown'"></m-option>
         </m-select>
       </m-form-item>
 
@@ -84,7 +84,7 @@
     </form>
   </ng-container>
 
-  <div *m-modal-footer class="tw-button-group">
+  <div *m-modal-footer class="m-items-middle">
     <m-button mDisplay="text" (click)="closed.emit()">{{'core.btn.close' | translate}}</m-button>
     <m-button mDisplay="primary"
         [mLoading]="loading['save']"

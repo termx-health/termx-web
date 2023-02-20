@@ -29,11 +29,11 @@
         </div>
 
         <m-card class="m-card-inside" *ngIf="association">
-          <div *m-card-header class="m-items-between">
-            <div class="m-card-title">{{'entities.map-set-entity.versions' | translate}}</div>
+          <div *m-card-header class="m-justify-between">
+            <div class="m-card__title">{{'entities.map-set-entity.versions' | translate}}</div>
           </div>
 
-          <m-table [mData]="association.versions" mEnablePagination mHideOnSinglePage>
+          <m-table [mData]="association.versions" mEnablePagination>
             <tr *mTableHead>
               <th>{{'entities.map-set-entity-version.id' | translate}}</th>
               <th>{{'entities.map-set-entity-version.created-at' | translate}}</th>

@@ -2,7 +2,9 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "cli": {
     "analytics": false,
-    "defaultCollection": "@angular-eslint/schematics"
+    "schematicCollections": [
+      "@angular-eslint/schematics"
+    ]
   },
   "version": 1,
   "projects": {
@@ -26,14 +28,6 @@
             }
           },
           "defaultConfiguration": "production"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "lib/src/test.ts",
-            "tsConfig": "lib/tsconfig.spec.json",
-            "karmaConfig": "lib/karma.conf.js"
-          }
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -69,6 +63,12 @@
             "polyfills": "app/src/polyfills.ts",
             "tsConfig": "app/tsconfig.app.json",
             "inlineStyleLanguage": "less",
+            "allowedCommonJsDependencies": [
+              "angular2-text-mask",
+              "slugify",
+              "file-saver",
+              "fhir"
+            ],
             "assets": [
               "app/src/favicon.ico",
               "app/src/assets",
@@ -79,19 +79,13 @@
               }
             ],
             "styles": [
-              "node_modules/@kodality-web/marina-ui/mui.styles.css",
-              {
-                "input": "node_modules/@kodality-web/marina-ui/mui-contrast.styles.css",
-                "bundleName": "contrast",
-                "inject": false
-              },
               "app/src/styles.less",
+              "node_modules/@kodality-web/marina-quill/quill.styles.less",
               "node_modules/prismjs/themes/prism-okaidia.css"
             ],
             "preserveSymlinks": true,
             "scripts": [
               "node_modules/quill/dist/quill.js",
-
               "node_modules/marked/marked.min.js",
               "node_modules/prismjs/prism.js",
               "node_modules/prismjs/components/prism-json.js",
@@ -103,8 +97,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "3mb",
-                  "maximumError": "10mb"
+                  "maximumWarning": "10mb",
+                  "maximumError": "14mb"
                 },
                 {
                   "type": "anyComponentStyle",
@@ -149,24 +143,6 @@
             "browserTarget": "app:build"
           }
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "app/src/test.ts",
-            "polyfills": "app/src/polyfills.ts",
-            "tsConfig": "app/tsconfig.spec.json",
-            "karmaConfig": "app/karma.conf.js",
-            "inlineStyleLanguage": "less",
-            "assets": [
-              "app/src/favicon.ico",
-              "app/src/assets"
-            ],
-            "styles": [
-              "app/src/styles.less"
-            ],
-            "scripts": []
-          }
-        },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
@@ -178,6 +154,5 @@
         }
       }
     }
-  },
-  "defaultProject": "app"
+  }
 }

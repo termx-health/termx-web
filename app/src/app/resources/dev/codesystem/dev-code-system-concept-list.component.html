@@ -3,8 +3,8 @@
     <m-spinner [mLoading]="loading['save']">
       <m-card *ngIf="codeSystem" [mShowSkeleton]="loading['init']" autofocus>
         <div *m-card-header>
-          <div class="m-items-between">
-            <label class="m-card-title">{{('web.code-system.form.header' | translate) + ' ' +  codeSystemId}}</label>
+          <div class="m-justify-between">
+            <label class="m-card__title">{{('web.code-system.form.header' | translate) + ' ' +  codeSystemId}}</label>
             <div>
               <m-button (click)="openEdit()">{{'core.btn.edit' | translate}}</m-button>
             </div>

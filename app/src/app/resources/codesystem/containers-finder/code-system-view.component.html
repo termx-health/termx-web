@@ -38,7 +38,7 @@
 
     <m-form-item mLabel="entities.code-system.narrative">
       <ng-container *ngIf="codeSystem?.narrative">
-        <m-rich-text-editor *ngIf="narrativeVisible" [ngModel]="codeSystem.narrative" mViewMode></m-rich-text-editor>
+        <m-quill *ngIf="narrativeVisible" [ngModel]="codeSystem.narrative" mViewMode></m-quill>
         <m-button mDisplay="text" style="width: 100%" (click)="narrativeVisible = !narrativeVisible">
           {{narrativeVisible ? 'Hide narrative' : 'Show narrative'}}
         </m-button>

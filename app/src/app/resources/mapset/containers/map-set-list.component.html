@@ -1,5 +1,5 @@
 <m-card>
-  <div *m-card-header class="m-items-between">
+  <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <twa-add-button *twaPrivileged="'*.MapSet.edit'" [routerLink]="'map-sets/add'">
       {{'web.map-set.form.add-header' | translate}}

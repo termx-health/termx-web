@@ -15,7 +15,7 @@ import {Component, HostBinding, Input} from '@angular/core';
   styles: [`
     :host {
       display: block;
-      padding:0.875rem;
+      padding: 0.875rem;
       background-color: #fff;
       overflow: hidden;
       text-overflow: ellipsis;

@@ -1,8 +1,8 @@
 <m-card>
-  <div *m-card-header class="m-items-between">
-    <div class="m-card-title">{{'web.privileges.privileges' | translate}}</div>
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">{{'web.privileges.privileges' | translate}}</div>
   </div>
-  <div class="m-items-between" style="margin-bottom: 1em">
+  <div class="m-justify-between" style="margin-bottom: 1em">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <twa-add-button *twaPrivileged="'*.Privilege.edit'" [routerLink]="['./add']">
       {{'web.privileges.table.add-privilege' | translate}}

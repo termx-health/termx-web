@@ -1,5 +1,5 @@
 <m-card class="m-card-inside">
-  <div *m-card-header class="m-items-between">
+  <div *m-card-header class="m-justify-between">
     <div><b>{{'web.structure-definition-constraint.list.header' | translate}}</b></div>
     <twa-add-button *ngIf="!viewMode" (click)="addConstraint()">
       {{'web.structure-definition-constraint.list.add-constraint' | translate}}
@@ -38,10 +38,10 @@
           <m-input name="requirements" [(ngModel)]="modalData.constraint.requirements"></m-input>
         </m-form-item>
         <m-form-item mName="severity" mLabel="web.structure-definition-constraint.modal.severity" required>
-          <nz-radio-group name="type" [(ngModel)]="modalData.constraint.severity">
-            <label nz-radio-button nzValue="error">{{'web.structure-definition-constraint.modal.error' | translate}}</label>
-            <label nz-radio-button nzValue="warning">{{'web.structure-definition-constraint.modal.warning' | translate}}</label>
-          </nz-radio-group>
+          <m-radio-group name="type" [(ngModel)]="modalData.constraint.severity">
+            <ng-template m-radio-button mValue="error" mLabel="web.structure-definition-constraint.modal.error"></ng-template>
+            <ng-template m-radio-button mValue="warning" mLabel="web.structure-definition-constraint.modal.warning"></ng-template>
+          </m-radio-group>
         </m-form-item>
         <m-form-item mName="human" mLabel="web.structure-definition-constraint.modal.human" required>
           <m-input name="human" [(ngModel)]="modalData.constraint.human" required></m-input>
@@ -55,7 +55,7 @@
       </form>
     </ng-container>
 
-    <div *m-modal-footer class="tw-button-group">
+    <div *m-modal-footer class="m-items-middle">
       <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
       <m-button mDisplay="primary" (click)="confirmModalConstraint()">{{'core.btn.confirm' | translate}}</m-button>
     </div>

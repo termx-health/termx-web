@@ -2,17 +2,16 @@
   <m-card>
     <div *m-card-header style="display: flex">
       <div style="margin-right: auto;">
-        <label class="m-card-title">{{pageContent?.name}}</label>
+        <label class="m-card__title">{{pageContent?.name}}</label>
       </div>
       <div style="margin-left: auto; margin-right: auto;">
-        <nz-radio-group name="sourceImportType" [(ngModel)]="showPreview">
-          <label nz-radio-button [nzValue]="false">
-            <m-icon mCode="pic-center"></m-icon>
-          </label>
-          <label nz-radio-button [nzValue]="true">
-            <m-icon mCode="pic-left"></m-icon>
-          </label>
-        </nz-radio-group>
+        <m-radio-group name="sourceImportType" [(ngModel)]="showPreview">
+          <ng-template #picCenter><m-icon mCode="pic-center"></m-icon></ng-template>
+          <ng-template #picLeft><m-icon mCode="pic-left"></m-icon></ng-template>
+
+          <ng-template m-radio-button [mValue]="false" [mLabel]="picCenter"></ng-template>
+          <ng-template m-radio-button [mValue]="true" [mLabel]="picLeft"></ng-template>
+        </m-radio-group>
       </div>
       <div style="margin-left: auto;">
         <m-button (click)="save()" mDisplay="primary">
@@ -32,16 +31,24 @@
           m-popover
           mTrigger="click"
           style="margin-right: 0.5rem"
-          [mContent]="confirmTemplate">{{'web.thesaurus-page.form.add-structure-definition' | translate}}</m-button>
+          [mContent]="confirmTemplate"
+      >{{'web.thesaurus-page.form.add-structure-definition' | translate}}</m-button>
       <ng-template #confirmTemplate>
         <label>{{'core.data-lost-warning' | translate}}</label>
         <div style="display: flex; margin-top: 1rem">
           <m-button (click)="openStructureDefinition()">{{'web.thesaurus-page.form.proceed-without-saving' | translate}}</m-button>
-          <m-button mDisplay="primary" (click)="saveAndOpenStructureDefinition()" style="margin-left: 0.5rem">{{'web.thesaurus-page.form.save-and-proceed' | translate}}</m-button>
+          <m-button mDisplay="primary"
+              (click)="saveAndOpenStructureDefinition()"
+              style="margin-left: 0.5rem"
+          >{{'web.thesaurus-page.form.save-and-proceed' | translate}}</m-button>
         </div>
       </ng-template>
 
-      <m-button (click)="copyStructureDefToClipboard()" *ngIf="pageContent?.slug" m-tooltip [mTitle]="'web.thesaurus-page.form.copy-to-clipboard' | translate: ({val: '{{def:' + pageContent.slug + '-model}' + '}' })">
+      <m-button (click)="copyStructureDefToClipboard()"
+          *ngIf="pageContent?.slug"
+          m-tooltip
+          [mTitle]="'web.thesaurus-page.form.copy-to-clipboard' | translate: ({val: '{{def:' + pageContent.slug + '-model}' + '}' })"
+      >
         <m-icon mCode="copy" style="margin-right: 0.25rem"></m-icon>
       </m-button>
     </div>
@@ -51,7 +58,8 @@
         [valueType]="pageContent.contentType"
         [lang]="pageContent.lang"
         [showPreview]="showPreview"
-        name="content"></twa-smart-text-editor>
+        name="content"
+    ></twa-smart-text-editor>
 
   </m-card>
 </m-spinner>
@@ -60,4 +68,5 @@
     [pageId]="pageContent?.pageId"
     [contentId]="pageContent?.id"
     (closed)="modalVisible = false"
-    (saved)="openPageContentEdit($event)"></twa-thesaurus-page-modal>
+    (saved)="openPageContentEdit($event)"
+></twa-thesaurus-page-modal>

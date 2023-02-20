@@ -9,7 +9,7 @@
     [disabled]="disabled"
 >
   <m-option *ngFor="let key of data | keys"
-      [value]="key"
-      [label]="data[key]?.display ? data[key]?.display?.name : (key | localizedConceptName: {valueSet: valueSet, valueSetVersion: valueSetVersion} | async)"
+      [mValue]="key"
+      [mLabel]="data[key]?.display ? data[key]?.display?.name : (key | localizedConceptName: {valueSet: valueSet, valueSetVersion: valueSetVersion} | async)"
   ></m-option>
 </m-select>

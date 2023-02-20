@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FhirCodeSystemLibService, FhirCodeSystemValidateCodeParams} from 'terminology-lib/fhir';
-import {ClipboardService} from '@kodality-web/core-util';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
   templateUrl: './fhir-code-system-validate-code.component.html',
@@ -15,7 +15,7 @@ export class FhirCodeSystemValidateCodeComponent {
 
   public constructor(
     private fhirCodeSystemLibService: FhirCodeSystemLibService,
-    private clipboardService: ClipboardService,
+    private clipboardService: Clipboard,
   ) {}
 
   public validateCode(): void {

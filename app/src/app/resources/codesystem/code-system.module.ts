@@ -31,6 +31,7 @@ import {CodeSystemPropertyValueEditComponent} from './containers/concept/propert
 import {CodeSystemAssociationEditComponent} from './containers/concept/association/code-system-association-edit.component';
 import {CodeSystemConceptViewComponent} from './containers/concept/code-system-concept-view.component';
 import {CodeSystemConceptRelationsComponent} from './containers/concept/relations/code-system-concept-relations.component';
+import {MarinaQuillModule} from '@kodality-web/marina-quill';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -72,7 +73,8 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     SharedModule,
     FinderModule,
     ResourcesLibModule,
-    ContactModule
+    ContactModule,
+    MarinaQuillModule
   ],
   declarations: [
     CodeSystemListComponent,

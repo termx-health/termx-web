@@ -1,6 +1,6 @@
 <m-card>
-  <div *m-card-header class="m-items-between">
-    <div class="m-card-title">{{'entities.value-set-version.rule-set' | translate}} &nbsp;
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">{{'entities.value-set-version.rule-set' | translate}} &nbsp;
       <m-button (click)="expand()" mSize="small">
         <m-icon mCode="eye"></m-icon>
       </m-button>
@@ -14,16 +14,16 @@
     </m-form-item>
 
     <m-form-item mName="inactive" mLabel="entities.value-set-rule-set.inactive" [required]="!viewMode">
-      <nz-radio-group name="inactive" [(ngModel)]="ruleSet.inactive" [disabled]="!!viewMode">
-        <label nz-radio-button [nzValue]="true">{{'web.value-set-version.form.rule-set.inactive' | translate}}</label>
-        <label nz-radio-button [nzValue]="undefined">{{'web.value-set-version.form.rule-set.all' | translate}}</label>
-        <label nz-radio-button [nzValue]="false">{{'web.value-set-version.form.rule-set.active' | translate}}</label>
-      </nz-radio-group>
+      <m-radio-group name="inactive" [(ngModel)]="ruleSet.inactive" [disabled]="!!viewMode">
+        <ng-template m-radio-button [mValue]="true" mLabel="web.value-set-version.form.rule-set.inactive"></ng-template>
+        <ng-template m-radio-button [mValue]="undefined" mLabel="web.value-set-version.form.rule-set.all"></ng-template>
+        <ng-template m-radio-button [mValue]="false" mLabel="web.value-set-version.form.rule-set.active"></ng-template>
+      </m-radio-group>
     </m-form-item>
 
     <m-card class="m-card-inside">
-      <div *m-card-header class="m-items-between">
-        <div class="m-card-title">
+      <div *m-card-header class="m-justify-between">
+        <div class="m-card__title">
           {{'entities.value-set-rule-set.rules' | translate}}
         </div>
         <twa-add-button [routerLink]="['../rule-sets',ruleSet.id,'rules','add']" *ngIf="!viewMode && ruleSet.id">
@@ -49,7 +49,7 @@
           </ng-template>
 
           <ng-template #edit>
-            <div class="tw-button-group">
+            <div class="m-items-middle">
               <m-button (click)="$event.stopPropagation();expand(rule)" mSize="small">
                 <m-icon [mCode]="'eye'"></m-icon>
               </m-button>

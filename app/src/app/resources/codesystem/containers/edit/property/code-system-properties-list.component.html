@@ -1,6 +1,6 @@
 <m-card class="m-card-inside">
-  <div *m-card-header class="m-items-between">
-    <div class="m-card-title">
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">
       {{'entities.code-system.properties' | translate}}
     </div>
     <m-dropdown *ngIf="!viewMode">
@@ -17,7 +17,7 @@
     </m-dropdown>
   </div>
 
-  <m-table [mData]="properties" [mLoading]="loading" mEnablePagination mHideOnSinglePage>
+  <m-table [mData]="properties" [mLoading]="loading" mEnablePagination>
     <tr *mTableHead>
       <th>{{'entities.entity-property.name' | translate}}</th>
       <th>{{'entities.entity-property.type' | translate}}</th>

@@ -15,10 +15,6 @@ Run `ng build lib` to build the project. The build artifacts will be stored in t
 
 After building your library with `ng build lib`, go to the dist folder `cd dist/lib` and run `npm publish`.
 
-## Running unit tests
-
-Run `ng test lib` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.

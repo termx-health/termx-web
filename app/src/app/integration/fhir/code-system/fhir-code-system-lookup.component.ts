@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import {FhirCodeSystemLibService, FhirCodeSystemLookupParams} from 'terminology-lib/fhir';
-import {ClipboardService, serializeDate} from '@kodality-web/core-util';
+import {serializeDate} from '@kodality-web/core-util';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 
 @Component({
@@ -23,7 +24,7 @@ export class FhirCodeSystemLookupComponent {
 
   public constructor(
     private fhirCodeSystemLibService: FhirCodeSystemLibService,
-    private clipboardService: ClipboardService,
+    private clipboardService: Clipboard,
   ) {}
 
   public lookUp(): void {

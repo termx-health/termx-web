@@ -51,14 +51,14 @@
         </form>
 
         <m-card class="m-card-inside" *ngIf="association">
-          <div *m-card-header class="m-items-between">
-            <div class="m-card-title">{{'entities.map-set-entity.versions' | translate}}</div>
+          <div *m-card-header class="m-justify-between">
+            <div class="m-card__title">{{'entities.map-set-entity.versions' | translate}}</div>
             <twa-add-button (click)="openModal()">
               {{'web.map-set-entity-version.table.add-version' | translate}}
             </twa-add-button>
           </div>
 
-          <m-table [mData]="association.versions" mEnablePagination mHideOnSinglePage>
+          <m-table [mData]="association.versions" mEnablePagination>
             <tr *mTableHead>
               <th>{{'entities.map-set-entity-version.id' | translate}}</th>
               <th>{{'entities.map-set-entity-version.created-at' | translate}}</th>
@@ -122,7 +122,7 @@
     </form>
   </ng-container>
 
-  <div *m-modal-footer class="tw-button-group">
+  <div *m-modal-footer class="m-items-middle">
     <m-button mDisplay="text" (click)="closeModal()">{{'core.btn.close' | translate}}</m-button>
     <m-button mDisplay="primary" (click)="confirmModal()">{{'core.btn.save' | translate}}</m-button>
   </div>

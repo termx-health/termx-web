@@ -19,7 +19,7 @@
 </m-card>
 
 <m-card *ngIf="relatedValueSets.length > 0" class="m-card-inside" mTitle="web.dev-code-system-relation.value-set.header" [mShowSkeleton]="loading['value-sets']">
-  <m-table [mData]="relatedValueSets" mHideOnSinglePage>
+  <m-table [mData]="relatedValueSets">
     <tr *mTableHead>
       <th>{{'web.dev-code-system-relation.value-set.code' | translate}}</th>
       <th>{{'web.dev-code-system-relation.value-set.name' | translate}}</th>
@@ -31,7 +31,7 @@
   </m-table>
 </m-card>
 <m-card *ngIf="relatedMapSets.length > 0" class="m-card-inside" mTitle="web.dev-code-system-relation.map-set.header" [mShowSkeleton]="loading['map-sets']">
-  <m-table [mData]="relatedMapSets" mHideOnSinglePage>
+  <m-table [mData]="relatedMapSets">
     <tr *mTableHead>
       <th>{{'web.dev-code-system-relation.map-set.code' | translate}}</th>
       <th>{{'web.dev-code-system-relation.map-set.name' | translate}}</th>

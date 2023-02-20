@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FhirConceptMapLibService, FhirConceptMapTranslateParams} from 'terminology-lib/fhir';
-import {ClipboardService} from '@kodality-web/core-util';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class FhirConceptMapTranslateComponent {
 
   public constructor(
     private fhirConceptMapLibService: FhirConceptMapLibService,
-    private clipboardService: ClipboardService,
+    private clipboardService: Clipboard,
   ) {}
 
   public translate(): void {

@@ -8,7 +8,7 @@
 </m-card>
 
 <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.concepts'" *ngIf="concepts?.length > 0">
-  <m-table [mData]="concepts" [mLoading]="loading['c-search']" mHideOnSinglePage>
+  <m-table [mData]="concepts" [mLoading]="loading['c-search']">
     <tr *mTableHead>
       <th>{{'entities.code-system-concept.code' | translate}}</th>
       <th>{{'entities.code-system-concept.code-system' | translate}}</th>
@@ -26,7 +26,7 @@
 </m-card>
 
 <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.code-systems'" *ngIf="codeSystems?.length > 0">
-  <m-table [mData]="codeSystems" [mLoading]="loading['cs-search']" mHideOnSinglePage>
+  <m-table [mData]="codeSystems" [mLoading]="loading['cs-search']">
     <tr *mTableHead>
       <th>{{'entities.code-system.id' | translate}}</th>
       <th>{{'entities.code-system.uri' | translate}}</th>
@@ -46,7 +46,7 @@
 </m-card>
 
 <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.value-sets'" *ngIf="valueSets?.length > 0">
-  <m-table [mData]="valueSets" [mLoading]="loading['vs-search']" mHideOnSinglePage>
+  <m-table [mData]="valueSets" [mLoading]="loading['vs-search']">
     <tr *mTableHead>
       <th>{{'entities.value-set.id' | translate}}</th>
       <th>{{'entities.value-set.uri' | translate}}</th>
@@ -66,7 +66,7 @@
 </m-card>
 
 <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.map-sets'" *ngIf="mapSets?.length > 0">
-  <m-table [mData]="mapSets" [mLoading]="loading['ms-search']" mHideOnSinglePage>
+  <m-table [mData]="mapSets" [mLoading]="loading['ms-search']">
     <tr *mTableHead>
       <th>{{'entities.map-set.id' | translate}}</th>
       <th>{{'entities.map-set.uri' | translate}}</th>
@@ -86,7 +86,7 @@
 </m-card>
 
 <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.measurement-unit'" *ngIf="measurementUnits?.length > 0">
-  <m-table [mData]="measurementUnits" [mLoading]="loading['measurement-unit']" mHideOnSinglePage>
+  <m-table [mData]="measurementUnits" [mLoading]="loading['measurement-unit']">
     <tr *mTableHead>
       <th>{{'entities.measurement-unit.code' | translate}}</th>
       <th>{{'entities.measurement-unit.name' | translate}}</th>
@@ -104,7 +104,7 @@
 </m-card>
 
 <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.snomed'" *ngIf="snomedConcepts?.length > 0">
-  <m-table [mData]="snomedConcepts" [mLoading]="loading['snomed']" mHideOnSinglePage>
+  <m-table [mData]="snomedConcepts" [mLoading]="loading['snomed']">
     <tr *mTableHead>
       <th>{{'entities.snomed-concept.concept-id' | translate}}</th>
       <th>{{'entities.snomed-concept.pt' | translate}}</th>

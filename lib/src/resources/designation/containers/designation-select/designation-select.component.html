@@ -7,5 +7,5 @@
     [multiple]="multiple"
     [autoUnselect]="false"
 >
-  <m-option *ngFor="let key of data | keys" [value]="data[key]?.id" [label]="data[key]?.name"></m-option>
+  <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.id" [mLabel]="data[key]?.name"></m-option>
 </m-select>

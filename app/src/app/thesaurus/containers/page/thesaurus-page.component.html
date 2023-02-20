@@ -7,7 +7,7 @@
     <m-spinner [mLoading]="isLoading">
       <m-card *ngIf="pageId">
         <div *m-card-header style="display: flex">
-          <label class="m-card-title">{{pageContent?.name}}</label>
+          <label class="m-card__title">{{pageContent?.name}}</label>
           <div style="margin-left: auto;">
             <twa-github-export [title]="pageContent?.name" [prepareExport]="prepareExport"></twa-github-export>
             <m-dropdown style="margin-left: 0.5rem">
@@ -35,7 +35,7 @@
       </m-card>
       <m-card *ngIf="(pageRelations | keys)?.length > 0 || usages?.length > 0" style="margin-top: 1rem">
         <m-card  *ngIf="(pageRelations | keys)?.length > 0" mTitle="entities.page.relations" class="m-card-inside">
-          <m-table [mData]="pageRelations | keys" [mLoading]="isLoading" mEnablePagination mHideOnSinglePage>
+          <m-table [mData]="pageRelations | keys" [mLoading]="isLoading" mEnablePagination>
             <tr *mTableHead>
               <th>{{'entities.page-relation.type' | translate}}</th>
               <th>{{'entities.page-relation.target' | translate}}</th>
@@ -70,13 +70,13 @@
       </m-form-item>
       <m-form-item mName="type" mLabel="entities.page-content.content-type" required>
         <m-select name="type" [(ngModel)]="contentModalData.content.contentType" required>
-          <m-option label="WYSIWYG" [value]="'html'"></m-option>
-          <m-option label="Markdown" [value]="'markdown'"></m-option>
+          <m-option mLabel="WYSIWYG" [mValue]="'html'"></m-option>
+          <m-option mLabel="Markdown" [mValue]="'markdown'"></m-option>
         </m-select>
       </m-form-item>
     </form>
   </ng-container>
-  <div *m-modal-footer class="tw-button-group">
+  <div *m-modal-footer class="m-items-middle">
     <m-button mDisplay="text" (click)="contentModalData.visible = false">{{'core.btn.close' | translate}}</m-button>
     <m-button mDisplay="primary"
         [mLoading]="loading['save']"

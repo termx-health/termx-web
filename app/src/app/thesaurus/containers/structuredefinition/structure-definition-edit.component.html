@@ -25,7 +25,7 @@
           <div nz-row nzGutter="12" class="m-row">
             <div nz-col [nzMd]="8" [nzXs]="24">
               <m-card *ngIf="structureDefinition?.code">
-                <div *m-card-header class="m-items-between">
+                <div *m-card-header class="m-justify-between">
                   <label></label>
                   <twa-add-button (click)="addElement()">{{'web.structure-definition.form.add-element' | translate}}</twa-add-button>
                 </div>
@@ -42,20 +42,20 @@
                     <m-input name="path" [(ngModel)]="element.path" required></m-input>
                   </m-form-item>
                   <m-form-item mName="cardinality" mLabel="web.structure-definition.form.cardinality">
-                    <nz-radio-group name="cardinality" [(ngModel)]="element.cardinality">
-                      <label nz-radio-button nzValue="0..0">0..0</label>
-                      <label nz-radio-button nzValue="0..1">0..1</label>
-                      <label nz-radio-button nzValue="0..*">0..*</label>
-                      <label nz-radio-button nzValue="1..1">1..1</label>
-                      <label nz-radio-button nzValue="1..*">1..*</label>
-                    </nz-radio-group>
+                    <m-radio-group name="cardinality" [(ngModel)]="element.cardinality">
+                      <ng-template m-radio-button mValue="0..0" mLabel="0..0"></ng-template>
+                      <ng-template m-radio-button mValue="0..1" mLabel="0..1"></ng-template>
+                      <ng-template m-radio-button mValue="0..*" mLabel="0..*"></ng-template>
+                      <ng-template m-radio-button mValue="1..1" mLabel="1..1"></ng-template>
+                      <ng-template m-radio-button mValue="1..*" mLabel="1..*"></ng-template>
+                    </m-radio-group>
                   </m-form-item>
                   <twa-sd-type-list [types]="element.types" (typesChange)="element.types = $event"></twa-sd-type-list>
                   <m-form-item mName="fixed" mLabel="web.structure-definition.form.fixed-uri">
                     <m-input name="fixed" [(ngModel)]="element.fixedUri"></m-input>
                   </m-form-item>
                   <m-form-item mName="fixedCoding" mLabel="web.structure-definition.form.fixed-coding">
-                    <div style="display: flex">
+                    <div class="m-items-middle">
                       <m-input style="width: 100%"
                           name="fixedCodingCode"
                           placeholder="web.structure-definition.form.code"
@@ -108,16 +108,16 @@
 
         <m-form-item mName="format" mLabel="web.structure-definition.form.primary-source" required>
           <m-select name="format" [(ngModel)]="structureDefinition.contentFormat" (ngModelChange)="contentFormatChanged($event)">
-            <m-option [value]="'json'" [label]="'JSON'"></m-option>
-            <m-option [value]="'fsh'" [label]="'FSH'"></m-option>
+            <m-option [mValue]="'json'" [mLabel]="'JSON'"></m-option>
+            <m-option [mValue]="'fsh'" [mLabel]="'FSH'"></m-option>
           </m-select>
         </m-form-item>
 
         <m-form-item mName="contentType" mLabel="entities.structure-definition.content-type" required>
           <m-select name="contentType" [(ngModel)]="structureDefinition.contentType" required>
-            <m-option [value]="'profile'" [label]="'Profile'"></m-option>
-            <m-option [value]="'logical'" [label]="'Logical'"></m-option>
-            <m-option [value]="'instance'" [label]="'Instance'"></m-option>
+            <m-option [mValue]="'profile'" [mLabel]="'Profile'"></m-option>
+            <m-option [mValue]="'logical'" [mLabel]="'Logical'"></m-option>
+            <m-option [mValue]="'instance'" [mLabel]="'Instance'"></m-option>
           </m-select>
         </m-form-item>
 
@@ -185,7 +185,7 @@
     {{'web.structure-definition.form.modal.content' | translate}}
   </ng-container>
 
-  <div *m-modal-footer class="tw-button-group">
+  <div *m-modal-footer class="m-items-middle">
     <m-button (click)="proceed()">{{'web.structure-definition.form.modal.no-save-proceed' | translate}}</m-button>
     <m-button mDisplay="primary" (click)="proceed(true)">{{'web.structure-definition.form.modal.save-proceed' | translate}}</m-button>
   </div>
@@ -202,7 +202,7 @@
       </label>
     </div>
   </ng-container>
-  <div *m-modal-footer class="tw-button-group">
+  <div *m-modal-footer class="m-items-middle">
     <m-button (click)="proceedAfterError(errorModalData.pendingIndex)">{{'web.structure-definition.form.error-modal.delete-content' | translate}}</m-button>
     <m-button (click)="errorModal.close()">{{'core.btn.close' | translate}}</m-button>
   </div>

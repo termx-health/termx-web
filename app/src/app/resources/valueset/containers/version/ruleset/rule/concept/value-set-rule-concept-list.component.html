@@ -1,6 +1,6 @@
 <m-card class="m-card-inside">
-  <div *m-card-header class="m-items-between">
-    <div class="m-card-title">
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">
       {{'entities.value-set-rule-set.rule.concepts' | translate}}
     </div>
     <twa-add-button *ngIf="!viewMode" (click)="addRow()">
@@ -8,7 +8,7 @@
     </twa-add-button>
   </div>
 
-  <m-table [mData]="concepts" mHideOnSinglePage>
+  <m-table [mData]="concepts">
     <tr *mTableHead>
       <th>{{'entities.value-set-version-concept.concept' | translate}}</th>
       <th>{{'entities.value-set-version-concept.display' | translate}}</th>
@@ -99,7 +99,7 @@
   </ng-container>
 
   <ng-container *ngIf="codeSystem !== 'snomed-ct'">
-    <div *m-modal-footer class="tw-button-group">
+    <div *m-modal-footer class="m-items-middle">
       <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
       <m-button mDisplay="primary" (click)="confirmModalConcept()">{{'core.btn.confirm' | translate}}</m-button>
     </div>

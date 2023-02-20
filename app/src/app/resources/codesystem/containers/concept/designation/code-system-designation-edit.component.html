@@ -1,6 +1,6 @@
 <m-card class="m-card-inside">
-  <div *m-card-header class="m-items-between">
-    <div class="m-card-title">{{'entities.code-system-entity-version.designations' | translate}}</div>
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">{{'entities.code-system-entity-version.designations' | translate}}</div>
     <twa-add-button *ngIf="!viewMode" (click)="modalData.visible = true">{{'web.code-system-concept-version.designation.add-designation' | translate}}</twa-add-button>
   </div>
   <div *ngIf="!loading['languages']">
@@ -27,7 +27,7 @@
             placeholder="marina.ui.inputs.search.placeholder"
             icon="search"
             required>
-          <m-option *ngFor="let prop of entityProperties" [value]="prop.id" [label]="prop.name"></m-option>
+          <m-option *ngFor="let prop of entityProperties" [mValue]="prop.id" [mLabel]="prop.name"></m-option>
         </m-select>
       </m-form-item>
     </form>

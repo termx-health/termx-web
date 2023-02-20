@@ -1,6 +1,6 @@
 <m-card>
   <m-spinner [mLoading]="loading">
-    <div *m-card-header class="m-items-between">
+    <div *m-card-header class="m-justify-between">
       <nz-breadcrumb>
         <nz-breadcrumb-item>FHIR</nz-breadcrumb-item>
         <nz-breadcrumb-item>ConceptMap</nz-breadcrumb-item>
@@ -47,7 +47,7 @@
 
     <m-card *ngIf="response || error" class="m-card-inside">
       <div *m-card-header class="m-items-middle">
-        <div class="m-card-title">{{'web.integration.response' | translate}}</div>
+        <div class="m-card__title">{{'web.integration.response' | translate}}</div>
         <m-button (click)="copyResult()">
           <m-icon mCode="copy"></m-icon>
         </m-button>

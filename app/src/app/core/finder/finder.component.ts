@@ -30,7 +30,7 @@ export class FinderLoadMoreItemComponent {
     </div>
 
 
-    <div *ngIf="navigate" class="m-items-between">
+    <div *ngIf="navigate" class="m-justify-between">
       <a [routerLink]="navigate" routerLinkActive="tw-finder-menu-item-active">
         <ng-container *ngTemplateOutlet="contentTpl"></ng-container>
       </a>

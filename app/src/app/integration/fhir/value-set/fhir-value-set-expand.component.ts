@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {FhirValueSetExpandParams, FhirValueSetLibService} from 'terminology-lib/fhir';
-import {ClipboardService} from '@kodality-web/core-util';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 
 @Component({
@@ -16,7 +16,7 @@ export class FhirValueSetExpandComponent {
 
   public constructor(
     private fhirValueSetService: FhirValueSetLibService,
-    private clipboardService: ClipboardService,
+    private clipboardService: Clipboard,
   ) {}
 
   public expand(): void {

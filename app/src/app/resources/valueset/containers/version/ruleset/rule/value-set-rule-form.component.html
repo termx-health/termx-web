@@ -2,10 +2,10 @@
   <form #form="ngForm">
 
     <m-form-item mName="type" mLabel="entities.value-set-rule-set.rule.type" [required]="!viewMode">
-      <nz-radio-group name="type" [(ngModel)]="rule.type" [disabled]="!!viewMode" [required]="!viewMode">
-        <label nz-radio-button [nzValue]="'include'">{{'web.value-set-version.form.rule-set.rule.include' | translate}}</label>
-        <label nz-radio-button [nzValue]="'exclude'">{{'web.value-set-version.form.rule-set.rule.exclude' | translate}}</label>
-      </nz-radio-group>
+      <m-radio-group name="type" [(ngModel)]="rule.type" [disabled]="!!viewMode" [required]="!viewMode">
+        <ng-template m-radio-button [mValue]="'include'" mLabel="web.value-set-version.form.rule-set.rule.include"></ng-template>
+        <ng-template m-radio-button [mValue]="'exclude'" mLabel="web.value-set-version.form.rule-set.rule.exclude"></ng-template>
+      </m-radio-group>
     </m-form-item>
 
     <m-form-item mName="codeSystem"

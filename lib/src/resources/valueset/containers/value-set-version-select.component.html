@@ -5,5 +5,5 @@
     [autoUnselect]="false"
     [loading]="isLoading"
 >
-  <m-option *ngFor="let key of data | keys" [value]="data[key]?.id" [label]="data[key]?.version"></m-option>
+  <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.id" [mLabel]="data[key]?.version"></m-option>
 </m-select>

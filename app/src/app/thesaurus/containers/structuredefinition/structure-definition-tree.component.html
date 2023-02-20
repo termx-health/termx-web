@@ -1,9 +1,9 @@
 <div style="display: grid" *ngIf="dataSource">
-  <nz-radio-group name="type" [(ngModel)]="type" nzSize="small" style="margin-bottom: 0.5rem; margin-left: auto" (ngModelChange)="onTypeChange($event)">
-    <label nz-radio-button [nzValue]="'diff'">diff</label>
-    <label nz-radio-button [nzValue]="'hybrid'">hybrid</label>
-    <label nz-radio-button [nzValue]="'snap'">snap</label>
-  </nz-radio-group>
+  <m-radio-group name="type" [(ngModel)]="type" mSize="small" style="margin-bottom: 0.5rem; margin-left: auto" (ngModelChange)="onTypeChange($event)">
+    <ng-template m-radio-button [mValue]="'diff'" mLabel="diff"></ng-template>
+    <ng-template m-radio-button [mValue]="'hybrid'" mLabel="hybrid"></ng-template>
+    <ng-template m-radio-button [mValue]="'snap'" mLabel="snap"></ng-template>
+  </m-radio-group>
 </div>
 
 <nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource">

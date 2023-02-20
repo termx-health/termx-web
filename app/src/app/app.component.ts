@@ -3,10 +3,10 @@ import {MuiPageMenuItem} from '@kodality-web/marina-ui';
 import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
-import {LocalizedName} from '@kodality-web/marina-util';
 import {filter} from 'rxjs';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {AuthService} from './auth/auth.service';
+import {group} from '@kodality-web/core-util';
 
 @Component({
   selector: 'twa-root',
@@ -43,22 +43,22 @@ export class AppComponent implements OnInit {
   }
 
   private loadMenu(): void {
-    this.http.get<{label?: LocalizedName, icon: string, link: string}[]>("./assets/menu.json").subscribe((menu) => {
-      const createMenu = (items: any[] = []): MuiPageMenuItem[] => {
-        return this.filter(items).map(i => ({
+    this.http.get<any[]>("./assets/menu.json").subscribe(menu => {
+      const createMenu = (items: any[] = []): MuiPageMenuItem[] => items.map(i => {
+        const [route, query] = (i.link?.split('?') || []) as [string, string];
+        return ({
           label: i.label?.[this.translateService.currentLang],
           icon: i.icon,
-          click: () => i.link ? this.router.navigateByUrl(i.link) : undefined,
+          route: route,
+          queryParams: group(query?.split("&") || [], k => k.split('=')[0], k => k.split('=')[1]),
+          disabled: i.privileges && !this.authService.hasAnyPrivilege(i.privileges),
           items: createMenu(i.items)
-        }));
-      };
+        });
+      });
       this.menu = createMenu(menu);
     });
   }
 
-  private filter(items: any[]): any[] {
-    return items.filter(item => !item.privileges || this.authService.hasAnyPrivilege(item.privileges));
-  }
 
   public onLangChange(lang: string): void {
     this.translateService.use(lang);

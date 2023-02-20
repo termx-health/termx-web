@@ -51,14 +51,14 @@
           <m-card *ngIf="valueSet">
             <m-form-item mName="narrative" [mLabel]="narrativeHeader">
               <ng-template #narrativeHeader>
-                <div class="m-items-between">
-                  <div class="m-card-title">{{'entities.value-set.narrative' | translate}}</div>
+                <div class="m-justify-between">
+                  <div class="m-card__title">{{'entities.value-set.narrative' | translate}}</div>
                   <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
                     <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
                   </m-button>
                 </div>
               </ng-template>
-              <m-rich-text-editor *ngIf="!narrativeRaw" [(ngModel)]="valueSet.narrative" name="narrative"></m-rich-text-editor>
+              <m-quill *ngIf="!narrativeRaw" [(ngModel)]="valueSet.narrative" name="narrative"></m-quill>
               <m-textarea *ngIf="narrativeRaw" [(ngModel)]="valueSet.narrative" name="narrative"></m-textarea>
             </m-form-item>
           </m-card>

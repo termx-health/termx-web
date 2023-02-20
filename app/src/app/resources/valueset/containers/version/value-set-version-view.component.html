@@ -2,7 +2,7 @@
   <div nz-col [nzLg]="10" [nzMd]="18" [nzXs]="24">
     <m-card [mShowSkeleton]="loading">
       <div *m-card-header class="m-items-middle">
-        <div class="m-card-title">{{'web.value-set-version.form.view-header' | translate}}</div>
+        <div class="m-card__title">{{'web.value-set-version.form.view-header' | translate}}</div>
         <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
         <m-button (click)="expand()" mSize="small">
           <m-icon mCode="eye"></m-icon>

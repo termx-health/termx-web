@@ -33,7 +33,7 @@
       <ng-template nz-tab>
         <m-spinner [mLoading]="loading['refsets']">
           <m-select name="refSet" [(ngModel)]="refsetParams.referenceSet" (ngModelChange)="loadRefsetConcepts()" style="display: block; margin-bottom: 1em">
-            <m-option *ngFor="let refSet of refsets" [label]="refSet | snomedConceptName | async" [value]="refSet.id"></m-option>
+            <m-option *ngFor="let refSet of refsets" [mLabel]="refSet | snomedConceptName | async" [mValue]="refSet.id"></m-option>
           </m-select>
 
           <m-backend-table [mResult]="refsetConcepts" [(mQuery)]="refsetParams" (mQueryChange)="loadRefsetConcepts()" [mLoading]="loading['refset-concepts']">
