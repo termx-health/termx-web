@@ -29,17 +29,17 @@ export class AppComponent implements OnInit {
   public ngOnInit(): void {
     this.loadMenu();
 
-    const getLastChild = (r: ActivatedRouteSnapshot): ActivatedRouteSnapshot => {
-      return r.firstChild ? getLastChild(r.firstChild) : r;
-    };
     this.router.events.pipe(filter(e => e instanceof NavigationEnd)).subscribe(() => {
-      this.activeRoutePrivileges = getLastChild(this.route.snapshot).data['privilege'];
-      this.pageType = getLastChild(this.route.snapshot).data['pageType'];
+      const getLastChild = (r: ActivatedRouteSnapshot): ActivatedRouteSnapshot => r.firstChild ? getLastChild(r.firstChild) : r;
+      const lastChild = getLastChild(this.route.snapshot);
+
+      this.activeRoutePrivileges = lastChild.data['privilege'];
+      this.pageType = lastChild.data['pageType'];
     });
   }
 
   public logout(): void {
-    this.oidcSecurityService.logoff();
+    this.oidcSecurityService.logoff().subscribe();
   }
 
   private loadMenu(): void {
