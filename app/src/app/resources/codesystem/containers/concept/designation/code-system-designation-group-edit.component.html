@@ -16,8 +16,8 @@
     <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
       <m-form-item mName="designationKind" mLabel="entities.designation.designation-kind" required>
         <m-radio-group *ngIf="!viewMode" name="designationKind" [(ngModel)]="designationGroup.designationKind" required>
-          <ng-template m-radio mValue="text" mLabel="Text"></ng-template>
-          <ng-template m-radio mValue="blob" mLabel="Blob"></ng-template>
+          <label m-radio mValue="text">Text</label>
+          <label m-radio mValue="blob">Blob</label>
         </m-radio-group>
         <label *ngIf="viewMode">{{designationGroup.designationKind}}</label>
       </m-form-item>
@@ -72,9 +72,9 @@
             [(ngModel)]="designationGroup.caseSignificance"
             [disabled]="!!viewMode"
             required>
-          <ng-template m-radio mValue="ci" mLabel="web.case-sensitive-options.ci"></ng-template>
-          <ng-template m-radio mValue="cs" mLabel="web.case-sensitive-options.cs"></ng-template>
-          <ng-template m-radio mValue="ics" mLabel="web.case-sensitive-options.ics"></ng-template>
+          <label m-radio mValue="ci">{{'web.case-sensitive-options.ci' | translate}}</label>
+          <label m-radio mValue="cs">{{'web.case-sensitive-options.cs' | translate}}</label>
+          <label m-radio mValue="ics">{{'web.case-sensitive-options.ics' | translate}}</label>
         </m-radio-group>
         <label *ngIf="viewMode">{{'web.case-sensitive-options.' + designationGroup.caseSignificance | translate}}</label>
       </m-form-item>

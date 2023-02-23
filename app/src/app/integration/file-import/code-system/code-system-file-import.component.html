@@ -95,8 +95,8 @@
       <m-form-item mName="sourceImportType">
         <div class="m-items-middle">
           <m-radio-group name="sourceImportType" [(ngModel)]="data.source.type" (ngModelChange)="data.source.file = undefined" required>
-            <ng-template m-radio-button [mValue]="'link'" mLabel="web.integration.file-import.code-system.link"></ng-template>
-            <ng-template m-radio-button [mValue]="'file'" mLabel="web.integration.file-import.code-system.file"></ng-template>
+            <label m-radio-button [mValue]="'link'">{{'web.integration.file-import.code-system.link' | translate}}</label>
+            <label m-radio-button [mValue]="'file'">{{'web.integration.file-import.code-system.file' | translate}}</label>
           </m-radio-group>
 
           <ng-container [ngSwitch]="data.source.type">
@@ -108,8 +108,8 @@
 
       <m-form-item mName="sourceImportMode" [mLabel]="'File format'" required>
         <m-radio-group name="sourceImportMode" [(ngModel)]="data.source.mode" required>
-          <ng-template m-radio mValue="csv" mLabel="web.integration.file-import.code-system.csv"></ng-template>
-          <ng-template m-radio mValue="tsv" mLabel="web.integration.file-import.code-system.tsv"></ng-template>
+          <label m-radio mValue="csv">{{'web.integration.file-import.code-system.csv' | translate}}</label>
+          <label m-radio mValue="tsv">{{'web.integration.file-import.code-system.tsv' | translate}}</label>
         </m-radio-group>
       </m-form-item>
 

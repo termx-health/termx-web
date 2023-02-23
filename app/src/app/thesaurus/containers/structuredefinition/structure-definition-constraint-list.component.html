@@ -39,8 +39,8 @@
         </m-form-item>
         <m-form-item mName="severity" mLabel="web.structure-definition-constraint.modal.severity" required>
           <m-radio-group name="type" [(ngModel)]="modalData.constraint.severity">
-            <ng-template m-radio-button mValue="error" mLabel="web.structure-definition-constraint.modal.error"></ng-template>
-            <ng-template m-radio-button mValue="warning" mLabel="web.structure-definition-constraint.modal.warning"></ng-template>
+            <label m-radio-button mValue="error">{{'web.structure-definition-constraint.modal.error' | translate}}</label>
+            <label m-radio-button mValue="warning">{{'web.structure-definition-constraint.modal.warning' | translate}}</label>
           </m-radio-group>
         </m-form-item>
         <m-form-item mName="human" mLabel="web.structure-definition-constraint.modal.human" required>

@@ -1,8 +1,8 @@
 <div style="display: grid" *ngIf="dataSource">
   <m-radio-group name="type" [(ngModel)]="type" mSize="small" style="margin-bottom: 0.5rem; margin-left: auto" (ngModelChange)="onTypeChange($event)">
-    <ng-template m-radio-button [mValue]="'diff'" mLabel="diff"></ng-template>
-    <ng-template m-radio-button [mValue]="'hybrid'" mLabel="hybrid"></ng-template>
-    <ng-template m-radio-button [mValue]="'snap'" mLabel="snap"></ng-template>
+    <label m-radio-button [mValue]="'diff'">diff</label>
+    <label m-radio-button [mValue]="'hybrid'">hybrid</label>
+    <label m-radio-button [mValue]="'snap'">snap</label>
   </m-radio-group>
 </div>
 

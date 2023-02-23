@@ -43,11 +43,11 @@
                   </m-form-item>
                   <m-form-item mName="cardinality" mLabel="web.structure-definition.form.cardinality">
                     <m-radio-group name="cardinality" [(ngModel)]="element.cardinality">
-                      <ng-template m-radio-button mValue="0..0" mLabel="0..0"></ng-template>
-                      <ng-template m-radio-button mValue="0..1" mLabel="0..1"></ng-template>
-                      <ng-template m-radio-button mValue="0..*" mLabel="0..*"></ng-template>
-                      <ng-template m-radio-button mValue="1..1" mLabel="1..1"></ng-template>
-                      <ng-template m-radio-button mValue="1..*" mLabel="1..*"></ng-template>
+                      <label m-radio-button mValue="0..0">{{'0..0' | translate}}</label>
+                      <label m-radio-button mValue="0..1">{{'0..1' | translate}}</label>
+                      <label m-radio-button mValue="0..*">{{'0..*' | translate}}</label>
+                      <label m-radio-button mValue="1..1">{{'1..1' | translate}}</label>
+                      <label m-radio-button mValue="1..*">{{'1..*' | translate}}</label>
                     </m-radio-group>
                   </m-form-item>
                   <twa-sd-type-list [types]="element.types" (typesChange)="element.types = $event"></twa-sd-type-list>

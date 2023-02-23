@@ -21,9 +21,9 @@ import {TranslateService} from '@ngx-translate/core';
           </m-form-item>
           <m-form-item mName="type">
             <m-radio-group name="type" [(ngModel)]="data.linkType">
-              <ng-template m-radio-button mValue="url" mLabel="web.thesaurus-page.link-modal.url"></ng-template>
-              <ng-template m-radio-button mValue="page" mLabel="web.thesaurus-page.link-modal.page"></ng-template>
-              <ng-template m-radio-button mValue="resource" mLabel="web.thesaurus-page.link-modal.resource"></ng-template>
+              <label m-radio-button mValue="url">{{'web.thesaurus-page.link-modal.url' | translate}}</label>
+              <label m-radio-button mValue="page">{{'web.thesaurus-page.link-modal.page' | translate}}</label>
+              <label m-radio-button mValue="resource">{{'web.thesaurus-page.link-modal.resource' | translate}}</label>
             </m-radio-group>
           </m-form-item>
           <m-form-item *ngIf="data.linkType === 'url'" mName="link" mLabel="web.thesaurus-page.link-modal.url" required>

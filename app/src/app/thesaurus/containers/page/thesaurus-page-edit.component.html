@@ -6,11 +6,8 @@
       </div>
       <div style="margin-left: auto; margin-right: auto;">
         <m-radio-group name="sourceImportType" [(ngModel)]="showPreview">
-          <ng-template #picCenter><m-icon mCode="pic-center"></m-icon></ng-template>
-          <ng-template #picLeft><m-icon mCode="pic-left"></m-icon></ng-template>
-
-          <ng-template m-radio-button [mValue]="false" [mLabel]="picCenter"></ng-template>
-          <ng-template m-radio-button [mValue]="true" [mLabel]="picLeft"></ng-template>
+          <label m-radio-button [mValue]="false"><m-icon mCode="pic-center"></m-icon></label>
+          <label m-radio-button [mValue]="true"><m-icon mCode="pic-left"></m-icon></label>
         </m-radio-group>
       </div>
       <div style="margin-left: auto;">

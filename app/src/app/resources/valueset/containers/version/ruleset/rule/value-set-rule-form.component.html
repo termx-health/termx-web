@@ -3,8 +3,8 @@
 
     <m-form-item mName="type" mLabel="entities.value-set-rule-set.rule.type" [required]="!viewMode">
       <m-radio-group name="type" [(ngModel)]="rule.type" [disabled]="!!viewMode" [required]="!viewMode">
-        <ng-template m-radio-button [mValue]="'include'" mLabel="web.value-set-version.form.rule-set.rule.include"></ng-template>
-        <ng-template m-radio-button [mValue]="'exclude'" mLabel="web.value-set-version.form.rule-set.rule.exclude"></ng-template>
+        <label m-radio-button [mValue]="'include'">{{'web.value-set-version.form.rule-set.rule.include' | translate}}</label>
+        <label m-radio-button [mValue]="'exclude'">{{'web.value-set-version.form.rule-set.rule.exclude' | translate}}</label>
       </m-radio-group>
     </m-form-item>
 

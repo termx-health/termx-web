@@ -15,9 +15,9 @@
 
     <m-form-item mName="inactive" mLabel="entities.value-set-rule-set.inactive" [required]="!viewMode">
       <m-radio-group name="inactive" [(ngModel)]="ruleSet.inactive" [disabled]="!!viewMode">
-        <ng-template m-radio-button [mValue]="true" mLabel="web.value-set-version.form.rule-set.inactive"></ng-template>
-        <ng-template m-radio-button [mValue]="undefined" mLabel="web.value-set-version.form.rule-set.all"></ng-template>
-        <ng-template m-radio-button [mValue]="false" mLabel="web.value-set-version.form.rule-set.active"></ng-template>
+        <label m-radio-button [mValue]="true">{{'web.value-set-version.form.rule-set.inactive' | translate}}</label>
+        <label m-radio-button [mValue]="undefined">{{'web.value-set-version.form.rule-set.all' | translate}}</label>
+        <label m-radio-button [mValue]="false">{{'web.value-set-version.form.rule-set.active' | translate}}</label>
       </m-radio-group>
     </m-form-item>
 
