@@ -1,0 +1,18 @@
+<m-skeleton [mLoading]="loading">
+  <m-list mSeparated [mEmpty]="searchResult.data.length === 0">
+    <m-list-item *ngFor="let ms of searchResult.data" mClickable [routerLink]="['/resources','map-sets',ms.id,'edit']">
+      <div class="m-justify-between m-items-top">
+        <div>
+          <div class="m-items-middle">
+            <span class="m-bold">{{ms.names | localName}}</span>
+            <m-divider mVertical></m-divider>
+            <span>{{ms.uri}}</span>
+          </div>
+        </div>
+        <m-button mDisplay="text" mShape="circle" [routerLink]="['diff']" [queryParams]="{resourceId: ms.id, resourceType: 'map-set'}">
+          <span class="m-items-middle"><m-icon mCode="diff"></m-icon></span>
+        </m-button>
+      </div>
+    </m-list-item>
+  </m-list>
+</m-skeleton>

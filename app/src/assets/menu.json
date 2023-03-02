@@ -97,8 +97,8 @@
   },
   {
     "label": {
-      "en": "CodeSystems",
-      "et": "Koodisüsteemid"
+      "en": "External resources",
+      "et": "Välised ressursid"
     },
     "privileges": [
       "*.Snomed.view",
@@ -123,6 +123,19 @@
         "link": "measurement-units",
         "privileges": [
           "*.MeasurementUnit.view"
+        ]
+      },
+      {
+        "label": {
+          "en": "Integration",
+          "et": "Integratsioon"
+        },
+        "icon": "interaction",
+        "link": "integration",
+        "privileges": [
+          "*.CodeSystem.view",
+          "*.ValueSet.view",
+          "*.MapSet.view"
         ]
       }
     ]
@@ -161,15 +174,24 @@
     "items": [
       {
         "label": {
-          "en": "Integration",
-          "et": "Integratsioon"
+          "en": "Projects",
+          "et": "Projektid"
         },
-        "icon": "interaction",
-        "link": "integration",
+        "icon": "appstore",
+        "link": "projects",
         "privileges": [
-          "*.CodeSystem.view",
-          "*.ValueSet.view",
-          "*.MapSet.view"
+          "*.Project.view"
+        ]
+      },
+      {
+        "label": {
+          "en": "Terminology servers",
+          "et": "Terminoloogia serverid"
+        },
+        "icon": "cloud-server",
+        "link": "terminology-servers",
+        "privileges": [
+          "*.TerminologyServer.view"
         ]
       },
       {

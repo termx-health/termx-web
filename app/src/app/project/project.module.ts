@@ -1,0 +1,67 @@
+import {NgModule} from '@angular/core';
+import {Routes} from '@angular/router';
+import {ProjectListComponent} from './containers/project/project-list.component';
+import {ProjectEditComponent} from './containers/project/project-edit.component';
+import {SharedModule} from '../core/shared/shared.module';
+import {ProjectService} from './services/project.service';
+import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from 'terminology-lib/resources';
+import {ProjectLibModule} from '../../../../lib/src';
+import {PackageEditComponent} from './containers/package/package-edit.component';
+import {ProjectDashboardComponent} from './containers/project/project-dashboard.component';
+import {ProjectDiffComponent} from './containers/project/project-diff.component';
+import {TerminologyServerListComponent} from './containers/terminologyserver/terminology-server-list.component';
+import {TerminologyServerEditComponent} from './containers/terminologyserver/terminology-server-edit.component';
+import {TerminologyServerService} from './services/terminology-server.service';
+import {PackageService} from './services/package.service';
+import {PackageVersionService} from './services/package-version.service';
+
+export const PROJECT_CTX_ROUTES: Routes = [
+  {path: '', component: ProjectDashboardComponent},
+  {path: 'diff', component: ProjectDiffComponent}
+];
+
+export const PROJECT_ROUTES: Routes = [
+  {path: '', component: ProjectListComponent},
+  {path: 'add', component: ProjectEditComponent},
+  {path: ':id/edit', component: ProjectEditComponent},
+  {path: ':projectId/packages/add', component: PackageEditComponent},
+  {path: ':projectId/packages/:id/edit', component: PackageEditComponent}
+];
+
+export const TERMINOLOGY_SERVER_ROUTES: Routes = [
+  {path: '', component: TerminologyServerListComponent},
+  {path: 'add', component: TerminologyServerEditComponent},
+  {path: ':id/edit', component: TerminologyServerEditComponent},
+];
+
+@NgModule({
+  imports: [
+    SharedModule,
+    CodeSystemLibModule,
+    ValueSetLibModule,
+    MapSetLibModule,
+    NamingSystemLibModule,
+    AssociationLibModule,
+
+    ProjectLibModule
+  ],
+  declarations: [
+    ProjectDashboardComponent,
+    ProjectListComponent,
+    ProjectEditComponent,
+    ProjectDiffComponent,
+
+    PackageEditComponent,
+
+    TerminologyServerListComponent,
+    TerminologyServerEditComponent
+  ],
+  providers: [
+    ProjectService,
+    PackageService,
+    PackageVersionService,
+    TerminologyServerService
+  ]
+})
+export class ProjectModule {
+}

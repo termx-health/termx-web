@@ -1,0 +1,9 @@
+<m-select icon="search"
+    placeholder="marina.ui.inputs.search.placeholder"
+    [(ngModel)]="value"
+    (mInputChange)="onSearch($event)"
+    (mChange)="fireOnChange()"
+    [loading]="isLoading"
+    [autoUnselect]="false">
+  <m-option *ngFor="let id of data | keys" [mValue]="id | toNumber" mLabel="{{data[id].names | localName}}"></m-option>
+</m-select>

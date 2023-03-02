@@ -7,7 +7,6 @@
     "strict": false,
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
-    "noImplicitAny": true,
     "noImplicitThis": true,
     "noUnusedParameters": false,
     "noUnusedLocals": false,

@@ -1,0 +1,18 @@
+<m-skeleton [mLoading]="loading">
+  <m-list mSeparated [mEmpty]="searchResult.data.length === 0">
+    <m-list-item *ngFor="let cs of searchResult.data" mClickable [routerLink]="['/resources','code-systems',cs.id,'edit']">
+      <div class="m-justify-between m-items-top">
+        <div>
+          <div class="m-items-middle">
+            <span class="m-bold">{{cs.names | localName}}</span>
+            <m-divider mVertical></m-divider>
+            <span>{{cs.uri}}</span>
+          </div>
+        </div>
+        <m-button mDisplay="text" mShape="circle" [routerLink]="['diff']" [queryParams]="{resourceId: cs.id, resourceType: 'code-system'}">
+          <span class="m-items-middle"><m-icon mCode="diff"></m-icon></span>
+        </m-button>
+      </div>
+    </m-list-item>
+  </m-list>
+</m-skeleton>

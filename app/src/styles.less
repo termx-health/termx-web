@@ -7,6 +7,7 @@
 @primary-color: #1464C0;
 
 :root {
+  --color-action-bar-background: @mui-bg-color-light;
   --color-table-header-background: #fafafa;
   --color-table-header-background--sorter: #f9f9f9;
 }
@@ -49,6 +50,13 @@ html {
   text-align: right !important;
   width: 0;
   white-space: nowrap;
+}
+
+.tw-flex-container {
+  // container with default row gap
+  display: flex;
+  flex-direction: column;
+  gap: calc(2 * var(--gap-default));
 }
 
 

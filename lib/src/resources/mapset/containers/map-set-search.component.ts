@@ -16,10 +16,11 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 })
 export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() @BooleanInput() public multiple: string | boolean;
   @Input() public filter?: (resource: MapSet) => boolean;
 
   public data: {[id: string]: MapSet} = {};
-  public value?: string;
+  public value?: string | string[];
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
@@ -61,25 +62,31 @@ export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
     );
   }
 
-  private loadMapSet(id?: string): void {
+  private loadMapSets(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.mapSetLibService.load(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
-        this.data = {...(this.data || {}), [c.id!]: c};
+      this.mapSetLibService.search({ids: id, associationsDecorated: true, versionsDecorated: true}).pipe(takeUntil(this.destroy$)).subscribe(resp => {
+        this.data = {...(this.data || {}), ...group(resp.data, m => m.id)};
       }).add(() => this.loading['load'] = false);
     }
   }
 
-  public writeValue(obj: MapSet | string): void {
-    this.value = typeof obj === 'object' ? obj?.id : obj;
-    this.loadMapSet(this.value);
+  public writeValue(obj: MapSet | MapSet[] | string | string[]): void {
+    if (Array.isArray(obj)) {
+      this.value = obj.map(p => typeof p === 'object' ? p?.id : p);
+      this.loadMapSets(this.value.join(','));
+    } else {
+      this.value = typeof obj === 'object' ? obj?.id : obj;
+      this.loadMapSets(this.value);
+    }
   }
 
   public fireOnChange(): void {
     if (this.valuePrimitive) {
       this.onChange(this.value);
     } else {
-      this.onChange(this.data?.[this.value!]);
+      const v = Array.isArray(this.value) ? this.value.map(id => this.data?.[id]) : this.data?.[this.value];
+      this.onChange(v);
     }
   }
 

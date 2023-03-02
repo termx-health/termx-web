@@ -1,0 +1,43 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">{{'entities.project.plural' | translate}}</div>
+  </div>
+  <div class="m-justify-between" style="margin-bottom: 1em">
+    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <div style="display: flex; gap: 0.5rem">
+      <twa-add-button *twaPrivileged="'*.Project.edit'" [routerLink]="['./add']">
+        {{'web.project.add-btn' | translate}}
+      </twa-add-button>
+      <m-button mClass="m-justify-between" *twaPrivileged="'*.Project.edit'">
+        <m-icon mCode="import"></m-icon>
+        <label>{{'web.project.import-btn' | translate}}</label>
+      </m-button>
+    </div>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+    <tr *mTableHead>
+      <th mColumnKey="code">{{'entities.project.code' | translate}}</th>
+      <th>{{'entities.project.name' | translate}}</th>
+      <th>{{'entities.project.active' | translate}}</th>
+    </tr>
+
+    <tr *mTableRow="let project">
+      <td>
+        <a *ngIf="'*.Project.edit' | twaHasAnyPrivilege; else view" [routerLink]="['context', {pr: project.id}]">
+          {{project.code}}
+        </a>
+        <ng-template #view>
+          {{project.code}}
+        </ng-template>
+      </td>
+      <td>{{project.names | localName}}</td>
+      <td><m-checkbox [(ngModel)]="project.active" readOnly></m-checkbox></td>
+    </tr>
+    <tr *mTableNoData>
+      <td colspan="5">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>

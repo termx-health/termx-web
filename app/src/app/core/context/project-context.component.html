@@ -1,0 +1,53 @@
+<m-page-bar mPosition="top">
+  <div class="project-context">
+    <div class="project-context__container">
+      <span class="project-context__item" style="width: 100%; grid-column: 3 span" *ngIf="loading">...</span>
+
+      <ng-container *ngIf="!loading">
+        <!-- Left -->
+        <div class="project-context__item project-context__info">
+          <twl-project-drawer-search [project]="project" [package]="pack" [version]="version"
+              (twChange)="setContext({projectId: $event?.project?.id, packageId: $event?.package?.id, versionId: $event.version?.id})">
+          </twl-project-drawer-search>
+          <div>
+            <m-button *ngIf="project" mDisplay="text" mShape="circle" [routerLink]="['/projects', project?.id, 'edit']">
+              <span class="m-items-middle"><m-icon mCode="form"></m-icon></span>
+            </m-button>
+            <m-button *ngIf="version" mDisplay="text" mShape="circle" (mClick)="downloadYaml()">
+              <span class="m-items-middle"><m-icon mCode="download"></m-icon></span>
+            </m-button>
+          </div>
+        </div>
+
+        <!-- Filler -->
+        <div class="project-context__item"></div>
+
+        <!-- Right -->
+        <div class="project-context__item project-context__info">
+          <!-- Package-->
+          <div *ngIf="pack">
+            <div class="m-subtitle">{{'entities.package.singular' | translate}}</div>
+            <div class="m-items-middle">
+              <div class="m-bold">{{pack.code}}</div>
+            </div>
+            <div class="m-subtitle">{{pack.git}}</div>
+          </div>
+
+          <!-- Package version-->
+          <div *ngIf="version">
+            <!-- Title -->
+            <div class="m-subtitle">{{'entities.package.version.singular' | translate}}</div>
+            <!-- Code -->
+            <div class="m-bold">{{version.version}}</div>
+          </div>
+        </div>
+
+      </ng-container>
+    </div>
+  </div>
+</m-page-bar>
+
+<div class="project-context__content">
+  <router-outlet></router-outlet>
+</div>
+

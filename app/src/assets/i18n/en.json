@@ -9,7 +9,8 @@
       "duplicate": "Duplicate",
       "confirm": "Confirm",
       "proceed": "Proceed",
-      "add": "Add"
+      "add": "Add",
+      "select": "Select"
     },
     "no-privilege": {
       "error": "401 Unauthorized",
@@ -737,6 +738,23 @@
         "add-header": "Add template",
         "edit-header": "Edit template"
       }
+    },
+    "project": {
+      "add-header": "Add project",
+      "edit-header": "Edit project",
+      "select-context": "Select context",
+      "add-btn": "Add project",
+      "import-btn": "Import project",
+      "new-version": "New version"
+    },
+    "package": {
+      "add-header": "Add package",
+      "edit-header": "Edit package"
+    },
+    "terminology-server": {
+      "add-header": "Add terminology server",
+      "edit-header": "Edit terminology server",
+      "add-btn": "Add terminology server"
     }
   },
   "entities": {
@@ -766,6 +784,7 @@
       "description": "Description"
     },
     "map-set": {
+      "plural": "Map Sets",
       "id": "Identifier",
       "uri": "Uniform resource identifier (URI)",
       "name": "Name",
@@ -804,6 +823,7 @@
       "status": "Status"
     },
     "code-system": {
+      "plural": "Code Systems",
       "id": "Identifier",
       "uri": "Uniform resource identifier (URI)",
       "uri-short": "URI",
@@ -905,6 +925,7 @@
       }
     },
     "value-set": {
+      "plural": "Value Sets",
       "id": "Identifier",
       "name": "Name",
       "uri": "Uniform resource identifier (URI)",
@@ -1004,6 +1025,7 @@
       "type": "Type"
     },
     "page": {
+      "plural": "Pages",
       "status": "Status",
       "tags": "Tags",
       "template": "Template",
@@ -1027,6 +1049,7 @@
       "target": "Target"
     },
     "structure-definition": {
+      "plural": "Structure Definitions",
       "url": "URL",
       "code": "Code",
       "content": "Content",
@@ -1040,6 +1063,38 @@
       "names": "Names",
       "content-type": "Content type",
       "content": "Content"
+    },
+    "package": {
+      "plural": "Packages",
+      "singular": "Package",
+      "code": "Code",
+      "git": "Git",
+      "version": {
+        "plural": "Versions",
+        "singular": "Version",
+        "version": "Version"
+      }
+    },
+    "project": {
+      "plural": "Projects",
+      "singular": "Project",
+      "code": "Code",
+      "name": "Name",
+      "active": "Active",
+      "terminology-servers": "Terminology servers",
+      "acl": "ACL",
+      "shared": "Shared",
+      "owners": "Owners",
+      "editors": "Editors",
+      "viewers": "Viewers"},
+    "terminology-server": {
+      "plural": "Terminology servers",
+      "singular": "Terminology server",
+      "code": "Code",
+      "name": "Name",
+      "active": "Active",
+      "root-url": "Root URL",
+      "current-installation": "Current installation"
     }
   }
 }

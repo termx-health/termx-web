@@ -7,6 +7,9 @@ import {CoreUtilModule} from '@kodality-web/core-util';
 import {FormsModule} from '@angular/forms';
 import {MapSetEntityVersionSearchComponent} from './containers/map-set-entity-version-search.component';
 import {MapSetEntityVersionLibService} from './services/map-set-entity-version-lib.service';
+import {MapSetWidgetComponent} from './containers/map-set-widget.component';
+import {MarinaUtilModule} from '@kodality-web/marina-util';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -14,7 +17,9 @@ import {MapSetEntityVersionLibService} from './services/map-set-entity-version-l
     MuiComponentsModule,
     FormsModule,
     CommonModule,
-    CoreUtilModule
+    CoreUtilModule,
+    MarinaUtilModule,
+    RouterModule
   ],
   providers: [
     MapSetLibService,
@@ -23,10 +28,12 @@ import {MapSetEntityVersionLibService} from './services/map-set-entity-version-l
   declarations: [
     MapSetSearchComponent,
     MapSetEntityVersionSearchComponent,
+    MapSetWidgetComponent
   ],
   exports: [
     MapSetSearchComponent,
-    MapSetEntityVersionSearchComponent
+    MapSetEntityVersionSearchComponent,
+    MapSetWidgetComponent
   ]
 })
 export class MapSetLibModule {

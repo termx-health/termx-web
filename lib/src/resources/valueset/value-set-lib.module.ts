@@ -10,6 +10,9 @@ import {ValueSetConceptSelectComponent} from './containers/value-set-concept-sel
 import {CodeSystemLibModule} from '../codesystem';
 import {ValueSetVersionLibService} from './services/value-set-version-lib.service';
 import {ValueSetVersionCodePipe} from './pipe/value-set-version-code-pipe';
+import {ValueSetWidgetComponent} from './containers/value-set-widget.component';
+import {MarinaUtilModule} from '@kodality-web/marina-util';
+import {RouterModule} from '@angular/router';
 
 
 @NgModule({
@@ -18,7 +21,9 @@ import {ValueSetVersionCodePipe} from './pipe/value-set-version-code-pipe';
     MarinaUiModule,
     FormsModule,
     CoreUtilModule,
-    CodeSystemLibModule
+    CodeSystemLibModule,
+    MarinaUtilModule,
+    RouterModule
   ],
   providers: [
     ValueSetLibService,
@@ -28,6 +33,7 @@ import {ValueSetVersionCodePipe} from './pipe/value-set-version-code-pipe';
     ValueSetSearchComponent,
     ValueSetVersionSelectComponent,
     ValueSetConceptSelectComponent,
+    ValueSetWidgetComponent,
 
     ValueSetVersionCodePipe
   ],
@@ -35,6 +41,7 @@ import {ValueSetVersionCodePipe} from './pipe/value-set-version-code-pipe';
     ValueSetSearchComponent,
     ValueSetVersionSelectComponent,
     ValueSetConceptSelectComponent,
+    ValueSetWidgetComponent,
 
     ValueSetVersionCodePipe
   ]

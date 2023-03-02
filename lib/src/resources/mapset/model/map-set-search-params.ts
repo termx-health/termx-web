@@ -3,6 +3,7 @@ import {QueryParams} from '@kodality-web/core-util';
 
 export class MapSetSearchParams extends QueryParams {
   public id?: string;
+  public ids?: string;
   public idContains?: string;
   public uri?: string;
   public uriContains?: string;
@@ -28,4 +29,8 @@ export class MapSetSearchParams extends QueryParams {
   public versionsDecorated?: boolean;
 
   public lang?: string;
+
+  public projectId?: number;
+  public packageId?: number;
+  public packageVersionId?: number;
 }

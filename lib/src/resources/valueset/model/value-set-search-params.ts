@@ -2,6 +2,7 @@ import {QueryParams} from '@kodality-web/core-util';
 
 export class ValueSetSearchParams extends QueryParams {
   public id?: string;
+  public ids?: string;
   public idContains?: string;
   public uri?: string;
   public uriContains?: string;
@@ -19,4 +20,8 @@ export class ValueSetSearchParams extends QueryParams {
 
   public codeSystem?: string;
   public conceptCode?: string;
+
+  public projectId?: number;
+  public packageId?: number;
+  public packageVersionId?: number;
 }

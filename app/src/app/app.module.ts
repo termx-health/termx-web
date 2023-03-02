@@ -36,6 +36,8 @@ import {ThesaurusModule} from './thesaurus/thesaurus.module';
 import {SmartAuthService} from './auth/smart-auth.service';
 import {SmartHttpInterceptor} from './auth/smart-http-interceptor.service';
 import {FhirModule} from './fhir/fhir.module';
+import {ProjectLibModule} from 'terminology-lib/project';
+import {ProjectModule} from './project/project.module';
 
 registerLocaleData(et);
 
@@ -110,7 +112,10 @@ export function MarinaUiConfigFactory(): MuiConfig {
     SharedModule,
 
     MeasurementUnitLibModule,
-    MeasurementUnitModule
+    MeasurementUnitModule,
+
+    ProjectLibModule,
+    ProjectModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},

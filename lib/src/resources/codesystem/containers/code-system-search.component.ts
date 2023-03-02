@@ -18,9 +18,10 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() public filter?: (resource: CodeSystem) => boolean;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
+  @Input() @BooleanInput() public multiple: string | boolean;
 
   public data: {[id: string]: CodeSystem} = {};
-  public value?: string;
+  public value?: string | string[];
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
@@ -62,26 +63,33 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
     );
   }
 
-  private loadCodeSystem(id?: string): void {
+  private loadCodeSystems(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.codeSystemService.load(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
-        this.data = {...(this.data || {}), [c.id!]: c};
+      this.codeSystemService.search({ids: id, conceptsDecorated: true, propertiesDecorated: true, versionsDecorated: true})
+        .pipe(takeUntil(this.destroy$)).subscribe(resp => {
+        this.data = {...(this.data || {}), ...group(resp.data, c => c.id)};
       }).add(() => this.loading['load'] = false);
     }
   }
 
 
-  public writeValue(obj: CodeSystem | string): void {
-    this.value = typeof obj === 'object' ? obj?.id : obj;
-    this.loadCodeSystem(this.value);
+  public writeValue(obj: CodeSystem | CodeSystem[] | string | string[]): void {
+    if (Array.isArray(obj)) {
+      this.value = obj.map(p => typeof p === 'object' ? p?.id : p);
+      this.loadCodeSystems(this.value.join(','));
+    } else {
+      this.value = typeof obj === 'object' ? obj?.id : obj;
+      this.loadCodeSystems(this.value);
+    }
   }
 
   public fireOnChange(): void {
     if (this.valuePrimitive) {
       this.onChange(this.value);
     } else {
-      this.onChange(this.data?.[this.value!]);
+      const v = Array.isArray(this.value) ? this.value.map(id => this.data?.[id]) : this.data?.[this.value];
+      this.onChange(v);
     }
   }
 

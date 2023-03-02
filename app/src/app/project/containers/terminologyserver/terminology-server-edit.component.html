@@ -1,0 +1,35 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading">
+      <m-card>
+        <div *m-card-header class="m-justify-between">
+          <div class="m-card__title">
+            {{(mode === 'edit' ? 'web.terminology-server.edit-header' : 'web.terminology-server.add-header') | translate}}
+          </div>
+        </div>
+        <form #form="ngForm" *ngIf="terminologyServer">
+          <m-form-item mName="code" mLabel="entities.terminology-server.code" required>
+            <m-input name="code" [(ngModel)]="terminologyServer.code" required></m-input>
+          </m-form-item>
+          <m-form-item mName="name" mLabel="entities.terminology-server.name" required>
+            <m-multi-language-input name="name" [(ngModel)]="terminologyServer.names" required></m-multi-language-input>
+          </m-form-item>
+          <m-form-item mName="url" mLabel="entities.terminology-server.root-url">
+            <m-input name="url" [(ngModel)]="terminologyServer.rootUrl"></m-input>
+          </m-form-item>
+          <m-form-item mName="active" mLabel="entities.terminology-server.active">
+            <m-checkbox name="active" [(ngModel)]="terminologyServer.active"></m-checkbox>
+          </m-form-item>
+          <m-form-item mName="currentInstallation" mLabel="entities.terminology-server.current-installation">
+            <m-checkbox name="currentInstallation" [(ngModel)]="terminologyServer.currentInstallation"></m-checkbox>
+          </m-form-item>
+        </form>
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

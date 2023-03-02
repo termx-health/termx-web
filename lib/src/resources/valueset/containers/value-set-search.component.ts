@@ -16,10 +16,11 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 })
 export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() @BooleanInput() public multiple: string | boolean;
   @Input() public filter?: (resource: ValueSet) => boolean;
 
   public data: {[id: string]: ValueSet} = {};
-  public value?: string;
+  public value?: string | string[];
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
@@ -61,26 +62,32 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
     );
   }
 
-  private loadValueSet(id?: string): void {
+  private loadValueSets(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.valueSetService.load(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
-        this.data = {...(this.data || {}), [c.id!]: c};
+      this.valueSetService.search({ids: id, decorated: true}).pipe(takeUntil(this.destroy$)).subscribe(resp => {
+        this.data = {...(this.data || {}), ...group(resp.data, v => v.id)};
       }).add(() => this.loading['load'] = false);
     }
   }
 
 
-  public writeValue(obj: ValueSet | string): void {
-    this.value = typeof obj === 'object' ? obj?.id : obj;
-    this.loadValueSet(this.value);
+  public writeValue(obj: ValueSet | ValueSet[] | string | string[]): void {
+    if (Array.isArray(obj)) {
+      this.value = obj.map(p => typeof p === 'object' ? p?.id : p);
+      this.loadValueSets(this.value.join(','));
+    } else {
+      this.value = typeof obj === 'object' ? obj?.id : obj;
+      this.loadValueSets(this.value);
+    }
   }
 
   public fireOnChange(): void {
     if (this.valuePrimitive) {
       this.onChange(this.value);
     } else {
-      this.onChange(this.data?.[this.value!]);
+      const v = Array.isArray(this.value) ? this.value.map(id => this.data?.[id]) : this.data?.[this.value];
+      this.onChange(v);
     }
   }
 

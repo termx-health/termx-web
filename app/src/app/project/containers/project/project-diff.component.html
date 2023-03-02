@@ -1,0 +1,52 @@
+<m-page [mLoading]="loading">
+  <div style="display: flex; flex-direction: column; gap: 1rem">
+    <m-card>
+      <div style="display: flex; gap: 1rem">
+        <m-form-item mName="type" mLabel="Resource type">
+          <m-select name="type" [(ngModel)]="diffItem.resourceType" (ngModelChange)="diffItem.resourceId = undefined">
+            <m-option mLabel="Code System" [mValue]="'code-system'"></m-option>
+            <m-option mLabel="Value Set" [mValue]="'value-set'"></m-option>
+            <m-option mLabel="Map Set" [mValue]="'map-set'"></m-option>
+          </m-select>
+        </m-form-item>
+        <m-form-item mName="current" mLabel="Resource">
+          <ng-container [ngSwitch]="diffItem.resourceType">
+            <twl-code-system-search *ngSwitchCase="'code-system'"
+                name="current-cs"
+                [(ngModel)]="diffItem.resourceId"
+                (ngModelChange)="loadResources($event)"
+                valuePrimitive></twl-code-system-search>
+            <twl-value-set-search *ngSwitchCase="'value-set'"
+                name="current-vs"
+                [(ngModel)]="diffItem.resourceId"
+                (ngModelChange)="loadResources($event)"
+                valuePrimitive></twl-value-set-search>
+            <twl-map-set-search *ngSwitchCase="'map-set'"
+                name="current-ms"
+                [(ngModel)]="diffItem.resourceId"
+                (ngModelChange)="loadResources($event)"
+                valuePrimitive></twl-map-set-search>
+          </ng-container>
+        </m-form-item>
+        <m-form-item mName="server" mLabel="Comparable server">
+          <m-select name="server" [(ngModel)]="diffItem.server" (ngModelChange)="loadServerResource(diffItem.resourceId, $event?.rootUrl)" compareWith="id">
+            <m-option *ngFor="let server of terminologyServers" [mLabel]="server.names | localName" [mValue]="server"></m-option>
+          </m-select>
+        </m-form-item>
+      </div>
+    </m-card>
+    <div style="display: flex; gap: 1rem">
+      <m-card style="max-width: 33%">
+        <label *m-card-header>{{'entities.terminology-server.current-installation' | translate}}</label>
+        <pre>{{current}}</pre>
+      </m-card>
+      <m-card style="max-width: 33%">
+        <label *m-card-header>{{diffItem.server?.names | localName}}</label>
+        <pre>{{comparable}}</pre>
+      </m-card>
+      <m-card style="max-width: 33%">
+        <pre id="display"></pre>
+      </m-card>
+    </div>
+  </div>
+</m-page>

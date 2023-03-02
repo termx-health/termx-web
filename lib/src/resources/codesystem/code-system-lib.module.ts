@@ -14,14 +14,19 @@ import {CodeSystemEntityVersionSearchComponent} from './containers/code-system-e
 import {TranslateModule} from '@ngx-translate/core';
 import {LocalizedConceptNamePipe} from './pipe/localized-concept-name-pipe';
 import {CodeSystemVersionCodePipe} from './pipe/code-system-version-code-pipe';
+import {CodeSystemWidgetComponent} from './containers/code-system-widget.component';
+import {MarinaUtilModule} from '@kodality-web/marina-util';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
+    RouterModule,
     CommonModule,
     MarinaUiModule,
     FormsModule,
     CoreUtilModule,
-    TranslateModule
+    TranslateModule,
+    MarinaUtilModule,
   ],
   providers: [
     CodeSystemLibService,
@@ -34,6 +39,7 @@ import {CodeSystemVersionCodePipe} from './pipe/code-system-version-code-pipe';
     ConceptSearchComponent,
     CodeSystemVersionSelectComponent,
     CodeSystemEntityVersionSearchComponent,
+    CodeSystemWidgetComponent,
 
     LocalizedConceptNamePipe,
     CodeSystemVersionCodePipe
@@ -43,6 +49,7 @@ import {CodeSystemVersionCodePipe} from './pipe/code-system-version-code-pipe';
     ConceptSearchComponent,
     CodeSystemVersionSelectComponent,
     CodeSystemEntityVersionSearchComponent,
+    CodeSystemWidgetComponent,
 
     LocalizedConceptNamePipe,
     CodeSystemVersionCodePipe

@@ -2,6 +2,7 @@ import {QueryParams} from '@kodality-web/core-util';
 
 export class CodeSystemSearchParams extends QueryParams {
   public id?: string;
+  public ids?: string;
   public idContains?: string;
   public uri?: string;
   public uriContains?: string;
@@ -28,4 +29,8 @@ export class CodeSystemSearchParams extends QueryParams {
   public codeSystemEntityVersionId?: number;
 
   public lang?: string;
+
+  public projectId?: number;
+  public packageId?: number;
+  public packageVersionId?: number;
 }

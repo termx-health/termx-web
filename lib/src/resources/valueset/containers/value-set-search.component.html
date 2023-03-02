@@ -7,6 +7,7 @@
     [loading]="isLoading"
     [autoUnselect]="false"
     [filterOption]="filterOption"
+    [multiple]="multiple | toBoolean"
 >
   <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.id" [mLabel]="data[key]?.id"></m-option>
 </m-select>
