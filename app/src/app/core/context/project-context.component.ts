@@ -71,4 +71,8 @@ export class ProjectContextComponent implements OnInit {
        saveAs(new Blob([resp.content], {type: 'application/yaml'}), `${name}.yaml`);
     });
   }
+
+  public unselectPackage(): void {
+    this.setContext({projectId: this.project.id});
+  }
 }

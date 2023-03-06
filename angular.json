@@ -79,7 +79,7 @@
               }
             ],
             "styles": [
-              "app/src/styles.less",
+              "app/src/styles/styles.less",
               "node_modules/@kodality-web/marina-quill/quill.styles.less",
               "node_modules/prismjs/themes/prism-okaidia.css"
             ],
@@ -103,7 +103,7 @@
                 {
                   "type": "anyComponentStyle",
                   "maximumWarning": "10kb",
-                  "maximumError": "600kb"
+                  "maximumError": "20kb"
                 }
               ],
               "fileReplacements": [

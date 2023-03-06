@@ -745,7 +745,8 @@
       "select-context": "Select context",
       "add-btn": "Add project",
       "import-btn": "Import project",
-      "new-version": "New version"
+      "new-version": "New version",
+      "all-packages": "All packages"
     },
     "package": {
       "add-header": "Add package",

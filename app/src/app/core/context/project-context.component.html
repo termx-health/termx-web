@@ -6,7 +6,7 @@
       <ng-container *ngIf="!loading">
         <!-- Left -->
         <div class="project-context__item project-context__info">
-          <twl-project-drawer-search [project]="project" [package]="pack" [version]="version"
+          <twl-project-drawer-search #projectDrawer [project]="project" [package]="pack" [version]="version"
               (twChange)="setContext({projectId: $event?.project?.id, packageId: $event?.package?.id, versionId: $event.version?.id})">
           </twl-project-drawer-search>
           <div>
@@ -24,6 +24,8 @@
 
         <!-- Right -->
         <div class="project-context__item project-context__info">
+          <a *ngIf="!pack && !version" (click)="projectDrawer.openDrawer()">{{'web.project.all-packages' | translate}}</a>
+
           <!-- Package-->
           <div *ngIf="pack">
             <div class="m-subtitle">{{'entities.package.singular' | translate}}</div>
@@ -40,6 +42,10 @@
             <!-- Code -->
             <div class="m-bold">{{version.version}}</div>
           </div>
+        </div>
+
+        <div *ngIf="pack || version" class="project-context__item selectable" (click)="unselectPackage()">
+          <m-icon mCode="close"></m-icon>
         </div>
 
       </ng-container>
