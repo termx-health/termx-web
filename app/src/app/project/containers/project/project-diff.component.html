@@ -14,22 +14,22 @@
             <twl-code-system-search *ngSwitchCase="'code-system'"
                 name="current-cs"
                 [(ngModel)]="diffItem.resourceId"
-                (ngModelChange)="loadResources($event)"
+                (ngModelChange)="loadResources($event, diffItem?.server?.code)"
                 valuePrimitive></twl-code-system-search>
             <twl-value-set-search *ngSwitchCase="'value-set'"
                 name="current-vs"
                 [(ngModel)]="diffItem.resourceId"
-                (ngModelChange)="loadResources($event)"
+                (ngModelChange)="loadResources($event, diffItem?.server?.code)"
                 valuePrimitive></twl-value-set-search>
             <twl-map-set-search *ngSwitchCase="'map-set'"
                 name="current-ms"
                 [(ngModel)]="diffItem.resourceId"
-                (ngModelChange)="loadResources($event)"
+                (ngModelChange)="loadResources($event, diffItem?.server?.code)"
                 valuePrimitive></twl-map-set-search>
           </ng-container>
         </m-form-item>
         <m-form-item mName="server" mLabel="Comparable server">
-          <m-select name="server" [(ngModel)]="diffItem.server" (ngModelChange)="loadServerResource(diffItem.resourceId, $event?.rootUrl)" compareWith="id">
+          <m-select name="server" [(ngModel)]="diffItem.server" (ngModelChange)="loadResources(diffItem?.resourceId, $event?.code)" compareWith="id">
             <m-option *ngFor="let server of terminologyServers" [mLabel]="server.names | localName" [mValue]="server"></m-option>
           </m-select>
         </m-form-item>

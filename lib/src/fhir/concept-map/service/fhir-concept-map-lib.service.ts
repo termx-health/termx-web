@@ -14,8 +14,8 @@ export class FhirConceptMapLibService {
     this.baseUrl = `${api}/fhir/ConceptMap`;
   }
 
-  public loadConceptMap(id: string, version?: string, url?: string): Observable<any> {
-    return this.http.get<any>(`${url ? url + '/fhir/CodeSystem' : this.baseUrl}/${id}`, {params: SearchHttpParams.build({version: version})});
+  public loadConceptMap(id: string, version?: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/${id}`, {params: SearchHttpParams.build({version: version})});
   }
 
   public import(urls: FhirParameters): Observable<FhirParameters> {

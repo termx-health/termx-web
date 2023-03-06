@@ -42,35 +42,32 @@ export class ProjectDiffComponent implements OnInit {
 
   }
 
-  private loadResource(id: string, url?: string): Observable<string> {
+  private loadResource(id: string): Observable<string> {
     if (id && this.diffItem.resourceType === 'code-system') {
-      return this.fhirCSService.loadCodeSystem(id, undefined, url).pipe(map(r => JSON.stringify(r, null, 2)));
+      return this.fhirCSService.loadCodeSystem(id).pipe(map(r => JSON.stringify(r, null, 2)));
     }
     if (id && this.diffItem.resourceType === 'value-set') {
-      return this.fhirVSService.loadValueSet(id, undefined, url).pipe(map(r => JSON.stringify(r, null, 2)));
+      return this.fhirVSService.loadValueSet(id).pipe(map(r => JSON.stringify(r, null, 2)));
     }
     if (id && this.diffItem.resourceType === 'map-set') {
-      return this.fhirCMService.loadConceptMap(id, undefined, url).pipe(map(r => JSON.stringify(r, null, 2)));
+      return this.fhirCMService.loadConceptMap(id).pipe(map(r => JSON.stringify(r, null, 2)));
     }
     return of(null);
   }
 
-  public loadServerResource(id: string, url: string): void {
-    if (!url) {
-      return;
+  private loadServerResource(id: string, code: string): Observable<string> {
+    if (!id || !code) {
+      return of(null);
     }
-    this.loading = true;
-    this.loadResource(id, url).subscribe(r => this.comparable = r).add(() => {
-      this.compare();
-      this.loading = false;
-    });
+    const request = {serverCode: code, resourceId: id, resourceType: this.diffItem.resourceType};
+    return this.terminologyServerService.loadResource(request).pipe(map(r => r.resource));
   }
 
-  public loadResources(id: string): void {
+  public loadResources(id: string, serverCode: string): void {
     this.loading = true;
     forkJoin([
       this.loadResource(id),
-      this.loadResource(id, this.diffItem.server?.rootUrl)
+      this.loadServerResource(id, serverCode)
     ]).subscribe(([current, comparable]) => {
       this.current = current;
       this.comparable = comparable;

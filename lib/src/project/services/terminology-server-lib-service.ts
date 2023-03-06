@@ -21,4 +21,8 @@ export class TerminologyServerLibService {
   public search(params: TerminologyServerSearchParams): Observable<SearchResult<TerminologyServer>> {
     return this.http.get<SearchResult<TerminologyServer>>(`${this.baseUrl}`, {params: SearchHttpParams.build(params)});
   }
+
+  public loadResource(request: {serverCode: string, resourceType: string, resourceId: string}): Observable<{resource: string}> {
+    return this.http.post<{resource: string}>(`${this.baseUrl}/resource`, request);
+  }
 }
