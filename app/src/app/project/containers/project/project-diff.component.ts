@@ -4,6 +4,7 @@ import {forkJoin, map, Observable, of} from 'rxjs';
 import {DestroyService} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirValueSetLibService} from 'terminology-lib/fhir';
+import {diffWords} from 'diff';
 
 export class ProjectDiffItem {
   public resourceId?: string;
@@ -81,10 +82,9 @@ export class ProjectDiffComponent implements OnInit {
     if (!this.current || !this.comparable) {
       return;
     }
-    const Diff = require('diff');
     let span = null;
 
-    const diff = Diff.diffWords(this.current, this.comparable),
+    const diff = diffWords(this.current, this.comparable),
       display = document.getElementById('display'),
       fragment = document.createDocumentFragment();
     display.innerHTML = '';
