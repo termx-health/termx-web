@@ -22,4 +22,6 @@ export class PackageResource {
   public resourceType?: string;
   public resourceId?: string;
   public terminologyServer?: string;
+
+  public versionId?: number;
 }

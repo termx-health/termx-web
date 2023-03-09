@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Package, PackageVersion, Project, ProjectLibService} from 'terminology-lib/project';
+import {JobLogResponse} from 'terminology-lib/job';
 
 @Injectable()
 export class ProjectService extends ProjectLibService {
@@ -15,5 +16,10 @@ export class ProjectService extends ProjectLibService {
     return this.http.post<Project>(`${this.baseUrl}/${projectId}/packages`, req);
   }
 
+  public import(file: File): Observable<JobLogResponse> {
+    const formdata: FormData = new FormData();
+    formdata.append('file', file as Blob);
+    return this.http.post<JobLogResponse>(`${this.baseUrl}/sync`, formdata)
+  }
 
 }

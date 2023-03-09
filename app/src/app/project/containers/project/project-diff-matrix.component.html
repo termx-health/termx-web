@@ -1,0 +1,30 @@
+<m-table [mData]="diffItems" [mLoading]="loading">
+  <tr *mTableHead>
+    <th></th>
+    <th>{{'entities.terminology-server.current-installation' | translate}}</th>
+    <th *ngFor="let server of (diffItems | apply:extractServers)">
+      <label>{{server}}</label>
+    </th>
+  </tr>
+
+  <tr *mTableRow="let item">
+    <td>{{item.resourceId}}</td>
+    <td>
+      <ng-container *ngIf="!item.resourceServer">
+        <label class="m-clickable" (click)="openDiff(item)"><m-icon style="color: green" mCode="check-circle"></m-icon></label>
+      </ng-container>
+    </td>
+    <td *ngFor="let server of (diffItems | apply:extractServers)">
+      <ng-container *ngIf="item.resourceServer === server">
+        <label *ngIf="item.upToDate" class="m-clickable" (click)="openDiff(item)"><m-icon style="color: green" mCode="check-circle"></m-icon></label>
+        <label *ngIf="!item.upToDate" class="m-clickable" (click)="openDiff(item)"><m-icon style="color: red" mCode="exclamation-circle"></m-icon></label>
+      </ng-container>
+    </td>
+  </tr>
+
+  <tr *mTableNoData>
+    <td colspan="6">
+      <m-no-data></m-no-data>
+    </td>
+  </tr>
+</m-table>

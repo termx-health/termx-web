@@ -68,19 +68,16 @@
               <m-input name="version" [(ngModel)]="version.version" required></m-input>
             </m-form-item>
 
-            <ng-container *ngIf="(version.resources | apply: groupResources: terminologyServers) as resources">
-              <ng-container *ngFor="let ts of terminologyServers">
-                <m-divider [mText]="ts.names | localName"></m-divider>
-                <m-form-item mName="{{ts.code}}-codeSystem" mLabel="entities.code-system.plural">
-                  <twl-code-system-search name="{{ts.code}}-codeSystem" [(ngModel)]="resources[ts.code]['code-system']" (ngModelChange)="addResource($event, 'code-system', ts.code)" multiple valuePrimitive></twl-code-system-search>
-                </m-form-item>
-                <m-form-item mName="{{ts.code}}-valueSet" mLabel="entities.value-set.plural">
-                  <twl-value-set-search name="{{ts.code}}-valueSet" [(ngModel)]="resources[ts.code]['value-set']" (ngModelChange)="addResource($event, 'value-set', ts.code)" multiple valuePrimitive></twl-value-set-search>
-                </m-form-item>
-                <m-form-item mName="{{ts.code}}-mapSet" mLabel="entities.map-set.plural">
-                  <twl-map-set-search name="{{ts.code}}-mapSet" [(ngModel)]="resources[ts.code]['map-set']" (ngModelChange)="addResource($event, 'map-set', ts.code)" multiple valuePrimitive></twl-map-set-search>
-                </m-form-item>
-              </ng-container>
+            <ng-container *ngIf="(version.resources | apply: groupResources) as resources">
+              <m-form-item mName="cs" mLabel="entities.code-system.plural">
+                <twl-code-system-search name="cs" [(ngModel)]="resources['code-system']" (ngModelChange)="addResource($event, 'code-system')" multiple valuePrimitive></twl-code-system-search>
+              </m-form-item>
+              <m-form-item mName="vs" mLabel="entities.value-set.plural">
+                <twl-value-set-search name="vs" [(ngModel)]="resources['value-set']" (ngModelChange)="addResource($event, 'value-set')" multiple valuePrimitive></twl-value-set-search>
+              </m-form-item>
+              <m-form-item mName="mapSet" mLabel="entities.map-set.plural">
+                <twl-map-set-search name="mapSet" [(ngModel)]="resources['map-set']" (ngModelChange)="addResource($event, 'map-set')" multiple valuePrimitive></twl-map-set-search>
+              </m-form-item>
             </ng-container>
           </ng-container>
         </form>

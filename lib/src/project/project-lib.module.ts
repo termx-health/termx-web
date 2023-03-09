@@ -7,6 +7,7 @@ import {ProjectDrawerSearchComponent} from './containers/project-drawer-search.c
 import {SharedModule} from '../../../app/src/app/core/shared/shared.module';
 import {ProjectSearchComponent} from './containers/project-search.component';
 import {TerminologyServerLibService} from './services/terminology-server-lib-service';
+import {PackageResourceLibService} from './services/package-resource-lib-service';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {TerminologyServerLibService} from './services/terminology-server-lib-ser
   providers: [
     ProjectLibService,
     PackageLibService,
+    PackageResourceLibService,
     PackageVersionLibService,
     TerminologyServerLibService
   ]

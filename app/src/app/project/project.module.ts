@@ -14,10 +14,13 @@ import {TerminologyServerEditComponent} from './containers/terminologyserver/ter
 import {TerminologyServerService} from './services/terminology-server.service';
 import {PackageService} from './services/package.service';
 import {PackageVersionService} from './services/package-version.service';
+import {PackageResourceService} from './services/package-resource.service';
+import {ProjectDiffMatrixComponent} from './containers/project/project-diff-matrix.component';
 
 export const PROJECT_CTX_ROUTES: Routes = [
   {path: '', component: ProjectDashboardComponent},
-  {path: 'diff', component: ProjectDiffComponent}
+  {path: 'diff', component: ProjectDiffComponent},
+  {path: 'diff-matrix', component: ProjectDiffMatrixComponent}
 ];
 
 export const PROJECT_ROUTES: Routes = [
@@ -50,6 +53,7 @@ export const TERMINOLOGY_SERVER_ROUTES: Routes = [
     ProjectListComponent,
     ProjectEditComponent,
     ProjectDiffComponent,
+    ProjectDiffMatrixComponent,
 
     PackageEditComponent,
 
@@ -60,6 +64,7 @@ export const TERMINOLOGY_SERVER_ROUTES: Routes = [
     ProjectService,
     PackageService,
     PackageVersionService,
+    PackageResourceService,
     TerminologyServerService
   ]
 })

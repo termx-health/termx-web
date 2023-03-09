@@ -6,6 +6,7 @@ import {Project} from '../model/project';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {Package} from '../model/package';
 import {ProjectSearchParams} from '../model/project-search-params';
+import {ProjectDiff} from '../model/project-diff';
 
 @Injectable()
 export class ProjectLibService {
@@ -29,5 +30,9 @@ export class ProjectLibService {
 
   public overview(request: {projectCode: string, packageCode: string, version: string}): Observable<{content: string}> {
     return this.http.post<{content: string}>(`${this.baseUrl}/overview`, request);
+  }
+
+  public diff(request: {projectCode: string, packageCode: string, version: string}): Observable<ProjectDiff> {
+    return this.http.post<ProjectDiff>(`${this.baseUrl}/diff`, request);
   }
 }

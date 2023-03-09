@@ -8,7 +8,7 @@
       <twa-add-button *twaPrivileged="'*.Project.edit'" [routerLink]="['./add']">
         {{'web.project.add-btn' | translate}}
       </twa-add-button>
-      <m-button mClass="m-justify-between" *twaPrivileged="'*.Project.edit'">
+      <m-button mClass="m-justify-between" *twaPrivileged="'*.Project.edit'" (mClick)="touchImport()">
         <m-icon mCode="import"></m-icon>
         <label>{{'web.project.import-btn' | translate}}</label>
       </m-button>
@@ -41,3 +41,5 @@
     </tr>
   </m-backend-table>
 </m-card>
+
+<input #importProject hidden type="file" (change)="import($event)">

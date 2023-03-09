@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ProjectContext, ProjectContextService} from './project-context.service';
+import {ProjectContextParams, ProjectContextService} from './project-context.service';
 import {Package, PackageVersion, Project, ProjectLibService} from 'terminology-lib/project';
 import {distinctUntilChanged, map, Observable} from 'rxjs';
 import {saveAs} from 'file-saver';
@@ -15,8 +15,8 @@ export class ProjectContextComponent implements OnInit {
   public loading = true;
 
 
-  public get context(): ProjectContext {
-    return this.ctx.context;
+  public get params(): ProjectContextParams {
+    return this.ctx.params;
   }
 
   public get version(): PackageVersion {

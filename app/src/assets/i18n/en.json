@@ -746,7 +746,9 @@
       "add-btn": "Add project",
       "import-btn": "Import project",
       "new-version": "New version",
-      "all-packages": "All packages"
+      "all-packages": "All packages",
+      "import-success-message": "Project import succeeded",
+      "import-error-message": "Project import failed"
     },
     "package": {
       "add-header": "Add package",

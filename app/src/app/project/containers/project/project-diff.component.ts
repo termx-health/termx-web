@@ -1,15 +1,16 @@
 import {Component, OnInit} from '@angular/core';
-import {TerminologyServer, TerminologyServerLibService} from 'lib/src/project';
-import {forkJoin, map, Observable, of} from 'rxjs';
-import {DestroyService} from '@kodality-web/core-util';
+import {PackageResource, TerminologyServer, TerminologyServerLibService} from 'lib/src/project';
+import {combineLatest, forkJoin, map, Observable, of, takeUntil} from 'rxjs';
+import {collect, group, DestroyService} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirValueSetLibService} from 'terminology-lib/fhir';
 import {diffWords} from 'diff';
+import {ProjectContextComponent} from '../../../core/context/project-context.component';
+import {PackageResourceService} from '../../services/package-resource.service';
 
 export class ProjectDiffItem {
-  public resourceId?: string;
+  public resource?: PackageResource;
   public resourceType?: string;
-  public server?: TerminologyServer;
 }
 
 @Component({
@@ -21,25 +22,22 @@ export class ProjectDiffComponent implements OnInit {
   public current: string;
   public comparable: string;
   public diffItem: ProjectDiffItem = {};
-  public terminologyServers: TerminologyServer[];
+  public terminologyServers: {[key: string]: TerminologyServer};
+  public serverEditable: boolean;
+  public resources: {[key: string]: PackageResource[]};
 
   public constructor(
     private fhirCSService: FhirCodeSystemLibService,
     private fhirVSService: FhirValueSetLibService,
     private fhirCMService: FhirConceptMapLibService,
     private terminologyServerService: TerminologyServerLibService,
-    private route: ActivatedRoute,) {}
+    private packageResourceService: PackageResourceService,
+    public ctx: ProjectContextComponent,
+    private destroy$: DestroyService,
+    private route: ActivatedRoute) {}
 
   public ngOnInit(): void {
-    this.loadTerminologyServers();
-
-    this.route.queryParamMap.subscribe(queryParamMap => {
-      this.diffItem.resourceType = queryParamMap.get('resourceType') || undefined;
-      this.diffItem.resourceId = queryParamMap.get('resourceId') || undefined;
-      this.loading = true;
-      this.loadResource(this.diffItem.resourceId).subscribe(r => this.current = r).add(() => this.loading = false);
-    });
-
+    this.loadData();
   }
 
   private loadResource(id: string): Observable<string> {
@@ -63,7 +61,16 @@ export class ProjectDiffComponent implements OnInit {
     return this.terminologyServerService.loadResource(request).pipe(map(r => r.resource));
   }
 
-  public loadResources(id: string, serverCode: string): void {
+  public loadResources(resource: PackageResource): void {
+    this.current = undefined;
+    this.comparable = undefined;
+    if (!resource) {
+      return;
+    }
+
+    const id = resource.resourceId;
+    const serverCode = resource.terminologyServer;
+
     this.loading = true;
     forkJoin([
       this.loadResource(id),
@@ -86,18 +93,47 @@ export class ProjectDiffComponent implements OnInit {
       fragment = document.createDocumentFragment();
     display.innerHTML = '';
 
+    let different = false;
     diff.forEach((part) => {
       const color = part.added ? 'green' : part.removed ? 'red' : 'grey';
+      different = different || ((part.added || part.removed) && part.value.trim() !== '');
       span = document.createElement('span');
       span.style.color = color;
       span.appendChild(document.createTextNode(part.value));
       fragment.appendChild(span);
     });
 
-    display.appendChild(fragment);
+    if (different) {
+      display.appendChild(fragment);
+    }
   }
 
-  private loadTerminologyServers(): void {
-    this.terminologyServerService.search({limit: -1}).subscribe(r => this.terminologyServers = r.data);
+  private loadData(): void {
+    combineLatest([
+      this.ctx.project$.pipe(takeUntil(this.destroy$)),
+      this.ctx.pack$.pipe(takeUntil(this.destroy$)),
+      this.ctx.version$.pipe(takeUntil(this.destroy$)),
+      this.route.queryParamMap
+    ]).subscribe(([pr, p, v, params]) => {
+      forkJoin([
+        this.terminologyServerService.search({projectId: pr?.id, limit: -1}),
+        this.packageResourceService.loadAll(pr?.code, p?.code, v?.version)
+      ]).subscribe(([servers, resources]) => {
+        this.terminologyServers = group(servers.data, s => s.code);
+        this.resources = collect(resources, r => r.resourceType);
+        this.diffItem.resourceType = params.get('resourceType') || undefined;
+        this.diffItem.resource = this.resources[this.diffItem.resourceType].find(r => r.resourceId === params.get('resourceId'));
+        this.loadResources(this.diffItem.resource);
+      });
+    });
+  }
+
+  public serverSelected(serverCode: string): void {
+    const resource = this.diffItem.resource;
+    resource.terminologyServer = serverCode;
+    this.packageResourceService.update(resource.id, resource.versionId, resource).subscribe(r => {
+      this.loadResources(r);
+      this.serverEditable = false;
+    });
   }
 }

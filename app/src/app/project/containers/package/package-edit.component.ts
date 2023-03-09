@@ -7,7 +7,6 @@ import {Package, PackageLibService, PackageResource, PackageVersion, Terminology
 import {ProjectService} from '../../services/project.service';
 import {forkJoin} from 'rxjs';
 import {saveAs} from 'file-saver';
-import {PackageService} from '../../services/package.service';
 import {PackageVersionService} from '../../services/package-version.service';
 
 @Component({
@@ -17,7 +16,6 @@ export class PackageEditComponent implements OnInit {
   public package?: Package;
   public version?: PackageVersion;
   public versions?: PackageVersion[];
-  public terminologyServers?: TerminologyServer[];
   public projectId?: number;
 
   public loading = false;
@@ -37,7 +35,6 @@ export class PackageEditComponent implements OnInit {
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.projectId = Number(this.route.snapshot.paramMap.get('projectId'));
-    this.loadTerminologyServers(this.projectId);
     this.mode = id ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
@@ -107,32 +104,17 @@ export class PackageEditComponent implements OnInit {
     return !!this.versions?.find(v => !v.id);
   }
 
-  public groupResources = (resources: PackageResource[], servers: TerminologyServer[]): {[key: string]: {[key: string]: string[]}} => {
-    const collectedByServer: {[key: string]: PackageResource[]} = resources && collect(resources, r => r.terminologyServer, r => r) || {};
-    const collected: {[key: string]: {[key: string]: string[]}} = {};
-    servers?.forEach(server => {
-      collected[server.code] = collectedByServer[server.code] ? collect(collectedByServer[server.code], r => r.resourceType, r => r.resourceId) : {};
-    });
-    return collected;
+  public groupResources = (resources: PackageResource[]): {[key: string]: string[]} => {
+    return  resources && collect(resources, r => r.resourceType, r => r.resourceId) || {};
   };
 
-  public addResource = (resources: string[], type: string, server: string) => {
-    const current: {[key: string]: PackageResource} = group((this.version.resources || []).filter(r => r.resourceType === type && r.terminologyServer === server), r => r.resourceId);
+  public addResource = (resources: string[], type: string) => {
+    const current: {[key: string]: PackageResource} = group((this.version.resources || []).filter(r => r.resourceType === type), r => r.resourceId);
     this.version.resources = [
-      ...(this.version.resources || []).filter(r => r.resourceType !== type || r.terminologyServer !== server),
-      ...(resources || []).map(r => ({id: current[r]?.id, resourceId: r, resourceType: type, terminologyServer: server}))
+      ...(this.version.resources || []).filter(r => r.resourceType !== type),
+      ...(resources || []).map(r => ({id: current[r]?.id, resourceId: r, resourceType: type}))
     ];
   };
-
-  private loadTerminologyServers(projectId: number): void {
-    forkJoin([
-      this.terminologyServerService.search({projectId: projectId, limit: -1}),
-      this.terminologyServerService.search({currentInstallation: true, limit: 1})
-    ]).subscribe(([projectServers, currentInstallation]) => {
-      this.terminologyServers = [...new Map([...projectServers.data, ...currentInstallation.data].map(s => [s.id, s])).values()];
-      this.version.resources = [...this.version.resources.filter(r => this.terminologyServers.map(ts => ts.code).includes(r.terminologyServer))];
-    });
-  }
 
   public downloadYaml(version: PackageVersion): void {
     if (!version) {
