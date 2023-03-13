@@ -19,7 +19,7 @@ export class ProjectService extends ProjectLibService {
   public import(file: File): Observable<JobLogResponse> {
     const formdata: FormData = new FormData();
     formdata.append('file', file as Blob);
-    return this.http.post<JobLogResponse>(`${this.baseUrl}/sync`, formdata)
+    return this.http.post<JobLogResponse>(`${this.baseUrl}/sync`, formdata);
   }
 
 }

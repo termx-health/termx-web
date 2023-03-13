@@ -32,7 +32,7 @@
           <m-button [routerLink]="['/projects/context', ctx.params, 'diff-matrix']">
             <div class="m-items-middle"><label>{{'Diff matrix'}}</label><m-icon mCode="table"></m-icon></div>
           </m-button>
-          <m-button mDisplay="primary">
+          <m-button mDisplay="primary" (mClick)="sync()">
             <div class="m-items-middle"><label>{{'Sync'}}</label><m-icon mCode="sync"></m-icon></div>
           </m-button>
         </div>

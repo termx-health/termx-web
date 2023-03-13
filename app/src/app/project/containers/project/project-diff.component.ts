@@ -1,12 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {PackageResource, TerminologyServer, TerminologyServerLibService} from 'lib/src/project';
-import {combineLatest, forkJoin, map, Observable, of, takeUntil} from 'rxjs';
+import {combineLatest, filter, forkJoin, map, merge, Observable, of, Subject, switchMap, takeUntil, timer} from 'rxjs';
 import {collect, group, DestroyService} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirValueSetLibService} from 'terminology-lib/fhir';
 import {diffWords} from 'diff';
 import {ProjectContextComponent} from '../../../core/context/project-context.component';
 import {PackageResourceService} from '../../services/package-resource.service';
+import {JobLibService} from 'terminology-lib/job';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 export class ProjectDiffItem {
   public resource?: PackageResource;
@@ -32,6 +34,8 @@ export class ProjectDiffComponent implements OnInit {
     private fhirCMService: FhirConceptMapLibService,
     private terminologyServerService: TerminologyServerLibService,
     private packageResourceService: PackageResourceService,
+    private jobService: JobLibService,
+    private notificationService: MuiNotificationService,
     public ctx: ProjectContextComponent,
     private destroy$: DestroyService,
     private route: ActivatedRoute) {}
@@ -135,5 +139,33 @@ export class ProjectDiffComponent implements OnInit {
       this.loadResources(r);
       this.serverEditable = false;
     });
+  }
+
+  public sync(): void {
+    const resourceId =this.diffItem?.resource?.id;
+    if (resourceId) {
+      this.loading = true;
+      this.packageResourceService.sync(resourceId).subscribe({
+        next: (resp) => this.pollJobStatus(resp.jobId as number),
+        error: () => this.loading = false
+      });
+    }
+  }
+
+  private pollJobStatus(jobId: number): void {
+    const stopPolling$ = new Subject<void>();
+    timer(0, 3000).pipe(
+      takeUntil(merge(this.destroy$, stopPolling$)),
+      switchMap(() => this.jobService.getLog(jobId)),
+      filter(resp => resp.execution?.status !== 'running')
+    ).subscribe(jobResp => {
+      stopPolling$.next();
+      if (!jobResp.errors) {
+        this.notificationService.success("web.project.resource-import-success-message");
+        this.loadData();
+      } else {
+        this.notificationService.error("web.project.resource-import-error-message", jobResp.errors.join(","), {duration: 0, closable: true});
+      }
+    }).add(() => this.loading = false);
   }
 }

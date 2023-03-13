@@ -748,7 +748,9 @@
       "new-version": "New version",
       "all-packages": "All packages",
       "import-success-message": "Project import succeeded",
-      "import-error-message": "Project import failed"
+      "import-error-message": "Project import failed",
+      "resource-import-success-message": "Resource import succeeded",
+      "resource-import-error-message": "Resource import failed"
     },
     "package": {
       "add-header": "Add package",
