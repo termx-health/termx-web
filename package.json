@@ -27,7 +27,6 @@
     "@kodality-web/marina-util": "^15.0.0-snapshot",
     "@terminology/core": "^15.0.0-snapshot",
     "@terminology/supplement-module": "^15.0.0-snapshot",
-    "@terminology/supplement-module-providers": "^15.0.0-snapshot",
     "@ngx-translate/core": "^14.0.0",
     "ngx-translate-multi-http-loader": "^9.3.2",
     "angular-auth-oidc-client": "^15.0.3",
