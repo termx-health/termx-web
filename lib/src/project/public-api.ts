@@ -1,3 +1,4 @@
+export * from './containers/project-search.component';
 export * from './containers/project-drawer-search.component';
 export * from './model/package';
 export * from './model/project';

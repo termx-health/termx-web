@@ -12,7 +12,6 @@ image: registry.gitlab.com/kodality/gitlab-builders/ng
 
 stages:
   - build
-  - publish
   - release
 
 
@@ -22,9 +21,10 @@ build:
   before_script:
     - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
     - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
+    - echo "@terminology:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
   script:
     - npm install --cache .npm --prefer-offline
-    - ng build app -c production
+    - npm run build
   artifacts:
     paths:
       - "**/dist"
@@ -47,26 +47,28 @@ build_chef:
     - main
 
 publish:
-  stage: publish
-  image: docker:stable
+  stage: release
   before_script:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
   script:
     - docker build -t docker.kodality.com/terminology-web:latest .
     - docker push docker.kodality.com/terminology-web:latest
+    - npm run publish
   only:
     - main
 
 release:
   stage: release
-  image: docker:stable
   before_script:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
   script:
     - export APP_VERSION="$CI_COMMIT_REF_NAME"
+    - export APP_TAG="$CI_COMMIT_TAG"
 
     - docker build -t docker.kodality.com/terminology-web:$APP_VERSION --build-arg APP_VERSION=$APP_VERSION .
     - docker push docker.kodality.com/terminology-web:$APP_VERSION
+
+    - npm run publish $APP_TAG
   only:
     - /^\d*\.\d*\.\d*$/
   except:

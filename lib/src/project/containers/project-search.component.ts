@@ -8,7 +8,7 @@ import {ProjectLibService} from '../services/project-lib-service';
 import {ProjectSearchParams} from '../model/project-search-params';
 
 @Component({
-  selector: 'twl-project-search',
+  selector: 'tw-project-search',
   templateUrl: './project-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ProjectSearchComponent), multi: true}, DestroyService]
 })

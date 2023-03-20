@@ -1,4 +1,4 @@
-import {MapSet, MapSetAssociation, MapSetLibService, MapSetVersion} from 'terminology-lib/resources';
+import {MapSet, MapSetAssociation, MapSetLibService, MapSetVersion} from '@terminology/core';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 

@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {TERMINOLOGY_API} from '../../../terminology-lib.token';
+import {TERMINOLOGY_API_URL} from '../../../terminology-lib.config';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
@@ -10,7 +10,7 @@ import {AssociationType} from '../model/association-type';
 export class AssociationTypeLibService {
   protected baseUrl;
 
-  public constructor(@Inject(TERMINOLOGY_API) api: string, protected http: HttpClient) {
+  public constructor(@Inject(TERMINOLOGY_API_URL) api: string, protected http: HttpClient) {
     this.baseUrl = `${api}/ts/association-types`;
   }
 

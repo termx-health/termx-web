@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'terminology-lib/integration';
+import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from '@terminology/core';
 import {forkJoin} from 'rxjs';
 import {isDefined} from '@kodality-web/core-util';
 

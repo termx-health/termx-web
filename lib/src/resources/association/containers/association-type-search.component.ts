@@ -8,7 +8,7 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 @Component({
-  selector: 'twl-association-type-search',
+  selector: 'tw-association-type-search',
   templateUrl: './association-type-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AssociationTypeSearchComponent), multi: true}, DestroyService]
 })

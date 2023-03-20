@@ -4,7 +4,7 @@ import {NzTreeFlatDataSource, NzTreeFlattener} from 'ng-zorro-antd/tree-view';
 import {ThesaurusFhirMapperUtil} from '../../services/thesaurus-fhir-mapper.util';
 import {StructureDefinitionLibService} from 'lib/src/thesaurus';
 import {isDefined} from '@kodality-web/core-util';
-import {ChefService} from 'terminology-lib/integration';
+import {ChefService} from '@terminology/core';
 
 @Component({
   selector: 'twa-structure-definition-tree',

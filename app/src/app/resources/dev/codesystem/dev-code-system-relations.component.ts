@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {CodeSystemLibService, MapSet, MapSetLibService, ValueSet, ValueSetLibService, ValueSetTransactionRequest} from 'terminology-lib/resources';
+import {CodeSystemLibService, MapSet, MapSetLibService, ValueSet, ValueSetLibService, ValueSetTransactionRequest} from '@terminology/core';
 import {forkJoin} from 'rxjs';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';

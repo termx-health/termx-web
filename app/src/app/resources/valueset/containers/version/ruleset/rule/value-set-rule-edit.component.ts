@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {ValueSetVersionRule} from 'terminology-lib/resources';
+import {ValueSetVersionRule} from '@terminology/core';
 import {ValueSetService} from '../../../../services/value-set.service';
 import {ValueSetRuleFormComponent} from './value-set-rule-form.component';
 

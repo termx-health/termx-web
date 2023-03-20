@@ -10,11 +10,11 @@ import {MarinaUiModule} from '@kodality-web/marina-ui';
 import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {TranslateModule} from '@ngx-translate/core';
-import {SharedModule} from '../../../app/src/app/core/shared/shared.module';
 import {ChefService} from './chef/services/chef.service';
 import {FhirToFshPipe} from './chef/pipe/fhir-to-fsh-pipe';
 import {FshToFhirPipe} from './chef/pipe/fsh-to-fhir-pipe';
 import {IntegrationIchiLibService} from './ichi/service/integration-ichi-lib.service';
+import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
@@ -23,7 +23,7 @@ import {IntegrationIchiLibService} from './ichi/service/integration-ichi-lib.ser
     FormsModule,
     CoreUtilModule,
     TranslateModule,
-    SharedModule
+    RouterModule
   ],
   providers: [
     IntegrationAtcLibService,

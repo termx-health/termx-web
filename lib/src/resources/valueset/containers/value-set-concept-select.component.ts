@@ -7,7 +7,7 @@ import {takeUntil} from 'rxjs';
 import {ValueSetVersionConcept} from '../model/value-set-version-concept';
 
 @Component({
-  selector: 'twl-value-set-concept-select',
+  selector: 'tw-value-set-concept-select',
   templateUrl: './value-set-concept-select.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetConceptSelectComponent), multi: true}, DestroyService]
 })

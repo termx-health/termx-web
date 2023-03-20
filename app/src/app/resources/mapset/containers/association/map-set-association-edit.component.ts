@@ -1,11 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {MapSetAssociation} from 'terminology-lib/resources';
+import {MapSetAssociation, MapSetEntityVersion} from '@terminology/core';
 import {NgForm} from '@angular/forms';
 import {copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {MapSetService} from '../../services/map-set-service';
 import {Location} from '@angular/common';
-import {MapSetEntityVersion} from 'terminology-lib/resources/mapset/model/map-set-entity-version';
 
 @Component({
   templateUrl: './map-set-association-edit.component.html',

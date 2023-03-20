@@ -1,10 +1,8 @@
 import {Inject, Injectable} from '@angular/core';
 import {mergeMap, Observable, of, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
-import {TERMINOLOGY_API} from 'terminology-lib/terminology-lib.token';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
-import {environment} from '../../environments/environment';
-import {SmartAuthService} from './smart-auth.service';
+import {TERMINOLOGY_API_URL, TERMINOLOGY_LIB_CONTEXT, TerminologyLibContext} from '../terminology-lib.config';
 
 interface UserInfo {
   username: string;
@@ -20,36 +18,42 @@ export class AuthService {
   protected baseUrl;
 
   public constructor(
-    @Inject(TERMINOLOGY_API) api: string,
+    @Inject(TERMINOLOGY_API_URL) private url: string,
+    @Inject(TERMINOLOGY_LIB_CONTEXT) private context: TerminologyLibContext,
     protected http: HttpClient,
     private oidcSecurityService: OidcSecurityService,
-    private smartAuthService: SmartAuthService,
   ) {
-    this.baseUrl = `${api}/auth`;
+    this.baseUrl = `${url}/auth`;
   }
 
 
   public refresh(): Observable<UserInfo> {
-    if (environment.yupiEnabled) {
+    if (this.context.yupiEnabled) {
       return of({username: 'yupi', privileges: [this.ADMIN]}).pipe(tap(u => this.user = u));
     }
     return this.refreshUserInfo().pipe(tap(u => this.user = u));
   }
 
+
   private refreshUserInfo(): Observable<UserInfo> {
-    return this.smartAuthService.checkAuth().pipe(mergeMap(authenticated => {
-      if (authenticated) {
+    return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
+      if (!lr.isAuthenticated) {
+        return of(null as any);
+      } else {
         return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`);
       }
-      return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
-        if (!lr.isAuthenticated) {
-          return of(null as any);
-        } else {
-          return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`);
-        }
-      }));
     }));
   }
+
+
+  public login(): void {
+    this.oidcSecurityService.authorize();
+  }
+
+  public logout(): Observable<unknown> {
+    return this.oidcSecurityService.logoff();
+  }
+
 
   private includesPrivilege(userPrivileges: string[], authPrivilege: string): boolean {
     if (!authPrivilege) {

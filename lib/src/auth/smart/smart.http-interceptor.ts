@@ -1,19 +1,18 @@
+/*
 import {HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {Injectable} from '@angular/core';
-import {environment} from '../../environments/environment';
-import {SmartAuthService} from './smart-auth.service';
+import {Inject, Injectable} from '@angular/core';
+import {TERMINOLOGY_LIB_CONTEXT, TerminologyLibContext} from '../../terminology-lib.config';
 
 @Injectable()
 export class SmartHttpInterceptor implements HttpInterceptor {
-
   public constructor(
-    private smartAuthService: SmartAuthService
-  ) {
-  }
+    private smartAuthService: SmartAuthService,
+    @Inject(TERMINOLOGY_LIB_CONTEXT) private context: TerminologyLibContext,
+  ) { }
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    if (environment.yupiEnabled) {
+    if (this.context.yupiEnabled) {
       return next.handle(req);
     }
 
@@ -28,8 +27,6 @@ export class SmartHttpInterceptor implements HttpInterceptor {
       }
     });
     return next.handle(req);
-
-
   }
-
 }
+*/

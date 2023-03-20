@@ -76,6 +76,11 @@
                 "glob": "**/*",
                 "input": "./node_modules/@kodality-web/marina-ui/src/icons",
                 "output": "/assets/"
+              },
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@terminology/supplement-module/assets",
+                "output": "/assets/"
               }
             ],
             "styles": [

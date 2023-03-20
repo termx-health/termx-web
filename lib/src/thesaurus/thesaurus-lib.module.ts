@@ -1,14 +1,18 @@
 import {NgModule} from '@angular/core';
 import {PageLibService} from './services/page-lib.service';
 import {PageSelectComponent} from './containers/page-select.component';
-import {SharedModule} from '../../../app/src/app/core/shared/shared.module';
 import {StructureDefinitionLibService} from './services/structure-definition-lib.service';
 import {TagLibService} from './services/tag-lib.service';
 import {TemplateLibService} from './services/template-lib.service';
+import {FormsModule} from '@angular/forms';
+import {MarinaComponentsModule} from '@kodality-web/marina-ui';
+import {CoreUtilModule} from '@kodality-web/core-util';
 
 @NgModule({
   imports: [
-    SharedModule
+    FormsModule,
+    MarinaComponentsModule,
+    CoreUtilModule,
   ],
   providers: [
     TagLibService,

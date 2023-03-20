@@ -13,11 +13,11 @@
           <!-- View -->
           <ng-container *ngIf="!data.codeSystem?.['_new']">
             <m-form-item mName="targetCodeSystem" mLabel="web.integration.file-import.code-system.resource-id" required>
-              <twl-code-system-search name="targetCodeSystem"
+              <tw-code-system-search name="targetCodeSystem"
                   [(ngModel)]="data.codeSystem.id"
                   (ngModelChange)="loadCodeSystem($event)"
                   valuePrimitive
-                  required></twl-code-system-search>
+                  required></tw-code-system-search>
               <div style="margin-top: 0.5rem" (click)="initCodeSystem()">{{'web.integration.file-import.not-found' | translate}}
                 <a>{{'web.integration.file-import.create-new' | translate}}</a></div>
             </m-form-item>
@@ -80,7 +80,7 @@
 
 
         <m-form-item mName="csStatus" mLabel="entities.code-system-version.status" required>
-          <twl-value-set-concept-select name="csStatus" [(ngModel)]="data.version.status" valueSet="publication-status" required></twl-value-set-concept-select>
+          <tw-value-set-concept-select name="csStatus" [(ngModel)]="data.version.status" valueSet="publication-status" required></tw-value-set-concept-select>
         </m-form-item>
 
 
@@ -173,10 +173,10 @@
               {{item.propertyType}}
             </ng-container>
 
-            <twl-value-set-concept-select *ngIf="item['_newProp'] || !item.propertyName"
+            <tw-value-set-concept-select *ngIf="item['_newProp'] || !item.propertyName"
                 [(ngModel)]="item.propertyType"
                 (ngModelChange)="onPropertyTypeChange(item)"
-                valueSet="concept-property-type"></twl-value-set-concept-select>
+                valueSet="concept-property-type"></tw-value-set-concept-select>
           </td>
 
           <td>
@@ -190,9 +190,9 @@
           </td>
 
           <td>
-            <twl-value-set-concept-select *ngIf="item.propertyType === 'string' && item.propertyName !== 'concept-code'"
+            <tw-value-set-concept-select *ngIf="item.propertyType === 'string' && item.propertyName !== 'concept-code'"
                 [(ngModel)]="item.lang"
-                valueSet="languages"></twl-value-set-concept-select>
+                valueSet="languages"></tw-value-set-concept-select>
           </td>
 
           <td>
@@ -250,7 +250,7 @@
 </nz-tabset>
 
 <ng-template #successNotificationContent>
-  <a *ngIf="'*.CodeSystem.edit' | twaHasAnyPrivilege; else view" (click)="openCodeSystem(data.codeSystem.id, 'edit')">{{data.codeSystem.id}}</a>
+  <a *ngIf="'*.CodeSystem.edit' | twHasAnyPrivilege; else view" (click)="openCodeSystem(data.codeSystem.id, 'edit')">{{data.codeSystem.id}}</a>
   <ng-template #view>
     <a (click)="openCodeSystem(data.codeSystem.id, 'view')">{{data.codeSystem.id}}</a>
   </ng-template>

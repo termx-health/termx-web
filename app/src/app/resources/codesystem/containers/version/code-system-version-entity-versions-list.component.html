@@ -50,13 +50,13 @@
   <ng-container *m-modal-content>
     <form #form="ngForm">
       <m-form-item mName="modalData" mLabel="web.code-system-version.form.entities.modal.entity-version" required>
-        <twl-code-system-entity-version-search
+        <tw-code-system-entity-version-search
             name="modalData"
             [(ngModel)]="modalData"
             [codeSystemId]="codeSystemId"
             autofocus
             required
-        ></twl-code-system-entity-version-search>
+        ></tw-code-system-entity-version-search>
       </m-form-item>
     </form>
   </ng-container>

@@ -5,7 +5,7 @@ import {ThesaurusSidebarComponent} from './containers/page/thesaurus-sidebar.com
 import {PageService} from './services/page.service';
 import {ThesaurusPageComponent} from './containers/page/thesaurus-page.component';
 import {ThesaurusPageEditComponent} from './containers/page/thesaurus-page-edit.component';
-import {ThesaurusLibModule} from 'terminology-lib/thesaurus';
+import {IntegrationLibModule, ResourcesLibModule, ThesaurusLibModule} from '@terminology/core';
 import {ThesaurusPageModalComponent} from './containers/page/thesaurus-page-modal.component';
 import {ThesaurusTextareaComponent} from './containers/texteditor/thesaurus-textarea.component';
 import {ThesaurusDropdownComponent} from './containers/texteditor/thesaurus-dropdown.component';
@@ -13,7 +13,6 @@ import {PortalModule} from '@angular/cdk/portal';
 import {ThesaurusDropdownOptionComponent} from './containers/texteditor/thesaurus-dropdown-option.component';
 import {ThesaurusSmartTextEditorComponent} from './containers/texteditor/thesaurus-smart-text-editor.component';
 import {ThesaurusLinkModalComponent} from './containers/texteditor/link/thesaurus-link-modal.component';
-import {ResourcesLibModule} from 'terminology-lib/resources';
 import {ThesaurusStructureDefinitionModalComponent} from './containers/texteditor/structuredefinition/thesaurus-structure-definition-modal.component';
 import {ThesaurusSmartTextEditorViewComponent} from './containers/texteditor/thesaurus-smart-text-editor-view.component';
 import {StructureDefinitionListComponent} from './containers/structuredefinition/structure-definition-list.component';
@@ -22,7 +21,6 @@ import {StructureDefinitionService} from './services/structure-definition.servic
 import {TemplateService} from './services/template.service';
 import {TemplateListComponent} from './containers/template/template-list.component';
 import {TemplateEditComponent} from './containers/template/template-edit.component';
-import {IntegrationLibModule} from 'terminology-lib/integration';
 import {StructureDefinitionTreeComponent} from './containers/structuredefinition/structure-definition-tree.component';
 import {StructureDefinitionTypeListComponent} from './containers/structuredefinition/structure-definition-type-list.component';
 import {StructureDefinitionConstraintListComponent} from './containers/structuredefinition/structure-definition-constraint-list.component';

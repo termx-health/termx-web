@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
-import {NamingSystem, NamingSystemSearchParams} from 'terminology-lib/resources';
+import {NamingSystem, NamingSystemSearchParams} from '@terminology/core';
 import {NamingSystemService} from '../../services/naming-system-service';
 import {TranslateService} from '@ngx-translate/core';
 

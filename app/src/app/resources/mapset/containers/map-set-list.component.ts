@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
-import {MapSet, MapSetSearchParams, MapSetVersion} from 'terminology-lib/resources';
+import {MapSet, MapSetSearchParams, MapSetVersion} from '@terminology/core';
 import {MapSetService} from '../services/map-set-service';
 
 

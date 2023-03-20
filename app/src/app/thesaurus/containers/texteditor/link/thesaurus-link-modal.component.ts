@@ -30,7 +30,7 @@ import {TranslateService} from '@ngx-translate/core';
             <m-input [(ngModel)]="data.link" name="link" required></m-input>
           </m-form-item>
           <m-form-item *ngIf="data.linkType === 'page'" mName="page" mLabel="web.thesaurus-page.link-modal.page" required>
-            <twl-page-select [(ngModel)]="data.page" name="page" [valuePrimitive]="false"></twl-page-select>
+            <tw-page-select [(ngModel)]="data.page" name="page" [valuePrimitive]="false"></tw-page-select>
           </m-form-item>
           <ng-container *ngIf="data.linkType === 'resource'">
             <m-form-item mName="resource" mLabel="web.thesaurus-page.link-modal.resource-type" required>
@@ -42,23 +42,23 @@ import {TranslateService} from '@ngx-translate/core';
               </m-select>
             </m-form-item>
             <m-form-item *ngIf="data.resourceType === 'cs'" mName="codeSystem" mLabel="web.thesaurus-page.link-modal.code-system" required>
-              <twl-code-system-search [(ngModel)]="data.resource" name="codeSystem" valuePrimitive required></twl-code-system-search>
+              <tw-code-system-search [(ngModel)]="data.resource" name="codeSystem" valuePrimitive required></tw-code-system-search>
             </m-form-item>
             <m-form-item *ngIf="data.resourceType === 'vs'" mName="valueSet" mLabel="web.thesaurus-page.link-modal.value-set" required>
-              <twl-value-set-search [(ngModel)]="data.resource" name="valueSet" valuePrimitive required></twl-value-set-search>
+              <tw-value-set-search [(ngModel)]="data.resource" name="valueSet" valuePrimitive required></tw-value-set-search>
             </m-form-item>
             <m-form-item *ngIf="data.resourceType === 'ms'" mName="mapSet" mLabel="web.thesaurus-page.link-modal.map-set" required>
-              <twl-map-set-search [(ngModel)]="data.resource" name="mapSet" valuePrimitive required></twl-map-set-search>
+              <tw-map-set-search [(ngModel)]="data.resource" name="mapSet" valuePrimitive required></tw-map-set-search>
             </m-form-item>
             <m-form-item *ngIf="data.resourceType === 'concept'" mName="conceptCodeSystem" mLabel="web.thesaurus-page.link-modal.concept-code-system" required>
-              <twl-code-system-search [(ngModel)]="data.conceptCodeSystem" name="conceptCodeSystem" valuePrimitive required></twl-code-system-search>
+              <tw-code-system-search [(ngModel)]="data.conceptCodeSystem" name="conceptCodeSystem" valuePrimitive required></tw-code-system-search>
             </m-form-item>
             <m-form-item *ngIf="data.resourceType === 'concept' && data.conceptCodeSystem" mName="concept" mLabel="web.thesaurus-page.link-modal.concept" required>
               <div *ngIf="data.conceptCodeSystem === 'snomed-ct' && data.resource">
                 <label>{{data.resource}}</label><m-icon style="cursor: pointer; margin-left: 0.5rem" mCode="close" (click)="data.resource = null"></m-icon>
               </div>
-              <twl-snomed-search *ngIf="data.conceptCodeSystem === 'snomed-ct' && !data.resource" (conceptSelected)="data.resource = $event"></twl-snomed-search>
-              <twl-concept-search *ngIf="data.conceptCodeSystem !== 'snomed-ct'" [(ngModel)]="data.resource" [codeSystem]="data.conceptCodeSystem" valueType="code" name="concept" required></twl-concept-search>
+              <tw-snomed-search *ngIf="data.conceptCodeSystem === 'snomed-ct' && !data.resource" (conceptSelected)="data.resource = $event"></tw-snomed-search>
+              <tw-concept-search *ngIf="data.conceptCodeSystem !== 'snomed-ct'" [(ngModel)]="data.resource" [codeSystem]="data.conceptCodeSystem" valueType="code" name="concept" required></tw-concept-search>
             </m-form-item>
           </ng-container>
 

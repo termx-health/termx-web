@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {MapSetService} from '../../services/map-set-service';
-import {MapSet} from 'terminology-lib/resources';
+import {MapSet} from '@terminology/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 

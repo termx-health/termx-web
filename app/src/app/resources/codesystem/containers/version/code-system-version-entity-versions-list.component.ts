@@ -1,4 +1,4 @@
-import {CodeSystemEntityVersion, CodeSystemEntityVersionSearchParams} from 'terminology-lib/resources';
+import {CodeSystemEntityVersion, CodeSystemEntityVersionSearchParams} from '@terminology/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, of, Subject, switchMap} from 'rxjs';
 import {BooleanInput, copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../services/code-system.service';

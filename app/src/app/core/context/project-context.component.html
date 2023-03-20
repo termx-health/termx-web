@@ -6,9 +6,9 @@
       <ng-container *ngIf="!loading">
         <!-- Left -->
         <div class="project-context__item project-context__info">
-          <twl-project-drawer-search #projectDrawer [project]="project" [package]="pack" [version]="version"
+          <tw-project-drawer-search #projectDrawer [project]="project" [package]="pack" [version]="version"
               (twChange)="setContext({projectId: $event?.project?.id, packageId: $event?.package?.id, versionId: $event.version?.id})">
-          </twl-project-drawer-search>
+          </tw-project-drawer-search>
           <div>
             <m-button *ngIf="project" mDisplay="text" mShape="circle" [routerLink]="['/projects', project?.id, 'edit']">
               <span class="m-items-middle"><m-icon mCode="form"></m-icon></span>

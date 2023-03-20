@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemConcept, CodeSystemLibService} from 'terminology-lib/resources';
+import {CodeSystemConcept, CodeSystemLibService} from '@terminology/core';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
 import {DestroyService, isNil} from '@kodality-web/core-util';

@@ -1,7 +1,7 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {AuthService} from '../../../auth/auth.service';
+import {AuthService} from '../auth.service';
 
-@Pipe({name: 'twaHasAnyPrivilege'})
+@Pipe({name: 'twHasAnyPrivilege'})
 export class HasAnyPrivilegePipe implements PipeTransform {
   public constructor(private authService: AuthService) {}
 

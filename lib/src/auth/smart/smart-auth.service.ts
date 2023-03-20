@@ -1,3 +1,4 @@
+/*
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {map, mergeMap, Observable, of, timer} from 'rxjs';
@@ -123,5 +124,4 @@ export class SmartAuthService {
       })
     );
   }
-
-}
+}*/

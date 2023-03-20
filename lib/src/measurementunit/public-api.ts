@@ -1,3 +1,4 @@
+export * from './containers/measurement-unit-search.component';
 export * from './measurement-unit-lib.module';
 export * from './model/measurement-unit';
 export * from './model/measurement-unit-mapping';

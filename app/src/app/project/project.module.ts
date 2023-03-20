@@ -4,8 +4,7 @@ import {ProjectListComponent} from './containers/project/project-list.component'
 import {ProjectEditComponent} from './containers/project/project-edit.component';
 import {SharedModule} from '../core/shared/shared.module';
 import {ProjectService} from './services/project.service';
-import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from 'terminology-lib/resources';
-import {ProjectLibModule} from '../../../../lib/src';
+import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ProjectLibModule, ValueSetLibModule} from '@terminology/core';
 import {PackageEditComponent} from './containers/package/package-edit.component';
 import {ProjectDashboardComponent} from './containers/project/project-dashboard.component';
 import {ProjectDiffComponent} from './containers/project/project-diff.component';

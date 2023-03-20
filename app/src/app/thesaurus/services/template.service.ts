@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {isDefined} from '@kodality-web/core-util';
-import {Template, TemplateLibService} from 'terminology-lib/thesaurus';
+import {Template, TemplateLibService} from '@terminology/core';
 
 @Injectable()
 export class TemplateService extends TemplateLibService {

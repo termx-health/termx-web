@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {CodeSystemConcept, MapSetAssociation, MapSetLibService, ValueSet, ValueSetLibService} from 'lib/src/resources';
 import {NgForm} from '@angular/forms';
-import {PageLibService, PageRelation} from 'terminology-lib/thesaurus';
+import {PageLibService, PageRelation} from '@terminology/core';
 import {isDefined} from '@kodality-web/core-util';
 import {forkJoin} from 'rxjs';
 

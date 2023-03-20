@@ -2,7 +2,7 @@
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twaPrivileged="'*.AssociationType.edit'" [routerLink]="['association-types/add']">
+      <twa-add-button *twPrivileged="'*.AssociationType.edit'" [routerLink]="['association-types/add']">
         {{'web.association-type.list.add-association-type' | translate}}
       </twa-add-button>
     </div>
@@ -16,14 +16,14 @@
       <th mColumnKey="forwardName">{{'entities.association-type.forward-name' | translate}}</th>
       <th mColumnKey="reverseName">{{'entities.association-type.reverse-name' | translate}}</th>
       <th mColumnKey="directed">{{'entities.association-type.directed' | translate}}</th>
-      <th class="tw-table-actions" *twaPrivileged="'*.AssociationType.edit'"></th>
+      <th class="tw-table-actions" *twPrivileged="'*.AssociationType.edit'"></th>
     </tr>
 
     <tr *mTableRow="let at">
       <td *ngIf="at.description" m-table-expand [mItem]="at"></td>
       <td *ngIf="!at.description && (searchResult | apply : haveDescriptions)"></td>
       <td>
-        <a *ngIf="'*.AssociationType.edit' | twaHasAnyPrivilege; else view" [routerLink]="['association-types',at.code,'edit']">{{at.code}}</a>
+        <a *ngIf="'*.AssociationType.edit' | twHasAnyPrivilege; else view" [routerLink]="['association-types',at.code,'edit']">{{at.code}}</a>
         <ng-template #view>
           <a [routerLink]="['association-types',at.code,'view']">{{at.code}}</a>
         </ng-template>
@@ -34,9 +34,9 @@
       <td>
         <m-icon *ngIf="at.directed" mCode="check"></m-icon>
       </td>
-      <td class="tw-table-actions" *twaPrivileged="'*.AssociationType.edit'">
+      <td class="tw-table-actions" *twPrivileged="'*.AssociationType.edit'">
         <m-dropdown>
-          <ng-container *twaPrivileged="'*.AssociationType.publish'">
+          <ng-container *twPrivileged="'*.AssociationType.publish'">
             <a *m-dropdown-item (click)="deleteAssociationType(at.code)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>

@@ -8,7 +8,7 @@ import {ValueSetVersionLibService} from '../services/value-set-version-lib.servi
 
 
 @Component({
-  selector: 'twl-value-set-version-select',
+  selector: 'tw-value-set-version-select',
   templateUrl: './value-set-version-select.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetVersionSelectComponent), multi: true}, DestroyService]
 })

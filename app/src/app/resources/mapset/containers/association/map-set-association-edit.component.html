@@ -4,49 +4,49 @@
       <m-card [mTitle]="mode === 'edit'? 'web.map-set-association.form.edit-header' : 'web.map-set-association.form.add-header'" [mShowSkeleton]="loading['init']">
         <form #form="ngForm" *ngIf="association">
           <m-form-item mName="sourceCodeSystem" mLabel="web.map-set-association.form.source-system" required>
-            <twl-code-system-search
+            <tw-code-system-search
                 [(ngModel)]="sourceCodeSystem"
                 name="sourceCodeSystem"
                 valuePrimitive
                 required
-            ></twl-code-system-search>
+            ></tw-code-system-search>
           </m-form-item>
           <m-form-item *ngIf="sourceCodeSystem" mName="sourceConcept" mLabel="web.map-set-association.form.source-concept" required>
-            <twl-code-system-entity-version-search
+            <tw-code-system-entity-version-search
                 [codeSystemId]="sourceCodeSystem"
                 [(ngModel)]="association.source"
                 name="sourceConcept"
-            ></twl-code-system-entity-version-search>
+            ></tw-code-system-entity-version-search>
           </m-form-item>
           <m-form-item mName="targetCodeSystem" mLabel="web.map-set-association.form.target-system" required>
-            <twl-code-system-search
+            <tw-code-system-search
                 [(ngModel)]="targetCodeSystem"
                 name="targetCodeSystem"
                 valuePrimitive
                 required
-            ></twl-code-system-search>
+            ></tw-code-system-search>
           </m-form-item>
           <m-form-item *ngIf="targetCodeSystem" mName="targetConcept" mLabel="web.map-set-association.form.target-concept" required>
-            <twl-code-system-entity-version-search
+            <tw-code-system-entity-version-search
                 [codeSystemId]="targetCodeSystem"
                 [(ngModel)]="association.target"
                 name="targetConcept"
-            ></twl-code-system-entity-version-search>
+            ></tw-code-system-entity-version-search>
           </m-form-item>
           <m-form-item mName="associationType" mLabel="web.map-set-association.form.type" required>
-            <twl-association-type-search
+            <tw-association-type-search
                 [(ngModel)]="association.associationType"
                 name="associationType"
                 valuePrimitive
                 required
-            ></twl-association-type-search>
+            ></tw-association-type-search>
           </m-form-item>
 
           <m-form-item mName="associationStatus" mLabel="web.map-set-association.form.status" required>
-            <twl-value-set-concept-select name="associationStatus"
+            <tw-value-set-concept-select name="associationStatus"
                 [(ngModel)]="association.status"
                 valueSet="publication-status"
-                required></twl-value-set-concept-select>
+                required></tw-value-set-concept-select>
           </m-form-item>
         </form>
 

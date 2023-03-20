@@ -7,7 +7,7 @@ import {BooleanInput, DestroyService, group, isNil} from '@kodality-web/core-uti
 import {takeUntil} from 'rxjs';
 
 @Component({
-  selector: 'twl-designation-select',
+  selector: 'tw-designation-select',
   templateUrl: './designation-select.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => DesignationSelectComponent), multi: true}, DestroyService]
 })

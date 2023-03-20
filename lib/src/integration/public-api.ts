@@ -24,4 +24,5 @@ export * from './snomed/model/refset/snomed-refset-item';
 export * from './snomed/model/refset/snomed-refset-member-search-result';
 export * from './snomed/pipe/snomed-concept-name-pipe';
 export * from './snomed/util/snomed-util';
+export * from './orphanet/service/integration-orphanet-lib.service';
 export * from './integration-lib.module';

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {MeasurementUnit, MeasurementUnitLibService} from 'terminology-lib/measurementunit';
+import {MeasurementUnit, MeasurementUnitLibService} from '@terminology/core';
 import {Observable} from 'rxjs';
 import {isDefined} from '@kodality-web/core-util';
 

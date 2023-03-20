@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {NamingSystem, NamingSystemLibService} from 'terminology-lib/resources';
+import {NamingSystem, NamingSystemLibService} from '@terminology/core';
 
 @Injectable()
 export class NamingSystemService extends NamingSystemLibService {

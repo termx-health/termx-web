@@ -8,7 +8,7 @@ import {ConceptSearchParams} from '../model/concept-search-params';
 import {CodeSystemConceptLibService} from '../services/code-system-concept-lib.service';
 
 @Component({
-  selector: 'twl-concept-search',
+  selector: 'tw-concept-search',
   templateUrl: './concept-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}, DestroyService]
 })

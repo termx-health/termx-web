@@ -14,7 +14,7 @@ export class ProjectItem {
 }
 
 @Component({
-  selector: 'twl-project-drawer-search',
+  selector: 'tw-project-drawer-search',
   templateUrl: 'project-drawer-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ProjectDrawerSearchComponent), multi: true}]
 })

@@ -16,11 +16,11 @@
           </m-form-item>
 
           <m-form-item mName="kind" mLabel="entities.naming-system.kind" required>
-            <twl-value-set-concept-select name="kind" valueSet="namingsystem-type" [(ngModel)]="namingSystem.kind" required></twl-value-set-concept-select>
+            <tw-value-set-concept-select name="kind" valueSet="namingsystem-type" [(ngModel)]="namingSystem.kind" required></tw-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="codeSystem" *ngIf="namingSystem.kind === 'codesystem'" mLabel="entities.naming-system.code-system" required>
-            <twl-code-system-search name="codeSystem" [(ngModel)]="namingSystem.codeSystem" valuePrimitive required></twl-code-system-search>
+            <tw-code-system-search name="codeSystem" [(ngModel)]="namingSystem.codeSystem" valuePrimitive required></tw-code-system-search>
           </m-form-item>
 
           <m-form-item mName="source" mLabel="entities.naming-system.source">

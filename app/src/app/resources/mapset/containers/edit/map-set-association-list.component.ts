@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {MapSetService} from '../../services/map-set-service';
 import {BooleanInput, collect} from '@kodality-web/core-util';
-import {MapSetAssociation} from 'terminology-lib/resources';
+import {MapSetAssociation} from '@terminology/core';
 
 @Component({
   selector: 'twa-map-set-association-list',

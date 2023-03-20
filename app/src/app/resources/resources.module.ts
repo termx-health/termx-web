@@ -9,6 +9,7 @@ import {NAMING_SYSTEM_ROUTES, NamingSystemModule} from './namingsystem/naming-sy
 import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './associationtype/association-type.module';
 import {DEV_RESOURCES_ROUTES} from './dev/dev-resources.module';
 
+
 export const RESOURCES_ROUTES: Routes = [
   {path: '', component: ResourcesTabsetComponent, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view', '*.NamingSystem.view', '*.AssociationType.view']}},
   {path: 'code-systems', children: CODE_SYSTEM_ROUTES, data: {privilege: ['*.CodeSystem.view']}},

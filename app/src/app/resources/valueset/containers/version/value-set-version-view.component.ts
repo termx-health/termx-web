@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ValueSetVersion} from 'terminology-lib/resources';
+import {ValueSetVersion} from '@terminology/core';
 import {ActivatedRoute} from '@angular/router';
 import {ValueSetService} from '../../services/value-set.service';
 import {Location} from '@angular/common';

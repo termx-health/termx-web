@@ -13,7 +13,7 @@
               </m-form-item>
 
               <m-form-item mName="baseCodeSystem" mLabel="entities.code-system.base-code-system">
-                <twl-code-system-search name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive></twl-code-system-search>
+                <tw-code-system-search name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive></tw-code-system-search>
               </m-form-item>
 
               <m-form-item mLabel="entities.code-system.name">
@@ -32,10 +32,10 @@
               </m-form-item>
 
               <m-form-item mName="content" mLabel="entities.code-system.content" required>
-                <twl-value-set-concept-select name="content"
+                <tw-value-set-concept-select name="content"
                     [(ngModel)]="codeSystem.content"
                     valueSet="codesystem-content-mode"
-                    required></twl-value-set-concept-select>
+                    required></tw-value-set-concept-select>
               </m-form-item>
 
               <m-form-item mName="caseSensitive" mLabel="entities.code-system.case-sensitivity">
@@ -47,10 +47,10 @@
               </m-form-item>
 
               <m-form-item mName="caseSensitive" mLabel="entities.code-system.supported-languages">
-                <twl-value-set-concept-select name="supportedLanguages"
+                <tw-value-set-concept-select name="supportedLanguages"
                     [(ngModel)]="codeSystem.supportedLanguages"
                     valueSet="languages"
-                    multiple></twl-value-set-concept-select>
+                    multiple></tw-value-set-concept-select>
               </m-form-item>
 
               <m-form-item mName="description" mLabel="entities.code-system.description">

@@ -1,10 +1,8 @@
 import {Component} from '@angular/core';
 import {IntegrationImportComponent} from '../integration-import.component';
 import {ActivatedRoute} from '@angular/router';
-import {JobLibService, JobLogResponse} from 'terminology-lib/job';
-import {IntegrationImportConfiguration} from 'terminology-lib/integration';
+import {IntegrationImportConfiguration, IntegrationOrphanetLibService, JobLibService, JobLogResponse} from '@terminology/core';
 import {Observable} from 'rxjs';
-import {IntegrationOrphanetLibService} from 'terminology-lib/integration/orphanet/service/integration-orphanet-lib.service';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Component({

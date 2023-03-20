@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ValueSetVersionConcept} from 'terminology-lib/resources';
+import {ValueSetVersionConcept} from '@terminology/core';
 
 
 @Component({

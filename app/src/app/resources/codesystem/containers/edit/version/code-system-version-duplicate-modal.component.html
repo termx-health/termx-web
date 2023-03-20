@@ -6,15 +6,15 @@
   <ng-container *m-modal-content>
     <form #form="ngForm" *ngIf="params">
       <m-form-item mName="sourceCodeSystem" mLabel="web.code-system.form.versions.duplicate.source-code-system" required>
-        <twl-code-system-search name="sourceCodeSystem" [(ngModel)]="params.sourceCodeSystem" valuePrimitive autofocus required></twl-code-system-search>
+        <tw-code-system-search name="sourceCodeSystem" [(ngModel)]="params.sourceCodeSystem" valuePrimitive autofocus required></tw-code-system-search>
       </m-form-item>
 
       <m-form-item mName="sourceVersion" mLabel="web.code-system.form.versions.duplicate.source-version" required>
-        <twl-code-system-version-select name="sourceVersion"
+        <tw-code-system-version-select name="sourceVersion"
             [(ngModel)]="params.sourceVersion"
             [codeSystemId]="params.sourceCodeSystem"
             required
-        ></twl-code-system-version-select>
+        ></tw-code-system-version-select>
       </m-form-item>
 
       <m-form-item mName="targetVersion" mLabel="web.code-system.form.versions.duplicate.target-version" required>

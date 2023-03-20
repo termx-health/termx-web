@@ -8,10 +8,8 @@ import {MarinaUiModule} from '@kodality-web/marina-ui';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {StatusTagComponent} from './components/publication-status-tag/status-tag.component';
 import {AddButtonComponent} from './components/add-button/add-button.component';
-import {CodeSystemLibModule} from 'terminology-lib/resources';
+import {AuthModule, CodeSystemLibModule} from '@terminology/core';
 import {ValidateUrlPipe} from './pipes/validate-url.pipe';
-import {HasAnyPrivilegePipe} from './pipes/has-any-privilege.pipe';
-import {PrivilegeDirective} from './directives/privilege.directive';
 
 
 const commonModules = [
@@ -21,7 +19,8 @@ const commonModules = [
   TranslateModule,
   MarinaUiModule,
   MarinaUtilModule,
-  CoreUtilModule
+  CoreUtilModule,
+  AuthModule
 ];
 
 const components = [
@@ -31,16 +30,17 @@ const components = [
 
 const pipes = [
   ValidateUrlPipe,
-  HasAnyPrivilegePipe
 ];
 
 const directives = [
   ValidateUrlPipe,
-  PrivilegeDirective
 ];
 
 @NgModule({
-  imports: [...commonModules, CodeSystemLibModule],
+  imports: [
+    ...commonModules,
+    CodeSystemLibModule
+  ],
   exports: [
     ...commonModules,
     ...components,

@@ -56,7 +56,7 @@
           </tr>
           <tr *mTableRow="let link; let index = index">
             <td>
-              <twl-page-select name="source-{{index}}" [(ngModel)]="link.sourceId" [idNe]="page.id" required></twl-page-select>
+              <tw-page-select name="source-{{index}}" [(ngModel)]="link.sourceId" [idNe]="page.id" required></tw-page-select>
             </td>
             <td>
               <m-number-input name="orderNumber-{{index}}" [(ngModel)]="link.orderNumber"></m-number-input>

@@ -2,7 +2,7 @@
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twaPrivileged="'*.ValueSet.edit'" [routerLink]="'value-sets/add'">
+      <twa-add-button *twPrivileged="'*.ValueSet.edit'" [routerLink]="'value-sets/add'">
         {{'web.value-set.list.add-value-set' | translate}}
       </twa-add-button>
       <m-button [routerLink]="'finder/value-sets'">
@@ -17,13 +17,13 @@
       <th mColumnKey="id">{{'entities.value-set.id' | translate}}</th>
       <th mColumnKey="name">{{'entities.value-set.name' | translate}}</th>
       <th mColumnKey="uri">{{'web.value-set.list.domain' | translate}}</th>
-      <th *twaPrivileged="'*.ValueSet.edit'" class="tw-table-actions"></th>
+      <th *twPrivileged="'*.ValueSet.edit'" class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let vs">
       <td m-table-expand [mItem]="vs"></td>
       <td>
-        <a *ngIf="'*.ValueSet.edit' | twaHasAnyPrivilege; else view" [routerLink]="['value-sets',vs.id, 'edit']" [queryParams]="{ tab: 'concepts' }">{{vs.id}}</a>
+        <a *ngIf="'*.ValueSet.edit' | twHasAnyPrivilege; else view" [routerLink]="['value-sets',vs.id, 'edit']" [queryParams]="{ tab: 'concepts' }">{{vs.id}}</a>
         <ng-template #view>
           <a [routerLink]="['value-sets',vs.id, 'view']" [queryParams]="{ tab: 'concepts' }">{{vs.id}}</a>
         </ng-template>
@@ -35,7 +35,7 @@
           <a *m-dropdown-item (click)="openFhir(vs.id)">
             <m-icon [mCode]="'link'"></m-icon>&nbsp; {{'web.value-set.list.open-fhir' | translate}}
           </a>
-          <ng-container *twaPrivileged="'*.ValueSet.publish'">
+          <ng-container *twPrivileged="'*.ValueSet.publish'">
             <a *m-dropdown-item (click)="deleteValueSet(vs.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>

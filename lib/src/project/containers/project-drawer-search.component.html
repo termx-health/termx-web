@@ -16,7 +16,7 @@
         <m-form-row>
           <div *m-form-col>
             <m-form-item mName="project" mLabel="entities.project.singular">
-              <twl-project-search name="project" [(ngModel)]="val.project" (ngModelChange)="loadPackages($event?.id)"></twl-project-search>
+              <tw-project-search name="project" [(ngModel)]="val.project" (ngModelChange)="loadPackages($event?.id)"></tw-project-search>
             </m-form-item>
             <m-form-item mName="package" mLabel="entities.package.singular">
               <m-select name="package" [(ngModel)]="val.package" [disabled]="!packages" (ngModelChange)="loadVersions($event?.id)" compareWith="id" autoSelect>

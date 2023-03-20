@@ -50,12 +50,12 @@
   <ng-container *m-modal-content>
     <form #modalForm="ngForm">
       <m-form-item mName="entityVersion" mLabel="web.map-set-entity-version.modal.entity-version" required>
-        <twl-map-set-entity-version-search [(ngModel)]="entityVersionModalData.entityVersion"
+        <tw-map-set-entity-version-search [(ngModel)]="entityVersionModalData.entityVersion"
             [mapSetId]="mapSetId"
             name="entityVersion"
             autofocus
             required
-        ></twl-map-set-entity-version-search>
+        ></tw-map-set-entity-version-search>
       </m-form-item>
     </form>
   </ng-container>

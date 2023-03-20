@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ValueSetService} from '../services/value-set.service';
 import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {CodeSystemVersion, ValueSet, ValueSetSearchParams} from 'terminology-lib/resources';
+import {CodeSystemVersion, ValueSet, ValueSetSearchParams} from '@terminology/core';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, tap} from 'rxjs';
 import {environment} from '../../../../environments/environment';

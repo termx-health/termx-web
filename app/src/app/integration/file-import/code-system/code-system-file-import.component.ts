@@ -1,5 +1,5 @@
 import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
-import {CodeSystem, CodeSystemLibService, EntityProperty} from 'terminology-lib/resources';
+import {CodeSystem, CodeSystemLibService, EntityProperty, JobLibService, JobLog, JobLogResponse} from '@terminology/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {collect, copyDeep, DestroyService, group, isNil} from '@kodality-web/core-util';
@@ -7,7 +7,6 @@ import {NgForm} from '@angular/forms';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {filter, merge, Subject, switchMap, takeUntil, timer} from 'rxjs';
-import {JobLibService, JobLog, JobLogResponse} from 'terminology-lib/job';
 import {Router} from '@angular/router';
 
 const IMPORT_TEMPLATES: {

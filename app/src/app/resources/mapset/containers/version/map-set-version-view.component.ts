@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MapSetVersion} from 'terminology-lib/resources';
+import {MapSetVersion} from '@terminology/core';
 import {ActivatedRoute} from '@angular/router';
 import {MapSetService} from '../../services/map-set-service';
 import {Location} from '@angular/common';

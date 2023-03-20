@@ -43,11 +43,11 @@
               </m-button>
             </ng-template>
 
-            <twl-value-set-concept-select *ngIf="!viewMode"
+            <tw-value-set-concept-select *ngIf="!viewMode"
                 name="{{index}}-status"
                 [(ngModel)]="designation.status"
                 valueSet="publication-status"
-                required></twl-value-set-concept-select>
+                required></tw-value-set-concept-select>
             <twa-status-tag *ngIf="viewMode" [status]="designation.status" style="margin-left: 1rem"></twa-status-tag>
 
             <m-button *ngIf="!viewMode" mDisplay="text" mShape="circle" (click)="designation.preferred = !designation.preferred">
@@ -56,13 +56,13 @@
             <m-icon *ngIf="viewMode" [mOptions]="{nzTheme : designation.preferred ? 'fill' : 'outline'}" [mCode]="'star'" style="margin-left: 1rem"></m-icon>
 
           </m-form-control>
-          <twl-value-set-concept-select *ngIf="!viewMode"
+          <tw-value-set-concept-select *ngIf="!viewMode"
               valueSet="languages"
               name="language"
               [(ngModel)]="language"
               (ngModelChange)="addDesignation($event)"
               [placeholder]="'web.code-system-concept-version.designation.multi-language-input.add-translation' | translate"
-              style="margin-top: 0.1rem"></twl-value-set-concept-select>
+              style="margin-top: 0.1rem"></tw-value-set-concept-select>
         </div>
       </m-form-item>
 

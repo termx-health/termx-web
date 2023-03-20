@@ -137,6 +137,12 @@
           "*.ValueSet.view",
           "*.MapSet.view"
         ]
+      },
+      {
+        "label": {
+          "en": "Observation definitions"
+        },
+        "link": "supplements/observation-definitions"
       }
     ]
   },

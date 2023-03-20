@@ -81,10 +81,10 @@
 
         <div *m-form-col>
           <m-form-item *ngIf="group.type === 'association'" mLabel="web.code-system-concept.group.association">
-            <twl-association-type-search [(ngModel)]="group.association"
+            <tw-association-type-search [(ngModel)]="group.association"
                 (ngModelChange)="groupConcepts($event)"
                 name="association"
-                valuePrimitive></twl-association-type-search>
+                valuePrimitive></tw-association-type-search>
           </m-form-item>
           <m-form-item *ngIf="group.type === 'property'" mLabel="web.code-system-concept.group.property">
             <m-select [(ngModel)]="group.property" (ngModelChange)="groupConcepts($event)" name="property">

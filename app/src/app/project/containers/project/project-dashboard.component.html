@@ -28,25 +28,25 @@
         <!-- Code Systems -->
         <m-card *ngSwitchCase="'code-system'">
           <label *m-card-header>{{'entities.code-system.plural' | translate}}</label>
-          <twl-code-system-widget [projectId]="projectContext?.project?.id"
+          <tw-code-system-widget [projectId]="projectContext?.project?.id"
               [packageId]="projectContext?.pack?.id"
-              [packageVersionId]="projectContext?.version?.id"></twl-code-system-widget>
+              [packageVersionId]="projectContext?.version?.id"></tw-code-system-widget>
         </m-card>
 
         <!-- Value Sets -->
         <m-card *ngSwitchCase="'value-set'">
           <label *m-card-header>{{'entities.value-set.plural' | translate}}</label>
-          <twl-value-set-widget [projectId]="projectContext?.project?.id"
+          <tw-value-set-widget [projectId]="projectContext?.project?.id"
               [packageId]="projectContext?.pack?.id"
-              [packageVersionId]="projectContext?.version?.id"></twl-value-set-widget>
+              [packageVersionId]="projectContext?.version?.id"></tw-value-set-widget>
         </m-card>
 
         <!-- Map Sets -->
         <m-card *ngSwitchCase="'map-set'">
           <label *m-card-header>{{'entities.map-set.plural' | translate}}</label>
-          <twl-map-set-widget [projectId]="projectContext?.project?.id"
+          <tw-map-set-widget [projectId]="projectContext?.project?.id"
               [packageId]="projectContext?.pack?.id"
-              [packageVersionId]="projectContext?.version?.id"></twl-map-set-widget>
+              [packageVersionId]="projectContext?.version?.id"></tw-map-set-widget>
         </m-card>
 
         <!-- Pages -->

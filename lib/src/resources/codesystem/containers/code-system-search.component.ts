@@ -10,7 +10,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 
 @Component({
-  selector: 'twl-code-system-search',
+  selector: 'tw-code-system-search',
   templateUrl: './code-system-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemSearchComponent), multi: true}, DestroyService]
 })

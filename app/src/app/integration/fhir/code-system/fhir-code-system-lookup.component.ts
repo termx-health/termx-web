@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FhirCodeSystemLibService, FhirCodeSystemLookupParams} from 'terminology-lib/fhir';
+import {FhirCodeSystemLibService, FhirCodeSystemLookupParams} from '@terminology/core';
 import {serializeDate} from '@kodality-web/core-util';
 import {Clipboard} from '@angular/cdk/clipboard';
 

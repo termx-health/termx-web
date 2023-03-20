@@ -6,7 +6,7 @@ import {ValueSetSearchParams} from '../model/value-set-search-params';
 import {ValueSetLibService} from '../services/value-set-lib.service';
 
 @Component({
-  selector: 'twl-value-set-widget',
+  selector: 'tw-value-set-widget',
   templateUrl: 'value-set-widget.component.html'
 })
 export class ValueSetWidgetComponent implements OnChanges {

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {SharedModule} from '../core/shared/shared.module';
 import {FhirValueSetComponent} from './valueset/fhir-value-set.component';
-import {FhirLibModule} from 'terminology-lib/fhir';
+import {FhirLibModule} from '@terminology/core';
 import {FhirCodeSystemComponent} from './codesystem/fhir-code-system.component';
 
 export const FHIR_ROUTES: Routes = [

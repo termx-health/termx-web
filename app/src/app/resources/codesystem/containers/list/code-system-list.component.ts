@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {CodeSystem, CodeSystemSearchParams} from 'terminology-lib/resources';
+import {CodeSystem, CodeSystemSearchParams} from '@terminology/core';
 import {CodeSystemService} from '../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, tap} from 'rxjs';

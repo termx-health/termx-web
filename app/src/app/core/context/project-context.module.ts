@@ -7,7 +7,7 @@ import {TranslateModule} from '@ngx-translate/core';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {ProjectContextComponent} from './project-context.component';
 import {ProjectModule} from '../../project/project.module';
-import {ProjectLibModule} from 'terminology-lib/project';
+import {ProjectLibModule} from '@terminology/core';
 
 @NgModule({
   imports: [

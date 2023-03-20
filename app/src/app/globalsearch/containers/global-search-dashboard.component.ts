@@ -10,13 +10,17 @@ import {
   MapSet,
   MapSetLibService,
   MapSetSearchParams,
+  MeasurementUnit,
+  MeasurementUnitLibService,
+  MeasurementUnitSearchParams,
+  SnomedConcept,
+  SnomedConceptSearchParams,
+  SnomedLibService,
   ValueSet,
   ValueSetLibService,
   ValueSetSearchParams
-} from 'terminology-lib/resources';
+} from '@terminology/core';
 import {Router} from '@angular/router';
-import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'terminology-lib/integration';
-import {MeasurementUnit, MeasurementUnitLibService, MeasurementUnitSearchParams} from 'terminology-lib/measurementunit';
 
 @Component({
   templateUrl: './global-search-dashboard.component.html'

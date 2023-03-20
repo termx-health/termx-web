@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {MapSetLibService} from './services/map-set-lib.service';
 import {MapSetSearchComponent} from './containers/map-set-search.component';
-import {MuiComponentsModule} from '@kodality-web/marina-ui';
+import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {FormsModule} from '@angular/forms';
 import {MapSetEntityVersionSearchComponent} from './containers/map-set-entity-version-search.component';
@@ -14,7 +14,7 @@ import {RouterModule} from '@angular/router';
 
 @NgModule({
   imports: [
-    MuiComponentsModule,
+    MarinaComponentsModule,
     FormsModule,
     CommonModule,
     CoreUtilModule,

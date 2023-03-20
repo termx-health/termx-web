@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AssociationType, AssociationTypeSearchParams} from 'terminology-lib/resources';
+import {AssociationType, AssociationTypeSearchParams} from '@terminology/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {AssociationTypeService} from '../../services/association-type.service';
