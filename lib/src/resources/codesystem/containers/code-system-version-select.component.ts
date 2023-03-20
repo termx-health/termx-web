@@ -8,7 +8,7 @@ import {takeUntil} from 'rxjs';
 
 
 @Component({
-  selector: 'twl-code-system-version-select',
+  selector: 'tw-code-system-version-select',
   templateUrl: './code-system-version-select.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemVersionSelectComponent), multi: true}, DestroyService]
 })

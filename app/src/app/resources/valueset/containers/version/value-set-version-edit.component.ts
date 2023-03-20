@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemVersion, ValueSetVersion} from 'terminology-lib/resources';
+import {CodeSystemVersion, ValueSetVersion} from '@terminology/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';

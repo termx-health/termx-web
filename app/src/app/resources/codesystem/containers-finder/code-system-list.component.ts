@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchResult} from '@kodality-web/core-util';
-import {CodeSystem} from 'terminology-lib/resources';
+import {AuthService, CodeSystem} from '@terminology/core';
 import {CodeSystemService} from '../services/code-system.service';
 import {Router} from '@angular/router';
-import {AuthService} from '../../../auth/auth.service';
 
 @Component({
   template: `

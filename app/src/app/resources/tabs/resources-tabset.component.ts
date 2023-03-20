@@ -1,6 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {AssociationTypeLibService, CodeSystemLibService, MapSetLibService, NamingSystemLibService, ValueSetLibService} from 'terminology-lib/resources';
-import {AuthService} from '../../auth/auth.service';
+import {AssociationTypeLibService, AuthService, CodeSystemLibService, MapSetLibService, NamingSystemLibService, ValueSetLibService} from '@terminology/core';
 
 
 @Component({

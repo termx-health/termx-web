@@ -1,5 +1,5 @@
 import {Inject, Injectable} from '@angular/core';
-import {TERMINOLOGY_API} from '../../terminology-lib.token';
+import {TERMINOLOGY_API_URL} from '../../terminology-lib.config';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {PackageResource} from '../model/package';
@@ -9,7 +9,7 @@ import {SearchHttpParams} from '@kodality-web/core-util';
 export class PackageResourceLibService {
   protected baseUrl;
 
-  public constructor(@Inject(TERMINOLOGY_API) api: string, protected http: HttpClient) {
+  public constructor(@Inject(TERMINOLOGY_API_URL) api: string, protected http: HttpClient) {
     this.baseUrl = `${api}/package-resources`;
   }
 

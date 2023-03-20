@@ -1,6 +1,5 @@
 import {Component} from '@angular/core';
-import {IntegrationAtcLibService, IntegrationImportConfiguration} from 'terminology-lib/integration';
-import {JobLibService, JobLogResponse} from 'terminology-lib/job';
+import {IntegrationAtcLibService, IntegrationImportConfiguration, JobLibService, JobLogResponse} from '@terminology/core';
 import {IntegrationImportComponent} from '../integration-import.component';
 import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';

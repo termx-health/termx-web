@@ -60,22 +60,22 @@
 
           <tr *mTableRow="let telecom; let index = index">
             <td>
-              <twl-value-set-concept-select
+              <tw-value-set-concept-select
                   name="system-{{index}}"
                   [(ngModel)]="telecom.system"
                   valueSet="contact-point-system"
                   autofocus
-              ></twl-value-set-concept-select>
+              ></tw-value-set-concept-select>
             </td>
             <td>
               <m-input name="value-{{index}}" [(ngModel)]="telecom.value"></m-input>
             </td>
             <td>
-              <twl-value-set-concept-select
+              <tw-value-set-concept-select
                   name="use-{{index}}"
                   [(ngModel)]="telecom.use"
                   valueSet="contact-point-use"
-              ></twl-value-set-concept-select>
+              ></tw-value-set-concept-select>
             </td>
             <td class="tw-table-actions">
               <m-button (click)="removeModalTelecom(index)">

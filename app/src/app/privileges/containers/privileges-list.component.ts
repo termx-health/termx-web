@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
-import {Privilege, PrivilegeResourceActions, PrivilegeSearchParams} from 'terminology-lib/auth/privileges';
+import {Privilege, PrivilegeResourceActions, PrivilegeSearchParams} from '@terminology/core';
 import {PrivilegeService} from '../services/privilege.service';
 
 @Component({

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptSearchParams, EntityProperty} from 'terminology-lib/resources';
+import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptSearchParams, EntityProperty} from '@terminology/core';
 import {debounceTime, finalize, Observable, of, Subject, switchMap} from 'rxjs';
 import {BooleanInput, compareValues, copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';

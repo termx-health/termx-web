@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {EntityProperty} from 'terminology-lib/resources';
+import {EntityProperty} from '@terminology/core';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {BooleanInput} from '@kodality-web/core-util';
 

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystem} from 'terminology-lib/resources';
+import {CodeSystem} from '@terminology/core';
 import {NgForm} from '@angular/forms';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';

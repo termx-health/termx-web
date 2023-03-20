@@ -10,7 +10,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 
 @Component({
-  selector: 'twl-map-set-search',
+  selector: 'tw-map-set-search',
   templateUrl: './map-set-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MapSetSearchComponent), multi: true}, DestroyService]
 })

@@ -1,8 +1,7 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MapSetEntityVersionSearchParams} from 'terminology-lib/resources';
+import {MapSetEntityVersion, MapSetEntityVersionSearchParams} from '@terminology/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 import {BooleanInput, copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
-import {MapSetEntityVersion} from 'terminology-lib/resources/mapset/model/map-set-entity-version';
 import {MapSetService} from '../../services/map-set-service';
 import {NgForm} from '@angular/forms';
 

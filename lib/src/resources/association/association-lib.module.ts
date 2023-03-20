@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {MuiComponentsModule} from '@kodality-web/marina-ui';
+import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {CoreUtilModule} from '@kodality-web/core-util';
@@ -8,7 +8,7 @@ import {AssociationTypeSearchComponent} from './containers/association-type-sear
 
 @NgModule({
   imports: [
-    MuiComponentsModule,
+    MarinaComponentsModule,
     FormsModule,
     CommonModule,
     CoreUtilModule

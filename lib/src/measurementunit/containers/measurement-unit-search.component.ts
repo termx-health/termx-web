@@ -8,7 +8,7 @@ import {MeasurementUnitLibService} from '../services/measurement-unit-lib.servic
 import {MeasurementUnitSearchParams} from '../model/measurement-unit-search-params';
 
 @Component({
-  selector: 'twl-measurement-unit-search',
+  selector: 'tw-measurement-unit-search',
   templateUrl: './measurement-unit-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MeasurementUnitSearchComponent), multi: true}, DestroyService]
 })

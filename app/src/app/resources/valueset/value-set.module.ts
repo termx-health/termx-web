@@ -13,7 +13,7 @@ import {ValueSetRuleFormComponent} from './containers/version/ruleset/rule/value
 import {ValueSetRuleFilterListComponent} from './containers/version/ruleset/rule/filter/value-set-rule-filter-list.component';
 import {ValueSetVersionConceptModalComponent} from './containers/version/concepts/value-set-version-concept-modal.component';
 import {ContactModule} from '../contact/contact.module';
-import {ResourcesLibModule} from 'terminology-lib/resources';
+import {IntegrationLibModule, MeasurementUnitLibModule, ResourcesLibModule} from '@terminology/core';
 import {FinderValueSetListComponent} from './containers-finder/value-set-list.component';
 import {FinderModule} from '../../core/finder/finder.module';
 import {FinderValueSetViewComponent} from './containers-finder/value-set-view.component';
@@ -22,9 +22,7 @@ import {ValueSetViewComponent} from './containers/edit/value-set-view.component'
 import {ValueSetRuleConceptListComponent} from './containers/version/ruleset/rule/concept/value-set-rule-concept-list.component';
 import {ValueSetVersionConceptEditComponent} from './containers/version/concepts/value-set-version-concept-edit.component';
 import {ValueSetRuleEditComponent} from './containers/version/ruleset/rule/value-set-rule-edit.component';
-import {IntegrationLibModule} from 'terminology-lib/integration';
 import {ValueSetConceptListComponent} from './containers/edit/concept/value-set-concept-list.component';
-import {MeasurementUnitLibModule} from 'terminology-lib/measurementunit';
 import {MarinaQuillModule} from '@kodality-web/marina-quill';
 
 

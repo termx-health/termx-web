@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {EntityProperty} from 'terminology-lib/resources';
+import {EntityProperty} from '@terminology/core';
 import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../codesystem/services/code-system.service';
 import {NgForm} from '@angular/forms';

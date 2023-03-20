@@ -114,32 +114,32 @@
       <m-form-item *ngIf="modalData.resource.resourceType && ['CodeSystem', 'ValueSet', 'MapSet', 'NamingSystem', 'AssociationType'].includes(modalData.resource.resourceType)"
           mName="resourceId"
           mLabel="web.privileges.resources.modal.resource-id">
-        <twl-code-system-search name="resourceId"
+        <tw-code-system-search name="resourceId"
             *ngIf="modalData.resource.resourceType === 'CodeSystem'"
             [(ngModel)]="modalData.resource.resourceId"
             [filter]="filter"
-            valuePrimitive></twl-code-system-search>
-        <twl-value-set-search name="resourceId"
+            valuePrimitive></tw-code-system-search>
+        <tw-value-set-search name="resourceId"
             *ngIf="modalData.resource.resourceType === 'ValueSet'"
             [(ngModel)]="modalData.resource.resourceId"
             [filter]="filter"
-            valuePrimitive></twl-value-set-search>
-        <twl-map-set-search name="resourceId"
+            valuePrimitive></tw-value-set-search>
+        <tw-map-set-search name="resourceId"
             *ngIf="modalData.resource.resourceType === 'MapSet'"
             [(ngModel)]="modalData.resource.resourceId"
             [filter]="filter"
-            valuePrimitive></twl-map-set-search>
-        <twl-naming-system-search name="resourceId"
+            valuePrimitive></tw-map-set-search>
+        <tw-naming-system-search name="resourceId"
             *ngIf="modalData.resource.resourceType === 'NamingSystem'"
             [(ngModel)]="modalData.resource.resourceId"
             [filter]="filter"
-            valuePrimitive></twl-naming-system-search>
-        <twl-association-type-search name="resourceId"
+            valuePrimitive></tw-naming-system-search>
+        <tw-association-type-search name="resourceId"
             *ngIf="modalData.resource.resourceType === 'AssociationType'"
             [(ngModel)]="modalData.resource.resourceId"
             [filter]="filterCode"
             valuePrimitive>
-        </twl-association-type-search>
+        </tw-association-type-search>
       </m-form-item>
       <ng-container *ngIf="modalData.resource.resourceType !== 'Admin'">
         <m-form-item [mLabel]="view"></m-form-item>

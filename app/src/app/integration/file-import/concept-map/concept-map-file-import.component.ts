@@ -3,10 +3,9 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../../environments/environment';
 import {NgForm} from '@angular/forms';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {MapSet, MapSetLibService} from 'terminology-lib/resources';
+import {JobLibService, JobLog, JobLogResponse, MapSet, MapSetLibService} from '@terminology/core';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {filter, merge, Subject, switchMap, takeUntil, timer} from 'rxjs';
-import {JobLibService, JobLog, JobLogResponse} from 'terminology-lib/job';
 import {DestroyService} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
 

@@ -10,7 +10,7 @@ import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'twl-page-select',
+  selector: 'tw-page-select',
   templateUrl: './page-select.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => PageSelectComponent), multi: true}, DestroyService]
 })

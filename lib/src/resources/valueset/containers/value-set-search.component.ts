@@ -10,7 +10,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 
 @Component({
-  selector: 'twl-value-set-search',
+  selector: 'tw-value-set-search',
   templateUrl: './value-set-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetSearchComponent), multi: true}, DestroyService]
 })

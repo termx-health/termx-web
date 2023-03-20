@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angula
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {Template, TemplateLibService} from 'terminology-lib/thesaurus';
+import {Template, TemplateLibService} from '@terminology/core';
 
 
 @Component({

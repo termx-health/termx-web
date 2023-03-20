@@ -1,7 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {CodeSystemService} from '../../../services/code-system.service';
-import {CodeSystemVersion} from 'terminology-lib/resources';
-import {FhirCodeSystemLibService} from 'terminology-lib/fhir';
+import {CodeSystemVersion, FhirCodeSystemLibService} from '@terminology/core';
 import {saveAs} from 'file-saver';
 import {BooleanInput} from '@kodality-web/core-util';
 import {Fhir} from 'fhir/fhir';

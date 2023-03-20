@@ -7,7 +7,7 @@
         (mLangChange)="onLangChange($event)"
         (mLogout)="logout()"
     >
-      <ng-container *ngIf="!activeRoutePrivileges || (activeRoutePrivileges | twaHasAnyPrivilege); else accessError">
+      <ng-container *ngIf="!activeRoutePrivileges || (activeRoutePrivileges | twHasAnyPrivilege); else accessError">
         <router-outlet></router-outlet>
       </ng-container>
       <ng-template #accessError>

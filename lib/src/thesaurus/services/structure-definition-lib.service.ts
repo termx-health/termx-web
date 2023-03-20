@@ -2,7 +2,7 @@ import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
-import {TERMINOLOGY_API} from '../../terminology-lib.token';
+import {TERMINOLOGY_API_URL} from '../../terminology-lib.config';
 import {StructureDefinition} from '../model/structure-definition';
 import {StructureDefinitionSearchParams} from '../model/structure-definition-search-params';
 
@@ -10,7 +10,7 @@ import {StructureDefinitionSearchParams} from '../model/structure-definition-sea
 export class StructureDefinitionLibService {
   protected baseUrl;
 
-  public constructor(@Inject(TERMINOLOGY_API) api: string, protected http: HttpClient) {
+  public constructor(@Inject(TERMINOLOGY_API_URL) api: string, protected http: HttpClient) {
     this.baseUrl = `${api}`;
   }
 

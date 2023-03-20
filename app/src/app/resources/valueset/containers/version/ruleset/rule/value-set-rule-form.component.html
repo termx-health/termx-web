@@ -12,11 +12,11 @@
         mLabel="entities.value-set-rule-set.rule.code-system"
         [required]="!viewMode && !rule.valueSet"
         *ngIf="!viewMode || rule.codeSystem">
-      <twl-code-system-search name="codeSystem"
+      <tw-code-system-search name="codeSystem"
           *ngIf="!viewMode"
           [(ngModel)]="rule.codeSystem"
           [required]="!rule.valueSet"
-          valuePrimitive></twl-code-system-search>
+          valuePrimitive></tw-code-system-search>
       <label *ngIf="viewMode">
         {{rule.codeSystem}}
       </label>
@@ -26,12 +26,12 @@
         mLabel="entities.value-set-rule-set.rule.code-system-version"
         [required]="!viewMode && !!rule.codeSystem && !lockedDate"
         *ngIf="!viewMode || rule.codeSystem">
-      <twl-code-system-version-select name="codeSystemVersion"
+      <tw-code-system-version-select name="codeSystemVersion"
           *ngIf="!viewMode"
           [(ngModel)]="rule.codeSystemVersionId"
           [codeSystemId]="rule.codeSystem"
           [required]="!lockedDate && !!rule.codeSystem"
-          valuePrimitive></twl-code-system-version-select>
+          valuePrimitive></tw-code-system-version-select>
       <label *ngIf="viewMode">
         {{rule?.codeSystemVersionId | codeSystemVersionCode | async}}
       </label>
@@ -60,7 +60,7 @@
       mLabel="entities.value-set-rule-set.rule.value-set"
       [required]="!viewMode && !rule.codeSystem"
       *ngIf="!viewMode || rule.valueSet">
-    <twl-value-set-search *ngIf="!viewMode" name="valueSet" [(ngModel)]="rule.valueSet" valuePrimitive [required]="!rule.codeSystem"></twl-value-set-search>
+    <tw-value-set-search *ngIf="!viewMode" name="valueSet" [(ngModel)]="rule.valueSet" valuePrimitive [required]="!rule.codeSystem"></tw-value-set-search>
     <label *ngIf="viewMode">{{rule.valueSet}}</label>
   </m-form-item>
 
@@ -68,12 +68,12 @@
       mLabel="entities.value-set-rule-set.rule.value-set-version"
       [required]="!viewMode && !!rule.valueSet && !lockedDate"
       *ngIf="!viewMode || rule.valueSet">
-    <twl-value-set-version-select *ngIf="!viewMode"
+    <tw-value-set-version-select *ngIf="!viewMode"
         name="valueSetVersion"
         [(ngModel)]="rule.valueSetVersionId"
         [valueSetId]="rule.valueSet"
         [required]="!!rule.valueSet && !lockedDate"
-        valuePrimitive></twl-value-set-version-select>
+        valuePrimitive></tw-value-set-version-select>
     <label *ngIf="viewMode">{{rule.valueSetVersionId | valueSetVersionCode | async}}</label>
   </m-form-item>
 </ng-container>

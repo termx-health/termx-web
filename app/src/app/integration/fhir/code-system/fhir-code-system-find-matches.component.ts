@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FhirCodeSystemLibService, FhirParameters} from 'terminology-lib/fhir';
+import {FhirCodeSystemLibService, FhirParameters} from '@terminology/core';
 import {Clipboard} from '@angular/cdk/clipboard';
 
 

@@ -23,7 +23,7 @@
           </m-form-item>
 
           <m-form-item mName="periodUpper" mLabel="web.measurement-unit.form.to">
-            <div *ngIf="'*.MeasurementUnit.edit' | twaHasAnyPrivilege; else view">
+            <div *ngIf="'*.MeasurementUnit.edit' | twHasAnyPrivilege; else view">
               <m-date-picker name="periodUpper" [(ngModel)]="measurementUnit.period.upper"></m-date-picker>
             </div>
             <ng-template #view>{{measurementUnit.period.upper | localDate}}</ng-template>
@@ -46,7 +46,7 @@
 
         <twa-measurement-unit-mapping-list *ngIf="measurementUnit" [(mappings)]="measurementUnit.mappings" viewMode></twa-measurement-unit-mapping-list>
 
-        <ng-container *twaPrivileged="'*.MeasurementUnit.edit'">
+        <ng-container *twPrivileged="'*.MeasurementUnit.edit'">
           <ng-container *m-card-footer>
             <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="!measurementUnit?.period?.upper" (click)="save()">
               {{'core.btn.save' | translate}}

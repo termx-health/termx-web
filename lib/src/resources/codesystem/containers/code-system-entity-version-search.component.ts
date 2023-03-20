@@ -10,7 +10,7 @@ import {CodeSystemEntityVersionSearchParams} from '../model/code-system-entity-v
 import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 @Component({
-  selector: 'twl-code-system-entity-version-search',
+  selector: 'tw-code-system-entity-version-search',
   templateUrl: './code-system-entity-version-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemEntityVersionSearchComponent), multi: true}, DestroyService]
 })

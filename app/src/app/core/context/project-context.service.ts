@@ -3,7 +3,7 @@ import {NavigationEnd, Router} from '@angular/router';
 import {filter, mergeMap, Observable, of, ReplaySubject} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {copyDeep} from '@kodality-web/core-util';
-import {Package, PackageLibService, PackageVersion, PackageVersionLibService, Project, ProjectLibService} from 'terminology-lib/project';
+import {Package, PackageLibService, PackageVersion, PackageVersionLibService, Project, ProjectLibService} from '@terminology/core';
 
 
 export class ProjectContext {

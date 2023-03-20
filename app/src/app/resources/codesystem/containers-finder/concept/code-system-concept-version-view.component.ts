@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from 'terminology-lib/resources';
+import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from '@terminology/core';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
 import {DestroyService, isNil} from '@kodality-web/core-util';

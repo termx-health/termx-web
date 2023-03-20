@@ -3,7 +3,6 @@ import {AbstractSecurityStorage} from 'angular-auth-oidc-client';
 
 @Injectable()
 export class OauthStorageService implements AbstractSecurityStorage {
-
   public read(key: string) {
     return localStorage.getItem(key);
   }

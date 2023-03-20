@@ -1,6 +1,7 @@
 export * from './containers/value-set-concept-select.component';
 export * from './containers/value-set-search.component';
 export * from './containers/value-set-version-select.component';
+export * from './containers/value-set-widget.component';
 export * from './model/value-set';
 export * from './model/value-set-expand-request';
 export * from './model/value-set-search-params';

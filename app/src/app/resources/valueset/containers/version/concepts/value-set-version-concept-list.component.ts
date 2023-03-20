@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {ValueSetVersionConcept} from 'terminology-lib/resources';
+import {ValueSetVersionConcept} from '@terminology/core';
 import {BooleanInput} from '@kodality-web/core-util';
 import {ValueSetService} from '../../../services/value-set.service';
 

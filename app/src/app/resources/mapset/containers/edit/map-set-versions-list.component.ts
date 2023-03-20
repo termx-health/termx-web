@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {MapSetVersion} from 'terminology-lib/resources';
+import {MapSetVersion} from '@terminology/core';
 import {MapSetService} from '../../services/map-set-service';
 import {BooleanInput} from '@kodality-web/core-util';
 

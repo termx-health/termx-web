@@ -2,7 +2,7 @@
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twaPrivileged="'*.NamingSystem.edit'" [routerLink]="['naming-systems/add']">
+      <twa-add-button *twPrivileged="'*.NamingSystem.edit'" [routerLink]="['naming-systems/add']">
         {{'web.naming-system.list.add-naming-system' | translate}}
       </twa-add-button>
     </div>
@@ -16,13 +16,13 @@
       <th mColumnKey="source">{{'entities.naming-system.source' | translate}}</th>
       <th mColumnKey="kind">{{'web.naming-system.list.type' | translate}}</th>
       <th mColumnKey="status">{{'entities.naming-system.status' | translate}}</th>
-      <th class="tw-table-actions" *twaPrivileged="'*.NamingSystem.edit'"></th>
+      <th class="tw-table-actions" *twPrivileged="'*.NamingSystem.edit'"></th>
     </tr>
 
     <tr *mTableRow="let ns">
       <td m-table-expand [mItem]="ns"></td>
       <td>
-        <a *ngIf="'*.NamingSystem.edit' | twaHasAnyPrivilege; else view" [routerLink]="['naming-systems',ns.id, ns.status ==='draft'? 'edit': 'view']">{{ns.id}}</a>
+        <a *ngIf="'*.NamingSystem.edit' | twHasAnyPrivilege; else view" [routerLink]="['naming-systems',ns.id, ns.status ==='draft'? 'edit': 'view']">{{ns.id}}</a>
         <ng-template #view>
           <a [routerLink]="['naming-systems',ns.id, 'view']">{{ns.id}}</a>
         </ng-template>
@@ -33,7 +33,7 @@
       <td class="tw-table-min-width">
         <twa-status-tag [status]="ns.status"></twa-status-tag>
       </td>
-      <td class="tw-table-actions" *twaPrivileged="'*.NamingSystem.edit'">
+      <td class="tw-table-actions" *twPrivileged="'*.NamingSystem.edit'">
         <m-dropdown>
           <a *mDropdownItemIf="ns.status !== 'retired'" (click)="retire(ns)">
             {{'web.publication-status.operations.retire' | translate}}
@@ -41,7 +41,7 @@
           <a *mDropdownItemIf="ns.status === 'draft'" (click)="activate(ns)">
             {{'web.publication-status.operations.activate' | translate}}
           </a>
-          <ng-container *twaPrivileged="'*.NamingSystem.publish'">
+          <ng-container *twPrivileged="'*.NamingSystem.publish'">
             <a *m-dropdown-item (click)="deleteNamingSystem(ns.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>

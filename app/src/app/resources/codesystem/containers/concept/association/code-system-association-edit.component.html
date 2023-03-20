@@ -9,29 +9,29 @@
         <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
           <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content">
             <m-form-item mName="type-{{index}}" required>
-              <twl-association-type-search *ngIf="!viewMode"
+              <tw-association-type-search *ngIf="!viewMode"
                   [(ngModel)]="association.associationType"
                   name="type-{{index}}"
                   valuePrimitive
-                  required></twl-association-type-search>
+                  required></tw-association-type-search>
               <label *ngIf="viewMode">{{association.associationType}}</label>
             </m-form-item>
           </div>
           <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
             <div style="display: flex">
               <m-form-item style="width: 100%" mName="targetConcept-{{index}}" required>
-                <twl-code-system-entity-version-search *ngIf="!viewMode" [codeSystemId]="codeSystemId"
+                <tw-code-system-entity-version-search *ngIf="!viewMode" [codeSystemId]="codeSystemId"
                     [(ngModel)]="association.targetId"
                     name="targetConcept-{{index}}"
                     valuePrimitive
-                    required></twl-code-system-entity-version-search>
+                    required></tw-code-system-entity-version-search>
                 <label *ngIf="viewMode">{{association.targetId | localizedConceptName: {codeSystem: codeSystemId} | async }}</label>
               </m-form-item>
               <m-form-item mName="status-{{index}}">
-                <twl-value-set-concept-select *ngIf="!viewMode" [(ngModel)]="association.status"
+                <tw-value-set-concept-select *ngIf="!viewMode" [(ngModel)]="association.status"
                     name="status-{{index}}"
                     valueSet="publication-status"
-                    required></twl-value-set-concept-select>
+                    required></tw-value-set-concept-select>
                 <twa-status-tag *ngIf="viewMode" [status]="association.status"></twa-status-tag>
               </m-form-item>
               <m-button *ngIf="!viewMode" mDisplay="text" (click)="removeAssociation(index)">

@@ -3,7 +3,7 @@ import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {validateForm} from '@kodality-web/core-util';
-import {ValueSet} from 'terminology-lib/resources';
+import {ValueSet} from '@terminology/core';
 import {ValueSetService} from '../../services/value-set.service';
 
 

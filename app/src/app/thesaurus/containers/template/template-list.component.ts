@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
-import {Template, TemplateSearchParams} from 'terminology-lib/thesaurus';
+import {Template, TemplateSearchParams} from '@terminology/core';
 import {TemplateService} from '../../services/template.service';
 
 @Component({

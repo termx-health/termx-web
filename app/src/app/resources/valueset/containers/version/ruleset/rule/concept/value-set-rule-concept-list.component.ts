@@ -1,8 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BooleanInput, copyDeep, isDefined} from '@kodality-web/core-util';
 import {ValueSetVersionConcept} from 'lib/src/resources';
-import {SnomedLibService} from 'terminology-lib/integration';
-import {MeasurementUnit} from 'terminology-lib/measurementunit';
+import {MeasurementUnit, SnomedLibService} from '@terminology/core';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({

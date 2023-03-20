@@ -6,7 +6,7 @@ import {MapSetSearchParams} from '../model/map-set-search-params';
 import {MapSetLibService} from '../services/map-set-lib.service';
 
 @Component({
-  selector: 'twl-map-set-widget',
+  selector: 'tw-map-set-widget',
   templateUrl: 'map-set-widget.component.html'
 })
 export class MapSetWidgetComponent implements OnChanges {

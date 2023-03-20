@@ -9,7 +9,7 @@
     </m-form-item>
 
     <m-form-item mName="publisher" mLabel="web.dev-code-system-relation.value-set.publisher" [required]="generateValueSet">
-      <twl-value-set-concept-select [(ngModel)]="valueSet.versions[0].source" name="publisher" (ngModelChange)="publisherChanged($event)" valueSet="publisher" [required]="generateValueSet"></twl-value-set-concept-select>
+      <tw-value-set-concept-select [(ngModel)]="valueSet.versions[0].source" name="publisher" (ngModelChange)="publisherChanged($event)" valueSet="publisher" [required]="generateValueSet"></tw-value-set-concept-select>
     </m-form-item>
 
     <m-form-item mName="uri" mLabel="web.dev-code-system-relation.value-set.uri" [required]="generateValueSet">

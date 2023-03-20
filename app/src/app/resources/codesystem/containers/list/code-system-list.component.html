@@ -2,7 +2,7 @@
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twaPrivileged="'*.CodeSystem.edit'" [routerLink]="dev ? ['add'] : ['code-systems/add']">
+      <twa-add-button *twPrivileged="'*.CodeSystem.edit'" [routerLink]="dev ? ['add'] : ['code-systems/add']">
         {{'web.code-system.list.add-code-system' | translate}}
       </twa-add-button>
       <m-button [routerLink]="'finder/code-systems'">
@@ -18,13 +18,13 @@
       <th mColumnKey="name">{{'entities.code-system.name' | translate}}</th>
       <th mColumnKey="uri">{{'web.code-system.list.domain' | translate}}</th>
       <th mColumnKey="uri">{{'entities.code-system.description' | translate}}</th>
-      <th *twaPrivileged="'*.CodeSystem.edit'" class="tw-table-actions"></th>
+      <th *twPrivileged="'*.CodeSystem.edit'" class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let cs">
       <td m-table-expand [mItem]="cs"></td>
       <td>
-        <a *ngIf="'*.CodeSystem.edit' | twaHasAnyPrivilege; else view" [routerLink]="dev ? [cs.id,'concepts'] : ['code-systems',cs.id,'edit']" [queryParams]="dev ? {} : { tab: 'concepts' }">{{cs.id}}</a>
+        <a *ngIf="'*.CodeSystem.edit' | twHasAnyPrivilege; else view" [routerLink]="dev ? [cs.id,'concepts'] : ['code-systems',cs.id,'edit']" [queryParams]="dev ? {} : { tab: 'concepts' }">{{cs.id}}</a>
         <ng-template #view>
           <a [routerLink]="dev ? [cs.id,'view'] : ['code-systems',cs.id,'view']" [queryParams]="dev ? {} : { tab: 'concepts' }">{{cs.id}}</a>
         </ng-template>
@@ -37,12 +37,12 @@
           <a *m-dropdown-item (click)="openFhir(cs.id)">
             <m-icon [mCode]="'link'"></m-icon>&nbsp; {{'web.code-system.list.open-fhir' | translate}}
           </a>
-          <ng-container *twaPrivileged="'*.CodeSystem.edit'">
+          <ng-container *twPrivileged="'*.CodeSystem.edit'">
             <a *m-dropdown-item (click)="duplicateModal.toggleModal({sourceCodeSystem: cs.id})">
               <m-icon [mCode]="'copy'"></m-icon>&nbsp; {{'core.btn.duplicate' | translate}}
             </a>
           </ng-container>
-          <ng-container *twaPrivileged="'*.CodeSystem.publish'">
+          <ng-container *twPrivileged="'*.CodeSystem.publish'">
             <a *m-dropdown-item (click)="deleteCodeSystem(cs.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>

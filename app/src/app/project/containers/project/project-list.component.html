@@ -5,10 +5,10 @@
   <div class="m-justify-between" style="margin-bottom: 1em">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div style="display: flex; gap: 0.5rem">
-      <twa-add-button *twaPrivileged="'*.Project.edit'" [routerLink]="['./add']">
+      <twa-add-button *twPrivileged="'*.Project.edit'" [routerLink]="['./add']">
         {{'web.project.add-btn' | translate}}
       </twa-add-button>
-      <m-button mClass="m-justify-between" *twaPrivileged="'*.Project.edit'" (mClick)="touchImport()">
+      <m-button mClass="m-justify-between" *twPrivileged="'*.Project.edit'" (mClick)="touchImport()">
         <m-icon mCode="import"></m-icon>
         <label>{{'web.project.import-btn' | translate}}</label>
       </m-button>
@@ -24,7 +24,7 @@
 
     <tr *mTableRow="let project">
       <td>
-        <a *ngIf="'*.Project.edit' | twaHasAnyPrivilege; else view" [routerLink]="['context', {pr: project.id}]">
+        <a *ngIf="'*.Project.edit' | twHasAnyPrivilege; else view" [routerLink]="['context', {pr: project.id}]">
           {{project.code}}
         </a>
         <ng-template #view>

@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemSupplement, Designation, EntityProperty, EntityPropertyValue} from 'terminology-lib/resources';
+import {CodeSystemSupplement, Designation, EntityProperty, EntityPropertyValue} from '@terminology/core';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';

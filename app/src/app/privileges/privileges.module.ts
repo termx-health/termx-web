@@ -4,7 +4,7 @@ import {PrivilegesListComponent} from './containers/privileges-list.component';
 import {PrivilegeEditComponent} from './containers/privilege-edit.component';
 import {SharedModule} from '../core/shared/shared.module';
 import {PrivilegeService} from './services/privilege.service';
-import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from 'terminology-lib/resources';
+import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, PrivilegeModule, ValueSetLibModule} from '@terminology/core';
 
 
 export const PRIVILEGES_ROUTES: Routes = [
@@ -20,7 +20,8 @@ export const PRIVILEGES_ROUTES: Routes = [
     ValueSetLibModule,
     MapSetLibModule,
     NamingSystemLibModule,
-    AssociationLibModule
+    AssociationLibModule,
+    PrivilegeModule
   ],
   declarations: [
     PrivilegeEditComponent,

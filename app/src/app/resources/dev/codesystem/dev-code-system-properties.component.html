@@ -47,7 +47,7 @@
 
       <ng-container *ngIf="!viewMode">
         <td><m-input [(ngModel)]="property.name" name="name-{{index}}" required></m-input></td>
-        <td><twl-value-set-concept-select valueSet="concept-property-type" [(ngModel)]="property.type" name="type-{{index}}" required></twl-value-set-concept-select> </td>
+        <td><tw-value-set-concept-select valueSet="concept-property-type" [(ngModel)]="property.type" name="type-{{index}}" required></tw-value-set-concept-select> </td>
         <td><m-checkbox [(ngModel)]="property.required" name="required-{{index}}"></m-checkbox></td>
         <td><m-checkbox [(ngModel)]="property.preferred" name="preferred-{{index}}"></m-checkbox></td>
         <td><m-input [(ngModel)]="property.description" name="description-{{index}}"></m-input></td>

@@ -9,7 +9,7 @@ import {MapSetLibService} from '../services/map-set-lib.service';
 import {MapSetEntityVersionLibService} from '../services/map-set-entity-version-lib.service';
 
 @Component({
-  selector: 'twl-map-set-entity-version-search',
+  selector: 'tw-map-set-entity-version-search',
   templateUrl: './map-set-entity-version-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MapSetEntityVersionSearchComponent), multi: true}, DestroyService]
 })

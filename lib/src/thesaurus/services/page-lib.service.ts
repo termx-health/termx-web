@@ -6,7 +6,7 @@ import {Page} from '../model/page';
 import {PageSearchParams} from '../model/page-search-params';
 import {PageContentSearchParams} from '../model/page-content-search-params';
 import {PageContent} from '../model/page-content';
-import {TERMINOLOGY_API} from '../../terminology-lib.token';
+import {TERMINOLOGY_API_URL} from '../../terminology-lib.config';
 import {PageRelationSearchParams} from '../model/page-relation-search-params';
 import {PageRelation} from '../model/page-relation';
 
@@ -14,7 +14,7 @@ import {PageRelation} from '../model/page-relation';
 export class PageLibService {
   protected baseUrl;
 
-  public constructor(@Inject(TERMINOLOGY_API) api: string, protected http: HttpClient) {
+  public constructor(@Inject(TERMINOLOGY_API_URL) api: string, protected http: HttpClient) {
     this.baseUrl = `${api}`;
   }
 

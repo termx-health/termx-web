@@ -7,7 +7,7 @@ import {SnomedConceptSearchParams} from '../model/concept/snomed-concept-search-
 import {SnomedLibService} from '../services/snomed-lib.service';
 
 @Component({
-  selector: 'twl-snomed-search',
+  selector: 'tw-snomed-search',
   templateUrl: './snomed-search.component.html',
 })
 export class SnomedSearchComponent implements OnInit {

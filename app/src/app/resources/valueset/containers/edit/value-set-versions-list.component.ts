@@ -1,8 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ValueSetVersion} from 'terminology-lib/resources';
+import {FhirValueSetLibService, ValueSetVersion} from '@terminology/core';
 import {ValueSetService} from '../../services/value-set.service';
 import {saveAs} from 'file-saver';
-import {FhirValueSetLibService} from 'terminology-lib/fhir';
 import {BooleanInput} from '@kodality-web/core-util';
 import {Fhir} from 'fhir/fhir';
 import {environment} from '../../../../../environments/environment';

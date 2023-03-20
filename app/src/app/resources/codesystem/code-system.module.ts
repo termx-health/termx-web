@@ -19,7 +19,7 @@ import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/
 import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
 import {FinderModule} from '../../core/finder/finder.module';
 import {ContactModule} from '../contact/contact.module';
-import {ResourcesLibModule} from 'terminology-lib/resources';
+import {ResourcesLibModule} from '@terminology/core';
 import {CodeSystemPropertyEditComponent} from './containers/edit/property/code-system-property-edit.component';
 import {CodeSystemPropertyFormComponent} from './containers/edit/property/code-system-property-form.component';
 import {CodeSystemSupplementEditComponent} from './containers/supplement/code-system-supplement-edit.component';

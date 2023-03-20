@@ -1,11 +1,13 @@
 {
-  "name": "terminology-lib",
-  "version": "0.0.0",
+  "name": "@terminology/core",
   "peerDependencies": {
-    "@angular/common": "^13.3.0",
-    "@angular/core": "^13.3.0"
+    "@angular/common": "^15.0.0",
+    "@angular/core": "^15.0.0",
+    "@kodality-web/marina-ui": "^15.0.0-snapshot",
+    "@kodality-web/marina-util": "^15.0.0-snapshot",
+    "@kodality-web/core-util": "^15.0.0-snapshot"
   },
   "dependencies": {
-    "tslib": "^2.3.0"
+    "tslib": "^2.5.0"
   }
 }

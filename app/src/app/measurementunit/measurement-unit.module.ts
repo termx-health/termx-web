@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {MeasurementUnitLibModule} from 'terminology-lib/measurementunit';
+import {MeasurementUnitLibModule} from '@terminology/core';
 import {SharedModule} from '../core/shared/shared.module';
 import {MeasurementUnitService} from './services/measurement-unit.service';
 import {MeasurementUnitListComponent} from './containers/measurement-unit-list.component';

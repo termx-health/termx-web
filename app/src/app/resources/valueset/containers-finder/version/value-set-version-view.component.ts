@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
 import {DestroyService, isNil} from '@kodality-web/core-util';
-import {ValueSetVersion} from 'terminology-lib/resources';
+import {ValueSetVersion} from '@terminology/core';
 import {ValueSetService} from '../../services/value-set.service';
 
 

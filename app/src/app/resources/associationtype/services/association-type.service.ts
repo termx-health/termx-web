@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {AssociationType, AssociationTypeLibService} from 'terminology-lib/resources';
+import {AssociationType, AssociationTypeLibService} from '@terminology/core';
 import {Observable} from 'rxjs';
 
 @Injectable()

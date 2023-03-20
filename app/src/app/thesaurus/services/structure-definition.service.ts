@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {isDefined} from '@kodality-web/core-util';
-import {StructureDefinition, StructureDefinitionLibService} from 'terminology-lib/thesaurus';
+import {StructureDefinition, StructureDefinitionLibService} from '@terminology/core';
 
 @Injectable()
 export class StructureDefinitionService extends StructureDefinitionLibService {

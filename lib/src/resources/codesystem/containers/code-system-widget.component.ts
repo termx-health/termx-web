@@ -6,7 +6,7 @@ import {CodeSystemSearchParams} from '../model/code-system-search-params';
 import {CodeSystemLibService} from '../services/code-system-lib.service';
 
 @Component({
-  selector: 'twl-code-system-widget',
+  selector: 'tw-code-system-widget',
   templateUrl: 'code-system-widget.component.html'
 })
 export class CodeSystemWidgetComponent implements OnChanges {

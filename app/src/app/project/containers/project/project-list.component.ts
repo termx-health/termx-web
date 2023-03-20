@@ -4,7 +4,7 @@ import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult
 import {ProjectService} from '../../services/project.service';
 import {ProjectSearchParams} from 'lib/src/project/model/project-search-params';
 import {Project} from 'lib/src/project';
-import {JobLibService} from 'terminology-lib/job';
+import {JobLibService} from '@terminology/core';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Component({

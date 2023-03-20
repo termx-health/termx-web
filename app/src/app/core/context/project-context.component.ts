@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ProjectContextParams, ProjectContextService} from './project-context.service';
-import {Package, PackageVersion, Project, ProjectLibService} from 'terminology-lib/project';
+import {Package, PackageVersion, Project, ProjectLibService} from '@terminology/core';
 import {distinctUntilChanged, map, Observable} from 'rxjs';
 import {saveAs} from 'file-saver';
 import {isDefined} from '@kodality-web/core-util';
