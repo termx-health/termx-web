@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {CodeSystemLibService, EntityProperty, EntityPropertySearchParams, ValueSetRuleFilter} from 'lib/src/resources';
+import {CodeSystemLibService, EntityProperty, EntityPropertySearchParams, ValueSetRuleFilter} from 'term-web/resources/_lib';
 import {BooleanInput, copyDeep, isDefined} from '@kodality-web/core-util';
 
 
 @Component({
-  selector: 'twa-value-set-rule-filter-list',
+  selector: 'tw-value-set-rule-filter-list',
   templateUrl: 'value-set-rule-filter-list.component.html',
 })
 export class ValueSetRuleFilterListComponent implements OnChanges {

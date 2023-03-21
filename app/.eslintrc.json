@@ -11,8 +11,8 @@
         "createDefaultProgram": true
       },
       "rules": {
-        "@angular-eslint/directive-selector": ["error", {"type": "attribute", "prefix": "twa", "style": "camelCase"}],
-        "@angular-eslint/component-selector": ["error", {"type": "element", "prefix": "twa", "style": "kebab-case"}]
+        "@angular-eslint/directive-selector": ["error", {"type": "attribute", "prefix": "tw", "style": "camelCase"}],
+        "@angular-eslint/component-selector": ["error", {"type": "element", "prefix": "tw", "style": "kebab-case"}]
       }
     }
   ]

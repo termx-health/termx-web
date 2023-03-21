@@ -44,7 +44,7 @@
           </m-form-item>
         </form>
 
-        <twa-measurement-unit-mapping-list *ngIf="measurementUnit" [(mappings)]="measurementUnit.mappings" viewMode></twa-measurement-unit-mapping-list>
+        <tw-measurement-unit-mapping-list *ngIf="measurementUnit" [(mappings)]="measurementUnit.mappings" viewMode></tw-measurement-unit-mapping-list>
 
         <ng-container *twPrivileged="'*.MeasurementUnit.edit'">
           <ng-container *m-card-footer>

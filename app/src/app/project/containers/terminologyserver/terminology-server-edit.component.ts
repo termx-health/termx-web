@@ -3,7 +3,7 @@ import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {validateForm} from '@kodality-web/core-util';
-import {TerminologyServer} from 'lib/src/project';
+import {TerminologyServer} from 'term-web/project/_lib';
 import {TerminologyServerService} from '../../services/terminology-server.service';
 
 @Component({

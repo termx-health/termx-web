@@ -1,16 +1,14 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {Page} from 'lib/src/thesaurus/model/page';
-import {PageContent} from 'lib/src/thesaurus/model/page-content';
 import {TranslateService} from '@ngx-translate/core';
 import {PageService} from '../../services/page.service';
 import {catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap} from 'rxjs';
-import {PageLink, PageSearchParams} from 'lib/src/thesaurus';
 import {Router} from '@angular/router';
 import {compareValues} from '@kodality-web/core-util';
 import {GithubExportable} from '../../../integration/github/github.service';
+import {Page, PageContent, PageLink, PageSearchParams} from 'term-web/thesaurus/_lib';
 
 @Component({
-  selector: 'twa-thesaurus-sidebar',
+  selector: 'tw-thesaurus-sidebar',
   templateUrl: './thesaurus-sidebar.component.html',
   styles: [`
     .tw-page-active-item ::ng-deep {

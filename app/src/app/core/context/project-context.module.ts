@@ -6,8 +6,8 @@ import {CoreUtilModule} from '@kodality-web/core-util';
 import {TranslateModule} from '@ngx-translate/core';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {ProjectContextComponent} from './project-context.component';
-import {ProjectModule} from '../../project/project.module';
-import {ProjectLibModule} from '@terminology/core';
+import {ProjectLibModule} from 'term-web/project/_lib';
+import {ProjectModule} from 'term-web/project/project.module';
 
 @NgModule({
   imports: [

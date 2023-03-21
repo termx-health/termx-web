@@ -8,8 +8,9 @@ import {MarinaUiModule} from '@kodality-web/marina-ui';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {StatusTagComponent} from './components/publication-status-tag/status-tag.component';
 import {AddButtonComponent} from './components/add-button/add-button.component';
-import {AuthModule, CodeSystemLibModule} from '@terminology/core';
+import {AuthModule} from 'term-web/core/auth';
 import {ValidateUrlPipe} from './pipes/validate-url.pipe';
+import {CodeSystemLibModule} from '../../resources/_lib';
 
 
 const commonModules = [
@@ -17,9 +18,11 @@ const commonModules = [
   RouterModule,
   FormsModule,
   TranslateModule,
+
   MarinaUiModule,
   MarinaUtilModule,
   CoreUtilModule,
+
   AuthModule
 ];
 
@@ -32,25 +35,20 @@ const pipes = [
   ValidateUrlPipe,
 ];
 
-const directives = [
-  ValidateUrlPipe,
-];
 
 @NgModule({
   imports: [
     ...commonModules,
     CodeSystemLibModule
   ],
+  declarations: [
+    ...components,
+    ...pipes
+  ],
   exports: [
     ...commonModules,
     ...components,
-    ...pipes,
-    ...directives
-  ],
-  declarations: [
-    ...components,
-    ...pipes,
-    ...directives
+    ...pipes
   ]
 })
 export class SharedModule {

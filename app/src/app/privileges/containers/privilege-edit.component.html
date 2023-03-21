@@ -36,9 +36,9 @@
             <div class="m-card__title">
               {{'web.privileges.resources.table.head' | translate}}
             </div>
-            <twa-add-button (click)="openResourceModal()">
+            <tw-add-button (click)="openResourceModal()">
               {{'web.privileges.resources.table.add-resource' | translate}}
-            </twa-add-button>
+            </tw-add-button>
           </div>
           <m-table [mData]="resourceMap | keys">
             <tr *mTableHead>

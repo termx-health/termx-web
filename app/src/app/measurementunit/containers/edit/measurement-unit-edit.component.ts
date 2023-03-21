@@ -4,7 +4,7 @@ import {Location} from '@angular/common';
 import {DateRange, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {MeasurementUnitService} from '../../services/measurement-unit.service';
-import {MeasurementUnit} from 'lib/src/measurementunit';
+import {MeasurementUnit} from 'term-web/measurementunit/_lib';
 
 @Component({
   templateUrl: './measurement-unit-edit.component.html',

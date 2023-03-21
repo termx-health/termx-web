@@ -1,10 +1,10 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import {CodeSystemAssociation} from 'lib/src/resources';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, validateForm} from '@kodality-web/core-util';
+import {CodeSystemAssociation} from 'term-web/resources/_lib';
 
 @Component({
-  selector: 'twa-code-system-association-edit',
+  selector: 'tw-code-system-association-edit',
   templateUrl: './code-system-association-edit.component.html',
 })
 export class CodeSystemAssociationEditComponent {

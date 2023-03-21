@@ -3,7 +3,7 @@ import {CdkPortal} from '@angular/cdk/portal';
 import {Component, HostListener, Input, ViewChild} from '@angular/core';
 
 @Component({
-  selector: "twa-dropdown",
+  selector: "tw-dropdown",
   template: `
     <ng-template cdk-portal>
       <ng-content></ng-content>

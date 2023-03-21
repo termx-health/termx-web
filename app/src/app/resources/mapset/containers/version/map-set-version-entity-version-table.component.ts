@@ -1,12 +1,12 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
-import {MapSetEntityVersion, MapSetEntityVersionSearchParams} from '@terminology/core';
+import {MapSetEntityVersion, MapSetEntityVersionSearchParams} from 'term-web/resources/_lib';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 import {BooleanInput, copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
 import {MapSetService} from '../../services/map-set-service';
 import {NgForm} from '@angular/forms';
 
 @Component({
-  selector: 'twa-map-set-version-entity-version-table',
+  selector: 'tw-map-set-version-entity-version-table',
   templateUrl: './map-set-version-entity-version-table.component.html',
 })
 export class MapSetVersionEntityVersionTableComponent implements OnInit {

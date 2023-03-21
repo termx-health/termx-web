@@ -38,9 +38,9 @@
               {{codeSystem.description}}
             </m-form-item>
 
-            <twa-code-system-versions-list [codeSystemId]="codeSystem.id" [versions]="codeSystem.versions" viewMode></twa-code-system-versions-list>
-            <twa-code-system-properties-list [codeSystemId]="codeSystem.id" [properties]="codeSystem.properties" viewMode></twa-code-system-properties-list>
-            <twa-contact-list [(contacts)]="codeSystem.contacts" viewMode></twa-contact-list>
+            <tw-code-system-versions-list [codeSystemId]="codeSystem.id" [versions]="codeSystem.versions" viewMode></tw-code-system-versions-list>
+            <tw-code-system-properties-list [codeSystemId]="codeSystem.id" [properties]="codeSystem.properties" viewMode></tw-code-system-properties-list>
+            <tw-contact-list [(contacts)]="codeSystem.contacts" viewMode></tw-contact-list>
           </div>
         </m-card>
       </nz-tab>
@@ -71,10 +71,10 @@
           {{'entities.code-system.concepts' | translate}}
         </a>
         <m-card *ngIf="codeSystem">
-          <twa-code-system-concepts-list [codeSystemId]="codeSystemId"
+          <tw-code-system-concepts-list [codeSystemId]="codeSystemId"
               [codeSystemVersions]="codeSystem.versions"
               [properties]="codeSystem.properties"
-              viewMode></twa-code-system-concepts-list>
+              viewMode></tw-code-system-concepts-list>
         </m-card>
       </nz-tab>
     </nz-tabset>

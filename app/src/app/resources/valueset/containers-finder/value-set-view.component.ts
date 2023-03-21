@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ValueSet, ValueSetVersion} from '@terminology/core';
+import {ValueSet, ValueSetVersion} from 'term-web/resources/_lib';
 import {ActivatedRoute} from '@angular/router';
 import {forkJoin, takeUntil} from 'rxjs';
 import {DestroyService, isNil} from '@kodality-web/core-util';

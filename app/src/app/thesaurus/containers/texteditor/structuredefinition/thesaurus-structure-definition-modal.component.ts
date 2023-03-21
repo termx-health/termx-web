@@ -2,11 +2,11 @@ import {Component, EventEmitter, OnInit, Output, ViewChild} from '@angular/core'
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {StructureDefinition, StructureDefinitionLibService} from '@terminology/core';
+import {StructureDefinition, StructureDefinitionLibService} from 'term-web/thesaurus/_lib';
 
 
 @Component({
-  selector: 'twa-structure-definition-modal',
+  selector: 'tw-structure-definition-modal',
   template: `
     <m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal(false)" [mMaskClosable]="false">
       <ng-container *m-modal-header>

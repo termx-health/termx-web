@@ -8,38 +8,6 @@
   },
   "version": 1,
   "projects": {
-    "lib": {
-      "projectType": "library",
-      "root": "lib",
-      "sourceRoot": "lib/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "lib/ng-package.json"
-          },
-          "configurations": {
-            "production": {
-              "tsConfig": "lib/tsconfig.lib.prod.json"
-            },
-            "development": {
-              "tsConfig": "lib/tsconfig.lib.json"
-            }
-          },
-          "defaultConfiguration": "production"
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "lib/**/*.ts",
-              "lib/**/*.html"
-            ]
-          }
-        }
-      }
-    },
     "app": {
       "projectType": "application",
       "schematics": {
@@ -75,11 +43,6 @@
               {
                 "glob": "**/*",
                 "input": "./node_modules/@kodality-web/marina-ui/src/icons",
-                "output": "/assets/"
-              },
-              {
-                "glob": "**/*",
-                "input": "./node_modules/@terminology/supplement-module/assets",
                 "output": "/assets/"
               }
             ],

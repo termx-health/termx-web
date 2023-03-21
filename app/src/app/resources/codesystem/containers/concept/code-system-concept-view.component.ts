@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'lib/src/resources';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
+import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'term-web/resources/_lib';
 
 @Component({
   templateUrl: './code-system-concept-view.component.html',

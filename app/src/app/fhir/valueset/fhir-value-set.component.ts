@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {FhirValueSetLibService} from '@terminology/core';
-import {environment} from '../../../environments/environment';
+import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
+import {FhirValueSetLibService} from 'term-web/fhir/_lib';
 
 @Component({
   templateUrl: './fhir-value-set.component.html',

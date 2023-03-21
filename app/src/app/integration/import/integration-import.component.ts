@@ -1,8 +1,9 @@
 import {Directive, OnInit} from '@angular/core';
-import {IntegrationImportConfiguration, JobLibService, JobLogResponse} from '@terminology/core';
+import {JobLibService, JobLogResponse} from '../../job/_lib';
 import {ActivatedRoute} from '@angular/router';
 import {filter, Observable} from 'rxjs';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {IntegrationImportConfiguration} from 'term-web/integration/_lib';
 
 @Directive()
 export abstract class IntegrationImportComponent implements OnInit {

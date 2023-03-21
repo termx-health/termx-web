@@ -2,7 +2,7 @@ import {Component, Input} from '@angular/core';
 import {MuiBreakpointService} from '@kodality-web/marina-ui';
 
 @Component({
-  selector: 'twa-add-button',
+  selector: 'tw-add-button',
   templateUrl: 'add-button.component.html'
 })
 export class AddButtonComponent {

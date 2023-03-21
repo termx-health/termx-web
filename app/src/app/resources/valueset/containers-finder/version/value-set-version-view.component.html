@@ -1,11 +1,11 @@
-<twa-finder-wrapper [loading]="loading" title="VALUE SET VERSION">
+<tw-finder-wrapper [loading]="loading" title="VALUE SET VERSION">
   <m-alert mType="warning" mTitle="Work In Progress" mShowIcon style="margin-top: 0">
     TODO: Rule set & VSV Concepts
   </m-alert>
 
   <div class="tw-finder-view-form">
     <m-form-item mLabel="entities.value-set-version.status">
-      <twa-status-tag [status]="version?.status"></twa-status-tag>
+      <tw-status-tag [status]="version?.status"></tw-status-tag>
     </m-form-item>
 
     <m-form-row mFull>
@@ -41,24 +41,24 @@
     </m-form-item>
   </div>
 
-  <twa-finder-menu title="entities.value-set-version.rule-set" [length]="1">
-    <twa-finder-menu-item>
+  <tw-finder-menu title="entities.value-set-version.rule-set" [length]="1">
+    <tw-finder-menu-item>
       {{(version?.ruleSet?.lockedDate | localDate) || '-'}}
       {{version?.ruleSet?.inactive || '-'}}
-    </twa-finder-menu-item>
+    </tw-finder-menu-item>
 
-    <twa-finder-menu-item>
-      <twa-finder-menu title="entities.value-set-rule-set.include" [length]="version?.ruleSet?.rules?.length">
-        <twa-finder-menu-item *ngFor="let r of version?.ruleSet?.rules">
+    <tw-finder-menu-item>
+      <tw-finder-menu title="entities.value-set-rule-set.include" [length]="version?.ruleSet?.rules?.length">
+        <tw-finder-menu-item *ngFor="let r of version?.ruleSet?.rules">
           {{r.codeSystem}} {{r.type}}
-        </twa-finder-menu-item>
-      </twa-finder-menu>
-    </twa-finder-menu-item>
-  </twa-finder-menu>
+        </tw-finder-menu-item>
+      </tw-finder-menu>
+    </tw-finder-menu-item>
+  </tw-finder-menu>
 
-  <twa-finder-menu title="entities.value-set-version.concepts" [length]="version?.concepts?.length">
-    <twa-finder-menu-item *ngFor="let c of version?.concepts">
+  <tw-finder-menu title="entities.value-set-version.concepts" [length]="version?.concepts?.length">
+    <tw-finder-menu-item *ngFor="let c of version?.concepts">
       {{c.concept?.code}} - {{c.display?.name}} - {{c.additionalDesignations | map:'name' | join:', '}}
-    </twa-finder-menu-item>
-  </twa-finder-menu>
-</twa-finder-wrapper>
+    </tw-finder-menu-item>
+  </tw-finder-menu>
+</tw-finder-wrapper>

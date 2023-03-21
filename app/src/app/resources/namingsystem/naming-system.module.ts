@@ -1,6 +1,6 @@
 import {Routes} from '@angular/router';
 import {SharedModule} from '../../core/shared/shared.module';
-import {ResourcesLibModule} from '@terminology/core';
+import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {NamingSystemListComponent} from './containers/list/naming-system-list.component';
 import {NgModule} from '@angular/core';
 import {NamingSystemEditComponent} from './containers/edit/naming-system-edit.component';

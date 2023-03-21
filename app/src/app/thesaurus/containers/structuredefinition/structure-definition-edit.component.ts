@@ -3,12 +3,13 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgForm} from '@angular/forms';
 import {compareValues, isDefined, validateForm} from '@kodality-web/core-util';
-import {ChefService, StructureDefinition} from '@terminology/core';
+import {StructureDefinition} from 'term-web/thesaurus/_lib';
 import {StructureDefinitionService} from '../../services/structure-definition.service';
 import {Element, StructureDefinitionTreeComponent} from './structure-definition-tree.component';
 import {StructureDefinitionType} from './structure-definition-type-list.component';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {map, Observable, of, switchMap} from 'rxjs';
+import {ChefService} from 'term-web/integration/_lib';
 
 @Component({
   templateUrl: 'structure-definition-edit.component.html'

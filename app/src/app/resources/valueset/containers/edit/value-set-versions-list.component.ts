@@ -1,14 +1,15 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {FhirValueSetLibService, ValueSetVersion} from '@terminology/core';
+import {ValueSetVersion} from 'term-web/resources/_lib';
 import {ValueSetService} from '../../services/value-set.service';
 import {saveAs} from 'file-saver';
 import {BooleanInput} from '@kodality-web/core-util';
 import {Fhir} from 'fhir/fhir';
-import {environment} from '../../../../../environments/environment';
+import {environment} from 'environments/environment';
+import {FhirValueSetLibService} from 'term-web/fhir/_lib';
 
 
 @Component({
-  selector: 'twa-value-set-versions-list',
+  selector: 'tw-value-set-versions-list',
   templateUrl: 'value-set-versions-list.component.html',
 })
 export class ValueSetVersionsListComponent implements OnChanges {

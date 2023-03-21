@@ -3,7 +3,7 @@
       <m-card [mShowSkeleton]="loading">
         <div *m-card-header class="m-items-middle">
           <div class="m-card__title">{{'web.naming-system.form.view-header' | translate}}</div>
-          <twa-status-tag *ngIf="namingSystem?.status" [status]="namingSystem.status"></twa-status-tag>
+          <tw-status-tag *ngIf="namingSystem?.status" [status]="namingSystem.status"></tw-status-tag>
         </div>
 
         <div *ngIf="namingSystem">

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ValueSet} from '@terminology/core';
+import {ValueSet} from 'term-web/resources/_lib';
 import {ValueSetService} from '../../services/value-set.service';
 import {ActivatedRoute} from '@angular/router';
 

@@ -1,13 +1,14 @@
 import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
-import {CodeSystem, CodeSystemLibService, EntityProperty, JobLibService, JobLog, JobLogResponse} from '@terminology/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../../environments/environment';
+import {environment} from 'environments/environment';
 import {collect, copyDeep, DestroyService, group, isNil} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {filter, merge, Subject, switchMap, takeUntil, timer} from 'rxjs';
 import {Router} from '@angular/router';
+import {CodeSystem, CodeSystemLibService, EntityProperty} from '../../../resources/_lib';
+import {JobLibService, JobLog, JobLogResponse} from '../../../job/_lib';
 
 const IMPORT_TEMPLATES: {
   [p: string]: FileImportPropertyRow[]

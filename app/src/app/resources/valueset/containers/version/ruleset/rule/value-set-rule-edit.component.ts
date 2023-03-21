@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {ValueSetVersionRule} from '@terminology/core';
 import {ValueSetService} from '../../../../services/value-set.service';
 import {ValueSetRuleFormComponent} from './value-set-rule-form.component';
+import {ValueSetVersionRule} from 'term-web/resources/_lib';
 
 @Component({
   templateUrl: 'value-set-rule-edit.component.html',

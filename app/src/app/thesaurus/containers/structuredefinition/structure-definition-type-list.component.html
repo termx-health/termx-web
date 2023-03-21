@@ -1,9 +1,9 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-justify-between">
     <div><b>{{'web.structure-definition-type.list.header' | translate}}</b></div>
-    <twa-add-button *ngIf="!viewMode" (click)="addType()">
+    <tw-add-button *ngIf="!viewMode" (click)="addType()">
       {{'web.structure-definition-type.list.add-type' | translate}}
-    </twa-add-button>
+    </tw-add-button>
   </div>
 
   <m-no-data *ngIf="!types?.length"></m-no-data>

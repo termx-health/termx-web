@@ -3,9 +3,9 @@ import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {validateForm} from '@kodality-web/core-util';
-import {NamingSystem, NamingSystemIdentifier} from '@terminology/core';
 import {NamingSystemService} from '../../services/naming-system-service';
 import {NamingSystemIdentifierFormComponent} from './naming-system-identifier-form.component';
+import {NamingSystem, NamingSystemIdentifier} from 'term-web/resources/_lib';
 
 
 @Component({

@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NamingSystemIdentifier} from '@terminology/core';
+import {NamingSystemIdentifier} from 'term-web/resources/_lib';
 import {validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 
 @Component({
-  selector: 'twa-naming-system-identifier-form',
+  selector: 'tw-naming-system-identifier-form',
   templateUrl: './naming-system-identifier-form.component.html',
 })
 export class NamingSystemIdentifierFormComponent implements OnInit {

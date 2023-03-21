@@ -1,10 +1,10 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import {ValueSetVersionRule} from 'lib/src/resources';
 import {BooleanInput, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {ValueSetVersionRule} from 'term-web/resources/_lib';
 
 @Component({
-  selector: 'twa-value-set-rule-form',
+  selector: 'tw-value-set-rule-form',
   templateUrl: 'value-set-rule-form.component.html',
 })
 export class ValueSetRuleFormComponent {

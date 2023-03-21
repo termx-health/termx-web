@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
-import {MeasurementUnitMapping} from 'lib/src/measurementunit';
+import {MeasurementUnitMapping} from 'term-web/measurementunit/_lib';
 
 @Component({
-  selector: 'twa-measurement-unit-mapping-list',
+  selector: 'tw-measurement-unit-mapping-list',
   templateUrl: './measurement-unit-mapping-list.component.html',
 })
 export class MeasurementUnitMappingListComponent {

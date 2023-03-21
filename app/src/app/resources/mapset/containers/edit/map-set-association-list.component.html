@@ -3,9 +3,9 @@
     <div class="m-card__title">
       {{'web.map-set-association.list.associations' | translate}}
     </div>
-    <twa-add-button *ngIf="!viewMode" [routerLink]="['../associations/add']">
+    <tw-add-button *ngIf="!viewMode" [routerLink]="['../associations/add']">
       {{'web.map-set-association.list.add-association' | translate}}
-    </twa-add-button>
+    </tw-add-button>
   </div>
 
   <m-table [mData]="data | keys" [mLoading]="loading" mEnablePagination>
@@ -32,7 +32,7 @@
         <td>{{association.target.codeSystem}}</td>
         <td>{{association.associationType}}</td>
         <td class="tw-table-min-width">
-          <twa-status-tag [status]="association.status"></twa-status-tag>
+          <tw-status-tag [status]="association.status"></tw-status-tag>
         </td>
       </tr>
     </ng-container>

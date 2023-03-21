@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Page, PageContent, PageLibService} from '@terminology/core';
+import {Page, PageContent, PageLibService} from 'term-web/thesaurus/_lib';
 import {Observable} from 'rxjs';
 import {isDefined} from '@kodality-web/core-util';
 

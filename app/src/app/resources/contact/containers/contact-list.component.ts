@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {ContactDetail} from '@terminology/core';
+import {ContactDetail} from 'term-web/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, copyDeep, isDefined} from '@kodality-web/core-util';
 
 
 @Component({
-  selector: 'twa-contact-list',
+  selector: 'tw-contact-list',
   templateUrl: './contact-list.component.html',
   styles: [`
     .tw-cs-contact-collapse ::ng-deep {

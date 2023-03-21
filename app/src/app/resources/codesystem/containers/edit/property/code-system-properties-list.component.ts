@@ -1,10 +1,10 @@
 import {Component, Input} from '@angular/core';
-import {EntityProperty} from '@terminology/core';
+import {EntityProperty} from 'term-web/resources/_lib';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {BooleanInput} from '@kodality-web/core-util';
 
 @Component({
-  selector: 'twa-code-system-properties-list',
+  selector: 'tw-code-system-properties-list',
   templateUrl: './code-system-properties-list.component.html',
 })
 export class CodeSystemPropertiesListComponent {

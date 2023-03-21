@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SearchResult} from '@kodality-web/core-util';
-import {ValueSet} from '@terminology/core';
+import {ValueSet} from 'term-web/resources/_lib';
 import {Router} from '@angular/router';
 import {ValueSetService} from '../services/value-set.service';
 
@@ -8,18 +8,18 @@ import {ValueSetService} from '../services/value-set.service';
 @Component({
   template: `
     <div style="max-height: 100%; width: 100%; height: 100%; padding: 0 0 1rem 0;">
-      <twa-finder-wrapper [loading]="loading">
-        <twa-finder-menu title="VALUE SET" [length]="searchResult.meta.total">
-          <twa-finder-menu-item *ngFor="let vs of searchResult.data" [navigate]="[vs.id]" (view)="openResource(vs)">
+      <tw-finder-wrapper [loading]="loading">
+        <tw-finder-menu title="VALUE SET" [length]="searchResult.meta.total">
+          <tw-finder-menu-item *ngFor="let vs of searchResult.data" [navigate]="[vs.id]" (view)="openResource(vs)">
             {{(vs.names | localName) || vs.id}}
-          </twa-finder-menu-item>
+          </tw-finder-menu-item>
 
-          <twa-finder-load-more-item
+          <tw-finder-load-more-item
               *ngIf="searchResult.data.length < searchResult.meta.total"
               (twClick)="loadValueSets(searchResult.data.length + DEFAULT_LIMIT)"
-          ></twa-finder-load-more-item>
-        </twa-finder-menu>
-      </twa-finder-wrapper>
+          ></tw-finder-load-more-item>
+        </tw-finder-menu>
+      </tw-finder-wrapper>
     </div>
   `
 })

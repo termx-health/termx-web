@@ -1,9 +1,9 @@
 import {Component} from '@angular/core';
-import {ValueSetVersionConcept} from '@terminology/core';
+import {ValueSetVersionConcept} from 'term-web/resources/_lib';
 
 
 @Component({
-  selector: 'twa-value-set-version-concept-modal',
+  selector: 'tw-value-set-version-concept-modal',
   templateUrl: './value-set-version-concept-modal.component.html',
 })
 export class ValueSetVersionConceptModalComponent {

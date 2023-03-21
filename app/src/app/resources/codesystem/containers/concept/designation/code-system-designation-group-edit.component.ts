@@ -1,10 +1,10 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import {Designation, EntityProperty} from 'lib/src/resources';
+import {Designation, EntityProperty} from 'term-web/resources/_lib';
 import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 
 @Component({
-  selector: 'twa-code-system-designation-group-edit',
+  selector: 'tw-code-system-designation-group-edit',
   templateUrl: './code-system-designation-group-edit.component.html',
 })
 export class CodeSystemDesignationGroupEditComponent {

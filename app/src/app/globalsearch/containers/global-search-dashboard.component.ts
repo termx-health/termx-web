@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {catchError, finalize, forkJoin, map, Observable, of} from 'rxjs';
+import {Router} from '@angular/router';
 import {
   CodeSystem,
   CodeSystemConcept,
@@ -10,17 +11,12 @@ import {
   MapSet,
   MapSetLibService,
   MapSetSearchParams,
-  MeasurementUnit,
-  MeasurementUnitLibService,
-  MeasurementUnitSearchParams,
-  SnomedConcept,
-  SnomedConceptSearchParams,
-  SnomedLibService,
   ValueSet,
   ValueSetLibService,
   ValueSetSearchParams
-} from '@terminology/core';
-import {Router} from '@angular/router';
+} from 'term-web/resources/_lib';
+import {MeasurementUnit, MeasurementUnitLibService, MeasurementUnitSearchParams} from 'term-web/measurementunit/_lib';
+import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'term-web/integration/_lib';
 
 @Component({
   templateUrl: './global-search-dashboard.component.html'

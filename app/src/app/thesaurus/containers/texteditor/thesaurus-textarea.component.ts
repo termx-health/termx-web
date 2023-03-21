@@ -2,7 +2,7 @@ import {Component, forwardRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
-  selector: 'twa-thesaurus-textarea',
+  selector: 'tw-thesaurus-textarea',
   template: `
     <div class="tw-textarea" contenteditable (input)="fireOnChange($event.target)" [innerText]="value"></div>
   `,

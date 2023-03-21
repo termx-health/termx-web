@@ -4,8 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "scripts/build.sh",
-    "publish": "scripts/publish.sh",
+    "build": "ng build",
     "watch:lib": "ng build lib --watch --configuration production",
     "test": "ng test",
     "lint": "ng lint"
@@ -25,8 +24,6 @@
     "@kodality-web/marina-quill": "^15.0.0-snapshot",
     "@kodality-web/marina-ui": "^15.0.0-snapshot",
     "@kodality-web/marina-util": "^15.0.0-snapshot",
-    "@terminology/core": "^15.0.0-snapshot",
-    "@terminology/supplement-module": "^15.0.0-snapshot",
     "@ngx-translate/core": "^14.0.0",
     "ngx-translate-multi-http-loader": "^9.3.2",
     "angular-auth-oidc-client": "^15.0.3",

@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {ValueSetVersionRule, ValueSetVersionRuleSet} from 'lib/src/resources';
+import {ValueSetVersionRule, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 import {BooleanInput, copyDeep} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {ValueSetRuleFormComponent} from './rule/value-set-rule-form.component';
@@ -7,7 +7,7 @@ import {ValueSetVersionConceptModalComponent} from '../concepts/value-set-versio
 import {ValueSetService} from '../../../services/value-set.service';
 
 @Component({
-  selector: 'twa-value-set-rule-set',
+  selector: 'tw-value-set-rule-set',
   templateUrl: 'value-set-rule-set.component.html',
 })
 export class ValueSetRuleSetComponent implements OnChanges {

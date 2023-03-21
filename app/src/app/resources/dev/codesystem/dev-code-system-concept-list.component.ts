@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {CodeSystem} from '@terminology/core';
 import {NgForm} from '@angular/forms';
 import {CodeSystemService} from '../../codesystem/services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {DevCodeSystemRelationsComponent} from './dev-code-system-relations.component';
 import {DevCodeSystemPropertiesComponent} from './dev-code-system-properties.component';
+import {CodeSystem} from 'term-web/resources/_lib';
 
 
 @Component({

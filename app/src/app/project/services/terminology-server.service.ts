@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {TerminologyServer, TerminologyServerLibService} from '@terminology/core';
+import {TerminologyServer, TerminologyServerLibService} from 'term-web/project/_lib';
 
 @Injectable()
 export class TerminologyServerService extends TerminologyServerLibService {

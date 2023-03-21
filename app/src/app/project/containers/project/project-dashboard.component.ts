@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ProjectContextComponent} from '../../../core/context/project-context.component';
+import {ProjectContextComponent} from 'term-web/core/context/project-context.component';
 
 @Component({
   templateUrl: './project-dashboard.component.html',

@@ -4,7 +4,7 @@ import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/cor
 
 
 @Component({
-  selector: 'twa-sd-type-list',
+  selector: 'tw-sd-type-list',
   templateUrl: './structure-definition-type-list.component.html',
   styles: [`
     .tw-sd-type-collapse ::ng-deep {

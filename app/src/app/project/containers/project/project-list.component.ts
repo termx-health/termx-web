@@ -2,9 +2,8 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {debounceTime, distinctUntilChanged, filter, finalize, merge, Observable, Subject, switchMap, takeUntil, timer} from 'rxjs';
 import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {ProjectService} from '../../services/project.service';
-import {ProjectSearchParams} from 'lib/src/project/model/project-search-params';
-import {Project} from 'lib/src/project';
-import {JobLibService} from '@terminology/core';
+import {Project, ProjectSearchParams} from 'term-web/project/_lib';
+import {JobLibService} from 'term-web/job/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Component({

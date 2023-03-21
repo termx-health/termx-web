@@ -1,4 +1,4 @@
-import {CodeSystemEntityVersion, CodeSystemEntityVersionSearchParams} from '@terminology/core';
+import {CodeSystemEntityVersion, CodeSystemEntityVersionSearchParams} from 'term-web/resources/_lib';
 import {debounceTime, distinctUntilChanged, finalize, Observable, of, Subject, switchMap} from 'rxjs';
 import {BooleanInput, copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../services/code-system.service';
@@ -7,7 +7,7 @@ import {NgForm} from '@angular/forms';
 
 
 @Component({
-  selector: 'twa-code-system-version-entity-version-list',
+  selector: 'tw-code-system-version-entity-version-list',
   templateUrl: './code-system-version-entity-versions-list.component.html',
 })
 export class CodeSystemVersionEntityVersionsListComponent implements OnInit {

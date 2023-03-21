@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, tap} from 'rxjs';
 import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {MeasurementUnit, MeasurementUnitSearchParams} from '@terminology/core';
 import {MeasurementUnitService} from '../services/measurement-unit.service';
+import {MeasurementUnit, MeasurementUnitSearchParams} from 'term-web/measurementunit/_lib';
 
 @Component({
   templateUrl: './measurement-unit-list.component.html',

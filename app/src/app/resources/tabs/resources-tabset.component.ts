@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {AssociationTypeLibService, AuthService, CodeSystemLibService, MapSetLibService, NamingSystemLibService, ValueSetLibService} from '@terminology/core';
+import {AuthService} from 'term-web/core/auth';
+import {AssociationTypeLibService, CodeSystemLibService, MapSetLibService, NamingSystemLibService, ValueSetLibService} from 'term-web/resources/_lib';
 
 
 @Component({
-  selector: 'twa-tabset',
+  selector: 'tw-tabset',
   templateUrl: './resources-tabset.component.html',
   styles: [`
     .tw-tab-total-tag {

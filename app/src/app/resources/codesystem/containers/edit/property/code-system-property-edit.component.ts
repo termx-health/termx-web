@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {EntityProperty} from 'lib/src/resources';
+import {EntityProperty} from 'term-web/resources/_lib';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {CodeSystemService} from '../../../services/code-system.service';

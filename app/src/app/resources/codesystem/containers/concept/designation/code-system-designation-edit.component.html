@@ -1,14 +1,14 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-justify-between">
     <div class="m-card__title">{{'entities.code-system-entity-version.designations' | translate}}</div>
-    <twa-add-button *ngIf="!viewMode" (click)="modalData.visible = true">{{'web.code-system-concept-version.designation.add-designation' | translate}}</twa-add-button>
+    <tw-add-button *ngIf="!viewMode" (click)="modalData.visible = true">{{'web.code-system-concept-version.designation.add-designation' | translate}}</tw-add-button>
   </div>
   <div *ngIf="!loading['languages']">
     <m-card class="m-card-inside" *ngFor="let group of designationGroups">
-      <twa-code-system-designation-group-edit [viewMode]="viewMode"
+      <tw-code-system-designation-group-edit [viewMode]="viewMode"
           [designationGroup]="group"
           [supportedLangs]="supportedLangs"
-          [entityProperties]="entityProperties"></twa-code-system-designation-group-edit>
+          [entityProperties]="entityProperties"></tw-code-system-designation-group-edit>
     </m-card>
   </div>
 </m-card>

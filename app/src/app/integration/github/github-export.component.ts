@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {GithubExportable, GithubService} from './github.service';
 import {concat, toArray} from 'rxjs';
 
-@Component({templateUrl: './github-export.component.html', selector: 'twa-github-export'})
+@Component({templateUrl: './github-export.component.html', selector: 'tw-github-export'})
 export class GithubExportComponent implements OnInit {
 
   @Input()

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectDiffItem, ProjectLibService} from 'lib/src/project';
+import {ProjectDiffItem, ProjectLibService} from 'term-web/project/_lib';
 import {combineLatest, takeUntil} from 'rxjs';
 import {DestroyService, isDefined} from '@kodality-web/core-util';
-import {ProjectContextComponent} from '../../../core/context/project-context.component';
 import {Router} from '@angular/router';
+import {ProjectContextComponent} from 'term-web/core/context/project-context.component';
 
 @Component({
   templateUrl: './project-diff-matrix.component.html',

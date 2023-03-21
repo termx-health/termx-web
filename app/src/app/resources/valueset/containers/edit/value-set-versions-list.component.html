@@ -1,9 +1,9 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-justify-between">
     <div class="m-card__title">{{'entities.value-set.versions' | translate}}</div>
-    <twa-add-button *ngIf="!viewMode" [routerLink]="['../versions/add']">
+    <tw-add-button *ngIf="!viewMode" [routerLink]="['../versions/add']">
       {{'web.value-set.form.versions.add-version' | translate}}
-    </twa-add-button>
+    </tw-add-button>
   </div>
 
   <m-table [mData]="versions" [mLoading]="loading" mEnablePagination>
@@ -21,7 +21,7 @@
       <td>{{version.source}}</td>
       <td>{{version.releaseDate | localDate}}</td>
       <td>{{version.expirationDate | localDate}}</td>
-      <td class="tw-table-min-width"><twa-status-tag [status]="version.status"></twa-status-tag></td>
+      <td class="tw-table-min-width"><tw-status-tag [status]="version.status"></tw-status-tag></td>
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="openFhir(valueSetId, version.version)">

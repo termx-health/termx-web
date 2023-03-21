@@ -31,8 +31,8 @@
                 {{valueSet.description}}
               </m-form-item>
 
-              <twa-value-set-versions-list [valueSetId]="valueSetId" [valueSetUri]="valueSet?.uri" viewMode></twa-value-set-versions-list>
-              <twa-contact-list *ngIf="valueSet" [(contacts)]="valueSet.contacts" viewMode></twa-contact-list>
+              <tw-value-set-versions-list [valueSetId]="valueSetId" [valueSetUri]="valueSet?.uri" viewMode></tw-value-set-versions-list>
+              <tw-contact-list *ngIf="valueSet" [(contacts)]="valueSet.contacts" viewMode></tw-contact-list>
             </div>
           </m-card>
         </m-spinner>
@@ -63,7 +63,7 @@
           {{'entities.value-set.concepts' | translate}}
         </a>
         <m-card [mTitle]="'entities.code-system.concepts'" *ngIf="valueSet">
-          <twa-value-set-concept-list [valueSet]="valueSet.id"></twa-value-set-concept-list>
+          <tw-value-set-concept-list [valueSet]="valueSet.id"></tw-value-set-concept-list>
         </m-card>
       </nz-tab>
     </nz-tabset>

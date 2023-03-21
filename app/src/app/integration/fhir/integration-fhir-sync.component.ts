@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService, JobLibService, JobLog} from '@terminology/core';
 import {ActivatedRoute} from '@angular/router';
 import {filter, merge, Observable, Subject, switchMap, takeUntil, timer} from 'rxjs';
 import {DestroyService} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {JobLibService, JobLog} from '../../job/_lib';
+import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from '../../fhir/_lib';
 
 
 @Component({

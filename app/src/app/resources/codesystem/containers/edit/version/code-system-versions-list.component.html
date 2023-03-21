@@ -3,9 +3,9 @@
     <div class="m-card__title">{{'entities.code-system.versions' | translate}}</div>
 
     <m-dropdown *ngIf="!viewMode">
-      <twa-add-button *m-dropdown-container icon="down" placement="right">
+      <tw-add-button *m-dropdown-container icon="down" placement="right">
         {{'web.code-system.form.versions.list.add-version' | translate}}
-      </twa-add-button>
+      </tw-add-button>
 
       <a *m-dropdown-item [routerLink]="['../versions/add']">
         {{'web.code-system.form.versions.list.add-new-version' | translate}}
@@ -32,7 +32,7 @@
       <td>{{version.releaseDate | localDate}}</td>
       <td>{{version.expirationDate | localDate}}</td>
       <td class="tw-table-min-width">
-        <twa-status-tag [status]="version.status"></twa-status-tag>
+        <tw-status-tag [status]="version.status"></tw-status-tag>
       </td>
       <td class="tw-table-actions">
         <m-dropdown>
@@ -70,4 +70,4 @@
   </m-table>
 </m-card>
 
-<twa-code-system-version-duplicate-modal #duplicateModal (duplicated)="loadVersions()"></twa-code-system-version-duplicate-modal>
+<tw-code-system-version-duplicate-modal #duplicateModal (duplicated)="loadVersions()"></tw-code-system-version-duplicate-modal>

@@ -1,9 +1,9 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-justify-between">
     <div class="m-card__title">{{'entities.code-system-version.entities' | translate}}</div>
-    <twa-add-button (click)="modalVisible = true" *ngIf="!viewMode">
+    <tw-add-button (click)="modalVisible = true" *ngIf="!viewMode">
       {{'web.code-system-version.form.entities.add-entity' | translate}}
-    </twa-add-button>
+    </tw-add-button>
   </div>
   <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
 
@@ -24,7 +24,7 @@
     <tr *mTableRow="let entityVersion">
       <td>{{entityVersion.code}} {{entityVersion.id | localizedConceptName: {codeSystem: codeSystemId} | async}}</td>
       <td>{{entityVersion.created | localDate}}</td>
-      <td class="tw-table-min-width"><twa-status-tag [status]="entityVersion.status"></twa-status-tag></td>
+      <td class="tw-table-min-width"><tw-status-tag [status]="entityVersion.status"></tw-status-tag></td>
       <td class="tw-table-actions" *ngIf="!viewMode">
         <m-dropdown>
           <a *m-dropdown-item (click)="delete(entityVersion)">

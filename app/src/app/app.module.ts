@@ -5,25 +5,11 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {HttpBackend, HttpClientModule} from '@angular/common/http';
-import {environment} from '../environments/environment';
-import {
-  AuthModule,
-  AuthService,
-  FhirLibModule,
-  JobLibModule,
-  MarinaUiConfigModule,
-  MeasurementUnitLibModule,
-  ProjectLibModule,
-  ResourcesLibModule,
-  TERMINOLOGY_API_URL,
-  TERMINOLOGY_CHEF_URL
-} from '@terminology/core';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
 import {ResourcesModule} from './resources/resources.module';
-import {MarinaUtilModule} from '@kodality-web/marina-util';
-import {NoPrivilegeModule} from './core/no-privilege/no-privilege.module';
+import {NoPrivilegeModule} from './core/ui/no-privilege/no-privilege.module';
 import {SharedModule} from './core/shared/shared.module';
 import {Observable} from 'rxjs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -36,36 +22,33 @@ import {FhirModule} from './fhir/fhir.module';
 import {ToolsModule} from './tools/tools.module';
 import {MeasurementUnitModule} from './measurementunit/measurement-unit.module';
 import {ProjectModule} from './project/project.module';
+import {JobLibModule} from './job/_lib';
+import {SupplementModule} from './supplement/supplement.module';
+import {AuthModule, AuthService} from './core/auth';
+import {MarinaUiConfigModule} from './core/marina';
 
 registerLocaleData(et);
 
 
 export function HttpLoaderFactory(http: HttpBackend): TranslateLoader {
-  return new MultiTranslateHttpLoader(http, ['/assets/i18n/', '/assets/termsupp/i18n/']);
+  return new MultiTranslateHttpLoader(http, ['/assets/i18n/']);
 }
-
 
 export function preloadAuth(authService: AuthService): () => Observable<any> {
   return () => authService.refresh();
 }
 
 const TERM_MODULES = [
-  ResourcesLibModule,
   ResourcesModule,
-  FhirLibModule,
   IntegrationModule,
   JobLibModule,
   PrivilegesModule,
   GlobalSearchModule,
   ThesaurusModule,
   FhirModule,
-
+  SupplementModule,
   ToolsModule,
-
-  MeasurementUnitLibModule,
   MeasurementUnitModule,
-
-  ProjectLibModule,
   ProjectModule
 ];
 
@@ -87,29 +70,9 @@ const TERM_MODULES = [
       }
     }),
 
-    MarinaUiConfigModule.forRoot(),
-    MarinaUtilModule,
+    AuthModule.init(),
+    MarinaUiConfigModule.init(),
     CoreUtilModule,
-
-    AuthModule.forRoot({
-      context: {
-        production: environment.production,
-        yupiEnabled: environment.yupiEnabled
-      },
-      oidc: {
-        authority: environment.oauthIssuer,
-        redirectUrl: window.location.origin,
-        postLogoutRedirectUri: window.location.origin,
-        clientId: environment.oauthClientId,
-        scope: 'openid profile offline_access',
-        responseType: 'code',
-        silentRenew: true,
-        useRefreshToken: true,
-        renewTimeBeforeTokenExpiresInSeconds: 30,
-        ignoreNonceAfterRefresh: true,
-        logLevel: 2
-      }
-    }),
 
     SharedModule,
     NoPrivilegeModule,
@@ -118,8 +81,6 @@ const TERM_MODULES = [
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},
-    {provide: TERMINOLOGY_API_URL, useValue: environment.terminologyApi},
-    {provide: TERMINOLOGY_CHEF_URL, useValue: environment.chefUrl},
     {provide: APP_INITIALIZER, useFactory: preloadAuth, deps: [AuthService], multi: true},
   ],
   bootstrap: [AppComponent]

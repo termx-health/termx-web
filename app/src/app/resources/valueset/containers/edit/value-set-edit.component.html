@@ -31,8 +31,8 @@
                 <m-textarea name="description" [(ngModel)]="valueSet.description"></m-textarea>
               </m-form-item>
 
-              <twa-value-set-versions-list *ngIf="mode === 'edit'" [valueSetId]="valueSetId" [valueSetUri]="valueSet?.uri"></twa-value-set-versions-list>
-              <twa-contact-list *ngIf="valueSet" [(contacts)]="valueSet.contacts"></twa-contact-list>
+              <tw-value-set-versions-list *ngIf="mode === 'edit'" [valueSetId]="valueSetId" [valueSetUri]="valueSet?.uri"></tw-value-set-versions-list>
+              <tw-contact-list *ngIf="valueSet" [(contacts)]="valueSet.contacts"></tw-contact-list>
             </form>
 
             <ng-container *m-card-footer>
@@ -69,7 +69,7 @@
           {{'entities.value-set.concepts' | translate}}
         </a>
         <m-card [mTitle]="'entities.code-system.concepts'" *ngIf="valueSet">
-          <twa-value-set-concept-list [valueSet]="valueSet.id"></twa-value-set-concept-list>
+          <tw-value-set-concept-list [valueSet]="valueSet.id"></tw-value-set-concept-list>
         </m-card>
       </nz-tab>
     </nz-tabset>

@@ -1,13 +1,13 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {CodeSystem, CodeSystemSearchParams} from '@terminology/core';
+import {CodeSystem, CodeSystemSearchParams} from 'term-web/resources/_lib';
 import {CodeSystemService} from '../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, tap} from 'rxjs';
-import {environment} from '../../../../../environments/environment';
+import {environment} from 'environments/environment';
 
 @Component({
-  selector: 'twa-code-system-list',
+  selector: 'tw-code-system-list',
   templateUrl: 'code-system-list.component.html',
   providers: [DestroyService]
 })

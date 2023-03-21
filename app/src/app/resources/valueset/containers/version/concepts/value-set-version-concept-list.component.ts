@@ -1,10 +1,10 @@
 import {Component, Input} from '@angular/core';
-import {ValueSetVersionConcept} from '@terminology/core';
+import {ValueSetVersionConcept} from 'term-web/resources/_lib';
 import {BooleanInput} from '@kodality-web/core-util';
 import {ValueSetService} from '../../../services/value-set.service';
 
 @Component({
-  selector: 'twa-value-set-version-concept-list',
+  selector: 'tw-value-set-version-concept-list',
   templateUrl: 'value-set-version-concept-list.component.html',
 })
 export class ValueSetVersionConceptListComponent {

@@ -2,7 +2,7 @@ import {Highlightable} from '@angular/cdk/a11y';
 import {Component, HostBinding, Input} from '@angular/core';
 
 @Component({
-  selector: 'twa-dropdown-option',
+  selector: 'tw-dropdown-option',
   template: `
     <nz-list-item-meta [id]="item.id">
       <nz-list-item-meta-avatar>

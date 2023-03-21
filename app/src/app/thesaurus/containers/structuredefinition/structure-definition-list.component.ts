@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
-import {StructureDefinition, StructureDefinitionSearchParams} from '@terminology/core';
+import {StructureDefinition, StructureDefinitionSearchParams} from 'term-web/thesaurus/_lib';
 import {StructureDefinitionService} from '../../services/structure-definition.service';
 
 @Component({

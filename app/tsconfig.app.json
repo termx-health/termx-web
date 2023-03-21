@@ -4,8 +4,11 @@
     "outDir": "../out-tsc/app",
     "types": [],
     "paths": {
-      "@terminology/core": [
-        "lib/src"
+      "term-web/*": [
+        "app/src/app/*"
+      ],
+      "environments/*": [
+        "app/src/environments/*"
       ]
     }
   },

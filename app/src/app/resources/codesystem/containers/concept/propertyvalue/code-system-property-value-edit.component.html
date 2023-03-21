@@ -1,7 +1,7 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-justify-between">
     <div class="m-card__title">{{'entities.code-system-entity-version.property-values' | translate}}</div>
-    <twa-add-button *ngIf="!viewMode" (click)="addPropertyValue()">{{'web.code-system-concept-version.property-value.add-property-value' | translate}}</twa-add-button>
+    <tw-add-button *ngIf="!viewMode" (click)="addPropertyValue()">{{'web.code-system-concept-version.property-value.add-property-value' | translate}}</tw-add-button>
   </div>
   <div>
     <form #form="ngForm">

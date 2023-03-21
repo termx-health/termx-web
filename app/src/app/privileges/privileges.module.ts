@@ -4,7 +4,8 @@ import {PrivilegesListComponent} from './containers/privileges-list.component';
 import {PrivilegeEditComponent} from './containers/privilege-edit.component';
 import {SharedModule} from '../core/shared/shared.module';
 import {PrivilegeService} from './services/privilege.service';
-import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, PrivilegeModule, ValueSetLibModule} from '@terminology/core';
+import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from '../resources/_lib';
+import {PrivilegeModule} from 'term-web/privileges/_lib';
 
 
 export const PRIVILEGES_ROUTES: Routes = [

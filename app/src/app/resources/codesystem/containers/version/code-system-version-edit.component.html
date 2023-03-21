@@ -4,7 +4,7 @@
       <m-card [mShowSkeleton]="loading['init']">
         <div *m-card-header class="m-items-middle">
           <div class="m-card__title">{{(mode === 'edit' ? 'web.code-system-version.form.edit-header' : 'web.code-system-version.form.add-header') | translate}}</div>
-          <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
+          <tw-status-tag *ngIf="version?.status" [status]="version.status"></tw-status-tag>
         </div>
 
         <form #form="ngForm" *ngIf="version">
@@ -40,10 +40,10 @@
             <m-date-picker name="expirationDate" [(ngModel)]="version.expirationDate"></m-date-picker>
           </m-form-item>
 
-          <twa-code-system-version-entity-version-list *ngIf="version.id"
+          <tw-code-system-version-entity-version-list *ngIf="version.id"
               [codeSystemId]="codeSystemId"
               [version]="version.version"
-          ></twa-code-system-version-entity-version-list>
+          ></tw-code-system-version-entity-version-list>
         </form>
 
         <ng-container *m-card-footer>

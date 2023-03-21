@@ -5,7 +5,6 @@ import {ThesaurusSidebarComponent} from './containers/page/thesaurus-sidebar.com
 import {PageService} from './services/page.service';
 import {ThesaurusPageComponent} from './containers/page/thesaurus-page.component';
 import {ThesaurusPageEditComponent} from './containers/page/thesaurus-page-edit.component';
-import {IntegrationLibModule, ResourcesLibModule, ThesaurusLibModule} from '@terminology/core';
 import {ThesaurusPageModalComponent} from './containers/page/thesaurus-page-modal.component';
 import {ThesaurusTextareaComponent} from './containers/texteditor/thesaurus-textarea.component';
 import {ThesaurusDropdownComponent} from './containers/texteditor/thesaurus-dropdown.component';
@@ -27,8 +26,10 @@ import {StructureDefinitionConstraintListComponent} from './containers/structure
 import {ThesaurusTemplateModalComponent} from './containers/texteditor/template/thesaurus-template-modal.component';
 import {TemplateViewComponent} from './containers/template/template-view.component';
 import {IntegrationModule} from '../integration/integration.module';
-import {MarinaQuillModule} from '@kodality-web/marina-quill';
 import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
+import {ThesaurusLibModule} from 'term-web/thesaurus/_lib';
+import {ResourcesLibModule} from '../resources/_lib';
+import {IntegrationLibModule} from '../integration/_lib';
 
 export const THESAURUS_ROUTES: Routes = [
   {path: 'pages', component: ThesaurusPageComponent},
@@ -52,7 +53,6 @@ export const THESAURUS_ROUTES: Routes = [
     IntegrationLibModule,
     IntegrationModule,
     MarinaMarkdownModule,
-    MarinaQuillModule
   ],
   declarations: [
     ThesaurusSidebarComponent,

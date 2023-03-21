@@ -3,9 +3,9 @@
     <div class="m-card__title">
       {{'web.map-set-entity-version.table.header' | translate}}
     </div>
-    <twa-add-button *ngIf="!viewMode" (click)="openEntityVersionModal()">
+    <tw-add-button *ngIf="!viewMode" (click)="openEntityVersionModal()">
       {{'web.map-set-entity-version.table.link-version' | translate}}
-    </twa-add-button>
+    </tw-add-button>
   </div>
   <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
 

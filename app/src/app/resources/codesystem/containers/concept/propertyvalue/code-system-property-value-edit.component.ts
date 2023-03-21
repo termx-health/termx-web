@@ -1,12 +1,12 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {EntityProperty, EntityPropertyValue} from 'lib/src/resources';
+import {EntityProperty, EntityPropertyValue} from 'term-web/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {finalize, Observable} from 'rxjs';
 
 @Component({
-  selector: 'twa-code-system-property-value-edit',
+  selector: 'tw-code-system-property-value-edit',
   templateUrl: './code-system-property-value-edit.component.html',
 })
 export class CodeSystemPropertyValueEditComponent implements OnChanges {

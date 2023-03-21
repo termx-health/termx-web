@@ -35,8 +35,8 @@
           </m-form-item>
         </form>
 
-        <twa-map-set-versions-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></twa-map-set-versions-list>
-        <twa-map-set-association-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></twa-map-set-association-list>
+        <tw-map-set-versions-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></tw-map-set-versions-list>
+        <tw-map-set-association-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></tw-map-set-association-list>
 
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="save()" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading">
