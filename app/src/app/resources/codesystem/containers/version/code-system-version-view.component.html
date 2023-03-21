@@ -4,7 +4,7 @@
       <m-card [mShowSkeleton]="loading['init']">
         <div *m-card-header class="m-items-middle">
           <div class="m-card__title">{{'web.code-system-version.form.view-header' | translate}}</div>
-          <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
+          <tw-status-tag *ngIf="version?.status" [status]="version.status"></tw-status-tag>
         </div>
 
         <form #form="ngForm" *ngIf="version">
@@ -39,11 +39,11 @@
             </div>
           </m-form-item>
 
-          <twa-code-system-version-entity-version-list
+          <tw-code-system-version-entity-version-list
               [codeSystemId]="codeSystemId"
               [version]="version.version"
               viewMode
-          ></twa-code-system-version-entity-version-list>
+          ></tw-code-system-version-entity-version-list>
         </form>
 
         <div *ngIf="version?.status === 'active'">

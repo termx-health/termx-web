@@ -2,8 +2,8 @@
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
 
-    <twa-github-export [title]="'Thesaurus'" [prepareExport]="prepareExport"></twa-github-export>
-    <twa-add-button (click)="modalVisible = true"></twa-add-button>
+    <tw-github-export [title]="'Thesaurus'" [prepareExport]="prepareExport"></tw-github-export>
+    <tw-add-button (click)="modalVisible = true"></tw-add-button>
   </div>
 
   <m-no-data *ngIf="pages.length === 0"></m-no-data>
@@ -33,4 +33,4 @@
 
 </m-card>
 
-<twa-thesaurus-page-modal [modalVisible]="modalVisible" (closed)="modalVisible = false" (saved)="openPageContent($event)"></twa-thesaurus-page-modal>
+<tw-thesaurus-page-modal [modalVisible]="modalVisible" (closed)="modalVisible = false" (saved)="openPageContent($event)"></tw-thesaurus-page-modal>

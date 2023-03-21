@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {TerminologyServer, TerminologyServerLibService, TerminologyServerSearchParams} from 'lib/src/project';
+import {TerminologyServer, TerminologyServerLibService, TerminologyServerSearchParams} from 'term-web/project/_lib';
 
 @Component({
   templateUrl: './terminology-server-list.component.html',

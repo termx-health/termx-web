@@ -1,13 +1,13 @@
 import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
-import {NamingSystem, NamingSystemSearchParams} from '@terminology/core';
+import {NamingSystem, NamingSystemSearchParams} from 'term-web/resources/_lib';
 import {NamingSystemService} from '../../services/naming-system-service';
 import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'twa-naming-system-list',
+  selector: 'tw-naming-system-list',
   templateUrl: './naming-system-list.component.html',
 })
 export class NamingSystemListComponent implements OnInit {

@@ -5,7 +5,7 @@ import {ElementConstraint} from './structure-definition-tree.component';
 
 
 @Component({
-  selector: 'twa-sd-constraint-list',
+  selector: 'tw-sd-constraint-list',
   templateUrl: './structure-definition-constraint-list.component.html',
   styles: [`
     .tw-sd-constraint-collapse ::ng-deep {

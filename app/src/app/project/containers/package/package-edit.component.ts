@@ -3,7 +3,7 @@ import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {collect, copyDeep, group, isDefined, validateForm} from '@kodality-web/core-util';
-import {Package, PackageLibService, PackageResource, PackageVersion, TerminologyServerLibService} from '@terminology/core';
+import {Package, PackageLibService, PackageResource, PackageVersion, TerminologyServerLibService} from 'term-web/project/_lib';
 import {ProjectService} from '../../services/project.service';
 import {forkJoin} from 'rxjs';
 import {saveAs} from 'file-saver';

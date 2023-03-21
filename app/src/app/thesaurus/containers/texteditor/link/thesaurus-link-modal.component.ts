@@ -2,12 +2,12 @@ import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {Location} from '@angular/common';
-import {Page} from 'lib/src/thesaurus';
+import {Page} from 'term-web/thesaurus/_lib';
 import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'twa-link-modal',
+  selector: 'tw-link-modal',
   template: `
     <m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal(false)" [mMaskClosable]="false">
       <ng-container *m-modal-header>

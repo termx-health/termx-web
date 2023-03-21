@@ -2,9 +2,9 @@
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twPrivileged="'*.CodeSystem.edit'" [routerLink]="dev ? ['add'] : ['code-systems/add']">
+      <tw-add-button *twPrivileged="'*.CodeSystem.edit'" [routerLink]="dev ? ['add'] : ['code-systems/add']">
         {{'web.code-system.list.add-code-system' | translate}}
-      </twa-add-button>
+      </tw-add-button>
       <m-button [routerLink]="'finder/code-systems'">
         <m-icon mCode="layout"></m-icon>
       </m-button>
@@ -74,4 +74,4 @@
   </m-backend-table>
 </m-card>
 
-<twa-code-system-duplicate-modal #duplicateModal (duplicated)="loadData()"></twa-code-system-duplicate-modal>
+<tw-code-system-duplicate-modal #duplicateModal (duplicated)="loadData()"></tw-code-system-duplicate-modal>

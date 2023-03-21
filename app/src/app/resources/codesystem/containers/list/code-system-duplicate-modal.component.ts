@@ -5,7 +5,7 @@ import {validateForm} from '@kodality-web/core-util';
 
 
 @Component({
-  selector: 'twa-code-system-duplicate-modal',
+  selector: 'tw-code-system-duplicate-modal',
   templateUrl: './code-system-duplicate-modal.component.html',
 })
 export class CodeSystemDuplicateModalComponent {

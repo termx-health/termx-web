@@ -1,7 +1,7 @@
 <ng-container *ngFor="let v of processedValue">
   <m-markdown *ngIf="v.type === 'text' && valueType === 'markdown'" [mData]="v.value" mEmoji></m-markdown>
   <m-quill *ngIf="v.type === 'text' && valueType === 'html'" [(ngModel)]="v.value" mViewMode></m-quill>
-  <twa-structure-definition-tree *ngIf="v.type === 'def'" [defCode]="v.value"></twa-structure-definition-tree>
-  <twa-template-view *ngIf="v.type === 'temp'" [lang]="lang" [templateCode]="v.value"></twa-template-view>
-  <twa-structure-definition-tree *ngIf="v.type === 'fsh'" [fsh]="v.value"></twa-structure-definition-tree>
+  <tw-structure-definition-tree *ngIf="v.type === 'def'" [defCode]="v.value"></tw-structure-definition-tree>
+  <tw-template-view *ngIf="v.type === 'temp'" [lang]="lang" [templateCode]="v.value"></tw-template-view>
+  <tw-structure-definition-tree *ngIf="v.type === 'fsh'" [fsh]="v.value"></tw-structure-definition-tree>
 </ng-container>

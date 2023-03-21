@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 
 @Component({
-  selector: 'twa-status-tag',
+  selector: 'tw-status-tag',
   templateUrl: './status-tag.component.html',
 })
 export class StatusTagComponent {

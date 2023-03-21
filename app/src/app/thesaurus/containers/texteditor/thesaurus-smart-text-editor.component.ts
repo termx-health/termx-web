@@ -9,7 +9,7 @@ import {ThesaurusStructureDefinitionModalComponent} from './structuredefinition/
 import {ThesaurusTemplateModalComponent} from './template/thesaurus-template-modal.component';
 
 @Component({
-  selector: 'twa-smart-text-editor',
+  selector: 'tw-smart-text-editor',
   templateUrl: './thesaurus-smart-text-editor.component.html',
   styles: [`
     .input-wrapper {

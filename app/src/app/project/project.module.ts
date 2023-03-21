@@ -1,10 +1,9 @@
 import {NgModule} from '@angular/core';
-import {Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {ProjectListComponent} from './containers/project/project-list.component';
 import {ProjectEditComponent} from './containers/project/project-edit.component';
 import {SharedModule} from '../core/shared/shared.module';
 import {ProjectService} from './services/project.service';
-import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ProjectLibModule, ValueSetLibModule} from '@terminology/core';
 import {PackageEditComponent} from './containers/package/package-edit.component';
 import {ProjectDashboardComponent} from './containers/project/project-dashboard.component';
 import {ProjectDiffComponent} from './containers/project/project-diff.component';
@@ -15,6 +14,8 @@ import {PackageService} from './services/package.service';
 import {PackageVersionService} from './services/package-version.service';
 import {PackageResourceService} from './services/package-resource.service';
 import {ProjectDiffMatrixComponent} from './containers/project/project-diff-matrix.component';
+import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from '../resources/_lib';
+import {ProjectLibModule} from 'term-web/project/_lib';
 
 export const PROJECT_CTX_ROUTES: Routes = [
   {path: '', component: ProjectDashboardComponent},

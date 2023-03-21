@@ -26,9 +26,9 @@
         <div class="m-card__title">
           {{'entities.value-set-rule-set.rules' | translate}}
         </div>
-        <twa-add-button [routerLink]="['../rule-sets',ruleSet.id,'rules','add']" *ngIf="!viewMode && ruleSet.id">
+        <tw-add-button [routerLink]="['../rule-sets',ruleSet.id,'rules','add']" *ngIf="!viewMode && ruleSet.id">
           {{'web.value-set-version.form.rule-set.add-rule-set' | translate}}
-        </twa-add-button>
+        </tw-add-button>
       </div>
       <m-no-data *ngIf="!ruleSet.rules?.length"></m-no-data>
       <nz-collapse class="tw-cs-contact-collapse" *ngIf="ruleSet.rules?.length">
@@ -62,7 +62,7 @@
             </div>
           </ng-template>
 
-          <twa-value-set-rule-form [rule]="rule" viewMode></twa-value-set-rule-form>
+          <tw-value-set-rule-form [rule]="rule" viewMode></tw-value-set-rule-form>
 
         </nz-collapse-panel>
       </nz-collapse>
@@ -70,4 +70,4 @@
   </form>
 </m-card>
 
-<twa-value-set-version-concept-modal #conceptModal></twa-value-set-version-concept-modal>
+<tw-value-set-version-concept-modal #conceptModal></tw-value-set-version-concept-modal>

@@ -41,9 +41,9 @@
             <m-textarea name="description" [(ngModel)]="codeSystem.description"></m-textarea>
           </m-form-item>
 
-          <twa-dev-cs-properties #propertiesComponent [codeSystemId]="codeSystemId"></twa-dev-cs-properties>
+          <tw-dev-cs-properties #propertiesComponent [codeSystemId]="codeSystemId"></tw-dev-cs-properties>
 
-          <twa-dev-cs-relations #relationsComponent [codeSystemId]="codeSystemId" [currentCodeSystemId]="codeSystem.id"></twa-dev-cs-relations>
+          <tw-dev-cs-relations #relationsComponent [codeSystemId]="codeSystemId" [currentCodeSystemId]="codeSystem.id"></tw-dev-cs-relations>
         </form>
 
         <ng-container *m-card-footer>

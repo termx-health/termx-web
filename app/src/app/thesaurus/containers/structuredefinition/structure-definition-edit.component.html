@@ -27,12 +27,12 @@
               <m-card *ngIf="structureDefinition?.code">
                 <div *m-card-header class="m-justify-between">
                   <label></label>
-                  <twa-add-button (click)="addElement()">{{'web.structure-definition.form.add-element' | translate}}</twa-add-button>
+                  <tw-add-button (click)="addElement()">{{'web.structure-definition.form.add-element' | translate}}</tw-add-button>
                 </div>
-                <twa-structure-definition-tree #sdTree
+                <tw-structure-definition-tree #sdTree
                     mode="edit"
                     [defCode]="structureDefinition.code"
-                    (elementSelected)="openElementForm($event)"></twa-structure-definition-tree>
+                    (elementSelected)="openElementForm($event)"></tw-structure-definition-tree>
               </m-card>
             </div>
             <div nz-col [nzMd]="16" [nzXs]="24">
@@ -50,7 +50,7 @@
                       <label m-radio-button mValue="1..*">{{'1..*' | translate}}</label>
                     </m-radio-group>
                   </m-form-item>
-                  <twa-sd-type-list [types]="element.types" (typesChange)="element.types = $event"></twa-sd-type-list>
+                  <tw-sd-type-list [types]="element.types" (typesChange)="element.types = $event"></tw-sd-type-list>
                   <m-form-item mName="fixed" mLabel="web.structure-definition.form.fixed-uri">
                     <m-input name="fixed" [(ngModel)]="element.fixedUri"></m-input>
                   </m-form-item>
@@ -76,7 +76,7 @@
                   <m-form-item mName="definition" mLabel="web.structure-definition.form.definition">
                     <m-textarea name="definition" [(ngModel)]="element.definition"></m-textarea>
                   </m-form-item>
-                  <twa-sd-constraint-list [constraints]="element.constraint" (constraintsChange)="element.constraint = $event"></twa-sd-constraint-list>
+                  <tw-sd-constraint-list [constraints]="element.constraint" (constraintsChange)="element.constraint = $event"></tw-sd-constraint-list>
                 </form>
                 <ng-container *m-card-footer>
                   <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="saveElement()">

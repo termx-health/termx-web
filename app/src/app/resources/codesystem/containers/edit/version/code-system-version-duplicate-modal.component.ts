@@ -2,11 +2,11 @@ import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {CodeSystemVersion} from '@terminology/core';
+import {CodeSystemVersion} from 'term-web/resources/_lib';
 
 
 @Component({
-  selector: 'twa-code-system-version-duplicate-modal',
+  selector: 'tw-code-system-version-duplicate-modal',
   templateUrl: './code-system-version-duplicate-modal.component.html',
 })
 export class CodeSystemVersionDuplicateModalComponent {

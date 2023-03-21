@@ -1,4 +1,4 @@
-import {MapSet, MapSetAssociation, MapSetLibService, MapSetVersion} from '@terminology/core';
+import {MapSet, MapSetAssociation, MapSetLibService, MapSetVersion} from 'term-web/resources/_lib';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 

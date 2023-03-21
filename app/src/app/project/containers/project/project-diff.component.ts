@@ -1,13 +1,14 @@
 import {Component, OnInit} from '@angular/core';
-import {PackageResource, TerminologyServer, TerminologyServerLibService} from 'lib/src/project';
+import {PackageResource, TerminologyServer, TerminologyServerLibService} from 'term-web/project/_lib';
 import {combineLatest, filter, forkJoin, map, merge, Observable, of, Subject, switchMap, takeUntil, timer} from 'rxjs';
 import {collect, DestroyService, group} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
-import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirValueSetLibService, JobLibService} from '@terminology/core';
+import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirValueSetLibService} from '../../../fhir/_lib';
 import {diffWords} from 'diff';
-import {ProjectContextComponent} from '../../../core/context/project-context.component';
 import {PackageResourceService} from '../../services/package-resource.service';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {JobLibService} from '../../../job/_lib';
+import {ProjectContextComponent} from 'term-web/core/context/project-context.component';
 
 export class ProjectDiffItem {
   public resource?: PackageResource;

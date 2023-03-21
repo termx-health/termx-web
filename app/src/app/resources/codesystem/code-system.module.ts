@@ -17,9 +17,8 @@ import {FinderCodeSystemViewComponent} from './containers-finder/code-system-vie
 import {FinderCodeSystemVersionViewComponent} from './containers-finder/version/code-system-version-view.component';
 import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/code-system-concept-view.component';
 import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
-import {FinderModule} from '../../core/finder/finder.module';
+import {FinderModule} from '../../core/ui/finder/finder.module';
 import {ContactModule} from '../contact/contact.module';
-import {ResourcesLibModule} from '@terminology/core';
 import {CodeSystemPropertyEditComponent} from './containers/edit/property/code-system-property-edit.component';
 import {CodeSystemPropertyFormComponent} from './containers/edit/property/code-system-property-form.component';
 import {CodeSystemSupplementEditComponent} from './containers/supplement/code-system-supplement-edit.component';
@@ -32,6 +31,7 @@ import {CodeSystemAssociationEditComponent} from './containers/concept/associati
 import {CodeSystemConceptViewComponent} from './containers/concept/code-system-concept-view.component';
 import {CodeSystemConceptRelationsComponent} from './containers/concept/relations/code-system-concept-relations.component';
 import {MarinaQuillModule} from '@kodality-web/marina-quill';
+import {ResourcesLibModule} from 'term-web/resources/_lib';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [

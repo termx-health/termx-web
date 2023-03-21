@@ -2,12 +2,12 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '
 import {FlatTreeControl} from '@angular/cdk/tree';
 import {NzTreeFlatDataSource, NzTreeFlattener} from 'ng-zorro-antd/tree-view';
 import {ThesaurusFhirMapperUtil} from '../../services/thesaurus-fhir-mapper.util';
-import {StructureDefinitionLibService} from 'lib/src/thesaurus';
+import {StructureDefinitionLibService} from 'term-web/thesaurus/_lib';
 import {isDefined} from '@kodality-web/core-util';
-import {ChefService} from '@terminology/core';
+import {ChefService} from 'term-web/integration/_lib';
 
 @Component({
-  selector: 'twa-structure-definition-tree',
+  selector: 'tw-structure-definition-tree',
   templateUrl: './structure-definition-tree.component.html'
 })
 export class StructureDefinitionTreeComponent implements OnChanges {

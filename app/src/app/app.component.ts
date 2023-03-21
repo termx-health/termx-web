@@ -4,11 +4,11 @@ import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from '@an
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {filter} from 'rxjs';
-import {AuthService} from '@terminology/core';
+import {AuthService} from 'term-web/core/auth';
 import {group} from '@kodality-web/core-util';
 
 @Component({
-  selector: 'twa-root',
+  selector: 'tw-root',
   templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {

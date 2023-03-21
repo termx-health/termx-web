@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {TemplateLibService} from 'lib/src/thesaurus';
+import {TemplateLibService} from 'term-web/thesaurus/_lib';
 
 @Component({
-  selector: 'twa-template-view',
+  selector: 'tw-template-view',
   templateUrl: './template-view.component.html'
 })
 export class TemplateViewComponent implements OnChanges {

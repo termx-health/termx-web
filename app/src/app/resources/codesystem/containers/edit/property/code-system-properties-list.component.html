@@ -4,9 +4,9 @@
       {{'entities.code-system.properties' | translate}}
     </div>
     <m-dropdown *ngIf="!viewMode">
-      <twa-add-button *m-dropdown-container icon="down" placement="right">
+      <tw-add-button *m-dropdown-container icon="down" placement="right">
         {{'web.code-system.form.properties.add-property' | translate}}
-      </twa-add-button>
+      </tw-add-button>
 
       <a *m-dropdown-item [routerLink]="['../entity-properties/add']">
         {{'web.code-system.form.properties.add-property' | translate}}
@@ -42,7 +42,7 @@
         <m-icon *ngIf="property.supplementId" [mCode]="'block'" m-tooltip [mTitle]="'web.supplement.supplement' | translate"></m-icon> <!--todo better icon for supplement-->
       </td>
       <td class="tw-table-min-width">
-        <twa-status-tag [status]="property.status"></twa-status-tag>
+        <tw-status-tag [status]="property.status"></tw-status-tag>
       </td>
       <td class="tw-table-actions" *ngIf="!viewMode">
         <m-dropdown>

@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
 import {ProjectService} from '../../services/project.service';
 import {validateForm} from '@kodality-web/core-util';
-import {Package, Project, TerminologyServer, TerminologyServerLibService} from 'lib/src/project';
+import {Package, Project, TerminologyServer, TerminologyServerLibService} from 'term-web/project/_lib';
 import {forkJoin} from 'rxjs';
 import {PackageService} from '../../services/package.service';
 

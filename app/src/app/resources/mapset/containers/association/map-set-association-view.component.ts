@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {MapSetAssociation} from '@terminology/core';
+import {MapSetAssociation} from 'term-web/resources/_lib';
 import {MapSetService} from '../../services/map-set-service';
 import {ActivatedRoute} from '@angular/router';
 

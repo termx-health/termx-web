@@ -1,4 +1,4 @@
-import {ValueSet, ValueSetLibService, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule} from '@terminology/core';
+import {ValueSet, ValueSetLibService, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule} from 'term-web/resources/_lib';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 

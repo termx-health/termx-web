@@ -45,7 +45,7 @@
           </m-form-item>
         </form>
 
-        <twa-measurement-unit-mapping-list *ngIf="measurementUnit" [(mappings)]="measurementUnit.mappings"></twa-measurement-unit-mapping-list>
+        <tw-measurement-unit-mapping-list *ngIf="measurementUnit" [(mappings)]="measurementUnit.mappings"></tw-measurement-unit-mapping-list>
 
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">

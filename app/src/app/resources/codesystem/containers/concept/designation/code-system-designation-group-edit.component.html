@@ -48,7 +48,7 @@
                 [(ngModel)]="designation.status"
                 valueSet="publication-status"
                 required></tw-value-set-concept-select>
-            <twa-status-tag *ngIf="viewMode" [status]="designation.status" style="margin-left: 1rem"></twa-status-tag>
+            <tw-status-tag *ngIf="viewMode" [status]="designation.status" style="margin-left: 1rem"></tw-status-tag>
 
             <m-button *ngIf="!viewMode" mDisplay="text" mShape="circle" (click)="designation.preferred = !designation.preferred">
               <m-icon [mOptions]="{nzTheme : designation.preferred ? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>

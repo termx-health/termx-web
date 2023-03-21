@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {SharedModule} from '../core/shared/shared.module';
 import {IntegrationDashboardComponent} from './dashboard/integration-dashboard.component';
 import {IntegrationFhirSyncComponent} from './fhir/integration-fhir-sync.component';
-import {FhirLibModule, IntegrationLibModule, JobLibModule, ResourcesLibModule} from '@terminology/core';
 import {Routes} from '@angular/router';
 import {FhirCodeSystemLookupComponent} from './fhir/code-system/fhir-code-system-lookup.component';
 import {FhirCodeSystemValidateCodeComponent} from './fhir/code-system/fhir-code-system-validate-code.component';
@@ -21,6 +20,10 @@ import {SnomedConceptInfoComponent} from './snomed/snomed-concept-info.component
 import {OrphanetImportComponent} from './import/orphanet/orphanet-import-component';
 import {GithubExportComponent} from './github/github-export.component';
 import {IntegrationIchiImportComponent} from './import/ichi/integration-ichi-import.component';
+import {FhirLibModule} from 'term-web/fhir/_lib';
+import {JobLibModule} from 'term-web/job/_lib';
+import {IntegrationLibModule} from 'term-web/integration/_lib';
+import {ResourcesLibModule} from 'term-web/resources/_lib';
 
 export const INTEGRATION_ROUTES: Routes = [
   {

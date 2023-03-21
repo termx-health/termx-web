@@ -12,7 +12,7 @@ import {
   Designation,
   EntityProperty,
   EntityPropertyValue
-} from '@terminology/core';
+} from 'term-web/resources/_lib';
 
 @Injectable()
 export class CodeSystemService extends CodeSystemLibService {

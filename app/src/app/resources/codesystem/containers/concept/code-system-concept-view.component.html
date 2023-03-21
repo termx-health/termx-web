@@ -35,7 +35,7 @@
       <m-card mTitle="web.code-system-concept.form.version.information" [mShowSkeleton]="loading['init']">
         <form *ngIf="concept && conceptVersion">
           <m-form-item mLabel="entities.code-system-entity-version.status">
-            <twa-status-tag [status]="conceptVersion.status"></twa-status-tag>
+            <tw-status-tag [status]="conceptVersion.status"></tw-status-tag>
           </m-form-item>
           <m-form-item mLabel="entities.code-system-entity-version.created">
             {{conceptVersion.created | localDateTime}}
@@ -48,22 +48,22 @@
     </m-spinner>
 
     <m-card style="margin-top: 1rem">
-      <twa-code-system-designation-edit [designations]="conceptVersion?.designations" viewMode></twa-code-system-designation-edit>
+      <tw-code-system-designation-edit [designations]="conceptVersion?.designations" viewMode></tw-code-system-designation-edit>
     </m-card>
 
     <m-card style="margin-top: 1rem">
-      <twa-code-system-property-value-edit [propertyValues]="conceptVersion?.propertyValues" viewMode></twa-code-system-property-value-edit>
+      <tw-code-system-property-value-edit [propertyValues]="conceptVersion?.propertyValues" viewMode></tw-code-system-property-value-edit>
     </m-card>
 
     <m-card style="margin-top: 1rem">
-      <twa-code-system-association-edit [associations]="conceptVersion?.associations" viewMode></twa-code-system-association-edit>
+      <tw-code-system-association-edit [associations]="conceptVersion?.associations" viewMode></tw-code-system-association-edit>
     </m-card>
   </div>
 </div>
 
 <div nz-row [nzGutter]="12" nzJustify="center" class="m-row" style="margin-top: 1rem">
   <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
-    <twa-code-system-concept-relations [concept]="concept"></twa-code-system-concept-relations>
+    <tw-code-system-concept-relations [concept]="concept"></tw-code-system-concept-relations>
   </div>
 </div>
 

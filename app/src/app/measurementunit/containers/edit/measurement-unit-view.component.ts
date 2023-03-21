@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MeasurementUnit} from 'lib/src/measurementunit';
+import {MeasurementUnit} from 'term-web/measurementunit/_lib';
 import {NgForm} from '@angular/forms';
 import {MeasurementUnitService} from '../../services/measurement-unit.service';
 import {ActivatedRoute} from '@angular/router';

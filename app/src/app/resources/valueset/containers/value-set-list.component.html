@@ -2,9 +2,9 @@
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twPrivileged="'*.ValueSet.edit'" [routerLink]="'value-sets/add'">
+      <tw-add-button *twPrivileged="'*.ValueSet.edit'" [routerLink]="'value-sets/add'">
         {{'web.value-set.list.add-value-set' | translate}}
-      </twa-add-button>
+      </tw-add-button>
       <m-button [routerLink]="'finder/value-sets'">
         <m-icon mCode="layout"></m-icon>
       </m-button>

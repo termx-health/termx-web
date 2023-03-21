@@ -58,13 +58,13 @@
               </m-form-item>
             </form>
 
-            <twa-code-system-versions-list *ngIf="mode === 'edit' && codeSystem"
+            <tw-code-system-versions-list *ngIf="mode === 'edit' && codeSystem"
                 [codeSystemId]="codeSystemId"
-                [versions]="codeSystem.versions"></twa-code-system-versions-list>
-            <twa-code-system-properties-list *ngIf="mode === 'edit' && codeSystem"
+                [versions]="codeSystem.versions"></tw-code-system-versions-list>
+            <tw-code-system-properties-list *ngIf="mode === 'edit' && codeSystem"
                 [codeSystemId]="codeSystemId"
-                [properties]="codeSystem.properties"></twa-code-system-properties-list>
-            <twa-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></twa-contact-list>
+                [properties]="codeSystem.properties"></tw-code-system-properties-list>
+            <tw-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></tw-contact-list>
 
             <ng-container *m-card-footer>
               <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">
@@ -101,7 +101,7 @@
           {{'entities.code-system.concepts' | translate}}
         </a>
         <m-card *ngIf="codeSystem">
-          <twa-code-system-concepts-list [codeSystemId]="codeSystemId" [codeSystemVersions]="codeSystem.versions" [properties]="codeSystem.properties"></twa-code-system-concepts-list>
+          <tw-code-system-concepts-list [codeSystemId]="codeSystemId" [codeSystemVersions]="codeSystem.versions" [properties]="codeSystem.properties"></tw-code-system-concepts-list>
         </m-card>
       </nz-tab>
     </nz-tabset>

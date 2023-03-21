@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {ValueSetService} from '../services/value-set.service';
 import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {CodeSystemVersion, ValueSet, ValueSetSearchParams} from '@terminology/core';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, tap} from 'rxjs';
-import {environment} from '../../../../environments/environment';
+import {environment} from 'environments/environment';
+import {CodeSystemVersion, ValueSet, ValueSetSearchParams} from 'term-web/resources/_lib';
 
 
 @Component({
-  selector: 'twa-value-set-list',
+  selector: 'tw-value-set-list',
   templateUrl: 'value-set-list.component.html',
 })
 export class ValueSetListComponent implements OnInit {

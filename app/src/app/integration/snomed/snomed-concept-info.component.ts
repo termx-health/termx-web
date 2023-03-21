@@ -1,10 +1,10 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from '@terminology/core';
+import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'term-web/integration/_lib';
 import {forkJoin} from 'rxjs';
 import {isDefined} from '@kodality-web/core-util';
 
 @Component({
-  selector: 'twa-snomed-concept-info',
+  selector: 'tw-snomed-concept-info',
   templateUrl: './snomed-concept-info.component.html',
 })
 export class SnomedConceptInfoComponent implements OnChanges {

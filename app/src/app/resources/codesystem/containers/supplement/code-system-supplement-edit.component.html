@@ -3,10 +3,10 @@
     <m-spinner [mLoading]="isLoading">
       <m-card [mTitle]="supplement?.targetType | apply: getHeader:mode" [mShowSkeleton]="loading['init']">
         <div *ngIf="supplement" [ngSwitch]="supplement.targetType">
-          <twa-code-system-property-form #form
+          <tw-code-system-property-form #form
               *ngSwitchCase="'EntityProperty'"
               [property]="supplement.target"
-          ></twa-code-system-property-form>
+          ></tw-code-system-property-form>
 
           <m-form-item mName="supplementDescription" mLabel="web.supplement.form.description">
             <m-textarea name="supplementDescription" [(ngModel)]="supplement.description"></m-textarea>

@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
-import {IntegrationIcdLibService, IntegrationImportConfiguration, JobLibService, JobLogResponse} from '@terminology/core';
 import {IntegrationImportComponent} from '../integration-import.component';
 import {Observable} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {IntegrationIcdLibService, IntegrationImportConfiguration} from 'term-web/integration/_lib';
+import {JobLibService, JobLogResponse} from 'term-web/job/_lib';
 
 
 @Component({

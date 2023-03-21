@@ -4,7 +4,7 @@
       <m-card [mShowSkeleton]="loading['init']">
         <div *m-card-header class="m-items-middle">
           <div class="m-card__title">{{(mode === 'edit' ? 'web.map-set-version.form.edit-header' : 'web.map-set-version.form.add-header') | translate}}</div>
-          <twa-status-tag *ngIf="version?.status" [status]="version.status"></twa-status-tag>
+          <tw-status-tag *ngIf="version?.status" [status]="version.status"></tw-status-tag>
         </div>
 
         <form #form="ngForm" *ngIf="version">
@@ -36,7 +36,7 @@
           </m-form-item>
         </form>
 
-        <twa-map-set-version-entity-version-table [mapSetId]="mapSetId" [mapSetVersion]="mapSetVersion"></twa-map-set-version-entity-version-table>
+        <tw-map-set-version-entity-version-table [mapSetId]="mapSetId" [mapSetVersion]="mapSetVersion"></tw-map-set-version-entity-version-table>
 
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="save()" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading">

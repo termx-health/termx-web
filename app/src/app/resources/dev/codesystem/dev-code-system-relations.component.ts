@@ -1,11 +1,11 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {CodeSystemLibService, MapSet, MapSetLibService, ValueSet, ValueSetLibService, ValueSetTransactionRequest} from '@terminology/core';
+import {CodeSystemLibService, MapSet, MapSetLibService, ValueSet, ValueSetLibService, ValueSetTransactionRequest} from 'term-web/resources/_lib';
 import {forkJoin} from 'rxjs';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 
 @Component({
-  selector: 'twa-dev-cs-relations',
+  selector: 'tw-dev-cs-relations',
   templateUrl: 'dev-code-system-relations.component.html'
 })
 export class DevCodeSystemRelationsComponent implements OnChanges {

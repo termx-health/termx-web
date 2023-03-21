@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemConcept, CodeSystemLibService} from '@terminology/core';
+import {CodeSystemConcept, CodeSystemLibService} from 'term-web/resources/_lib';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';
 import {DestroyService, isNil} from '@kodality-web/core-util';
@@ -7,7 +7,7 @@ import {DestroyService, isNil} from '@kodality-web/core-util';
 
 @Component({
   template: `
-    <twa-finder-wrapper [loading]="loading" title="CODE SYSTEM CONCEPT">
+    <tw-finder-wrapper [loading]="loading" title="CODE SYSTEM CONCEPT">
       <div class="tw-finder-view-form">
         <m-form-item mLabel="entities.code-system-concept.code">
           {{concept?.code || '-'}}
@@ -17,12 +17,12 @@ import {DestroyService, isNil} from '@kodality-web/core-util';
         </m-form-item>
       </div>
 
-      <twa-finder-menu title="entities.code-system-concept.versions" [length]="concept?.versions?.length">
-        <twa-finder-menu-item *ngFor="let v of concept?.versions" [navigate]="['versions', v.id]">
+      <tw-finder-menu title="entities.code-system-concept.versions" [length]="concept?.versions?.length">
+        <tw-finder-menu-item *ngFor="let v of concept?.versions" [navigate]="['versions', v.id]">
           {{v.id}} - {{v.created | localDateTime}}
-        </twa-finder-menu-item>
-      </twa-finder-menu>
-    </twa-finder-wrapper>
+        </tw-finder-menu-item>
+      </tw-finder-menu>
+    </tw-finder-wrapper>
   `,
   providers: [DestroyService]
 })

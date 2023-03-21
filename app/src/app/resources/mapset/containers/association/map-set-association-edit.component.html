@@ -53,9 +53,9 @@
         <m-card class="m-card-inside" *ngIf="association">
           <div *m-card-header class="m-justify-between">
             <div class="m-card__title">{{'entities.map-set-entity.versions' | translate}}</div>
-            <twa-add-button (click)="openModal()">
+            <tw-add-button (click)="openModal()">
               {{'web.map-set-entity-version.table.add-version' | translate}}
-            </twa-add-button>
+            </tw-add-button>
           </div>
 
           <m-table [mData]="association.versions" mEnablePagination>
@@ -75,7 +75,7 @@
                   <m-abbreviate [mValue]="entityVersion.description" [mLength]="60"></m-abbreviate>
                 </td>
                 <td class="tw-table-min-width">
-                  <twa-status-tag [status]="entityVersion.status"></twa-status-tag>
+                  <tw-status-tag [status]="entityVersion.status"></tw-status-tag>
                 </td>
                 <td class="tw-table-actions">
                   <m-dropdown>

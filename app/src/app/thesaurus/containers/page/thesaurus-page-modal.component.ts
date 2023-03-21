@@ -1,12 +1,12 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {Page, PageContent, PageLink, Tag, TagLibService, Template, TemplateLibService} from 'lib/src/thesaurus';
+import {Page, PageContent, PageLink, Tag, TagLibService, Template, TemplateLibService} from 'term-web/thesaurus/_lib';
 import {PageService} from '../../services/page.service';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'twa-thesaurus-page-modal',
+  selector: 'tw-thesaurus-page-modal',
   templateUrl: 'thesaurus-page-modal.component.html',
 })
 export class ThesaurusPageModalComponent implements OnInit, OnChanges {

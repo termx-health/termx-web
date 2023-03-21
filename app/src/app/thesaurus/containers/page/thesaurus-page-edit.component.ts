@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PageContent, StructureDefinition} from 'lib/src/thesaurus';
+import {PageContent, StructureDefinition} from 'term-web/thesaurus/_lib';
 import {PageService} from '../../services/page.service';
 import {StructureDefinitionService} from '../../services/structure-definition.service';
 import {Clipboard} from '@angular/cdk/clipboard';

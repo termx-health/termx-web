@@ -4,9 +4,9 @@
   </div>
   <div class="m-justify-between" style="margin-bottom: 1em">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-    <twa-add-button *twPrivileged="'*.Privilege.edit'" [routerLink]="['./add']">
+    <tw-add-button *twPrivileged="'*.Privilege.edit'" [routerLink]="['./add']">
       {{'web.privileges.table.add-privilege' | translate}}
-    </twa-add-button>
+    </tw-add-button>
   </div>
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">

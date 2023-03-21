@@ -1,14 +1,15 @@
 import {Component, Input} from '@angular/core';
 import {CodeSystemService} from '../../../services/code-system.service';
-import {CodeSystemVersion, FhirCodeSystemLibService} from '@terminology/core';
 import {saveAs} from 'file-saver';
 import {BooleanInput} from '@kodality-web/core-util';
 import {Fhir} from 'fhir/fhir';
-import {environment} from '../../../../../../environments/environment';
+import {environment} from 'environments/environment';
+import {CodeSystemVersion} from 'term-web/resources/_lib';
+import {FhirCodeSystemLibService} from 'term-web/fhir/_lib';
 
 
 @Component({
-  selector: 'twa-code-system-versions-list',
+  selector: 'tw-code-system-versions-list',
   templateUrl: 'code-system-versions-list.component.html',
 })
 export class CodeSystemVersionsListComponent {

@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ValueSetVersionConcept} from '@terminology/core';
+import {ValueSetVersionConcept} from 'term-web/resources/_lib';
 import {ValueSetService} from '../../../services/value-set.service';
 
 @Component({
-  selector: 'twa-value-set-concept-list',
+  selector: 'tw-value-set-concept-list',
   templateUrl: './value-set-concept-list.component.html',
 })
 export class ValueSetConceptListComponent implements OnChanges {

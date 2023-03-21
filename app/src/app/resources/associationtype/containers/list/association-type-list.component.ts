@@ -1,11 +1,11 @@
 import {Component, OnInit} from '@angular/core';
-import {AssociationType, AssociationTypeSearchParams} from '@terminology/core';
+import {AssociationType, AssociationTypeSearchParams} from 'term-web/resources/_lib';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {AssociationTypeService} from '../../services/association-type.service';
 
 @Component({
-  selector: 'twa-association-type-list',
+  selector: 'tw-association-type-list',
   templateUrl: './association-type-list.component.html',
 })
 export class AssociationTypeListComponent implements OnInit {

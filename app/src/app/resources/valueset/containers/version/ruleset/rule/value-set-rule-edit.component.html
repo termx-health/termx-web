@@ -6,7 +6,7 @@
           <div class="m-card__title">{{(mode === 'edit' ? 'web.value-set-version-rule.form.edit-header' : 'web.value-set-version-rule.form.add-header') | translate}}</div>
         </div>
 
-        <twa-value-set-rule-form #form [rule]="rule"></twa-value-set-rule-form>
+        <tw-value-set-rule-form #form [rule]="rule"></tw-value-set-rule-form>
 
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">

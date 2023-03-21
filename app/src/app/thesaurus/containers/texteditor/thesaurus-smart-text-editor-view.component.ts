@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
-  selector: 'twa-smart-text-editor-view',
+  selector: 'tw-smart-text-editor-view',
   templateUrl: './thesaurus-smart-text-editor-view.component.html'
 })
 export class ThesaurusSmartTextEditorViewComponent implements OnChanges {

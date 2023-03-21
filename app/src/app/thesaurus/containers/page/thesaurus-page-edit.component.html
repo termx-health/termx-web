@@ -50,20 +50,20 @@
       </m-button>
     </div>
 
-    <twa-smart-text-editor *ngIf="pageContent"
+    <tw-smart-text-editor *ngIf="pageContent"
         [(ngModel)]="pageContent.content"
         [valueType]="pageContent.contentType"
         [lang]="pageContent.lang"
         [showPreview]="showPreview"
         name="content"
-    ></twa-smart-text-editor>
+    ></tw-smart-text-editor>
 
   </m-card>
 </m-spinner>
 
-<twa-thesaurus-page-modal [modalVisible]="modalVisible"
+<tw-thesaurus-page-modal [modalVisible]="modalVisible"
     [pageId]="pageContent?.pageId"
     [contentId]="pageContent?.id"
     (closed)="modalVisible = false"
     (saved)="openPageContentEdit($event)"
-></twa-thesaurus-page-modal>
+></tw-thesaurus-page-modal>

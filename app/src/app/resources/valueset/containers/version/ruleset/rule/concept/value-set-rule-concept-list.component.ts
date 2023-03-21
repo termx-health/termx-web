@@ -1,11 +1,12 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BooleanInput, copyDeep, isDefined} from '@kodality-web/core-util';
-import {ValueSetVersionConcept} from 'lib/src/resources';
-import {MeasurementUnit, SnomedLibService} from '@terminology/core';
 import {TranslateService} from '@ngx-translate/core';
+import {ValueSetVersionConcept} from 'term-web/resources/_lib';
+import {MeasurementUnit} from 'term-web/measurementunit/_lib';
+import {SnomedLibService} from 'term-web/integration/_lib';
 
 @Component({
-  selector: 'twa-value-set-rule-concept-list',
+  selector: 'tw-value-set-rule-concept-list',
   templateUrl: 'value-set-rule-concept-list.component.html',
 })
 export class ValueSetRuleConceptListComponent {
@@ -81,7 +82,7 @@ export class ValueSetRuleConceptListComponent {
     const lang = this.translateService.currentLang;
     this.modalData.concept = {
       concept: {code: mu.code, codeSystem: this.codeSystem},
-      display: {name: mu.names?.[lang], language: lang }
+      display: {name: mu.names?.[lang], language: lang}
     };
   }
 }

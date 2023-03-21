@@ -13,9 +13,9 @@ import {ValueSetRuleFormComponent} from './containers/version/ruleset/rule/value
 import {ValueSetRuleFilterListComponent} from './containers/version/ruleset/rule/filter/value-set-rule-filter-list.component';
 import {ValueSetVersionConceptModalComponent} from './containers/version/concepts/value-set-version-concept-modal.component';
 import {ContactModule} from '../contact/contact.module';
-import {IntegrationLibModule, MeasurementUnitLibModule, ResourcesLibModule} from '@terminology/core';
+import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {FinderValueSetListComponent} from './containers-finder/value-set-list.component';
-import {FinderModule} from '../../core/finder/finder.module';
+import {FinderModule} from '../../core/ui/finder/finder.module';
 import {FinderValueSetViewComponent} from './containers-finder/value-set-view.component';
 import {FinderValueSetVersionViewComponent} from './containers-finder/version/value-set-version-view.component';
 import {ValueSetViewComponent} from './containers/edit/value-set-view.component';
@@ -24,6 +24,8 @@ import {ValueSetVersionConceptEditComponent} from './containers/version/concepts
 import {ValueSetRuleEditComponent} from './containers/version/ruleset/rule/value-set-rule-edit.component';
 import {ValueSetConceptListComponent} from './containers/edit/concept/value-set-concept-list.component';
 import {MarinaQuillModule} from '@kodality-web/marina-quill';
+import {IntegrationLibModule} from '../../integration/_lib';
+import {MeasurementUnitLibModule} from '../../measurementunit/_lib';
 
 
 export const VALUE_SET_ROUTES: Routes = [

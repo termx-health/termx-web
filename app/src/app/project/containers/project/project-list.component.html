@@ -5,9 +5,9 @@
   <div class="m-justify-between" style="margin-bottom: 1em">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div style="display: flex; gap: 0.5rem">
-      <twa-add-button *twPrivileged="'*.Project.edit'" [routerLink]="['./add']">
+      <tw-add-button *twPrivileged="'*.Project.edit'" [routerLink]="['./add']">
         {{'web.project.add-btn' | translate}}
-      </twa-add-button>
+      </tw-add-button>
       <m-button mClass="m-justify-between" *twPrivileged="'*.Project.edit'" (mClick)="touchImport()">
         <m-icon mCode="import"></m-icon>
         <label>{{'web.project.import-btn' | translate}}</label>

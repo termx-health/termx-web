@@ -21,7 +21,6 @@ build:
   before_script:
     - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
     - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
-    - echo "@terminology:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
   script:
     - npm install --cache .npm --prefer-offline
     - npm run build
@@ -59,18 +58,6 @@ publish:
   only:
     - main
 
-publish lib:
-  stage: release
-  before_script:
-    - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
-    - echo "@terminology:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
-  script:
-    - npm run publish
-  only:
-    - main
-
-
-
 release:
   stage: release
   image: docker:stable
@@ -84,19 +71,4 @@ release:
     - /^\d*\.\d*\.\d*$/
   except:
     - branches
-
-release lib:
-  stage: release
-  before_script:
-    - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
-    - echo "@terminology:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
-  script:
-    - npm run publish ${VERSION}
-  variables:
-    VERSION: $CI_COMMIT_TAG | xargs
-  only:
-    - /^\d*\.\d*\.\d*$/
-  except:
-    - branches
-
 

@@ -1,11 +1,11 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {MapSetVersion} from '@terminology/core';
+import {MapSetVersion} from 'term-web/resources/_lib';
 import {MapSetService} from '../../services/map-set-service';
 import {BooleanInput} from '@kodality-web/core-util';
 
 
 @Component({
-  selector: 'twa-map-set-versions-list',
+  selector: 'tw-map-set-versions-list',
   templateUrl: './map-set-versions-list.component.html',
 })
 export class MapSetVersionsListComponent implements OnChanges {

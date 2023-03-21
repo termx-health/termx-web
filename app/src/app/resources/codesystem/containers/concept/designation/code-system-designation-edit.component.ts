@@ -1,13 +1,13 @@
 import {Component, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
-import {Designation, EntityProperty} from 'lib/src/resources';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {CodeSystemDesignationGroupEditComponent} from './code-system-designation-group-edit.component';
 import {finalize, Observable} from 'rxjs';
+import {Designation, EntityProperty} from 'term-web/resources/_lib';
 
 @Component({
-  selector: 'twa-code-system-designation-edit',
+  selector: 'tw-code-system-designation-edit',
   templateUrl: './code-system-designation-edit.component.html',
 })
 export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {

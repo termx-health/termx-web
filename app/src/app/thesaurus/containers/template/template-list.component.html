@@ -2,9 +2,9 @@
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twPrivileged="'*.Thesaurus.edit'" [routerLink]="['../templates/add']">
+      <tw-add-button *twPrivileged="'*.Thesaurus.edit'" [routerLink]="['../templates/add']">
         {{'web.template.list.add-template' | translate}}
-      </twa-add-button>
+      </tw-add-button>
     </div>
   </div>
 

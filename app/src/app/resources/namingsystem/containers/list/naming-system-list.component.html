@@ -2,9 +2,9 @@
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div class="m-items-middle">
-      <twa-add-button *twPrivileged="'*.NamingSystem.edit'" [routerLink]="['naming-systems/add']">
+      <tw-add-button *twPrivileged="'*.NamingSystem.edit'" [routerLink]="['naming-systems/add']">
         {{'web.naming-system.list.add-naming-system' | translate}}
-      </twa-add-button>
+      </tw-add-button>
     </div>
   </div>
 
@@ -31,7 +31,7 @@
       <td>{{ns.source}}</td>
       <td>{{ns.kind}}</td>
       <td class="tw-table-min-width">
-        <twa-status-tag [status]="ns.status"></twa-status-tag>
+        <tw-status-tag [status]="ns.status"></tw-status-tag>
       </td>
       <td class="tw-table-actions" *twPrivileged="'*.NamingSystem.edit'">
         <m-dropdown>

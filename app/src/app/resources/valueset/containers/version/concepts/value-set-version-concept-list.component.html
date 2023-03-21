@@ -3,9 +3,9 @@
     <div class="m-card__title">
       {{'entities.value-set-version.concepts' | translate}}
     </div>
-    <twa-add-button *ngIf="!viewMode" [routerLink]="['../concepts/add']">
+    <tw-add-button *ngIf="!viewMode" [routerLink]="['../concepts/add']">
       {{'web.value-set-version.form.add-concept' | translate}}
-    </twa-add-button>
+    </tw-add-button>
   </div>
 
   <m-table [mData]="concepts">

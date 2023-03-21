@@ -40,20 +40,20 @@
 
 
   <ng-container *ngIf="rule.codeSystem && rule.codeSystemVersionId">
-    <twa-value-set-rule-concept-list *ngIf="!viewMode || rule.concepts?.length > 0"
+    <tw-value-set-rule-concept-list *ngIf="!viewMode || rule.concepts?.length > 0"
         [codeSystem]="rule?.codeSystem"
         [codeSystemVersionId]="rule?.valueSetVersionId"
         [lockedDate]="lockedDate"
         [concepts]="rule.concepts"
         [inactiveConcepts]="inactiveConcepts"
         [viewMode]="viewMode"
-        (conceptsChange)="rule.concepts = $event"></twa-value-set-rule-concept-list>
+        (conceptsChange)="rule.concepts = $event"></tw-value-set-rule-concept-list>
 
-    <twa-value-set-rule-filter-list *ngIf="!viewMode || rule.filters?.length > 0"
+    <tw-value-set-rule-filter-list *ngIf="!viewMode || rule.filters?.length > 0"
         [codeSystem]="rule.codeSystem"
         [filters]="rule.filters"
         [viewMode]="viewMode"
-        (filtersChange)="rule.filters = $event"></twa-value-set-rule-filter-list>
+        (filtersChange)="rule.filters = $event"></tw-value-set-rule-filter-list>
   </ng-container>
 
   <m-form-item mName="valueSet"

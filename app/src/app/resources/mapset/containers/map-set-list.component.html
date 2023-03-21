@@ -1,9 +1,9 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-    <twa-add-button *twPrivileged="'*.MapSet.edit'" [routerLink]="'map-sets/add'">
+    <tw-add-button *twPrivileged="'*.MapSet.edit'" [routerLink]="'map-sets/add'">
       {{'web.map-set.form.add-header' | translate}}
-    </twa-add-button>
+    </tw-add-button>
   </div>
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">

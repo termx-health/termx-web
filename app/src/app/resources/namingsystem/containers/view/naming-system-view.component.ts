@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {NamingSystem} from '@terminology/core';
+import {NamingSystem} from 'term-web/resources/_lib';
 import {NamingSystemService} from '../../services/naming-system-service';
 import {ActivatedRoute} from '@angular/router';
 

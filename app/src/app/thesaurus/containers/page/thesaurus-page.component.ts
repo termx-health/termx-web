@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Page, PageContent, PageLink, PageRelation} from 'lib/src/thesaurus';
 import {PageService} from '../../services/page.service';
 import {collect, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {GithubExportable} from '../../../integration/github/github.service';
+import {Page, PageContent, PageLink, PageRelation} from 'term-web/thesaurus/_lib';
 
 @Component({
   templateUrl: './thesaurus-page.component.html',

@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {CodeSystemVersion} from '@terminology/core';
+import {CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemService} from '../../services/code-system.service';
 import {Location} from '@angular/common';
 import {validateForm} from '@kodality-web/core-util';

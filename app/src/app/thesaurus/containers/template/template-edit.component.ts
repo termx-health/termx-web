@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgForm} from '@angular/forms';
 import {isDefined, validateForm} from '@kodality-web/core-util';
-import {Template} from '@terminology/core';
+import {Template} from 'term-web/thesaurus/_lib';
 import {TemplateService} from '../../services/template.service';
 
 

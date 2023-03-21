@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemEntityVersion, CodeSystemVersion} from '@terminology/core';
+import {CodeSystemEntityVersion, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemService} from '../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {takeUntil} from 'rxjs';

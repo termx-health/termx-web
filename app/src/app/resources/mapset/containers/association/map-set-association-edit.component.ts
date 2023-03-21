@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {MapSetAssociation, MapSetEntityVersion} from '@terminology/core';
+import {MapSetAssociation, MapSetEntityVersion} from 'term-web/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {MapSetService} from '../../services/map-set-service';

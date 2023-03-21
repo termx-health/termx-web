@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {FhirValueSetLibService, FhirValueSetValidateCodeParams} from '@terminology/core';
+import {FhirValueSetLibService, FhirValueSetValidateCodeParams} from '../../../fhir/_lib';
 import {Clipboard} from '@angular/cdk/clipboard';
 
 

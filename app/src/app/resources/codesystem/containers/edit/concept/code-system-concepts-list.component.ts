@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptSearchParams, EntityProperty} from '@terminology/core';
+import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptSearchParams, EntityProperty} from 'term-web/resources/_lib';
 import {debounceTime, finalize, Observable, of, Subject, switchMap} from 'rxjs';
 import {BooleanInput, compareValues, copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
@@ -8,7 +8,7 @@ import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'twa-code-system-concepts-list',
+  selector: 'tw-code-system-concepts-list',
   templateUrl: './code-system-concepts-list.component.html',
 })
 export class CodeSystemConceptsListComponent implements OnInit {

@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystemVersion, ValueSetVersion} from '@terminology/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
@@ -7,6 +6,7 @@ import {validateForm} from '@kodality-web/core-util';
 import {ValueSetService} from '../../services/value-set.service';
 import {ValueSetRuleSetComponent} from './ruleset/value-set-rule-set.component';
 import {ValueSetVersionConceptModalComponent} from './concepts/value-set-version-concept-modal.component';
+import {CodeSystemVersion, ValueSetVersion} from 'term-web/resources/_lib';
 
 @Component({
   templateUrl: 'value-set-version-edit.component.html',
