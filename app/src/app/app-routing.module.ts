@@ -16,6 +16,7 @@ import {ProjectContextModule} from 'term-web/core/context/project-context.module
 
 
 const routes: Routes = [
+  {path: 'fhir', children: FHIR_ROUTES, data: {pageType: 'fhir'}},
   {
     path: '', children: [
       {
@@ -29,7 +30,6 @@ const routes: Routes = [
       {path: 'tools', children: TOOLS_ROUTES},
       {path: 'thesaurus', children: THESAURUS_ROUTES, data: {privilege: ['*.Thesaurus.view']}},
       {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['*.MeasurementUnit.view']}},
-      {path: 'fhir', children: FHIR_ROUTES, data: {pageType: 'fhir'}},
       {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.TerminologyServer.view']}},
       {path: 'supplements', children: SUPPLEMENTS_ROUTES},
       {
