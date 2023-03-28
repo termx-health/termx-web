@@ -4,7 +4,7 @@ import {Location} from '@angular/common';
 import {CodeSystem} from 'term-web/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {isDefined, validateForm} from '@kodality-web/core-util';
-import {CodeSystemService} from '../../codesystem/services/code-system.service';
+import {CodeSystemService} from '../../code-system/services/code-system.service';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {TranslateService} from '@ngx-translate/core';
 import slugify from 'slugify';
@@ -88,7 +88,7 @@ export class DevCodeSystemEditComponent implements OnInit {
       return;
     }
     forkJoin([
-      this.codeSystemService.searchProperties('publisher', {name: 'uri'}),
+      this.codeSystemService.searchProperties('publisher', {names: 'uri'}),
       this.codeSystemService.loadConcept('publisher', publisher)
     ]).subscribe(([prop, c]) => {
       const activeVersion = c.versions?.find(v => v.status === 'active');

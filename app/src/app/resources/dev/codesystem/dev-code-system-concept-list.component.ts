@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {CodeSystemService} from '../../codesystem/services/code-system.service';
+import {CodeSystemService} from '../../code-system/services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {DevCodeSystemRelationsComponent} from './dev-code-system-relations.component';
 import {DevCodeSystemPropertiesComponent} from './dev-code-system-properties.component';

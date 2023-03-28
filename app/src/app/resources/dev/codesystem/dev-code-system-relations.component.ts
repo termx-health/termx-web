@@ -61,7 +61,7 @@ export class DevCodeSystemRelationsComponent implements OnChanges {
       return;
     }
     forkJoin([
-      this.codeSystemService.searchProperties('publisher', {name: 'uri'}),
+      this.codeSystemService.searchProperties('publisher', {names: 'uri'}),
       this.codeSystemService.loadConcept('publisher', publisher)
     ]).subscribe(([prop, c]) => {
       const activeVersion = c.versions?.find(v => v.status === 'active');

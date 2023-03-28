@@ -15,6 +15,7 @@ import {FhirToFshPipe} from './chef/pipe/fhir-to-fsh-pipe';
 import {FshToFhirPipe} from './chef/pipe/fsh-to-fhir-pipe';
 import {IntegrationIchiLibService} from './ichi/service/integration-ichi-lib.service';
 import {RouterModule} from '@angular/router';
+import {SnomedDrawerSearchComponent} from 'term-web/integration/_lib/snomed/containers/snomed-drawer-search.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import {RouterModule} from '@angular/router';
   declarations: [
     SnomedConceptNamePipe,
     SnomedSearchComponent,
+    SnomedDrawerSearchComponent,
 
     FhirToFshPipe,
     FshToFhirPipe
@@ -43,6 +45,7 @@ import {RouterModule} from '@angular/router';
   exports: [
     SnomedConceptNamePipe,
     SnomedSearchComponent,
+    SnomedDrawerSearchComponent,
 
     FhirToFshPipe,
     FshToFhirPipe

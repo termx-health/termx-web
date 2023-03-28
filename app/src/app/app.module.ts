@@ -16,16 +16,16 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
 import {PrivilegesModule} from './privileges/privileges.module';
 import {IntegrationModule} from './integration/integration.module';
-import {GlobalSearchModule} from './globalsearch/global-search.module';
+import {GlobalSearchModule} from './global-search/global-search.module';
 import {ThesaurusModule} from './thesaurus/thesaurus.module';
 import {FhirModule} from './fhir/fhir.module';
 import {ToolsModule} from './tools/tools.module';
-import {MeasurementUnitModule} from './measurementunit/measurement-unit.module';
+import {MeasurementUnitModule} from './measurement-unit/measurement-unit.module';
 import {ProjectModule} from './project/project.module';
 import {JobLibModule} from './job/_lib';
-import {SupplementModule} from './supplement/supplement.module';
 import {AuthModule, AuthService} from './core/auth';
 import {MarinaUiConfigModule} from './core/marina';
+import {ObservationDefinitionModule} from 'term-web/observation-definition/observation-definition.module';
 
 registerLocaleData(et);
 
@@ -46,7 +46,7 @@ const TERM_MODULES = [
   GlobalSearchModule,
   ThesaurusModule,
   FhirModule,
-  SupplementModule,
+  ObservationDefinitionModule,
   ToolsModule,
   MeasurementUnitModule,
   ProjectModule

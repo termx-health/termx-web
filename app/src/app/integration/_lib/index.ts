@@ -13,6 +13,7 @@ export * from './integration-lib.module';
 export * from './model/integration-import-configuration';
 export * from './orphanet/service/integration-orphanet-lib.service';
 export * from './snomed/containers/snomed-search.component';
+export * from './snomed/containers/snomed-drawer-search.component';
 export * from './snomed/model/concept/snomed-concept';
 export * from './snomed/model/concept/snomed-concept-search-params';
 export * from './snomed/model/description/snomed-description';

@@ -5,7 +5,7 @@ import {OptionItem, ThesaurusDropdownOptionComponent} from './thesaurus-dropdown
 import {ThesaurusDropdownComponent} from './thesaurus-dropdown.component';
 import {BooleanInput, isDefined} from '@kodality-web/core-util';
 import {ThesaurusLinkModalComponent} from './link/thesaurus-link-modal.component';
-import {ThesaurusStructureDefinitionModalComponent} from './structuredefinition/thesaurus-structure-definition-modal.component';
+import {ThesaurusStructureDefinitionModalComponent} from './structure-definition/thesaurus-structure-definition-modal.component';
 import {ThesaurusTemplateModalComponent} from './template/thesaurus-template-modal.component';
 
 @Component({

@@ -1,0 +1,13 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loader.isLoading">
+      <m-card [mTitle]="'web.measurement-unit.form.view-header'" [mShowSkeleton]="loader.isLoading">
+        <form #form="ngForm" *ngIf="observationDefinition">
+          <m-form-item mLabel="entities.observation-definition.code">
+            {{observationDefinition.code}}
+          </m-form-item>
+        </form>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

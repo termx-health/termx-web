@@ -1,0 +1,15 @@
+<div class="m-justify-between">
+  <a class="drawer-search-input" [class.uw-text-disabled]="disabled" [class.cursor-not-allowed]="disabled" (click)="openDrawer()">
+    <ng-container *ngIf="valueDefined">
+      {{value | apply: valueDisplay | async}}
+    </ng-container>
+    <ng-container *ngIf="!valueDefined">
+      {{'core.btn.select' | translate}}
+    </ng-container>
+  </a>
+</div>
+
+<m-drawer [mVisible]="drawerOpened" (mClose)="closeDrawer()">
+  <tw-snomed-search (conceptSelected)="onSelect($event)"></tw-snomed-search>
+</m-drawer>
+

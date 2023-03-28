@@ -57,8 +57,7 @@ import {TranslateService} from '@ngx-translate/core';
               <div *ngIf="data.conceptCodeSystem === 'snomed-ct' && data.resource">
                 <label>{{data.resource}}</label><m-icon style="cursor: pointer; margin-left: 0.5rem" mCode="close" (click)="data.resource = null"></m-icon>
               </div>
-              <tw-snomed-search *ngIf="data.conceptCodeSystem === 'snomed-ct' && !data.resource" (conceptSelected)="data.resource = $event"></tw-snomed-search>
-              <tw-concept-search *ngIf="data.conceptCodeSystem !== 'snomed-ct'" [(ngModel)]="data.resource" [codeSystem]="data.conceptCodeSystem" valueType="code" name="concept" required></tw-concept-search>
+              <tw-term-concept-search [(ngModel)]="data.resource" [codeSystem]="data.conceptCodeSystem" valueType="code" name="concept" required></tw-term-concept-search>
             </m-form-item>
           </ng-container>
 

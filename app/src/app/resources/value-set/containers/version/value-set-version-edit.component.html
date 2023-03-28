@@ -1,0 +1,57 @@
+<div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
+  <div nz-col [nzLg]="10" [nzMd]="18" [nzXs]="24">
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mShowSkeleton]="loading['init']">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{(mode === 'edit' ? 'web.value-set-version.form.edit-header' : 'web.value-set-version.form.add-header') | translate}}</div>
+          <tw-status-tag *ngIf="version?.status" [status]="version.status"></tw-status-tag>
+          <m-button (click)="expand()" mSize="small">
+            <m-icon mCode="eye"></m-icon>
+          </m-button>
+        </div>
+
+        <form #form="ngForm" *ngIf="version">
+          <m-form-item mName="version" mLabel="entities.value-set-version.version" required>
+            <m-input name="version" [(ngModel)]="version.version" required></m-input>
+          </m-form-item>
+
+          <m-form-item mName="source" mLabel="entities.value-set-version.source">
+            <m-input name="source" [(ngModel)]="version.source"></m-input>
+          </m-form-item>
+
+          <m-form-item mName="releaseDate" mLabel="entities.value-set-version.release-date" required>
+            <m-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" required></m-date-picker>
+          </m-form-item>
+
+          <m-form-item mName="expirationDate" mLabel="entities.value-set-version.expiration-date">
+            <m-date-picker name="expirationDate" [(ngModel)]="version.expirationDate"></m-date-picker>
+          </m-form-item>
+
+          <m-form-item mName="supportedLanguages" mLabel="entities.value-set-version.supported-languages">
+            <tw-value-set-concept-select name="supportedLanguages"
+                [(ngModel)]="version.supportedLanguages"
+                valueSet="languages"
+                multiple></tw-value-set-concept-select>
+          </m-form-item>
+
+          <m-form-item mName="description" mLabel="entities.value-set-version.description">
+            <m-textarea [(ngModel)]="version.description" name="description"></m-textarea>
+          </m-form-item>
+
+          <tw-value-set-version-concept-list *ngIf="version.id" [concepts]="version.concepts"></tw-value-set-version-concept-list>
+        </form>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+  <div nz-col [nzLg]="8" [nzMd]="6" [nzXs]="24" style="height: min-content">
+    <tw-value-set-rule-set *ngIf="version" #ruleSetComponent [ruleSet]="version.ruleSet" [valueSetId]="valueSetId" [valueSetVersion]="valueSetVersion"></tw-value-set-rule-set>
+  </div>
+</div>
+
+<tw-value-set-version-concept-modal #conceptModal></tw-value-set-version-concept-modal>

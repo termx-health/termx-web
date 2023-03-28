@@ -760,6 +760,40 @@
       "add-header": "Add terminology server",
       "edit-header": "Edit terminology server",
       "add-btn": "Add terminology server"
+    },
+    "observation-definition": {
+      "header-add": "Add observation definition",
+      "header-edit": "Observation definition {{code}}",
+      "divider": {
+        "identification": "Identification",
+        "description": "Description",
+        "data": "Data",
+        "value": "Value",
+        "protocol": "Protocol",
+        "state": "State",
+        "interpretation": "Interpretation",
+        "mappings": "Mappings",
+        "members": "Members",
+        "components": "Components"
+      },
+      "time-precision": {
+        "timestamp": "Timestamp",
+        "period": "Period"
+      },
+      "structure": {
+        "value": "Value",
+        "panel": "Panel",
+        "component": "Component"
+      },
+      "behaviour": {
+        "editable": "Editable",
+        "read-only": "Read only",
+        "computable": "Computable"
+      },
+      "cardinality": {
+        "min": "min",
+        "max": "max"
+      }
     }
   },
   "entities": {
@@ -1100,6 +1134,37 @@
       "active": "Active",
       "root-url": "Root URL",
       "current-installation": "Current installation"
+    },
+    "observation-definition": {
+      "code": "Code",
+      "version": "Version",
+      "publisher": "Publisher",
+      "status": "Status",
+      "url": "URL",
+      "name": "Name",
+      "alias": "Alias",
+      "definition": "Definition",
+      "keywords": "Keywords",
+      "category": "Category",
+      "time-precision": "Time precision",
+      "structure": "Structure",
+      "value": {
+        "type": "Type",
+        "multiple-results-allowed": "Multiple results allowed",
+        "behaviour": "Behaviour",
+        "expression": "Expression",
+        "value-set": "Value set",
+        "unit": {
+          "singular": "Unit",
+          "system": "Unit system"
+        }
+      },
+      "members": {
+        "code": "Code",
+        "order-number": "Order",
+        "names": "Names",
+        "cardinality": "Cardinality"
+      }
     }
   }
 }

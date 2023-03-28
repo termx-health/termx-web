@@ -1,0 +1,36 @@
+<m-page>
+  <m-form-row>
+    <m-card *m-form-col>
+      <div *m-card-header class="m-justify-between">
+        <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+        <div class="m-items-middle">
+          <tw-add-button *twPrivileged="'*.ObservationDefinition.edit'" [routerLink]="['add']">
+            {{'web.observation-definition.header-add' | translate}}
+          </tw-add-button>
+        </div>
+      </div>
+
+      <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="search()" [mLoading]="loader.isLoading">
+        <tr *mTableHead>
+          <th mColumnKey="code">{{'entities.observation-definition.code' | translate}}</th>
+          <th mColumnKey="name">{{'entities.observation-definition.name' | translate}}</th>
+          <th mColumnKey="category">{{'entities.observation-definition.category' | translate}}</th>
+        </tr>
+
+        <tr *mTableRow="let obs">
+          <td>
+            <a [routerLink]="[obs.id, ('*.ObservationDefinition.edit' | twHasAnyPrivilege)? 'edit': 'view']">{{obs.code}}</a>
+          </td>
+          <td>{{obs.names | localName}}</td>
+          <td>{{obs.category}}</td>
+        </tr>
+
+        <tr *mTableNoData>
+          <td colspan="100%">
+            <m-no-data></m-no-data>
+          </td>
+        </tr>
+      </m-backend-table>
+    </m-card>
+  </m-form-row>
+</m-page>

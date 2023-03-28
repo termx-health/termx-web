@@ -1,0 +1,21 @@
+<ng-container *ngIf="codeSystem" [ngSwitch]="codeSystem">
+
+  <tw-measurement-unit-search *ngSwitchCase="'ucum'"
+      [(ngModel)]="value"
+      (ngModelChange)="onChange(fromUcum($event))"
+      [valuePrimitive]="valueType | apply:valuePrimitive"></tw-measurement-unit-search>
+
+  <tw-snomed-drawer-search *ngSwitchCase="'snomed-ct'" [value]="value | apply:getCode" (twChange)="onChange(fromSnomed($event))"></tw-snomed-drawer-search>
+
+  <tw-concept-search *ngSwitchDefault
+      [(ngModel)]="value"
+      (ngModelChange)="onChange($event)"
+      [valueType]="valueType"
+      [codeSystem]="codeSystem"
+      [codeSystemVersion]="codeSystemVersion"
+      [codeSystemVersionId]="codeSystemVersionId"
+      [codeSystemVersionReleaseDateLe]="codeSystemVersionReleaseDateLe"
+      [codeSystemVersionExpirationDateGe]="codeSystemVersionExpirationDateGe"
+      [codeSystemEntityVersionStatus]="codeSystemEntityVersionStatus"></tw-concept-search>
+
+</ng-container>

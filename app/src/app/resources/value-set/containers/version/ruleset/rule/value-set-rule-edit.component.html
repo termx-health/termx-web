@@ -1,0 +1,19 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mShowSkeleton]="loading['init']">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{(mode === 'edit' ? 'web.value-set-version-rule.form.edit-header' : 'web.value-set-version-rule.form.add-header') | translate}}</div>
+        </div>
+
+        <tw-value-set-rule-form #form [rule]="rule" [valueSet]="valueSetId" [valueSetVersion]="valueSetVersionCode"></tw-value-set-rule-form>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

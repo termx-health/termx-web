@@ -1,0 +1,40 @@
+<form #form="ngForm" *ngIf="value">
+  <m-form-row mFull>
+    <div *mFormCol>
+      <m-form-item mLabel="entities.observation-definition.value.type" mName="type" required>
+        <tw-value-set-concept-select [(ngModel)]="value.type" name="type" valueSet="permitted-data-type" required></tw-value-set-concept-select>
+      </m-form-item>
+      <m-form-item mLabel="entities.observation-definition.value.behaviour" mName="behaviour">
+        <m-select [(ngModel)]="value.behaviour" name="behaviour">
+          <m-option mLabel="web.observation-definition.behaviour.editable" [mValue]="'editable'"></m-option>
+          <m-option mLabel="web.observation-definition.behaviour.read-only" [mValue]="'read-only'"></m-option>
+          <m-option mLabel="web.observation-definition.behaviour.computable" [mValue]="'computable'"></m-option>
+        </m-select>
+      </m-form-item>
+    </div>
+    <div *mFormCol>
+      <m-form-item *ngIf="value.type === 'Quantity'" mLabel="entities.observation-definition.value.unit.singular" mName="unit">
+        <div class="m-items-middle">
+          <m-form-control mName="system">
+            <tw-code-system-search [(ngModel)]="value.unit.system" name="system" valuePrimitive placeholder="entities.observation-definition.value.unit.system">
+            </tw-code-system-search>
+          </m-form-control>
+          <m-form-control mName="dose-unit">
+            <tw-term-concept-search [codeSystem]="value.unit.system" [(ngModel)]="value.unit.unit" name="unit"></tw-term-concept-search>
+          </m-form-control>
+        </div>
+      </m-form-item>
+      <m-form-item *ngIf="value.type === 'CodeableConcept'" mLabel="entities.observation-definition.value.value-set" mName="valueSet">
+        <tw-value-set-search [(ngModel)]="value.valueSet" name="valueSet" valuePrimitive></tw-value-set-search>
+      </m-form-item>
+      <m-form-item mLabel="entities.observation-definition.value.multiple-results-allowed" mName="multipleResultsAllowed">
+        <m-checkbox [(ngModel)]="value.multipleResultsAllowed" name="multipleResultsAllowed"></m-checkbox>
+      </m-form-item>
+    </div>
+  </m-form-row>
+  <m-form-row mFull>
+    <m-form-item mLabel="entities.observation-definition.value.expression" mName="expression">
+      <m-textarea [(ngModel)]="value.expression" name="expression"></m-textarea>
+    </m-form-item>
+  </m-form-row>
+</form>

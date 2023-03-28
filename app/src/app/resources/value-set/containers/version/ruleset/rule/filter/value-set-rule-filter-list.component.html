@@ -1,0 +1,109 @@
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">
+      {{'entities.value-set-rule-set.rule.filters' | translate}}
+    </div>
+    <tw-add-button *ngIf="!viewMode" (click)="addRow()">
+      {{'web.value-set-version-rule.form.filter.add-filter' | translate}}
+    </tw-add-button>
+  </div>
+
+  <m-table [mData]="filters" [mLoading]="loading">
+    <tr *mTableHead>
+      <th>{{'entities.value-set-rule-filter.property.label' | translate}}</th>
+      <th>{{'entities.value-set-rule-filter.operator.label' | translate}}</th>
+      <th>{{'entities.value-set-rule-filter.value' | translate}}</th>
+      <th *ngIf="!viewMode" class="tw-table-actions"></th>
+    </tr>
+
+    <tr *mTableRow="let item; let i = index">
+      <td>
+        <a *ngIf="!viewMode" (click)="toggleModal(item, i)">{{item.property?.name}}</a>
+        <div *ngIf="viewMode">{{item.property?.name}}</div>
+      </td>
+      <td>
+        {{item.operator || '='}}
+      </td>
+      <td>
+        {{item.value}}
+      </td>
+      <td class="tw-table-actions" *ngIf="!viewMode">
+        <m-button mDisplay="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
+      </td>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="4">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-table>
+</m-card>
+
+<m-modal #modal [(mVisible)]="modalData.visible" (mClose)="toggleModal()">
+  <ng-container *m-modal-header>
+    {{'web.value-set-version-rule.form.filter.modal-header' | translate}}
+  </ng-container>
+
+  <ng-container *m-modal-content [ngSwitch]="codeSystem">
+    <form #form="ngForm" *ngIf="modalData.filter">
+
+      <ng-container *ngSwitchDefault>
+        <m-form-item mName="property" mLabel="entities.value-set-rule-filter.property.label">
+          <m-select name="property" [(ngModel)]="modalData.filter.property" [compareWith]="'id'" autofocus>
+            <m-option *ngFor="let property of properties" [mLabel]="property.name" [mValue]="property"></m-option>
+          </m-select>
+        </m-form-item>
+        <m-form-item *ngIf="modalData.filter.property?.type" mName="propertyValue" mLabel="entities.value-set-rule-filter.value">
+          <m-input *ngIf="modalData.filter.property?.type === 'string'" name="propertyValue" [(ngModel)]="modalData.filter.value"></m-input>
+          <m-checkbox *ngIf="modalData.filter.property?.type === 'boolean'" name="propertyValue" [(ngModel)]="modalData.filter.value"></m-checkbox>
+          <m-date-picker *ngIf="modalData.filter.property?.type === 'dateTime'" name="propertyValue" [(ngModel)]="modalData.filter.value"></m-date-picker>
+          <m-number-input *ngIf="['decimal','integer'].includes(modalData.filter.property?.type)"
+              name="propertyValue"
+              [(ngModel)]="modalData.filter.value"></m-number-input>
+          <tw-term-concept-search *ngIf="['code','Coding'].includes(modalData.filter.property?.type)"
+              name="propertyValue"
+              valueType="code"
+              [(ngModel)]="modalData.filter.value"
+              [codeSystem]="modalData.filter.property?.name"></tw-term-concept-search>
+        </m-form-item>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'snomed-ct'">
+        <m-form-item mName="property" mLabel="entities.value-set-rule-filter.property.label">
+          <m-select name="property" [(ngModel)]="modalData.filter.property" [compareWith]="'name'" autofocus>
+            <m-option [mLabel]="'entities.value-set-rule-filter.property.concept' | translate" [mValue]="{name: 'concept'}"></m-option>
+            <m-option [mLabel]="'entities.value-set-rule-filter.property.constraint' | translate" [mValue]="{name: 'constraint'}"></m-option>
+          </m-select>
+        </m-form-item>
+        <m-form-item mName="operator" mLabel="entities.value-set-rule-filter.operator.label">
+          <m-select name="operator" [(ngModel)]="modalData.filter.operator" autoSelect>
+            <m-option [mLabel]="'entities.value-set-rule-filter.operator.is-a' | translate" mValue="is-a" *ngIf="modalData.filter.property?.name === 'concept'"></m-option>
+            <m-option [mLabel]="'entities.value-set-rule-filter.operator.in' | translate" mValue="in" *ngIf="modalData.filter.property?.name === 'concept'"></m-option>
+            <m-option [mLabel]="'entities.value-set-rule-filter.operator.equal' | translate" mValue="=" *ngIf="modalData.filter.property?.name === 'constraint'"></m-option>
+          </m-select>
+        </m-form-item>
+        <m-form-item mName="propertyValue" mLabel="entities.value-set-rule-filter.value">
+          <m-input name="propertyValue" [(ngModel)]="modalData.filter.value"></m-input>
+        </m-form-item>
+      </ng-container>
+
+      <ng-container *ngSwitchCase="'ucum'">
+        <m-form-item mName="property" mLabel="entities.value-set-rule-filter.property.label">
+          <m-select name="property" [(ngModel)]="modalData.filter.property" [compareWith]="'name'" autofocus>
+            <m-option [mLabel]="'entities.value-set-rule-filter.property.kind' | translate" [mValue]="{name: 'kind'}"></m-option>
+          </m-select>
+        </m-form-item>
+        <m-form-item mName="propertyValue" mLabel="entities.value-set-rule-filter.value">
+          <m-input name="propertyValue" [(ngModel)]="modalData.filter.value"></m-input>
+        </m-form-item>
+      </ng-container>
+
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="confirmModalFilter()">{{'core.btn.confirm' | translate}}</m-button>
+  </div>
+</m-modal>

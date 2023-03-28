@@ -11,6 +11,9 @@ import {AddButtonComponent} from './components/add-button/add-button.component';
 import {AuthModule} from 'term-web/core/auth';
 import {ValidateUrlPipe} from './pipes/validate-url.pipe';
 import {CodeSystemLibModule} from '../../resources/_lib';
+import {TerminologyConceptSearchComponent} from 'term-web/core/shared/components/terminology-concept-select/terminology-concept-search.component';
+import {MeasurementUnitLibModule} from '../../measurement-unit/_lib';
+import {IntegrationLibModule} from '../../integration/_lib';
 
 
 const commonModules = [
@@ -28,7 +31,8 @@ const commonModules = [
 
 const components = [
   StatusTagComponent,
-  AddButtonComponent
+  AddButtonComponent,
+  TerminologyConceptSearchComponent
 ];
 
 const pipes = [
@@ -39,7 +43,9 @@ const pipes = [
 @NgModule({
   imports: [
     ...commonModules,
-    CodeSystemLibModule
+    CodeSystemLibModule,
+    MeasurementUnitLibModule,
+    IntegrationLibModule
   ],
   declarations: [
     ...components,

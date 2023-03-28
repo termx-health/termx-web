@@ -1,18 +1,18 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 import {RESOURCES_ROUTES} from './resources/resources.module';
-import {GLOBAL_SEARCH_ROUTES} from './globalsearch/global-search.module';
+import {GLOBAL_SEARCH_ROUTES} from './global-search/global-search.module';
 import {INTEGRATION_ROUTES} from './integration/integration.module';
 import {PRIVILEGES_ROUTES} from './privileges/privileges.module';
 import {TOOLS_ROUTES} from './tools/tools.module';
 import {THESAURUS_ROUTES} from './thesaurus/thesaurus.module';
-import {MEASUREMENT_UNIT_ROUTES} from './measurementunit/measurement-unit.module';
+import {MEASUREMENT_UNIT_ROUTES} from './measurement-unit/measurement-unit.module';
 import {FHIR_ROUTES} from './fhir/fhir.module';
 import {PROJECT_CTX_ROUTES, PROJECT_ROUTES, TERMINOLOGY_SERVER_ROUTES} from './project/project.module';
-import {SUPPLEMENTS_ROUTES} from './supplement/supplement.module';
 import {autoLoginGuard} from 'term-web/core/auth';
 import {ProjectContextComponent} from 'term-web/core/context/project-context.component';
 import {ProjectContextModule} from 'term-web/core/context/project-context.module';
+import {OBSERVATION_DEFINITION_ROUTES} from 'term-web/observation-definition/observation-definition.module';
 
 
 const routes: Routes = [
@@ -31,7 +31,7 @@ const routes: Routes = [
       {path: 'thesaurus', children: THESAURUS_ROUTES, data: {privilege: ['*.Thesaurus.view']}},
       {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['*.MeasurementUnit.view']}},
       {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.TerminologyServer.view']}},
-      {path: 'supplements', children: SUPPLEMENTS_ROUTES},
+      {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES},
       {
         path: 'projects', children: [
           {path: '', children: PROJECT_ROUTES},
