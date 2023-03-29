@@ -3,13 +3,23 @@ import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptSe
 import {debounceTime, finalize, Observable, of, Subject, switchMap} from 'rxjs';
 import {BooleanInput, compareValues, copyDeep, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
-import {NzTreeNodeOptions} from 'ng-zorro-antd/core/tree/nz-tree-base-node';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
+import {MuiTreeNode, MuiTreeNodeOptions} from '@kodality-web/marina-ui';
 
 @Component({
   selector: 'tw-code-system-concepts-list',
   templateUrl: './code-system-concepts-list.component.html',
+  styles: [`
+    ::ng-deep .concept-tree {
+      .m-tree-node__option {
+        width: 100%;
+      }
+
+      .m-tree-toggle {
+        align-self: center;
+      }
+    }`]
 })
 export class CodeSystemConceptsListComponent implements OnInit {
   @Input() public dev: boolean = false;
@@ -24,7 +34,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
   public searchInput: string = "";
   public searchUpdate = new Subject<void>();
   public searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
-  public rootConcepts?: NzTreeNodeOptions[];
+  public rootConcepts?: MuiTreeNodeOptions[];
 
   public loading = false;
 
@@ -93,26 +103,23 @@ export class CodeSystemConceptsListComponent implements OnInit {
     }).add(() => this.loading = false);
   }
 
-  public loadChildren(event: any): void {
-    if (event.eventName === 'expand') {
-      const node = event.node;
-      if (node?.getChildren().length === 0 && node?.isExpanded) {
-        const params = new ConceptSearchParams();
-        params.propertySource = this.group.type === 'property' && this.group.property + '|' + event.node.key || undefined;
-        params.associationSource = this.group.type === 'association' && this.group.association + '|' + event.node.key || undefined;
-        params.sort = 'code';
-        params.limit = 1000;
-        this.codeSystemService.searchConcepts(this.codeSystemId!, params).subscribe(concepts => node.addChildren(concepts.data.map(c => this.mapToNode(c))));
-      }
+  public loadChildren(node: MuiTreeNode): void {
+    if (node.loading) {
+      const params = new ConceptSearchParams();
+      params.propertySource = this.group.type === 'property' && this.group.property + '|' + node.key || undefined;
+      params.associationSource = this.group.type === 'association' && this.group.association + '|' + node.key || undefined;
+      params.sort = 'code';
+      params.limit = 1000;
+      this.codeSystemService.searchConcepts(this.codeSystemId!, params).subscribe(concepts => node.setChildren(concepts.data.map(c => this.mapToNode(c))));
     }
   }
 
-  public mapToNode(c: CodeSystemConcept): NzTreeNodeOptions {
+  public mapToNode(c: CodeSystemConcept): MuiTreeNodeOptions {
     const name = this.getConceptName(c, this.translateService.currentLang);
-    return {title: c.code! + (name ? ' - ' + name : ''), key: c.code!, isLeaf: c.leaf};
+    return {title: c.code + (name ? ' - ' + name : ''), key: c.code, expandable: !c.leaf};
   }
 
-  public openConcept(code?: any, parentCode?: string): void {
+  public openConcept(code?: string, parentCode?: string): void {
     const lastVersionCode = this.dev && this.findLastVersionCode();
     if (!code) {
       const path = 'resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/add') : '/concepts/add');

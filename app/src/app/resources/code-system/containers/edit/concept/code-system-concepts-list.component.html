@@ -139,16 +139,17 @@
     </tr>
   </m-backend-table>
 
-  <nz-tree *ngIf="group.open" [nzData]="rootConcepts" nzAsyncData (nzExpandChange)="loadChildren($event)" [nzTreeTemplate]="treeTemplate">
-    <ng-template #treeTemplate let-node>
+  <m-tree class="concept-tree" *ngIf="group.open && rootConcepts" [mData]="rootConcepts" mAsyncData (mExpand)="loadChildren($event)" [mOption]="option">
+    <ng-template #option let-node>
       <div class="m-justify-between">
         <span (click)="openConcept(node.key)">{{ node.title }}</span>
         <m-dropdown>
+          <m-icon *m-dropdown-container mCode="ellipsis"></m-icon>
           <a *m-dropdown-item (click)="openConcept(null, node.key)">
             {{'web.code-system-concept.list.add-concept-child' | translate}}
           </a>
         </m-dropdown>
       </div>
     </ng-template>
-  </nz-tree>
+  </m-tree>
 </m-card>
