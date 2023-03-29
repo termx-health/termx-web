@@ -127,7 +127,7 @@ export class StructureDefinitionEditComponent implements OnInit {
         return;
       }
       if (this.sdTree) {
-        this.sdTree.selectedElement = undefined;
+        this.sdTree.unselect();
       }
       this.element = {fixedCoding: {}};
     });

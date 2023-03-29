@@ -1,4 +1,4 @@
-<div style="display: grid" *ngIf="dataSource">
+<div style="display: grid" *ngIf="treeOptions">
   <m-radio-group name="type" [(ngModel)]="type" mSize="small" style="margin-bottom: 0.5rem; margin-left: auto" (ngModelChange)="onTypeChange($event)">
     <label m-radio-button [mValue]="'diff'">diff</label>
     <label m-radio-button [mValue]="'hybrid'">hybrid</label>
@@ -6,59 +6,57 @@
   </m-radio-group>
 </div>
 
-<nz-tree-view [nzTreeControl]="treeControl" [nzDataSource]="dataSource">
-  <nz-tree-node *nzTreeNodeDef="let node" nzTreeNodeIndentLine style="width: 100%">
-    <nz-tree-node-option style="width: 100%" [ngStyle]="!!node.element && node.element === selectedElement ? {'background': '#eee'} : {}">
-      <ng-container *ngTemplateOutlet="option; context: {node: node}"></ng-container>
-    </nz-tree-node-option>
-  </nz-tree-node>
+<m-tree
+    *ngIf="treeOptions"
+    class="structure-definition-tree"
+    [mData]="treeOptions"
+    [mOption]="option"
+    [mExpandIcon]="expandIcon"
+    (mSelect)="selectElement($event)"
+    mSelectMode
+    mExpandAll
+>
+  <ng-template #expandIcon let-node>
+    <m-icon [mCode]="node.isExpanded ? 'minus-square' : 'plus-square'"></m-icon>
+  </ng-template>
 
-  <nz-tree-node *nzTreeNodeDef="let node; when: hasChild" nzTreeNodeIndentLine style="width: 100%">
-    <nz-tree-node-toggle>
-          <span nz-icon [nzType]="treeControl.isExpanded(node) ? 'minus-square' : 'plus-square'" nzTheme="outline"></span>
-    </nz-tree-node-toggle>
-    <nz-tree-node-option style="width: 100%; border: 1px solid #d2d2d2;" [ngStyle]="!!node.element && node.element === selectedElement ? {'background': '#eee'} : {}">
-      <ng-container *ngTemplateOutlet="option; context: {node: node}"></ng-container>
-    </nz-tree-node-option>
-  </nz-tree-node>
-</nz-tree-view>
+  <ng-template #option let-node let-data="data">
+    <div style="display: flex">
+      <label>{{node.title}}</label>
 
-
-<ng-template #option let-node="node">
-    <div style="display: flex" (click)="selectElement(node.element)">
-      <label style="display: grid;">
-        <label>{{node.name}}</label>
-      </label>
       <div *ngIf="mode === 'view'" style="width: 45vw; display: flex; margin-left: auto">
-        <label style="flex: 1">{{ node.cardinality }}</label>
+        <label style="flex: 1">{{ data.cardinality }}</label>
 
         <label style="flex: 5">
-          <label>{{node.type}}</label>
-          <label *ngIf="node.targetProfile?.length > 0">
-            (<a *ngFor="let profile of node.targetProfile; let index = index" [href]="profile">{{index !== 0 ? ' | ' : ''}}{{profile | apply:lastWordFromUrl}}</a>)
+          <label>{{data.type}}</label>
+          <label *ngIf="data.targetProfile?.length">
+            (<a *ngFor="let profile of data.targetProfile; let index = index" [href]="profile">{{index !== 0 ? ' | ' : ''}}{{profile | apply:lastWordFromUrl}}</a>)
           </label>
         </label>
 
         <label style="flex: 10; display: grid">
-          <label>{{node.short}}</label>
-          <label *ngIf="node.definition" style="color: grey">{{ node.definition }}</label>
-          <label *ngIf="node.binding" style="color: grey">
+          <label>{{data.short}}</label>
+          <label *ngIf="data.definition" style="color: grey">
+            {{ data.definition }}
+          </label>
+          <label *ngIf="data.binding" style="color: grey">
             {{'web.structure-definition.view.binding' | translate}}:
-            <a [href]="node.binding.valueSet" target="_blank">{{node.binding.valueSet | apply:lastWordFromUrl}}</a>
-            ({{node.binding.strength}})
+            <a [href]="data.binding.valueSet" target="_blank">{{data.binding.valueSet | apply:lastWordFromUrl}}</a>
+            ({{data.binding.strength}})
           </label>
-          <label *ngIf="node.fixedUri" style="color: grey">
+          <label *ngIf="data.fixedUri" style="color: grey">
             {{'web.structure-definition.view.fixed' | translate}}:
-            <a [href]="node.fixedUri">{{node.fixedUri | apply:lastWordFromUrl}}</a>
+            <a [href]="data.fixedUri">{{data.fixedUri | apply:lastWordFromUrl}}</a>
           </label>
-          <label *ngIf="node.fixedCoding?.code" style="color: grey">
-            {{'web.structure-definition.view.fixed' | translate}}: {{node.fixedCoding.code}} | {{node.fixedCoding.system}}
+          <label *ngIf="data.fixedCoding?.code" style="color: grey">
+            {{'web.structure-definition.view.fixed' | translate}}: {{data.fixedCoding.code}} | {{data.fixedCoding.system}}
           </label>
 
-          <label *ngFor="let m of node.mappings" style="color: grey">
+          <label *ngFor="let m of data.mappings" style="color: grey">
             {{m.identity}}: {{m.map}}
           </label>
         </label>
       </div>
     </div>
-</ng-template>
+  </ng-template>
+</m-tree>
