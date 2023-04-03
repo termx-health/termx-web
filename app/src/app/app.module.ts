@@ -5,9 +5,10 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {HttpBackend, HttpClientModule} from '@angular/common/http';
-import {CoreUtilModule} from '@kodality-web/core-util';
+import {CoreI18nService, CoreUtilModule} from '@kodality-web/core-util';
 import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
+import lt from '@angular/common/locales/lt';
 import {ResourcesModule} from './resources/resources.module';
 import {NoPrivilegeModule} from './core/ui/no-privilege/no-privilege.module';
 import {SharedModule} from './core/shared/shared.module';
@@ -26,8 +27,10 @@ import {JobLibModule} from './job/_lib';
 import {AuthModule, AuthService} from './core/auth';
 import {MarinaUiConfigModule} from './core/marina';
 import {ObservationDefinitionModule} from 'term-web/observation-definition/observation-definition.module';
+import {MuiConfigService} from '@kodality-web/marina-ui';
 
 registerLocaleData(et);
+registerLocaleData(lt);
 
 
 export function HttpLoaderFactory(http: HttpBackend): TranslateLoader {
@@ -86,7 +89,17 @@ const TERM_MODULES = [
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  public constructor(translate: TranslateService) {
-    translate.use('en');
+  public constructor(
+    translate: TranslateService,
+    muiTranslate: CoreI18nService,
+    muiConfig: MuiConfigService
+  ) {
+    translate.use(localStorage.getItem('locale') ?? 'en');
+    translate.onLangChange.subscribe(({lang}) => {
+      muiTranslate.use(lang);
+      localStorage.setItem('locale', lang);
+
+      muiConfig.set('multiLanguageInput', {...muiConfig.getConfigFor('multiLanguageInput'), requiredLanguages: [lang]});
+    });
   }
 }

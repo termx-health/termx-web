@@ -1,22 +1,36 @@
 <ng-container [ngSwitch]="pageType">
-  <ng-container *ngSwitchDefault>
-    <m-page-layout
-        mTitle="web.app.header"
-        [mMenu]="menu"
-        mMenuMode="horizontal"
-        (mLangChange)="onLangChange($event)"
-        (mLogout)="logout()"
-    >
-      <ng-container *ngIf="!activeRoutePrivileges || (activeRoutePrivileges | twHasAnyPrivilege); else accessError">
-        <router-outlet></router-outlet>
-      </ng-container>
-      <ng-template #accessError>
-        <tw-no-privilege [privileges]="activeRoutePrivileges"></tw-no-privilege>
-      </ng-template>
-    </m-page-layout>
-  </ng-container>
-
   <ng-container *ngSwitchCase="'fhir'">
     <router-outlet></router-outlet>
   </ng-container>
+
+  <m-page-layout
+      *ngSwitchDefault
+      mTitle="web.app.header"
+      [mMenu]="menu"
+      mMenuMode="horizontal"
+      [mUserInfo]="auth.user ? {initials: auth.user?.username, template: userInfoTpl} : undefined"
+      (mLangChange)="onLangChange($event)"
+      (mLogout)="logout()"
+  >
+    <ng-container *ngIf="!activeRoutePrivileges || (activeRoutePrivileges | twHasAnyPrivilege); else accessError">
+      <router-outlet></router-outlet>
+    </ng-container>
+    <ng-template #accessError>
+      <tw-no-privilege [privileges]="activeRoutePrivileges"></tw-no-privilege>
+    </ng-template>
+  </m-page-layout>
 </ng-container>
+
+<ng-template #userInfoTpl>
+  <div class="tw-form-view">
+    <div class="tw-user-info__user">
+      <div>{{auth.user?.username}}</div>
+    </div>
+
+    <div class="tw-user-info__info">
+      <m-form-item mLabel="entities.common.privileges" *ngIf="auth.user.privileges as roles">
+        <div *ngFor="let role of roles">{{role}}</div>
+      </m-form-item>
+    </div>
+  </div>
+</ng-template>

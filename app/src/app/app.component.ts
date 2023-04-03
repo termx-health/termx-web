@@ -4,12 +4,13 @@ import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, Router} from '@an
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {filter} from 'rxjs';
-import {AuthService} from 'term-web/core/auth';
+import {AuthService, UserInfo} from 'term-web/core/auth';
 import {group} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-root',
-  templateUrl: './app.component.html'
+  templateUrl: 'app.component.html',
+  styleUrls: ['app.component.less']
 })
 export class AppComponent implements OnInit {
   public menu: MuiPageMenuItem[] = [];
@@ -21,7 +22,7 @@ export class AppComponent implements OnInit {
     private http: HttpClient,
     private route: ActivatedRoute,
     private translateService: TranslateService,
-    private authService: AuthService
+    protected auth: AuthService
   ) {}
 
   public ngOnInit(): void {
@@ -37,7 +38,7 @@ export class AppComponent implements OnInit {
   }
 
   public logout(): void {
-    this.authService.logout().subscribe();
+    this.auth.logout().subscribe();
   }
 
   private loadMenu(): void {
@@ -48,7 +49,7 @@ export class AppComponent implements OnInit {
         icon: i.icon,
         route: route,
         queryParams: group(query?.split("&") || [], k => k.split('=')[0], k => k.split('=')[1]),
-        disabled: i.privileges && !this.authService.hasAnyPrivilege(i.privileges),
+        disabled: i.privileges && !this.auth.hasAnyPrivilege(i.privileges),
         items: createMenu(i.items)
       };
     });

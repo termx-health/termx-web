@@ -29,9 +29,11 @@ export class LocalizedConceptNamePipe implements PipeTransform {
       valueSet: resource.valueSet,
       valueSetVersion: resource.valueSetVersion,
       limit: 1
-    }).pipe(map(resp => {
-      return resp.data[0] ? this.getName(resp.data[0], this.translateService.currentLang, typeof identifier === 'number' ? identifier : undefined) : identifier;
-    }));
+    }).pipe(
+      map(resp => resp.data[0]),
+      map(val => val ? this.getName(val, this.translateService.currentLang, typeof identifier === 'number' ? identifier : undefined) : identifier),
+      map(String)
+    );
 
     const key = `${identifier || '-'}` +
       `#${resource.codeSystem || '-'}#${resource.codeSystemVersion || '-'}` +

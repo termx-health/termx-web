@@ -27,7 +27,6 @@ html {
   font-weight: bold;
 }
 
-
 .m-card__footer .m-button-wrapper {
   width: 100%;
 }
@@ -39,6 +38,10 @@ html {
   .m-button-wrapper {
     width: initial;
   }
+}
+
+.m-page-header__userinfo {
+  text-transform: uppercase;
 }
 
 
@@ -61,13 +64,16 @@ html {
   gap: calc(2 * var(--gap-default));
 }
 
+.tw-form-view {
+  .ant-form-item-label > label {
+    text-transform: uppercase;
+    color: @mui-text-color-secondary;
+    height: 1.5rem;
+  }
+}
+
 
 // NG-zorro overrides
-
-.ant-tree-show-line .ant-tree-switcher {
-  // transparent for the containers with colored background
-  background: transparent;
-}
 
 .ant-tabs-tabpane {
   // allows card to have a box shadow inside of zorro's tab

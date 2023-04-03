@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {NoPrivilegeComponent} from './components/no-privilege.component';
+import {NoPrivilegeComponent} from './no-privilege.component';
 import {SharedModule} from 'term-web/core/shared/shared.module';
 
 @NgModule({

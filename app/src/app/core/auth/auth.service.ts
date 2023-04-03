@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 
-interface UserInfo {
+export interface UserInfo {
   username: string;
   privileges: string[];
 }

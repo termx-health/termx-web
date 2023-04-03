@@ -797,6 +797,9 @@
     }
   },
   "entities": {
+    "common": {
+      "privileges": "Privileges"
+    },
     "measurement-unit": {
       "id": "Id",
       "code": "Code",
@@ -1125,7 +1128,8 @@
       "shared": "Shared",
       "owners": "Owners",
       "editors": "Editors",
-      "viewers": "Viewers"},
+      "viewers": "Viewers"
+    },
     "terminology-server": {
       "plural": "Terminology servers",
       "singular": "Terminology server",
