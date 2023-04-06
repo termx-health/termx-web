@@ -1,0 +1,102 @@
+<form #form="ngForm" *ngIf="protocol">
+  <m-form-row mFull>
+    <div *mFormCol>
+      <m-form-item mLabel="entities.observation-definition.protocol.device" mName="device-usage" required>
+        <m-select name="device-usage" [(ngModel)]="protocol.device.usage" required>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
+        </m-select>
+      </m-form-item>
+    </div>
+    <div *mFormCol>
+      <m-form-item *ngIf="protocol.device.usage === 'value-set'" mLabel="entities.observation-definition.protocol.device-value-set" mName="device-value-set">
+        <tw-value-set-search [(ngModel)]="protocol.device.valueSet" name="device-value-set" valuePrimitive></tw-value-set-search>
+      </m-form-item>
+    </div>
+  </m-form-row>
+  <m-form-row mFull>
+    <div *mFormCol>
+      <m-form-item mLabel="entities.observation-definition.protocol.method" mName="method-usage" required>
+        <m-select name="method-usage" [(ngModel)]="protocol.method.usage" required>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
+        </m-select>
+      </m-form-item>
+    </div>
+    <div *mFormCol>
+      <m-form-item *ngIf="protocol.method.usage === 'value-set'" mLabel="entities.observation-definition.protocol.method-value-set" mName="method-value-set">
+        <tw-value-set-search [(ngModel)]="protocol.method.valueSet" name="method-value-set" valuePrimitive></tw-value-set-search>
+      </m-form-item>
+    </div>
+  </m-form-row>
+  <m-form-row mFull>
+    <div *mFormCol>
+      <m-form-item mLabel="entities.observation-definition.protocol.measurement-location" mName="measurement-location-usage" required>
+        <m-select name="measurement-location-usage" [(ngModel)]="protocol.method.usage" required>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
+        </m-select>
+      </m-form-item>
+    </div>
+    <div *mFormCol>
+      <m-form-item *ngIf="protocol.measurementLocation.usage === 'value-set'" mLabel="entities.observation-definition.protocol.measurement-location-value-set" mName="measurement-location-value-set">
+        <tw-value-set-search [(ngModel)]="protocol.measurementLocation.valueSet" name="measurement-location-value-set" valuePrimitive></tw-value-set-search>
+      </m-form-item>
+    </div>
+  </m-form-row>
+  <m-form-row mFull>
+    <div *mFormCol>
+      <m-form-item mLabel="entities.observation-definition.protocol.specimen" mName="specimen-usage" required>
+        <m-select name="specimen-usage" [(ngModel)]="protocol.method.usage" required>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
+        </m-select>
+      </m-form-item>
+    </div>
+    <div *mFormCol>
+      <m-form-item *ngIf="protocol.specimen.usage === 'value-set'" mLabel="entities.observation-definition.protocol.specimen-value-set" mName="specimen-value-set">
+        <tw-value-set-search [(ngModel)]="protocol.specimen.valueSet" name="specimen-value-set" valuePrimitive></tw-value-set-search>
+      </m-form-item>
+    </div>
+  </m-form-row>
+  <m-form-row mFull>
+    <div *mFormCol>
+      <m-form-item mLabel="entities.observation-definition.protocol.position" mName="position-usage" required>
+        <m-select name="position-usage" [(ngModel)]="protocol.method.usage" required>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
+        </m-select>
+      </m-form-item>
+    </div>
+    <div *mFormCol>
+      <m-form-item *ngIf="protocol.position.usage === 'value-set'" mLabel="entities.observation-definition.protocol.position-value-set" mName="position-value-set">
+        <tw-value-set-search [(ngModel)]="protocol.position.valueSet" name="position-value-set" valuePrimitive></tw-value-set-search>
+      </m-form-item>
+    </div>
+  </m-form-row>
+  <m-form-row mFull>
+    <div *mFormCol>
+      <m-form-item mLabel="entities.observation-definition.protocol.circumstances" mName="circumstances-usage" required>
+        <m-select name="circumstances-usage" [(ngModel)]="protocol.method.usage" required>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
+        </m-select>
+      </m-form-item>
+    </div>
+    <div *mFormCol>
+      <m-form-item *ngIf="protocol.dataCollectionCircumstances.usage === 'value-set'" mLabel="entities.observation-definition.protocol.circumstances-value-set" mName="circumstances-value-set">
+        <tw-value-set-search [(ngModel)]="protocol.dataCollectionCircumstances.valueSet" name="circumstances-value-set" valuePrimitive></tw-value-set-search>
+      </m-form-item>
+    </div>
+  </m-form-row>
+
+  <m-form-item mLabel="entities.observation-definition.protocol.components">
+    <tw-obs-def-component-list [components]="protocol.components"></tw-obs-def-component-list>
+  </m-form-item>
+</form>

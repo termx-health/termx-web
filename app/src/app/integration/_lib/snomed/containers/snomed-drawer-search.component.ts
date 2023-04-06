@@ -10,6 +10,7 @@ import {SnomedLibService} from '../services/snomed-lib.service';
 })
 export class SnomedDrawerSearchComponent {
   @Input() public value: string;
+  @Input() @BooleanInput() public multiple: string | boolean;
   @Input() @BooleanInput() public allowClear: string | boolean = true;
   @Input() @BooleanInput() public disabled: string | boolean;
   @Output() public twChange = new EventEmitter<string>();

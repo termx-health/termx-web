@@ -1,0 +1,74 @@
+<form #form="ngForm" *ngIf="mappings">
+  <m-editable-table #rowsTable [mData]="mappings" [mRowInstance]="rowInstance">
+    <m-editable-column [mTitle]="'entities.observation-definition.mappings.order-number'" mName="order">
+      <ng-template #viewTemplate let-m>{{m.orderNumber}}</ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.observation-definition.mappings.target'" mName="target">
+      <ng-template #viewTemplate let-m>{{m.target | apply:getTargetDisplay:observationDefinition:components}}</ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.observation-definition.mappings.map-set'" mName="mapSet">
+      <ng-template #viewTemplate let-m>{{m.mapSet}}</ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.observation-definition.mappings.code-system'" mName="codeSystem">
+      <ng-template #viewTemplate let-m>{{m.codeSystem}}</ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.observation-definition.mappings.concept'" mName="concept">
+      <ng-template #viewTemplate let-m>{{m.concept}}</ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.observation-definition.mappings.relation'" mName="relation">
+      <ng-template #viewTemplate let-m>{{m.relation}}</ng-template>
+    </m-editable-column>
+
+    <ng-template #expandEditTemplate let-m let-prefix="ngModelNamePrefix">
+      <tr>
+        <td colspan="7">
+          <m-form-row>
+            <div *mFormCol>
+              <m-form-item mLabel="entities.observation-definition.mappings.target" [mName]="prefix + '-target'" required>
+                <m-select [(ngModel)]="m.target" [name]="prefix + '-target'" required compareWith="id">
+                  <m-option *ngFor="let target of targets" [mValue]="target" [mLabel]="target | apply:getTargetDisplay:observationDefinition:components"></m-option>
+                </m-select>
+              </m-form-item>
+            </div>
+            <div *mFormCol>
+              <m-form-item mLabel="entities.observation-definition.mappings.order-number" [mName]="prefix + '-order-number'">
+                <m-number-input [min]="1" [(ngModel)]="m.orderNumber" [name]="prefix + '-order-number'"></m-number-input>
+              </m-form-item>
+            </div>
+          </m-form-row>
+          <m-form-row>
+            <div *mFormCol>
+              <m-form-item mLabel="entities.observation-definition.mappings.map-set" [mName]="prefix + '-map-set'">
+                <tw-map-set-search [(ngModel)]="m.mapSet" [name]="prefix + '-map-set'" valuePrimitive></tw-map-set-search>
+              </m-form-item>
+            </div>
+            <div *mFormCol>
+              <m-form-item mLabel="entities.observation-definition.mappings.code-system" [mName]="prefix + 'code-system'" required>
+                <tw-code-system-search [(ngModel)]="m.codeSystem" [name]="prefix + 'code-system'" valuePrimitive required></tw-code-system-search>
+              </m-form-item>
+            </div>
+          </m-form-row>
+          <m-form-row>
+            <div *mFormCol>
+              <m-form-item mLabel="entities.observation-definition.mappings.concept" [mName]="prefix + '-concept'" required>
+                <tw-concept-search [(ngModel)]="m.concept" [codeSystem]="m.codeSystem" [name]="prefix + '-concept'" valueType="code" required></tw-concept-search>
+              </m-form-item>
+            </div>
+            <div *mFormCol>
+              <m-form-item mLabel="entities.observation-definition.mappings.relation" [mName]="prefix + '-relation'">
+                <tw-association-type-search [(ngModel)]="m.relation" [name]="prefix + '-relation'" valuePrimitive></tw-association-type-search>
+              </m-form-item>
+            </div>
+          </m-form-row>
+          <m-form-row *ngIf="m.relation !== 'equivalent'">
+            <div *mFormCol>
+              <m-form-item mLabel="entities.observation-definition.mappings.condition" [mName]="prefix + '-condition'">
+                <m-textarea [(ngModel)]="m.condition" [name]="prefix + '-condition'"></m-textarea>
+              </m-form-item>
+            </div>
+          </m-form-row>
+        </td>
+      </tr>
+    </ng-template>
+  </m-editable-table>
+</form>

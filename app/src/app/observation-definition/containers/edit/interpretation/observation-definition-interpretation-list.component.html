@@ -1,0 +1,161 @@
+<form #form="ngForm" *ngIf="interpretations">
+  <m-editable-table #rowsTable [mData]="interpretations" [mRowInstance]="rowInstance" [mLoading]="loader.isLoading">
+    <m-editable-column [mTitle]="'entities.observation-definition.interpretations.order-number'" mName="order">
+      <ng-template #viewTemplate let-i>{{i.orderNumber}}</ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.observation-definition.interpretations.target'" mName="target">
+      <ng-template #viewTemplate let-i>{{i.target | apply:getTargetDisplay:observationDefinitions:components}}</ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.observation-definition.interpretations.state'" mName="state">
+      <ng-template #viewTemplate let-i>{{i.state | apply:getStateDisplay}}</ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.observation-definition.interpretations.range.singular'" mName="range">
+      <ng-template #viewTemplate
+        let-i>{{(i.target | apply:checkType:observationDefinitions:components:'complex') ? (i.range | apply:getRangeDisplay:i.target) : ''}}</ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.observation-definition.interpretations.category.singular'" mName="category">
+      <ng-template #viewTemplate
+        let-i>{{i.rangeCategory ? ('web.observation-definition.interpretation-category.' + i.rangeCategory | translate) : ''}}</ng-template>
+    </m-editable-column>
+
+    <ng-template #expandEditTemplate let-i let-prefix="ngModelNamePrefix">
+      <tr>
+        <td colspan="7">
+          <m-form-row>
+            <div *mFormCol>
+              <m-form-item mLabel="entities.observation-definition.interpretations.target" [mName]="prefix + '-target'" required>
+                <m-select [(ngModel)]="i.target" [name]="prefix + '-target'" required compareWith="id">
+                  <m-option *ngFor="let target of targets"
+                      [mValue]="target"
+                      [mLabel]="target | apply:getTargetDisplay:observationDefinitions:components"></m-option>
+                </m-select>
+              </m-form-item>
+            </div>
+            <div *mFormCol>
+              <m-form-item mLabel="entities.observation-definition.interpretations.order-number" [mName]="prefix + '-order-number'">
+                <m-number-input [min]="1" [(ngModel)]="i.orderNumber" [name]="prefix + '-order-number'"></m-number-input>
+              </m-form-item>
+            </div>
+          </m-form-row>
+          <ng-container *ngIf="i.target">
+            <m-form-row>
+              <div *mFormCol>
+                <m-form-item mLabel="entities.observation-definition.interpretations.state" [mName]="prefix + '-state'">
+                  <a (mClick)="toggleStateModal(i.state)">{{(i.state | apply:getStateDisplay: 'core.btn.select') | translate}}</a>
+                </m-form-item>
+              </div>
+              <ng-container *ngIf="i.target | apply:checkType:observationDefinitions:components:'complex'">
+                <div *mFormCol>
+                  <m-form-item mLabel="entities.observation-definition.interpretations.range.singular" [mName]="prefix + '-range'">
+                    <a (mClick)="toggleRangeModal(i.range, i.target)">{{(i.range | apply:getRangeDisplay:i.target:'core.btn.select') | translate}}</a>
+                  </m-form-item>
+                </div>
+              </ng-container>
+            </m-form-row>
+            <m-form-row>
+              <div *mFormCol>
+                <m-form-item mLabel="entities.observation-definition.interpretations.condition" [mName]="prefix + '-condition'">
+                  <m-textarea [(ngModel)]="i.condition" [name]="prefix + '-condition'"></m-textarea>
+                </m-form-item>
+              </div>
+            </m-form-row>
+            <m-form-row>
+              <div *mFormCol>
+                <m-form-item mLabel="entities.observation-definition.interpretations.category.singular" [mName]="prefix + '-category'" required>
+                  <m-select [(ngModel)]="i.rangeCategory" [name]="prefix + '-category'" required>
+                    <m-option [mValue]="'reference'" [mLabel]="'web.observation-definition.interpretation-category.reference'"></m-option>
+                    <m-option [mValue]="'critical'" [mLabel]="'web.observation-definition.interpretation-category.critical'"></m-option>
+                    <m-option [mValue]="'absolute'" [mLabel]="'web.observation-definition.interpretation-category.absolute'"></m-option>
+                  </m-select>
+                </m-form-item>
+              </div>
+            </m-form-row>
+            <m-form-row>
+              <div *mFormCol>
+                <m-form-item mLabel="entities.observation-definition.interpretations.fhir-interpretation-code" [mName]="prefix + '-fhir-interpretation-code'">
+                  <tw-value-set-concept-select [(ngModel)]="i.fhirInterpretationCode"
+                      [name]="prefix + '-fhir-interpretation-code'"
+                      valueSet="observation-interpretation"></tw-value-set-concept-select>
+                </m-form-item>
+              </div>
+              <div *mFormCol>
+                <m-form-item mLabel="entities.observation-definition.interpretations.snomed-interpretation-code"
+                    [mName]="prefix + '-snomed-interpretation-code'">
+                  <tw-snomed-drawer-search [value]="i.snomedInterpretationCode" (twChange)="i.snomedInterpretationCode = $event"></tw-snomed-drawer-search>
+                </m-form-item>
+              </div>
+            </m-form-row>
+          </ng-container>
+        </td>
+      </tr>
+    </ng-template>
+  </m-editable-table>
+</form>
+
+<m-modal #stateModal [(mVisible)]="stateModalData.visible" (mClose)="toggleStateModal()">
+  <ng-container *m-modal-header>{{'entities.observation-definition.interpretations.category.singular'| translate}}</ng-container>
+
+  <ng-container *m-modal-content>
+    <form #stateForm="ngForm">
+      <m-form-item mName="gender" mLabel="entities.observation-definition.interpretations.category.gender">
+        <tw-value-set-concept-select [(ngModel)]="stateModalData.state.gender" name="gender" valueSet="administrative-gender"></tw-value-set-concept-select>
+      </m-form-item>
+      <m-form-item mName="age" mLabel="entities.observation-definition.interpretations.category.age">
+        <div class="m-items-middle">
+          <m-number-input name="age-min" [(ngModel)]="stateModalData.state.age.min" placeholder="web.observation-definition.cardinality.min"></m-number-input>
+          <m-number-input name="age-max" [(ngModel)]="stateModalData.state.age.max" placeholder="web.observation-definition.cardinality.max"></m-number-input>
+        </div>
+      </m-form-item>
+      <m-form-item mName="gestation-age" mLabel="entities.observation-definition.interpretations.category.gestation-age">
+        <div class="m-items-middle">
+          <m-number-input name="gestation-age-min" [(ngModel)]="stateModalData.state.gestationAge.min" placeholder="web.observation-definition.cardinality.min"></m-number-input>
+          <m-number-input name="gestation-age-max" [(ngModel)]="stateModalData.state.gestationAge.max" placeholder="web.observation-definition.cardinality.max"></m-number-input>
+        </div>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="stateModal.close()">{{'core.btn.cancel' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="confirmStateModal()">{{'core.btn.confirm' | translate}}</m-button>
+  </div>
+</m-modal>
+
+
+<m-modal #rangeModal [(mVisible)]="rangeModalData.visible" (mClose)="toggleRangeModal()">
+  <ng-container *m-modal-header>{{'entities.observation-definition.interpretations.range.singular'| translate}}</ng-container>
+
+  <ng-container *m-modal-content>
+    <form #rangeForm="ngForm">
+      <ng-container *ngIf="rangeModalData.target | apply:checkType:observationDefinitions:components:'numeric'">
+        <m-form-item mName="range" mLabel="entities.observation-definition.interpretations.range.numeric-range">
+          <div class="m-items-middle">
+            <m-number-input name="range-min" [(ngModel)]="rangeModalData.range.numericRange.min" placeholder="web.observation-definition.cardinality.min"></m-number-input>
+            <m-number-input name="range-max" [(ngModel)]="rangeModalData.range.numericRange.max" placeholder="web.observation-definition.cardinality.max"></m-number-input>
+          </div>
+        </m-form-item>
+      </ng-container>
+
+      <ng-container *ngIf="rangeModalData.target| apply:checkType:observationDefinitions:components: 'CodeableConcept'">
+        <m-form-item mName="value-set" mLabel="entities.observation-definition.interpretations.range.value-set">
+          <tw-value-set-search [(ngModel)]="rangeModalData.range.valueSet" name="value-set" valuePrimitive></tw-value-set-search>
+        </m-form-item>
+        <m-form-item mName="code-system" mLabel="entities.observation-definition.interpretations.range.code-system">
+          <tw-code-system-search [(ngModel)]="rangeModalData.range.codeSystem" name="code-system" valuePrimitive></tw-code-system-search>
+        </m-form-item>
+        <m-form-item mName="concepts" mLabel="entities.observation-definition.interpretations.range.code-system-concepts">
+          <tw-term-concept-search [codeSystem]="rangeModalData.range.codeSystem"
+              [(ngModel)]="rangeModalData.range.codeSystemConcepts"
+              name="concepts"
+              valueType="code"
+              multiple></tw-term-concept-search>
+        </m-form-item>
+      </ng-container>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="rangeModal.close()">{{'core.btn.cancel' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="confirmRangeModal()">{{'core.btn.confirm' | translate}}</m-button>
+  </div>
+</m-modal>

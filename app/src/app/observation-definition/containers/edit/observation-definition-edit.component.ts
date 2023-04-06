@@ -1,17 +1,28 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {
-  ObservationDefinition,
+  ObservationDefinition, ObservationDefinitionComponent,
   ObservationDefinitionProtocol,
+  ObservationDefinitionProtocolValue,
   ObservationDefinitionUnit,
   ObservationDefinitionValue
 } from 'term-web/observation-definition/_lib';
 import {ObservationDefinitionService} from 'term-web/observation-definition/services/observation-definition.service';
 import {forkJoin} from 'rxjs';
 import {CodeSystemLibService} from 'term-web/resources/_lib';
+import {ObservationDefinitionValueComponent} from 'term-web/observation-definition/containers/edit/value/observation-definition-value.component';
+import {ObservationDefinitionMemberListComponent} from 'term-web/observation-definition/containers/edit/member/observation-definition-member-list.component';
+import {
+  ObservationDefinitionComponentListComponent
+} from 'term-web/observation-definition/containers/edit/component/observation-definition-component-list.component';
+import {ObservationDefinitionProtocolComponent} from 'term-web/observation-definition/containers/edit/protocol/observation-definition-protocol.component';
+import {
+  ObservationDefinitionInterpretationListComponent
+} from 'term-web/observation-definition/containers/edit/interpretation/observation-definition-interpretation-list.component';
+import {ObservationDefinitionMappingListComponent} from 'term-web/observation-definition/containers/edit/mapping/observation-definition-mapping-list.component';
 
 @Component({
   templateUrl: './observation-definition-edit.component.html',
@@ -21,6 +32,12 @@ export class ObservationDefinitionEditComponent implements OnInit {
   protected loader = new LoadingManager();
 
   @ViewChild("form") public form?: NgForm;
+  @ViewChild(ObservationDefinitionValueComponent) public valueComponent?: ObservationDefinitionValueComponent;
+  @ViewChild(ObservationDefinitionMemberListComponent) public memberListComponent?: ObservationDefinitionMemberListComponent;
+  @ViewChildren(ObservationDefinitionComponentListComponent) public componentListComponents?: QueryList<ObservationDefinitionComponentListComponent>;
+  @ViewChild(ObservationDefinitionProtocolComponent) public protocolComponent?: ObservationDefinitionProtocolComponent;
+  @ViewChild(ObservationDefinitionInterpretationListComponent) public interpretationListComponent?: ObservationDefinitionInterpretationListComponent;
+  @ViewChild(ObservationDefinitionMappingListComponent) public mappingListComponent?: ObservationDefinitionMappingListComponent;
 
   public constructor(
     private observationDefinitionService: ObservationDefinitionService,
@@ -42,11 +59,17 @@ export class ObservationDefinitionEditComponent implements OnInit {
     if (!this.validate()) {
       return;
     }
-    this.loader.wrap('save',  this.observationDefinitionService.save(this.observationDefinition!)).subscribe(() => this.location.back());
+    this.loader.wrap('save', this.observationDefinitionService.save(this.observationDefinition!)).subscribe(() => this.location.back());
   }
 
   private validate(): boolean {
-    return isDefined(this.form) && validateForm(this.form);
+    return isDefined(this.form) && validateForm(this.form)
+      && (!isDefined(this.valueComponent) || this.valueComponent.validate())
+      && (!isDefined(this.memberListComponent) || this.memberListComponent.validate())
+      && (!isDefined(this.componentListComponents) || !this.componentListComponents.find(c => !c.validate()))
+      && (!isDefined(this.protocolComponent) || this.protocolComponent.validate())
+      && (!isDefined(this.interpretationListComponent) || this.interpretationListComponent.validate())
+      && (!isDefined(this.mappingListComponent) || this.mappingListComponent.validate());
   }
 
   private writeObservationDefinition(obs: ObservationDefinition): void {
@@ -60,6 +83,19 @@ export class ObservationDefinitionEditComponent implements OnInit {
     obs.members ??= [];
     obs.components ??= [];
     obs.protocol ??= new ObservationDefinitionProtocol();
+    obs.protocol.device ??= new ObservationDefinitionProtocolValue();
+    obs.protocol.device.usage ??= 'not-in-use';
+    obs.protocol.method ??= new ObservationDefinitionProtocolValue();
+    obs.protocol.method.usage ??= 'not-in-use';
+    obs.protocol.measurementLocation ??= new ObservationDefinitionProtocolValue();
+    obs.protocol.measurementLocation.usage ??= 'not-in-use';
+    obs.protocol.specimen ??= new ObservationDefinitionProtocolValue();
+    obs.protocol.specimen.usage ??= 'not-in-use';
+    obs.protocol.position ??= new ObservationDefinitionProtocolValue();
+    obs.protocol.position.usage ??= 'not-in-use';
+    obs.protocol.dataCollectionCircumstances ??= new ObservationDefinitionProtocolValue();
+    obs.protocol.dataCollectionCircumstances.usage ??= 'not-in-use';
+    obs.protocol.components ??= [];
     obs.state ??= [];
     obs.interpretations ??= [];
     obs.mappings ??= [];
@@ -84,5 +120,12 @@ export class ObservationDefinitionEditComponent implements OnInit {
       }
     });
   }
+
+  protected extractComponents = (def: ObservationDefinition): ObservationDefinitionComponent[] => {
+    if (!isDefined(def)) {
+      return [];
+    }
+    return [...(def.components || []), ...(def.state || []), ...(def.protocol.components || []),];
+  };
 
 }

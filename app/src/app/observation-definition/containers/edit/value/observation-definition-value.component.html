@@ -4,8 +4,8 @@
       <m-form-item mLabel="entities.observation-definition.value.type" mName="type" required>
         <tw-value-set-concept-select [(ngModel)]="value.type" name="type" valueSet="permitted-data-type" required></tw-value-set-concept-select>
       </m-form-item>
-      <m-form-item mLabel="entities.observation-definition.value.behaviour" mName="behaviour">
-        <m-select [(ngModel)]="value.behaviour" name="behaviour">
+      <m-form-item mLabel="entities.observation-definition.value.behaviour" mName="behaviour" required>
+        <m-select [(ngModel)]="value.behaviour" name="behaviour" required>
           <m-option mLabel="web.observation-definition.behaviour.editable" [mValue]="'editable'"></m-option>
           <m-option mLabel="web.observation-definition.behaviour.read-only" [mValue]="'read-only'"></m-option>
           <m-option mLabel="web.observation-definition.behaviour.computable" [mValue]="'computable'"></m-option>
@@ -20,7 +20,7 @@
             </tw-code-system-search>
           </m-form-control>
           <m-form-control mName="dose-unit">
-            <tw-term-concept-search [codeSystem]="value.unit.system" [(ngModel)]="value.unit.unit" name="unit"></tw-term-concept-search>
+            <tw-term-concept-search [codeSystem]="value.unit.system" [(ngModel)]="value.unit.unit" name="unit" valueType="code"></tw-term-concept-search>
           </m-form-control>
         </div>
       </m-form-item>
@@ -32,7 +32,7 @@
       </m-form-item>
     </div>
   </m-form-row>
-  <m-form-row mFull>
+  <m-form-row mFull *ngIf="value.behaviour === 'computable'">
     <m-form-item mLabel="entities.observation-definition.value.expression" mName="expression">
       <m-textarea [(ngModel)]="value.expression" name="expression"></m-textarea>
     </m-form-item>

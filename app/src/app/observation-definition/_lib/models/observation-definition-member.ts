@@ -1,10 +1,9 @@
 import {ObservationDefinitionCardinality} from './observation-definition-cardinality';
-import {LocalizedName} from '@kodality-web/marina-util';
+import {CodeName} from '@kodality-web/marina-util';
 
 export class ObservationDefinitionMember {
   public id?: number;
-  public code?: string;
-  public names?: LocalizedName;
+  public item?: CodeName;
   public orderNumber?: number;
   public cardinality?: ObservationDefinitionCardinality;
 }

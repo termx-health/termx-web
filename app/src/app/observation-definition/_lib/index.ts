@@ -1,4 +1,4 @@
-export * from './components/observation-definition-select.component';
+export * from './components/observation-definition-search.component';
 export * from './models/observation-definition';
 export * from './models/observation-definition-cardinality';
 export * from './models/observation-definition-component';

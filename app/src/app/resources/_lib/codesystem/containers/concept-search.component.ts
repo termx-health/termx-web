@@ -2,7 +2,7 @@ import {Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@a
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {DestroyService, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams} from '../../codesystem';
 
 @Component({
@@ -11,16 +11,18 @@ import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams} fro
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}, DestroyService]
 })
 export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
+  @Input() public valueType: 'id' | 'code' | 'full' = 'full';
+  @Input() @BooleanInput() public multiple: string | boolean;
+
   @Input() public codeSystem?: string;
   @Input() public codeSystemVersion?: string;
   @Input() public codeSystemVersionId?: number;
   @Input() public codeSystemVersionReleaseDateLe?: Date;
   @Input() public codeSystemVersionExpirationDateGe?: Date;
   @Input() public codeSystemEntityVersionStatus?: string;
-  @Input() public valueType: 'id' | 'code' | 'full' = 'full';
 
   public data: {[id: string]: CodeSystemConcept} = {};
-  public value?: number | string;
+  public value?: number | number[] | string | string[];
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
@@ -80,7 +82,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     );
   }
 
-  private loadConcept(val?: number | string): void {
+  private loadConcept(val: number | string, isIdArray?: boolean): void {
     if (isDefined(val) && typeof val === 'number') {
       this.loading['load'] = true;
       this.conceptService.load(val).pipe(takeUntil(this.destroy$)).subscribe(c => {
@@ -90,23 +92,31 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
 
     if (isDefined(val) && typeof val === 'string') {
       this.loading['load'] = true;
-      this.conceptService.search({code: val, limit: 1, codeSystem: this.codeSystem}).pipe(takeUntil(this.destroy$)).subscribe(c => {
-        this.data = {...(this.data || {}), [c.data[0].code!]: c.data[0]};
-      }).add(() => this.loading['load'] = false);
+      this.conceptService.search({id: isIdArray ? val : undefined, code: !isIdArray ? val: undefined, limit: val.split(',').length, codeSystem: this.codeSystem})
+        .pipe(takeUntil(this.destroy$)).subscribe(c => {
+          const data = group(c.data, d => this.valueType === 'code' ? d.code! : d.id!);
+          this.data = {...(this.data || {}), ...data};
+        }).add(() => this.loading['load'] = false);
     }
   }
 
 
   public writeValue(obj: CodeSystemConcept | number | string): void {
-    this.value = (typeof obj === 'object' ? obj?.id : obj);
-    this.loadConcept(this.value);
+    if (Array.isArray(obj)) {
+      this.value = obj.map(o => typeof o === 'object' ? o?.code : o);
+      this.loadConcept(this.value.join(','), typeof this.value?.[0] === 'number');
+    } else {
+      this.value = (typeof obj === 'object' ? obj?.id : obj);
+      this.loadConcept(this.value);
+    }
   }
 
   public fireOnChange(): void {
     if (this.valueType === 'id' || this.valueType === 'code') {
       this.onChange(this.value);
     } else {
-      this.onChange(this.data?.[this.value!]);
+      const v = Array.isArray(this.value) ? this.value.map(v => this.data?.[v]) : this.data?.[this.value];
+      this.onChange(v);
     }
   }
 

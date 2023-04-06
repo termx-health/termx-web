@@ -3,9 +3,10 @@
   <tw-measurement-unit-search *ngSwitchCase="'ucum'"
       [(ngModel)]="value"
       (ngModelChange)="onChange(fromUcum($event))"
-      [valuePrimitive]="valueType | apply:valuePrimitive"></tw-measurement-unit-search>
+      [valuePrimitive]="valueType | apply:valuePrimitive"
+      [multiple]="multiple"></tw-measurement-unit-search>
 
-  <tw-snomed-drawer-search *ngSwitchCase="'snomed-ct'" [value]="value | apply:getCode" (twChange)="onChange(fromSnomed($event))"></tw-snomed-drawer-search>
+  <tw-snomed-drawer-search *ngSwitchCase="'snomed-ct'" [value]="value | apply:getCode" (twChange)="onChange(fromSnomed($event))" [multiple]="multiple"></tw-snomed-drawer-search>
 
   <tw-concept-search *ngSwitchDefault
       [(ngModel)]="value"
@@ -16,6 +17,7 @@
       [codeSystemVersionId]="codeSystemVersionId"
       [codeSystemVersionReleaseDateLe]="codeSystemVersionReleaseDateLe"
       [codeSystemVersionExpirationDateGe]="codeSystemVersionExpirationDateGe"
-      [codeSystemEntityVersionStatus]="codeSystemEntityVersionStatus"></tw-concept-search>
+      [codeSystemEntityVersionStatus]="codeSystemEntityVersionStatus"
+      [multiple]="multiple"></tw-concept-search>
 
 </ng-container>

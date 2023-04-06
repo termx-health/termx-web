@@ -2,6 +2,7 @@ import {Component, forwardRef, Input} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CodeSystemConcept} from 'term-web/resources/_lib';
 import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
+import {BooleanInput} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-term-concept-search',
@@ -10,6 +11,7 @@ import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
 })
 export class TerminologyConceptSearchComponent {
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
+  @Input() @BooleanInput() public multiple: string | boolean;
 
   @Input() public codeSystem?: string;
   @Input() public codeSystemVersion?: string;
@@ -41,7 +43,15 @@ export class TerminologyConceptSearchComponent {
     this.onTouched = fn;
   }
 
-  protected fromUcum = (value: MeasurementUnit | string): CodeSystemConcept | string => {
+  protected fromUcum = (value: MeasurementUnit | MeasurementUnit[] | string | string[]): (CodeSystemConcept | string) | (CodeSystemConcept | string)[] => {
+    if (Array.isArray(value)) {
+      return value.map(v => this.mapUcum(v));
+    } else {
+      return this.mapUcum(value);
+    }
+  };
+
+  protected mapUcum = (value: MeasurementUnit | string): CodeSystemConcept | string => {
     if (typeof value === 'object') {
       const designations = [
         ...Object.keys(value.names).map(lang => ({language: lang, name: value.names[lang], designationType: 'display'})),

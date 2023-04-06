@@ -12,6 +12,12 @@ import {ObservationDefinitionMemberListComponent} from './containers/edit/member
 import {
   ObservationDefinitionComponentListComponent
 } from 'term-web/observation-definition/containers/edit/component/observation-definition-component-list.component';
+import {ObservationDefinitionProtocolComponent} from 'term-web/observation-definition/containers/edit/protocol/observation-definition-protocol.component';
+import {
+  ObservationDefinitionInterpretationListComponent
+} from 'term-web/observation-definition/containers/edit/interpretation/observation-definition-interpretation-list.component';
+import {IntegrationLibModule} from 'term-web/integration/_lib';
+import {ObservationDefinitionMappingListComponent} from 'term-web/observation-definition/containers/edit/mapping/observation-definition-mapping-list.component';
 
 export const OBSERVATION_DEFINITION_ROUTES: Routes = [
   {path: '', component: ObservationDefinitionListComponent},
@@ -26,7 +32,8 @@ export const OBSERVATION_DEFINITION_ROUTES: Routes = [
   imports: [
     SharedModule,
     ObservationDefinitionLibModule,
-    ResourcesLibModule
+    ResourcesLibModule,
+    IntegrationLibModule
   ],
   declarations: [
     ObservationDefinitionListComponent,
@@ -35,7 +42,10 @@ export const OBSERVATION_DEFINITION_ROUTES: Routes = [
 
     ObservationDefinitionValueComponent,
     ObservationDefinitionMemberListComponent,
-    ObservationDefinitionComponentListComponent
+    ObservationDefinitionComponentListComponent,
+    ObservationDefinitionProtocolComponent,
+    ObservationDefinitionInterpretationListComponent,
+    ObservationDefinitionMappingListComponent
   ],
   providers: [
     ObservationDefinitionService
@@ -43,7 +53,10 @@ export const OBSERVATION_DEFINITION_ROUTES: Routes = [
   exports: [
     ObservationDefinitionValueComponent,
     ObservationDefinitionMemberListComponent,
-    ObservationDefinitionComponentListComponent
+    ObservationDefinitionComponentListComponent,
+    ObservationDefinitionProtocolComponent,
+    ObservationDefinitionInterpretationListComponent,
+    ObservationDefinitionMappingListComponent
   ]
 })
 export class ObservationDefinitionModule {

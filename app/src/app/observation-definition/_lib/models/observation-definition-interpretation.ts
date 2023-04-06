@@ -1,5 +1,6 @@
 export class ObservationDefinitionInterpretation {
   public id?: number;
+  public target?: ObservationDefinitionInterpretationTarget;
   public orderNumber?: number;
   public state?: ObservationDefinitionInterpretationState;
   public range?: ObservationDefinitionInterpretationRange;
@@ -9,13 +10,20 @@ export class ObservationDefinitionInterpretation {
   public snomedInterpretationCode?: string;
 }
 
+export class ObservationDefinitionInterpretationTarget {
+  public type?: string;
+  public id?: number;
+}
+
 export class ObservationDefinitionInterpretationState {
   public gender?: string;
-  public age?: string;
-  public gestationAge?: string;
+  public age?: {min?: number, max?: number};
+  public gestationAge?:  {min?: number, max?: number};
 }
 
 export class ObservationDefinitionInterpretationRange {
-  public numericRange?: number[];
-  public conceptRange?: string[];
+  public numericRange?: {min?: number, max?: number};
+  public valueSet?: string;
+  public codeSystem?: string;
+  public codeSystemConcepts?: string[];
 }

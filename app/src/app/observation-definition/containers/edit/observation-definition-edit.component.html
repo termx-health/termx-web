@@ -1,16 +1,17 @@
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="loader.isLoading">
-      <m-card [mTitle]="(observationDefinition?.id ? 'web.observation-definition.header-edit' : 'web.observation-definition.header-add')"
+      <m-card [mTitle]="(observationDefinition?.id ? ('web.observation-definition.header-edit' | translate: ({code: observationDefinition.code})) : 'web.observation-definition.header-add')"
           [mShowSkeleton]="loader.isLoading">
         <form #form="ngForm" *ngIf="observationDefinition">
+
           <m-divider mText="web.observation-definition.divider.identification"></m-divider>
           <m-form-row mFull>
             <div *mFormCol>
               <m-form-item mName="code" mLabel="entities.observation-definition.code" required>
                 <m-input name="code" [(ngModel)]="observationDefinition.code" required></m-input>
               </m-form-item>
-              <m-form-item mLabel="entities.observation-definition.version" required>
+              <m-form-item mName="version" mLabel="entities.observation-definition.version" required>
                 <m-input name="version" [(ngModel)]="observationDefinition.version" required></m-input>
               </m-form-item>
             </div>
@@ -23,8 +24,10 @@
                     required></tw-value-set-concept-select>
               </m-form-item>
               <m-form-item mName="status" mLabel="entities.observation-definition.status" required>
-                <tw-value-set-concept-select [(ngModel)]="observationDefinition.status" name="status" valueSet="publication-status" required>
-                </tw-value-set-concept-select>
+                <tw-value-set-concept-select name="status"
+                    [(ngModel)]="observationDefinition.status"
+                    valueSet="publication-status"
+                    required></tw-value-set-concept-select>
               </m-form-item>
             </div>
           </m-form-row>
@@ -36,25 +39,25 @@
 
 
           <m-divider mText="web.observation-definition.divider.description"></m-divider>
-          <m-form-item mLabel="entities.observation-definition.name" required>
+          <m-form-item mName="name" mLabel="entities.observation-definition.name" required>
             <m-multi-language-input name="name" [(ngModel)]="observationDefinition.names" required></m-multi-language-input>
           </m-form-item>
-          <m-form-item mLabel="entities.observation-definition.alias">
-            <m-multi-language-input name="name" [(ngModel)]="observationDefinition.alias"></m-multi-language-input>
+          <m-form-item mName="alias" mLabel="entities.observation-definition.alias">
+            <m-multi-language-input name="alias" [(ngModel)]="observationDefinition.alias"></m-multi-language-input>
           </m-form-item>
-          <m-form-item mLabel="entities.observation-definition.definition">
+          <m-form-item mName="definition" mLabel="entities.observation-definition.definition">
             <m-multi-language-input name="definition" [(ngModel)]="observationDefinition.definition"></m-multi-language-input>
           </m-form-item>
-          <m-form-item mLabel="entities.observation-definition.keywords">
+          <m-form-item mName="keywords" mLabel="entities.observation-definition.keywords">
             <m-multi-language-input name="keywords" [(ngModel)]="observationDefinition.keywords"></m-multi-language-input>
           </m-form-item>
-          <m-form-item mLabel="entities.observation-definition.category" required>
+          <m-form-item mName="category" mLabel="entities.observation-definition.category" required>
             <tw-value-set-concept-select name="category"
                 [(ngModel)]="observationDefinition.category"
                 valueSet="observation-category"
                 required></tw-value-set-concept-select>
           </m-form-item>
-          <m-form-item mLabel="entities.observation-definition.time-precision" required>
+          <m-form-item mName="time-precision" mLabel="entities.observation-definition.time-precision" required>
             <m-select name="time-precision" [(ngModel)]="observationDefinition.timePrecision">
               <m-option [mLabel]="'web.observation-definition.time-precision.timestamp'" [mValue]="'timestamp'"></m-option>
               <m-option [mLabel]="'web.observation-definition.time-precision.period'" [mValue]="'period'"></m-option>
@@ -63,7 +66,8 @@
 
 
           <m-divider mText="web.observation-definition.divider.data"></m-divider>
-          <m-form-item mLabel="entities.observation-definition.structure" required>
+          <m-alert [mType]="'info'" [mTitle]="'web.observation-definition.info.data'"></m-alert>
+          <m-form-item mName="structure" mLabel="entities.observation-definition.structure" required>
             <m-select name="structure" [(ngModel)]="observationDefinition.structure" multiple required>
               <m-option [mLabel]="'web.observation-definition.structure.value'" [mValue]="'value'"></m-option>
               <m-option [mLabel]="'web.observation-definition.structure.panel'" [mValue]="'panel'"></m-option>
@@ -80,26 +84,36 @@
 
           <ng-container *ngIf="observationDefinition.structure | includes: 'panel'">
             <m-divider mText="web.observation-definition.divider.members"></m-divider>
-            <tw-obs-def-member-list [members]="observationDefinition.members"></tw-obs-def-member-list>
+            <tw-obs-def-member-list [members]="observationDefinition.members" [observationDefinitionId]="observationDefinition.id"></tw-obs-def-member-list>
           </ng-container>
 
 
           <ng-container *ngIf="observationDefinition.structure | includes: 'component'">
             <m-divider mText="web.observation-definition.divider.components"></m-divider>
+            <tw-obs-def-component-list [components]="observationDefinition.components"></tw-obs-def-component-list>
           </ng-container>
 
 
           <m-divider mText="web.observation-definition.divider.protocol"></m-divider>
+          <m-alert [mType]="'info'" [mTitle]="'web.observation-definition.info.protocol'"></m-alert>
+          <tw-obs-def-protocol [protocol]="observationDefinition.protocol"></tw-obs-def-protocol>
 
 
           <m-divider mText="web.observation-definition.divider.state"></m-divider>
+          <m-alert [mType]="'info'" [mTitle]="'web.observation-definition.info.state'"></m-alert>
+          <tw-obs-def-component-list [components]="observationDefinition.state"></tw-obs-def-component-list>
 
 
           <m-divider mText="web.observation-definition.divider.interpretation"></m-divider>
+          <tw-obs-def-interpretation-list [interpretations]="observationDefinition.interpretations"
+              [components]="observationDefinition.components"></tw-obs-def-interpretation-list>
 
 
           <m-divider mText="web.observation-definition.divider.mappings"></m-divider>
-
+          <m-alert [mType]="'info'" [mTitle]="'web.observation-definition.info.mappings'"></m-alert>
+          <tw-obs-def-mapping-list [mappings]="observationDefinition.mappings"
+              [observationDefinition]="observationDefinition"
+              [components]="observationDefinition | apply:extractComponents"></tw-obs-def-mapping-list>
 
         </form>
 

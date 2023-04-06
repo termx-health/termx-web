@@ -14,9 +14,10 @@ import {MeasurementUnitSearchParams} from '../model/measurement-unit-search-para
 })
 export class MeasurementUnitSearchComponent implements OnInit {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() @BooleanInput() public multiple: string | boolean;
 
   public data: {[code: string]: MeasurementUnit} = {};
-  public value?: string;
+  public value?: string | string[];
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
@@ -61,23 +62,28 @@ export class MeasurementUnitSearchComponent implements OnInit {
   private loadUnit(code?: string): void {
     if (isDefined(code)) {
       this.loading['load'] = true;
-      this.measurementUnitService.search({code: code, limit: 1}).pipe(takeUntil(this.destroy$)).subscribe(resp => {
-        const u = resp.data[0];
-        this.data = {[u.code!]: u};
+      this.measurementUnitService.search({code: code, limit: code.split(',')?.length}).pipe(takeUntil(this.destroy$)).subscribe(resp => {
+        this.data = group(resp.data, d => d.code);
       }).add(() => this.loading['load'] = false);
     }
   }
 
-  public writeValue(obj: MeasurementUnit | string): void {
-    this.value = typeof obj === 'object' ? obj?.code : obj;
-    this.loadUnit(this.value);
+  public writeValue(obj: MeasurementUnit | MeasurementUnit[] | string | string[]): void {
+    if (Array.isArray(obj)) {
+      this.value = obj.map(o => typeof o === 'object' ? o?.code : o);
+      this.loadUnit(this.value.join(','));
+    } else {
+      this.value = typeof obj === 'object' ? obj?.code : obj;
+      this.loadUnit(this.value);
+    }
   }
 
   public fireOnChange(): void {
     if (this.valuePrimitive) {
       this.onChange(this.value);
     } else {
-      this.onChange(this.data?.[this.value!]);
+      const v = Array.isArray(this.value) ? this.value.map(code => this.data?.[code]) : this.data?.[this.value];
+      this.onChange(v);
     }
   }
 

@@ -4,6 +4,7 @@
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
     [loading]="isLoading"
-    [autoUnselect]="false">
+    [autoUnselect]="false"
+    [multiple]="multiple | toBoolean">
   <m-option *ngFor="let code of data | keys" [mValue]="code" mLabel="{{code}} - {{data[code].names | localName}}"></m-option>
 </m-select>

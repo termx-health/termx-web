@@ -764,6 +764,11 @@
     "observation-definition": {
       "header-add": "Add observation definition",
       "header-edit": "Observation definition {{code}}",
+      "protocol-usage": {
+        "not-in-use": "Not in use",
+        "value-set": "In use (value set)",
+        "values": "In use (values)"
+      },
       "divider": {
         "identification": "Identification",
         "description": "Description",
@@ -775,6 +780,12 @@
         "mappings": "Mappings",
         "members": "Members",
         "components": "Components"
+      },
+      "info": {
+        "data": "Description of data structure",
+        "protocol": "Methodology of the observation measurement",
+        "state": "Ability to describe the state of subject during the observation process",
+        "mappings": "Concept map from observation definition to other code systems"
       },
       "time-precision": {
         "timestamp": "Timestamp",
@@ -793,6 +804,11 @@
       "cardinality": {
         "min": "min",
         "max": "max"
+      },
+      "interpretation-category": {
+        "reference": "Reference",
+        "critical": "Critical",
+        "absolute": "Absolute"
       }
     }
   },
@@ -1168,6 +1184,64 @@
         "order-number": "Order",
         "names": "Names",
         "cardinality": "Cardinality"
+      },
+      "components": {
+        "code": "Code",
+        "order-number": "Order",
+        "names": "Names",
+        "cardinality": "Cardinality",
+        "binding": "Binding",
+        "type": "Type",
+        "value-set": "Value set",
+        "unit": {
+          "singular": "Unit",
+          "system": "Unit system"
+        }
+      },
+      "protocol": {
+        "device": "Device",
+        "device-value-set": "Device value set",
+        "method": "Method",
+        "method-value-set": "Method value set",
+        "measurement-location": "Measurement location",
+        "measurement-location-value-set": "Measurement location value set",
+        "specimen": "Specimen",
+        "specimen-value-set": "Specimen value set",
+        "position": "Position",
+        "position-value-set": "Position value set",
+        "circumstances": "Circumstances of data collection",
+        "circumstances-value-set": "Collection details value set",
+        "components": "Custom parameters"
+      },
+      "interpretations": {
+        "order-number": "Order",
+        "target": "Component",
+        "state": "Criteria text",
+        "range": {
+          "singular": "Range",
+          "numeric-range": "Numeric range",
+          "value-set": "Value set",
+          "code-system": "Code system",
+          "code-system-concepts": "Code system concepts"
+        },
+        "category": {
+          "singular": "Category",
+          "age": "Age",
+          "gender": "Gender",
+          "gestation-age": "Gestation age"
+        },
+        "condition": "Condition (CQL)",
+        "fhir-interpretation-code": "FHIR interpretation code",
+        "snomed-interpretation-code": "SNOMED interpretation code"
+      },
+      "mappings": {
+        "order-number": "Order",
+        "target": "Component",
+        "map-set": "Map set",
+        "code-system": "Code system",
+        "concept": "Concept",
+        "relation": "Relation",
+        "condition": "Condition"
       }
     }
   }

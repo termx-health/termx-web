@@ -1,5 +1,5 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import {BooleanInput} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {ObservationDefinitionValue} from 'term-web/observation-definition/_lib';
 
@@ -12,4 +12,8 @@ export class ObservationDefinitionValueComponent {
   @Input() public value!: ObservationDefinitionValue;
 
   @ViewChild("form") public form?: NgForm;
+
+  public validate(): boolean {
+    return isDefined(this.form) && validateForm(this.form);
+  }
 }

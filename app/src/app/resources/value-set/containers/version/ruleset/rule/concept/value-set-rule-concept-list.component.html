@@ -3,7 +3,7 @@
     <div class="m-card__title">{{'entities.value-set-rule-set.rule.concepts' | translate}}</div>
   </div>
 
-  <form *ngIf="rule?.concepts && !showPredefinedConcepts">
+  <form *ngIf="rule?.concepts && !showPredefinedConcepts || viewMode">
     <m-editable-table #rowsTable [mData]="rule.concepts" [mRowInstance]="rowInstance" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
       <m-editable-column [mTitle]="'entities.value-set-version-concept.concept'" mName="concept">
         <ng-template #viewTemplate let-c>{{c.concept?.code}}</ng-template>
@@ -43,7 +43,7 @@
     </m-editable-table>
   </form>
 
-  <ng-container *ngIf="rule?.concepts && showPredefinedConcepts">
+  <ng-container *ngIf="rule?.concepts && showPredefinedConcepts && !viewMode">
     <m-select [(ngModel)]="rule.concepts" name="concepts" compareWith="concept.code" multiple>
       <m-option *ngFor="let vsc of vsConcepts" [mLabel]="vsc.concept.code" [mValue]="vsc"></m-option>
     </m-select>
