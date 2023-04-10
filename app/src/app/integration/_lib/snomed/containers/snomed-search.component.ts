@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {debounceTime, distinctUntilChanged, EMPTY, finalize, forkJoin, Observable, Subject, switchMap, tap} from 'rxjs';
 import {isDefined, SearchResult} from '@kodality-web/core-util';
 import {SnomedConcept} from '../model/concept/snomed-concept';
@@ -10,8 +10,10 @@ import {SnomedLibService} from '../services/snomed-lib.service';
   selector: 'tw-snomed-search',
   templateUrl: './snomed-search.component.html',
 })
-export class SnomedSearchComponent implements OnInit {
+export class SnomedSearchComponent implements OnInit, OnChanges {
   private static snomed_root = '138875005';
+
+  @Input() public ecl: string;
 
   public loading: {[key: string]: boolean} = {};
 
@@ -44,6 +46,13 @@ export class SnomedSearchComponent implements OnInit {
       distinctUntilChanged(),
       switchMap(() => this.searchConcepts(this.searchText)),
     ).subscribe();
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['ecl'] && this.ecl) {
+      this.eclParams.ecl = this.ecl;
+      this.loadEclConcepts();
+    }
   }
 
   public loadTaxonomyRootTree(): void {

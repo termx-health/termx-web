@@ -10,6 +10,7 @@ import {ValueSetExpandRequest} from '../model/value-set-expand-request';
 import {ValueSetVersionRule} from '../model/value-set-version-rule';
 import {ValueSet} from '../model/value-set';
 import {ValueSetSearchParams} from '../model/value-set-search-params';
+import {ValueSetVersionRuleSearchParams, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 
 @Injectable()
 export class ValueSetLibService {
@@ -50,5 +51,13 @@ export class ValueSetLibService {
 
   public loadRule(valueSetId: string, id: number): Observable<ValueSetVersionRule> {
     return this.http.get<ValueSetVersionRule>(`${this.baseUrl}/${valueSetId}/rules/${id}`);
+  }
+
+  public searchRules(valueSetId: string, params: ValueSetVersionRuleSearchParams = {}): Observable<SearchResult<ValueSetVersion>> {
+    return this.http.get<SearchResult<ValueSetVersionRule>>(`${this.baseUrl}/${valueSetId}/rules`, {params: SearchHttpParams.build(params)});
+  }
+
+  public loadRuleSet(valueSetId: string): Observable<ValueSetVersionRuleSet> {
+    return this.http.get<ValueSetVersionRuleSet>(`${this.baseUrl}/${valueSetId}/rule-set`);
   }
 }

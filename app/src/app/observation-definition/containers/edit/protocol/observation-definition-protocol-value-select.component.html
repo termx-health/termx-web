@@ -1,0 +1,13 @@
+<div class="m-justify-between">
+  <m-select style="width: 100%" [(ngModel)]="value" (ngModelChange)="fireOnChange()" multiple>
+    <m-option *ngFor="let key of data | keys" [mValue]="key" [mLabel]="data[key]?.names | localName"></m-option>
+  </m-select>
+
+  <a (click)="drawerOpened = true" *ngIf="snomedEcl">{{'core.btn.select' | translate}}</a>
+</div>
+
+<m-drawer [mVisible]="drawerOpened" (mClose)="drawerOpened = false">
+  <tw-snomed-search (conceptSelected)="onSelect($event)" [ecl]="snomedEcl"></tw-snomed-search>
+</m-drawer>
+
+

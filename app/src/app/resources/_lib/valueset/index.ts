@@ -9,6 +9,7 @@ export * from './model/value-set-transaction-request';
 export * from './model/value-set-version';
 export * from './model/value-set-version-concept';
 export * from './model/value-set-version-rule';
+export * from './model/value-set-version-rule-search-params';
 export * from './model/value-set-version-rule-set';
 export * from './model/value-set-version-search-params';
 export * from './pipe/value-set-version-code-pipe';

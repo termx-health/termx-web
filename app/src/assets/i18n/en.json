@@ -1201,16 +1201,22 @@
       "protocol": {
         "device": "Device",
         "device-value-set": "Device value set",
+        "device-values": "Device values",
         "method": "Method",
         "method-value-set": "Method value set",
+        "method-values": "Method values",
         "measurement-location": "Measurement location",
         "measurement-location-value-set": "Measurement location value set",
+        "measurement-location-values": "Measurement location values",
         "specimen": "Specimen",
         "specimen-value-set": "Specimen value set",
+        "specimen-values": "Specimen values",
         "position": "Position",
         "position-value-set": "Position value set",
+        "position-values": "Position values",
         "circumstances": "Circumstances of data collection",
         "circumstances-value-set": "Collection details value set",
+        "circumstances-values": "Collection details values",
         "components": "Custom parameters"
       },
       "interpretations": {

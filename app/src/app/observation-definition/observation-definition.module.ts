@@ -18,6 +18,9 @@ import {
 } from 'term-web/observation-definition/containers/edit/interpretation/observation-definition-interpretation-list.component';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
 import {ObservationDefinitionMappingListComponent} from 'term-web/observation-definition/containers/edit/mapping/observation-definition-mapping-list.component';
+import {
+  ObservationDefinitionProtocolValueSelectComponent
+} from 'term-web/observation-definition/containers/edit/protocol/observation-definition-protocol-value-select.component';
 
 export const OBSERVATION_DEFINITION_ROUTES: Routes = [
   {path: '', component: ObservationDefinitionListComponent},
@@ -45,7 +48,9 @@ export const OBSERVATION_DEFINITION_ROUTES: Routes = [
     ObservationDefinitionComponentListComponent,
     ObservationDefinitionProtocolComponent,
     ObservationDefinitionInterpretationListComponent,
-    ObservationDefinitionMappingListComponent
+    ObservationDefinitionMappingListComponent,
+
+    ObservationDefinitionProtocolValueSelectComponent
   ],
   providers: [
     ObservationDefinitionService
@@ -56,7 +61,9 @@ export const OBSERVATION_DEFINITION_ROUTES: Routes = [
     ObservationDefinitionComponentListComponent,
     ObservationDefinitionProtocolComponent,
     ObservationDefinitionInterpretationListComponent,
-    ObservationDefinitionMappingListComponent
+    ObservationDefinitionMappingListComponent,
+
+    ObservationDefinitionProtocolValueSelectComponent
   ]
 })
 export class ObservationDefinitionModule {
