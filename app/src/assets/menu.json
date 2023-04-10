@@ -127,15 +127,6 @@
       },
       {
         "label": {
-          "en": "Observation definitions"
-        },
-        "link": "observation-definitions",
-        "privileges": [
-          "*.ObservationDefinition.view"
-        ]
-      },
-      {
-        "label": {
           "en": "Integration",
           "et": "Integratsioon"
         },
