@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
@@ -11,6 +11,8 @@ import {MapSetService} from '../services/map-set-service';
   templateUrl: 'map-set-list.component.html'
 })
 export class MapSetListComponent implements OnInit {
+  @Input() public dev: boolean = false;
+
   public searchResult: SearchResult<MapSet> = SearchResult.empty();
   public query = new MapSetSearchParams();
   public loading: boolean = false;

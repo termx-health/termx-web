@@ -19,8 +19,8 @@ export class MapSetLibService {
 
   public constructor(protected http: HttpClient) { }
 
-  public load(mapSetId: string): Observable<MapSet> {
-    return this.http.get<MapSet>(`${this.baseUrl}/${mapSetId}`);
+  public load(mapSetId: string, decorate?: boolean): Observable<MapSet> {
+    return this.http.get<MapSet>(`${this.baseUrl}/${mapSetId}?decorate=${decorate}`);
   }
 
   public search(params: MapSetSearchParams = {}): Observable<SearchResult<MapSet>> {

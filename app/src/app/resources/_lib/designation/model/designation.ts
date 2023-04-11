@@ -1,6 +1,7 @@
 export class Designation {
   public id?: number;
   public designationTypeId?: number;
+  public designationType?: string;
   public name?: string;
   public language?: string;
   public rendering?: string;

@@ -43,4 +43,8 @@ export class MapSetService extends MapSetLibService {
   public unlinkEntityVersion(mapSetId: string, version: string, entityVersionId: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${mapSetId}/versions/${version}/entity-versions/${entityVersionId}/membership`);
   }
+
+  public saveTransaction(request: {mapSet: MapSet; version?: MapSetVersion, associations?: MapSetAssociation[]}): any {
+    return this.http.post<void>(`${this.baseUrl}/transaction`, request);
+  }
 }

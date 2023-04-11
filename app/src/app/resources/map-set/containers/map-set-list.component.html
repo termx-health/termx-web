@@ -1,7 +1,7 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-    <tw-add-button *twPrivileged="'*.MapSet.edit'" [routerLink]="'map-sets/add'">
+    <tw-add-button *twPrivileged="'*.MapSet.edit'" [routerLink]="dev ? ['add'] : ['map-sets/add']">
       {{'web.map-set.form.add-header' | translate}}
     </tw-add-button>
   </div>
@@ -18,7 +18,7 @@
     <tr *mTableRow="let ms">
       <td m-table-expand [mItem]="ms"></td>
       <td>
-        <a *ngIf="'*.MapSet.edit' | twHasAnyPrivilege; else view" [routerLink]="['map-sets', ms.id, 'edit']">{{ms.id}}</a>
+        <a *ngIf="'*.MapSet.edit' | twHasAnyPrivilege; else view" [routerLink]="dev ? [ms.id,'concepts'] : ['map-sets', ms.id, 'edit']">{{ms.id}}</a>
         <ng-template #view>
           <a [routerLink]="['map-sets',ms.id,'view']">{{ms.id}}</a>
         </ng-template>

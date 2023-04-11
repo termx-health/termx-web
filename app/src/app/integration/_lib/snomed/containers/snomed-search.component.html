@@ -14,10 +14,12 @@
             </nz-breadcrumb-item>
           </nz-breadcrumb>
           <div style="display: grid">
-            <label *ngFor="let child of children">
+            <label *ngFor="let child of children" class="m-items-middle">
               <m-icon *ngIf="!child.isLeafInferred" (click)="loadTaxonomyTree(child.conceptId)" mCode="down"></m-icon>
-              <a (click)="selectConcept(child.conceptId)">
-                <m-icon *ngIf="child.isLeafInferred" mCode="minus"></m-icon> &nbsp;{{child | snomedConceptName | async}}
+              <a (click)="selectConcept(child.conceptId)" class="m-items-middle">
+                <m-icon *ngIf="child.isLeafInferred" mCode="minus"></m-icon>
+                <label>{{child['term'] || (child | snomedConceptName | async)}}</label>
+                <label *ngIf="child['term']" style="color: grey">{{child | snomedConceptName: 'fsn' | async}}</label>
               </a>
             </label>
           </div>

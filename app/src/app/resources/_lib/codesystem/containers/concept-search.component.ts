@@ -11,6 +11,8 @@ import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams} fro
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}, DestroyService]
 })
 export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
+  private static complex_code_systems = ['loinc'];
+
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
   @Input() @BooleanInput() public multiple: string | boolean;
 
@@ -59,7 +61,10 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   }
 
   public searchConcepts(text?: string): Observable<{[id: string]: CodeSystemConcept}> {
-    if ((!text || text.length < 1) && !this.codeSystem && !this.codeSystemVersion) {
+    if (!isDefined(this.codeSystem)) {
+      return of(this.data);
+    }
+    if (ConceptSearchComponent.complex_code_systems.includes(this.codeSystem) && (!text || text.length < 2)) {
       return of(this.data);
     }
 
@@ -71,7 +76,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     q.codeSystemVersionReleaseDateLe = this.codeSystemVersionReleaseDateLe;
     q.codeSystemVersionExpirationDateGe = this.codeSystemVersionExpirationDateGe;
     q.codeSystemEntityStatus = this.codeSystemEntityVersionStatus;
-    q.limit = 10_000;
+    q.limit = 1000;
 
     this.loading['search'] = true;
     return this.conceptService.search(q).pipe(

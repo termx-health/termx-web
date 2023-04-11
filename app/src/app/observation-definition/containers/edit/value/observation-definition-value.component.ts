@@ -16,4 +16,13 @@ export class ObservationDefinitionValueComponent {
   public validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
   }
+
+  protected clearBinding(type: string): void {
+    this.value.unit = {};
+    this.value.valueSet = undefined;
+
+    if (type === 'Quantity') {
+      this.value.unit = {system: 'ucum'};
+    }
+  }
 }

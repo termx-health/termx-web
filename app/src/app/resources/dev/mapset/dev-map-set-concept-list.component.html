@@ -1,0 +1,124 @@
+<div nz-row nzJustify="center">
+  <div nz-col [nzLg]="18" [nzXs]="24">
+    <m-spinner [mLoading]="loading['save']">
+      <m-card *ngIf="mapSet" [mShowSkeleton]="loading['init']" autofocus>
+        <div *m-card-header>
+          <div class="m-justify-between">
+            <label class="m-card__title">{{('web.map-set.form.header' | translate) + ' ' + mapSetId}}</label>
+            <div class="m-items-middle">
+              <m-button (click)="openEdit()">{{'core.btn.edit' | translate}}</m-button>
+              <m-button (click)="save()" mDisplay="primary">{{'core.btn.save' | translate}}</m-button>
+            </div>
+          </div>
+        </div>
+        <div nz-row [nzGutter]="12" class="m-row">
+          <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24">
+            <m-form-item mLabel="entities.map-set.name">
+              {{mapSet.names | localName}}
+            </m-form-item>
+            <m-form-item mLabel="entities.map-set.source-value-set">
+              {{mapSet.sourceValueSet}}
+            </m-form-item>
+            <m-form-item mLabel="entities.map-set.target-value-set">
+              {{mapSet.targetValueSet}}
+            </m-form-item>
+          </div>
+        </div>
+
+        <m-card class="m-card-inside">
+          <div *m-card-header class="m-justify-between">
+            <div class="m-card__title">{{'entities.map-set.associations' | translate}}</div>
+            <m-dropdown>
+              <a *m-dropdown-item (click)="populateAll()">{{'Populate all source concepts' | translate}}</a>
+              <a *m-dropdown-item (click)="toggleModal(true)">{{'Automap' | translate}}</a>
+              <a *m-dropdown-item (click)="deleteEmptyRelations()">{{'Delete empty relations' | translate}}</a>
+            </m-dropdown>
+          </div>
+          <nz-tabset>
+            <nz-tab [nzTitle]="'Unmapped' | translate">
+              <div style="display: flex; justify-content: space-between">
+                <tw-map-set-unmapped-concepts #unmappedSourceConceptList [unmappedConcepts]="unmappedSourceConcepts"></tw-map-set-unmapped-concepts>
+                <div style="align-self: center">
+                  <m-button (mClick)="mapConcepts()" [disabled]="!unmappedTargetConceptList.selectedConcept || !unmappedTargetConceptList.selectedConcept">=</m-button>
+                </div>
+                <tw-map-set-unmapped-concepts #unmappedTargetConceptList [unmappedConcepts]="unmappedTargetConcepts"></tw-map-set-unmapped-concepts>
+              </div>
+            </nz-tab>
+
+            <nz-tab [nzTitle]="'Source -> Target' | translate">
+              <div class="m-items-middle" style="margin-bottom: 0.5rem">
+                <m-input name="mapping-search-text" [(ngModel)]="mappingSearchOptions.text" (ngModelChange)="filterAssociations($event, mappingSearchOptions.unmapped)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+                <m-checkbox name="mapping-search-unmapped" [(ngModel)]="mappingSearchOptions.unmapped" (ngModelChange)="filterAssociations(mappingSearchOptions.text, $event)">Unmapped</m-checkbox>
+              </div>
+              <form #form="ngForm" *ngIf="filteredMapSetAssociations">
+                <m-editable-table #rowsTable [mData]="filteredMapSetAssociations" [mRowInstance]="rowInstance" (mAfterDelete)="deleteAssociation($event)" (mRowAdd)="addAssociation()">
+                  <m-editable-column [mTitle]="'Source code'" mName="source-code">
+                    <ng-template #viewTemplate let-a>{{a.source.code}}</ng-template>
+                    <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+                      <m-select [name]="ngModelName" [(ngModel)]="a.source.code" (ngModelChange)="conceptSelected($event, a, 'source')" required>
+                        <m-option *ngFor="let concept of sourceConcepts" [mValue]="concept.concept.code" [mLabel]="concept.concept.code"></m-option>
+                      </m-select>
+                    </ng-template>
+                  </m-editable-column>
+                  <m-editable-column [mTitle]="'Source display'" mName="source-display">
+                    <ng-template #viewTemplate let-a>{{a.source.designations | apply:findDisplay}}</ng-template>
+                  </m-editable-column>
+                  <m-editable-column [mTitle]="'Target code'" mName="target-code">
+                    <ng-template #viewTemplate let-a>{{a.target.code}}</ng-template>
+                    <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+                      <m-select [name]="ngModelName" [(ngModel)]="a.target.code" (ngModelChange)="conceptSelected($event, a, 'target')" required>
+                        <m-option *ngFor="let concept of targetConcepts" [mValue]="concept.concept.code" [mLabel]="concept.concept.code"></m-option>
+                      </m-select>
+                    </ng-template>
+                  </m-editable-column>
+                  <m-editable-column [mTitle]="'Target display'" mName="target-display">
+                    <ng-template #viewTemplate let-a>{{a.target.designations | apply:findDisplay}}</ng-template>
+                  </m-editable-column>
+                  <m-editable-column [mTitle]="'Relation'" mName="relation">
+                    <ng-template #viewTemplate let-a>{{a.associationType}}</ng-template>
+                    <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+                      <tw-association-type-search [name]="ngModelName" [(ngModel)]="a.associationType" valuePrimitive required></tw-association-type-search>
+                    </ng-template>
+                  </m-editable-column>
+                </m-editable-table>
+              </form>
+            </nz-tab>
+
+            <nz-tab [nzTitle]="'Visualization' | translate">
+              TODO
+            </nz-tab>
+          </nz-tabset>
+        </m-card>
+      </m-card>
+    </m-spinner>
+  </div>
+</div>
+
+
+<m-modal #modal [(mVisible)]="modalData.visible" (mClose)="toggleModal()">
+  <ng-container *m-modal-header>
+    {{'Automap'| translate}}
+  </ng-container>
+
+  <ng-container *m-modal-content>
+    <form #modalForm="ngForm">
+      <m-form-item mName="sourceProperty" mLabel="Source property" required>
+        <m-select name="sourceProperty" [(ngModel)]="modalData.sourceProperty" required>
+          <m-option [mLabel]="'code'" [mValue]="'code'"></m-option>
+          <m-option *ngFor="let p of sourceProperties" [mLabel]="p" [mValue]="p"></m-option>
+        </m-select>
+      </m-form-item>
+      <m-form-item mName="targetProperty" mLabel="Target property">
+        <m-select name="targetProperty" [(ngModel)]="modalData.targetProperty" required>
+          <m-option [mLabel]="'code'" [mValue]="'code'"></m-option>
+          <m-option *ngFor="let p of targetProperties" [mLabel]="p" [mValue]="p"></m-option>
+        </m-select>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="automap()">{{'core.btn.confirm' | translate}}</m-button>
+  </div>
+</m-modal>

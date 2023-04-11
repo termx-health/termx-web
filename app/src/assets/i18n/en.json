@@ -764,6 +764,7 @@
     "observation-definition": {
       "header-add": "Add observation definition",
       "header-edit": "Observation definition {{code}}",
+      "select-snomed": "SNOMED search",
       "protocol-usage": {
         "not-in-use": "Not in use",
         "value-set": "In use (value set)",
