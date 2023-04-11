@@ -24,9 +24,13 @@ export class ObservationDefinitionComponentListComponent implements OnChanges{
     }
   }
 
-  protected clearBinding(component: ObservationDefinitionComponent): void {
+  protected clearBinding(component: ObservationDefinitionComponent, type: string): void {
     component.unit = {};
     component.valueSet = undefined;
+
+    if (type === 'Quantity') {
+      component.unit = {system: 'ucum'};
+    }
   }
 
   public validate(): boolean {

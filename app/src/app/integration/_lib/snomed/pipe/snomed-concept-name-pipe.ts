@@ -12,10 +12,10 @@ export class SnomedConceptNamePipe implements PipeTransform {
 
   public constructor(private snomedService: SnomedLibService) {}
 
-  public transform(concept: string | SnomedConcept): Observable<string> {
+  public transform(concept: string | SnomedConcept, type: 'pt' | 'fsn' = 'pt'): Observable<string> {
     if (!concept) {
       return EMPTY;
     }
-    return (typeof concept === 'string' ? this.snomedService.loadConcept(concept) : of(concept)).pipe(map(c => SnomedUtil.formatConcept(c)));
+    return (typeof concept === 'string' ? this.snomedService.loadConcept(concept) : of(concept)).pipe(map(c => SnomedUtil.formatConcept(c, type)));
   }
 }

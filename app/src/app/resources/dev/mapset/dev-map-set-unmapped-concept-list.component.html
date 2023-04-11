@@ -1,0 +1,14 @@
+<div class="m-items-middle">
+  <a (click)="populate()">Populate</a>
+  <m-select name="concept" [(ngModel)]="conceptToAdd" (ngModelChange)="addConcept($event)">
+    <m-option [mValue]="concept" [mLabel]="concept.concept.code" *ngFor="let concept of (unmappedConcepts | apply: notUsed:concepts)"></m-option>
+  </m-select>
+</div>
+<m-list *ngIf="concepts" style="margin-top: 1rem">
+  <m-list-item *ngFor="let concept of concepts" (mClick)="selectConcept(concept)" [ngClass]="selectedConcept === concept ? 'selected-item' : ''" mClickable>
+    <div class="m-justify-between">
+      <label>{{concept.concept?.code}}</label>
+      <m-icon style="cursor: pointer" (click)="removeConcept(concept)" mCode="close"></m-icon>
+    </div>
+  </m-list-item>
+</m-list>

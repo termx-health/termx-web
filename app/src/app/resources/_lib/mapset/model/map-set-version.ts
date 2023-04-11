@@ -1,4 +1,5 @@
 import {MapSetEntityVersion} from './map-set-entity-version';
+import {MapSetAssociation} from './map-set-association';
 
 export class MapSetVersion {
   public id?: number;
@@ -13,4 +14,5 @@ export class MapSetVersion {
   public created?: Date;
 
   public entities?: MapSetEntityVersion[];
+  public associations?: MapSetAssociation[];
 }

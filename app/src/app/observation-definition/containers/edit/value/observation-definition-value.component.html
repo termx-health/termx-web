@@ -2,7 +2,7 @@
   <m-form-row mFull>
     <div *mFormCol>
       <m-form-item mLabel="entities.observation-definition.value.type" mName="type" required>
-        <tw-value-set-concept-select [(ngModel)]="value.type" name="type" valueSet="permitted-data-type" required></tw-value-set-concept-select>
+        <tw-value-set-concept-select [(ngModel)]="value.type" (ngModelChange)="clearBinding($event)" name="type" valueSet="permitted-data-type" required></tw-value-set-concept-select>
       </m-form-item>
       <m-form-item mLabel="entities.observation-definition.value.behaviour" mName="behaviour" required>
         <m-select [(ngModel)]="value.behaviour" name="behaviour" required>
@@ -16,8 +16,7 @@
       <m-form-item *ngIf="value.type === 'Quantity'" mLabel="entities.observation-definition.value.unit.singular" mName="unit">
         <div class="m-items-middle">
           <m-form-control mName="system">
-            <tw-code-system-search [(ngModel)]="value.unit.system" name="system" valuePrimitive placeholder="entities.observation-definition.value.unit.system">
-            </tw-code-system-search>
+            <tw-code-system-search [(ngModel)]="value.unit.system" name="system" valuePrimitive placeholder="entities.observation-definition.value.unit.system"></tw-code-system-search>
           </m-form-control>
           <m-form-control mName="dose-unit">
             <tw-term-concept-search [codeSystem]="value.unit.system" [(ngModel)]="value.unit.unit" name="unit" valueType="code"></tw-term-concept-search>

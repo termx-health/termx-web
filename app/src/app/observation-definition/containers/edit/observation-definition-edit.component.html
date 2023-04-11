@@ -112,6 +112,8 @@
           <m-divider mText="web.observation-definition.divider.mappings"></m-divider>
           <m-alert [mType]="'info'" [mTitle]="'web.observation-definition.info.mappings'"></m-alert>
           <tw-obs-def-mapping-list [mappings]="observationDefinition.mappings"
+              [positionUsed]="observationDefinition.protocol?.position?.usage !== 'not-in-use'"
+              [dataCollectionCircumstancesUsed]="observationDefinition.protocol?.dataCollectionCircumstances?.usage !== 'not-in-use'"
               [observationDefinition]="observationDefinition"
               [components]="observationDefinition | apply:extractComponents"></tw-obs-def-mapping-list>
 

@@ -25,7 +25,7 @@
           <m-form-row>
             <div *mFormCol>
               <m-form-item mLabel="entities.observation-definition.mappings.target" [mName]="prefix + '-target'" required>
-                <m-select [(ngModel)]="m.target" [name]="prefix + '-target'" required compareWith="id">
+                <m-select [(ngModel)]="m.target" [name]="prefix + '-target'" required [compareWith]="compareTargets">
                   <m-option *ngFor="let target of targets" [mValue]="target" [mLabel]="target | apply:getTargetDisplay:observationDefinition:components"></m-option>
                 </m-select>
               </m-form-item>
@@ -51,7 +51,7 @@
           <m-form-row>
             <div *mFormCol>
               <m-form-item mLabel="entities.observation-definition.mappings.concept" [mName]="prefix + '-concept'" required>
-                <tw-concept-search [(ngModel)]="m.concept" [codeSystem]="m.codeSystem" [name]="prefix + '-concept'" valueType="code" required></tw-concept-search>
+                <tw-term-concept-search [(ngModel)]="m.concept" [codeSystem]="m.codeSystem" [name]="prefix + '-concept'" valueType="code" required></tw-term-concept-search>
               </m-form-item>
             </div>
             <div *mFormCol>

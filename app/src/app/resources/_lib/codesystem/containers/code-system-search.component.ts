@@ -64,7 +64,7 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   private loadCodeSystems(id?: string): void {
     if (isDefined(id)) {
       this.loading['load'] = true;
-      this.codeSystemService.search({ids: id, conceptsDecorated: true, propertiesDecorated: true, versionsDecorated: true})
+      this.codeSystemService.search({ids: id, propertiesDecorated: true, versionsDecorated: true})
         .pipe(takeUntil(this.destroy$)).subscribe(resp => {
         this.data = {...(this.data || {}), ...group(resp.data, c => c.id)};
       }).add(() => this.loading['load'] = false);

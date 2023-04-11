@@ -81,7 +81,7 @@
         <m-select name="position-usage" [(ngModel)]="protocol.position.usage" required>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
-<!--          <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>-->
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
         </m-select>
       </m-form-item>
     </div>
@@ -90,7 +90,7 @@
         <tw-value-set-search [(ngModel)]="protocol.position.valueSet" name="position-value-set" valuePrimitive></tw-value-set-search>
       </m-form-item>
       <m-form-item *ngIf="protocol.position.usage === 'values'" mLabel="entities.observation-definition.protocol.position-values" mName="position-values">
-        <!--TODO-->
+        <tw-obs-def-protocol-value-select [(ngModel)]="protocol.position.values" name="position-values"></tw-obs-def-protocol-value-select>
       </m-form-item>
     </div>
   </m-form-row>
@@ -100,7 +100,7 @@
         <m-select name="circumstances-usage" [(ngModel)]="protocol.dataCollectionCircumstances.usage" required>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
-<!--          <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>-->
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
         </m-select>
       </m-form-item>
     </div>
@@ -109,7 +109,7 @@
         <tw-value-set-search [(ngModel)]="protocol.dataCollectionCircumstances.valueSet" name="circumstances-value-set" valuePrimitive></tw-value-set-search>
       </m-form-item>
       <m-form-item *ngIf="protocol.dataCollectionCircumstances.usage === 'values'" mLabel="entities.observation-definition.protocol.circumstances-values" mName="circumstances-values">
-        <!--TODO-->
+        <tw-obs-def-protocol-value-select [(ngModel)]="protocol.dataCollectionCircumstances.values" name="circumstances-values"></tw-obs-def-protocol-value-select>
       </m-form-item>
     </div>
   </m-form-row>
