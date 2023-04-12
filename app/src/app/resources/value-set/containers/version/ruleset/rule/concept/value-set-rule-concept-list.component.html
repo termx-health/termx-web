@@ -5,6 +5,12 @@
 
   <form *ngIf="rule?.concepts && !showPredefinedConcepts || viewMode">
     <m-editable-table #rowsTable [mData]="rule.concepts" [mRowInstance]="rowInstance" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
+      <m-editable-column [mTitle]="'entities.value-set-version-concept.order-number'" mName="order-number">
+        <ng-template #viewTemplate let-c>{{c.orderNumber}}</ng-template>
+        <ng-template #editTemplate let-c let-ngModelName="ngModelName">
+          <m-number-input [name]="ngModelName" [(ngModel)]="c.orderNumber"></m-number-input>
+        </ng-template>
+      </m-editable-column>
       <m-editable-column [mTitle]="'entities.value-set-version-concept.concept'" mName="concept">
         <ng-template #viewTemplate let-c>{{c.concept?.code}}</ng-template>
         <ng-template #editTemplate let-c let-ngModelName="ngModelName">

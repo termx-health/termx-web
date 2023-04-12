@@ -1044,6 +1044,7 @@
     "value-set-version-concept": {
       "concept": "Concept",
       "display": "Display",
+      "order-number": "Order",
       "additional-designations": "Additional designations"
     },
     "privilege": {

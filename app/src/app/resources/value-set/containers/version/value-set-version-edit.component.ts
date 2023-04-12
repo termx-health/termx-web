@@ -7,6 +7,7 @@ import {ValueSetService} from '../../services/value-set.service';
 import {ValueSetRuleSetComponent} from './ruleset/value-set-rule-set.component';
 import {ValueSetVersionConceptModalComponent} from './concepts/value-set-version-concept-modal.component';
 import {CodeSystemVersion, ValueSetVersion} from 'term-web/resources/_lib';
+import {ValueSetVersionConceptListComponent} from 'term-web/resources/value-set/containers/version/concepts/value-set-version-concept-list.component';
 
 @Component({
   templateUrl: 'value-set-version-edit.component.html',
@@ -21,6 +22,7 @@ export class ValueSetVersionEditComponent implements OnInit {
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("ruleSetComponent") public ruleSetComponent?: ValueSetRuleSetComponent;
+  @ViewChild("conceptListComponent") public conceptListComponent?: ValueSetVersionConceptListComponent;
   @ViewChild("conceptModal") public conceptModal?: ValueSetVersionConceptModalComponent;
 
   public constructor(
@@ -47,12 +49,13 @@ export class ValueSetVersionEditComponent implements OnInit {
   }
 
   public save(): void {
-    if (!validateForm(this.form)) {
+    if (!validateForm(this.form) || !this.conceptListComponent.validate()) {
       return;
     }
     this.loading['save'] = true;
     this.version!.status = 'draft';
     this.version!.ruleSet = this.ruleSetComponent?.getRuleSet();
+    this.version!.concepts = this.conceptListComponent?.getConcepts();
     this.valueSetService.saveVersion(this.valueSetId!, this.version!).subscribe(() => this.location.back()).add(() => this.loading['save'] = false);
   }
 

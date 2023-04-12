@@ -227,10 +227,6 @@ export class DevMapSetConceptListComponent implements OnInit {
     }
   }
 
-  protected deleteAssociation(association: MapSetAssociation): void {
-    this.mapSetVersion.associations = this.mapSetVersion.associations.filter(a => a['_id'] !== association['_id']);
-  }
-
   private initFilteredAssociations(): void {
     this.mapSetVersion.associations.forEach(a => a['_id'] = uuid());
     this.filteredMapSetAssociations = copyDeep(this.mapSetVersion.associations);
@@ -241,6 +237,10 @@ export class DevMapSetConceptListComponent implements OnInit {
     association['_id'] = uuid();
     this.filteredMapSetAssociations = [...this.filteredMapSetAssociations, association];
     this.mapSetVersion.associations = [...this.mapSetVersion.associations, association];
+  }
+
+  protected deleteAssociation(association: MapSetAssociation): void {
+    this.mapSetVersion.associations = this.mapSetVersion.associations.filter(a => a['_id'] !== association['_id']);
   }
 
   private extractConcepts(r: SearchResult<CodeSystemConcept> | ValueSetVersionConcept[]): CodeSystemConcept[] {

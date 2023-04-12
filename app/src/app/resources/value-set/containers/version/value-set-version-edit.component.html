@@ -38,7 +38,7 @@
             <m-textarea [(ngModel)]="version.description" name="description"></m-textarea>
           </m-form-item>
 
-          <tw-value-set-version-concept-list *ngIf="version.id" [concepts]="version.concepts"></tw-value-set-version-concept-list>
+          <tw-value-set-version-concept-list #conceptListComponent *ngIf="version.id" [concepts]="version.concepts"></tw-value-set-version-concept-list>
         </form>
 
         <ng-container *m-card-footer>

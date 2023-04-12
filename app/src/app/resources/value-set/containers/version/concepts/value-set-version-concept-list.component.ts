@@ -1,7 +1,7 @@
-import {Component, Input} from '@angular/core';
-import {ValueSetVersionConcept} from 'term-web/resources/_lib';
-import {BooleanInput} from '@kodality-web/core-util';
-import {ValueSetService} from '../../../services/value-set.service';
+import {Component, Input, ViewChild} from '@angular/core';
+import {Designation, ValueSetVersionConcept} from 'term-web/resources/_lib';
+import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
+import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'tw-value-set-version-concept-list',
@@ -15,12 +15,25 @@ export class ValueSetVersionConceptListComponent {
 
   @Input() public valueSet?: string;
   @Input() public concepts: ValueSetVersionConcept[] = [];
+  public rowInstance: ValueSetVersionConcept = {concept: {}, display: {}};
 
   @Input() @BooleanInput() public viewMode: string | boolean = false;
 
-  public constructor(private valueSetService: ValueSetService) { }
+  @ViewChild("form") public form?: NgForm;
 
-  public deleteConcept(id: number): void {
-    this.valueSetService.deleteConcept(this.valueSet!, id).subscribe(() => this.concepts = this.concepts.filter(c => c.id !== id));
+  public validate(): boolean {
+    return isDefined(this.form) && validateForm(this.form);
+  }
+
+  public getConcepts(): ValueSetVersionConcept[] {
+    return this.concepts;
+  }
+
+  protected addDesignation(concept: ValueSetVersionConcept): void {
+    concept.additionalDesignations = [...(concept.additionalDesignations || []), new Designation()];
+  }
+
+  protected deleteDesignation(concept: ValueSetVersionConcept, index: number): void {
+    concept.additionalDesignations.splice(index, 1);
   }
 }
