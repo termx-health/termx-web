@@ -16,8 +16,11 @@
             <m-form-item mLabel="entities.map-set.name">
               {{mapSet.names | localName}}
             </m-form-item>
-            <m-form-item mLabel="entities.map-set.source-value-set">
+            <m-form-item mLabel="entities.map-set.source-value-set" *ngIf="mapSet.sourceValueSet">
               {{mapSet.sourceValueSet}}
+            </m-form-item>
+            <m-form-item mLabel="entities.map-set.source-code-systems" *ngIf="mapSet.sourceCodeSystems?.length > 0">
+              <div style="display: grid"><label *ngFor="let cs of mapSet.sourceCodeSystems">{{cs}}</label></div>
             </m-form-item>
             <m-form-item mLabel="entities.map-set.target-value-set">
               {{mapSet.targetValueSet}}
@@ -56,7 +59,7 @@
                     <ng-template #viewTemplate let-a>{{a.source.code}}</ng-template>
                     <ng-template #editTemplate let-a let-ngModelName="ngModelName">
                       <m-select [name]="ngModelName" [(ngModel)]="a.source.code" (ngModelChange)="conceptSelected($event, a, 'source')" required>
-                        <m-option *ngFor="let concept of sourceConcepts" [mValue]="concept.concept.code" [mLabel]="concept.concept.code"></m-option>
+                        <m-option *ngFor="let concept of sourceConcepts" [mValue]="concept.code" [mLabel]="concept.code"></m-option>
                       </m-select>
                     </ng-template>
                   </m-editable-column>
@@ -67,7 +70,7 @@
                     <ng-template #viewTemplate let-a>{{a.target.code}}</ng-template>
                     <ng-template #editTemplate let-a let-ngModelName="ngModelName">
                       <m-select [name]="ngModelName" [(ngModel)]="a.target.code" (ngModelChange)="conceptSelected($event, a, 'target')" required>
-                        <m-option *ngFor="let concept of targetConcepts" [mValue]="concept.concept.code" [mLabel]="concept.concept.code"></m-option>
+                        <m-option *ngFor="let concept of targetConcepts" [mValue]="concept.code" [mLabel]="concept.code"></m-option>
                       </m-select>
                     </ng-template>
                   </m-editable-column>

@@ -38,8 +38,16 @@
             <tw-value-set-search name="sourceValueSet" [(ngModel)]="mapSet.sourceValueSet" valuePrimitive></tw-value-set-search>
           </m-form-item>
 
+          <m-form-item mName="sourceCodeSystems" mLabel="entities.map-set.source-code-systems">
+            <tw-code-system-search name="sourceCodeSystems" [(ngModel)]="mapSet.sourceCodeSystems" valuePrimitive multiple></tw-code-system-search>
+          </m-form-item>
+
           <m-form-item mName="targetValueSet" mLabel="entities.map-set.target-value-set">
             <tw-value-set-search name="targetValueSet" [(ngModel)]="mapSet.targetValueSet" valuePrimitive></tw-value-set-search>
+          </m-form-item>
+
+          <m-form-item mName="targetCodeSystems" mLabel="entities.map-set.target-code-systems">
+            <tw-code-system-search name="targetCodeSystems" [(ngModel)]="mapSet.targetCodeSystems" valuePrimitive multiple></tw-code-system-search>
           </m-form-item>
 
         </form>

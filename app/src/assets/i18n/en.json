@@ -852,7 +852,9 @@
       "versions": "Versions",
       "associations": "Associations",
       "source-value-set": "Source value set",
-      "target-value-set": "Target value set"
+      "target-value-set": "Target value set",
+      "source-code-systems": "Source code systems",
+      "target-code-systems": "Target code systems"
     },
     "map-set-entity": {
       "id": "Id",

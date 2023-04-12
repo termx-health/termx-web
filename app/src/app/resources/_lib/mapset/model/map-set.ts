@@ -9,6 +9,8 @@ export class MapSet {
   public description?: string;
   public sourceValueSet?: string;
   public targetValueSet?: string;
+  public sourceCodeSystems?: string[];
+  public targetCodeSystems?: string[];
 
   public versions?: MapSetVersion[];
   public associations?: MapSetAssociation[];

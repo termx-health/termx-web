@@ -1,7 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {
-  CodeSystemEntityVersion,
+  CodeSystemConcept,
+  CodeSystemEntityVersion, CodeSystemLibService,
   Designation,
   MapSet,
   MapSetAssociation,
@@ -13,7 +14,7 @@ import {NgForm} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {MapSetService} from '../../map-set/services/map-set-service';
 import {forkJoin} from 'rxjs';
-import {compareValues, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
+import {compareValues, copyDeep, isDefined, SearchResult, validateForm} from '@kodality-web/core-util';
 import {DevMapSetUnmappedConceptListComponent} from './dev-map-set-unmapped-concept-list.component';
 import {v4 as uuid} from 'uuid';
 
@@ -24,12 +25,12 @@ export class DevMapSetConceptListComponent implements OnInit {
   public mapSetId?: string | null;
   public mapSet?: MapSet;
   public mapSetVersion?: MapSetVersion;
-  public sourceConcepts?: ValueSetVersionConcept[];
+  public sourceConcepts?: CodeSystemConcept[];
   public sourceProperties?: string[];
-  public unmappedSourceConcepts?: ValueSetVersionConcept[];
-  public targetConcepts?: ValueSetVersionConcept[];
+  public unmappedSourceConcepts?: CodeSystemConcept[];
+  public targetConcepts?: CodeSystemConcept[];
   public targetProperties?: string[];
-  public unmappedTargetConcepts?: ValueSetVersionConcept[];
+  public unmappedTargetConcepts?: CodeSystemConcept[];
 
   public loading: {[k: string]: boolean} = {};
 
@@ -52,6 +53,7 @@ export class DevMapSetConceptListComponent implements OnInit {
     private translateService: TranslateService,
     private mapSetService: MapSetService,
     private valueSetService: ValueSetLibService,
+    private codeSystemService: CodeSystemLibService,
     private router: Router,
     private route: ActivatedRoute
   ) {}
@@ -67,20 +69,40 @@ export class DevMapSetConceptListComponent implements OnInit {
       this.mapSet = ms;
       this.mapSetVersion = this.getLastMapSetVersion(ms.versions!);
       this.initFilteredAssociations();
-      forkJoin([
-        this.valueSetService.expand({valueSet: ms.sourceValueSet}),
-        this.valueSetService.expand({valueSet: ms.targetValueSet})
-      ]).subscribe(([source, target]) => {
-        this.sourceConcepts = source;
-        this.targetConcepts = target;
-        this.sourceProperties = [...new Set(this.sourceConcepts?.flatMap(c => c.concept!.versions!
-          .flatMap(v => [...v.propertyValues!.map(v => v.entityProperty!), ...v.designations!.map(d => d.designationType!)])))];
-        this.targetProperties = [...new Set(this.targetConcepts?.flatMap(c => c.concept!.versions!
-          .flatMap(v => [...v.propertyValues!.map(v => v.entityProperty!), ...v.designations!.map(d => d.designationType!)])))];
-        this.unmappedSourceConcepts = source?.filter(c => this.isUnmapped(c, 'source'));
-        this.unmappedTargetConcepts = target?.filter(c => this.isUnmapped(c, 'target'));
-      });
+      this.loadConcepts(ms);
     }).add(() => this.loading ['init'] = false);
+  }
+
+  private loadConcepts(ms: MapSet): void {
+    const csSourceRequests = ms.sourceCodeSystems?.length > 0 ? ms.sourceCodeSystems.map(cs => this.codeSystemService.searchConcepts(cs, {limit: 10_000})) : [];
+    const vsSourceRequests = !(ms.sourceCodeSystems?.length > 0) && ms.sourceValueSet ? [this.valueSetService.expand({valueSet: ms.sourceValueSet})] : [];
+    const csTargetRequests = ms.targetCodeSystems?.length > 0 ? ms.targetCodeSystems.map(cs => this.codeSystemService.searchConcepts(cs, {limit: 10_000})) : [];
+    const vsTargetRequests = !(ms.targetCodeSystems?.length > 0) && ms.targetValueSet ? [this.valueSetService.expand({valueSet: ms.targetValueSet})] : [];
+
+    this.sourceConcepts = [];
+    this.targetConcepts = [];
+
+    forkJoin([
+      ...csSourceRequests,
+      ...vsSourceRequests
+    ]).subscribe((responses) => {
+      responses.forEach(r => {
+        this.sourceConcepts = [...this.sourceConcepts, ...this.extractConcepts(r)];
+        this.sourceProperties = [...new Set(this.sourceConcepts?.flatMap(c => c.versions.flatMap(v => [...v.propertyValues!.map(v => v.entityProperty!), ...v.designations!.map(d => d.designationType!)])))];
+        this.unmappedSourceConcepts = this.sourceConcepts?.filter(c => this.isUnmapped(c, 'source'));
+      });
+    });
+
+    forkJoin([
+      ...csTargetRequests,
+      ...vsTargetRequests
+    ]).subscribe((responses) => {
+      responses.forEach(r => {
+        this.targetConcepts = [...this.targetConcepts, ...this.extractConcepts(r)];
+        this.targetProperties = [...new Set(this.targetConcepts?.flatMap(c => c.versions.flatMap(v => [...v.propertyValues!.map(v => v.entityProperty!), ...v.designations!.map(d => d.designationType!)])))];
+        this.unmappedTargetConcepts = this.targetConcepts?.filter(c => this.isUnmapped(c, 'target'));
+      });
+    });
   }
 
   protected openEdit(): void {
@@ -90,12 +112,12 @@ export class DevMapSetConceptListComponent implements OnInit {
     this.router.navigate(['/resources/dev/map-sets/', this.mapSetId, 'edit']);
   }
 
-  private isUnmapped(concept: ValueSetVersionConcept, type: 'target' | 'source'): boolean {
+  private isUnmapped(concept: CodeSystemConcept, type: 'target' | 'source'): boolean {
     if (type === 'source') {
-      return !isDefined(this.mapSetVersion?.associations?.find(a => a?.source?.code === concept.concept?.code));
+      return !isDefined(this.mapSetVersion?.associations?.find(a => a?.source?.code === concept?.code));
     }
     if (type === 'target') {
-      return !isDefined(this.mapSetVersion?.associations?.find(a => a?.target?.code === concept.concept?.code));
+      return !isDefined(this.mapSetVersion?.associations?.find(a => a?.target?.code === concept?.code));
     }
     return true;
   };
@@ -105,8 +127,8 @@ export class DevMapSetConceptListComponent implements OnInit {
 
     const association = new MapSetAssociation();
     association.associationType = 'equal';
-    association.source = this.getLastVersion(this.unmappedSourceConceptList.selectedConcept.concept.versions);
-    association.target = this.getLastVersion(this.unmappedTargetConceptList.selectedConcept.concept.versions);
+    association.source = this.getLastVersion(this.unmappedSourceConceptList.selectedConcept.versions);
+    association.target = this.getLastVersion(this.unmappedTargetConceptList.selectedConcept.versions);
     association.status = 'draft';
     association.versions = [{status: 'draft'}];
 
@@ -144,20 +166,22 @@ export class DevMapSetConceptListComponent implements OnInit {
     const associations = this.mapSetVersion?.associations || [];
 
     this.unmappedSourceConceptList?.unmappedConcepts?.forEach(sourceConcept => {
-      const sourceDesignations = sourceConcept.concept?.versions?.flatMap(v => v.designations)?.filter(d => d!.designationType === sourceProperty)?.map(d => d?.name!);
-      const sourceProperties = sourceConcept.concept?.versions?.flatMap(v => v.propertyValues)?.filter(d => d!.entityProperty === sourceProperty)?.map(d => d?.value!);
-      const sourceValues = [...(sourceDesignations || []), ...(sourceProperties || []), ...(sourceProperty === 'code' ? [sourceConcept.concept.code] : [])];
-      const targetConcept =  this.unmappedTargetConceptList?.unmappedConcepts?.find(t => {
-        const targetDesignations = t?.concept?.versions?.flatMap(v => v.designations)?.filter(d => d!.designationType === targetProperty)?.map(d => d?.name!);
-        const targetProperties = t?.concept?.versions?.flatMap(v => v.propertyValues)?.filter(d => d!.entityProperty === targetProperty)?.map(d => d?.value!);
-        const targetValues = [...targetDesignations, ...targetProperties, ...(targetProperty === 'code' ? [t?.concept?.code] : [])];
+      const sourceDesignations = sourceConcept?.versions?.flatMap(v => v.designations)?.filter(d => d!.designationType === sourceProperty)
+        ?.map(d => d?.name!);
+      const sourceProperties = sourceConcept?.versions?.flatMap(v => v.propertyValues)?.filter(d => d!.entityProperty === sourceProperty)
+        ?.map(d => d?.value!);
+      const sourceValues = [...(sourceDesignations || []), ...(sourceProperties || []), ...(sourceProperty === 'code' ? [sourceConcept.code] : [])];
+      const targetConcept = this.unmappedTargetConceptList?.unmappedConcepts?.find(t => {
+        const targetDesignations = t?.versions?.flatMap(v => v.designations)?.filter(d => d!.designationType === targetProperty)?.map(d => d?.name!);
+        const targetProperties = t?.versions?.flatMap(v => v.propertyValues)?.filter(d => d!.entityProperty === targetProperty)?.map(d => d?.value!);
+        const targetValues = [...targetDesignations, ...targetProperties, ...(targetProperty === 'code' ? [t?.code] : [])];
         return targetValues.find(v => sourceValues.includes(v));
       });
       if (isDefined(targetConcept)) {
         const association = new MapSetAssociation();
         association.associationType = 'equal';
-        association.source = this.getLastVersion(sourceConcept.concept.versions);
-        association.target = this.getLastVersion(targetConcept.concept.versions);
+        association.source = this.getLastVersion(sourceConcept.versions);
+        association.target = this.getLastVersion(targetConcept.versions);
         association.status = 'draft';
         association.versions = [{status: 'draft'}];
         associations.push(association);
@@ -194,12 +218,12 @@ export class DevMapSetConceptListComponent implements OnInit {
   }
 
   protected conceptSelected(code: string, association: MapSetAssociation, type: 'source' | 'target'): void {
-    const concept = (type === 'source' ? this.sourceConcepts : this.targetConcepts).find(c => c.concept.code === code);
+    const concept = (type === 'source' ? this.sourceConcepts : this.targetConcepts).find(c => c.code === code);
     if (type === 'source') {
-      association.source = concept && this.getLastVersion(concept.concept.versions) || undefined;
+      association.source = concept && this.getLastVersion(concept.versions) || undefined;
     }
     if (type === 'target') {
-      association.target = concept && this.getLastVersion(concept.concept.versions) || undefined;
+      association.target = concept && this.getLastVersion(concept.versions) || undefined;
     }
   }
 
@@ -208,7 +232,7 @@ export class DevMapSetConceptListComponent implements OnInit {
   }
 
   private initFilteredAssociations(): void {
-    this.mapSetVersion.associations.forEach(a => a['_id'] = uuid())
+    this.mapSetVersion.associations.forEach(a => a['_id'] = uuid());
     this.filteredMapSetAssociations = copyDeep(this.mapSetVersion.associations);
   }
 
@@ -217,5 +241,12 @@ export class DevMapSetConceptListComponent implements OnInit {
     association['_id'] = uuid();
     this.filteredMapSetAssociations = [...this.filteredMapSetAssociations, association];
     this.mapSetVersion.associations = [...this.mapSetVersion.associations, association];
+  }
+
+  private extractConcepts(r: SearchResult<CodeSystemConcept> | ValueSetVersionConcept[]): CodeSystemConcept[] {
+    if (r instanceof Array) {
+      return r.map(c => c.concept);
+    }
+    return r.data;
   }
 }
