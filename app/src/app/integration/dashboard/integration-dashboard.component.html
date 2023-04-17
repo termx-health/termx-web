@@ -34,6 +34,13 @@
         </nz-collapse-panel>
       </nz-collapse>
 
+      <m-divider [mText]="'web.integration.systems.loinc' | translate" *twPrivileged="'*.CodeSystem.edit'"></m-divider>
+      <div style="display: grid" *twPrivileged="'*.CodeSystem.edit'">
+        <m-button mDisplay="link" [routerLink]="'./loinc/import'">
+          {{'web.integration.import.loinc' | translate}}
+        </m-button>
+      </div>
+
       <m-divider [mText]="'web.integration.systems.atc' | translate" *twPrivileged="'*.CodeSystem.edit'"></m-divider>
       <div style="display: grid" *twPrivileged="'*.CodeSystem.edit'">
         <m-button mDisplay="link" [routerLink]="'./atc/import'" [queryParams]="{edition: 'int'}">
@@ -43,6 +50,7 @@
           {{'web.integration.import.atc' | translate: ({edition: 'est'})}}
         </m-button>
       </div>
+
       <m-divider [mText]="'web.integration.systems.icd-10' | translate" *twPrivileged="'*.CodeSystem.edit'"></m-divider>
       <div style="display: grid" *twPrivileged="'*.CodeSystem.edit'">
         <m-button mDisplay="link" [routerLink]="'./icd-10/import'" [queryParams]="{edition: 'int'}">

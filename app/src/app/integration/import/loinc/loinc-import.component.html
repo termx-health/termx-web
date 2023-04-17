@@ -1,0 +1,67 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <nz-breadcrumb>
+      <nz-breadcrumb-item>{{'web.integration.loinc-import.loinc' | translate}}</nz-breadcrumb-item>
+      <nz-breadcrumb-item>{{'web.integration.loinc-import.loinc-import' | translate}}</nz-breadcrumb-item>
+    </nz-breadcrumb>
+  </div>
+  <form #form="ngForm">
+    <m-form-item mName="csVersion" mLabel="entities.code-system-version.version" required>
+      <m-input name="csVersion" [(ngModel)]="data.version" required></m-input>
+    </m-form-item>
+    <m-form-item mName="parts" mLabel="web.integration.loinc-import.parts" required>
+      <input #partsFileInput id="partsFileInput" name="parts" type="file" required>
+    </m-form-item>
+    <m-form-item mName="loinc-terminology" mLabel="web.integration.loinc-import.loinc-terminology" required>
+      <input #loincTerminologyFileInput id="loincTerminologyFileInput" name="loinc-terminology" type="file" required>
+    </m-form-item>
+    <m-form-item mName="loinc-terminology" mLabel="web.integration.loinc-import.supplementary-properties">
+      <input #supplementaryPropertiesFileInput id="supplementaryPropertiesFileInput" name="supplementary-properties" type="file">
+    </m-form-item>
+    <m-form-item mName="panels" mLabel="web.integration.loinc-import.panels">
+      <input #panelsFileInput id="panelsFileInput" name="panels" type="file">
+    </m-form-item>
+
+    <m-form-row>
+      <m-form-item *m-form-col mName="answer-list" mLabel="web.integration.loinc-import.answer-list">
+        <input #answerListFileInput id="answerListFileInput" name="answer-list" type="file">
+      </m-form-item>
+      <m-form-item *m-form-col mName="answer-list-link" mLabel="web.integration.loinc-import.answer-list-link">
+        <input #answerListLinkFileInput id="answerListLinkFileInput" name="answer-list-link" type="file">
+      </m-form-item>
+    </m-form-row>
+
+    <m-form-row>
+      <m-form-item *m-form-col mName="language" mLabel="web.integration.loinc-import.language">
+        <m-input name="language" [(ngModel)]="data.language"></m-input>
+      </m-form-item>
+      <m-form-item *m-form-col mName="translations" mLabel="web.integration.loinc-import.translations">
+        <input #translationsFileInput id="translationsFileInput" name="translations" type="file">
+      </m-form-item>
+    </m-form-row>
+
+  </form>
+
+  <m-button *m-card-footer (click)="importLoinc()" [mLoading]="loading['process']" [disabled]="form.invalid">
+    {{'web.integration.loinc-import.import' | translate}}
+  </m-button>
+  <div *ngIf="jobResponse">
+    <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
+      {{error}}
+    </m-alert>
+    <m-alert *ngFor="let warning of jobResponse.warnings" mType="warning" mShowIcon>
+      {{warning}}
+    </m-alert>
+    <m-alert *ngFor="let success of jobResponse.successes" mType="success" mShowIcon>
+      {{success}}
+    </m-alert>
+  </div>
+</m-card>
+
+
+<ng-template #successNotificationContent>
+  <a *ngIf="'*.CodeSystem.edit' | twHasAnyPrivilege; else view" (click)="openCodeSystem( 'edit')">{{'web.integration.loinc-import.loinc' | translate}}</a>
+  <ng-template #view>
+    <a (click)="openCodeSystem('view')">{{'web.integration.loinc-import.loinc' | translate}}</a>
+  </ng-template>
+</ng-template>

@@ -437,7 +437,8 @@
         "atc": "ATC",
         "icd-10": "ICD-10",
         "ichi": "ICHI",
-        "fhir": "FHIR"
+        "fhir": "FHIR",
+        "loinc": "LOINC"
       },
       "fhir": {
         "code-system": {
@@ -505,7 +506,8 @@
         "atc": "ATC {{edition}} import",
         "icd-10": "ICD-10 {{edition}} import",
         "ichi": "ICHI {{edition}} import",
-        "orphanet": "Rare diseases",
+        "loinc": "LOINC import",
+        "orphanet": "Rare diseases import",
         "uri": "Uri",
         "source-url": "Source URL",
         "source": "Publisher",
@@ -552,6 +554,19 @@
           "source-value-set": "Source value set",
           "target-value-set": "Target value set"
         }
+      },
+      "loinc-import": {
+        "loinc": "LOINC",
+        "loinc-import": "LOINC import",
+        "import": "Import",
+        "parts": "Parts",
+        "loinc-terminology": "LOINC terminology",
+        "supplementary-properties": "Supplementary properties",
+        "panels": "Panels",
+        "answer-list": "Answer list",
+        "answer-list-link": "Answer list link",
+        "language": "Language",
+        "translations": "Translations"
       }
     },
     "privileges": {

@@ -13,8 +13,8 @@ import {FhirConceptMapClosureComponent} from './fhir/concept-map/fhir-concept-ma
 import {FhirValueSetExpandComponent} from './fhir/value-set/fhir-value-set-expand.component';
 import {FhirValueSetValidateCodeComponent} from './fhir/value-set/fhir-value-set-validate-code.component';
 import {FhirCodeSystemFindMatchesComponent} from './fhir/code-system/fhir-code-system-find-matches.component';
-import {CodeSystemFileImportComponent} from './file-import/code-system/code-system-file-import.component';
-import {ConceptMapFileImportComponent} from './file-import/concept-map/concept-map-file-import.component';
+import {CodeSystemFileImportComponent} from './import/file-import/code-system/code-system-file-import.component';
+import {ConceptMapFileImportComponent} from './import/file-import/concept-map/concept-map-file-import.component';
 import {SnomedDashboardComponent} from './snomed/snomed-dashboard.component';
 import {SnomedConceptInfoComponent} from './snomed/snomed-concept-info.component';
 import {OrphanetImportComponent} from './import/orphanet/orphanet-import-component';
@@ -24,6 +24,7 @@ import {FhirLibModule} from 'term-web/fhir/_lib';
 import {JobLibModule} from 'term-web/job/_lib';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
+import {LoincImportComponent} from 'term-web/integration/import/loinc/loinc-import.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -41,6 +42,7 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'icd-10/import', component: IntegrationIcdImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'ichi/import', component: IntegrationIchiImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'orphanet/import', component: OrphanetImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
+      {path: 'loinc/import', component: LoincImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.edit']}}
     ]
@@ -79,7 +81,8 @@ export const INTEGRATION_ROUTES: Routes = [
     OrphanetImportComponent,
     SnomedDashboardComponent,
     SnomedConceptInfoComponent,
-    GithubExportComponent
+    GithubExportComponent,
+    LoincImportComponent
   ]
 })
 export class IntegrationModule {

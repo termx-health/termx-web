@@ -25,10 +25,12 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['codeSystemId'] || changes['propertyValues']) && this.codeSystemId && this.propertyValues) {
+    if ((changes['codeSystemId'] || changes['propertyValues'] || changes['viewMode']) && this.codeSystemId && this.propertyValues) {
       this.loadProperties(this.codeSystemId).subscribe(result => {
         this.entityProperties = result.data;
-        this.addDefProperties(this.entityProperties);
+        if (!this.viewMode) {
+          this.addDefProperties(this.entityProperties);
+        }
       });
     }
   }
@@ -52,7 +54,7 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   }
 
   public getPropertyValues(): EntityPropertyValue[] | undefined {
-    return this.propertyValues?.filter(pv => isDefined(pv.value));
+    return this.propertyValues?.filter(pv => isDefined(pv.value) && (!this.checkPropertyType('Coding', pv) || pv.value.code && pv.value.codeSystem));
   }
 
   public valid(): boolean {
@@ -66,6 +68,10 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   private addDefProperties(entityProperties: EntityProperty[]): void {
     entityProperties.filter(p => !['display', 'definition', 'alias'].includes(p.name!))
       .filter(p => !this.propertyValues?.find(pv => pv.entityPropertyId === p.id))
-      .forEach(p => this.propertyValues = [...this.propertyValues || [], {entityPropertyId: p.id}]);
+      .forEach(p => {
+        const pv: EntityPropertyValue = {entityPropertyId: p.id};
+        pv.value = this.checkPropertyType('Coding', pv) ? {} : undefined;
+        this.propertyValues = [...this.propertyValues || [], pv];
+      });
   }
 }

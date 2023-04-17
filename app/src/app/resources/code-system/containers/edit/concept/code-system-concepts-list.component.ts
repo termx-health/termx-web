@@ -47,12 +47,12 @@ export class CodeSystemConceptsListComponent implements OnInit {
   }
 
   public ngOnInit(): void {
-    this.loadData();
-    this.expandTree();
     this.searchUpdate.pipe(
       debounceTime(250),
       switchMap(() => this.search()),
     ).subscribe(data => this.searchResult = data);
+    this.searchUpdate.next();
+    this.expandTree();
   }
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
