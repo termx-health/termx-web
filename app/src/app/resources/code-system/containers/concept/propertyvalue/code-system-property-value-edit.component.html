@@ -27,6 +27,7 @@
                     <tw-code-system-search *ngIf="!viewMode" name="propertyValueCS-{{index}}" [(ngModel)]="propertyValue.value.codeSystem" valuePrimitive></tw-code-system-search>
                     <tw-term-concept-search *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value.code" [codeSystem]="propertyValue.value.codeSystem" valueType="code"></tw-term-concept-search>
                     <label *ngIf="viewMode">{{propertyValue.value?.code}}</label>
+                    <label *ngIf="viewMode">{{propertyValue.value?.code | localizedConceptName: {codeSystem: propertyValue.value.codeSystem} | async}}</label>
                   </div>
                 </ng-container>
                 <ng-container *ngIf="checkPropertyType('string,code', propertyValue)">
