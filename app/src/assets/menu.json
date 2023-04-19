@@ -112,7 +112,17 @@
         },
         "link": "integration/snomed",
         "privileges": [
-          "*.Snomed.view"
+          "*.CodeSystem.view"
+        ]
+      },
+      {
+        "label": {
+          "en": "LOINC",
+          "et": "LOINC"
+        },
+        "link": "integration/loinc",
+        "privileges": [
+          "*.CodeSystem.view"
         ]
       },
       {

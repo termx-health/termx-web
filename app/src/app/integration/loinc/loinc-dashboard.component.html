@@ -1,0 +1,14 @@
+<nz-tabset nzLinkRouter>
+  <nz-tab>
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" class="m-items-middle">LOINC</a>
+    <tw-loinc-list></tw-loinc-list>
+  </nz-tab>
+  <nz-tab *twPrivileged="'*.ValueSet.view'">
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'parts' }" class="m-items-middle">Part</a>
+    <tw-loinc-part-list></tw-loinc-part-list>
+  </nz-tab>
+  <nz-tab *twPrivileged="'*.MapSet.view'">
+    <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'map-sets' }" class="m-items-middle">Answer List</a>
+    <tw-loinc-answer-list-list></tw-loinc-answer-list-list>
+  </nz-tab>
+</nz-tabset>

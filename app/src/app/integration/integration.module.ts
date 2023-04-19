@@ -25,6 +25,10 @@ import {JobLibModule} from 'term-web/job/_lib';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {LoincImportComponent} from 'term-web/integration/import/loinc/loinc-import.component';
+import {LoincDashboardComponent} from 'term-web/integration/loinc/loinc-dashboard.component';
+import {LoincPartListComponent} from 'term-web/integration/loinc/loinc-part-list.component';
+import {LoincListComponent} from 'term-web/integration/loinc/loinc-list.component';
+import {LoincAnswerListListComponent} from 'term-web/integration/loinc/loinc-answer-list-list.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -47,8 +51,9 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.edit']}}
     ]
   },
-  {path: 'snomed', component: SnomedDashboardComponent, data: {privilege: ['*.Snomed.view']}},
-  {path: 'snomed/:conceptId', component: SnomedDashboardComponent, data: {privilege: ['*.Snomed.view']}}
+  {path: 'loinc', component: LoincDashboardComponent, data: {privilege: ['*.CodeSystem.view']}},
+  {path: 'snomed', component: SnomedDashboardComponent, data: {privilege: ['*.CodeSystem.view']}},
+  {path: 'snomed/:conceptId', component: SnomedDashboardComponent, data: {privilege: ['*.CodeSystem.view']}}
 ];
 
 @NgModule({
@@ -60,7 +65,10 @@ export const INTEGRATION_ROUTES: Routes = [
     ResourcesLibModule
   ],
   exports: [
-    GithubExportComponent
+    GithubExportComponent,
+    LoincListComponent,
+    LoincPartListComponent,
+    LoincAnswerListListComponent
   ],
   declarations: [
     IntegrationDashboardComponent,
@@ -81,6 +89,10 @@ export const INTEGRATION_ROUTES: Routes = [
     OrphanetImportComponent,
     SnomedDashboardComponent,
     SnomedConceptInfoComponent,
+    LoincDashboardComponent,
+    LoincListComponent,
+    LoincPartListComponent,
+    LoincAnswerListListComponent,
     GithubExportComponent,
     LoincImportComponent
   ]

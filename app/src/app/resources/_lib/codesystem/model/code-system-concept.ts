@@ -5,4 +5,5 @@ export class CodeSystemConcept extends CodeSystemEntity{
   public description?: string;
 
   public leaf?: boolean;
+  public childCount?: number;
 }

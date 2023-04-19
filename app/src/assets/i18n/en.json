@@ -566,7 +566,8 @@
         "answer-list": "Answer list",
         "answer-list-link": "Answer list link",
         "language": "Language",
-        "translations": "Translations"
+        "translations": "Translations",
+        "order-observation": "Order observation"
       }
     },
     "privileges": {
@@ -635,6 +636,31 @@
         "ecl": "ECL",
         "ecl-placeholder": "ECL expression",
         "import-refset-concepts": "Import refset concepts"
+      }
+    },
+    "loinc": {
+      "loinc": {
+        "code": "LOINC",
+        "name": "Long Common Name",
+        "component": "Component",
+        "property": "Property",
+        "timing": "Timing",
+        "system": "System",
+        "scale": "Scale",
+        "method": "Method",
+        "class": "Class",
+        "type": "Type",
+        "ord-obs": "Ord/Obs"
+      },
+      "part": {
+        "code": "Part code",
+        "name": "Part name"
+      },
+      "answer-list": {
+        "code": "Answer list code",
+        "name": "Answer list name",
+        "answers": "Answers",
+        "oid": "OID"
       }
     },
     "thesaurus-page": {

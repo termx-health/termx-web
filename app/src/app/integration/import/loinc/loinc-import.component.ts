@@ -32,6 +32,7 @@ export class LoincImportComponent {
   @ViewChild('answerListFileInput') public answerListFileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('answerListLinkFileInput') public answerListLinkFileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('translationsFileInput') public translationsFileInput?: ElementRef<HTMLInputElement>;
+  @ViewChild('orderObservationFileInput') public orderObservationFileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('successNotificationContent') public successNotificationContent?: TemplateRef<any>;
 
   public jobResponse: JobLog | null = null;
@@ -64,6 +65,9 @@ export class LoincImportComponent {
     }
     if (this.translationsFileInput?.nativeElement?.files?.[0]) {
       formData.append('translationsFile', this.translationsFileInput.nativeElement.files[0] as Blob, 'translationsFile');
+    }
+    if (this.orderObservationFileInput?.nativeElement?.files?.[0]) {
+      formData.append('orderObservationFile', this.orderObservationFileInput.nativeElement.files[0] as Blob, 'orderObservationFile');
     }
 
     this.jobResponse = null;

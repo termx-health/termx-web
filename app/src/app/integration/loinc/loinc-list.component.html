@@ -1,0 +1,75 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
+    <tr *mTableHead>
+      <th mColumnKey="code">{{'web.loinc.loinc.code' | translate}}</th>
+      <th mColumnKey="name">{{'web.loinc.loinc.name' | translate}}</th>
+      <th>{{'web.loinc.loinc.component' | translate}}</th>
+      <th>{{'web.loinc.loinc.property' | translate}}</th>
+      <th>{{'web.loinc.loinc.timing' | translate}}</th>
+      <th>{{'web.loinc.loinc.system' | translate}}</th>
+      <th>{{'web.loinc.loinc.scale' | translate}}</th>
+      <th>{{'web.loinc.loinc.method' | translate}}</th>
+      <th>{{'web.loinc.loinc.class' | translate}}</th>
+      <th>{{'web.loinc.loinc.type' | translate}}</th>
+      <th>{{'web.loinc.loinc.ord-obs' | translate}}</th>
+    </tr>
+
+    <tr *mTableRow="let c">
+      <td style="white-space: nowrap;">{{c.code}}</td>
+      <td>{{c | apply:getName}}</td>
+      <td>
+        <div style="display: grid">
+          <label *ngFor="let name of (c | apply:getPartName:'COMPONENT':parts)">{{name}}</label>
+        </div>
+      <td>
+        <div style="display: grid">
+          <label *ngFor="let name of (c | apply:getPartName:'PROPERTY':parts)">{{name}}</label>
+        </div>
+      </td>
+      <td>
+        <div style="display: grid">
+          <label *ngFor="let name of (c | apply:getPartName:'TIME':parts)">{{name}}</label>
+        </div>
+      </td>
+      <td>
+        <div style="display: grid">
+          <label *ngFor="let name of (c | apply:getPartName:'SYSTEM':parts)">{{name}}</label>
+        </div>
+      </td>
+      <td>
+        <div style="display: grid">
+          <label *ngFor="let name of (c | apply:getPartName:'SCALE':parts)">{{name}}</label>
+        </div>
+      </td>
+      <td>
+        <div style="display: grid">
+          <label *ngFor="let name of (c | apply:getPartName:'METHOD':parts)">{{name}}</label>
+        </div>
+      </td>
+      <td>
+        <div style="display: grid">
+          <label *ngFor="let name of (c | apply:getPartName:'CLASS':parts)">{{name}}</label>
+        </div>
+      </td>
+      <td>
+        <div style="display: grid">
+          <m-icon *ngFor="let name of (c | apply:getPartName:'TYPE':parts)" [mCode]="name | apply:getIconCode" m-popover [mContent]="name"></m-icon>
+        </div>
+      </td>
+      <td>
+        <div style="display: grid">
+          <label *ngFor="let name of (c | apply:getPropName:'ORDER_OBS')">{{name}}</label>
+        </div>
+      </td>
+    </tr>
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>

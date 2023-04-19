@@ -40,6 +40,10 @@
       </m-form-item>
     </m-form-row>
 
+    <m-form-item mName="orderObservation" mLabel="web.integration.loinc-import.order-observation">
+      <input #orderObservationFileInput id="orderObservationFileInput" name="orderObservation" type="file">
+    </m-form-item>
+
   </form>
 
   <m-button *m-card-footer (click)="importLoinc()" [mLoading]="loading['process']" [disabled]="form.invalid">

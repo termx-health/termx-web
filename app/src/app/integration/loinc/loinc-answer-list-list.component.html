@@ -1,0 +1,40 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
+    <tr *mTableHead>
+      <th mColumnKey="code">{{'web.loinc.answer-list.code' | translate}}</th>
+      <th mColumnKey="name">{{'web.loinc.answer-list.name' | translate}}</th>
+      <th>{{'web.loinc.answer-list.answers' | translate}}</th>
+      <th>{{'web.loinc.answer-list.oid' | translate}}</th>
+    </tr>
+
+    <tr *mTableRow="let c; let i = index">
+      <td style="white-space: nowrap;">{{c.code}}</td>
+      <td>{{c | apply:getName}}</td>
+      <td><m-tag class="m-clickable" mColor="blue" (click)="showAnswers(c, i)">{{c.childCount}}</m-tag></td>
+      <td>{{c | apply:getProperty:'oid'}}</td>
+    </tr>
+    <tr *mTableRowExpand="let c" class="m-table-expanded-row">
+      <td>
+        <div style="display: grid">
+          <label *ngFor="let a of c['_children']">{{a.code}}</label>
+        </div>
+      </td>
+      <td>
+        <div style="display: grid">
+          <label *ngFor="let a of c['_children']">{{a | apply:getName}}</label>
+        </div>
+      </td>
+      <td></td>
+      <td></td>
+    </tr>
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>

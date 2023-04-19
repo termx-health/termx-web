@@ -1,0 +1,45 @@
+<nz-breadcrumb style="margin-bottom: 1rem">
+  <nz-breadcrumb-item *ngFor="let crumb of breadcrumb" [ngClass]="crumb === '...' ? 'm-clickable' : ''" (click)="openProperties(crumb)">{{crumb}}</nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<div *ngIf="!(breadcrumb?.length > 0)" style="display: flex; gap: 1rem">
+  <m-list style="flex: 1">
+    <m-list-item mClickable *ngFor="let p of properties" (mClick)="loadParts(p.name)">{{p.name}}</m-list-item>
+  </m-list>
+  <m-list style="flex: 1">
+    <m-list-item mClickable *ngFor="let p of radProperties" (mClick)="loadParts(p.name)">{{p.name}}</m-list-item>
+  </m-list>
+  <m-list style="flex: 1">
+    <m-list-item mClickable *ngFor="let p of docProperties" (mClick)="loadParts(p.name)">{{p.name}}</m-list-item>
+  </m-list>
+</div>
+
+<div *ngIf="breadcrumb?.length === 2" style="display: flex; gap: 1rem; flex-direction: column">
+  <m-input [(ngModel)]="partsSearchInput" (mChange)="partsSearchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+  <m-backend-table [mResult]="parts" [(mQuery)]="partsQuery" (mQueryChange)="loadParts()" [mLoading]="loader.isLoading" mSize="small">
+    <tr *mTableHead>
+      <th mColumnKey="code">{{'web.loinc.part.code' | translate}}</th>
+      <th mColumnKey="name">{{'web.loinc.part.name' | translate}}</th>
+    </tr>
+    <tr *mTableRow="let p">
+      <td style="white-space: nowrap;"><a (mClick)="loadLoinc(p.code)">{{p.code}}</a></td>
+      <td>{{p | apply:getName}}</td>
+    </tr>
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</div>
+
+<div *ngIf="breadcrumb?.length === 3">
+  <m-list [mLoading]="loader.isLoading">
+    <m-list-item *ngFor="let lc of loincConcepts">
+      <div class="m-items-middle">
+        <label>{{lc.code}}</label>
+        <label>{{lc | apply:getName}}</label>
+      </div>
+    </m-list-item>
+  </m-list>
+</div>
