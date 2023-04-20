@@ -29,7 +29,7 @@ export class LoincPartListComponent implements OnInit {
   public ngOnInit(): void {
     this.codeSystemService.load('loinc', true).subscribe(cs => {
       const prop = cs.properties
-        .filter(p => !['answer-list', 'answer-list-binding', 'display'].includes(p.name))
+        .filter(p => !['answer-list', 'answer-list-binding', 'display', 'key-words'].includes(p.name))
         .sort((p1, p2) => compareStrings(p1.name, p2.name));
       this.properties = prop.filter(p => !p.name.startsWith('Rad') && !p.name.startsWith('Document'));
       this.radProperties = prop.filter(p => p.name.startsWith('Rad'));
