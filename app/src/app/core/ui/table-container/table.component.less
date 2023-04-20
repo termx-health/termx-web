@@ -1,0 +1,43 @@
+@import "../../../../styles/variables";
+
+::ng-deep .tw-table-container-wrapper {
+  display: flex;
+  background: transparent;
+
+  .tw-table-container {
+    overflow: auto;
+    height: min-content;
+
+    position: sticky;
+    top: calc(var(--page-header-height) + 1.74rem);
+
+    > .m-card__header:empty {
+      padding-bottom: 0;
+    }
+  }
+
+  .tw-table-container-filter {
+    transition: .2s ease;
+
+    min-width: 0;
+    width: 0;
+    max-height: 0;
+
+    overflow: hidden;
+    white-space: nowrap;
+
+
+    &--open {
+      margin-left: 1rem;
+      max-height: min-content;
+      height: min-content;
+
+      min-width: 250px;
+      width: 450px;
+
+      &-full {
+        overflow: auto;
+      }
+    }
+  }
+}

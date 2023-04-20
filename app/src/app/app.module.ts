@@ -28,6 +28,7 @@ import {AuthModule, AuthService} from './core/auth';
 import {MarinaUiConfigModule} from './core/marina';
 import {ObservationDefinitionModule} from 'term-web/observation-definition/observation-definition.module';
 import {MuiConfigService} from '@kodality-web/marina-ui';
+import {TableModule} from 'term-web/core/ui/table-container/table.module';
 
 registerLocaleData(et);
 registerLocaleData(lt);
@@ -79,6 +80,7 @@ const TERM_MODULES = [
 
     SharedModule,
     NoPrivilegeModule,
+    TableModule,
 
     ...TERM_MODULES
   ],

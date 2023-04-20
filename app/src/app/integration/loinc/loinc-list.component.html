@@ -1,7 +1,43 @@
-<m-card>
-  <div *m-card-header class="m-justify-between">
+<tw-table [(filterOpen)]="isFilterOpen">
+  <div class="m-justify-between" style="margin-bottom: 1rem">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+    <m-button *ngIf="!isFilterOpen" (mClick)="isFilterOpen = true">
+      <m-icon mCode="filter"></m-icon>
+    </m-button>
   </div>
+
+  <tw-table-filter (twSearch)="loadData()" (twReset)="reset()">
+    <m-form-item [mLabel]="'web.loinc.loinc.filter.type'">
+      <m-checkbox [(mChecked)]="filter['clinicalType']">{{'web.loinc.loinc.filter.clinical' | translate}}</m-checkbox>
+      <m-checkbox [(mChecked)]="filter['labType']">{{'web.loinc.loinc.filter.lab' | translate}}</m-checkbox>
+      <m-checkbox [(mChecked)]="filter['surveyType']">{{'web.loinc.loinc.filter.survey' | translate}}</m-checkbox>
+    </m-form-item>
+    <m-form-item [mLabel]="'web.loinc.loinc.filter.class'">
+      <tw-loinc-part-search [(ngModel)]="filter['class']" type="CLASS" multiple></tw-loinc-part-search>
+    </m-form-item>
+    <m-form-item [mLabel]="'web.loinc.loinc.filter.ord-obs'">
+      <m-radio-group [(ngModel)]="filter['orderObs']" >
+        <label m-radio-button [mValue]="'Order'">{{'web.loinc.loinc.filter.order' | translate}}</label>
+        <label m-radio-button [mValue]="'Observation'">{{'web.loinc.loinc.filter.observation' | translate}}</label>
+        <label m-radio-button [mValue]="'Both'">{{'web.loinc.loinc.filter.both' | translate}}</label>
+      </m-radio-group>
+    </m-form-item>
+    <m-form-item [mLabel]="'web.loinc.loinc.filter.property'">
+      <tw-loinc-part-search [(ngModel)]="filter['property']" type="PROPERTY" multiple></tw-loinc-part-search>
+    </m-form-item>
+    <m-form-item [mLabel]="'web.loinc.loinc.filter.timing'">
+      <tw-loinc-part-search [(ngModel)]="filter['time']" type="TIME" multiple></tw-loinc-part-search>
+    </m-form-item>
+    <m-form-item [mLabel]="'web.loinc.loinc.filter.system'">
+      <tw-loinc-part-search [(ngModel)]="filter['system']" type="SYSTEM" multiple></tw-loinc-part-search>
+    </m-form-item>
+    <m-form-item [mLabel]="'web.loinc.loinc.filter.scale'">
+      <tw-loinc-part-search [(ngModel)]="filter['scale']" type="SCALE" multiple></tw-loinc-part-search>
+    </m-form-item>
+    <m-form-item [mLabel]="'web.loinc.loinc.filter.method'">
+      <tw-loinc-part-search [(ngModel)]="filter['method']" type="METHOD" multiple></tw-loinc-part-search>
+    </m-form-item>
+  </tw-table-filter>
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
     <tr *mTableHead>
@@ -72,4 +108,4 @@
       </td>
     </tr>
   </m-backend-table>
-</m-card>
+</tw-table>

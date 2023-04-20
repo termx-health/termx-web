@@ -17,7 +17,7 @@ import {CodeSystemFileImportComponent} from './import/file-import/code-system/co
 import {ConceptMapFileImportComponent} from './import/file-import/concept-map/concept-map-file-import.component';
 import {SnomedDashboardComponent} from './snomed/snomed-dashboard.component';
 import {SnomedConceptInfoComponent} from './snomed/snomed-concept-info.component';
-import {OrphanetImportComponent} from './import/orphanet/orphanet-import-component';
+import {IntegrationOrphanetImportComponent} from './import/orphanet/integration-orphanet-import-component';
 import {GithubExportComponent} from './github/github-export.component';
 import {IntegrationIchiImportComponent} from './import/ichi/integration-ichi-import.component';
 import {FhirLibModule} from 'term-web/fhir/_lib';
@@ -29,6 +29,8 @@ import {LoincDashboardComponent} from 'term-web/integration/loinc/loinc-dashboar
 import {LoincPartListComponent} from 'term-web/integration/loinc/loinc-part-list.component';
 import {LoincListComponent} from 'term-web/integration/loinc/loinc-list.component';
 import {LoincAnswerListListComponent} from 'term-web/integration/loinc/loinc-answer-list-list.component';
+import {TableModule} from 'term-web/core/ui/table-container/table.module';
+import {LoincPartSearchComponent} from 'term-web/integration/loinc/loinc-part-search.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -45,7 +47,7 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'atc/import', component: IntegrationAtcImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'icd-10/import', component: IntegrationIcdImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'ichi/import', component: IntegrationIchiImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
-      {path: 'orphanet/import', component: OrphanetImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
+      {path: 'orphanet/import', component: IntegrationOrphanetImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'loinc/import', component: LoincImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.edit']}}
@@ -62,7 +64,8 @@ export const INTEGRATION_ROUTES: Routes = [
     FhirLibModule,
     JobLibModule,
     IntegrationLibModule,
-    ResourcesLibModule
+    ResourcesLibModule,
+    TableModule
   ],
   exports: [
     GithubExportComponent,
@@ -73,6 +76,11 @@ export const INTEGRATION_ROUTES: Routes = [
   declarations: [
     IntegrationDashboardComponent,
     IntegrationFhirSyncComponent,
+    IntegrationAtcImportComponent,
+    IntegrationIcdImportComponent,
+    IntegrationIchiImportComponent,
+    IntegrationOrphanetImportComponent,
+
     FhirCodeSystemLookupComponent,
     FhirCodeSystemSubsumesComponent,
     FhirCodeSystemFindMatchesComponent,
@@ -81,20 +89,21 @@ export const INTEGRATION_ROUTES: Routes = [
     FhirValueSetValidateCodeComponent,
     FhirConceptMapTranslateComponent,
     FhirConceptMapClosureComponent,
-    IntegrationAtcImportComponent,
-    IntegrationIcdImportComponent,
-    IntegrationIchiImportComponent,
-    CodeSystemFileImportComponent,
-    ConceptMapFileImportComponent,
-    OrphanetImportComponent,
+
     SnomedDashboardComponent,
     SnomedConceptInfoComponent,
+
     LoincDashboardComponent,
     LoincListComponent,
     LoincPartListComponent,
     LoincAnswerListListComponent,
-    GithubExportComponent,
-    LoincImportComponent
+    LoincPartSearchComponent,
+    LoincImportComponent,
+
+    CodeSystemFileImportComponent,
+    ConceptMapFileImportComponent,
+
+    GithubExportComponent
   ]
 })
 export class IntegrationModule {

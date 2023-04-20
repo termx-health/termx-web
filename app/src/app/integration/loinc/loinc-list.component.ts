@@ -19,6 +19,8 @@ export class LoincListComponent implements OnInit {
   protected searchInput: string;
   protected searchUpdate = new Subject<string>();
   protected searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
+  protected isFilterOpen = false;
+  protected filter: any = {};
 
   protected parts: {[key: string]: CodeSystemConcept} = {};
 
@@ -51,6 +53,7 @@ export class LoincListComponent implements OnInit {
   private search(): Observable<SearchResult<CodeSystemConcept>> {
     const q = copyDeep(this.query);
     q.textContains = this.searchInput;
+    q.propertyValues = this.getPropertyValues(this.filter);
     this.stateStore.put(this.STORE_KEY, {query: q});
     return this.loader.wrap('search', this.codeSystemService.searchConcepts('loinc', q));
   }
@@ -110,5 +113,32 @@ export class LoincListComponent implements OnInit {
     this.loader.wrap('parts', this.codeSystemService.searchConcepts('loinc-part', params)).subscribe(r => {
       this.parts = group(r.data, c => c.code, c => c);
     });
+  }
+
+  public reset(): void {
+    this.filter = {};
+  }
+
+  private getPropertyValues(filter: any): string {
+    let propertyValues = [];
+    if (filter.clinicalType) {
+      propertyValues.push('CLASS|LP7787-7');
+    }
+    if (filter.labType) {
+      propertyValues.push('CLASS|LP29693-6');
+    }
+    if (filter.surveyType) {
+      propertyValues.push('CLASS|LP29696-9');
+    }
+    if (filter.orderObs) {
+      propertyValues.push('ORDER_OBS|' + filter.orderObs);
+    }
+    filter.time?.forEach(c => propertyValues.push('TIME|' + c));
+    filter.scale?.forEach(c => propertyValues.push('SCALE|' + c));
+    filter.class?.forEach(c => propertyValues.push('CLASS|' + c));
+    filter.method?.forEach(c => propertyValues.push('METHOD|' + c));
+    filter.system?.forEach(c => propertyValues.push('SYSTEM|' + c));
+    filter.property?.forEach(c => propertyValues.push('PROPERTY|' + c));
+    return propertyValues.length > 0 ? propertyValues.join(',') : undefined;
   }
 }

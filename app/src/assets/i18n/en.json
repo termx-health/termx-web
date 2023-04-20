@@ -10,7 +10,9 @@
       "confirm": "Confirm",
       "proceed": "Proceed",
       "add": "Add",
-      "select": "Select"
+      "select": "Select",
+      "search": "Search",
+      "clear-all": "Clear all"
     },
     "no-privilege": {
       "error": "401 Unauthorized",
@@ -20,6 +22,7 @@
       },
       "access": "To access: {{path}}"
     },
+    "filter": "Filter",
     "no-data": "No data",
     "back": "Back",
     "delete-confirm": "Are you sure you want to delete?",
@@ -650,7 +653,23 @@
         "method": "Method",
         "class": "Class",
         "type": "Type",
-        "ord-obs": "Ord/Obs"
+        "ord-obs": "Ord/Obs",
+        "filter": {
+          "type": "Type",
+          "class": "Class",
+          "ord-obs": "Ord/Obs",
+          "property": "Property",
+          "timing": "Timing",
+          "system": "System",
+          "scale": "Scale",
+          "method": "Method",
+          "clinical": "Clinical",
+          "lab": "Lab",
+          "survey": "Survey",
+          "order": "Order",
+          "observation": "Observation",
+          "both": "Both"
+        }
       },
       "part": {
         "code": "Part code",

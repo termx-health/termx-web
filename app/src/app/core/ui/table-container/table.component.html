@@ -1,0 +1,28 @@
+<div class="tw-table-container-wrapper">
+  <m-card class="tw-table-container">
+    <ng-container *m-card-header>
+      <ng-content select="[header]"></ng-content>
+    </ng-container>
+    <ng-content></ng-content>
+  </m-card>
+
+  <m-card class="tw-table-container-filter"
+      [class.tw-table-container-filter--open]="filterOpen"
+      [class.tw-table-container-filter--open-full]="filterOpen && isFilterFullyOpened"
+      (transitionend)="onFilterTransitionEnd($event)">
+    <div *m-card-header class="m-justify-between">
+      <span>{{'core.filter' | translate}}</span>
+
+      <div>
+        <m-button mDisplay="text" (mClick)="reset()" *ngIf="filter?.twReset.observed">
+          <span class="m-subtitle">{{'core.btn.clear-all' | translate}}</span>
+        </m-button>
+        <m-button mDisplay="text" (mClick)="closeFilter()">
+          <m-icon mCode="right"></m-icon>
+        </m-button>
+      </div>
+    </div>
+
+    <ng-content select="tw-table-filter"></ng-content>
+  </m-card>
+</div>

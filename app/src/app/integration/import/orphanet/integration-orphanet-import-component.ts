@@ -9,7 +9,7 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 @Component({
   templateUrl: '../integration-import.component.html',
 })
-export class OrphanetImportComponent extends IntegrationImportComponent {
+export class IntegrationOrphanetImportComponent extends IntegrationImportComponent {
   public breadcrumbs = ['web.integration.systems.orphanet', 'web.integration.import.orphanet'];
 
   public constructor(

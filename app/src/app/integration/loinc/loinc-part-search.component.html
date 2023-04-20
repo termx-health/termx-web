@@ -1,0 +1,10 @@
+<m-select icon="search"
+    [placeholder]="placeholder"
+    [(ngModel)]="value"
+    (mInputChange)="onSearch($event)"
+    (mChange)="fireOnChange()"
+    [loading]="loader.isLoading"
+    [autoUnselect]="false"
+    [multiple]="multiple | toBoolean">
+  <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.code" [mLabel]="data[key] | apply:getCodeName"></m-option>
+</m-select>
