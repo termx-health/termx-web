@@ -5,4 +5,5 @@ export class CodeSystemAssociation extends CodeSystemEntity{
   public status?: string;
   public targetId?: number;
   public targetCode?: string;
+  public orderNumber?: number;
 }

@@ -18,7 +18,7 @@
             </m-form-item>
           </div>
           <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
-            <div style="display: flex">
+            <div class="m-items-middle">
               <m-form-item style="width: 100%" mName="targetConcept-{{index}}" required>
                 <tw-code-system-entity-version-search *ngIf="!viewMode" [codeSystemId]="codeSystemId"
                     [(ngModel)]="association.targetId"
@@ -33,6 +33,10 @@
                     valueSet="publication-status"
                     required></tw-value-set-concept-select>
                 <tw-status-tag *ngIf="viewMode" [status]="association.status"></tw-status-tag>
+              </m-form-item>
+              <m-form-item mName="order-{{index}}">
+                <m-number-input *ngIf="!viewMode" name="order-{{index}}" [(ngModel)]="association.orderNumber"></m-number-input>
+                <label *ngIf="viewMode">{{association.orderNumber}}</label>
               </m-form-item>
               <m-button *ngIf="!viewMode" mDisplay="text" (click)="removeAssociation(index)">
                 <m-icon [mCode]="'delete'"></m-icon>

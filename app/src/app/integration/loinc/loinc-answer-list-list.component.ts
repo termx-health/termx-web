@@ -1,5 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
-import {compareValues, ComponentStateStore, copyDeep, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
+import {compareNumbers, compareValues, ComponentStateStore, copyDeep, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
 import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, tap} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
@@ -89,7 +89,11 @@ export class LoincAnswerListListComponent {
     const q = new ConceptSearchParams();
     q.associationSource = 'is-a|' + c.code;
     q.limit = c.childCount;
-    this.loader.wrap('search', this.codeSystemService.searchConcepts('loinc-answer-list', q)).subscribe(r => c['_children'] = r.data);
+    this.loader.wrap('search', this.codeSystemService.searchConcepts('loinc-answer-list', q))
+      .subscribe(r => c['_children'] = r.data.sort((c1, c2) => compareNumbers(this.getOrderNumber(c1, c.code), this.getOrderNumber(c2, c.code))));
   }
 
+  private getOrderNumber(concept: CodeSystemConcept, code: string): number {
+    return this.getLastVersion(concept.versions)?.associations?.find(a => a.targetCode === code)?.orderNumber;
+  }
 }
