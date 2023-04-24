@@ -28,7 +28,7 @@
     <tr *mTableRow="let p">
       <td style="white-space: nowrap;"><a (mClick)="openConcept(p.code, 'loinc-part')">{{p.code}}</a></td>
       <td>{{p | apply:getName}}</td>
-      <td><a (mClick)="loadLoinc(p.code)"><m-icon mCode="apartment"></m-icon></a></td>
+      <td><a (mClick)="loadLoinc(p.code)">{{'web.loinc.part.used-by' | translate}}</a></td>
     </tr>
     <tr *mTableNoData>
       <td colspan="100%">

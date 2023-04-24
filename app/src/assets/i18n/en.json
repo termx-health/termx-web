@@ -673,7 +673,8 @@
       },
       "part": {
         "code": "Part code",
-        "name": "Part name"
+        "name": "Part name",
+        "used-by": "Used by"
       },
       "answer-list": {
         "code": "Answer list code",

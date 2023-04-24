@@ -44,7 +44,9 @@ export class LoincPartListComponent implements OnInit {
       this.docProperties = prop.filter(p => p.name.startsWith('Document'));
     });
 
-    this.handlePath(this.route.snapshot.queryParamMap.get('path'));
+    this.route.queryParams.subscribe(p => {
+      this.handlePath(p['path']);
+    });
 
     this.partsSearchUpdate.pipe(
       debounceTime(250),
@@ -103,15 +105,17 @@ export class LoincPartListComponent implements OnInit {
 
   private handlePath(path: string): void {
     if (!isDefined(path)) {
+      this.openProperties('...');
       return;
     }
     const components = path.split(',');
     if (components.length === 2) {
       this.loadParts(components[1]);
-    }
-    if (components.length === 3) {
+    } else if (components.length === 3) {
       this.breadcrumb = [components[0], components[1]];
       this.loadLoinc(components[2]);
+    } else {
+      this.openProperties('...');
     }
   }
 }
