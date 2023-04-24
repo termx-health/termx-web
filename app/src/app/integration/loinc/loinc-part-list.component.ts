@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams, EntityProperty} from 'term-web/resources/_lib';
-import {compareStrings, compareValues, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import {compareStrings, compareValues, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'tw-loinc-part-list',
@@ -30,7 +30,8 @@ export class LoincPartListComponent implements OnInit {
     private codeSystemService:CodeSystemLibService,
     private translateService: TranslateService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   public ngOnInit(): void {
@@ -42,6 +43,8 @@ export class LoincPartListComponent implements OnInit {
       this.radProperties = prop.filter(p => p.name.startsWith('Rad'));
       this.docProperties = prop.filter(p => p.name.startsWith('Document'));
     });
+
+    this.handlePath(this.route.snapshot.queryParamMap.get('path'));
 
     this.partsSearchUpdate.pipe(
       debounceTime(250),
@@ -55,6 +58,7 @@ export class LoincPartListComponent implements OnInit {
     if (type) {
       this.breadcrumb = ['...', type];
       this.partsQuery.propertyValues = type ? 'type|' + type : this.partsQuery.propertyValues;
+      this.router.navigate(['/integration/loinc'], {queryParams: {tab: 'parts', path: this.breadcrumb.join(",")}});
     }
     this.searchParts().subscribe(r => this.parts = r);
   }
@@ -88,11 +92,26 @@ export class LoincPartListComponent implements OnInit {
     q.propertyValues = type + '|' + partCode;
     q.limit = 100;
     this.loader.wrap('loinc', this.codeSystemService.searchConcepts('loinc', q)).subscribe(r => this.loincConcepts = r.data);
+    this.router.navigate(['/integration/loinc'], {queryParams: {tab: 'parts', path: this.breadcrumb.join(",")}});
   }
 
   protected openConcept(code: string): void {
     const canEdit = this.authService.hasPrivilege('*.CodeSystem.edit');
     const path = 'resources/code-systems/loinc-part/concepts/' + code + (canEdit ? '/edit' : '/view');
     this.router.navigate([path]);
+  }
+
+  private handlePath(path: string): void {
+    if (!isDefined(path)) {
+      return;
+    }
+    const components = path.split(',');
+    if (components.length === 2) {
+      this.loadParts(components[1]);
+    }
+    if (components.length === 3) {
+      this.breadcrumb = [components[0], components[1]];
+      this.loadLoinc(components[2]);
+    }
   }
 }
