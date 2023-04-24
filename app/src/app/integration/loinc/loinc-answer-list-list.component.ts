@@ -4,6 +4,8 @@ import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, Concep
 import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, tap} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {MuiTableComponent} from '@kodality-web/marina-ui';
+import {AuthService} from 'term-web/core/auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'tw-loinc-answer-list-list',
@@ -24,7 +26,9 @@ export class LoincAnswerListListComponent {
   public constructor(
     private codeSystemService: CodeSystemLibService,
     private translateService: TranslateService,
-    private stateStore: ComponentStateStore) {}
+    private stateStore: ComponentStateStore,
+    private authService: AuthService,
+    private router: Router) {}
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
@@ -95,5 +99,11 @@ export class LoincAnswerListListComponent {
 
   private getOrderNumber(concept: CodeSystemConcept, code: string): number {
     return this.getLastVersion(concept.versions)?.associations?.find(a => a.targetCode === code)?.orderNumber;
+  }
+
+  protected openConcept(code: string): void {
+    const canEdit = this.authService.hasPrivilege('*.CodeSystem.edit');
+    const path = 'resources/code-systems/loinc-answer-list/concepts/' + code + (canEdit ? '/edit' : '/view');
+    this.router.navigate([path]);
   }
 }

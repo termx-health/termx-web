@@ -12,7 +12,7 @@
     </tr>
 
     <tr *mTableRow="let c; let i = index">
-      <td style="white-space: nowrap;">{{c.code}}</td>
+      <td style="white-space: nowrap;"><a (mClick)="openConcept(c.code)">{{c.code}}</a></td>
       <td>{{c | apply:getName}}</td>
       <td><m-tag class="m-clickable" mColor="blue" (click)="showAnswers(c, i)">{{c.childCount}}</m-tag></td>
       <td>{{c | apply:getProperty:'oid'}}</td>

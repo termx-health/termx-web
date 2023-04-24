@@ -55,7 +55,7 @@
     </tr>
 
     <tr *mTableRow="let c">
-      <td style="white-space: nowrap;">{{c.code}}</td>
+      <td style="white-space: nowrap;"><a (mClick)="openConcept(c.code)">{{c.code}}</a></td>
       <td>{{c | apply:getName}}</td>
       <td>
         <div style="display: grid">

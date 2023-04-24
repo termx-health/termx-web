@@ -3,6 +3,8 @@ import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, Concep
 import {compareStrings, compareValues, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, tap} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'tw-loinc-part-list',
@@ -24,7 +26,12 @@ export class LoincPartListComponent implements OnInit {
 
   protected loader = new LoadingManager();
 
-  public constructor(private codeSystemService:CodeSystemLibService, private translateService: TranslateService) {}
+  public constructor(
+    private codeSystemService:CodeSystemLibService,
+    private translateService: TranslateService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   public ngOnInit(): void {
     this.codeSystemService.load('loinc', true).subscribe(cs => {
@@ -81,5 +88,11 @@ export class LoincPartListComponent implements OnInit {
     q.propertyValues = type + '|' + partCode;
     q.limit = 100;
     this.loader.wrap('loinc', this.codeSystemService.searchConcepts('loinc', q)).subscribe(r => this.loincConcepts = r.data);
+  }
+
+  protected openConcept(code: string): void {
+    const canEdit = this.authService.hasPrivilege('*.CodeSystem.edit');
+    const path = 'resources/code-systems/loinc-part/concepts/' + code + (canEdit ? '/edit' : '/view');
+    this.router.navigate([path]);
   }
 }

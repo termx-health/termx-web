@@ -3,6 +3,8 @@ import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, tap}
 import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
 import {TranslateService} from '@ngx-translate/core';
+import {AuthService} from 'term-web/core/auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'tw-loinc-list',
@@ -27,6 +29,8 @@ export class LoincListComponent implements OnInit {
   public constructor(
     private codeSystemService: CodeSystemLibService,
     private translateService: TranslateService,
+    private authService: AuthService,
+    private router: Router,
     private stateStore: ComponentStateStore) {}
 
   public ngOnInit(): void {
@@ -140,5 +144,12 @@ export class LoincListComponent implements OnInit {
     filter.system?.forEach(c => propertyValues.push('SYSTEM|' + c));
     filter.property?.forEach(c => propertyValues.push('PROPERTY|' + c));
     return propertyValues.length > 0 ? propertyValues.join(',') : undefined;
+  }
+
+
+  protected openConcept(code: string): void {
+    const canEdit = this.authService.hasPrivilege('*.CodeSystem.edit');
+    const path = 'resources/code-systems/loinc/concepts/' + code + (canEdit ? '/edit' : '/view');
+    this.router.navigate([path]);
   }
 }
