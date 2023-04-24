@@ -33,7 +33,7 @@
 
     <m-form-row>
       <m-form-item *m-form-col mName="language" mLabel="web.integration.loinc-import.language">
-        <m-input name="language" [(ngModel)]="data.language"></m-input>
+        <tw-value-set-concept-select name="language" [(ngModel)]="data.language" valueSet="languages"></tw-value-set-concept-select>
       </m-form-item>
       <m-form-item *m-form-col mName="translations" mLabel="web.integration.loinc-import.translations">
         <input #translationsFileInput id="translationsFileInput" name="translations" type="file">
