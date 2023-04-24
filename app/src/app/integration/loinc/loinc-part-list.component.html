@@ -1,5 +1,8 @@
 <nz-breadcrumb style="margin-bottom: 1rem">
-  <nz-breadcrumb-item *ngFor="let crumb of breadcrumb" [ngClass]="crumb === '...' ? 'm-clickable' : ''" (click)="openProperties(crumb)">{{crumb}}</nz-breadcrumb-item>
+  <nz-breadcrumb-item *ngFor="let crumb of breadcrumb; let i = index" [ngClass]="crumb === '...' ? 'm-clickable' : ''" (click)="openProperties(crumb)">
+    <label *ngIf="i !== 2" [ngClass]="crumb === '...' ? 'm-clickable' : ''">{{crumb}}</label>
+    <label *ngIf="i === 2">{{crumb}} {{crumb | localizedConceptName: {codeSystem:'loinc-part'} | async}}</label>
+  </nz-breadcrumb-item>
 </nz-breadcrumb>
 
 <div *ngIf="!(breadcrumb?.length > 0)" style="display: flex; gap: 1rem">
@@ -23,7 +26,7 @@
       <th></th>
     </tr>
     <tr *mTableRow="let p">
-      <td style="white-space: nowrap;"><a (mClick)="openConcept(p.code)">{{p.code}}</a></td>
+      <td style="white-space: nowrap;"><a (mClick)="openConcept(p.code, 'loinc-part')">{{p.code}}</a></td>
       <td>{{p | apply:getName}}</td>
       <td><a (mClick)="loadLoinc(p.code)"><m-icon mCode="apartment"></m-icon></a></td>
     </tr>
@@ -37,7 +40,7 @@
 
 <div *ngIf="breadcrumb?.length === 3">
   <m-list [mLoading]="loader.isLoading">
-    <m-list-item *ngFor="let lc of loincConcepts">
+    <m-list-item *ngFor="let lc of loincConcepts" mClickable (mClick)="openConcept(lc.code, 'loinc')">
       <div class="m-items-middle">
         <label>{{lc.code}}</label>
         <label>{{lc | apply:getName}}</label>

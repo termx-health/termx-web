@@ -95,9 +95,9 @@ export class LoincPartListComponent implements OnInit {
     this.router.navigate(['/integration/loinc'], {queryParams: {tab: 'parts', path: this.breadcrumb.join(",")}});
   }
 
-  protected openConcept(code: string): void {
+  protected openConcept(code: string, cs: string): void {
     const canEdit = this.authService.hasPrivilege('*.CodeSystem.edit');
-    const path = 'resources/code-systems/loinc-part/concepts/' + code + (canEdit ? '/edit' : '/view');
+    const path = 'resources/code-systems/' + cs + '/concepts/' + code + (canEdit ? '/edit' : '/view');
     this.router.navigate([path]);
   }
 
