@@ -22,8 +22,11 @@
             <m-form-item mLabel="entities.map-set.source-code-systems" *ngIf="mapSet.sourceCodeSystems?.length > 0">
               <div style="display: grid"><label *ngFor="let cs of mapSet.sourceCodeSystems">{{cs}}</label></div>
             </m-form-item>
-            <m-form-item mLabel="entities.map-set.target-value-set">
+            <m-form-item mLabel="entities.map-set.target-value-set" *ngIf="mapSet.targetValueSet">
               {{mapSet.targetValueSet}}
+            </m-form-item>
+            <m-form-item mLabel="entities.map-set.target-code-systems" *ngIf="mapSet.targetCodeSystems?.length > 0">
+              <div style="display: grid"><label *ngFor="let cs of mapSet.targetCodeSystems">{{cs}}</label></div>
             </m-form-item>
           </div>
         </div>

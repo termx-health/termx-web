@@ -1,4 +1,11 @@
-<m-card>
+<nz-breadcrumb style="margin-bottom: 1rem">
+  <nz-breadcrumb-item *ngFor="let crumb of breadcrumb; let i = index" [ngClass]="crumb === '...' ? 'm-clickable' : ''" (click)="breadcrumb = []">
+    <label *ngIf="i !== 1" [ngClass]="crumb === '...' ? 'm-clickable' : ''">{{crumb}}</label>
+    <label *ngIf="i === 1">{{crumb}} {{crumb | localizedConceptName: {codeSystem:'loinc-answer-list'} | async}}</label>
+  </nz-breadcrumb-item>
+</nz-breadcrumb>
+
+<m-card *ngIf="!(breadcrumb?.length > 0)">
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
   </div>
@@ -9,6 +16,7 @@
       <th mColumnKey="name">{{'web.loinc.answer-list.name' | translate}}</th>
       <th>{{'web.loinc.answer-list.answers' | translate}}</th>
       <th>{{'web.loinc.answer-list.oid' | translate}}</th>
+      <th></th>
     </tr>
 
     <tr *mTableRow="let c; let i = index">
@@ -16,6 +24,7 @@
       <td>{{c | apply:getName}}</td>
       <td><m-tag class="m-clickable" mColor="blue" (click)="showAnswers(c, i)">{{c.childCount}}</m-tag></td>
       <td>{{c | apply:getProperty:'oid'}}</td>
+      <td><a (mClick)="loadLoinc(c.code)">{{'web.loinc.answer-list.used-by' | translate}}</a></td>
     </tr>
     <tr *mTableRowExpand="let c" class="m-table-expanded-row">
       <td>
@@ -30,6 +39,7 @@
       </td>
       <td></td>
       <td></td>
+      <td></td>
     </tr>
     <tr *mTableNoData>
       <td colspan="100%">
@@ -38,3 +48,14 @@
     </tr>
   </m-backend-table>
 </m-card>
+
+<div *ngIf="breadcrumb?.length === 2">
+  <m-list [mLoading]="loader.isLoading">
+    <m-list-item *ngFor="let lc of loincConcepts" mClickable (mClick)="openConcept(lc.code, 'loinc')">
+      <div class="m-items-middle">
+        <label>{{lc.code}}</label>
+        <label>{{lc | apply:getName}}</label>
+      </div>
+    </m-list-item>
+  </m-list>
+</div>

@@ -5,7 +5,7 @@ import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, tap}
 import {TranslateService} from '@ngx-translate/core';
 import {MuiTableComponent} from '@kodality-web/marina-ui';
 import {AuthService} from 'term-web/core/auth';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 @Component({
   selector: 'tw-loinc-answer-list-list',
@@ -21,6 +21,9 @@ export class LoincAnswerListListComponent {
   protected searchUpdate = new Subject<string>();
   protected searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
 
+  protected breadcrumb: string[] = [];
+  protected loincConcepts: CodeSystemConcept[];
+
   @ViewChild(MuiTableComponent) public table?: MuiTableComponent<CodeSystemConcept>;
 
   public constructor(
@@ -28,7 +31,9 @@ export class LoincAnswerListListComponent {
     private translateService: TranslateService,
     private stateStore: ComponentStateStore,
     private authService: AuthService,
-    private router: Router) {}
+    private router: Router,
+    private route: ActivatedRoute,
+    ) {}
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
@@ -38,13 +43,18 @@ export class LoincAnswerListListComponent {
       this.searchInput = this.query.textContains;
     }
 
+    this.route.queryParams.subscribe(p => {
+      if (p['tab'] === 'answer-list') {
+        this.handlePath(p['path']);
+      }
+    });
+
     this.searchUpdate.pipe(
       debounceTime(250),
       distinctUntilChanged(),
       tap(() => this.query.offset = 0),
       switchMap(() => this.search()),
     ).subscribe(r => this.searchResult = r);
-
     this.searchUpdate.next(null);
   }
 
@@ -101,9 +111,31 @@ export class LoincAnswerListListComponent {
     return this.getLastVersion(concept.versions)?.associations?.find(a => a.targetCode === code)?.orderNumber;
   }
 
-  protected openConcept(code: string): void {
+  protected openConcept(code: string, cs: string = 'loinc-answer-list'): void {
     const canEdit = this.authService.hasPrivilege('*.CodeSystem.edit');
-    const path = 'resources/code-systems/loinc-answer-list/concepts/' + code + (canEdit ? '/edit' : '/view');
+    const path = 'resources/code-systems/' + cs + '/concepts/' + code + (canEdit ? '/edit' : '/view');
     this.router.navigate([path]);
+  }
+
+  protected loadLoinc(partCode): void {
+    this.breadcrumb = ['...', partCode];
+    const q = new ConceptSearchParams();
+    q.propertyValues =  'answer-list|' + partCode;
+    q.limit = 100;
+    this.loader.wrap('loinc', this.codeSystemService.searchConcepts('loinc', q)).subscribe(r => this.loincConcepts = r.data);
+    this.router.navigate(['/integration/loinc'], {queryParams: {tab: 'answer-list', path: this.breadcrumb.join(",")}});
+  }
+
+  private handlePath(path: string): void {
+    if (!isDefined(path)) {
+      this.breadcrumb = [];
+      return;
+    }
+    const components = path.split(',');
+    if (components.length === 2) {
+      this.loadLoinc(components[1]);
+    } else {
+      this.breadcrumb = [];
+    }
   }
 }

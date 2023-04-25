@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
@@ -12,11 +12,12 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './loinc-part-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => LoincPartSearchComponent), multi: true}, DestroyService]
 })
-export class LoincPartSearchComponent implements OnInit, ControlValueAccessor {
+export class LoincPartSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
   @Input() public type: string;
 
   @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
   @Input() @BooleanInput() public multiple: string | boolean;
+  @Input() public mode: 'search' | 'select' = 'search';
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
 
   protected loader = new LoadingManager();
@@ -42,12 +43,18 @@ export class LoincPartSearchComponent implements OnInit, ControlValueAccessor {
     ).subscribe(data => this.data = data);
   }
 
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['mode'] && this.mode === 'select') {
+      this.searchParts(undefined, true).subscribe(data => this.data = data);
+    }
+  }
+
   protected onSearch(text: string): void {
     this.searchUpdate.next(text);
   }
 
-  private searchParts(text: string): Observable<{[id: string]: CodeSystemConcept}> {
-    if (!text || text.length < 1 || !this.type) {
+  private searchParts(text: string, allowEmptyText: boolean = false): Observable<{[id: string]: CodeSystemConcept}> {
+    if (!allowEmptyText && (!text || text.length < 1 || !this.type)) {
       return of(this.data);
     }
 

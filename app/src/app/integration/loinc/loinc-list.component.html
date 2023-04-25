@@ -23,16 +23,16 @@
       </m-radio-group>
     </m-form-item>
     <m-form-item [mLabel]="'web.loinc.loinc.filter.property'">
-      <tw-loinc-part-search [(ngModel)]="filter['property']" type="PROPERTY" multiple></tw-loinc-part-search>
+      <tw-loinc-part-search [(ngModel)]="filter['property']" type="PROPERTY" mode="select" multiple></tw-loinc-part-search>
     </m-form-item>
     <m-form-item [mLabel]="'web.loinc.loinc.filter.timing'">
-      <tw-loinc-part-search [(ngModel)]="filter['time']" type="TIME" multiple></tw-loinc-part-search>
+      <tw-loinc-part-search [(ngModel)]="filter['time']" type="TIME" mode="select" multiple></tw-loinc-part-search>
     </m-form-item>
     <m-form-item [mLabel]="'web.loinc.loinc.filter.system'">
       <tw-loinc-part-search [(ngModel)]="filter['system']" type="SYSTEM" multiple></tw-loinc-part-search>
     </m-form-item>
     <m-form-item [mLabel]="'web.loinc.loinc.filter.scale'">
-      <tw-loinc-part-search [(ngModel)]="filter['scale']" type="SCALE" multiple></tw-loinc-part-search>
+      <tw-loinc-part-search [(ngModel)]="filter['scale']" type="SCALE" mode="select" multiple></tw-loinc-part-search>
     </m-form-item>
     <m-form-item [mLabel]="'web.loinc.loinc.filter.method'">
       <tw-loinc-part-search [(ngModel)]="filter['method']" type="METHOD" multiple></tw-loinc-part-search>

@@ -45,7 +45,9 @@ export class LoincPartListComponent implements OnInit {
     });
 
     this.route.queryParams.subscribe(p => {
-      this.handlePath(p['path']);
+      if (p['tab'] === 'parts') {
+        this.handlePath(p['path']);
+      }
     });
 
     this.partsSearchUpdate.pipe(

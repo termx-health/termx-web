@@ -680,7 +680,8 @@
         "code": "Answer list code",
         "name": "Answer list name",
         "answers": "Answers",
-        "oid": "OID"
+        "oid": "OID",
+        "used-by": "Used by"
       }
     },
     "thesaurus-page": {
