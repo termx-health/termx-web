@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {validateForm} from '@kodality-web/core-util';
+import {isDefined, validateForm} from '@kodality-web/core-util';
 import {ValueSetService} from '../../services/value-set.service';
 import {ValueSetRuleSetComponent} from './ruleset/value-set-rule-set.component';
 import {ValueSetVersionConceptModalComponent} from './concepts/value-set-version-concept-modal.component';
@@ -49,7 +49,7 @@ export class ValueSetVersionEditComponent implements OnInit {
   }
 
   public save(): void {
-    if (!validateForm(this.form) || !this.conceptListComponent.validate()) {
+    if (!validateForm(this.form) || (isDefined(this.conceptListComponent) && !this.conceptListComponent.validate())) {
       return;
     }
     this.loading['save'] = true;
