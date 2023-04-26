@@ -6,6 +6,9 @@ export class ObservationDefinitionValue {
   public expression?: string;
   public type?: string;
   public unit?: ObservationDefinitionUnit;
-  public valueSet?: string;
   public multipleResultsAllowed?: boolean;
+
+  public usage?: string;
+  public values?: string[];
+  public valueSet?: string;
 }

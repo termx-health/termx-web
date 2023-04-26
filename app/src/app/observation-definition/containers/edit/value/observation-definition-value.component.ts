@@ -20,9 +20,15 @@ export class ObservationDefinitionValueComponent {
   protected clearBinding(type: string): void {
     this.value.unit = {};
     this.value.valueSet = undefined;
+    this.value.usage = undefined;
+    this.value.values = undefined;
 
     if (type === 'Quantity') {
       this.value.unit = {system: 'ucum'};
+    }
+
+    if (type === 'CodeableConcept') {
+      this.value.usage = 'not-in-use';
     }
   }
 }

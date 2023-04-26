@@ -1,9 +1,48 @@
 <form #form="ngForm" *ngIf="value">
-  <m-form-row mFull>
+  <m-form-row>
     <div *mFormCol>
       <m-form-item mLabel="entities.observation-definition.value.type" mName="type" required>
         <tw-value-set-concept-select [(ngModel)]="value.type" (ngModelChange)="clearBinding($event)" name="type" valueSet="permitted-data-type" required></tw-value-set-concept-select>
       </m-form-item>
+    </div>
+    <div *mFormCol></div>
+  </m-form-row>
+  <m-form-row *ngIf="value.type === 'CodeableConcept'">
+    <div *mFormCol>
+      <m-form-item mLabel="entities.observation-definition.value.usage" mName="usage" required>
+        <m-select name="circumstances-usage" [(ngModel)]="value.usage" required>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
+        </m-select>
+      </m-form-item>
+    </div>
+    <div *mFormCol>
+      <m-form-item *ngIf="value.usage === 'value-set'" mLabel="entities.observation-definition.value.value-set" mName="valueSet">
+        <tw-value-set-search [(ngModel)]="value.valueSet" name="valueSet" valuePrimitive></tw-value-set-search>
+      </m-form-item>
+      <m-form-item *ngIf="value.usage === 'values'" mLabel="entities.observation-definition.value.values" mName="values">
+        <tw-obs-def-protocol-value-select [(ngModel)]="value.values" name="values"></tw-obs-def-protocol-value-select>
+      </m-form-item>
+    </div>
+  </m-form-row>
+  <m-form-row *ngIf="value.type === 'Quantity'">
+    <m-form-item mLabel="entities.observation-definition.value.unit.singular" mName="unit">
+      <div class="m-items-middle">
+        <m-form-control mName="system">
+          <tw-code-system-search [(ngModel)]="value.unit.system"
+              name="system"
+              valuePrimitive
+              placeholder="entities.observation-definition.value.unit.system"></tw-code-system-search>
+        </m-form-control>
+        <m-form-control mName="dose-unit">
+          <tw-term-concept-search [codeSystem]="value.unit.system" [(ngModel)]="value.unit.unit" name="unit" valueType="code"></tw-term-concept-search>
+        </m-form-control>
+      </div>
+    </m-form-item>
+  </m-form-row>
+  <m-form-row mFull>
+    <div *mFormCol>
       <m-form-item mLabel="entities.observation-definition.value.behaviour" mName="behaviour" required>
         <m-select [(ngModel)]="value.behaviour" name="behaviour" required>
           <m-option mLabel="web.observation-definition.behaviour.editable" [mValue]="'editable'"></m-option>
@@ -13,19 +52,6 @@
       </m-form-item>
     </div>
     <div *mFormCol>
-      <m-form-item *ngIf="value.type === 'Quantity'" mLabel="entities.observation-definition.value.unit.singular" mName="unit">
-        <div class="m-items-middle">
-          <m-form-control mName="system">
-            <tw-code-system-search [(ngModel)]="value.unit.system" name="system" valuePrimitive placeholder="entities.observation-definition.value.unit.system"></tw-code-system-search>
-          </m-form-control>
-          <m-form-control mName="dose-unit">
-            <tw-term-concept-search [codeSystem]="value.unit.system" [(ngModel)]="value.unit.unit" name="unit" valueType="code"></tw-term-concept-search>
-          </m-form-control>
-        </div>
-      </m-form-item>
-      <m-form-item *ngIf="value.type === 'CodeableConcept'" mLabel="entities.observation-definition.value.value-set" mName="valueSet">
-        <tw-value-set-search [(ngModel)]="value.valueSet" name="valueSet" valuePrimitive></tw-value-set-search>
-      </m-form-item>
       <m-form-item mLabel="entities.observation-definition.value.multiple-results-allowed" mName="multipleResultsAllowed">
         <m-checkbox [(ngModel)]="value.multipleResultsAllowed" name="multipleResultsAllowed"></m-checkbox>
       </m-form-item>

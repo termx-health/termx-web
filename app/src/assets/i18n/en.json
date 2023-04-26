@@ -1240,6 +1240,8 @@
         "behaviour": "Behaviour",
         "expression": "Expression",
         "value-set": "Value set",
+        "values": "Values",
+        "usage": "Usage",
         "unit": {
           "singular": "Unit",
           "system": "Unit system"
