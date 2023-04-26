@@ -29,7 +29,7 @@
     <tr *mTableRowExpand="let c" class="m-table-expanded-row">
       <td>
         <div style="display: grid">
-          <label *ngFor="let a of c['_children']">{{a.code}}</label>
+          <label *ngFor="let a of c['_children']"><a (mClick)="openConcept(a.code)">{{a.code}}</a></label>
         </div>
       </td>
       <td>
