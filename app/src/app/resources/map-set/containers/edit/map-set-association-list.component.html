@@ -28,8 +28,8 @@
       <tr *ngFor="let association of data[key]; let isFirst = first;">
         <td *ngIf="isFirst" [rowSpan]="data[key].length">{{association.source.codeSystem}}</td>
         <td><a [routerLink]="['../associations/', association.id, viewMode? 'view' : 'edit']">{{association.source.code}}</a></td>
-        <td>{{association.target.code}}</td>
-        <td>{{association.target.codeSystem}}</td>
+        <td>{{association.target?.code}}</td>
+        <td>{{association.target?.codeSystem}}</td>
         <td>{{association.associationType}}</td>
         <td class="tw-table-min-width">
           <tw-status-tag [status]="association.status"></tw-status-tag>

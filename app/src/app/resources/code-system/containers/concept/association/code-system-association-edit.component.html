@@ -20,7 +20,7 @@
           <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
             <div class="m-items-middle">
               <m-form-item style="width: 100%" mName="targetConcept-{{index}}" required>
-                <tw-code-system-entity-version-search *ngIf="!viewMode" [codeSystemId]="codeSystemId"
+                <tw-code-system-entity-version-search *ngIf="!viewMode" [codeSystem]="codeSystemId"
                     [(ngModel)]="association.targetId"
                     name="targetConcept-{{index}}"
                     valuePrimitive

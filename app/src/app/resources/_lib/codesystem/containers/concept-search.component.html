@@ -8,5 +8,5 @@
     [multiple]="multiple | toBoolean">
   <m-option *ngFor="let key of (data | keys)"
       [mValue]="valueType === 'code' ? data[key]?.code : data[key]?.id"
-      mLabel="{{data[key]?.code}} {{data[key]?.code | localizedConceptName:{codeSystem: codeSystem} | async}}"></m-option>
+      mLabel="{{data[key]?.code}} {{data[key] | apply:getDisplay}}"></m-option>
 </m-select>

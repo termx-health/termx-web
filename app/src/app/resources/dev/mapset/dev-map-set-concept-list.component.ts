@@ -217,23 +217,19 @@ export class DevMapSetConceptListComponent implements OnInit {
     }).add(this.loading['save'] = false);
   }
 
-  protected conceptSelected(code: string, association: MapSetAssociation, type: 'source' | 'target'): void {
-    const concept = (type === 'source' ? this.sourceConcepts : this.targetConcepts).find(c => c.code === code);
-    if (type === 'source') {
-      association.source = concept && this.getLastVersion(concept.versions) || undefined;
-    }
-    if (type === 'target') {
-      association.target = concept && this.getLastVersion(concept.versions) || undefined;
-    }
-  }
-
   private initFilteredAssociations(): void {
-    this.mapSetVersion.associations.forEach(a => a['_id'] = uuid());
-    this.filteredMapSetAssociations = copyDeep(this.mapSetVersion.associations);
+    this.mapSetVersion.associations.forEach(a => {
+      a['_id'] = uuid();
+      a.source ??= new CodeSystemEntityVersion();
+      a.target ??= new CodeSystemEntityVersion();
+    });
+    this.filteredMapSetAssociations = this.mapSetVersion.associations;
   }
 
   public addAssociation(): void {
-    const association = {source: {}, target: {}, status: 'draft', versions: [{status: 'draft'}]};
+    const sourceCS = this.mapSet.sourceCodeSystems?.length === 1 ? this.mapSet.sourceCodeSystems[0]: undefined;
+    const targetCS = this.mapSet.targetCodeSystems?.length === 1 ? this.mapSet.targetCodeSystems[0]: undefined;
+    const association = {source: {codeSystem: sourceCS}, target: {codeSystem: targetCS}, status: 'draft', versions: [{status: 'draft'}]};
     association['_id'] = uuid();
     this.filteredMapSetAssociations = [...this.filteredMapSetAssociations, association];
     this.mapSetVersion.associations = [...this.mapSetVersion.associations, association];

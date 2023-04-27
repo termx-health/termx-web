@@ -1,4 +1,4 @@
-<m-select
+<m-select *ngIf="!entityCode"
     icon="search"
     placeholder="marina.ui.inputs.search.placeholder"
     [(ngModel)]="value"
@@ -6,10 +6,23 @@
     (mChange)="fireOnChange()"
     [loading]="isLoading"
     [filterOption]="filterOption"
-    [autoUnselect]="false"
->
+    [autoUnselect]="false">
   <m-option *ngFor="let key of data | keys"
       [mValue]="data[key]?.id"
-      [mLabel]="data[key]?.code + ' ' + (data[key]?.id | localizedConceptName: {codeSystem: codeSystemId} | async) + ' ' + (data[key]?.created | localDate) + ' ' + (data[key]?.status | localizedConceptName: {valueSet: 'publication-status'} | async) "
-  ></m-option>
+      [mLabel]="data[key]?.code + ' ' + (data[key]?.id | localizedConceptName: {codeSystem: codeSystem} | async) + ' ' + (data[key]?.created | localDate) + ' ' + (data[key]?.status | localizedConceptName: {valueSet: 'publication-status'} | async) "></m-option>
+</m-select>
+
+
+<m-select *ngIf="entityCode"
+    icon="search"
+    placeholder="marina.ui.inputs.search.placeholder"
+    [(ngModel)]="value"
+    (mChange)="fireOnChange()"
+    [loading]="isLoading"
+    [filterOption]="filterOption"
+    [autoUnselect]="true"
+    [autoSelect]="false">
+  <m-option *ngFor="let key of data | keys"
+      [mValue]="data[key]?.id"
+      [mLabel]="(data[key]?.created | localDate) + ' ' + (data[key]?.status | localizedConceptName: {valueSet: 'publication-status'} | async) "></m-option>
 </m-select>

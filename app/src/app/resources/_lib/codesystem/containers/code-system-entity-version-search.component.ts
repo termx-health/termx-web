@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
 import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
@@ -11,9 +11,10 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
   templateUrl: './code-system-entity-version-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemEntityVersionSearchComponent), multi: true}, DestroyService]
 })
-export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlValueAccessor {
+export class CodeSystemEntityVersionSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
-  @Input() public codeSystemId?: string;
+  @Input() public entityCode?: string;
+  @Input() public codeSystem?: string;
 
   public data: {[id: string]: CodeSystemEntityVersion} = {};
   public value?: number;
@@ -37,22 +38,29 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
     ).subscribe(data => this.data = data);
   }
 
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ((changes['codeSystem'] || changes['entityCode']) && this.codeSystem && this.entityCode) {
+      this.codeSystemService.searchEntityVersions(this.codeSystem, {code: this.entityCode, limit: -1})
+        .subscribe(resp => this.data = ({...group(resp.data, csev => csev.id)}));
+    }
+  }
+
   public onSearch(text: string): void {
     this.searchUpdate.next(text);
   }
 
   private searchEntities(text: string): Observable<{[id: string]: CodeSystemEntityVersion}> {
-    if (!text || !this.codeSystemId) {
+    if (!text || !this.codeSystem) {
       return of(this.data);
     }
 
     const q = new CodeSystemEntityVersionSearchParams();
     q.textContains = text;
-    q.codeSystem = this.codeSystemId;
+    q.codeSystem = this.codeSystem;
     q.limit = 10_000;
 
     this.loading['search'] = true;
-    return this.codeSystemService.searchEntityVersions(this.codeSystemId, q).pipe(
+    return this.codeSystemService.searchEntityVersions(this.codeSystem, q).pipe(
       takeUntil(this.destroy$),
       map(cseva => ({...this.data, ...group(cseva.data, csev => csev.id!)})),
       catchError(() => of(this.data)),
@@ -69,7 +77,6 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, ControlVa
         .add(() => this.loading['load'] = false);
     }
   }
-
 
   public writeValue(obj: CodeSystemEntityVersion | number): void {
     this.value = (typeof obj === 'object' ? obj?.id : obj);

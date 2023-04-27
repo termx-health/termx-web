@@ -1,6 +1,6 @@
 <div nz-row nzJustify="center">
   <div nz-col [nzLg]="18" [nzXs]="24">
-    <m-spinner [mLoading]="loading['save']">
+    <m-spinner [mLoading]="loading['save'] || loading['init']">
       <m-card *ngIf="mapSet" [mShowSkeleton]="loading['init']" autofocus>
         <div *m-card-header>
           <div class="m-justify-between">
@@ -45,7 +45,8 @@
               <div style="display: flex; justify-content: space-between">
                 <tw-map-set-unmapped-concepts #unmappedSourceConceptList [unmappedConcepts]="unmappedSourceConcepts"></tw-map-set-unmapped-concepts>
                 <div style="align-self: center">
-                  <m-button (mClick)="mapConcepts()" [disabled]="!unmappedTargetConceptList.selectedConcept || !unmappedTargetConceptList.selectedConcept">=</m-button>
+                  <m-button (mClick)="mapConcepts()" [disabled]="!unmappedTargetConceptList.selectedConcept || !unmappedTargetConceptList.selectedConcept">=
+                  </m-button>
                 </div>
                 <tw-map-set-unmapped-concepts #unmappedTargetConceptList [unmappedConcepts]="unmappedTargetConcepts"></tw-map-set-unmapped-concepts>
               </div>
@@ -53,39 +54,123 @@
 
             <nz-tab [nzTitle]="'Source -> Target' | translate">
               <div class="m-items-middle" style="margin-bottom: 0.5rem">
-                <m-input name="mapping-search-text" [(ngModel)]="mappingSearchOptions.text" (ngModelChange)="filterAssociations($event, mappingSearchOptions.unmapped)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-                <m-checkbox name="mapping-search-unmapped" [(ngModel)]="mappingSearchOptions.unmapped" (ngModelChange)="filterAssociations(mappingSearchOptions.text, $event)">Unmapped</m-checkbox>
+                <m-input name="mapping-search-text"
+                    [(ngModel)]="mappingSearchOptions.text"
+                    (ngModelChange)="filterAssociations($event, mappingSearchOptions.unmapped)"
+                    placeholder="marina.ui.inputs.search.placeholder"></m-input>
+                <m-checkbox name="mapping-search-unmapped"
+                    [(ngModel)]="mappingSearchOptions.unmapped"
+                    (ngModelChange)="filterAssociations(mappingSearchOptions.text, $event)">Unmapped
+                </m-checkbox>
               </div>
               <form #form="ngForm" *ngIf="filteredMapSetAssociations">
-                <m-editable-table #rowsTable [mData]="filteredMapSetAssociations" [mRowInstance]="rowInstance" (mAfterDelete)="deleteAssociation($event)" (mRowAdd)="addAssociation()">
+                <m-editable-table #rowsTable
+                    [mData]="filteredMapSetAssociations"
+                    [mRowInstance]="rowInstance"
+                    (mAfterDelete)="deleteAssociation($event)"
+                    (mRowAdd)="addAssociation()">
                   <m-editable-column [mTitle]="'Source code'" mName="source-code">
-                    <ng-template #viewTemplate let-a>{{a.source.code}}</ng-template>
-                    <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-                      <m-select [name]="ngModelName" [(ngModel)]="a.source.code" (ngModelChange)="conceptSelected($event, a, 'source')" required>
-                        <m-option *ngFor="let concept of sourceConcepts" [mValue]="concept.code" [mLabel]="concept.code"></m-option>
-                      </m-select>
-                    </ng-template>
+                    <ng-template #viewTemplate let-a><label style="white-space: nowrap;">{{a.source?.code}}</label></ng-template>
                   </m-editable-column>
                   <m-editable-column [mTitle]="'Source display'" mName="source-display">
-                    <ng-template #viewTemplate let-a>{{a.source.designations | apply:findDisplay}}</ng-template>
+                    <ng-template #viewTemplate let-a>{{a.source?.designations | apply:findDisplay}}</ng-template>
                   </m-editable-column>
                   <m-editable-column [mTitle]="'Target code'" mName="target-code">
-                    <ng-template #viewTemplate let-a>{{a.target.code}}</ng-template>
-                    <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-                      <m-select [name]="ngModelName" [(ngModel)]="a.target.code" (ngModelChange)="conceptSelected($event, a, 'target')" required>
-                        <m-option *ngFor="let concept of targetConcepts" [mValue]="concept.code" [mLabel]="concept.code"></m-option>
-                      </m-select>
-                    </ng-template>
+                    <ng-template #viewTemplate let-a><label style="white-space: nowrap;">{{a.target?.code}}</label></ng-template>
                   </m-editable-column>
                   <m-editable-column [mTitle]="'Target display'" mName="target-display">
-                    <ng-template #viewTemplate let-a>{{a.target.designations | apply:findDisplay}}</ng-template>
+                    <ng-template #viewTemplate let-a>{{a.target?.designations | apply:findDisplay}}</ng-template>
                   </m-editable-column>
                   <m-editable-column [mTitle]="'Relation'" mName="relation">
                     <ng-template #viewTemplate let-a>{{a.associationType}}</ng-template>
-                    <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-                      <tw-association-type-search [name]="ngModelName" [(ngModel)]="a.associationType" valuePrimitive required></tw-association-type-search>
-                    </ng-template>
                   </m-editable-column>
+
+                  <ng-template #expandEditTemplate let-a let-prefix="ngModelNamePrefix">
+                    <tr>
+                      <td colspan="7">
+                        <m-form-row *ngIf="mapSet?.sourceCodeSystems?.length > 1 || !a.source.codeSystem || mapSet?.targetCodeSystems?.length > 1 || !a.target.codeSystem">
+                          <div *mFormCol>
+                            <m-form-item *ngIf="mapSet?.sourceCodeSystems?.length > 1 || !a.source.codeSystem" mLabel="Source code system" [mName]="prefix + '-s-code-system'" required>
+                              <m-select [(ngModel)]="a.source.codeSystem" [name]="prefix + '-s-code-system'" required>
+                                <m-option *ngFor="let cs of mapSet.sourceCodeSystems" [mValue]="cs" [mLabel]="cs"></m-option>
+                              </m-select>
+                            </m-form-item>
+                          </div>
+                          <div *mFormCol>
+                            <m-form-item *ngIf="mapSet?.targetCodeSystems?.length > 1 || !a.target.codeSystem" mLabel="Target code system" [mName]="prefix + '-t-code-system'" required>
+                              <m-select [(ngModel)]="a.target.codeSystem" [name]="prefix + '-t-code-system'" required>
+                                <m-option *ngFor="let cs of mapSet.targetCodeSystems" [mValue]="cs" [mLabel]="cs"></m-option>
+                              </m-select>
+                            </m-form-item>
+                          </div>
+                        </m-form-row>
+                        <m-form-row>
+                          <div *mFormCol>
+                            <m-form-item mLabel="Source concept" [mName]="prefix + '-source'" required>
+                              <tw-term-concept-search *ngIf="mapSet?.sourceCodeSystems?.length > 0"
+                                  [(ngModel)]="a.source.code"
+                                  [name]="prefix + '-source'"
+                                  [codeSystem]="a.source.codeSystem"
+                                  valueType="code"
+                                  required></tw-term-concept-search>
+                              <tw-value-set-concept-select *ngIf="!(mapSet?.sourceCodeSystems?.length > 0) && mapSet?.sourceValueSet"
+                                  [(ngModel)]="a.source.code"
+                                  [name]="prefix + '-source'"
+                                  [valueSet]="mapSet.sourceValueSet"
+                                  required></tw-value-set-concept-select>
+                            </m-form-item>
+                          </div>
+                          <div *mFormCol>
+                            <m-form-item mLabel="Target concept" [mName]="prefix + '-target'" required>
+                              <tw-term-concept-search *ngIf="mapSet?.targetCodeSystems?.length > 0"
+                                  [(ngModel)]="a.target.code"
+                                  [name]="prefix + '-target'"
+                                  [codeSystem]="a.target.codeSystem"
+                                  valueType="code"
+                                  required></tw-term-concept-search>
+                              <tw-value-set-concept-select *ngIf="!(mapSet?.targetCodeSystems?.length > 0) && mapSet?.targetValueSet"
+                                  [(ngModel)]="a.target.code"
+                                  [name]="prefix + '-target'"
+                                  [valueSet]="mapSet.targetValueSet"
+                                  required></tw-value-set-concept-select>
+                            </m-form-item>
+                          </div>
+                        </m-form-row>
+                        <m-form-row>
+                          <div *mFormCol>
+                            <m-form-item *ngIf="a.source.code" mLabel="Source concept version" [mName]="prefix + '-source-version'">
+                              <tw-code-system-entity-version-search [(ngModel)]="a.source.id"
+                                  [name]="prefix + '-source-version'"
+                                  [codeSystem]="a.source.codeSystem"
+                                  [entityCode]="a.source.code"
+                                  valuePrimitive></tw-code-system-entity-version-search>
+                            </m-form-item>
+                          </div>
+
+                          <div *mFormCol>
+                            <m-form-item *ngIf="a.target.code" mLabel="Target concept version" [mName]="prefix + '-target-version'">
+                              <tw-code-system-entity-version-search [(ngModel)]="a.target.id"
+                                  [name]="prefix + '-target-version'"
+                                  [codeSystem]="a.target.codeSystem"
+                                  [entityCode]="a.target.code"
+                                  valuePrimitive></tw-code-system-entity-version-search>
+                            </m-form-item>
+                          </div>
+                        </m-form-row>
+                        <m-form-row>
+                          <div *mFormCol>
+                            <m-form-item *ngIf="a.source.code" mLabel="Relation" [mName]="prefix + '-association'">
+                              <tw-association-type-search [(ngModel)]="a.associationType"
+                                  [name]="prefix + '-association'"
+                                  valuePrimitive
+                                  required></tw-association-type-search>
+                            </m-form-item>
+                          </div>
+                          <div *mFormCol></div>
+                        </m-form-row>
+                      </td>
+                    </tr>
+                  </ng-template>
                 </m-editable-table>
               </form>
             </nz-tab>

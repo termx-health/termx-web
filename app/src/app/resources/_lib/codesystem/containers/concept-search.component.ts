@@ -3,7 +3,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
-import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams} from '../../codesystem';
+import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams, ConceptUtil} from '../../codesystem';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'tw-concept-search',
@@ -11,7 +12,7 @@ import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams} fro
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}, DestroyService]
 })
 export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
-  private static complex_code_systems = ['loinc'];
+  private static complex_code_systems = ['loinc', 'loinc-answer-list'];
 
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
   @Input() @BooleanInput() public multiple: string | boolean;
@@ -33,6 +34,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
 
   public constructor(
     private conceptService: CodeSystemConceptLibService,
+    private translateService: TranslateService,
     private destroy$: DestroyService
   ) {}
 
@@ -76,7 +78,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     q.codeSystemVersionReleaseDateLe = this.codeSystemVersionReleaseDateLe;
     q.codeSystemVersionExpirationDateGe = this.codeSystemVersionExpirationDateGe;
     q.codeSystemEntityStatus = this.codeSystemEntityVersionStatus;
-    q.limit = 1000;
+    q.limit = 100;
 
     this.loading['search'] = true;
     return this.conceptService.search(q).pipe(
@@ -97,11 +99,12 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
 
     if (isDefined(val) && typeof val === 'string') {
       this.loading['load'] = true;
-      this.conceptService.search({id: isIdArray ? val : undefined, code: !isIdArray ? val: undefined, limit: val.split(',').length, codeSystem: this.codeSystem})
+      this.conceptService.search(
+        {id: isIdArray ? val : undefined, code: !isIdArray ? val : undefined, limit: val.split(',').length, codeSystem: this.codeSystem})
         .pipe(takeUntil(this.destroy$)).subscribe(c => {
-          const data = group(c.data, d => this.valueType === 'code' ? d.code! : d.id!);
-          this.data = {...(this.data || {}), ...data};
-        }).add(() => this.loading['load'] = false);
+        const data = group(c.data, d => this.valueType === 'code' ? d.code! : d.id!);
+        this.data = {...(this.data || {}), ...data};
+      }).add(() => this.loading['load'] = false);
     }
   }
 
@@ -133,8 +136,12 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     this.onTouched = fn;
   }
 
-
   public get isLoading(): boolean {
     return Object.values(this.loading).some(Boolean);
   }
+
+  protected getDisplay = (concept: CodeSystemConcept): string => {
+    const lang = this.translateService.currentLang;
+    return ConceptUtil.getDisplay(concept, lang);
+  };
 }

@@ -13,7 +13,7 @@
           </m-form-item>
           <m-form-item *ngIf="sourceCodeSystem" mName="sourceConcept" mLabel="web.map-set-association.form.source-concept" required>
             <tw-code-system-entity-version-search
-                [codeSystemId]="sourceCodeSystem"
+                [codeSystem]="sourceCodeSystem"
                 [(ngModel)]="association.source"
                 name="sourceConcept"
             ></tw-code-system-entity-version-search>
@@ -28,7 +28,7 @@
           </m-form-item>
           <m-form-item *ngIf="targetCodeSystem" mName="targetConcept" mLabel="web.map-set-association.form.target-concept" required>
             <tw-code-system-entity-version-search
-                [codeSystemId]="targetCodeSystem"
+                [codeSystem]="targetCodeSystem"
                 [(ngModel)]="association.target"
                 name="targetConcept"
             ></tw-code-system-entity-version-search>
