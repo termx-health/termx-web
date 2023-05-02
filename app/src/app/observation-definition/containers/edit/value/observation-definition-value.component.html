@@ -11,7 +11,6 @@
     <div *mFormCol>
       <m-form-item mLabel="entities.observation-definition.value.usage" mName="usage" required>
         <m-select name="circumstances-usage" [(ngModel)]="value.usage" required>
-          <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
         </m-select>
