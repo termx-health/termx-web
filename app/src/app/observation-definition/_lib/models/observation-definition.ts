@@ -17,7 +17,7 @@ export class ObservationDefinition {
   public alias?: LocalizedName;
   public definition?: LocalizedName;
   public keywords?: ObservationDefinitionKeyWord[];
-  public category?: string;
+  public category?: ObservationDefinitionCategory[];
   public timePrecision?: string;
   public structure?: string[];
   public value?: ObservationDefinitionValue;
@@ -33,4 +33,9 @@ export class ObservationDefinition {
 export class ObservationDefinitionKeyWord {
   public lang?: string;
   public word?: string;
+}
+
+export class ObservationDefinitionCategory {
+  public code?: string;
+  public codeSystem?: string;
 }

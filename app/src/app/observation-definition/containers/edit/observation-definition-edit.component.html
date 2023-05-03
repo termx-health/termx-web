@@ -52,10 +52,26 @@
             <m-multi-language-input name="keywords" [(ngModel)]="observationDefinition.keywords"></m-multi-language-input>
           </m-form-item>
           <m-form-item mName="category" mLabel="entities.observation-definition.category" required>
-            <tw-value-set-concept-select name="category"
-                [(ngModel)]="observationDefinition.category"
-                valueSet="observation-category"
-                required></tw-value-set-concept-select>
+            <div>
+              <m-tag *ngFor="let c of observationDefinition.category; let i = index" style="margin: 0 0.5rem 0.5rem 0">
+                {{c.code | localizedConceptName: {codeSystem: c.codeSystem} | async}}
+                <m-icon class="m-clickable" mCode="close" (click)="removeCategory(i)"></m-icon>
+              </m-tag>
+            </div>
+            <div class="m-items-middle">
+              <tw-value-set-concept-select name="category"
+                  [(ngModel)]="category.observationCategory"
+                  (ngModelChange)="addCategory($event, 'observation-category')"
+                  valueSet="observation-category"
+                  placeholder="Observation category"></tw-value-set-concept-select>
+              <tw-concept-search name="category"
+                  [(ngModel)]="category.loincPart"
+                  (ngModelChange)="addCategory($event, 'loinc-part')"
+                  codeSystem="loinc-part"
+                  valueType="code"
+                  placeholder="LOINC part"></tw-concept-search>
+            </div>
+
           </m-form-item>
           <m-form-item mName="time-precision" mLabel="entities.observation-definition.time-precision" required>
             <m-select name="time-precision" [(ngModel)]="observationDefinition.timePrecision">

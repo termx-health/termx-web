@@ -22,7 +22,11 @@
             <a [routerLink]="[obs.id, ('*.ObservationDefinition.edit' | twHasAnyPrivilege)? 'edit': 'view']">{{obs.code}}</a>
           </td>
           <td>{{obs.names | localName}}</td>
-          <td>{{obs.category}}</td>
+          <td>
+            <div style="display: grid">
+              <label *ngFor="let cat of obs.category">{{cat.code}}</label>
+            </div>
+          </td>
         </tr>
 
         <tr *mTableNoData>

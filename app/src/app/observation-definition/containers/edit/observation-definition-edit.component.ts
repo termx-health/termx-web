@@ -30,6 +30,7 @@ import {ObservationDefinitionMappingListComponent} from 'term-web/observation-de
 export class ObservationDefinitionEditComponent implements OnInit {
   protected observationDefinition?: ObservationDefinition;
   protected loader = new LoadingManager();
+  protected category: {observationCategory?: string, loincPart?: string} = {};
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild(ObservationDefinitionValueComponent) public valueComponent?: ObservationDefinitionValueComponent;
@@ -128,4 +129,19 @@ export class ObservationDefinitionEditComponent implements OnInit {
     return [...(def.components || []), ...(def.state || []), ...(def.protocol.components || []),];
   };
 
+  public removeCategory(index: number): void {
+    this.observationDefinition.category?.splice(index, 1);
+    this.observationDefinition.category = [...this.observationDefinition.category];
+  }
+
+  public addCategory(code: string, system: string): void {
+    if (!code || !system) {
+      return;
+    }
+    this.observationDefinition.category = [...this.observationDefinition.category, {code: code, codeSystem: system}];
+    setTimeout(() => {
+      this.category.observationCategory = undefined;
+      this.category.loincPart = undefined;
+    });
+  }
 }

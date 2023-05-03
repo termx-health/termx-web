@@ -12,10 +12,11 @@ import {TranslateService} from '@ngx-translate/core';
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}, DestroyService]
 })
 export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
-  private static complex_code_systems = ['loinc', 'loinc-answer-list'];
+  private static complex_code_systems = ['loinc', 'loinc-answer-list', 'loinc-part'];
 
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
   @Input() @BooleanInput() public multiple: string | boolean;
+  @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
 
   @Input() public codeSystem?: string;
   @Input() public codeSystemVersion?: string;
