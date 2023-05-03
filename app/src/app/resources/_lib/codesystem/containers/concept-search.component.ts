@@ -15,6 +15,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   private static complex_code_systems = ['loinc', 'loinc-answer-list', 'loinc-part'];
 
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
+  @Input() public displayType: 'code' | 'name' | 'codeName' = 'codeName';
   @Input() @BooleanInput() public multiple: string | boolean;
   @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
 
@@ -144,5 +145,16 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   protected getDisplay = (concept: CodeSystemConcept): string => {
     const lang = this.translateService.currentLang;
     return ConceptUtil.getDisplay(concept, lang);
+  };
+
+  protected getLabel = (key: string): string => {
+    const displays = [];
+    if (this.displayType === 'code' || this.displayType === 'codeName') {
+      displays.push(this.data[key]?.code);
+    }
+    if (this.displayType === 'name' || this.displayType === 'codeName') {
+      displays.push(this.getDisplay(this.data[key]));
+    }
+    return displays.filter(d => isDefined(d)).join(' ');
   };
 }

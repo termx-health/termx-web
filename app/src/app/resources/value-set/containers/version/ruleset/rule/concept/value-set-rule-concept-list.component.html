@@ -5,18 +5,19 @@
 
   <form *ngIf="rule?.concepts && !showPredefinedConcepts || viewMode">
     <m-editable-table #rowsTable [mData]="rule.concepts" [mRowInstance]="rowInstance" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
-      <m-editable-column [mTitle]="'entities.value-set-version-concept.order-number'" mName="order-number">
+      <m-editable-column mWidth="10%" [mTitle]="'entities.value-set-version-concept.order-number'" mName="order-number">
         <ng-template #viewTemplate let-c>{{c.orderNumber}}</ng-template>
         <ng-template #editTemplate let-c let-ngModelName="ngModelName">
           <m-number-input [name]="ngModelName" [(ngModel)]="c.orderNumber"></m-number-input>
         </ng-template>
       </m-editable-column>
-      <m-editable-column [mTitle]="'entities.value-set-version-concept.concept'" mName="concept">
+      <m-editable-column mWidth="20%" [mTitle]="'entities.value-set-version-concept.concept'" mName="concept">
         <ng-template #viewTemplate let-c>{{c.concept?.code}}</ng-template>
         <ng-template #editTemplate let-c let-ngModelName="ngModelName">
           <tw-term-concept-search
               [name]="ngModelName"
               [(ngModel)]="c.concept"
+              [displayType]="'code'"
               [codeSystem]="rule.codeSystem"
               [codeSystemVersionId]="rule.codeSystemVersionId"
               [codeSystemVersionReleaseDateLe]="lockedDate"
@@ -26,15 +27,15 @@
               required></tw-term-concept-search>
         </ng-template>
       </m-editable-column>
-      <m-editable-column [mTitle]="'entities.value-set-version-concept.display'" mName="display" >
+      <m-editable-column mWidth="20%" [mTitle]="'entities.value-set-version-concept.display'" mName="display" >
         <ng-template #viewTemplate let-c>{{c.display?.name}}</ng-template>
         <ng-template #editTemplate let-c let-ngModelName="ngModelName">
-          <m-select [name]="ngModelName" [(ngModel)]="c.display" compareWith="name" >
+          <m-select [name]="ngModelName" [(ngModel)]="c.display" compareWith="name" autoSelect>
             <m-option *ngFor="let d of c.concept?.versions?.[0]?.designations" [mValue]="d" [mLabel]="d.name"></m-option>
           </m-select>
         </ng-template>
       </m-editable-column>
-      <m-editable-column [mTitle]="'entities.value-set-version-concept.additional-designations'" mName="designations" >
+      <m-editable-column mWidth="50%" [mTitle]="'entities.value-set-version-concept.additional-designations'" mName="designations" >
         <ng-template #viewTemplate let-c>
           <div style="display:grid">
             <label *ngFor="let d of c.additionalDesignations">{{d.language}} | {{d.name}}</label>
@@ -42,9 +43,9 @@
         </ng-template>
         <ng-template #editTemplate let-c let-ngModelName="ngModelName">
           <div class="m-items-middle" *ngFor="let d of c.additionalDesignations; let i = index" style="margin-bottom: 0.5rem">
-            <tw-value-set-concept-select valueSet="languages" [(ngModel)]="d.language" name="{{i}}-lang"></tw-value-set-concept-select>
-            <m-input [(ngModel)]="d.name" name="{{i}}-name"></m-input>
-            <m-icon class="m-clickable" mCode="delete" (click)="removeDesignation(c, i)"></m-icon>
+            <tw-value-set-concept-select style="flex: 1" valueSet="languages" [(ngModel)]="d.language" name="{{i}}-lang"></tw-value-set-concept-select>
+            <m-input style="flex: 1" [(ngModel)]="d.name" name="{{i}}-name"></m-input>
+            <m-icon style="flex: 1" class="m-clickable" mCode="delete" (click)="removeDesignation(c, i)"></m-icon>
           </div>
           <tw-add-button (click)="addDesignation(c)">Add designation</tw-add-button>
         </ng-template>

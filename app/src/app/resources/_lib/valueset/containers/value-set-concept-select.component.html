@@ -6,7 +6,8 @@
     [loading]="isLoading"
     [autoUnselect]="false"
     [multiple]="multiple | toBoolean"
-    [disabled]="disabled">
+    [disabled]="disabled"
+    [filterOption]="filterOption">
   <m-option *ngFor="let key of data | keys"
       [mValue]="key"
       [mLabel]="data[key]?.display ? data[key]?.display?.name : (key | localizedConceptName: {valueSet: valueSet, valueSetVersion: valueSetVersion} | async)"></m-option>

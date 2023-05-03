@@ -3,6 +3,7 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {CodeSystemConcept} from 'term-web/resources/_lib';
 import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
 import {BooleanInput} from '@kodality-web/core-util';
+import {SnomedLibService} from 'term-web/integration/_lib';
 
 @Component({
   selector: 'tw-term-concept-search',
@@ -11,6 +12,7 @@ import {BooleanInput} from '@kodality-web/core-util';
 })
 export class TerminologyConceptSearchComponent {
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
+  @Input() public displayType: 'code' | 'name' | 'codeName' = 'codeName';
   @Input() @BooleanInput() public multiple: string | boolean;
 
   @Input() public codeSystem?: string;
@@ -25,7 +27,7 @@ export class TerminologyConceptSearchComponent {
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
 
-  public constructor() {}
+  public constructor(private snomedService: SnomedLibService) {}
 
   public writeValue(obj: CodeSystemConcept | number | string): void {
     this.value = obj;
@@ -43,11 +45,11 @@ export class TerminologyConceptSearchComponent {
     this.onTouched = fn;
   }
 
-  protected fromUcum = (value: MeasurementUnit | MeasurementUnit[] | string | string[]): (CodeSystemConcept | string) | (CodeSystemConcept | string)[] => {
+  protected fromUcum = (value: MeasurementUnit | MeasurementUnit[] | string | string[]): void => {
     if (Array.isArray(value)) {
-      return value.map(v => this.mapUcum(v));
+      this.onChange(value.map(v => this.mapUcum(v)));
     } else {
-      return this.mapUcum(value);
+      this.onChange(this.mapUcum(value));
     }
   };
 
@@ -62,13 +64,16 @@ export class TerminologyConceptSearchComponent {
     return value;
   };
 
-  protected fromSnomed = (value: string): CodeSystemConcept | string => {
+  protected fromSnomed = (value: string): void => {
     if (this.valueType === 'full') {
-      this.value = {code: value, codeSystem: 'snomed-ct', versions: [{designations: []}]};
+      this.snomedService.loadConcept(value).subscribe(c => {
+        this.value = {code: c.conceptId, codeSystem: 'snomed-ct', versions: [{designations: [{language: c.pt.lang, name: c.pt.term}]}]};
+        this.onChange(this.value);
+      });
     } else {
       this.value = value;
+      this.onChange(this.value);
     }
-    return this.value;
   };
 
   protected valuePrimitive = (type: 'id' | 'code' | 'full'): boolean => {

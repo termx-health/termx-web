@@ -9,6 +9,7 @@ import {SnomedLibService} from '../services/snomed-lib.service';
   templateUrl: 'snomed-drawer-search.component.html'
 })
 export class SnomedDrawerSearchComponent {
+  @Input() public displayType: 'code' | 'name' | 'codeName' = 'codeName';
   @Input() public value: string;
   @Input() @BooleanInput() public multiple: string | boolean;
   @Input() @BooleanInput() public allowClear: string | boolean = true;
@@ -43,8 +44,11 @@ export class SnomedDrawerSearchComponent {
     if (!val) {
       return of('');
     }
+    if (this.displayType === 'code') {
+      return of(val);
+    }
     return this.snomedService.loadConcept(val).pipe(map(concept => {
-      return concept.conceptId + ' | ' + concept.pt.term;
+      return this.displayType === 'name' ? concept.pt.term : concept.conceptId + ' | ' + concept.pt.term;
     }));
   };
 

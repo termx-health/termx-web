@@ -5,6 +5,7 @@ import {takeUntil} from 'rxjs';
 import {CodeSystemConcept, CodeSystemConceptLibService} from '../../codesystem';
 import {ValueSetVersionConcept} from '../model/value-set-version-concept';
 import {ValueSetLibService} from '../services/value-set-lib.service';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 @Component({
   selector: 'tw-value-set-concept-select',
@@ -99,8 +100,12 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
     this.onTouched = fn;
   }
 
-
   public get isLoading(): boolean {
     return Object.values(this.loading).some(Boolean);
   }
+
+  public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
+    return nzValue.includes(_input) || this.data[nzValue]?.display?.name?.includes(_input);
+  };
+
 }
