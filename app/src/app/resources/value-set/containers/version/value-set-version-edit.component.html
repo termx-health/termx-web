@@ -1,7 +1,7 @@
 <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
   <div nz-col [nzLg]="10" [nzMd]="18" [nzXs]="24">
     <m-spinner [mLoading]="isLoading">
-      <m-card [mShowSkeleton]="loading['init']">
+      <m-card [mShowSkeleton]="loader.state['init']">
         <div *m-card-header class="m-items-middle">
           <div class="m-card__title">{{(mode === 'edit' ? 'web.value-set-version.form.edit-header' : 'web.value-set-version.form.add-header') | translate}}</div>
           <tw-status-tag *ngIf="version?.status" [status]="version.status"></tw-status-tag>
@@ -12,7 +12,7 @@
 
         <form #form="ngForm" *ngIf="version">
           <m-form-item mName="version" mLabel="entities.value-set-version.version" required>
-            <m-input name="version" [(ngModel)]="version.version" required></m-input>
+            <tw-semantic-version-select name="version" [(ngModel)]="version.version" [versions]="valueSetId | apply: versions | async" required></tw-semantic-version-select>
           </m-form-item>
 
           <m-form-item mName="source" mLabel="entities.value-set-version.source">
@@ -31,7 +31,8 @@
             <tw-value-set-concept-select name="supportedLanguages"
                 [(ngModel)]="version.supportedLanguages"
                 valueSet="languages"
-                multiple></tw-value-set-concept-select>
+                multiple
+            ></tw-value-set-concept-select>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="entities.value-set-version.description">
@@ -42,15 +43,21 @@
         </form>
 
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.state['init'] || isLoading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>
       </m-card>
     </m-spinner>
   </div>
+
   <div nz-col [nzLg]="8" [nzMd]="6" [nzXs]="24" style="height: min-content">
-    <tw-value-set-rule-set *ngIf="version" #ruleSetComponent [ruleSet]="version.ruleSet" [valueSetId]="valueSetId" [valueSetVersion]="valueSetVersion"></tw-value-set-rule-set>
+    <tw-value-set-rule-set *ngIf="version"
+      #ruleSetComponent
+        [ruleSet]="version.ruleSet"
+        [valueSetId]="valueSetId"
+        [valueSetVersion]="valueSetVersion"
+    ></tw-value-set-rule-set>
   </div>
 </div>
 

@@ -18,7 +18,7 @@
       </m-form-item>
 
       <m-form-item mName="targetVersion" mLabel="web.code-system.form.versions.duplicate.target-version" required>
-        <m-input name="targetVersion" [(ngModel)]="params.targetVersion" required></m-input>
+        <tw-semantic-version-select name="targetVersion" [(ngModel)]="params.targetVersion" [versions]="[params.sourceVersion?.version]" required></tw-semantic-version-select>
       </m-form-item>
     </form>
   </ng-container>

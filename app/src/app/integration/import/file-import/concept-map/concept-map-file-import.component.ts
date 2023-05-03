@@ -4,7 +4,7 @@ import {environment} from 'app/src/environments/environment';
 import {NgForm} from '@angular/forms';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {LocalizedName} from '@kodality-web/marina-util';
-import {filter, merge, Subject, switchMap, takeUntil, timer} from 'rxjs';
+import {filter, map, merge, Observable, Subject, switchMap, takeUntil, timer} from 'rxjs';
 import {DestroyService} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
 import {JobLibService, JobLog, JobLogResponse} from '../../../../job/_lib';
@@ -83,9 +83,8 @@ export class ConceptMapFileImportComponent {
     this.jobResponse = null;
     this.loading['processing'] = true;
     this.http.post<JobLogResponse>(`${environment.terminologyApi}/file-importer/map-set/process`, formData).subscribe({
-      next: (resp) => {
-        this.pollJobStatus(resp.jobId as number);
-      }, error: () => this.loading['processing'] = false
+      next: resp => this.pollJobStatus(resp.jobId),
+      error: () => this.loading['processing'] = false
     });
   }
 
@@ -107,4 +106,8 @@ export class ConceptMapFileImportComponent {
   public openMapSet(id: string, mode: 'edit' | 'view'): void {
     this.router.navigate(['/resources/map-sets/', id, mode]);
   }
+
+  protected loadMapSetVersions = (id): Observable<string[]> => {
+    return this.mapSetService.searchVersions(id, {limit: -1}).pipe(map(r => r.data.map(d => d.version)));
+  };
 }

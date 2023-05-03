@@ -14,6 +14,7 @@ import {CodeSystemLibModule} from '../../resources/_lib';
 import {TerminologyConceptSearchComponent} from 'term-web/core/shared/components/terminology-concept-select/terminology-concept-search.component';
 import {MeasurementUnitLibModule} from '../../measurement-unit/_lib';
 import {IntegrationLibModule} from '../../integration/_lib';
+import {SemanticVersionSelectComponent} from 'term-web/core/shared/components/version-select/semantic-version-select.component';
 
 
 const commonModules = [
@@ -32,7 +33,8 @@ const commonModules = [
 const components = [
   StatusTagComponent,
   AddButtonComponent,
-  TerminologyConceptSearchComponent
+  TerminologyConceptSearchComponent,
+  SemanticVersionSelectComponent
 ];
 
 const pipes = [

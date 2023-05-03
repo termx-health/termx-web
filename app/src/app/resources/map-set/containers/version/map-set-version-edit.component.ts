@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {validateForm} from '@kodality-web/core-util';
 import {MapSetService} from '../../services/map-set-service';
+import {map, Observable} from 'rxjs';
 
 
 @Component({
@@ -57,4 +58,8 @@ export class MapSetVersionEditComponent implements OnInit {
   public get isLoading(): boolean {
     return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
   }
+
+  public versions = (id): Observable<string[]> => {
+    return this.mapSetService.searchVersions(id, {limit: -1}).pipe(map(r => r.data.map(d => d.version)));
+  };
 }

@@ -22,6 +22,9 @@
       },
       "access": "To access: {{path}}"
     },
+    "version-select": {
+      "custom": "Custom"
+    },
     "filter": "Filter",
     "no-data": "No data",
     "back": "Back",

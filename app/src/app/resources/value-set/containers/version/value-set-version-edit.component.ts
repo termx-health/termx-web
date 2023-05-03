@@ -2,12 +2,13 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {isDefined, validateForm} from '@kodality-web/core-util';
+import {compareNumbers, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ValueSetService} from '../../services/value-set.service';
 import {ValueSetRuleSetComponent} from './ruleset/value-set-rule-set.component';
 import {ValueSetVersionConceptModalComponent} from './concepts/value-set-version-concept-modal.component';
 import {CodeSystemVersion, ValueSetVersion} from 'term-web/resources/_lib';
 import {ValueSetVersionConceptListComponent} from 'term-web/resources/value-set/containers/version/concepts/value-set-version-concept-list.component';
+import {map, Observable} from 'rxjs';
 
 @Component({
   templateUrl: 'value-set-version-edit.component.html',
@@ -18,7 +19,8 @@ export class ValueSetVersionEditComponent implements OnInit {
   public version?: ValueSetVersion;
 
   public mode: 'add' | 'edit' = 'add';
-  public loading: {[k: string]: boolean} = {};
+  public loader = new LoadingManager();
+
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("ruleSetComponent") public ruleSetComponent?: ValueSetRuleSetComponent;
@@ -44,23 +46,21 @@ export class ValueSetVersionEditComponent implements OnInit {
   }
 
   private loadVersion(id: string, version: string): void {
-    this.loading['init'] = true;
-    this.valueSetService.loadVersion(id, version).subscribe(version => this.version = version).add(() => this.loading['init'] = false);
+    this.loader.wrap('init', this.valueSetService.loadVersion(id, version)).subscribe(version => {
+      this.version = version;
+    });
   }
 
   public save(): void {
     if (!validateForm(this.form) || (isDefined(this.conceptListComponent) && !this.conceptListComponent.validate())) {
       return;
     }
-    this.loading['save'] = true;
-    this.version!.status = 'draft';
-    this.version!.ruleSet = this.ruleSetComponent?.getRuleSet();
-    this.version!.concepts = this.conceptListComponent?.getConcepts();
-    this.valueSetService.saveVersion(this.valueSetId!, this.version!).subscribe(() => this.location.back()).add(() => this.loading['save'] = false);
-  }
-
-  public get isLoading(): boolean {
-    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
+    this.version.status = 'draft';
+    this.version.ruleSet = this.ruleSetComponent?.getRuleSet();
+    this.version.concepts = this.conceptListComponent?.getConcepts();
+    this.loader.wrap('save', this.valueSetService.saveVersion(this.valueSetId!, this.version)).subscribe(() => {
+      this.location.back();
+    });
   }
 
   public expand(): void {
@@ -68,4 +68,12 @@ export class ValueSetVersionEditComponent implements OnInit {
       this.conceptModal?.toggleModal(vsConcepts);
     });
   }
+
+
+  public get isLoading(): boolean {
+    return this.loader.isLoadingExcept('init');
+  }
+  public versions = (id): Observable<string[]> => {
+    return this.valueSetService.searchVersions(id, {limit: -1}).pipe(map(r => r.data.map(d => d.version)));
+  };
 }

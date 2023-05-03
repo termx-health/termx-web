@@ -5,6 +5,7 @@ import {CodeSystemVersion} from 'term-web/resources/_lib';
 import {ActivatedRoute} from '@angular/router';
 import {CodeSystemService} from '../../services/code-system.service';
 import {Location} from '@angular/common';
+import {map, Observable} from 'rxjs';
 
 
 @Component({
@@ -53,7 +54,12 @@ export class CodeSystemVersionEditComponent implements OnInit {
       .add(() => this.loading['save'] = false);
   }
 
+
   public get isLoading(): boolean {
     return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
   }
+
+  public versions = (id): Observable<string[]> => {
+    return this.codeSystemService.searchVersions(id, {limit: -1}).pipe(map(r => r.data.map(d => d.version)));
+  };
 }

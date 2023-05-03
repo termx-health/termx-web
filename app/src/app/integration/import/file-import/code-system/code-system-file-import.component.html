@@ -17,9 +17,12 @@
                   [(ngModel)]="data.codeSystem.id"
                   (ngModelChange)="loadCodeSystem($event)"
                   valuePrimitive
-                  required></tw-code-system-search>
-              <div style="margin-top: 0.5rem" (click)="initCodeSystem()">{{'web.integration.file-import.not-found' | translate}}
-                <a>{{'web.integration.file-import.create-new' | translate}}</a></div>
+                  required
+              ></tw-code-system-search>
+              <div style="margin-top: 0.5rem" (click)="initCodeSystem()">
+                {{'web.integration.file-import.not-found' | translate}}
+                <a>{{'web.integration.file-import.create-new' | translate}}</a>
+              </div>
             </m-form-item>
 
             <m-card mDisplay="bordered" *ngIf="data.codeSystem.id">
@@ -67,15 +70,21 @@
         <!-- Do generate value set? -->
         <m-form-item mName="generateValueSet" [mLabel]="chkbx">
           <ng-template #chkbx>
-            <m-checkbox name="generateValueSet"
-                [(ngModel)]="data.generateValueSet">{{'web.integration.file-import.code-system.generate-valueset' | translate}}</m-checkbox>
+            <m-checkbox name="generateValueSet" [(ngModel)]="data.generateValueSet">
+              {{'web.integration.file-import.code-system.generate-valueset' | translate}}
+            </m-checkbox>
           </ng-template>
         </m-form-item>
 
 
         <!-- New CS version info -->
         <m-form-item mName="csVersion" mLabel="entities.code-system-version.version" required>
-          <m-input name="csVersion" [(ngModel)]="data.version.version" required></m-input>
+          <tw-semantic-version-select
+              name="csVersion"
+              [(ngModel)]="data.version.version"
+              [versions]="(data.codeSystem?.['_new'] ? undefined : data.codeSystem.id) | apply: loadCodeSystemVersions | async"
+              required
+          ></tw-semantic-version-select>
         </m-form-item>
 
 
@@ -107,7 +116,7 @@
       </m-form-item>
 
       <m-form-item mName="sourceImportMode" [mLabel]="'File format'" required>
-        <m-radio-group name="sourceImportMode" [(ngModel)]="data.source.mode" required>
+        <m-radio-group name="sourceImportMode" [(ngModel)]="data.source.format" required>
           <label m-radio mValue="csv">{{'web.integration.file-import.code-system.csv' | translate}}</label>
           <label m-radio mValue="tsv">{{'web.integration.file-import.code-system.tsv' | translate}}</label>
         </m-radio-group>
@@ -115,8 +124,9 @@
 
       <m-button *m-card-footer
           (click)="analyze()"
-          [mLoading]="loading['analyze']"
-          [disabled]="!data.source.file">{{'web.integration.file-import.code-system.analyze' | translate}}</m-button>
+          [mLoading]="loader.state['analyze']"
+          [disabled]="!data.source.file"
+      >{{'web.integration.file-import.code-system.analyze' | translate}}</m-button>
     </m-card>
 
 
@@ -138,7 +148,7 @@
         <tr *mTableHead>
           <th>{{'web.integration.file-import.code-system.table.csv-column' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.table.kts-property' | translate}}</th>
-          <th *ngIf="hasAnyIdentifierRow">{{'web.integration.file-import.code-system.table.preferred' | translate}}</th>
+          <th *ngIf="hasDuplicatedIdentifiers">{{'web.integration.file-import.code-system.table.preferred' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.table.type' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.table.format' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.table.lang' | translate}}</th>
@@ -153,9 +163,10 @@
           <td>
             <!-- Mapped KTS property -->
             <m-select *ngIf="!item['_newProp']" [(ngModel)]="item.propertyName" (ngModelChange)="onPropertyNameChange(item)" style="flex: 1">
-              <m-option *ngFor="let prop of data.loadedCodeSystem?.properties | apply: decorateWithDefaultProperties"
+              <m-option *ngFor="let prop of data.loadedCodeSystem?.properties | apply: combineWithDefaults"
                   [mValue]="prop.name"
-                  [mLabel]="prop.name"></m-option>
+                  [mLabel]="prop.name"
+              ></m-option>
               <m-select-button mLabel="ADD NEW" (mClick)="item['_newProp'] = true"></m-select-button>
             </m-select>
 
@@ -163,8 +174,11 @@
 
           </td>
 
-          <td *ngIf="hasAnyIdentifierRow">
-            <m-checkbox *ngIf="item.propertyName === 'concept-code'" [(ngModel)]="item.preferred" (ngModelChange)="onPreferredChange(item)"></m-checkbox>
+          <td *ngIf="hasDuplicatedIdentifiers">
+            <m-checkbox *ngIf="item.propertyName === 'concept-code'"
+                [(ngModel)]="item.preferred"
+                (ngModelChange)="onPropertyPreferredChange(item)"
+            ></m-checkbox>
           </td>
 
           <td>
@@ -176,7 +190,8 @@
             <tw-value-set-concept-select *ngIf="item['_newProp'] || !item.propertyName"
                 [(ngModel)]="item.propertyType"
                 (ngModelChange)="onPropertyTypeChange(item)"
-                valueSet="concept-property-type"></tw-value-set-concept-select>
+                valueSet="concept-property-type"
+            ></tw-value-set-concept-select>
           </td>
 
           <td>
@@ -192,7 +207,8 @@
           <td>
             <tw-value-set-concept-select *ngIf="item.propertyType === 'string' && item.propertyName !== 'concept-code'"
                 [(ngModel)]="item.lang"
-                valueSet="languages"></tw-value-set-concept-select>
+                valueSet="languages"
+            ></tw-value-set-concept-select>
           </td>
 
           <td>
@@ -207,7 +223,7 @@
         </tr>
       </m-table>
 
-      <m-button *m-card-footer (click)="process()" [mLoading]="loading['process']" [disabled]="form.invalid || !analyzeResponse?.properties?.length">
+      <m-button *m-card-footer (click)="process()" [mLoading]="loader.state['process']" [disabled]="form.invalid || !analyzeResponse?.properties?.length">
         {{'web.integration.file-import.process' | translate}}
       </m-button>
       <div *ngIf="jobResponse">
@@ -230,8 +246,9 @@
 
       <m-button *m-card-footer
           (click)="processRequest({type: 'json'})"
-          [mLoading]="loading['process']"
-          [disabled]="!data.source.file">{{'web.integration.file-import.code-system.import' | translate}}</m-button>
+          [mLoading]="loader.state['process']"
+          [disabled]="!data.source.file"
+      >{{'web.integration.file-import.code-system.import' | translate}}</m-button>
 
       <div *ngIf="jobResponse">
         <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
@@ -246,7 +263,6 @@
       </div>
     </m-card>
   </nz-tab>
-
 </nz-tabset>
 
 <ng-template #successNotificationContent>

@@ -12,7 +12,8 @@
       <ng-container *ngIf="!isNewMapSet">
         <tw-map-set-search name="id" [(ngModel)]="data.map.id" (ngModelChange)="loadMapSet($event)" valuePrimitive required></tw-map-set-search>
         <div style="margin-top: 0.5rem" (click)="iniMapSet()">
-          {{'web.integration.file-import.not-found' | translate}}<a>{{'web.integration.file-import.create-new' | translate}}</a>
+          {{'web.integration.file-import.not-found' | translate}}
+          <a>{{'web.integration.file-import.create-new' | translate}}</a>
         </div>
       </ng-container>
 
@@ -21,13 +22,17 @@
 
     <!-- Name -->
     <m-form-item mName="name" mLabel="web.integration.file-import.concept-map.map-name" *ngIf="data.map.id">
-      <ng-container *ngIf="!isNewMapSet">{{(data.loadedMapSet?.names | localName) || '-'}}</ng-container>
+      <ng-container *ngIf="!isNewMapSet">{{data.loadedMapSet?.names | localName: '-'}}</ng-container>
       <m-multi-language-input *ngIf="isNewMapSet" name="names" [(ngModel)]="data.map.names"></m-multi-language-input>
     </m-form-item>
 
     <!-- Version -->
     <m-form-item mName="version" mLabel="web.integration.file-import.concept-map.map-version">
-      <m-input name="version" [(ngModel)]="data.version.version"></m-input>
+      <tw-semantic-version-select
+          name="version"
+          [(ngModel)]="data.version.version"
+          [versions]="(isNewMapSet ? undefined : data.map.id) | apply: loadMapSetVersions | async"
+      ></tw-semantic-version-select>
     </m-form-item>
 
     <!-- Release date -->
