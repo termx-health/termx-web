@@ -37,13 +37,16 @@
       <m-editable-column [mTitle]="'entities.value-set-version-concept.additional-designations'" mName="designations" >
         <ng-template #viewTemplate let-c>
           <div style="display:grid">
-            <label *ngFor="let d of c.additionalDesignations">{{d?.language}} | {{d?.name}}</label>
+            <label *ngFor="let d of c.additionalDesignations">{{d.language}} | {{d.name}}</label>
           </div>
         </ng-template>
         <ng-template #editTemplate let-c let-ngModelName="ngModelName">
-          <m-select [name]="ngModelName" [(ngModel)]="c.additionalDesignations" compareWith="name" multiple>
-            <m-option *ngFor="let d of c.concept?.versions?.[0]?.designations" [mValue]="d" [mLabel]="d.name"></m-option>
-          </m-select>
+          <div class="m-items-middle" *ngFor="let d of c.additionalDesignations; let i = index" style="margin-bottom: 0.5rem">
+            <tw-value-set-concept-select valueSet="languages" [(ngModel)]="d.language" name="{{i}}-lang"></tw-value-set-concept-select>
+            <m-input [(ngModel)]="d.name" name="{{i}}-name"></m-input>
+            <m-icon class="m-clickable" mCode="delete" (click)="removeDesignation(c, i)"></m-icon>
+          </div>
+          <tw-add-button (click)="addDesignation(c)">Add designation</tw-add-button>
         </ng-template>
       </m-editable-column>
     </m-editable-table>

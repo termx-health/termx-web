@@ -38,4 +38,13 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
     }
   }
 
+
+  protected removeDesignation(c: ValueSetVersionConcept, i: number): void {
+    c.additionalDesignations?.splice(i, 1);
+    c.additionalDesignations = [...c.additionalDesignations];
+  }
+
+  protected addDesignation(c: ValueSetVersionConcept): void {
+    c.additionalDesignations = [...(c.additionalDesignations || []), {}];
+  }
 }
