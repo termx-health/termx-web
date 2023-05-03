@@ -489,7 +489,7 @@ export class CodeSystemFileImportComponent {
     });
   }
 
-  protected get hasDuplicatedIdentifiers(): boolean {
+  protected get hasDuplicateIdentifiers(): boolean {
     return this.analyzeResponse.properties.filter(p => p.propertyName === 'concept-code').length > 1;
   }
 

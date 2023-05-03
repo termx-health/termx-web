@@ -148,7 +148,7 @@
         <tr *mTableHead>
           <th>{{'web.integration.file-import.code-system.table.csv-column' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.table.kts-property' | translate}}</th>
-          <th *ngIf="hasDuplicatedIdentifiers">{{'web.integration.file-import.code-system.table.preferred' | translate}}</th>
+          <th *ngIf="hasDuplicateIdentifiers">{{'web.integration.file-import.code-system.table.preferred' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.table.type' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.table.format' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.table.lang' | translate}}</th>
@@ -174,7 +174,7 @@
 
           </td>
 
-          <td *ngIf="hasDuplicatedIdentifiers">
+          <td *ngIf="hasDuplicateIdentifiers">
             <m-checkbox *ngIf="item.propertyName === 'concept-code'"
                 [(ngModel)]="item.preferred"
                 (ngModelChange)="onPropertyPreferredChange(item)"

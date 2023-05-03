@@ -1,14 +1,12 @@
 <m-spinner [mLoading]="!versions" mSize="small" *ngIf="semver">
   <div class="m-justify-left" *ngIf="!customVersion">
     <m-radio-group [(ngModel)]="version" (ngModelChange)="fireOnChange()">
-      <label m-radio-button *ngIf="semver | apply: composeVersion: 'patch' as v" [mValue]="v">{{'' + v}}</label>
-      <label m-radio-button *ngIf="semver | apply: composeVersion: 'minor' as v" [mValue]="v">{{'' + v}}</label>
-      <label m-radio-button *ngIf="semver | apply: composeVersion: 'major' as v" [mValue]="v">{{'' + v}}</label>
+      <label m-radio-button *ngIf="semver | apply: composeVersion: 'patch' as v" [mValue]="v">{{v}}</label>
+      <label m-radio-button *ngIf="semver | apply: composeVersion: 'minor' as v" [mValue]="v">{{v}}</label>
+      <label m-radio-button *ngIf="semver | apply: composeVersion: 'major' as v" [mValue]="v">{{v}}</label>
     </m-radio-group>
-
     <m-button (mClick)="setCustom()">{{'core.version-select.custom' | translate}}</m-button>
   </div>
 </m-spinner>
 
 <m-input *ngIf="customVersion" [(ngModel)]="version" (ngModelChange)="fireOnChange()" autofocus></m-input>
-

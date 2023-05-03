@@ -30,23 +30,21 @@ export class SemanticVersionSelectComponent implements OnChanges, ControlValueAc
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['versions']) {
-      this.calc();
+      this.calcSemver();
     }
   }
 
 
-  private calc(): void {
+  private calcSemver(): void {
     let semver = this.latestVersion(this.versions);
     if (!semver && this.versions && !this.versions?.length) {
       semver = this.latestVersion(['0.0.0']);
     }
-
     const versions = [
       this.composeVersion(semver, 'major'),
       this.composeVersion(semver, 'minor'),
       this.composeVersion(semver, 'patch')
     ];
-
 
     // cannot suggest next semver
     // current version is not among suggested semantic versions
@@ -62,7 +60,7 @@ export class SemanticVersionSelectComponent implements OnChanges, ControlValueAc
 
   public writeValue(obj: string): void {
     this.version = obj;
-    this.calc();
+    this.calcSemver();
   }
 
   public registerOnChange(fn: any): void {
@@ -82,7 +80,6 @@ export class SemanticVersionSelectComponent implements OnChanges, ControlValueAc
     if (!versions) {
       return undefined;
     }
-
     const semVersions = versions
       .filter(v => REGEX.test(v))
       .filter(Boolean)
@@ -100,13 +97,11 @@ export class SemanticVersionSelectComponent implements OnChanges, ControlValueAc
         const v2 = Number(b.base.replace(/\./gm, ''));
         return compareNumbers(v1, v2, false) || compareNumbers(a.src.length, b.src.length, true);
       });
-
     return semVersions[0];
   };
 
   protected composeVersion = (semver: Semver, core: 'major' | 'minor' | 'patch'): string => {
     const {major, minor, patch} = semver || {};
-
     if (core === 'major') {
       return [major + 1, 0, 0].join('.');
     }
