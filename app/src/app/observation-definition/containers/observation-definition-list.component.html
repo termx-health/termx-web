@@ -24,7 +24,9 @@
           <td>{{obs.names | localName}}</td>
           <td>
             <div style="display: grid">
-              <label *ngFor="let cat of obs.category">{{cat.code}}</label>
+              <label *ngFor="let cat of obs.category" m-tooltip [mTitle]="cat.codeSystem">
+                {{cat.code | localizedConceptName: {codeSystem: cat.codeSystem} | async}}
+              </label>
             </div>
           </td>
         </tr>

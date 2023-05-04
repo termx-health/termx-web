@@ -53,23 +53,25 @@
           </m-form-item>
           <m-form-item mName="category" mLabel="entities.observation-definition.category" required>
             <div>
-              <m-tag *ngFor="let c of observationDefinition.category; let i = index" style="margin: 0 0.5rem 0.5rem 0">
+              <m-tag m-tooltip [mTitle]="c.codeSystem" *ngFor="let c of observationDefinition.category; let i = index" style="margin: 0 0.5rem 0.5rem 0">
                 {{c.code | localizedConceptName: {codeSystem: c.codeSystem} | async}}
                 <m-icon class="m-clickable" mCode="close" (click)="removeCategory(i)"></m-icon>
               </m-tag>
             </div>
             <div class="m-items-middle">
-              <tw-value-set-concept-select name="category"
-                  [(ngModel)]="category.observationCategory"
-                  (ngModelChange)="addCategory($event, 'observation-category')"
-                  valueSet="observation-category"
-                  placeholder="Observation category"></tw-value-set-concept-select>
-              <tw-concept-search name="category"
-                  [(ngModel)]="category.loincPart"
-                  (ngModelChange)="addCategory($event, 'loinc-part')"
-                  codeSystem="loinc-part"
+              <tw-code-system-search style="flex: 1"
+                  name="category-code-system"
+                  placeholder="Code system"
+                  [(ngModel)]="category.codeSystem"
+                  valuePrimitive></tw-code-system-search>
+              <tw-term-concept-search style="flex: 1"
+                  name="category-code"
+                  [(ngModel)]="category.code"
+                  (ngModelChange)="addCategory($event, category.codeSystem)"
+                  [codeSystem]="category.codeSystem"
                   valueType="code"
-                  placeholder="LOINC part"></tw-concept-search>
+                  displayType="name"
+                  placeholder="Concept"></tw-term-concept-search>
             </div>
 
           </m-form-item>

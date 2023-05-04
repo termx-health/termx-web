@@ -14,6 +14,7 @@ export class TerminologyConceptSearchComponent {
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
   @Input() public displayType: 'code' | 'name' | 'codeName' = 'codeName';
   @Input() @BooleanInput() public multiple: string | boolean;
+  @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
 
   @Input() public codeSystem?: string;
   @Input() public codeSystemVersion?: string;
