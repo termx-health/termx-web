@@ -12,7 +12,8 @@
       "add": "Add",
       "select": "Select",
       "search": "Search",
-      "clear-all": "Clear all"
+      "clear-all": "Clear all",
+      "query": "Query"
     },
     "no-privilege": {
       "error": "401 Unauthorized",
@@ -1133,7 +1134,9 @@
       "relationships": "Relationships",
       "refsets": "Refsets",
       "fsn": "Fully Specified Name (FSN)",
-      "pt": "Preferred term (PT)"
+      "pt": "Preferred term (PT)",
+      "snomed-references": "References in SNOMED",
+      "kts-references": "References in KTS"
     },
     "snomed-description": {
       "refset": "Refset",
@@ -1150,6 +1153,10 @@
     "snomed-refset": {
       "target": "Target",
       "type": "Type"
+    },
+    "snomed-reference": {
+      "type": "Type",
+      "concept": "Concept"
     },
     "page": {
       "plural": "Pages",

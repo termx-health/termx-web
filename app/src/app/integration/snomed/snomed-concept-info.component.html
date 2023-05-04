@@ -15,7 +15,7 @@
         {{'entities.snomed-concept.descriptions' | translate}}
       </div>
     </div>
-    <m-table [mData]="descriptions | keys" [mLoading]="loading" mEnablePagination>
+    <m-table [mData]="descriptions | keys" [mLoading]="loader.state['load']" mEnablePagination>
       <tr *mTableHead>
         <th>{{'entities.snomed-description.refset' | translate}}</th>
         <th>{{'entities.snomed-description.concept-id' | translate}}</th>
@@ -46,14 +46,14 @@
         {{'entities.snomed-concept.relationships' | translate}}
       </div>
     </div>
-    <m-table [mData]="relationships" [mLoading]="loading" mEnablePagination>
+    <m-table [mData]="relationships" [mLoading]="loader.state['load']" mEnablePagination>
       <tr *mTableHead>
         <th>{{'entities.snomed-relationship.type' | translate}}</th>
         <th>{{'entities.snomed-relationship.target' | translate}}</th>
       </tr>
       <tr *mTableRow="let relationship">
         <td>{{relationship.type.fsn.term}}</td>
-        <td>{{relationship.target.fsn.term}}</td>
+        <td><a (mClick)="conceptSelected.emit(relationship.target.conceptId)">{{relationship.target.fsn.term}}</a></td>
       </tr>
       <tr *mTableNoData>
         <td colspan="100%">
@@ -69,7 +69,7 @@
         {{'entities.snomed-concept.refsets' | translate}}
       </div>
     </div>
-    <m-table [mData]="refsets" [mLoading]="loading" mEnablePagination>
+    <m-table [mData]="refsets" [mLoading]="loader.state['load']" mEnablePagination>
       <tr *mTableHead>
         <th>{{'entities.snomed-refset.type' | translate}}</th>
         <th>{{'entities.snomed-refset.target' | translate}}</th>
@@ -77,6 +77,54 @@
       <tr *mTableRow="let refset">
         <td>{{refset.pt.term}}</td>
         <td>{{refset.target}}</td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="100%">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
+
+  <m-card class="m-card-inside">
+    <div *m-card-header class="m-justify-between">
+      <div class="m-card__title">
+        {{'entities.snomed-concept.snomed-references' | translate}}
+      </div>
+      <m-button (mClick)="loadSnomedReferences()">{{'core.btn.query' | translate}}</m-button>
+    </div>
+    <m-table [mData]="snomedReferences" [mLoading]="loader.state['snomed-references']" mEnablePagination>
+      <tr *mTableHead>
+        <th>{{'entities.snomed-reference.type' | translate}}</th>
+        <th>{{'entities.snomed-reference.concept' | translate}}</th>
+      </tr>
+      <tr *mTableRow="let reference">
+        <td>{{'Is a'}}</td>
+        <td><a (mClick)="conceptSelected.emit(reference.conceptId)">{{reference.pt.term}}</a></td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="100%">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
+
+  <m-card class="m-card-inside">
+    <div *m-card-header class="m-justify-between">
+      <div class="m-card__title">
+        {{'entities.snomed-concept.kts-references' | translate}}
+      </div>
+      <m-button (mClick)="loadKtsReferences()">{{'core.btn.query' | translate}}</m-button>
+    </div>
+    <m-table [mData]="ktsReferences" [mLoading]="loader.state['kts-references']" mEnablePagination>
+      <tr *mTableHead>
+        <th>{{'entities.snomed-reference.type' | translate}}</th>
+        <th>{{'entities.snomed-reference.concept' | translate}}</th>
+      </tr>
+      <tr *mTableRow="let ref">
+        <td>{{ref.type}}</td>
+        <td><a (mClick)="openReference(ref.type, ref.id)">{{ref.name}}</a></td>
       </tr>
       <tr *mTableNoData>
         <td colspan="100%">

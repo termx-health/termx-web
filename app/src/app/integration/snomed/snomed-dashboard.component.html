@@ -1,8 +1,8 @@
 <div nz-row nzGutter="12" class="m-row">
   <div nz-col [nzMd]="8" [nzXs]="24">
-    <tw-snomed-search (conceptSelected)="conceptId = $event"></tw-snomed-search>
+    <tw-snomed-search (conceptSelected)="conceptSelected($event)"></tw-snomed-search>
   </div>
   <div nz-col [nzMd]="16" [nzXs]="24">
-    <tw-snomed-concept-info *ngIf="conceptId" [conceptId]="conceptId"></tw-snomed-concept-info>
+    <tw-snomed-concept-info *ngIf="conceptId" [conceptId]="conceptId" (conceptSelected)="conceptSelected($event)"></tw-snomed-concept-info>
   </div>
 </div>
