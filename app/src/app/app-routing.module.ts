@@ -13,6 +13,7 @@ import {autoLoginGuard} from 'term-web/core/auth';
 import {ProjectContextComponent} from 'term-web/core/context/project-context.component';
 import {ProjectContextModule} from 'term-web/core/context/project-context.module';
 import {OBSERVATION_DEFINITION_ROUTES} from 'term-web/observation-definition/observation-definition.module';
+import {SEQUENCE_ROUTES} from 'term-web/sequence/sequence.module';
 
 
 const routes: Routes = [
@@ -28,6 +29,7 @@ const routes: Routes = [
       {path: 'integration', children: INTEGRATION_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view', '*.Snomed.view']}},
       {path: 'privileges', children: PRIVILEGES_ROUTES, data: {privilege: ['*.Privilege.view']}},
       {path: 'tools', children: TOOLS_ROUTES},
+      {path: 'sequences', children: SEQUENCE_ROUTES},
       {path: 'thesaurus', children: THESAURUS_ROUTES, data: {privilege: ['*.Thesaurus.view']}},
       {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['*.MeasurementUnit.view']}},
       {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.TerminologyServer.view']}},

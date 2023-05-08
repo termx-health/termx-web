@@ -6,8 +6,7 @@
   <m-page-layout
       *ngSwitchDefault
       mTitle="web.app.header"
-      [mMenu]="menu"
-      mMenuMode="horizontal"
+      [mMenu]="menu" mMenuMode="horizontal"
       [mUserInfo]="auth.user ? {initials: auth.user?.username, template: userInfoTpl} : undefined"
       (mLangChange)="onLangChange($event)"
       (mLogout)="logout()"
@@ -34,3 +33,6 @@
     </div>
   </div>
 </ng-template>
+
+
+<m-http-error-notification></m-http-error-notification>

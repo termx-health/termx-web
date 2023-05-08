@@ -726,6 +726,15 @@
         "template": "Template"
       }
     },
+    "sequence": {
+      "list": {
+        "add-sequence": "Add sequence"
+      },
+      "form": {
+        "add-header": "Add sequence",
+        "edit-header": "Edit sequence"
+      }
+    },
     "structure-definition": {
       "list": {
         "add-structure-definition": "Add structure definition"
@@ -964,7 +973,8 @@
       "concepts": "Concepts",
       "properties": "Properties",
       "versions": "Versions",
-      "base-code-system": "Parent code system"
+      "base-code-system": "Parent code system",
+      "sequence": "Sequence for concept code"
     },
     "code-system-version": {
       "id": "Identifier",
@@ -1191,6 +1201,18 @@
       "version": "Version",
       "content-type": "Content type",
       "content-format": "Content format"
+    },
+    "sequence": {
+      "code": "Code",
+      "description": "Description",
+      "pattern": "Pattern",
+      "restart": "Restart",
+      "start-from": "Start from",
+      "luvs": "Last used values"
+    },
+    "sequence-luv": {
+      "luv": "Last used value",
+      "period": "Period"
     },
     "template": {
       "code": "Code",

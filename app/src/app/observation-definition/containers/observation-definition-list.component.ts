@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {ObservationDefinitionService} from '../services/observation-definition.service';
 import {ObservationDefinition, ObservationDefinitionSearchParams} from 'app/src/app/observation-definition/_lib';
-import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 
 @Component({
   templateUrl: 'observation-definition-list.component.html'
@@ -10,11 +10,10 @@ import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, tap}
 export class ObservationDefinitionListComponent implements OnInit {
   private readonly STORE_KEY = 'observation-definition-list';
 
-  protected searchInput?: string;
-  protected searchResult = SearchResult.empty<ObservationDefinition>();
   protected query = new ObservationDefinitionSearchParams();
+  protected searchResult = SearchResult.empty<ObservationDefinition>();
+  protected searchInput: string;
   protected loader = new LoadingManager();
-  public searchUpdate = new Subject<string>();
 
   public constructor(
     private observationDefinitionService: ObservationDefinitionService,
@@ -29,12 +28,6 @@ export class ObservationDefinitionListComponent implements OnInit {
     }
 
     this.loadData();
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      tap(() => this.query.offset = 0),
-      switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
   }
 
   private loadData(): void {
@@ -48,4 +41,9 @@ export class ObservationDefinitionListComponent implements OnInit {
 
     return this.loader.wrap('load', this.observationDefinitionService.search(q));
   }
+
+  public onSearch = (): Observable<SearchResult<ObservationDefinition>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
 }

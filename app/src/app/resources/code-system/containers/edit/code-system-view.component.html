@@ -69,10 +69,12 @@
       {{'entities.code-system.concepts' | translate}}
     </a>
     <m-card *ngIf="codeSystem">
-      <tw-code-system-concepts-list [codeSystemId]="codeSystemId"
+      <tw-code-system-concepts-list
+          [codeSystemId]="codeSystemId"
           [codeSystemVersions]="codeSystem.versions"
           [properties]="codeSystem.properties"
-          viewMode></tw-code-system-concepts-list>
+          viewMode
+      ></tw-code-system-concepts-list>
     </m-card>
   </nz-tab>
 </nz-tabset>

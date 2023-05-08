@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {Privilege, PrivilegeResourceActions, PrivilegeSearchParams} from 'term-web/privileges/_lib';
 import {PrivilegeService} from '../services/privilege.service';
@@ -9,10 +9,9 @@ import {PrivilegeService} from '../services/privilege.service';
 })
 export class PrivilegesListComponent implements OnInit {
   public query = new PrivilegeSearchParams();
-  public searchInput?: string;
-  public searchUpdate = new Subject<string>();
   public searchResult: SearchResult<Privilege> = SearchResult.empty();
-  public loading = false;
+  public searchInput: string;
+  public loading: boolean;
 
   public constructor(
     private privilegeService: PrivilegeService
@@ -20,19 +19,11 @@ export class PrivilegesListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loadData();
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
   }
 
-  public toPlainString = (actions: PrivilegeResourceActions): string => {
-    if (!actions) {
-      return '';
-    }
-    return Object.keys(actions).filter(key => !!(actions as any)[key]).join(', ');
-  };
+  public loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
+  }
 
   private search(): Observable<SearchResult<Privilege>> {
     const q = copyDeep(this.query);
@@ -41,7 +32,15 @@ export class PrivilegesListComponent implements OnInit {
     return this.privilegeService.search(q).pipe(finalize(() => this.loading = false));
   }
 
-  public loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
-  }
+  public onSearch = (): Observable<SearchResult<Privilege>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
+
+  public toPlainString = (actions: PrivilegeResourceActions): string => {
+    if (!actions) {
+      return '';
+    }
+    return Object.keys(actions).filter(key => !!(actions as any)[key]).join(', ');
+  };
 }

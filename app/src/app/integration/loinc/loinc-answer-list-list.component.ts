@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
 import {compareNumbers, compareValues, ComponentStateStore, copyDeep, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
-import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {MuiTableComponent} from '@kodality-web/marina-ui';
 import {AuthService} from 'term-web/core/auth';
@@ -14,12 +14,10 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class LoincAnswerListListComponent {
   protected readonly STORE_KEY = 'loin-answer-list';
 
-  protected loader = new LoadingManager();
-
   protected query = new ConceptSearchParams();
-  protected searchInput: string;
-  protected searchUpdate = new Subject<string>();
   protected searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
+  protected searchInput: string;
+  protected loader = new LoadingManager();
 
   protected breadcrumb: string[] = [];
   protected loincConcepts: CodeSystemConcept[];
@@ -33,7 +31,7 @@ export class LoincAnswerListListComponent {
     private authService: AuthService,
     private router: Router,
     private route: ActivatedRoute,
-    ) {}
+  ) {}
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
@@ -49,13 +47,11 @@ export class LoincAnswerListListComponent {
       }
     });
 
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      tap(() => this.query.offset = 0),
-      switchMap(() => this.search()),
-    ).subscribe(r => this.searchResult = r);
-    this.searchUpdate.next(null);
+    this.loadData();
+  }
+
+  protected loadData(): void {
+    this.search().subscribe(r => this.searchResult = r);
   }
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
@@ -66,9 +62,11 @@ export class LoincAnswerListListComponent {
     return this.loader.wrap('search', this.codeSystemService.searchConcepts('loinc-answer-list', q));
   }
 
-  protected loadData(): void {
-    this.search().subscribe(r => this.searchResult = r);
-  }
+  public onSearch = (): Observable<SearchResult<CodeSystemConcept>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
+
 
   protected getName = (c: CodeSystemConcept, type = 'display'): string => {
     const lang = this.translateService.currentLang;
@@ -120,7 +118,7 @@ export class LoincAnswerListListComponent {
   protected loadLoinc(partCode): void {
     this.breadcrumb = ['...', partCode];
     const q = new ConceptSearchParams();
-    q.propertyValues =  'answer-list|' + partCode;
+    q.propertyValues = 'answer-list|' + partCode;
     q.limit = 100;
     this.loader.wrap('loinc', this.codeSystemService.searchConcepts('loinc', q)).subscribe(r => this.loincConcepts = r.data);
     this.router.navigate(['/integration/loinc'], {queryParams: {tab: 'answer-list', path: this.breadcrumb.join(",")}});

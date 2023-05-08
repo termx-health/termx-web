@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
-import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {StructureDefinition, StructureDefinitionSearchParams} from 'term-web/thesaurus/_lib';
 import {StructureDefinitionService} from '../../services/structure-definition.service';
 
@@ -9,20 +9,18 @@ import {StructureDefinitionService} from '../../services/structure-definition.se
 })
 export class StructureDefinitionListComponent implements OnInit {
   public query = new StructureDefinitionSearchParams();
-  public searchInput?: string;
-  public searchUpdate = new Subject<string>();
   public searchResult: SearchResult<StructureDefinition> = SearchResult.empty();
-  public loading = false;
+  public searchInput: string;
+  public loading: boolean;
 
   public constructor(private structureDefinitionService: StructureDefinitionService) {}
 
   public ngOnInit(): void {
     this.loadData();
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
+  }
+
+  public loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
   }
 
   private search(): Observable<SearchResult<StructureDefinition>> {
@@ -32,9 +30,11 @@ export class StructureDefinitionListComponent implements OnInit {
     return this.structureDefinitionService.search(q).pipe(finalize(() => this.loading = false));
   }
 
-  public loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
-  }
+  public onSearch = (): Observable<SearchResult<StructureDefinition>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
+
 
   public deleteStructureDefinition(id: number): void {
     this.structureDefinitionService.delete(id).subscribe(() => this.loadData());

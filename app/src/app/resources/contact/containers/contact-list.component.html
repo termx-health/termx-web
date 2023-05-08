@@ -6,7 +6,14 @@
     </tw-add-button>
   </div>
 
-  <m-no-data *ngIf="!contacts?.length"></m-no-data>
+  <m-table *ngIf="!contacts?.length">
+    <tr *mTableNoData>
+      <td>
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-table>
+
   <nz-collapse class="tw-cs-contact-collapse" *ngIf="contacts?.length">
     <nz-collapse-panel *ngFor="let contact of contacts; let index = index" [nzHeader]="header" [nzExtra]="!viewMode? edit: ''">
       <ng-template #header>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {TerminologyServer, TerminologyServerLibService, TerminologyServerSearchParams} from 'term-web/project/_lib';
 
@@ -8,10 +8,9 @@ import {TerminologyServer, TerminologyServerLibService, TerminologyServerSearchP
 })
 export class TerminologyServerListComponent implements OnInit {
   public query = new TerminologyServerSearchParams();
-  public searchInput?: string;
-  public searchUpdate = new Subject<string>();
   public searchResult: SearchResult<TerminologyServer> = SearchResult.empty();
-  public loading = false;
+  public searchInput: string;
+  public loading: boolean;
 
   protected readonly STORE_KEY = 'terminology-server-list';
 
@@ -28,11 +27,10 @@ export class TerminologyServerListComponent implements OnInit {
     }
 
     this.loadData();
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
+  }
+
+  public loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
   }
 
   private search(): Observable<SearchResult<TerminologyServer>> {
@@ -44,7 +42,8 @@ export class TerminologyServerListComponent implements OnInit {
     return this.terminologyServerService.search(q).pipe(finalize(() => this.loading = false));
   }
 
-  public loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
-  }
+  public onSearch = (): Observable<SearchResult<TerminologyServer>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
 }

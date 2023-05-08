@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams, EntityProperty} from 'term-web/resources/_lib';
 import {compareStrings, compareValues, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {ActivatedRoute, Router} from '@angular/router';
 
@@ -19,7 +19,6 @@ export class LoincPartListComponent implements OnInit {
 
   protected partsQuery = new ConceptSearchParams();
   protected partsSearchInput: string;
-  protected partsSearchUpdate = new Subject<string>();
   protected parts: SearchResult<CodeSystemConcept> = SearchResult.empty();
 
   protected loincConcepts: CodeSystemConcept[];
@@ -27,7 +26,7 @@ export class LoincPartListComponent implements OnInit {
   protected loader = new LoadingManager();
 
   public constructor(
-    private codeSystemService:CodeSystemLibService,
+    private codeSystemService: CodeSystemLibService,
     private translateService: TranslateService,
     private authService: AuthService,
     private router: Router,
@@ -49,13 +48,6 @@ export class LoincPartListComponent implements OnInit {
         this.handlePath(p['path']);
       }
     });
-
-    this.partsSearchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      tap(() => this.partsQuery.offset = 0),
-      switchMap(() => this.searchParts()),
-    ).subscribe(r => this.parts = r);
   }
 
   public loadParts(type?: string): void {
@@ -71,6 +63,11 @@ export class LoincPartListComponent implements OnInit {
     this.partsQuery.textContains = this.partsSearchInput;
     return this.loader.wrap('parts', this.codeSystemService.searchConcepts('loinc-part', this.partsQuery));
   }
+
+  protected onSearchParts = (): Observable<SearchResult<CodeSystemConcept>> => {
+    this.partsQuery.offset = 0;
+    return this.searchParts().pipe(tap(resp => this.parts = resp));
+  };
 
   public openProperties(crumb: string): void {
     if (crumb === '...') {

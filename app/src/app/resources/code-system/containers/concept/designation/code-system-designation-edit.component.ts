@@ -8,7 +8,7 @@ import {Designation, EntityProperty} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-code-system-designation-edit',
-  templateUrl: './code-system-designation-edit.component.html',
+  templateUrl: 'code-system-designation-edit.component.html',
 })
 export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {
   @Input() @BooleanInput() public viewMode: boolean | string = false;

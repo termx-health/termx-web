@@ -3,7 +3,7 @@
     <div class="m-card__title">{{'entities.terminology-server.plural' | translate}}</div>
   </div>
   <div class="m-justify-between" style="margin-bottom: 1em">
-    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <tw-add-button *twPrivileged="'*.TerminologyServer.edit'" [routerLink]="['./add']">
       {{'web.terminology-server.add-btn' | translate}}
     </tw-add-button>

@@ -1,6 +1,6 @@
 <form #form="ngForm" *ngIf="designationGroup">
-  <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
-    <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content">
+  <div nz-row [nzGutter]="18" nzJustify="center" class="m-row">
+    <div nz-col [nzMd]="6" [nzXs]="24" style="height: min-content">
       <m-form-item mName="designationType" mLabel="entities.designation.type" required>
         <m-select *ngIf="!viewMode"
             name="designationType"
@@ -13,7 +13,8 @@
         <label *ngIf="viewMode">{{designationGroup.designationTypeId | apply:getPropertyName: entityProperties}}</label>
       </m-form-item>
     </div>
-    <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
+
+    <div nz-col [nzMd]="18" [nzXs]="24" style="border-left: 1px solid var(--color-borders-light)">
       <m-form-item mName="designationKind" mLabel="entities.designation.designation-kind" required>
         <m-radio-group *ngIf="!viewMode" name="designationKind" [(ngModel)]="designationGroup.designationKind" required>
           <label m-radio mValue="text">Text</label>
@@ -26,7 +27,7 @@
         <div class="m-language-input-group-wrapper">
           <m-form-control *ngFor="let designation of designationGroup.designations; let index = index"
               mName="{{index}}-designation"
-              style="display: flex">
+              class="m-items-middle">
             <nz-input-group *ngIf="!viewMode"
                 class="m-language-input-group"
                 [nzAddOnBefore]="designation.language | localizedConceptName: {valueSet: 'languages'} | async "

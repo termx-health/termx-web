@@ -7,7 +7,7 @@ import {finalize, Observable} from 'rxjs';
 
 @Component({
   selector: 'tw-code-system-property-value-edit',
-  templateUrl: './code-system-property-value-edit.component.html',
+  templateUrl: 'code-system-property-value-edit.component.html',
 })
 export class CodeSystemPropertyValueEditComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;

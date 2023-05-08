@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {debounceTime, distinctUntilChanged, filter, finalize, merge, Observable, Subject, switchMap, takeUntil, timer} from 'rxjs';
+import {filter, finalize, merge, Observable, Subject, switchMap, takeUntil, tap, timer} from 'rxjs';
 import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {ProjectService} from '../../services/project.service';
 import {Project, ProjectSearchParams} from 'term-web/project/_lib';
@@ -12,11 +12,10 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 })
 export class ProjectListComponent implements OnInit {
   public query = new ProjectSearchParams();
-  public searchInput?: string;
-  public searchUpdate = new Subject<string>();
   public searchResult: SearchResult<Project> = SearchResult.empty();
-  public loading = false;
-  public importing = false;
+  public searchInput: string;
+  public loading: boolean;
+  public importing: boolean;
 
   protected readonly STORE_KEY = 'project-list';
 
@@ -38,11 +37,10 @@ export class ProjectListComponent implements OnInit {
     }
 
     this.loadData();
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
+  }
+
+  public loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
   }
 
   private search(): Observable<SearchResult<Project>> {
@@ -54,9 +52,10 @@ export class ProjectListComponent implements OnInit {
     return this.projectService.search(q).pipe(finalize(() => this.loading = false));
   }
 
-  public loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
-  }
+  public onSearch = (): Observable<SearchResult<Project>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
 
   public touchImport(): void {
     this.importFileInput.nativeElement.click();

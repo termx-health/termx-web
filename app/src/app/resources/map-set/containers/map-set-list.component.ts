@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {MapSet, MapSetSearchParams, MapSetVersion} from 'term-web/resources/_lib';
 import {MapSetService} from '../services/map-set-service';
 
@@ -13,11 +13,10 @@ import {MapSetService} from '../services/map-set-service';
 export class MapSetListComponent implements OnInit {
   @Input() public dev: boolean = false;
 
-  public searchResult: SearchResult<MapSet> = SearchResult.empty();
   public query = new MapSetSearchParams();
-  public loading: boolean = false;
-  public searchInput: string = "";
-  public searchUpdate = new Subject<string>();
+  public searchResult: SearchResult<MapSet> = SearchResult.empty();
+  public searchInput: string;
+  public loading: boolean;
 
   public constructor(
     private mapSetService: MapSetService,
@@ -26,11 +25,10 @@ export class MapSetListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loadData();
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
+  }
+
+  public loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
   }
 
   public search(): Observable<SearchResult<MapSet>> {
@@ -42,9 +40,10 @@ export class MapSetListComponent implements OnInit {
     return this.mapSetService.search(q).pipe(finalize(() => this.loading = false));
   }
 
-  public loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
-  }
+  public onSearch = (): Observable<SearchResult<MapSet>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
 
 
   public getVersionTranslateTokens = (version: MapSetVersion, translateOptions: object): string[] => {
