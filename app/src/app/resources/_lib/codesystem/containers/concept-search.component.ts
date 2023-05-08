@@ -25,6 +25,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   @Input() public codeSystemVersionReleaseDateLe?: Date;
   @Input() public codeSystemVersionExpirationDateGe?: Date;
   @Input() public codeSystemEntityVersionStatus?: string;
+  @Input() public propertyValues?: string;
 
   public data: {[id: string]: CodeSystemConcept} = {};
   public value?: number | number[] | string | string[];
@@ -54,6 +55,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
       || changes["codeSystemVersionReleaseDateLe"]
       || changes["codeSystemVersionExpirationDateGe"]
       || changes["entityVersionStatus"]
+      || changes["propertyValues"]
     ) {
       this.data = {};
       this.searchUpdate.next('');
@@ -80,6 +82,8 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     q.codeSystemVersionReleaseDateLe = this.codeSystemVersionReleaseDateLe;
     q.codeSystemVersionExpirationDateGe = this.codeSystemVersionExpirationDateGe;
     q.codeSystemEntityStatus = this.codeSystemEntityVersionStatus;
+    q.propertyValues = this.propertyValues;
+    q.associationSource = this.propertyValues;
     q.limit = 100;
 
     this.loading['search'] = true;

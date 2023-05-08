@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput, DestroyService, group, isNil} from '@kodality-web/core-util';
 import {takeUntil} from 'rxjs';
@@ -19,6 +19,7 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
   @Input() public disabled?: boolean;
   @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
   @Input() @BooleanInput() public multiple: string | boolean = false;
+  @Output() public selected: EventEmitter<ValueSetVersionConcept> = new EventEmitter();
 
   public data: {[conceptCode: string]: ValueSetVersionConcept} = {};
   public value?: string | string[];
@@ -80,6 +81,10 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
   }
 
   public fireOnChange(): void {
+    if (!Array.isArray(this.value)) {
+      this.selected.emit(this.data?.[this.value!]);
+    }
+
     if (this.valuePrimitive) {
       this.onChange(this.value);
       return;

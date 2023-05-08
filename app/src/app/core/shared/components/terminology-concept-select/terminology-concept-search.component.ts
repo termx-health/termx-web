@@ -22,6 +22,7 @@ export class TerminologyConceptSearchComponent {
   @Input() public codeSystemVersionReleaseDateLe?: Date;
   @Input() public codeSystemVersionExpirationDateGe?: Date;
   @Input() public codeSystemEntityVersionStatus?: string;
+  @Input() public propertyValues?: string;
 
   public value?: CodeSystemConcept | number | string;
 

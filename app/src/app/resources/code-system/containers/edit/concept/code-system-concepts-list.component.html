@@ -115,7 +115,7 @@
       <td style="width: 30%">
         <div *ngFor="let property of (concept.versions | apply:findLastVersion)?.propertyValues" style="display: flex">
           <label class="m-bold" style="flex: 1">{{property.entityProperty}}</label>
-          <label style="flex: 1">{{property.value?.code ? property.value.code : (property.value | json)}}</label>
+          <tw-property-value-input viewMode [ngModel]="property.value" [propertyId]="property.entityPropertyId" [codeSystem]="codeSystemId"></tw-property-value-input>
         </div>
       </td>
       <td>{{concept.description}}</td>

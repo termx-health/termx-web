@@ -1,7 +1,7 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput, DestroyService, isDefined} from '@kodality-web/core-util';
-import {EntityProperty} from 'term-web/resources/_lib';
+import {CodeSystemLibService, EntityProperty} from 'term-web/resources/_lib';
 
 
 @Component({
@@ -9,18 +9,31 @@ import {EntityProperty} from 'term-web/resources/_lib';
   templateUrl: './entity-property-value-input.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EntityPropertyValueInputComponent), multi: true}, DestroyService]
 })
-export class EntityPropertyValueInputComponent implements ControlValueAccessor {
+export class EntityPropertyValueInputComponent implements OnChanges, ControlValueAccessor {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
 
   @Input() public codeSystem?: string;
   @Input() public property?: EntityProperty;
+  @Input() public propertyId?: number;
 
   public value?: any;
 
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
 
-  public constructor() {}
+  public constructor(private codeSystemService : CodeSystemLibService) {}
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ((changes['propertyId'] || changes['codeSystem']) && this.propertyId && this.codeSystem) {
+      this.codeSystemService.loadEntityProperty(this.codeSystem, this.propertyId).subscribe(ep => {
+        this.property = ep;
+        this.prepareValue(this.property);
+      });
+    }
+    if (changes['property'] && this.property) {
+      this.prepareValue(this.property);
+    }
+  }
 
   public writeValue(obj: any): void {
     this.value = obj;
@@ -47,4 +60,17 @@ export class EntityPropertyValueInputComponent implements ControlValueAccessor {
     }
     return 'undefined';
   };
+
+  protected getFilterPropertyValues = (property: EntityProperty): string => {
+    return property.rule?.filters
+      ?.filter(f => (isDefined(f.property?.name) || isDefined(f.association)) && isDefined(f.value))
+      ?.map(f => (f.property?.name || f.association) + '|' + (f.value?.code || f.value))
+      .join(';');
+  };
+
+  private prepareValue(property: EntityProperty): void {
+    if (property.type === 'Coding') {
+      this.value ??= {};
+    }
+  }
 }
