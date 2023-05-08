@@ -1039,7 +1039,17 @@
       "value": "Value",
       "order-number": "Order",
       "preferred": "Preferred",
-      "required": "Required"
+      "required": "Required",
+      "rule": {
+        "singular": "Rule",
+        "code-systems": "Code systems",
+        "value-set": "Value set",
+        "filters": "Filters",
+        "type": "Type",
+        "property": "Property",
+        "operator": "Operator",
+        "value": "Value"
+      }
     },
     "designation": {
       "type": "Type",

@@ -8,6 +8,7 @@
     [autoUnselect]="false"
     [filterOption]="filterOption"
     [multiple]="multiple | toBoolean"
+    [disabled]="disabled | toBoolean"
 >
   <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.id" [mLabel]="data[key]?.id"></m-option>
 </m-select>

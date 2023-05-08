@@ -1,0 +1,35 @@
+<ng-container *ngIf="!viewMode" [ngSwitch]="property?.type">
+  <m-input *ngSwitchDefault name="value" [(ngModel)]="value"></m-input>
+  <m-date-picker *ngSwitchCase="'dateTime'" name="value" [(ngModel)]="value"></m-date-picker>
+  <m-number-input *ngSwitchCase="'decimal'" name="value" [(ngModel)]="value"></m-number-input>
+  <m-number-input *ngSwitchCase="'integer'" name="value" [(ngModel)]="value"></m-number-input>
+
+  <ng-container *ngSwitchCase="'code'">
+    <tw-term-concept-search name="value" valueType="code" [(ngModel)]="value" [codeSystem]="codeSystem"></tw-term-concept-search>
+  </ng-container>
+  <ng-container *ngSwitchCase="'Coding'">
+    <div class="m-items-middle" [ngSwitch]="property | apply:codingType">
+      <ng-container *ngSwitchDefault>
+        <tw-code-system-search [(ngModel)]="value.codeSystem" valuePrimitive name="system" style="flex: 1" placeholder="Code system"></tw-code-system-search>
+        <tw-term-concept-search [(ngModel)]="value.code" [codeSystem]="value.codeSystem" valueType="code" name="value" style="flex: 1"></tw-term-concept-search>
+      </ng-container>
+      <ng-container *ngSwitchCase="'code-system'">
+        <m-select [(ngModel)]="value.codeSystem" name="system" style="flex: 1" placeholder="Code system" autoSelect>
+          <m-option *ngFor="let system of property.rule.codeSystems" [mValue]="system" [mLabel]="system"></m-option>
+        </m-select>
+        <tw-term-concept-search [(ngModel)]="value.code" [codeSystem]="value.codeSystem" valueType="code" name="value" style="flex: 1"></tw-term-concept-search>
+      </ng-container>
+      <ng-container *ngSwitchCase="'value-set'">
+        <tw-value-set-concept-select [(ngModel)]="value.code" [valueSet]="property.rule.valueSet" name="value" valuePrimitive></tw-value-set-concept-select>
+      </ng-container>
+    </div>
+  </ng-container>
+</ng-container>
+
+<ng-container *ngIf="viewMode">
+  <label *ngIf="['string', 'decimal', 'integer'] | includes:property?.type">{{value}}</label>
+  <m-checkbox *ngIf="'boolean' === property?.type" [ngModel]="value" readOnly></m-checkbox>
+  <label *ngIf="'dateTime' === property?.type">{{value | localDate}}</label>
+  <label *ngIf="['code', 'Coding'] | includes:property?.type">{{value?.code | localizedConceptName: {codeSystem: value?.codeSystem || codeSystem} | async}}</label>
+</ng-container>
+

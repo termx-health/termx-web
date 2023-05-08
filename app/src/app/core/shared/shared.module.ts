@@ -10,12 +10,13 @@ import {StatusTagComponent} from './components/publication-status-tag/status-tag
 import {AddButtonComponent} from './components/add-button/add-button.component';
 import {AuthModule} from 'term-web/core/auth';
 import {ValidateUrlPipe} from './pipes/validate-url.pipe';
-import {CodeSystemLibModule} from '../../resources/_lib';
+import {CodeSystemLibModule, ValueSetLibModule} from '../../resources/_lib';
 import {TerminologyConceptSearchComponent} from 'term-web/core/shared/components/terminology-concept-select/terminology-concept-search.component';
 import {MeasurementUnitLibModule} from '../../measurement-unit/_lib';
 import {IntegrationLibModule} from '../../integration/_lib';
 import {SemanticVersionSelectComponent} from 'term-web/core/shared/components/version-select/semantic-version-select.component';
 import {InputDebounceDirective} from 'term-web/core/shared/directives/input-debounce.directive';
+import {EntityPropertyValueInputComponent} from 'term-web/core/shared/components/property-value-input/entity-property-value-input.component';
 
 
 const commonModules = [
@@ -35,7 +36,8 @@ const components = [
   StatusTagComponent,
   AddButtonComponent,
   TerminologyConceptSearchComponent,
-  SemanticVersionSelectComponent
+  SemanticVersionSelectComponent,
+  EntityPropertyValueInputComponent,
 ];
 
 const pipes = [
@@ -44,7 +46,7 @@ const pipes = [
 
 const directives = [
   InputDebounceDirective
-]
+];
 
 
 @NgModule({
@@ -52,7 +54,8 @@ const directives = [
     ...commonModules,
     CodeSystemLibModule,
     MeasurementUnitLibModule,
-    IntegrationLibModule
+    IntegrationLibModule,
+    ValueSetLibModule
   ],
   declarations: [
     ...components,

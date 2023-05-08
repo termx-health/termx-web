@@ -25,7 +25,7 @@
         {{item.operator || '='}}
       </td>
       <td>
-        {{item.value}}
+        <tw-property-value-input viewMode [ngModel]="item.value" [property]="item.property" [codeSystem]="codeSystem"></tw-property-value-input>
       </td>
       <td class="tw-table-actions" *ngIf="!viewMode">
         <m-button mDisplay="link" (click)="removeRow(i)">{{'core.btn.delete' | translate}}</m-button>
@@ -55,17 +55,7 @@
           </m-select>
         </m-form-item>
         <m-form-item *ngIf="modalData.filter.property?.type" mName="propertyValue" mLabel="entities.value-set-rule-filter.value">
-          <m-input *ngIf="modalData.filter.property?.type === 'string'" name="propertyValue" [(ngModel)]="modalData.filter.value"></m-input>
-          <m-checkbox *ngIf="modalData.filter.property?.type === 'boolean'" name="propertyValue" [(ngModel)]="modalData.filter.value"></m-checkbox>
-          <m-date-picker *ngIf="modalData.filter.property?.type === 'dateTime'" name="propertyValue" [(ngModel)]="modalData.filter.value"></m-date-picker>
-          <m-number-input *ngIf="['decimal','integer'].includes(modalData.filter.property?.type)"
-              name="propertyValue"
-              [(ngModel)]="modalData.filter.value"></m-number-input>
-          <tw-term-concept-search *ngIf="['code','Coding'].includes(modalData.filter.property?.type)"
-              name="propertyValue"
-              valueType="code"
-              [(ngModel)]="modalData.filter.value"
-              [codeSystem]="modalData.filter.property?.name"></tw-term-concept-search>
+          <tw-property-value-input [(ngModel)]="modalData.filter.value" name="propertyValue" [property]="modalData.filter.property" [codeSystem]="codeSystem"></tw-property-value-input>
         </m-form-item>
       </ng-container>
 

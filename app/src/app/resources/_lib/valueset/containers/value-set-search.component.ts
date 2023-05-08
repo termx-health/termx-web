@@ -15,6 +15,7 @@ import {ValueSetSearchParams} from '../model/value-set-search-params';
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetSearchComponent), multi: true}, DestroyService]
 })
 export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
+  @Input() @BooleanInput() public disabled: string | boolean = false;
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() @BooleanInput() public multiple: string | boolean;
   @Input() public filter?: (resource: ValueSet) => boolean;

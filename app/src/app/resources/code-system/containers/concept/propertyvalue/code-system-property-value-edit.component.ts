@@ -65,6 +65,10 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
     return properties?.find(p => p.id === id)?.name || id;
   };
 
+  public getProperty = (id: number, properties: EntityProperty[]): EntityProperty => {
+    return properties?.find(p => p.id === id);
+  };
+
   private addDefProperties(entityProperties: EntityProperty[]): void {
     entityProperties.filter(p => !['display', 'definition', 'alias'].includes(p.name!))
       .filter(p => !this.propertyValues?.find(pv => pv.entityPropertyId === p.id))

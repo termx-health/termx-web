@@ -17,65 +17,138 @@
   </div>
 
   <form #form="ngForm">
-  <m-table [mData]="properties" [mLoading]="loading">
-    <tr *mTableHead>
-      <th>{{'entities.entity-property.name' | translate}}</th>
-      <th>{{'entities.entity-property.type' | translate}}</th>
-      <th>{{'entities.entity-property.required' | translate}}</th>
-      <th>{{'entities.entity-property.preferred' | translate}}</th>
-      <th>{{'entities.entity-property.description' | translate}}</th>
-      <th>{{'entities.entity-property.order-number' | translate}}</th>
-      <th class="tw-table-actions" *ngIf="!viewMode"></th>
-    </tr>
+    <m-editable-table #rowsTable [mData]="properties" [mLoading]="loader.isLoading" [mRowInstance]="rowInstance">
+      <m-editable-column [mTitle]="'entities.entity-property.order-number'">
+        <ng-template #viewTemplate let-p>{{p.orderNumber}}</ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.name'">
+        <ng-template #viewTemplate let-p>{{p.name}}</ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.type'">
+        <ng-template #viewTemplate let-p>{{p.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.required'" mName="required">
+        <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
+          <m-checkbox [(ngModel)]="p.required" readOnly [name]="ngModelName"></m-checkbox>
+        </ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.preferred'" mName="preferred">
+        <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
+          <m-checkbox [(ngModel)]="p.preferred" readOnly [name]="ngModelName"></m-checkbox>
+        </ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.description'">
+        <ng-template #viewTemplate let-p>{{p.description}}</ng-template>
+      </m-editable-column>
 
-    <tr *mTableRow="let property; let index = index">
-      <ng-container *ngIf="viewMode">
-        <td>{{property.name}}</td>
-        <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
-        <td><m-abbreviate [mValue]="property.description" [mLength]="40"></m-abbreviate></td>
-        <td class="tw-table-min-width">
-          <tw-status-tag [status]="property.status"></tw-status-tag>
-        </td>
-        <td class="tw-table-actions" *ngIf="!viewMode">
-          <m-dropdown>
-            <a *m-dropdown-item (click)="removeProperty(index)">
-              {{'web.code-system.form.properties.delete-property' | translate}}
-            </a>
-          </m-dropdown>
-        </td>
-      </ng-container>
+      <ng-template #expandEditTemplate let-p let-prefix="ngModelNamePrefix">
+        <tr>
+          <td colspan="8">
+            <m-form-row>
+              <div *mFormCol>
+                <m-form-item mLabel="entities.entity-property.name" mName="name-{{prefix}}" required>
+                  <m-input [(ngModel)]="p.name" name="name-{{prefix}}" required></m-input>
+                </m-form-item>
+              </div>
+              <div *mFormCol>
+                <m-form-item mLabel="entities.entity-property.required" mName="required-{{prefix}}">
+                  <m-checkbox [(ngModel)]="p.required" name="required-{{prefix}}"></m-checkbox>
+                </m-form-item>
+              </div>
+            </m-form-row>
+            <m-form-row>
+              <div *mFormCol>
+                <m-form-item mLabel="entities.entity-property.type" mName="type-{{prefix}}" required>
+                  <tw-value-set-concept-select valueSet="concept-property-type"
+                      [(ngModel)]="p.type"
+                      name="type-{{prefix}}"
+                      required></tw-value-set-concept-select>
+                </m-form-item>
+              </div>
+              <div *mFormCol>
+                <m-form-item mLabel="entities.entity-property.preferred" mName="preferred-{{prefix}}">
+                  <m-checkbox [(ngModel)]="p.preferred" name="preferred-{{prefix}}"></m-checkbox>
+                </m-form-item>
+              </div>
+            </m-form-row>
+            <m-form-row>
+              <m-form-item mLabel="entities.entity-property.order-number" mName="order-number-{{prefix}}">
+                <m-number-input [(ngModel)]="p.orderNumber" name="order-number-{{prefix}}"></m-number-input>
+              </m-form-item>
+            </m-form-row>
+            <m-form-row>
+              <m-form-item mLabel="entities.entity-property.description" mName="description-{{prefix}}">
+                <m-textarea [(ngModel)]="p.description" name="description-{{prefix}}"></m-textarea>
+              </m-form-item>
+            </m-form-row>
 
-      <ng-container *ngIf="!viewMode">
-        <td><m-input [(ngModel)]="property.name" name="name-{{index}}" required></m-input></td>
-        <td><tw-value-set-concept-select valueSet="concept-property-type" [(ngModel)]="property.type" name="type-{{index}}" required></tw-value-set-concept-select> </td>
-        <td><m-checkbox [(ngModel)]="property.required" name="required-{{index}}"></m-checkbox></td>
-        <td><m-checkbox [(ngModel)]="property.preferred" name="preferred-{{index}}"></m-checkbox></td>
-        <td><m-input [(ngModel)]="property.description" name="description-{{index}}"></m-input></td>
-        <td><m-number-input [(ngModel)]="property.orderNumber" name="order-{{index}}"></m-number-input></td>
-        <td class="tw-table-actions" *ngIf="!viewMode">
-          <m-dropdown>
-            <a *m-dropdown-item (click)="removeProperty(index)">
-              {{'web.code-system.form.properties.delete-property' | translate}}
-            </a>
-          </m-dropdown>
-        </td>
-      </ng-container>
-    </tr>
-
-    <tr *mTableNoData>
-      <td colspan="7">
-        <m-no-data></m-no-data>
-      </td>
-    </tr>
-
-    <tr *ngIf="!viewMode">
-      <td colspan="7" style="padding: 0">
-        <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addProperty()">
-          <m-icon [mCode]="'plus'"></m-icon>
-        </m-button>
-      </td>
-    </tr>
-  </m-table>
+            <ng-container *ngIf="['code', 'Coding'] | includes: p.type">
+              <m-divider>{{'entities.entity-property.rule.singular' | translate}}</m-divider>
+              <m-form-row *ngIf="'Coding' === p.type">
+                <m-form-item mLabel="entities.entity-property.rule.code-systems" mName="cs-{{prefix}}">
+                  <tw-code-system-search [(ngModel)]="p.rule.codeSystems"
+                      name="cs-{{prefix}}"
+                      valuePrimitive
+                      multiple
+                      [disabled]="p.rule.valueSet"></tw-code-system-search>
+                </m-form-item>
+              </m-form-row>
+              <m-form-row *ngIf="'Coding' === p.type">
+                <m-form-item mLabel="entities.entity-property.rule.value-set" mName="vs-{{prefix}}">
+                  <tw-value-set-search [(ngModel)]="p.rule.valueSet"
+                      name="vs-{{prefix}}"
+                      valuePrimitive
+                      [disabled]="p.rule.codeSystems?.length > 0"></tw-value-set-search>
+                </m-form-item>
+              </m-form-row>
+              <m-form-row *ngIf="'code' === p.type">
+                <m-form-item mLabel="entities.entity-property.rule.filters">
+                  <m-editable-table #rowsTable [mData]="p.rule.filters" [mRowInstance]="filterRowInstance">
+                    <m-editable-column [mTitle]="'entities.entity-property.rule.type'" mName="type">
+                      <ng-template #viewTemplate let-f>{{f.type}}</ng-template>
+                      <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+                        <m-select [name]="ngModelName" [(ngModel)]="f.type" (ngModelChange)="filterTypeChanged($event, f)">
+                          <m-option mLabel="property" [mValue]="'property'"></m-option>
+                          <m-option mLabel="association" [mValue]="'association'"></m-option>
+                        </m-select>
+                      </ng-template>
+                    </m-editable-column>
+                    <m-editable-column [mTitle]="'entities.entity-property.rule.property'" mName="property">
+                      <ng-template #viewTemplate let-f>{{f.association || f.property?.name}}</ng-template>
+                      <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+                        <m-select *ngIf="f.type === 'property'" [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'id'" autofocus>
+                          <m-option mLabel="code" [mValue]="{id: 0, name: 'code', type: 'string'}"></m-option>
+                          <m-option *ngFor="let property of (properties | apply: filterProperties)" [mLabel]="property.name" [mValue]="property"></m-option>
+                        </m-select>
+                        <tw-association-type-search *ngIf="f.type === 'association'"
+                            [name]="ngModelName"
+                            [(ngModel)]="f.association"
+                            valuePrimitive
+                            autofocus></tw-association-type-search>
+                      </ng-template>
+                    </m-editable-column>
+                    <m-editable-column [mTitle]="'entities.entity-property.rule.value'" mName="value">
+                      <ng-template #viewTemplate let-f>{{f.value}}</ng-template>
+                      <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+                        <ng-container *ngIf="f.type === 'property'">
+                          <tw-property-value-input [(ngModel)]="f.value" [name]="ngModelName" [codeSystem]="codeSystemId" [property]="f.property"></tw-property-value-input>
+                        </ng-container>
+                        <ng-container *ngIf="f.type === 'association'">
+                          <tw-term-concept-search [name]="ngModelName"
+                              valueType="code"
+                              [(ngModel)]="f.value"
+                              [codeSystem]="codeSystemId"></tw-term-concept-search>
+                        </ng-container>
+                      </ng-template>
+                    </m-editable-column>
+                  </m-editable-table>
+                </m-form-item>
+              </m-form-row>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-template>
+    </m-editable-table>
   </form>
 
 </m-card>

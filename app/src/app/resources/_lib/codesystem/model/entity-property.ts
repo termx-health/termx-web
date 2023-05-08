@@ -10,7 +10,23 @@ export class EntityProperty {
   public preferred?: boolean;
   public required?: boolean;
 
+  public rule?: EntityPropertyRule;
+
   public supplementId?: number;
+}
+
+export class EntityPropertyRule {
+  public codeSystems?: string[];
+  public valueSet?: string;
+  public filters?: EntityPropertyRuleFilter[];
+}
+
+export class EntityPropertyRuleFilter {
+  public type?: string;
+  public association?: string;
+  public property?: EntityProperty;
+  public operator?: string;
+  public value?: any;
 }
 
 export class EntityPropertyValue {

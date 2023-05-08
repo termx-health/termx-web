@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {EntityProperty} from 'term-web/resources/_lib';
-import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
+import {EntityProperty, EntityPropertyRule, EntityPropertyRuleFilter} from 'term-web/resources/_lib';
+import {BooleanInput, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../code-system/services/code-system.service';
 import {NgForm} from '@angular/forms';
 
@@ -14,10 +14,12 @@ export class DevCodeSystemPropertiesComponent implements OnChanges {
 
   @ViewChild("form") public form?: NgForm;
 
-  public properties: EntityProperty[] = [];
-  public loading = false;
+  protected rowInstance: EntityProperty = {rule: {filters: []}, status: 'active'};
+  protected filterRowInstance: EntityPropertyRuleFilter = {type: 'entity-property'};
+  protected properties: EntityProperty[] = [];
+  protected loader = new LoadingManager();
 
-  public defProperties: {[key: string]: {selected: boolean, property: EntityProperty}} = {
+  protected defProperties: {[key: string]: {selected: boolean, property: EntityProperty}} = {
     "display": {selected: false, property: {name: "display", type: "string", status: "active"}},
     "definition": {selected: false, property: {name: "definition", type: "string", status: "active"}},
     "alias": {selected: false, property: {name: "alias", type: "string", status: "active"}},
@@ -36,14 +38,18 @@ export class DevCodeSystemPropertiesComponent implements OnChanges {
     }
   }
 
-  public loadProperties(): void {
-    this.loading = true;
-    this.codeSystemService.searchProperties(this.codeSystemId!, {limit: -1})
-      .subscribe(properties => this.properties = properties.data)
-      .add(() => this.loading = false);
+  private loadProperties(): void {
+    this.loader.wrap('load', this.codeSystemService.searchProperties(this.codeSystemId!, {limit: -1}))
+      .subscribe(properties => {
+        properties.data.forEach(p => {
+          p.rule ??= new EntityPropertyRule();
+          p.rule.filters ??= [];
+        });
+        this.properties = properties.data;
+      });
   }
 
-  public defPropertySelectionChange(selected: boolean, p: string): void {
+  protected defPropertySelectionChange(selected: boolean, p: string): void {
     if (selected) {
       this.addProperty(this.defProperties[p].property);
     } else {
@@ -55,11 +61,11 @@ export class DevCodeSystemPropertiesComponent implements OnChanges {
     }
   }
 
-  public addProperty(property?: EntityProperty): void {
+  private addProperty(property?: EntityProperty): void {
     this.properties = [...(this.properties || []), property || {status: 'active'}];
   }
 
-  public removeProperty(index: number): void {
+  private removeProperty(index: number): void {
     this.properties!.splice(index, 1);
     this.properties = [...this.properties];
   }
@@ -70,5 +76,20 @@ export class DevCodeSystemPropertiesComponent implements OnChanges {
 
   public valid(): boolean {
     return validateForm(this.form);
+  }
+
+  protected filterProperties = (properties: EntityProperty[]): EntityProperty[] => {
+    return properties?.filter(p => isDefined(p.id));
+  };
+
+  protected filterTypeChanged(type: string, f: EntityPropertyRuleFilter): void {
+    if (type === 'association') {
+      f.property = undefined;
+      f.value = undefined;
+    }
+    if (type === 'property') {
+      f.association = undefined;
+      f.value = undefined;
+    }
   }
 }

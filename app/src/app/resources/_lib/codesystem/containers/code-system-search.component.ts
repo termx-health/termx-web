@@ -13,10 +13,11 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemSearchComponent), multi: true}, DestroyService]
 })
 export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
+  @Input() @BooleanInput() public disabled: string | boolean = false;
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() @BooleanInput() public multiple: string | boolean;
   @Input() public filter?: (resource: CodeSystem) => boolean;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
-  @Input() @BooleanInput() public multiple: string | boolean;
 
   public data: {[id: string]: CodeSystem} = {};
   public value?: string | string[];
