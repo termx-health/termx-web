@@ -27,6 +27,8 @@ export class SequenceEditComponent implements OnInit {
       this.loadSequence(Number(id));
     } else {
       this.sequence = new Sequence();
+      this.sequence.restart = 'yearly';
+      this.sequence.startFrom = 0;
     }
   }
 

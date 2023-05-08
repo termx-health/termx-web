@@ -3,9 +3,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DestroyService, group, LoadingManager} from '@kodality-web/core-util';
 import {Sequence} from '../models/sequence';
 import {SequenceLibService} from 'term-web/sequence/_lib/services/sequence-lib.service';
-import {catchError, EMPTY, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
+import {catchError, EMPTY, map, Observable, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {MapSet, MapSetSearchParams} from 'term-web/resources/_lib';
 import {SequenceSearchParams} from 'term-web/sequence/_lib/models/sequence-search-params';
 
 @Component({

@@ -4,7 +4,7 @@ export class Sequence {
   public description?: string;
   public pattern?: string;
   public restart?: string;
-  public startFrom?: string;
+  public startFrom?: number;
   public luvs?: SequenceLuv[];
 }
 

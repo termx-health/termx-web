@@ -3,8 +3,9 @@
     <m-spinner [mLoading]="isLoading">
       <m-card [mTitle]="sequence?.id ? 'web.sequence.form.edit-header' : 'web.sequence.form.add-header'" [mShowSkeleton]="loader.state['load']">
         <form *ngIf="sequence">
-          <m-form-item mName="code" mLabel="entities.sequence.code" required>
-            <m-input name="code" [(ngModel)]="sequence.code" required></m-input>
+          <m-form-item mName="code" mLabel="entities.sequence.code" [required]="!sequence.id">
+            <m-input *ngIf="!sequence.id" name="code" [(ngModel)]="sequence.code" autofocus required></m-input>
+            <span *ngIf="sequence.id">{{sequence.code}}</span>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="entities.sequence.description" required>
