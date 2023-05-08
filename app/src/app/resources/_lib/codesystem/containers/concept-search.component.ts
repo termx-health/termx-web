@@ -73,7 +73,7 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     }
 
     const q = new ConceptSearchParams();
-    q.codeContains = text;
+    q.textContains = text;
     q.codeSystem = this.codeSystem;
     q.codeSystemVersion = this.codeSystemVersion;
     q.codeSystemVersionId = this.codeSystemVersionId;
