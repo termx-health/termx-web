@@ -3,7 +3,7 @@ import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult
 import {CodeSystem, CodeSystemSearchParams} from 'term-web/resources/_lib';
 import {CodeSystemService} from '../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
-import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, tap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {environment} from 'environments/environment';
 
 @Component({
@@ -16,10 +16,9 @@ export class CodeSystemListComponent implements OnInit {
   protected readonly STORE_KEY = 'code-system-list';
 
   public query = new CodeSystemSearchParams();
-  public searchInput?: string;
-  public searchUpdate = new Subject<string>();
   public searchResult: SearchResult<CodeSystem> = SearchResult.empty();
-  public loading = false;
+  public searchInput: string;
+  public loading: boolean;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -35,14 +34,11 @@ export class CodeSystemListComponent implements OnInit {
     }
 
     this.loadData();
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      tap(() => this.query.offset = 0),
-      switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
   }
 
+  public loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
+  }
 
   private search(): Observable<SearchResult<CodeSystem>> {
     const q = copyDeep(this.query);
@@ -55,9 +51,10 @@ export class CodeSystemListComponent implements OnInit {
     return this.codeSystemService.search(q).pipe(finalize(() => this.loading = false));
   }
 
-  public loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
-  }
+  public onSearch = (): Observable<SearchResult<CodeSystem>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
 
   public parseDomain(uri: string): string {
     return uri?.split('//')[1]?.split('/')[0];

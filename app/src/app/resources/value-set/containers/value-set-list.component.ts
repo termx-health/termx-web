@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ValueSetService} from '../services/value-set.service';
 import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, tap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {environment} from 'environments/environment';
 import {CodeSystemVersion, ValueSet, ValueSetSearchParams} from 'term-web/resources/_lib';
 
@@ -14,11 +14,10 @@ import {CodeSystemVersion, ValueSet, ValueSetSearchParams} from 'term-web/resour
 export class ValueSetListComponent implements OnInit {
   protected readonly STORE_KEY = 'value-set-list';
 
-  public searchResult: SearchResult<ValueSet> = SearchResult.empty();
   public query = new ValueSetSearchParams();
-  public loading = false;
-  public searchInput?: string;
-  public searchUpdate = new Subject<string>();
+  public searchResult: SearchResult<ValueSet> = SearchResult.empty();
+  public searchInput: string;
+  public loading: boolean;
 
   public constructor(
     private valueSetService: ValueSetService,
@@ -34,12 +33,10 @@ export class ValueSetListComponent implements OnInit {
     }
 
     this.loadData();
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      tap(() => this.query.offset = 0),
-      switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
+  }
+
+  public loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
   }
 
   public search(): Observable<SearchResult<ValueSet>> {
@@ -53,9 +50,10 @@ export class ValueSetListComponent implements OnInit {
     return this.valueSetService.search(q).pipe(finalize(() => this.loading = false));
   }
 
-  public loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
-  }
+  public onSearch = (): Observable<SearchResult<ValueSet>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
 
   public getVersionTranslateTokens = (version: CodeSystemVersion, translateOptions: object): string[] => {
     const tokens = [

@@ -54,6 +54,10 @@
           <m-form-item mName="description" mLabel="entities.code-system.description">
             <m-textarea name="description" [(ngModel)]="codeSystem.description"></m-textarea>
           </m-form-item>
+
+          <m-form-item mName="sequence" mLabel="entities.code-system.sequence">
+            <tw-sequence-select name="sequence" [(ngModel)]="codeSystem.sequence"></tw-sequence-select>
+          </m-form-item>
         </form>
 
         <tw-code-system-versions-list *ngIf="mode === 'edit' && codeSystem"
@@ -99,7 +103,8 @@
       {{'entities.code-system.concepts' | translate}}
     </a>
     <m-card *ngIf="codeSystem">
-      <tw-code-system-concepts-list [codeSystemId]="codeSystemId"
+      <tw-code-system-concepts-list
+          [codeSystemId]="codeSystemId"
           [codeSystemVersions]="codeSystem.versions"
           [properties]="codeSystem.properties"></tw-code-system-concepts-list>
     </m-card>

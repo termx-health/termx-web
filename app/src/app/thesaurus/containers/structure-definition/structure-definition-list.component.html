@@ -1,6 +1,6 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
     <div class="m-items-middle">
       <tw-add-button *twPrivileged="'*.Thesaurus.edit'" [routerLink]="['../structure-definitions/add']">
         {{'web.structure-definition.list.add-structure-definition' | translate}}

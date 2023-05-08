@@ -15,6 +15,7 @@ export class CodeSystem {
   public baseCodeSystem?: string;
   public contacts?: ContactDetail[];
   public supportedLanguages?: string[];
+  public sequence?: string;
 
   public concepts?: CodeSystemConcept[];
   public properties?: EntityProperty[];

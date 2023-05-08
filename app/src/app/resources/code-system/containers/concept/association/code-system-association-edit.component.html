@@ -1,50 +1,53 @@
-<m-card class="m-card-inside">
+<m-card>
   <div *m-card-header class="m-justify-between">
     <div class="m-card__title">{{'entities.code-system-entity-version.associations' | translate}}</div>
-    <tw-add-button *ngIf="!viewMode" (click)="addAssociation()">{{'web.code-system-concept-version.association.add-association' | translate}}</tw-add-button>
+    <tw-add-button *ngIf="!viewMode" (click)="addAssociation()">
+      {{'web.code-system-concept-version.association.add-association' | translate}}
+    </tw-add-button>
   </div>
-  <div>
-    <form #form="ngForm">
-      <m-card class="m-card-inside" *ngFor="let association of associations; let index = index">
-        <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
-          <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content">
-            <m-form-item mName="type-{{index}}" required>
-              <tw-association-type-search *ngIf="!viewMode"
-                  [(ngModel)]="association.associationType"
-                  name="type-{{index}}"
+
+  <form #form="ngForm">
+    <m-no-data *ngIf="!associations?.length"/>
+
+    <ng-container *ngFor="let association of associations; let index = index">
+      <div nz-row [nzGutter]="8" nzJustify="center">
+        <div nz-col [nzMd]="6" [nzXs]="24">
+          <m-form-item mName="type-{{index}}" required>
+            <tw-association-type-search *ngIf="!viewMode"
+                [(ngModel)]="association.associationType"
+                name="type-{{index}}"
+                valuePrimitive
+                required></tw-association-type-search>
+            <label *ngIf="viewMode">{{association.associationType}}</label>
+          </m-form-item>
+        </div>
+
+        <div nz-col [nzMd]="18" [nzXs]="24">
+          <div class="m-items-top">
+            <m-form-item style="width: 100%" mName="targetConcept-{{index}}" required>
+              <tw-code-system-entity-version-search *ngIf="!viewMode" [codeSystem]="codeSystemId"
+                  [(ngModel)]="association.targetId"
+                  name="targetConcept-{{index}}"
                   valuePrimitive
-                  required></tw-association-type-search>
-              <label *ngIf="viewMode">{{association.associationType}}</label>
+                  required></tw-code-system-entity-version-search>
+              <label *ngIf="viewMode">{{association.targetId | localizedConceptName: {codeSystem: codeSystemId} | async }}</label>
             </m-form-item>
-          </div>
-          <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
-            <div class="m-items-middle">
-              <m-form-item style="width: 100%" mName="targetConcept-{{index}}" required>
-                <tw-code-system-entity-version-search *ngIf="!viewMode" [codeSystem]="codeSystemId"
-                    [(ngModel)]="association.targetId"
-                    name="targetConcept-{{index}}"
-                    valuePrimitive
-                    required></tw-code-system-entity-version-search>
-                <label *ngIf="viewMode">{{association.targetId | localizedConceptName: {codeSystem: codeSystemId} | async }}</label>
-              </m-form-item>
-              <m-form-item mName="status-{{index}}">
-                <tw-value-set-concept-select *ngIf="!viewMode" [(ngModel)]="association.status"
-                    name="status-{{index}}"
-                    valueSet="publication-status"
-                    required></tw-value-set-concept-select>
-                <tw-status-tag *ngIf="viewMode" [status]="association.status"></tw-status-tag>
-              </m-form-item>
-              <m-form-item mName="order-{{index}}">
-                <m-number-input *ngIf="!viewMode" name="order-{{index}}" [(ngModel)]="association.orderNumber"></m-number-input>
-                <label *ngIf="viewMode">{{association.orderNumber}}</label>
-              </m-form-item>
-              <m-button *ngIf="!viewMode" mDisplay="text" (click)="removeAssociation(index)">
-                <m-icon [mCode]="'delete'"></m-icon>
-              </m-button>
-            </div>
+            <m-form-item mName="status-{{index}}">
+              <tw-value-set-concept-select *ngIf="!viewMode" [(ngModel)]="association.status"
+                  name="status-{{index}}"
+                  valueSet="publication-status"
+                  required></tw-value-set-concept-select>
+              <tw-status-tag *ngIf="viewMode" [status]="association.status"></tw-status-tag>
+            </m-form-item>
+            <m-form-item mName="order-{{index}}">
+              <m-number-input *ngIf="!viewMode" name="order-{{index}}" [(ngModel)]="association.orderNumber"></m-number-input>
+              <label *ngIf="viewMode">{{association.orderNumber}}</label>
+            </m-form-item>
+
+            <m-icon-button *ngIf="!viewMode" mIcon="delete" (mClick)="removeAssociation(index)" />
           </div>
         </div>
-      </m-card>
-    </form>
-  </div>
+      </div>
+    </ng-container>
+  </form>
 </m-card>

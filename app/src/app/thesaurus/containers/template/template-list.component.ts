@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
-import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {Template, TemplateSearchParams} from 'term-web/thesaurus/_lib';
 import {TemplateService} from '../../services/template.service';
 
@@ -9,20 +9,18 @@ import {TemplateService} from '../../services/template.service';
 })
 export class TemplateListComponent implements OnInit {
   public query = new TemplateSearchParams();
-  public searchInput?: string;
-  public searchUpdate = new Subject<string>();
   public searchResult: SearchResult<Template> = SearchResult.empty();
-  public loading = false;
+  public searchInput: string;
+  public loading: boolean;
 
   public constructor(private templateService: TemplateService) {}
 
   public ngOnInit(): void {
     this.loadData();
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
+  }
+
+  public loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
   }
 
   private search(): Observable<SearchResult<Template>> {
@@ -32,9 +30,11 @@ export class TemplateListComponent implements OnInit {
     return this.templateService.searchTemplates(q).pipe(finalize(() => this.loading = false));
   }
 
-  public loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
-  }
+  public onSearch = (): Observable<SearchResult<Template>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
+
 
   public deleteTemplate(id: number): void {
     this.templateService.deleteTemplate(id).subscribe(() => this.loadData());

@@ -1,6 +1,6 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
     <div class="m-items-middle">
       <tw-add-button *twPrivileged="'*.CodeSystem.edit'" [routerLink]="dev ? ['add'] : ['code-systems/add']">
         {{'web.code-system.list.add-code-system' | translate}}

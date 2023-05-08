@@ -1,56 +1,62 @@
-<m-card class="m-card-inside">
+<m-card>
   <div *m-card-header class="m-justify-between">
     <div class="m-card__title">{{'entities.code-system-entity-version.property-values' | translate}}</div>
-    <tw-add-button *ngIf="!viewMode" (click)="addPropertyValue()">{{'web.code-system-concept-version.property-value.add-property-value' | translate}}</tw-add-button>
+    <tw-add-button *ngIf="!viewMode" (click)="addPropertyValue()">
+      {{'web.code-system-concept-version.property-value.add-property-value' | translate}}
+    </tw-add-button>
   </div>
-  <div>
-    <form #form="ngForm">
-      <m-card class="m-card-inside" *ngFor="let propertyValue of propertyValues; let index = index">
-        <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
-          <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24" style="height: min-content">
-            <m-form-item mName="property-{{index}}" required>
-              <m-select *ngIf="!viewMode" name="property-{{index}}"
-                  [(ngModel)]="propertyValue.entityPropertyId"
-                  placeholder="entities.entity-property.type"
-                  icon="search"
-                  required>
-                <m-option *ngFor="let prop of entityProperties" [mValue]="prop.id" [mLabel]="prop.name"></m-option>
-              </m-select>
-              <label *ngIf="viewMode">{{propertyValue.entityPropertyId | apply:getPropertyName:entityProperties}}</label>
+
+  <form #form="ngForm">
+    <m-no-data *ngIf="!propertyValues?.length"/>
+
+    <ng-container *ngFor="let propertyValue of propertyValues; let index = index">
+      <div nz-row [nzGutter]="8" nzJustify="center">
+        <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24">
+          <m-form-item mName="property-{{index}}" required>
+            <m-select *ngIf="!viewMode" name="property-{{index}}"
+                [(ngModel)]="propertyValue.entityPropertyId"
+                placeholder="entities.entity-property.type"
+                icon="search"
+                required
+            >
+              <m-option *ngFor="let prop of entityProperties" [mValue]="prop.id" [mLabel]="prop.name"></m-option>
+            </m-select>
+            <label *ngIf="viewMode">
+              {{propertyValue.entityPropertyId | apply:getPropertyName:entityProperties}}
+            </label>
+          </m-form-item>
+        </div>
+
+        <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
+          <div class="m-items-top">
+            <m-form-item style="width: 100%" *ngIf="propertyValue.entityPropertyId" mName="propertyValue-{{index}}">
+              <ng-container *ngIf="checkPropertyType('Coding', propertyValue)">
+                <div class="m-items-middle">
+                  <tw-code-system-search *ngIf="!viewMode" name="propertyValueCS-{{index}}" [(ngModel)]="propertyValue.value.codeSystem" valuePrimitive></tw-code-system-search>
+                  <tw-term-concept-search *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value.code" [codeSystem]="propertyValue.value.codeSystem" valueType="code"></tw-term-concept-search>
+                  <label *ngIf="viewMode">{{propertyValue.value?.code}}</label>
+                  <label *ngIf="viewMode">{{propertyValue.value?.code | localizedConceptName: {codeSystem: propertyValue.value.codeSystem} | async}}</label>
+                </div>
+              </ng-container>
+              <ng-container *ngIf="checkPropertyType('string,code', propertyValue)">
+                <m-input *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value"></m-input>
+                <label *ngIf="viewMode">{{propertyValue.value}}</label>
+              </ng-container>
+              <ng-container *ngIf="checkPropertyType('dateTime', propertyValue)">
+                <m-date-picker *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value"></m-date-picker>
+                <label *ngIf="viewMode">{{propertyValue.value | localDate}}</label>
+              </ng-container>
+              <ng-container *ngIf="checkPropertyType('decimal,integer', propertyValue)">
+                <m-number-input *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value"></m-number-input>
+                <label *ngIf="viewMode">{{propertyValue.value}}</label>
+              </ng-container>
+              <m-checkbox *ngIf="checkPropertyType('boolean', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode"></m-checkbox>
             </m-form-item>
-          </div>
-          <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
-            <div style="display: flex">
-              <m-form-item style="width: 100%" *ngIf="propertyValue.entityPropertyId" mName="propertyValue-{{index}}">
-                <ng-container *ngIf="checkPropertyType('Coding', propertyValue)">
-                  <div class="m-items-middle">
-                    <tw-code-system-search *ngIf="!viewMode" name="propertyValueCS-{{index}}" [(ngModel)]="propertyValue.value.codeSystem" valuePrimitive></tw-code-system-search>
-                    <tw-term-concept-search *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value.code" [codeSystem]="propertyValue.value.codeSystem" valueType="code"></tw-term-concept-search>
-                    <label *ngIf="viewMode">{{propertyValue.value?.code}}</label>
-                    <label *ngIf="viewMode">{{propertyValue.value?.code | localizedConceptName: {codeSystem: propertyValue.value.codeSystem} | async}}</label>
-                  </div>
-                </ng-container>
-                <ng-container *ngIf="checkPropertyType('string,code', propertyValue)">
-                  <m-input *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value"></m-input>
-                  <label *ngIf="viewMode">{{propertyValue.value}}</label>
-                </ng-container>
-                <ng-container *ngIf="checkPropertyType('dateTime', propertyValue)">
-                  <m-date-picker *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value"></m-date-picker>
-                  <label *ngIf="viewMode">{{propertyValue.value | localDate}}</label>
-                </ng-container>
-                <ng-container *ngIf="checkPropertyType('decimal,integer', propertyValue)">
-                  <m-number-input *ngIf="!viewMode" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value"></m-number-input>
-                  <label *ngIf="viewMode">{{propertyValue.value}}</label>
-                </ng-container>
-                <m-checkbox *ngIf="checkPropertyType('boolean', propertyValue)" name="propertyValue-{{index}}" [(ngModel)]="propertyValue.value" [disabled]="!!viewMode"></m-checkbox>
-              </m-form-item>
-              <m-button *ngIf="!viewMode" mDisplay="text" (click)="removePropertyValue(index)">
-                <m-icon [mCode]="'delete'"></m-icon>
-              </m-button>
-            </div>
+
+            <m-icon-button *ngIf="!viewMode" mIcon="delete" (mClick)="removePropertyValue(index)"/>
           </div>
         </div>
-      </m-card>
-    </form>
-  </div>
+      </div>
+    </ng-container>
+  </form>
 </m-card>

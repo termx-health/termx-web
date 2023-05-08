@@ -1,17 +1,24 @@
-<m-card class="m-card-inside">
+<m-card>
   <div *m-card-header class="m-justify-between">
     <div class="m-card__title">{{'entities.code-system-entity-version.designations' | translate}}</div>
-    <tw-add-button *ngIf="!viewMode" (click)="modalData.visible = true">{{'web.code-system-concept-version.designation.add-designation' | translate}}</tw-add-button>
+    <tw-add-button *ngIf="!viewMode" (click)="modalData.visible = true">
+      {{'web.code-system-concept-version.designation.add-designation' | translate}}
+    </tw-add-button>
   </div>
-  <div *ngIf="!loading['languages']">
-    <m-card class="m-card-inside" *ngFor="let group of designationGroups">
-      <tw-code-system-designation-group-edit [viewMode]="viewMode"
-          [designationGroup]="group"
-          [supportedLangs]="supportedLangs"
-          [entityProperties]="entityProperties"></tw-code-system-designation-group-edit>
-    </m-card>
+
+  <div *ngIf="!loading['languages']" class="tw-flex-container">
+    <m-no-data *ngIf="!designationGroups?.length"/>
+
+    <tw-code-system-designation-group-edit
+        *ngFor="let group of designationGroups"
+        [viewMode]="viewMode"
+        [designationGroup]="group"
+        [supportedLangs]="supportedLangs"
+        [entityProperties]="entityProperties"
+    ></tw-code-system-designation-group-edit>
   </div>
 </m-card>
+
 
 <m-modal [(mVisible)]="modalData.visible" (mClose)="newModal()">
   <ng-container *m-modal-header>
@@ -21,12 +28,14 @@
   <ng-container *m-modal-content>
     <form #modalForm="ngForm">
       <m-form-item mName="designationType" mLabel="entities.designation.type" required>
-        <m-select  [loading]="loading['properties']"
-            [(ngModel)]="modalData.designation.designationTypeId"
-            name="designationType"
-            placeholder="marina.ui.inputs.search.placeholder"
+        <m-select
             icon="search"
-            required>
+            name="designationType"
+            [(ngModel)]="modalData.designation.designationTypeId"
+            placeholder="marina.ui.inputs.search.placeholder"
+            [loading]="loading['properties']"
+            required
+        >
           <m-option *ngFor="let prop of entityProperties" [mValue]="prop.id" [mLabel]="prop.name"></m-option>
         </m-select>
       </m-form-item>

@@ -29,6 +29,7 @@ import {MarinaUiConfigModule} from './core/marina';
 import {ObservationDefinitionModule} from 'term-web/observation-definition/observation-definition.module';
 import {MuiConfigService} from '@kodality-web/marina-ui';
 import {TableModule} from 'term-web/core/ui/table-container/table.module';
+import {SequenceModule} from 'term-web/sequence/sequence.module';
 
 registerLocaleData(et);
 registerLocaleData(lt);
@@ -41,20 +42,6 @@ export function HttpLoaderFactory(http: HttpBackend): TranslateLoader {
 export function preloadAuth(authService: AuthService): () => Observable<any> {
   return () => authService.refresh();
 }
-
-const TERM_MODULES = [
-  ResourcesModule,
-  IntegrationModule,
-  JobLibModule,
-  PrivilegesModule,
-  GlobalSearchModule,
-  ThesaurusModule,
-  FhirModule,
-  ObservationDefinitionModule,
-  ToolsModule,
-  MeasurementUnitModule,
-  ProjectModule
-];
 
 @NgModule({
   declarations: [
@@ -82,7 +69,18 @@ const TERM_MODULES = [
     NoPrivilegeModule,
     TableModule,
 
-    ...TERM_MODULES
+    ResourcesModule,
+    IntegrationModule,
+    JobLibModule,
+    PrivilegesModule,
+    GlobalSearchModule,
+    ThesaurusModule,
+    FhirModule,
+    ObservationDefinitionModule,
+    ToolsModule,
+    MeasurementUnitModule,
+    ProjectModule,
+    SequenceModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},
@@ -91,17 +89,8 @@ const TERM_MODULES = [
   bootstrap: [AppComponent]
 })
 export class AppModule {
-  public constructor(
-    translate: TranslateService,
-    muiTranslate: CoreI18nService,
-    muiConfig: MuiConfigService
-  ) {
+  public constructor(translate: TranslateService,) {
     translate.use(localStorage.getItem('locale') ?? 'en');
-    translate.onLangChange.subscribe(({lang}) => {
-      muiTranslate.use(lang);
-      localStorage.setItem('locale', lang);
-
-      muiConfig.set('multiLanguageInput', {...muiConfig.getConfigFor('multiLanguageInput'), requiredLanguages: [lang]});
-    });
+    translate.onLangChange.subscribe(({lang}) => localStorage.setItem('locale', lang));
   }
 }

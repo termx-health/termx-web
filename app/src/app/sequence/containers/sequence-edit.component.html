@@ -1,0 +1,66 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="isLoading">
+      <m-card [mTitle]="sequence?.id ? 'web.sequence.form.edit-header' : 'web.sequence.form.add-header'" [mShowSkeleton]="loader.state['load']">
+        <form *ngIf="sequence">
+          <m-form-item mName="code" mLabel="entities.sequence.code" required>
+            <m-input name="code" [(ngModel)]="sequence.code" required></m-input>
+          </m-form-item>
+
+          <m-form-item mName="description" mLabel="entities.sequence.description" required>
+            <m-input name="description" [(ngModel)]="sequence.description" required></m-input>
+          </m-form-item>
+
+          <m-form-item mName="pattern" mLabel="entities.sequence.pattern" required>
+            <m-input name="pattern" [(ngModel)]="sequence.pattern" required></m-input>
+            <code class="m-subtitle">[YY][YYYY][MM][DD][N..N]</code>
+          </m-form-item>
+
+          <m-form-item mName="restart" mLabel="entities.sequence.restart" required>
+            <m-select name="restart" [(ngModel)]="sequence.restart" required>
+              <m-option mLabel="daily" [mValue]="'daily'"></m-option>
+              <m-option mLabel="monthly" [mValue]="'monthly'"></m-option>
+              <m-option mLabel="yearly" [mValue]="'yearly'"></m-option>
+              <m-option mLabel="never" [mValue]="'never'"></m-option>
+            </m-select>
+          </m-form-item>
+
+          <m-form-item mName="start-from" mLabel="entities.sequence.start-from" required>
+            <m-number-input name="start-from" [(ngModel)]="sequence.startFrom" required></m-number-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.sequence.luvs">
+            <m-table [mData]="sequence.luvs" mSize="small">
+              <tr *mTableHead>
+                <th>{{'entities.sequence-luv.period' | translate}}</th>
+                <th>{{'entities.sequence-luv.luv' | translate}}</th>
+              </tr>
+
+              <tr *mTableRow="let luv">
+                <td>{{luv.period ?? '-'}}</td>
+                <td>{{luv.luv}}</td>
+              </tr>
+
+              <tr *mTableNoData>
+                <td colspan="100%">
+                  <m-no-data></m-no-data>
+                </td>
+              </tr>
+            </m-table>
+          </m-form-item>
+        </form>
+
+        <ng-container *m-card-footer>
+          <m-button
+              mDisplay="primary"
+              [mLoading]="loader.state['save']"
+              [disabled]="loader.state['save'] || isLoading"
+              (mClick)="save()"
+          >
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

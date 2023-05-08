@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
-import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {NamingSystem, NamingSystemSearchParams} from 'term-web/resources/_lib';
 import {NamingSystemService} from '../../services/naming-system-service';
 import {TranslateService} from '@ngx-translate/core';
@@ -11,12 +11,10 @@ import {TranslateService} from '@ngx-translate/core';
   templateUrl: './naming-system-list.component.html',
 })
 export class NamingSystemListComponent implements OnInit {
-  public searchResult: SearchResult<NamingSystem> = SearchResult.empty();
   public query = new NamingSystemSearchParams();
-  public loading = false;
-
-  public searchInput?: string;
-  public searchUpdate = new Subject<string>();
+  public searchResult: SearchResult<NamingSystem> = SearchResult.empty();
+  public searchInput: string;
+  public loading: boolean;
 
   public constructor(
     private namingSystemService: NamingSystemService,
@@ -25,13 +23,11 @@ export class NamingSystemListComponent implements OnInit {
 
   public ngOnInit(): void {
     this.loadData();
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
   }
 
+  public loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
+  }
 
   private search(): Observable<SearchResult<NamingSystem>> {
     const q = copyDeep(this.query);
@@ -41,9 +37,11 @@ export class NamingSystemListComponent implements OnInit {
     return this.namingSystemService.search(q).pipe(finalize(() => this.loading = false));
   }
 
-  public loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
-  }
+  public onSearch = (): Observable<SearchResult<NamingSystem>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
+
 
   public retire(ns: NamingSystem): void {
     this.loading = true;

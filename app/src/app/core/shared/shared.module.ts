@@ -15,6 +15,7 @@ import {TerminologyConceptSearchComponent} from 'term-web/core/shared/components
 import {MeasurementUnitLibModule} from '../../measurement-unit/_lib';
 import {IntegrationLibModule} from '../../integration/_lib';
 import {SemanticVersionSelectComponent} from 'term-web/core/shared/components/version-select/semantic-version-select.component';
+import {InputDebounceDirective} from 'term-web/core/shared/directives/input-debounce.directive';
 
 
 const commonModules = [
@@ -41,6 +42,10 @@ const pipes = [
   ValidateUrlPipe,
 ];
 
+const directives = [
+  InputDebounceDirective
+]
+
 
 @NgModule({
   imports: [
@@ -51,12 +56,14 @@ const pipes = [
   ],
   declarations: [
     ...components,
-    ...pipes
+    ...pipes,
+    ...directives
   ],
   exports: [
     ...commonModules,
     ...components,
-    ...pipes
+    ...pipes,
+    ...directives
   ]
 })
 export class SharedModule {

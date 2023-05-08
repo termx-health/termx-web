@@ -4,32 +4,38 @@
       <m-card *ngIf="codeSystem" [mShowSkeleton]="loading['init']" autofocus>
         <div *m-card-header>
           <div class="m-justify-between">
-            <label class="m-card__title">{{('web.code-system.form.header' | translate) + ' ' +  codeSystemId}}</label>
-            <div>
-              <m-button (click)="openEdit()">{{'core.btn.edit' | translate}}</m-button>
-            </div>
+            <label class="m-card__title">{{('web.code-system.form.header' | translate) + ' ' + codeSystemId}}</label>
+            <m-button (click)="openEdit()">{{'core.btn.edit' | translate}}</m-button>
           </div>
         </div>
-        <div nz-row [nzGutter]="12" class="m-row">
-          <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24">
+
+        <div nz-row [nzGutter]="12">
+          <div nz-col [nzMd]="6" [nzXs]="24">
             <m-form-item mLabel="entities.code-system.name">
               {{codeSystem.names | localName}}
             </m-form-item>
           </div>
-          <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24">
-            <m-form-item  mLabel="entities.code-system.versions">
+          <div nz-col [nzMd]="6" [nzXs]="24">
+            <m-form-item mLabel="entities.code-system.versions">
               <label *ngFor="let version of codeSystem.versions">{{version.version}} | {{version.status}}</label>
             </m-form-item>
           </div>
         </div>
-        <div nz-row [nzGutter]="12" class="m-row">
-          <m-form-item  mLabel="entities.code-system.description">
+
+        <div nz-row [nzGutter]="12">
+          <m-form-item nz-col mLabel="entities.code-system.description">
             {{codeSystem.description}}
           </m-form-item>
         </div>
-        <tw-code-system-concepts-list [dev]="true" [codeSystemId]="codeSystemId"
-            [codeSystemVersions]="codeSystem.versions"
-            [properties]="codeSystem.properties"></tw-code-system-concepts-list>
+
+        <m-card class="m-card-inside" mTitle="entities.code-system.concepts">
+          <tw-code-system-concepts-list
+              [dev]="true"
+              [codeSystemId]="codeSystemId"
+              [codeSystemVersions]="codeSystem.versions"
+              [properties]="codeSystem.properties"
+          ></tw-code-system-concepts-list>
+        </m-card>
       </m-card>
     </m-spinner>
   </div>

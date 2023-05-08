@@ -1,5 +1,5 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiHttpErrorHandler} from '@kodality-web/marina-ui';
+import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiConfigService, MuiHttpErrorHandler} from '@kodality-web/marina-ui';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {CoreI18nService, CoreI18nTranslationHandler, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
@@ -10,7 +10,6 @@ export function TranslationHandlerFactory(translateService: TranslateService): C
 
 export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
   return {
-
     multiLanguageInput: {
       languages: [
         {code: 'en', names: {'en': 'English', 'et': 'Inglise', 'ru': 'Английский', 'uz-LATN': 'Ingliz', 'uz-CYRL': 'Инглиз'}},
@@ -42,8 +41,13 @@ export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
   ]
 })
 export class MarinaUiConfigModule {
-  public constructor(translate: TranslateService, i18nService: CoreI18nService) {
-    translate.onLangChange.subscribe(({lang}) => i18nService.use(lang));
+  public constructor(translate: TranslateService, muiTranslate: CoreI18nService, muiConfig: MuiConfigService) {
+    translate.onLangChange.subscribe(({lang}) => {
+      muiTranslate.use(lang);
+      muiConfig.set('multiLanguageInput', {
+        ...muiConfig.getConfigFor('multiLanguageInput'), requiredLanguages: [lang]
+      });
+    });
   }
 
   public static init(marinaConfig: MuiConfig = {}): ModuleWithProviders<MarinaUiConfigModule> {

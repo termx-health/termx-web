@@ -32,6 +32,7 @@ import {CodeSystemConceptViewComponent} from './containers/concept/code-system-c
 import {CodeSystemConceptRelationsComponent} from './containers/concept/relations/code-system-concept-relations.component';
 import {MarinaQuillModule} from '@kodality-web/marina-quill';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
+import {SequenceLibModule} from 'term-web/sequence/_lib/sequence-lib.module';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -74,7 +75,8 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     FinderModule,
     ResourcesLibModule,
     ContactModule,
-    MarinaQuillModule
+    MarinaQuillModule,
+    SequenceLibModule
   ],
   declarations: [
     CodeSystemListComponent,

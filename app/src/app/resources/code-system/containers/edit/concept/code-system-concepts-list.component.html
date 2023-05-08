@@ -1,8 +1,7 @@
-<m-card class="m-card-inside">
-  <div *m-card-header>
+<div class="tw-flex-container">
+  <div>
     <div class="m-justify-between">
       <div class="m-items-middle">
-        <label class="m-card__title">{{'entities.code-system.concepts' | translate}}</label>
         <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next()" placeholder="marina.ui.inputs.search.placeholder" [disabled]="group.open"></m-input>
         <m-button (click)="filter.open = !filter.open"
             [disabled]="group.open"
@@ -152,4 +151,4 @@
       </div>
     </ng-template>
   </m-tree>
-</m-card>
+</div>

@@ -1,7 +1,7 @@
 <nz-breadcrumb style="margin-bottom: 1rem">
   <nz-breadcrumb-item *ngFor="let crumb of breadcrumb; let i = index" [ngClass]="crumb === '...' ? 'm-clickable' : ''" (click)="openProperties(crumb)">
     <label *ngIf="i !== 2" [ngClass]="crumb === '...' ? 'm-clickable' : ''">{{crumb}}</label>
-    <label *ngIf="i === 2">{{crumb}} {{crumb | localizedConceptName: {codeSystem:'loinc-part'} | async}}</label>
+    <label *ngIf="i === 2">{{crumb}} {{crumb | localizedConceptName: {codeSystem: 'loinc-part'} | async}}</label>
   </nz-breadcrumb-item>
 </nz-breadcrumb>
 
@@ -18,7 +18,7 @@
 </div>
 
 <div *ngIf="breadcrumb?.length === 2" style="display: flex; gap: 1rem; flex-direction: column">
-  <m-input [(ngModel)]="partsSearchInput" (mChange)="partsSearchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+  <m-input [(ngModel)]="partsSearchInput" twDebounce [debounced]="onSearchParts" placeholder="marina.ui.inputs.search.placeholder"></m-input>
   <m-backend-table [mResult]="parts" [(mQuery)]="partsQuery" (mQueryChange)="loadParts()" [mLoading]="loader.isLoading" mSize="small">
     <tr *mTableHead>
       <th mColumnKey="code">{{'web.loinc.part.code' | translate}}</th>

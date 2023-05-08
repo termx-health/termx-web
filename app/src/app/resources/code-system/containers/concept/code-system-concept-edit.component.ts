@@ -12,6 +12,18 @@ import {of} from 'rxjs';
 
 @Component({
   templateUrl: './code-system-concept-edit.component.html',
+  styles: [`
+    .version-sidebar {
+      height: min-content;
+      position: sticky;
+      top: calc(var(--page-header-height) + 1rem);
+      margin-bottom: 1rem
+    }
+    
+    .padded {
+      display: block; margin-top: 1rem
+    }
+  `]
 })
 export class CodeSystemConceptEditComponent implements OnInit {
   public codeSystemId?: string | null;

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {debounceTime, distinctUntilChanged, finalize, Observable, Subject, switchMap, tap} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {MeasurementUnitService} from '../services/measurement-unit.service';
 import {MeasurementUnit, MeasurementUnitSearchParams} from 'term-web/measurement-unit/_lib';
@@ -11,10 +11,9 @@ export class MeasurementUnitListComponent implements OnInit {
   protected readonly STORE_KEY = 'measurement-unit-list';
 
   public query = new MeasurementUnitSearchParams();
-  public searchInput?: string;
-  public searchUpdate = new Subject<string>();
   public searchResult: SearchResult<MeasurementUnit> = SearchResult.empty();
-  public loading = false;
+  public searchInput: string;
+  public loading: boolean;
 
   public constructor(
     private measurementUnitService: MeasurementUnitService,
@@ -29,14 +28,11 @@ export class MeasurementUnitListComponent implements OnInit {
     }
 
     this.loadData();
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      tap(() => this.query.offset = 0),
-      switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
   }
 
+  public loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
+  }
 
   private search(): Observable<SearchResult<MeasurementUnit>> {
     const q = copyDeep(this.query);
@@ -47,8 +43,8 @@ export class MeasurementUnitListComponent implements OnInit {
     return this.measurementUnitService.search(q).pipe(finalize(() => this.loading = false));
   }
 
-  public loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
-  }
-
+  public onSearch = (): Observable<SearchResult<MeasurementUnit>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
 }

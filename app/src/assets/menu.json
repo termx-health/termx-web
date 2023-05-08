@@ -222,6 +222,14 @@
         },
         "icon": "cloud",
         "link": "tools/terminology-service-api"
+      },
+      {
+        "label": {
+          "en": "Sequences",
+          "et": "Jadad"
+        },
+        "icon": "field-binary",
+        "link": "sequences"
       }
     ]
   },

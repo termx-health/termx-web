@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {debounceTime, distinctUntilChanged, Observable, Subject, switchMap, tap} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
 import {TranslateService} from '@ngx-translate/core';
@@ -15,14 +15,12 @@ export class LoincListComponent implements OnInit {
   protected readonly TYPES = ['CLIN', 'Lab', 'Survey'];
   protected readonly TYPE_ICONS = {'CLIN': 'medicine-box', 'Lab': 'experiment', 'Survey': 'file-text'};
 
-  protected loader = new LoadingManager();
-
   protected query = new ConceptSearchParams();
-  protected searchInput: string;
-  protected searchUpdate = new Subject<string>();
   protected searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
+  protected searchInput: string;
   protected isFilterOpen = false;
   protected filter: any = {};
+  protected loader = new LoadingManager();
 
   protected parts: {[key: string]: CodeSystemConcept} = {};
 
@@ -35,23 +33,19 @@ export class LoincListComponent implements OnInit {
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
-
     if (state) {
       this.query = Object.assign(new QueryParams(), state.query);
       this.searchInput = this.query.textContains;
     }
 
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      tap(() => this.query.offset = 0),
-      switchMap(() => this.search()),
-    ).subscribe(r => {
+    this.loadData();
+  }
+
+  protected loadData(): void {
+    this.search().subscribe(r => {
       this.searchResult = r;
       this.loadParts(r.data);
     });
-
-    this.searchUpdate.next(null);
   }
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
@@ -62,12 +56,11 @@ export class LoincListComponent implements OnInit {
     return this.loader.wrap('search', this.codeSystemService.searchConcepts('loinc', q));
   }
 
-  protected loadData(): void {
-    this.search().subscribe(r => {
-      this.searchResult = r;
-      this.loadParts(r.data);
-    });
-  }
+  public onSearch = (): Observable<SearchResult<CodeSystemConcept>> => {
+    this.query.offset = 0;
+    return this.search().pipe(tap(resp => this.searchResult = resp));
+  };
+
 
   protected getName = (c: CodeSystemConcept, type = 'display'): string => {
     const lang = this.translateService.currentLang;

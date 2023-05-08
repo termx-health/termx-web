@@ -1,5 +1,5 @@
 <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
-  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
+  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" *ngIf="concept?.versions">
     <m-card [mShowSkeleton]="loading['init']">
       <div class="m-justify-between">
         <label *ngIf="mode === 'edit'" class="m-card__title">
@@ -26,8 +26,9 @@
     </m-card>
   </div>
 </div>
+
 <div nz-row [nzGutter]="12" nzJustify="center" class="m-row" style="margin-top: 1rem">
-  <div nz-col [nzLg]="4" [nzMd]="4" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
+  <div nz-col [nzMd]="4" [nzSm]="18" [nzXs]="24" class="version-sidebar" *ngIf="concept?.versions">
     <m-spinner [mLoading]="isLoading">
       <m-card [mShowSkeleton]="loading['init']" mTitle="web.code-system-concept.form.version.header">
         <nz-timeline>
@@ -39,7 +40,7 @@
               <m-icon mCode="delete"></m-icon>
             </a>
             <ng-template #versionTemplate>
-              <label *ngIf="version.id === conceptVersion?.id" style="font-weight: bold">
+              <label *ngIf="version.id === conceptVersion?.id" class="m-bold">
                 {{version.created ? (version.created | localDateTime) : 'web.code-system-concept.form.version.new-version' | translate}}
               </label>
               <label *ngIf="version.id !== conceptVersion?.id" (click)="selectVersion(version)">
@@ -58,61 +59,56 @@
     </m-spinner>
   </div>
 
-  <div nz-col [nzLg]="14" [nzMd]="14" [nzXs]="18">
-    <m-spinner [mLoading]="isLoading">
-      <ng-container *ngIf="concept && conceptVersion">
-        <m-card [mShowSkeleton]="loading['init']">
-          <form #form="ngForm">
-            <m-card *ngIf="conceptEdit" class="m-card-inside" mTitle="web.code-system-concept.form.concept">
-              <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>
-                <m-input name="code" [(ngModel)]="concept.code" autofocus required></m-input>
-              </m-form-item>
-              <m-form-item mName="description" mLabel="entities.code-system-concept.description">
-                <m-textarea name="description" [(ngModel)]="concept.description"></m-textarea>
-              </m-form-item>
-            </m-card>
+  <m-spinner nz-col [nzMd]="14" [nzSm]="18" [nzXs]="24" [mLoading]="isLoading">
+    <ng-container *ngIf="concept && conceptVersion">
+      <m-card class="tw-card-inside-wrapper" [mShowSkeleton]="loading['init']">
+        <form #form="ngForm">
+          <m-card *ngIf="conceptEdit" class="m-card-inside" mTitle="web.code-system-concept.form.concept">
+            <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>
+              <div class="m-items-middle">
+                <m-input style="width: 100%" name="code" [(ngModel)]="concept.code" autofocus required></m-input>
+                <tw-sequence-value-generator *ngIf="codeSystem?.sequence" [code]="codeSystem.sequence" (valueGenerated)="concept.code = $event"/>
+              </div>
+            </m-form-item>
+            <m-form-item mName="description" mLabel="entities.code-system-concept.description">
+              <m-textarea name="description" [(ngModel)]="concept.description"></m-textarea>
+            </m-form-item>
+          </m-card>
 
-            <m-card class="m-card-inside" mTitle="web.code-system-concept.form.version.information">
-              <m-form-item mLabel="entities.code-system-entity-version.status">
-                <tw-status-tag [status]="conceptVersion.status"></tw-status-tag>
-              </m-form-item>
-              <m-form-item mName="created" mLabel="entities.code-system-entity-version.created" *ngIf="conceptVersion.created">
-                {{conceptVersion.created | localDateTime}}
-              </m-form-item>
-              <m-form-item mName="versionDescription" mLabel="entities.code-system-entity-version.description">
-                <m-textarea *ngIf="conceptVersion.status === 'draft'" name="versionDescription" [(ngModel)]="conceptVersion.description"></m-textarea>
-                <label *ngIf="conceptVersion.status !== 'draft'">{{conceptVersion.description}}</label>
-              </m-form-item>
-            </m-card>
-          </form>
-        </m-card>
-        <m-card style="margin-top: 1rem">
-          <tw-code-system-designation-edit #designationEdit
-              [codeSystemId]="codeSystem?.id"
-              [designations]="conceptVersion?.designations"
-              [supportedLangs]="codeSystem?.supportedLanguages"
-              [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-designation-edit>
-        </m-card>
+          <m-card class="m-card-inside" mTitle="web.code-system-concept.form.version.information">
+            <m-form-item mLabel="entities.code-system-entity-version.status">
+              <tw-status-tag [status]="conceptVersion.status"></tw-status-tag>
+            </m-form-item>
+            <m-form-item mName="created" mLabel="entities.code-system-entity-version.created" *ngIf="conceptVersion.created">
+              {{conceptVersion.created | localDateTime}}
+            </m-form-item>
+            <m-form-item mName="versionDescription" mLabel="entities.code-system-entity-version.description">
+              <m-textarea *ngIf="conceptVersion.status === 'draft'" name="versionDescription" [(ngModel)]="conceptVersion.description"></m-textarea>
+              <label *ngIf="conceptVersion.status !== 'draft'">{{conceptVersion.description}}</label>
+            </m-form-item>
+          </m-card>
+        </form>
+      </m-card>
 
-        <m-card style="margin-top: 1rem">
-          <tw-code-system-property-value-edit #propertyValueEdit
-              [codeSystemId]="codeSystemId"
-              [propertyValues]="conceptVersion?.propertyValues"
-              [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-property-value-edit>
-        </m-card>
 
-        <m-card style="margin-top: 1rem">
-          <tw-code-system-association-edit #associationEdit
-              [codeSystemId]="codeSystemId"
-              [associations]="conceptVersion?.associations"
-              [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-association-edit>
-        </m-card>
-      </ng-container>
-    </m-spinner>
-  </div>
-</div>
-<div nz-row [nzGutter]="12" nzJustify="center" class="m-row" style="margin-top: 1rem">
-  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" style="height: min-content" *ngIf="concept?.id && concept?.versions">
-    <tw-code-system-concept-relations [concept]="concept"></tw-code-system-concept-relations>
-  </div>
+      <tw-code-system-designation-edit #designationEdit class="padded"
+          [codeSystemId]="codeSystem?.id"
+          [designations]="conceptVersion?.designations"
+          [supportedLangs]="codeSystem?.supportedLanguages"
+          [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-designation-edit>
+
+      <tw-code-system-property-value-edit #propertyValueEdit class="padded"
+          [codeSystemId]="codeSystemId"
+          [propertyValues]="conceptVersion?.propertyValues"
+          [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-property-value-edit>
+
+      <tw-code-system-association-edit #associationEdit class="padded"
+          [codeSystemId]="codeSystemId"
+          [associations]="conceptVersion?.associations"
+          [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-association-edit>
+    </ng-container>
+
+
+    <tw-code-system-concept-relations *ngIf="concept?.id && concept?.versions" class="padded" [concept]="concept"></tw-code-system-concept-relations>
+  </m-spinner>
 </div>
