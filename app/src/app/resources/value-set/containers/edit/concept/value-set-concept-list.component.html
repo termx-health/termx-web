@@ -6,7 +6,8 @@
       </div>
     </div>
   </div>
-  <m-table [mData]="concepts | apply:filterConcepts:searchInput">
+
+  <m-table [mData]="concepts | apply:filterConcepts:searchInput" [mLoading]="loading">
     <tr *mTableHead>
       <th></th>
       <th>{{'entities.value-set-version-concept.concept' | translate}}</th>
