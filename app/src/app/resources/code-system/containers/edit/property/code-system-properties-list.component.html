@@ -11,23 +11,23 @@
       <a *m-dropdown-item [routerLink]="['../entity-properties/add']">
         {{'web.code-system.form.properties.add-property' | translate}}
       </a>
-      <a *m-dropdown-item [routerLink]="['../supplements/add']" [queryParams]="{targetType: 'EntityProperty'}">
-        {{'web.code-system.form.properties.add-supplement' | translate}}
-      </a>
     </m-dropdown>
   </div>
 
   <m-table [mData]="properties" [mLoading]="loading" mEnablePagination>
     <tr *mTableHead>
+      <th>{{'entities.entity-property.order-number' | translate}}</th>
       <th>{{'entities.entity-property.name' | translate}}</th>
       <th>{{'entities.entity-property.type' | translate}}</th>
+      <th>{{'entities.entity-property.required' | translate}}</th>
+      <th>{{'entities.entity-property.preferred' | translate}}</th>
       <th>{{'entities.entity-property.description' | translate}}</th>
-      <th></th>
       <th>{{'entities.entity-property.status' | translate}}</th>
       <th class="tw-table-actions" *ngIf="!viewMode"></th>
     </tr>
 
     <tr *mTableRow="let property">
+      <td>{{property.orderNumber}}</td>
       <td>
         <div *ngIf="viewMode">
           {{property.name}}
@@ -37,10 +37,9 @@
         </a>
       </td>
       <td>{{property.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
+      <td><m-checkbox readOnly [ngModel]="property.required"></m-checkbox></td>
+      <td><m-checkbox readOnly [ngModel]="property.preferred"></m-checkbox></td>
       <td><m-abbreviate [mValue]="property.description" [mLength]="40"></m-abbreviate></td>
-      <td class="tw-table-min-width">
-        <m-icon *ngIf="property.supplementId" [mCode]="'block'" m-tooltip [mTitle]="'web.supplement.supplement' | translate"></m-icon> <!--todo better icon for supplement-->
-      </td>
       <td class="tw-table-min-width">
         <tw-status-tag [status]="property.status"></tw-status-tag>
       </td>

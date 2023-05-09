@@ -8,7 +8,77 @@
   <m-form-item mName="propertyStatus" mLabel="entities.entity-property.status" required>
     <tw-value-set-concept-select name="propertyStatus" [(ngModel)]="property.status" valueSet="publication-status" required></tw-value-set-concept-select>
   </m-form-item>
+  <m-form-item mName="required" mLabel="entities.entity-property.required">
+    <m-checkbox name="required" [(ngModel)]="property.required"></m-checkbox>
+  </m-form-item>
+  <m-form-item mName="preferred" mLabel="entities.entity-property.preferred">
+    <m-checkbox name="preferred" [(ngModel)]="property.preferred"></m-checkbox>
+  </m-form-item>
+  <m-form-item mName="order" mLabel="entities.entity-property.order-number">
+    <m-number-input name="order" [(ngModel)]="property.orderNumber"></m-number-input>
+  </m-form-item>
   <m-form-item mName="propertyDescription" mLabel="entities.entity-property.description">
     <m-textarea name="propertyDescription" [(ngModel)]="property.description"></m-textarea>
   </m-form-item>
+
+  <ng-container *ngIf="(['code', 'Coding'] | includes: property.type) && property.rule">
+    <m-divider>{{'entities.entity-property.rule.singular' | translate}}</m-divider>
+    <m-form-row *ngIf="'Coding' === property.type">
+      <m-form-item mLabel="entities.entity-property.rule.code-systems" mName="cs">
+        <tw-code-system-search [(ngModel)]="property.rule.codeSystems"
+            name="cs"
+            valuePrimitive
+            multiple
+            [disabled]="property.rule.valueSet | toBoolean"></tw-code-system-search>
+      </m-form-item>
+    </m-form-row>
+    <m-form-row *ngIf="'Coding' === property.type">
+      <m-form-item mLabel="entities.entity-property.rule.value-set" mName="vs">
+        <tw-value-set-search [(ngModel)]="property.rule.valueSet"
+            name="vs"
+            valuePrimitive
+            [disabled]="property.rule.codeSystems?.length > 0"></tw-value-set-search>
+      </m-form-item>
+    </m-form-row>
+    <m-form-row *ngIf="'code' === property.type">
+      <m-form-item mLabel="entities.entity-property.rule.filters">
+        <m-editable-table #rowsTable [mData]="property.rule.filters" [mRowInstance]="filterRowInstance">
+          <m-editable-column [mTitle]="'entities.entity-property.rule.type'" mName="type">
+            <ng-template #viewTemplate let-f>{{f.type}}</ng-template>
+            <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+              <m-select [name]="ngModelName" [(ngModel)]="f.type" (ngModelChange)="filterTypeChanged($event, f)">
+                <m-option mLabel="property" [mValue]="'property'"></m-option>
+                <m-option mLabel="association" [mValue]="'association'"></m-option>
+              </m-select>
+            </ng-template>
+          </m-editable-column>
+          <m-editable-column [mTitle]="'entities.entity-property.rule.property'" mName="property">
+            <ng-template #viewTemplate let-f>{{f.association || f.property?.name}}</ng-template>
+            <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+              <m-select *ngIf="f.type === 'property'" [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'id'" autofocus>
+                <m-option mLabel="code" [mValue]="{id: 0, name: 'code', type: 'string'}"></m-option>
+                <m-option *ngFor="let property of properties" [mLabel]="property.name" [mValue]="property"></m-option>
+              </m-select>
+              <tw-association-type-search *ngIf="f.type === 'association'"
+                  [name]="ngModelName"
+                  [(ngModel)]="f.association"
+                  valuePrimitive
+                  autofocus></tw-association-type-search>
+            </ng-template>
+          </m-editable-column>
+          <m-editable-column [mTitle]="'entities.entity-property.rule.value'" mName="value">
+            <ng-template #viewTemplate let-f>{{f.value}}</ng-template>
+            <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+              <ng-container *ngIf="f.type === 'property'">
+                <tw-property-value-input [(ngModel)]="f.value" [name]="ngModelName" [codeSystem]="codeSystem" [property]="f.property"></tw-property-value-input>
+              </ng-container>
+              <ng-container *ngIf="f.type === 'association'">
+                <tw-term-concept-search [name]="ngModelName" valueType="code" [(ngModel)]="f.value" [codeSystem]="codeSystem"></tw-term-concept-search>
+              </ng-container>
+            </ng-template>
+          </m-editable-column>
+        </m-editable-table>
+      </m-form-item>
+    </m-form-row>
+  </ng-container>
 </form>

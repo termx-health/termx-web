@@ -34,7 +34,8 @@
                   [(ngModel)]="propertyValue.value"
                   name="propertyValue-{{index}}"
                   [property]="propertyValue.entityPropertyId | apply:getProperty:entityProperties"
-                  [codeSystem]="codeSystemId"></tw-property-value-input>
+                  [codeSystem]="codeSystemId"
+                  [required]="(propertyValue.entityPropertyId | apply:getProperty:entityProperties)?.required"></tw-property-value-input>
             </m-form-item>
             <m-icon-button *ngIf="!viewMode" mIcon="delete" (mClick)="removePropertyValue(index)"/>
           </div>

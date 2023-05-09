@@ -1,6 +1,6 @@
-import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, isDefined} from '@kodality-web/core-util';
+import {Component, forwardRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
+import {BooleanInput, DestroyService, isDefined, validateForm} from '@kodality-web/core-util';
 import {CodeSystemLibService, EntityProperty} from 'term-web/resources/_lib';
 
 
@@ -11,10 +11,13 @@ import {CodeSystemLibService, EntityProperty} from 'term-web/resources/_lib';
 })
 export class EntityPropertyValueInputComponent implements OnChanges, ControlValueAccessor {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
+  @Input() @BooleanInput() public required: boolean | string = false;
 
   @Input() public codeSystem?: string;
   @Input() public property?: EntityProperty;
   @Input() public propertyId?: number;
+
+  @ViewChild("form") public form?: NgForm;
 
   public value?: any;
 
@@ -49,6 +52,10 @@ export class EntityPropertyValueInputComponent implements OnChanges, ControlValu
 
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
+  }
+
+  public valid(): boolean {
+    return validateForm(this.form);
   }
 
   protected codingType = (property: EntityProperty): string => {

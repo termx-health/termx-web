@@ -1,67 +1,81 @@
-<ng-container *ngIf="!viewMode" [ngSwitch]="property?.type">
-  <m-input *ngSwitchDefault name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()"></m-input>
-  <m-date-picker *ngSwitchCase="'dateTime'" name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()"></m-date-picker>
-  <m-number-input *ngSwitchCase="'decimal'" name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()"></m-number-input>
-  <m-number-input *ngSwitchCase="'integer'" name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()"></m-number-input>
-  <ng-container *ngSwitchCase="'code'">
-    <tw-term-concept-search name="value"
-        valueType="code"
-        [(ngModel)]="value"
-        [codeSystem]="codeSystem"
-        [propertyValues]="property | apply:getFilterPropertyValues"
-        (ngModelChange)="fireOnChange()"></tw-term-concept-search>
-  </ng-container>
-  <ng-container *ngSwitchCase="'Coding'">
-    <div class="m-items-middle" [ngSwitch]="property | apply:codingType" *ngIf="value">
-      <ng-container *ngSwitchDefault>
-        <tw-code-system-search [(ngModel)]="value.codeSystem"
-            (ngModelChange)="fireOnChange()"
-            valuePrimitive
-            name="system"
-            style="flex: 1"
-            placeholder="Code system"></tw-code-system-search>
-        <tw-term-concept-search [(ngModel)]="value.code"
-            (ngModelChange)="fireOnChange()"
-            [codeSystem]="value.codeSystem"
+<form #form="ngForm">
+  <m-form-control mName="value">
+    <ng-container *ngIf="!viewMode" [ngSwitch]="property?.type">
+      <m-input *ngSwitchDefault name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()" [required]="required"></m-input>
+      <m-date-picker *ngSwitchCase="'dateTime'" name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()" [required]="required"></m-date-picker>
+      <m-number-input *ngSwitchCase="'decimal'" name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()" [required]="required"></m-number-input>
+      <m-number-input *ngSwitchCase="'integer'" name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()" [required]="required"></m-number-input>
+      <ng-container *ngSwitchCase="'code'">
+        <tw-term-concept-search name="value"
             valueType="code"
-            name="value"
-            style="flex: 1"></tw-term-concept-search>
-      </ng-container>
-      <ng-container *ngSwitchCase="'code-system'">
-        <m-select [(ngModel)]="value.codeSystem" (ngModelChange)="fireOnChange()" name="system" style="flex: 1" placeholder="Code system" autoSelect>
-          <m-option *ngFor="let system of property.rule.codeSystems" [mValue]="system" [mLabel]="system"></m-option>
-        </m-select>
-        <tw-term-concept-search [(ngModel)]="value.code"
+            [(ngModel)]="value"
+            [codeSystem]="codeSystem"
+            [propertyValues]="property | apply:getFilterPropertyValues"
             (ngModelChange)="fireOnChange()"
-            [codeSystem]="value.codeSystem"
-            valueType="code"
-            name="value"
-            style="flex: 1"></tw-term-concept-search>
+            [required]="required"></tw-term-concept-search>
       </ng-container>
-      <ng-container *ngSwitchCase="'value-set'">
-        <tw-value-set-concept-select [(ngModel)]="value.code"
-            (ngModelChange)="fireOnChange()"
-            (selected)="value.codeSystem = $event?.concept?.codeSystem; fireOnChange()"
-            [valueSet]="property.rule.valueSet"
-            name="value"
-            valuePrimitive></tw-value-set-concept-select>
+      <ng-container *ngSwitchCase="'Coding'">
+        <div class="m-items-middle" [ngSwitch]="property | apply:codingType" *ngIf="value">
+          <ng-container *ngSwitchDefault>
+            <tw-code-system-search style="flex: 1"
+                name="system"
+                valuePrimitive
+                placeholder="Code system"
+                [(ngModel)]="value.codeSystem"
+                (ngModelChange)="fireOnChange()"
+                [required]="required"></tw-code-system-search>
+            <tw-term-concept-search style="flex: 1"
+                name="value"
+                valueType="code"
+                [(ngModel)]="value.code"
+                (ngModelChange)="fireOnChange()"
+                [codeSystem]="value.codeSystem"
+                [required]="required"></tw-term-concept-search>
+          </ng-container>
+          <ng-container *ngSwitchCase="'code-system'">
+            <m-select style="flex: 1"
+                name="system"
+                autoSelect
+                placeholder="Code system"
+                [(ngModel)]="value.codeSystem"
+                (ngModelChange)="fireOnChange()"
+                [required]="required | toBoolean">
+              <m-option *ngFor="let system of property.rule.codeSystems" [mValue]="system" [mLabel]="system"></m-option>
+            </m-select>
+            <tw-term-concept-search style="flex: 1"
+                name="value"
+                valueType="code"
+                [(ngModel)]="value.code"
+                (ngModelChange)="fireOnChange()"
+                [codeSystem]="value.codeSystem"
+                [required]="required"></tw-term-concept-search>
+          </ng-container>
+          <ng-container *ngSwitchCase="'value-set'">
+            <tw-value-set-concept-select name="value"
+                valuePrimitive
+                [(ngModel)]="value.code"
+                (ngModelChange)="fireOnChange()"
+                (selected)="value.codeSystem = $event?.concept?.codeSystem; fireOnChange()"
+                [valueSet]="property.rule.valueSet"
+                [required]="required"></tw-value-set-concept-select>
+          </ng-container>
+        </div>
       </ng-container>
-    </div>
-  </ng-container>
-</ng-container>
+    </ng-container>
 
-<ng-container *ngIf="viewMode">
-  <label *ngIf="['string', 'decimal', 'integer'] | includes:property?.type">{{value}}</label>
-  <m-checkbox *ngIf="'boolean' === property?.type" [ngModel]="value" readOnly></m-checkbox>
-  <label *ngIf="'dateTime' === property?.type">{{value | localDate}}</label>
-  <label *ngIf="'code' === property?.type">{{value | localizedConceptName: {codeSystem: codeSystem} | async}}</label>
-  <ng-container *ngIf="'Coding' === property?.type" [ngSwitch]="property | apply:codingType">
-    <label *ngSwitchCase="'value-set'">
-      {{value?.code | localizedConceptName: {valueSet: property.rule.valueSet} | async}}
-    </label>
-    <label *ngSwitchDefault>
-      {{value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async}}
-    </label>
-  </ng-container>
-</ng-container>
-
+    <ng-container *ngIf="viewMode">
+      <label *ngIf="['string', 'decimal', 'integer'] | includes:property?.type">{{value}}</label>
+      <m-checkbox *ngIf="'boolean' === property?.type" [ngModel]="value" readOnly></m-checkbox>
+      <label *ngIf="'dateTime' === property?.type">{{value | localDate}}</label>
+      <label *ngIf="'code' === property?.type">{{value | localizedConceptName: {codeSystem: codeSystem} | async}}</label>
+      <ng-container *ngIf="'Coding' === property?.type" [ngSwitch]="property | apply:codingType">
+        <label *ngSwitchCase="'value-set'">
+          {{value?.code | localizedConceptName: {valueSet: property.rule.valueSet} | async}}
+        </label>
+        <label *ngSwitchDefault>
+          {{value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async}}
+        </label>
+      </ng-container>
+    </ng-container>
+  </m-form-control>
+</form>

@@ -2,7 +2,7 @@
   <div *mFormCol>
     <m-spinner [mLoading]="isLoading">
       <m-card [mTitle]="mode === 'edit'? 'web.entity-property.form.edit-header' : 'web.entity-property.form.add-header'" [mShowSkeleton]="loading['init']">
-        <tw-code-system-property-form #propertyForm [property]="property"></tw-code-system-property-form>
+        <tw-code-system-property-form #propertyForm [property]="property" [codeSystem]="codeSystemId"></tw-code-system-property-form>
 
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">

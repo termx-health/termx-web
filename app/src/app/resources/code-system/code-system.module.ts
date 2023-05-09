@@ -21,7 +21,6 @@ import {FinderModule} from '../../core/ui/finder/finder.module';
 import {ContactModule} from '../contact/contact.module';
 import {CodeSystemPropertyEditComponent} from './containers/edit/property/code-system-property-edit.component';
 import {CodeSystemPropertyFormComponent} from './containers/edit/property/code-system-property-form.component';
-import {CodeSystemSupplementEditComponent} from './containers/supplement/code-system-supplement-edit.component';
 import {CodeSystemViewComponent} from './containers/edit/code-system-view.component';
 import {CodeSystemConceptEditComponent} from './containers/concept/code-system-concept-edit.component';
 import {CodeSystemDesignationGroupEditComponent} from './containers/concept/designation/code-system-designation-group-edit.component';
@@ -48,9 +47,6 @@ export const CODE_SYSTEM_ROUTES: Routes = [
 
   {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-
-  {path: ':id/supplements/add', component: CodeSystemSupplementEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/supplements/:supplementId/edit', component: CodeSystemSupplementEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
 
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
@@ -85,11 +81,8 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemDuplicateModalComponent,
 
     CodeSystemPropertiesListComponent,
-    CodeSystemPropertyFormComponent,
     CodeSystemPropertyEditComponent,
     CodeSystemPropertyFormComponent,
-    CodeSystemPropertyEditComponent,
-    CodeSystemSupplementEditComponent,
 
     CodeSystemVersionsListComponent,
     CodeSystemVersionEditComponent,

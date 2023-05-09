@@ -1,9 +1,10 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
 import {EntityProperty, EntityPropertyValue} from 'term-web/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {finalize, Observable} from 'rxjs';
+import {EntityPropertyValueInputComponent} from 'term-web/core/shared/components/property-value-input/entity-property-value-input.component';
 
 @Component({
   selector: 'tw-code-system-property-value-edit',
@@ -15,6 +16,7 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   @Input() public codeSystemId?: string;
 
   @ViewChild("form") public form?: NgForm;
+  @ViewChildren(EntityPropertyValueInputComponent) public propertyValueInputs?: QueryList<EntityPropertyValueInputComponent>;
 
   public entityProperties: EntityProperty[] = [];
   public codingSystemId?: string;
@@ -58,7 +60,7 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   }
 
   public valid(): boolean {
-    return validateForm(this.form);
+    return validateForm(this.form) && (!this.propertyValueInputs || !this.propertyValueInputs.find(i => !i.valid()));
   }
 
   public getPropertyName = (id: number, properties: EntityProperty[]): string | number => {
