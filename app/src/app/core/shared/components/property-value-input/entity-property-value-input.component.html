@@ -51,7 +51,8 @@
                 [required]="required"></tw-term-concept-search>
           </ng-container>
           <ng-container *ngSwitchCase="'value-set'">
-            <tw-value-set-concept-select name="value"
+            <tw-value-set-concept-select style="flex: 1"
+                name="value"
                 valuePrimitive
                 [(ngModel)]="value.code"
                 (ngModelChange)="fireOnChange()"

@@ -110,7 +110,7 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
   }
 
   public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
-    return nzValue.includes(_input) || this.data[nzValue]?.display?.name?.includes(_input);
+    return nzValue.toLowerCase().includes(_input.toLowerCase()) || this.data[nzValue]?.display?.name?.toLowerCase().includes(_input.toLowerCase());
   };
 
 }
