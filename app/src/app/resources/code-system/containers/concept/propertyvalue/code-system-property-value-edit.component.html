@@ -13,7 +13,7 @@
       <div nz-row [nzGutter]="8" nzJustify="center">
         <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24">
           <m-form-item mName="property-{{index}}" required>
-            <m-select *ngIf="!viewMode"
+            <m-select *ngIf="!viewMode && !(index | apply:isRequired:entityProperties)"
                 name="property-{{index}}"
                 [(ngModel)]="propertyValue.entityPropertyId"
                 placeholder="entities.entity-property.type"
@@ -21,7 +21,7 @@
                 required>
               <m-option *ngFor="let prop of entityProperties" [mValue]="prop.id" [mLabel]="prop.name"></m-option>
             </m-select>
-            <label *ngIf="viewMode">
+            <label *ngIf="viewMode || (index | apply:isRequired:entityProperties)">
               {{propertyValue.entityPropertyId | apply:getPropertyName:entityProperties}}
             </label>
           </m-form-item>
@@ -35,9 +35,9 @@
                   name="propertyValue-{{index}}"
                   [property]="propertyValue.entityPropertyId | apply:getProperty:entityProperties"
                   [codeSystem]="codeSystemId"
-                  [required]="(propertyValue.entityPropertyId | apply:getProperty:entityProperties)?.required"></tw-property-value-input>
+                  [required]="(index | apply:isRequired:entityProperties)"></tw-property-value-input>
             </m-form-item>
-            <m-icon-button *ngIf="!viewMode" mIcon="delete" (mClick)="removePropertyValue(index)"/>
+            <m-icon-button *ngIf="!viewMode && !(index | apply:isRequired:entityProperties)" mIcon="delete" (mClick)="removePropertyValue(index)"/>
           </div>
         </div>
       </div>

@@ -80,4 +80,11 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
         this.propertyValues = [...this.propertyValues || [], pv];
       });
   }
+
+  protected isRequired = (i: number, properties: EntityProperty[]): boolean => {
+    const val = this.propertyValues[i];
+    const requiredProperty = properties.find(p => p.id === val.entityPropertyId)?.required;
+    const samePropertyValue = this.propertyValues.find(p => p.entityPropertyId === val.entityPropertyId && this.propertyValues.indexOf(p) < i);
+    return requiredProperty && !samePropertyValue;
+  };
 }
