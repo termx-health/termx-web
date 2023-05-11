@@ -39,7 +39,7 @@ export class DevCodeSystemPropertiesComponent implements OnChanges {
   }
 
   private loadProperties(): void {
-    this.loader.wrap('load', this.codeSystemService.searchProperties(this.codeSystemId!, {limit: -1}))
+    this.loader.wrap('load', this.codeSystemService.searchProperties(this.codeSystemId!, {limit: -1, sort: 'order-number'}))
       .subscribe(properties => {
         properties.data.forEach(p => {
           p.rule ??= new EntityPropertyRule();

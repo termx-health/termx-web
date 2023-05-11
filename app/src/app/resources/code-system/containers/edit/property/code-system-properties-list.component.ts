@@ -19,7 +19,7 @@ export class CodeSystemPropertiesListComponent {
 
   public loadProperties(): void {
     this.loading = true;
-    this.codeSystemService.searchProperties(this.codeSystemId!, {limit: -1})
+    this.codeSystemService.searchProperties(this.codeSystemId!, {limit: -1, sort: 'order-number'})
       .subscribe(properties => this.properties = properties.data)
       .add(() => this.loading = false);
   }

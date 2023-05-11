@@ -39,7 +39,7 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
 
   private loadProperties(codeSystem: string): Observable<any> {
     this.loading['properties'] = true;
-    return this.codeSystemService.searchProperties(codeSystem, {limit: -1}).pipe(finalize(() => this.loading['properties'] = false));
+    return this.codeSystemService.searchProperties(codeSystem, {limit: -1, sort: 'order-number'}).pipe(finalize(() => this.loading['properties'] = false));
   }
 
   public checkPropertyType = (type: string, propertyValue: EntityPropertyValue): boolean => {
