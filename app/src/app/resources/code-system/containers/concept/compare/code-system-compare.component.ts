@@ -28,9 +28,9 @@ class CodeSystemCompareResult {
 })
 export class CodeSystemCompareComponent implements OnInit {
   public sourceCodeSystem: string;
-  public sourceVersion: string;
+  public sourceVersion: number;
   public targetCodeSystem: string;
-  public targetVersion: string;
+  public targetVersion: number;
   public result: CodeSystemCompareResult;
   public loading: boolean;
 
@@ -42,7 +42,7 @@ export class CodeSystemCompareComponent implements OnInit {
   public ngOnInit(): void {
     this.sourceCodeSystem = this.route.snapshot.paramMap.get('code-system');
     this.targetCodeSystem = this.route.snapshot.paramMap.get('code-system');
-    this.sourceVersion = this.route.snapshot.paramMap.get('version');
+    this.sourceVersion = Number(this.route.snapshot.paramMap.get('version'));
   }
 
   public onSourceChange(cs: string): void {
