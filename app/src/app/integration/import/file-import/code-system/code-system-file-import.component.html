@@ -1,269 +1,309 @@
 <nz-tabset>
   <nz-tab [nzTitle]="'CSV / TSV' | translate">
-    <m-card>
-      <div *m-card-header class="m-justify-between">
-        <nz-breadcrumb>
-          <nz-breadcrumb-item>{{'web.integration.file-import.file-import' | translate}}</nz-breadcrumb-item>
-          <nz-breadcrumb-item>{{'web.integration.file-import.code-system.import' | translate}}</nz-breadcrumb-item>
-        </nz-breadcrumb>
-      </div>
-      <form #form="ngForm">
-        <!-- Code system info -->
-        <ng-container>
-          <!-- View -->
-          <ng-container *ngIf="!data.codeSystem?.['_new']">
-            <m-form-item mName="targetCodeSystem" mLabel="web.integration.file-import.code-system.resource-id" required>
-              <tw-code-system-search name="targetCodeSystem"
-                  [(ngModel)]="data.codeSystem.id"
-                  (ngModelChange)="loadCodeSystem($event)"
-                  valuePrimitive
-                  required
-              ></tw-code-system-search>
-              <div style="margin-top: 0.5rem" (click)="initCodeSystem()">
-                {{'web.integration.file-import.not-found' | translate}}
-                <a>{{'web.integration.file-import.create-new' | translate}}</a>
-              </div>
-            </m-form-item>
+    <div class="tw-flex-container">
+      <m-card>
+        <div *m-card-header class="m-justify-between">
+          <nz-breadcrumb>
+            <nz-breadcrumb-item>{{'web.integration.file-import.file-import' | translate}}</nz-breadcrumb-item>
+            <nz-breadcrumb-item>{{'web.integration.file-import.code-system.import' | translate}}</nz-breadcrumb-item>
+          </nz-breadcrumb>
+        </div>
 
-            <m-card mDisplay="bordered" *ngIf="data.codeSystem.id">
-              <m-form-item mLabel="entities.code-system.uri-short">
-                {{data.loadedCodeSystem?.uri || '-'}}
-              </m-form-item>
+        <form #form="ngForm">
+          <div>
+            <ng-container *ngIf="!isNewResource; else resourceForm">
+              <m-form-item mName="targetCodeSystem" mLabel="web.integration.file-import.code-system.general.resource-id" required>
+                <tw-code-system-search name="targetCodeSystem"
+                    [(ngModel)]="data.codeSystem.id"
+                    (ngModelChange)="onCodeSystemSelect($event)"
+                    valuePrimitive
+                    autofocus
+                    required
+                ></tw-code-system-search>
 
-              <m-form-item mLabel="entities.code-system.name">
-                {{(data.loadedCodeSystem?.names | localName) || '-'}}
-              </m-form-item>
-
-              <m-form-item mLabel="entities.code-system.description">
-                {{data.loadedCodeSystem?.description || '-'}}
-              </m-form-item>
-            </m-card>
-          </ng-container>
-
-
-          <!-- Edit -->
-          <ng-container *ngIf="data.codeSystem?.['_new']">
-            <m-form-item mName="id" mLabel="web.integration.file-import.code-system.resource-id" required>
-              <m-input name="id" [(ngModel)]="data.codeSystem.id" required></m-input>
-            </m-form-item>
-
-            <m-card mDisplay="bordered">
-              <m-form-item mName="uri" mLabel="entities.code-system.uri" required>
-                <div class="m-items-middle">
-                  <m-input name="uri" [(ngModel)]="data.codeSystem.uri" required></m-input>
+                <div style="margin-top: 0.35rem; font-size: 0.85rem">
+                  {{'web.integration.file-import.not-found' | translate}}
+                  <a (mClick)="createCodeSystem()">{{'web.integration.file-import.create-new' | translate}}</a>
                 </div>
+              </m-form-item>
+
+              <m-form-item *ngIf="data.codeSystem.id">
+                <m-alert class="import-alert" mType="info">
+                  <m-form-item mLabel="entities.code-system.uri-short">
+                    {{sourceCodeSystem?.uri || '-'}}
+                  </m-form-item>
+
+                  <m-form-item mLabel="entities.code-system.name">
+                    {{sourceCodeSystem?.names | localName:'-'}}
+                  </m-form-item>
+
+                  <m-form-item mLabel="entities.code-system.description">
+                    {{sourceCodeSystem?.description || '-'}}
+                  </m-form-item>
+                </m-alert>
+              </m-form-item>
+            </ng-container>
+
+
+            <ng-template #resourceForm>
+              <m-form-item mName="id" mLabel="web.integration.file-import.code-system.general.resource-id" required>
+                <m-input name="id" [(ngModel)]="data.codeSystem.id" autofocus [focusTimeout]="50" required></m-input>
               </m-form-item>
 
               <m-form-item mName="name" mLabel="entities.code-system.name" required>
                 <m-multi-language-input name="name" [(ngModel)]="data.codeSystem.names" required></m-multi-language-input>
               </m-form-item>
 
+              <m-form-item mName="uri" mLabel="entities.code-system.uri" required>
+                <m-input name="uri" [(ngModel)]="data.codeSystem.uri" required></m-input>
+              </m-form-item>
+
               <m-form-item mName="description" mLabel="entities.code-system.description">
                 <m-textarea name="description" [(ngModel)]="data.codeSystem.description"></m-textarea>
               </m-form-item>
-            </m-card>
-          </ng-container>
-        </ng-container>
-
-        <div style="height: 1rem"></div>
-
-        <!-- Do generate value set? -->
-        <m-form-item mName="generateValueSet" [mLabel]="chkbx">
-          <ng-template #chkbx>
-            <m-checkbox name="generateValueSet" [(ngModel)]="data.generateValueSet">
-              {{'web.integration.file-import.code-system.generate-valueset' | translate}}
-            </m-checkbox>
-          </ng-template>
-        </m-form-item>
+            </ng-template>
+          </div>
 
 
-        <!-- New CS version info -->
-        <m-form-item mName="csVersion" mLabel="entities.code-system-version.version" required>
-          <tw-semantic-version-select
-              name="csVersion"
-              [(ngModel)]="data.version.version"
-              [versions]="(data.codeSystem?.['_new'] ? undefined : data.codeSystem.id) | apply: loadCodeSystemVersions | async"
-              required
-          ></tw-semantic-version-select>
-        </m-form-item>
+          <div *ngIf="data.codeSystem?.id || isNewResource">
+            <ng-container *ngIf="!isNewVersion; else codeSystemVersionForm">
+              <m-form-item mName="versionVersion" mLabel="entities.code-system-version.version" required mLabelHint="Draft versions only">
+                <m-select
+                    name="versionVersion"
+                    [(ngModel)]="data.codeSystemVersion.versionId"
+                    (ngModelChange)="data.cleanRun = false"
+                    autoSelect
+                    required
+                >
+                  <m-option
+                      *ngFor="let v of sourceCodeSystem?.versions | filter: filterVersion: 'draft'"
+                      [mLabel]="v.version"
+                      [mValue]="v.id"
+                  ></m-option>
+                </m-select>
 
+                <div style="margin-top: 0.35rem; font-size: 0.85rem">
+                  {{'web.integration.file-import.not-found' | translate}}
+                  <a (mClick)="createCodeSystemVersion()">{{'web.integration.file-import.create-new' | translate}}</a>
+                </div>
+              </m-form-item>
 
-        <m-form-item mName="csStatus" mLabel="entities.code-system-version.status" required>
-          <tw-value-set-concept-select name="csStatus" [(ngModel)]="data.version.status" valueSet="publication-status" required></tw-value-set-concept-select>
-        </m-form-item>
-
-
-        <m-form-item mName="csReleaseDate" mLabel="entities.code-system-version.release-date" required>
-          <m-date-picker name="csReleaseDate" [(ngModel)]="data.version.releaseDate" required></m-date-picker>
-        </m-form-item>
-      </form>
-    </m-card>
-
-
-    <m-card mTitle="web.integration.file-import.code-system.source" style="margin-top: 1rem">
-      <m-form-item mName="sourceImportType">
-        <div class="m-items-middle">
-          <m-radio-group name="sourceImportType" [(ngModel)]="data.source.type" (ngModelChange)="data.source.file = undefined" required>
-            <label m-radio-button [mValue]="'link'">{{'web.integration.file-import.code-system.link' | translate}}</label>
-            <label m-radio-button [mValue]="'file'">{{'web.integration.file-import.code-system.file' | translate}}</label>
-          </m-radio-group>
-
-          <ng-container [ngSwitch]="data.source.type">
-            <m-input *ngSwitchCase="'link'" name="sourceImportFile" [(ngModel)]="data.source.file" style="flex: 1" required></m-input>
-            <input *ngSwitchCase="'file'" #fileInput id="fileInput" name="sourceImportFile" type="file" [(ngModel)]="data.source.file" required>
-          </ng-container>
-        </div>
-      </m-form-item>
-
-      <m-form-item mName="sourceImportMode" [mLabel]="'File format'" required>
-        <m-radio-group name="sourceImportMode" [(ngModel)]="data.source.format" required>
-          <label m-radio mValue="csv">{{'web.integration.file-import.code-system.csv' | translate}}</label>
-          <label m-radio mValue="tsv">{{'web.integration.file-import.code-system.tsv' | translate}}</label>
-        </m-radio-group>
-      </m-form-item>
-
-      <m-button *m-card-footer
-          (click)="analyze()"
-          [mLoading]="loader.state['analyze']"
-          [disabled]="!data.source.file"
-      >{{'web.integration.file-import.code-system.analyze' | translate}}</m-button>
-    </m-card>
-
-
-    <m-card [mTitle]="'Properties'" style="margin-top: 1rem">
-      <m-alert *ngIf="validationErrors.length" mType="error">
-        <ul style="margin-bottom: 0; padding-left: 1.5rem">
-          <li *ngFor="let msg of validationErrors">{{msg}}</li>
-        </ul>
-      </m-alert>
-
-      <div style="margin-bottom: 1rem">
-        <m-select [(ngModel)]="data.template" (ngModelChange)="applyTemplate()">
-          <m-option [mValue]="'pub.e-tervis'" [mLabel]="'pub.e-tervis'"></m-option>
-          <m-option [mValue]="'icf'" [mLabel]="'icf'"></m-option>
-        </m-select>
-      </div>
-
-      <m-table [mData]="analyzeResponse.properties">
-        <tr *mTableHead>
-          <th>{{'web.integration.file-import.code-system.table.csv-column' | translate}}</th>
-          <th>{{'web.integration.file-import.code-system.table.kts-property' | translate}}</th>
-          <th *ngIf="hasDuplicateIdentifiers">{{'web.integration.file-import.code-system.table.preferred' | translate}}</th>
-          <th>{{'web.integration.file-import.code-system.table.type' | translate}}</th>
-          <th>{{'web.integration.file-import.code-system.table.format' | translate}}</th>
-          <th>{{'web.integration.file-import.code-system.table.lang' | translate}}</th>
-          <th>{{'web.integration.file-import.code-system.table.import' | translate}}</th>
-        </tr>
-
-        <tr *mTableRow="let item">
-          <td>
-            {{item.columnName}}
-          </td>
-
-          <td>
-            <!-- Mapped KTS property -->
-            <m-select *ngIf="!item['_newProp']" [(ngModel)]="item.propertyName" (ngModelChange)="onPropertyNameChange(item)" style="flex: 1">
-              <m-option *ngFor="let prop of data.loadedCodeSystem?.properties | apply: combineWithDefaults"
-                  [mValue]="prop.name"
-                  [mLabel]="prop.name"
-              ></m-option>
-              <m-select-button mLabel="ADD NEW" (mClick)="item['_newProp'] = true"></m-select-button>
-            </m-select>
-
-            <m-input *ngIf="item['_newProp']" [(ngModel)]="item.propertyName" style="flex: 1"></m-input>
-
-          </td>
-
-          <td *ngIf="hasDuplicateIdentifiers">
-            <m-checkbox *ngIf="item.propertyName === 'concept-code'"
-                [(ngModel)]="item.preferred"
-                (ngModelChange)="onPropertyPreferredChange(item)"
-            ></m-checkbox>
-          </td>
-
-          <td>
-            <!-- Property type -->
-            <ng-container *ngIf="!item['_newProp'] && item.propertyName">
-              {{item.propertyType}}
+<!-- fixme              <m-form-item mName="versionCleanRun" mLabel="web.integration.file-import.code-system.general.clear-version-data">
+                <m-radio-group name="versionCleanRun" [(ngModel)]="data.cleanRun" required>
+                  <label m-radio-button [mValue]="true">Yes</label>
+                  <label m-radio-button [mValue]="false">No</label>
+                </m-radio-group>
+              </m-form-item>-->
             </ng-container>
 
-            <tw-value-set-concept-select *ngIf="item['_newProp'] || !item.propertyName"
-                [(ngModel)]="item.propertyType"
-                (ngModelChange)="onPropertyTypeChange(item)"
-                valueSet="concept-property-type"
-            ></tw-value-set-concept-select>
-          </td>
 
-          <td>
-            <!-- Property format -->
-            <m-select [(ngModel)]="item.propertyTypeFormat" *ngIf="item.propertyType === 'dateTime'">
-              <m-option [mValue]="'yyyy-MM-dd'" [mLabel]="'yyyy-MM-dd'"></m-option>
-              <m-option [mValue]="'dd.MM.yy'" [mLabel]="'dd.MM.yy'"></m-option>
-              <m-option [mValue]="'dd.MM.yyyy'" [mLabel]="'dd.MM.yyyy'"></m-option>
-              <m-option [mValue]="'MM/dd/yyyy'" [mLabel]="'MM/dd/yyyy'"></m-option>
-            </m-select>
-          </td>
+            <ng-template #codeSystemVersionForm>
+              <m-form-item mName="versionVersion" mLabel="entities.code-system-version.version" required>
+                <tw-semantic-version-select
+                    name="versionVersion"
+                    [(ngModel)]="data.codeSystemVersion.version"
+                    [versions]="isNewResource ? [] : (sourceCodeSystem?.versions | apply: getVersions)"
+                    required
+                ></tw-semantic-version-select>
+              </m-form-item>
 
-          <td>
-            <tw-value-set-concept-select *ngIf="item.propertyType === 'string' && item.propertyName !== 'concept-code'"
-                [(ngModel)]="item.lang"
-                valueSet="languages"
-            ></tw-value-set-concept-select>
-          </td>
+              <m-form-item mName="versionStatus" mLabel="entities.code-system-version.status" required>
+                <tw-value-set-concept-select name="versionStatus"
+                    [(ngModel)]="data.codeSystemVersion.status"
+                    valueSet="publication-status"
+                    required
+                ></tw-value-set-concept-select>
+              </m-form-item>
 
-          <td>
-            <m-checkbox [(ngModel)]="item.import"></m-checkbox>
-          </td>
-        </tr>
+              <m-form-item mName="versionReleaseDate" mLabel="entities.code-system-version.release-date" required>
+                <m-date-picker name="versionReleaseDate" [(ngModel)]="data.codeSystemVersion.releaseDate" required></m-date-picker>
+              </m-form-item>
+            </ng-template>
+          </div>
 
-        <tr *mTableNoData>
-          <td colspan="100%">
-            <m-no-data></m-no-data>
-          </td>
-        </tr>
-      </m-table>
 
-      <m-button *m-card-footer (click)="process()" [mLoading]="loader.state['process']" [disabled]="form.invalid || !analyzeResponse?.properties?.length">
-        {{'web.integration.file-import.process' | translate}}
-      </m-button>
-      <div *ngIf="jobResponse">
-        <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
-          {{error}}
-        </m-alert>
-        <m-alert *ngFor="let warning of jobResponse.warnings" mType="warning" mShowIcon>
-          {{warning}}
-        </m-alert>
-        <m-alert *ngFor="let success of jobResponse.successes" mType="success" mShowIcon>
-          {{success}}
-        </m-alert>
-      </div>
-    </m-card>
+          <m-form-item mName="generateValueSet" mLabel="web.integration.file-import.code-system.general.generate-valueset">
+            <m-radio-group name="generateValueSet" [(ngModel)]="data.generateValueSet" required>
+              <label m-radio-button [mValue]="true">Yes</label>
+              <label m-radio-button [mValue]="false">No</label>
+            </m-radio-group>
+          </m-form-item>
+        </form>
+      </m-card>
+
+
+      <m-card mTitle="web.integration.file-import.code-system.source.header">
+        <m-form-item mName="sourceImportType">
+          <div class="m-items-middle">
+            <m-radio-group name="sourceImportType" [(ngModel)]="data.source.type" (ngModelChange)="data.source.file = undefined" required>
+              <label m-radio-button [mValue]="'link'">{{'web.integration.file-import.code-system.source.link' | translate}}</label>
+              <label m-radio-button [mValue]="'file'">{{'web.integration.file-import.code-system.source.file' | translate}}</label>
+            </m-radio-group>
+
+            <ng-container [ngSwitch]="data.source.type">
+              <m-input *ngSwitchCase="'link'" name="sourceImportFile" [(ngModel)]="data.source.file" style="flex: 1" required></m-input>
+              <input *ngSwitchCase="'file'" #fileInput name="sourceImportFile" type="file" [(ngModel)]="data.source.file" required>
+            </ng-container>
+          </div>
+        </m-form-item>
+
+        <m-form-item mName="sourceImportMode" [mLabel]="'File format'" required>
+          <m-radio-group name="sourceImportMode" [(ngModel)]="data.source.format" required>
+            <label m-radio mValue="csv">{{'web.integration.file-import.code-system.source.types.csv' | translate}}</label>
+            <label m-radio mValue="tsv">{{'web.integration.file-import.code-system.source.types.tsv' | translate}}</label>
+          </m-radio-group>
+        </m-form-item>
+
+        <m-button
+            *m-card-footer
+            [mLoading]="loader.state['analyze']"
+            [disabled]="!data.source.file"
+            (click)="analyze()"
+        >
+          {{'web.integration.file-import.code-system.source.analyze' | translate}}
+        </m-button>
+      </m-card>
+
+
+      <m-card mTitle="web.integration.file-import.code-system.properties.header">
+        <div *m-card-content class="tw-flex-container">
+          <m-select [(ngModel)]="data.template" (ngModelChange)="applyTemplate()">
+            <m-option [mValue]="'pub.e-tervis'" [mLabel]="'pub.e-tervis'"></m-option>
+            <m-option [mValue]="'icf'" [mLabel]="'icf'"></m-option>
+          </m-select>
+
+          <m-table [mData]="analyzeResponse.parsedProperties">
+            <tr *mTableHead>
+              <th>{{'web.integration.file-import.code-system.properties.type-column' | translate: ({type: ('web.integration.file-import.code-system.source.types.' + analyzeResponse.origin.type) | translate})}}</th>
+              <th>{{'web.integration.file-import.code-system.properties.kts-property' | translate}}</th>
+              <th *ngIf="hasDuplicateIdentifiers">{{'web.integration.file-import.code-system.properties.preferred' | translate}}</th>
+              <th>{{'web.integration.file-import.code-system.properties.type' | translate}}</th>
+              <th>{{'web.integration.file-import.code-system.properties.format' | translate}}</th>
+              <th>{{'web.integration.file-import.code-system.properties.lang' | translate}}</th>
+              <th>{{'web.integration.file-import.code-system.properties.import' | translate}}</th>
+            </tr>
+
+            <tr *mTableRow="let item">
+              <td>{{item.columnName}}</td>
+
+              <td>
+                <!-- Mapped KTS property -->
+                <m-select *ngIf="!item['_newProp']" [(ngModel)]="item.propertyName" (ngModelChange)="onPropertyNameChange(item)" style="flex: 1">
+                  <m-option *ngFor="let prop of sourceCodeSystem?.properties | apply: combineWithDefaults"
+                      [mValue]="prop.name"
+                      [mLabel]="prop.name"
+                  ></m-option>
+                  <m-select-button mLabel="ADD NEW" (mClick)="item['_newProp'] = true"></m-select-button>
+                </m-select>
+
+                <m-input *ngIf="item['_newProp']" [(ngModel)]="item.propertyName" style="flex: 1"></m-input>
+              </td>
+
+              <td *ngIf="hasDuplicateIdentifiers">
+                <m-checkbox *ngIf="item.propertyName === 'concept-code'"
+                    [(ngModel)]="item.preferred"
+                    (ngModelChange)="onPropertyPreferredChange(item)"
+                ></m-checkbox>
+              </td>
+
+              <td>
+                <ng-container *ngIf="!item['_newProp'] && item.propertyName">
+                  {{item.propertyType}}
+                </ng-container>
+
+                <tw-value-set-concept-select *ngIf="item['_newProp'] || !item.propertyName"
+                    [(ngModel)]="item.propertyType"
+                    (ngModelChange)="onPropertyTypeChange(item)"
+                    valueSet="concept-property-type"
+                ></tw-value-set-concept-select>
+              </td>
+
+              <td>
+                <m-select [(ngModel)]="item.propertyTypeFormat" *ngIf="item.propertyType === 'dateTime'">
+                  <m-option [mValue]="'yyyy-MM-dd'" [mLabel]="'yyyy-MM-dd'"></m-option>
+                  <m-option [mValue]="'dd.MM.yy'" [mLabel]="'dd.MM.yy'"></m-option>
+                  <m-option [mValue]="'dd.MM.yyyy'" [mLabel]="'dd.MM.yyyy'"></m-option>
+                  <m-option [mValue]="'MM/dd/yyyy'" [mLabel]="'MM/dd/yyyy'"></m-option>
+                </m-select>
+              </td>
+
+              <td>
+                <tw-value-set-concept-select *ngIf="item.propertyType === 'string' && item.propertyName !== 'concept-code'"
+                    [(ngModel)]="item.lang"
+                    valueSet="languages"
+                ></tw-value-set-concept-select>
+              </td>
+
+              <td>
+                <m-checkbox [(ngModel)]="item.import"></m-checkbox>
+              </td>
+            </tr>
+
+            <tr *mTableNoData>
+              <td colspan="100%">
+                <m-no-data></m-no-data>
+              </td>
+            </tr>
+          </m-table>
+
+          <m-alert *ngIf="validations?.length" class="import-alert" mTitle="Validations" mType="error">
+            <ul style="margin-block: 0; padding-left: 1.5rem">
+              <li *ngFor="let msg of validations">{{msg}}</li>
+            </ul>
+          </m-alert>
+
+          <ng-container *ngIf="jobLog">
+            <m-alert *ngIf="jobLog.errors?.length === 0" class="import-alert" mType="success" mTitle="No detectable errors found"></m-alert>
+
+            <m-alert *ngIf="jobLog.errors?.length >= 10" class="import-alert" mType="error" mTitle="Found {{jobLog.errors?.length}} errors during the file processing">
+              <a (mClick)="downloadLog()">Download log</a>
+            </m-alert>
+
+            <tw-import-job-log *ngIf="0 < jobLog.errors?.length && jobLog.errors?.length < 10" [jobLog]="jobLog"/>
+          </ng-container>
+
+        </div>
+
+        <div *m-card-footer class="m-items-middle">
+          <m-radio-group name="dryRun" [(ngModel)]="data.dryRun" required>
+            <label m-radio-button [mValue]="false">Import data</label>
+            <label m-radio-button [mValue]="true">Validate data only</label>
+          </m-radio-group>
+
+          <m-button
+              style="flex: 1"
+              [mLoading]="loader.state['process']"
+              [disabled]="form.invalid || !analyzeResponse?.parsedProperties?.length"
+              (click)="process()"
+          >
+            {{'web.integration.file-import.process' | translate}}
+          </m-button>
+        </div>
+
+      </m-card>
+    </div>
   </nz-tab>
 
-  <nz-tab [nzTitle]="'JSON' | translate">
-    <m-card mTitle="web.integration.file-import.code-system.source">
-      <input #jsonFileInput id="jsonFileInput" name="jsonFileInput" type="file" [(ngModel)]="data.source.file" required>
 
-      <m-button *m-card-footer
-          (click)="processRequest({type: 'json'})"
+  <nz-tab [nzTitle]="'JSON' | translate">
+    <m-card mTitle="web.integration.file-import.code-system.source.header">
+      <div *m-card-content class="tw-flex-container">
+        <input #jsonFileInput type="file" name="jsonFileInput" [(ngModel)]="data.source.file" required>
+        <tw-import-job-log *ngIf="jobLog" [jobLog]="jobLog"/>
+      </div>
+
+      <m-button
+          *m-card-footer
           [mLoading]="loader.state['process']"
           [disabled]="!data.source.file"
-      >{{'web.integration.file-import.code-system.import' | translate}}</m-button>
-
-      <div *ngIf="jobResponse">
-        <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
-          {{error}}
-        </m-alert>
-        <m-alert *ngFor="let warning of jobResponse.warnings" mType="warning" mShowIcon>
-          {{warning}}
-        </m-alert>
-        <m-alert *ngFor="let success of jobResponse.successes" mType="success" mShowIcon>
-          {{success}}
-        </m-alert>
-      </div>
+          (click)="processRequest({type: 'json'})"
+      >
+        {{'web.integration.file-import.code-system.import' | translate}}
+      </m-button>
     </m-card>
   </nz-tab>
 </nz-tabset>
+
 
 <ng-template #successNotificationContent>
   <a *ngIf="'*.CodeSystem.edit' | twHasAnyPrivilege; else view" (click)="openCodeSystem(data.codeSystem.id, 'edit')">{{data.codeSystem.id}}</a>

@@ -1,18 +1,16 @@
-import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, Injectable, TemplateRef, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'app/src/environments/environment';
 import {collect, copyDeep, DestroyService, group, isNil, LoadingManager} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {filter, map, merge, Observable, Subject, switchMap, takeUntil, timer} from 'rxjs';
+import {merge, mergeMap, Observable, of, Subject, switchMap, take, takeUntil, timer} from 'rxjs';
 import {Router} from '@angular/router';
-import {CodeSystem, CodeSystemLibService, EntityProperty} from '../../../../resources/_lib';
+import {CodeSystem, CodeSystemLibService, CodeSystemVersion, EntityProperty} from '../../../../resources/_lib';
 import {JobLibService, JobLog, JobLogResponse} from '../../../../job/_lib';
 
-const IMPORT_TEMPLATES: {
-  [p: string]: FileImportPropertyRow[]
-} = {
+const IMPORT_TEMPLATES: {[p: string]: FileImportPropertyRow[]} = {
   'pub.e-tervis': [
     {
       columnName: 'Kood',
@@ -209,33 +207,45 @@ interface FileAnalysisRequest {
 }
 
 interface FileAnalysisResponse {
-  properties?: {
-    columnName?: string;
-    columnType?: string;
-    columnTypeFormat?: string;
-    hasValues?: boolean;
-  }[];
+  // parsed properties from the file
+  properties?: FileAnalysisResponseProperty[];
+}
+
+interface FileAnalysisResponseProperty {
+  columnName?: string;
+  columnType?: string;
+  columnTypeFormat?: string;
+  hasValues?: boolean;
+}
+
+
+type FileImportPropertyRow = FileProcessingRequestProperty & {
+  import: boolean
 }
 
 
 // processing
 interface FileProcessingRequest {
-  link?: string;
   type: string;
-  properties?: FileProcessingRequestProperty[];
-  generateValueSet?: boolean;
+  link?: string;
 
   codeSystem?: {
-    id: string;
+    id?: string;
     uri?: string;
     names?: LocalizedName;
     description?: string;
   };
   version?: {
+    id?: number,
     version?: string;
     status?: string;
     releaseDate?: Date;
   };
+
+  properties?: FileProcessingRequestProperty[];
+  generateValueSet?: boolean;
+  dryRun?: boolean;
+  cleanRun?: boolean
 }
 
 interface FileProcessingRequestProperty {
@@ -247,26 +257,111 @@ interface FileProcessingRequestProperty {
   lang?: string;
 }
 
-type FileImportPropertyRow = FileProcessingRequestProperty & {import: boolean}
 
+@Injectable()
+class CodeSystemFileImportService {
+  public readonly baseUrl = `${environment.terminologyApi}/file-importer/code-system`;
+
+  public constructor(
+    private http: HttpClient,
+    private jobService: JobLibService,
+    private destroy$: DestroyService
+  ) { }
+
+
+  public validate(_props: FileImportPropertyRow[]): string[] {
+    const props = _props.filter(p => p.import).filter(p => p.propertyName);
+    const propMap = collect(props, p => p.propertyName!);
+
+    const errors: string[] = [];
+
+    const duplicates = Object.keys(propMap).filter(p => propMap[p].length > 1).filter(Boolean);
+    if (duplicates.filter(p => p === 'identifier').length) {
+      errors.push(`Code system MUST have only one "identifier" property`);
+    }
+
+    const propertiesWithoutFormat = props.filter(p => ['date', 'dateTime'].includes(p.propertyType) && isNil(p.propertyTypeFormat));
+    if (propertiesWithoutFormat.length) {
+      propertiesWithoutFormat.forEach(p => errors.push(`Please define the type format for the "${p.propertyName}" property`));
+    }
+
+    const forbiddenNewProperties = props.filter(p => ['code', 'Coding'].includes(p.propertyType) && p['_newProp']);
+    if (forbiddenNewProperties.length) {
+      errors.push(`Please create code system and define ${forbiddenNewProperties.map(p => `"${p.propertyName}"`).join(', ')} properties there`);
+    }
+
+    return errors;
+  }
+
+  public analyze(req: FileAnalysisRequest, file?: Blob): Observable<FileAnalysisResponse> {
+    const fd = new FormData();
+    fd.append('request', JSON.stringify(req));
+    if (file) {
+      fd.append('file', file, 'files');
+    }
+    return this.http.post<FileAnalysisResponse>(`${this.baseUrl}/analyze`, fd);
+  }
+
+
+  public processRequest(req: FileProcessingRequest, file: Blob): Observable<JobLog> {
+    const fd = new FormData();
+    fd.append('request', JSON.stringify(req));
+    if (file) {
+      fd.append('file', file, 'files');
+    }
+
+    const startResponsePolling = (jobId: number): Observable<JobLog> => {
+      const poll$ = new Subject();
+
+      timer(0, 3000).pipe(
+        takeUntil(merge(poll$, this.destroy$)),
+        switchMap(() => this.jobService.getLog(jobId)),
+      ).subscribe(resp => {
+        if (resp.execution?.status !== 'running') {
+          poll$.next(resp);
+        }
+      });
+
+      return poll$.pipe(take(1));
+    };
+
+    return this.http.post<JobLogResponse>(`${this.baseUrl}/process`, fd).pipe(
+      mergeMap(resp => startResponsePolling(resp.jobId))
+    );
+  };
+}
 
 @Component({
   templateUrl: 'code-system-file-import.component.html',
-  providers: [DestroyService]
+  styles: [`
+    .import-alert {
+      margin: 0;
+
+      &:after {
+        height: 100%;
+        width: 2px;
+      }
+    }
+  `],
+  providers: [DestroyService, CodeSystemFileImportService]
 })
 export class CodeSystemFileImportComponent {
   public readonly baseUrl = `${environment.terminologyApi}/file-importer/code-system`;
 
+  public sourceCodeSystem: CodeSystem;
+
   public data: {
     // general
     codeSystem: CodeSystem,
-    loadedCodeSystem?: CodeSystem,
-    version?: {
+    codeSystemVersion?: {
+      versionId?: number;
       version?: string;
       status?: string;
       releaseDate?: Date;
     },
     generateValueSet?: boolean;
+    dryRun?: boolean;
+    cleanRun?: boolean
     // source
     source?: {
       type?: string,
@@ -277,8 +372,10 @@ export class CodeSystemFileImportComponent {
     template?: string
   } = {
     codeSystem: {},
-    version: {},
+    codeSystemVersion: {},
     generateValueSet: false,
+    dryRun: false,
+    cleanRun: false,
     source: {
       type: 'link',
       format: 'csv',
@@ -286,13 +383,18 @@ export class CodeSystemFileImportComponent {
     }
   };
 
-  public analyzeResponse: {properties: FileImportPropertyRow[], request?: FileAnalysisRequest} = {
-    properties: []
+  public analyzeResponse: {
+    parsedProperties: FileImportPropertyRow[],
+    origin?: FileAnalysisRequest
+  } = {
+    parsedProperties: []
   };
 
+
   public loader = new LoadingManager();
-  public validationErrors: string[] = [];
-  public jobResponse: JobLog | null = null;
+  public validations: string[];
+  public jobLog: JobLog;
+
 
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('jsonFileInput') public jsonFileInput?: ElementRef<HTMLInputElement>;
@@ -303,29 +405,41 @@ export class CodeSystemFileImportComponent {
     private http: HttpClient,
     private notificationService: MuiNotificationService,
     private codeSystemLibService: CodeSystemLibService,
+    private importService: CodeSystemFileImportService,
     private jobService: JobLibService,
     private destroy$: DestroyService,
     private router: Router
   ) {}
 
-  public initCodeSystem(): void {
+  public createCodeSystem(): void {
+    this.sourceCodeSystem = undefined;
     this.data.codeSystem = new CodeSystem();
     this.data.codeSystem['_new'] = true;
-    this.data.loadedCodeSystem = undefined;
+  }
+
+  public createCodeSystemVersion(): void {
+    this.data.codeSystemVersion = {
+      status: 'draft'
+    };
+    this.data.codeSystemVersion['_new'] = true;
   }
 
 
-  /* General */
+  protected onCodeSystemSelect(id: string): void {
+    const req$ = id ? this.codeSystemLibService.load(id, true) : of(undefined);
 
-  protected loadCodeSystem(id: string): void {
-    this.data.loadedCodeSystem = undefined;
-    if (id) {
-      this.loader.wrap('cs', this.codeSystemLibService.load(id, true)).subscribe(cs => this.data.loadedCodeSystem = cs);
-    }
+    this.loader.wrap('cs', req$).subscribe(cs => {
+      this.sourceCodeSystem = cs;
+      this.data.codeSystemVersion = {};
+      this.data.codeSystemVersion['_new'] = true; // fixme: delete
+      this.data.cleanRun = false;
+
+      const draftVersions = cs?.versions?.filter(v => this.filterVersion(v, 'draft'));
+      if (!draftVersions?.length) {
+        this.createCodeSystemVersion();
+      }
+    });
   }
-
-
-  /* Source */
 
   protected analyze(): void {
     const req: FileAnalysisRequest = {
@@ -333,80 +447,46 @@ export class CodeSystemFileImportComponent {
       link: this.data.source.file
     };
 
-    const fd = new FormData();
-    fd.append('request', JSON.stringify(req));
-    if (this.data.source.type === 'file') {
-      fd.append('file', this.fileInput?.nativeElement?.files?.[0] as Blob, 'files');
-    }
+    const file: Blob = this.data.source.type === 'file'
+      ? this.fileInput?.nativeElement?.files?.[0]
+      : undefined;
 
-    this.loader.wrap('analyze', this.http.post<FileAnalysisResponse>(`${this.baseUrl}/analyze`, fd)).subscribe(resp => {
+    this.loader.wrap('analyze', this.importService.analyze(req, file)).subscribe(({properties}) => {
+      const toPropertyRow = (p: FileAnalysisResponseProperty): FileImportPropertyRow => ({
+        columnName: p.columnName,
+        propertyType: p.columnType,
+        propertyTypeFormat: p.columnTypeFormat,
+        import: !!p.hasValues
+      });
+
       this.analyzeResponse = {
-        request: copyDeep(req),
-        properties: (resp.properties || []).map(p => ({
-          columnName: p.columnName,
-          propertyType: p.columnType,
-          propertyTypeFormat: p.columnTypeFormat,
-          import: !!p.hasValues
-        }))
+        origin: copyDeep(req),
+        parsedProperties: properties?.map(toPropertyRow) ?? []
       };
-      this.validationErrors = [];
+
+      this.validations = [];
       this.data.template = undefined;
     });
   }
 
-
-  /* Properties */
-
-  protected applyTemplate(): void {
-    const tpl = IMPORT_TEMPLATES[this.data.template];
-    if (!tpl) {
-      return;
-    }
-    const existingProperties = this.combineWithDefaults(this.data.loadedCodeSystem?.properties).map(p => p.name);
-
-    this.analyzeResponse.properties.forEach(ap => {
-      const tplProp = tpl.find(tp => tp.columnName === ap.columnName);
-      if (tplProp) {
-        ap.propertyName = tplProp.propertyName;
-        ap.propertyType = tplProp.propertyType;
-        ap.propertyTypeFormat = tplProp.propertyTypeFormat;
-        ap.preferred = tplProp.preferred;
-        ap.lang = tplProp.lang;
-        ap.import = tplProp.import;
-        ap['_newProp'] = !existingProperties.includes(tplProp.propertyName);
-        if (ap.preferred) {
-          this.onPropertyPreferredChange(ap);
-        }
-      }
-    });
-  }
-
   private validate(): string[] {
-    const errors: string[] = [];
-    const props = this.analyzeResponse.properties.filter(p => p.import).filter(p => p.propertyName);
-    const propMap = collect(props, p => p.propertyName!);
-
-    const duplicateProperties = Object.keys(propMap).filter(p => propMap[p].length > 1).filter(Boolean);
-    if (duplicateProperties.filter(p => p === 'identifier').length) {
-      errors.push(`Code system may have only one identifier`);
-    }
-    if (props.filter(p => p.propertyType === 'date' && isNil(p.propertyTypeFormat)).length) {
-      errors.push(`Please select date type property format`);
-    }
-    return errors;
+    return this.importService.validate(this.analyzeResponse.parsedProperties);
   }
 
   protected process(): void {
-    if ((this.validationErrors = this.validate()).length) {
+    this.validations = this.jobLog = undefined;
+    if ((this.validations = this.validate()).length) {
       return;
     }
 
     const req: FileProcessingRequest = {
       // request
-      link: this.analyzeResponse.request?.link!,
-      type: this.analyzeResponse.request?.type!,
-      properties: this.analyzeResponse.properties?.filter(p => p.import),
+      link: this.analyzeResponse.origin?.link!,
+      type: this.analyzeResponse.origin?.type!,
+      properties: this.analyzeResponse.parsedProperties?.filter(p => p.import),
       generateValueSet: this.data.generateValueSet,
+      dryRun: this.data.dryRun,
+      cleanRun: this.data.cleanRun,
 
       // meta
       codeSystem: {
@@ -418,54 +498,77 @@ export class CodeSystemFileImportComponent {
         })
       },
       version: {
-        version: this.data.version.version,
-        status: this.data.version.status,
-        releaseDate: this.data.version.releaseDate
+        id: this.data.codeSystemVersion.versionId,
+        version: this.data.codeSystemVersion.version,
+        status: this.data.codeSystemVersion.status,
+        releaseDate: this.data.codeSystemVersion.releaseDate,
       },
     };
-
 
     this.processRequest(req);
   }
 
   protected processRequest(req: FileProcessingRequest): void {
-    const startResponsePolling = (jobId: number): void => {
-      const poll$ = new Subject<void>();
-      const req$ = timer(0, 3000).pipe(
-        takeUntil(merge(this.destroy$, poll$)),
-        switchMap(() => this.jobService.getLog(jobId)),
-        filter(resp => resp.execution?.status !== 'running')
-      );
-
-      this.loader.wrap('process', req$).subscribe(jobResp => {
-        poll$.next();
-        if (!jobResp.errors && !jobResp.warnings) {
-          this.notificationService.success("web.integration.file-import.success-message", this.successNotificationContent!, {
-            duration: 0,
-            closable: true
-          });
-        }
-        this.jobResponse = jobResp;
-      });
-    };
-
-
-    const fd = new FormData();
-    fd.append('request', JSON.stringify(req));
+    let file: Blob;
     if (['csv', 'tsv', 'json'].includes(req.type)) {
-      const fileInput = 'json' === req.type ? this.jsonFileInput : this.fileInput;
-      fd.append('file', fileInput?.nativeElement?.files?.[0] as Blob, 'files');
+      const fileInput = 'json' === req.type
+        ? this.jsonFileInput
+        : this.fileInput;
+      file = fileInput?.nativeElement?.files?.[0];
     }
 
-    this.jobResponse = null;
-    this.loader.wrap('process', this.http.post<JobLogResponse>(`${this.baseUrl}/process`, fd)).subscribe(resp => {
-      startResponsePolling(resp.jobId);
+    this.jobLog = undefined;
+    this.loader.wrap('process', this.importService.processRequest(req, file)).subscribe(resp => {
+      this.jobLog = resp;
+      if (!resp.errors && !resp.warnings) {
+        this.notificationService.success("web.integration.file-import.success-message", this.successNotificationContent!, {duration: 0, closable: true});
+      }
     });
   };
 
+  protected downloadLog(): void {
+    const errors = this.jobLog.errors.join('\n').replace(/ApiException: .+: /gm, '');
+
+    const element = document.createElement('a');
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(errors));
+    element.setAttribute('download', ['log', this.data.codeSystem.id].filter(Boolean).join('_') + '.txt');
+
+    element.style.display = 'none';
+    document.body.appendChild(element);
+
+    element.click();
+
+    document.body.removeChild(element);
+  }
+
+  /* Parsed properties table */
+
+  protected applyTemplate(): void {
+    const existingPropertyNames = this.combineWithDefaults(this.sourceCodeSystem?.properties).map(p => p.name);
+
+    const template = group(IMPORT_TEMPLATES[this.data.template], p => p.columnName);
+    if (!template) {
+      return;
+    }
+
+    this.analyzeResponse.parsedProperties.forEach(pp => {
+      const prop = template[pp.columnName];
+      if (!prop) {
+        return;
+      }
+      pp['_newProp'] = !existingPropertyNames.includes(prop.propertyName);
+      pp.propertyName = prop.propertyName;
+      pp.propertyType = prop.propertyType;
+      pp.propertyTypeFormat = prop.propertyTypeFormat;
+      pp.preferred = prop.preferred;
+      pp.lang = prop.lang;
+      pp.import = prop.import;
+      this.onPropertyPreferredChange(pp);
+    });
+  }
 
   protected onPropertyNameChange(item: FileImportPropertyRow): void {
-    const entityProperties = this.combineWithDefaults(this.data.loadedCodeSystem?.properties);
+    const entityProperties = this.combineWithDefaults(this.sourceCodeSystem?.properties);
     const grouped = group(entityProperties, p => p.name);
 
     item.propertyType = grouped[item.propertyName]?.type;
@@ -477,9 +580,7 @@ export class CodeSystemFileImportComponent {
   }
 
   protected onPropertyPreferredChange(item: FileImportPropertyRow): void {
-    this.analyzeResponse.properties
-      .filter(p => p !== item)
-      .forEach(p => p.preferred = false);
+    this.analyzeResponse.parsedProperties.filter(p => p !== item).forEach(p => p.preferred = false);
   }
 
   protected combineWithDefaults(entityProperties: EntityProperty[]): EntityProperty[] {
@@ -490,7 +591,7 @@ export class CodeSystemFileImportComponent {
   }
 
   protected get hasDuplicateIdentifiers(): boolean {
-    return this.analyzeResponse.properties.filter(p => p.propertyName === 'concept-code').length > 1;
+    return this.analyzeResponse.parsedProperties.filter(p => p.propertyName === 'concept-code').length > 1;
   }
 
 
@@ -500,7 +601,19 @@ export class CodeSystemFileImportComponent {
     this.router.navigate(['/resources/code-systems/', id, mode]);
   }
 
-  protected loadCodeSystemVersions = (id): Observable<string[]> => {
-    return this.codeSystemLibService.searchVersions(id, {limit: -1}).pipe(map(r => r.data.map(d => d.version)));
+  protected getVersions = (versions: CodeSystemVersion[]): string[] => {
+    return versions?.map(v => v.version);
   };
+
+  protected filterVersion = (v: CodeSystemVersion, status: string): boolean => {
+    return v.status === status;
+  };
+
+  protected get isNewResource(): boolean {
+    return this.data?.codeSystem?.['_new'];
+  }
+
+  protected get isNewVersion(): boolean {
+    return this.data?.codeSystemVersion?.['_new'];
+  }
 }

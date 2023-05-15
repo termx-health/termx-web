@@ -32,6 +32,7 @@ import {TableModule} from 'term-web/core/ui/table-container/table.module';
 import {LoincPartSearchComponent} from 'term-web/integration/loinc/loinc-part-search.component';
 import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
+import {ImportJobLogComponent} from 'term-web/integration/import-job-log.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -75,6 +76,8 @@ export const INTEGRATION_ROUTES: Routes = [
     SnomedTranslationListComponent,
   ],
   declarations: [
+    ImportJobLogComponent,
+
     IntegrationDashboardComponent,
     IntegrationFhirSyncComponent,
     IntegrationAtcImportComponent,
