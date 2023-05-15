@@ -164,7 +164,8 @@
             "duplicate-version": "Duplicate version",
             "export-fhir-json": "Export FHIR json",
             "export-fhir-xml": "Export FHIR xml",
-            "open-fhir": "Open FHIR"
+            "open-fhir": "Open FHIR",
+            "compare": "Compare"
           }
         },
         "properties": {
@@ -268,6 +269,16 @@
         "edit-association": "Edit association",
         "delete-association": "Delete association"
       }
+    },
+    "code-system-compare": {
+      "source": "Source",
+      "target": "Target",
+      "source-code-system": "Source code system",
+      "target-code-system": "Target code system",
+      "compare": "Compare",
+      "deleted": "Deleted",
+      "added": "Added",
+      "changed": "Changed"
     },
     "code-system-association": {
       "form": {

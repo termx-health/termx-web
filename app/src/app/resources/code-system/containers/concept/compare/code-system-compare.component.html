@@ -1,0 +1,110 @@
+<div nz-row nzJustify="center" class="m-row">
+  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18">
+
+    <div nz-row class="m-row" [nzGutter]="12">
+      <div nz-col nzSpan="12">
+        <h1>{{'web.code-system-compare.source' | translate}}</h1>
+
+        <div nz-row class="m-row" [nzGutter]="6">
+          <div nz-col nzSpan="12">
+            <m-form-item mName="sourceCodeSystem" required>
+              <tw-code-system-search name="sourceCodeSystem"
+                  [(ngModel)]="sourceCodeSystem"
+                  (ngModelChange)="onSourceChange($event)"
+                  valuePrimitive
+                  autofocus
+                  [placeholder]="'web.code-system-compare.source-code-system' | translate"></tw-code-system-search>
+            </m-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <m-form-item mName="sourceVersion" required>
+              <tw-code-system-version-select name="sourceVersion"
+                  [(ngModel)]="sourceVersion"
+                  [codeSystemId]="sourceCodeSystem"
+                  valuePrimitive></tw-code-system-version-select>
+            </m-form-item>
+          </div>
+        </div>
+      </div>
+
+      <div nz-col nzSpan="12">
+        <h1>{{'web.code-system-compare.target' | translate}}</h1>
+        <div nz-row class="m-row" [nzGutter]="6">
+          <div nz-col nzSpan="12">
+            <m-form-item mName="sourceCodeSystem" required>
+              <tw-code-system-search name="sourceCodeSystem"
+                  [(ngModel)]="targetCodeSystem"
+                  valuePrimitive
+                  [placeholder]="'web.code-system-compare.target-code-system' | translate"></tw-code-system-search>
+            </m-form-item>
+          </div>
+          <div nz-col nzSpan="12">
+            <m-form-item mName="sourceVersion" required>
+              <tw-code-system-version-select name="sourceVersion"
+                  [(ngModel)]="targetVersion"
+                  [codeSystemId]="targetCodeSystem"
+                  required
+                  valuePrimitive></tw-code-system-version-select>
+            </m-form-item>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div>
+      <m-button mDisplay="primary"
+          (click)="compare()"
+          [disabled]="!sourceVersion || ! targetVersion"
+          [mLoading]="loading">{{'web.code-system-compare.compare' | translate}}</m-button>
+    </div>
+
+    <ng-container *ngIf="!!result">
+      <div nz-row style="margin-top: 10px" [nzGutter]="16">
+        <div nz-col nzSpan="12">
+          <m-card mTitle="web.code-system-compare.deleted">
+            <div *ngFor="let i of result.deleted">
+              {{i}}
+            </div>
+          </m-card>
+        </div>
+        <div nz-col nzSpan="12">
+          <m-card mTitle="web.code-system-compare.added">
+            <div *ngFor="let i of result.added">
+              {{i}}
+            </div>
+          </m-card>
+        </div>
+      </div>
+      <m-card style="margin-top: 10px" mTitle="web.code-system-compare.changed" *ngIf="!!result.changed">
+        <m-table [mData]="result.changed">
+          <tr *mTableRow="let i">
+            <td>
+              <span style="font-weight: 800">{{i.code}}</span>
+              <div nz-row>
+                <div nz-col nzSpan="12" [class]="i.diff.old.status !== i.diff.mew.status ? 'red' : ''" style="padding: 4px">
+                  <tw-status-tag [status]="i.diff.old.status"></tw-status-tag>
+                </div>
+                <div nz-col nzSpan="12" [class]="i.diff.old.status !== i.diff.mew.status ? 'green' : ''" style="padding: 4px">
+                  <tw-status-tag [status]="i.diff.mew.status"></tw-status-tag>
+                </div>
+              </div>
+              <div nz-row>
+                <div nz-col nzSpan="12">
+                  <div *ngFor="let p of i.diff.old.properties" [class]="!(i.diff.mew.properties | includes:p) ? 'red' : ''">
+                    {{p}}
+                  </div>
+                </div>
+                <div nz-col nzSpan="12">
+                  <div *ngFor="let p of i.diff.mew.properties" [class]="!(i.diff.old.properties | includes:p) ? 'green' : ''">
+                    {{p}}
+                  </div>
+                </div>
+              </div>
+            </td>
+          </tr>
+        </m-table>
+      </m-card>
+    </ng-container>
+
+  </div>

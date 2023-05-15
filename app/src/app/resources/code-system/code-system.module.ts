@@ -32,6 +32,7 @@ import {CodeSystemConceptRelationsComponent} from './containers/concept/relation
 import {MarinaQuillModule} from '@kodality-web/marina-quill';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {SequenceLibModule} from 'term-web/sequence/_lib/sequence-lib.module';
+import {CodeSystemCompareComponent} from 'term-web/resources/code-system/containers/concept/compare/code-system-compare.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -44,6 +45,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent},
   {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: 'compare', component: CodeSystemCompareComponent, data: {privilege: ['*.CodeSystem.view']}},
 
   {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
@@ -98,6 +100,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemPropertyValueEditComponent,
     CodeSystemAssociationEditComponent,
     CodeSystemConceptRelationsComponent,
+    CodeSystemCompareComponent,
 
     FinderCodeSystemListComponent,
     FinderCodeSystemViewComponent,

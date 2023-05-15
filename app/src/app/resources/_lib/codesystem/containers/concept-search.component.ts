@@ -83,7 +83,6 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
     q.codeSystemVersionExpirationDateGe = this.codeSystemVersionExpirationDateGe;
     q.codeSystemEntityStatus = this.codeSystemEntityVersionStatus;
     q.propertyValues = this.propertyValues;
-    q.associationSource = this.propertyValues;
     q.limit = 100;
 
     this.loading['search'] = true;
