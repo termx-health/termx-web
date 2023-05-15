@@ -546,16 +546,24 @@
         "success-message": "File processing is finished",
         "code-system": {
           "import": "Code System file import",
-          "resource-id": "Resource ID",
-          "generate-valueset": "Generate ValueSet too",
-          "link": "Link",
-          "file": "File",
-          "source": "Source",
-          "csv": "CSV",
-          "tsv": "TSV",
-          "analyze": "Analyze",
-          "table": {
-            "csv-column": "CSV column",
+          "general": {
+            "resource-id": "Resource ID",
+            "generate-valueset": "Generate ValueSet",
+            "clear-version-data": "Clear version data"
+          },
+          "source": {
+            "header": "Source",
+            "link": "Link",
+            "file": "File",
+            "types": {
+              "csv": "CSV",
+              "tsv": "TSV"
+            },
+            "analyze": "Analyze"
+          },
+          "properties": {
+            "header": "Properties",
+            "type-column": "{{type}} column",
             "kts-property": "KTS property",
             "preferred": "Preferred",
             "type": "Type",
