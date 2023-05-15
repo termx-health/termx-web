@@ -1,12 +1,14 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'term-web/integration/_lib';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'app/src/app/integration/_lib';
 import {forkJoin} from 'rxjs';
 import {isDefined, LoadingManager} from '@kodality-web/core-util';
-import {MapSetLibService, ValueSetLibService} from 'term-web/resources/_lib';
-import {PageLibService} from 'term-web/thesaurus/_lib';
+import {MapSetLibService, ValueSetLibService} from 'app/src/app/resources/_lib';
+import {PageLibService} from 'app/src/app/thesaurus/_lib';
 import {TranslateService} from '@ngx-translate/core';
 import {Router} from '@angular/router';
-import {AuthService} from 'term-web/core/auth';
+import {AuthService} from 'app/src/app/core/auth';
+import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
+import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 
 @Component({
   selector: 'tw-snomed-concept-info',
@@ -21,12 +23,15 @@ export class SnomedConceptInfoComponent implements OnChanges {
   public ktsReferences?: {type?: string, id?: any, name?: string}[];
   public descriptions?: {[key: string]: SnomedDescription[]};
   public relationships?: SnomedRelationship[];
+  public dataChanged: boolean = false;
 
   @Input() public conceptId?: string;
   @Output() public conceptSelected: EventEmitter<string> = new EventEmitter<string>();
+  @ViewChild(SnomedTranslationListComponent) public translationListComponent?: SnomedTranslationListComponent;
 
   public constructor(
     private snomedService: SnomedLibService,
+    private snomedTranslationService: SnomedTranslationService,
     private valueSetService: ValueSetLibService,
     private mapSetService: MapSetLibService,
     private pageService: PageLibService,
@@ -39,6 +44,7 @@ export class SnomedConceptInfoComponent implements OnChanges {
     if (changes['conceptId'] && isDefined(this.conceptId)) {
       this.loadConceptData(this.conceptId);
       this.snomedReferences = undefined;
+      this.dataChanged = false;
     }
   }
 
@@ -98,6 +104,16 @@ export class SnomedConceptInfoComponent implements OnChanges {
     }
     if (type === 'Page') {
       this.router.navigate(['/thesaurus/pages/', id]);
+    }
+  }
+
+  public saveTranslations(): void {
+    const valid = this.translationListComponent.validate();
+    if (valid && this.conceptId) {
+      this.loader.wrap('save', this.snomedTranslationService.save(this.conceptId, this.translationListComponent.translations)).subscribe(() => {
+        this.translationListComponent.loadTranslations(this.conceptId);
+        this.dataChanged = false;
+      });
     }
   }
 }

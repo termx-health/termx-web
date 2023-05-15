@@ -15,10 +15,9 @@ import {FhirValueSetValidateCodeComponent} from './fhir/value-set/fhir-value-set
 import {FhirCodeSystemFindMatchesComponent} from './fhir/code-system/fhir-code-system-find-matches.component';
 import {CodeSystemFileImportComponent} from './import/file-import/code-system/code-system-file-import.component';
 import {ConceptMapFileImportComponent} from './import/file-import/concept-map/concept-map-file-import.component';
-import {SnomedDashboardComponent} from './snomed/snomed-dashboard.component';
-import {SnomedConceptInfoComponent} from './snomed/snomed-concept-info.component';
+import {SnomedDashboardComponent} from './snomed/containers/snomed-dashboard.component';
+import {SnomedConceptInfoComponent} from './snomed/containers/snomed-concept-info.component';
 import {IntegrationOrphanetImportComponent} from './import/orphanet/integration-orphanet-import-component';
-import {GithubExportComponent} from './github/github-export.component';
 import {IntegrationIchiImportComponent} from './import/ichi/integration-ichi-import.component';
 import {FhirLibModule} from 'term-web/fhir/_lib';
 import {JobLibModule} from 'term-web/job/_lib';
@@ -31,6 +30,8 @@ import {LoincListComponent} from 'term-web/integration/loinc/loinc-list.componen
 import {LoincAnswerListListComponent} from 'term-web/integration/loinc/loinc-answer-list-list.component';
 import {TableModule} from 'term-web/core/ui/table-container/table.module';
 import {LoincPartSearchComponent} from 'term-web/integration/loinc/loinc-part-search.component';
+import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
+import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -61,17 +62,17 @@ export const INTEGRATION_ROUTES: Routes = [
 @NgModule({
   imports: [
     SharedModule,
+    ResourcesLibModule,
     FhirLibModule,
     JobLibModule,
-    IntegrationLibModule,
-    ResourcesLibModule,
-    TableModule
+    TableModule,
+    IntegrationLibModule
   ],
   exports: [
-    GithubExportComponent,
     LoincListComponent,
     LoincPartListComponent,
-    LoincAnswerListListComponent
+    LoincAnswerListListComponent,
+    SnomedTranslationListComponent,
   ],
   declarations: [
     IntegrationDashboardComponent,
@@ -92,6 +93,7 @@ export const INTEGRATION_ROUTES: Routes = [
 
     SnomedDashboardComponent,
     SnomedConceptInfoComponent,
+    SnomedTranslationListComponent,
 
     LoincDashboardComponent,
     LoincListComponent,
@@ -101,9 +103,10 @@ export const INTEGRATION_ROUTES: Routes = [
     LoincImportComponent,
 
     CodeSystemFileImportComponent,
-    ConceptMapFileImportComponent,
-
-    GithubExportComponent
+    ConceptMapFileImportComponent
+  ],
+  providers: [
+    SnomedTranslationService
   ]
 })
 export class IntegrationModule {

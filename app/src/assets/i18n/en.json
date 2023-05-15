@@ -1169,6 +1169,23 @@
       "snomed-references": "References in SNOMED",
       "kts-references": "References in KTS"
     },
+    "snomed-translation": {
+      "module": "Module",
+      "language": "Language",
+      "term": "Term",
+      "type": "Type",
+      "acceptability": "Acceptability",
+      "task": "Task",
+      "status": "Status",
+      "type-options": {
+        "synonym": "Synonym",
+        "fully-specified-name": "Fully specified name"
+      },
+      "acceptability-options": {
+        "acceptable": "Acceptable",
+        "preferred": "Preferred"
+      }
+    },
     "snomed-description": {
       "refset": "Refset",
       "concept-id": "Concept id",
