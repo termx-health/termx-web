@@ -34,8 +34,7 @@
             [(ngModel)]="modalData.designation.designationTypeId"
             placeholder="marina.ui.inputs.search.placeholder"
             [loading]="loading['properties']"
-            required
-        >
+            required>
           <m-option *ngFor="let prop of entityProperties" [mValue]="prop.id" [mLabel]="prop.name"></m-option>
         </m-select>
       </m-form-item>

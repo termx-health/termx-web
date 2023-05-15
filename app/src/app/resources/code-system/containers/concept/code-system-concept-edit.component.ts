@@ -118,6 +118,9 @@ export class CodeSystemConceptEditComponent implements OnInit {
   }
 
   public selectVersion(version?: CodeSystemEntityVersion): void {
+    version.designations ??= [];
+    version.propertyValues ??= [];
+    version.associations ??= [];
     this.conceptVersion = version;
   }
 
@@ -135,7 +138,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
         newVersion.associations = [{associationType: 'is-a', status: 'active', targetCode: parent.code, targetId: this.getLastVersion(parent.versions!).id}];
       }
       this.concept!.versions = [...this.concept!.versions || [], newVersion];
-      this.conceptVersion = newVersion;
+      this.selectVersion(newVersion);
     });
 
   }
@@ -144,7 +147,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.concept!.versions?.splice(index, 1);
     this.concept!.versions = [...this.concept?.versions!];
     if (!this.concept!.versions.includes(this.conceptVersion!)) {
-      this.conceptVersion = this.concept!.versions[this.concept!.versions.length - 1];
+      this.selectVersion(this.concept!.versions[this.concept!.versions.length - 1]);
     }
   }
 

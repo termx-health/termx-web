@@ -42,8 +42,7 @@ export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-
-    if ((changes['codeSystemId'] ||changes['designations']) && this.codeSystemId && this.designations) {
+    if ((changes['codeSystemId'] || changes['designations']) && this.codeSystemId && this.designations) {
       this.loadProperties(this.codeSystemId).subscribe(result => {
         this.entityProperties = result.data;
         this.convertToDesignationGroup(this.designations!, this.entityProperties!);
