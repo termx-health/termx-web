@@ -22,4 +22,5 @@ export * from './pipe/localized-concept-name-pipe';
 export * from './services/code-system-concept-lib.service';
 export * from './services/code-system-entity-version-lib.service';
 export * from './services/code-system-lib.service';
+export * from './util/code-system-util';
 export * from './util/concept-util';

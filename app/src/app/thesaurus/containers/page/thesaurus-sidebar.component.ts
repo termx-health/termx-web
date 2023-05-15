@@ -4,7 +4,7 @@ import {PageService} from '../../services/page.service';
 import {catchError, debounceTime, distinctUntilChanged, map, Observable, of, Subject, switchMap} from 'rxjs';
 import {Router} from '@angular/router';
 import {compareValues} from '@kodality-web/core-util';
-import {GithubExportable} from '../../../integration/github/github.service';
+import {GithubExportable} from '../../../integration/_lib/github/github.service';
 import {Page, PageContent, PageLink, PageSearchParams} from 'term-web/thesaurus/_lib';
 
 @Component({

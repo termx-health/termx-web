@@ -1,0 +1,63 @@
+<form #form="ngForm">
+  <m-editable-table #rowsTable
+      [mData]="translations"
+      [mRowInstance]="rowInstance"
+      (mRowAdd)="addRow()"
+      (mRowEdit)="translationsChanged.emit()"
+      (mAfterSubmit)="translationsChanged.emit()"
+      (mAfterDelete)="translationsChanged.emit()"
+      [mRowEditAllowed]="editAllowed">
+    <m-editable-column [mTitle]="'entities.snomed-translation.module'" mName="module">
+      <ng-template #viewTemplate let-t>{{t.module}}</ng-template>
+      <ng-template #editTemplate let-t let-ngModelName="ngModelName">
+        <m-select [name]="ngModelName" [(ngModel)]="t.module">
+          <m-option *ngFor="let m of modules" [mLabel]="m.code" [mValue]="m.code"></m-option>
+        </m-select>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.snomed-translation.language'" mName="language">
+      <ng-template #viewTemplate let-t>{{t.language}}</ng-template>
+      <ng-template #editTemplate let-t let-ngModelName="ngModelName">
+        <m-select *ngIf="(t.module | apply:langsDefined)" [name]="ngModelName" [(ngModel)]="t.language" autoSelect>
+          <m-option *ngFor="let lang of (t.module | apply:getLangs)" [mLabel]="lang.code" [mValue]="lang.code"></m-option>
+        </m-select>
+        <tw-value-set-concept-select *ngIf="!(t.module | apply:langsDefined)"
+            [name]="ngModelName"
+            [(ngModel)]="t.language"
+            valueSet="languages"
+            required></tw-value-set-concept-select>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.snomed-translation.term'" mName="term">
+      <ng-template #viewTemplate let-t>{{t.term}}</ng-template>
+      <ng-template #editTemplate let-t let-ngModelName="ngModelName">
+        <m-input [name]="ngModelName" [(ngModel)]="t.term" required></m-input>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.snomed-translation.type'" mName="type">
+      <ng-template #viewTemplate let-t>{{t.type ? ('entities.snomed-translation.type-options.' + t.type | translate) : ''}}</ng-template>
+      <ng-template #editTemplate let-t let-ngModelName="ngModelName">
+        <m-select [name]="ngModelName" [(ngModel)]="t.type" required>
+          <m-option [mValue]="'synonym'" [mLabel]="'entities.snomed-translation.type-options.synonym'"></m-option>
+          <m-option [mValue]="'fully-specified-name'" [mLabel]="'entities.snomed-translation.type-options.fully-specified-name'"></m-option>
+        </m-select>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.snomed-translation.acceptability'" mName="acceptability">
+      <ng-template #viewTemplate
+        let-t>{{t.acceptability ? ('entities.snomed-translation.acceptability-options.' + t.acceptability | translate) : ''}}</ng-template>
+      <ng-template #editTemplate let-t let-ngModelName="ngModelName">
+        <m-select [name]="ngModelName" [(ngModel)]="t.acceptability" required>
+          <m-option [mValue]="'preferred'" [mLabel]="'entities.snomed-translation.acceptability-options.preferred'"></m-option>
+          <m-option [mValue]="'acceptable'" [mLabel]="'entities.snomed-translation.acceptability-options.acceptable'"></m-option>
+        </m-select>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.snomed-translation.task'">
+      <ng-template #viewTemplate let-t><a>{{t.task?.code}}</a></ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.snomed-translation.status'">
+      <ng-template #viewTemplate let-t>{{t.status | localizedConceptName: {codeSystem: 'v3-ConceptStatus'} | async }}</ng-template>
+    </m-editable-column>
+  </m-editable-table>
+</form>

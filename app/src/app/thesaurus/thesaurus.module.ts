@@ -25,7 +25,6 @@ import {StructureDefinitionTypeListComponent} from './containers/structure-defin
 import {StructureDefinitionConstraintListComponent} from './containers/structure-definition/structure-definition-constraint-list.component';
 import {ThesaurusTemplateModalComponent} from './containers/texteditor/template/thesaurus-template-modal.component';
 import {TemplateViewComponent} from './containers/template/template-view.component';
-import {IntegrationModule} from '../integration/integration.module';
 import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
 import {ThesaurusLibModule} from 'term-web/thesaurus/_lib';
 import {ResourcesLibModule} from '../resources/_lib';
@@ -51,7 +50,6 @@ export const THESAURUS_ROUTES: Routes = [
     PortalModule,
     ResourcesLibModule,
     IntegrationLibModule,
-    IntegrationModule,
     MarinaMarkdownModule,
   ],
   declarations: [

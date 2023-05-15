@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../../services/page.service';
 import {collect, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
-import {GithubExportable} from '../../../integration/github/github.service';
+import {GithubExportable} from '../../../integration/_lib/github/github.service';
 import {Page, PageContent, PageLink, PageRelation} from 'term-web/thesaurus/_lib';
 
 @Component({

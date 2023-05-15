@@ -1,5 +1,10 @@
 <m-card>
-
+  <div *m-card-header class="m-justify-between">
+    <div></div>
+    <div *ngIf="dataChanged">
+      <m-button mDisplay="primary" (mClick)="saveTranslations()" [mLoading]="loader.state['save']">{{'core.btn.save' | translate}}</m-button>
+    </div>
+  </div>
   <m-card class="m-card-inside">
     <div *m-card-header class="m-justify-between">
       <div class="m-card__title">
@@ -38,6 +43,15 @@
         </td>
       </tr>
     </m-table>
+  </m-card>
+
+  <m-card class="m-card-inside">
+    <div *m-card-header class="m-justify-between">
+      <div class="m-card__title">
+        {{'entities.snomed-concept.translations' | translate}}
+      </div>
+    </div>
+    <tw-snomed-translations [conceptId]="conceptId" (translationsChanged)="dataChanged = true"></tw-snomed-translations>
   </m-card>
 
   <m-card class="m-card-inside">
