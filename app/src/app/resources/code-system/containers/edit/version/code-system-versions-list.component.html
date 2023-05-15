@@ -58,6 +58,9 @@
           <a *mDropdownItemIf="version.status !== 'draft' && !viewMode" (click)="saveAsDraft(version)">
             {{'web.publication-status.operations.save-as-draft' | translate}}
           </a>
+          <a *mDropdownItem [routerLink]="['/resources/code-systems/compare', {'code-system': codeSystemId, 'version': version.id}]">
+            {{'web.code-system.form.versions.list.compare' | translate}}
+          </a>
         </m-dropdown>
       </td>
     </tr>
