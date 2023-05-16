@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ValueSetVersionConcept} from 'term-web/resources/_lib';
 import {ValueSetService} from '../../../services/value-set.service';
+import {TextUtil} from 'term-web/core/shared/util/text-util';
 
 @Component({
   selector: 'tw-value-set-concept-list',
@@ -35,6 +36,6 @@ export class ValueSetConceptListComponent implements OnChanges {
   };
 
   private contains(names: (string | undefined)[], searchInput: string): boolean {
-    return !!names.find(n => n && n.toLowerCase().includes(searchInput.toLowerCase()));
+    return !!names.find(n => n && TextUtil.searchTranslate(n).includes(TextUtil.searchTranslate(searchInput)));
   }
 }
