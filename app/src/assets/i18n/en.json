@@ -156,7 +156,8 @@
             "duplicate-header": "Create duplicate code system version",
             "source-code-system": "Source code system:",
             "source-version": "Source version:",
-            "target-version": "Target version:"
+            "target-version": "Target version:",
+            "create-new-entity-version": "Create new entity versions"
           },
           "list": {
             "add-version": "Add version",
@@ -858,6 +859,8 @@
     "observation-definition": {
       "header-add": "Add observation definition",
       "header-edit": "Observation definition {{code}}",
+      "import-from-loinc": "Import from LOINC",
+      "import": "Start import",
       "select-snomed": "SNOMED search",
       "protocol-usage": {
         "not-in-use": "Not in use",
@@ -1170,6 +1173,7 @@
       "term": "Term",
       "concept-id": "Concept ID",
       "descriptions": "Descriptions",
+      "translations": "Translations",
       "relationships": "Relationships",
       "refsets": "Refsets",
       "fsn": "Fully Specified Name (FSN)",
