@@ -753,7 +753,7 @@
       "form": {
         "add-header": "Add sequence",
         "edit-header": "Edit sequence",
-        "contains-forbidden-chars": "Contains forbidden characters: {{chars}}"
+        "contains-invalid-chars": "Contains invalid characters: \"{{chars}}\""
       }
     },
     "structure-definition": {
