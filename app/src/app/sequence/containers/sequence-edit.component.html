@@ -8,9 +8,9 @@
             <div *ngIf="sequence.id">{{sequence.code}}</div>
 
             <ng-container *ngIf="sequence?.code | apply: getInvalidCodeChars as chars">
-              <m-tag *ngIf="chars.length" mColor="error" style="margin-top: var(--gap-default)">
+              <div *ngIf="chars.length" class="m-form-control-error-explain ng-star-inserted">
                 {{'web.sequence.form.contains-invalid-chars' | translate: ({chars: chars | join: '", "'})}}
-              </m-tag>
+              </div>
             </ng-container>
           </m-form-item>
 
