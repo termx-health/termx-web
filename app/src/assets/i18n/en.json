@@ -752,7 +752,8 @@
       },
       "form": {
         "add-header": "Add sequence",
-        "edit-header": "Edit sequence"
+        "edit-header": "Edit sequence",
+        "contains-forbidden-chars": "Contains forbidden characters: {{chars}}"
       }
     },
     "structure-definition": {

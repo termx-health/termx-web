@@ -13,7 +13,7 @@ export class SequenceLibService {
   public constructor(protected http: HttpClient) { }
 
   public nextValue(code: string): Observable<string> {
-    return this.http.get<{value: string}>(`${this.baseUrl}/${code}/next`).pipe(map(r => r.value));
+    return this.http.get<{value: string}>(`${this.baseUrl}/${encodeURIComponent(code)}/next`).pipe(map(r => r.value));
   }
 
   public load(id: number): Observable<Sequence> {
