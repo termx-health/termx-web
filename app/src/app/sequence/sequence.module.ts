@@ -4,7 +4,7 @@ import {SequenceService} from './services/sequence.service';
 import {Routes} from '@angular/router';
 import {SequenceListComponent} from './containers/sequence-list.component';
 import {SharedModule} from 'term-web/core/shared/shared.module';
-import {SequenceEditComponent} from 'term-web/sequence/containers/sequence-edit.component';
+import {InvalidSequenceCodeValidatorDirective, SequenceEditComponent} from 'term-web/sequence/containers/sequence-edit.component';
 
 export const SEQUENCE_ROUTES: Routes = [
   {path: '', component: SequenceListComponent},
@@ -19,7 +19,8 @@ export const SEQUENCE_ROUTES: Routes = [
   ],
   declarations: [
     SequenceListComponent,
-    SequenceEditComponent
+    SequenceEditComponent,
+    InvalidSequenceCodeValidatorDirective
   ],
   providers: [
     SequenceService

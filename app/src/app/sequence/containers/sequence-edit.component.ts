@@ -1,10 +1,23 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {Component, Directive, OnInit, ViewChild} from '@angular/core';
+import {AbstractControl, NG_VALIDATORS, NgForm, ValidationErrors, Validator} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {LoadingManager, unique, validateForm} from '@kodality-web/core-util';
 import {Sequence} from '../_lib/models/sequence';
 import {SequenceService} from '../services/sequence.service';
+
+const getInvalidCodeChars = (v: string): string[] => v?.match(/[^\w-]/gm)?.filter(unique) || [];
+
+@Directive({
+  selector: '[twInvalidSequenceCode]',
+  providers: [{provide: NG_VALIDATORS, useExisting: InvalidSequenceCodeValidatorDirective, multi: true}]
+})
+export class InvalidSequenceCodeValidatorDirective implements Validator {
+  public validate(control: AbstractControl): ValidationErrors | null {
+    const chars = getInvalidCodeChars(control.value);
+    return chars.length ? {sequenceInvalidCharacters: chars} : null;
+  }
+}
 
 @Component({
   templateUrl: 'sequence-edit.component.html',
@@ -37,15 +50,11 @@ export class SequenceEditComponent implements OnInit {
   }
 
   protected save(): void {
-    if (!validateForm(this.form) || this.getInvalidCodeChars(this.sequence.code).length) {
+    if (!validateForm(this.form)) {
       return;
     }
     this.loader.wrap('save', this.sequenceService.save(this.sequence)).subscribe(() => this.location.back());
   }
-
-  protected getInvalidCodeChars = (code: string): string[] => {
-    return code?.match(/[^\w-]/gm)?.filter(unique) || [];
-  };
 
   protected get isLoading(): boolean {
     return this.loader.isLoadingExcept('save');

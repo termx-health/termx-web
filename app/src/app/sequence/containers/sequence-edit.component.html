@@ -4,14 +4,8 @@
       <m-card [mTitle]="sequence?.id ? 'web.sequence.form.edit-header' : 'web.sequence.form.add-header'" [mShowSkeleton]="loader.state['load']">
         <form *ngIf="sequence">
           <m-form-item mName="code" mLabel="entities.sequence.code" [required]="!sequence.id">
-            <m-input *ngIf="!sequence.id" name="code" [(ngModel)]="sequence.code" autofocus required></m-input>
+            <m-input *ngIf="!sequence.id" name="code" [(ngModel)]="sequence.code" autofocus required twInvalidSequenceCode></m-input>
             <div *ngIf="sequence.id">{{sequence.code}}</div>
-
-            <ng-container *ngIf="sequence?.code | apply: getInvalidCodeChars as chars">
-              <div *ngIf="chars.length" class="m-form-control-error-explain ng-star-inserted">
-                {{'web.sequence.form.contains-invalid-chars' | translate: ({chars: chars | join: '", "'})}}
-              </div>
-            </ng-container>
           </m-form-item>
 
           <m-form-item mName="description" mLabel="entities.sequence.description" required>

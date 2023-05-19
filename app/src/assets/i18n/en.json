@@ -752,8 +752,7 @@
       },
       "form": {
         "add-header": "Add sequence",
-        "edit-header": "Edit sequence",
-        "contains-invalid-chars": "Contains invalid characters: \"{{chars}}\""
+        "edit-header": "Edit sequence"
       }
     },
     "structure-definition": {
@@ -1401,5 +1400,8 @@
         "condition": "Condition"
       }
     }
+  },
+  "marina.ui.form.validationError": {
+    "sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
   }
 }
