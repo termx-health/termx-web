@@ -1400,5 +1400,8 @@
         "condition": "Condition"
       }
     }
+  },
+  "marina.ui.form.validationError": {
+    "sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
   }
 }
