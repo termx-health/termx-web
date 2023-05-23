@@ -138,7 +138,7 @@ export class ObservationDefinitionEditComponent implements OnInit {
     if (!code || !system) {
       return;
     }
-    this.observationDefinition.category = [...this.observationDefinition.category, {code: code, codeSystem: system}];
+    this.observationDefinition.category = [...(this.observationDefinition.category || []), {code: code, codeSystem: system}];
     setTimeout(() => {
       this.category.code = undefined;
     });
