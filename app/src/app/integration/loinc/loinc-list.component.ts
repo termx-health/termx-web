@@ -100,7 +100,7 @@ export class LoincListComponent implements OnInit {
 
   private loadParts(concepts: CodeSystemConcept[]): void {
     const properties = concepts.map(c => this.getLastVersion(c.versions)).filter(v => isDefined(v)).flatMap(v => v.propertyValues);
-    const partCodes = properties?.map(p => p.value?.code).filter(c => isDefined(c));
+    const partCodes = properties?.map(p => p?.value?.code).filter(c => isDefined(c));
     if (!partCodes || partCodes.length === 0) {
       return;
     }

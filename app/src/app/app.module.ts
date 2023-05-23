@@ -5,7 +5,7 @@ import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {HttpBackend, HttpClientModule} from '@angular/common/http';
-import {CoreI18nService, CoreUtilModule} from '@kodality-web/core-util';
+import {CoreUtilModule} from '@kodality-web/core-util';
 import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
 import lt from '@angular/common/locales/lt';
@@ -27,9 +27,9 @@ import {JobLibModule} from './job/_lib';
 import {AuthModule, AuthService} from './core/auth';
 import {MarinaUiConfigModule} from './core/marina';
 import {ObservationDefinitionModule} from 'term-web/observation-definition/observation-definition.module';
-import {MuiConfigService} from '@kodality-web/marina-ui';
 import {TableModule} from 'term-web/core/ui/table-container/table.module';
 import {SequenceModule} from 'term-web/sequence/sequence.module';
+import {TaskflowModule} from 'term-web/taskflow/taskflow.module';
 
 registerLocaleData(et);
 registerLocaleData(lt);
@@ -75,6 +75,7 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     PrivilegesModule,
     GlobalSearchModule,
     ThesaurusModule,
+    TaskflowModule,
     FhirModule,
     ObservationDefinitionModule,
     ToolsModule,

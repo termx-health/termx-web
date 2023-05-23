@@ -1,0 +1,12 @@
+<label *ngIf="!selectOpened" (click)="selectOpened = !readonly"
+    [ngClass]="['m-subtitle', readonly ? '' : 'm-clickable']"
+    [style]="'font-size:1rem;' + (taskTypeColor(value) ? 'color:' + taskTypeColor(value): '')">{{value}}</label>
+<m-select *ngIf="selectOpened" [(ngModel)]="value" (ngModelChange)="typeSelected($event)" name="type">
+  <m-option mLabel="Task" [mValue]="'task'"></m-option>
+  <m-option mLabel="Milestone" [mValue]="'milestone'"></m-option>
+  <m-option mLabel="Phase" [mValue]="'phase'"></m-option>
+  <m-option mLabel="Feature" [mValue]="'feature'"></m-option>
+  <m-option mLabel="Epic" [mValue]="'epic'"></m-option>
+  <m-option mLabel="User story" [mValue]="'user-story'"></m-option>
+  <m-option mLabel="Bug" [mValue]="'bug'"></m-option>
+</m-select>

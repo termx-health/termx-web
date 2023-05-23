@@ -1,0 +1,90 @@
+<m-spinner [mLoading]="loader.isLoading">
+  <m-card [mShowSkeleton]="loader.isLoading">
+    <form #form="ngForm" *ngIf="task">
+      <div *m-card-header>
+        <div class="m-items-middle">
+          <tw-task-type name="type" [(ngModel)]="task.type" required></tw-task-type>
+          <m-input style="flex: 1" name="title" [(ngModel)]="task.title" required></m-input>
+          <m-button mDisplay="primary" (mClick)="save()">{{'core.btn.save' | translate}}</m-button>
+        </div>
+      </div>
+      <div *m-card-content style="display: flex; gap: 1rem">
+        <div style="flex: 2">
+          <div class="m-justify-between" style="margin-bottom: 1rem">
+            <tw-task-status [status]="task.status"></tw-task-status>
+            <m-radio-group name="generateValueSet" [(ngModel)]="newStatus">
+              <label m-radio-button
+                  [mValue]="s"
+                  *ngFor="let s of (workflow |apply:getTargetStatuses:task.status)">{{s | localizedConceptName: {valueSet: 'task-status'} | async}}</label>
+            </m-radio-group>
+          </div>
+          <m-form-item>
+            <m-textarea [rows]="5" name="content" [(ngModel)]="task.content"></m-textarea>
+          </m-form-item>
+
+
+          <ng-container *ngIf="task.context?.length > 0">
+            <m-divider>{{'web.task.context' | translate}}</m-divider>
+            <div style="display: grid">
+              <a *ngFor="let ctx of task.context" (mClick)="openContext(ctx)">{{ctx.type}} | {{ctx.id}}</a>
+            </div>
+          </ng-container>
+
+          <m-divider>{{'web.task.activity' | translate}}</m-divider>
+          <m-list>
+            <m-list-item *ngFor="let activity of (taskActivities| apply:hasTransitions)">
+              <div class="m-justify-between">
+                <label>{{activity.updatedBy?.sub}}</label>
+                <label class="m-subtitle">{{activity.updatedAt | localDateTime}}</label>
+              </div>
+              <div style="display:grid">
+                <label *ngFor="let at of (activity.transition | apply:changeTransitions)">
+                  <label class="m-bold">{{at.key}}: </label>
+                  <label class="m-subtitle">{{at.transition.from}}</label>&nbsp;
+                  <m-icon mCode="arrow-right"></m-icon>&nbsp; <label class="m-subtitle">{{at.transition.to}}</label>
+                </label>
+                <label style="font-style: italic">{{activity.note}}</label>
+              </div>
+            </m-list-item>
+            <m-list-item *ngIf="newActivity.visible">
+              <m-textarea [(ngModel)]="newActivity.note" name="note"></m-textarea>
+              <m-button mDisplay="text" (mClick)="createActivity()">
+                <m-icon mCode="check"></m-icon>
+              </m-button>
+              <m-button mDisplay="text" (mClick)="newActivity = {}">
+                <m-icon mCode="close"></m-icon>
+              </m-button>
+            </m-list-item>
+            <m-list-item *ngIf="!newActivity.visible && task.id" mClickable (mClick)="newActivity.visible = true">
+              <m-icon mCode="plus"></m-icon>&nbsp; <label>{{'web.task.add-comment' | translate}}</label>
+            </m-list-item>
+          </m-list>
+        </div>
+        <div style="flex: 1; border-left: 1px solid var(--color-borders-light); padding-left: 1rem">
+          <m-form-item mLabel="entities.task.assignee" mName="assignee">
+            <m-input name="assignee" [(ngModel)]="task.assignee.sub"></m-input>
+          </m-form-item>
+          <m-form-item mName="priority" mLabel="entities.task.priority" required>
+            <tw-value-set-concept-select name="priority"
+                [(ngModel)]="task.priority"
+                valueSet="request-priority"
+                valuePrimitive
+                required></tw-value-set-concept-select>
+          </m-form-item>
+          <m-form-item mLabel="entities.task.created">
+            <label>{{(task.createdAt | localDate) || '-'}}</label>
+          </m-form-item>
+          <m-form-item mLabel="entities.task.author">
+            <label>{{(task.createdBy?.sub) || '-'}}</label>
+          </m-form-item>
+          <m-form-item mLabel="entities.task.modified">
+            <label>{{(task.updatedAt | localDate) || '-'}}</label>
+          </m-form-item>
+          <m-form-item mLabel="entities.task.modified-by">
+            <label>{{(task.updatedBy?.sub) || '-'}}</label>
+          </m-form-item>
+        </div>
+      </div>
+    </form>
+  </m-card>
+</m-spinner>

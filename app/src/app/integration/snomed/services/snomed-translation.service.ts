@@ -6,6 +6,6 @@ import {SnomedTranslation, SnomedTranslationLibService} from 'app/src/app/integr
 @Injectable()
 export class SnomedTranslationService extends SnomedTranslationLibService {
   public save(conceptId: string, translations: SnomedTranslation[]): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${conceptId}`, translations);
+    return this.http.post(`${this.baseUrl}/concepts/${conceptId}/translations`, translations);
   }
 }

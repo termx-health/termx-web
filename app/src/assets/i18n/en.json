@@ -908,6 +908,29 @@
         "critical": "Critical",
         "absolute": "Absolute"
       }
+    },
+    "task": {
+      "add-btn": "Add task",
+      "select-space": "Select space",
+      "activity": "Activity",
+      "context": "Context",
+      "add-comment": "Add new comment",
+      "filter": {
+        "space": "Space",
+        "status": "Status",
+        "priority": "Priority",
+        "assignee": "Assignee",
+        "type": "Type",
+        "author": "Author",
+        "created": "Created",
+        "requested-performer": "Requested performer",
+        "finished": "Finished",
+        "presets": {
+          "header": "Presets",
+          "mine": "Authored by me",
+          "to-me": "Assigned to me"
+        }
+      }
     }
   },
   "entities": {
@@ -1399,6 +1422,19 @@
         "relation": "Relation",
         "condition": "Condition"
       }
+    },
+    "task": {
+      "plural": "Tasks",
+      "number": "Number",
+      "title": "Title",
+      "type": "Type",
+      "priority": "Priority",
+      "status": "Status",
+      "assignee": "Assignee",
+      "author": "Author",
+      "created": "Created",
+      "modified": "Modified",
+      "modified-by": "Modified by"
     }
   },
   "marina.ui.form.validationError": {

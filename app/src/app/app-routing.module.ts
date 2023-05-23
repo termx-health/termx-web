@@ -14,6 +14,7 @@ import {ProjectContextComponent} from 'term-web/core/context/project-context.com
 import {ProjectContextModule} from 'term-web/core/context/project-context.module';
 import {OBSERVATION_DEFINITION_ROUTES} from 'term-web/observation-definition/observation-definition.module';
 import {SEQUENCE_ROUTES} from 'term-web/sequence/sequence.module';
+import {TASKFLOW_ROUTES} from 'term-web/taskflow/taskflow.module';
 
 
 const routes: Routes = [
@@ -34,6 +35,7 @@ const routes: Routes = [
       {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['*.MeasurementUnit.view']}},
       {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.TerminologyServer.view']}},
       {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES},
+      {path: 'taskflow', children: TASKFLOW_ROUTES},
       {
         path: 'projects', children: [
           {path: '', children: PROJECT_ROUTES},

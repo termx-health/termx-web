@@ -184,6 +184,17 @@
     "items": [
       {
         "label": {
+          "en": "Tasks",
+          "et": "Ülesanded"
+        },
+        "icon": "inbox",
+        "link": "taskflow",
+        "privileges": [
+          "*.Task.view"
+        ]
+      },
+      {
+        "label": {
           "en": "Projects",
           "et": "Projektid"
         },

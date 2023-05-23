@@ -54,7 +54,7 @@
       </ng-template>
     </m-editable-column>
     <m-editable-column [mTitle]="'entities.snomed-translation.task'">
-      <ng-template #viewTemplate let-t><a>{{t.task?.code}}</a></ng-template>
+      <ng-template #viewTemplate let-t><a [routerLink]="['/taskflow', t.task?.id,'edit']">{{t.task?.code}}</a></ng-template>
     </m-editable-column>
     <m-editable-column [mTitle]="'entities.snomed-translation.status'">
       <ng-template #viewTemplate let-t>{{t.status | localizedConceptName: {codeSystem: 'v3-ConceptStatus'} | async }}</ng-template>
