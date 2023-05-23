@@ -365,6 +365,7 @@ export class CodeSystemFileImportComponent {
     document.body.removeChild(element);
   }
 
+
   /* Parsed properties table */
 
   protected applyTemplate(): void {
