@@ -62,6 +62,7 @@ export class TaskEditComponent implements OnInit {
     }
     const t = copyDeep(this.task);
     t.status = this.newStatus || t.status;
+    t.assignee = t.assignee.sub ? t.assignee : undefined;
     this.loader.wrap('save', this.taskService.save(t)).subscribe(t => this.loadTask(t.id));
   }
 
