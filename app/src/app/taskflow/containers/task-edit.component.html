@@ -62,7 +62,9 @@
         </div>
         <div style="flex: 1; border-left: 1px solid var(--color-borders-light); padding-left: 1rem">
           <m-form-item mLabel="entities.task.assignee" mName="assignee">
-            <m-input name="assignee" [(ngModel)]="task.assignee.sub"></m-input>
+            <m-select name="assignee" [(ngModel)]="task.assignee.sub">
+              <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"></m-option>
+            </m-select>
           </m-form-item>
           <m-form-item mName="priority" mLabel="entities.task.priority" required>
             <tw-value-set-concept-select name="priority"

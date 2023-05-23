@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable, tap} from 'rxjs';
-import {ComponentStateStore, copyDeep, DestroyService, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {Space, SpaceLibService, Task, TaskLibService, TaskSearchParams} from 'term-web/taskflow/_lib';
+import {ComponentStateStore, copyDeep, DestroyService, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
+import {Space, SpaceLibService, Task, TaskflowUser, TaskLibService, TaskSearchParams, UserLibService} from 'term-web/taskflow/_lib';
 import {AuthService} from 'term-web/core/auth';
 
 @Component({
@@ -17,15 +17,17 @@ export class TaskListComponent implements OnInit {
   protected loader = new LoadingManager();
 
   protected spaces: Space[];
+  protected users: TaskflowUser[];
 
   protected readonly STORE_KEY = 'task-list';
 
   public constructor(
     private taskService: TaskLibService,
     private spaceService: SpaceLibService,
+    private userService: UserLibService,
     private stateStore: ComponentStateStore,
     private auth: AuthService,
-    ) {}
+  ) {}
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
@@ -35,6 +37,7 @@ export class TaskListComponent implements OnInit {
     }
     this.loadData();
     this.loadSpaces();
+    this.loadUsers();
   }
 
   protected loadData(): void {
@@ -72,6 +75,10 @@ export class TaskListComponent implements OnInit {
     this.loader.wrap('space-list', this.spaceService.loadAll()).subscribe(spaces => this.spaces = spaces);
   }
 
+  private loadUsers(): void {
+    this.loader.wrap('user-list', this.userService.load()).subscribe(users => this.users = users);
+  }
+
   private processStatusOption(q: TaskSearchParams, filter: any): void {
     if (filter['status-option'] === 'open') {
       q.statuses = 'draft,requested,received,accepted,ready,in-progress,on-hold,failed';
@@ -96,4 +103,5 @@ export class TaskListComponent implements OnInit {
       this.filter['author'] = this.auth.user?.username;
     }
   }
+
 }

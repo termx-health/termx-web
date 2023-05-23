@@ -9,6 +9,7 @@ import {TaskTypeComponent} from 'term-web/taskflow/_lib/containers/task-type.com
 import {WorkflowLibService} from 'term-web/taskflow/_lib/services/workflow-lib-service';
 import {TaskStatusComponent} from 'term-web/taskflow/_lib/containers/task-status.component';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
+import {UserLibService} from 'term-web/taskflow/_lib/services/user-lib-service';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import {ResourcesLibModule} from 'term-web/resources/_lib';
     TaskLibService,
     SpaceLibService,
     WorkflowLibService,
+    UserLibService,
   ],
   declarations: [TaskTypeComponent, TaskStatusComponent],
   exports: [TaskTypeComponent, TaskStatusComponent]

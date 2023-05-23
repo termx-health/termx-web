@@ -3,13 +3,11 @@ import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {
-  Space,
-  SpaceLibService,
   Task,
   TaskActivity,
   TaskActivityTransition,
   TaskContextItem,
-  TaskflowUser,
+  TaskflowUser, UserLibService,
   Workflow,
   WorkflowLibService
 } from 'term-web/taskflow/_lib';
@@ -23,18 +21,19 @@ import {SnomedTranslationService} from 'term-web/integration/snomed/services/sno
 export class TaskEditComponent implements OnInit {
   protected task?: Task;
   protected taskActivities?: TaskActivity[];
-  protected space?: Space;
-  protected workflow?: Workflow;
   protected newStatus?: string;
   protected newActivity?: {visible?: boolean, note?: string} = {};
   protected loader = new LoadingManager();
+
+  protected users: TaskflowUser[];
+  protected workflow?: Workflow;
 
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private taskService: TaskService,
-    private spaceService: SpaceLibService,
     private workflowService: WorkflowLibService,
+    private userService: UserLibService,
     private route: ActivatedRoute,
     private router: Router,
     private snomedTranslationService: SnomedTranslationService,
@@ -43,6 +42,7 @@ export class TaskEditComponent implements OnInit {
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     this.loadTask(Number(id));
+    this.loadUsers();
   }
 
   private loadTask(id: number): void {
@@ -52,7 +52,6 @@ export class TaskEditComponent implements OnInit {
       .subscribe(([task, activities]) => {
         this.task = this.prepare(task);
         this.taskActivities = activities;
-        this.loadSpace(task.spaceId);
         this.loadWorkflow(task.workflowId);
       });
   }
@@ -76,10 +75,6 @@ export class TaskEditComponent implements OnInit {
       this.loadTask(this.task.id);
       this.newActivity = {};
     });
-  }
-
-  private loadSpace(spaceId: number): void {
-    this.spaceService.load(spaceId).subscribe(s => this.space = s);
   }
 
   private loadWorkflow(workflowId: number): void {
@@ -119,5 +114,9 @@ export class TaskEditComponent implements OnInit {
     if (ctx.type === 'snomed-translation') {
       this.snomedTranslationService.load(ctx.id).subscribe(t => this.router.navigate(['/integration/snomed', t.conceptId]));
     }
+  }
+
+  private loadUsers(): void {
+    this.loader.wrap('user-list', this.userService.load()).subscribe(users => this.users = users);
   }
 }

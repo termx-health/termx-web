@@ -43,7 +43,9 @@
       </div>
     </m-form-item>
     <m-form-item [mLabel]="'web.task.filter.assignee'" mName="assignee">
-      <m-input name="assignee" [(ngModel)]="filter['assignee']"></m-input>
+      <m-select name="assignee" [(ngModel)]="filter['assignee']">
+        <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"></m-option>
+      </m-select>
     </m-form-item>
     <m-form-item [mLabel]="'web.task.filter.priority'">
       <m-form-item mName="priority">
@@ -62,7 +64,9 @@
       </m-select>
     </m-form-item>
     <m-form-item [mLabel]="'web.task.filter.author'" mName="author">
-      <m-input name="author" [(ngModel)]="filter['author']"></m-input>
+      <m-select name="author" [(ngModel)]="filter['author']">
+        <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"></m-option>
+      </m-select>
     </m-form-item>
     <m-form-item [mLabel]="'web.task.filter.created'">
       <div class="m-items-middle">
