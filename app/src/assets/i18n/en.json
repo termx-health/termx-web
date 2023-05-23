@@ -570,7 +570,11 @@
             "type": "Type",
             "format": "Format",
             "lang": "Lang",
-            "import": "Import"
+            "import": "Import",
+            "download-diff": "Download diff",
+            "download-log": "Download log",
+            "import-data": "Import data",
+            "validate-data": "Validate data only"
           }
         },
         "concept-map": {

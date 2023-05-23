@@ -1,7 +1,7 @@
 import {Component, ElementRef, Injectable, TemplateRef, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'app/src/environments/environment';
-import {collect, copyDeep, DestroyService, group, isNil, LoadingManager} from '@kodality-web/core-util';
+import {collect, copyDeep, DestroyService, group, isNil, LoadingManager, sort} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
@@ -10,193 +10,13 @@ import {Router} from '@angular/router';
 import {CodeSystem, CodeSystemLibService, CodeSystemVersion, EntityProperty} from '../../../../resources/_lib';
 import {JobLibService, JobLog, JobLogResponse} from '../../../../job/_lib';
 
-const IMPORT_TEMPLATES: {[p: string]: FileImportPropertyRow[]} = {
-  'pub.e-tervis': [
-    {
-      columnName: 'Kood',
-      propertyName: 'concept-code',
-      propertyType: 'string',
-      preferred: true,
-      import: true
-    },
-    {
-      columnName: 'Lühinimetus',
-      propertyName: 'alias',
-      propertyType: 'string',
-      lang: 'et',
-      import: false
-    },
-    {
-      columnName: 'Nimetus',
-      propertyName: 'display',
-      propertyType: 'string',
-      lang: 'et',
-      import: true
-    },
-    {
-      columnName: 'Pikk_nimetus',
-      propertyName: 'designation',
-      propertyType: 'string',
-      lang: 'et',
-      import: true
-    },
-    {
-      columnName: 'Vanem_kood',
-      propertyName: 'parent',
-      propertyType: 'code',
-      import: false
-    },
-    {
-      columnName: 'Hierarhia_aste',
-      propertyName: 'level',
-      propertyType: 'integer',
-      import: false
-    },
-    {
-      columnName: 'Kehtivuse_alguse_kpv',
-      propertyName: 'validFrom',
-      propertyType: 'dateTime',
-      propertyTypeFormat: 'dd.MM.yyyy',
-      import: true
-    },
-    {
-      columnName: 'Kehtivuse_lõpu_kpv',
-      propertyName: 'validTo',
-      propertyType: 'dateTime',
-      propertyTypeFormat: 'dd.MM.yyyy',
-      import: true
-    },
-    {
-      columnName: 'Viimane_muudatus_kpv',
-      propertyName: 'modifiedAt',
-      propertyType: 'dateTime',
-      propertyTypeFormat: 'dd.MM.yyyy',
-      import: true
-    },
-    {
-      columnName: 'Staatus',
-      propertyName: 'status',
-      propertyType: 'boolean',
-      import: true
-    },
-    {
-      columnName: 'Selgitus',
-      propertyName: 'description',
-      propertyType: 'string',
-      lang: 'et',
-      import: false
-    }
-  ],
-  'icf': [
-    {
-      columnName: 'Foundation URI',
-      propertyName: 'foundationUri',
-      propertyType: 'string',
-      import: true
-    },
-    {
-      columnName: 'Linearization (release) URI',
-      propertyName: 'linearizationUri',
-      propertyType: 'string',
-      import: true
-    },
-    {
-      columnName: 'Code',
-      propertyName: 'concept-code',
-      propertyType: 'string',
-      preferred: true,
-      import: true
-    },
-    {
-      columnName: 'BlockId',
-      propertyName: 'concept-code',
-      propertyType: 'string',
-      preferred: false,
-      import: true
-    },
-    {
-      columnName: 'Title',
-      propertyName: 'display',
-      propertyType: 'string',
-      lang: 'en',
-      import: true
-    },
-    {
-      columnName: 'Title',
-      propertyName: 'display',
-      propertyType: 'string',
-      lang: 'en',
-      import: true
-    },
-    {
-      columnName: 'ClassKind',
-      propertyName: 'classKind',
-      propertyType: 'string',
-      import: false
-    },
-    {
-      columnName: 'DepthInKind',
-      propertyName: 'level',
-      propertyType: 'integer',
-      import: false
-    },
-    {
-      columnName: 'IsResidual',
-      propertyName: 'residual',
-      propertyType: 'boolean',
-      import: true
-    },
-    {
-      columnName: 'isLeaf',
-      propertyName: 'leaf',
-      propertyType: 'boolean',
-      import: true
-    },
-    {
-      columnName: 'PrimaryLocation',
-      propertyName: 'primaryLocation',
-      propertyType: 'boolean',
-      import: true
-    },
-    {
-      columnName: 'ChapterNo',
-      propertyName: 'chapterNo',
-      propertyType: 'integer',
-      import: false
-    },
-    {
-      columnName: 'ChapterNo',
-      propertyName: 'chapterNo',
-      propertyType: 'integer',
-      import: false
-    },
-    {
-      columnName: 'BrowserLink',
-      propertyName: 'browserLink',
-      propertyType: 'string',
-      import: false
-    },
-    {
-      columnName: 'iCatLink',
-      propertyName: 'iCatLink',
-      propertyType: 'string',
-      import: false
-    },
-    {
-      columnName: 'noOfNonResidualChildren',
-      propertyName: 'nonResidualChildrenNumber',
-      propertyType: 'integer',
-      import: false
-    }
-  ]
-};
 
 const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
-  {name: 'concept-code', type: 'string'},
-  {name: 'description', type: 'string'},
-  {name: 'definition', type: 'string'},
-  {name: 'display', type: 'string'},
-  {name: 'parent', type: 'code'}
+  {name: 'concept-code', type: 'string', orderNumber: -100},
+  {name: 'display', type: 'string', orderNumber: -50},
+  {name: 'definition', type: 'string', orderNumber: -25},
+  {name: 'description', type: 'string', orderNumber: 9900},
+  {name: 'parent', type: 'code', orderNumber: 9999},
 ];
 
 
@@ -422,6 +242,7 @@ export class CodeSystemFileImportComponent {
       status: 'draft'
     };
     this.data.codeSystemVersion['_new'] = true;
+    this.data.cleanRun = false;
   }
 
 
@@ -548,26 +369,30 @@ export class CodeSystemFileImportComponent {
 
   protected applyTemplate(): void {
     const existingPropertyNames = this.combineWithDefaults(this.sourceCodeSystem?.properties).map(p => p.name);
+    const req$ = this.data.template ? this.http.get<FileImportPropertyRow[]>(`./assets/file-import-templates/${this.data.template}.json`) : of([]);
 
-    const template = group(IMPORT_TEMPLATES[this.data.template], p => p.columnName);
-    if (!template) {
-      return;
-    }
-
-    this.analyzeResponse.parsedProperties.forEach(pp => {
-      const prop = template[pp.columnName];
-      if (!prop) {
+    req$.subscribe(resp => {
+      const template = group(resp, p => p.columnName);
+      if (!template) {
         return;
       }
-      pp['_newProp'] = !existingPropertyNames.includes(prop.propertyName);
-      pp.propertyName = prop.propertyName;
-      pp.propertyType = prop.propertyType;
-      pp.propertyTypeFormat = prop.propertyTypeFormat;
-      pp.preferred = prop.preferred;
-      pp.lang = prop.lang;
-      pp.import = prop.import;
-      this.onPropertyPreferredChange(pp);
+
+      this.analyzeResponse.parsedProperties.forEach(pp => {
+        const prop = template[pp.columnName];
+        if (!prop) {
+          return;
+        }
+        pp['_newProp'] = !existingPropertyNames.includes(prop.propertyName);
+        pp.propertyName = prop.propertyName;
+        pp.propertyType = prop.propertyType;
+        pp.propertyTypeFormat = prop.propertyTypeFormat;
+        pp.preferred = prop.preferred;
+        pp.lang = prop.lang;
+        pp.import = prop.import;
+        this.onPropertyPreferredChange(pp);
+      });
     });
+
   }
 
   protected onPropertyNameChange(item: FileImportPropertyRow): void {
@@ -587,10 +412,10 @@ export class CodeSystemFileImportComponent {
   }
 
   protected combineWithDefaults(entityProperties: EntityProperty[]): EntityProperty[] {
-    return Object.values({
+    return sort(Object.values({
       ...group<string, EntityProperty>(DEFAULT_KTS_PROPERTIES, e => e.name!),
       ...group<string, EntityProperty>(entityProperties || [], e => e.name!),
-    });
+    }), 'orderNumber');
   }
 
   protected get hasDuplicateIdentifiers(): boolean {

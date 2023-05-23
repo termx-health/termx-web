@@ -1,0 +1,76 @@
+[
+  {
+    "columnName": "Kood",
+    "propertyName": "concept-code",
+    "propertyType": "string",
+    "preferred": true,
+    "import": true
+  },
+  {
+    "columnName": "Lühinimetus",
+    "propertyName": "alias",
+    "propertyType": "string",
+    "lang": "et",
+    "import": false
+  },
+  {
+    "columnName": "Nimetus",
+    "propertyName": "display",
+    "propertyType": "string",
+    "lang": "et",
+    "import": true
+  },
+  {
+    "columnName": "Pikk_nimetus",
+    "propertyName": "designation",
+    "propertyType": "string",
+    "lang": "et",
+    "import": true
+  },
+  {
+    "columnName": "Vanem_kood",
+    "propertyName": "parent",
+    "propertyType": "code",
+    "import": false
+  },
+  {
+    "columnName": "Hierarhia_aste",
+    "propertyName": "level",
+    "propertyType": "integer",
+    "import": false
+  },
+  {
+    "columnName": "Kehtivuse_alguse_kpv",
+    "propertyName": "validFrom",
+    "propertyType": "dateTime",
+    "propertyTypeFormat": "dd.MM.yyyy",
+    "import": true
+  },
+  {
+    "columnName": "Kehtivuse_lõpu_kpv",
+    "propertyName": "validTo",
+    "propertyType": "dateTime",
+    "propertyTypeFormat": "dd.MM.yyyy",
+    "import": true
+  },
+  {
+    "columnName": "Viimane_muudatus_kpv",
+    "propertyName": "modifiedAt",
+    "propertyType": "dateTime",
+    "propertyTypeFormat": "dd.MM.yyyy",
+    "import": true
+  },
+  {
+    "columnName": "Staatus",
+    "propertyName": "status",
+    "propertyType": "boolean",
+    "import": true
+  },
+  {
+    "columnName": "Selgitus",
+    "propertyName": "description",
+    "propertyType": "string",
+    "lang": "et",
+    "import": false
+  }
+]

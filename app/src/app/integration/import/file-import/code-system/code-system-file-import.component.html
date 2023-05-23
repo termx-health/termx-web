@@ -170,6 +170,7 @@
           <m-select [(ngModel)]="data.template" (ngModelChange)="applyTemplate()">
             <m-option [mValue]="'pub.e-tervis'" [mLabel]="'pub.e-tervis'"></m-option>
             <m-option [mValue]="'icf'" [mLabel]="'icf'"></m-option>
+            <m-option [mValue]="'loinc-lt'" [mLabel]="'loinc-lt'"></m-option>
           </m-select>
 
           <m-table [mData]="analyzeResponse.parsedProperties">
@@ -254,7 +255,9 @@
 
           <ng-container *ngIf="jobLog">
             <m-alert *ngIf="!jobLog.errors?.length" class="import-alert" mType="success" mTitle="No errors found">
-              <a *ngIf="jobLog.warnings?.length" (mClick)="downloadLog()">Download diff</a>
+              <a *ngIf="jobLog.warnings?.length" (mClick)="downloadLog()">
+                {{'web.integration.file-import.code-system.properties.download-diff' | translate}}
+              </a>
             </m-alert>
 
             <m-alert *ngIf="jobLog.errors?.length"
@@ -262,7 +265,9 @@
                 mType="error"
                 mTitle="Found {{jobLog.errors?.length}} errors during the file processing"
             >
-              <a (mClick)="downloadLog()">Download log</a>
+              <a (mClick)="downloadLog()">
+                {{'web.integration.file-import.code-system.properties.download-log' | translate}}
+              </a>
             </m-alert>
           </ng-container>
 
@@ -270,8 +275,8 @@
 
         <div *m-card-footer class="m-items-middle">
           <m-radio-group name="dryRun" [(ngModel)]="data.dryRun" required>
-            <label m-radio-button [mValue]="false">Import data</label>
-            <label m-radio-button [mValue]="true">Validate data only</label>
+            <label m-radio-button [mValue]="false">{{'web.integration.file-import.code-system.properties.import-data' | translate}}</label>
+            <label m-radio-button [mValue]="true">{{'web.integration.file-import.code-system.properties.validate-data' | translate}}</label>
           </m-radio-group>
 
           <m-button
@@ -283,7 +288,6 @@
             {{'web.integration.file-import.process' | translate}}
           </m-button>
         </div>
-
       </m-card>
     </div>
   </nz-tab>
