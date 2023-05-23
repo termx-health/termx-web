@@ -236,7 +236,6 @@ interface FileProcessingRequest {
     description?: string;
   };
   version?: {
-    id?: number,
     version?: string;
     status?: string;
     releaseDate?: Date;
@@ -354,7 +353,6 @@ export class CodeSystemFileImportComponent {
     // general
     codeSystem: CodeSystem,
     codeSystemVersion?: {
-      versionId?: number;
       version?: string;
       status?: string;
       releaseDate?: Date;
@@ -374,7 +372,7 @@ export class CodeSystemFileImportComponent {
     codeSystem: {},
     codeSystemVersion: {},
     generateValueSet: false,
-    dryRun: false,
+    dryRun: true,
     cleanRun: false,
     source: {
       type: 'link',
@@ -415,6 +413,8 @@ export class CodeSystemFileImportComponent {
     this.sourceCodeSystem = undefined;
     this.data.codeSystem = new CodeSystem();
     this.data.codeSystem['_new'] = true;
+
+    this.createCodeSystemVersion();
   }
 
   public createCodeSystemVersion(): void {
@@ -431,7 +431,6 @@ export class CodeSystemFileImportComponent {
     this.loader.wrap('cs', req$).subscribe(cs => {
       this.sourceCodeSystem = cs;
       this.data.codeSystemVersion = {};
-      this.data.codeSystemVersion['_new'] = true; // fixme: delete
       this.data.cleanRun = false;
 
       const draftVersions = cs?.versions?.filter(v => this.filterVersion(v, 'draft'));
@@ -498,7 +497,6 @@ export class CodeSystemFileImportComponent {
         })
       },
       version: {
-        id: this.data.codeSystemVersion.versionId,
         version: this.data.codeSystemVersion.version,
         status: this.data.codeSystemVersion.status,
         releaseDate: this.data.codeSystemVersion.releaseDate,
@@ -520,24 +518,29 @@ export class CodeSystemFileImportComponent {
     this.jobLog = undefined;
     this.loader.wrap('process', this.importService.processRequest(req, file)).subscribe(resp => {
       this.jobLog = resp;
-      if (!resp.errors && !resp.warnings) {
+      if (resp.errors?.length || resp.warnings?.length) {
+        this.downloadLog();
+      } else if (!this.data.dryRun) {
         this.notificationService.success("web.integration.file-import.success-message", this.successNotificationContent!, {duration: 0, closable: true});
       }
     });
   };
 
   protected downloadLog(): void {
-    const errors = this.jobLog.errors.join('\n').replace(/ApiException: .+: /gm, '');
+    const warnings = this.jobLog.warnings?.join('\n');
+    const errors = this.jobLog.errors?.join('\n');
+
+    const file = [
+      warnings,
+      errors
+    ].filter(Boolean).join('\n\n');
 
     const element = document.createElement('a');
-    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(errors));
+    element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(file));
     element.setAttribute('download', ['log', this.data.codeSystem.id].filter(Boolean).join('_') + '.txt');
-
     element.style.display = 'none';
     document.body.appendChild(element);
-
     element.click();
-
     document.body.removeChild(element);
   }
 

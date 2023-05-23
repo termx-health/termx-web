@@ -70,7 +70,7 @@
               <m-form-item mName="versionVersion" mLabel="entities.code-system-version.version" required mLabelHint="Draft versions only">
                 <m-select
                     name="versionVersion"
-                    [(ngModel)]="data.codeSystemVersion.versionId"
+                    [(ngModel)]="data.codeSystemVersion.version"
                     (ngModelChange)="data.cleanRun = false"
                     autoSelect
                     required
@@ -78,7 +78,7 @@
                   <m-option
                       *ngFor="let v of sourceCodeSystem?.versions | filter: filterVersion: 'draft'"
                       [mLabel]="v.version"
-                      [mValue]="v.id"
+                      [mValue]="v.version"
                   ></m-option>
                 </m-select>
 
@@ -88,12 +88,12 @@
                 </div>
               </m-form-item>
 
-<!-- fixme              <m-form-item mName="versionCleanRun" mLabel="web.integration.file-import.code-system.general.clear-version-data">
+              <m-form-item mName="versionCleanRun" mLabel="web.integration.file-import.code-system.general.clear-version-data">
                 <m-radio-group name="versionCleanRun" [(ngModel)]="data.cleanRun" required>
                   <label m-radio-button [mValue]="true">Yes</label>
                   <label m-radio-button [mValue]="false">No</label>
                 </m-radio-group>
-              </m-form-item>-->
+              </m-form-item>
             </ng-container>
 
 
@@ -253,13 +253,17 @@
           </m-alert>
 
           <ng-container *ngIf="jobLog">
-            <m-alert *ngIf="jobLog.errors?.length === 0" class="import-alert" mType="success" mTitle="No detectable errors found"></m-alert>
-
-            <m-alert *ngIf="jobLog.errors?.length >= 10" class="import-alert" mType="error" mTitle="Found {{jobLog.errors?.length}} errors during the file processing">
-              <a (mClick)="downloadLog()">Download log</a>
+            <m-alert *ngIf="!jobLog.errors?.length" class="import-alert" mType="success" mTitle="No errors found">
+              <a *ngIf="jobLog.warnings?.length" (mClick)="downloadLog()">Download diff</a>
             </m-alert>
 
-            <tw-import-job-log *ngIf="0 < jobLog.errors?.length && jobLog.errors?.length < 10" [jobLog]="jobLog"/>
+            <m-alert *ngIf="jobLog.errors?.length"
+                class="import-alert"
+                mType="error"
+                mTitle="Found {{jobLog.errors?.length}} errors during the file processing"
+            >
+              <a (mClick)="downloadLog()">Download log</a>
+            </m-alert>
           </ng-container>
 
         </div>
