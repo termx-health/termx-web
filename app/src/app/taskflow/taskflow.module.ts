@@ -10,6 +10,7 @@ import {TaskService} from 'term-web/taskflow/services/task-service';
 
 export const TASKFLOW_ROUTES: Routes = [
   {path: '', component: TaskListComponent},
+  {path: 'add', data: {privilege: ['*.Task.edit']}, component: TaskEditComponent},
   {path: ':id/edit', data: {privilege: ['*.Task.edit']}, component: TaskEditComponent},
 ];
 

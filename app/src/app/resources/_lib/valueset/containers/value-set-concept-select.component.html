@@ -10,5 +10,5 @@
     [filterOption]="filterOption">
   <m-option *ngFor="let key of data | keys"
       [mValue]="key"
-      [mLabel]="data[key]?.display ? data[key]?.display?.name : (key | localizedConceptName: {valueSet: valueSet, valueSetVersion: valueSetVersion} | async)"></m-option>
+      [mLabel]="data[key] | apply: getDisplay"></m-option>
 </m-select>

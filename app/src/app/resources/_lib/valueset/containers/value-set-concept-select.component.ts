@@ -6,6 +6,7 @@ import {CodeSystemConcept, CodeSystemConceptLibService} from '../../codesystem';
 import {ValueSetVersionConcept} from '../model/value-set-version-concept';
 import {ValueSetLibService} from '../services/value-set-lib.service';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'tw-value-set-concept-select',
@@ -31,6 +32,7 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
   public constructor(
     private valueSetService: ValueSetLibService,
     private conceptService: CodeSystemConceptLibService,
+    private translateService: TranslateService,
     private destroy$: DestroyService
   ) {}
 
@@ -111,6 +113,12 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
 
   public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
     return nzValue.toLowerCase().includes(_input.toLowerCase()) || this.data[nzValue]?.display?.name?.toLowerCase().includes(_input.toLowerCase());
+  };
+
+  protected getDisplay = (concept: ValueSetVersionConcept): string => {
+    const lang = this.translateService.currentLang;
+    const d = concept?.additionalDesignations?.find(ad => ad?.language === lang)?.name;
+    return d || concept?.display?.name || concept?.concept?.code;
   };
 
 }

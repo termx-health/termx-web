@@ -1,1 +1,1 @@
-<m-tag [mColor]="statusMap[status]" [mLabel]="status | localizedConceptName: {valueSet: 'task-status'} | async"></m-tag>
+<m-tag *ngIf="status" [mColor]="statusMap[status]" [mLabel]="status | localizedConceptName: {valueSet: 'task-status'} | async"></m-tag>

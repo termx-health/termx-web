@@ -7,6 +7,7 @@ export * from './model/task-activity';
 export * from './model/task-search-params';
 export * from './model/taskflow-user';
 export * from './model/workflow';
+export * from './model/workflow-search-params';
 
 export * from './services/space-lib-service';
 export * from './services/task-lib-service';

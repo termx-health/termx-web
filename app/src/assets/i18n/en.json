@@ -1438,7 +1438,9 @@
       "author": "Author",
       "created": "Created",
       "modified": "Modified",
-      "modified-by": "Modified by"
+      "modified-by": "Modified by",
+      "space": "Space",
+      "workflow": "Workflow"
     }
   },
   "marina.ui.form.validationError": {

@@ -4,7 +4,7 @@
       <div *m-card-header>
         <div class="m-items-middle">
           <tw-task-type name="type" [(ngModel)]="task.type" required></tw-task-type>
-          <m-input style="flex: 1" name="title" [(ngModel)]="task.title" required></m-input>
+          <m-input style="flex: 1" name="title" [(ngModel)]="task.title" required placeholder="Title"></m-input>
           <m-button mDisplay="primary" (mClick)="save()">{{'core.btn.save' | translate}}</m-button>
         </div>
       </div>
@@ -15,11 +15,11 @@
             <m-radio-group name="generateValueSet" [(ngModel)]="newStatus">
               <label m-radio-button
                   [mValue]="s"
-                  *ngFor="let s of (workflow |apply:getTargetStatuses:task.status)">{{s | localizedConceptName: {valueSet: 'task-status'} | async}}</label>
+                  *ngFor="let s of (task.workflowId |apply:getTargetStatuses:task.status:workflows)">{{s | localizedConceptName: {valueSet: 'task-status'} | async}}</label>
             </m-radio-group>
           </div>
           <m-form-item>
-            <m-textarea [rows]="5" name="content" [(ngModel)]="task.content"></m-textarea>
+            <m-textarea [rows]="5" name="content" [(ngModel)]="task.content" placeholder="Content"></m-textarea>
           </m-form-item>
 
 
@@ -61,6 +61,16 @@
           </m-list>
         </div>
         <div style="flex: 1; border-left: 1px solid var(--color-borders-light); padding-left: 1rem">
+          <m-form-item *ngIf="!task.id" mLabel="entities.task.space" mName="space" required>
+            <m-select name="space" [(ngModel)]="task.spaceId" (ngModelChange)="loadWorkflows($event)" required>
+              <m-option *ngFor="let s of spaces" [mLabel]="s.names | localName" [mValue]="s.id"></m-option>
+            </m-select>
+          </m-form-item>
+          <m-form-item *ngIf="!task.id && task.spaceId" mLabel="entities.task.workflow" mName="workflow" required>
+            <m-select name="workflow" [(ngModel)]="task.workflowId" required>
+              <m-option *ngFor="let wf of workflows" [mLabel]="wf.taskType" [mValue]="wf.id"></m-option>
+            </m-select>
+          </m-form-item>
           <m-form-item mLabel="entities.task.assignee" mName="assignee">
             <m-select name="assignee" [(ngModel)]="task.assignee.sub">
               <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"></m-option>
