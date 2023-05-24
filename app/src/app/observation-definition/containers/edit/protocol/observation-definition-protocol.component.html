@@ -2,7 +2,7 @@
   <m-form-row mFull>
     <div *mFormCol>
       <m-form-item mLabel="entities.observation-definition.protocol.device" mName="device-usage" required>
-        <m-select name="device-usage" [(ngModel)]="protocol.device.usage" required>
+        <m-select name="device-usage" [(ngModel)]="protocol.device.usage" (ngModelChange)="onUsageChange(protocol.device, $event, 'device-type')" required>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
@@ -14,14 +14,14 @@
         <tw-value-set-search [(ngModel)]="protocol.device.valueSet" name="device-value-set" valuePrimitive></tw-value-set-search>
       </m-form-item>
       <m-form-item *ngIf="protocol.device.usage === 'values'" mLabel="entities.observation-definition.protocol.device-values" mName="device-values">
-        <tw-obs-def-protocol-value-select [(ngModel)]="protocol.device.values" name="device-values" valueSet="device-type"></tw-obs-def-protocol-value-select>
+        <tw-obs-def-value-select [(ngModel)]="protocol.device.values" name="device-values"></tw-obs-def-value-select>
       </m-form-item>
     </div>
   </m-form-row>
   <m-form-row mFull>
     <div *mFormCol>
       <m-form-item mLabel="entities.observation-definition.protocol.method" mName="method-usage" required>
-        <m-select name="method-usage" [(ngModel)]="protocol.method.usage" required>
+        <m-select name="method-usage" [(ngModel)]="protocol.method.usage" (ngModelChange)="onUsageChange(protocol.method, $event, 'observation-methods')" required>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
@@ -33,14 +33,14 @@
         <tw-value-set-search [(ngModel)]="protocol.method.valueSet" name="method-value-set" valuePrimitive></tw-value-set-search>
       </m-form-item>
       <m-form-item *ngIf="protocol.method.usage === 'values'" mLabel="entities.observation-definition.protocol.method-values" mName="method-values">
-        <tw-obs-def-protocol-value-select [(ngModel)]="protocol.method.values" name="method-values" valueSet="observation-methods"></tw-obs-def-protocol-value-select>
+        <tw-obs-def-value-select [(ngModel)]="protocol.method.values" name="method-values"></tw-obs-def-value-select>
       </m-form-item>
     </div>
   </m-form-row>
   <m-form-row mFull>
     <div *mFormCol>
       <m-form-item mLabel="entities.observation-definition.protocol.measurement-location" mName="measurement-location-usage" required>
-        <m-select name="measurement-location-usage" [(ngModel)]="protocol.measurementLocation.usage" required>
+        <m-select name="measurement-location-usage" [(ngModel)]="protocol.measurementLocation.usage" (ngModelChange)="onUsageChange(protocol.measurementLocation, $event, 'body-site')" required>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
@@ -52,14 +52,14 @@
         <tw-value-set-search [(ngModel)]="protocol.measurementLocation.valueSet" name="measurement-location-value-set" valuePrimitive></tw-value-set-search>
       </m-form-item>
       <m-form-item *ngIf="protocol.measurementLocation.usage === 'values'" mLabel="entities.observation-definition.protocol.measurement-location-values" mName="measurement-location-values">
-        <tw-obs-def-protocol-value-select [(ngModel)]="protocol.measurementLocation.values" name="measurement-location-values" valueSet="body-site"></tw-obs-def-protocol-value-select>
+        <tw-obs-def-value-select [(ngModel)]="protocol.measurementLocation.values" name="measurement-location-values"></tw-obs-def-value-select>
       </m-form-item>
     </div>
   </m-form-row>
   <m-form-row mFull>
     <div *mFormCol>
       <m-form-item mLabel="entities.observation-definition.protocol.specimen" mName="specimen-usage" required>
-        <m-select name="specimen-usage" [(ngModel)]="protocol.specimen.usage" required>
+        <m-select name="specimen-usage" [(ngModel)]="protocol.specimen.usage" (ngModelChange)="onUsageChange(protocol.specimen, $event, 'v2-0487')" required>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.not-in-use' | translate" [mValue]="'not-in-use'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.value-set' | translate" [mValue]="'value-set'"></m-option>
           <m-option [mLabel]="'web.observation-definition.protocol-usage.values' | translate" [mValue]="'values'"></m-option>
@@ -71,7 +71,7 @@
         <tw-value-set-search [(ngModel)]="protocol.specimen.valueSet" name="specimen-value-set" valuePrimitive></tw-value-set-search>
       </m-form-item>
       <m-form-item *ngIf="protocol.specimen.usage === 'values'" mLabel="entities.observation-definition.protocol.specimen-values" mName="specimen-values">
-        <tw-obs-def-protocol-value-select [(ngModel)]="protocol.specimen.values" name="specimen-values" valueSet="v2-0487"></tw-obs-def-protocol-value-select>
+        <tw-obs-def-value-select [(ngModel)]="protocol.specimen.values" name="specimen-values"></tw-obs-def-value-select>
       </m-form-item>
     </div>
   </m-form-row>
@@ -90,7 +90,7 @@
         <tw-value-set-search [(ngModel)]="protocol.position.valueSet" name="position-value-set" valuePrimitive></tw-value-set-search>
       </m-form-item>
       <m-form-item *ngIf="protocol.position.usage === 'values'" mLabel="entities.observation-definition.protocol.position-values" mName="position-values">
-        <tw-obs-def-protocol-value-select [(ngModel)]="protocol.position.values" name="position-values"></tw-obs-def-protocol-value-select>
+        <tw-obs-def-value-select [(ngModel)]="protocol.position.values" name="position-values"></tw-obs-def-value-select>
       </m-form-item>
     </div>
   </m-form-row>
@@ -109,7 +109,7 @@
         <tw-value-set-search [(ngModel)]="protocol.dataCollectionCircumstances.valueSet" name="circumstances-value-set" valuePrimitive></tw-value-set-search>
       </m-form-item>
       <m-form-item *ngIf="protocol.dataCollectionCircumstances.usage === 'values'" mLabel="entities.observation-definition.protocol.circumstances-values" mName="circumstances-values">
-        <tw-obs-def-protocol-value-select [(ngModel)]="protocol.dataCollectionCircumstances.values" name="circumstances-values"></tw-obs-def-protocol-value-select>
+        <tw-obs-def-value-select [(ngModel)]="protocol.dataCollectionCircumstances.values" name="circumstances-values"></tw-obs-def-value-select>
       </m-form-item>
     </div>
   </m-form-row>

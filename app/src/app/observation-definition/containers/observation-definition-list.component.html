@@ -1,4 +1,16 @@
 <m-page>
+  <div *ngIf="jobResponse">
+    <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
+      {{error}}
+    </m-alert>
+    <m-alert *ngFor="let warning of jobResponse.warnings" mType="warning" mShowIcon>
+      {{warning}}
+    </m-alert>
+    <m-alert *ngFor="let success of jobResponse.successes" mType="success" mShowIcon>
+      {{success}}
+    </m-alert>
+  </div>
+
   <m-form-row>
     <m-card *m-form-col>
       <div *m-card-header class="m-justify-between">
@@ -7,6 +19,11 @@
           <tw-add-button *twPrivileged="'*.ObservationDefinition.edit'" [routerLink]="['add']">
             {{'web.observation-definition.header-add' | translate}}
           </tw-add-button>
+          <m-dropdown *twPrivileged="'*.ObservationDefinition.edit'">
+            <a *m-dropdown-item (mClick)="importData.visible = true">
+              {{'web.observation-definition.import-from-loinc' | translate}}
+            </a>
+          </m-dropdown>
         </div>
       </div>
 
@@ -40,3 +57,22 @@
     </m-card>
   </m-form-row>
 </m-page>
+
+<m-modal #modal [(mVisible)]="importData.visible" (mClose)="importData.visible = false" [mMaskClosable]="false">
+  <ng-container *m-modal-header>Import data</ng-container>
+  <ng-container *m-modal-content>
+    <form #form="ngForm">
+      <m-form-item mLabel="Loinc code" mName="code" required>
+        <tw-concept-search [(ngModel)]="importData.loincCodes" name="code" [codeSystem]="'loinc'" valueType="code" multiple required></tw-concept-search>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary"
+        [mLoading]="loader.state['import']"
+        [disabled]="loader.isLoading"
+        (click)="startImport()">{{'web.observation-definition.import' | translate}}</m-button>
+  </div>
+</m-modal>

@@ -866,6 +866,7 @@
       "import-from-loinc": "Import from LOINC",
       "import": "Start import",
       "select-snomed": "SNOMED search",
+      "import-success-message": "Observation definition import succeeded",
       "protocol-usage": {
         "not-in-use": "Not in use",
         "value-set": "In use (value set)",

@@ -1,0 +1,23 @@
+<div>
+  <m-tag m-tooltip [mTitle]="v.codeSystem" *ngFor="let v of value; let i = index" style="margin: 0 0.5rem 0.5rem 0">
+    {{v.code | localizedConceptName: {codeSystem: v.codeSystem} | async}}
+    <m-icon class="m-clickable" mCode="close" (click)="removeValue(i)"></m-icon>
+  </m-tag>
+</div>
+<div class="m-items-middle">
+  <tw-code-system-search style="flex: 1"
+      name="category-code-system"
+      placeholder="Code system"
+      [(ngModel)]="v.codeSystem"
+      valuePrimitive></tw-code-system-search>
+  <tw-term-concept-search style="flex: 1"
+      name="category-code"
+      [(ngModel)]="v.code"
+      (ngModelChange)="addValue($event, v.codeSystem)"
+      [codeSystem]="v.codeSystem"
+      valueType="code"
+      displayType="name"
+      placeholder="Concept"></tw-term-concept-search>
+</div>
+
+
