@@ -4,18 +4,23 @@ import {ObservationDefinitionSearchComponent} from './components/observation-def
 import {FormsModule} from '@angular/forms';
 import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {SharedModule} from '../../core/shared/shared.module';
+import {ObservationDefinitionValueSelectComponent} from 'term-web/observation-definition/_lib/components/observation-definition-value-select.component';
+import {ResourcesLibModule} from 'term-web/resources/_lib';
 
 @NgModule({
   imports: [
     FormsModule,
     MarinaComponentsModule,
-    SharedModule
+    SharedModule,
+    ResourcesLibModule
   ],
   declarations: [
-    ObservationDefinitionSearchComponent
+    ObservationDefinitionSearchComponent,
+    ObservationDefinitionValueSelectComponent,
   ],
   exports: [
-    ObservationDefinitionSearchComponent
+    ObservationDefinitionSearchComponent,
+    ObservationDefinitionValueSelectComponent,
   ],
   providers: [
     ObservationDefinitionLibService

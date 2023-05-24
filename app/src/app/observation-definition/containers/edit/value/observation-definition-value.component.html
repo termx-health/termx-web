@@ -21,7 +21,7 @@
         <tw-value-set-search [(ngModel)]="value.valueSet" name="valueSet" valuePrimitive></tw-value-set-search>
       </m-form-item>
       <m-form-item *ngIf="value.usage === 'values'" mLabel="entities.observation-definition.value.values" mName="values">
-        <tw-obs-def-protocol-value-select [(ngModel)]="value.values" name="values"></tw-obs-def-protocol-value-select>
+        <tw-obs-def-value-select name="values" [(ngModel)]="value.values"></tw-obs-def-value-select>
       </m-form-item>
     </div>
   </m-form-row>

@@ -52,26 +52,8 @@
             <m-multi-language-input name="keywords" [(ngModel)]="observationDefinition.keywords"></m-multi-language-input>
           </m-form-item>
           <m-form-item mName="category" mLabel="entities.observation-definition.category" required>
-            <div>
-              <m-tag m-tooltip [mTitle]="c.codeSystem" *ngFor="let c of observationDefinition.category; let i = index" style="margin: 0 0.5rem 0.5rem 0">
-                {{c.code | localizedConceptName: {codeSystem: c.codeSystem} | async}}
-                <m-icon class="m-clickable" mCode="close" (click)="removeCategory(i)"></m-icon>
-              </m-tag>
-            </div>
             <div class="m-items-middle">
-              <tw-code-system-search style="flex: 1"
-                  name="category-code-system"
-                  placeholder="Code system"
-                  [(ngModel)]="category.codeSystem"
-                  valuePrimitive></tw-code-system-search>
-              <tw-term-concept-search style="flex: 1"
-                  name="category-code"
-                  [(ngModel)]="category.code"
-                  (ngModelChange)="addCategory($event, category.codeSystem)"
-                  [codeSystem]="category.codeSystem"
-                  valueType="code"
-                  displayType="name"
-                  placeholder="Concept"></tw-term-concept-search>
+              <tw-obs-def-value-select name="category-code-system" [(ngModel)]="observationDefinition.category" codeSystem="observation-category"></tw-obs-def-value-select>
             </div>
 
           </m-form-item>
