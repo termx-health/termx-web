@@ -1,7 +1,7 @@
 import {APP_INITIALIZER, LOCALE_ID, NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 
-import {AppRoutingModule} from './app-routing.module';
+import {RootRoutingModule} from './root-routing.module';
 import {AppComponent} from './app.component';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
 import {HttpBackend, HttpClientModule} from '@angular/common/http';
@@ -10,7 +10,6 @@ import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
 import lt from '@angular/common/locales/lt';
 import {ResourcesModule} from './resources/resources.module';
-import {NoPrivilegeModule} from './core/ui/no-privilege/no-privilege.module';
 import {SharedModule} from './core/shared/shared.module';
 import {Observable} from 'rxjs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -30,6 +29,8 @@ import {ObservationDefinitionModule} from 'term-web/observation-definition/obser
 import {TableModule} from 'term-web/core/ui/table-container/table.module';
 import {SequenceModule} from 'term-web/sequence/sequence.module';
 import {TaskflowModule} from 'term-web/taskflow/taskflow.module';
+import {RootComponent} from 'term-web/root.component';
+import {NoPrivilegeComponent} from 'term-web/core/ui/no-privilege/no-privilege.component';
 
 registerLocaleData(et);
 registerLocaleData(lt);
@@ -43,15 +44,17 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
   return () => authService.refresh();
 }
 
+
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    RootComponent,
   ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
 
-    AppRoutingModule,
+    RootRoutingModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -66,8 +69,8 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     CoreUtilModule,
 
     SharedModule,
-    NoPrivilegeModule,
     TableModule,
+    NoPrivilegeComponent,
 
     ResourcesModule,
     IntegrationModule,
@@ -85,11 +88,13 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},
-    {provide: APP_INITIALIZER, useFactory: preloadAuth, deps: [AuthService], multi: true},
+    {provide: APP_INITIALIZER, useFactory: preloadAuth, deps: [AuthService], multi: true}
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    RootComponent
+  ]
 })
-export class AppModule {
+export class RootModule {
   public constructor(translate: TranslateService,) {
     translate.use(localStorage.getItem('locale') ?? 'en');
     translate.onLangChange.subscribe(({lang}) => localStorage.setItem('locale', lang));

@@ -1,5 +1,5 @@
 <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
-  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" *ngIf="concept?.versions">
+  <div nz-col [nzSm]="18" [nzXs]="24" *ngIf="concept?.versions">
     <m-card [mShowSkeleton]="loading['init']">
       <div class="m-justify-between">
         <label *ngIf="mode === 'edit'" class="m-card__title">

@@ -1,19 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, inject, Input} from '@angular/core';
 import {Router} from '@angular/router';
+import {CommonModule} from '@angular/common';
+import {TranslateModule} from '@ngx-translate/core';
+import {CoreUtilModule} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-no-privilege',
-  templateUrl: './no-privilege.component.html',
+  standalone: true,
+  imports: [CommonModule, TranslateModule, CoreUtilModule],
+  templateUrl: 'no-privilege.component.html',
 })
-export class NoPrivilegeComponent implements OnInit {
+export class NoPrivilegeComponent {
   @Input() public privileges?: string[];
-  public path?: string;
-
-  public constructor(
-    private router: Router
-  ) {}
-
-  public ngOnInit(): void {
-    this.path = this.router.url;
-  }
+  protected router = inject(Router);
 }

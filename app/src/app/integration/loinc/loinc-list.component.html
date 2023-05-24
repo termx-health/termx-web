@@ -16,7 +16,7 @@
       <tw-loinc-part-search [(ngModel)]="filter['class']" type="CLASS" multiple></tw-loinc-part-search>
     </m-form-item>
     <m-form-item [mLabel]="'web.loinc.loinc.filter.ord-obs'">
-      <m-radio-group [(ngModel)]="filter['orderObs']" >
+      <m-radio-group [(ngModel)]="filter['orderObs']">
         <label m-radio-button [mValue]="'Order'">{{'web.loinc.loinc.filter.order' | translate}}</label>
         <label m-radio-button [mValue]="'Observation'">{{'web.loinc.loinc.filter.observation' | translate}}</label>
         <label m-radio-button [mValue]="'Both'">{{'web.loinc.loinc.filter.both' | translate}}</label>

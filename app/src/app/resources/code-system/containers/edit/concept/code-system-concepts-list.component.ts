@@ -122,11 +122,11 @@ export class CodeSystemConceptsListComponent implements OnInit {
   public openConcept(code?: string, parentCode?: string): void {
     const lastVersionCode = this.dev && this.findLastVersionCode();
     if (!code) {
-      const path = 'resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/add') : '/concepts/add');
+      const path = '/resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/add') : '/concepts/add');
       this.router.navigate([path], {queryParams: {parent: parentCode}});
       return;
     }
-    const path = 'resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/') : '/concepts/') + code +
+    const path = '/resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/') : '/concepts/') + code +
       (!this.viewMode ? '/edit' : '/view');
     this.router.navigate([path], {queryParams: {parent: parentCode}});
   }
