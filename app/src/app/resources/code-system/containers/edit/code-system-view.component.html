@@ -37,7 +37,7 @@
         </m-form-item>
 
         <tw-code-system-versions-list [codeSystemId]="codeSystem.id" [versions]="codeSystem.versions" viewMode></tw-code-system-versions-list>
-        <tw-code-system-properties-list [codeSystemId]="codeSystem.id" [properties]="codeSystem.properties" viewMode></tw-code-system-properties-list>
+        <tw-cs-properties [codeSystemId]="codeSystem.id" viewMode></tw-cs-properties>
         <tw-contact-list [(contacts)]="codeSystem.contacts" viewMode></tw-contact-list>
       </div>
     </m-card>

@@ -10,7 +10,7 @@ import {TranslateService} from '@ngx-translate/core';
 import slugify from 'slugify';
 import {forkJoin} from 'rxjs';
 import {DevCodeSystemRelationsComponent} from './dev-code-system-relations.component';
-import {DevCodeSystemPropertiesComponent} from './dev-code-system-properties.component';
+import {CodeSystemPropertiesComponent} from 'term-web/resources/code-system/containers/edit/property/code-system-properties.component';
 
 
 @Component({
@@ -26,7 +26,7 @@ export class DevCodeSystemEditComponent implements OnInit {
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("relationsComponent") public relationsComponent?: DevCodeSystemRelationsComponent;
-  @ViewChild("propertiesComponent") public propertiesComponent?: DevCodeSystemPropertiesComponent;
+  @ViewChild("propertiesComponent") public propertiesComponent?: CodeSystemPropertiesComponent;
 
   public constructor(
     private translateService: TranslateService,

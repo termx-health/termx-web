@@ -6,7 +6,6 @@ import {DevCodeSystemListComponent} from './codesystem/dev-code-system-list.comp
 import {CodeSystemModule} from '../code-system/code-system.module';
 import {MapSetModule} from '../map-set/map-set.module';
 import {DevCodeSystemEditComponent} from './codesystem/dev-code-system-edit.component';
-import {DevCodeSystemPropertiesComponent} from './codesystem/dev-code-system-properties.component';
 import {DevCodeSystemRelationsComponent} from './codesystem/dev-code-system-relations.component';
 import {DevCodeSystemConceptListComponent} from './codesystem/dev-code-system-concept-list.component';
 import {DevMapSetListComponent} from './mapset/dev-map-set-list.component';
@@ -42,7 +41,6 @@ export const DEV_RESOURCES_ROUTES: Routes = [
     DevCodeSystemListComponent,
     DevCodeSystemEditComponent,
     DevCodeSystemRelationsComponent,
-    DevCodeSystemPropertiesComponent,
     DevCodeSystemConceptListComponent,
 
     DevMapSetListComponent,

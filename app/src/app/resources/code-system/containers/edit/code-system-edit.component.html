@@ -63,9 +63,7 @@
         <tw-code-system-versions-list *ngIf="mode === 'edit' && codeSystem"
             [codeSystemId]="codeSystemId"
             [versions]="codeSystem.versions"></tw-code-system-versions-list>
-        <tw-code-system-properties-list *ngIf="mode === 'edit' && codeSystem"
-            [codeSystemId]="codeSystemId"
-            [properties]="codeSystem.properties"></tw-code-system-properties-list>
+        <tw-cs-properties #propertiesComponent *ngIf="mode === 'edit' && codeSystem" [codeSystemId]="codeSystemId"></tw-cs-properties>
         <tw-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></tw-contact-list>
 
         <ng-container *m-card-footer>
@@ -103,8 +101,7 @@
       {{'entities.code-system.concepts' | translate}}
     </a>
     <m-card *ngIf="codeSystem">
-      <tw-code-system-concepts-list
-          [codeSystemId]="codeSystemId"
+      <tw-code-system-concepts-list [codeSystemId]="codeSystemId"
           [codeSystemVersions]="codeSystem.versions"
           [properties]="codeSystem.properties"></tw-code-system-concepts-list>
     </m-card>

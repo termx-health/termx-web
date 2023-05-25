@@ -53,9 +53,9 @@ const directives = [
   imports: [
     ...commonModules,
     CodeSystemLibModule,
+    ValueSetLibModule,
     MeasurementUnitLibModule,
-    IntegrationLibModule,
-    ValueSetLibModule
+    IntegrationLibModule
   ],
   declarations: [
     ...components,

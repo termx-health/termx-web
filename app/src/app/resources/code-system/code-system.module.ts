@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {CodeSystemListComponent} from './containers/list/code-system-list.component';
-import {CodeSystemPropertiesListComponent} from './containers/edit/property/code-system-properties-list.component';
+import {CodeSystemPropertiesComponent} from './containers/edit/property/code-system-properties.component';
 import {CodeSystemVersionsListComponent} from './containers/edit/version/code-system-versions-list.component';
 import {CodeSystemEditComponent} from './containers/edit/code-system-edit.component';
 import {CodeSystemVersionEditComponent} from './containers/version/code-system-version-edit.component';
@@ -19,8 +19,6 @@ import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/
 import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
 import {FinderModule} from '../../core/ui/finder/finder.module';
 import {ContactModule} from '../contact/contact.module';
-import {CodeSystemPropertyEditComponent} from './containers/edit/property/code-system-property-edit.component';
-import {CodeSystemPropertyFormComponent} from './containers/edit/property/code-system-property-form.component';
 import {CodeSystemViewComponent} from './containers/edit/code-system-view.component';
 import {CodeSystemConceptEditComponent} from './containers/concept/code-system-concept-edit.component';
 import {CodeSystemDesignationGroupEditComponent} from './containers/concept/designation/code-system-designation-group-edit.component';
@@ -46,9 +44,6 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: 'compare', component: CodeSystemCompareComponent, data: {privilege: ['*.CodeSystem.view']}},
-
-  {path: ':id/entity-properties/add', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/entity-properties/:propertyId/edit', component: CodeSystemPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
 
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
@@ -82,10 +77,6 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemViewComponent,
     CodeSystemDuplicateModalComponent,
 
-    CodeSystemPropertiesListComponent,
-    CodeSystemPropertyEditComponent,
-    CodeSystemPropertyFormComponent,
-
     CodeSystemVersionsListComponent,
     CodeSystemVersionEditComponent,
     CodeSystemVersionViewComponent,
@@ -101,6 +92,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemAssociationEditComponent,
     CodeSystemConceptRelationsComponent,
     CodeSystemCompareComponent,
+    CodeSystemPropertiesComponent,
 
     FinderCodeSystemListComponent,
     FinderCodeSystemViewComponent,
@@ -111,7 +103,8 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
   exports: [
     CodeSystemListComponent,
     CodeSystemConceptsListComponent,
-    CodeSystemConceptRelationsComponent
+    CodeSystemConceptRelationsComponent,
+    CodeSystemPropertiesComponent,
   ],
   providers: [
     CodeSystemService

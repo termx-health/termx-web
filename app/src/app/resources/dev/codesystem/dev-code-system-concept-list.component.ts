@@ -4,8 +4,8 @@ import {NgForm} from '@angular/forms';
 import {CodeSystemService} from '../../code-system/services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {DevCodeSystemRelationsComponent} from './dev-code-system-relations.component';
-import {DevCodeSystemPropertiesComponent} from './dev-code-system-properties.component';
 import {CodeSystem} from 'term-web/resources/_lib';
+import {CodeSystemPropertiesComponent} from 'term-web/resources/code-system/containers/edit/property/code-system-properties.component';
 
 
 @Component({
@@ -20,7 +20,7 @@ export class DevCodeSystemConceptListComponent implements OnInit {
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("relationsComponent") public relationsComponent?: DevCodeSystemRelationsComponent;
-  @ViewChild("propertiesComponent") public propertiesComponent?: DevCodeSystemPropertiesComponent;
+  @ViewChild("propertiesComponent") public propertiesComponent?: CodeSystemPropertiesComponent;
 
   public constructor(
     private translateService: TranslateService,

@@ -1,14 +1,14 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {EntityProperty, EntityPropertyRule, EntityPropertyRuleFilter} from 'term-web/resources/_lib';
+import {EntityProperty, EntityPropertyRule, EntityPropertyRuleFilter} from 'app/src/app/resources/_lib';
 import {BooleanInput, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {CodeSystemService} from '../../code-system/services/code-system.service';
 import {NgForm} from '@angular/forms';
+import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
 
 @Component({
-  selector: 'tw-dev-cs-properties',
-  templateUrl: './dev-code-system-properties.component.html',
+  selector: 'tw-cs-properties',
+  templateUrl: './code-system-properties.component.html',
 })
-export class DevCodeSystemPropertiesComponent implements OnChanges {
+export class CodeSystemPropertiesComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public codeSystemId?: string | null;
 

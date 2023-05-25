@@ -3,8 +3,9 @@ import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {CodeSystemService} from '../../services/code-system.service';
 import {NgForm} from '@angular/forms';
-import {isDefined, validateForm} from '@kodality-web/core-util';
+import {copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {CodeSystem} from 'term-web/resources/_lib';
+import {CodeSystemPropertiesComponent} from 'term-web/resources/code-system/containers/edit/property/code-system-properties.component';
 
 
 @Component({
@@ -19,6 +20,7 @@ export class CodeSystemEditComponent implements OnInit {
   public mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
+  @ViewChild("propertiesComponent") public propertiesComponent?: CodeSystemPropertiesComponent;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -42,11 +44,13 @@ export class CodeSystemEditComponent implements OnInit {
   }
 
   public save(): void {
-    if (!this.validate()) {
+    if (!this.validate() || (this.propertiesComponent && !this.propertiesComponent.valid())) {
       return;
     }
+    const cs = copyDeep(this.codeSystem);
+    cs.properties = this.propertiesComponent?.getProperties();
     this.loading['save'] = true;
-    this.codeSystemService.save(this.codeSystem!)
+    this.codeSystemService.save(cs)
       .subscribe(() => this.location.back())
       .add(() => this.loading['save'] = false);
   }

@@ -26,7 +26,7 @@ import {RouterModule} from '@angular/router';
     FormsModule,
     CoreUtilModule,
     TranslateModule,
-    MarinaUtilModule,
+    MarinaUtilModule
   ],
   providers: [
     CodeSystemLibService,

@@ -14,7 +14,7 @@ import {NgForm} from '@angular/forms';
 import {TranslateService} from '@ngx-translate/core';
 import {MapSetService} from '../../map-set/services/map-set-service';
 import {forkJoin} from 'rxjs';
-import {compareValues, copyDeep, isDefined, SearchResult, validateForm} from '@kodality-web/core-util';
+import {compareValues, isDefined, SearchResult, validateForm} from '@kodality-web/core-util';
 import {DevMapSetUnmappedConceptListComponent} from './dev-map-set-unmapped-concept-list.component';
 import {v4 as uuid} from 'uuid';
 
