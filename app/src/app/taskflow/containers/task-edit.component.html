@@ -62,12 +62,12 @@
         </div>
         <div style="flex: 1; border-left: 1px solid var(--color-borders-light); padding-left: 1rem">
           <m-form-item *ngIf="!task.id" mLabel="entities.task.space" mName="space" required>
-            <m-select name="space" [(ngModel)]="task.spaceId" (ngModelChange)="loadWorkflows($event)" required>
+            <m-select name="space" [(ngModel)]="task.spaceId" (ngModelChange)="loadWorkflows($event)" autoSelect required>
               <m-option *ngFor="let s of spaces" [mLabel]="s.names | localName" [mValue]="s.id"></m-option>
             </m-select>
           </m-form-item>
           <m-form-item *ngIf="!task.id && task.spaceId" mLabel="entities.task.workflow" mName="workflow" required>
-            <m-select name="workflow" [(ngModel)]="task.workflowId" required>
+            <m-select name="workflow" [(ngModel)]="task.workflowId" autoSelect required>
               <m-option *ngFor="let wf of workflows" [mLabel]="wf.taskType" [mValue]="wf.id"></m-option>
             </m-select>
           </m-form-item>

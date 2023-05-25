@@ -70,7 +70,7 @@ export class TaskEditComponent implements OnInit {
     if (!validateForm(this.form)) {
       return;
     }
-    if (!this.task.status) {
+    if (!this.task.status && !this.newStatus) {
       return;
     }
     const t = copyDeep(this.task);
@@ -106,7 +106,11 @@ export class TaskEditComponent implements OnInit {
     if (!isDefined(wf)) {
       return [];
     }
-    return wf.transitions?.filter(t => t.from === status)?.map(t => t.to);
+    const statuses = wf.transitions?.filter(t => t.from === status)?.map(t => t.to);
+    if (statuses?.includes('draft')) {
+      this.newStatus = 'draft';
+    }
+    return statuses;
   };
 
   protected hasTransitions = (activities: TaskActivity[]): TaskActivity[] => {
@@ -149,6 +153,7 @@ export class TaskEditComponent implements OnInit {
 
   private writeTask(task: Task): Task {
     task.type ??= 'task';
+    task.priority ??= 'routine';
     task.assignee ??= {};
     return task;
   }
