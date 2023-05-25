@@ -867,6 +867,11 @@
       "import": "Start import",
       "select-snomed": "SNOMED search",
       "import-success-message": "Observation definition import succeeded",
+      "filter": {
+        "category": "Category",
+        "structure": "Structure",
+        "value-type": "Value type"
+      },
       "protocol-usage": {
         "not-in-use": "Not in use",
         "value-set": "In use (value set)",
@@ -1361,7 +1366,8 @@
         "code": "Code",
         "order-number": "Order",
         "names": "Names",
-        "cardinality": "Cardinality"
+        "cardinality": "Cardinality",
+        "multiple": "Members"
       },
       "components": {
         "code": "Code",
@@ -1374,7 +1380,8 @@
         "unit": {
           "singular": "Unit",
           "system": "Unit system"
-        }
+        },
+        "multiple": "Components"
       },
       "protocol": {
         "device": "Device",
@@ -1395,7 +1402,8 @@
         "circumstances": "Circumstances of data collection",
         "circumstances-value-set": "Collection details value set",
         "circumstances-values": "Collection details values",
-        "components": "Custom parameters"
+        "components": "Custom parameters",
+        "single": "Protocol"
       },
       "interpretations": {
         "order-number": "Order",

@@ -18,6 +18,7 @@ import {
 } from 'term-web/observation-definition/containers/edit/interpretation/observation-definition-interpretation-list.component';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
 import {ObservationDefinitionMappingListComponent} from 'term-web/observation-definition/containers/edit/mapping/observation-definition-mapping-list.component';
+import {TableModule} from 'term-web/core/ui/table-container/table.module';
 
 export const OBSERVATION_DEFINITION_ROUTES: Routes = [
   {path: '', component: ObservationDefinitionListComponent},
@@ -33,7 +34,8 @@ export const OBSERVATION_DEFINITION_ROUTES: Routes = [
     SharedModule,
     ObservationDefinitionLibModule,
     ResourcesLibModule,
-    IntegrationLibModule
+    IntegrationLibModule,
+    TableModule
   ],
   declarations: [
     ObservationDefinitionListComponent,

@@ -11,51 +11,107 @@
     </m-alert>
   </div>
 
-  <m-form-row>
-    <m-card *m-form-col>
-      <div *m-card-header class="m-justify-between">
-        <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-        <div class="m-items-middle">
-          <tw-add-button *twPrivileged="'*.ObservationDefinition.edit'" [routerLink]="['add']">
-            {{'web.observation-definition.header-add' | translate}}
-          </tw-add-button>
-          <m-dropdown *twPrivileged="'*.ObservationDefinition.edit'">
-            <a *m-dropdown-item (mClick)="importData.visible = true">
-              {{'web.observation-definition.import-from-loinc' | translate}}
-            </a>
-          </m-dropdown>
-        </div>
+  <tw-table [(filterOpen)]="isFilterOpen">
+    <div class="m-justify-between" style="margin-bottom: 1rem">
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+
+      <div class="m-items-middle">
+        <tw-add-button *twPrivileged="'*.ObservationDefinition.edit'" [routerLink]="['add']">
+          {{'web.observation-definition.header-add' | translate}}
+        </tw-add-button>
+        <m-button *twPrivileged="'*.ObservationDefinition.edit'" (mClick)="importData.visible = true">
+          {{'web.observation-definition.import-from-loinc' | translate}}
+        </m-button>
+        <m-button *ngIf="!isFilterOpen" (mClick)="isFilterOpen = true">
+          <m-icon mCode="filter"></m-icon>
+        </m-button>
       </div>
+    </div>
 
-      <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="search()" [mLoading]="loader.isLoading">
-        <tr *mTableHead>
-          <th mColumnKey="code">{{'entities.observation-definition.code' | translate}}</th>
-          <th mColumnKey="name">{{'entities.observation-definition.name' | translate}}</th>
-          <th mColumnKey="category">{{'entities.observation-definition.category' | translate}}</th>
-        </tr>
+    <tw-table-filter (twSearch)="loadData()" (twReset)="reset()">
+      <m-form-item [mLabel]="'web.observation-definition.filter.category'" mName="category">
+        <tw-obs-def-value-select [(ngModel)]="filter['categories']" name="category"></tw-obs-def-value-select>
+      </m-form-item>
+      <m-form-item [mLabel]="'web.observation-definition.filter.structure'" mName="structure">
+        <m-select name="structure" [(ngModel)]="filter['structure']" multiple>
+          <m-option [mLabel]="'web.observation-definition.structure.value'" [mValue]="'value'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.structure.panel'" [mValue]="'panel'"></m-option>
+          <m-option [mLabel]="'web.observation-definition.structure.component'" [mValue]="'component'"></m-option>
+        </m-select>
+      </m-form-item>
+      <m-form-item [mLabel]="'web.observation-definition.filter.value-type'" mName="valueType">
+        <tw-value-set-concept-select [(ngModel)]="filter['value-type']" name="valueType" valueSet="permitted-data-type" multiple></tw-value-set-concept-select>
+      </m-form-item>
+    </tw-table-filter>
 
-        <tr *mTableRow="let obs">
-          <td>
-            <a [routerLink]="[obs.id, ('*.ObservationDefinition.edit' | twHasAnyPrivilege)? 'edit': 'view']">{{obs.code}}</a>
-          </td>
-          <td>{{obs.names | localName}}</td>
-          <td>
-            <div style="display: grid">
-              <label *ngFor="let cat of obs.category" m-tooltip [mTitle]="cat.codeSystem">
-                {{cat.code | localizedConceptName: {codeSystem: cat.codeSystem} | async}}
-              </label>
-            </div>
-          </td>
-        </tr>
+    <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading">
+      <tr *mTableHead>
+        <th mColumnKey="code">{{'entities.observation-definition.code' | translate}}</th>
+        <th>{{'entities.observation-definition.name' | translate}}</th>
+        <th>{{'entities.observation-definition.category' | translate}}</th>
+        <th>{{'entities.observation-definition.structure' | translate}}</th>
+        <th>{{'entities.observation-definition.members.multiple' | translate}}</th>
+        <th>{{'entities.observation-definition.components.multiple' | translate}}</th>
+        <th>{{'entities.observation-definition.protocol.single' | translate}}</th>
+      </tr>
 
-        <tr *mTableNoData>
-          <td colspan="100%">
-            <m-no-data></m-no-data>
-          </td>
-        </tr>
-      </m-backend-table>
-    </m-card>
-  </m-form-row>
+      <tr *mTableRow="let obs">
+        <td><a [routerLink]="[obs.id, ('*.ObservationDefinition.edit' | twHasAnyPrivilege)? 'edit': 'view']">{{obs.code}}</a></td>
+        <td>
+          <div style="display:grid">
+            <label>{{obs.names | localName}}</label>
+            <label>{{obs.alias | localName}}</label>
+            <label>{{obs.definition | localName}}</label>
+            <label>{{obs.keywords | localName}}</label>
+          </div>
+        </td>
+        <td>
+          <div style="display: grid">
+            <label *ngFor="let cat of obs.category" m-tooltip [mTitle]="cat.codeSystem">{{cat.code | localizedConceptName: {codeSystem: cat.codeSystem} | async}}</label>
+          </div>
+        </td>
+        <td>
+          <div *ngFor="let structure of obs.structure" style="display: grid">
+            <ng-container *ngIf="structure === 'value'">
+              <label class="m-bold">{{'web.observation-definition.structure.' + structure | translate}} - {{obs.value.type}}</label>
+              <label *ngIf="obs.value?.valueSet">{{obs.value.valueSet}}</label>
+              <label *ngFor="let v of obs.value?.values" m-tooltip [mTitle]="v.code | localizedConceptName: {codeSystem: v.codeSystem} | async">{{v.code}}</label>
+            </ng-container>
+            <ng-container *ngIf="structure !== 'value'">
+              <label class="m-bold">{{'web.observation-definition.structure.' + structure | translate}}</label>
+            </ng-container>
+          </div>
+        </td>
+        <td>
+          <div style="display:grid">
+            <label *ngFor="let m of obs.members" m-tooltip [mTitle]="m.item.names | localName">{{m.item.code}}</label>
+          </div>
+        </td>
+        <td>
+          <div style="display:grid">
+            <label *ngFor="let c of obs.components" m-tooltip [mTitle]="c.names | localName">{{c.code}}</label>
+          </div>
+        </td>
+        <td>
+          <div style="display: grid">
+            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.device?.usage">{{'Device'}}</label>
+            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.method?.usage">{{'Method'}}</label>
+            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.measurementLocation?.usage">{{'Measurement location'}}</label>
+            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.specimen?.usage">{{'Specimen'}}</label>
+            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.position?.usage">{{'Position'}}</label>
+            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.dataCollectionCircumstances?.usage">{{'Data collection circumstances'}}</label>
+            <label *ngFor="let c of obs.protocol?.components">{{c.names | localName}}</label>
+          </div>
+        </td>
+      </tr>
+
+      <tr *mTableNoData>
+        <td colspan="100%">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-backend-table>
+  </tw-table>
 </m-page>
 
 <m-modal #modal [(mVisible)]="importData.visible" (mClose)="importData.visible = false" [mMaskClosable]="false">

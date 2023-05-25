@@ -19,10 +19,12 @@ export class ObservationDefinitionListComponent implements OnInit {
   protected searchInput: string;
   protected loader = new LoadingManager();
 
-  protected jobResponse: JobLog;
+  protected isFilterOpen = false;
+  protected filter: {[key: string]: any} = {};
 
   @ViewChild("form") public form?: NgForm;
 
+  protected jobResponse: JobLog;
   protected importData: {
     visible?: boolean,
     loincCodes?: string[]
@@ -46,19 +48,23 @@ export class ObservationDefinitionListComponent implements OnInit {
     this.loadData();
   }
 
-  private loadData(): void {
+  protected loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
   }
 
   protected search(): Observable<SearchResult<ObservationDefinition>> {
     const q = copyDeep(this.query);
+    q.categories = this.filter['categories']?.map(c => c.codeSystem + '|' + c.code).join(',');
+    q.structures = this.filter['structure']?.join(',');
+    q.types = this.filter['value-type']?.join(',');
     q.textContains = this.searchInput || undefined;
+    q.decorated = true;
     this.stateStore.put(this.STORE_KEY, {query: q});
 
     return this.loader.wrap('load', this.observationDefinitionService.search(q));
   }
 
-  public onSearch = (): Observable<SearchResult<ObservationDefinition>> => {
+  protected onSearch = (): Observable<SearchResult<ObservationDefinition>> => {
     this.query.offset = 0;
     return this.search().pipe(tap(resp => this.searchResult = resp));
   };
@@ -89,5 +95,9 @@ export class ObservationDefinitionListComponent implements OnInit {
       this.jobResponse = jobResp;
       this.loadData();
     });
+  }
+
+  protected reset(): void {
+    this.filter = {};
   }
 }
