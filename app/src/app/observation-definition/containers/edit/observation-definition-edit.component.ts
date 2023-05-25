@@ -1,7 +1,7 @@
 import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {
   ObservationDefinition, ObservationDefinitionComponent,
@@ -11,7 +11,7 @@ import {
   ObservationDefinitionValue
 } from 'term-web/observation-definition/_lib';
 import {ObservationDefinitionService} from 'term-web/observation-definition/services/observation-definition.service';
-import {forkJoin} from 'rxjs';
+import {forkJoin, takeUntil} from 'rxjs';
 import {CodeSystemLibService} from 'term-web/resources/_lib';
 import {ObservationDefinitionValueComponent} from 'term-web/observation-definition/containers/edit/value/observation-definition-value.component';
 import {ObservationDefinitionMemberListComponent} from 'term-web/observation-definition/containers/edit/member/observation-definition-member-list.component';
@@ -26,6 +26,7 @@ import {ObservationDefinitionMappingListComponent} from 'term-web/observation-de
 
 @Component({
   templateUrl: './observation-definition-edit.component.html',
+  providers: [DestroyService]
 })
 export class ObservationDefinitionEditComponent implements OnInit {
   protected observationDefinition?: ObservationDefinition;
@@ -44,16 +45,19 @@ export class ObservationDefinitionEditComponent implements OnInit {
     private observationDefinitionService: ObservationDefinitionService,
     private codeSystemService: CodeSystemLibService,
     private route: ActivatedRoute,
+    private destroy$: DestroyService,
     private location: Location
   ) {}
 
   public ngOnInit(): void {
-    const id = Number(this.route.snapshot.paramMap.get('id'));
-    if (id) {
-      this.loader.wrap('load', this.observationDefinitionService.load(id)).subscribe(obs => this.writeObservationDefinition(obs));
-    } else {
-      this.writeObservationDefinition(new ObservationDefinition());
-    }
+    this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {
+      const id = params.get('id');
+      if (id) {
+        this.loader.wrap('load', this.observationDefinitionService.load(Number(id))).subscribe(obs => this.writeObservationDefinition(obs));
+      } else {
+        this.writeObservationDefinition(new ObservationDefinition());
+      }
+    });
   }
 
   protected save(): void {

@@ -13,7 +13,7 @@
       </ng-template>
     </m-editable-column>
     <m-editable-column [mTitle]="'entities.observation-definition.members.names'" mName="names">
-      <ng-template #viewTemplate let-m>{{m.item?.names | localName}}</ng-template>
+      <ng-template #viewTemplate let-m><a [routerLink]="['/observation-definitions', m.item?.id, 'edit']">{{m.item?.names | localName}}</a></ng-template>
     </m-editable-column>
     <m-editable-column [mTitle]="'entities.observation-definition.members.cardinality'" mName="cardinality">
       <ng-template #viewTemplate let-m>{{(m.cardinality?.min || '...') + ' - ' + (m.cardinality?.max || '...')}}</ng-template>

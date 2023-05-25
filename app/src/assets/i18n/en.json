@@ -1349,6 +1349,7 @@
       "category": "Category",
       "time-precision": "Time precision",
       "structure": "Structure",
+      "details": "Details",
       "value": {
         "type": "Type",
         "multiple-results-allowed": "Multiple results allowed",
@@ -1433,8 +1434,10 @@
         "code-system": "Code system",
         "concept": "Concept",
         "relation": "Relation",
-        "condition": "Condition"
-      }
+        "condition": "Condition",
+        "multiple": "Mappings"
+      },
+      "state": "State"
     },
     "task": {
       "plural": "Tasks",

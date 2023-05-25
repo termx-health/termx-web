@@ -75,7 +75,7 @@ export class ObservationDefinitionListComponent implements OnInit {
     }
 
     const request: ObservationDefinitionImportRequest = {loincCodes: this.importData.loincCodes};
-    this.loader.wrap('import', this.observationDefinitionService.import(request)).subscribe( resp => {
+    this.loader.wrap('import', this.observationDefinitionService.import(request)).subscribe(resp => {
       this.importData = {};
       this.pollJobStatus(resp.jobId);
     });
@@ -100,4 +100,35 @@ export class ObservationDefinitionListComponent implements OnInit {
   protected reset(): void {
     this.filter = {};
   }
+
+  public getDetails = (obs: ObservationDefinition): {label: string, tooltip: any}[] => {
+    const details = [];
+    obs.members?.forEach(m => details.push({label: m.item.code, tooltip: m.item.names}));
+    obs.components?.forEach(c => details.push({label: c.code, tooltip: c.names}));
+    return details;
+  };
+
+  public getProtocol = (obs: ObservationDefinition): {label: string, tooltip: any}[] => {
+    const details = [];
+    if (['values', 'value-set'].includes(obs.protocol?.device?.usage)) {
+      details.push({label: 'device', tooltip: obs.protocol.device.values?.map(v => v.code)?.join(',') || obs.protocol.device.valueSet});
+    }
+    if (['values', 'value-set'].includes(obs.protocol?.method?.usage)) {
+      details.push({label: 'method', tooltip: obs.protocol.method.values?.map(v => v.code)?.join(',') || obs.protocol.method.valueSet});
+    }
+    if (['values', 'value-set'].includes(obs.protocol?.measurementLocation?.usage)) {
+      details.push({label: 'measurement-location', tooltip: obs.protocol.measurementLocation.values?.map(v => v.code)?.join(',') || obs.protocol.measurementLocation.valueSet});
+    }
+    if (['values', 'value-set'].includes(obs.protocol?.specimen?.usage)) {
+      details.push({label: 'specimen', tooltip: obs.protocol.specimen.values?.map(v => v.code)?.join(',') || obs.protocol.specimen.valueSet});
+    }
+    if (['values', 'value-set'].includes(obs.protocol?.position?.usage)) {
+      details.push({label: 'position', tooltip: obs.protocol.position.values?.map(v => v.code)?.join(',') || obs.protocol.position.valueSet});
+    }
+    if (['values', 'value-set'].includes(obs.protocol?.dataCollectionCircumstances?.usage)) {
+      details.push({label: 'data-collection-circumstances', tooltip: obs.protocol.dataCollectionCircumstances.values?.map(v => v.code)?.join(',') || obs.protocol.dataCollectionCircumstances.valueSet});
+    }
+    obs.protocol?.components?.forEach(c => details.push({label: c.code, tooltip: c.names}));
+    return details;
+  };
 }

@@ -13,6 +13,11 @@ export class ObservationDefinitionProtocol {
 
 export class ObservationDefinitionProtocolValue {
   public usage?: string;
-  public values?: string[];
+  public values?: ObservationDefinitionProtocolValueItem[];
   public valueSet?: string;
+}
+
+export class ObservationDefinitionProtocolValueItem {
+  public code?: string;
+  public codeSystem?: string;
 }

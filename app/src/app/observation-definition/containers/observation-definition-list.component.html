@@ -50,13 +50,14 @@
         <th>{{'entities.observation-definition.name' | translate}}</th>
         <th>{{'entities.observation-definition.category' | translate}}</th>
         <th>{{'entities.observation-definition.structure' | translate}}</th>
-        <th>{{'entities.observation-definition.members.multiple' | translate}}</th>
-        <th>{{'entities.observation-definition.components.multiple' | translate}}</th>
+        <th>{{'entities.observation-definition.details' | translate}}</th>
         <th>{{'entities.observation-definition.protocol.single' | translate}}</th>
+        <th>{{'entities.observation-definition.state' | translate}}</th>
+        <th>{{'entities.observation-definition.mappings.multiple' | translate}}</th>
       </tr>
 
       <tr *mTableRow="let obs">
-        <td><a [routerLink]="[obs.id, ('*.ObservationDefinition.edit' | twHasAnyPrivilege)? 'edit': 'view']">{{obs.code}}</a></td>
+        <td><a [routerLink]="[obs.id, ('*.ObservationDefinition.edit' | twHasAnyPrivilege)? 'edit': 'view']" style="white-space: nowrap">{{obs.code}}</a></td>
         <td>
           <div style="display:grid">
             <label>{{obs.names | localName}}</label>
@@ -72,36 +73,29 @@
         </td>
         <td>
           <div *ngFor="let structure of obs.structure" style="display: grid">
-            <ng-container *ngIf="structure === 'value'">
-              <label class="m-bold">{{'web.observation-definition.structure.' + structure | translate}} - {{obs.value.type}}</label>
-              <label *ngIf="obs.value?.valueSet">{{obs.value.valueSet}}</label>
-              <label *ngFor="let v of obs.value?.values" m-tooltip [mTitle]="v.code | localizedConceptName: {codeSystem: v.codeSystem} | async">{{v.code}}</label>
-            </ng-container>
-            <ng-container *ngIf="structure !== 'value'">
-              <label class="m-bold">{{'web.observation-definition.structure.' + structure | translate}}</label>
-            </ng-container>
+            <label *ngIf="structure === 'value'">{{'web.observation-definition.structure.' + structure | translate}} ({{obs.value.type}})</label>
+            <label  *ngIf="structure !== 'value'">{{'web.observation-definition.structure.' + structure | translate}}</label>
+          </div>
+        </td>
+        <td style="width: 30%">
+          <div>
+            <label *ngFor="let d of (obs | apply: getDetails); let i = index" m-tooltip [mTitle]="d.tooltip | localName">
+              {{d.label}}{{i === ((obs | apply: getDetails).length - 1) ? '' : ', '}}
+            </label>
           </div>
         </td>
         <td>
-          <div style="display:grid">
-            <label *ngFor="let m of obs.members" m-tooltip [mTitle]="m.item.names | localName">{{m.item.code}}</label>
+          <div>
+            <label *ngFor="let d of (obs | apply: getProtocol); let i = index" m-tooltip [mTitle]="d.tooltip | localName">
+              {{d.label}}{{i === ((obs | apply: getProtocol).length - 1) ? '' : ', '}}
+            </label>
           </div>
         </td>
         <td>
-          <div style="display:grid">
-            <label *ngFor="let c of obs.components" m-tooltip [mTitle]="c.names | localName">{{c.code}}</label>
-          </div>
+          <label *ngFor="let s of obs.state; let i = index" m-tooltip [mTitle]="s.names | localName">{{s.code}}{{i === (obs.state?.length - 1) ? '' : ', '}}</label>
         </td>
         <td>
-          <div style="display: grid">
-            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.device?.usage">{{'Device'}}</label>
-            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.method?.usage">{{'Method'}}</label>
-            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.measurementLocation?.usage">{{'Measurement location'}}</label>
-            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.specimen?.usage">{{'Specimen'}}</label>
-            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.position?.usage">{{'Position'}}</label>
-            <label *ngIf="['values', 'value-set'] | includes:obs.protocol?.dataCollectionCircumstances?.usage">{{'Data collection circumstances'}}</label>
-            <label *ngFor="let c of obs.protocol?.components">{{c.names | localName}}</label>
-          </div>
+          <label style="white-space: nowrap" *ngFor="let m of obs.mappings; let i = index" m-tooltip [mTitle]="m.codeSystem">{{m.concept}}{{i === (obs.mappings?.length - 1) ? '' : ', '}}</label>
         </td>
       </tr>
 
