@@ -95,7 +95,7 @@
           <label *ngFor="let s of obs.state; let i = index" m-tooltip [mTitle]="s.names | localName">{{s.code}}{{i === (obs.state?.length - 1) ? '' : ', '}}</label>
         </td>
         <td>
-          <label style="white-space: nowrap" *ngFor="let m of obs.mappings; let i = index" m-tooltip [mTitle]="m.codeSystem">{{m.concept}}{{i === (obs.mappings?.length - 1) ? '' : ', '}}</label>
+          <label *ngFor="let m of obs.mappings; let i = index" m-tooltip [mTitle]="m.codeSystem">{{m.concept}}{{i === (obs.mappings?.length - 1) ? '' : ', '}}</label>
         </td>
       </tr>
 
