@@ -5,10 +5,11 @@ import {collect, copyDeep, DestroyService, group, isNil, LoadingManager, sort} f
 import {NgForm} from '@angular/forms';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {merge, mergeMap, Observable, of, Subject, switchMap, take, takeUntil, timer} from 'rxjs';
+import {mergeMap, Observable, of} from 'rxjs';
 import {Router} from '@angular/router';
 import {CodeSystem, CodeSystemLibService, CodeSystemVersion, EntityProperty} from '../../../../resources/_lib';
 import {JobLibService, JobLog, JobLogResponse} from '../../../../job/_lib';
+import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../file-analysis.service';
 
 
 const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
@@ -18,25 +19,6 @@ const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
   {name: 'description', type: 'string', orderNumber: 9900},
   {name: 'parent', type: 'code', orderNumber: 9999},
 ];
-
-
-// analysis
-interface FileAnalysisRequest {
-  link: string;
-  type: string;
-}
-
-interface FileAnalysisResponse {
-  // parsed properties from the file
-  properties?: FileAnalysisResponseProperty[];
-}
-
-interface FileAnalysisResponseProperty {
-  columnName?: string;
-  columnType?: string;
-  columnTypeFormat?: string;
-  hasValues?: boolean;
-}
 
 
 type FileImportPropertyRow = FileProcessingRequestProperty & {
@@ -112,16 +94,6 @@ class CodeSystemFileImportService {
     return errors;
   }
 
-  public analyze(req: FileAnalysisRequest, file?: Blob): Observable<FileAnalysisResponse> {
-    const fd = new FormData();
-    fd.append('request', JSON.stringify(req));
-    if (file) {
-      fd.append('file', file, 'files');
-    }
-    return this.http.post<FileAnalysisResponse>(`${this.baseUrl}/analyze`, fd);
-  }
-
-
   public processRequest(req: FileProcessingRequest, file: Blob): Observable<JobLog> {
     const fd = new FormData();
     fd.append('request', JSON.stringify(req));
@@ -129,44 +101,17 @@ class CodeSystemFileImportService {
       fd.append('file', file, 'files');
     }
 
-    const startResponsePolling = (jobId: number): Observable<JobLog> => {
-      const poll$ = new Subject();
-
-      timer(0, 3000).pipe(
-        takeUntil(merge(poll$, this.destroy$)),
-        switchMap(() => this.jobService.getLog(jobId)),
-      ).subscribe(resp => {
-        if (resp.execution?.status !== 'running') {
-          poll$.next(resp);
-        }
-      });
-
-      return poll$.pipe(take(1));
-    };
-
     return this.http.post<JobLogResponse>(`${this.baseUrl}/process`, fd).pipe(
-      mergeMap(resp => startResponsePolling(resp.jobId))
+      mergeMap(resp => this.jobService.pollFinishedJobLog(resp.jobId, this.destroy$))
     );
   };
 }
 
 @Component({
   templateUrl: 'code-system-file-import.component.html',
-  styles: [`
-    .import-alert {
-      margin: 0;
-
-      &:after {
-        height: 100%;
-        width: 2px;
-      }
-    }
-  `],
   providers: [DestroyService, CodeSystemFileImportService]
 })
 export class CodeSystemFileImportComponent {
-  public readonly baseUrl = `${environment.terminologyApi}/file-importer/code-system`;
-
   public sourceCodeSystem: CodeSystem;
 
   public data: {
@@ -224,6 +169,7 @@ export class CodeSystemFileImportComponent {
     private notificationService: MuiNotificationService,
     private codeSystemLibService: CodeSystemLibService,
     private importService: CodeSystemFileImportService,
+    private fileAnalysisService: FileAnalysisService,
     private jobService: JobLibService,
     private destroy$: DestroyService,
     private router: Router
@@ -271,8 +217,8 @@ export class CodeSystemFileImportComponent {
       ? this.fileInput?.nativeElement?.files?.[0]
       : undefined;
 
-    this.loader.wrap('analyze', this.importService.analyze(req, file)).subscribe(({properties}) => {
-      const toPropertyRow = (p: FileAnalysisResponseProperty): FileImportPropertyRow => ({
+    this.loader.wrap('analyze', this.fileAnalysisService.analyze(req, file)).subscribe(({columns}) => {
+      const toPropertyRow = (p: FileAnalysisResponseColumn): FileImportPropertyRow => ({
         columnName: p.columnName,
         propertyType: p.columnType,
         propertyTypeFormat: p.columnTypeFormat,
@@ -281,7 +227,7 @@ export class CodeSystemFileImportComponent {
 
       this.analyzeResponse = {
         origin: copyDeep(req),
-        parsedProperties: properties?.map(toPropertyRow) ?? []
+        parsedProperties: columns?.map(toPropertyRow) ?? []
       };
 
       this.validations = [];
@@ -324,10 +270,6 @@ export class CodeSystemFileImportComponent {
       },
     };
 
-    this.processRequest(req);
-  }
-
-  protected processRequest(req: FileProcessingRequest): void {
     let file: Blob;
     if (['csv', 'tsv', 'json'].includes(req.type)) {
       const fileInput = 'json' === req.type
@@ -336,6 +278,11 @@ export class CodeSystemFileImportComponent {
       file = fileInput?.nativeElement?.files?.[0];
     }
 
+
+    this.processRequest(req, file);
+  }
+
+  protected processRequest(req: FileProcessingRequest, file: Blob): void {
     this.jobLog = undefined;
     this.loader.wrap('process', this.importService.processRequest(req, file)).subscribe(resp => {
       this.jobLog = resp;

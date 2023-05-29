@@ -4,14 +4,13 @@ import {environment} from 'app/src/environments/environment';
 import {NgForm} from '@angular/forms';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {LocalizedName} from '@kodality-web/marina-util';
-import {filter, map, merge, Observable, Subject, switchMap, takeUntil, timer} from 'rxjs';
-import {DestroyService} from '@kodality-web/core-util';
+import {map, mergeMap, Observable} from 'rxjs';
+import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
 import {JobLibService, JobLog, JobLogResponse} from '../../../../job/_lib';
 import {MapSet, MapSetLibService} from '../../../../resources/_lib';
 
 
-// processing
 interface FileProcessingRequest {
   map: {
     id?: string;
@@ -39,7 +38,7 @@ export class ConceptMapFileImportComponent {
   };
   public jobResponse: JobLog | null = null;
   public isNewMapSet: boolean = false;
-  public loading: {[k: string]: boolean} = {};
+  public loader = new LoadingManager();
 
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('form') public form?: NgForm;
@@ -63,12 +62,12 @@ export class ConceptMapFileImportComponent {
   public loadMapSet(id: string): void {
     this.data.loadedMapSet = undefined;
     if (id) {
-      this.loading['ms'] = true;
-      this.mapSetService.load(id).subscribe(resp => this.data.loadedMapSet = resp).add(() => this.loading['ms'] = false);
+      this.loader.wrap('ms', this.mapSetService.load(id)).subscribe(resp => this.data.loadedMapSet = resp);
     }
   }
 
   public process(): void {
+    const file = this.fileInput?.nativeElement?.files?.[0];
     const req: FileProcessingRequest = {
       map: this.data.map,
       version: this.data.version,
@@ -76,34 +75,27 @@ export class ConceptMapFileImportComponent {
       targetValueSet: this.data.targetValueSet
     };
 
-    const formData = new FormData();
-    formData.append('request', JSON.stringify(req));
-    formData.append('file', this.fileInput?.nativeElement?.files?.[0] as Blob, 'files');
-
     this.jobResponse = null;
-    this.loading['processing'] = true;
-    this.http.post<JobLogResponse>(`${environment.terminologyApi}/file-importer/map-set/process`, formData).subscribe({
-      next: resp => this.pollJobStatus(resp.jobId),
-      error: () => this.loading['processing'] = false
+    this.loader.wrap('processing', this.processRequest(req, file)).subscribe(resp => {
+      this.jobResponse = resp;
+      if (!resp.errors && !resp.warnings) {
+        this.notificationService.success("web.integration.file-import.success-message", this.successNotificationContent, {duration: 0, closable: true});
+      }
     });
   }
 
-  private pollJobStatus(jobId: number): void {
-    const stopPolling$ = new Subject<void>();
-    timer(0, 3000).pipe(
-      takeUntil(merge(this.destroy$, stopPolling$)),
-      switchMap(() => this.jobService.getLog(jobId)),
-      filter(resp => resp.execution?.status !== 'running')
-    ).subscribe(jobResp => {
-      stopPolling$.next();
-      if (!jobResp.errors && !jobResp.warnings) {
-        this.notificationService.success("web.integration.file-import.success-message", this.successNotificationContent, {duration: 0, closable: true});
-      }
-      this.jobResponse = jobResp;
-    }).add(() => this.loading['processing'] = false);
-  }
+  private processRequest(req: FileProcessingRequest, file: Blob): Observable<JobLog> {
+    const fd = new FormData();
+    fd.append('request', JSON.stringify(req));
+    fd.append('file', file, 'files');
 
-  public openMapSet(id: string, mode: 'edit' | 'view'): void {
+    return this.http.post<JobLogResponse>(`${environment.terminologyApi}/file-importer/map-set/process`, fd).pipe(
+      mergeMap(resp => this.jobService.pollFinishedJobLog(resp.jobId, this.destroy$))
+    );
+  };
+
+
+  protected openMapSet(id: string, mode: 'edit' | 'view'): void {
     this.router.navigate(['/resources/map-sets/', id, mode]);
   }
 

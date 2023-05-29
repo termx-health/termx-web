@@ -13,7 +13,8 @@ import {takeUntil} from 'rxjs';
 })
 export class CodeSystemVersionSelectComponent implements OnChanges, ControlValueAccessor {
   @Input() public codeSystemId?: string;
-  @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() @BooleanInput() public valuePrimitive: string | boolean;
+  @Input() @BooleanInput() public disabled: string | boolean;
 
   public data: {[version: string]: CodeSystemVersion} = {};
   public value?: number;
@@ -76,6 +77,10 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
 
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
+  }
+
+  public setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 
 

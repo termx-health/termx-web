@@ -6,6 +6,7 @@
     [loading]="isLoading"
     [autoSelect]="true"
     [autoUnselect]="true"
+    [disabled]="!!disabled"
 >
   <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.id" [mLabel]="data[key]?.version"></m-option>
 </m-select>

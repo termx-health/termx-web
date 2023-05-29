@@ -15,8 +15,6 @@ import {of} from 'rxjs';
   styles: [`
     .version-sidebar {
       height: min-content;
-      position: sticky;
-      top: calc(var(--page-header-height) + 1rem);
       margin-bottom: 1rem
     }
     

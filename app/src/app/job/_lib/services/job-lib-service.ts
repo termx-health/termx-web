@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {merge, Observable, Subject, switchMap, take, takeUntil, timer} from 'rxjs';
 import {environment} from 'environments/environment';
 import {JobLog} from '../model/job-log';
 
@@ -13,4 +13,19 @@ export class JobLibService {
   public getLog(jobId: number): Observable<JobLog> {
     return this.http.get<JobLog>(`${this.baseUrl}/${jobId}`);
   }
+
+  public pollFinishedJobLog = (jobId: number, destroy$: Observable<any> = timer(60_000)): Observable<JobLog> => {
+    const pollComplete$ = new Subject();
+
+    timer(0, 3000).pipe(
+      switchMap(() => this.getLog(jobId)),
+      takeUntil(merge(pollComplete$, destroy$))
+    ).subscribe(resp => {
+      if (resp.execution?.status !== 'running') {
+        pollComplete$.next(resp);
+      }
+    });
+
+    return pollComplete$.pipe(take(1));
+  };
 }
