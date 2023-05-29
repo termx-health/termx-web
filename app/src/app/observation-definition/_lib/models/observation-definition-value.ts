@@ -9,6 +9,6 @@ export class ObservationDefinitionValue {
   public multipleResultsAllowed?: boolean;
 
   public usage?: string;
-  public values?: string[];
+  public values?: {code?: string, codeSystem?: string}[];
   public valueSet?: string;
 }
