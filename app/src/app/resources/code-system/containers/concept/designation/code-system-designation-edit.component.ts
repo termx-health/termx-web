@@ -58,6 +58,10 @@ export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {
     designations.forEach(d => {
       this.addDesignationToMap(d);
     });
+
+    if (this.viewMode) {
+      return;
+    }
     this.designationGroups.forEach(g => {
       this.supportedLangs?.forEach(lang => {
         let designation = g.designations?.find(d => d.language === lang);
