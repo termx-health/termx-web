@@ -540,7 +540,7 @@
         "code-system-version-description": "CodeSystem version description"
       },
       "file-import": {
-        "file-import": "File import",
+        "title": "File import",
         "not-found": "Not found?",
         "create-new": "Create new",
         "process": "Process",
@@ -584,6 +584,18 @@
           "map-version": "Map version",
           "source-value-set": "Source value set",
           "target-value-set": "Target value set"
+        },
+        "association": {
+          "import": "Association file import",
+          "file-column": "File column",
+          "mapped-column": "Mapped column",
+          "code-system": "Code system",
+          "code-system-version": "Code system version",
+          "column-value-separator": "Column value separator",
+          "file": "Associations CSV file",
+          "target": "Target",
+          "source": "Source",
+          "order": "Order"
         }
       },
       "loinc-import": {

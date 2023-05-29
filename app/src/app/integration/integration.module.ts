@@ -33,6 +33,8 @@ import {LoincPartSearchComponent} from 'term-web/integration/loinc/loinc-part-se
 import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {ImportJobLogComponent} from 'term-web/integration/import-job-log.component';
+import {FileAnalysisService} from 'term-web/integration/import/file-import/file-analysis.service';
+import {AssociationFileImportComponent} from 'term-web/integration/import/file-import/association/association-file-import.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -52,7 +54,8 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'orphanet/import', component: IntegrationOrphanetImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'loinc/import', component: LoincImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
-      {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.edit']}}
+      {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.edit']}},
+      {path: 'file-import/association', component: AssociationFileImportComponent, data: {privilege: ['*.MapSet.edit']}}
     ]
   },
   {path: 'loinc', component: LoincDashboardComponent, data: {privilege: ['*.CodeSystem.view']}},
@@ -106,10 +109,12 @@ export const INTEGRATION_ROUTES: Routes = [
     LoincImportComponent,
 
     CodeSystemFileImportComponent,
-    ConceptMapFileImportComponent
+    ConceptMapFileImportComponent,
+    AssociationFileImportComponent
   ],
   providers: [
-    SnomedTranslationService
+    SnomedTranslationService,
+    FileAnalysisService
   ]
 })
 export class IntegrationModule {

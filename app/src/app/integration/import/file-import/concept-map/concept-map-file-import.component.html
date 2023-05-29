@@ -1,7 +1,7 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
     <nz-breadcrumb>
-      <nz-breadcrumb-item>{{'web.integration.file-import.file-import' | translate}}</nz-breadcrumb-item>
+      <nz-breadcrumb-item>{{'web.integration.file-import.title' | translate}}</nz-breadcrumb-item>
       <nz-breadcrumb-item>{{'web.integration.file-import.concept-map.import' | translate}}</nz-breadcrumb-item>
     </nz-breadcrumb>
   </div>
@@ -57,8 +57,12 @@
 
     <tw-import-job-log *ngIf="jobResponse" [jobLog]="jobResponse"/>
 
-
-    <m-button *m-card-footer (click)="process()" [mLoading]="loading['processing']" [disabled]="form.invalid">
+    <m-button
+        *m-card-footer
+        [mLoading]="loader.state['processing']"
+        [disabled]="form.invalid"
+        (click)="process()"
+    >
       {{'web.integration.file-import.process' | translate}}
     </m-button>
   </form>

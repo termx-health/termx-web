@@ -72,10 +72,11 @@
         <m-button mDisplay="link" [routerLink]="'./orphanet/import'">{{'web.integration.import.orphanet' | translate}}</m-button>
       </div>
 
-      <m-divider [mText]="'web.integration.file-import.file-import' | translate" *twPrivileged="['*.CodeSystem.edit', '*.MapSet.edit']"></m-divider>
+      <m-divider [mText]="'web.integration.file-import.title' | translate" *twPrivileged="['*.CodeSystem.edit', '*.MapSet.edit']"></m-divider>
       <div style="display: grid" *twPrivileged="['*.CodeSystem.edit', '*.MapSet.edit']">
         <m-button mDisplay="link" [routerLink]="'./file-import/code-system'" *twPrivileged="'*.CodeSystem.edit'">{{'web.integration.file-import.code-system.import' | translate}}</m-button>
         <m-button mDisplay="link" [routerLink]="'./file-import/concept-map'" *twPrivileged="'*.MapSet.edit'">{{'web.integration.file-import.concept-map.import' | translate}}</m-button>
+        <m-button mDisplay="link" [routerLink]="'./file-import/association'" *twPrivileged="'*.CodeSystem.edit'">{{'web.integration.file-import.association.import' | translate}}</m-button>
       </div>
     </m-card>
   </div>
