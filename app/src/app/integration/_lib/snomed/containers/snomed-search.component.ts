@@ -14,6 +14,7 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
   private static snomed_root = '138875005';
 
   @Input() public ecl: string;
+  @Input() public conceptId: string;
 
   public loading: {[key: string]: boolean} = {};
 
@@ -38,14 +39,19 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
   ) {}
 
   public ngOnInit(): void {
-    this.loadTaxonomyRootTree();
-    this.loadRefsets();
+    if (this.conceptId) {
+      this.expandTree(this.conceptId);
+    } else {
+      this.loadTaxonomyRootTree();
+    }
 
     this.searchUpdate.pipe(
       debounceTime(250),
       distinctUntilChanged(),
       switchMap(() => this.searchConcepts(this.searchText)),
     ).subscribe();
+
+    this.loadRefsets();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -122,5 +128,33 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
     this.snomedService.findConcepts(this.eclParams).subscribe(concepts => {
       this.eclConcepts = {data: concepts.items || [], meta: {total: concepts.total, offset: concepts.offset}};
     }).add(() => this.loading['ecl-concepts'] = false);
+  }
+
+  public expandTree(conceptId: string): void {
+    this.loading['taxonomy'] = true;
+    this.snomedService.loadConcept(conceptId).subscribe(c => {
+      const relation = c.relationships?.[0];
+      if (relation) {
+        this.snomedService.findConceptChildren(relation.target.conceptId).subscribe(children => this.children = children);
+      } else {
+        this.children = [c];
+      }
+      this.parents = [];
+      this.loadParents(c);
+      this.loading['taxonomy'] = false;
+    });
+
+  }
+
+  private loadParents(c: SnomedConcept): void {
+    const relation = c.relationships?.[0];
+    if (relation) {
+      this.loading['taxonomy'] = true;
+      this.snomedService.loadConcept(relation.target.conceptId).subscribe(r => {
+        this.parents = [r, ...(this.parents || [])];
+        this.loadParents(r);
+        this.loading['taxonomy'] = false;
+      });
+    }
   }
 }
