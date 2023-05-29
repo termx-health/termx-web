@@ -102,7 +102,9 @@ export class ObservationDefinitionListComponent implements OnInit {
   }
 
   public getDetails = (obs: ObservationDefinition): {label: string, tooltip: any}[] => {
-    const details = [];
+    let details = [];
+    details = [...details, ...(obs.value?.valueSet ? [{label: obs.value.valueSet}] : [])];
+    details = [...details, ...(obs.value?.values ? obs.value.values.map(v => ({label: v.code})) : [])];
     obs.members?.forEach(m => details.push({label: m.item.code, tooltip: m.item.names}));
     obs.components?.forEach(c => details.push({label: c.code, tooltip: c.names}));
     return details;
