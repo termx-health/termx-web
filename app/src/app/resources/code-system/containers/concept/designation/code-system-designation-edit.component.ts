@@ -52,9 +52,11 @@ export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {
 
   public convertToDesignationGroup(designations: Designation[], properties: EntityProperty[]): void {
     this.designationGroups = [];
-    properties.filter(p => ['display', 'definition', 'alias'].includes(p.name!))
-      .filter(p => !designations.find(d => d.designationTypeId === p.id))
-      .forEach(p => designations.push({language: 'en', designationTypeId: p.id, designationKind: 'text', status: 'draft', caseSignificance: 'ci'}));
+    if (!this.viewMode) {
+      properties.filter(p => ['display', 'definition', 'alias'].includes(p.name!))
+        .filter(p => !designations.find(d => d.designationTypeId === p.id))
+        .forEach(p => designations.push({language: 'en', designationTypeId: p.id, designationKind: 'text', status: 'draft', caseSignificance: 'ci'}));
+    }
     designations.forEach(d => {
       this.addDesignationToMap(d);
     });
