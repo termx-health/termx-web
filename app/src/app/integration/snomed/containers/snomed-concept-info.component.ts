@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'app/src/app/integration/_lib';
 import {forkJoin} from 'rxjs';
-import {isDefined, LoadingManager} from '@kodality-web/core-util';
+import {DestroyService, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {MapSetLibService, ValueSetLibService} from 'app/src/app/resources/_lib';
 import {PageLibService} from 'app/src/app/thesaurus/_lib';
 import {TranslateService} from '@ngx-translate/core';
@@ -9,10 +9,13 @@ import {Router} from '@angular/router';
 import {AuthService} from 'app/src/app/core/auth';
 import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
+import {LorqueLibService} from 'term-web/sys/_lib';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Component({
   selector: 'tw-snomed-concept-info',
   templateUrl: './snomed-concept-info.component.html',
+  providers: [DestroyService]
 })
 export class SnomedConceptInfoComponent implements OnChanges {
 
@@ -36,7 +39,10 @@ export class SnomedConceptInfoComponent implements OnChanges {
     private mapSetService: MapSetLibService,
     private pageService: PageLibService,
     private translateService: TranslateService,
+    private lorqueService: LorqueLibService,
     private authService: AuthService,
+    private destroy$: DestroyService,
+    private notificationService: MuiNotificationService,
     private router: Router
   ) {}
 
@@ -115,5 +121,17 @@ export class SnomedConceptInfoComponent implements OnChanges {
         this.dataChanged = false;
       });
     }
+  }
+
+  public exportToRF2(): void {
+    this.snomedTranslationService.startRF2Export().subscribe(process => {
+      this.loader.wrap('rf2-export', this.lorqueService.pollFinishedProcess(process.id, this.destroy$)).subscribe(status => {
+        if (status === 'failed') {
+          this.lorqueService.load(process.id).subscribe(p => this.notificationService.error(p.resultText));
+          return;
+        }
+        this.snomedTranslationService.getRF2(process.id);
+      });
+    });
   }
 }

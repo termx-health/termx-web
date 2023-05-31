@@ -1,8 +1,9 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
     <div></div>
-    <div *ngIf="dataChanged">
-      <m-button mDisplay="primary" (mClick)="saveTranslations()" [mLoading]="loader.state['save']">{{'core.btn.save' | translate}}</m-button>
+    <div class="m-items-middle">
+      <m-button (mClick)="exportToRF2()" [mLoading]="loader.state['rf2-export']">{{'web.snomed.rf2-export' | translate}}</m-button>
+      <m-button *ngIf="dataChanged" mDisplay="primary" (mClick)="saveTranslations()" [mLoading]="loader.state['save']">{{'core.btn.save' | translate}}</m-button>
     </div>
   </div>
   <m-card class="m-card-inside">

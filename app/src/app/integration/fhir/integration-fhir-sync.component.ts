@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {filter, merge, Observable, Subject, switchMap, takeUntil, timer} from 'rxjs';
+import {Observable} from 'rxjs';
 import {DestroyService} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {JobLibService, JobLog} from '../../job/_lib';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from '../../fhir/_lib';
+import {JobLibService, JobLog} from 'term-web/sys/_lib';
 
 
 @Component({
@@ -65,15 +65,8 @@ export class IntegrationFhirSyncComponent implements OnInit {
   }
 
   private pollJobStatus(jobId: number): void {
-    const stopPolling$ = new Subject<void>();
-
     this.loading['polling'] = true;
-    timer(0, 3000).pipe(
-      takeUntil(merge(this.destroy$, stopPolling$)),
-      switchMap(() => this.jobService.getLog(jobId)),
-      filter(resp => resp.execution?.status !== 'running')
-    ).subscribe(jobResp => {
-      stopPolling$.next();
+    this.jobService.pollFinishedJobLog(jobId, this.destroy$).subscribe(jobResp => {
       if (!jobResp.errors && !jobResp.warnings) {
         this.urls = [];
         jobResp.successes?.forEach(success => this.notificationService.success('Sync successful!', success, {duration: 0, closable: true}));

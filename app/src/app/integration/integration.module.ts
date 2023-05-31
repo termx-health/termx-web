@@ -20,7 +20,6 @@ import {SnomedConceptInfoComponent} from './snomed/containers/snomed-concept-inf
 import {IntegrationOrphanetImportComponent} from './import/orphanet/integration-orphanet-import-component';
 import {IntegrationIchiImportComponent} from './import/ichi/integration-ichi-import.component';
 import {FhirLibModule} from 'term-web/fhir/_lib';
-import {JobLibModule} from 'term-web/job/_lib';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {LoincImportComponent} from 'term-web/integration/import/loinc/loinc-import.component';
@@ -67,7 +66,6 @@ export const INTEGRATION_ROUTES: Routes = [
     CoreUiModule,
     ResourcesLibModule,
     FhirLibModule,
-    JobLibModule,
     IntegrationLibModule
   ],
   exports: [

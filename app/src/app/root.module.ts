@@ -22,7 +22,6 @@ import {FhirModule} from './fhir/fhir.module';
 import {ToolsModule} from './tools/tools.module';
 import {MeasurementUnitModule} from './measurement-unit/measurement-unit.module';
 import {ProjectModule} from './project/project.module';
-import {JobLibModule} from './job/_lib';
 import {AuthModule, AuthService} from './core/auth';
 import {MarinaUiConfigModule} from './core/marina';
 import {ObservationDefinitionModule} from 'term-web/observation-definition/observation-definition.module';
@@ -30,6 +29,7 @@ import {SequenceModule} from 'term-web/sequence/sequence.module';
 import {TaskflowModule} from 'term-web/taskflow/taskflow.module';
 import {RootComponent} from 'term-web/root.component';
 import {NoPrivilegeComponent} from 'term-web/core/components/no-privilege/no-privilege.component';
+import {SysModule} from 'term-web/sys/sys.module';
 
 registerLocaleData(et);
 registerLocaleData(lt);
@@ -72,7 +72,6 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
 
     ResourcesModule,
     IntegrationModule,
-    JobLibModule,
     PrivilegesModule,
     GlobalSearchModule,
     ThesaurusModule,
@@ -82,6 +81,7 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     ToolsModule,
     MeasurementUnitModule,
     ProjectModule,
+    SysModule,
     SequenceModule
   ],
   providers: [

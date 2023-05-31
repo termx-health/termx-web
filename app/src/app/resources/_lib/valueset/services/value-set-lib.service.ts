@@ -37,10 +37,6 @@ export class ValueSetLibService {
     return this.http.get<SearchResult<ValueSetVersion>>(`${this.baseUrl}/${valueSetId}/versions`, {params: SearchHttpParams.build(params)});
   }
 
-  public loadConcept(valueSetId: string, valueSetVersion: string, id: number): Observable<ValueSetVersionConcept> {
-    return this.http.get<ValueSetVersionConcept>(`${this.baseUrl}/${valueSetId}/versions/${valueSetVersion}/concepts/${id}`);
-  }
-
   public expand(request: ValueSetExpandRequest): Observable<ValueSetVersionConcept[]> {
     if (!request.ruleSet) {
       const key = `${request.valueSet}#${request.valueSetVersion || '-'}`;

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchHttpParams} from '@kodality-web/core-util';
-import {JobLogResponse} from 'term-web/job/_lib';
+import {JobLogResponse} from 'term-web/sys/_lib';
 import {environment} from 'environments/environment';
 import {IntegrationImportConfiguration} from '../../model/integration-import-configuration';
 

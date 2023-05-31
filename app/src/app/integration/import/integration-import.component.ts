@@ -1,5 +1,5 @@
 import {Directive, OnInit} from '@angular/core';
-import {JobLibService, JobLogResponse} from '../../job/_lib';
+import {JobLibService, JobLogResponse} from '../../sys/_lib';
 import {ActivatedRoute} from '@angular/router';
 import {filter, Observable} from 'rxjs';
 import {MuiNotificationService} from '@kodality-web/marina-ui';

@@ -8,8 +8,8 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {mergeMap, Observable, of} from 'rxjs';
 import {Router} from '@angular/router';
 import {CodeSystem, CodeSystemLibService, CodeSystemVersion, EntityProperty} from '../../../../resources/_lib';
-import {JobLibService, JobLog, JobLogResponse} from '../../../../job/_lib';
 import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../file-analysis.service';
+import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 
 
 const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [

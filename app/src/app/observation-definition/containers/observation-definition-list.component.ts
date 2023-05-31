@@ -2,9 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ComponentStateStore, copyDeep, DestroyService, LoadingManager, QueryParams, SearchResult, validateForm} from '@kodality-web/core-util';
 import {ObservationDefinitionService} from '../services/observation-definition.service';
 import {ObservationDefinition, ObservationDefinitionImportRequest, ObservationDefinitionSearchParams} from 'app/src/app/observation-definition/_lib';
-import {filter, merge, Observable, Subject, switchMap, takeUntil, tap, timer} from 'rxjs';
+import {Observable, tap} from 'rxjs';
 import {NgForm} from '@angular/forms';
-import {JobLibService, JobLog} from 'term-web/job/_lib';
+import {JobLibService, JobLog} from 'term-web/sys/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Component({
@@ -82,13 +82,7 @@ export class ObservationDefinitionListComponent implements OnInit {
   }
 
   private pollJobStatus(jobId: number): void {
-    const stopPolling$ = new Subject<void>();
-    timer(0, 3000).pipe(
-      takeUntil(merge(this.destroy$, stopPolling$)),
-      switchMap(() => this.loader.wrap('import', this.jobService.getLog(jobId))),
-      filter(resp => resp.execution?.status !== 'running')
-    ).subscribe(jobResp => {
-      stopPolling$.next();
+    this.loader.wrap('import', this.jobService.pollFinishedJobLog(jobId, this.destroy$)).subscribe(jobResp => {
       if (!jobResp.errors && !jobResp.warnings) {
         this.notificationService.success("web.observation-definition.import-success-message", '', {duration: 0, closable: true});
       }
@@ -119,7 +113,10 @@ export class ObservationDefinitionListComponent implements OnInit {
       details.push({label: 'method', tooltip: obs.protocol.method.values?.map(v => v.code)?.join(',') || obs.protocol.method.valueSet});
     }
     if (['values', 'value-set'].includes(obs.protocol?.measurementLocation?.usage)) {
-      details.push({label: 'measurement-location', tooltip: obs.protocol.measurementLocation.values?.map(v => v.code)?.join(',') || obs.protocol.measurementLocation.valueSet});
+      details.push({
+        label: 'measurement-location',
+        tooltip: obs.protocol.measurementLocation.values?.map(v => v.code)?.join(',') || obs.protocol.measurementLocation.valueSet
+      });
     }
     if (['values', 'value-set'].includes(obs.protocol?.specimen?.usage)) {
       details.push({label: 'specimen', tooltip: obs.protocol.specimen.values?.map(v => v.code)?.join(',') || obs.protocol.specimen.valueSet});
@@ -128,7 +125,10 @@ export class ObservationDefinitionListComponent implements OnInit {
       details.push({label: 'position', tooltip: obs.protocol.position.values?.map(v => v.code)?.join(',') || obs.protocol.position.valueSet});
     }
     if (['values', 'value-set'].includes(obs.protocol?.dataCollectionCircumstances?.usage)) {
-      details.push({label: 'data-collection-circumstances', tooltip: obs.protocol.dataCollectionCircumstances.values?.map(v => v.code)?.join(',') || obs.protocol.dataCollectionCircumstances.valueSet});
+      details.push({
+        label: 'data-collection-circumstances',
+        tooltip: obs.protocol.dataCollectionCircumstances.values?.map(v => v.code)?.join(',') || obs.protocol.dataCollectionCircumstances.valueSet
+      });
     }
     obs.protocol?.components?.forEach(c => details.push({label: c.code, tooltip: c.names}));
     return details;

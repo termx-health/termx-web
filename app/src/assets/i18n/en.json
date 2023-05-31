@@ -679,7 +679,8 @@
         "ecl": "ECL",
         "ecl-placeholder": "ECL expression",
         "import-refset-concepts": "Import refset concepts"
-      }
+      },
+      "rf2-export": "RF2 export"
     },
     "loinc": {
       "loinc": {

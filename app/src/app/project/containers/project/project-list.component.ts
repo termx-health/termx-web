@@ -1,9 +1,9 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {filter, finalize, merge, Observable, Subject, switchMap, takeUntil, tap, timer} from 'rxjs';
+import {finalize, Observable, tap} from 'rxjs';
 import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {ProjectService} from '../../services/project.service';
 import {Project, ProjectSearchParams} from 'term-web/project/_lib';
-import {JobLibService} from 'term-web/job/_lib';
+import {JobLibService} from 'term-web/sys/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Component({
@@ -73,13 +73,7 @@ export class ProjectListComponent implements OnInit {
   }
 
   private pollJobStatus(jobId: number): void {
-    const stopPolling$ = new Subject<void>();
-    timer(0, 3000).pipe(
-      takeUntil(merge(this.destroy$, stopPolling$)),
-      switchMap(() => this.jobService.getLog(jobId)),
-      filter(resp => resp.execution?.status !== 'running')
-    ).subscribe(jobResp => {
-      stopPolling$.next();
+    this.jobService.pollFinishedJobLog(jobId, this.destroy$).subscribe(jobResp => {
       if (!jobResp.errors) {
         this.notificationService.success("web.project.import-success-message");
         this.loadData();

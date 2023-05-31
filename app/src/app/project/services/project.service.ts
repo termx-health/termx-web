@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Package, PackageVersion, Project, ProjectLibService} from 'term-web/project/_lib';
-import {JobLogResponse} from 'term-web/job/_lib';
+import {JobLogResponse} from 'term-web/sys/_lib';
 
 @Injectable()
 export class ProjectService extends ProjectLibService {

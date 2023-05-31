@@ -7,8 +7,8 @@ import {LocalizedName} from '@kodality-web/marina-util';
 import {map, mergeMap, Observable} from 'rxjs';
 import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
-import {JobLibService, JobLog, JobLogResponse} from '../../../../job/_lib';
 import {MapSet, MapSetLibService} from '../../../../resources/_lib';
+import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 
 
 interface FileProcessingRequest {

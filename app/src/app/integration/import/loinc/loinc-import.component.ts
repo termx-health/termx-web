@@ -5,9 +5,8 @@ import {NgForm} from '@angular/forms';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {Router} from '@angular/router';
 import {CodeSystemLibService} from '../../../resources/_lib';
-import {JobLibService, JobLog, JobLogResponse} from '../../../job/_lib';
 import {environment} from 'environments/environment';
-import {filter, merge, Subject, switchMap, takeUntil, timer} from 'rxjs';
+import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 
 
 @Component({
@@ -81,13 +80,7 @@ export class LoincImportComponent {
   }
 
   private pollJobStatus(jobId: number): void {
-    const stopPolling$ = new Subject<void>();
-    timer(0, 3000).pipe(
-      takeUntil(merge(this.destroy$, stopPolling$)),
-      switchMap(() => this.jobService.getLog(jobId)),
-      filter(resp => resp.execution?.status !== 'running')
-    ).subscribe(jobResp => {
-      stopPolling$.next();
+    this.jobService.pollFinishedJobLog(jobId, this.destroy$).subscribe(jobResp => {
       if (!jobResp.errors && !jobResp.warnings) {
         this.notificationService.success("web.integration.file-import.success-message", this.successNotificationContent!, {duration: 0, closable: true});
       }

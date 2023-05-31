@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {PackageResource, TerminologyServer, TerminologyServerLibService} from 'term-web/project/_lib';
-import {combineLatest, filter, forkJoin, map, merge, Observable, of, Subject, switchMap, takeUntil, timer} from 'rxjs';
+import {combineLatest, forkJoin, map, Observable, of, takeUntil} from 'rxjs';
 import {collect, DestroyService, group} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirValueSetLibService} from '../../../fhir/_lib';
 import {diffWords} from 'diff';
 import {PackageResourceService} from '../../services/package-resource.service';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {JobLibService} from '../../../job/_lib';
 import {ProjectContextComponent} from 'term-web/core/context/project-context.component';
+import {JobLibService} from 'term-web/sys/_lib';
 
 export class ProjectDiffItem {
   public resource?: PackageResource;
@@ -153,13 +153,7 @@ export class ProjectDiffComponent implements OnInit {
   }
 
   private pollJobStatus(jobId: number): void {
-    const stopPolling$ = new Subject<void>();
-    timer(0, 3000).pipe(
-      takeUntil(merge(this.destroy$, stopPolling$)),
-      switchMap(() => this.jobService.getLog(jobId)),
-      filter(resp => resp.execution?.status !== 'running')
-    ).subscribe(jobResp => {
-      stopPolling$.next();
+    this.jobService.pollFinishedJobLog(jobId, this.destroy$).subscribe(jobResp => {
       if (!jobResp.errors) {
         this.notificationService.success("web.project.resource-import-success-message");
         this.loadData();

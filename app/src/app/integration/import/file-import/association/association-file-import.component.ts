@@ -6,7 +6,7 @@ import {NgForm} from '@angular/forms';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {mergeMap, Observable} from 'rxjs';
 import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../file-analysis.service';
-import {JobLibService, JobLog, JobLogResponse} from 'term-web/job/_lib';
+import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 import {CodeSystemLibService} from 'term-web/resources/_lib';
 
 interface AssociationFileImportRequest {
