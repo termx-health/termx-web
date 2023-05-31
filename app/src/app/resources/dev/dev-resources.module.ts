@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {SharedModule} from '../../core/shared/shared.module';
+import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {Routes} from '@angular/router';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {DevCodeSystemListComponent} from './codesystem/dev-code-system-list.component';
@@ -30,7 +30,7 @@ export const DEV_RESOURCES_ROUTES: Routes = [
 
 @NgModule({
   imports: [
-    SharedModule,
+    CoreUiModule,
     ResourcesLibModule,
     CodeSystemModule,
     MapSetModule,

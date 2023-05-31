@@ -10,7 +10,7 @@ import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
 import lt from '@angular/common/locales/lt';
 import {ResourcesModule} from './resources/resources.module';
-import {SharedModule} from './core/shared/shared.module';
+import {CoreUiModule} from './core/ui/core-ui.module';
 import {Observable} from 'rxjs';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
@@ -26,11 +26,10 @@ import {JobLibModule} from './job/_lib';
 import {AuthModule, AuthService} from './core/auth';
 import {MarinaUiConfigModule} from './core/marina';
 import {ObservationDefinitionModule} from 'term-web/observation-definition/observation-definition.module';
-import {TableModule} from 'term-web/core/ui/table-container/table.module';
 import {SequenceModule} from 'term-web/sequence/sequence.module';
 import {TaskflowModule} from 'term-web/taskflow/taskflow.module';
 import {RootComponent} from 'term-web/root.component';
-import {NoPrivilegeComponent} from 'term-web/core/ui/no-privilege/no-privilege.component';
+import {NoPrivilegeComponent} from 'term-web/core/components/no-privilege/no-privilege.component';
 
 registerLocaleData(et);
 registerLocaleData(lt);
@@ -68,8 +67,7 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     MarinaUiConfigModule.init(),
     CoreUtilModule,
 
-    SharedModule,
-    TableModule,
+    CoreUiModule,
     NoPrivilegeComponent,
 
     ResourcesModule,

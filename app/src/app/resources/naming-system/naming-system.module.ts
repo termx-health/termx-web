@@ -1,5 +1,5 @@
 import {Routes} from '@angular/router';
-import {SharedModule} from '../../core/shared/shared.module';
+import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {NamingSystemListComponent} from './containers/list/naming-system-list.component';
 import {NgModule} from '@angular/core';
@@ -16,7 +16,7 @@ export const NAMING_SYSTEM_ROUTES: Routes = [
 
 @NgModule({
   imports: [
-    SharedModule,
+    CoreUiModule,
     ResourcesLibModule,
   ],
   declarations: [

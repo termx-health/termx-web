@@ -3,7 +3,7 @@ import {ObservationDefinitionLibService} from './services/observation-definition
 import {ObservationDefinitionSearchComponent} from './components/observation-definition-search.component';
 import {FormsModule} from '@angular/forms';
 import {MarinaComponentsModule} from '@kodality-web/marina-ui';
-import {SharedModule} from '../../core/shared/shared.module';
+import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {ObservationDefinitionValueSelectComponent} from 'term-web/observation-definition/_lib/components/observation-definition-value-select.component';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 
@@ -11,7 +11,7 @@ import {ResourcesLibModule} from 'term-web/resources/_lib';
   imports: [
     FormsModule,
     MarinaComponentsModule,
-    SharedModule,
+    CoreUiModule,
     ResourcesLibModule
   ],
   declarations: [

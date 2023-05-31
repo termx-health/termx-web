@@ -1,8 +1,8 @@
 import {NgModule} from '@angular/core';
-import {RouterModule, Routes} from '@angular/router';
+import {Routes} from '@angular/router';
 import {ProjectListComponent} from './containers/project/project-list.component';
 import {ProjectEditComponent} from './containers/project/project-edit.component';
-import {SharedModule} from '../core/shared/shared.module';
+import {CoreUiModule} from '../core/ui/core-ui.module';
 import {ProjectService} from './services/project.service';
 import {PackageEditComponent} from './containers/package/package-edit.component';
 import {ProjectDashboardComponent} from './containers/project/project-dashboard.component';
@@ -39,7 +39,7 @@ export const TERMINOLOGY_SERVER_ROUTES: Routes = [
 
 @NgModule({
   imports: [
-    SharedModule,
+    CoreUiModule,
     CodeSystemLibModule,
     ValueSetLibModule,
     MapSetLibModule,

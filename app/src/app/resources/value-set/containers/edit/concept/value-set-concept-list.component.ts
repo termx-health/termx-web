@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ValueSetVersionConcept} from 'term-web/resources/_lib';
 import {ValueSetService} from '../../../services/value-set.service';
-import {TextUtil} from 'term-web/core/shared/util/text-util';
+import {TextUtil} from 'term-web/core/ui/util/text-util';
 
 @Component({
   selector: 'tw-value-set-concept-list',

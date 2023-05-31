@@ -3,7 +3,7 @@ import {Routes} from '@angular/router';
 import {CODE_SYSTEM_FINDER_ROUTES, CODE_SYSTEM_ROUTES, CodeSystemModule} from './code-system/code-system.module';
 import {VALUE_SET_FINDER_ROUTES, VALUE_SET_ROUTES, ValueSetModule} from './value-set/value-set.module';
 import {ResourcesTabsetComponent} from './tabs/resources-tabset.component';
-import {SharedModule} from '../core/shared/shared.module';
+import {CoreUiModule} from '../core/ui/core-ui.module';
 import {MAP_SET_ROUTES, MapSetModule} from './map-set/map-set.module';
 import {NAMING_SYSTEM_ROUTES, NamingSystemModule} from './naming-system/naming-system.module';
 import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './association-type/association-type.module';
@@ -34,7 +34,7 @@ export const RESOURCES_ROUTES: Routes = [
     CodeSystemModule,
     ValueSetModule,
     MapSetModule,
-    SharedModule,
+    CoreUiModule,
     NamingSystemModule,
     AssociationTypeModule
   ],

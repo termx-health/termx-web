@@ -11,12 +11,14 @@ import {AddButtonComponent} from './components/add-button/add-button.component';
 import {AuthModule} from 'term-web/core/auth';
 import {ValidateUrlPipe} from './pipes/validate-url.pipe';
 import {CodeSystemLibModule, ValueSetLibModule} from '../../resources/_lib';
-import {TerminologyConceptSearchComponent} from 'term-web/core/shared/components/terminology-concept-select/terminology-concept-search.component';
+import {TerminologyConceptSearchComponent} from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
 import {MeasurementUnitLibModule} from '../../measurement-unit/_lib';
 import {IntegrationLibModule} from '../../integration/_lib';
-import {SemanticVersionSelectComponent} from 'term-web/core/shared/components/version-select/semantic-version-select.component';
-import {InputDebounceDirective} from 'term-web/core/shared/directives/input-debounce.directive';
-import {EntityPropertyValueInputComponent} from 'term-web/core/shared/components/property-value-input/entity-property-value-input.component';
+import {SemanticVersionSelectComponent} from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
+import {InputDebounceDirective} from 'term-web/core/ui/directives/input-debounce.directive';
+import {EntityPropertyValueInputComponent} from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
+import {TableComponent} from 'term-web/core/ui/components/table-container/table.component';
+import {TableFilterComponent} from 'term-web/core/ui/components/table-container/table-filter.component';
 
 
 const commonModules = [
@@ -33,11 +35,13 @@ const commonModules = [
 ];
 
 const components = [
-  StatusTagComponent,
   AddButtonComponent,
-  TerminologyConceptSearchComponent,
-  SemanticVersionSelectComponent,
   EntityPropertyValueInputComponent,
+  SemanticVersionSelectComponent,
+  StatusTagComponent,
+  TableComponent,
+  TableFilterComponent,
+  TerminologyConceptSearchComponent,
 ];
 
 const pipes = [
@@ -69,5 +73,5 @@ const directives = [
     ...directives
   ]
 })
-export class SharedModule {
+export class CoreUiModule {
 }

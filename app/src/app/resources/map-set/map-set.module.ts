@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {MapSetListComponent} from './containers/map-set-list.component';
-import {SharedModule} from '../../core/shared/shared.module';
+import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {Routes} from '@angular/router';
 import {MapSetService} from './services/map-set-service';
 import {MapSetEditComponent} from './containers/edit/map-set-edit.component';
@@ -29,7 +29,7 @@ export const MAP_SET_ROUTES: Routes = [
 
 @NgModule({
   imports: [
-    SharedModule,
+    CoreUiModule,
     ResourcesLibModule
   ],
   exports: [

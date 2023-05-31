@@ -4,7 +4,7 @@ import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {TaskLibService} from 'term-web/taskflow/_lib/services/task-lib-service';
 import {SpaceLibService} from 'term-web/taskflow/_lib/services/space-lib-service';
-import {SharedModule} from 'term-web/core/shared/shared.module';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 import {TaskTypeComponent} from 'term-web/taskflow/_lib/containers/task-type.component';
 import {WorkflowLibService} from 'term-web/taskflow/_lib/services/workflow-lib-service';
 import {TaskStatusComponent} from 'term-web/taskflow/_lib/containers/task-status.component';
@@ -16,7 +16,7 @@ import {UserLibService} from 'term-web/taskflow/_lib/services/user-lib-service';
     FormsModule,
     MarinaComponentsModule,
     CoreUtilModule,
-    SharedModule,
+    CoreUiModule,
     ResourcesLibModule,
   ],
   providers: [

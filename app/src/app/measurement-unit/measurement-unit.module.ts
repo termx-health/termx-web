@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {SharedModule} from '../core/shared/shared.module';
+import {CoreUiModule} from '../core/ui/core-ui.module';
 import {MeasurementUnitService} from './services/measurement-unit.service';
 import {MeasurementUnitListComponent} from './containers/measurement-unit-list.component';
 import {Routes} from '@angular/router';
@@ -24,7 +24,7 @@ export const MEASUREMENT_UNIT_ROUTES: Routes = [
     MeasurementUnitMappingListComponent,
   ],
   imports: [
-    SharedModule,
+    CoreUiModule,
     MeasurementUnitLibModule
   ],
   providers: [

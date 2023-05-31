@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {ContactListComponent} from './containers/contact-list.component';
-import {SharedModule} from '../../core/shared/shared.module';
+import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 
 
 @NgModule({
   imports: [
-    SharedModule,
+    CoreUiModule,
     ResourcesLibModule
   ],
   declarations: [

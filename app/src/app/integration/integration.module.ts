@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {SharedModule} from '../core/shared/shared.module';
+import {CoreUiModule} from '../core/ui/core-ui.module';
 import {IntegrationDashboardComponent} from './dashboard/integration-dashboard.component';
 import {IntegrationFhirSyncComponent} from './fhir/integration-fhir-sync.component';
 import {Routes} from '@angular/router';
@@ -28,7 +28,6 @@ import {LoincDashboardComponent} from 'term-web/integration/loinc/loinc-dashboar
 import {LoincPartListComponent} from 'term-web/integration/loinc/loinc-part-list.component';
 import {LoincListComponent} from 'term-web/integration/loinc/loinc-list.component';
 import {LoincAnswerListListComponent} from 'term-web/integration/loinc/loinc-answer-list-list.component';
-import {TableModule} from 'term-web/core/ui/table-container/table.module';
 import {LoincPartSearchComponent} from 'term-web/integration/loinc/loinc-part-search.component';
 import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
@@ -65,11 +64,10 @@ export const INTEGRATION_ROUTES: Routes = [
 
 @NgModule({
   imports: [
-    SharedModule,
+    CoreUiModule,
     ResourcesLibModule,
     FhirLibModule,
     JobLibModule,
-    TableModule,
     IntegrationLibModule
   ],
   exports: [
