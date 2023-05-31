@@ -25,7 +25,6 @@ export class CodeSystemPropertiesComponent implements OnChanges {
     "alias": {selected: false, property: {name: "alias", type: "string", status: "active"}},
     "order": {selected: false, property: {name: "order", type: "integer", status: "active"}},
     "synonym": {selected: false, property: {name: "synonym", type: "code", status: "active"}},
-    "is-a": {selected: false, property: {name: "is-a", type: "string", status: "active"}},
     "valid-from": {selected: false, property: {name: "valid-from", type: "dateTime", status: "active"}},
     "valid-to": {selected: false, property: {name: "valid-to", type: "dateTime", status: "active"}}
   };
