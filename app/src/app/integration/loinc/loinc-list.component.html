@@ -51,10 +51,11 @@
       <th>{{'web.loinc.loinc.method' | translate}}</th>
       <th>{{'web.loinc.loinc.class' | translate}}</th>
       <th>{{'web.loinc.loinc.type' | translate}}</th>
+      <th>{{'web.loinc.loinc.values' | translate}}</th>
       <th>{{'web.loinc.loinc.ord-obs' | translate}}</th>
     </tr>
 
-    <tr *mTableRow="let c">
+    <tr *mTableRow="let c;let i = index">
       <td style="white-space: nowrap;"><a (mClick)="openConcept(c.code)">{{c.code}}</a></td>
       <td>{{c | apply:getName}}</td>
       <td>
@@ -96,9 +97,22 @@
           <m-icon *ngFor="let name of (c | apply:getPartName:'TYPE':parts)" [mCode]="name | apply:getIconCode" m-popover [mContent]="name"></m-icon>
         </div>
       </td>
+      <td><m-tag class="m-clickable" mColor="blue" (click)="showAssociations(c, i)" *ngIf="(c | apply: getAssociations)">{{(c | apply: getAssociations)?.length}}</m-tag></td>
       <td>
         <div style="display: grid">
           <label *ngFor="let name of (c | apply:getPropName:'ORDER_OBS')">{{name}}</label>
+        </div>
+      </td>
+    </tr>
+    <tr *mTableRowExpand="let c" class="m-table-expanded-row">
+      <td colspan="1">
+        <div style="display: grid">
+          <label *ngFor="let a of (c | apply: getAssociations)"><a>{{a.targetCode}}</a></label>
+        </div>
+      </td>
+      <td colspan="11">
+        <div style="display: grid">
+          <label *ngFor="let a of (c | apply: getAssociations)">{{a.targetCode | localizedConceptName: {codeSystem: a.codeSystem} | async}}</label>
         </div>
       </td>
     </tr>

@@ -1,10 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable, tap} from 'rxjs';
 import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
+import {CodeSystemAssociation, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthService} from 'term-web/core/auth';
 import {Router} from '@angular/router';
+import {MuiTableComponent} from '@kodality-web/marina-ui';
 
 @Component({
   selector: 'tw-loinc-list',
@@ -23,6 +24,8 @@ export class LoincListComponent implements OnInit {
   protected loader = new LoadingManager();
 
   protected parts: {[key: string]: CodeSystemConcept} = {};
+
+  @ViewChild(MuiTableComponent) public table?: MuiTableComponent<CodeSystemConcept>;
 
   public constructor(
     private codeSystemService: CodeSystemLibService,
@@ -90,6 +93,11 @@ export class LoincListComponent implements OnInit {
     return properties?.map(p => p.value).filter(n => isDefined(n));
   };
 
+  protected getAssociations = (c: CodeSystemConcept): CodeSystemAssociation[] => {
+    const version = this.getLastVersion(c?.versions);
+    return version?.associations;
+  };
+
   protected getIconCode = (type: string): string => {
     return this.TYPE_ICONS[type];
   };
@@ -143,5 +151,14 @@ export class LoincListComponent implements OnInit {
     if (values?.length > 0) {
       propertyValues.push(type + '|' + values.join(','));
     }
+  }
+
+  protected showAssociations(c: CodeSystemConcept, i: number): void {
+    if (c['_expanded']) {
+      this.table.collapse(i);
+    } else {
+      this.table.expand(i);
+    }
+    c['_expanded'] = !c['_expanded'];
   }
 }

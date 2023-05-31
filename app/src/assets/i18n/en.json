@@ -695,6 +695,7 @@
         "class": "Class",
         "type": "Type",
         "ord-obs": "Ord/Obs",
+        "values": "Values",
         "filter": {
           "type": "Type",
           "class": "Class",
