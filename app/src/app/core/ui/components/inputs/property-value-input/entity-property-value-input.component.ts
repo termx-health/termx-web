@@ -1,20 +1,23 @@
 import {Component, forwardRef, Injectable, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
-import {BooleanInput, DestroyService, HttpCacheService, isDefined, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, isDefined, unique, validateForm} from '@kodality-web/core-util';
 import {CodeSystemLibService, EntityProperty} from 'term-web/resources/_lib';
 import {Observable} from 'rxjs';
+import {QueuedCacheService} from 'term-web/core/ui/services/queued-cache.service';
 
 
 @Injectable({providedIn: 'root'})
 class EntityPropertyValueInputCacheService {
-  public constructor(
-    private codeSystemService: CodeSystemLibService,
-    private cachedService: HttpCacheService
-  ) { }
+  private cacheService = new QueuedCacheService();
+
+  public constructor(private codeSystemService: CodeSystemLibService) { }
 
   public loadEntityProperty(codeSystemId: string, entityPropertyId: number): Observable<EntityProperty> {
-    return this.cachedService.getCachedResponse(`${codeSystemId}-${entityPropertyId}`,
-      this.codeSystemService.loadEntityProperty(codeSystemId, entityPropertyId)
+    return this.cacheService.enqueueRequest(
+      codeSystemId,
+      entityPropertyId,
+      (ids) => this.codeSystemService.searchProperties(codeSystemId, {ids: ids.filter(unique).join(','), limit: ids.filter(unique).length}),
+      (resp, id) => resp.data.find(ep => ep.id === id)
     );
   }
 }
@@ -24,7 +27,6 @@ class EntityPropertyValueInputCacheService {
   templateUrl: './entity-property-value-input.component.html',
   providers: [
     {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EntityPropertyValueInputComponent), multi: true},
-    EntityPropertyValueInputCacheService,
     DestroyService
   ]
 })

@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
-import {SharedModule} from '../core/shared/shared.module';
+import {CoreUiModule} from '../core/ui/core-ui.module';
 import {ThesaurusSidebarComponent} from './containers/page/thesaurus-sidebar.component';
 import {PageService} from './services/page.service';
 import {ThesaurusPageComponent} from './containers/page/thesaurus-page.component';
@@ -44,7 +44,7 @@ export const THESAURUS_ROUTES: Routes = [
 
 @NgModule({
   imports: [
-    SharedModule,
+    CoreUiModule,
     ThesaurusLibModule,
 
     PortalModule,

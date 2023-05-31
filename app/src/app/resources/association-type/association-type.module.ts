@@ -1,6 +1,6 @@
 import {NgModule} from '@angular/core';
 import {AssociationTypeListComponent} from './containers/list/association-type-list.component';
-import {SharedModule} from '../../core/shared/shared.module';
+import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {AssociationTypeService} from './services/association-type.service';
 import {AssociationTypeEditComponent} from './containers/edit/association-type-edit.component';
 import {Routes} from '@angular/router';
@@ -14,7 +14,7 @@ export const ASSOCIATION_TYPE_ROUTES: Routes = [
 
 @NgModule({
   imports: [
-    SharedModule
+    CoreUiModule
   ],
   declarations: [
     AssociationTypeListComponent,

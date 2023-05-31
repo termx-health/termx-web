@@ -5,7 +5,7 @@ import {CodeSystemPropertiesComponent} from './containers/edit/property/code-sys
 import {CodeSystemVersionsListComponent} from './containers/edit/version/code-system-versions-list.component';
 import {CodeSystemEditComponent} from './containers/edit/code-system-edit.component';
 import {CodeSystemVersionEditComponent} from './containers/version/code-system-version-edit.component';
-import {SharedModule} from '../../core/shared/shared.module';
+import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {CodeSystemService} from './services/code-system.service';
 import {CodeSystemVersionViewComponent} from './containers/version/code-system-version-view.component';
 import {CodeSystemDuplicateModalComponent} from './containers/list/code-system-duplicate-modal.component';
@@ -17,7 +17,7 @@ import {FinderCodeSystemViewComponent} from './containers-finder/code-system-vie
 import {FinderCodeSystemVersionViewComponent} from './containers-finder/version/code-system-version-view.component';
 import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/code-system-concept-view.component';
 import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
-import {FinderModule} from '../../core/ui/finder/finder.module';
+import {FinderModule} from '../../core/components/finder/finder.module';
 import {ContactModule} from '../contact/contact.module';
 import {CodeSystemViewComponent} from './containers/edit/code-system-view.component';
 import {CodeSystemConceptEditComponent} from './containers/concept/code-system-concept-edit.component';
@@ -64,7 +64,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
 
 @NgModule({
   imports: [
-    SharedModule,
+    CoreUiModule,
     FinderModule,
     ResourcesLibModule,
     ContactModule,

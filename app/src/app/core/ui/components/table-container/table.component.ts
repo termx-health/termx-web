@@ -1,5 +1,5 @@
 import {Component, ContentChild, EventEmitter, Input, Output} from '@angular/core';
-import {TableFilterComponent} from 'term-web/core/ui/table-container/table-filter.component';
+import {TableFilterComponent} from 'term-web/core/ui/components/table-container/table-filter.component';
 
 @Component({
   selector: 'tw-table',

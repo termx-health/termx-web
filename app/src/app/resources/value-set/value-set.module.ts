@@ -3,7 +3,7 @@ import {Routes} from '@angular/router';
 import {ValueSetListComponent} from './containers/value-set-list.component';
 import {ValueSetVersionEditComponent} from './containers/version/value-set-version-edit.component';
 import {ValueSetVersionConceptListComponent} from './containers/version/concepts/value-set-version-concept-list.component';
-import {SharedModule} from '../../core/shared/shared.module';
+import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {ValueSetService} from './services/value-set.service';
 import {ValueSetEditComponent} from './containers/edit/value-set-edit.component';
 import {ValueSetVersionsListComponent} from './containers/edit/value-set-versions-list.component';
@@ -15,7 +15,7 @@ import {ValueSetVersionConceptModalComponent} from './containers/version/concept
 import {ContactModule} from '../contact/contact.module';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {FinderValueSetListComponent} from './containers-finder/value-set-list.component';
-import {FinderModule} from '../../core/ui/finder/finder.module';
+import {FinderModule} from '../../core/components/finder/finder.module';
 import {FinderValueSetViewComponent} from './containers-finder/value-set-view.component';
 import {FinderValueSetVersionViewComponent} from './containers-finder/version/value-set-version-view.component';
 import {ValueSetViewComponent} from './containers/edit/value-set-view.component';
@@ -48,7 +48,7 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
 
 @NgModule({
   imports: [
-    SharedModule,
+    CoreUiModule,
     FinderModule,
     ResourcesLibModule,
     IntegrationLibModule,
