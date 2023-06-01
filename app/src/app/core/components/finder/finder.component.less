@@ -1,7 +1,9 @@
+@import "../../../../styles/variables";
+
 @border-color: #d3d3d3;
 
 
-.tw-finder {
+::ng-deep .tw-finder {
   &-view-form .ant-form-item {
     &-label {
       height: min-content;
@@ -122,7 +124,7 @@
 }
 
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: @mui-screen-sm-max) {
   .tw-finder-wrapper {
     display: block;
   }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewEncapsulation} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
 import {BooleanInput, NumberInput} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
 import {BreakpointState} from '@angular/cdk/layout';
@@ -8,7 +8,6 @@ import {Location} from '@angular/common';
 
 @Component({
   selector: 'tw-finder-load-more-item',
-  encapsulation: ViewEncapsulation.None,
   template: `
     <tw-finder-menu-item>
       <a class="tw-finder-load-more" (click)="twClick.emit()">
@@ -23,7 +22,6 @@ export class FinderLoadMoreItemComponent {
 
 @Component({
   selector: 'tw-finder-menu-item',
-  encapsulation: ViewEncapsulation.None,
   template: `
     <div *ngIf="!navigate">
       <ng-container *ngTemplateOutlet="contentTpl"></ng-container>
@@ -55,7 +53,6 @@ export class FinderMenuItemComponent {
 
 @Component({
   selector: 'tw-finder-menu',
-  encapsulation: ViewEncapsulation.None,
   template: `
     <m-spinner [mLoading]="loading">
       <div *stringTemplateOutlet="title" class="tw-finder-title">
@@ -92,7 +89,6 @@ export class FinderMenuComponent {
 @Component({
   selector: 'tw-finder-wrapper',
   styleUrls: ['finder.component.less'],
-  encapsulation: ViewEncapsulation.None,
   template: `
     <m-card class="tw-finder-wrapper-inner" style="height: min-content" m-scrollable *ngIf="isDisplayed">
       <ng-container *ngIf="title || isMobile">
