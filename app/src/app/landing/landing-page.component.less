@@ -1,0 +1,132 @@
+@import "../../styles/variables";
+
+.uw-landing-title-container {
+  background: linear-gradient(45deg, var(--color-primary-4), var(--color-primary-6), var(--color-primary-8));
+}
+
+/* Layout */
+
+.wrapper {
+  padding-block: 4rem;
+  padding-inline: 1rem;
+
+  > * {
+    max-width: 1000px;
+    margin: auto;
+  }
+
+  > * + * {
+    margin-top: 4rem;
+  }
+}
+
+
+.grid-auto-fit {
+  --column: 10rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(var(--column), 1fr));
+  gap: 1rem;
+}
+
+.grid-auto-fill {
+  --column: 10rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--column), 1fr));
+  gap: 1rem;
+}
+
+.v-align {
+  display: flex;
+  flex-direction: column;
+  gap: @mui-default-gap;
+}
+
+
+/* Misc */
+
+.task-card {
+  height: min-content;
+}
+
+
+/* Typography */
+
+.header {
+  margin-bottom: 1.7rem;
+}
+
+.title {
+  font-size: 1.5rem;
+  line-height: 1.5rem;
+  font-weight: bold;
+}
+
+.subtitle {
+  color: @mui-text-color-secondary;
+  margin-bottom: 0.75rem;
+}
+
+
+/* Base component */
+
+.card {
+  border: none;
+  display: flex;
+  flex-direction: column;
+
+  padding: 1.25rem 1.5rem;
+  height: 100%;
+
+  background: @mui-bg-component;
+  transition: 0.15s ease-out;
+
+  &:hover {
+    transform: translateY(-0.3rem);
+    box-shadow: var(--shadow-large);
+  }
+}
+
+
+.m-list.borderless {
+  border-radius: 0;
+
+  .m-list-item {
+    border-inline: none !important;
+    border-radius: 0 !important;
+
+    &:last-child {
+      border-bottom: none !important;
+    }
+  }
+}
+
+
+/* Animation */
+
+.animated > * {
+  opacity: 0;
+}
+
+@keyframes fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(-2rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+}
+
+.fade-in-350ms {
+  animation: fade-in .35s ease-out forwards 0s
+}
+
+.fade-in-350ms-delay-200ms {
+  animation: fade-in .35s ease-out forwards 0.2s
+}
+
+.fade-in-350ms-delay-400ms {
+  animation: fade-in .35s ease-out forwards 0.4s
+}

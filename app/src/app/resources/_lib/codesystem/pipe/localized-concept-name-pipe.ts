@@ -65,10 +65,12 @@ class LocalizedConceptNameService {
       map(resp => {
         const concepts = resp.data;
         const lang = this.translateService.currentLang;
-        return ids.map(i => {
-          const csEntityVersionId = typeof i === 'number' ? i : undefined;
-          const concept = concepts.find(c => typeof i === 'string' ? c.code === i : c.versions?.find(v => v.id === i));
-          return concept ? {id: i, name: this.getName(concept, lang, csEntityVersionId)} : {id: i, name: i};
+        return ids.map(id => {
+          const concept = concepts.find(c => typeof id === 'string' ? c.code === id : c.versions?.find(v => v.id === id));
+          return {
+            id: id,
+            name: concept ? this.getName(concept, lang, typeof id === 'number' ? id : undefined) : id
+          };
         }).filter(Boolean);
       })
     );

@@ -1,11 +1,15 @@
 <m-page-layout
     [class.embedded]="router.url | apply: isEmbedded"
-    mTitle="web.app.header"
+    [mTitle]="titleTpl"
     [mMenu]="menu$ | async" mMenuMode="horizontal"
     [mUserInfo]="auth.user ? {initials: auth.user?.username, template: userInfoTpl} : undefined"
     (mLangChange)="onLangChange($event)"
     (mLogout)="logout()"
 >
+  <ng-template #titleTpl>
+    <a style="color: inherit" [routerLink]="['/landing']">{{'web.app.header' | translate}}</a>
+  </ng-template>
+
   <ng-template #userInfoTpl>
     <div class="tw-form-view">
       <div class="tw-user-info__user">
@@ -21,7 +25,7 @@
   </ng-template>
 
   <ng-container *ngIf="activeRoutePrivileges$ | async as privileges">
-    <router-outlet *ngIf="!privileges || privileges | twHasAnyPrivilege; else accessError"/>
+    <router-outlet *ngIf="!privileges?.length || (privileges | twHasAnyPrivilege); else accessError"/>
     <ng-template #accessError>
       <tw-no-privilege [privileges]="privileges"/>
     </ng-template>

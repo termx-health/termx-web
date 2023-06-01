@@ -33,6 +33,30 @@
     "data-lost-warning": "Your changes wouldn't be saved!"
   },
   "web": {
+    "landing": {
+      "resources": {
+        "title": "Resources",
+        "types": {
+          "code-system": "Code Systems",
+          "value-set": "Value Sets",
+          "map-set": "Map Sets"
+        }
+      },
+      "summary": {
+        "title": "Summary",
+        "spaces": "Spaces",
+        "pages": "Pages",
+        "open-tasks": "Open tasks"
+      },
+      "tasks": {
+        "title": "Tasks",
+        "actions": {
+          "create": "Create task"
+        },
+        "created-by-me": "Create by my",
+        "assigned-to-me": "Assigned to me"
+      }
+    },
     "measurement-unit": {
       "form": {
         "edit-header": "Edit measurement unit",
