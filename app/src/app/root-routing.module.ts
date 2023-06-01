@@ -16,9 +16,11 @@ import {OBSERVATION_DEFINITION_ROUTES} from 'term-web/observation-definition/obs
 import {SEQUENCE_ROUTES} from 'term-web/sequence/sequence.module';
 import {TASKFLOW_ROUTES} from 'term-web/taskflow/taskflow.module';
 import {AppComponent} from 'term-web/app.component';
+import {LandingPageComponent} from 'term-web/landing/landing-page.component';
 
 
-const APP_ROUTES = [
+const APP_ROUTES: Routes = [
+  {path: 'landing', component: LandingPageComponent},
   {path: 'resources', children: RESOURCES_ROUTES},
   {path: 'global-search', children: GLOBAL_SEARCH_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view']}},
   {path: 'integration', children: INTEGRATION_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view', '*.Snomed.view']}},
@@ -44,8 +46,10 @@ const routes: Routes = [
   {
     path: '',
     children: [
-      {path: 'embedded', children: APP_ROUTES},
+      {path: '', pathMatch: 'full', redirectTo: 'landing'},
       {path: '', children: APP_ROUTES},
+      {path: 'embedded', pathMatch: 'full', redirectTo: 'embedded/landing'},
+      {path: 'embedded', children: APP_ROUTES},
     ],
     component: AppComponent,
     canActivate: [autoLoginGuard]
@@ -56,12 +60,16 @@ const routes: Routes = [
   },
   {
     path: "**",
-    redirectTo: 'resources'
+    redirectTo: 'landing'
   }
 ];
 
 @NgModule({
-  imports: [ProjectContextModule, RouterModule.forRoot(routes)],
+  imports: [
+    RouterModule.forRoot(routes),
+    ProjectContextModule,
+    LandingPageComponent
+  ],
   exports: [RouterModule]
 })
 export class RootRoutingModule {
