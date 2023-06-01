@@ -150,7 +150,9 @@
         "delete-property-usages": "Delete property usages",
         "concepts": {
           "add-concept": "Add concept",
-          "concept": "Concept"
+          "concept": "Concept",
+          "contains": "Contains",
+          "eq": "Equals"
         },
         "versions": {
           "duplicate": {
@@ -711,7 +713,9 @@
           "survey": "Survey",
           "order": "Order",
           "observation": "Observation",
-          "both": "Both"
+          "both": "Both",
+          "contains": "Contains",
+          "eq": "Equals"
         }
       },
       "part": {

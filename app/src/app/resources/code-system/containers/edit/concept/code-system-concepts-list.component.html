@@ -2,7 +2,11 @@
   <div>
     <div class="m-justify-between">
       <div class="m-items-middle">
-        <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next()" placeholder="marina.ui.inputs.search.placeholder" [disabled]="group.open"></m-input>
+        <m-input [(ngModel)]="searchInput.input" (mChange)="searchUpdate.next()" placeholder="marina.ui.inputs.search.placeholder" [disabled]="group.open"></m-input>
+        <m-radio-group [(ngModel)]="searchInput.type" (ngModelChange)="searchUpdate.next()">
+          <label m-radio-button [mValue]="'contains'">{{'web.code-system.form.concepts.contains' | translate}}</label>
+          <label m-radio-button [mValue]="'eq'">{{'web.code-system.form.concepts.eq' | translate}}</label>
+        </m-radio-group>
         <m-button (click)="filter.open = !filter.open"
             [disabled]="group.open"
             [mDisplay]="filter.languages || filter.propertyName || filter.propertyValue || filter.version ? 'primary' : 'default'">

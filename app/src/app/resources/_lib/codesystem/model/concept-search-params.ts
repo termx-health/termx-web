@@ -5,6 +5,7 @@ export class ConceptSearchParams extends QueryParams {
   public code?: string;
   public codeContains?: string;
   public textContains?: string;
+  public textEq?: string;
   public codeSystem?: string;
   public codeSystemUri?: string;
   public codeSystemVersion?: string;

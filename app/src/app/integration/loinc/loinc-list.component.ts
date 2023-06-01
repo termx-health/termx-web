@@ -18,7 +18,7 @@ export class LoincListComponent implements OnInit {
 
   protected query = new ConceptSearchParams();
   protected searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
-  protected searchInput: string;
+  protected searchInput: {input?: string, type: 'eq' | 'contains'} = {type: 'contains'};
   protected isFilterOpen = false;
   protected filter: any = {};
   protected loader = new LoadingManager();
@@ -38,7 +38,7 @@ export class LoincListComponent implements OnInit {
     const state = this.stateStore.pop(this.STORE_KEY);
     if (state) {
       this.query = Object.assign(new QueryParams(), state.query);
-      this.searchInput = this.query.textContains;
+      this.searchInput.input = this.query.textContains || this.query.textEq;
     }
 
     this.loadData();
@@ -53,7 +53,8 @@ export class LoincListComponent implements OnInit {
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
     const q = copyDeep(this.query);
-    q.textContains = this.searchInput;
+    q.textContains = this.searchInput.type === 'contains' ? this.searchInput.input : undefined;
+    q.textEq = this.searchInput.type === 'eq' ? this.searchInput.input : undefined;
     q.propertyValues = this.getPropertyValues(this.filter);
     this.stateStore.put(this.STORE_KEY, {query: q});
     return this.loader.wrap('search', this.codeSystemService.searchConcepts('loinc', q));

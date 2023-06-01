@@ -31,7 +31,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
   public query = new ConceptSearchParams();
   public filter: {open: boolean, languages?: string[], version?: CodeSystemVersion, propertyName?: string, propertyValue?: string} = {open: false};
   public group: {open: boolean, type?: string, association?: string, property?: string} = {open: false};
-  public searchInput: string = "";
+  public searchInput: {input?: string, type: 'eq' | 'contains'} = {type: 'contains'};
   public searchUpdate = new Subject<void>();
   public searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
   public rootConcepts?: MuiTreeNodeOptions[];
@@ -60,7 +60,8 @@ export class CodeSystemConceptsListComponent implements OnInit {
       return of(this.searchResult);
     }
     const q = copyDeep(this.query);
-    q.textContains = this.searchInput;
+    q.textContains = this.searchInput.type === 'contains' ? this.searchInput.input : undefined;
+    q.textEq = this.searchInput.type === 'eq' ? this.searchInput.input : undefined;
     if (this.filter.propertyName && this.filter.propertyValue) {
       q.propertyValues = this.filter['propertyName'] + '|' + this.filter['propertyValue'];
     }
