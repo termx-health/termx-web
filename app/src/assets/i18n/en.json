@@ -147,6 +147,7 @@
         "add-header": "Create a new code system",
         "edit-header": "Edit code system",
         "view-header": "View code system",
+        "delete-property-usages": "Delete property usages",
         "concepts": {
           "add-concept": "Add concept",
           "concept": "Concept"

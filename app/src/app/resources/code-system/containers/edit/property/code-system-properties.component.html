@@ -40,10 +40,19 @@
       <m-editable-column [mTitle]="'entities.entity-property.description'">
         <ng-template #viewTemplate let-p>{{p.description}}</ng-template>
       </m-editable-column>
+      <m-editable-column>
+        <ng-template #viewTemplate let-p>
+          <div class="m-justify-right">
+            <m-dropdown *ngIf="p.id">
+              <a *m-dropdown-item (mClick)="deletePropertyUsages(p.id)">{{'web.code-system.form.delete-property-usages' | translate}}</a>
+            </m-dropdown>
+          </div>
+        </ng-template>
+      </m-editable-column>
 
       <ng-template #expandEditTemplate let-p let-prefix="ngModelNamePrefix">
         <tr>
-          <td colspan="8">
+          <td colspan="9">
             <m-form-row>
               <div *mFormCol>
                 <m-form-item mLabel="entities.entity-property.name" mName="name-{{prefix}}" required>

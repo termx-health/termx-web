@@ -91,4 +91,8 @@ export class CodeSystemPropertiesComponent implements OnChanges {
       f.value = undefined;
     }
   }
+
+  public deletePropertyUsages(propertyId: number): void {
+    this.loader.wrap('load', this.codeSystemService.deleteEntityPropertyUsages(this.codeSystemId, propertyId)).subscribe();
+  }
 }

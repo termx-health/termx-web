@@ -2,16 +2,12 @@ import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {
   CodeSystem,
-  CodeSystemAssociation,
   CodeSystemConcept,
   CodeSystemEntityVersion,
   CodeSystemLibService,
   CodeSystemSupplement,
   CodeSystemTransactionRequest,
   CodeSystemVersion,
-  Designation,
-  EntityProperty,
-  EntityPropertyValue
 } from 'term-web/resources/_lib';
 
 @Injectable()
@@ -94,23 +90,8 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/entity-versions/${entityVersionId}/membership`, {});
   }
 
-  public saveEntityProperty(codeSystemId: string, property: EntityProperty): Observable<EntityProperty> {
-    if (property.id) {
-      return this.http.put<EntityProperty>(`${this.baseUrl}/${codeSystemId}/entity-properties/${property.id}`, property);
-    }
-    return this.http.post<EntityProperty>(`${this.baseUrl}/${codeSystemId}/entity-properties/`, property);
-  }
-
-  public saveEntityPropertyValue(codeSystemId: string, conceptVersionId: number, propertyValue: EntityPropertyValue): Observable<EntityPropertyValue> {
-    if (propertyValue.id) {
-      return this.http.put<EntityPropertyValue>(
-        `${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/entity-property-values/${propertyValue.id}`, propertyValue);
-    }
-    return this.http.post<EntityPropertyValue>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/entity-property-values/`, propertyValue);
-  }
-
-  public deleteEntityProperty(codeSystemId: string, propertyId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/entity-properties/${propertyId}`);
+  public deleteEntityPropertyUsages(codeSystemId: string, propertyId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/entity-property-usages/${propertyId}`);
   }
 
   public saveSupplement(codeSystemId: string, supplement: CodeSystemSupplement, conceptVersionId?: number): Observable<CodeSystemSupplement> {
@@ -123,23 +104,4 @@ export class CodeSystemService extends CodeSystemLibService {
     }
     return this.http.post<CodeSystemSupplement>(`${url}`, supplement);
   }
-
-  public saveDesignation(codeSystemId: string, conceptVersionId: number, designation: Designation): Observable<Designation> {
-    if (designation.id) {
-      return this.http.put<Designation>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/designations/${designation.id}`, designation);
-    }
-    return this.http.post<Designation>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/designations`, designation);
-  }
-
-  public deleteDesignation(codeSystemId: string, designationId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/designations/${designationId}`);
-  }
-
-  public saveAssociation(codeSystemId: string, conceptVersionId: number, association: CodeSystemAssociation): Observable<CodeSystemAssociation> {
-    if (association.id) {
-      return this.http.put<Designation>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/associations/${association.id}`, association);
-    }
-    return this.http.post<Designation>(`${this.baseUrl}/${codeSystemId}/entity-versions/${conceptVersionId}/associations`, association);
-  }
-
 }
