@@ -7,8 +7,8 @@ import {CodeSystem} from 'term-web/resources/_lib';
 
 @Component({
   template: `
-    <div style="max-height: 100%; width: 100%; height: 100%; padding: 0 0 1rem 0;">
-      <tw-finder-wrapper [loading]="loading">
+    <m-page mFull>
+      <tw-finder-wrapper [loading]="loading" style="overflow: auto; height: 100%; padding: 1rem">
         <tw-finder-menu title="CODE SYSTEMS" [length]="searchResult.data.length">
           <tw-finder-menu-item *ngFor="let cs of searchResult.data" [navigate]="[cs.id]" (view)="openResource(cs)">
             {{(cs.names | localName) || cs.id}}
@@ -19,7 +19,7 @@ import {CodeSystem} from 'term-web/resources/_lib';
           ></tw-finder-load-more-item>
         </tw-finder-menu>
       </tw-finder-wrapper>
-    </div>
+    </m-page>
   `
 })
 export class FinderCodeSystemListComponent implements OnInit {

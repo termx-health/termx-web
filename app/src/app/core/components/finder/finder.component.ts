@@ -112,7 +112,7 @@ export class FinderMenuComponent {
     <router-outlet></router-outlet>
   `,
   host: {
-    '[class.tw-finder-wrapper]': `true`
+    class: 'tw-finder-wrapper'
   }
 })
 export class FinderWrapperComponent implements AfterViewInit {

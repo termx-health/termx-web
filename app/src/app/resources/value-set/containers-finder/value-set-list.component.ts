@@ -7,8 +7,8 @@ import {ValueSetService} from '../services/value-set.service';
 
 @Component({
   template: `
-    <div style="max-height: 100%; width: 100%; height: 100%; padding: 0 0 1rem 0;">
-      <tw-finder-wrapper [loading]="loading">
+    <m-page mFull>
+      <tw-finder-wrapper [loading]="loading" style="overflow: auto; height: 100%; padding: 1rem">
         <tw-finder-menu title="VALUE SET" [length]="searchResult.meta.total">
           <tw-finder-menu-item *ngFor="let vs of searchResult.data" [navigate]="[vs.id]" (view)="openResource(vs)">
             {{(vs.names | localName) || vs.id}}
@@ -20,7 +20,7 @@ import {ValueSetService} from '../services/value-set.service';
           ></tw-finder-load-more-item>
         </tw-finder-menu>
       </tw-finder-wrapper>
-    </div>
+    </m-page>
   `
 })
 export class FinderValueSetListComponent implements OnInit {
