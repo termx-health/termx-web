@@ -24,16 +24,10 @@
 .grid-auto-fit {
   --column: 10rem;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(var(--column), 1fr));
+  grid-template-columns: ~'repeat(auto-fit, minmax(min(var(--column), 100%), 1fr))';
   gap: 1rem;
 }
 
-.grid-auto-fill {
-  --column: 10rem;
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(var(--column), 1fr));
-  gap: 1rem;
-}
 
 .v-align {
   display: flex;

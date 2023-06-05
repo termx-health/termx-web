@@ -1,6 +1,21 @@
 [
   {
     "label": {
+      "en": "Dashboards",
+      "et": "Esipaneelid"
+    },
+    "items": [
+      {
+        "label": {
+          "en": "Landing page",
+          "et": "Sihtleht"
+        },
+        "link": "landing"
+      }
+    ]
+  },
+  {
+    "label": {
       "en": "Resources",
       "et": "Ressursid"
     },
