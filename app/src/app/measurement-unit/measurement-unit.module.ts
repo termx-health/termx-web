@@ -11,8 +11,8 @@ import {MeasurementUnitLibModule} from 'term-web/measurement-unit/_lib';
 
 export const MEASUREMENT_UNIT_ROUTES: Routes = [
   {path: '', component: MeasurementUnitListComponent},
-  {path: 'add', data: {privilege: ['*.MeasurementUnit.edit']}, component: MeasurementUnitEditComponent},
-  {path: ':id/edit', data: {privilege: ['*.MeasurementUnit.edit']}, component: MeasurementUnitEditComponent},
+  {path: 'add', data: {privilege: ['ucum.CodeSystem.edit']}, component: MeasurementUnitEditComponent},
+  {path: ':id/edit', data: {privilege: ['ucum.CodeSystem.edit']}, component: MeasurementUnitEditComponent},
   {path: ':id/view', component: MeasurementUnitViewComponent},
 ];
 

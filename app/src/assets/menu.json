@@ -116,8 +116,9 @@
       "et": "Välised ressursid"
     },
     "privileges": [
-      "*.Snomed.view",
-      "*.MeasurementUnit.view"
+      "snomed-ct.CodeSystem.view",
+      "loinc.CodeSystem.view",
+      "ucum.CodeSystem.view"
     ],
     "items": [
       {
@@ -127,7 +128,7 @@
         },
         "link": "integration/snomed",
         "privileges": [
-          "*.CodeSystem.view"
+          "snomed-ct.CodeSystem.view"
         ]
       },
       {
@@ -137,7 +138,7 @@
         },
         "link": "integration/loinc",
         "privileges": [
-          "*.CodeSystem.view"
+          "loinc.CodeSystem.view"
         ]
       },
       {
@@ -147,7 +148,7 @@
         },
         "link": "measurement-units",
         "privileges": [
-          "*.MeasurementUnit.view"
+          "ucum.CodeSystem.view"
         ]
       },
       {
@@ -227,7 +228,7 @@
         "icon": "cloud-server",
         "link": "terminology-servers",
         "privileges": [
-          "*.TerminologyServer.view"
+          "*.Project.view"
         ]
       },
       {

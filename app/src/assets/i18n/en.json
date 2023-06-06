@@ -674,8 +674,10 @@
             "map-set": "MapSet",
             "naming-system": "NamingSystem",
             "association-type": "AssociationType",
-            "snomed": "Snomed",
-            "measurement-unit": "MeasurementUnit",
+            "project": "Project",
+            "thesaurus": "Thesaurus",
+            "observation-definition": "Observation definition",
+            "task": "Taskflow",
             "privilege": "Privilege"
           }
         }

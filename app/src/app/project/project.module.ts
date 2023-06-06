@@ -25,16 +25,16 @@ export const PROJECT_CTX_ROUTES: Routes = [
 
 export const PROJECT_ROUTES: Routes = [
   {path: '', component: ProjectListComponent},
-  {path: 'add', component: ProjectEditComponent},
-  {path: ':id/edit', component: ProjectEditComponent},
-  {path: ':projectId/packages/add', component: PackageEditComponent},
-  {path: ':projectId/packages/:id/edit', component: PackageEditComponent}
+  {path: 'add', data: {privilege: ['*.Project.edit']}, component: ProjectEditComponent},
+  {path: ':id/edit', data: {privilege: ['*.Project.edit']}, component: ProjectEditComponent},
+  {path: ':projectId/packages/add', data: {privilege: ['*.Project.edit']}, component: PackageEditComponent},
+  {path: ':projectId/packages/:id/edit', data: {privilege: ['*.Project.edit']}, component: PackageEditComponent}
 ];
 
 export const TERMINOLOGY_SERVER_ROUTES: Routes = [
   {path: '', component: TerminologyServerListComponent},
-  {path: 'add', component: TerminologyServerEditComponent},
-  {path: ':id/edit', component: TerminologyServerEditComponent},
+  {path: 'add', data: {privilege: ['*.Project.edit']}, component: TerminologyServerEditComponent},
+  {path: ':id/edit', data: {privilege: ['*.Project.edit']}, component: TerminologyServerEditComponent},
 ];
 
 @NgModule({

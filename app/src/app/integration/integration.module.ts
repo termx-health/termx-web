@@ -56,9 +56,9 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'file-import/association', component: AssociationFileImportComponent, data: {privilege: ['*.MapSet.edit']}}
     ]
   },
-  {path: 'loinc', component: LoincDashboardComponent, data: {privilege: ['*.CodeSystem.view']}},
-  {path: 'snomed', component: SnomedDashboardComponent, data: {privilege: ['*.CodeSystem.view']}},
-  {path: 'snomed/:conceptId', component: SnomedDashboardComponent, data: {privilege: ['*.CodeSystem.view']}}
+  {path: 'loinc', component: LoincDashboardComponent, data: {privilege: ['loinc.CodeSystem.view']}},
+  {path: 'snomed', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
+  {path: 'snomed/:conceptId', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}}
 ];
 
 @NgModule({
