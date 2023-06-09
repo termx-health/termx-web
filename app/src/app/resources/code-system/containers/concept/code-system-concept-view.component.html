@@ -1,5 +1,5 @@
 <div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
-  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
+  <div nz-col [nzSm]="18" [nzXs]="24" style="height: min-content" *ngIf="concept?.versions">
     <m-card [mShowSkeleton]="loading['init']">
       <div class="m-justify-between">
         <label class="m-card__title">
@@ -9,8 +9,9 @@
     </m-card>
   </div>
 </div>
+
 <div nz-row [nzGutter]="12" nzJustify="center" class="m-row" style="margin-top: 1rem">
-  <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
+  <div nz-col [nzMd]="4" [nzSm]="18" [nzXs]="24" class="version-sidebar" *ngIf="concept?.versions">
     <m-spinner [mLoading]="isLoading">
       <m-card [mShowSkeleton]="loading['init']" mTitle="web.code-system-concept.form.version.header">
         <nz-timeline>
@@ -30,40 +31,46 @@
       </m-card>
     </m-spinner>
   </div>
-  <div nz-col [nzLg]="12" [nzMd]="12" [nzXs]="18">
+
+
+  <div nz-col [nzMd]="14" [nzSm]="18" [nzXs]="24">
     <m-spinner [mLoading]="isLoading">
       <m-card mTitle="web.code-system-concept.form.version.information" [mShowSkeleton]="loading['init']">
         <form *ngIf="concept && conceptVersion">
           <m-form-item mLabel="entities.code-system-entity-version.status">
             <tw-status-tag [status]="conceptVersion.status"></tw-status-tag>
           </m-form-item>
+
           <m-form-item mLabel="entities.code-system-entity-version.created">
             {{conceptVersion.created | localDateTime}}
           </m-form-item>
+
           <m-form-item mLabel="entities.code-system-entity-version.description">
-            {{conceptVersion.description}}
+            {{conceptVersion.description ?? '-'}}
           </m-form-item>
         </form>
       </m-card>
     </m-spinner>
 
-    <m-card style="margin-top: 1rem">
-      <tw-code-system-designation-edit [designations]="conceptVersion?.designations" viewMode></tw-code-system-designation-edit>
-    </m-card>
+    <tw-code-system-designation-edit
+        class="padded"
+        [designations]="conceptVersion?.designations"
+        viewMode
+    ></tw-code-system-designation-edit>
 
-    <m-card style="margin-top: 1rem">
-      <tw-code-system-property-value-edit [propertyValues]="conceptVersion?.propertyValues" viewMode></tw-code-system-property-value-edit>
-    </m-card>
+    <tw-code-system-property-value-edit
+        class="padded"
+        [propertyValues]="conceptVersion?.propertyValues"
+        viewMode
+    ></tw-code-system-property-value-edit>
 
-    <m-card style="margin-top: 1rem">
-      <tw-code-system-association-edit [associations]="conceptVersion?.associations" viewMode></tw-code-system-association-edit>
-    </m-card>
+    <tw-code-system-association-edit
+        class="padded"
+        [associations]="conceptVersion?.associations"
+        viewMode
+    ></tw-code-system-association-edit>
+
+
+    <tw-code-system-concept-relations *ngIf="concept?.versions" class="padded" [concept]="concept"></tw-code-system-concept-relations>
   </div>
 </div>
-
-<div nz-row [nzGutter]="12" nzJustify="center" class="m-row" style="margin-top: 1rem">
-  <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18" style="height: min-content" *ngIf="concept?.versions">
-    <tw-code-system-concept-relations [concept]="concept"></tw-code-system-concept-relations>
-  </div>
-</div>
-

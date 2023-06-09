@@ -1,24 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, TrackByFunction} from '@angular/core';
 import {CdkDragDrop, CdkDragMove} from '@angular/cdk/drag-drop';
 import {BooleanInput} from '@kodality-web/core-util';
-import {animate, AnimationTriggerMetadata, query, stagger, style, transition, trigger} from '@angular/animations';
-
-export const easeAnimation: AnimationTriggerMetadata = trigger('easeAnimation', [
-  transition('* => *', [
-    query(
-      ':enter',
-      [
-        style({overflow: 'hidden', height: 0, opacity: 0}),
-        stagger(0, [
-          animate(
-            `150ms cubic-bezier(0.645, 0.045, 0.355, 1)`,
-            style({overflow: 'hidden', height: '*', opacity: '*'})
-          )
-        ])
-      ],
-      {optional: true})
-  ])
-]);
 
 
 export interface DropListNode {
@@ -44,8 +26,7 @@ export interface DropListMoveEvent {
 @Component({
   selector: 'tw-drop-list',
   templateUrl: 'drop-list.component.html',
-  styleUrls: ['drop-list.component.less'],
-  animations: [easeAnimation]
+  styleUrls: ['drop-list.component.less']
 })
 export class DropListComponent implements OnChanges {
   @Input() public nodes: DropListNode[] = [];

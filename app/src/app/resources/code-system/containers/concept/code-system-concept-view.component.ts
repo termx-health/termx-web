@@ -5,6 +5,17 @@ import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'ter
 
 @Component({
   templateUrl: './code-system-concept-view.component.html',
+  styles: [`
+    .version-sidebar {
+      height: min-content;
+      margin-bottom: 1rem
+    }
+
+    .padded {
+      display: block;
+      margin-top: 1rem
+    }
+  `]
 })
 export class CodeSystemConceptViewComponent implements OnInit {
   public codeSystemId?: string | null;

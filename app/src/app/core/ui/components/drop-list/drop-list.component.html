@@ -50,7 +50,6 @@
     <div
         *ngIf="node.expanded && node.children.length"
         [style.padding-left.rem]="DEFAULT_ITEM_OFFSET"
-        [@easeAnimation]="node.expanded"
 
         cdkDropList
         [id]="node.key"

@@ -5,6 +5,8 @@ import {collect, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {GithubExportable} from '../../../integration/_lib/github/github.service';
 import {Page, PageContent, PageLink, PageRelation} from 'term-web/thesaurus/_lib';
+import {MuiConfigService} from '@kodality-web/marina-ui';
+import {forkJoin} from 'rxjs';
 
 @Component({
   templateUrl: './thesaurus-page.component.html',
@@ -29,7 +31,8 @@ export class ThesaurusPageComponent implements OnInit {
   public constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private pageService: PageService
+    private pageService: PageService,
+    protected muiConfig: MuiConfigService
   ) { }
 
   public ngOnInit(): void {
@@ -51,27 +54,28 @@ export class ThesaurusPageComponent implements OnInit {
     });
   }
 
-  private init(page?: Page, slug?: string | null): void {
-    this.pageId = page && page.id || undefined;
-    this.pageContent = page && page.contents!.find(c => c.slug === slug) || undefined;
-    this.pageContents = page && page.contents || [];
+  private init(page?: Page, slug?: string): void {
+    this.pageId = page?.id;
+    this.pageContent = page?.contents!.find(c => c.slug === slug);
+    this.pageContents = page?.contents || [];
     this.pageRelations = collect(page?.relations || [], r => r.type!);
-    this.pageLinks = page && page.links || [];
+    this.pageLinks = page?.links || [];
     this.path = [];
 
     if (page) {
-      this.pageService.getPath(page.id!).subscribe(path => this.path = path);
-      this.pageService.searchPageRelations({type: 'page', target: page.contents?.map(c => c.slug).join(',')!, limit: 999})
-        .subscribe(resp => this.usages = resp.data);
+      forkJoin([
+        this.pageService.getPath(page.id),
+        this.pageService.searchPageRelations({
+          type: 'page', target: page.contents?.map(c => c.slug).join(',')!,
+          limit: 999
+        })
+      ]).subscribe(([path, resp]) => {
+        this.path = path;
+        this.usages = resp.data;
+      });
     }
   }
 
-  public openContentModal(lang: string): void {
-    this.contentModalData = {
-      visible: true,
-      content: {lang: lang, contentType: 'markdown'}
-    };
-  }
 
   public saveContent(): void {
     if (!validateForm(this.contentFrom)) {
@@ -83,44 +87,35 @@ export class ThesaurusPageComponent implements OnInit {
       .add(() => this.loading['save'] = false);
   }
 
-  public openContent(content: PageContent): void {
-    if (isDefined(content)) {
-      this.router.navigate(['/thesaurus/pages/', content.slug]);
-    }
-  }
 
-  public flagIcon(lang?: string): string | undefined {
-    const getEmoji = (countryCode: string): string => {
-      const codePoints = countryCode.toUpperCase().split('').map(char => 127397 + char.charCodeAt(0));
-      return String.fromCodePoint(...codePoints);
+  public openContentModal(lang: string): void {
+    this.contentModalData = {
+      visible: true,
+      content: {lang: lang, contentType: 'markdown'}
     };
-
-    const langCountryMap: {[key: string]: string} = {'en': 'gb', 'et': 'ee'};
-    return lang ? getEmoji(langCountryMap[lang] || lang) : undefined;
   }
+
+  public editPageContent(content: PageContent): void {
+    this.newPageModalVisible = false;
+    this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']);
+  }
+
 
   public filterContents = (contents: PageContent[], lang: string): PageContent[] => {
     return contents.filter(c => c.lang !== lang);
   };
 
-  public filterLanguages = (langs: string[], lang: string, contents: PageContent[]): string[] => {
-    return langs.filter(l => l !== lang && !contents.find(c => c.lang === l));
+  public filterLanguages = (supportedLangs: string[], currentLang: string, contents: PageContent[]): string[] => {
+    return supportedLangs.filter(l => l !== currentLang && !contents.find(c => c.lang === l));
   };
+
   public prepareExport = (): GithubExportable[] => {
     let filename = `${this.pageContent?.slug}.${this.pageContent?.contentType === 'markdown' ? 'md' : 'html'}`;
     return [{content: this.pageContent?.content, filename: filename}];
   };
 
-  public openPageContent(content: PageContent): void {
-    this.newPageModalVisible = false;
-    this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']);
-  }
 
-  public get isLoading(): boolean {
-    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
-  }
-
-  public openTarget(relation: PageRelation): void {
+  public viewTarget(relation: PageRelation): void {
     if (relation.type === 'cs') {
       this.router.navigate(['/resources/code-systems/', relation.target, 'view']);
     } else if (relation.type === 'vs') {
@@ -140,7 +135,19 @@ export class ThesaurusPageComponent implements OnInit {
     }
   }
 
-  public openPage(relation: PageRelation): void {
+  public viewPage(relation: PageRelation): void {
     this.router.navigate(['/thesaurus/pages/', relation.content!.code]);
   }
+
+  public viewPageContent(content: PageContent): void {
+    if (isDefined(content)) {
+      this.router.navigate(['/thesaurus/pages/', content.slug]);
+    }
+  }
+
+
+  public get isLoading(): boolean {
+    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
+  }
+
 }
