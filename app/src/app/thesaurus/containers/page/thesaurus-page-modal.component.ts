@@ -21,7 +21,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
   @Input() public contentId: number | undefined;
   @Input() public parentPageId: number | undefined;
   @Input() public modalVisible = false;
-  @Output() public saved: EventEmitter<PageContent> = new EventEmitter();
+  @Output() public saved: EventEmitter<{page: Page, pageContent: PageContent}> = new EventEmitter();
   @Output() public closed: EventEmitter<void> = new EventEmitter();
 
   @ViewChild("form") public form?: NgForm;
@@ -37,11 +37,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
   ) {}
 
   public ngOnInit(): void {
-    this.page = new Page();
-    this.page.status = 'draft';
-    this.page.links = [];
-    this.content = {contentType: 'markdown', lang: this.translateService.currentLang};
-
+    this.initPage();
     this.initData();
   }
 
@@ -72,7 +68,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
     this.prepare(this.page!);
     this.pageService.savePage(this.page!, this.content!)
       .subscribe(page => {
-        this.saved.emit(page.contents?.find(c => c.name === this.content!.name));
+        this.saved.emit({page, pageContent: page.contents?.find(c => c.name === this.content!.name)});
         this.initData();
       })
       .add(() => this.loading['save'] = false);
@@ -87,6 +83,13 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
         page.tags!.push({tag: newTag ? newTag : {text: t}});
       }
     });
+  }
+
+  private initPage(): void {
+    this.page = new Page();
+    this.page.status = 'draft';
+    this.page.links = [];
+    this.content = {contentType: 'markdown', lang: this.translateService.currentLang};
   }
 
   private initData(): void {
@@ -112,6 +115,16 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
       this.page.links.splice(index, 1);
       this.page.links = [...this.page.links || []];
     }
+  }
+
+  public open(initial: {links?: Pick<PageLink, 'sourceId' | 'orderNumber'>[]} = {}): void {
+    this.initPage();
+    this.page.links = initial?.links ?? [];
+    this.modalVisible = true;
+  }
+
+  public close(): void {
+    this.modalVisible = false;
   }
 
   public get isLoading(): boolean {

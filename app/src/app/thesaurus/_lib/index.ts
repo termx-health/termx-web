@@ -16,6 +16,7 @@ export * from './model/template-content';
 export * from './model/template-search-params';
 
 export * from './services/page-lib.service';
+export * from './services/page-link-lib.service';
 export * from './services/structure-definition-lib.service';
 export * from './services/tag-lib.service';
 export * from './services/template-lib.service';

@@ -1,36 +1,44 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-
-    <tw-github-export [title]="'Thesaurus'" [prepareExport]="prepareExport"></tw-github-export>
-    <tw-add-button (click)="modalVisible = true"></tw-add-button>
+    <m-icon-button mIcon="sync" (mClick)="reload()"/>
+    <m-input style="flex: 1" twDebounce [debounced]="search" [(ngModel)]="searchText" placeholder="marina.ui.inputs.search.placeholder"/>
+    <tw-github-export [title]="'Thesaurus'"></tw-github-export>
+    <tw-add-button (click)="modal.open()"/>
   </div>
 
-  <m-no-data *ngIf="pages.length === 0"></m-no-data>
+  <m-no-data *ngIf="data.length === 0"/>
 
-  <nz-collapse nzGhost *ngFor="let page of pages" class="tw-page-collapse">
-    <ng-container *ngTemplateOutlet="pageLink; context: {page: page}"></ng-container>
+  <m-skeleton [mLoading]="loader.isLoading">
+    <tw-drop-list
+        [nodes]="nodes"
+        [nodeRenderer]="nodeDisplay"
+        [nodeActions]="nodeActions"
+        [selectedKey]="selectedKey | apply: findLinkId: nodes | toString"
+        [disableDrag]="!!searchText?.length"
+        (twExpand)="onExpand($event)"
+        (twSelect)="onSelect($event)"
+        (twMove)="onMove($event)"
+    >
+      <ng-template #nodeDisplay let-node>
+        <div class="m-justify-between">
+          <div>{{(node.obj.page | apply: localizedContent).name}}</div>
+          <m-icon *ngIf="node.obj.page.status === 'active'" mCode="check-circle"/>
+        </div>
+      </ng-template>
 
-    <ng-template #pageCollapse let-pages="pages">
-      <nz-collapse nzGhost *ngFor="let page of pages" class="tw-page-collapse">
-        <ng-container *ngTemplateOutlet="pageLink; context: {page: page}"></ng-container>
-      </nz-collapse>
-    </ng-template>
-
-    <ng-template #pageLink let-page="page">
-      <m-button *ngIf="page.leaf" mDisplay="link" (click)="openPage(page)" [class]="page | apply:getLinkStyle">
-        {{(page | apply:localizedContent).name}}
-      </m-button>
-      <nz-collapse-panel *ngIf="!page.leaf"
-          [nzHeader]="(page | apply:localizedContent).name"
-          [(nzActive)]="page['active']"
-          (nzActiveChange)="loadPageChildren(page, $event)"
-          [class]="page | apply:getLinkStyle">
-        <ng-container *ngTemplateOutlet="pageCollapse; context: {pages: page.linkPages}"></ng-container>
-      </nz-collapse-panel>
-    </ng-template>
-  </nz-collapse>
-
+      <ng-template #nodeActions let-node>
+        <m-button mSize="small" (mClick)="onChildAdd($event, node, modal)">
+          <m-icon mCode="plus"/>
+        </m-button>
+      </ng-template>
+    </tw-drop-list>
+  </m-skeleton>
 </m-card>
 
-<tw-thesaurus-page-modal [modalVisible]="modalVisible" (closed)="modalVisible = false" (saved)="openPageContent($event)"></tw-thesaurus-page-modal>
+
+<tw-thesaurus-page-modal
+  #modal
+    (saved)="openPageAfterSave($event.page, modal)"
+    (closed)="modal.close()"
+/>
+
