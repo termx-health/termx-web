@@ -21,7 +21,7 @@
     >
       <ng-template #nodeDisplay let-node>
         <div class="m-justify-between">
-          <div>{{(node.obj.page | apply: localizedContent).name}} {{node.obj.leaf ? 'leaf' : 'branch'}} {{node.obj.expanded ? '-' : '+'}}</div>
+          <div>{{(node.obj.page | apply: localizedContent).name}}</div>
           <m-icon *ngIf="node.obj.page.status === 'active'" mCode="check-circle"/>
         </div>
       </ng-template>
