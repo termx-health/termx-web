@@ -7,12 +7,14 @@ import {TemplateLibService} from './services/template-lib.service';
 import {FormsModule} from '@angular/forms';
 import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {CoreUtilModule} from '@kodality-web/core-util';
+import {NgForOf} from '@angular/common';
 
 @NgModule({
   imports: [
     FormsModule,
     MarinaComponentsModule,
     CoreUtilModule,
+    NgForOf,
   ],
   providers: [
     TagLibService,

@@ -65,5 +65,5 @@
     [pageId]="pageContent?.pageId"
     [contentId]="pageContent?.id"
     (closed)="modalVisible = false"
-    (saved)="openPageContentEdit($event)"
+    (saved)="openPageContentEdit($event.pageContent)"
 ></tw-thesaurus-page-modal>

@@ -1,0 +1,147 @@
+@import "../../../../../styles/variables";
+
+
+.cdk-drag-placeholder > *:not(:first-child) {
+  display: none;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: @mui-border-radius-component;
+  background: @mui-bg-component;
+}
+
+.cdk-drag-placeholder .drop-container {
+  opacity: 0.5;
+}
+
+
+.drop-container {
+  position: relative;
+  padding: 0 0.5rem 0 1rem;
+  border-radius: 2px;
+  height: 2.4rem;
+}
+
+.drop-container__wrapper {
+  position: relative;
+}
+
+.node-item {
+  //padding-left: 1rem;
+  border-radius: 2px;
+  cursor: pointer;
+
+  &:hover {
+    background: @mui-border-color-light;
+  }
+
+  &--selected {
+    background: @mui-border-color-light;
+    color: @mui-primary-color-6;
+  }
+
+  &--preview {
+    padding: 0.5rem 1rem;
+    border-radius: 2px;
+  }
+
+  &__default-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 1rem;
+
+    & > div {
+      height: 3px;
+      aspect-ratio: 1;
+      background: currentColor;
+      border-radius: 50%;
+    }
+  }
+
+
+  &__renderer {
+    flex: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    user-select: none;
+    white-space: nowrap;
+  }
+
+  &__actions {
+    color: initial;
+    transition: 0.4s ease-out;
+    opacity: 0;
+
+    .node-item:hover & {
+      transition: 0.4s ease-out;
+      opacity: 1;
+    }
+  }
+}
+
+
+.dragging {
+  cursor: move;
+
+  .node-item:hover {
+    background: unset;
+  }
+}
+
+// parent element of drop target
+.drop-container-target__parent {
+  background: @mui-primary-color-1;
+  color: @mui-primary-color-6;
+
+  + div > div > div {
+    border-left: 1px dashed @mui-border-color;
+    margin-left: -1px;
+  }
+}
+
+
+// wrapper around actual .drop-container, enables styles
+.drop-container-target {
+  --size: 6px;
+  --color: transparent;
+  position: relative;
+
+  & .drop-container::after,
+  &.drop-container__wrapper::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: var(--color);
+  }
+}
+
+
+.drop-container-target {
+  &&--inside > .drop-container {
+    outline: 2px solid @mui-primary-color-6;
+    color: @mui-primary-color-6;
+    background: @mui-primary-color-1;
+  }
+
+
+  &&--before > .drop-container::after {
+    --color: @mui-primary-color-6;
+    top: 0;
+  }
+
+  &&--after {
+    &:not(.node-item--expanded) > .drop-container::after {
+      --color: @mui-primary-color-6;
+      bottom: -2px;
+    }
+
+    &:is(.node-item--expanded) + .drop-container__wrapper::after {
+      --color: @mui-primary-color-6;
+      bottom: -2px;
+    }
+  }
+}

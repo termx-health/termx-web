@@ -1,13 +1,15 @@
 <div nz-row nzGutter="12" class="m-row">
   <div nz-col [nzMd]="6" [nzXs]="24">
-    <tw-thesaurus-sidebar [path]="path"></tw-thesaurus-sidebar>
+    <tw-thesaurus-sidebar [path]="path"/>
   </div>
 
   <div nz-col [nzMd]="18" [nzXs]="24">
     <m-spinner [mLoading]="isLoading">
       <m-card *ngIf="pageId">
         <div *m-card-header style="display: flex">
-          <label class="m-card__title">{{pageContent?.name}}</label>
+          <label class="m-card__title">
+            {{pageContent?.name}}
+          </label>
           <div style="margin-left: auto;">
             <tw-github-export [title]="pageContent?.name" [prepareExport]="prepareExport"></tw-github-export>
             <m-dropdown style="margin-left: 0.5rem">
@@ -29,12 +31,18 @@
             </m-button>
           </div>
         </div>
+
         <ng-container *ngIf="pageContent">
-          <tw-smart-text-editor [(ngModel)]="pageContent.content" [valueType]="pageContent.contentType" [lang]="pageContent.lang" viewMode></tw-smart-text-editor>
+          <tw-smart-text-editor [(ngModel)]="pageContent.content"
+              [valueType]="pageContent.contentType"
+              [lang]="pageContent.lang"
+              viewMode
+          />
         </ng-container>
       </m-card>
+
       <m-card *ngIf="(pageRelations | keys)?.length > 0 || usages?.length > 0" style="margin-top: 1rem">
-        <m-card  *ngIf="(pageRelations | keys)?.length > 0" mTitle="entities.page.relations" class="m-card-inside">
+        <m-card *ngIf="(pageRelations | keys)?.length > 0" mTitle="entities.page.relations" class="m-card-inside">
           <m-table [mData]="pageRelations | keys" [mLoading]="isLoading" mEnablePagination>
             <tr *mTableHead>
               <th>{{'entities.page-relation.type' | translate}}</th>
@@ -53,8 +61,11 @@
             </tr>
           </m-table>
         </m-card>
+
         <m-card *ngIf="usages?.length > 0" mTitle="web.thesaurus-page.form.usages" class="m-card-inside">
-          <a *ngFor="let usage of usages" (click)="openPage(usage)"><m-icon mCode="link"></m-icon> {{usage.content.names | localName}}</a>
+          <a *ngFor="let usage of usages" (click)="openPage(usage)">
+            <m-icon mCode="link"></m-icon>
+            {{usage.content.names | localName}}</a>
         </m-card>
       </m-card>
     </m-spinner>
@@ -62,7 +73,10 @@
 </div>
 
 <m-modal [(mVisible)]="contentModalData.visible" (mClose)="contentModalData.visible = false" [mMaskClosable]="false">
-  <ng-container *m-modal-header>{{'web.thesaurus-page.form.content-header' | translate}}</ng-container>
+  <ng-container *m-modal-header>
+    {{'web.thesaurus-page.form.content-header' | translate}}
+  </ng-container>
+
   <ng-container *m-modal-content>
     <form #contentForm="ngForm" *ngIf="contentModalData.content">
       <m-form-item mName="name" mLabel="entities.page-content.name" required>
@@ -76,13 +90,19 @@
       </m-form-item>
     </form>
   </ng-container>
+
   <div *m-modal-footer class="m-items-middle">
     <m-button mDisplay="text" (click)="contentModalData.visible = false">{{'core.btn.close' | translate}}</m-button>
     <m-button mDisplay="primary"
         [mLoading]="loading['save']"
         [disabled]="loading['init'] || isLoading"
-        (click)="saveContent()">{{'core.btn.save' | translate}}</m-button>
+        (click)="saveContent()"
+    >{{'core.btn.save' | translate}}</m-button>
   </div>
 </m-modal>
 
-<tw-thesaurus-page-modal [modalVisible]="newPageModalVisible" [parentPageId]="pageId" (closed)="newPageModalVisible = false" (saved)="openPageContent($event)"></tw-thesaurus-page-modal>
+<tw-thesaurus-page-modal [modalVisible]="newPageModalVisible"
+    [parentPageId]="pageId"
+    (closed)="newPageModalVisible = false"
+    (saved)="openPageContent($event.pageContent)"
+></tw-thesaurus-page-modal>

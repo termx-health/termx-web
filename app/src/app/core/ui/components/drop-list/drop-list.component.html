@@ -1,0 +1,102 @@
+<ng-template #tmplNode let-node="node">
+  <div
+      class="node-item"
+      [class.node-item--selected]="node.key === selectedKey"
+      [class.node-item--expandable]="node.expandable"
+      [class.node-item--expanded]="node.expanded"
+
+      [class.drop-container-target]="node.key === dragInfo?.targetKey"
+      [class.drop-container-target--before]="dragInfo?.action === 'before'"
+      [class.drop-container-target--inside]="dragInfo?.action === 'inside'"
+      [class.drop-container-target--after]="dragInfo?.action === 'after'"
+      [class.drop-container-target__parent]="node.key === dragInfo?.parentKey"
+
+      (mouseenter)="node['_hovered'] = true"
+      (mouseleave)="node['_hovered'] = false"
+  >
+    <div
+        [attr.data-key]="node.key"
+        class="drop-container m-items-middle"
+        (click)="onSelect(node, $event)"
+    >
+      <ng-template #filler>
+        <div class="node-item__default-icon">
+          <div></div>
+        </div>
+      </ng-template>
+
+      <m-icon
+          *ngIf="node.expandable; else filler"
+          [mCode]="node.expanded ? 'folder-open' : 'folder'"
+          (click)="onExpand(node, $event)"
+      ></m-icon>
+
+
+      <div class="node-item__renderer">
+        <ng-container *ngTemplateOutlet="renderer, context: {$implicit: node, node: node}"/>
+      </div>
+
+      <div class="node-item__actions m-items-middle" *ngIf="nodeActions && node['_hovered']">
+        <ng-container *ngTemplateOutlet="nodeActions, context: {$implicit: node, node: node}"/>
+      </div>
+    </div>
+  </div>
+
+  <div
+      [attr.data-key]="node.key"
+      class="drop-container__wrapper"
+      [class.drop-container-target]="node.key === dragInfo?.targetKey"
+  >
+    <div
+        *ngIf="node.expanded && node.children.length"
+        [style.padding-left.rem]="DEFAULT_ITEM_OFFSET"
+
+        cdkDropList
+        [id]="node.key"
+        [cdkDropListData]="node.children"
+        (cdkDropListDropped)="dropped($event)"
+        [cdkDropListSortingDisabled]="true"
+    >
+      <div *ngFor="let child of node.children">
+        <div cdkDrag [cdkDragData]="child" (cdkDragMoved)="dragMoved($event)">
+          <div *cdkDragPreview class="node-item--preview">
+            <ng-container *ngTemplateOutlet="renderer, context: {$implicit: child, node: child}"/>
+          </div>
+
+          <ng-container *ngTemplateOutlet="tmplNode, context:{$implicit: child, node: child}"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</ng-template>
+
+
+<div cdkDropListGroup>
+  <div
+      cdkDropList
+      [id]="undefined"
+      [cdkDropListData]="nodes"
+      (cdkDropListDropped)="dropped($event)"
+      [cdkDropListSortingDisabled]="true"
+      [class.dragging]="!!dragInfo"
+  >
+    <div *ngFor="let node of nodes" cdkDrag [cdkDragData]="node" (cdkDragMoved)="dragMoved($event)">
+      <div *cdkDragPreview class="node-item--preview">
+        <ng-container *ngTemplateOutlet="renderer, context: {$implicit: node, node: node}"/>
+      </div>
+
+      <ng-container *ngTemplateOutlet="tmplNode, context:{$implicit: node, node: node}"/>
+    </div>
+  </div>
+</div>
+
+
+<ng-template #renderer let-node="node">
+  <ng-container *ngIf="nodeRenderer; else titleRenderer">
+    <ng-container *ngTemplateOutlet="nodeRenderer, context:{$implicit: node, node: node}"/>
+  </ng-container>
+
+  <ng-template #titleRenderer>
+    {{node.title}}
+  </ng-template>
+</ng-template>
