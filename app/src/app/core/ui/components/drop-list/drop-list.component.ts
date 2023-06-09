@@ -1,6 +1,25 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, TrackByFunction} from '@angular/core';
 import {CdkDragDrop, CdkDragMove} from '@angular/cdk/drag-drop';
 import {BooleanInput} from '@kodality-web/core-util';
+import {animate, AnimationTriggerMetadata, query, stagger, style, transition, trigger} from '@angular/animations';
+
+export const easeAnimation: AnimationTriggerMetadata = trigger('easeAnimation', [
+  transition('* => *', [
+    query(
+      ':enter',
+      [
+        style({overflow: 'hidden', height: 0, opacity: 0}),
+        stagger(0, [
+          animate(
+            `150ms cubic-bezier(0.645, 0.045, 0.355, 1)`,
+            style({overflow: 'hidden', height: '*', opacity: '*'})
+          )
+        ])
+      ],
+      {optional: true})
+  ])
+]);
+
 
 export interface DropListNode {
   key: string,
@@ -25,7 +44,8 @@ export interface DropListMoveEvent {
 @Component({
   selector: 'tw-drop-list',
   templateUrl: 'drop-list.component.html',
-  styleUrls: ['drop-list.component.less']
+  styleUrls: ['drop-list.component.less'],
+  animations: [easeAnimation]
 })
 export class DropListComponent implements OnChanges {
   @Input() public nodes: DropListNode[] = [];
@@ -41,12 +61,11 @@ export class DropListComponent implements OnChanges {
   @Output() public twExpand = new EventEmitter<DropListNode>();
   @Output() public twMove = new EventEmitter<DropListMoveEvent>();
 
-
   protected readonly DEFAULT_ITEM_OFFSET = 1.25;
   protected readonly ZONE_BOUND_MARGIN = 0.75;
 
   protected dragInfo: {parentKey?: string, targetKey?: string, action?: string};
-
+  protected trackBy: TrackByFunction<DropListNode> = (idx, node) => node.key;
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['nodes']) {

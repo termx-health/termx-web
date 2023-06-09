@@ -164,7 +164,6 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
     this.openPage(obj.page);
 
     if (!obj.leaf && !obj.expanded) {
-      obj.expanded = true;
       this.expandBranch(obj);
     }
   }
@@ -176,10 +175,11 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
         source.children ??= [];
         source.children = source.children.filter(lp => lp.link.id !== obj.link.id);
 
-        if (source.expanded) {
+        if (!source.leaf) {
           // page was expanded, it is safe to assume all pages were loaded already
           // if no linked pages exists, we could assume that page is the leaf node
-          source.leaf = !source.children.length;
+          source.leaf = source.children.length === 0;
+          source.expanded = !source.leaf;
         }
       } else {
         this.data = this.data.filter(lp => lp.link.id !== obj.link.id);
@@ -190,10 +190,15 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
         target.children ??= [];
         target.children.splice(idx, 0, obj);
 
-        if (!target.expanded) {
+        if (target.leaf) {
           // if page was not yet expanded, we can precalculate its leaf status
           // when user will expand the page, the actual result will be loaded
-          target.leaf = target.children.length > 0;
+          target.leaf = target.children.length === 0;
+        }
+
+        if (!target.expanded && !target['_expanded']) {
+          // clear children, because target node will load actual children on click
+          target.children = [];
         }
       } else {
         this.data.splice(idx, 0, obj);
@@ -295,14 +300,15 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
     return this.megaService.findChildren(obj.link.targetId).pipe(tap(children => {
       obj.children = children;
       obj.expanded = children.length > 0;
-      obj['_expanded'] = true;
+      obj['_expanded'] = true; // expanded via request, all OK, trustworthy children
       this.toDropListNodes();
     }));
   }
 
   private expandBranch(obj: DragNode): void {
     if (!obj['_expanded']) {
-      this._expandBranch(obj).subscribe()
+      // node was already expanded, its nodes are somewhere in the tree (still in node or dragged into other nodes)
+      this._expandBranch(obj).subscribe();
     }
   }
 

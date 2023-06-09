@@ -50,6 +50,7 @@
     <div
         *ngIf="node.expanded && node.children.length"
         [style.padding-left.rem]="DEFAULT_ITEM_OFFSET"
+        [@easeAnimation]="node.expanded"
 
         cdkDropList
         [id]="node.key"
@@ -57,7 +58,7 @@
         (cdkDropListDropped)="dropped($event)"
         [cdkDropListSortingDisabled]="true"
     >
-      <div *ngFor="let child of node.children">
+      <div *ngFor="let child of node.children; trackBy: trackBy">
         <div cdkDrag [cdkDragData]="child" (cdkDragMoved)="dragMoved($event)">
           <div *cdkDragPreview class="node-item--preview">
             <ng-container *ngTemplateOutlet="renderer, context: {$implicit: child, node: child}"/>
@@ -80,7 +81,7 @@
       [cdkDropListSortingDisabled]="true"
       [class.dragging]="!!dragInfo"
   >
-    <div *ngFor="let node of nodes" cdkDrag [cdkDragData]="node" (cdkDragMoved)="dragMoved($event)">
+    <div *ngFor="let node of nodes; trackBy: trackBy" cdkDrag [cdkDragData]="node" (cdkDragMoved)="dragMoved($event)">
       <div *cdkDragPreview class="node-item--preview">
         <ng-container *ngTemplateOutlet="renderer, context: {$implicit: node, node: node}"/>
       </div>
