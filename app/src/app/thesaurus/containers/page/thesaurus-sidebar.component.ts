@@ -3,7 +3,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {PageService} from '../../services/page.service';
 import {forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {ActivatedRoute, Router} from '@angular/router';
-import {compareValues, copyDeep, LoadingManager, SearchResult, unique} from '@kodality-web/core-util';
+import {compareValues, copyDeep, LoadingManager, remove, SearchResult, unique} from '@kodality-web/core-util';
 import {Page, PageContent, PageLink} from 'term-web/thesaurus/_lib';
 import {DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
 import {PageLinkService} from 'term-web/thesaurus/services/page-link.service';
@@ -194,9 +194,6 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
           // when user will expand the page, the actual result will be loaded
           target.leaf = target.children.length > 0;
         }
-        // if (!target.leaf) {
-        //   target.expanded = true
-        // }
       } else {
         this.data.splice(idx, 0, obj);
       }
@@ -250,10 +247,16 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
 
   /* Page link API */
 
-  protected search = (text: string): Observable<any> => this.megaService.search(text).pipe(tap(roots => {
-    this.data = roots;
-    this.toDropListNodes();
-  }));
+  protected search = (text: string): Observable<DragNode[]> => {
+    if (!text) {
+      return this.loadRoots();
+    }
+
+    return this.megaService.search(text).pipe(tap(roots => {
+      this.data = roots;
+      this.toDropListNodes();
+    }));
+  };
 
   protected loadRoots = (): Observable<DragNode[]> => this.megaService.loadRoots().pipe(tap(roots => {
     this.data = roots;
@@ -261,32 +264,45 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
   }));
 
   protected reload(): void {
-    const findPaths = (nodes: DropListNode[]): DropListNode[][] => {
-      // fixme: only the first branch inside of root node is collected
-      return nodes.filter(n => n.expanded).map(n => [n, ...findPaths(n.children).flat()]);
+    const collectExpandedPageIds = (nodes: DropListNode[]): number[] => {
+      return nodes.filter(n => n.expanded).map(n => [n[this.NODE_OBJECT_KEY].page.id, ...collectExpandedPageIds(n.children)]).flat();
     };
 
-    const paths = findPaths(this.nodes);
-    this.loadRoots().subscribe(() => {
-      paths.forEach(path => {
-        this.expandPath(path.map(n => n[this.NODE_OBJECT_KEY].link.targetId), this.data, true);
+
+    const restoreExpansion = (obj: DragNode, expandedPageIds: number[]): void => {
+      const pageId = obj.page.id;
+      if (!expandedPageIds.includes(pageId) || obj.expanded) {
+        return;
+      }
+
+      this.loader.wrap('reload', this._expandBranch(obj)).subscribe(children => {
+        remove(expandedPageIds, pageId);
+        children.forEach(c => restoreExpansion(c, expandedPageIds));
       });
+    };
+
+    const expansionPageIds = collectExpandedPageIds(this.nodes);
+    this.loadRoots().subscribe(() => {
+      this.data.forEach(rootNode => restoreExpansion(rootNode, expansionPageIds));
     });
   }
 
 
   /* Expand API */
 
-  private expandBranch(obj: DragNode): void {
-    if (obj['_expanded']) {
-      return;
-    }
-
-    this.megaService.findChildren(obj.link.targetId).subscribe(children => {
+  protected _expandBranch(obj: DragNode): Observable<DragNode[]> {
+    return this.megaService.findChildren(obj.link.targetId).pipe(tap(children => {
       obj.children = children;
+      obj.expanded = children.length > 0;
       obj['_expanded'] = true;
       this.toDropListNodes();
-    });
+    }));
+  }
+
+  private expandBranch(obj: DragNode): void {
+    if (!obj['_expanded']) {
+      this._expandBranch(obj).subscribe()
+    }
   }
 
   private expandPath(pageIdPath: number[], data: DragNode[], force = false): void {
@@ -295,17 +311,13 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
       return;
     }
 
-    obj.expanded ??= pageIdPath.length >= 1;
-    pageIdPath.shift();
-
-    if (!force && obj.children?.length) {
-      return;
+    if (force) {
+      obj['_expanded'] = false;
     }
 
-    this.loader.wrap('expand', this.megaService.findChildren(obj.link.targetId)).subscribe(children => {
-      obj.children = children;
+    this._expandBranch(obj).subscribe(() => {
+      pageIdPath.shift();
       this.expandPath(pageIdPath, obj.children, force);
-      this.toDropListNodes();
     });
   }
 
