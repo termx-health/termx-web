@@ -1,9 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {validateForm} from '@kodality-web/core-util';
+import {LoadingManager, validateForm} from '@kodality-web/core-util';
 import {Page, PageContent, PageLink, Tag, TagLibService, Template, TemplateLibService} from 'term-web/thesaurus/_lib';
 import {PageService} from '../../services/page.service';
 import {TranslateService} from '@ngx-translate/core';
+import {MuiConfigService} from '@kodality-web/marina-ui';
 
 @Component({
   selector: 'tw-thesaurus-page-modal',
@@ -11,79 +12,83 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class ThesaurusPageModalComponent implements OnInit, OnChanges {
   public page?: Page;
+  public pageTags?: string[];
   public content?: PageContent;
 
-  public tags?: Tag[];
-  public templates?: Template[];
-  public pageTags?: string[];
+  protected tags?: Tag[];
+  protected templates?: Template[];
 
   @Input() public pageId: number | undefined;
   @Input() public contentId: number | undefined;
   @Input() public parentPageId: number | undefined;
   @Input() public modalVisible = false;
-  @Output() public saved: EventEmitter<{page: Page, pageContent: PageContent}> = new EventEmitter();
-  @Output() public closed: EventEmitter<void> = new EventEmitter();
+
+  @Output() public saved = new EventEmitter<{page: Page, pageContent: PageContent}>();
+  @Output() public closed = new EventEmitter<void>();
 
   @ViewChild("form") public form?: NgForm;
 
-  public loading: {[k: string]: boolean} = {};
+  public loader = new LoadingManager();
   public mode: 'add' | 'edit' = 'add';
 
   public constructor(
     private pageService: PageService,
     private tagService: TagLibService,
     private translateService: TranslateService,
-    private templateLibService: TemplateLibService
+    private templateLibService: TemplateLibService,
+    protected muiConfig: MuiConfigService
   ) {}
 
+
   public ngOnInit(): void {
-    this.initPage();
     this.initData();
+    this.initPage();
   }
+
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['pageId'] && this.pageId) {
       this.mode = 'edit';
-      this.loadPage(this.pageId!);
+      this.loadPage(this.pageId, this.contentId);
     }
     if (changes['parentPageId'] && this.parentPageId) {
       this.page!.links = [{sourceId: this.parentPageId, orderNumber: 1}];
     }
   }
 
-  private loadPage(id: number): void {
-    this.loading['init'] = true;
-    this.pageService.loadPage(id).subscribe(p => {
+  private loadPage(id: number, contentId: number): void {
+    this.loader.wrap('init', this.pageService.loadPage(id)).subscribe(p => {
       this.page = p;
-      this.pageTags = p.tags?.map(t => t.tag!.text!) || [];
-      this.content = this.contentId ? p.contents?.find(c => c.id === this.contentId) : undefined;
-    }).add(() => this.loading['init'] = false);
+      this.pageTags = p.tags?.map(t => t.tag.text!) ?? [];
+      this.content = contentId ? p.contents?.find(c => c.id === contentId) : undefined;
+    });
+  }
+
+
+  private prepare(page: Page): void {
+    page.tags ??= [];
+    page.tags = page.tags.filter(t => this.pageTags.includes(t.tag.text!));
+
+    this.pageTags?.forEach(t => {
+      if (!page.tags.find(pt => pt.tag!.text === t)) {
+        const newTag = this.tags.find(tag => tag.text == t);
+        page.tags!.push({tag: newTag ?? {text: t}});
+      }
+    });
   }
 
   public save(): void {
     if (!validateForm(this.form)) {
       return;
     }
-    this.loading['save'] = true;
-    this.prepare(this.page!);
-    this.pageService.savePage(this.page!, this.content!)
-      .subscribe(page => {
-        this.saved.emit({page, pageContent: page.contents?.find(c => c.name === this.content!.name)});
-        this.initData();
-      })
-      .add(() => this.loading['save'] = false);
-  }
 
-  private prepare(page: Page): void {
-    page.tags = page.tags || [];
-    page.tags = page.tags.filter(t => this.pageTags!.includes(t.tag!.text!));
-    this.pageTags?.forEach(t => {
-      if (!page.tags!.find(pt => pt.tag!.text === t)) {
-        const newTag = this.tags!.find(tag => tag.text == t);
-        page.tags!.push({tag: newTag ? newTag : {text: t}});
-      }
+    this.prepare(this.page!);
+    this.loader.wrap('save', this.pageService.savePage(this.page, this.content)).subscribe(page => {
+      this.saved.emit({page, pageContent: page.contents?.find(c => c.name === this.content!.name)});
+      this.initData();
     });
   }
+
 
   private initPage(): void {
     this.page = new Page();
@@ -93,17 +98,10 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
   }
 
   private initData(): void {
-    this.loadTags();
-    this.loadTemplates();
-  }
-
-  private loadTags(): void {
     this.tagService.loadAll().subscribe(tags => this.tags = tags);
-  }
-
-  private loadTemplates(): void {
     this.templateLibService.searchTemplates({limit: 999}).subscribe(templates => this.templates = templates.data);
   }
+
 
   public addLink(): void {
     this.page!.links!.push(new PageLink());
@@ -117,6 +115,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
     }
   }
 
+
   public open(initial: {links?: Pick<PageLink, 'sourceId' | 'orderNumber'>[]} = {}): void {
     this.initPage();
     this.page.links = initial?.links ?? [];
@@ -128,6 +127,6 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
   }
 
   public get isLoading(): boolean {
-    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
+    return this.loader.isLoadingExcept('init');
   }
 }

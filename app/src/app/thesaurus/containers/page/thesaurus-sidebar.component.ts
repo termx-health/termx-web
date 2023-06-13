@@ -8,7 +8,6 @@ import {Page, PageContent, PageLink} from 'term-web/thesaurus/_lib';
 import {DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
 import {PageLinkService} from 'term-web/thesaurus/services/page-link.service';
 import {ThesaurusPageModalComponent} from 'term-web/thesaurus/containers/page/thesaurus-page-modal.component';
-import {GithubExportable} from 'term-web/integration/_lib/github/github.service';
 
 function findInTree<Node, Key>(nodesToSearch: Node[], key: Key, getKey: (n: Node) => Key, getChildren: (n: Node) => Node[]): Node {
   for (let node of nodesToSearch) {
@@ -368,14 +367,5 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
 
   protected findLinkId = (pageId: number, nodes: DropListNode[]): number => {
     return findInTree(nodes, String(pageId), n => n[this.NODE_OBJECT_KEY].page.id, n => n.children)?.[this.NODE_OBJECT_KEY]?.link?.id;
-  };
-
-  public prepareExport = (): GithubExportable[] => {
-    //FIXME: add sub-pages with filename containing parent page names
-    return this.data.filter(p => p.page.contents?.[0].content).map(p => {
-      let content = p.page.contents?.[0];
-      let filename = `${content?.slug}.${content?.contentType === 'markdown' ? 'md' : 'html'}`;
-      return {content: content?.content, filename: filename};
-    });
   };
 }

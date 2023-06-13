@@ -758,6 +758,16 @@
       }
     },
     "thesaurus-page": {
+      "header": {
+        "modified": "<b>{{user}}</b> edited this page on {{date}}"
+      },
+      "actions": {
+        "contents": "Contents",
+        "relations": "Relations",
+        "usages": "Usages",
+        "tags": "Tags",
+        "none": "None"
+      },
       "form": {
         "add-header": "Add page",
         "edit-header": "Edit page",

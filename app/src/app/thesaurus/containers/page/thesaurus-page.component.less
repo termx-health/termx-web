@@ -1,0 +1,72 @@
+@import "../../../../styles/variables";
+
+.page__container {
+  display: grid;
+  grid-template-columns: minmax(200px, 300px) 1fr;
+}
+
+.page__sidebar {
+  height: calc(100vh - var(--page-header-height));
+
+  position: sticky;
+  top: calc(var(--page-header-height));
+  overflow: auto;
+
+  border-right: 1px solid var(--color-borders);
+  background: linear-gradient(135deg, @mui-bg-component, transparent);
+
+  tw-thesaurus-sidebar {
+    display: block;
+    padding: 1rem;
+  }
+}
+
+.page__wrapper {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2rem;
+
+  height: min-content;
+  width: 100%;
+  max-width: 1500px;
+  margin-inline: auto;
+
+  padding-block: 3rem 1rem;
+  padding-inline: 1rem;
+
+
+  .page__header {
+    h2 {
+      margin: 0
+    }
+  }
+
+  .page__content {
+    margin-bottom: 1rem;
+  }
+
+  .page__actions > div {
+    padding-block: 0.5rem;
+
+    &:not(&:first-child) {
+      border-top: 1px solid var(--color-borders);
+    }
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
+
+    dl {
+      margin-bottom: 0;
+    }
+  }
+}
+
+
+.text-secondary {
+  color: var(--color-text-secondary);
+}

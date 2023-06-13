@@ -1,15 +1,16 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../../services/page.service';
-import {collect, isDefined, validateForm} from '@kodality-web/core-util';
+import {collect, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {GithubExportable} from '../../../integration/_lib/github/github.service';
-import {Page, PageContent, PageLink, PageRelation} from 'term-web/thesaurus/_lib';
+import {Page, PageContent, PageLink, PageRelation, PageTag} from 'term-web/thesaurus/_lib';
 import {MuiConfigService} from '@kodality-web/marina-ui';
 import {forkJoin} from 'rxjs';
 
 @Component({
   templateUrl: './thesaurus-page.component.html',
+  styleUrls: ['thesaurus-page.component.less']
 })
 export class ThesaurusPageComponent implements OnInit {
   public pageId?: number;
@@ -17,14 +18,15 @@ export class ThesaurusPageComponent implements OnInit {
   public pageContents: PageContent[] = [];
   public pageLinks: PageLink[] = [];
   public pageRelations?: {[k: string]: PageRelation[]};
+  public pageTags?: PageTag[];
   public usages?: PageRelation[];
   public path?: number[];
-  public loading: {[k: string]: boolean} = {};
-  public newPageModalVisible: boolean = false;
   public contentModalData: {
     visible?: boolean,
     content?: PageContent
   } = {};
+
+  protected loader = new LoadingManager();
 
   @ViewChild("contentForm") public contentFrom?: NgForm;
 
@@ -41,15 +43,14 @@ export class ThesaurusPageComponent implements OnInit {
 
       const slug = routeParam.get("slug");
       if (slug) {
-        this.loading['init'] = true;
-        this.pageService.searchPages({slug: slug, limit: 1}).subscribe(pages => {
+        this.loader.wrap('init', this.pageService.searchPages({slug: slug, limit: 1})).subscribe(pages => {
           const page = pages.data[0];
           if (!page) {
             this.router.navigate(['/thesaurus/pages']);
           } else {
             this.init(page, slug);
           }
-        }).add(() => this.loading['init'] = false);
+        });
       }
     });
   }
@@ -58,8 +59,9 @@ export class ThesaurusPageComponent implements OnInit {
     this.pageId = page?.id;
     this.pageContent = page?.contents!.find(c => c.slug === slug);
     this.pageContents = page?.contents || [];
-    this.pageRelations = collect(page?.relations || [], r => r.type!);
+    this.pageRelations = collect(page?.relations || [], r => r.type);
     this.pageLinks = page?.links || [];
+    this.pageTags = page?.tags || [];
     this.path = [];
 
     if (page) {
@@ -81,10 +83,9 @@ export class ThesaurusPageComponent implements OnInit {
     if (!validateForm(this.contentFrom)) {
       return;
     }
-    this.loading['save'] = true;
-    this.pageService.savePageContent(this.contentModalData.content!, this.pageId!)
-      .subscribe(content => this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']))
-      .add(() => this.loading['save'] = false);
+    this.loader.wrap('save', this.pageService.savePageContent(this.contentModalData.content, this.pageId)).subscribe(content => {
+      this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']);
+    });
   }
 
 
@@ -96,7 +97,6 @@ export class ThesaurusPageComponent implements OnInit {
   }
 
   public editPageContent(content: PageContent): void {
-    this.newPageModalVisible = false;
     this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']);
   }
 
@@ -145,9 +145,7 @@ export class ThesaurusPageComponent implements OnInit {
     }
   }
 
-
   public get isLoading(): boolean {
-    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
+    return this.loader.isLoadingExcept('init');
   }
-
 }

@@ -1,95 +1,110 @@
-<div nz-row nzGutter="12" class="m-row">
-  <div nz-col [nzMd]="6" [nzXs]="24">
-    <tw-thesaurus-sidebar [path]="path"/>
-  </div>
+<m-page mFull>
+  <div class="page__container">
+    <div class="page__sidebar">
+      <tw-thesaurus-sidebar [path]="path"/>
+    </div>
 
-  <div nz-col [nzMd]="18" [nzXs]="24">
-    <m-spinner [mLoading]="isLoading">
-      <!-- Page preview -->
-      <m-card *ngIf="pageId">
-        <div *m-card-header class="m-justify-between">
-          <label class="m-card__title">
-            {{pageContent?.name}}
-          </label>
 
-          <div class="m-items-middle">
-            <tw-github-export [title]="pageContent?.name" [prepareExport]="prepareExport"/>
-
-            <m-dropdown>
-              <m-button *mDropdownContainer>
-                {{pageContent?.lang | uppercase}}
-              </m-button>
-
-              <ng-container *ngFor="let content of pageContents | apply: filterContents: pageContent?.lang">
-                <a *m-dropdown-item (click)="viewPageContent(content)">{{content.lang | uppercase}} {{content.name}}</a>
-              </ng-container>
-
-              <ng-container *ngFor="let lang of muiConfig.config.supportedLangs | keys | apply: filterLanguages: pageContent?.lang: pageContents">
-                <a *m-dropdown-item (click)="openContentModal(lang)">{{lang | uppercase}}</a>
-              </ng-container>
-            </m-dropdown>
-
-            <m-button [routerLink]="'edit'">
-              <m-icon mCode="edit"/>
-            </m-button>
-
-            <m-button (click)="newPageModalVisible = true">
-              <m-icon mCode="file-add"/>
-            </m-button>
+    <m-spinner class="page__wrapper" [mLoading]="isLoading">
+      <div *ngIf="pageId" class="page__header m-justify-between m-items-middle">
+        <div>
+          <h2 class="m-items-middle">
+            <span class="m-bold">{{pageContent?.name}}</span>
+          </h2>
+          <div class="m-items-middle text-secondary">
+            <div
+                *ngIf="pageContent['modifiedBy']"
+                [innerHTML]="'web.thesaurus-page.header.modified' | translate: ({user: pageContent['modifiedBy'], date: pageContent['modifiedAt'] | localDateTime})"
+            ></div>
           </div>
         </div>
 
-        <tw-smart-text-editor
-            *ngIf="pageContent"
-            [(ngModel)]="pageContent.content"
-            [valueType]="pageContent.contentType"
-            [lang]="pageContent.lang"
-            viewMode
-        />
-      </m-card>
+        <div class="m-items-middle">
+          <tw-github-export [title]="pageContent?.name" [prepareExport]="prepareExport"/>
+          <m-icon-button mIcon="edit" [routerLink]="'edit'"/>
+          <m-icon-button mIcon="file-add" (click)="pageModal.open({links:[{sourceId: pageId, orderNumber: 1}]})"/>
+        </div>
+      </div>
 
-      <!-- Page relations & usages -->
-      <m-card *ngIf="(pageRelations | keys)?.length || usages?.length" style="margin-top: 1rem">
-        <m-card *ngIf="(pageRelations | keys)?.length" mTitle="entities.page.relations" class="m-card-inside">
-          <m-table [mData]="pageRelations | keys" [mLoading]="isLoading" mEnablePagination>
-            <tr *mTableHead>
-              <th>{{'entities.page-relation.type' | translate}}</th>
-              <th>{{'entities.page-relation.target' | translate}}</th>
-            </tr>
+      <div *ngIf="pageId">
+        <div nz-row nzGutter="12">
+          <div nz-col [nzLg]="18" [nzXs]="24" class="page__content">
+            <m-card>
+              <tw-smart-text-editor
+                  *ngIf="pageContent"
+                  [(ngModel)]="pageContent.content"
+                  [valueType]="pageContent.contentType"
+                  [lang]="pageContent.lang"
+                  viewMode
+              />
+            </m-card>
+          </div>
 
-            <ng-container *mTableRow="let key; let index = index">
-              <tr *ngFor="let relation of pageRelations[key]; let isFirst = first">
-                <td
-                    *ngIf="isFirst"
-                    [rowSpan]="pageRelations[key].length"
-                    [style.border-bottom]="(index === (pageRelations | keys).length - 1) ? 'none' : ''"
-                >
-                  {{key}}
-                </td>
-                <td>
-                  <a (click)="viewTarget(relation)">{{relation.target}}</a>
-                </td>
-              </tr>
-            </ng-container>
+          <div nz-col [nzLg]="6" [nzXs]="24">
+            <m-card>
+              <div class="page__actions">
+                <div>
+                  <b>{{'web.thesaurus-page.actions.contents' | translate}}</b>
+                  <div>
+                    <div *ngFor="let content of pageContents | sort: 'lang'">
+                      <a (click)="viewPageContent(content)">
+                        {{content.lang | uppercase}} | {{content.name}}
+                      </a>
+                    </div>
+                    <div *ngFor="let lang of muiConfig.config.supportedLangs | keys | apply: filterLanguages: pageContent?.lang: pageContents">
+                      <a (click)="openContentModal(lang)" class="text-secondary">
+                        {{lang | uppercase}}
+                      </a>
+                    </div>
+                  </div>
+                </div>
 
-            <tr *mTableNoData>
-              <td colspan="100%">
-                <m-no-data></m-no-data>
-              </td>
-            </tr>
-          </m-table>
-        </m-card>
+                <div>
+                  <b>{{'web.thesaurus-page.actions.relations' | translate}}</b>
+                  <div *ngIf="!(pageRelations | keys)?.length" class="text-secondary">
+                    {{'web.thesaurus-page.actions.none' | translate}}
+                  </div>
+                  <dl *ngFor="let key of pageRelations | keys">
+                    <dt>{{key}}</dt>
+                    <dd>
+                      <li style="margin-left: 1rem" *ngFor="let relation of pageRelations[key];"><a (click)="viewTarget(relation)">{{relation.target}}</a></li>
+                    </dd>
+                  </dl>
+                </div>
 
-        <m-card *ngIf="usages?.length" mTitle="web.thesaurus-page.form.usages" class="m-card-inside">
-          <a *ngFor="let usage of usages" (click)="viewPage(usage)">
-            <m-icon mCode="link"></m-icon>
-            {{usage.content.names | localName}}
-          </a>
-        </m-card>
-      </m-card>
+                <div>
+                  <b>{{'web.thesaurus-page.actions.usages' | translate}}</b>
+                  <div *ngIf="!usages?.length" class="text-secondary">
+                    {{'web.thesaurus-page.actions.none' | translate}}
+                  </div>
+                  <div>
+                    <a *ngFor="let usage of usages" (click)="viewPage(usage)">
+                      <m-icon mCode="link"></m-icon>
+                      {{usage.content.names | localName}}
+                    </a>
+                  </div>
+                </div>
+
+
+                <div>
+                  <b>{{'web.thesaurus-page.actions.tags' | translate}}</b>
+                  <div *ngIf="!pageTags?.length" class="text-secondary">
+                    {{'web.thesaurus-page.actions.none' | translate}}
+                  </div>
+                  <div class="m-items-middle">
+                    <m-tag *ngFor="let tag of pageTags">
+                      {{tag.tag.text}}
+                    </m-tag>
+                  </div>
+                </div>
+              </div>
+            </m-card>
+          </div>
+        </div>
+      </div>
     </m-spinner>
   </div>
-</div>
+</m-page>
 
 
 <m-modal [(mVisible)]="contentModalData.visible" (mClose)="contentModalData.visible = false">
@@ -102,6 +117,7 @@
       <m-form-item mName="name" mLabel="entities.page-content.name" required>
         <m-input name="name" [(ngModel)]="contentModalData.content.name" autofocus required></m-input>
       </m-form-item>
+
       <m-form-item mName="type" mLabel="entities.page-content.content-type" required>
         <m-select name="type" [(ngModel)]="contentModalData.content.contentType" required>
           <m-option mLabel="WYSIWYG" [mValue]="'html'"></m-option>
@@ -112,18 +128,24 @@
   </ng-container>
 
   <div *m-modal-footer class="m-items-middle">
-    <m-button mDisplay="text" (click)="contentModalData.visible = false">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="text" (click)="contentModalData.visible = false">
+      {{'core.btn.close' | translate}}
+    </m-button>
+
     <m-button mDisplay="primary"
-        [mLoading]="loading['save']"
-        [disabled]="loading['init'] || isLoading"
-        (click)="saveContent()"
-    >{{'core.btn.save' | translate}}</m-button>
+        [mLoading]="loader.state['save']"
+        [disabled]="loader.state['init'] || isLoading"
+        (mClick)="saveContent()"
+    >
+      {{'core.btn.save' | translate}}
+    </m-button>
   </div>
 </m-modal>
 
 
-<tw-thesaurus-page-modal [modalVisible]="newPageModalVisible"
+<tw-thesaurus-page-modal
+  #pageModal
     [parentPageId]="pageId"
-    (closed)="newPageModalVisible = false"
+    (closed)="pageModal.close()"
     (saved)="editPageContent($event.pageContent)"
 ></tw-thesaurus-page-modal>
