@@ -31,6 +31,7 @@ import {ResourcesLibModule} from '../resources/_lib';
 import {IntegrationLibModule} from '../integration/_lib';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {PageLinkService} from 'term-web/thesaurus/services/page-link.service';
+import {MarinaQuillModule} from '@kodality-web/marina-quill';
 
 export const THESAURUS_ROUTES: Routes = [
   {path: 'pages', component: ThesaurusPageComponent},
@@ -53,6 +54,7 @@ export const THESAURUS_ROUTES: Routes = [
     ResourcesLibModule,
     IntegrationLibModule,
     MarinaMarkdownModule,
+    MarinaQuillModule,
 
     DragDropModule,
   ],

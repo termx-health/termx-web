@@ -31,8 +31,7 @@
 
       <m-form-item mName="lang" mLabel="entities.page-content.lang" required>
         <m-select name="lang" [(ngModel)]="content.lang" required>
-          <m-option mLabel="en" [mValue]="'en'"></m-option>
-          <m-option mLabel="et" [mValue]="'et'"></m-option>
+          <m-option *ngFor="let lang of muiConfig.config.supportedLangs | keys" [mLabel]="lang" [mValue]="lang"></m-option>
         </m-select>
       </m-form-item>
 
@@ -87,9 +86,10 @@
   <div *m-modal-footer class="m-items-middle">
     <m-button mDisplay="text" (click)="closed.emit()">{{'core.btn.close' | translate}}</m-button>
     <m-button mDisplay="primary"
-        [mLoading]="loading['save']"
-        [disabled]="loading['init'] || isLoading"
-        (click)="save()">{{'core.btn.save' | translate}}</m-button>
+        [mLoading]="loader.state['save']"
+        [disabled]="loader.state['init'] || isLoading"
+        (click)="save()"
+    >{{'core.btn.save' | translate}}</m-button>
   </div>
 </m-modal>
 

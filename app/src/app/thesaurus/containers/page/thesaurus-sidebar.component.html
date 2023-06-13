@@ -1,8 +1,7 @@
-<m-card>
-  <div *m-card-header class="m-justify-between">
+<div class="tw-flex-container">
+  <div class="m-justify-between">
     <m-icon-button mIcon="sync" (mClick)="reload()"/>
     <m-input style="flex: 1" twDebounce [debounced]="search" [(ngModel)]="searchText" placeholder="marina.ui.inputs.search.placeholder"/>
-    <tw-github-export [title]="'Thesaurus'" [prepareExport]="prepareExport"></tw-github-export>
     <tw-add-button (click)="modal.open()"/>
   </div>
 
@@ -33,7 +32,7 @@
       </ng-template>
     </tw-drop-list>
   </m-skeleton>
-</m-card>
+</div>
 
 
 <tw-thesaurus-page-modal
