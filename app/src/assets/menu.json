@@ -16,8 +16,8 @@
   },
   {
     "label": {
-      "en": "Resources",
-      "et": "Ressursid"
+      "en": "Terminology",
+      "et": "Terminoloogia"
     },
     "link": "resources?tab=code-systems",
     "privileges": [
@@ -75,36 +75,17 @@
         "privileges": [
           "*.AssociationType.view"
         ]
-      }
-    ]
-  },
-  {
-    "label": {
-      "en": "Developer tools",
-      "et": "Arendaja tööriistad"
-    },
-    "privileges": [
-      "*.CodeSystem.view",
-      "*.MapSet.view"
-    ],
-    "items": [
-      {
-        "label": {
-          "en": "Code systems",
-          "et": "Koodisüsteemid"
-        },
-        "link": "resources/dev/code-systems",
-        "privileges": [
-          "*.CodeSystem.view"
-        ]
       },
       {
         "label": {
-          "en": "Map sets",
-          "et": "Kaardistus kogumid"
+          "en": "Import",
+          "et": "Import"
         },
-        "link": "resources/dev/map-sets",
+        "icon": "interaction",
+        "link": "integration",
         "privileges": [
+          "*.CodeSystem.view",
+          "*.ValueSet.view",
           "*.MapSet.view"
         ]
       }
@@ -153,15 +134,11 @@
       },
       {
         "label": {
-          "en": "Integration",
-          "et": "Integratsioon"
+          "en": "Observation definition"
         },
-        "icon": "interaction",
-        "link": "integration",
+        "link": "observation-definitions",
         "privileges": [
-          "*.CodeSystem.view",
-          "*.ValueSet.view",
-          "*.MapSet.view"
+          "*.ObservationDefinition.view"
         ]
       }
     ]
