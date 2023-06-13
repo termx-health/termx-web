@@ -14,7 +14,7 @@ export class FhirValueSetLibService {
   public constructor(protected http: HttpClient) {  }
 
   public loadValueSet(id: string, version?: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${id}|${version}`);
+    return this.http.get<any>(`${this.baseUrl}/${id}@${version}`);
   }
 
   public search(params: any): Observable<any> {

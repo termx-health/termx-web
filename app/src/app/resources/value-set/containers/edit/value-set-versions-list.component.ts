@@ -68,6 +68,6 @@ export class ValueSetVersionsListComponent implements OnChanges {
   }
 
   public openFhir(id: string, version: string): void {
-    window.open(environment.terminologyApi + '/fhir/ValueSet/' + id + '|' + version, '_blank');
+    window.open(environment.terminologyApi + '/fhir/ValueSet/' + id + '@' + version, '_blank');
   }
 }
