@@ -2,22 +2,39 @@
 
 .page__container {
   display: grid;
-  grid-template-columns: minmax(200px, 300px) 1fr;
+  grid-template-columns: auto 1fr;
 }
 
 .page__sidebar {
-  height: calc(100vh - var(--page-header-height));
+  display: flex;
+  background: linear-gradient(135deg, @mui-bg-component, transparent);
 
   position: sticky;
   top: calc(var(--page-header-height));
+  height: calc(100vh - var(--page-header-height));
   overflow: auto;
 
   border-right: 1px solid var(--color-borders);
-  background: linear-gradient(135deg, @mui-bg-component, transparent);
+
+  @move-needle-size: 3px;
+
+  .move-needle {
+    height: 100%;
+    width: @move-needle-size;
+    cursor: ew-resize;
+
+    transition: 0.25s;
+
+    &:hover {
+      background: @mui-primary-color-2
+    }
+
+  }
 
   tw-thesaurus-sidebar {
     display: block;
-    padding: 1rem;
+    padding: 1rem calc(1rem - @move-needle-size) 1rem 1rem;
+    width: calc(100% - @move-needle-size);
   }
 }
 

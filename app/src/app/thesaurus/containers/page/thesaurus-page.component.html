@@ -1,7 +1,12 @@
-<m-page mFull>
+<m-page
+    mFull
+    (mousemove)="resizeMouseMove($event)"
+    (mouseup)="resizeMouseUp($event)"
+>
   <div class="page__container">
-    <div class="page__sidebar">
+    <div class="page__sidebar" #sidebar>
       <tw-thesaurus-sidebar [path]="path"/>
+      <div class="move-needle" (mousedown)="mouseDown($event)"></div>
     </div>
 
 
