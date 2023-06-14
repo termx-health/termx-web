@@ -12,7 +12,10 @@
     </div>
     <div class="m-items-middle">
       <m-icon mCode="global"></m-icon>
-      <span *ngFor="let lang of version.supportedLanguages; let i = index">{{lang}} <m-divider mVertical *ngIf="i !== (version.supportedLanguages?.length - 1)"></m-divider></span>
+      <ng-container *ngFor="let lang of version.supportedLanguages; let i = index">
+        <span>{{lang}}</span>
+        <m-divider mVertical *ngIf="i !== (version.supportedLanguages?.length - 1)"></m-divider>
+      </ng-container>
     </div>
     <div *ngFor="let rule of version.ruleSet?.rules">
       <div class="m-items-middle">
