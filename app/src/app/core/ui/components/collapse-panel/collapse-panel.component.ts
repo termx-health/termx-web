@@ -27,7 +27,7 @@ export class CollapsePanelComponent implements OnChanges, AfterViewInit, OnDestr
   };
 
   protected collapseData = {
-    collapsed: true,
+    collapsed: false,
     inProgress: false,
   };
 
