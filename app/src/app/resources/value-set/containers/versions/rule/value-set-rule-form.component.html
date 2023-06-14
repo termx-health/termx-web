@@ -9,7 +9,7 @@
           </m-radio-group>
         </m-form-item>
         <m-form-item *mFormCol mName="based-on" mLabel="entities.value-set-rule-set.rule.based-on" required>
-          <m-radio-group name="based-on" [(ngModel)]="ruleBase" required>
+          <m-radio-group name="based-on" [(ngModel)]="ruleBase" (ngModelChange)="ruleBaseChanged($event)" required>
             <label m-radio-button [mValue]="'code-system'">{{'web.value-set-version.form.rule-set.rule.code-system' | translate}}</label>
             <label m-radio-button [mValue]="'value-set'">{{'web.value-set-version.form.rule-set.rule.value-set' | translate}}</label>
           </m-radio-group>
@@ -50,16 +50,17 @@
       </ng-container>
 
       <ng-container *ngIf="ruleBase === 'value-set'">
-        <m-form-item *mFormCol mName="valueSet" mLabel="entities.value-set-rule-set.rule.value-set" required>
-          <tw-value-set-search name="valueSet" [(ngModel)]="rule.valueSet" valuePrimitive required></tw-value-set-search>
-        </m-form-item>
-
-        <m-form-item *mFormCol mName="valueSetVersion" mLabel="entities.value-set-rule-set.rule.value-set-version" [required]="!lockedDate">
-          <tw-value-set-version-select name="valueSetVersion"
-              [(ngModel)]="rule.valueSetVersion"
-              [valueSetId]="rule.valueSet"
-              [required]="!lockedDate"></tw-value-set-version-select>
-        </m-form-item>
+        <m-form-row>
+          <m-form-item *mFormCol mName="valueSet" mLabel="entities.value-set-rule-set.rule.value-set" required>
+            <tw-value-set-search name="valueSet" [(ngModel)]="rule.valueSet" valuePrimitive required></tw-value-set-search>
+          </m-form-item>
+          <m-form-item *mFormCol mName="valueSetVersion" mLabel="entities.value-set-rule-set.rule.value-set-version" [required]="!lockedDate">
+            <tw-value-set-version-select name="valueSetVersion"
+                [(ngModel)]="rule.valueSetVersion"
+                [valueSetId]="rule.valueSet"
+                [required]="!lockedDate"></tw-value-set-version-select>
+          </m-form-item>
+        </m-form-row>
       </ng-container>
     </ng-container>
 

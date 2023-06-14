@@ -39,4 +39,18 @@ export class ValueSetRuleFormComponent implements OnChanges{
     this.rule.concepts = [];
     this.rule.filters = [];
   }
+
+  public ruleBaseChanged(base: 'code-system' | 'value-set'): void {
+    if (base !== 'code-system') {
+      this.rule.concepts = [];
+      this.rule.filters = [];
+      this.rule.codeSystem = undefined;
+      this.rule.codeSystemVersion = {};
+    }
+
+    if (base !== 'value-set') {
+      this.rule.valueSet = undefined;
+      this.rule.valueSetVersion = {};
+    }
+  }
 }
