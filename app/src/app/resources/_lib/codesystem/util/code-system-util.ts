@@ -1,4 +1,4 @@
-import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'term-web/resources/_lib';
+import {CodeSystemVersion} from 'term-web/resources/_lib';
 import {compareValues} from '@kodality-web/core-util';
 
 export class CodeSystemUtil {

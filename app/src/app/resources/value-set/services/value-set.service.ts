@@ -1,4 +1,11 @@
-import {ValueSet, ValueSetLibService, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule} from 'term-web/resources/_lib';
+import {
+  CodeSystemTransactionRequest,
+  ValueSet,
+  ValueSetLibService, ValueSetTransactionRequest,
+  ValueSetVersion,
+  ValueSetVersionConcept,
+  ValueSetVersionRule
+} from 'term-web/resources/_lib';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 
@@ -7,6 +14,10 @@ export class ValueSetService extends ValueSetLibService {
 
   public save(valueSet: ValueSet): Observable<ValueSet> {
     return this.http.post(this.baseUrl, valueSet);
+  }
+
+  public saveTransaction(request: ValueSetTransactionRequest): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/transaction`, request);
   }
 
   public delete(valueSetId: string): Observable<void> {

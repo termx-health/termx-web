@@ -18,7 +18,6 @@ import {FinderCodeSystemVersionViewComponent} from './containers-finder/version/
 import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/code-system-concept-view.component';
 import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
 import {FinderModule} from '../../core/components/finder/finder.module';
-import {ContactModule} from '../contact/contact.module';
 import {CodeSystemViewComponent} from './containers/edit/code-system-view.component';
 import {CodeSystemConceptEditComponent} from './containers/concept/code-system-concept-edit.component';
 import {CodeSystemDesignationGroupEditComponent} from './containers/concept/designation/code-system-designation-group-edit.component';
@@ -31,9 +30,11 @@ import {MarinaQuillModule} from '@kodality-web/marina-quill';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {SequenceLibModule} from 'term-web/sequence/_lib/sequence-lib.module';
 import {CodeSystemCompareComponent} from 'term-web/resources/code-system/containers/concept/compare/code-system-compare.component';
+import {ResourceModule} from 'term-web/resources/resource/resource.module';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
+  {path: '', component: CodeSystemListComponent},
   {path: 'add', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/edit', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/view', component: CodeSystemViewComponent},
@@ -67,9 +68,9 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CoreUiModule,
     FinderModule,
     ResourcesLibModule,
-    ContactModule,
     MarinaQuillModule,
-    SequenceLibModule
+    SequenceLibModule,
+    ResourceModule
   ],
   declarations: [
     CodeSystemListComponent,

@@ -1,0 +1,24 @@
+<nz-collapse nzGhost>
+  <nz-collapse-panel nzActive [nzHeader]="'entities.resource.copyright.single' | translate" *ngIf="copyright">
+    <m-form-item mName="copyright-holder" mLabel="entities.resource.copyright.holder">
+      <m-input name="copyright-holder" [(ngModel)]="copyright.holder"></m-input>
+    </m-form-item>
+    <m-form-item mName="jurisdiction" mLabel="entities.resource.copyright.jurisdiction">
+      <m-input name="jurisdiction" [(ngModel)]="copyright.jurisdiction"></m-input>
+    </m-form-item>
+    <m-form-item mName="copyright-statement" mLabel="entities.resource.copyright.statement">
+      <m-textarea name="copyright-statement" [(ngModel)]="copyright.statement"></m-textarea>
+    </m-form-item>
+  </nz-collapse-panel>
+  <nz-collapse-panel nzActive [nzHeader]="'entities.resource.permissions.multiple' | translate" *ngIf="permissions">
+    <m-form-item mName="admin" mLabel="entities.resource.permissions.admin">
+      <m-input name="admin" [(ngModel)]="permissions.admin"></m-input>
+    </m-form-item>
+    <m-form-item mName="editor" mLabel="entities.resource.permissions.editor">
+      <m-input name="editor" [(ngModel)]="permissions.editor"></m-input>
+    </m-form-item>
+    <m-form-item mName="viewer" mLabel="entities.resource.permissions.viewer">
+      <m-input name="viewer" [(ngModel)]="permissions.viewer"></m-input>
+    </m-form-item>
+  </nz-collapse-panel>
+</nz-collapse>

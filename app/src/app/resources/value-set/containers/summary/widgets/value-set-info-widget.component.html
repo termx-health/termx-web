@@ -1,0 +1,23 @@
+<m-no-data *ngIf="!valueSet"></m-no-data>
+
+<div *ngIf="valueSet as vs">
+  <div class="m-items-middle m-bold">
+    <m-icon mCode="key"></m-icon>
+    <span>{{vs.id}}</span>
+  </div>
+  <span>{{vs.description | localName}}</span>
+  <div class="m-items-middle" *ngIf="(vs | apply:getTelecoms) as telecoms">
+    <m-icon mCode="contacts"></m-icon>
+    <span *ngFor="let t of telecoms;let i = index" class="m-items-middle">{{t.system}}: {{t.value}} <m-divider mVertical *ngIf="i !== (telecoms.length - 1)"></m-divider></span>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="environment"></m-icon>
+    <span>{{vs.publisher | localizedConceptName:{codeSystem: 'publisher'} | async}}</span>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="unlock"></m-icon>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="calendar"></m-icon>
+  </div>
+</div>

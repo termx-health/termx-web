@@ -16,6 +16,7 @@ import {ResourcesLibModule} from 'term-web/resources/_lib';
 
 
 export const MAP_SET_ROUTES: Routes = [
+  {path: '', component: MapSetListComponent},
   {path: 'add', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
   {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
   {path: ':id/view', component: MapSetViewComponent},

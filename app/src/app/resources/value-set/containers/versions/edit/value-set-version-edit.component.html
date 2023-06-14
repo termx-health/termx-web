@@ -1,0 +1,79 @@
+<m-spinner [mLoading]="isLoading">
+  <m-card [mShowSkeleton]="loader.state['init']">
+    <div *m-card-header class="m-items-middle">
+      <div class="m-card__title">{{(mode === 'edit' ? 'web.value-set-version.form.edit-header' : 'web.value-set-version.form.add-header') | translate}}</div>
+      <tw-status-tag [status]="version.status"></tw-status-tag>
+    </div>
+
+    <form #form="ngForm" *ngIf="version">
+
+      <m-form-item mName="version" mLabel="entities.value-set-version.version" required>
+        <tw-semantic-version-select name="version"
+            [(ngModel)]="version.version"
+            [versions]="valueSetId | apply: versions | async"
+            required></tw-semantic-version-select>
+      </m-form-item>
+
+
+      <m-form-row>
+        <m-form-item *mFormCol mName="releaseDate" mLabel="entities.value-set-version.release-date" required>
+          <m-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" [mMax]="version.expirationDate" required></m-date-picker>
+        </m-form-item>
+        <m-form-item *mFormCol mName="expirationDate" mLabel="entities.value-set-version.expiration-date">
+          <m-date-picker name="expirationDate" [(ngModel)]="version.expirationDate" [mMin]="version.releaseDate"></m-date-picker>
+        </m-form-item>
+      </m-form-row>
+
+      <m-form-row>
+        <m-form-item *mFormCol mName="supportedLanguages" mLabel="entities.value-set-version.supported-languages">
+          <tw-value-set-concept-select name="supportedLanguages"
+              [(ngModel)]="version.supportedLanguages"
+              valueSet="languages"
+              multiple></tw-value-set-concept-select>
+        </m-form-item>
+        <m-form-item *mFormCol mLabel="entities.value-set-version.algorithm" mName="algorithm">
+          <m-input name="algorithm" [(ngModel)]="version.algorithm"></m-input>
+        </m-form-item>
+      </m-form-row>
+
+      <m-form-item mName="description" mLabel="entities.value-set-version.description">
+        <m-multi-language-input [(ngModel)]="version.description" name="description"></m-multi-language-input>
+      </m-form-item>
+
+      <m-divider mText="entities.value-set-rule-set.rules"></m-divider>
+      <m-form-row>
+        <m-form-item *mFormCol mName="ruleSetLockedDate" mLabel="entities.value-set-rule-set.locked-date">
+          <m-date-picker [(ngModel)]="version.ruleSet.lockedDate" name="ruleSetLockedDate"></m-date-picker>
+        </m-form-item>
+        <m-form-item *mFormCol mName="inactive" mLabel="entities.value-set-rule-set.inactive">
+          <m-checkbox [(ngModel)]="version.ruleSet.inactive" name="inactive"></m-checkbox>
+        </m-form-item>
+      </m-form-row>
+      <tw-value-set-version-rule-set-widget [ruleSet]="version.ruleSet"></tw-value-set-version-rule-set-widget>
+
+      <m-divider mText="web.value-set-version.form.download"></m-divider>
+      <div class="m-items-middle">
+        <m-button (mClick)="downloadDefinition('json')">{{'web.value-set-version.form.def-json' | translate}}</m-button>
+        <m-button (mClick)="downloadDefinition('xml')">{{'web.value-set-version.form.def-xml' | translate}}</m-button>
+        <m-button (mClick)="downloadExpansion('json')">{{'web.value-set-version.form.expansion-json' | translate}}</m-button>
+        <m-button (mClick)="downloadExpansion('xml')">{{'web.value-set-version.form.expansion-xml' | translate}}</m-button>
+        <m-button disabled>{{'web.value-set-version.form.concepts-csv' | translate}}</m-button>
+      </div>
+
+      <m-divider mText="web.value-set-version.form.tasks"></m-divider>
+      <tw-resource-tasks-widget [resourceId]="version?.id | toString" resourceType="ValueSetVersion"></tw-resource-tasks-widget>
+
+      <m-divider mText="web.value-set-version.form.provenance"></m-divider>
+      <m-alert mType="warning">TODO</m-alert>
+
+    </form>
+  </m-card>
+
+  <m-page-bar mPosition="bottom">
+    <div style="display: grid; overflow: auto; background: #f9f9f9">
+      <m-button style="padding: 1rem 2rem; width: 100%" mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
+        {{'core.btn.save' | translate}}
+      </m-button>
+    </div>
+  </m-page-bar>
+</m-spinner>

@@ -2,10 +2,10 @@
   <div *m-card-header class="m-justify-between">
     <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
     <div class="m-items-middle">
-      <tw-add-button *twPrivileged="'*.CodeSystem.edit'" [routerLink]="dev ? ['add'] : ['code-systems/add']">
+      <tw-add-button *twPrivileged="'*.CodeSystem.edit'" [routerLink]="'add'">
         {{'web.code-system.list.add-code-system' | translate}}
       </tw-add-button>
-      <m-button [routerLink]="'finder/code-systems'">
+      <m-button [routerLink]="'/resources/finder/code-systems'">
         <m-icon mCode="layout"></m-icon>
       </m-button>
     </div>
@@ -24,9 +24,9 @@
     <tr *mTableRow="let cs">
       <td m-table-expand [mItem]="cs"></td>
       <td>
-        <a *ngIf="'*.CodeSystem.edit' | twHasAnyPrivilege; else view" [routerLink]="dev ? [cs.id,'concepts'] : ['code-systems',cs.id,'edit']" [queryParams]="dev ? {} : { tab: 'concepts' }">{{cs.id}}</a>
+        <a *ngIf="'*.CodeSystem.edit' | twHasAnyPrivilege; else view" [routerLink]="dev ? [cs.id,'concepts'] : [cs.id,'edit']">{{cs.id}}</a>
         <ng-template #view>
-          <a [routerLink]="dev ? [cs.id,'view'] : ['code-systems',cs.id,'view']" [queryParams]="dev ? {} : { tab: 'concepts' }">{{cs.id}}</a>
+          <a [routerLink]="[cs.id,'view']">{{cs.id}}</a>
         </ng-template>
       </td>
       <td>{{cs.names | localName}}</td>

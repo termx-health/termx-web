@@ -11,7 +11,7 @@ import {ValueSetService} from '../services/value-set.service';
       <tw-finder-wrapper [loading]="loading" style="overflow: auto; height: 100%; padding: 1rem">
         <tw-finder-menu title="VALUE SET" [length]="searchResult.meta.total">
           <tw-finder-menu-item *ngFor="let vs of searchResult.data" [navigate]="[vs.id]" (view)="openResource(vs)">
-            {{(vs.names | localName) || vs.id}}
+            {{(vs.name | localName) || vs.id}}
           </tw-finder-menu-item>
 
           <tw-finder-load-more-item

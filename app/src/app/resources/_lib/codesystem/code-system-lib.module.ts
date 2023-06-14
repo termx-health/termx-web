@@ -13,7 +13,6 @@ import {CodeSystemVersionSelectComponent} from './containers/code-system-version
 import {CodeSystemEntityVersionSearchComponent} from './containers/code-system-entity-version-search.component';
 import {TranslateModule} from '@ngx-translate/core';
 import {LocalizedConceptNamePipe} from './pipe/localized-concept-name-pipe';
-import {CodeSystemVersionCodePipe} from './pipe/code-system-version-code-pipe';
 import {CodeSystemWidgetComponent} from './containers/code-system-widget.component';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {RouterModule} from '@angular/router';
@@ -41,8 +40,7 @@ import {RouterModule} from '@angular/router';
     CodeSystemEntityVersionSearchComponent,
     CodeSystemWidgetComponent,
 
-    LocalizedConceptNamePipe,
-    CodeSystemVersionCodePipe
+    LocalizedConceptNamePipe
   ],
   exports: [
     CodeSystemSearchComponent,
@@ -51,8 +49,7 @@ import {RouterModule} from '@angular/router';
     CodeSystemEntityVersionSearchComponent,
     CodeSystemWidgetComponent,
 
-    LocalizedConceptNamePipe,
-    CodeSystemVersionCodePipe
+    LocalizedConceptNamePipe
   ]
 })
 export class CodeSystemLibModule {

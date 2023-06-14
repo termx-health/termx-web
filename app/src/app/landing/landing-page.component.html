@@ -5,29 +5,17 @@
       <div class="header title">{{'web.landing.resources.title' | translate}}</div>
 
       <div class="grid-auto-fit">
-        <button class="card m-rounded m-raised m-clickable v-align"
-            *twPrivileged="'*.CodeSystem.view'"
-            [routerLink]="['/resources']"
-            [queryParams]="{tab: 'code-systems'}"
-        >
+        <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.CodeSystem.view'" [routerLink]="['/resources/code-systems']">
           <div class="m-subtitle">{{'web.landing.resources.types.code-system' | translate}}</div>
           <div class="title">{{data.codeSystemCount}}</div>
         </button>
 
-        <button class="card m-rounded m-raised m-clickable v-align"
-            *twPrivileged="'*.ValueSets.view'"
-            [routerLink]="['/resources']"
-            [queryParams]="{tab: 'value-sets'}"
-        >
+        <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.ValueSets.view'" [routerLink]="['/resources/value-sets']">
           <div class="m-subtitle">{{'web.landing.resources.types.value-set' | translate}}</div>
           <div class="title">{{data.valueSetCount}}</div>
         </button>
 
-        <button class="card m-rounded m-raised m-clickable v-align"
-            *twPrivileged="'*.MapSets.view'"
-            [routerLink]="['/resources']"
-            [queryParams]="{tab: 'map-sets'}"
-        >
+        <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.MapSets.view'" [routerLink]="['/resources/map-sets']">
           <div class="m-subtitle">{{'web.landing.resources.types.map-set' | translate}}</div>
           <div class="title">{{data.mapSetsCount}}</div>
         </button>

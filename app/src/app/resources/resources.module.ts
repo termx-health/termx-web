@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {CODE_SYSTEM_FINDER_ROUTES, CODE_SYSTEM_ROUTES, CodeSystemModule} from './code-system/code-system.module';
 import {VALUE_SET_FINDER_ROUTES, VALUE_SET_ROUTES, ValueSetModule} from './value-set/value-set.module';
-import {ResourcesTabsetComponent} from './tabs/resources-tabset.component';
 import {CoreUiModule} from '../core/ui/core-ui.module';
 import {MAP_SET_ROUTES, MapSetModule} from './map-set/map-set.module';
 import {NAMING_SYSTEM_ROUTES, NamingSystemModule} from './naming-system/naming-system.module';
@@ -11,7 +10,6 @@ import {DEV_RESOURCES_ROUTES} from './dev/dev-resources.module';
 
 
 export const RESOURCES_ROUTES: Routes = [
-  {path: '', component: ResourcesTabsetComponent, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view', '*.NamingSystem.view', '*.AssociationType.view']}},
   {path: 'code-systems', children: CODE_SYSTEM_ROUTES, data: {privilege: ['*.CodeSystem.view']}},
   {path: 'value-sets', children: VALUE_SET_ROUTES, data: {privilege: ['*.ValueSet.view']}},
   {path: 'map-sets', children: MAP_SET_ROUTES, data: {privilege: ['*.MapSet.view']}},
@@ -38,10 +36,9 @@ export const RESOURCES_ROUTES: Routes = [
     NamingSystemModule,
     AssociationTypeModule
   ],
-  declarations: [
-    ResourcesTabsetComponent,
-  ],
-  exports: []
+  declarations: [],
+  exports: [
+  ]
 })
 export class ResourcesModule {
 }

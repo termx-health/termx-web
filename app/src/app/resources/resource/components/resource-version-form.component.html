@@ -1,0 +1,27 @@
+<m-divider>{{'entities.resource.version.single' | translate}}
+  <tw-status-tag [status]="version.status"></tw-status-tag>
+</m-divider>
+<form #form="ngForm" *ngIf="version">
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.resource.version.algorithm" mName="algorithm">
+      <m-input name="algorithm" [(ngModel)]="version.algorithm"></m-input>
+    </m-form-item>
+    <m-form-item *mFormCol mLabel="entities.resource.version.version" mName="version" required>
+      <tw-semantic-version-select name="version" [(ngModel)]="version.version" [versions]="[]" required></tw-semantic-version-select>
+    </m-form-item>
+  </m-form-row>
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.resource.version.from" mName="from" required>
+      <m-date-picker name="from" [(ngModel)]="version.from" required></m-date-picker>
+    </m-form-item>
+    <m-form-item *mFormCol mLabel="entities.resource.version.to" mName="to">
+      <m-date-picker name="to" [(ngModel)]="version.to"></m-date-picker>
+    </m-form-item>
+  </m-form-row>
+  <m-form-item mLabel="entities.resource.version.description" mName="description">
+    <m-multi-language-input name="description" [(ngModel)]="version.description"></m-multi-language-input>
+  </m-form-item>
+  <m-form-item mLabel="entities.resource.supported-languages" mName="supported-languages" required>
+    <tw-value-set-concept-select name="supported-languages" [(ngModel)]="version.supportedLanguages" valueSet="languages" multiple required></tw-value-set-concept-select>
+  </m-form-item>
+</form>

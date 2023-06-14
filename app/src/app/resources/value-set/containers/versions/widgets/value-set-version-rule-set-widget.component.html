@@ -1,0 +1,17 @@
+<m-no-data *ngIf="!ruleSet"></m-no-data>
+
+<m-list *ngIf="ruleSet?.rules?.length > 0" mSeparated>
+  <m-list-item *ngFor="let rule of ruleSet.rules; let i = index" [mClickable]="clickable | toBoolean" (mClick)="ruleSelected.emit({index: i, rule:rule})">
+    <div class="m-items-middle">
+      <m-icon *ngIf="rule.type === 'include'" mCode="plus-square" style="color:green"></m-icon>
+      <m-icon *ngIf="rule.type === 'exclude'" mCode="minus-square" style="color: red"></m-icon>
+      <span *ngIf="rule.codeSystem" class="m-items-middle">CS: {{rule.codeSystem}}
+        <m-divider mVertical></m-divider>
+        {{rule.codeSystemVersion?.version}}</span>
+      <span *ngIf="rule.valueSet" class="m-items-middle">VS: {{rule.valueSet}}
+        <m-divider mVertical></m-divider>
+        {{rule.valueSetVersion?.version}}</span>
+    </div>
+    <div *ngIf="rule.concepts?.length > 0">(<span *ngFor="let c of rule.concepts">#{{c.concept.code}} </span>)</div>
+  </m-list-item>
+</m-list>

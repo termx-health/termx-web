@@ -91,7 +91,7 @@ export class SnomedConceptInfoComponent implements OnChanges {
     )).subscribe(([vs, ms1, ms2, p]) => {
       const lang = this.translateService.currentLang;
       this.ktsReferences = [
-        ...vs.data.map(d => ({type: 'Value set', id: d.id, name: d.names[lang] || Object.values(d.names)?.[0] || '-'})),
+        ...vs.data.map(d => ({type: 'Value set', id: d.id, name: d.title[lang] || Object.values(d.title)?.[0] || '-'})),
         ...ms1.data.map(d => ({type: 'Map set', id: d.id, name: d.names[lang] || Object.values(d.names)?.[0] || '-'})),
         ...ms2.data.map(d => ({type: 'Map set', id: d.id, name: d.names[lang] || Object.values(d.names)?.[0] || '-'})),
         ...p.data.map(d => ({type: 'Page', id: d.content.code, name: d.content.names[lang] || Object.values(d.content.names)?.[0]}))

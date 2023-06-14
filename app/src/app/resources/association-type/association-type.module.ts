@@ -7,6 +7,7 @@ import {Routes} from '@angular/router';
 import {AssociationTypeViewComponent} from './containers/view/association-type-view.component';
 
 export const ASSOCIATION_TYPE_ROUTES: Routes = [
+  {path: '', component: AssociationTypeListComponent},
   {path: 'add', component: AssociationTypeEditComponent, data: {privilege: ['*.AssociationType.edit']}},
   {path: ':code/edit', component: AssociationTypeEditComponent, data: {privilege: ['*.AssociationType.edit']}},
   {path: ':code/view', component: AssociationTypeViewComponent},

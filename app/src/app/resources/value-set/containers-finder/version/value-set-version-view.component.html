@@ -14,12 +14,6 @@
           {{version?.version || '-'}}
         </m-form-item>
       </div>
-
-      <div *mFormCol>
-        <m-form-item mLabel="entities.value-set-version.source">
-          {{version?.source || '-'}}
-        </m-form-item>
-      </div>
     </m-form-row>
 
     <m-form-row mFull>
@@ -53,12 +47,6 @@
           {{r.codeSystem}} {{r.type}}
         </tw-finder-menu-item>
       </tw-finder-menu>
-    </tw-finder-menu-item>
-  </tw-finder-menu>
-
-  <tw-finder-menu title="entities.value-set-version.concepts" [length]="version?.concepts?.length">
-    <tw-finder-menu-item *ngFor="let c of version?.concepts">
-      {{c.concept?.code}} - {{c.display?.name}} - {{c.additionalDesignations | map:'name' | join:', '}}
     </tw-finder-menu-item>
   </tw-finder-menu>
 </tw-finder-wrapper>

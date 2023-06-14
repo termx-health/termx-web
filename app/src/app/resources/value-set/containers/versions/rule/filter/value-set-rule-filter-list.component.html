@@ -1,0 +1,66 @@
+<m-card class="m-card-inside">
+  <m-title *m-card-header class="m-card__title" mTitle="entities.value-set-rule-set.rule.filters"></m-title>
+
+  <form #form="ngForm" *ngIf="filters">
+    <m-editable-table #rowsTable
+        [mData]="filters"
+        [mRowInstance]="rowInstance"
+        [mEditAllowed]="!viewMode && ('*.ValueSet.edit' | twHasAnyPrivilege)"
+        [mDeleteAllowed]="!viewMode && ('*.ValueSet.edit' | twHasAnyPrivilege)"
+        [mLoading]="loading">
+      <m-editable-column mTitle="entities.value-set-rule-filter.property.label" mName="property">
+        <ng-template #viewTemplate let-f>{{f.property?.name}}</ng-template>
+        <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+          <ng-container [ngSwitch]="codeSystem">
+            <ng-container *ngSwitchDefault>
+              <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'id'">
+                <m-option *ngFor="let property of properties" [mLabel]="property.name" [mValue]="property"></m-option>
+              </m-select>
+            </ng-container>
+            <ng-container *ngSwitchCase="'snomed-ct'">
+              <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'name'">
+                <m-option [mLabel]="'entities.value-set-rule-filter.property.concept' | translate" [mValue]="{name: 'concept'}"></m-option>
+                <m-option [mLabel]="'entities.value-set-rule-filter.property.constraint' | translate" [mValue]="{name: 'constraint'}"></m-option>
+              </m-select>
+            </ng-container>
+            <ng-container *ngSwitchCase="'ucum'">
+              <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'name'">
+                <m-option [mLabel]="'entities.value-set-rule-filter.property.kind' | translate" [mValue]="{name: 'kind'}"></m-option>
+              </m-select>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </m-editable-column>
+
+      <m-editable-column mTitle="entities.value-set-rule-filter.operator.label" mName="operator">
+        <ng-template #viewTemplate let-f>{{f.operator || '='}}</ng-template>
+        <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+          <ng-container [ngSwitch]="codeSystem">
+            <ng-container *ngSwitchCase="'snomed-ct'">
+              <m-select [name]="ngModelName" [(ngModel)]="f.operator">
+                <m-option *ngIf="f.property?.name === 'concept'" [mLabel]="'entities.value-set-rule-filter.operator.is-a' | translate" mValue="is-a"></m-option>
+                <m-option *ngIf="f.property?.name === 'concept'" [mLabel]="'entities.value-set-rule-filter.operator.in' | translate" mValue="in"></m-option>
+                <m-option *ngIf="f.property?.name === 'constraint'"
+                    [mLabel]="'entities.value-set-rule-filter.operator.equal' | translate"
+                    mValue="="></m-option>
+              </m-select>
+            </ng-container>
+          </ng-container>
+        </ng-template>
+      </m-editable-column>
+
+      <m-editable-column mTitle="entities.value-set-rule-filter.value" mName="value">
+        <ng-template #viewTemplate let-f let-ngModelName="ngModelName">
+          <tw-property-value-input viewMode
+              [name]="ngModelName"
+              [ngModel]="f.value"
+              [property]="f.property"
+              [codeSystem]="codeSystem"></tw-property-value-input>
+        </ng-template>
+        <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+          <tw-property-value-input [name]="ngModelName" [(ngModel)]="f.value" [property]="f.property" [codeSystem]="codeSystem"></tw-property-value-input>
+        </ng-template>
+      </m-editable-column>
+    </m-editable-table>
+  </form>
+</m-card>

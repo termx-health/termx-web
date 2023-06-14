@@ -13,7 +13,8 @@
       "select": "Select",
       "search": "Search",
       "clear-all": "Clear all",
-      "query": "Query"
+      "query": "Query",
+      "custom": "Custom"
     },
     "no-privilege": {
       "error": "401 Unauthorized",
@@ -345,7 +346,9 @@
     "value-set": {
       "list": {
         "add-value-set": "Add value set",
-        "domain": "Domain",
+        "last-version": "Last version",
+        "status": "Status",
+        "expansion": "Expansion concepts",
         "versions-release-date": "From: {{releaseDate}}",
         "versions-expiration-date": "to {{expirationDate}}",
         "versions-version": "Version name: {{version}}",
@@ -366,6 +369,18 @@
       "tabs": {
         "value-set": "Value set",
         "narrative": "Narrative"
+      },
+      "concepts": {
+        "no-version": "Version not selected",
+        "select-version": "Please select a version to view the concepts"
+      },
+      "summary": {
+        "value-set": "Value set",
+        "opened-tasks": "Opened tasks",
+        "related-artifacts": "Related artifacts",
+        "versions": "Versions",
+        "expansions": "Expansions",
+        "total-concepts": "Total concepts"
       }
     },
     "value-set-version": {
@@ -374,25 +389,50 @@
         "add-header": "Add version",
         "add-concept": "Add concept",
         "view-header": "View version",
+        "tasks": "Tasks",
+        "download": "Download",
+        "provenance": "Provenance",
+        "def-json": "Definition JSON",
+        "def-xml": "Definition XML",
+        "expansion-json": "Expansion JSON",
+        "expansion-xml": "Expansion XML",
+        "concepts-csv": "Concepts CSV",
+        "concepts": {
+          "warning": "Concept has no active version"
+        },
         "rule-set": {
-          "add-rule-set": "Add rule",
-          "inactive": "Inactive",
-          "all": "All",
-          "active": "Active",
-          "modal": {
-            "edit-header": "Rule"
-          },
           "rule": {
             "include": "Include",
-            "exclude": "Exclude"
-          }
-        },
-        "concepts": {
-          "modal": {
-            "header": "Preview of result concepts",
-            "warning": "Concept has no active versions"
+            "exclude": "Exclude",
+            "code-system": "Code system",
+            "value-set": "Value set",
+            "all": "All concepts",
+            "exact": "Exact concepts",
+            "filter": "Property based expression",
+            "add-designation": "Add designation"
           }
         }
+      },
+      "summary": {
+        "info": {
+          "expansion": "Expansion",
+          "definition": "Definition",
+          "last-modified": "Last modified",
+          "last-reviewed": "Last review date",
+          "last-approved": "Last approval date",
+          "show-changes": "Show changes",
+          "create-review": "Create review task",
+          "create-approve": "Create approval task",
+          "make-draft": "Make draft",
+          "activate": "Activate",
+          "retire": "Retire",
+          "load-from-github": "Load from Github",
+          "push-to-github": "Push to Github"
+        },
+        "value-set-version": "Value set version",
+        "rule-set": "Rule set",
+        "expansion": "Expansion",
+        "rule": "Rule"
       }
     },
     "value-set-version-concept": {
@@ -996,9 +1036,52 @@
           "to-me": "Assigned to me"
         }
       }
+    },
+    "resource-context": {
+      "all-versions": "All versions",
+      "concepts": "Concepts",
+      "provenance": "Provenance",
+      "summary": "Summary"
     }
   },
   "entities": {
+    "resource": {
+      "id": "ID",
+      "name": "Name",
+      "title": "Title",
+      "uri": "URI",
+      "description": "Description",
+      "purpose": "Purpose",
+      "publisher": "Publisher",
+      "use-context": "Use context",
+      "experimental": "Experimental",
+      "supported-languages": "Supported languages",
+      "identifiers": {
+        "multiple": "Identifiers",
+        "system": "System",
+        "value": "Value"
+      },
+      "copyright": {
+        "single": "Copyright",
+        "holder": "Copyright holder",
+        "jurisdiction": "Jurisdiction",
+        "statement": "Copyright statement"
+      },
+      "permissions": {
+        "multiple": "Permissions",
+        "admin": "Admin",
+        "editor": "Editor",
+        "viewer": "Viewer"
+      },
+      "version": {
+        "single": "Version",
+        "version": "Version",
+        "algorithm": "Algorithm",
+        "from": "Expected to be used since",
+        "to": "Expected to be used until",
+        "description": "Description"
+      }
+    },
     "common": {
       "privileges": "Privileges"
     },
@@ -1155,7 +1238,7 @@
         "code-systems": "Code systems",
         "value-set": "Value set",
         "filters": "Filters",
-        "type": "Type",
+        "compose": "Compose",
         "property": "Property",
         "operator": "Operator",
         "value": "Value"
@@ -1183,8 +1266,10 @@
     },
     "value-set": {
       "plural": "Value Sets",
-      "id": "Identifier",
+      "id": "ID",
       "name": "Name",
+      "title": "Title",
+      "publisher": "Publisher",
       "uri": "Uniform resource identifier (URI)",
       "uri-short": "URI",
       "narrative": "Narrative",
@@ -1201,11 +1286,12 @@
       "supported-languages": "Supported languages",
       "description": "Description",
       "status": "Status",
-      "release-date": "Release date",
-      "expiration-date": "Expiration date",
+      "release-date": "Expected use since",
+      "expiration-date": "Expected use until",
       "created": "Created",
       "rule-set": "Rule set",
-      "concepts": "Concepts"
+      "concepts": "Concepts",
+      "algorithm": "Algorithm"
     },
     "value-set-rule-set": {
       "locked-date": "Locked date",
@@ -1214,7 +1300,8 @@
       "include": "Include",
       "exclude": "Exclude",
       "rule": {
-        "type": "Type",
+        "compose": "Compose",
+        "based-on": "Based on",
         "code-system": "Code system",
         "concepts": "Concepts",
         "filters": "Filters",
