@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../../services/page.service';
 import {collect, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
@@ -19,24 +19,16 @@ export class ThesaurusPageComponent implements OnInit, AfterViewInit {
   public pageLinks: PageLink[] = [];
   public pageRelations?: {[k: string]: PageRelation[]};
   public pageTags?: PageTag[];
-  public usages?: PageRelation[];
+  public pageUsages?: PageRelation[];
+
+  protected loader = new LoadingManager();
   public path?: number[];
   public contentModalData: {
     visible?: boolean,
     content?: PageContent
   } = {};
 
-  protected resizeData = {
-    startWidth: 0,
-    startCursorX: 0,
-    tracking: false,
-  };
-
-
-  protected loader = new LoadingManager();
-
   @ViewChild("contentForm") public contentFrom?: NgForm;
-  @ViewChild("sidebar") public sidebar?: ElementRef<HTMLElement>;
 
   public constructor(
     private router: Router,
@@ -66,7 +58,6 @@ export class ThesaurusPageComponent implements OnInit, AfterViewInit {
 
   public ngAfterViewInit(): void {
     if (localStorage.getItem('_thesaurus-page-width')) {
-      this.sidebar.nativeElement.style.width = localStorage.getItem('_thesaurus-page-width');
     }
   }
 
@@ -89,7 +80,7 @@ export class ThesaurusPageComponent implements OnInit, AfterViewInit {
         })
       ]).subscribe(([path, resp]) => {
         this.path = path;
-        this.usages = resp.data;
+        this.pageUsages = resp.data;
       });
     }
   }
@@ -148,31 +139,6 @@ export class ThesaurusPageComponent implements OnInit, AfterViewInit {
     }
   }
 
-
-  /* Resize */
-
-  protected mouseDown(event: MouseEvent): void {
-    event.preventDefault();
-    event.stopPropagation();
-    this.resizeData.startWidth = this.sidebar.nativeElement.offsetWidth;
-    this.resizeData.startCursorX = event.x;
-    this.resizeData.tracking = true;
-  }
-
-  protected resizeMouseMove(event: MouseEvent): void {
-    if (this.resizeData.tracking) {
-      const cursorDelta = event.x - this.resizeData.startCursorX;
-      const width = Math.min(this.resizeData.startWidth + cursorDelta, 1000);
-      this.sidebar.nativeElement.style.width = Math.max(200, width) + 'px';
-    }
-  }
-
-  protected resizeMouseUp(_): void {
-    if (this.resizeData.tracking) {
-      localStorage.setItem('_thesaurus-page-width', this.sidebar.nativeElement.style.width);
-      this.resizeData.tracking = false;
-    }
-  }
 
 
   /* Utils */

@@ -1,0 +1,120 @@
+@import "../../../../../styles/variables";
+
+:host {
+  display: block;
+}
+
+.container {
+  position: relative;
+  height: 100%;
+
+  &--in-progress {
+    transition: 0.2s ease-out;
+  }
+
+  &--collapsed {
+    width: 1rem !important;
+
+    .content__wrapper {
+      display: none;
+    }
+  }
+}
+
+
+.content__wrapper {
+  height: 100%;
+  padding: 1rem;
+  overflow-y: auto;
+}
+
+
+.actions__container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+
+  &--left {
+    left: 100%;
+  }
+
+  &--right {
+    right: 100%;
+  }
+}
+
+
+.resize-bar {
+  position: absolute;
+
+  height: 100%;
+  width: .5rem;
+  padding: 0;
+  border: 0;
+  background-color: transparent;
+
+  transition: 0.2s linear;
+  cursor: ew-resize;
+
+  .container--collapsed & {
+    display: none;
+  }
+
+
+  .actions__container--left & {
+    border-left: 2px solid transparent;
+  }
+
+  .actions__container--right & {
+    border-right: 2px solid transparent;
+  }
+
+  .container:not(.container--collapsed) &:hover {
+    border-color: @mui-primary-color;
+  }
+}
+
+.expand-button {
+  --button-size: 1.5rem;
+
+  position: absolute;
+  top: 3rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--button-size);
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid @mui-border-color;
+  border-radius: 50%;
+  font-size: calc(var(--button-size) * .5);
+
+  transition: 0.2s linear;
+  cursor: pointer;
+  opacity: 0;
+
+  box-shadow: @mui-shadow-base;
+  background: @mui-bg-component;
+
+  .actions__container--left & {
+    left: calc(-1 * var(--button-size) / 2);
+  }
+
+  .actions__container--right & {
+    right: calc(-1 * var(--button-size) / 2);
+  }
+
+  &:hover,
+  .container:not(.container--collapsed) .actions__container:hover & {
+    border-color: @mui-primary-color;
+    color: @mui-primary-color;
+  }
+
+  &:focus,
+  .container:hover &,
+  .container--collapsed & {
+    opacity: 1;
+  }
+}

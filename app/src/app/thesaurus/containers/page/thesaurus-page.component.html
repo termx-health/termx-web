@@ -1,12 +1,9 @@
-<m-page
-    mFull
-    (mousemove)="resizeMouseMove($event)"
-    (mouseup)="resizeMouseUp($event)"
->
+<m-page mFull>
   <div class="page__container">
-    <div class="page__sidebar" #sidebar>
-      <tw-thesaurus-sidebar [path]="path"/>
-      <div class="move-needle" (mousedown)="mouseDown($event)"></div>
+    <div class="page__sidebar">
+      <tw-collapse-panel resizable>
+        <tw-thesaurus-sidebar [path]="path"/>
+      </tw-collapse-panel>
     </div>
 
 
@@ -79,11 +76,11 @@
 
                 <div>
                   <b>{{'web.thesaurus-page.actions.usages' | translate}}</b>
-                  <div *ngIf="!usages?.length" class="text-secondary">
+                  <div *ngIf="!pageUsages?.length" class="text-secondary">
                     {{'web.thesaurus-page.actions.none' | translate}}
                   </div>
                   <div>
-                    <a *ngFor="let usage of usages" (click)="viewPage(usage)">
+                    <a *ngFor="let usage of pageUsages" (click)="viewPage(usage)">
                       <m-icon mCode="link"></m-icon>
                       {{usage.content.names | localName}}
                     </a>

@@ -12,29 +12,11 @@
   position: sticky;
   top: calc(var(--page-header-height));
   height: calc(100vh - var(--page-header-height));
-  overflow: auto;
 
   border-right: 1px solid var(--color-borders);
 
-  @move-needle-size: 3px;
-
-  .move-needle {
-    height: 100%;
-    width: @move-needle-size;
-    cursor: ew-resize;
-
-    transition: 0.25s;
-
-    &:hover {
-      background: @mui-primary-color-2
-    }
-
-  }
-
   tw-thesaurus-sidebar {
     display: block;
-    padding: 1rem calc(1rem - @move-needle-size) 1rem 1rem;
-    width: calc(100% - @move-needle-size);
   }
 }
 

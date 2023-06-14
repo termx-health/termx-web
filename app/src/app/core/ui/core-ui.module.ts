@@ -21,6 +21,7 @@ import {TableComponent} from 'term-web/core/ui/components/table-container/table.
 import {TableFilterComponent} from 'term-web/core/ui/components/table-container/table-filter.component';
 import {DropListComponent} from 'term-web/core/ui/components/drop-list/drop-list.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
+import {CollapsePanelComponent} from 'term-web/core/ui/components/collapse-panel/collapse-panel.component';
 
 
 const commonModules = [
@@ -38,13 +39,14 @@ const commonModules = [
 
 const components = [
   AddButtonComponent,
+  CollapsePanelComponent,
+  DropListComponent,
   EntityPropertyValueInputComponent,
   SemanticVersionSelectComponent,
   StatusTagComponent,
   TableComponent,
   TableFilterComponent,
   TerminologyConceptSearchComponent,
-  DropListComponent
 ];
 
 const pipes = [
