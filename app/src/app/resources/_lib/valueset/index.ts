@@ -5,6 +5,7 @@ export * from './containers/value-set-widget.component';
 export * from './model/value-set';
 export * from './model/value-set-expand-request';
 export * from './model/value-set-search-params';
+export * from './model/value-set-snapshot';
 export * from './model/value-set-transaction-request';
 export * from './model/value-set-version';
 export * from './model/value-set-version-concept';

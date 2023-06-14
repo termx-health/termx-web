@@ -1,0 +1,59 @@
+<m-page-bar mPosition="top">
+  <div class="resource-context">
+    <div class="resource-context__container">
+      <span class="resource-context__item" style="width: 100%; grid-column: 3 span" *ngIf="!resource">...</span>
+
+      <ng-container *ngIf="resource">
+        <!-- Left -->
+        <div class="resource-context__item resource-context__info" style="display: grid">
+          <span class="m-title">{{resourceType}}: {{resource.title | localName}}</span>
+          <div style="display: flex; gap: 1rem">
+            <m-button mDisplay="text" mShape="circle" (mClick)="navigate('summary')">
+              <span class="m-items-middle" *ngIf="mode !== 'summary'"><a>{{'web.resource-context.summary' | translate}} </a><m-icon mCode="appstore"></m-icon></span>
+              <span class="m-items-middle" *ngIf="mode === 'summary'"><span>{{'web.resource-context.summary' | translate}} </span><m-icon mCode="appstore"></m-icon></span>
+            </m-button>
+            <m-button mDisplay="text" mShape="circle" *twPrivileged="'*.' + resourceType + '.edit'" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']">
+              <span class="m-items-middle"><a>{{'core.btn.edit' | translate}} </a><m-icon mCode="form"></m-icon></span>
+            </m-button>
+            <m-button mDisplay="text" mShape="circle" (mClick)="navigate('concepts')">
+              <span class="m-items-middle" *ngIf="mode !== 'concepts'"><a>{{'web.resource-context.concepts' | translate}} </a><m-icon mCode="database"></m-icon></span>
+              <span class="m-items-middle" *ngIf="mode === 'concepts'"><span>{{'web.resource-context.concepts' | translate}} </span><m-icon mCode="database"></m-icon></span>
+            </m-button>
+            <m-button mDisplay="text" mShape="circle">
+              <span class="m-items-middle"><a>{{'web.resource-context.provenance' | translate}} </a><m-icon mCode="history"></m-icon></span>
+            </m-button>
+          </div>
+        </div>
+
+        <!-- Filler -->
+        <div class="resource-context__item"></div>
+
+        <!-- Right -->
+        <div class="resource-context__item resource-context__info">
+          <ng-container *ngIf="!version">
+            <m-dropdown>
+              <a *m-dropdown-container>{{'web.resource-context.all-versions' | translate}}</a>
+              <ng-container *ngFor="let ver of versions">
+                <a *m-dropdown-item (mClick)="selectVersion(ver.version)">{{ver.version}}</a>
+              </ng-container>
+            </m-dropdown>
+
+          </ng-container>
+
+          <!-- Version-->
+          <div *ngIf="version">
+            <!-- Title -->
+            <div class="m-subtitle">{{'entities.resource.version.single' | translate}}</div>
+            <!-- Code -->
+            <div class="m-bold">{{version.version}}</div>
+          </div>
+        </div>
+
+        <div *ngIf="version" class="resource-context__item selectable" (click)="unselectVersion()">
+          <m-icon mCode="close"></m-icon>
+        </div>
+
+      </ng-container>
+    </div>
+  </div>
+</m-page-bar>

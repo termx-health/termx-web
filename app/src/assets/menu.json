@@ -19,7 +19,6 @@
       "en": "Terminology",
       "et": "Terminoloogia"
     },
-    "link": "resources?tab=code-systems",
     "privileges": [
       "*.CodeSystem.view",
       "*.ValueSet.view",
@@ -33,7 +32,7 @@
           "en": "Code systems",
           "et": "Koodisüsteemid"
         },
-        "link": "resources?tab=code-systems",
+        "link": "resources/code-systems",
         "privileges": [
           "*.CodeSystem.view"
         ]
@@ -43,7 +42,7 @@
           "en": "Value sets",
           "et": "Väärtuste kogumid"
         },
-        "link": "resources?tab=value-sets",
+        "link": "resources/value-sets",
         "privileges": [
           "*.ValueSet.view"
         ]
@@ -53,7 +52,7 @@
           "en": "Map sets",
           "et": "Kaardistus kogumid"
         },
-        "link": "resources?tab=map-sets",
+        "link": "resources/map-sets",
         "privileges": [
           "*.MapSet.view"
         ]
@@ -62,7 +61,7 @@
         "label": {
           "en": "Naming systems"
         },
-        "link": "resources?tab=naming-systems",
+        "link": "resources/naming-systems",
         "privileges": [
           "*.NamingSystem.view"
         ]
@@ -71,7 +70,7 @@
         "label": {
           "en": "Association types"
         },
-        "link": "resources?tab=association-types",
+        "link": "resources/association-types",
         "privileges": [
           "*.AssociationType.view"
         ]

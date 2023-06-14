@@ -1,9 +1,12 @@
 import {CodeSystemEntityVersion} from './code-system-entity';
 
-export class CodeSystemVersion {
+export class CodeSystemVersionReference {
   public id?: number;
-  public codeSystem?: string;
   public version?: string;
+}
+
+export class CodeSystemVersion extends CodeSystemVersionReference{
+  public codeSystem?: string;
   public source?: string;
   public preferredLanguage?: string;
   public supportedLanguages?: string[];

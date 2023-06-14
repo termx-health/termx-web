@@ -1,77 +1,28 @@
-<div nz-row nzJustify="center">
-  <div nz-col [nzLg]="18" [nzXs]="24">
-    <nz-tabset nzLinkRouter>
-      <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" class="m-items-middle">
-          {{'web.value-set.tabs.value-set' | translate}}
-        </a>
-        <m-spinner [mLoading]="isLoading">
-          <m-card [mTitle]="mode === 'edit' ? 'web.value-set.form.edit-header' : 'web.value-set.form.add-header'" [mShowSkeleton]="loading['init']">
-            <form #form="ngForm" *ngIf="valueSet">
-              <m-form-item mName="id" mLabel="entities.value-set.id" required>
-                <m-input name="id" [(ngModel)]="valueSet.id" [disabled]="mode === 'edit'" required></m-input>
-              </m-form-item>
-
-              <m-form-item mLabel="entities.value-set.name">
-                <m-multi-language-input name="names" [(ngModel)]="valueSet.names"></m-multi-language-input>
-              </m-form-item>
-
-              <m-form-item mName="uri" mLabel="entities.value-set.uri" required>
-                <div class="m-items-middle">
-                  <m-input style="width: 100%" name="uri" [(ngModel)]="valueSet.uri" required></m-input>
-                  <a *ngIf="valueSet.uri | validateUrl" [href]="valueSet.uri" target="_blank">
-                    <m-button>
-                      <m-icon mCode="eye"></m-icon>
-                    </m-button>
-                  </a>
-                </div>
-              </m-form-item>
-
-              <m-form-item mName="description" mLabel="entities.value-set.description">
-                <m-textarea name="description" [(ngModel)]="valueSet.description"></m-textarea>
-              </m-form-item>
-
-              <tw-value-set-versions-list *ngIf="mode === 'edit'" [valueSetId]="valueSetId" [valueSetUri]="valueSet?.uri"></tw-value-set-versions-list>
-              <tw-contact-list *ngIf="valueSet" [(contacts)]="valueSet.contacts"></tw-contact-list>
-            </form>
-
-            <ng-container *m-card-footer>
-              <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">
-                {{'core.btn.save' | translate}}
-              </m-button>
-            </ng-container>
-          </m-card>
-        </m-spinner>
-      </nz-tab>
-      <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" [queryParams]="{ tab: 'narrative' }">
-          {{'web.code-system.tabs.narrative' | translate}}
-        </a>
-        <ng-template nz-tab>
-          <m-card *ngIf="valueSet">
-            <m-form-item mName="narrative" [mLabel]="narrativeHeader">
-              <ng-template #narrativeHeader>
-                <div class="m-justify-between">
-                  <div class="m-card__title">{{'entities.value-set.narrative' | translate}}</div>
-                  <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
-                    <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
-                  </m-button>
-                </div>
-              </ng-template>
-              <m-quill *ngIf="!narrativeRaw" [(ngModel)]="valueSet.narrative" name="narrative"></m-quill>
-              <m-textarea *ngIf="narrativeRaw" [(ngModel)]="valueSet.narrative" name="narrative"></m-textarea>
-            </m-form-item>
-          </m-card>
-        </ng-template>
-      </nz-tab>
-      <nz-tab>
-        <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" [queryParams]="{ tab: 'concepts' }">
-          {{'entities.value-set.concepts' | translate}}
-        </a>
-        <m-card [mTitle]="'entities.code-system.concepts'" *ngIf="valueSet">
-          <tw-value-set-concept-list [valueSet]="valueSet.id"></tw-value-set-concept-list>
+<m-spinner [mLoading]="loader.state['save']">
+  <form #form="ngForm" *ngIf="valueSet">
+    <div style="display: flex; gap: 1rem">
+      <div style="flex: 3">
+        <m-card [mTitle]="'web.value-set.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading">
+          <tw-resource-form resourceType="ValueSet" [resource]="valueSet | apply:toResource" [mode]="mode"></tw-resource-form>
+          <tw-resource-identifiers [identifiers]="valueSet.identifiers"></tw-resource-identifiers>
+          <tw-resource-contacts [(contacts)]="valueSet.contacts"></tw-resource-contacts>
+          <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
         </m-card>
-      </nz-tab>
-    </nz-tabset>
-  </div>
-</div>
+      </div>
+      <m-card [mShowSkeleton]="loader.isLoading" style="flex: 1">
+        <tw-resource-side-info [copyright]="valueSet.copyright" [permissions]="valueSet.permissions"></tw-resource-side-info>
+      </m-card>
+    </div>
+  </form>
+
+  <m-page-bar mPosition="bottom">
+    <div style="display: flex; gap: 1rem">
+      <div style="display: grid; overflow: auto; background: #f9f9f9; flex: 3">
+        <m-button style="padding: 1rem 2rem; width: 100%" mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
+          {{'core.btn.save' | translate}}
+        </m-button>
+      </div>
+      <div style="flex: 1"></div>
+    </div>
+  </m-page-bar>
+</m-spinner>

@@ -1,0 +1,11 @@
+<m-no-data *ngIf="!(relatedArtifacts?.length > 0)"></m-no-data>
+
+<m-list *ngIf="relatedArtifacts?.length > 0" mSeparated>
+  <m-list-item *ngFor="let artifact of relatedArtifacts" mClickable (mClick)="openArtifact(artifact)">
+    <div class="m-items-middle">
+      <span class="m-bold">{{artifact.type}}</span>
+      <m-divider mVertical></m-divider>
+      <span>{{artifact.id}}</span>
+    </div>
+  </m-list-item>
+</m-list>

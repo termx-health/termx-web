@@ -1,0 +1,81 @@
+<tw-resource-context resourceType="ValueSet"
+    [resource]="valueSet | apply:toResource"
+    [version]="valueSetVersion | apply:toResourceVersion"
+    mode="concepts"></tw-resource-context>
+
+<m-card>
+  <div style="display: flex; flex-direction: column; gap: 1rem">
+    <div class="m-justify-between">
+      <m-input [(ngModel)]="searchInput" name="search" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+
+      <div class="m-items-middle">
+        <ng-container *ngIf="valueSetVersion?.snapshot">
+          <m-icon mCode="clock-circle"></m-icon>
+          <span>{{valueSetVersion.snapshot.createdAt | localDate}}</span>
+          <m-divider mVertical></m-divider>
+          <m-icon mCode="user"></m-icon>
+          <span>{{valueSetVersion.snapshot.createdBy || '-'}}</span>
+        </ng-container>
+        <m-button [disabled]="loader.state['expand']" (mClick)="reloadExpansion()">
+          <m-icon *ngIf="!loader.state['expand']" mCode="reload"></m-icon>
+          <m-icon *ngIf="loader.state['expand']" mCode="loading"></m-icon>
+        </m-button>
+      </div>
+    </div>
+    <div>
+      <m-table [mLoading]="loader.isLoading"
+          [mData]="valueSetVersion?.snapshot?.expansion | apply:filterExpansion:searchInput"
+          [mPageSize]="10"
+          mEnablePagination>
+        <tr *mTableHead>
+          <th></th>
+          <th>{{'entities.value-set-version-concept.concept' | translate}}</th>
+          <th>{{'entities.value-set-version-concept.display' | translate}}</th>
+          <th>{{'entities.value-set-version-concept.additional-designations' | translate}}</th>
+        </tr>
+
+        <ng-container *mTableRow="let item; let i = index">
+          <ng-container>
+            <tr *ngFor="let ad of item.additionalDesignations; let isFirst = first">
+              <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
+                <m-icon *ngIf="!item.id && !item.active"
+                    mCode="warning"
+                    m-popover
+                    mContent="{{'web.value-set-version.form.concepts.warning' | translate}}"></m-icon>
+              </td>
+              <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
+                {{item.concept?.code}}
+              </td>
+              <td *ngIf="isFirst" [rowSpan]="item.additionalDesignations?.length">
+                {{item.display?.name ? item.display.name : (item.concept.code | localizedConceptName : {codeSystem: item.concept?.codeSystem} | async)}}
+              </td>
+              <td>{{ad.language}} | {{ad.name}}</td>
+            </tr>
+          </ng-container>
+
+          <tr *ngIf="!(item.additionalDesignations?.length > 0)">
+            <td>
+              <m-icon *ngIf="!item.id && !item.active"
+                  mCode="warning"
+                  m-popover
+                  mContent="{{'web.value-set-version.form.concepts.warning' | translate}}"></m-icon>
+            </td>
+            <td>
+              {{item.concept?.code}}
+            </td>
+            <td>
+              {{item.display?.name ? item.display.name : (item.concept.code | localizedConceptName : {codeSystem: item.concept?.codeSystem} | async)}}
+            </td>
+            <td></td>
+          </tr>
+        </ng-container>
+
+        <tr *mTableNoData>
+          <td colspan="4">
+            <m-no-data></m-no-data>
+          </td>
+        </tr>
+      </m-table>
+    </div>
+  </div>
+</m-card>

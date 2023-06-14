@@ -64,7 +64,7 @@
             [codeSystemId]="codeSystemId"
             [versions]="codeSystem.versions"></tw-code-system-versions-list>
         <tw-cs-properties #propertiesComponent *ngIf="mode === 'edit' && codeSystem" [codeSystemId]="codeSystemId"></tw-cs-properties>
-        <tw-contact-list *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></tw-contact-list>
+        <tw-resource-contacts *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></tw-resource-contacts>
 
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">

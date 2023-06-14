@@ -11,6 +11,7 @@ import {ValueSetVersionRule} from '../model/value-set-version-rule';
 import {ValueSet} from '../model/value-set';
 import {ValueSetSearchParams} from '../model/value-set-search-params';
 import {ValueSetVersionRuleSearchParams, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
+import {JobLogResponse} from 'term-web/sys/_lib';
 
 @Injectable()
 export class ValueSetLibService {
@@ -43,6 +44,10 @@ export class ValueSetLibService {
       return this.cacheService.put(key, this.http.post<ValueSetVersionConcept[]>(`${this.baseUrl}/expand`, request));
     }
     return this.http.post<ValueSetVersionConcept[]>(`${this.baseUrl}/expand`, request);
+  }
+
+  public expandAsync(request: ValueSetExpandRequest): Observable<JobLogResponse> {
+    return this.http.post<JobLogResponse>(`${this.baseUrl}/expand-async`, request);
   }
 
   public loadRule(valueSetId: string, id: number): Observable<ValueSetVersionRule> {

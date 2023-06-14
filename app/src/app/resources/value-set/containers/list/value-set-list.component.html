@@ -1,0 +1,84 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <div class="m-items-middle">
+      <tw-add-button *twPrivileged="'*.ValueSet.edit'" [routerLink]="'add'">
+        {{'web.value-set.list.add-value-set' | translate}}
+      </tw-add-button>
+      <m-button [routerLink]="'/resources/finder/value-sets'">
+        <m-icon mCode="layout"></m-icon>
+      </m-button>
+    </div>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+    <tr *mTableHead>
+      <th></th>
+      <th mColumnKey="id">{{'entities.value-set.id' | translate}}</th>
+      <th>{{'web.value-set.list.last-version' | translate}}</th>
+      <th>{{'entities.value-set.title' | translate}}</th>
+      <th>{{'entities.value-set.publisher' | translate}}</th>
+      <th>{{'web.value-set.list.status' | translate}}</th>
+      <th>{{'web.value-set.list.expansion' | translate}}</th>
+      <th *twPrivileged="'*.ValueSet.edit'" class="tw-table-actions"></th>
+    </tr>
+
+    <tr *mTableRow="let vs">
+      <td m-table-expand [mItem]="vs"></td>
+      <td><a [routerLink]="[vs.id, 'summary']">{{vs.id}}</a></td>
+      <td>
+        <ng-container *ngIf="(vs.versions | apply:findLastVersion)?.version as version">
+          <a [routerLink]="[vs.id, 'versions', version, 'summary']">{{version}}</a>
+        </ng-container>
+      </td>
+      <td>{{vs.title | localName}}</td>
+      <td>{{vs.publisher | localizedConceptName: {codeSystem: 'publisher'} | async}}</td>
+      <td><tw-status-tag [status]="(vs.versions | apply:findLastVersion)?.status"></tw-status-tag></td>
+      <td>
+        <ng-container *ngIf="(vs.versions | apply:findLastVersion) as v">
+          <a [routerLink]="[vs.id, 'versions', v?.version, 'concepts']">{{v?.snapshot?.conceptsTotal}}</a>
+        </ng-container>
+      </td>
+      <td class="tw-table-actions">
+        <m-dropdown>
+          <a *m-dropdown-item (click)="openFhir(vs.id)">
+            <m-icon [mCode]="'link'"></m-icon>&nbsp; {{'web.value-set.list.open-fhir' | translate}}
+          </a>
+          <ng-container *twPrivileged="'*.ValueSet.publish'">
+            <a *m-dropdown-item (click)="deleteValueSet(vs.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
+          </ng-container>
+        </m-dropdown>
+      </td>
+    </tr>
+
+    <tr *mTableRowExpand="let vs" class="m-table-expanded-row">
+      <td colspan="100%">
+        <m-form-row mFull>
+          <div *mFormCol>
+            <m-form-item mLabel="entities.value-set.uri">
+              {{vs.uri}}
+            </m-form-item>
+            <m-form-item mLabel="entities.value-set.description">
+              {{vs.description | localName}}
+            </m-form-item>
+            <m-form-item mLabel="entities.value-set.versions">
+              <div *ngFor="let version of vs.versions">{{
+                version | apply: getVersionTranslateTokens: ({
+                  releaseDate: (version.releaseDate | localDate),
+                  expirationDate: (version.expirationDate | localDate),
+                  version: version.version
+                }) | join: ' '}}
+              </div>
+            </m-form-item>
+          </div>
+        </m-form-row>
+      </td>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>

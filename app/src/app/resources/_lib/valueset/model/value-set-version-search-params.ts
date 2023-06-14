@@ -7,4 +7,5 @@ export class ValueSetVersionSearchParams extends QueryParams {
   public status?: string;
   public releaseDateLe?: Date;
   public expirationDateGe?: Date;
+  public decorated?: boolean;
 }

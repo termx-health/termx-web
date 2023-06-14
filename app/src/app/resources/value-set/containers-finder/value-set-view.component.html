@@ -5,7 +5,7 @@
     </m-form-item>
 
     <m-form-item mLabel="entities.value-set.name">
-      {{(valueSet?.names | localName) || '-'}}
+      {{(valueSet?.name | localName) || '-'}}
     </m-form-item>
 
     <m-form-item mLabel="entities.value-set.uri-short">
@@ -19,7 +19,7 @@
 
   <tw-finder-menu title="entities.value-set.versions" [length]="versions.length">
     <tw-finder-menu-item *ngFor="let v of versions" [navigate]="['versions', v.version]">
-      {{v.version}} - {{v.source}}
+      {{v.version}}
     </tw-finder-menu-item>
   </tw-finder-menu>
 

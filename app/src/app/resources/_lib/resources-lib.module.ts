@@ -6,6 +6,7 @@ import {MapSetLibModule} from './mapset';
 import {ContactLibModule} from './contact';
 import {NamingSystemLibModule} from './namingsystem';
 import {AssociationLibModule} from './association';
+import {RelatedArtifactLibModule} from 'term-web/resources/_lib/relatedartifacts/related-artifact-lib.module';
 
 @NgModule({
   declarations: [],
@@ -16,7 +17,8 @@ import {AssociationLibModule} from './association';
     ValueSetLibModule,
     ContactLibModule,
     NamingSystemLibModule,
-    AssociationLibModule
+    AssociationLibModule,
+    RelatedArtifactLibModule
   ],
   exports: [
     CodeSystemLibModule,
@@ -25,7 +27,8 @@ import {AssociationLibModule} from './association';
     ValueSetLibModule,
     ContactLibModule,
     NamingSystemLibModule,
-    AssociationLibModule
+    AssociationLibModule,
+    RelatedArtifactLibModule
   ]
 })
 export class ResourcesLibModule {

@@ -1,0 +1,43 @@
+<form #form="ngForm" *ngIf="resource">
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.resource.title" mName="title" required>
+      <m-multi-language-input name="title" [(ngModel)]="resource.title" (ngModelChange)="titleChanged($event)" required></m-multi-language-input>
+    </m-form-item>
+    <m-form-item *mFormCol mLabel="entities.resource.name" mName="name">
+      <m-multi-language-input name="name" [(ngModel)]="resource.name"></m-multi-language-input>
+    </m-form-item>
+  </m-form-row>
+
+  <m-form-item mLabel="entities.resource.id" mName="id" required>
+    <m-input name="id" [(ngModel)]="resource.id" required></m-input>
+  </m-form-item>
+
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.resource.publisher" mName="publisher" required>
+      <div class="m-items-middle" *ngIf="!customPublisher">
+        <tw-value-set-concept-select style="width: 100%" name="publisher" [(ngModel)]="resource.publisher" (ngModelChange)="publisherChanged($event)" valueSet="publisher" required></tw-value-set-concept-select>
+        <m-button (mClick)="customPublisher = true">{{'core.btn.custom' | translate}}</m-button>
+      </div>
+      <m-input *ngIf="customPublisher" name="publisher" [(ngModel)]="resource.publisher" required></m-input>
+    </m-form-item>
+    <m-form-item *mFormCol mLabel="entities.resource.uri" mName="uri" required>
+      <div class="m-items-middle">
+        <m-input style="width: 100%" name="uri" [(ngModel)]="resource.uri" required></m-input>
+        <a *ngIf="resource.uri | validateUrl" [href]="resource.uri" target="_blank"><m-button m-tooltip mTitle="web.resource-form.open-uri"><m-icon mCode="link"></m-icon></m-button></a>
+      </div>
+    </m-form-item>
+  </m-form-row>
+
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.resource.description" mName="description">
+      <m-multi-language-input name="description" [(ngModel)]="resource.description"></m-multi-language-input>
+    </m-form-item>
+    <m-form-item *mFormCol mLabel="entities.resource.purpose" mName="purpose">
+      <m-multi-language-input name="purpose" [(ngModel)]="resource.purpose"></m-multi-language-input>
+    </m-form-item>
+  </m-form-row>
+
+  <m-form-item mLabel="entities.resource.experimental" mName="experimental">
+    <m-checkbox name="experimental" [(ngModel)]="resource.experimental"></m-checkbox>
+  </m-form-item>
+</form>

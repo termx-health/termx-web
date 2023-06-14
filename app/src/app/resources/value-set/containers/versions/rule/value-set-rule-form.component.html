@@ -1,0 +1,116 @@
+<ng-container *ngIf="rule">
+  <form #form="ngForm">
+    <ng-container *ngIf="!viewMode">
+      <m-form-row>
+        <m-form-item *mFormCol mName="type" mLabel="entities.value-set-rule-set.rule.compose" required>
+          <m-radio-group name="type" [(ngModel)]="rule.type" required>
+            <label m-radio-button [mValue]="'include'">{{'web.value-set-version.form.rule-set.rule.include' | translate}}</label>
+            <label m-radio-button [mValue]="'exclude'">{{'web.value-set-version.form.rule-set.rule.exclude' | translate}}</label>
+          </m-radio-group>
+        </m-form-item>
+        <m-form-item *mFormCol mName="based-on" mLabel="entities.value-set-rule-set.rule.based-on" required>
+          <m-radio-group name="based-on" [(ngModel)]="ruleBase" required>
+            <label m-radio-button [mValue]="'code-system'">{{'web.value-set-version.form.rule-set.rule.code-system' | translate}}</label>
+            <label m-radio-button [mValue]="'value-set'">{{'web.value-set-version.form.rule-set.rule.value-set' | translate}}</label>
+          </m-radio-group>
+        </m-form-item>
+      </m-form-row>
+
+      <ng-container *ngIf="ruleBase === 'code-system'">
+        <m-form-row>
+          <m-form-item *mFormCol mName="codeSystem" mLabel="entities.value-set-rule-set.rule.code-system" required>
+            <tw-code-system-search name="codeSystem" [(ngModel)]="rule.codeSystem" required valuePrimitive></tw-code-system-search>
+          </m-form-item>
+          <m-form-item *mFormCol mName="codeSystemVersion" mLabel="entities.value-set-rule-set.rule.code-system-version" [required]="!lockedDate">
+            <tw-code-system-version-select name="codeSystemVersion"
+                [(ngModel)]="rule.codeSystemVersion"
+                [codeSystemId]="rule.codeSystem"
+                [required]="!lockedDate"></tw-code-system-version-select>
+          </m-form-item>
+        </m-form-row>
+
+        <m-form-item mName="concept-based-on" mLabel="entities.value-set-rule-set.rule.based-on" required>
+          <m-radio-group name="concept-based-on" [(ngModel)]="conceptsBase" (ngModelChange)="conceptsBaseChanged()" required>
+            <label m-radio-button [mValue]="'all'">{{'web.value-set-version.form.rule-set.rule.all' | translate}}</label>
+            <label m-radio-button [mValue]="'exact'">{{'web.value-set-version.form.rule-set.rule.exact' | translate}}</label>
+            <label m-radio-button [mValue]="'filter'">{{'web.value-set-version.form.rule-set.rule.filter' | translate}}</label>
+          </m-radio-group>
+        </m-form-item>
+
+        <tw-value-set-rule-concept-list *ngIf="conceptsBase === 'exact'"
+            [valueSet]="valueSet"
+            [valueSetVersion]="valueSetVersion"
+            [lockedDate]="lockedDate"
+            [rule]="rule"
+            [inactiveConcepts]="inactiveConcepts"></tw-value-set-rule-concept-list>
+        <tw-value-set-rule-filter-list *ngIf="conceptsBase === 'filter'"
+            [codeSystem]="rule.codeSystem"
+            [filters]="rule.filters"
+            (filtersChange)="rule.filters = $event"></tw-value-set-rule-filter-list>
+      </ng-container>
+
+      <ng-container *ngIf="ruleBase === 'value-set'">
+        <m-form-item *mFormCol mName="valueSet" mLabel="entities.value-set-rule-set.rule.value-set" required>
+          <tw-value-set-search name="valueSet" [(ngModel)]="rule.valueSet" valuePrimitive required></tw-value-set-search>
+        </m-form-item>
+
+        <m-form-item *mFormCol mName="valueSetVersion" mLabel="entities.value-set-rule-set.rule.value-set-version" [required]="!lockedDate">
+          <tw-value-set-version-select name="valueSetVersion"
+              [(ngModel)]="rule.valueSetVersion"
+              [valueSetId]="rule.valueSet"
+              [required]="!lockedDate"></tw-value-set-version-select>
+        </m-form-item>
+      </ng-container>
+    </ng-container>
+
+
+    <ng-container *ngIf="viewMode">
+      <m-form-row>
+        <m-form-item *mFormCol mName="type" mLabel="entities.value-set-rule-set.rule.compose">
+          {{'web.value-set-version.form.rule-set.rule.' + rule.type | translate}}
+        </m-form-item>
+        <m-form-item *mFormCol mName="based-on" mLabel="entities.value-set-rule-set.rule.based-on">
+          {{'web.value-set-version.form.rule-set.rule.' + ruleBase | translate}}
+        </m-form-item>
+      </m-form-row>
+
+      <ng-container *ngIf="ruleBase === 'code-system'">
+        <m-form-row>
+          <m-form-item *mFormCol mName="codeSystem" mLabel="entities.value-set-rule-set.rule.code-system">
+            {{rule.codeSystem}}
+          </m-form-item>
+          <m-form-item *mFormCol mName="codeSystemVersion" mLabel="entities.value-set-rule-set.rule.code-system-version">
+            {{rule.codeSystemVersion?.version || '-'}}
+          </m-form-item>
+        </m-form-row>
+
+        <m-form-item mName="concept-based-on" mLabel="entities.value-set-rule-set.rule.based-on">
+          {{'web.value-set-version.form.rule-set.rule.' + conceptsBase | translate}}
+        </m-form-item>
+
+        <tw-value-set-rule-concept-list *ngIf="conceptsBase === 'exact'"
+            [valueSet]="valueSet"
+            [valueSetVersion]="valueSetVersion"
+            [lockedDate]="lockedDate"
+            [rule]="rule"
+            [inactiveConcepts]="inactiveConcepts"
+            viewMode></tw-value-set-rule-concept-list>
+        <tw-value-set-rule-filter-list *ngIf="conceptsBase === 'filter'"
+            [codeSystem]="rule.codeSystem"
+            [filters]="rule.filters"
+            (filtersChange)="rule.filters = $event"
+            viewMode></tw-value-set-rule-filter-list>
+      </ng-container>
+
+      <ng-container *ngIf="ruleBase === 'value-set'">
+        <m-form-item *mFormCol mName="valueSet" mLabel="entities.value-set-rule-set.rule.value-set">
+          {{rule.valueSet}}
+        </m-form-item>
+
+        <m-form-item *mFormCol mName="valueSetVersion" mLabel="entities.value-set-rule-set.rule.value-set-version">
+          {{rule.valueSetVersion?.version || '-'}}
+        </m-form-item>
+      </ng-container>
+    </ng-container>
+  </form>
+</ng-container>

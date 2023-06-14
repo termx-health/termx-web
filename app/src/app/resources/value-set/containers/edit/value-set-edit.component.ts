@@ -1,56 +1,82 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {ValueSet, ValueSetTransactionRequest, ValueSetVersion} from 'app/src/app/resources/_lib';
 import {NgForm} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
-import {validateForm} from '@kodality-web/core-util';
-import {ValueSet} from 'term-web/resources/_lib';
-import {ValueSetService} from '../../services/value-set.service';
+import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {ResourceFormComponent} from 'app/src/app/resources/resource/components/resource-form.component';
+import {ActivatedRoute, Router} from '@angular/router';
+import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
+import {ResourceIdentifiersComponent} from 'app/src/app/resources/resource/components/resource-identifiers.component';
+import {ResourceVersionFormComponent} from 'app/src/app/resources/resource/components/resource-version-form.component';
+import {Resource} from 'app/src/app/resources/resource/model/resource';
+import {ResourceVersion} from 'app/src/app/resources/resource/model/resource-version';
+import {ResourceUtil} from 'app/src/app/resources/resource/util/resource-util';
 
 
 @Component({
-  templateUrl: 'value-set-edit.component.html',
+  templateUrl: 'value-set-edit.component.html'
 })
 export class ValueSetEditComponent implements OnInit {
-  public valueSetId?: string | null;
-  public valueSet?: ValueSet;
-
-  public mode: 'add' | 'edit' = 'add';
-  public loading: {[k: string]: boolean} = {};
-  public narrativeRaw = false;
+  protected valueSet?: ValueSet;
+  protected loader = new LoadingManager();
+  protected mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
+  @ViewChild(ResourceFormComponent) public resourceFormComponent?: ResourceFormComponent;
+  @ViewChild(ResourceIdentifiersComponent) public resourceIdentifiersComponent?: ResourceIdentifiersComponent;
+  @ViewChild(ResourceVersionFormComponent) public resourceVersionFormComponent?: ResourceVersionFormComponent;
 
   public constructor(
-    private valueSetService: ValueSetService,
     private route: ActivatedRoute,
-    private location: Location
+    private router: Router,
+    private valueSetService: ValueSetService
   ) {}
 
   public ngOnInit(): void {
-    this.valueSetId = this.route.snapshot.paramMap.get('id');
-    this.mode = this.valueSetId ? 'edit' : 'add';
+    const id = this.route.snapshot.paramMap.get('id');
 
-    if (this.mode === 'edit') {
-      this.loadValueSet(this.valueSetId!);
-    } else {
-      this.valueSet = new ValueSet();
+    if (isDefined(id)) {
+      this.mode = 'edit';
+      this.loader.wrap('load', this.valueSetService.load(id)).subscribe(vs => this.valueSet = this.writeVS(vs));
     }
+    this.valueSet = this.writeVS(new ValueSet());
   }
 
-  private loadValueSet(id: string): void {
-    this.loading['init'] = true;
-    this.valueSetService.load(id).subscribe(v => this.valueSet = v).add(() => this.loading['init'] = false);
-  }
-
-  public save(): void {
-    if (!validateForm(this.form)) {
+  protected save(): void {
+    if (!this.validate() ||
+      (this.resourceFormComponent && !this.resourceFormComponent.valid()) ||
+      (this.resourceIdentifiersComponent && !this.resourceIdentifiersComponent.valid()) ||
+      (this.resourceVersionFormComponent && !this.resourceVersionFormComponent.valid())) {
       return;
     }
-    this.loading['save'] = true;
-    this.valueSetService.save(this.valueSet!).subscribe(() => this.location.back()).add(() => this.loading['save'] = false);
+
+    const vs = copyDeep(this.valueSet);
+    ResourceUtil.mergeValueSet(vs, this.resourceFormComponent.getResource());
+    const request: ValueSetTransactionRequest = {
+      valueSet: vs,
+      version: this.fromResourceVersion(this.resourceVersionFormComponent?.getVersion())
+    };
+    this.loader.wrap('save', this.valueSetService.saveTransaction(request))
+      .subscribe(() => this.router.navigate(['/resources/value-sets', vs.id, 'summary']));
   }
 
-  public get isLoading(): boolean {
-    return Object.keys(this.loading).filter(k => 'init' !== k).some(k => this.loading[k]);
+  protected validate(): boolean {
+    return isDefined(this.form) && validateForm(this.form);
   }
+
+  protected toResource = (vs: ValueSet): Resource => {
+    return ResourceUtil.fromValueSet(vs);
+  };
+
+  protected fromResourceVersion = (rv: ResourceVersion): ValueSetVersion => {
+    return ResourceUtil.toValueSetVersion(rv);
+  };
+
+  private writeVS(vs: ValueSet): ValueSet {
+    vs.copyright ??= {};
+    vs.permissions ??= {};
+    vs.identifiers ??= [];
+    return vs;
+  }
+
+
 }
