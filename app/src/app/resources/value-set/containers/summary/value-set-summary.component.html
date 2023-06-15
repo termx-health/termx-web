@@ -28,6 +28,7 @@
         <m-card>
           <m-title *m-card-header mTitle="web.value-set.summary.versions">
             <m-button mControls mDisplay="text" mShape="circle" [routerLink]="['/resources/value-sets', valueSet?.id, 'versions', 'add']">
+              {{'web.value-set.summary.add-version' | translate}}&nbsp;
               <m-icon mCode="plus"></m-icon>
             </m-button>
           </m-title>

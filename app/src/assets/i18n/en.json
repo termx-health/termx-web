@@ -380,7 +380,8 @@
         "related-artifacts": "Related artifacts",
         "versions": "Versions",
         "expansions": "Expansions",
-        "total-concepts": "Total concepts"
+        "total-concepts": "Total concepts",
+        "add-version": "Add version"
       }
     },
     "value-set-version": {
@@ -432,7 +433,8 @@
         "value-set-version": "Value set version",
         "rule-set": "Rule set",
         "expansion": "Expansion",
-        "rule": "Rule"
+        "rule": "Rule",
+        "edit-version": "Edit version"
       }
     },
     "value-set-version-concept": {
@@ -1153,7 +1155,7 @@
     },
     "code-system": {
       "plural": "Code Systems",
-      "id": "Identifier",
+      "id": "ID",
       "uri": "Uniform resource identifier (URI)",
       "uri-short": "URI",
       "name": "Name",
