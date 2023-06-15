@@ -20,8 +20,12 @@ export class ResourceContextComponent {
   protected typeMap = {'CodeSystem': 'code-systems', 'ValueSet': 'value-sets', 'MapSet': 'map-sets'};
 
 
-  protected unselectVersion(): void {
-    this.router.navigate(['/resources', this.typeMap[this.resourceType], this.resource.id, this.mode]);
+  protected unselectResourceOrVersion(): void {
+    if (this.version) {
+      this.router.navigate(['/resources', this.typeMap[this.resourceType], this.resource.id, this.mode]);
+    } else {
+      this.router.navigate(['/resources', this.typeMap[this.resourceType]]);
+    }
   }
 
   protected selectVersion(version: string): void {
