@@ -13,8 +13,10 @@
         <ng-template #editTemplate let-f let-ngModelName="ngModelName">
           <ng-container [ngSwitch]="codeSystem">
             <ng-container *ngSwitchDefault>
-              <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'id'">
+              <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'name'">
                 <m-option *ngFor="let property of properties" [mLabel]="property.name" [mValue]="property"></m-option>
+                <m-option [mLabel]="'concept'" [mValue]="{name: 'concept'}"></m-option>
+                <m-option [mLabel]="'code'" [mValue]="{name: 'code'}"></m-option>
               </m-select>
             </ng-container>
             <ng-container *ngSwitchCase="'snomed-ct'">
@@ -36,13 +38,18 @@
         <ng-template #viewTemplate let-f>{{f.operator || '='}}</ng-template>
         <ng-template #editTemplate let-f let-ngModelName="ngModelName">
           <ng-container [ngSwitch]="codeSystem">
+            <ng-container *ngSwitchDefault>
+              <m-select *ngIf="f.property?.name === 'code'" [name]="ngModelName" [(ngModel)]="f.operator">
+                <m-option [mLabel]="'='" [mValue]="'='"></m-option>
+                <m-option [mLabel]="'regex'" [mValue]="'regex'"></m-option>
+              </m-select>
+              <tw-association-type-search *ngIf="f.property?.name === 'concept'" [name]="ngModelName" [(ngModel)]="f.operator" valuePrimitive></tw-association-type-search>
+            </ng-container>
             <ng-container *ngSwitchCase="'snomed-ct'">
               <m-select [name]="ngModelName" [(ngModel)]="f.operator">
                 <m-option *ngIf="f.property?.name === 'concept'" [mLabel]="'entities.value-set-rule-filter.operator.is-a' | translate" mValue="is-a"></m-option>
                 <m-option *ngIf="f.property?.name === 'concept'" [mLabel]="'entities.value-set-rule-filter.operator.in' | translate" mValue="in"></m-option>
-                <m-option *ngIf="f.property?.name === 'constraint'"
-                    [mLabel]="'entities.value-set-rule-filter.operator.equal' | translate"
-                    mValue="="></m-option>
+                <m-option *ngIf="f.property?.name === 'constraint'" [mLabel]="'entities.value-set-rule-filter.operator.equal' | translate" mValue="="></m-option>
               </m-select>
             </ng-container>
           </ng-container>
