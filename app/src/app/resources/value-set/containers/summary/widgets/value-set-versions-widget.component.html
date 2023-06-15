@@ -25,6 +25,9 @@
         <span *ngIf="rule.valueSet" class="m-items-middle">VS: {{rule.valueSet}} <m-divider mVertical></m-divider> {{rule.valueSetVersion?.version}}</span>
       </div>
       <div *ngIf="rule.concepts?.length > 0">(<span *ngFor="let c of rule.concepts">#{{c.concept.code}} </span>)</div>
+      <div *ngIf="rule.filters?.length > 0" class="m-items-middle">(<span *ngFor="let f of rule.filters" class="m-items-middle">#{{f.property?.name}} {{f.operator || '='}}
+        <tw-property-value-input viewMode [ngModel]="f.value" [property]="f.property" [codeSystem]="rule.codeSystem"></tw-property-value-input></span>)
+      </div>
     </div>
     <div>{{version.description | localName}}</div>
   </m-list-item>
