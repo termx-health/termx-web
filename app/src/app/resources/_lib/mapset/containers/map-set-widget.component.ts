@@ -10,7 +10,7 @@ import {MapSetLibService} from '../services/map-set-lib.service';
   templateUrl: 'map-set-widget.component.html'
 })
 export class MapSetWidgetComponent implements OnChanges {
-  @Input() public projectId: number;
+  @Input() public spaceId: number;
   @Input() public packageId: number;
   @Input() public packageVersionId: number;
 
@@ -24,7 +24,7 @@ export class MapSetWidgetComponent implements OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['projectId'] || changes['packageId'] || changes['packageVersionId']) {
+    if (changes['spaceId'] || changes['packageId'] || changes['packageVersionId']) {
       this.search();
     }
   }
@@ -32,7 +32,7 @@ export class MapSetWidgetComponent implements OnChanges {
   private search(): void {
     this.searchSub?.unsubscribe();
 
-    if (!this.projectId && !this.packageId && !this.packageVersionId) {
+    if (!this.spaceId && !this.packageId && !this.packageVersionId) {
       this.searchResult = SearchResult.empty();
       return;
     }
@@ -41,7 +41,7 @@ export class MapSetWidgetComponent implements OnChanges {
     this.searchSub = this.mapSetService.search(
       {
         ...this.query,
-        projectId: this.projectId,
+        spaceId: this.spaceId,
         packageId: this.packageId,
         packageVersionId: this.packageVersionId
       }).subscribe(resp => {

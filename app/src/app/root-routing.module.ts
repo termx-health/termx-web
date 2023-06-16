@@ -8,10 +8,10 @@ import {TOOLS_ROUTES} from './tools/tools.module';
 import {THESAURUS_ROUTES} from './thesaurus/thesaurus.module';
 import {MEASUREMENT_UNIT_ROUTES} from './measurement-unit/measurement-unit.module';
 import {FHIR_ROUTES} from './fhir/fhir.module';
-import {PROJECT_CTX_ROUTES, PROJECT_ROUTES, TERMINOLOGY_SERVER_ROUTES} from './project/project.module';
+import {SPACE_CTX_ROUTES, SPACE_ROUTES, TERMINOLOGY_SERVER_ROUTES} from './space/space.module';
 import {autoLoginGuard} from 'term-web/core/auth';
-import {ProjectContextComponent} from 'term-web/core/context/project-context.component';
-import {ProjectContextModule} from 'term-web/core/context/project-context.module';
+import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
+import {SpaceContextModule} from 'term-web/core/context/space-context.module';
 import {OBSERVATION_DEFINITION_ROUTES} from 'term-web/observation-definition/observation-definition.module';
 import {SEQUENCE_ROUTES} from 'term-web/sequence/sequence.module';
 import {TASKFLOW_ROUTES} from 'term-web/taskflow/taskflow.module';
@@ -29,16 +29,16 @@ const APP_ROUTES: Routes = [
   {path: 'sequences', children: SEQUENCE_ROUTES},
   {path: 'thesaurus', children: THESAURUS_ROUTES, data: {privilege: ['*.Thesaurus.view']}},
   {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
-  {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.Project.view']}},
+  {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.Space.view']}},
   {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.view']}},
   {path: 'taskflow', children: TASKFLOW_ROUTES, data: {privilege: ['*.Task.view']}},
   {
-    path: 'projects',
+    path: 'spaces',
     children: [
-      {path: '', children: PROJECT_ROUTES},
-      {path: 'context', component: ProjectContextComponent, children: PROJECT_CTX_ROUTES}
+      {path: '', children: SPACE_ROUTES},
+      {path: 'context', component: SpaceContextComponent, children: SPACE_CTX_ROUTES}
     ],
-    data: {privilege: ['*.Project.view']}
+    data: {privilege: ['*.Space.view']}
   }
 ];
 
@@ -67,7 +67,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes),
-    ProjectContextModule,
+    SpaceContextModule,
     LandingPageComponent
   ],
   exports: [RouterModule]

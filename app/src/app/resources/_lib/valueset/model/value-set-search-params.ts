@@ -21,7 +21,7 @@ export class ValueSetSearchParams extends QueryParams {
   public codeSystem?: string;
   public conceptCode?: string;
 
-  public projectId?: number;
+  public spaceId?: number;
   public packageId?: number;
   public packageVersionId?: number;
 }

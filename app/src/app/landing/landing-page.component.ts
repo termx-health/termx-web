@@ -4,7 +4,7 @@ import {catchError, forkJoin, Observable, of} from 'rxjs';
 import {CoreUiModule} from '../core/ui/core-ui.module';
 import {AuthService} from '../core/auth';
 import {CodeSystemLibService, MapSetLibService, ValueSetLibService} from 'term-web/resources/_lib';
-import {ProjectService} from 'term-web/project/services/project.service';
+import {SpaceService} from 'term-web/space/services/space.service';
 import {TaskService} from 'term-web/taskflow/services/task-service';
 import {Task, TaskflowLibModule} from 'term-web/taskflow/_lib';
 import {PageService} from 'term-web/thesaurus/containers/page/services/page.service';
@@ -38,7 +38,7 @@ export class LandingPageComponent {
     private codeSystemService: CodeSystemLibService,
     private valueSetService: ValueSetLibService,
     private mapSetService: MapSetLibService,
-    private projectService: ProjectService,
+    private spaceService: SpaceService,
     private pageService: PageService,
     private taskService: TaskService,
     stateStore: ComponentStateStore,
@@ -71,7 +71,7 @@ export class LandingPageComponent {
   }
 
   private loadSummary(): void {
-    const spaces$ = this.withPrivilege(this.projectService.search({limit: 0}), '*.Project.view');
+    const spaces$ = this.withPrivilege(this.spaceService.search({limit: 0}), '*.Space.view');
     const pages$ = this.withPrivilege(this.pageService.searchPages({limit: 0}), '*.Thesaurus.view');
     const tasksOpen$ = this.withPrivilege(this.taskService.search({limit: 0,statusesNe: 'cancelled,completed,error,rejected'}), '*.Task.view');
 

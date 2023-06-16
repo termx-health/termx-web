@@ -21,7 +21,7 @@ import {ThesaurusModule} from './thesaurus/thesaurus.module';
 import {FhirModule} from './fhir/fhir.module';
 import {ToolsModule} from './tools/tools.module';
 import {MeasurementUnitModule} from './measurement-unit/measurement-unit.module';
-import {ProjectModule} from './project/project.module';
+import {SpaceModule} from './space/space.module';
 import {AuthModule, AuthService} from './core/auth';
 import {MarinaUiConfigModule} from './core/marina';
 import {ObservationDefinitionModule} from 'term-web/observation-definition/observation-definition.module';
@@ -80,7 +80,7 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     ObservationDefinitionModule,
     ToolsModule,
     MeasurementUnitModule,
-    ProjectModule,
+    SpaceModule,
     SysModule,
     SequenceModule
   ],

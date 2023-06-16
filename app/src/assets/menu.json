@@ -187,13 +187,13 @@
       },
       {
         "label": {
-          "en": "Projects",
+          "en": "Spaces",
           "et": "Projektid"
         },
         "icon": "appstore",
-        "link": "projects",
+        "link": "spaces",
         "privileges": [
-          "*.Project.view"
+          "*.Space.view"
         ]
       },
       {
@@ -204,7 +204,7 @@
         "icon": "cloud-server",
         "link": "terminology-servers",
         "privileges": [
-          "*.Project.view"
+          "*.Space.view"
         ]
       },
       {

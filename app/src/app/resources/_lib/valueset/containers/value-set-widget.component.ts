@@ -10,7 +10,7 @@ import {ValueSetLibService} from '../services/value-set-lib.service';
   templateUrl: 'value-set-widget.component.html'
 })
 export class ValueSetWidgetComponent implements OnChanges {
-  @Input() public projectId: number;
+  @Input() public spaceId: number;
   @Input() public packageId: number;
   @Input() public packageVersionId: number;
 
@@ -24,7 +24,7 @@ export class ValueSetWidgetComponent implements OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['projectId'] || changes['packageId'] || changes['packageVersionId']) {
+    if (changes['spaceId'] || changes['packageId'] || changes['packageVersionId']) {
       this.search();
     }
   }
@@ -32,7 +32,7 @@ export class ValueSetWidgetComponent implements OnChanges {
   private search(): void {
     this.searchSub?.unsubscribe();
 
-    if (!this.projectId && !this.packageId && !this.packageVersionId) {
+    if (!this.spaceId && !this.packageId && !this.packageVersionId) {
       this.searchResult = SearchResult.empty();
       return;
     }
@@ -41,7 +41,7 @@ export class ValueSetWidgetComponent implements OnChanges {
     this.searchSub = this.valueSetService.search(
       {
         ...this.query,
-        projectId: this.projectId,
+        spaceId: this.spaceId,
         packageId: this.packageId,
         packageVersionId: this.packageVersionId
       }).subscribe(resp => {

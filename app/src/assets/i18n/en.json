@@ -718,7 +718,7 @@
             "map-set": "MapSet",
             "naming-system": "NamingSystem",
             "association-type": "AssociationType",
-            "project": "Project",
+            "space": "Space",
             "thesaurus": "Thesaurus",
             "observation-definition": "Observation definition",
             "task": "Taskflow",
@@ -937,16 +937,16 @@
         "edit-header": "Edit template"
       }
     },
-    "project": {
-      "add-header": "Add project",
-      "edit-header": "Edit project",
+    "space": {
+      "add-header": "Add space",
+      "edit-header": "Edit space",
       "select-context": "Select context",
-      "add-btn": "Add project",
-      "import-btn": "Import project",
+      "add-btn": "Add space",
+      "import-btn": "Import space",
       "new-version": "New version",
       "all-packages": "All packages",
-      "import-success-message": "Project import succeeded",
-      "import-error-message": "Project import failed",
+      "import-success-message": "Space import succeeded",
+      "import-error-message": "Space import failed",
       "resource-import-success-message": "Resource import succeeded",
       "resource-import-error-message": "Resource import failed"
     },
@@ -1460,9 +1460,9 @@
         "version": "Version"
       }
     },
-    "project": {
-      "plural": "Projects",
-      "singular": "Project",
+    "space": {
+      "plural": "Spaces",
+      "singular": "Space",
       "code": "Code",
       "name": "Name",
       "active": "Active",

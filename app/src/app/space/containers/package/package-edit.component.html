@@ -1,0 +1,87 @@
+<div style="display: flex; flex-direction: column; gap: 0.5rem">
+  <m-form-row mFull>
+    <div *mFormCol>
+      <m-card [mShowSkeleton]="loading">
+        <div class="m-justify-between">
+          <label class="m-card__title">
+            {{(mode === 'edit' ? 'web.package.edit-header' : 'web.package.add-header') | translate}} {{package?.code}}
+          </label>
+          <div class="m-items-middle">
+            <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
+              {{'core.btn.save' | translate}}
+            </m-button>
+          </div>
+        </div>
+      </m-card>
+    </div>
+  </m-form-row>
+  <div style="display: flex; gap: 1rem">
+    <div style="flex: 1">
+      <m-card [mShowSkeleton]="loading" mTitle="entities.package.version.plural">
+        <nz-timeline>
+          <nz-timeline-item *ngFor="let v of versions; let index = index" [nzLabel]="versionTemplate">
+            <div style="display: flex; gap: 1rem">
+              <a (click)="downloadYaml(v)" *ngIf="v.id">
+                <m-icon mCode="download"></m-icon>
+              </a>
+              <a (click)="duplicateVersion(v)" *ngIf="v.id" m-tooltip mTitle="core.btn.duplicate">
+                <m-icon mCode="copy"></m-icon>
+              </a>
+              <a (click)="removeVersion(index)" *ngIf="!v.id && versions.length > 1">
+                <m-icon mCode="delete"></m-icon>
+              </a>
+              <a (click)="deleteVersion(v.id)" *ngIf="v.id && versions.length > 1">
+                <m-icon mCode="delete"></m-icon>
+              </a>
+            </div>
+            <ng-template #versionTemplate>
+              <label *ngIf="v.id === version?.id" style="font-weight: bold">
+                {{v.id ? v.version : 'web.space.new-version' | translate}}
+              </label>
+              <a *ngIf="v.id !== version?.id" (click)="selectVersion(v)">
+                {{v.id ? v.version : 'web.space.new-version' | translate}}
+              </a>
+            </ng-template>
+          </nz-timeline-item>
+          <nz-timeline-item *ngIf="!newVersionExists" [nzDot]="addVersionTemplate"></nz-timeline-item>
+          <ng-template #addVersionTemplate>
+            <a (click)="addVersion()">
+              <m-icon mCode="plus-circle"></m-icon>
+            </a>
+          </ng-template>
+        </nz-timeline>
+      </m-card>
+    </div>
+
+    <div style="flex: 3;">
+      <m-card [mShowSkeleton]="loading">
+        <form #form="ngForm" *ngIf="package">
+          <m-form-item mName="code" mLabel="entities.package.code" required>
+            <m-input name="code" [(ngModel)]="package.code" required></m-input>
+          </m-form-item>
+          <m-form-item mName="git" mLabel="entities.package.git">
+            <m-input name="git" [(ngModel)]="package.git"></m-input>
+          </m-form-item>
+          <ng-container *ngIf="version">
+            <m-divider mText="entities.package.version.singular"></m-divider>
+            <m-form-item mName="version" mLabel="entities.package.version.version" required>
+              <m-input name="version" [(ngModel)]="version.version" required></m-input>
+            </m-form-item>
+
+            <ng-container *ngIf="(version.resources | apply: groupResources) as resources">
+              <m-form-item mName="cs" mLabel="entities.code-system.plural">
+                <tw-code-system-search name="cs" [(ngModel)]="resources['code-system']" (ngModelChange)="addResource($event, 'code-system')" multiple valuePrimitive></tw-code-system-search>
+              </m-form-item>
+              <m-form-item mName="vs" mLabel="entities.value-set.plural">
+                <tw-value-set-search name="vs" [(ngModel)]="resources['value-set']" (ngModelChange)="addResource($event, 'value-set')" multiple valuePrimitive></tw-value-set-search>
+              </m-form-item>
+              <m-form-item mName="mapSet" mLabel="entities.map-set.plural">
+                <tw-map-set-search name="mapSet" [(ngModel)]="resources['map-set']" (ngModelChange)="addResource($event, 'map-set')" multiple valuePrimitive></tw-map-set-search>
+              </m-form-item>
+            </ng-container>
+          </ng-container>
+        </form>
+      </m-card>
+    </div>
+  </div>
+</div>

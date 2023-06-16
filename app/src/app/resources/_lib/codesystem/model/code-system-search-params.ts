@@ -30,7 +30,7 @@ export class CodeSystemSearchParams extends QueryParams {
 
   public lang?: string;
 
-  public projectId?: number;
+  public spaceId?: number;
   public packageId?: number;
   public packageVersionId?: number;
 }

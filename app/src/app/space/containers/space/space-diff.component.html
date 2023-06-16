@@ -1,0 +1,55 @@
+<m-page [mLoading]="loading">
+  <div style="display: flex; flex-direction: column; gap: 1rem">
+    <m-card>
+      <div class="m-justify-between">
+        <div style="display: flex; gap: 1rem">
+          <m-form-item mName="type" mLabel="Resource type">
+            <m-select name="type" [(ngModel)]="diffItem.resourceType" (ngModelChange)="diffItem.resource = undefined">
+              <m-option *ngFor="let type of resources | keys" [mLabel]="type" [mValue]="type"></m-option>
+            </m-select>
+          </m-form-item>
+          <m-form-item mName="resource" mLabel="Resource" *ngIf="diffItem.resourceType">
+            <ng-container>
+              <m-select name="resource" [(ngModel)]="diffItem.resource" (ngModelChange)="loadResources($event)" compareWith="id">
+                <m-option *ngFor="let r of resources[diffItem.resourceType]" [mLabel]="r.resourceId" [mValue]="r"></m-option>
+              </m-select>
+            </ng-container>
+          </m-form-item>
+          <m-form-item mName="server" mLabel="Comparable server" *ngIf="diffItem.resource?.id">
+            <div class="m-items-middle" *ngIf="!serverEditable">
+              <label *ngIf="!diffItem?.resource?.terminologyServer">{{'entities.terminology-server.current-installation' | translate}}</label>
+              <label>{{terminologyServers[diffItem?.resource?.terminologyServer]?.names | localName}}</label>
+              <m-button mDisplay="text" mShape="circle" (mClick)="serverEditable = true">
+                <span class="m-items-middle"><m-icon mCode="edit"></m-icon></span>
+              </m-button>
+            </div>
+            <m-select *ngIf="serverEditable" [(ngModel)]="diffItem.resource.terminologyServer" (ngModelChange)="serverSelected($event)">
+              <m-option *ngFor="let server of terminologyServers | keys" [mLabel]="terminologyServers[server]?.names | localName" [mValue]="server"></m-option>
+            </m-select>
+          </m-form-item>
+        </div>
+        <div class="m-items-middle">
+          <m-button [routerLink]="['/spaces/context', ctx.params, 'diff-matrix']">
+            <div class="m-items-middle"><label>{{'Diff matrix'}}</label><m-icon mCode="table"></m-icon></div>
+          </m-button>
+          <m-button mDisplay="primary" (mClick)="sync()">
+            <div class="m-items-middle"><label>{{'Sync'}}</label><m-icon mCode="sync"></m-icon></div>
+          </m-button>
+        </div>
+      </div>
+    </m-card>
+    <div style="display: flex; gap: 1rem">
+      <m-card style="max-width: 33%">
+        <label *m-card-header>{{'entities.terminology-server.current-installation' | translate}}</label>
+        <pre>{{current}}</pre>
+      </m-card>
+      <m-card style="max-width: 33%">
+        <label *m-card-header>{{terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName}}</label>
+        <pre>{{comparable}}</pre>
+      </m-card>
+      <m-card style="max-width: 33%">
+        <pre id="display"></pre>
+      </m-card>
+    </div>
+  </div>
+</m-page>
