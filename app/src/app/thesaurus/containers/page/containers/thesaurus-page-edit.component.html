@@ -1,0 +1,77 @@
+<m-page mFull>
+  <m-spinner class="page__wrapper" [mLoading]="isLoading">
+    <tw-thesaurus-page-header [pageContent]="pageContent">
+      <m-button (click)="saveContent()" mDisplay="primary" mShape="circle">
+        <m-icon mCode="check"></m-icon>
+      </m-button>
+      <m-button (click)="modal.open()" mDisplay="text" mShape="circle">
+        <m-icon mCode="setting"></m-icon>
+      </m-button>
+      <m-button (click)="back()" mDisplay="text" mShape="circle">
+        <m-icon mCode="close"></m-icon>
+      </m-button>
+    </tw-thesaurus-page-header>
+
+
+    <m-card>
+      <div class="equal-columns" style="margin-bottom: 1rem" *ngIf="pageContent?.contentType === 'markdown'">
+        <div style="justify-self: start" class="m-items-middle">
+          <m-button *ngIf="pageContent?.slug" m-popover [mContent]="confirmTemplate" mTrigger="click">
+            {{'web.thesaurus-page.form.add-structure-definition' | translate}}
+            <ng-template #confirmTemplate>
+              <label>{{'core.data-lost-warning' | translate}}</label>
+              <div style="display: flex; margin-top: 1rem">
+                <m-button (click)="openStructureDefinition()">{{'web.thesaurus-page.form.proceed-without-saving' | translate}}</m-button>
+                <m-button mDisplay="primary"
+                    (click)="saveAndOpenStructureDefinition()"
+                    style="margin-left: 0.5rem"
+                >{{'web.thesaurus-page.form.save-and-proceed' | translate}}</m-button>
+              </div>
+            </ng-template>
+          </m-button>
+
+          <m-button
+              *ngIf="pageContent?.slug"
+              m-tooltip
+              [mTitle]="'web.thesaurus-page.form.copy-to-clipboard' | translate: ({val: '{{def:' + pageContent.slug + '-model}' + '}' })"
+              (mClick)="copyStructureDefToClipboard()"
+          >
+            <m-icon mCode="copy"/>
+          </m-button>
+        </div>
+
+        <div style="justify-self: center">
+          <m-radio-group name="sourceImportType" [(ngModel)]="showPreview">
+            <label m-radio-button [mValue]="false">
+              <m-icon mCode="pic-center"></m-icon>
+            </label>
+            <label m-radio-button [mValue]="true">
+              <m-icon mCode="pic-left"></m-icon>
+            </label>
+          </m-radio-group>
+        </div>
+
+        <div style="justify-self: end"></div>
+      </div>
+
+
+      <tw-smart-text-editor
+          *ngIf="pageContent"
+          [(ngModel)]="pageContent.content"
+          [valueType]="pageContent.contentType"
+          [lang]="pageContent.lang"
+          [showPreview]="showPreview"
+          name="content"
+      ></tw-smart-text-editor>
+    </m-card>
+  </m-spinner>
+
+
+  <tw-thesaurus-page-modal
+    #modal
+      [pageId]="pageContent?.pageId"
+      [contentId]="pageContent?.id"
+      (closed)="modal.close()"
+      (saved)="afterPageSave($event.pageContent); modal.close()"
+  ></tw-thesaurus-page-modal>
+</m-page>
