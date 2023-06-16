@@ -1,24 +1,36 @@
-export * from './containers/page-select.component';
+export * from './page/page';
+export * from './page/page-content';
+export * from './page/page-content-search-params';
+export * from './page/page-lib.service';
+export * from './page/page-link';
+export * from './page/page-link-lib.service';
+export * from './page/page-relation';
+export * from './page/page-relation-search-params';
+export * from './page/page-search-params';
+export * from './page/page-select.component';
+export * from './page/page-tag';
 
-export * from './model/page';
-export * from './model/page-content';
-export * from './model/page-content-search-params';
-export * from './model/page-link';
-export * from './model/page-relation-search-params';
-export * from './model/page-search-params';
-export * from './model/page-tag';
-export * from './model/page-relation';
-export * from './model/structure-definition';
-export * from './model/structure-definition-search-params';
-export * from './model/tag';
-export * from './model/template';
-export * from './model/template-content';
-export * from './model/template-search-params';
+export * from './structure-definition/structure-definition';
+export * from './structure-definition/structure-definition-lib.service';
+export * from './structure-definition/structure-definition-search-params';
+export * from './structure-definition/structure-definition-tree.component';
 
-export * from './services/page-lib.service';
-export * from './services/page-link-lib.service';
-export * from './services/structure-definition-lib.service';
-export * from './services/tag-lib.service';
-export * from './services/template-lib.service';
+export * from './tag/tag';
+export * from './tag/tag-lib.service';
+
+export * from './template/template';
+export * from './template/template-content';
+export * from './template/template-lib.service';
+export * from './template/template-search-params';
+
+export * from './texteditor/menu/dropdown/thesaurus-dropdown-option.component';
+export * from './texteditor/menu/dropdown/thesaurus-dropdown.component';
+export * from './texteditor/menu/modals/thesaurus-modal-link.component';
+export * from './texteditor/menu/modals/thesaurus-modal-structure-definition.component';
+export * from './texteditor/menu/modals/thesaurus-modal-template.component';
+export * from './texteditor/menu/thesaurus-quick-actions-menu.component';
+export * from './texteditor/renderers/thesaurus-renderer-template.component';
+export * from './texteditor/thesaurus-smart-text-editor-view.component';
+export * from './texteditor/thesaurus-smart-text-editor.component';
 
 export * from './thesaurus-lib.module';
