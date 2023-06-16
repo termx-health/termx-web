@@ -38,26 +38,35 @@
 
       <!-- Expansion -->
       <m-card>
-        <div *m-card-header class="m-justify-between">
-          <m-title mTitle="web.value-set-version.summary.expansion">
+        <div class="m-justify-between">
+          <m-title class="m-title" mTitle="web.value-set-version.summary.expansion">
             <m-button mControls mDisplay="text" mShape="circle" [disabled]="loader.state['expand']" (mClick)="reloadExpansion()">
               <m-icon *ngIf="!loader.state['expand']" mCode="reload"></m-icon>
               <m-icon *ngIf="loader.state['expand']" mCode="loading"></m-icon>
             </m-button>
           </m-title>
-        </div>
-        <m-no-data *ngIf="!valueSetVersion?.snapshot"></m-no-data>
-
-        <div *ngIf="valueSetVersion?.snapshot">
-          <a [routerLink]="['/resources/value-sets', valueSet.id, 'versions', valueSetVersion.version, 'concepts']">Total
-            concepts: {{valueSetVersion.snapshot.conceptsTotal}}</a>
-          <div class="m-items-middle">
+          <div class="m-items-middle" *ngIf="valueSetVersion.snapshot">
             <m-icon mCode="clock-circle"></m-icon>
             <span>{{valueSetVersion.snapshot.createdAt | localDate}}</span>
             <m-divider mVertical></m-divider>
             <m-icon mCode="user"></m-icon>
             <span>{{valueSetVersion.snapshot.createdBy || '-'}}</span>
           </div>
+        </div>
+        <m-no-data *ngIf="!valueSetVersion?.snapshot"></m-no-data>
+
+        <div *ngIf="valueSetVersion?.snapshot">
+          <a [routerLink]="['/resources/value-sets', valueSet.id, 'versions', valueSetVersion.version, 'concepts']">Total
+            concepts: {{valueSetVersion.snapshot.conceptsTotal}}</a>
+          <div *ngFor="let e of (valueSetVersion.snapshot.expansion | apply:getFirstRows)" style="display: flex; gap: 1rem">
+            <span style="flex: 1">{{e.concept.code}}</span>
+            <span style="flex: 4">{{e.display?.name}}</span>
+          </div>
+          <ng-container *ngIf="valueSetVersion.snapshot.expansion?.length > 20">
+            <span class="m-subtitle">{{'web.value-set-version.summary.expansion-limit-info' | translate:({count: valueSetVersion.snapshot.expansion.length - 20})}}
+              <a [routerLink]="['/resources/value-sets', valueSet.id, 'versions', valueSetVersion.version, 'concepts']">{{'web.value-set-version.summary.expansion-see-all' | translate}}</a>
+            </span>
+          </ng-container>
         </div>
 
       </m-card>

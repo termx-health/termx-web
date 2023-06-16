@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ValueSet, ValueSetVersion, ValueSetVersionRule} from 'app/src/app/resources/_lib';
+import {ValueSet, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule} from 'app/src/app/resources/_lib';
 import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
@@ -40,6 +40,10 @@ export class ValueSetVersionSummaryComponent implements OnInit {
 
   protected toResourceVersion = (vsv: ValueSetVersion): Resource => {
     return ResourceUtil.fromValueSetVersion(vsv);
+  };
+
+  protected getFirstRows = (concepts: ValueSetVersionConcept[]): ValueSetVersionConcept[] => {
+    return concepts?.length > 20 ? concepts.slice(0, 20) : concepts;
   };
 
   protected saveRule(): void {

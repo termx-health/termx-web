@@ -10,6 +10,20 @@
           <tw-value-set-info-widget [valueSet]="valueSet"></tw-value-set-info-widget>
         </m-card>
 
+        <!-- Versions -->
+        <m-card>
+          <m-title *m-card-header mTitle="web.value-set.summary.versions">
+            <m-button mControls mDisplay="text" mShape="circle" [routerLink]="['/resources/value-sets', valueSet?.id, 'versions', 'add']">
+              {{'web.value-set.summary.add-version' | translate}}&nbsp;
+              <m-icon mCode="plus"></m-icon>
+            </m-button>
+          </m-title>
+          <tw-value-set-versions-widget [valueSet]="valueSet?.id" [versions]="versions"></tw-value-set-versions-widget>
+        </m-card>
+
+      </div>
+      <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
         <!-- Tasks -->
         <m-card>
           <m-title *m-card-header mTitle="web.value-set.summary.opened-tasks"></m-title>
@@ -21,19 +35,7 @@
           <m-title *m-card-header mTitle="web.value-set.summary.related-artifacts"></m-title>
           <tw-resource-related-artifact-widget [resourceId]="valueSet?.id" resourceType="ValueSet"></tw-resource-related-artifact-widget>
         </m-card>
-      </div>
-      <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
 
-        <!-- Versions -->
-        <m-card>
-          <m-title *m-card-header mTitle="web.value-set.summary.versions">
-            <m-button mControls mDisplay="text" mShape="circle" [routerLink]="['/resources/value-sets', valueSet?.id, 'versions', 'add']">
-              {{'web.value-set.summary.add-version' | translate}}&nbsp;
-              <m-icon mCode="plus"></m-icon>
-            </m-button>
-          </m-title>
-          <tw-value-set-versions-widget [valueSet]="valueSet?.id" [versions]="versions"></tw-value-set-versions-widget>
-        </m-card>
       </div>
     </m-form-row>
     <m-form-row>

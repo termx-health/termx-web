@@ -434,7 +434,9 @@
         "rule-set": "Rule set",
         "expansion": "Expansion",
         "rule": "Rule",
-        "edit-version": "Edit version"
+        "edit-version": "Edit version",
+        "expansion-limit-info": "Loaded 20 concepts. {{count}} concepts still on server.",
+        "expansion-see-all": "See full list of the concepts."
       }
     },
     "value-set-version-concept": {
