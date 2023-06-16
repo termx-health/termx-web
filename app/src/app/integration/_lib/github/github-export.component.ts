@@ -9,6 +9,8 @@ export class GithubExportComponent implements OnInit {
   public prepareExport!: () => GithubExportable[];
   @Input()
   public title!: string;
+  @Input()
+  public type: 'button' | 'text' = 'button';
 
   public modalVisible!: boolean;
   public authenticated!: boolean;
@@ -39,6 +41,10 @@ export class GithubExportComponent implements OnInit {
   }
 
   public openModal(): void {
+    if (!this.authenticated) {
+      return;
+    }
+
     this.githubService.listRepos(this.installationId).subscribe((repos: any) => {
       this.modalVisible = true;
       this.repos = repos.repositories;

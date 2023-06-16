@@ -1,7 +1,19 @@
-<m-button [disabled]="!authenticated" (click)="openModal()" m-popover [mContent]="!authenticated ? hoverRef: null">
-  <m-icon mCode="github" style="margin-right: 0.5rem"></m-icon>
-  Export
+<ng-template #lbl>
+  <div class="m-items-middle">
+    <m-icon mCode="github"/>
+    Export
+  </div>
+</ng-template>
+
+
+<div *ngIf="type === 'text'" (click)="openModal()" m-popover [mContent]="!authenticated ? hoverRef: null">
+  <ng-container *ngTemplateOutlet="lbl"></ng-container>
+</div>
+
+<m-button *ngIf="type === 'button'" [disabled]="!authenticated" (mClick)="openModal()" m-popover [mContent]="!authenticated ? hoverRef: null">
+  <ng-container *ngTemplateOutlet="lbl"></ng-container>
 </m-button>
+
 
 <ng-template #hoverRef>
   You have to

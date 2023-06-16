@@ -9,9 +9,26 @@
 
     <m-spinner class="page__wrapper" [mLoading]="isLoading">
       <tw-thesaurus-page-header *ngIf="pageId" [pageContent]="pageContent">
-        <tw-github-export [title]="pageContent?.name" [prepareExport]="prepareExport"/>
-        <m-icon-button mIcon="edit" [routerLink]="'edit'"/>
-        <m-icon-button mIcon="file-add" (click)="pageModal.open({links:[{sourceId: pageId, orderNumber: 1}]})"/>
+        <m-button [routerLink]="'edit'" >
+          <div class="m-items-middle">
+            <m-icon mCode="edit"></m-icon>
+            {{'core.btn.edit' | translate}}
+          </div>
+        </m-button>
+
+        <m-dropdown>
+          <m-button *m-dropdown-container mDisplay="text">
+            <m-icon mCode="ellipsis"></m-icon>
+          </m-button>
+
+          <a *m-dropdown-item class="m-items-middle" (click)="pageModal.open({links:[{sourceId: pageId, orderNumber: 1}]})">
+            <m-icon mCode="file-add"/>
+            {{'web.thesaurus-page.header.add-subpage' | translate}}
+          </a>
+          <a *m-dropdown-item>
+            <tw-github-export type="text" [title]="pageContent?.name" [prepareExport]="prepareExport"/>
+          </a>
+        </m-dropdown>
       </tw-thesaurus-page-header>
 
 
