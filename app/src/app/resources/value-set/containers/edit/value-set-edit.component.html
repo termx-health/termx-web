@@ -1,28 +1,22 @@
 <m-spinner [mLoading]="loader.state['save']">
   <form #form="ngForm" *ngIf="valueSet">
-    <div style="display: flex; gap: 1rem">
-      <div style="flex: 3">
-        <m-card [mTitle]="'web.value-set.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading">
-          <tw-resource-form resourceType="ValueSet" [resource]="valueSet | apply:toResource" [mode]="mode"></tw-resource-form>
+    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 1rem">
+      <m-card [mTitle]="'web.value-set.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+        <div *mCardContent="!loader.isLoading">
+          <tw-resource-form resourceType="ValueSet" [resource]="valueSet | apply: toResource" [mode]="mode"></tw-resource-form>
           <tw-resource-identifiers [identifiers]="valueSet.identifiers"></tw-resource-identifiers>
           <tw-resource-contacts [(contacts)]="valueSet.contacts"></tw-resource-contacts>
           <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
-        </m-card>
-      </div>
-      <m-card [mShowSkeleton]="loader.isLoading" style="flex: 1">
+        </div>
+
+        <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+          {{'core.btn.save' | translate}}
+        </m-button>
+      </m-card>
+
+      <m-card [mShowSkeleton]="loader.isLoading">
         <tw-resource-side-info [copyright]="valueSet.copyright" [permissions]="valueSet.permissions"></tw-resource-side-info>
       </m-card>
     </div>
   </form>
-
-  <m-page-bar mPosition="bottom">
-    <div style="display: flex; gap: 1rem">
-      <div style="display: grid; overflow: auto; background: #f9f9f9; flex: 3">
-        <m-button style="padding: 1rem 2rem; width: 100%" mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
-          {{'core.btn.save' | translate}}
-        </m-button>
-      </div>
-      <div style="flex: 1"></div>
-    </div>
-  </m-page-bar>
 </m-spinner>
