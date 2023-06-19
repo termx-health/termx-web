@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ValueSet, ValueSetTransactionRequest, ValueSetVersion} from 'app/src/app/resources/_lib';
+import {ValueSet, ValueSetTransactionRequest} from 'app/src/app/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ResourceFormComponent} from 'app/src/app/resources/resource/components/resource-form.component';
@@ -7,8 +7,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
 import {ResourceIdentifiersComponent} from 'app/src/app/resources/resource/components/resource-identifiers.component';
 import {ResourceVersionFormComponent} from 'app/src/app/resources/resource/components/resource-version-form.component';
-import {Resource} from 'app/src/app/resources/resource/model/resource';
-import {ResourceVersion} from 'app/src/app/resources/resource/model/resource-version';
 import {ResourceUtil} from 'app/src/app/resources/resource/util/resource-util';
 
 
@@ -42,10 +40,12 @@ export class ValueSetEditComponent implements OnInit {
   }
 
   protected save(): void {
-    if (!this.validate() ||
-      (this.resourceFormComponent && !this.resourceFormComponent.valid()) ||
-      (this.resourceIdentifiersComponent && !this.resourceIdentifiersComponent.valid()) ||
-      (this.resourceVersionFormComponent && !this.resourceVersionFormComponent.valid())) {
+    if (![
+      this.validate(),
+      (!this.resourceFormComponent || this.resourceFormComponent.valid()),
+      (!this.resourceIdentifiersComponent || this.resourceIdentifiersComponent.valid()),
+      (!this.resourceVersionFormComponent || this.resourceVersionFormComponent.valid())
+    ].every(Boolean)) {
       return;
     }
 
@@ -63,13 +63,8 @@ export class ValueSetEditComponent implements OnInit {
     return isDefined(this.form) && validateForm(this.form);
   }
 
-  protected toResource = (vs: ValueSet): Resource => {
-    return ResourceUtil.fromValueSet(vs);
-  };
-
-  protected fromResourceVersion = (rv: ResourceVersion): ValueSetVersion => {
-    return ResourceUtil.toValueSetVersion(rv);
-  };
+  protected toResource = ResourceUtil.fromValueSet;
+  protected fromResourceVersion = ResourceUtil.toValueSetVersion;
 
   private writeVS(vs: ValueSet): ValueSet {
     vs.copyright ??= {};
@@ -77,6 +72,4 @@ export class ValueSetEditComponent implements OnInit {
     vs.identifiers ??= [];
     return vs;
   }
-
-
 }

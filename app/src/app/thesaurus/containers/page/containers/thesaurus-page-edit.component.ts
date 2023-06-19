@@ -27,7 +27,7 @@ import {StructureDefinitionService} from '../../structure-definition/services/st
       max-width: 1800px;
       margin-inline: auto;
 
-      padding: 3rem 1rem 1rem;
+      padding: 2rem 1rem 1rem;
     }
   `]
 })

@@ -1,14 +1,18 @@
 <m-page mFull>
   <m-spinner class="page__wrapper" [mLoading]="isLoading">
     <tw-thesaurus-page-header [pageContent]="pageContent">
-      <m-button (click)="saveContent()" mDisplay="primary" mShape="circle">
-        <m-icon mCode="check"></m-icon>
+      <m-button (click)="saveContent()" mDisplay="primary">
+        <div class="m-items-middle">
+          <m-icon mCode="save"></m-icon>
+          {{'core.btn.save' | translate}}
+        </div>
       </m-button>
-      <m-button (click)="modal.open()" mDisplay="text" mShape="circle">
+      <m-button (click)="back()" mDisplay="text">
+        {{'core.btn.cancel' | translate}}
+      </m-button>
+      <m-divider mVertical></m-divider>
+      <m-button (click)="modal.open()" mDisplay="text" >
         <m-icon mCode="setting"></m-icon>
-      </m-button>
-      <m-button (click)="back()" mDisplay="text" mShape="circle">
-        <m-icon mCode="close"></m-icon>
       </m-button>
     </tw-thesaurus-page-header>
 

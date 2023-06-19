@@ -803,7 +803,8 @@
     },
     "thesaurus-page": {
       "header": {
-        "modified": "<b>{{user}}</b> edited this page on {{date}}"
+        "modified": "<b>{{user}}</b> edited this page on {{date}}",
+        "add-subpage": "Add subpage"
       },
       "actions": {
         "contents": "Contents",

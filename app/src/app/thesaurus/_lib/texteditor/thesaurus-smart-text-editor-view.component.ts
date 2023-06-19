@@ -2,7 +2,12 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 
 @Component({
   selector: 'tw-smart-text-editor-view',
-  templateUrl: './thesaurus-smart-text-editor-view.component.html'
+  templateUrl: './thesaurus-smart-text-editor-view.component.html',
+  styles: [`
+    ::ng-deep tw-smart-text-editor-view .ql-editor {
+      padding: 0;
+    }
+  `]
 })
 export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
   @Input() public valueType?: 'html' | 'markdown';
