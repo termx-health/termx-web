@@ -6,7 +6,7 @@ import {ValueSetService} from 'app/src/app/resources/value-set/services/value-se
 import {Resource} from 'app/src/app/resources/resource/model/resource';
 import {ResourceUtil} from 'app/src/app/resources/resource/util/resource-util';
 import {forkJoin} from 'rxjs';
-import {ValueSetRuleFormComponent} from 'app/src/app/resources/value-set/containers/versions/rule/value-set-rule-form.component';
+import {ValueSetRuleFormComponent} from 'app/src/app/resources/value-set/containers/version/rule/value-set-rule-form.component';
 import {JobLibService} from 'app/src/app/sys/_lib';
 
 @Component({
