@@ -4,7 +4,7 @@
 <form #form="ngForm" *ngIf="version">
   <m-form-row>
     <m-form-item *mFormCol mLabel="entities.resource.version.algorithm" mName="algorithm">
-      <m-input name="algorithm" [(ngModel)]="version.algorithm"></m-input>
+      <tw-value-set-concept-select name="algorithm" [(ngModel)]="version.algorithm" valueSet="version-algorithm"></tw-value-set-concept-select>
     </m-form-item>
     <m-form-item *mFormCol mLabel="entities.resource.version.version" mName="version" required>
       <tw-semantic-version-select name="version" [(ngModel)]="version.version" [versions]="[]" required></tw-semantic-version-select>

@@ -32,7 +32,7 @@
               multiple></tw-value-set-concept-select>
         </m-form-item>
         <m-form-item *mFormCol mLabel="entities.value-set-version.algorithm" mName="algorithm">
-          <m-input name="algorithm" [(ngModel)]="version.algorithm"></m-input>
+          <tw-value-set-concept-select name="algorithm" [(ngModel)]="version.algorithm" valueSet="version-algorithm"></tw-value-set-concept-select>
         </m-form-item>
       </m-form-row>
 
