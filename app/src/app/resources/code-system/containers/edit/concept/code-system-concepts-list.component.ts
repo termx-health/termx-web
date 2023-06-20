@@ -1,16 +1,32 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptSearchParams, EntityProperty} from 'term-web/resources/_lib';
-import {debounceTime, finalize, Observable, of, Subject, switchMap} from 'rxjs';
-import {BooleanInput, compareValues, copyDeep, SearchResult} from '@kodality-web/core-util';
+import {debounceTime, Observable, of, startWith, Subject, switchMap} from 'rxjs';
+import {BooleanInput, compareValues, copyDeep, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
-import {MuiTreeNode, MuiTreeNodeOptions} from '@kodality-web/marina-ui';
+
+interface ConceptNode {
+  code: string;
+  children?: ConceptNode[];
+
+  expandable?: boolean;
+  expanded?: boolean;
+  loading?: boolean;
+
+  concept: CodeSystemConcept
+}
 
 @Component({
   selector: 'tw-code-system-concepts-list',
   templateUrl: './code-system-concepts-list.component.html',
   styles: [`
+    @import "../../../../../../../../node_modules/@kodality-web/marina-ui/src/components/card/style";
+
+    ::ng-deep .recursive-card-inside-flatten .m-card {
+      .m-card-inside;
+    }
+
     ::ng-deep .concept-tree {
       .m-tree-node__option {
         width: 100%;
@@ -22,58 +38,95 @@ import {MuiTreeNode, MuiTreeNodeOptions} from '@kodality-web/marina-ui';
     }`]
 })
 export class CodeSystemConceptsListComponent implements OnInit {
-  @Input() public dev: boolean = false;
-  @Input() @BooleanInput() public viewMode: boolean | string = false;
+  @Input() @BooleanInput() public dev?: boolean | string;
+  @Input() @BooleanInput() public viewMode: boolean | string;
   @Input() public codeSystemId?: string;
   @Input() public codeSystemVersions?: CodeSystemVersion[];
   @Input() public properties?: EntityProperty[];
 
-  public query = new ConceptSearchParams();
-  public filter: {open: boolean, languages?: string[], version?: CodeSystemVersion, propertyName?: string, propertyValue?: string} = {open: false};
-  public group: {open: boolean, type?: string, association?: string, property?: string} = {open: false};
-  public searchInput: {input?: string, type: 'eq' | 'contains'} = {type: 'contains'};
-  public searchUpdate = new Subject<void>();
-  public searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
-  public rootConcepts?: MuiTreeNodeOptions[];
+  protected search$ = new Subject<void>();
+  protected searchInput: {input?: string, type: 'eq' | 'contains'} = {type: 'contains'};
 
-  public loading = false;
+  protected filter: {
+    open: boolean, languages?: string[],
+    version?: CodeSystemVersion,
+    propertyName?: string,
+    propertyValue?: string
+  } = {open: false};
+
+  protected group: {
+    open: boolean,
+    type?: string,
+    association?: string,
+    property?: string
+  } = {open: false};
+
+  protected query = new ConceptSearchParams();
+  protected searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
+  protected rootConcepts?: ConceptNode[];
+
+  protected selectedConcept: {code: string, version: CodeSystemEntityVersion};
+  protected loader = new LoadingManager();
+
 
   public constructor(
     private router: Router,
     private codeSystemService: CodeSystemService,
-    private translateService: TranslateService
+    protected translateService: TranslateService
   ) {
     this.query.sort = 'code';
   }
 
   public ngOnInit(): void {
-    this.searchUpdate.pipe(
+    this.search$.pipe(
+      startWith(null),
       debounceTime(250),
       switchMap(() => this.search()),
-    ).subscribe(data => this.searchResult = data);
-    this.searchUpdate.next();
+    ).subscribe(data => {
+      this.searchResult = data;
+    });
+
     this.expandTree();
+  }
+
+  private expandTree(): void {
+    if (!this.codeSystemId) {
+      return;
+    }
+    this.codeSystemService.searchConcepts(this.codeSystemId, {associationType: 'is-a', limit: 0}).subscribe(resp => {
+      if (resp.meta.total > 0) {
+        this.group.open = true;
+        this.group.type = 'association';
+        this.group.association = 'is-a';
+        this.groupConcepts(this.group.association);
+      }
+    });
+  }
+
+
+  protected loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
   }
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
     if (!this.codeSystemId) {
       return of(this.searchResult);
     }
+
+    const {type, input} = this.searchInput;
+
     const q = copyDeep(this.query);
-    q.textContains = this.searchInput.type === 'contains' ? this.searchInput.input : undefined;
-    q.textEq = this.searchInput.type === 'eq' ? this.searchInput.input : undefined;
+    q.textContains = type === 'contains' ? input : undefined;
+    q.textEq = type === 'eq' ? input : undefined;
     if (this.filter.propertyName && this.filter.propertyValue) {
-      q.propertyValues = this.filter['propertyName'] + '|' + this.filter['propertyValue'];
+      q.propertyValues = `${this.filter.propertyName}|${this.filter.propertyValue}`;
     }
-    this.loading = true;
-    return this.codeSystemService.searchConcepts(this.codeSystemId, q).pipe(finalize(() => this.loading = false));
+
+    return this.loader.wrap('search', this.codeSystemService.searchConcepts(this.codeSystemId, q));
   }
 
-  public loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
-  }
 
-  public initFilterLanguages(supportedLanguages: string[]): void {
+  protected initFilterLanguages(supportedLanguages: string[]): void {
     if (!supportedLanguages) {
       this.filter.languages = undefined;
       return;
@@ -82,46 +135,63 @@ export class CodeSystemConceptsListComponent implements OnInit {
     this.filter.languages = [...this.filter.languages];
   }
 
-  public getConceptName(concept: CodeSystemConcept, language?: string): string | undefined {
-    const findVersion = concept.versions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.created, b.created))?.[0];
-    const findDesignation = findVersion?.designations?.find(
-      designation => ['draft', 'active'].includes(designation.status!) && (!language || designation.language === language));
-    return findDesignation?.name;
-  }
 
-  public groupConcepts(groupParam: string): void {
+  protected groupConcepts(groupParam: string): void {
     if (!this.codeSystemId) {
       return;
     }
+
     const params = new ConceptSearchParams();
-    params.propertyRoot = this.group.type === 'property' && groupParam || undefined;
-    params.associationRoot = this.group.type === 'association' && groupParam || undefined;
+    params.propertyRoot = this.group.type === 'property' ? groupParam : undefined;
+    params.associationRoot = this.group.type === 'association' ? groupParam : undefined;
     params.sort = 'code';
     params.limit = 1000;
-    this.loading = true;
-    this.codeSystemService.searchConcepts(this.codeSystemId!, params).subscribe(concepts => {
+
+    this.loader.wrap('group', this.codeSystemService.searchConcepts(this.codeSystemId, params)).subscribe(concepts => {
       this.rootConcepts = concepts.data.map(c => this.mapToNode(c));
-    }).add(() => this.loading = false);
+    });
   }
 
-  public loadChildren(node: MuiTreeNode): void {
-    if (node.loading) {
+
+  protected selectConcept(concept: CodeSystemConcept): void {
+    this.selectedConcept = {code: concept.code, version: concept.versions[concept.versions.length - 1]};
+  }
+
+
+  public loadChildConcepts(node: ConceptNode): void {
+    if (node.expanded) {
+      node.expanded = false;
+      node.children = [];
+      return;
+    }
+
+    if (!node.loading) {
+      node.loading = true;
+
       const params = new ConceptSearchParams();
-      params.propertySource = this.group.type === 'property' && this.group.property + '|' + node.key || undefined;
-      params.associationSource = this.group.type === 'association' && this.group.association + '|' + node.key || undefined;
+      params.propertySource = this.group.type === 'property' ? `${this.group.property}|${node.code}` : undefined;
+      params.associationSource = this.group.type === 'association' ? `${this.group.association}|${node.code}` : undefined;
       params.sort = 'code';
       params.limit = 1000;
-      this.codeSystemService.searchConcepts(this.codeSystemId!, params).subscribe(concepts => node.setChildren(concepts.data.map(c => this.mapToNode(c))));
+
+      this.codeSystemService.searchConcepts(this.codeSystemId!, params).subscribe(concepts => {
+        node.children = concepts.data.map(c => this.mapToNode(c));
+        node.expanded = true;
+      }).add(() => node.loading = false);
     }
   }
 
-  public mapToNode(c: CodeSystemConcept): MuiTreeNodeOptions {
-    const name = this.getConceptName(c, this.translateService.currentLang);
-    return {title: c.code + (name ? ' - ' + name : ''), key: c.code, expandable: !c.leaf};
+  private mapToNode(c: CodeSystemConcept): ConceptNode {
+    return {
+      code: c.code,
+      expandable: !c.leaf,
+      concept: c
+    };
   }
 
-  public openConcept(code?: string, parentCode?: string): void {
-    const lastVersionCode = this.dev && this.findLastVersionCode();
+
+  protected openConcept(code?: string, parentCode?: string): void {
+    const lastVersionCode = this.dev && this.findLastCodeSystemVersion();
     if (!code) {
       const path = '/resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/add') : '/concepts/add');
       this.router.navigate([path], {queryParams: {parent: parentCode}});
@@ -132,31 +202,16 @@ export class CodeSystemConceptsListComponent implements OnInit {
     this.router.navigate([path], {queryParams: {parent: parentCode}});
   }
 
-  private expandTree(): void {
-    if (!this.codeSystemId) {
-      return;
-    }
-    const params = new ConceptSearchParams();
-    params.associationType = 'is-a';
-    params.limit = 1;
-    this.codeSystemService.searchConcepts(this.codeSystemId!, params).subscribe(resp => {
-      if (resp.data.length > 0) {
-        this.group.open = true;
-        this.group.type = 'association';
-        this.group.association = 'is-a';
-        this.groupConcepts(this.group.association);
-      }
-    });
-  }
 
-  private findLastVersionCode(): string | undefined {
-    return this.codeSystemVersions?.filter(v => ['draft', 'active'].includes(v.status!))
-      .sort((a, b) => compareValues(a.releaseDate, b.releaseDate))?.[0]?.version;
-  }
-
-  public findLastVersion(versions: CodeSystemEntityVersion[]): CodeSystemEntityVersion | undefined {
+  protected findLastEntityVersion = (versions: CodeSystemEntityVersion[]): CodeSystemEntityVersion => {
     return versions
-      .filter(v => ['draft', 'active'].includes(v.status!))
-      .sort((a, b) => new Date(a.created!) > new Date(b.created!) ? -1 : new Date(a.created!) > new Date(b.created!) ? 1 : 0)?.[0];
-  }
+      .filter(v => ['draft', 'active'].includes(v.status))
+      .sort((a, b) => compareValues(a.created, b.created))?.[0];
+  };
+
+  private findLastCodeSystemVersion = (): string => {
+    return this.codeSystemVersions
+      ?.filter(v => ['draft', 'active'].includes(v.status))
+      ?.sort((a, b) => compareValues(a.releaseDate, b.releaseDate))?.[0]?.version;
+  };
 }

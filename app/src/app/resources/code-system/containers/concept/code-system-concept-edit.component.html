@@ -70,6 +70,7 @@
                 <tw-sequence-value-generator *ngIf="codeSystem?.sequence" [code]="codeSystem.sequence" (valueGenerated)="concept.code = $event"/>
               </div>
             </m-form-item>
+
             <m-form-item mName="description" mLabel="entities.code-system-concept.description">
               <m-textarea name="description" [(ngModel)]="concept.description"></m-textarea>
             </m-form-item>
@@ -79,9 +80,11 @@
             <m-form-item mLabel="entities.code-system-entity-version.status">
               <tw-status-tag [status]="conceptVersion.status"></tw-status-tag>
             </m-form-item>
+
             <m-form-item mName="created" mLabel="entities.code-system-entity-version.created" *ngIf="conceptVersion.created">
               {{conceptVersion.created | localDateTime}}
             </m-form-item>
+
             <m-form-item mName="versionDescription" mLabel="entities.code-system-entity-version.description">
               <m-textarea *ngIf="conceptVersion.status === 'draft'" name="versionDescription" [(ngModel)]="conceptVersion.description"></m-textarea>
               <label *ngIf="conceptVersion.status !== 'draft'">{{conceptVersion.description}}</label>
@@ -95,17 +98,20 @@
           [codeSystemId]="codeSystem?.id"
           [designations]="conceptVersion?.designations"
           [supportedLangs]="codeSystem?.supportedLanguages"
-          [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-designation-edit>
+          [viewMode]="conceptVersion?.status !== 'draft'"
+      ></tw-code-system-designation-edit>
 
       <tw-code-system-property-value-edit #propertyValueEdit class="padded"
           [codeSystemId]="codeSystemId"
           [propertyValues]="conceptVersion?.propertyValues"
-          [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-property-value-edit>
+          [viewMode]="conceptVersion?.status !== 'draft'"
+      ></tw-code-system-property-value-edit>
 
       <tw-code-system-association-edit #associationEdit class="padded"
           [codeSystemId]="codeSystemId"
           [associations]="conceptVersion?.associations"
-          [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-association-edit>
+          [viewMode]="conceptVersion?.status !== 'draft'"
+      ></tw-code-system-association-edit>
     </ng-container>
 
 

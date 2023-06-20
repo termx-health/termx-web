@@ -36,7 +36,7 @@
   <div nz-col [nzMd]="14" [nzSm]="18" [nzXs]="24">
     <m-spinner [mLoading]="isLoading">
       <m-card mTitle="web.code-system-concept.form.version.information" [mShowSkeleton]="loading['init']">
-        <form *ngIf="concept && conceptVersion">
+        <div *ngIf="concept && conceptVersion">
           <m-form-item mLabel="entities.code-system-entity-version.status">
             <tw-status-tag [status]="conceptVersion.status"></tw-status-tag>
           </m-form-item>
@@ -48,24 +48,27 @@
           <m-form-item mLabel="entities.code-system-entity-version.description">
             {{conceptVersion.description ?? '-'}}
           </m-form-item>
-        </form>
+        </div>
       </m-card>
     </m-spinner>
 
     <tw-code-system-designation-edit
         class="padded"
+        [codeSystemId]="codeSystemId"
         [designations]="conceptVersion?.designations"
         viewMode
     ></tw-code-system-designation-edit>
 
     <tw-code-system-property-value-edit
         class="padded"
+        [codeSystemId]="codeSystemId"
         [propertyValues]="conceptVersion?.propertyValues"
         viewMode
     ></tw-code-system-property-value-edit>
 
     <tw-code-system-association-edit
         class="padded"
+        [codeSystemId]="codeSystemId"
         [associations]="conceptVersion?.associations"
         viewMode
     ></tw-code-system-association-edit>
