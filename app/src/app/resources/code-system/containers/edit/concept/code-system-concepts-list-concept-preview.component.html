@@ -1,0 +1,100 @@
+<m-card *ngIf="version"
+    mDisplay="bordered"
+    class="tw-card-inside-wrapper recursive-card-inside-flatten"
+    style="flex: 2"
+>
+  <div *m-card-header class="m-justify-between">
+    <div class="m-items-middle">
+      <span class="m-card__title">{{version.code}}</span>
+      <m-divider mVertical/>
+      <tw-status-tag [status]="version.status"/>
+    </div>
+
+    <m-icon-button mIcon="edit" [routerLink]="editRoute"/>
+  </div>
+
+
+  <div *m-card-content>
+    <m-form-item *ngIf="version.description" mLabel="entities.code-system-entity-version.description">
+      {{version.description}}
+    </m-form-item>
+
+
+    <div class="tw-flex-container">
+      <!-- Designations -->
+      <div *ngIf="version.designations?.length">
+        <div class="title">
+          {{'entities.code-system-entity-version.designations' | translate}}
+        </div>
+
+        <ng-container *ngIf="version.designations | apply: collectDesignations as groups">
+          <ng-container *ngFor="let dType of groups | keys">
+            <div class="m-subtitle">
+              {{dType}}
+            </div>
+
+            <div class="col offset">
+              <div *ngFor="let d of groups[dType] | sort: 'language'" class="m-justify-between">
+                <div><span class="italic">{{d.language}}</span> | {{d.name}}</div>
+
+                <div class="m-items-middle">
+                  <m-icon [mOptions]="{nzTheme : d.preferred ? 'fill' : 'outline'}" [mCode]="'star'"/>
+                  <tw-status-tag [status]="d.status"/>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+      </div>
+
+
+      <!-- Properties -->
+      <div *ngIf="version.propertyValues?.length">
+        <div class="title">
+          {{'entities.code-system-entity-version.property-values' | translate}}
+        </div>
+
+        <div class="col two-col">
+          <ng-container *ngFor="let pv of version.propertyValues">
+            <div>
+              {{(pv.entityPropertyId | apply: getProperty: entityProperties)?.name ?? pv.entityPropertyId}}
+            </div>
+
+            <tw-property-value-input
+                [ngModel]="pv.value"
+                [property]="pv.entityPropertyId | apply: getProperty: entityProperties"
+                [codeSystem]="codeSystemId"
+                viewMode
+            />
+          </ng-container>
+        </div>
+      </div>
+
+
+      <!-- Associations -->
+      <div *ngIf="version.associations?.length">
+        <div class="title">
+          {{'entities.code-system-entity-version.associations' | translate}}
+        </div>
+
+        <div class="col">
+          <div *ngFor="let a of version.associations" class="m-justify-between">
+            <div><span class="italic">{{a.associationType}}</span> | {{a.targetId | localizedConceptName: {codeSystem: codeSystemId} | async}}</div>
+
+            <div>
+              <tw-status-tag [status]="a.status"/>
+              <label>{{a.orderNumber}}</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div *m-card-footer class="tw-card__meta-footer">
+    <m-form-item mLabel="entities.code-system-entity-version.created">
+      {{version.created | localDateTime}}
+    </m-form-item>
+  </div>
+</m-card>

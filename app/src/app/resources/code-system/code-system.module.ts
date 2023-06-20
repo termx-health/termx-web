@@ -31,6 +31,9 @@ import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {SequenceLibModule} from 'term-web/sequence/_lib/sequence-lib.module';
 import {CodeSystemCompareComponent} from 'term-web/resources/code-system/containers/concept/compare/code-system-compare.component';
 import {ResourceModule} from 'term-web/resources/resource/resource.module';
+import {
+  CodeSystemConceptsListConceptPreviewComponent
+} from 'term-web/resources/code-system/containers/edit/concept/code-system-concepts-list-concept-preview.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -85,6 +88,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemVersionEntityVersionsListComponent,
 
     CodeSystemConceptsListComponent,
+    CodeSystemConceptsListConceptPreviewComponent,
     CodeSystemConceptViewComponent,
     CodeSystemConceptEditComponent,
     CodeSystemDesignationEditComponent,

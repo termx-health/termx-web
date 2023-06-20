@@ -25,7 +25,7 @@
         </m-button>
       </div>
 
-      <tw-add-button *ngIf="!viewMode" (click)="openConcept()">
+      <tw-add-button *ngIf="!viewMode && null | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">
         {{'web.code-system.form.concepts.add-concept' | translate}}
       </tw-add-button>
     </div>
@@ -131,7 +131,7 @@
       >
         <tr *mTableHead>
           <th>{{'entities.code-system-concept.code' | translate}}</th>
-          <th colspan="2" style="text-align: left">{{'entities.code-system-entity-version.designations' | translate}}</th>
+          <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
           <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
           <th>{{'entities.code-system-concept.description' | translate}}</th>
           <th class="tw-table-min-width">{{'web.code-system-concept.list.external' | translate}}</th>
@@ -157,7 +157,7 @@
       <m-table *ngIf="group.open && rootConcepts" [mData]="rootConcepts" mSize="small">
         <tr *mTableHead>
           <th>{{'entities.code-system-concept.code' | translate}}</th>
-          <th colspan="2" style="text-align: left">{{'entities.code-system-entity-version.designations' | translate}}</th>
+          <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
           <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
           <th>{{'entities.code-system-concept.description' | translate}}</th>
           <th class="tw-table-min-width">{{'web.code-system-concept.list.external' | translate}}</th>
@@ -177,44 +177,14 @@
     </div>
     <!-- //Table views -->
 
-    <m-card *ngIf="selectedConcept?.version" mDisplay="bordered" class="tw-card-inside-wrapper recursive-card-inside-flatten" style="flex: 2">
-      <div class="tw-flex-container">
-        <m-card [mTitle]="selectedConcept.version.code">
-          <m-form-item mLabel="entities.code-system-entity-version.status">
-            <tw-status-tag [status]="selectedConcept.version.status"></tw-status-tag>
-          </m-form-item>
 
-          <m-form-item mLabel="entities.code-system-entity-version.created">
-            {{selectedConcept.version.created | localDateTime}}
-          </m-form-item>
-
-          <m-form-item mLabel="entities.code-system-entity-version.description">
-            {{selectedConcept.version.description ?? '-'}}
-          </m-form-item>
-        </m-card>
-
-        <tw-code-system-designation-edit
-            class="padded"
-            [codeSystemId]="codeSystemId"
-            [designations]="selectedConcept.version.designations"
-            viewMode
-        ></tw-code-system-designation-edit>
-
-        <tw-code-system-property-value-edit
-            class="padded"
-            [codeSystemId]="codeSystemId"
-            [propertyValues]="selectedConcept.version.propertyValues"
-            viewMode
-        ></tw-code-system-property-value-edit>
-
-        <tw-code-system-association-edit
-            class="padded"
-            [codeSystemId]="codeSystemId"
-            [associations]="selectedConcept.version.associations"
-            viewMode
-        ></tw-code-system-association-edit>
-      </div>
-    </m-card>
+    <tw-code-system-concepts-list-concept-preview
+        *ngIf="selectedConcept?.version"
+        [codeSystemId]="codeSystemId"
+        [version]="selectedConcept.version"
+        [editRoute]="(selectedConcept.code | apply: getConceptEditRoute)?.path"
+        style="flex: 2"
+    ></tw-code-system-concepts-list-concept-preview>
   </div>
 
 
@@ -244,24 +214,19 @@
             (mClick)="$event.preventDefault(); $event.stopImmediatePropagation(); loadChildConcepts(node)"
         ></m-icon-button>
 
-        <a class="nowrap" (click)="openConcept(node.code)">
+        <a *ngIf="node.code | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">
           {{node.code}}
         </a>
       </div>
     </td>
-
-    <td class="nowrap">
-      <div class="m-bold" *ngFor="let designation of (node.concept.versions | apply:findLastEntityVersion)?.designations">
-        {{designation.language}}
+    <td>
+      <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
+        <ng-container *ngFor="let designation of (node.concept.versions | apply: findLastEntityVersion)?.designations | sort: 'language'">
+          <span class="m-bold">{{designation.language}}</span>
+          {{designation.name}}
+        </ng-container>
       </div>
     </td>
-
-    <td class="nowrap">
-      <div *ngFor="let designation of (node.concept.versions | apply:findLastEntityVersion)?.designations">
-        {{designation.name}}
-      </div>
-    </td>
-
     <td>
       <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
         <ng-container *ngFor="let property of (node.concept.versions | apply:findLastEntityVersion)?.propertyValues">
@@ -276,23 +241,21 @@
         </ng-container>
       </div>
     </td>
-
     <td>
       <m-abbreviate [mValue]="node.concept.description" mLength="150"/>
     </td>
-
     <td>
       <m-icon mCode="check" *ngIf="node.concept.codeSystem !== codeSystemId"></m-icon>
     </td>
-
     <td>
       <m-dropdown>
-        <a *m-dropdown-item (click)="openConcept(null, node.concept.code)">
-          {{'web.code-system-concept.list.add-concept-child' | translate}}
-        </a>
+        <ng-container *ngIf="null | apply: getConceptEditRoute: node.code as route">
+          <a *m-dropdown-item [routerLink]="route?.path" [queryParams]="route?.query">
+            {{'web.code-system-concept.list.add-concept-child' | translate}}
+          </a>
+        </ng-container>
       </m-dropdown>
     </td>
   </ng-template>
-
 </div>
 

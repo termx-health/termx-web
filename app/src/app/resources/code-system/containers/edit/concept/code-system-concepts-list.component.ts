@@ -36,13 +36,6 @@ interface ConceptNode {
         align-self: center;
       }
     }
-
-    .nowrap {
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
   `]
 })
 export class CodeSystemConceptsListComponent implements OnInit {
@@ -202,16 +195,16 @@ export class CodeSystemConceptsListComponent implements OnInit {
   }
 
 
-  protected openConcept(code?: string, parentCode?: string): void {
+  protected getConceptEditRoute = (code?: string, parentCode?: string): {path: any[], query: any} => {
     const lastVersionCode = this.dev && this.findLastCodeSystemVersion();
     if (!code) {
-      const path = '/resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/add') : '/concepts/add');
-      this.router.navigate([path], {queryParams: {parent: parentCode}});
-      return;
+      const path = `/resources/code-systems/${this.codeSystemId}${lastVersionCode ? `/versions/${lastVersionCode}/concepts/add` : '/concepts/add'}`;
+      return {path: [path], query: {parent: parentCode}};
     }
-    const path = '/resources/code-systems/' + this.codeSystemId + (lastVersionCode ? ('/versions/' + lastVersionCode + '/concepts/') : '/concepts/') + code +
-      (!this.viewMode ? '/edit' : '/view');
-    this.router.navigate([path], {queryParams: {parent: parentCode}});
+
+    const mode = this.viewMode ? '/view' : '/edit';
+    const path = `/resources/code-systems/${this.codeSystemId}${lastVersionCode ? `/versions/${lastVersionCode}/concepts/` : '/concepts/'}${code}${mode}`;
+    return {path: [path], query: {parent: parentCode}};
   }
 
 
