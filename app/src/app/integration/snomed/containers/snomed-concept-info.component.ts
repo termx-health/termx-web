@@ -71,7 +71,7 @@ export class SnomedConceptInfoComponent implements OnChanges {
     const refsetDescriptions: {[key: string]: SnomedDescription[]} = {};
     descriptions.forEach(description => {
       Object.keys(description.acceptabilityMap!).forEach(refset => {
-        refsetDescriptions[refset] = refsetDescriptions[refset] ? [...refsetDescriptions[refset], description] : [];
+        refsetDescriptions[refset] = refsetDescriptions[refset] ? [...refsetDescriptions[refset], description] : [description];
       });
     });
     return refsetDescriptions;
