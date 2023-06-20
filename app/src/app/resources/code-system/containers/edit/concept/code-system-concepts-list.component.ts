@@ -35,7 +35,15 @@ interface ConceptNode {
       .m-tree-toggle {
         align-self: center;
       }
-    }`]
+    }
+
+    .nowrap {
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+  `]
 })
 export class CodeSystemConceptsListComponent implements OnInit {
   @Input() @BooleanInput() public dev?: boolean | string;

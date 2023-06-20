@@ -120,7 +120,7 @@
 
   <div class="m-justify-between m-items-top">
     <!-- Table views -->
-    <div style="flex: 3">
+    <div style="flex: 4; max-width: 100%;">
       <m-backend-table
           *ngIf="!group.open"
           [mResult]="searchResult"
@@ -131,7 +131,7 @@
       >
         <tr *mTableHead>
           <th>{{'entities.code-system-concept.code' | translate}}</th>
-          <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
+          <th colspan="2" style="text-align: left">{{'entities.code-system-entity-version.designations' | translate}}</th>
           <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
           <th>{{'entities.code-system-concept.description' | translate}}</th>
           <th class="tw-table-min-width">{{'web.code-system-concept.list.external' | translate}}</th>
@@ -157,7 +157,7 @@
       <m-table *ngIf="group.open && rootConcepts" [mData]="rootConcepts" mSize="small">
         <tr *mTableHead>
           <th>{{'entities.code-system-concept.code' | translate}}</th>
-          <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
+          <th colspan="2" style="text-align: left">{{'entities.code-system-entity-version.designations' | translate}}</th>
           <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
           <th>{{'entities.code-system-concept.description' | translate}}</th>
           <th class="tw-table-min-width">{{'web.code-system-concept.list.external' | translate}}</th>
@@ -177,7 +177,7 @@
     </div>
     <!-- //Table views -->
 
-    <m-card *ngIf="selectedConcept?.version" mDisplay="bordered" class="tw-card-inside-wrapper recursive-card-inside-flatten" style="flex: 1">
+    <m-card *ngIf="selectedConcept?.version" mDisplay="bordered" class="tw-card-inside-wrapper recursive-card-inside-flatten" style="flex: 2">
       <div class="tw-flex-container">
         <m-card [mTitle]="selectedConcept.version.code">
           <m-form-item mLabel="entities.code-system-entity-version.status">
@@ -244,24 +244,25 @@
             (mClick)="$event.preventDefault(); $event.stopImmediatePropagation(); loadChildConcepts(node)"
         ></m-icon-button>
 
-        <div>
-          <a (click)="openConcept(node.code)">
-            {{node.code}}
-          </a>
-        </div>
+        <a class="nowrap" (click)="openConcept(node.code)">
+          {{node.code}}
+        </a>
       </div>
     </td>
 
-    <td style="width: 40%">
-      <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
-        <ng-container *ngFor="let designation of (node.concept.versions | apply:findLastEntityVersion)?.designations">
-          <div class="m-bold">{{designation.language}}</div>
-          <div>{{designation.name}}</div>
-        </ng-container>
+    <td class="nowrap">
+      <div class="m-bold" *ngFor="let designation of (node.concept.versions | apply:findLastEntityVersion)?.designations">
+        {{designation.language}}
       </div>
     </td>
 
-    <td style="width: 30%">
+    <td class="nowrap">
+      <div *ngFor="let designation of (node.concept.versions | apply:findLastEntityVersion)?.designations">
+        {{designation.name}}
+      </div>
+    </td>
+
+    <td>
       <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
         <ng-container *ngFor="let property of (node.concept.versions | apply:findLastEntityVersion)?.propertyValues">
           <div class="m-bold">{{property.entityProperty}}</div>
