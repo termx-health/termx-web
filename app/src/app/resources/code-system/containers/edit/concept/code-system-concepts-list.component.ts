@@ -162,7 +162,11 @@ export class CodeSystemConceptsListComponent implements OnInit {
 
 
   protected selectConcept(concept: CodeSystemConcept): void {
-    this.selectedConcept = {code: concept.code, version: concept.versions[concept.versions.length - 1]};
+    if (concept?.code === this.selectedConcept?.code) {
+      this.selectedConcept = undefined;
+    } else {
+      this.selectedConcept = {code: concept.code, version: concept.versions[concept.versions.length - 1]};
+    }
   }
 
 
