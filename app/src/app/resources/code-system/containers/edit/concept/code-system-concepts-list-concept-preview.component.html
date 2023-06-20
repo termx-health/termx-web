@@ -38,8 +38,8 @@
                 <div><span class="italic">{{d.language}}</span> | {{d.name}}</div>
 
                 <div class="m-items-middle">
+                  <span class="tw-circled" [style.color]="d.status === 'draft' ? 'var(--color-amber-7)' : 'initial'">{{d.status[0] | uppercase}}</span>
                   <m-icon [mOptions]="{nzTheme : d.preferred ? 'fill' : 'outline'}" [mCode]="'star'"/>
-                  <tw-status-tag [status]="d.status"/>
                 </div>
               </div>
             </div>
@@ -56,7 +56,7 @@
 
         <div class="col two-col">
           <ng-container *ngFor="let pv of version.propertyValues">
-            <div>
+            <div style="text-align: right">
               {{(pv.entityPropertyId | apply: getProperty: entityProperties)?.name ?? pv.entityPropertyId}}
             </div>
 
