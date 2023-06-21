@@ -13,7 +13,7 @@ export class FhirConceptMapLibService {
   public constructor(protected http: HttpClient) { }
 
   public loadConceptMap(id: string, version?: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${id}`, {params: SearchHttpParams.build({version: version})});
+    return this.http.get<any>(`${this.baseUrl}/${id}${version ? '@' + version : ''}`);
   }
 
   public import(urls: FhirParameters): Observable<FhirParameters> {
