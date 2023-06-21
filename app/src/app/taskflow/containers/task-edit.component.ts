@@ -3,12 +3,14 @@ import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {
-  Space, SpaceLibService,
+  Project,
+  ProjectLibService,
   Task,
   TaskActivity,
   TaskActivityTransition,
   TaskContextItem,
-  TaskflowUser, UserLibService,
+  TaskflowUser,
+  UserLibService,
   Workflow,
   WorkflowLibService
 } from 'term-web/taskflow/_lib';
@@ -28,7 +30,7 @@ export class TaskEditComponent implements OnInit {
   protected mode: string;
 
   protected users: TaskflowUser[];
-  protected spaces: Space[];
+  protected projects: Project[];
   protected workflows: Workflow[];
 
   @ViewChild("form") public form?: NgForm;
@@ -36,7 +38,7 @@ export class TaskEditComponent implements OnInit {
   public constructor(
     private taskService: TaskService,
     private workflowService: WorkflowLibService,
-    private spaceService: SpaceLibService,
+    private projectService: ProjectLibService,
     private userService: UserLibService,
     private route: ActivatedRoute,
     private router: Router,
@@ -62,7 +64,7 @@ export class TaskEditComponent implements OnInit {
       .subscribe(([task, activities]) => {
         this.task = this.prepare(task);
         this.taskActivities = activities;
-        this.loadWorkflows(task.spaceId);
+        this.loadWorkflows(task.projectId);
       });
   }
 
@@ -94,11 +96,11 @@ export class TaskEditComponent implements OnInit {
     });
   }
 
-  protected loadWorkflows(spaceId: number): void {
-    if (!spaceId) {
+  protected loadWorkflows(projectId: number): void {
+    if (!projectId) {
       return;
     }
-    this.workflowService.search({spaceIds: String(spaceId), limit: -1}).subscribe(w => this.workflows = w.data);
+    this.workflowService.search({projectIds: String(projectId), limit: -1}).subscribe(w => this.workflows = w.data);
   }
 
   protected getTargetStatuses = (wfId: number, status: string, workflows: Workflow[]): string[] => {
@@ -144,10 +146,10 @@ export class TaskEditComponent implements OnInit {
   private loadData(): void {
     this.loader.wrap('load', forkJoin([
       this.userService.load(),
-      this.spaceService.loadAll()
-    ])).subscribe(([users, spaces]) => {
+      this.projectService.loadAll()
+    ])).subscribe(([users, projects]) => {
       this.users = users;
-      this.spaces = spaces;
+      this.projects = projects;
     });
   }
 

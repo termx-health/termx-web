@@ -2,7 +2,7 @@ import {TaskflowUser} from 'term-web/taskflow/_lib';
 
 export class Task {
   public id?: number;
-  public spaceId?: number;
+  public projectId?: number;
   public workflowId?: number;
   public parentId?: number;
   public number?: string;

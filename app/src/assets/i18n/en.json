@@ -1021,12 +1021,12 @@
     },
     "task": {
       "add-btn": "Add task",
-      "select-space": "Select space",
+      "select-project": "Select project",
       "activity": "Activity",
       "context": "Context",
       "add-comment": "Add new comment",
       "filter": {
-        "space": "Space",
+        "project": "Project",
         "status": "Status",
         "priority": "Priority",
         "assignee": "Assignee",
@@ -1598,7 +1598,7 @@
       "created": "Created",
       "modified": "Modified",
       "modified-by": "Modified by",
-      "space": "Space",
+      "project": "Project",
       "workflow": "Workflow"
     }
   },

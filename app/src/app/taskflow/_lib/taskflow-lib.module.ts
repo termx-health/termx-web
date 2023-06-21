@@ -3,7 +3,7 @@ import {FormsModule} from '@angular/forms';
 import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {TaskLibService} from 'term-web/taskflow/_lib/services/task-lib-service';
-import {SpaceLibService} from 'term-web/taskflow/_lib/services/space-lib-service';
+import {ProjectLibService} from 'term-web/taskflow/_lib/services/project-lib.service';
 import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 import {TaskTypeComponent} from 'term-web/taskflow/_lib/containers/task-type.component';
 import {WorkflowLibService} from 'term-web/taskflow/_lib/services/workflow-lib-service';
@@ -21,7 +21,7 @@ import {UserLibService} from 'term-web/taskflow/_lib/services/user-lib-service';
   ],
   providers: [
     TaskLibService,
-    SpaceLibService,
+    ProjectLibService,
     WorkflowLibService,
     UserLibService,
   ],

@@ -5,7 +5,7 @@ export class TaskSearchParams extends QueryParams {
   public textContains?: string;
   public statuses?: string;
   public statusesNe?: string;
-  public spaceIds?: string;
+  public projectIds?: string;
   public priorities?: string;
   public types?: string;
   public context?: string;

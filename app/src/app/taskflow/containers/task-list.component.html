@@ -21,9 +21,9 @@
       </div>
     </m-form-item>
 
-    <m-form-item [mLabel]="'web.task.filter.space'" mName="space">
-      <m-select name="space" [(ngModel)]="filter['space']" multiple>
-        <m-option *ngFor="let s of spaces" [mLabel]="s.names | localName" [mValue]="s.id"></m-option>
+    <m-form-item [mLabel]="'web.task.filter.project'" mName="project">
+      <m-select name="project" [(ngModel)]="filter['project']" multiple>
+        <m-option *ngFor="let s of projects" [mLabel]="s.names | localName" [mValue]="s.id"></m-option>
       </m-select>
     </m-form-item>
     <m-form-item [mLabel]="'web.task.filter.status'">

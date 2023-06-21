@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable, tap} from 'rxjs';
-import {ComponentStateStore, copyDeep, DestroyService, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {Space, SpaceLibService, Task, TaskflowUser, TaskLibService, TaskSearchParams, UserLibService} from 'term-web/taskflow/_lib';
+import {ComponentStateStore, copyDeep, DestroyService, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
+import {Project, ProjectLibService, Task, TaskflowUser, TaskLibService, TaskSearchParams, UserLibService} from 'term-web/taskflow/_lib';
 import {AuthService} from 'term-web/core/auth';
 
 @Component({
@@ -16,14 +16,14 @@ export class TaskListComponent implements OnInit {
   protected filter: {[key: string]: any} = {};
   protected loader = new LoadingManager();
 
-  protected spaces: Space[];
+  protected projects: Project[];
   protected users: TaskflowUser[];
 
   protected readonly STORE_KEY = 'task-list';
 
   public constructor(
     private taskService: TaskLibService,
-    private spaceService: SpaceLibService,
+    private projectService: ProjectLibService,
     private userService: UserLibService,
     private stateStore: ComponentStateStore,
     private auth: AuthService,
@@ -36,7 +36,7 @@ export class TaskListComponent implements OnInit {
       this.searchInput = this.query.textContains;
     }
     this.loadData();
-    this.loadSpaces();
+    this.loadProjects();
     this.loadUsers();
   }
 
@@ -47,7 +47,7 @@ export class TaskListComponent implements OnInit {
   private search(): Observable<SearchResult<Task>> {
     const q = copyDeep(this.query);
     q.textContains = this.searchInput;
-    q.spaceIds = this.filter['space'] && this.filter['space']?.join(',') || undefined;
+    q.projectIds = this.filter['project'] && this.filter['project']?.join(',') || undefined;
     q.priorities = this.filter['priority'] && this.filter['priority']?.join(',') || undefined;
     q.types = this.filter['type'] && this.filter['type']?.join(',') || undefined;
     q.createdGe = this.filter['created-from'];
@@ -71,8 +71,8 @@ export class TaskListComponent implements OnInit {
     this.filter = {};
   }
 
-  private loadSpaces(): void {
-    this.loader.wrap('space-list', this.spaceService.loadAll()).subscribe(spaces => this.spaces = spaces);
+  private loadProjects(): void {
+    this.loader.wrap('project-list', this.projectService.loadAll()).subscribe(projects => this.projects = projects);
   }
 
   private loadUsers(): void {
