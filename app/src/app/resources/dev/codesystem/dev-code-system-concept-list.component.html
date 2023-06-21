@@ -29,12 +29,7 @@
         </div>
 
         <m-card class="m-card-inside" mTitle="entities.code-system.concepts">
-          <tw-code-system-concepts-list
-              [dev]="true"
-              [codeSystemId]="codeSystemId"
-              [codeSystemVersions]="codeSystem.versions"
-              [properties]="codeSystem.properties"
-          ></tw-code-system-concepts-list>
+          <tw-code-system-concepts-list [codeSystemId]="codeSystemId" dev></tw-code-system-concepts-list>
         </m-card>
       </m-card>
     </m-spinner>

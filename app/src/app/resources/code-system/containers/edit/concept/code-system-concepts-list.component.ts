@@ -1,6 +1,6 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptSearchParams, EntityProperty} from 'term-web/resources/_lib';
-import {debounceTime, Observable, of, startWith, Subject, switchMap} from 'rxjs';
+import {Component, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptSearchParams} from 'term-web/resources/_lib';
+import {Observable, of} from 'rxjs';
 import {BooleanInput, compareValues, copyDeep, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {Router} from '@angular/router';
@@ -38,14 +38,12 @@ interface ConceptNode {
     }
   `]
 })
-export class CodeSystemConceptsListComponent implements OnInit {
-  @Input() @BooleanInput() public dev?: boolean | string;
+export class CodeSystemConceptsListComponent implements OnInit, OnChanges {
+  @Input() @BooleanInput() public dev: boolean | string;
   @Input() @BooleanInput() public viewMode: boolean | string;
-  @Input() public codeSystemId?: string;
-  @Input() public codeSystemVersions?: CodeSystemVersion[];
-  @Input() public properties?: EntityProperty[];
+  @Input() public codeSystemId: string;
+  protected codeSystem: CodeSystem;
 
-  protected search$ = new Subject<void>();
   protected searchInput: {input?: string, type: 'eq' | 'contains'} = {type: 'contains'};
 
   protected filter: {
@@ -62,8 +60,13 @@ export class CodeSystemConceptsListComponent implements OnInit {
     property?: string
   } = {open: false};
 
+  protected tableView: {
+    langs?: string[],
+    properties?: string[]
+  } = {};
+
   protected query = new ConceptSearchParams();
-  protected searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
+  protected searchResult = SearchResult.empty<CodeSystemConcept>();
   protected rootConcepts?: ConceptNode[];
 
   protected selectedConcept: {code: string, version: CodeSystemEntityVersion};
@@ -78,15 +81,13 @@ export class CodeSystemConceptsListComponent implements OnInit {
     this.query.sort = 'code';
   }
 
-  public ngOnInit(): void {
-    this.search$.pipe(
-      startWith(null),
-      debounceTime(250),
-      switchMap(() => this.search()),
-    ).subscribe(data => {
-      this.searchResult = data;
-    });
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['codeSystemId']) {
+      this.codeSystemService.load(this.codeSystemId, true).subscribe(cs => this.codeSystem = cs);
+    }
+  }
 
+  public ngOnInit(): void {
     this.expandTree();
   }
 
@@ -126,6 +127,9 @@ export class CodeSystemConceptsListComponent implements OnInit {
     return this.loader.wrap('search', this.codeSystemService.searchConcepts(this.codeSystemId, q));
   }
 
+  protected reset(): void {
+    this.filter = {open: false};
+  }
 
   protected initFilterLanguages(supportedLanguages: string[]): void {
     if (!supportedLanguages) {
@@ -205,7 +209,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
     const mode = this.viewMode ? '/view' : '/edit';
     const path = `/resources/code-systems/${this.codeSystemId}${lastVersionCode ? `/versions/${lastVersionCode}/concepts/` : '/concepts/'}${code}${mode}`;
     return {path: [path], query: {parent: parentCode}};
-  }
+  };
 
 
   protected findLastEntityVersion = (versions: CodeSystemEntityVersion[]): CodeSystemEntityVersion => {
@@ -215,7 +219,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
   };
 
   private findLastCodeSystemVersion = (): string => {
-    return this.codeSystemVersions
+    return this.codeSystem?.versions
       ?.filter(v => ['draft', 'active'].includes(v.status))
       ?.sort((a, b) => compareValues(a.releaseDate, b.releaseDate))?.[0]?.version;
   };
