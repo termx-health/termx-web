@@ -50,15 +50,15 @@ export class FhirCodeSystemComponent implements OnInit {
   }
 
   public getDisplays(designations: any[]): any[] {
-    return designations.filter(d => d.use.code === 'display');
+    return designations?.filter(d => d.use.code === 'display');
   }
 
   public getDefinitions(designations: any[]): any[] {
-    return designations.filter(d => d.use.code === 'definition');
+    return designations?.filter(d => d.use.code === 'definition');
   }
 
   public getProperties(properties: any[], code: string): any[] {
-    return properties.filter(p => p.code === code);
+    return properties?.filter(p => p.code === code);
   }
 
   public getPropertyValue(properties: any[]): any {
