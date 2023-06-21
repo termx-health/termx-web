@@ -1,5 +1,4 @@
 import {ValueSetVersionRuleSet} from './value-set-version-rule-set';
-import {ValueSetVersionConcept} from './value-set-version-concept';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {ValueSetSnapshot} from 'term-web/resources/_lib';
 

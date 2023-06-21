@@ -1,110 +1,55 @@
-<nz-tabset nzLinkRouter>
-  <nz-tab>
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" class="m-items-middle">
-      {{'web.code-system.tabs.code-system' | translate}}
-    </a>
-    <m-spinner [mLoading]="loading['save']">
-      <m-card [mTitle]="mode === 'edit' ? 'web.code-system.form.edit-header' : 'web.code-system.form.add-header'" [mShowSkeleton]="loading['init']" autofocus>
-        <form #form="ngForm" *ngIf="codeSystem">
-          <m-form-item mName="id" mLabel="entities.code-system.id" required>
-            <m-input name="id" [(ngModel)]="codeSystem.id" [disabled]="mode === 'edit'" required></m-input>
-          </m-form-item>
+<m-spinner [mLoading]="loader.state['save']">
+  <form #form="ngForm" *ngIf="codeSystem">
+    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 1rem">
+      <m-card [mTitle]="'web.code-system.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+        <div *mCardContent="!loader.isLoading">
+          <tw-resource-form resourceType="CodeSystem" [resource]="codeSystem" [mode]="mode"></tw-resource-form>
 
           <m-form-item mName="baseCodeSystem" mLabel="entities.code-system.base-code-system">
             <tw-code-system-search name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive></tw-code-system-search>
           </m-form-item>
 
-          <m-form-item mLabel="entities.code-system.name">
-            <m-multi-language-input name="name" [(ngModel)]="codeSystem.names"></m-multi-language-input>
-          </m-form-item>
+          <m-form-row>
+            <m-form-item *mFormCol mName="content" mLabel="entities.code-system.content" required>
+              <tw-value-set-concept-select name="content"
+                  [(ngModel)]="codeSystem.content"
+                  valueSet="codesystem-content-mode"
+                  required></tw-value-set-concept-select>
+            </m-form-item>
+            <m-form-item *mFormCol mName="caseSensitive" mLabel="entities.code-system.case-sensitivity">
+              <m-select name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive">
+                <m-option mLabel="web.case-sensitive-options.ci" mValue="ci"></m-option>
+                <m-option mLabel="web.case-sensitive-options.cs" mValue="cs"></m-option>
+                <m-option mLabel="web.case-sensitive-options.ics" mValue="ics"></m-option>
+              </m-select>
+            </m-form-item>
+          </m-form-row>
 
-          <m-form-item mName="uri" mLabel="entities.code-system.uri" required>
-            <div class="m-items-middle">
-              <m-input style="width: 100%" name="uri" [(ngModel)]="codeSystem.uri" required></m-input>
-              <a *ngIf="codeSystem.uri | validateUrl" [href]="codeSystem.uri" target="_blank">
-                <m-button>
-                  <m-icon mCode="eye"></m-icon>
-                </m-button>
-              </a>
-            </div>
-          </m-form-item>
+          <m-form-row>
+            <m-form-item *mFormCol mName="hierarchyMeaning" mLabel="entities.code-system.hierarchy-meaning">
+              <tw-association-type-search name="hierarchyMeaning" [(ngModel)]="codeSystem.hierarchyMeaning" valuePrimitive></tw-association-type-search>
+            </m-form-item>
+            <m-form-item *mFormCol mName="sequence" mLabel="entities.code-system.sequence">
+              <tw-sequence-select name="sequence" [(ngModel)]="codeSystem.sequence"></tw-sequence-select>
+            </m-form-item>
+          </m-form-row>
 
-          <m-form-item mName="content" mLabel="entities.code-system.content" required>
-            <tw-value-set-concept-select name="content"
-                [(ngModel)]="codeSystem.content"
-                valueSet="codesystem-content-mode"
-                required
-            ></tw-value-set-concept-select>
-          </m-form-item>
 
-          <m-form-item mName="caseSensitive" mLabel="entities.code-system.case-sensitivity">
-            <m-select name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive">
-              <m-option mLabel="web.case-sensitive-options.ci" mValue="ci"></m-option>
-              <m-option mLabel="web.case-sensitive-options.cs" mValue="cs"></m-option>
-              <m-option mLabel="web.case-sensitive-options.ics" mValue="ics"></m-option>
-            </m-select>
-          </m-form-item>
+          <tw-resource-identifiers [identifiers]="codeSystem.identifiers"></tw-resource-identifiers>
+          <tw-cs-properties [properties]="codeSystem.properties" [codeSystemId]="codeSystem.id"></tw-cs-properties>
+          <tw-resource-contacts [(contacts)]="codeSystem.contacts"></tw-resource-contacts>
+          <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
+          <tw-cs-value-set [codeSystemId]="codeSystem.id"></tw-cs-value-set>
+        </div>
 
-          <m-form-item mName="caseSensitive" mLabel="entities.code-system.supported-languages">
-            <tw-value-set-concept-select name="supportedLanguages"
-                [(ngModel)]="codeSystem.supportedLanguages"
-                valueSet="languages"
-                multiple
-            ></tw-value-set-concept-select>
-          </m-form-item>
-
-          <m-form-item mName="description" mLabel="entities.code-system.description">
-            <m-textarea name="description" [(ngModel)]="codeSystem.description"></m-textarea>
-          </m-form-item>
-
-          <m-form-item mName="sequence" mLabel="entities.code-system.sequence">
-            <tw-sequence-select name="sequence" [(ngModel)]="codeSystem.sequence"></tw-sequence-select>
-          </m-form-item>
-        </form>
-
-        <tw-code-system-versions-list *ngIf="mode === 'edit' && codeSystem"
-            [codeSystemId]="codeSystemId"
-            [versions]="codeSystem.versions"
-        ></tw-code-system-versions-list>
-        <tw-cs-properties #propertiesComponent *ngIf="mode === 'edit' && codeSystem" [codeSystemId]="codeSystemId"></tw-cs-properties>
-        <tw-resource-contacts *ngIf="codeSystem" [(contacts)]="codeSystem.contacts"></tw-resource-contacts>
-
-        <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">
-            {{'core.btn.save' | translate}}
-          </m-button>
-        </ng-container>
+        <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+          {{'core.btn.save' | translate}}
+        </m-button>
       </m-card>
-    </m-spinner>
-  </nz-tab>
 
-  <nz-tab>
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" [queryParams]="{ tab: 'narrative' }">
-      {{'web.code-system.tabs.narrative' | translate}}
-    </a>
-    <ng-template nz-tab>
-      <m-card *ngIf="codeSystem">
-        <m-form-item mName="narrative" [mLabel]="narrativeHeader">
-          <ng-template #narrativeHeader>
-            <div class="m-justify-between">
-              <div class="m-card__title">{{'entities.code-system.narrative' | translate}}</div>
-              <m-button (click)="narrativeRaw = !narrativeRaw" mSize="small" mDisplay="link" mShape="circle">
-                <m-icon [mCode]="narrativeRaw ? 'check-square' : 'form'"></m-icon>
-              </m-button>
-            </div>
-          </ng-template>
-          <m-quill *ngIf="!narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-quill>
-          <m-textarea *ngIf="narrativeRaw" [(ngModel)]="codeSystem.narrative" name="narrative"></m-textarea>
-        </m-form-item>
+      <m-card [mShowSkeleton]="loader.isLoading">
+        <tw-resource-side-info [copyright]="codeSystem.copyright" [permissions]="codeSystem.permissions"></tw-resource-side-info>
       </m-card>
-    </ng-template>
-  </nz-tab>
-  <nz-tab>
-    <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true" [queryParams]="{ tab: 'concepts' }">
-      {{'entities.code-system.concepts' | translate}}
-    </a>
-    <div *ngIf="codeSystem">
-      <tw-code-system-concepts-list [codeSystemId]="codeSystemId"></tw-code-system-concepts-list>
     </div>
-  </nz-tab>
-</nz-tabset>
+  </form>
+</m-spinner>

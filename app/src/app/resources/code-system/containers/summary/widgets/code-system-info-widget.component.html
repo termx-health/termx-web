@@ -1,0 +1,37 @@
+<m-no-data *ngIf="!codeSystem"></m-no-data>
+
+<div *ngIf="codeSystem as cs">
+  <div class="m-items-middle m-bold">
+    <m-icon mCode="key"></m-icon>
+    <span>{{cs.id}}</span>
+  </div>
+  <span>{{cs.description | localName}}</span>
+  <div class="m-items-middle" *ngIf="cs.properties as properties">
+    <m-icon mCode="bars"></m-icon>
+    <span *ngFor="let p of properties;let i = index" class="m-items-middle">{{p?.name}}{{i !== (properties.length - 1) ? ', ' : ''}}</span>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="setting"></m-icon>
+    <span>{{'web.case-sensitive-options.' + cs.caseSensitive | translate}}</span>
+    <m-divider mVertical></m-divider>
+    <span>{{cs.content | localizedConceptName: {valueSet: 'codesystem-content-mode'} | async}}</span>
+    <ng-container *ngIf="cs.experimental">
+      <m-divider mVertical></m-divider>
+      <span>{{'entities.resource.experimental' | translate}}</span>
+    </ng-container>
+  </div>
+  <div class="m-items-middle" *ngIf="(cs | apply:getTelecoms) as telecoms">
+    <m-icon mCode="contacts"></m-icon>
+    <span *ngFor="let t of telecoms;let i = index" class="m-items-middle">{{t?.system}}: {{t?.value}} <m-divider mVertical *ngIf="i !== (telecoms.length - 1)"></m-divider></span>
+  </div>
+  <div class="m-items-middle" *ngIf="cs.publisher">
+    <m-icon mCode="environment"></m-icon>
+    <span>{{cs.publisher | localizedConceptName:{codeSystem: 'publisher'} | async}}</span>
+  </div>
+<!--  <div class="m-items-middle">-->
+<!--    <m-icon mCode="unlock"></m-icon>-->
+<!--  </div>-->
+<!--  <div class="m-items-middle">-->
+<!--    <m-icon mCode="calendar"></m-icon>-->
+<!--  </div>-->
+</div>

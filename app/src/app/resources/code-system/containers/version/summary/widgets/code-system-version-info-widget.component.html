@@ -1,0 +1,53 @@
+<m-no-data *ngIf="!version"></m-no-data>
+
+<div *ngIf="version">
+  <div class="m-justify-between">
+    <div class="m-items-middle">
+      <span class="m-bold">{{version.version}}</span>
+      <m-divider mVertical></m-divider>
+      <span>{{(version.releaseDate | localDate) || '...'}} - {{(version.expirationDate | localDate) || '...'}}</span>
+    </div>
+
+    <tw-status-tag [status]="version.status"></tw-status-tag>
+  </div>
+  <span>{{version.description | localName}}</span>
+  <div class="m-items-middle" *ngIf="version.supportedLanguages">
+    <m-icon mCode="global"></m-icon>
+    <ng-container *ngFor="let lang of version.supportedLanguages; let i = index">
+      <span>{{lang}}</span>
+      <m-divider mVertical *ngIf="i !== (version.supportedLanguages?.length - 1)"></m-divider>
+    </ng-container>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="download"></m-icon>
+    <span>{{'web.code-system-version.summary.info.definition' | translate}} (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
+    <a (mClick)="openJson()"><m-icon mCode="link"></m-icon></a>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="calendar"></m-icon>
+    <span>{{'web.code-system-version.summary.info.last-modified' | translate}}: none <a>{{'web.code-system-version.summary.info.show-changes' | translate}}</a></span>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="calendar"></m-icon>
+    <span>{{'web.code-system-version.summary.info.last-reviewed' | translate}}: none <a>{{'web.code-system-version.summary.info.create-review' | translate}}</a></span>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="calendar"></m-icon>
+    <span>{{'web.code-system-version.summary.info.last-approved' | translate}}: none <a>{{'web.code-system-version.summary.info.create-approve' | translate}}</a></span>
+  </div>
+  <div class="m-items-middle" *twPrivileged="version.codeSystem + '.CodeSystem.publish'">
+    <m-icon mCode="tool"></m-icon>
+    <a *ngIf="version.status !== 'draft'" (mClick)="makeDraft()">{{'web.code-system-version.summary.info.make-draft' | translate}}</a>
+    <a *ngIf="version.status !== 'active' && version.status !== 'retired'" (mClick)="activate()">{{'web.code-system-version.summary.info.activate' | translate}}</a>
+    <ng-container *ngIf="version.status !== 'retired'">
+      <m-divider mVertical></m-divider>
+      <a (mClick)="retire()">{{'web.code-system-version.summary.info.retire' | translate}}</a>
+    </ng-container>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="github"></m-icon>
+    <a>{{'web.code-system-version.summary.info.load-from-github' | translate}}</a>
+    <m-divider mVertical></m-divider>
+    <a>{{'web.code-system-version.summary.info.push-to-github' | translate}}</a>
+  </div>
+</div>

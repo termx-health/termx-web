@@ -1,0 +1,19 @@
+<m-card *ngIf="!hasRelatedValueSet" class="m-card-inside" mTitle="web.dev-code-system-relation.value-set.value-set" [mShowSkeleton]="loader.isLoading">
+  <form #form="ngForm">
+    <m-form-item mName="generate">
+      <m-checkbox [(ngModel)]="generateValueSet" name="generate" (ngModelChange)="generate($event)">{{'web.dev-code-system-relation.value-set.generate' | translate}}</m-checkbox>
+    </m-form-item>
+
+    <m-form-item mName="code" mLabel="web.dev-code-system-relation.value-set.code" [required]="generateValueSet">
+      <m-input [(ngModel)]="valueSet.id" name="code" [required]="generateValueSet"></m-input>
+    </m-form-item>
+
+    <m-form-item mName="publisher" mLabel="web.dev-code-system-relation.value-set.publisher" [required]="generateValueSet">
+      <tw-value-set-concept-select [(ngModel)]="valueSet.publisher" name="publisher" (ngModelChange)="publisherChanged($event)" valueSet="publisher" [required]="generateValueSet"></tw-value-set-concept-select>
+    </m-form-item>
+
+    <m-form-item mName="uri" mLabel="web.dev-code-system-relation.value-set.uri" [required]="generateValueSet">
+      <m-input [(ngModel)]="valueSet.uri" name="uri" [required]="generateValueSet"></m-input>
+    </m-form-item>
+  </form>
+</m-card>

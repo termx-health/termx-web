@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {CodeSystem, CodeSystemSearchParams} from 'term-web/resources/_lib';
+import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemService} from '../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {finalize, Observable, tap} from 'rxjs';
@@ -56,10 +56,6 @@ export class CodeSystemListComponent implements OnInit {
     return this.search().pipe(tap(resp => this.searchResult = resp));
   };
 
-  public parseDomain(uri: string): string {
-    return uri?.split('//')[1]?.split('/')[0];
-  }
-
   public deleteCodeSystem(codeSystemId: string): void {
     this.loading = true;
     this.codeSystemService.delete(codeSystemId).subscribe(() => this.loadData()).add(() => this.loading = false);
@@ -68,4 +64,9 @@ export class CodeSystemListComponent implements OnInit {
   public openFhir(id: string): void {
     window.open(environment.terminologyApi + '/fhir/CodeSystem/' + id, '_blank');
   }
+
+  protected findLastVersion = (versions: CodeSystemVersion[]): CodeSystemVersion => {
+    return  versions?.filter(v => ['draft', 'active'].includes(v.status!))
+      .sort((a, b) => new Date(a.created!) > new Date(b.created!) ? -1 : new Date(a.created!) > new Date(b.created!) ? 1 : 0)?.[0];
+  };
 }

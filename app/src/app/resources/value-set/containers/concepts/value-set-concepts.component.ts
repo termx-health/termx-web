@@ -30,8 +30,4 @@ export class ValueSetConceptsComponent implements OnInit {
         this.versions = versions.data;
       });
   }
-
-  protected toResource = (vs: ValueSet): Resource => {
-    return ResourceUtil.fromValueSet(vs);
-  };
 }

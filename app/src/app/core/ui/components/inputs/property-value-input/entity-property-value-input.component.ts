@@ -99,7 +99,7 @@ export class EntityPropertyValueInputComponent implements OnChanges, ControlValu
   };
 
   private prepareValue(property: EntityProperty): void {
-    if (property.type === 'Coding') {
+    if (property?.type === 'Coding') {
       this.value ??= {};
     }
   }

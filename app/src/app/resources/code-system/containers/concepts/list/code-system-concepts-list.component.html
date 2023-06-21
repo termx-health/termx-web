@@ -1,0 +1,207 @@
+<tw-table [(filterOpen)]="filter.open">
+  <div class="m-justify-between" style="margin-bottom: 1rem">
+    <div class="m-items-middle">
+      <m-button *ngIf="codeSystem.hierarchyMeaning"
+          (click)="groupOpened = !groupOpened; selectedConcept = undefined; filter.open = false"
+          [mDisplay]="groupOpened ? 'primary' : 'default'">
+        <m-icon mCode="folder-open"></m-icon>
+      </m-button>
+    </div>
+    <div class="m-items-middle">
+      <tw-add-button *ngIf="!viewMode && null | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">
+        {{'web.code-system.form.concepts.add-concept' | translate}}
+      </tw-add-button>
+      <m-button *ngIf="!filter.open && !groupOpened"
+          (mClick)="filter.open = true"
+          [mDisplay]="filter.languages || filter.propertyName || filter.propertyValue || filter.version ? 'primary' : 'default'">
+        <m-icon mCode="filter"></m-icon>
+      </m-button>
+    </div>
+  </div>
+
+  <tw-table-filter (twSearch)="loadData()" (twReset)="reset()">
+    <div *ngIf="!groupOpened">
+      <m-form-item>
+        <m-input placeholder="marina.ui.inputs.search.placeholder" [(ngModel)]="filter.searchInput"/>
+      </m-form-item>
+      <m-form-item>
+        <m-radio-group [(ngModel)]="filter.inputType">
+          <label m-radio-button [mValue]="'contains'">{{'web.code-system.form.concepts.contains' | translate}}</label>
+          <label m-radio-button [mValue]="'eq'">{{'web.code-system.form.concepts.eq' | translate}}</label>
+        </m-radio-group>
+      </m-form-item>
+      <m-divider/>
+      <m-form-item mLabel="web.code-system-concept.filter.property-filter">
+        <m-select [placeholder]="'web.code-system-concept.filter.select-property-placeholder' | translate"
+            [(ngModel)]="filter.propertyName"
+            (ngModelChange)="filter.propertyValue = undefined">
+          <m-option *ngFor="let property of codeSystem?.properties" [mLabel]="property.name" [mValue]="property.name"></m-option>
+        </m-select>
+      </m-form-item>
+      <m-form-item mLabel="web.code-system-concept.filter.property-name-filter">
+        <m-input [placeholder]="'web.code-system-concept.filter.search-property-value-placeholder' | translate"
+            [(ngModel)]="filter.propertyValue"
+            [disabled]="!filter.propertyName"></m-input>
+      </m-form-item>
+    </div>
+  </tw-table-filter>
+
+
+  <div class="m-justify-between m-items-top">
+    <!-- Table views -->
+    <div style="flex: 4; max-width: 100%;">
+      <m-backend-table *ngIf="!groupOpened" [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
+        <div tableHeader>
+          <ng-container *ngTemplateOutlet="tableHead"/>
+        </div>
+
+        <tr *mTableHead>
+          <th>{{'entities.code-system-concept.code' | translate}}</th>
+          <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
+          <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
+          <th>{{'entities.code-system-concept.description' | translate}}</th>
+          <th class="tw-table-min-width">{{'web.code-system-concept.list.external' | translate}}</th>
+          <th class="tw-table-min-width"></th>
+        </tr>
+
+        <tr *mTableRow="let concept"
+            class="m-clickable"
+            [style.background]="selectedConcept?.code === concept.code ? 'var(--color-table-background--expanded)' : 'initial'"
+            (click)="selectConcept(concept)">
+          <ng-container *ngTemplateOutlet="rowContent; context: {node: {code: concept.code, concept}, level: 0}"/>
+        </tr>
+
+        <tr *mTableNoData>
+          <td colspan="100%">
+            <m-no-data></m-no-data>
+          </td>
+        </tr>
+      </m-backend-table>
+
+
+      <m-table *ngIf="groupOpened && rootConcepts" [mData]="rootConcepts" mSize="small">
+        <div tableHeader>
+          <ng-container *ngTemplateOutlet="tableHead"/>
+        </div>
+
+        <tr *mTableHead>
+          <th>{{'entities.code-system-concept.code' | translate}}</th>
+          <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
+          <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
+          <th>{{'entities.code-system-concept.description' | translate}}</th>
+          <th class="tw-table-min-width">{{'web.code-system-concept.list.external' | translate}}</th>
+          <th class="tw-table-min-width"></th>
+        </tr>
+
+        <ng-container *ngFor="let root of rootConcepts">
+          <ng-container *ngTemplateOutlet="treeView; context: {node: root, level: 0}"/>
+        </ng-container>
+
+        <tr *mTableNoData>
+          <td colspan="100%">
+            <m-no-data></m-no-data>
+          </td>
+        </tr>
+      </m-table>
+    </div>
+
+    <tw-code-system-concepts-list-concept-preview *ngIf="selectedConcept?.version"
+        [codeSystemId]="codeSystem.id"
+        [version]="selectedConcept.version"
+        [editRoute]="(selectedConcept.code | apply: getConceptEditRoute)?.path"
+        style="flex: 2"></tw-code-system-concepts-list-concept-preview>
+  </div>
+
+
+  <ng-template #treeView let-node="node" let-level="level">
+    <tr class="m-clickable"
+        [style.background]="selectedConcept?.code === node.code ? 'var(--color-table-background--expanded)' : 'initial'"
+        (click)="selectConcept(node.concept)">
+      <ng-container *ngTemplateOutlet="rowContent; context: {node: node, level: level}"/>
+    </tr>
+    <ng-container *ngFor="let child of node.children">
+      <ng-container *ngTemplateOutlet="treeView; context: {node: child, level: level + 1}"/>
+    </ng-container>
+  </ng-template>
+
+
+  <ng-template #tableHead>
+    <div style="padding: 0.5rem 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(30rem, 100%), 1fr)); column-gap: 0.5rem;">
+      <m-form-item mLabel="Designation languages">
+        <m-select [(ngModel)]="tableView.langs" multiple>
+          <m-option *ngFor="let lang of (version | apply:getSupportedLangs:versions)" [mValue]="lang" [mLabel]="lang"/>
+        </m-select>
+      </m-form-item>
+      <m-form-item mLabel="Properties">
+        <m-select [(ngModel)]="tableView.properties" multiple>
+          <m-option *ngFor="let prop of codeSystem?.properties" [mValue]="prop.name" [mLabel]="prop.name"/>
+        </m-select>
+      </m-form-item>
+    </div>
+  </ng-template>
+
+
+  <ng-template #rowContent let-node="node" let-level="level">
+    <td>
+      <div class="m-items-middle m-bold">
+        <m-icon-button *ngIf="groupOpened"
+            [style.padding-left.rem]="level"
+            [style.opacity]="node.expandable ? '1' : '0'"
+            [mIcon]="node.loading ? 'loading' : node.expandable ? node.expanded ? 'folder-open' : 'folder' : 'file'"
+            (mClick)="$event.preventDefault(); $event.stopImmediatePropagation(); loadChildConcepts(node)"></m-icon-button>
+
+        <a *ngIf="node.code | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">
+          {{node.code}}
+        </a>
+      </div>
+    </td>
+    <td>
+      <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
+        <ng-container *ngFor="let designation of (node.concept | apply: getDesignations) | sort: 'language'">
+          <ng-container *ngIf="(!tableView.langs?.length || (tableView.langs | includes: designation.language)) &&
+          (!tableView.properties?.length || (tableView.properties | includes: designation.designationType))">
+            <span class="m-bold">{{designation.language}}</span>
+            {{designation.name}}
+          </ng-container>
+        </ng-container>
+      </div>
+    </td>
+    <td>
+      <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
+        <ng-container *ngFor="let property of (node.concept | apply:getPropertyValues)">
+          <ng-container *ngIf="!tableView.properties?.length || (tableView.properties | includes: property.entityProperty)">
+            <div class="m-bold">{{property.entityProperty}}</div>
+            <tw-property-value-input style="text-align: right"
+                viewMode
+                [ngModel]="property.value"
+                [propertyId]="property.entityPropertyId"
+                [codeSystem]="codeSystem.id"></tw-property-value-input>
+          </ng-container>
+        </ng-container>
+      </div>
+    </td>
+    <td>
+      <m-abbreviate [mValue]="node.concept.description" mLength="150"/>
+    </td>
+    <td>
+      <m-icon mCode="check" *ngIf="node.concept.codeSystem !== codeSystem.id"></m-icon>
+    </td>
+    <td>
+      <m-dropdown>
+        <ng-container *ngIf="null | apply: getConceptEditRoute: node.code as route">
+          <a *m-dropdown-item [routerLink]="route?.path" [queryParams]="route?.query">
+            {{'web.code-system-concept.list.add-concept-child' | translate}}
+          </a>
+        </ng-container>
+        <ng-container *ngIf="version">
+          <a *m-dropdown-item (mClick)="unlink(node.concept)">
+            {{'web.code-system-concept.list.unlink-concept' | translate}}
+          </a>
+        </ng-container>
+      </m-dropdown>
+    </td>
+  </ng-template>
+
+</tw-table>
+
+

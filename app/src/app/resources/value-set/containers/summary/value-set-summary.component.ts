@@ -3,8 +3,6 @@ import {ValueSet, ValueSetSnapshot, ValueSetVersion} from 'app/src/app/resources
 import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
-import {Resource} from 'app/src/app/resources/resource/model/resource';
-import {ResourceUtil} from 'app/src/app/resources/resource/util/resource-util';
 import {forkJoin} from 'rxjs';
 
 @Component({
@@ -30,10 +28,6 @@ export class ValueSetSummaryComponent implements OnInit {
         this.versions = versions.data;
       });
   }
-
-  protected toResource = (vs: ValueSet): Resource => {
-    return ResourceUtil.fromValueSet(vs);
-  };
 
   protected mapVersionToSnapshot = (versions: ValueSetVersion[]): ValueSetSnapshot[] => {
     return versions?.map(v => v.snapshot).filter(s => isDefined(s));

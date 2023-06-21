@@ -1,0 +1,75 @@
+<tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [versions]="versions" mode="summary"></tw-resource-context>
+<m-page [mLoading]="loader.isLoading">
+
+  <m-form-row class="with-row-gap" mGap="1rem">
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- CodeSystem info -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.code-system.summary.code-system"></m-title>
+        <tw-code-system-info-widget [codeSystem]="codeSystem"></tw-code-system-info-widget>
+      </m-card>
+
+      <!-- Versions -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.code-system.summary.versions">
+          <div mControls class="m-items-middle">
+            <m-button mDisplay="text" mShape="circle" [routerLink]="['/resources/code-systems/compare', {'code-system': codeSystem?.id}]">
+              {{'web.code-system.summary.compare' | translate}}&nbsp;
+              <m-icon mCode="diff"></m-icon>
+            </m-button>
+            <m-divider mVertical></m-divider>
+            <m-button mDisplay="text" mShape="circle" [routerLink]="['/resources/code-systems', codeSystem?.id, 'versions', 'add']">
+              {{'web.code-system.summary.add-version' | translate}}&nbsp;
+              <m-icon mCode="plus"></m-icon>
+            </m-button>
+          </div>
+        </m-title>
+        <tw-code-system-versions-widget [codeSystem]="codeSystem?.id" [versions]="versions"></tw-code-system-versions-widget>
+      </m-card>
+
+    </div>
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- Unlinked concepts -->
+      <m-card *ngIf="codeSystem">
+        <m-title *m-card-header mTitle="web.code-system.summary.unlinked-concepts.title">
+          <div mControls class="m-items-middle">
+            <m-dropdown>
+              <m-button *m-dropdown-container mDisplay="text">
+                {{'web.code-system.summary.unlinked-concepts.link-to' | translate:{version: '...'} }}
+              </m-button>
+              <ng-container *ngFor="let v of versions">
+                <a *m-dropdown-item (mClick)="link(v.version, unlinkedConcepts.checked())">{{v.version}}</a>
+              </ng-container>
+            </m-dropdown>
+            <m-divider mVertical />
+            <m-button mControls mDisplay="text" mShape="circle" [routerLink]="['/resources/code-systems', codeSystem?.id, 'concepts', 'add']">
+              {{'web.code-system.summary.add-concept' | translate}}&nbsp;
+              <m-icon mCode="plus"></m-icon>
+            </m-button>
+          </div>
+        </m-title>
+        <tw-code-system-unlinked-concepts #unlinkedConcepts [codeSystem]="codeSystem.id" [versions]="versions"></tw-code-system-unlinked-concepts>
+      </m-card>
+
+      <!-- Tasks -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.code-system.summary.opened-tasks"></m-title>
+        <tw-resource-tasks-widget [resourceId]="codeSystem?.id" resourceType="ValueSet"></tw-resource-tasks-widget>
+      </m-card>
+
+      <!-- Related artifacts-->
+      <m-card>
+        <m-title *m-card-header mTitle="web.code-system.summary.related-artifacts"></m-title>
+        <tw-resource-related-artifact-widget [resourceId]="codeSystem?.id" resourceType="CodeSystem"></tw-resource-related-artifact-widget>
+      </m-card>
+
+    </div>
+  </m-form-row>
+  <m-form-row>
+
+
+  </m-form-row>
+
+</m-page>

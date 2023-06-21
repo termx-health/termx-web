@@ -9,15 +9,15 @@ import {CodeSystemService} from 'app/src/app/resources/code-system/services/code
   templateUrl: './code-system-properties.component.html',
 })
 export class CodeSystemPropertiesComponent implements OnChanges {
-  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public codeSystemId?: string | null;
-
-  @ViewChild("form") public form?: NgForm;
+  @Input() public properties: EntityProperty[] = [];
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
 
   protected rowInstance: EntityProperty = {rule: {filters: []}, status: 'active'};
   protected filterRowInstance: EntityPropertyRuleFilter = {type: 'entity-property'};
-  protected properties: EntityProperty[] = [];
   protected loader = new LoadingManager();
+
+  @ViewChild("form") public form?: NgForm;
 
   protected defProperties: {[key: string]: {selected: boolean, property: EntityProperty}} = {
     "display": {selected: false, property: {name: "display", type: "string", status: "active"}},
@@ -32,20 +32,12 @@ export class CodeSystemPropertiesComponent implements OnChanges {
   public constructor(private codeSystemService: CodeSystemService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['codeSystemId'] && this.codeSystemId) {
-      this.loadProperties();
-    }
-  }
-
-  private loadProperties(): void {
-    this.loader.wrap('load', this.codeSystemService.searchProperties(this.codeSystemId!, {limit: -1, sort: 'order-number'}))
-      .subscribe(properties => {
-        properties.data.forEach(p => {
-          p.rule ??= new EntityPropertyRule();
-          p.rule.filters ??= [];
-        });
-        this.properties = properties.data;
+    if (changes['properties'] && this.properties) {
+      this.properties.forEach(p => {
+        p.rule ??= new EntityPropertyRule();
+        p.rule.filters ??= [];
       });
+    }
   }
 
   protected defPropertySelectionChange(selected: boolean, p: string): void {

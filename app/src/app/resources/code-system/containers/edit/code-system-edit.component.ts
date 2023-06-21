@@ -1,61 +1,85 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
 import {CodeSystemService} from '../../services/code-system.service';
 import {NgForm} from '@angular/forms';
-import {copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
-import {CodeSystem} from 'term-web/resources/_lib';
+import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {CodeSystem, CodeSystemTransactionRequest} from 'term-web/resources/_lib';
 import {CodeSystemPropertiesComponent} from 'term-web/resources/code-system/containers/edit/property/code-system-properties.component';
+import {ResourceFormComponent} from 'term-web/resources/resource/components/resource-form.component';
+import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
+import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
+import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
+import {CodeSystemValueSetAddComponent} from 'term-web/resources/code-system/containers/edit/valueset/code-system-value-set-add.component';
 
 
 @Component({
   templateUrl: 'code-system-edit.component.html'
 })
 export class CodeSystemEditComponent implements OnInit {
-  public codeSystemId?: string | null;
-  public codeSystem?: CodeSystem;
-
-  public narrativeRaw = false;
-  public loading: {[k: string]: boolean} = {};
-  public mode: 'edit' | 'add' = 'add';
+  protected codeSystem?: CodeSystem;
+  protected loader = new LoadingManager();
+  protected mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
-  @ViewChild("propertiesComponent") public propertiesComponent?: CodeSystemPropertiesComponent;
+
+  @ViewChild(ResourceFormComponent) public resourceFormComponent?: ResourceFormComponent;
+  @ViewChild(ResourceIdentifiersComponent) public resourceIdentifiersComponent?: ResourceIdentifiersComponent;
+  @ViewChild(ResourceVersionFormComponent) public resourceVersionFormComponent?: ResourceVersionFormComponent;
+  @ViewChild(CodeSystemPropertiesComponent) public codeSystemPropertiesComponent?: CodeSystemPropertiesComponent;
+  @ViewChild(CodeSystemValueSetAddComponent) public codeSystemRelationsComponent?: CodeSystemValueSetAddComponent;
 
   public constructor(
     private codeSystemService: CodeSystemService,
     private route: ActivatedRoute,
-    private location: Location
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
-    this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    this.mode = this.codeSystemId ? 'edit' : 'add';
+    const id = this.route.snapshot.paramMap.get('id');
 
-    if (this.mode === 'add') {
-      this.codeSystem = new CodeSystem();
-      this.codeSystem.names = {};
+    if (isDefined(id)) {
+      this.mode = 'edit';
+      this.loader.wrap('load', this.codeSystemService.load(id)).subscribe(vs => this.codeSystem = this.writeCS(vs));
     }
-
-    if (this.mode === 'edit') {
-      this.loading ['init'] = true;
-      this.codeSystemService.load(this.codeSystemId!, true).subscribe(cs => this.codeSystem = cs).add(() => this.loading ['init'] = false);
-    }
+    this.codeSystem = this.writeCS(new CodeSystem());
   }
 
   public save(): void {
-    if (!this.validate() || (this.propertiesComponent && !this.propertiesComponent.valid())) {
+    if (![
+      this.validate(),
+      (!this.resourceFormComponent || this.resourceFormComponent.valid()),
+      (!this.resourceIdentifiersComponent || this.resourceIdentifiersComponent.valid()),
+      (!this.resourceVersionFormComponent || this.resourceVersionFormComponent.valid()),
+      (!this.codeSystemRelationsComponent || this.codeSystemRelationsComponent.valid()),
+      (!this.codeSystemPropertiesComponent || this.codeSystemPropertiesComponent.valid())
+    ].every(Boolean)) {
       return;
     }
+
+
     const cs = copyDeep(this.codeSystem);
-    cs.properties = this.propertiesComponent?.getProperties();
-    this.loading['save'] = true;
-    this.codeSystemService.save(cs)
-      .subscribe(() => this.location.back())
-      .add(() => this.loading['save'] = false);
+    ResourceUtil.merge(cs, this.resourceFormComponent.getResource());
+    const request: CodeSystemTransactionRequest = {
+      codeSystem: cs,
+      properties: this.codeSystemPropertiesComponent.getProperties(),
+      valueSet: this.codeSystemRelationsComponent?.getValueSet(),
+      version: this.resourceVersionFormComponent?.getVersion()
+    };
+    this.loader.wrap('save', this.codeSystemService.saveTransaction(request))
+      .subscribe(() => this.router.navigate(['/resources/code-systems', cs.id, 'summary']));
   }
 
   public validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
+  }
+
+  private writeCS(cs: CodeSystem): CodeSystem {
+    cs.content = 'complete';
+    cs.caseSensitive = 'ci';
+    cs.copyright ??= {};
+    cs.permissions ??= {};
+    cs.identifiers ??= [];
+    cs.properties ??= [];
+    return cs;
   }
 }

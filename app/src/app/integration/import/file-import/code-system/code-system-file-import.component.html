@@ -34,7 +34,7 @@
                   </m-form-item>
 
                   <m-form-item mLabel="entities.code-system.name">
-                    {{sourceCodeSystem?.names | localName:'-'}}
+                    {{sourceCodeSystem?.title | localName:'-'}}
                   </m-form-item>
 
                   <m-form-item mLabel="entities.code-system.description">
@@ -50,8 +50,8 @@
                 <m-input name="id" [(ngModel)]="data.codeSystem.id" autofocus [focusTimeout]="50" required/>
               </m-form-item>
 
-              <m-form-item mName="name" mLabel="entities.code-system.name" required>
-                <m-multi-language-input name="name" [(ngModel)]="data.codeSystem.names" required/>
+              <m-form-item mName="title" mLabel="entities.code-system.title" required>
+                <m-multi-language-input name="title" [(ngModel)]="data.codeSystem.title" required/>
               </m-form-item>
 
               <m-form-item mName="uri" mLabel="entities.code-system.uri" required>
@@ -59,7 +59,7 @@
               </m-form-item>
 
               <m-form-item mName="description" mLabel="entities.code-system.description">
-                <m-textarea name="description" [(ngModel)]="data.codeSystem.description"/>
+                <m-multi-language-input name="description" [(ngModel)]="data.codeSystem.description"/>
               </m-form-item>
             </ng-template>
           </div>

@@ -1,0 +1,43 @@
+<m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+
+<m-backend-table [mResult]="searchResult"
+    [(mQuery)]="query"
+    (mQueryChange)="loadUnlinkedConcepts()"
+    [mLoading]="loader.isLoading"
+    style="margin-top: 1rem; display: block">
+  <tr *mTableHead>
+    <th *ngIf="!viewMode"></th>
+    <th>{{'web.code-system.summary.unlinked-concepts.concept' | translate}}</th>
+    <th>{{'web.code-system.summary.unlinked-concepts.version' | translate}}</th>
+    <th>{{'web.code-system.summary.unlinked-concepts.designation' | translate}}</th>
+    <th>{{'web.code-system.summary.unlinked-concepts.author' | translate}}</th>
+    <th>{{'web.code-system.summary.unlinked-concepts.task' | translate}}</th>
+    <th>{{'web.code-system.summary.unlinked-concepts.status' | translate}}</th>
+    <th *ngIf="!viewMode" class="tw-table-actions"></th>
+  </tr>
+
+  <tr *mTableRow="let entityVersion; let i = index">
+    <td *ngIf="!viewMode"><m-checkbox [(ngModel)]="entityVersion['checked']" name="{{i}}-checked"></m-checkbox></td>
+    <td><a (click)="openConcept(entityVersion.code)">{{entityVersion.code}}</a></td>
+    <td>{{entityVersion.created | localDate}}</td>
+    <td><div class="m-items-middle"><span *ngFor="let d of entityVersion.designations; let i = index">{{d.name}}{{i !== (entityVersion.designations?.length - 1) ? ', ' : ''}}</span></div></td>
+    <td></td>
+    <td></td>
+    <td><tw-status-tag [status]="entityVersion.status"></tw-status-tag></td>
+    <td *ngIf="!viewMode">
+      <m-dropdown>
+        <ng-container *ngFor="let v of versions">
+          <a *m-dropdown-item (mClick)="link(v.version, entityVersion.id)">
+            {{'web.code-system.summary.unlinked-concepts.link-to' | translate: {version: v.version} }}
+          </a>
+        </ng-container>
+      </m-dropdown>
+    </td>
+  </tr>
+
+  <tr *mTableNoData>
+    <td colspan="100%">
+      <m-no-data></m-no-data>
+    </td>
+  </tr>
+</m-backend-table>

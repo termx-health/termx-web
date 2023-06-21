@@ -1,13 +1,24 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
     <div class="m-items-middle">
-      <tw-add-button *twPrivileged="'*.ValueSet.edit'" [routerLink]="'add'">
-        {{'web.value-set.list.add-value-set' | translate}}
-      </tw-add-button>
       <m-button [routerLink]="'/resources/finder/value-sets'">
         <m-icon mCode="layout"></m-icon>
       </m-button>
+      <span>{{'web.value-set.list.title' | translate}}</span>
+    </div>
+    <div class="m-items-middle">
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+      <m-dropdown *twPrivileged="'*.ValueSet.edit'">
+        <tw-add-button *m-dropdown-container icon="down" placement="right">
+          {{'web.value-set.list.add-value-set' | translate}}
+        </tw-add-button>
+        <a *m-dropdown-item [routerLink]="'add'">
+          {{'web.value-set.list.manual' | translate}}
+        </a>
+        <a *m-dropdown-item (mClick)="importModal.toggleModal(true)">
+          {{'web.value-set.list.import-fhir' | translate}}
+        </a>
+      </m-dropdown>
     </div>
   </div>
 
@@ -82,3 +93,5 @@
     </tr>
   </m-backend-table>
 </m-card>
+
+<tw-resource-fhir-import-modal #importModal (imported)="loadData()" resourceType="ValueSet"></tw-resource-fhir-import-modal>

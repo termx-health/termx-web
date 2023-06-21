@@ -9,6 +9,7 @@ import {ResourceVersionFormComponent} from 'term-web/resources/resource/componen
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import {ResourceRelatedArtifactWidgetComponent} from 'term-web/resources/resource/components/resource-related-artifact-widget.component';
+import {ResourceFhirImportModalComponent} from 'term-web/resources/resource/components/resource-fhir-import-modal-component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {ResourceRelatedArtifactWidgetComponent} from 'term-web/resources/resourc
     ResourceSideInfoComponent,
     ResourceVersionFormComponent,
     ResourceTasksWidgetComponent,
-    ResourceRelatedArtifactWidgetComponent
+    ResourceRelatedArtifactWidgetComponent,
+    ResourceFhirImportModalComponent
   ],
   declarations: [
     ResourceContactsComponent,
@@ -34,7 +36,8 @@ import {ResourceRelatedArtifactWidgetComponent} from 'term-web/resources/resourc
     ResourceSideInfoComponent,
     ResourceVersionFormComponent,
     ResourceTasksWidgetComponent,
-    ResourceRelatedArtifactWidgetComponent
+    ResourceRelatedArtifactWidgetComponent,
+    ResourceFhirImportModalComponent
   ]
 })
 export class ResourceModule {

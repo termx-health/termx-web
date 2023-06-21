@@ -15,6 +15,7 @@ export * from './model/code-system-transaction-request';
 export * from './model/code-system-version';
 export * from './model/code-system-version-search-params';
 export * from './model/concept-search-params';
+export * from './model/concept-transaction-request';
 export * from './model/entity-property';
 export * from './model/entity-property-search-params';
 export * from './pipe/localized-concept-name-pipe';

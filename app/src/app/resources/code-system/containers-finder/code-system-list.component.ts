@@ -11,7 +11,7 @@ import {CodeSystem} from 'term-web/resources/_lib';
       <tw-finder-wrapper [loading]="loading" style="overflow: auto; height: 100%; padding: 1rem">
         <tw-finder-menu title="CODE SYSTEMS" [length]="searchResult.data.length">
           <tw-finder-menu-item *ngFor="let cs of searchResult.data" [navigate]="[cs.id]" (view)="openResource(cs)">
-            {{(cs.names | localName) || cs.id}}
+            {{(cs.title | localName) || cs.id}}
           </tw-finder-menu-item>
 
           <tw-finder-load-more-item *ngIf="searchResult.data.length < searchResult.meta.total"

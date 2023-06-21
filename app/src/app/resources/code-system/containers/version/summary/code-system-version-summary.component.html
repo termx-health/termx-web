@@ -1,0 +1,31 @@
+<tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [version]="codeSystemVersion" mode="summary"></tw-resource-context>
+<m-page [mLoading]="loader.isLoading">
+
+  <m-form-row class="with-row-gap" mGap="1rem">
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- ValueSetVersion info -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.code-system-version.summary.code-system-version">
+          <m-button *ngIf="codeSystemVersion?.status === 'draft'"
+              mControls
+              mDisplay="text"
+              mShape="circle"
+              [routerLink]="['/resources/code-systems', codeSystem?.id, 'versions', codeSystemVersion?.version, 'edit']">
+            {{'web.code-system-version.summary.edit-version' | translate}}&nbsp;
+            <m-icon mCode="form"></m-icon>
+          </m-button>
+        </m-title>
+        <tw-code-system-version-info-widget [version]="codeSystemVersion"></tw-code-system-version-info-widget>
+      </m-card>
+
+
+    </div>
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+      <m-card>
+        <m-title *m-card-header mTitle="web.code-system-version.summary.opened-tasks"></m-title>
+        <tw-resource-tasks-widget resourceType="CodeSystemVersion" [resourceId]="codeSystemVersion?.id | toString"></tw-resource-tasks-widget>
+      </m-card>
+    </div>
+  </m-form-row>
+</m-page>

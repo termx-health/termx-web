@@ -14,7 +14,8 @@
       "search": "Search",
       "clear-all": "Clear all",
       "query": "Query",
-      "custom": "Custom"
+      "custom": "Custom",
+      "import": "Import"
     },
     "no-privilege": {
       "error": "401 Unauthorized",
@@ -149,6 +150,12 @@
     },
     "code-system": {
       "list": {
+        "title": "Code systems",
+        "manual": "Manual",
+        "import-fhir": "Import external FHIR definition",
+        "last-version": "Last version",
+        "status": "Status",
+        "count": "Count",
         "add-code-system": "Add code system",
         "domain": "Domain",
         "uri": "URI",
@@ -162,10 +169,6 @@
           "target-code-system": "Target code system:",
           "target-uri": "Target URI:"
         }
-      },
-      "tabs": {
-        "code-system": "Code system",
-        "narrative": "Narrative"
       },
       "form": {
         "header": "Code system",
@@ -204,6 +207,26 @@
           "delete-supplement": "Delete supplement",
           "often-used": "Often used properties"
         }
+      },
+      "summary": {
+        "code-system": "Code system",
+        "related-artifacts": "Related artifacts",
+        "unlinked-concepts": {
+          "title": "Unlinked concepts",
+          "concept": "Concept",
+          "version": "Version",
+          "designation": "Designation",
+          "author": "Author",
+          "task": "Task",
+          "status": "Status",
+          "link-to": "Link to {{version}}"
+        },
+        "opened-tasks": "Opened tasks",
+        "versions": "Versions",
+        "concepts": "Concepts",
+        "compare": "Compare",
+        "add-version": "Add version",
+        "add-concept": "Add concept"
       }
     },
     "code-system-version": {
@@ -218,6 +241,25 @@
             "add-header": "Add entity",
             "entity-version": "Entity version"
           }
+        }
+      },
+      "summary": {
+        "code-system-version": "Code system version",
+        "opened-tasks": "Opened tasks",
+        "edit-version": "Edit version",
+        "info": {
+          "definition": "Definition",
+          "last-modified": "Last modified",
+          "last-reviewed": "Last review date",
+          "last-approved": "Last approval date",
+          "show-changes": "Show changes",
+          "create-review": "Create review task",
+          "create-approve": "Create approval task",
+          "make-draft": "Make draft",
+          "activate": "Activate",
+          "retire": "Retire",
+          "load-from-github": "Load from Github",
+          "push-to-github": "Push to Github"
         }
       }
     },
@@ -267,7 +309,8 @@
       },
       "list": {
         "external": "External",
-        "add-concept-child": "Add concept child"
+        "add-concept-child": "Add subconcept",
+        "unlink-concept": "Unlink concept from version"
       }
     },
     "code-system-concept-version": {
@@ -345,6 +388,9 @@
     },
     "value-set": {
       "list": {
+        "title":  "Value sets",
+        "manual": "Manual",
+        "import-fhir": "Import external FHIR definition",
         "add-value-set": "Add value set",
         "last-version": "Last version",
         "status": "Status",
@@ -365,10 +411,6 @@
           "export-fhir-xml": "Export FHIR xml",
           "export-fhir-expansion": "Export FHIR json with expansion"
         }
-      },
-      "tabs": {
-        "value-set": "Value set",
-        "narrative": "Narrative"
       },
       "concepts": {
         "no-version": "Version not selected",
@@ -600,7 +642,7 @@
         "orphanet": "Rare diseases import",
         "uri": "Uri",
         "source-url": "Source URL",
-        "source": "Publisher",
+        "publisher": "Publisher",
         "version": "Version",
         "valid-from": "Valid from",
         "valid-to": "Valid to",
@@ -1047,6 +1089,13 @@
       "concepts": "Concepts",
       "provenance": "Provenance",
       "summary": "Summary"
+    },
+    "resource-import-modal": {
+      "header": "Import from external FHIR definition",
+      "source": "Source",
+      "type": "Type",
+      "url": "URL",
+      "file": "File"
     }
   },
   "entities": {
@@ -1146,8 +1195,8 @@
       "source": "Publisher",
       "supported-languages": "Supported languages",
       "description": "Description",
-      "release-date": "Release date",
-      "expiration-date": "Expiration date",
+      "release-date": "Expected use since",
+      "expiration-date": "Expected use until",
       "status": "Status"
     },
     "map-set-entity-version": {
@@ -1162,6 +1211,8 @@
       "uri": "Uniform resource identifier (URI)",
       "uri-short": "URI",
       "name": "Name",
+      "title": "Title",
+      "publisher": "Publisher",
       "content": "Content",
       "case-sensitivity": "Case sensitivity",
       "supported-languages": "Supported languages",
@@ -1172,7 +1223,8 @@
       "properties": "Properties",
       "versions": "Versions",
       "base-code-system": "Parent code system",
-      "sequence": "Sequence for concept code"
+      "sequence": "Sequence for concept code",
+      "hierarchy-meaning": "Hierarchy meaning"
     },
     "code-system-version": {
       "id": "Identifier",
@@ -1183,8 +1235,8 @@
       "description": "Description",
       "status": "Status",
       "type": "Type",
-      "release-date": "Release date",
-      "expiration-date": "Expiration date",
+      "release-date": "Expected use since",
+      "expiration-date": "Expected use until",
       "entities": "Entity versions"
     },
     "code-system-concept": {

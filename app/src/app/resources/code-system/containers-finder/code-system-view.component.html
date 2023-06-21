@@ -9,7 +9,7 @@
 
       <div *mFormCol>
         <m-form-item mLabel="entities.code-system.name">
-          {{(codeSystem?.names | localName) || '-'}}
+          {{(codeSystem?.title | localName) || '-'}}
         </m-form-item>
       </div>
     </m-form-row>
@@ -57,7 +57,7 @@
   <!-- Versions -->
   <tw-finder-menu title="entities.code-system.versions"  [length]="versions.length">
     <tw-finder-menu-item *ngFor="let v of versions" [navigate]="['versions', v.version]">
-      {{v.version}} - {{v.source}}
+      {{v.version}}
     </tw-finder-menu-item>
   </tw-finder-menu>
 

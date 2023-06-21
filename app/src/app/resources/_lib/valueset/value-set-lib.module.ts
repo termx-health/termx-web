@@ -13,6 +13,7 @@ import {ValueSetVersionCodePipe} from './pipe/value-set-version-code-pipe';
 import {ValueSetWidgetComponent} from './containers/value-set-widget.component';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {RouterModule} from '@angular/router';
+import {ValueSetFileImportService} from 'term-web/resources/_lib/valueset/services/value-set-file-import.service';
 
 
 @NgModule({
@@ -27,7 +28,8 @@ import {RouterModule} from '@angular/router';
   ],
   providers: [
     ValueSetLibService,
-    ValueSetVersionLibService
+    ValueSetVersionLibService,
+    ValueSetFileImportService
   ],
   declarations: [
     ValueSetSearchComponent,

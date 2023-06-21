@@ -18,8 +18,8 @@
     <m-form-item mLabel="web.integration.import.uri" required>
       <m-input [(ngModel)]="data.uri"></m-input>
     </m-form-item>
-    <m-form-item mLabel="web.integration.import.source">
-      <m-input [(ngModel)]="data.source"></m-input>
+    <m-form-item mLabel="web.integration.import.publisher">
+      <m-input [(ngModel)]="data.publisher"></m-input>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.version" required>
       <m-input [(ngModel)]="data.version"></m-input>
@@ -40,10 +40,10 @@
       <m-multi-language-input [(ngModel)]="data.codeSystemName"></m-multi-language-input>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.code-system-description">
-      <m-textarea [(ngModel)]="data.codeSystemDescription" name="codeSystemDescription"></m-textarea>
+      <m-multi-language-input [(ngModel)]="data.codeSystemDescription" name="codeSystemDescription"></m-multi-language-input>
     </m-form-item>
     <m-form-item mLabel="web.integration.import.code-system-version-description">
-      <m-textarea [(ngModel)]="data.codeSystemVersionDescription" name="codeSystemVersionDescription"></m-textarea>
+      <m-multi-language-input [(ngModel)]="data.codeSystemVersionDescription" name="codeSystemVersionDescription"></m-multi-language-input>
     </m-form-item>
 
   </m-spinner>

@@ -1,13 +1,24 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
     <div class="m-items-middle">
-      <tw-add-button *twPrivileged="'*.CodeSystem.edit'" [routerLink]="'add'">
-        {{'web.code-system.list.add-code-system' | translate}}
-      </tw-add-button>
       <m-button [routerLink]="'/resources/finder/code-systems'">
         <m-icon mCode="layout"></m-icon>
       </m-button>
+      <span>{{'web.code-system.list.title' | translate}}</span>
+    </div>
+    <div class="m-items-middle">
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+      <m-dropdown *twPrivileged="'*.CodeSystem.edit'">
+        <tw-add-button *m-dropdown-container icon="down" placement="right">
+          {{'web.code-system.list.add-code-system' | translate}}
+        </tw-add-button>
+        <a *m-dropdown-item [routerLink]="'add'">
+          {{'web.code-system.list.manual' | translate}}
+        </a>
+        <a *m-dropdown-item (mClick)="importModal.toggleModal(true)">
+          {{'web.code-system.list.import-fhir' | translate}}
+        </a>
+      </m-dropdown>
     </div>
   </div>
 
@@ -15,23 +26,30 @@
     <tr *mTableHead>
       <th></th>
       <th mColumnKey="id">{{'entities.code-system.id' | translate}}</th>
-      <th mColumnKey="name">{{'entities.code-system.name' | translate}}</th>
-      <th mColumnKey="uri">{{'web.code-system.list.domain' | translate}}</th>
-      <th mColumnKey="uri">{{'entities.code-system.description' | translate}}</th>
+      <th>{{'web.code-system.list.last-version' | translate}}</th>
+      <th>{{'entities.code-system.title' | translate}}</th>
+      <th>{{'entities.code-system.publisher' | translate}}</th>
+      <th>{{'web.code-system.list.status' | translate}}</th>
+      <th>{{'web.code-system.list.count' | translate}}</th>
       <th *twPrivileged="'*.CodeSystem.edit'" class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let cs">
       <td m-table-expand [mItem]="cs"></td>
+      <td><a [routerLink]="[cs.id, 'summary']">{{cs.id}}</a></td>
       <td>
-        <a *ngIf="'*.CodeSystem.edit' | twHasAnyPrivilege; else view" [routerLink]="dev ? [cs.id,'concepts'] : [cs.id,'edit']">{{cs.id}}</a>
-        <ng-template #view>
-          <a [routerLink]="[cs.id,'view']">{{cs.id}}</a>
-        </ng-template>
+        <ng-container *ngIf="(cs.versions | apply:findLastVersion)?.version as version">
+          <a [routerLink]="[cs.id, 'versions', version, 'summary']">{{version}}</a>
+        </ng-container>
       </td>
-      <td>{{cs.names | localName}}</td>
-      <td>{{cs.uri | apply: parseDomain}}</td>
-      <td>{{cs.description}}</td>
+      <td>{{cs.title | localName}}</td>
+      <td>{{cs.publisher | localizedConceptName: {codeSystem: 'publisher'} | async}}</td>
+      <td><tw-status-tag [status]="(cs.versions | apply:findLastVersion)?.status"></tw-status-tag></td>
+      <td>
+        <ng-container *ngIf="(cs.versions | apply:findLastVersion) as v">
+          <a [routerLink]="[cs.id, 'versions', v?.version, 'concepts']">{{v?.conceptsTotal}}</a>
+        </ng-container>
+      </td>
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="openFhir(cs.id)">
@@ -75,3 +93,4 @@
 </m-card>
 
 <tw-code-system-duplicate-modal #duplicateModal (duplicated)="loadData()"></tw-code-system-duplicate-modal>
+<tw-resource-fhir-import-modal #importModal (imported)="loadData()" resourceType="CodeSystem"></tw-resource-fhir-import-modal>

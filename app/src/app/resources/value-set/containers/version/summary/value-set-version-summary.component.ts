@@ -3,8 +3,6 @@ import {ValueSet, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule} 
 import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
-import {Resource} from 'app/src/app/resources/resource/model/resource';
-import {ResourceUtil} from 'app/src/app/resources/resource/util/resource-util';
 import {forkJoin} from 'rxjs';
 import {ValueSetRuleFormComponent} from 'app/src/app/resources/value-set/containers/version/rule/value-set-rule-form.component';
 import {JobLibService} from 'app/src/app/sys/_lib';
@@ -33,14 +31,6 @@ export class ValueSetVersionSummaryComponent implements OnInit {
     const versionCode = this.route.snapshot.paramMap.get('versionCode');
     this.loadData(id, versionCode);
   }
-
-  protected toResource = (vs: ValueSet): Resource => {
-    return ResourceUtil.fromValueSet(vs);
-  };
-
-  protected toResourceVersion = (vsv: ValueSetVersion): Resource => {
-    return ResourceUtil.fromValueSetVersion(vsv);
-  };
 
   protected getFirstRows = (concepts: ValueSetVersionConcept[]): ValueSetVersionConcept[] => {
     return concepts?.length > 20 ? concepts.slice(0, 20) : concepts;

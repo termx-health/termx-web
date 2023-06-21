@@ -32,13 +32,6 @@ export class ValueSetVersionConceptsComponent implements OnInit {
     this.loadData(id, versionCode);
   }
 
-  protected toResource = (vs: ValueSet): Resource => {
-    return ResourceUtil.fromValueSet(vs);
-  };
-
-  protected toResourceVersion = (vsv: ValueSetVersion): Resource => {
-    return ResourceUtil.fromValueSetVersion(vsv);
-  };
   public filterExpansion = (expansion: ValueSetVersionConcept[], text: string): ValueSetVersionConcept[] => {
     if (!text) {
       return expansion;

@@ -7,7 +7,7 @@ export class RelatedArtifactUtil {
     const id = artifact.id;
 
     if (type === 'CodeSystem') {
-      return '/resources/code-systems/' + id + '/view'; //todo: replace with summary when summary component will be ready
+      return '/resources/code-systems/' + id + '/summary';
     }
     if (type === 'ValueSet') {
       return '/resources/value-sets/' + id + '/summary';

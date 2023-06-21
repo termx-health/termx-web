@@ -1,21 +1,23 @@
 import {CodeSystemEntityVersion} from './code-system-entity';
+import {LocalizedName} from '@kodality-web/marina-util';
 
 export class CodeSystemVersionReference {
   public id?: number;
   public version?: string;
 }
 
-export class CodeSystemVersion extends CodeSystemVersionReference{
+export class CodeSystemVersion extends CodeSystemVersionReference {
   public codeSystem?: string;
-  public source?: string;
   public preferredLanguage?: string;
   public supportedLanguages?: string[];
-  public description?: string;
+  public description?: LocalizedName;
   public status?: string;
-  public type?: string;
   public releaseDate?: Date;
   public expirationDate?: Date;
   public created?: Date;
+  public algorithm?: string;
+
+  public conceptsTotal?: number;
 
   public entities?: CodeSystemEntityVersion[];
 }

@@ -16,6 +16,7 @@ import {LocalizedConceptNamePipe} from './pipe/localized-concept-name-pipe';
 import {CodeSystemWidgetComponent} from './containers/code-system-widget.component';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {RouterModule} from '@angular/router';
+import {CodeSystemFileImportService} from 'term-web/resources/_lib/codesystem/services/code-system-file-import.service';
 
 @NgModule({
   imports: [
@@ -30,6 +31,7 @@ import {RouterModule} from '@angular/router';
   providers: [
     CodeSystemLibService,
     CodeSystemEntityVersionLibService,
+    CodeSystemFileImportService,
     CodeSystemConceptLibService,
     CodeSystemVersionLibService
   ],

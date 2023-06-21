@@ -50,10 +50,10 @@ export class ValueSetEditComponent implements OnInit {
     }
 
     const vs = copyDeep(this.valueSet);
-    ResourceUtil.mergeValueSet(vs, this.resourceFormComponent.getResource());
+    ResourceUtil.merge(vs, this.resourceFormComponent.getResource());
     const request: ValueSetTransactionRequest = {
       valueSet: vs,
-      version: this.fromResourceVersion(this.resourceVersionFormComponent?.getVersion())
+      version: this.resourceVersionFormComponent?.getVersion()
     };
     this.loader.wrap('save', this.valueSetService.saveTransaction(request))
       .subscribe(() => this.router.navigate(['/resources/value-sets', vs.id, 'summary']));
@@ -62,9 +62,6 @@ export class ValueSetEditComponent implements OnInit {
   protected validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
   }
-
-  protected toResource = ResourceUtil.fromValueSet;
-  protected fromResourceVersion = ResourceUtil.toValueSetVersion;
 
   private writeVS(vs: ValueSet): ValueSet {
     vs.copyright ??= {};

@@ -1,15 +1,18 @@
-import {Component, ElementRef, Injectable, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from 'app/src/environments/environment';
-import {collect, copyDeep, DestroyService, group, isNil, LoadingManager, sort} from '@kodality-web/core-util';
+import {copyDeep, DestroyService, group, LoadingManager, sort} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
-import {LocalizedName} from '@kodality-web/marina-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {mergeMap, Observable, of} from 'rxjs';
+import {of} from 'rxjs';
 import {Router} from '@angular/router';
 import {CodeSystem, CodeSystemLibService, CodeSystemVersion, EntityProperty} from '../../../../resources/_lib';
 import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../file-analysis.service';
-import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
+import {JobLibService, JobLog} from 'term-web/sys/_lib';
+import {
+  CodeSystemFileImportService,
+  FileImportPropertyRow,
+  FileProcessingRequest
+} from 'term-web/resources/_lib/codesystem/services/code-system-file-import.service';
 
 
 const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
@@ -20,92 +23,6 @@ const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
   {name: 'is-a', type: 'string', description: 'association', orderNumber: 9999},
 ];
 
-
-type FileImportPropertyRow = FileProcessingRequestProperty & {
-  import: boolean
-}
-
-
-// processing
-interface FileProcessingRequest {
-  type: string;
-  link?: string;
-
-  codeSystem?: {
-    id?: string;
-    uri?: string;
-    names?: LocalizedName;
-    description?: string;
-  };
-  version?: {
-    version?: string;
-    status?: string;
-    releaseDate?: Date;
-  };
-
-  properties?: FileProcessingRequestProperty[];
-  generateValueSet?: boolean;
-  dryRun?: boolean;
-  cleanRun?: boolean
-}
-
-interface FileProcessingRequestProperty {
-  columnName?: string;
-  propertyName?: string;
-  propertyType?: string;
-  propertyTypeFormat?: string;
-  preferred?: boolean;
-  lang?: string;
-}
-
-
-@Injectable()
-class CodeSystemFileImportService {
-  public readonly baseUrl = `${environment.terminologyApi}/file-importer/code-system`;
-
-  public constructor(
-    private http: HttpClient,
-    private jobService: JobLibService,
-    private destroy$: DestroyService
-  ) { }
-
-
-  public validate(_props: FileImportPropertyRow[]): string[] {
-    const props = _props.filter(p => p.import).filter(p => p.propertyName);
-    const propMap = collect(props, p => p.propertyName!);
-
-    const errors: string[] = [];
-
-    const duplicates = Object.keys(propMap).filter(p => propMap[p].length > 1).filter(Boolean);
-    if (duplicates.filter(p => p === 'identifier').length) {
-      errors.push(`Code system MUST have only one "identifier" property`);
-    }
-
-    const propertiesWithoutFormat = props.filter(p => ['date', 'dateTime'].includes(p.propertyType) && isNil(p.propertyTypeFormat));
-    if (propertiesWithoutFormat.length) {
-      propertiesWithoutFormat.forEach(p => errors.push(`Please define the type format for the "${p.propertyName}" property`));
-    }
-
-    const forbiddenNewProperties = props.filter(p => ['code', 'Coding'].includes(p.propertyType) && p['_newProp']);
-    if (forbiddenNewProperties.length) {
-      errors.push(`Please create code system and define ${forbiddenNewProperties.map(p => `"${p.propertyName}"`).join(', ')} properties there`);
-    }
-
-    return errors;
-  }
-
-  public processRequest(req: FileProcessingRequest, file: Blob): Observable<JobLog> {
-    const fd = new FormData();
-    fd.append('request', JSON.stringify(req));
-    if (file) {
-      fd.append('file', file, 'files');
-    }
-
-    return this.http.post<JobLogResponse>(`${this.baseUrl}/process`, fd).pipe(
-      mergeMap(resp => this.jobService.pollFinishedJobLog(resp.jobId, this.destroy$))
-    );
-  };
-}
 
 @Component({
   templateUrl: 'code-system-file-import.component.html',
@@ -259,7 +176,7 @@ export class CodeSystemFileImportComponent {
         id: this.data.codeSystem.id,
         ...(this.data.codeSystem['_new'] && {
           uri: this.data.codeSystem.uri,
-          names: this.data.codeSystem.names,
+          title: this.data.codeSystem.title,
           description: this.data.codeSystem.description,
         })
       },
@@ -284,7 +201,7 @@ export class CodeSystemFileImportComponent {
 
   protected processRequest(req: FileProcessingRequest, file: Blob): void {
     this.jobLog = undefined;
-    this.loader.wrap('process', this.importService.processRequest(req, file)).subscribe(resp => {
+    this.loader.wrap('process', this.importService.processRequest(req, file, this.destroy$)).subscribe(resp => {
       this.jobLog = resp;
       if (resp.errors?.length || resp.warnings?.length) {
         this.downloadLog();
@@ -314,7 +231,6 @@ export class CodeSystemFileImportComponent {
 
 
   /* Parsed properties table */
-
   protected applyTemplate(): void {
     const existingPropertyNames = this.combineWithDefaults(this.sourceCodeSystem?.properties).map(p => p.name);
     const req$ = this.data.template ? this.http.get<FileImportPropertyRow[]>(`./assets/file-import-templates/${this.data.template}.json`) : of([]);
