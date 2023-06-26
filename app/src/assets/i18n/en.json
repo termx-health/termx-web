@@ -205,7 +205,8 @@
           "add-supplement": "Add supplement",
           "delete-property": "Delete property",
           "delete-supplement": "Delete supplement",
-          "often-used": "Often used properties"
+          "often-used-designations": "Often used designations",
+          "often-used-properties": "Often used properties"
         }
       },
       "summary": {
@@ -267,9 +268,10 @@
       "form": {
         "add-header": "Add concept",
         "concept": "Concept",
+        "related-artifacts": "Related artifacts",
         "version": {
-          "header": "Versions",
-          "information": "Version information",
+          "header": "Version {{created}}",
+          "new": "New version",
           "code-system-version": "Code System version",
           "new-version": "New version"
         },
@@ -314,11 +316,7 @@
       }
     },
     "code-system-concept-version": {
-      "form": {
-        "add-header": "Add version",
-        "edit-header": "Edit version",
-        "view-header": "View version"
-      },
+      "add-version": "Add version",
       "designation": {
         "add-supplement": "Add supplement",
         "add-designation": "Add designation",
@@ -1224,7 +1222,8 @@
       "versions": "Versions",
       "base-code-system": "Parent code system",
       "sequence": "Sequence for concept code",
-      "hierarchy-meaning": "Hierarchy meaning"
+      "hierarchy-meaning": "Hierarchy meaning",
+      "designations": "Designations"
     },
     "code-system-version": {
       "id": "Identifier",
@@ -1265,7 +1264,11 @@
       "created": "Created at",
       "property-values": "Property values",
       "designations": "Designations",
-      "associations": "Associations"
+      "associations": "Associations",
+      "association-type": "Association",
+      "association-status": "Status",
+      "association-target": "Target",
+      "association-order": "Order"
     },
     "naming-system": {
       "id": "Id",
@@ -1292,6 +1295,7 @@
       "required": "Required",
       "rule": {
         "singular": "Rule",
+        "type": "Type",
         "code-systems": "Code systems",
         "value-set": "Value set",
         "filters": "Filters",

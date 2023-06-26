@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptUtil, EntityProperty} from 'app/src/app/resources/_lib';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'app/src/app/resources/_lib';
+import {LoadingManager} from '@kodality-web/core-util';
+import {forkJoin, of} from 'rxjs';
 
 @Component({
   templateUrl: './code-system-concept-view.component.html',
@@ -19,47 +21,56 @@ import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'app
 })
 export class CodeSystemConceptViewComponent implements OnInit {
   public codeSystemId?: string | null;
-  public conceptCode?: string | null;
+  public versionCode?: string | null;
+  public parent?: string | null;
+  public codeSystem?: CodeSystem;
+  public codeSystemVersion?: CodeSystemVersion;
   public concept?: CodeSystemConcept;
   public conceptVersion?: CodeSystemEntityVersion;
 
-  public loading: {[k: string]: boolean} = {};
+  protected loader = new LoadingManager();
 
-  public statusColorMap: {[status: string]: 'red' | 'green' | 'gray'} = {
-    'active': 'green',
-    'draft': 'gray',
-    'retired': 'red'
-  };
 
   public constructor(
     public codeSystemService: CodeSystemService,
     private route: ActivatedRoute
-  ) { }
+  ) {}
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
-    this.conceptCode = this.route.snapshot.paramMap.get('conceptCode') ? this.route.snapshot.paramMap.get('conceptCode') : undefined;
-    this.loadConcept(this.conceptCode!);
-  }
+    this.versionCode = this.route.snapshot.paramMap.get('versionCode');
+    const conceptCode = this.route.snapshot.paramMap.get('conceptCode');
 
-  public requiredLanguages(codeSystemVersion: CodeSystemVersion): string[] {
-    return [codeSystemVersion.preferredLanguage!];
-  }
+    this.loadData();
 
-  private loadConcept(conceptCode: string): void {
-    this.loading['init'] = true;
-    this.codeSystemService.loadConcept(this.codeSystemId!, conceptCode).subscribe(c => this.concept = c).add(() => {
-      this.loading['init'] = false;
+    this.loader.wrap('init', this.codeSystemService.loadConcept(this.codeSystemId, conceptCode, this.versionCode)).subscribe(c => {
+      this.concept = c;
       this.selectVersion(this.concept?.versions?.[this.concept?.versions?.length - 1]);
     });
   }
 
-  public get isLoading(): boolean {
-    return Object.values(this.loading).some(Boolean);
-  }
-
   public selectVersion(version?: CodeSystemEntityVersion): void {
+    version.designations ??= [];
+    version.propertyValues ??= [];
+    version.associations ??= [];
     this.conceptVersion = version;
   }
 
+  private loadData(): void {
+    this.loader.wrap('init', forkJoin([
+      this.codeSystemService.load(this.codeSystemId),
+      this.versionCode ? this.codeSystemService.loadVersion(this.codeSystemId, this.versionCode) : of(undefined)]
+    )).subscribe(([cs, version]) => {
+      this.codeSystem = cs;
+      this.codeSystemVersion = version;
+    });
+  }
+
+  public addPropertyValue(prop: EntityProperty): void {
+    this.conceptVersion.propertyValues = [...this.conceptVersion.propertyValues || [], {entityPropertyId: prop.id, entityProperty: prop.name}];
+  }
+
+  public addAssociation(): void {
+    this.conceptVersion.associations = [...this.conceptVersion.associations || [], {status: 'active', associationType: this.codeSystem.hierarchyMeaning}];
+  }
 }

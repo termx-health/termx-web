@@ -16,12 +16,10 @@ import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/
 import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
 import {FinderModule} from '../../core/components/finder/finder.module';
 import {CodeSystemConceptEditComponent} from './containers/concepts/edit/code-system-concept-edit.component';
-import {CodeSystemDesignationGroupEditComponent} from './containers/concepts/edit/designation/code-system-designation-group-edit.component';
 import {CodeSystemDesignationEditComponent} from './containers/concepts/edit/designation/code-system-designation-edit.component';
 import {CodeSystemPropertyValueEditComponent} from './containers/concepts/edit/propertyvalue/code-system-property-value-edit.component';
 import {CodeSystemAssociationEditComponent} from './containers/concepts/edit/association/code-system-association-edit.component';
 import {CodeSystemConceptViewComponent} from './containers/concepts/edit/code-system-concept-view.component';
-import {CodeSystemConceptRelationsComponent} from './containers/concepts/edit/relations/code-system-concept-relations.component';
 import {MarinaQuillModule} from '@kodality-web/marina-quill';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {SequenceLibModule} from 'term-web/sequence/_lib/sequence-lib.module';
@@ -47,17 +45,18 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/edit', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/summary', component: CodeSystemSummaryComponent},
   {path: ':id/concepts', component: CodeSystemConceptsComponent},
-  {path: ':id/versions/add', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/versions/:versionCode/summary', component: CodeSystemVersionSummaryComponent},
-  {path: ':id/versions/:versionCode/concepts', component: CodeSystemVersionConceptsComponent},
-  {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-
 
   {path: ':id/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent},
+
+  {path: ':id/versions/add', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/versions/:versionCode/summary', component: CodeSystemVersionSummaryComponent},
+  {path: ':id/versions/:versionCode/concepts', component: CodeSystemVersionConceptsComponent},
+  {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/versions/:versionCode/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: 'compare', component: CodeSystemCompareComponent, data: {privilege: ['*.CodeSystem.view']}}
 ];
 
@@ -95,10 +94,8 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemConceptViewComponent,
     CodeSystemConceptEditComponent,
     CodeSystemDesignationEditComponent,
-    CodeSystemDesignationGroupEditComponent,
     CodeSystemPropertyValueEditComponent,
     CodeSystemAssociationEditComponent,
-    CodeSystemConceptRelationsComponent,
     CodeSystemCompareComponent,
     CodeSystemPropertiesComponent,
 
@@ -122,7 +119,6 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
   exports: [
     CodeSystemListComponent,
     CodeSystemConceptsListComponent,
-    CodeSystemConceptRelationsComponent,
     CodeSystemPropertiesComponent,
   ],
   providers: [

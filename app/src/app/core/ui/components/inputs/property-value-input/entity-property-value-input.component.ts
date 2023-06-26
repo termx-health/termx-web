@@ -1,26 +1,8 @@
-import {Component, forwardRef, Injectable, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, forwardRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR, NgForm} from '@angular/forms';
-import {BooleanInput, DestroyService, isDefined, unique, validateForm} from '@kodality-web/core-util';
-import {CodeSystemLibService, EntityProperty} from 'term-web/resources/_lib';
-import {Observable} from 'rxjs';
-import {QueuedCacheService} from 'term-web/core/ui/services/queued-cache.service';
+import {BooleanInput, DestroyService, isDefined, validateForm} from '@kodality-web/core-util';
+import {EntityProperty} from 'term-web/resources/_lib';
 
-
-@Injectable({providedIn: 'root'})
-class EntityPropertyValueInputCacheService {
-  private cacheService = new QueuedCacheService();
-
-  public constructor(private codeSystemService: CodeSystemLibService) { }
-
-  public loadEntityProperty(codeSystemId: string, entityPropertyId: number): Observable<EntityProperty> {
-    return this.cacheService.enqueueRequest(
-      codeSystemId,
-      entityPropertyId,
-      (ids) => this.codeSystemService.searchProperties(codeSystemId, {ids: ids.filter(unique).join(','), limit: ids.filter(unique).length}),
-      (resp, id) => resp.data.find(ep => ep.id === id)
-    );
-  }
-}
 
 @Component({
   selector: 'tw-property-value-input',
@@ -33,10 +15,8 @@ class EntityPropertyValueInputCacheService {
 export class EntityPropertyValueInputComponent implements OnChanges, ControlValueAccessor {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() @BooleanInput() public required: boolean | string = false;
-
   @Input() public codeSystem?: string;
   @Input() public property?: EntityProperty;
-  @Input() public propertyId?: number;
 
   @ViewChild("form") public form?: NgForm;
 
@@ -45,17 +25,7 @@ export class EntityPropertyValueInputComponent implements OnChanges, ControlValu
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
 
-  public constructor(
-    private codeSystemService: EntityPropertyValueInputCacheService
-  ) {}
-
   public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['propertyId'] || changes['codeSystem']) && this.propertyId && this.codeSystem) {
-      this.codeSystemService.loadEntityProperty(this.codeSystem, this.propertyId).subscribe(ep => {
-        this.property = ep;
-        this.prepareValue(this.property);
-      });
-    }
     if (changes['property'] && this.property) {
       this.prepareValue(this.property);
     }

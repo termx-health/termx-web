@@ -174,7 +174,7 @@
             <tw-property-value-input style="text-align: right"
                 viewMode
                 [ngModel]="property.value"
-                [propertyId]="property.entityPropertyId"
+                [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
                 [codeSystem]="codeSystem.id"></tw-property-value-input>
           </ng-container>
         </ng-container>

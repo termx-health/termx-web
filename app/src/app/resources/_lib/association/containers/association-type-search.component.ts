@@ -12,6 +12,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 })
 export class AssociationTypeSearchComponent implements OnInit {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
   @Input() public filter?: (resource: AssociationType) => boolean;
 
   public data: {[code: string]: AssociationType} = {};

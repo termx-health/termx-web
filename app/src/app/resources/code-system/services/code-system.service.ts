@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import {CodeSystemConcept, CodeSystemLibService, CodeSystemTransactionRequest, CodeSystemVersion, ConceptTransactionRequest} from 'term-web/resources/_lib';
 
 @Injectable()
@@ -47,16 +47,17 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post(`${this.baseUrl}/${codeSystemId}/concepts/transaction`, request);
   }
 
-  public activateEntityVersion(codeSystemId: string, id: number): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/activate`, {});
-  }
-
-  public retireEntityVersion(codeSystemId: string, id: number): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/retire`, {});
-  }
-
-  public saveEntityVersionAsDraft(codeSystemId: string, id: number): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/draft`, {});
+  public changeVersionStatus(codeSystemId: string, id: number, status: 'draft' | 'active' | 'retired'): Observable<void> {
+    if (status === 'draft') {
+      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/draft`, {});
+    }
+    if (status === 'active') {
+      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/activate`, {});
+    }
+    if (status === 'retired') {
+      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/retire`, {});
+    }
+    return of();
   }
 
   public duplicateEntityVersion(codeSystemId: string, entityId: number, id: number): Observable<void> {

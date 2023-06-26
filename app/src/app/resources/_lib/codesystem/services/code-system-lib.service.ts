@@ -25,35 +25,15 @@ export class CodeSystemLibService {
   public constructor(protected http: HttpClient) { }
 
   public load(codeSystemId: string, decorate?: boolean): Observable<CodeSystem> {
-    return this.http.get<CodeSystem>(`${this.baseUrl}/${codeSystemId}?decorate=${decorate}`);
+    return this.http.get<CodeSystem>(`${this.baseUrl}/${codeSystemId}` + (decorate ? `?decorate=${decorate}` : ``));
   }
 
   public loadVersion(codeSystemId: string, version: string): Observable<CodeSystemVersion> {
     return this.http.get<CodeSystemVersion>(`${this.baseUrl}/${codeSystemId}/versions/${version}`);
   }
 
-  public loadConcept(codeSystemId: string, conceptCode: string): Observable<CodeSystemConcept> {
-    return this.http.get<CodeSystemConcept>(`${this.baseUrl}/${codeSystemId}/concepts/${conceptCode}`);
-  }
-
-  public loadEntityProperty(codeSystemId: string, entityPropertyId: number): Observable<EntityProperty> {
-    return this.http.get<EntityProperty>(`${this.baseUrl}/${codeSystemId}/entity-properties/${entityPropertyId}`);
-  }
-
-  public loadEntityPropertyValue(codeSystemId: string, entityPropertyValueId: number): Observable<EntityPropertyValue> {
-    return this.http.get<EntityPropertyValue>(`${this.baseUrl}/${codeSystemId}/entity-property-values/${entityPropertyValueId}`);
-  }
-
-  public loadDesignation(codeSystemId: string, designationId: number): Observable<Designation> {
-    return this.http.get<Designation>(`${this.baseUrl}/${codeSystemId}/designations/${designationId}`);
-  }
-
-  public loadAssociation(codeSystemId: string, associationId: number): Observable<CodeSystemAssociation> {
-    return this.http.get<Designation>(`${this.baseUrl}/${codeSystemId}/associations/${associationId}`);
-  }
-
-  public loadSupplement(codeSystemId: string, supplementId: number): Observable<CodeSystemSupplement> {
-    return this.http.get<CodeSystemSupplement>(`${this.baseUrl}/${codeSystemId}/supplements/${supplementId}`);
+  public loadConcept(codeSystemId: string, conceptCode: string, version?: string): Observable<CodeSystemConcept> {
+    return this.http.get<CodeSystemConcept>(`${this.baseUrl}/${codeSystemId}` + (version ? `/versions/${version}` : ``) + `/concepts/${conceptCode}`);
   }
 
   public search(params: CodeSystemSearchParams = {}): Observable<SearchResult<CodeSystem>> {

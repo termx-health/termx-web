@@ -13,6 +13,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 })
 export class CodeSystemEntityVersionSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
   @Input() public entityCode?: string;
   @Input() public codeSystem?: string;
 

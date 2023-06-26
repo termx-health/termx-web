@@ -5,7 +5,7 @@ import {
   CodeSystemEntityVersion,
   CodeSystemVersion,
   ConceptSearchParams,
-  Designation,
+  Designation, EntityProperty,
   EntityPropertyValue
 } from 'app/src/app/resources/_lib';
 import {Observable} from 'rxjs';
@@ -202,4 +202,8 @@ export class CodeSystemConceptsListComponent implements OnInit {
       this.loadData();
     });
   }
+
+  public getProperty = (id: number, properties: EntityProperty[]): EntityProperty => {
+    return properties?.find(p => p.id === id);
+  };
 }

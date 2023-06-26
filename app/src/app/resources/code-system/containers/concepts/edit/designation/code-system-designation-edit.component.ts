@@ -1,146 +1,58 @@
-import {Component, Input, OnChanges, OnInit, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
-import {CodeSystemService} from '../../../../services/code-system.service';
-import {NgForm} from '@angular/forms';
-import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
-import {CodeSystemDesignationGroupEditComponent} from './code-system-designation-group-edit.component';
-import {finalize, Observable} from 'rxjs';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {BooleanInput, collect, isDefined} from '@kodality-web/core-util';
 import {Designation, EntityProperty} from 'app/src/app/resources/_lib';
 
 @Component({
   selector: 'tw-code-system-designation-edit',
   templateUrl: 'code-system-designation-edit.component.html',
+  styles: [`
+    .italic {
+      font-style: italic;
+    }
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+    .offset {
+      margin-left: 1rem
+    }
+    .m-subtitle {
+      margin-block: 0.5rem;
+    }
+  `]
 })
-export class CodeSystemDesignationEditComponent implements OnChanges, OnInit {
+export class CodeSystemDesignationEditComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public designations?: Designation[];
-  @Input() public codeSystemId?: string;
+  @Input() public properties?: EntityProperty[];
   @Input() public supportedLangs?: string[];
 
-  @ViewChild("modalForm") public modalForm?: NgForm;
-  @ViewChildren(CodeSystemDesignationGroupEditComponent) public designationForms?: QueryList<CodeSystemDesignationGroupEditComponent>;
-
-  public entityProperties: EntityProperty[] = [];
-  public loading: {[k: string]: boolean} = {};
-  public designationGroups: {
-    designationTypeId: number,
-    designationKind: string,
-    caseSignificance: string,
-    designations?: Designation[]
-  }[] = [];
-
-  public modalData?: {
-    visible: boolean,
-    designation: Designation
-  };
-
-  public constructor(
-    private codeSystemService: CodeSystemService,
-  ) {}
-
-  public ngOnInit(): void {
-    this.newModal();
-  }
-
   public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['codeSystemId'] || changes['designations']) && this.codeSystemId && this.designations) {
-      this.loadProperties(this.codeSystemId).subscribe(result => {
-        this.entityProperties = result.data;
-        this.convertToDesignationGroup(this.designations!, this.entityProperties!);
-      });
+    if ((changes['properties'] || changes['designations'] || changes['supportedLangs'])
+      && this.properties && this.designations && this.supportedLangs
+      && !this.viewMode) {
+      this.addDefDesignations();
     }
-  }
-
-  public convertToDesignationGroup(designations: Designation[], properties: EntityProperty[]): void {
-    this.designationGroups = [];
-    if (!this.viewMode) {
-      properties.filter(p => ['display', 'definition', 'alias'].includes(p.name!))
-        .filter(p => !designations.find(d => d.designationTypeId === p.id))
-        .forEach(p => designations.push({language: 'en', designationTypeId: p.id, designationKind: 'text', status: 'draft', caseSignificance: 'ci'}));
-    }
-    designations.forEach(d => {
-      this.addDesignationToMap(d);
-    });
-
-    if (this.viewMode) {
-      return;
-    }
-    this.designationGroups.forEach(g => {
-      this.supportedLangs?.forEach(lang => {
-        let designation = g.designations?.find(d => d.language === lang);
-        if (!designation) {
-          designation = {
-            language: lang,
-            designationTypeId: g.designationTypeId,
-            designationKind: g.designationKind,
-            caseSignificance: g.caseSignificance,
-            status: 'draft'};
-          g.designations?.push(designation);
-        }
-      });
-    });
-  }
-
-  public convertFromDesignationMap(): Designation[] {
-    let designations: Designation[] = [];
-    this.designationGroups.forEach(g => {
-      g.designations?.filter(d => isDefined(d.name)).forEach(d => {
-        d.designationTypeId = g.designationTypeId;
-        d.caseSignificance = g.caseSignificance;
-        d.designationKind = g.designationKind;
-        designations.push(d);
-      });
-    });
-    return designations;
-  }
-
-  private loadProperties(codeSystem: string): Observable<any> {
-    this.loading['properties'] = true;
-    return this.codeSystemService.searchProperties(codeSystem, {limit: -1}).pipe(finalize(() => this.loading['properties'] = false));
-  }
-
-  public confirmModal(): void {
-    if (validateForm(this.modalForm)) {
-      const designations = (this.supportedLangs || ['en']).map(lang => {
-        const designation = copyDeep(this.modalData!.designation);
-        designation.language = lang;
-        return designation;
-      });
-      designations.forEach(d => {
-        this.addDesignationToMap(d);
-      });
-      this.newModal();
-    }
-  }
-
-  public newModal(): void {
-    this.modalData = {
-      visible: false,
-      designation: {designationKind: 'text', status: 'draft', caseSignificance: 'ci'}
-    };
   }
 
   public getDesignations(): Designation[] {
-    return this.designationGroups && this.convertFromDesignationMap() || [];
+    return this.designations.filter(d => isDefined(d.name) && d.name !== '');
   }
 
-  public valid(): boolean {
-    return !this.designationForms?.find(f => !f.validate());
-  }
+  protected collectDesignations = (designations: Designation[]): {[dType: string]: Designation[]} => {
+    return collect(designations, d => d.designationType);
+  };
 
-  private addDesignationToMap(d: Designation): void {
-    const matchingRow = this.designationGroups.find(r =>
-      r.designationTypeId === d.designationTypeId &&
-      r.designationKind === d.designationKind &&
-      r.caseSignificance === d.caseSignificance);
-    if (matchingRow) {
-      matchingRow.designations = [...(matchingRow.designations || []), d];
-    } else {
-      this.designationGroups.push({
-        designationTypeId: d.designationTypeId!,
-        designationKind: d.designationKind!,
-        caseSignificance: d.caseSignificance!,
-        designations: [d]
-      });
-    }
+  private addDefDesignations(): void {
+    const properties = this.properties.filter(p => p.kind === 'designation');
+    const langs = this.supportedLangs?.length > 0 ? this.supportedLangs : ['en'];
+    properties.forEach(p => {
+      langs.filter(l => !this.designations.find(d => d.designationTypeId === p.id && d.language === l))
+        .forEach(l => {
+          this.designations.push({designationTypeId: p.id, designationType: p.name, language: l, status: 'draft', caseSignificance: 'ci'});
+          this.designations = [...this.designations];
+        });
+    });
   }
 }

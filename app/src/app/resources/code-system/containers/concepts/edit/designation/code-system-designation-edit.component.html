@@ -1,48 +1,36 @@
-<m-card>
-  <div *m-card-header class="m-justify-between">
-    <div class="m-card__title">{{'entities.code-system-entity-version.designations' | translate}}</div>
-    <tw-add-button *ngIf="!viewMode" (click)="modalData.visible = true">
-      {{'web.code-system-concept-version.designation.add-designation' | translate}}
-    </tw-add-button>
+<div class="tw-flex-container">
+  <div *ngIf="designations?.length">
+    <ng-container *ngIf="designations | apply: collectDesignations as groups">
+      <ng-container *ngFor="let dType of groups | keys">
+        <div class="m-subtitle">{{dType}}</div>
+
+        <div class="col">
+          <ng-container *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
+            <div *ngIf="viewMode" class="m-justify-between offset">
+              <span><span class="italic">{{d.language}}</span> | {{d.name}}</span>
+              <div class="m-items-middle">
+                <label>{{d.caseSignificance}}</label>
+                <m-icon [mOptions]="{nzTheme : d.preferred ? 'fill' : 'outline'}" [mCode]="'star'"/>
+                <span class="tw-circled" [style.color]="d.status === 'draft' ? 'var(--color-amber-7)' : 'initial'">{{d.status?.[0] | uppercase}}</span>
+              </div>
+            </div>
+            <div *ngIf="!viewMode" class="m-items-middle">
+              <nz-input-group [nzAddOnBefore]="d.language">
+                <input type="text" nz-input [(ngModel)]="d.name" name="{{i}}-name"/>
+              </nz-input-group>
+              <m-button (mClick)="d.preferred = !d.preferred">
+                <m-icon [mOptions]="{nzTheme : d.preferred ? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
+              </m-button>
+              <tw-value-set-concept-select name="{{i}}-status" [(ngModel)]="d.status" valueSet="publication-status"></tw-value-set-concept-select>
+              <m-select name="{{i}}-caseSignificance" [(ngModel)]="d.caseSignificance">
+                <m-option mLabel="web.case-sensitive-options.ci" mValue="ci"></m-option>
+                <m-option mLabel="web.case-sensitive-options.cs" mValue="cs"></m-option>
+                <m-option mLabel="web.case-sensitive-options.ics" mValue="ics"></m-option>
+              </m-select>
+            </div>
+          </ng-container>
+        </div>
+      </ng-container>
+    </ng-container>
   </div>
-
-  <div *ngIf="!loading['languages']" class="tw-flex-container">
-    <m-no-data *ngIf="!designationGroups?.length"/>
-
-    <tw-code-system-designation-group-edit
-        *ngFor="let group of designationGroups"
-        [viewMode]="viewMode"
-        [designationGroup]="group"
-        [supportedLangs]="supportedLangs"
-        [entityProperties]="entityProperties"
-    ></tw-code-system-designation-group-edit>
-  </div>
-</m-card>
-
-
-<m-modal [(mVisible)]="modalData.visible" (mClose)="newModal()">
-  <ng-container *m-modal-header>
-    {{'web.code-system-concept-version.designation.add-designation'| translate}}
-  </ng-container>
-
-  <ng-container *m-modal-content>
-    <form #modalForm="ngForm">
-      <m-form-item mName="designationType" mLabel="entities.designation.type" required>
-        <m-select
-            icon="search"
-            name="designationType"
-            [(ngModel)]="modalData.designation.designationTypeId"
-            placeholder="marina.ui.inputs.search.placeholder"
-            [loading]="loading['properties']"
-            required>
-          <m-option *ngFor="let prop of entityProperties" [mValue]="prop.id" [mLabel]="prop.name"></m-option>
-        </m-select>
-      </m-form-item>
-    </form>
-  </ng-container>
-
-  <div *m-modal-footer class="m-items-middle">
-    <m-button mDisplay="text" (click)="newModal()">{{'core.btn.cancel' | translate}}</m-button>
-    <m-button mDisplay="primary" (click)="confirmModal()">{{'core.btn.confirm' | translate}}</m-button>
-  </div>
-</m-modal>
+</div>

@@ -7,7 +7,6 @@ export class Designation {
   public rendering?: string;
   public preferred?: boolean;
   public caseSignificance?: string;
-  public designationKind?: string;
   public description?: string;
   public status?: string;
 

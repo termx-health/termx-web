@@ -10,7 +10,7 @@ import {RelatedArtifactUtil} from 'term-web/resources/_lib/relatedartifacts/util
 })
 export class ResourceRelatedArtifactWidgetComponent implements OnChanges {
   @Input() public resourceId: string;
-  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet';
+  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'Concept';
 
   protected relatedArtifacts: RelatedArtifact[];
   protected loader = new LoadingManager();

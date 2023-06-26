@@ -1,46 +1,36 @@
-<m-card>
-  <div *m-card-header class="m-justify-between">
-    <div class="m-card__title">{{'entities.code-system-entity-version.property-values' | translate}}</div>
-    <tw-add-button *ngIf="!viewMode" (click)="addPropertyValue()">
-      {{'web.code-system-concept-version.property-value.add-property-value' | translate}}
-    </tw-add-button>
-  </div>
+<m-no-data *ngIf="!propertyValues?.length"/>
 
-  <form #form="ngForm">
-    <m-no-data *ngIf="!propertyValues?.length"/>
+<ng-container *ngFor="let pv of propertyValues | sort: 'entityPropertyId'; let i = index">
+  <ng-container *ngIf="viewMode">
+    <div class="m-items-middle">
+      <span class="m-subtitle">{{pv.entityProperty}}</span>
+      <tw-property-value-input [ngModel]="pv.value" [property]="pv.entityPropertyId | apply: getProperty: properties" [codeSystem]="codeSystemId" viewMode/>
+    </div>
+  </ng-container>
 
-    <ng-container *ngFor="let propertyValue of propertyValues; let index = index">
-      <div nz-row [nzGutter]="8" nzJustify="center">
-        <div nz-col [nzLg]="6" [nzMd]="6" [nzXs]="24">
-          <m-form-item mName="property-{{index}}" required>
-            <m-select *ngIf="!viewMode && !(index | apply:isRequired:entityProperties)"
-                name="property-{{index}}"
-                [(ngModel)]="propertyValue.entityPropertyId"
-                placeholder="entities.entity-property.type"
-                icon="search"
-                required>
-              <m-option *ngFor="let prop of entityProperties" [mValue]="prop.id" [mLabel]="prop.name"></m-option>
-            </m-select>
-            <label *ngIf="viewMode || (index | apply:isRequired:entityProperties)">
-              {{propertyValue.entityPropertyId | apply:getPropertyName:entityProperties}}
-            </label>
-          </m-form-item>
-        </div>
-
-        <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="24">
-          <div class="m-items-top">
-            <m-form-item style="width: 100%" *ngIf="propertyValue.entityPropertyId" mName="propertyValue-{{index}}">
-              <tw-property-value-input [viewMode]="viewMode"
-                  [(ngModel)]="propertyValue.value"
-                  name="propertyValue-{{index}}"
-                  [property]="propertyValue.entityPropertyId | apply:getProperty:entityProperties"
-                  [codeSystem]="codeSystemId"
-                  [required]="(index | apply:isRequired:entityProperties)"></tw-property-value-input>
-            </m-form-item>
-            <m-icon-button *ngIf="!viewMode && !(index | apply:isRequired:entityProperties)" mIcon="delete" (mClick)="removePropertyValue(index)"/>
-          </div>
-        </div>
+  <ng-container *ngIf="!viewMode">
+    <form #form="ngForm">
+      <div class="m-items-middle">
+        <m-form-item mName="{{i}}-property" required>
+          <m-select *ngIf="!(i | apply:isRequired:properties)"
+              name="{{i}}-property"
+              [(ngModel)]="pv.entityPropertyId"
+              placeholder="entities.entity-property.type"
+              icon="search"
+              required>
+            <m-option *ngFor="let prop of properties" [mValue]="prop.id" [mLabel]="prop.name"></m-option>
+          </m-select>
+          <label *ngIf="i | apply:isRequired:properties">{{pv.entityProperty}}</label>
+        </m-form-item>
+        <m-form-item style="width: 100%" *ngIf="pv.entityPropertyId" mName="{{i}}-propertyValue">
+          <tw-property-value-input [(ngModel)]="pv.value"
+              name="{{i}}-propertyValue"
+              [property]="pv.entityPropertyId | apply:getProperty:properties"
+              [codeSystem]="codeSystemId"
+              [required]="(i | apply:isRequired:properties)"></tw-property-value-input>
+        </m-form-item>
       </div>
-    </ng-container>
-  </form>
-</m-card>
+    </form>
+  </ng-container>
+</ng-container>
+

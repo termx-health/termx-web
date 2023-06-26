@@ -1,79 +1,79 @@
-<div nz-row [nzGutter]="12" nzJustify="center" class="m-row">
-  <div nz-col [nzSm]="18" [nzXs]="24" style="height: min-content" *ngIf="concept?.versions">
-    <m-card [mShowSkeleton]="loading['init']">
-      <div class="m-justify-between">
-        <label class="m-card__title">
-          {{concept?.code}} - {{concept?.code | localizedConceptName: {codeSystem: codeSystemId} | async}}
-        </label>
-      </div>
-    </m-card>
-  </div>
-</div>
+<m-page [mLoading]="loader.isLoading">
 
-<div nz-row [nzGutter]="12" nzJustify="center" class="m-row" style="margin-top: 1rem">
-  <div nz-col [nzMd]="4" [nzSm]="18" [nzXs]="24" class="version-sidebar" *ngIf="concept?.versions">
-    <m-spinner [mLoading]="isLoading">
-      <m-card [mShowSkeleton]="loading['init']" mTitle="web.code-system-concept.form.version.header">
-        <nz-timeline>
-          <nz-timeline-item *ngFor="let version of concept.versions; let index = index" [nzLabel]="versionTemplate" [nzColor]="statusColorMap[version.status]">
-            <ng-template #versionTemplate>
-              <div>
-                <label *ngIf="version.id === conceptVersion.id" style="font-weight: bold">
-                  {{version.created ? (version.created | localDateTime) : 'web.code-system-concept.form.version.new-version' | translate}}
-                </label>
-                <label *ngIf="version.id !== conceptVersion.id" (click)="selectVersion(version)">
-                  {{version.created ? (version.created | localDateTime) : 'web.code-system-concept.form.version.new-version' | translate}}
-                </label>
-              </div>
-            </ng-template>
-          </nz-timeline-item>
-        </nz-timeline>
+  <div style="display: flex; gap: 1rem">
+    <div style="display: flex; gap: 1rem; flex-direction: column; flex: 1">
+
+      <!-- Concept info -->
+      <m-card *ngIf="concept">
+        <m-title *m-card-header [mTitle]="concept.code" class="m-bold"></m-title>
+        <span>{{concept.description}}</span>
       </m-card>
-    </m-spinner>
-  </div>
 
+      <!-- Concept Versions -->
+      <m-card *ngIf="concept?.versions">
+        <m-title *m-card-header mTitle="entities.code-system-concept.versions"></m-title>
+        <m-list mSeparated>
+          <m-list-item *ngFor="let version of concept.versions" mClickable (mClick)="selectVersion(version)">
+            <div class="m-items-middle">
+              <span class="m-bold">{{version.created ? (version.created | localDate) : ('web.code-system-concept.form.version.new' | translate)}}</span>
+              <m-divider mVertical></m-divider>
+              <tw-status-tag [status]="version.status"></tw-status-tag>
+            </div>
+            <div>{{version.description | localName}}</div>
+          </m-list-item>
+        </m-list>
+      </m-card>
 
-  <div nz-col [nzMd]="14" [nzSm]="18" [nzXs]="24">
-    <m-spinner [mLoading]="isLoading">
-      <m-card mTitle="web.code-system-concept.form.version.information" [mShowSkeleton]="loading['init']">
-        <div *ngIf="concept && conceptVersion">
-          <m-form-item mLabel="entities.code-system-entity-version.status">
-            <tw-status-tag [status]="conceptVersion.status"></tw-status-tag>
-          </m-form-item>
+      <!-- Related artifacts -->
+      <m-card *ngIf="concept?.id">
+        <m-title *m-card-header mTitle="web.code-system-concept.form.related-artifacts"></m-title>
+        <tw-resource-related-artifact-widget resourceType="Concept" [resourceId]="concept.id | toString"></tw-resource-related-artifact-widget>
+      </m-card>
 
-          <m-form-item mLabel="entities.code-system-entity-version.created">
-            {{conceptVersion.created | localDateTime}}
-          </m-form-item>
+    </div>
+    <div style="display: flex; gap: 1rem; flex-direction: column; flex: 2">
 
-          <m-form-item mLabel="entities.code-system-entity-version.description">
-            {{conceptVersion.description ?? '-'}}
-          </m-form-item>
+      <!-- Version info -->
+      <m-card *ngIf="conceptVersion">
+        <div *m-card-header class="m-items-middle">
+          <m-title [mTitle]="conceptVersion.created ? ('web.code-system-concept.form.version.header' | translate: {created: conceptVersion.created | localDateTime}) : 'web.code-system-concept.form.version.new'"></m-title>
+          <m-divider mVertical></m-divider>
+          <tw-status-tag [status]="conceptVersion.status"></tw-status-tag>
         </div>
+        <span>{{conceptVersion.description}}</span>
+
+        <!-- Designations -->
+        <m-divider></m-divider>
+        <m-card class="m-card-inside">
+          <m-title *m-card-header mTitle="entities.code-system-entity-version.designations"></m-title>
+          <tw-code-system-designation-edit class="padded"
+              [properties]="codeSystem?.properties"
+              [designations]="conceptVersion?.designations"
+              [supportedLangs]="codeSystemVersion?.supportedLanguages || []"
+              viewMode></tw-code-system-designation-edit>
+        </m-card>
+
+        <!-- Property values -->
+        <m-divider></m-divider>
+        <m-card class="m-card-inside">
+          <m-title *m-card-header mTitle="entities.code-system-entity-version.property-values"></m-title>
+          <tw-code-system-property-value-edit class="padded"
+              [codeSystemId]="codeSystem?.id"
+              [properties]="codeSystem?.properties"
+              [propertyValues]="conceptVersion?.propertyValues"
+              viewMode></tw-code-system-property-value-edit>
+        </m-card>
+
+        <!-- Associations -->
+        <m-divider></m-divider>
+        <m-card class="m-card-inside">
+          <m-title *m-card-header mTitle="entities.code-system-entity-version.associations"></m-title>
+          <tw-code-system-association-edit class="padded"
+              [codeSystemId]="codeSystemId"
+              [associations]="conceptVersion?.associations"
+              viewMode></tw-code-system-association-edit>
+        </m-card>
       </m-card>
-    </m-spinner>
-
-    <tw-code-system-designation-edit
-        class="padded"
-        [codeSystemId]="codeSystemId"
-        [designations]="conceptVersion?.designations"
-        viewMode
-    ></tw-code-system-designation-edit>
-
-    <tw-code-system-property-value-edit
-        class="padded"
-        [codeSystemId]="codeSystemId"
-        [propertyValues]="conceptVersion?.propertyValues"
-        viewMode
-    ></tw-code-system-property-value-edit>
-
-    <tw-code-system-association-edit
-        class="padded"
-        [codeSystemId]="codeSystemId"
-        [associations]="conceptVersion?.associations"
-        viewMode
-    ></tw-code-system-association-edit>
-
-
-    <tw-code-system-concept-relations *ngIf="concept?.versions" class="padded" [concept]="concept"></tw-code-system-concept-relations>
+    </div>
   </div>
-</div>
+</m-page>

@@ -1,6 +1,7 @@
 export class EntityProperty {
   public id?: number;
   public name?: string;
+  public kind?: string;
   public type?: string;
   public description?: string;
   public status?: string;

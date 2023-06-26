@@ -6,4 +6,5 @@ export class CodeSystemConcept extends CodeSystemEntity{
 
   public leaf?: boolean;
   public childCount?: number;
+  public immutable?: boolean;
 }
