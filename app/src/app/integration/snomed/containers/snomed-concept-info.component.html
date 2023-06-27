@@ -24,6 +24,7 @@
     <m-table [mData]="descriptions | keys" [mLoading]="loader.state['load']" mEnablePagination>
       <tr *mTableHead>
         <th>{{'entities.snomed-description.refset' | translate}}</th>
+        <th>{{'entities.snomed-description.description-id' | translate}}</th>
         <th>{{'entities.snomed-description.lang' | translate}}</th>
         <th>{{'entities.snomed-description.term' | translate}}</th>
         <th>{{'entities.snomed-description.type' | translate}}</th>
@@ -31,6 +32,7 @@
       </tr>
       <tr *mTableRow="let dk">
         <td>{{dk | snomedConceptName | async}}</td>
+        <td><div *ngFor="let description of descriptions[dk]">{{description.descriptionId}}</div></td>
         <td><div *ngFor="let description of descriptions[dk]">{{description.lang}}</div></td>
         <td><div *ngFor="let description of descriptions[dk]">{{description.term}}</div></td>
         <td><div *ngFor="let description of descriptions[dk]">{{description.typeId | snomedConceptName | async}}</div></td>

@@ -4,6 +4,7 @@ export class SnomedDescription {
   public active?: boolean;
   public moduleId?: string;
 
+  public descriptionId?: string;
   public conceptId?: string;
   public lang?: string;
   public typeId?: string;

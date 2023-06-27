@@ -1438,7 +1438,7 @@
     },
     "snomed-description": {
       "refset": "Refset",
-      "concept-id": "Concept id",
+      "description-id": "Description id",
       "lang": "Language",
       "term": "Term",
       "type": "Type",
