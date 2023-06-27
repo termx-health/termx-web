@@ -55,7 +55,7 @@ export class ValueSetEditComponent implements OnInit {
       valueSet: vs,
       version: this.resourceVersionFormComponent?.getVersion()
     };
-    this.loader.wrap('save', this.valueSetService.saveTransaction(request))
+    this.loader.wrap('save', this.valueSetService.saveValueSet(request))
       .subscribe(() => this.router.navigate(['/resources/value-sets', vs.id, 'summary']));
   }
 

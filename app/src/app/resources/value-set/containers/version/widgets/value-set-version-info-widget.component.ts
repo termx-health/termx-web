@@ -53,16 +53,8 @@ export class ValueSetVersionInfoWidgetComponent {
     }
   }
 
-  protected makeDraft(): void {
-    this.valueSetService.saveVersionAsDraft(this.version.valueSet, this.version.version).subscribe(() => this.version.status = 'draft');
-  }
-
-  protected activate(): void {
-    this.valueSetService.activateVersion(this.version.valueSet, this.version.version).subscribe(() => this.version.status = 'active');
-  }
-
-  protected retire(): void {
-    this.valueSetService.retireVersion(this.version.valueSet, this.version.version).subscribe(() => this.version.status = 'retired');
+  protected changeVersionStatus(status: 'draft' | 'active' | 'retired'): void {
+    this.valueSetService.changeValueSetVersionStatus(this.version.valueSet, this.version.version, status).subscribe(() => this.version.status = status);
   }
 
   public openJson(expand: boolean = false): void {

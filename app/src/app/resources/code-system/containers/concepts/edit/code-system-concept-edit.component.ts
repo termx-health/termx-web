@@ -77,7 +77,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
     request.entityVersion.designations = this.designationEdit?.getDesignations();
     request.entityVersion.propertyValues = this.propertyValueEdit?.getPropertyValues();
     request.entityVersion.associations = this.associationEdit?.getAssociations();
-    this.loader.wrap('save', this.codeSystemService.saveConceptTransaction(this.codeSystemId, this.versionCode, request))
+    this.loader.wrap('save', this.codeSystemService.saveConcept(this.codeSystemId, this.versionCode, request))
       .subscribe(() => this.location.back());
   }
 

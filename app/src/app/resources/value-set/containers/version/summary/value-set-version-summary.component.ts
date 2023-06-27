@@ -40,7 +40,7 @@ export class ValueSetVersionSummaryComponent implements OnInit {
     if (!this.ruleFormComponent || !this.ruleFormComponent.validate()) {
       return;
     }
-    this.loader.wrap('save-rule', this.valueSetService.saveRule(this.valueSet.id, this.valueSetVersion.ruleSet.id, this.rule.rule)).subscribe(() => {
+    this.loader.wrap('save-rule', this.valueSetService.saveRule(this.valueSet.id, this.valueSetVersion.version, this.rule.rule)).subscribe(() => {
       this.rule = undefined;
       this.loadData(this.valueSet.id, this.valueSetVersion.version);
     });
@@ -55,7 +55,7 @@ export class ValueSetVersionSummaryComponent implements OnInit {
       this.rule = undefined;
       return;
     }
-    this.loader.wrap('delete-rule', this.valueSetService.deleteRule(this.valueSet.id, this.rule.rule.id)).subscribe(() => {
+    this.loader.wrap('delete-rule', this.valueSetService.deleteRule(this.valueSet.id, this.valueSetVersion.version, this.rule.rule.id)).subscribe(() => {
       this.rule = undefined;
       this.loadData(this.valueSet.id, this.valueSetVersion.version);
     });

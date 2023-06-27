@@ -1,67 +1,46 @@
-import {
-  CodeSystemTransactionRequest,
-  ValueSet,
-  ValueSetLibService, ValueSetTransactionRequest,
-  ValueSetVersion,
-  ValueSetVersionConcept,
-  ValueSetVersionRule
-} from 'term-web/resources/_lib';
+import {ValueSetLibService, ValueSetTransactionRequest, ValueSetVersion, ValueSetVersionRule} from 'term-web/resources/_lib';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 
 @Injectable()
 export class ValueSetService extends ValueSetLibService {
 
-  public save(valueSet: ValueSet): Observable<ValueSet> {
-    return this.http.post(this.baseUrl, valueSet);
-  }
-
-  public saveTransaction(request: ValueSetTransactionRequest): Observable<void> {
+  public saveValueSet(request: ValueSetTransactionRequest): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/transaction`, request);
   }
 
-  public delete(valueSetId: string): Observable<void> {
+  public deleteValueSet(valueSetId: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${valueSetId}`);
   }
 
-  public saveVersion(valueSetId: string, version: ValueSetVersion): Observable<ValueSetVersion> {
+  public saveValueSetVersion(valueSetId: string, version: ValueSetVersion): Observable<ValueSetVersion> {
     if (version.id && version.version) {
-      return this.http.put(`${this.baseUrl}/${valueSetId}/versions/${version.id}`, version);
+      return this.http.put(`${this.baseUrl}/${valueSetId}/versions/${version.version}`, version);
     }
     return this.http.post(`${this.baseUrl}/${valueSetId}/versions`, version);
   }
 
-  public activateVersion(valueSetId: string, version: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/activate`, {});
-  }
-
-  public retireVersion(valueSetId: string, version: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/retire`, {});
-  }
-
-  public saveVersionAsDraft(valueSetId: string, version: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/draft`, {});
-  }
-
-  public saveConcept(valueSetId: string, version: string, concept: ValueSetVersionConcept): Observable<ValueSetVersionConcept> {
-    if (concept.id) {
-      return this.http.put<ValueSetVersionConcept>(`${this.baseUrl}/${valueSetId}/versions/${version}/concepts/${concept.id}`, concept);
+  public changeValueSetVersionStatus(valueSetId: string, version: string, status: 'draft' | 'active' | 'retired'): Observable<void> {
+    if (status === 'draft') {
+      return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/draft`, {});
     }
-    return this.http.post<ValueSetVersionConcept>(`${this.baseUrl}/${valueSetId}/versions/${version}/concepts`, concept);
+    if (status === 'active') {
+      return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/activate`, {});
+    }
+    if (status === 'retired') {
+      return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/retire`, {});
+    }
+    return of();
   }
 
-  public deleteConcept(valueSetId: string, id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${valueSetId}/concepts/${id}`);
-  }
-
-  public saveRule(valueSetId: string, ruleSetId: number, rule: ValueSetVersionRule): Observable<ValueSetVersionRule> {
+  public saveRule(valueSetId: string, valueSetVersion: string, rule: ValueSetVersionRule): Observable<ValueSetVersionRule> {
     if (rule.id) {
-      return this.http.put<ValueSetVersionRule>(`${this.baseUrl}/${valueSetId}/rule-sets/${ruleSetId}/rules/${rule.id}`, rule);
+      return this.http.put<ValueSetVersionRule>(`${this.baseUrl}/${valueSetId}/versions/${valueSetVersion}/rules/${rule.id}`, rule);
     }
-    return this.http.post<ValueSetVersionRule>(`${this.baseUrl}/${valueSetId}/rule-sets/${ruleSetId}/rules`, rule);
+    return this.http.post<ValueSetVersionRule>(`${this.baseUrl}/${valueSetId}/versions/${valueSetVersion}/rules`, rule);
   }
 
-  public deleteRule(valueSetId: string, id: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${valueSetId}/rules/${id}`);
+  public deleteRule(valueSetId: string, valueSetVersion: string, id: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${valueSetId}/versions/${valueSetVersion}/rules/${id}`);
   }
 }

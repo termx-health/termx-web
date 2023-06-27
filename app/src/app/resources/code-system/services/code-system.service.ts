@@ -5,7 +5,7 @@ import {CodeSystemConcept, CodeSystemLibService, CodeSystemTransactionRequest, C
 @Injectable()
 export class CodeSystemService extends CodeSystemLibService {
 
-  public saveTransaction(request: CodeSystemTransactionRequest): Observable<void> {
+  public saveCodeSystem(request: CodeSystemTransactionRequest): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/transaction`, request);
   }
 
@@ -13,18 +13,18 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/duplicate`, duplicateRequest);
   }
 
-  public delete(codeSystemId: string): Observable<void> {
+  public deleteCodeSystem(codeSystemId: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}`);
   }
 
-  public saveVersion(codeSystemId: string, version: CodeSystemVersion): Observable<CodeSystemVersion> {
+  public saveCodeSystemVersion(codeSystemId: string, version: CodeSystemVersion): Observable<CodeSystemVersion> {
     if (version.id && version.version) {
-      return this.http.put(`${this.baseUrl}/${codeSystemId}/versions/${version.id}`, version);
+      return this.http.put(`${this.baseUrl}/${codeSystemId}/versions/${version.version}`, version);
     }
     return this.http.post(`${this.baseUrl}/${codeSystemId}/versions`, version);
   }
 
-  public changeVersionStatus(codeSystemId: string, version: string, status: 'draft' | 'active' | 'retired'): Observable<void> {
+  public changeCodeSystemVersionStatus(codeSystemId: string, version: string, status: 'draft' | 'active' | 'retired'): Observable<void> {
     if (status === 'draft') {
       return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/draft`, {});
     }
@@ -41,7 +41,7 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/duplicate`, duplicateRequest);
   }
 
-  public saveConceptTransaction(codeSystemId: string, version: string, request: ConceptTransactionRequest): Observable<CodeSystemConcept> {
+  public saveConcept(codeSystemId: string, version: string, request: ConceptTransactionRequest): Observable<CodeSystemConcept> {
     if (version) {
       return this.http.post(`${this.baseUrl}/${codeSystemId}/versions/${version}/concepts/transaction`, request);
     }
@@ -50,19 +50,19 @@ export class CodeSystemService extends CodeSystemLibService {
 
   public changeEntityVersionStatus(codeSystemId: string, id: number, status: 'draft' | 'active' | 'retired'): Observable<void> {
     if (status === 'draft') {
-      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/draft`, {});
+      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/${id}/draft`, {});
     }
     if (status === 'active') {
-      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/activate`, {});
+      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/${id}/activate`, {});
     }
     if (status === 'retired') {
-      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/retire`, {});
+      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/${id}/retire`, {});
     }
     return of();
   }
 
   public deleteEntityVersion(codeSystemId: string, id: number): Observable<any> {
-    return this.http.delete(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}`);
+    return this.http.delete(`${this.baseUrl}/${codeSystemId}/entity-versions/${id}`);
   }
 
   public duplicateEntityVersion(codeSystemId: string, entityId: number, id: number): Observable<void> {
@@ -70,14 +70,14 @@ export class CodeSystemService extends CodeSystemLibService {
   }
 
   public unlinkEntityVersions(codeSystemId: string, codeSystemVersion: string, entityVersionIds: number[]): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${codeSystemVersion}/unlink`, {entityVersionIds: entityVersionIds});
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${codeSystemVersion}/concepts/unlink`, {entityVersionIds: entityVersionIds});
   }
 
   public linkEntityVersions(codeSystemId: string, codeSystemVersion: string, entityVersionIds: number[]): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${codeSystemVersion}/link`, {entityVersionIds: entityVersionIds});
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${codeSystemVersion}/concepts/link`, {entityVersionIds: entityVersionIds});
   }
 
   public deleteEntityPropertyUsages(codeSystemId: string, propertyId: number): Observable<void> {
-    return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/entity-property-usages/${propertyId}`);
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-properties/${propertyId}/delete-usages`, {});
   }
 }

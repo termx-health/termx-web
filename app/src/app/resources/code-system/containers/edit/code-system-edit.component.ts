@@ -65,7 +65,7 @@ export class CodeSystemEditComponent implements OnInit {
       valueSet: this.codeSystemRelationsComponent?.getValueSet(),
       version: this.resourceVersionFormComponent?.getVersion()
     };
-    this.loader.wrap('save', this.codeSystemService.saveTransaction(request))
+    this.loader.wrap('save', this.codeSystemService.saveCodeSystem(request))
       .subscribe(() => this.router.navigate(['/resources/code-systems', cs.id, 'summary']));
   }
 

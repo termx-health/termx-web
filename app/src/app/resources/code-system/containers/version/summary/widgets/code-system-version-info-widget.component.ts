@@ -48,7 +48,7 @@ export class CodeSystemVersionInfoWidgetComponent {
   }
 
   protected changeVersionStatus(status: 'draft' | 'active' | 'retired'): void {
-    this.codeSystemService.changeVersionStatus(this.version.codeSystem, this.version.version, status).subscribe(() => this.version.status = status);
+    this.codeSystemService.changeCodeSystemVersionStatus(this.version.codeSystem, this.version.version, status).subscribe(() => this.version.status = status);
   }
 
   public openJson(): void {

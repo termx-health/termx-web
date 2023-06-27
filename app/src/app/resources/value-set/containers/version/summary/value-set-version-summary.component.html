@@ -42,7 +42,7 @@
               <m-icon *ngIf="loader.state['expand']" mCode="loading"></m-icon>
             </m-button>
           </m-title>
-          <div class="m-items-middle" *ngIf="valueSetVersion.snapshot">
+          <div class="m-items-middle" *ngIf="valueSetVersion?.snapshot">
             <m-icon mCode="clock-circle"></m-icon>
             <span>{{valueSetVersion.snapshot.createdAt | localDate}}</span>
             <m-divider mVertical></m-divider>

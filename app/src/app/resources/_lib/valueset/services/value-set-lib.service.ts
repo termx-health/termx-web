@@ -7,10 +7,8 @@ import {ValueSetVersionSearchParams} from '../model/value-set-version-search-par
 import {ValueSetVersion} from '../model/value-set-version';
 import {ValueSetVersionConcept} from '../model/value-set-version-concept';
 import {ValueSetExpandRequest} from '../model/value-set-expand-request';
-import {ValueSetVersionRule} from '../model/value-set-version-rule';
 import {ValueSet} from '../model/value-set';
 import {ValueSetSearchParams} from '../model/value-set-search-params';
-import {ValueSetVersionRuleSearchParams, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 import {JobLogResponse} from 'term-web/sys/_lib';
 
 @Injectable()
@@ -22,20 +20,20 @@ export class ValueSetLibService {
     this.cacheService = new HttpCacheService();
   }
 
-  public load(valueSetId: string): Observable<ValueSet> {
-    return this.http.get<ValueSet>(`${this.baseUrl}/${valueSetId}`);
-  }
-
   public search(params: ValueSetSearchParams = {}): Observable<SearchResult<ValueSet>> {
     return this.http.get<SearchResult<ValueSet>>(this.baseUrl, {params: SearchHttpParams.build(params)});
   }
 
-  public loadVersion(valueSetId: string, version: string): Observable<ValueSetVersion> {
-    return this.http.get<ValueSetVersion>(`${this.baseUrl}/${valueSetId}/versions/${version}`);
+  public load(valueSetId: string): Observable<ValueSet> {
+    return this.http.get<ValueSet>(`${this.baseUrl}/${valueSetId}`);
   }
 
   public searchVersions(valueSetId: string, params: ValueSetVersionSearchParams = {}): Observable<SearchResult<ValueSetVersion>> {
     return this.http.get<SearchResult<ValueSetVersion>>(`${this.baseUrl}/${valueSetId}/versions`, {params: SearchHttpParams.build(params)});
+  }
+
+  public loadVersion(valueSetId: string, version: string): Observable<ValueSetVersion> {
+    return this.http.get<ValueSetVersion>(`${this.baseUrl}/${valueSetId}/versions/${version}`);
   }
 
   public expand(request: ValueSetExpandRequest): Observable<ValueSetVersionConcept[]> {
@@ -48,17 +46,5 @@ export class ValueSetLibService {
 
   public expandAsync(request: ValueSetExpandRequest): Observable<JobLogResponse> {
     return this.http.post<JobLogResponse>(`${this.baseUrl}/expand-async`, request);
-  }
-
-  public loadRule(valueSetId: string, id: number): Observable<ValueSetVersionRule> {
-    return this.http.get<ValueSetVersionRule>(`${this.baseUrl}/${valueSetId}/rules/${id}`);
-  }
-
-  public searchRules(valueSetId: string, params: ValueSetVersionRuleSearchParams = {}): Observable<SearchResult<ValueSetVersion>> {
-    return this.http.get<SearchResult<ValueSetVersionRule>>(`${this.baseUrl}/${valueSetId}/rules`, {params: SearchHttpParams.build(params)});
-  }
-
-  public loadRuleSet(valueSetId: string): Observable<ValueSetVersionRuleSet> {
-    return this.http.get<ValueSetVersionRuleSet>(`${this.baseUrl}/${valueSetId}/rule-set`);
   }
 }

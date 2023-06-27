@@ -24,35 +24,35 @@ export class CodeSystemLibService {
 
   public constructor(protected http: HttpClient) { }
 
-  public load(codeSystemId: string, decorate?: boolean): Observable<CodeSystem> {
-    return this.http.get<CodeSystem>(`${this.baseUrl}/${codeSystemId}` + (decorate ? `?decorate=${decorate}` : ``));
-  }
-
-  public loadVersion(codeSystemId: string, version: string): Observable<CodeSystemVersion> {
-    return this.http.get<CodeSystemVersion>(`${this.baseUrl}/${codeSystemId}/versions/${version}`);
-  }
-
-  public loadConcept(codeSystemId: string, conceptCode: string, version?: string): Observable<CodeSystemConcept> {
-    return this.http.get<CodeSystemConcept>(`${this.baseUrl}/${codeSystemId}` + (version ? `/versions/${version}` : ``) + `/concepts/${conceptCode}`);
-  }
-
   public search(params: CodeSystemSearchParams = {}): Observable<SearchResult<CodeSystem>> {
     return this.http.get<SearchResult<CodeSystem>>(this.baseUrl, {params: SearchHttpParams.build(params)});
+  }
+
+  public load(codeSystemId: string, decorate?: boolean): Observable<CodeSystem> {
+    return this.http.get<CodeSystem>(`${this.baseUrl}/${codeSystemId}` + (decorate ? `?decorate=${decorate}` : ``));
   }
 
   public searchVersions(codeSystemId: string, params: CodeSystemVersionSearchParams = {}): Observable<SearchResult<CodeSystemVersion>> {
     return this.http.get<SearchResult<CodeSystemVersion>>(`${this.baseUrl}/${codeSystemId}/versions`, {params: SearchHttpParams.build(params)});
   }
 
+  public loadVersion(codeSystemId: string, version: string): Observable<CodeSystemVersion> {
+    return this.http.get<CodeSystemVersion>(`${this.baseUrl}/${codeSystemId}/versions/${version}`);
+  }
+
   public searchConcepts(codeSystemId: string, params: ConceptSearchParams): Observable<SearchResult<CodeSystemConcept>> {
     return this.http.get<SearchResult<CodeSystemConcept>>(`${this.baseUrl}/${codeSystemId}/concepts`, {params: SearchHttpParams.build(params)});
   }
 
-  public searchProperties(codeSystemId: string, params: EntityPropertySearchParams): Observable<SearchResult<EntityProperty>> {
-    return this.http.get<SearchResult<EntityProperty>>(`${this.baseUrl}/${codeSystemId}/entity-properties`, {params: SearchHttpParams.build(params)});
+  public loadConcept(codeSystemId: string, conceptCode: string, version?: string): Observable<CodeSystemConcept> {
+    return this.http.get<CodeSystemConcept>(`${this.baseUrl}/${codeSystemId}` + (version ? `/versions/${version}` : ``) + `/concepts/${conceptCode}`);
   }
 
   public searchEntityVersions(codeSystemId: string, params: CodeSystemEntityVersionSearchParams = {}): Observable<SearchResult<CodeSystemEntityVersion>> {
     return this.http.get<SearchResult<CodeSystemEntityVersion>>(`${this.baseUrl}/${codeSystemId}/entity-versions`, {params: SearchHttpParams.build(params)});
+  }
+
+  public searchProperties(codeSystemId: string, params: EntityPropertySearchParams): Observable<SearchResult<EntityProperty>> {
+    return this.http.get<SearchResult<EntityProperty>>(`${this.baseUrl}/${codeSystemId}/entity-properties`, {params: SearchHttpParams.build(params)});
   }
 }

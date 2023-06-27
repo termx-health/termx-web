@@ -70,7 +70,7 @@ export class ValueSetListComponent implements OnInit {
   };
 
   public deleteValueSet(valueSetId: string): void {
-    this.valueSetService.delete(valueSetId).subscribe(() => this.loadData());
+    this.valueSetService.deleteValueSet(valueSetId).subscribe(() => this.loadData());
   }
 
   public openFhir(id: string): void {

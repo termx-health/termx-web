@@ -42,7 +42,7 @@ export class CodeSystemVersionEditComponent implements OnInit {
     if (!validateForm(this.form)) {
       return;
     }
-    this.loader.wrap('save', this.codeSystemService.saveVersion(this.codeSystemId!, this.version!)).subscribe(() => this.location.back());
+    this.loader.wrap('save', this.codeSystemService.saveCodeSystemVersion(this.codeSystemId!, this.version!)).subscribe(() => this.location.back());
   }
 
   public versions = (id): Observable<string[]> => {

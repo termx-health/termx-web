@@ -58,7 +58,7 @@ export class CodeSystemListComponent implements OnInit {
 
   public deleteCodeSystem(codeSystemId: string): void {
     this.loading = true;
-    this.codeSystemService.delete(codeSystemId).subscribe(() => this.loadData()).add(() => this.loading = false);
+    this.codeSystemService.deleteCodeSystem(codeSystemId).subscribe(() => this.loadData()).add(() => this.loading = false);
   }
 
   public openFhir(id: string): void {

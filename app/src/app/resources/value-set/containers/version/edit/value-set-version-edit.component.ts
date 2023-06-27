@@ -54,7 +54,7 @@ export class ValueSetVersionEditComponent implements OnInit {
       return;
     }
     this.version.status = 'draft';
-    this.loader.wrap('save', this.valueSetService.saveVersion(this.valueSetId!, this.version)).subscribe(() => {
+    this.loader.wrap('save', this.valueSetService.saveValueSetVersion(this.valueSetId!, this.version)).subscribe(() => {
       this.location.back();
     });
   }
