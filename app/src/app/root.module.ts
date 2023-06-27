@@ -19,7 +19,6 @@ import {IntegrationModule} from './integration/integration.module';
 import {GlobalSearchModule} from './global-search/global-search.module';
 import {ThesaurusModule} from './thesaurus/thesaurus.module';
 import {FhirModule} from './fhir/fhir.module';
-import {ToolsModule} from './tools/tools.module';
 import {MeasurementUnitModule} from './measurement-unit/measurement-unit.module';
 import {SpaceModule} from './space/space.module';
 import {AuthModule, AuthService} from './core/auth';
@@ -30,6 +29,7 @@ import {TaskflowModule} from 'term-web/taskflow/taskflow.module';
 import {RootComponent} from 'term-web/root.component';
 import {NoPrivilegeComponent} from 'term-web/core/components/no-privilege/no-privilege.component';
 import {SysModule} from 'term-web/sys/sys.module';
+import {TerminologyServiceApiModule} from 'term-web/terminology-service-api/terminology-service-api.module';
 
 registerLocaleData(et);
 registerLocaleData(lt);
@@ -78,7 +78,7 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     TaskflowModule,
     FhirModule,
     ObservationDefinitionModule,
-    ToolsModule,
+    TerminologyServiceApiModule,
     MeasurementUnitModule,
     SpaceModule,
     SysModule,

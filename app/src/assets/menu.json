@@ -224,7 +224,7 @@
           "et": "Terminoloogi teenuse API"
         },
         "icon": "cloud",
-        "link": "tools/terminology-service-api"
+        "link": "terminology-service-api"
       },
       {
         "label": {

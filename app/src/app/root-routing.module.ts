@@ -4,17 +4,17 @@ import {RESOURCES_ROUTES} from './resources/resources.module';
 import {GLOBAL_SEARCH_ROUTES} from './global-search/global-search.module';
 import {INTEGRATION_ROUTES} from './integration/integration.module';
 import {PRIVILEGES_ROUTES} from './privileges/privileges.module';
-import {TOOLS_ROUTES} from './tools/tools.module';
 import {THESAURUS_ROUTES} from './thesaurus/thesaurus.module';
 import {MEASUREMENT_UNIT_ROUTES} from './measurement-unit/measurement-unit.module';
 import {FHIR_ROUTES} from './fhir/fhir.module';
 import {SPACE_CTX_ROUTES, SPACE_ROUTES, TERMINOLOGY_SERVER_ROUTES} from './space/space.module';
-import {autoLoginGuard} from 'term-web/core/auth';
-import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
-import {SpaceContextModule} from 'term-web/core/context/space-context.module';
+import {TERMINOLOGY_SERVICE_API_ROUTES} from 'term-web/terminology-service-api/terminology-service-api.module';
 import {OBSERVATION_DEFINITION_ROUTES} from 'term-web/observation-definition/observation-definition.module';
 import {SEQUENCE_ROUTES} from 'term-web/sequence/sequence.module';
 import {TASKFLOW_ROUTES} from 'term-web/taskflow/taskflow.module';
+import {autoLoginGuard} from 'term-web/core/auth';
+import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
+import {SpaceContextModule} from 'term-web/core/context/space-context.module';
 import {AppComponent} from 'term-web/app.component';
 import {LandingPageComponent} from 'term-web/landing/landing-page.component';
 
@@ -25,7 +25,7 @@ const APP_ROUTES: Routes = [
   {path: 'global-search', children: GLOBAL_SEARCH_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view']}},
   {path: 'integration', children: INTEGRATION_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view']}},
   {path: 'privileges', children: PRIVILEGES_ROUTES, data: {privilege: ['*.Privilege.view']}},
-  {path: 'tools', children: TOOLS_ROUTES},
+  {path: 'terminology-service-api', children: TERMINOLOGY_SERVICE_API_ROUTES},
   {path: 'sequences', children: SEQUENCE_ROUTES},
   {path: 'thesaurus', children: THESAURUS_ROUTES, data: {privilege: ['*.Thesaurus.view']}},
   {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
