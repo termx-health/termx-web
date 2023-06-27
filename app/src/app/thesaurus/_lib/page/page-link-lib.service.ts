@@ -9,7 +9,7 @@ import {environment} from 'environments/environment';
 
 @Injectable()
 export class PageLinkLibService {
-  protected baseUrl = `${environment.terminologyApi}/page-links`;
+  protected baseUrl = `${environment.termxApi}/page-links`;
 
   public constructor(protected http: HttpClient) { }
 

@@ -6,7 +6,7 @@ import {CodeSystemVersion} from '../model/code-system-version';
 
 @Injectable()
 export class CodeSystemVersionLibService {
-  protected baseUrl = `${environment.terminologyApi}/ts/code-system-versions`;
+  protected baseUrl = `${environment.termxApi}/ts/code-system-versions`;
 
   public constructor(protected http: HttpClient) { }
 

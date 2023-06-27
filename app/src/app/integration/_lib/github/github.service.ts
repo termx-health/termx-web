@@ -6,7 +6,7 @@ import {environment} from 'app/src/environments/environment';
 @Injectable({providedIn: 'root'})
 export class GithubService {
 
-  private baseUrl = `${environment.terminologyApi}/github`;
+  private baseUrl = `${environment.termxApi}/github`;
 
   public constructor(
     private http: HttpClient

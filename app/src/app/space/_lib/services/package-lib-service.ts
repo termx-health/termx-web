@@ -6,7 +6,7 @@ import {Package, PackageVersion} from '../model/package';
 
 @Injectable()
 export class PackageLibService {
-  protected baseUrl = `${environment.terminologyApi}/packages`;
+  protected baseUrl = `${environment.termxApi}/packages`;
 
   public constructor(protected http: HttpClient) { }
 

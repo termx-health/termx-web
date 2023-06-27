@@ -6,7 +6,7 @@ import {Tag} from './tag';
 
 @Injectable()
 export class TagLibService {
-  protected baseUrl = environment.terminologyApi;
+  protected baseUrl = environment.termxApi;
 
   public constructor(protected http: HttpClient) { }
 

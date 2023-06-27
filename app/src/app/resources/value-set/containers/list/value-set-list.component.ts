@@ -74,6 +74,6 @@ export class ValueSetListComponent implements OnInit {
   }
 
   public openFhir(id: string): void {
-    window.open(environment.terminologyApi + '/fhir/ValueSet/' + id, '_blank');
+    window.open(environment.termxApi + '/fhir/ValueSet/' + id, '_blank');
   }
 }

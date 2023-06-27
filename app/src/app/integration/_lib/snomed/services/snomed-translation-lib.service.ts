@@ -9,7 +9,7 @@ import {LorqueProcess} from 'term-web/sys/_lib';
 
 @Injectable()
 export class SnomedTranslationLibService {
-  protected baseUrl = `${environment.terminologyApi}/snomed`;
+  protected baseUrl = `${environment.termxApi}/snomed`;
 
   public constructor(protected http: HttpClient) { }
 

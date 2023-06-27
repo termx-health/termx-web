@@ -8,7 +8,7 @@ import {IntegrationImportConfiguration} from '../../model/integration-import-con
 
 @Injectable()
 export class IntegrationIchiLibService {
-  protected baseUrl = `${environment.terminologyApi}/ichi-uz`;
+  protected baseUrl = `${environment.termxApi}/ichi-uz`;
 
   public constructor(protected http: HttpClient) { }
 

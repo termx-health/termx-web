@@ -10,7 +10,7 @@ export interface FileProcessingRequest {
 
 @Injectable()
 export class ValueSetFileImportService {
-  public readonly baseUrl = `${environment.terminologyApi}/file-importer/value-set`;
+  public readonly baseUrl = `${environment.termxApi}/file-importer/value-set`;
 
   public constructor(private http: HttpClient, private jobService: JobLibService) {}
 

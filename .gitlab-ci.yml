@@ -53,8 +53,8 @@ publish:
   before_script:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
   script:
-    - docker build -t docker.kodality.com/terminology-web:latest .
-    - docker push docker.kodality.com/terminology-web:latest
+    - docker build -t docker.kodality.com/termx-web:latest .
+    - docker push docker.kodality.com/termx-web:latest
   only:
     - main
 
@@ -65,8 +65,8 @@ release:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
   script:
     - export APP_VERSION="$CI_COMMIT_REF_NAME"
-    - docker build -t docker.kodality.com/terminology-web:$APP_VERSION --build-arg APP_VERSION=$APP_VERSION .
-    - docker push docker.kodality.com/terminology-web:$APP_VERSION
+    - docker build -t docker.kodality.com/termx-web:$APP_VERSION --build-arg APP_VERSION=$APP_VERSION .
+    - docker push docker.kodality.com/termx-web:$APP_VERSION
   only:
     - /^\d*\.\d*\.\d*$/
   except:

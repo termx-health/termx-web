@@ -5,9 +5,7 @@ import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 
 import {environment} from 'environments/environment';
 import {CodeSystemVersion} from '../model/code-system-version';
-import {EntityProperty, EntityPropertyValue} from '../model/entity-property';
-import {Designation} from '../../designation';
-import {CodeSystemSupplement} from '../model/code-system-supplement';
+import {EntityProperty} from '../model/entity-property';
 import {CodeSystemSearchParams} from '../model/code-system-search-params';
 import {CodeSystem} from '../model/code-system';
 import {CodeSystemVersionSearchParams} from '../model/code-system-version-search-params';
@@ -16,11 +14,10 @@ import {CodeSystemConcept} from '../model/code-system-concept';
 import {EntityPropertySearchParams} from '../model/entity-property-search-params';
 import {CodeSystemEntityVersionSearchParams} from '../model/code-system-entity-version-search-params';
 import {CodeSystemEntityVersion} from '../model/code-system-entity';
-import {CodeSystemAssociation} from '../model/code-system-association';
 
 @Injectable()
 export class CodeSystemLibService {
-  protected baseUrl = `${environment.terminologyApi}/ts/code-systems`;
+  protected baseUrl = `${environment.termxApi}/ts/code-systems`;
 
   public constructor(protected http: HttpClient) { }
 

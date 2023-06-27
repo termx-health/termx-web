@@ -8,7 +8,7 @@ import {LorqueProcess} from '../model/lorque-process';
 @Injectable()
 export class LorqueLibService {
 
-  protected baseUrl = `${environment.terminologyApi}/lorque-processes`;
+  protected baseUrl = `${environment.termxApi}/lorque-processes`;
 
   public constructor(protected http: HttpClient) { }
 

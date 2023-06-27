@@ -71,7 +71,7 @@ export class LoincImportComponent {
 
     this.jobResponse = null;
     this.loading['process'] = true;
-    this.http.post<JobLogResponse>(`${environment.terminologyApi}/loinc/import`, formData)
+    this.http.post<JobLogResponse>(`${environment.termxApi}/loinc/import`, formData)
       .subscribe({
         next: (resp) => {
           this.pollJobStatus(resp.jobId as number);

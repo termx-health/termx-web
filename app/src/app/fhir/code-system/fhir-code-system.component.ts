@@ -37,7 +37,7 @@ export class FhirCodeSystemComponent implements OnInit {
   }
 
   public openJson(): void {
-    window.open(environment.terminologyApi + '/fhir/CodeSystem/' + this.codeSystem.id, '_blank');
+    window.open(environment.termxApi + '/fhir/CodeSystem/' + this.codeSystem.id, '_blank');
   }
 
   public exportXml(): void {

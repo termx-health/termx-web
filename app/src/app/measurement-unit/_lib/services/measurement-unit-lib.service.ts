@@ -8,7 +8,7 @@ import {MeasurementUnit} from '../model/measurement-unit';
 
 @Injectable()
 export class MeasurementUnitLibService {
-  protected baseUrl = `${environment.terminologyApi}/ts/measurement-units`;
+  protected baseUrl = `${environment.termxApi}/ts/measurement-units`;
 
   public constructor(protected http: HttpClient) {}
 

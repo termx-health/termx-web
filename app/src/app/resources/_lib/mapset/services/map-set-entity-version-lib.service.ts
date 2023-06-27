@@ -6,7 +6,7 @@ import {MapSetEntityVersion} from '../model/map-set-entity-version';
 
 @Injectable()
 export class MapSetEntityVersionLibService {
-  protected baseUrl = `${environment.terminologyApi}/ts/map-set-entity-versions`;
+  protected baseUrl = `${environment.termxApi}/ts/map-set-entity-versions`;
 
   public constructor(protected http: HttpClient) { }
 

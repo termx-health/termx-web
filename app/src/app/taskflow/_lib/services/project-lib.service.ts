@@ -7,7 +7,7 @@ import {Project} from 'term-web/taskflow/_lib';
 
 @Injectable()
 export class ProjectLibService {
-  protected baseUrl = `${environment.terminologyApi}/taskflow/projects`;
+  protected baseUrl = `${environment.termxApi}/taskflow/projects`;
 
   public constructor(protected http: HttpClient) { }
 

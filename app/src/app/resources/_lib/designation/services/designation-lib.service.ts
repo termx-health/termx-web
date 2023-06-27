@@ -7,7 +7,7 @@ import {environment} from 'environments/environment';
 
 @Injectable()
 export class DesignationLibService {
-  protected baseUrl = `${environment.terminologyApi}/ts/designations`;
+  protected baseUrl = `${environment.termxApi}/ts/designations`;
 
   public constructor(protected http: HttpClient) {}
 

@@ -6,7 +6,7 @@ import {JobLog} from '../model/job-log';
 
 @Injectable()
 export class JobLibService {
-  protected baseUrl = `${environment.terminologyApi}/job-logs`;
+  protected baseUrl = `${environment.termxApi}/job-logs`;
 
   public constructor(protected http: HttpClient) { }
 

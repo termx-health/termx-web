@@ -7,7 +7,7 @@ import {environment} from 'environments/environment';
 
 @Injectable()
 export class CodeSystemConceptLibService {
-  protected baseUrl = `${environment.terminologyApi}/ts/concepts`;
+  protected baseUrl = `${environment.termxApi}/ts/concepts`;
 
   public constructor(protected http: HttpClient) { }
 

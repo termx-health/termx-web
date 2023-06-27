@@ -14,7 +14,7 @@ import {JobLogResponse} from 'term-web/sys/_lib';
 @Injectable()
 export class ValueSetLibService {
   private cacheService: HttpCacheService;
-  protected baseUrl = `${environment.terminologyApi}/ts/value-sets`;
+  protected baseUrl = `${environment.termxApi}/ts/value-sets`;
 
   public constructor(protected http: HttpClient) {
     this.cacheService = new HttpCacheService();

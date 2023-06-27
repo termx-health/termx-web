@@ -8,7 +8,7 @@ import {TemplateSearchParams} from './template-search-params';
 
 @Injectable()
 export class TemplateLibService {
-  protected baseUrl = environment.terminologyApi;
+  protected baseUrl = environment.termxApi;
 
   public constructor(protected http: HttpClient) { }
 

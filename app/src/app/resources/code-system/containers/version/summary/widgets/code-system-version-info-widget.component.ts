@@ -52,6 +52,6 @@ export class CodeSystemVersionInfoWidgetComponent {
   }
 
   public openJson(): void {
-    window.open(environment.terminologyApi + '/fhir/CodeSystem/' + this.version.codeSystem + '@' + this.version.version, '_blank');
+    window.open(environment.termxApi + '/fhir/CodeSystem/' + this.version.codeSystem + '@' + this.version.version, '_blank');
   }
 }

@@ -6,7 +6,7 @@ import {RelatedArtifact} from 'term-web/resources/_lib/relatedartifacts';
 
 @Injectable()
 export class RelatedArtifactLibService {
-  protected baseUrl = `${environment.terminologyApi}/related-artifacts`;
+  protected baseUrl = `${environment.termxApi}/related-artifacts`;
 
   public constructor(protected http: HttpClient) { }
 

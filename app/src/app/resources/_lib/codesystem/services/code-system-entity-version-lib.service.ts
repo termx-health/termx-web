@@ -6,7 +6,7 @@ import {environment} from 'environments/environment';
 
 @Injectable()
 export class CodeSystemEntityVersionLibService {
-  protected baseUrl = `${environment.terminologyApi}/ts/code-system-entity-versions`;
+  protected baseUrl = `${environment.termxApi}/ts/code-system-entity-versions`;
 
   public constructor(protected http: HttpClient) { }
 

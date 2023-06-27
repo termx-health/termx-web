@@ -8,7 +8,7 @@ import {IntegrationImportConfiguration} from '../../model/integration-import-con
 
 @Injectable()
 export class IntegrationAtcLibService {
-  protected baseUrl = `${environment.terminologyApi}/atc`;
+  protected baseUrl = `${environment.termxApi}/atc`;
 
   public constructor(protected http: HttpClient) { }
 

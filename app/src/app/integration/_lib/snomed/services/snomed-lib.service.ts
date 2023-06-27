@@ -15,7 +15,7 @@ import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-memb
 
 @Injectable()
 export class SnomedLibService {
-  protected baseUrl = `${environment.terminologyApi}/snomed`;
+  protected baseUrl = `${environment.termxApi}/snomed`;
 
   public constructor(protected http: HttpClient) { }
 

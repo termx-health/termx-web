@@ -29,7 +29,7 @@ type AssociationFileImportColumn = FileAnalysisResponseColumn & {
 
 @Injectable()
 class AssociationFileImportService {
-  public readonly baseUrl = `${environment.terminologyApi}/file-importer/association`;
+  public readonly baseUrl = `${environment.termxApi}/file-importer/association`;
 
   public constructor(
     private http: HttpClient,

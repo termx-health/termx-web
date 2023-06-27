@@ -7,7 +7,7 @@ import {PackageResource} from '../model/package';
 
 @Injectable()
 export class PackageResourceLibService {
-  protected baseUrl = `${environment.terminologyApi}/package-resources`;
+  protected baseUrl = `${environment.termxApi}/package-resources`;
 
   public constructor(protected http: HttpClient) { }
 

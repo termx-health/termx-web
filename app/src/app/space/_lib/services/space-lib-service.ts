@@ -10,7 +10,7 @@ import {SpaceDiff} from '../model/space-diff';
 
 @Injectable()
 export class SpaceLibService {
-  protected baseUrl = `${environment.terminologyApi}/spaces`;
+  protected baseUrl = `${environment.termxApi}/spaces`;
 
   public constructor(protected http: HttpClient) { }
 

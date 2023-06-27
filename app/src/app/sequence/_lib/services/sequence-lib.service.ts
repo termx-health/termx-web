@@ -8,7 +8,7 @@ import {SequenceSearchParams} from '../models/sequence-search-params';
 
 @Injectable()
 export class SequenceLibService {
-  protected baseUrl = `${environment.terminologyApi}/sequences`;
+  protected baseUrl = `${environment.termxApi}/sequences`;
 
   public constructor(protected http: HttpClient) { }
 

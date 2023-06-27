@@ -8,7 +8,7 @@ import {IntegrationImportConfiguration} from '../../model/integration-import-con
 
 @Injectable()
 export class IntegrationOrphanetLibService {
-  protected baseUrl = `${environment.terminologyApi}/orphanet`;
+  protected baseUrl = `${environment.termxApi}/orphanet`;
 
   public constructor(protected http: HttpClient) { }
 

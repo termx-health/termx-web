@@ -15,7 +15,7 @@ export class AuthService {
   private ADMIN = 'admin';
   public user?: UserInfo;
 
-  protected baseUrl = `${environment.terminologyApi}/auth`;
+  protected baseUrl = `${environment.termxApi}/auth`;
 
   public constructor(
     protected http: HttpClient,

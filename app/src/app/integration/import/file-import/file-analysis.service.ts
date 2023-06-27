@@ -24,7 +24,7 @@ export interface FileAnalysisResponseColumn {
 
 @Injectable()
 export class FileAnalysisService {
-  protected baseUrl = `${environment.terminologyApi}/file-importer`;
+  protected baseUrl = `${environment.termxApi}/file-importer`;
 
   public constructor(protected http: HttpClient) { }
 

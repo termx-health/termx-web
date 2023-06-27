@@ -45,7 +45,7 @@ export type FileImportPropertyRow = FileProcessingRequestProperty & {
 
 @Injectable()
 export class CodeSystemFileImportService {
-  public readonly baseUrl = `${environment.terminologyApi}/file-importer/code-system`;
+  public readonly baseUrl = `${environment.termxApi}/file-importer/code-system`;
 
   public constructor(private http: HttpClient, private jobService: JobLibService) { }
 

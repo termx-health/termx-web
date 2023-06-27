@@ -11,7 +11,7 @@ import {FhirCodeSystemSubsumesParams} from '../model/fhir-code-system-subsumes.p
 
 @Injectable()
 export class FhirCodeSystemLibService {
-  protected baseUrl = `${environment.terminologyApi}/fhir/CodeSystem`;
+  protected baseUrl = `${environment.termxApi}/fhir/CodeSystem`;
 
   public constructor(protected http: HttpClient) { }
 

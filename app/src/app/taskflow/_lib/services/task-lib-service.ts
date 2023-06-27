@@ -8,7 +8,7 @@ import {Task, TaskActivity, TaskSearchParams} from 'term-web/taskflow/_lib';
 
 @Injectable()
 export class TaskLibService {
-  protected baseUrl = `${environment.terminologyApi}/taskflow/tasks`;
+  protected baseUrl = `${environment.termxApi}/taskflow/tasks`;
 
   public constructor(protected http: HttpClient) { }
 

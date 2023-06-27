@@ -56,7 +56,7 @@ export class CodeSystemCompareComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.http.get<CodeSystemCompareResult>(`${environment.terminologyApi}/ts/code-systems/compare?source=${this.sourceVersion}&target=${this.targetVersion}`)
+    this.http.get<CodeSystemCompareResult>(`${environment.termxApi}/ts/code-systems/compare?source=${this.sourceVersion}&target=${this.targetVersion}`)
       .subscribe(r => this.result = r)
       .add(() => this.loading = false);
   }

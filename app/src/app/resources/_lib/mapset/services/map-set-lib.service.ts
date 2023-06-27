@@ -15,7 +15,7 @@ import {MapSetVersionSearchParams} from '../model/map-set-version-search-params'
 
 @Injectable()
 export class MapSetLibService {
-  protected baseUrl = `${environment.terminologyApi}/ts/map-sets`;
+  protected baseUrl = `${environment.termxApi}/ts/map-sets`;
 
   public constructor(protected http: HttpClient) { }
 

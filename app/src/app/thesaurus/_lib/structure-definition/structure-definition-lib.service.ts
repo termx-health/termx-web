@@ -8,7 +8,7 @@ import {StructureDefinitionSearchParams} from './structure-definition-search-par
 
 @Injectable()
 export class StructureDefinitionLibService {
-  protected baseUrl = environment.terminologyApi;
+  protected baseUrl = environment.termxApi;
 
   public constructor(protected http: HttpClient) { }
 

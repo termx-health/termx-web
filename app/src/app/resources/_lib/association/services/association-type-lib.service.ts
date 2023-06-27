@@ -7,7 +7,7 @@ import {environment} from 'environments/environment';
 
 @Injectable()
 export class AssociationTypeLibService {
-  protected baseUrl = `${environment.terminologyApi}/ts/association-types`;
+  protected baseUrl = `${environment.termxApi}/ts/association-types`;
 
   public constructor(protected http: HttpClient) { }
 

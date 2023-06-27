@@ -9,7 +9,7 @@ import {FhirParameters} from '../../model/fhir-parameters';
 
 @Injectable()
 export class FhirValueSetLibService {
-  protected baseUrl = `${environment.terminologyApi}/fhir/ValueSet`;
+  protected baseUrl = `${environment.termxApi}/fhir/ValueSet`;
 
   public constructor(protected http: HttpClient) {  }
 

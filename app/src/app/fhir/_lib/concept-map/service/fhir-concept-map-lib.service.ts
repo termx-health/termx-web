@@ -8,7 +8,7 @@ import {FhirConceptMapTranslateParams} from '../model/fhir-concept-map-translate
 
 @Injectable()
 export class FhirConceptMapLibService {
-  protected baseUrl = `${environment.terminologyApi}/fhir/ConceptMap`;
+  protected baseUrl = `${environment.termxApi}/fhir/ConceptMap`;
 
   public constructor(protected http: HttpClient) { }
 

@@ -1,11 +1,11 @@
-# Terminology Web
+# TermX Web
 
 ## Install
 
 ```shell
 npm login --registry=https://kexus.kodality.com/repository/npm/
 npm set @kodality-web:registry https://kexus.kodality.com/repository/npm/
-npm set @terminology:registry https://kexus.kodality.com/repository/npm/
+npm set @termx:registry https://kexus.kodality.com/repository/npm/
 
 npm install
 ```
@@ -13,7 +13,7 @@ npm install
 ### Update Kodality packages
 
 ```shell
-rm -rf node_modules/@kodality-* node_modules/@terminology package-lock.json && npm i
+rm -rf node_modules/@kodality-* node_modules/@termx package-lock.json && npm i
 ```
 
 ## Run

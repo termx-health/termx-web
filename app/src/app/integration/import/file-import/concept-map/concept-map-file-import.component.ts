@@ -89,7 +89,7 @@ export class ConceptMapFileImportComponent {
     fd.append('request', JSON.stringify(req));
     fd.append('file', file, 'files');
 
-    return this.http.post<JobLogResponse>(`${environment.terminologyApi}/file-importer/map-set/process`, fd).pipe(
+    return this.http.post<JobLogResponse>(`${environment.termxApi}/file-importer/map-set/process`, fd).pipe(
       mergeMap(resp => this.jobService.pollFinishedJobLog(resp.jobId, this.destroy$))
     );
   };

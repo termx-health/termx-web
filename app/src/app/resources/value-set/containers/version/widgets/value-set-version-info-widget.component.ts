@@ -59,9 +59,9 @@ export class ValueSetVersionInfoWidgetComponent {
 
   public openJson(expand: boolean = false): void {
     if (expand) {
-      window.open(environment.terminologyApi + '/fhir/ValueSet/' + this.version.valueSet + '@' + this.version.version + '/$expand' , '_blank');
+      window.open(environment.termxApi + '/fhir/ValueSet/' + this.version.valueSet + '@' + this.version.version + '/$expand' , '_blank');
     } else {
-      window.open(environment.terminologyApi + '/fhir/ValueSet/' + this.version.valueSet + '@' + this.version.version , '_blank');
+      window.open(environment.termxApi + '/fhir/ValueSet/' + this.version.valueSet + '@' + this.version.version , '_blank');
     }
   }
 }

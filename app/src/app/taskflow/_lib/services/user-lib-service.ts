@@ -7,7 +7,7 @@ import {TaskflowUser} from 'term-web/taskflow/_lib';
 
 @Injectable()
 export class UserLibService {
-  protected baseUrl = `${environment.terminologyApi}/taskflow/users`;
+  protected baseUrl = `${environment.termxApi}/taskflow/users`;
 
   public constructor(protected http: HttpClient) { }
 

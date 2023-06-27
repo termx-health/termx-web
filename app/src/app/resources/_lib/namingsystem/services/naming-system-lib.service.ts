@@ -8,7 +8,7 @@ import {NamingSystem} from '../model/naming-system';
 
 @Injectable()
 export class NamingSystemLibService {
-  protected baseUrl = `${environment.terminologyApi}/ts/naming-systems`;
+  protected baseUrl = `${environment.termxApi}/ts/naming-systems`;
 
   public constructor(protected http: HttpClient) { }
 

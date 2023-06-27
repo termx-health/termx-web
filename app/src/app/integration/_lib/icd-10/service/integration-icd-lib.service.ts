@@ -8,7 +8,7 @@ import {IntegrationImportConfiguration} from '../../model/integration-import-con
 
 @Injectable()
 export class IntegrationIcdLibService {
-  protected baseUrl = `${environment.terminologyApi}/icd10`;
+  protected baseUrl = `${environment.termxApi}/icd10`;
 
   public constructor(protected http: HttpClient) { }
 

@@ -6,7 +6,7 @@ import {ValueSetVersion} from '../model/value-set-version';
 
 @Injectable()
 export class ValueSetVersionLibService {
-  protected baseUrl = `${environment.terminologyApi}/ts/value-set-versions`;
+  protected baseUrl = `${environment.termxApi}/ts/value-set-versions`;
 
   public constructor(protected http: HttpClient) { }
 

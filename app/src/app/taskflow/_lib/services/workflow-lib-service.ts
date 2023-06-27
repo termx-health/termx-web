@@ -7,7 +7,7 @@ import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 
 @Injectable()
 export class WorkflowLibService {
-  protected baseUrl = `${environment.terminologyApi}/taskflow/workflows`;
+  protected baseUrl = `${environment.termxApi}/taskflow/workflows`;
 
   public constructor(protected http: HttpClient) { }
 

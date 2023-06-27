@@ -2,8 +2,8 @@ export const environment = {
   production: false,
   yupiEnabled: false,
 
-  // terminologyApi: 'https://termx.kodality.dev/api',
-  terminologyApi: 'http://localhost:8200',
+  // termxApi: 'https://termx.kodality.dev/api',
+  termxApi: 'http://localhost:8200',
 
   oauthIssuer: 'https://auth.kodality.dev/realms/terminology',
   oauthClientId: 'term-client',

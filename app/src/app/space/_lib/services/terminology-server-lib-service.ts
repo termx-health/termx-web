@@ -8,7 +8,7 @@ import {TerminologyServerSearchParams} from '../model/terminology-server-search-
 
 @Injectable()
 export class TerminologyServerLibService {
-  protected baseUrl = `${environment.terminologyApi}/terminology-servers`;
+  protected baseUrl = `${environment.termxApi}/terminology-servers`;
 
   public constructor(protected http: HttpClient) { }
 

@@ -62,7 +62,7 @@ export class CodeSystemListComponent implements OnInit {
   }
 
   public openFhir(id: string): void {
-    window.open(environment.terminologyApi + '/fhir/CodeSystem/' + id, '_blank');
+    window.open(environment.termxApi + '/fhir/CodeSystem/' + id, '_blank');
   }
 
   protected findLastVersion = (versions: CodeSystemVersion[]): CodeSystemVersion => {

@@ -21,7 +21,7 @@ const MOCK: ObservationDefinition[] = [
 
 @Injectable()
 export class ObservationDefinitionLibService {
-  protected baseUrl = `${environment.terminologyApi}/observation-definitions`;
+  protected baseUrl = `${environment.termxApi}/observation-definitions`;
 
   public constructor(protected http: HttpClient) { }
 

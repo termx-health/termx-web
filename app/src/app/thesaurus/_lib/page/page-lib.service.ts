@@ -12,7 +12,7 @@ import {PageRelation} from './page-relation';
 
 @Injectable()
 export class PageLibService {
-  protected baseUrl = environment.terminologyApi;
+  protected baseUrl = environment.termxApi;
 
   public constructor(protected http: HttpClient) {  }
 
