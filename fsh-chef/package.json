@@ -10,7 +10,7 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
-    "fsh-sushi": "^2.9.0",
+    "fsh-sushi": "^3.0.0",
     "gofsh": "^1.6.3"
   }
 }
