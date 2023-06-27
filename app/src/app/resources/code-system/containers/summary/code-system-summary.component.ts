@@ -43,4 +43,8 @@ export class CodeSystemSummaryComponent implements OnInit {
         this.unlinkedConceptsComponent.loadUnlinkedConcepts();
       });
   }
+
+  protected filterDraftVersions = (v: CodeSystemVersion): boolean => {
+    return v.status === 'draft';
+  };
 }

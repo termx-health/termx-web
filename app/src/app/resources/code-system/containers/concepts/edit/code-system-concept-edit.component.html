@@ -32,8 +32,8 @@
             {{'web.code-system-concept-version.add-version' | translate}}
           </tw-add-button>
         </div>
-        <m-list mSeparated>
-          <m-list-item *ngFor="let version of concept.versions" mClickable (mClick)="selectVersion(version)">
+        <m-list mSeparated [ngModel]="conceptVersion">
+          <m-list-item *ngFor="let version of concept.versions" mClickable [mValue]="version" (mClick)="selectVersion(version)">
             <div class="m-justify-between">
               <div class="m-items-middle">
                 <span class="m-bold">{{version.created ? (version.created | localDate) : ('web.code-system-concept.form.version.new' | translate)}}</span>
@@ -42,7 +42,7 @@
               </div>
               <div class="m-items-middle">
                 <m-icon (click)="duplicateVersion(version)" *ngIf="version.id" mCode="copy" m-tooltip mTitle="core.btn.duplicate" class="m-clickable"></m-icon>
-                <m-icon (click)="deleteVersion(version.id)" *ngIf="version.status === 'draft'" mCode="delete" class="m-clickable"></m-icon>
+                <m-icon (click)="deleteVersion(version.id)" *ngIf="version.status === 'draft' && concept.versions?.length > 1" mCode="delete" class="m-clickable"></m-icon>
               </div>
             </div>
             <div>{{version.description | localName}}</div>
@@ -112,7 +112,7 @@
               <tw-add-button *m-dropdown-container>
                 {{'web.code-system-concept-version.property-value.add-property-value' | translate}}
               </tw-add-button>
-              <ng-container *ngFor="let prop of codeSystem.properties | filter: filterProperties: 'property' ">
+              <ng-container *ngFor="let prop of codeSystem?.properties | filter: filterProperties: 'property' ">
                 <a *m-dropdown-item (mClick)="addPropertyValue(prop)">{{prop.name}}</a>
               </ng-container>
             </m-dropdown>

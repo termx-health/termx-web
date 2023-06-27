@@ -59,8 +59,6 @@
           <th>{{'entities.code-system-concept.code' | translate}}</th>
           <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
           <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
-          <th>{{'entities.code-system-concept.description' | translate}}</th>
-          <th class="tw-table-min-width">{{'web.code-system-concept.list.external' | translate}}</th>
           <th class="tw-table-min-width"></th>
         </tr>
 
@@ -88,8 +86,6 @@
           <th>{{'entities.code-system-concept.code' | translate}}</th>
           <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
           <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
-          <th>{{'entities.code-system-concept.description' | translate}}</th>
-          <th class="tw-table-min-width">{{'web.code-system-concept.list.external' | translate}}</th>
           <th class="tw-table-min-width"></th>
         </tr>
 
@@ -179,12 +175,6 @@
           </ng-container>
         </ng-container>
       </div>
-    </td>
-    <td>
-      <m-abbreviate [mValue]="node.concept.description" mLength="150"/>
-    </td>
-    <td>
-      <m-icon mCode="check" *ngIf="node.concept.codeSystem !== codeSystem.id"></m-icon>
     </td>
     <td>
       <m-dropdown>

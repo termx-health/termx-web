@@ -37,11 +37,11 @@
   </div>
   <div class="m-items-middle" *twPrivileged="version.codeSystem + '.CodeSystem.publish'">
     <m-icon mCode="tool"></m-icon>
-    <a *ngIf="version.status !== 'draft'" (mClick)="makeDraft()">{{'web.code-system-version.summary.info.make-draft' | translate}}</a>
-    <a *ngIf="version.status !== 'active' && version.status !== 'retired'" (mClick)="activate()">{{'web.code-system-version.summary.info.activate' | translate}}</a>
+    <a *ngIf="version.status !== 'draft'" (mClick)="changeVersionStatus('draft')">{{'web.code-system-version.summary.info.make-draft' | translate}}</a>
+    <a *ngIf="version.status !== 'active' && version.status !== 'retired'" (mClick)="changeVersionStatus('active')">{{'web.code-system-version.summary.info.activate' | translate}}</a>
     <ng-container *ngIf="version.status !== 'retired'">
       <m-divider mVertical></m-divider>
-      <a (mClick)="retire()">{{'web.code-system-version.summary.info.retire' | translate}}</a>
+      <a (mClick)="changeVersionStatus('retired')">{{'web.code-system-version.summary.info.retire' | translate}}</a>
     </ng-container>
   </div>
   <div class="m-items-middle">

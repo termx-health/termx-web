@@ -133,11 +133,16 @@ export class CodeSystemConceptEditComponent implements OnInit {
       if (!this.concept.versions.includes(this.conceptVersion)) {
         this.selectVersion(this.concept.versions[this.concept.versions.length - 1]);
       }
+    } else {
+      this.loader.wrap('version-delete', this.codeSystemService.deleteEntityVersion(this.codeSystemId, id)).subscribe(() => {
+        this.loader.wrap('load', this.codeSystemService.loadConcept(this.codeSystemId, this.concept.code))
+          .subscribe(c => this.concept = c);
+      });
     }
   }
 
   public changeVersionStatus(version: CodeSystemEntityVersion, status: 'draft' | 'active' | 'retired'): void {
-    this.loader.wrap('status-change', this.codeSystemService.changeVersionStatus(this.codeSystemId, version.id, status)).subscribe(() => {
+    this.loader.wrap('status-change', this.codeSystemService.changeEntityVersionStatus(this.codeSystemId, version.id, status)).subscribe(() => {
       this.conceptVersion.status = status;
       this.loader.wrap('load', this.codeSystemService.loadConcept(this.codeSystemId, this.concept.code))
         .subscribe(c => this.concept = c);

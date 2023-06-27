@@ -24,16 +24,17 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post(`${this.baseUrl}/${codeSystemId}/versions`, version);
   }
 
-  public activateVersion(codeSystemId: string, version: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/activate`, {});
-  }
-
-  public retireVersion(codeSystemId: string, version: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/retire`, {});
-  }
-
-  public saveVersionAsDraft(codeSystemId: string, version: string): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/draft`, {});
+  public changeVersionStatus(codeSystemId: string, version: string, status: 'draft' | 'active' | 'retired'): Observable<void> {
+    if (status === 'draft') {
+      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/draft`, {});
+    }
+    if (status === 'active') {
+      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/activate`, {});
+    }
+    if (status === 'retired') {
+      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/retire`, {});
+    }
+    return of();
   }
 
   public duplicateCodeSystemVersion(codeSystemId: string, version: string, duplicateRequest: {codeSystem: string, version: string}): Observable<void> {
@@ -47,7 +48,7 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post(`${this.baseUrl}/${codeSystemId}/concepts/transaction`, request);
   }
 
-  public changeVersionStatus(codeSystemId: string, id: number, status: 'draft' | 'active' | 'retired'): Observable<void> {
+  public changeEntityVersionStatus(codeSystemId: string, id: number, status: 'draft' | 'active' | 'retired'): Observable<void> {
     if (status === 'draft') {
       return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/draft`, {});
     }
@@ -58,6 +59,10 @@ export class CodeSystemService extends CodeSystemLibService {
       return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}/retire`, {});
     }
     return of();
+  }
+
+  public deleteEntityVersion(codeSystemId: string, id: number): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/${codeSystemId}/entities/versions/${id}`);
   }
 
   public duplicateEntityVersion(codeSystemId: string, entityId: number, id: number): Observable<void> {

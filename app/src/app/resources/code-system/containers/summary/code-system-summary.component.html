@@ -39,8 +39,11 @@
               <m-button *m-dropdown-container mDisplay="text">
                 {{'web.code-system.summary.unlinked-concepts.link-to' | translate:{version: '...'} }}
               </m-button>
-              <ng-container *ngFor="let v of versions">
+              <ng-container *ngFor="let v of versions | filter: filterDraftVersions">
                 <a *m-dropdown-item (mClick)="link(v.version, unlinkedConcepts.checked())">{{v.version}}</a>
+              </ng-container>
+              <ng-container *ngIf="!(versions | filter: filterDraftVersions)?.length">
+                <span *m-dropdown-item>{{'web.code-system.summary.unlinked-concepts.no-versions' | translate}}</span>
               </ng-container>
             </m-dropdown>
             <m-divider mVertical />

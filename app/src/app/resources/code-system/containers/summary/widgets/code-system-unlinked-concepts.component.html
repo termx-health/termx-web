@@ -26,7 +26,7 @@
     <td><tw-status-tag [status]="entityVersion.status"></tw-status-tag></td>
     <td *ngIf="!viewMode">
       <m-dropdown>
-        <ng-container *ngFor="let v of versions">
+        <ng-container *ngFor="let v of versions | filter: filterDraftVersions">
           <a *m-dropdown-item (mClick)="link(v.version, entityVersion.id)">
             {{'web.code-system.summary.unlinked-concepts.link-to' | translate: {version: v.version} }}
           </a>

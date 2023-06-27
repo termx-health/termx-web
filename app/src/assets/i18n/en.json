@@ -220,7 +220,8 @@
           "author": "Author",
           "task": "Task",
           "status": "Status",
-          "link-to": "Link to {{version}}"
+          "link-to": "Link to {{version}}",
+          "no-versions": "No draft versions found"
         },
         "opened-tasks": "Opened tasks",
         "versions": "Versions",

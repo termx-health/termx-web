@@ -47,16 +47,8 @@ export class CodeSystemVersionInfoWidgetComponent {
     }
   }
 
-  protected makeDraft(): void {
-    this.codeSystemService.saveVersionAsDraft(this.version.codeSystem, this.version.version).subscribe(() => this.version.status = 'draft');
-  }
-
-  protected activate(): void {
-    this.codeSystemService.activateVersion(this.version.codeSystem, this.version.version).subscribe(() => this.version.status = 'active');
-  }
-
-  protected retire(): void {
-    this.codeSystemService.retireVersion(this.version.codeSystem, this.version.version).subscribe(() => this.version.status = 'retired');
+  protected changeVersionStatus(status: 'draft' | 'active' | 'retired'): void {
+    this.codeSystemService.changeVersionStatus(this.version.codeSystem, this.version.version, status).subscribe(() => this.version.status = status);
   }
 
   public openJson(): void {

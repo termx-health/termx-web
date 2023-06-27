@@ -53,6 +53,10 @@ export class CodeSystemUnlinkedConceptsComponent implements OnInit {
     return this.searchResult.data?.filter(c => c['checked']).map(c => c.id);
   };
 
+  protected filterDraftVersions = (v: CodeSystemVersion): boolean => {
+    return v.status === 'draft';
+  };
+
   public openConcept(code: string): void {
     const mode = this.viewMode ? '/view' : '/edit';
     const path = `/resources/code-systems/${this.codeSystem}/concepts/${code}${mode}`;
