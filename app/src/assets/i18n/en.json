@@ -677,7 +677,7 @@
           "properties": {
             "header": "Properties",
             "type-column": "{{type}} column",
-            "kts-property": "KTS property",
+            "kts-property": "TermX property",
             "preferred": "Preferred",
             "type": "Type",
             "format": "Format",
@@ -1416,7 +1416,7 @@
       "fsn": "Fully Specified Name (FSN)",
       "pt": "Preferred term (PT)",
       "snomed-references": "References in SNOMED",
-      "kts-references": "References in KTS"
+      "kts-references": "References in TermX"
     },
     "snomed-translation": {
       "module": "Module",
