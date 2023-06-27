@@ -5,6 +5,7 @@ import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 import {mergeMap, Observable, timer} from 'rxjs';
 
 export interface FileProcessingRequest {
+  valueSetId: string;
   type: string; //json, fsh
 }
 

@@ -15,8 +15,9 @@ export class IntegrationFhirSyncComponent implements OnInit {
   public source?: string | null;
 
   public input: string = "";
+  public id: string = "";
   public jobResponse?: JobLog;
-  public urls: string[] = [];
+  public resources: {url?: string, id?: string}[] = [];
   public loading: {[k: string]: boolean} = {};
 
   public constructor(
@@ -36,16 +37,19 @@ export class IntegrationFhirSyncComponent implements OnInit {
       this.loading['import'] = false;
       this.loading['polling'] = false;
       this.input = '';
-      this.urls = [];
+      this.resources = [];
     });
   }
 
   public importUrls(): void {
-    if (this.urls.length === 0) {
+    if (this.resources.length === 0) {
       return;
     }
 
-    const fhirSyncParameters = {parameter: this.urls.map(url => ({"name": "url", "valueString": url}))};
+    const fhirSyncParameters: FhirParameters = {
+      resourceType: "Parameters",
+      parameter: this.resources.map(r => ({name: "resources", part: [{name: "url", valueString: r.url}, {name: "id", valueString: r.id}]}))
+    };
     const importRequestMap: {[k: string]: Observable<FhirParameters>} = {
       'CodeSystem': this.fhirCodeSystemService.import(fhirSyncParameters),
       'ValueSet': this.fhirValueSetLibService.import(fhirSyncParameters),
@@ -57,8 +61,8 @@ export class IntegrationFhirSyncComponent implements OnInit {
     this.loading['import'] = true;
     importRequestMap[this.source!].subscribe(resp => {
         const jobIdParameter = resp.parameter?.find(p => p.name === 'jobId');
-        if (jobIdParameter?.valueDecimal) {
-          this.pollJobStatus(jobIdParameter.valueDecimal);
+        if (jobIdParameter?.valueString) {
+          this.pollJobStatus(Number(jobIdParameter.valueString));
         }
       }
     ).add(() => this.loading['import'] = false);
@@ -68,7 +72,7 @@ export class IntegrationFhirSyncComponent implements OnInit {
     this.loading['polling'] = true;
     this.jobService.pollFinishedJobLog(jobId, this.destroy$).subscribe(jobResp => {
       if (!jobResp.errors && !jobResp.warnings) {
-        this.urls = [];
+        this.resources = [];
         jobResp.successes?.forEach(success => this.notificationService.success('Sync successful!', success, {duration: 0, closable: true}));
         return;
       }
@@ -78,15 +82,15 @@ export class IntegrationFhirSyncComponent implements OnInit {
   }
 
   public removeUrl(index: number): void {
-    this.urls.splice(index, 1);
-    this.urls = [...this.urls];
+    this.resources.splice(index, 1);
+    this.resources = [...this.resources];
   }
 
   public addUrl(): void {
-    if (this.input.trim().length === 0) {
+    if (this.input.trim().length === 0 || this.id.trim().length === 0) {
       return;
     }
-    this.urls.push(this.input);
+    this.resources.push({url: this.input, id: this.id});
     this.input = '';
   }
 }

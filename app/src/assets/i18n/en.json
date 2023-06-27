@@ -1091,6 +1091,7 @@
     },
     "resource-import-modal": {
       "header": "Import from external FHIR definition",
+      "id": "ID",
       "source": "Source",
       "type": "Type",
       "url": "URL",

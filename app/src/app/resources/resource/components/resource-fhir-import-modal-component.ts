@@ -22,7 +22,7 @@ export class ResourceFhirImportModalComponent {
   protected jobResponse?: JobLog;
 
   protected modalVisible = false;
-  public params: {source: 'url' | 'file', type?: 'json' | 'fsh', url?: string, file?: any} = {source: 'url'};
+  public params: {id?: string, source: 'url' | 'file', type?: 'json' | 'fsh', url?: string, file?: any} = {source: 'url'};
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("fileInput") public fileInput?: ElementRef<HTMLInputElement>;
@@ -61,7 +61,12 @@ export class ResourceFhirImportModalComponent {
   }
 
   private importFromURL(): void {
-    const fhirSyncParameters = {parameter: [{"name": "url", "valueString": this.params.url}], resourceType: 'Parameters'};
+    const fhirSyncParameters: FhirParameters = {
+      parameter: [{
+        name: "resources",
+        part: [{name: "url", valueString: this.params.url}, {name: "id", valueString: this.params.id}]
+      }],
+      resourceType: 'Parameters'};
 
     const importRequestMap: {[k: string]: Observable<FhirParameters>} = {
       'CodeSystem': this.fhirCodeSystemService.import(fhirSyncParameters),
@@ -75,11 +80,10 @@ export class ResourceFhirImportModalComponent {
   }
 
   private importFromFile(): void {
-    const request = {type: this.params.type};
     const file = this.fileInput?.nativeElement?.files?.[0];
     const importRequestMap: {[k: string]: Observable<JobLog>} = {
-      'CodeSystem': this.codeSystemFileImportService.processRequest(request, file, this.destroy$),
-      'ValueSet': this.valueSetFileImportService.processRequest(request, file, this.destroy$),
+      'CodeSystem': this.codeSystemFileImportService.processRequest({type: this.params.type, codeSystem: {id: this.params.id}}, file, this.destroy$),
+      'ValueSet': this.valueSetFileImportService.processRequest({type: this.params.type, valueSetId: this.params.id}, file, this.destroy$),
       'ConceptMap': of(new JobLog())
     };
     this.loader.wrap('import',importRequestMap[this.resourceType])
