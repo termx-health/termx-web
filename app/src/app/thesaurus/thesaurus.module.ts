@@ -17,6 +17,7 @@ import {StructureDefinitionService} from 'term-web/thesaurus/containers/structur
 
 export const THESAURUS_ROUTES: Routes = [
   {path: 'pages', children: THESAURUS_PAGE_ROUTES},
+  {path: ':space/pages', children: THESAURUS_PAGE_ROUTES},
   {path: 'structure-definitions', component: StructureDefinitionListComponent},
   {path: 'structure-definitions/add', component: StructureDefinitionEditComponent, data: {privilege: ['*.Thesaurus.edit']}},
   {path: 'structure-definitions/:id/edit', component: StructureDefinitionEditComponent, data: {privilege: ['*.Thesaurus.edit']}},

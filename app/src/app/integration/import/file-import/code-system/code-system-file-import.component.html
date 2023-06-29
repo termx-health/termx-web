@@ -1,3 +1,4 @@
+    <div class="tw-flex-container">
 <div class="tw-flex-container">
   <m-card>
     <div *m-card-header class="m-justify-between">
@@ -25,7 +26,7 @@
           </m-form-item>
 
           <m-form-item *ngIf="data.codeSystem.id">
-            <m-alert class="tw-alert-vertical" mType="info">
+            <m-alert class="tw-alert--vertical" mType="info">
               <m-form-item mLabel="entities.code-system.uri-short">
                 {{sourceCodeSystem?.uri || '-'}}
               </m-form-item>
@@ -217,21 +218,21 @@
         </tr>
       </m-table>
 
-      <m-alert *ngIf="validations?.length" class="tw-alert-vertical" mTitle="Validations" mType="error">
+      <m-alert *ngIf="validations?.length" class="tw-alert--vertical" mTitle="Validations" mType="error">
         <ul style="margin-block: 0; padding-left: 1.5rem">
           <li *ngFor="let msg of validations">{{msg}}</li>
         </ul>
       </m-alert>
 
       <ng-container *ngIf="jobLog">
-        <m-alert *ngIf="!jobLog.errors?.length" class="tw-alert-vertical" mType="success" mTitle="No errors found">
+        <m-alert *ngIf="!jobLog.errors?.length" class="tw-alert--vertical" mType="success" mTitle="No errors found">
           <a *ngIf="jobLog.warnings?.length" (mClick)="downloadLog()">
             {{'web.integration.file-import.code-system.properties.download-diff' | translate}}
           </a>
         </m-alert>
 
         <m-alert *ngIf="jobLog.errors?.length"
-            class="tw-alert-vertical"
+            class="tw-alert--vertical"
             mType="error"
             mTitle="Found {{jobLog.errors?.length}} errors during the file processing">
           <a (mClick)="downloadLog()">

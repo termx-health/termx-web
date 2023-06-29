@@ -9,10 +9,12 @@ import {ThesaurusPageComponent} from './containers/thesaurus-page.component';
 import {ThesaurusPageEditComponent} from './containers/thesaurus-page-edit.component';
 import {ThesaurusPageModalComponent} from './components/thesaurus-page-modal.component';
 import {ThesaurusPageHeaderComponent} from './components/thesaurus-page-header.component';
-import {ThesaurusSidebarComponent} from 'term-web/thesaurus/containers/page/containers/thesaurus-sidebar.component';
+import {ThesaurusSidebarComponent} from 'term-web/thesaurus/containers/page/components/thesaurus-sidebar.component';
 import {PageService} from 'term-web/thesaurus/containers/page/services/page.service';
 import {PageLinkService} from 'term-web/thesaurus/containers/page/services/page-link.service';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
+import {ThesaurusPageDetailsComponent} from 'term-web/thesaurus/containers/page/components/thesaurus-page-details.component';
+import {ThesaurusSpaceOverviewComponent} from 'term-web/thesaurus/containers/page/components/thesaurus-space-overview.component';
 
 
 export const THESAURUS_PAGE_ROUTES: Routes = [
@@ -41,6 +43,8 @@ export const THESAURUS_PAGE_ROUTES: Routes = [
     ThesaurusSidebarComponent,
     ThesaurusPageModalComponent,
     ThesaurusPageHeaderComponent,
+    ThesaurusPageDetailsComponent,
+    ThesaurusSpaceOverviewComponent
   ],
   providers: [
     PageService,

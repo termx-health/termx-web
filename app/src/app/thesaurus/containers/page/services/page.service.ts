@@ -19,12 +19,4 @@ export class PageService extends PageLibService {
     }
     return this.http.post(`${this.baseUrl}/pages/${pageId}/contents`, content);
   }
-  //
-  // public movePage(pageId: number, req: {
-  //   parentId?: number,
-  //   siblingId?: number
-  //   action?: string
-  // }): Observable<PageContent> {
-  //   return this.http.post(`${this.baseUrl}/pages/${pageId}/move`, req);
-  // }
 }
