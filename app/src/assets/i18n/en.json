@@ -863,6 +863,9 @@
           "updated": "Updated {{date}}"
         }
       },
+      "sidebar": {
+        "pages": "Pages"
+      },
       "form": {
         "add-header": "Add page",
         "edit-header": "Edit page",

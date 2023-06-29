@@ -410,8 +410,4 @@ export class ThesaurusSidebarComponent implements OnChanges {
   protected findLinkId = (pageId: number, nodes: DropListNode[]): number => {
     return findInTree(nodes, String(pageId), n => n[NODE_OBJECT_KEY].page.id, n => n.children)?.[NODE_OBJECT_KEY]?.link?.id;
   };
-
-  protected loadSpace = (id: number): Observable<Space> => {
-    return this.spaceService.load(id);
-  };
 }

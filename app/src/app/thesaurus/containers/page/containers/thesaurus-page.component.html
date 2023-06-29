@@ -3,18 +3,17 @@
     <m-dropdown [mHideIfEmpty]="false">
       <m-button *m-dropdown-container mDisplay="text">
         <div class="m-items-middle">
-          {{'web.thesaurus-page.spaces' | translate}}
+          {{loader.state['spaces'] ? '...' : (space?.names | localName) ?? 'web.thesaurus-page.spaces' | translate}}
           <m-icon mCode="down"></m-icon>
         </div>
       </m-button>
 
       <ng-container *ngFor="let space of spaces">
-        <a *m-dropdown-item
-            [class.m-bold]="space.id === preferences.spaceId"
-            (mClick)="preferences.setSpace(space.id)"
-        >
-          {{space.names | localName: space.code}}
-        </a>
+        <ng-container *ngIf="space.id !== preferences.spaceId">
+          <a *m-dropdown-item (mClick)="preferences.setSpace(space.id)">
+            {{space.names | localName: space.code}}
+          </a>
+        </ng-container>
       </ng-container>
     </m-dropdown>
   </ng-template>

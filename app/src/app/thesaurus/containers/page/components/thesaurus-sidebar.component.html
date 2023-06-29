@@ -14,7 +14,7 @@
       <div class="space-item m-justify-between" [class.space-item--selected]="!selectedKey" (click)="viewRoot.emit()">
         <div class="m-items-middle">
           <m-icon mCode="database"/>
-          {{space?.names | localName}}
+          {{'web.thesaurus-page.sidebar.pages' | translate}}
         </div>
 
         <m-button mSize="small" (mClick)="onChildAdd($event,modal)">
