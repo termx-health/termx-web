@@ -854,6 +854,14 @@
         "tags": "Tags",
         "none": "None"
       },
+      "space": {
+        "pages": "Pages",
+        "recently-modified": {
+          "header": "Recently modified",
+          "created": "Created {{date}}",
+          "updated": "Updated {{date}}"
+        }
+      },
       "form": {
         "add-header": "Add page",
         "edit-header": "Edit page",

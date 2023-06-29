@@ -5,6 +5,7 @@ import {Page, PageContent, PageLink, Tag, TagLibService, Template, TemplateLibSe
 import {PageService} from '../services/page.service';
 import {TranslateService} from '@ngx-translate/core';
 import {MuiConfigService} from '@kodality-web/marina-ui';
+import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 
 @Component({
   selector: 'tw-thesaurus-page-modal',
@@ -35,6 +36,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
     private tagService: TagLibService,
     private translateService: TranslateService,
     private templateLibService: TemplateLibService,
+    private preferences: PreferencesService,
     protected muiConfig: MuiConfigService
   ) {}
 
@@ -89,6 +91,7 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
     const page = this.page;
     page.tags ??= [];
     page.tags = page.tags.filter(t => this.pageTags.includes(t.tag.text!));
+    page.spaceId = this.preferences.spaceId;
 
     this.pageTags?.forEach(t => {
       if (!page.tags.find(pt => pt.tag.text === t)) {

@@ -1,13 +1,15 @@
-import {Component, Injectable, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Injectable, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {PageService} from '../services/page.service';
-import {forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
-import {ActivatedRoute, Router} from '@angular/router';
-import {compareValues, copyDeep, LoadingManager, remove, SearchResult, unique} from '@kodality-web/core-util';
+import {EMPTY, forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
+import {Router} from '@angular/router';
+import {compareValues, copyDeep, isNil, LoadingManager, remove, SearchResult, unique} from '@kodality-web/core-util';
 import {Page, PageContent, PageLink} from 'term-web/thesaurus/_lib';
 import {DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
 import {PageLinkService} from '../services/page-link.service';
 import {ThesaurusPageModalComponent} from 'term-web/thesaurus/containers/page/components/thesaurus-page-modal.component';
+import {SpaceService} from 'term-web/space/services/space.service';
+import {Space} from 'term-web/space/_lib';
 
 function findInTree<Node, Key>(nodesToSearch: Node[], key: Key, getKey: (n: Node) => Key, getChildren: (n: Node) => Node[]): Node {
   for (let node of nodesToSearch) {
@@ -53,11 +55,16 @@ class ThesaurusSidebarService {
 
   public constructor(
     private pageService: PageService,
-    private pageLinkService: PageLinkService
+    private pageLinkService: PageLinkService,
   ) { }
 
-  public search(text: string): Observable<DragNode[]> {
+  public search(spaceId: number, text: string): Observable<DragNode[]> {
+    if (isNil(spaceId)) {
+      return EMPTY;
+    }
+
     return this.pageService.searchPages({
+      spaceIds: spaceId,
       textContains: text,
       limit: this.DEFAULT_CONCEPT_LIMIT
     }).pipe(
@@ -71,8 +78,13 @@ class ThesaurusSidebarService {
       }));
   };
 
-  public loadRoots(): Observable<DragNode[]> {
+  public loadRoots(spaceId: number): Observable<DragNode[]> {
+    if (isNil(spaceId)) {
+      return EMPTY;
+    }
+
     return this.pageLinkService.search({
+      spaceIds: spaceId,
       root: true,
       limit: this.DEFAULT_CONCEPT_LIMIT
     }).pipe(
@@ -85,9 +97,14 @@ class ThesaurusSidebarService {
       }));
   };
 
-  public findChildren(sourceId: number): Observable<DragNode[]> {
+  public findChildren(spaceId: number, sourceId: number): Observable<DragNode[]> {
+    if (isNil(spaceId)) {
+      return EMPTY;
+    }
+
     return this.pageLinkService
       .search({
+        spaceIds: spaceId as any,
         sourceIds: String(sourceId),
         root: false,
         limit: this.DEFAULT_CONCEPT_LIMIT
@@ -106,46 +123,68 @@ class ThesaurusSidebarService {
   }
 }
 
+const NODE_OBJECT_KEY = 'obj';
 
 @Component({
   selector: 'tw-thesaurus-sidebar',
   templateUrl: './thesaurus-sidebar.component.html',
+  styles: [`
+    @import "../../../../../styles/variables";
+
+    .space-item {
+      position: relative;
+      padding: 0 0.5rem 0 1rem;
+      border-radius: 2px;
+      height: 2.4rem;
+      cursor: pointer;
+    }
+
+    .space-item--selected {
+      background: @mui-border-color-light;
+      color: @mui-primary-color-6;
+    }
+  `],
   providers: [ThesaurusSidebarService]
 })
-export class ThesaurusSidebarComponent implements OnInit, OnChanges {
+export class ThesaurusSidebarComponent implements OnChanges {
   @Input() public path?: number[];
+  @Input() public space?: Space;
+
+  @Output() public viewRoot = new EventEmitter();
+  @Output() public viewPage = new EventEmitter<string>();
 
   protected data: DragNode[] = [];
   protected searchText: string;
 
   protected selectedKey: string;
   protected nodes: DropListNode[] = [];
-  private NODE_OBJECT_KEY = 'obj';
 
   protected loader = new LoadingManager();
 
   public constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private translateService: TranslateService,
     private pageLinkService: PageLinkService,
-    private megaService: ThesaurusSidebarService
+    private sidebarService: ThesaurusSidebarService,
+    private spaceService: SpaceService,
   ) { }
 
 
-  public ngOnInit(): void {
-    this.loadRoots().subscribe(() => {
-      if (this.path) {
-        // fixme: could be in ngOnChanges, but need a way for ngOnChange to wait until roots loaded
-        this.expandPath(copyDeep(this.path), this.data);
-        this.selectedKey = this.path?.length ? String(this.path[this.path.length - 1]) : this.selectedKey;
-      }
-    });
-  }
-
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['path'] && this.path?.length) {
+    if (changes['path']) {
       this.selectedKey = this.path?.length ? String(this.path[this.path.length - 1]) : this.selectedKey;
+      if (this.data.every(obj => !obj['_expanded'])) {
+        this.expandPath(copyDeep(this.path), this.data);
+      }
+    }
+
+    if (changes['space']) {
+      this.loader.wrap('roots', this.loadRoots()).subscribe(() => {
+        if (this.path) {
+          this.expandPath(copyDeep(this.path), this.data);
+          this.selectedKey = this.path?.length ? String(this.path[this.path.length - 1]) : this.selectedKey;
+        }
+      });
     }
   }
 
@@ -153,13 +192,13 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
   /* Drop list API */
 
   protected onExpand(node: DropListNode): void {
-    const obj: DragNode = node[this.NODE_OBJECT_KEY];
+    const obj: DragNode = node[NODE_OBJECT_KEY];
     obj.expanded = node.expanded;
     this.expandBranch(obj);
   }
 
   protected onSelect(node: DropListNode): void {
-    const obj: DragNode = node[this.NODE_OBJECT_KEY];
+    const obj: DragNode = node[NODE_OBJECT_KEY];
     this.openPage(obj.page);
 
     if (!obj.leaf && !obj.expanded) {
@@ -207,7 +246,7 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
     };
 
     syncWithPages(
-      event.node[this.NODE_OBJECT_KEY],
+      event.node[NODE_OBJECT_KEY],
       event.sourceContainerId,
       event.targetContainerId,
       event.index
@@ -232,21 +271,21 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
       : {parentLinkId: getParentId()};
 
     this.pageLinkService.moveLink(Number(event.node.key), req).subscribe(resp => {
-      const obj: DragNode = event.node[this.NODE_OBJECT_KEY];
+      const obj: DragNode = event.node[NODE_OBJECT_KEY];
       obj.link = resp.find(l => l.targetId === obj.link.targetId) ?? obj.link;
       setTimeout(() => this.toDropListNodes());
     });
   }
 
 
-  public onChildAdd(event: MouseEvent, node: DropListNode, modal: ThesaurusPageModalComponent): void {
+  public onChildAdd(event: MouseEvent, modal: ThesaurusPageModalComponent, node?: DropListNode): void {
     event.preventDefault();
     event.stopImmediatePropagation();
     modal.open({
-      links: [{
-        sourceId: node[this.NODE_OBJECT_KEY].page.id,
+      links: node ? [{
+        sourceId: node[NODE_OBJECT_KEY].page.id,
         orderNumber: node.children.length + 1
-      }]
+      }] : []
     });
   }
 
@@ -258,20 +297,22 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
       return this.loadRoots();
     }
 
-    return this.megaService.search(text).pipe(tap(roots => {
+    return this.sidebarService.search(this.space?.id, text).pipe(tap(roots => {
       this.data = roots;
       this.toDropListNodes();
     }));
   };
 
-  protected loadRoots = (): Observable<DragNode[]> => this.megaService.loadRoots().pipe(tap(roots => {
-    this.data = roots;
-    this.toDropListNodes();
-  }));
+  protected loadRoots = (): Observable<DragNode[]> => {
+    return this.sidebarService.loadRoots(this.space?.id).pipe(tap(roots => {
+      this.data = roots;
+      this.toDropListNodes();
+    }));
+  };
 
   protected reload(): void {
     const collectExpandedPageIds = (nodes: DropListNode[]): number[] => {
-      return nodes.filter(n => n.expanded).map(n => [n[this.NODE_OBJECT_KEY].page.id, ...collectExpandedPageIds(n.children)]).flat();
+      return nodes.filter(n => n.expanded).map(n => [n[NODE_OBJECT_KEY].page.id, ...collectExpandedPageIds(n.children)]).flat();
     };
 
 
@@ -297,7 +338,7 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
   /* Expand API */
 
   protected _expandBranch(obj: DragNode): Observable<DragNode[]> {
-    return this.megaService.findChildren(obj.link.targetId).pipe(tap(children => {
+    return this.sidebarService.findChildren(this.space?.id, obj.link.targetId).pipe(tap(children => {
       obj.children = children;
       obj.expanded = children.length > 0;
       obj['_expanded'] = true; // expanded via request, all OK, trustworthy children
@@ -322,7 +363,7 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
       obj['_expanded'] = false;
     }
 
-    this._expandBranch(obj).subscribe(() => {
+    this.loader.wrap('expand', this._expandBranch(obj)).subscribe(() => {
       pageIdPath.shift();
       this.expandPath(pageIdPath, obj.children, force);
     });
@@ -344,22 +385,22 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
   };
 
   protected openPage(obj: Page): void {
-    this.router.navigate(['/thesaurus/pages', this.localizedContent(obj)?.slug]);
+    this.viewPage.emit(this.localizedContent(obj)?.slug);
   }
 
   protected openPageAfterSave(obj: Page, modal: ThesaurusPageModalComponent): void {
-    this.router.navigate(['/thesaurus/pages', this.localizedContent(obj)?.slug]).then(() => {
-      obj.links.forEach(l => {
-        const parentLinkId = this.findLinkId(l.sourceId, this.nodes);
-        const parentLink = findNode(this.nodes, String(parentLinkId));
-        // fixme: expandBranch should work, but it does not
-        parentLink.expandable = true;
-        parentLink.expanded = true;
-      });
+    this.openPage(obj);
 
-      modal.close();
-      this.reload();
+    obj.links.forEach(l => {
+      const parentLinkId = this.findLinkId(l.sourceId, this.nodes);
+      const parentLink = findNode(this.nodes, String(parentLinkId));
+      // fixme: expandBranch should work, but it does not
+      parentLink.expandable = true;
+      parentLink.expanded = true;
     });
+
+    modal.close();
+    this.reload();
   }
 
   protected localizedContent = (page: Page): PageContent => {
@@ -367,6 +408,10 @@ export class ThesaurusSidebarComponent implements OnInit, OnChanges {
   };
 
   protected findLinkId = (pageId: number, nodes: DropListNode[]): number => {
-    return findInTree(nodes, String(pageId), n => n[this.NODE_OBJECT_KEY].page.id, n => n.children)?.[this.NODE_OBJECT_KEY]?.link?.id;
+    return findInTree(nodes, String(pageId), n => n[NODE_OBJECT_KEY].page.id, n => n.children)?.[NODE_OBJECT_KEY]?.link?.id;
+  };
+
+  protected loadSpace = (id: number): Observable<Space> => {
+    return this.spaceService.load(id);
   };
 }

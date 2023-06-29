@@ -2,13 +2,16 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PageContent, StructureDefinition} from 'term-web/thesaurus/_lib';
+import {Page, PageContent, StructureDefinition} from 'term-web/thesaurus/_lib';
 import {PageService} from '../services/page.service';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {StructureDefinitionService} from '../../structure-definition/services/structure-definition.service';
+import {mergeMap} from 'rxjs';
+import {SpaceService} from 'term-web/space/services/space.service';
 
 @Component({
   templateUrl: 'thesaurus-page-edit.component.html',
+  styleUrls: ['../styles/thesaurus-page.styles.less'],
   styles: [`
     .equal-columns {
       display: grid;
@@ -16,23 +19,10 @@ import {StructureDefinitionService} from '../../structure-definition/services/st
       grid-auto-columns: minmax(0, 1fr);
       gap: 1rem;
     }
-
-    .page__wrapper {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr);
-      gap: 2rem;
-
-      height: min-content;
-      width: 100%;
-      max-width: 1800px;
-      margin-inline: auto;
-
-      padding: 2rem 1rem 1rem;
-    }
   `]
 })
 export class ThesaurusPageEditComponent implements OnInit {
-  public pageId?: number;
+  public page?: Page;
   public pageContent?: PageContent;
   public showPreview?: boolean = false;
   protected loader = new LoadingManager();
@@ -40,32 +30,41 @@ export class ThesaurusPageEditComponent implements OnInit {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
+    private spaceService: SpaceService,
     private pageService: PageService,
     private structureDefinitionService: StructureDefinitionService,
     private clipboard: Clipboard,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
   ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe(routeParam => {
+      const space = routeParam.get('space');
       const slug = routeParam.get('slug');
-      if (slug) {
-        this.loadContent(slug);
+      if (space && slug) {
+        this.loadContent(space, slug);
       }
     });
   }
 
 
+  private loadContent(space: string, slug: string): void {
+    const req$ = this.spaceService.search({codes: space, limit: 1}).pipe(mergeMap(resp => {
+      return this.pageService.searchPages({
+        slugs: slug,
+        spaceIds: resp.data[0].id,
+        limit: 1
+      });
+    }));
 
-  private loadContent(slug: string): void {
-    this.loader.wrap('init', this.pageService.searchPageContents({slug: slug, limit: 1})).subscribe(contents => {
-      const content = contents.data[0];
-      if (content) {
-        this.pageContent = content;
-        this.pageId = content.pageId;
+    this.loader.wrap('init', req$).subscribe(pages => {
+      const page = pages.data[0];
+      if (page?.contents?.some(c => c.slug === slug)) {
+        this.page = page;
+        this.pageContent = page.contents.find(c => c.slug === slug);
       } else {
-        this.router.navigate(['/thesaurus/pages']);
+        this.router.navigate(['/thesaurus', this.route.snapshot.paramMap.get("space"), 'pages']);
       }
     });
   }
@@ -77,15 +76,14 @@ export class ThesaurusPageEditComponent implements OnInit {
     if (!validateForm(this.form)) {
       return;
     }
-    this.loader.wrap('save', this.pageService.savePageContent(this.pageContent!, this.pageId!)).subscribe(() => this.back());
+    this.loader.wrap('save', this.pageService.savePageContent(this.pageContent, this.page.id)).subscribe(() => this.back());
   }
 
   protected back(): void {
-    this.router.navigate(['/thesaurus/pages/', this.route.snapshot.paramMap.get('slug')]);
+    this.router.navigate(['/thesaurus', this.route.snapshot.paramMap.get("space"), 'pages', this.route.snapshot.paramMap.get('slug')]);
   }
 
-
-  public afterPageSave(content: PageContent): void {
+  protected afterPageSave(content: PageContent): void {
     this.pageContent = undefined;
 
     this.loader.start('update');
@@ -94,7 +92,7 @@ export class ThesaurusPageEditComponent implements OnInit {
       this.loader.stop('update');
     }, 200);
 
-    this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']);
+    this.router.navigate(['/thesaurus', this.route.snapshot.paramMap.get("space"), 'pages', content.slug, 'edit']);
   }
 
 
@@ -105,7 +103,7 @@ export class ThesaurusPageEditComponent implements OnInit {
       return;
     }
 
-    this.loader.wrap('save', this.pageService.savePageContent(this.pageContent!, this.pageId!)).subscribe(() => {
+    this.loader.wrap('save', this.pageService.savePageContent(this.pageContent!, this.page.id)).subscribe(() => {
       this.openStructureDefinition();
     });
   }

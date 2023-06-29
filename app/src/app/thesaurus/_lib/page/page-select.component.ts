@@ -51,7 +51,7 @@ export class PageSelectComponent implements OnInit, ControlValueAccessor {
     }
 
     const q = new PageSearchParams();
-    q.idNe = this.idNe;
+    q.idsNe = this.idNe;
     q.textContains = text;
     q.limit = 100;
 

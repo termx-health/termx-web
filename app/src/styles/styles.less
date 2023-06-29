@@ -86,12 +86,18 @@ a {
   }
 }
 
-.tw-alert-vertical {
+.tw-alert--vertical {
   margin: 0;
 
   &:after {
     height: 100%;
     width: 2px;
+  }
+}
+
+.tw-alert--no-line {
+  &:after {
+    content: none;
   }
 }
 
