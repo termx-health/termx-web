@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../services/page.service';
 import {LoadingManager} from '@kodality-web/core-util';
 import {Page, PageRelation} from 'term-web/thesaurus/_lib';
-import {filter, map, skip} from 'rxjs';
+import {map, skip} from 'rxjs';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 
@@ -66,7 +66,6 @@ export class ThesaurusPageComponent implements OnInit {
 
       this.preferences.spaceId$.pipe(
         skip(1), // fixme: service emits the undefined/localstorage value first
-        filter(id => this.spaces[id]?.code !== this.space?.code)
       ).subscribe(spaceId => {
         this.router.navigate(['/thesaurus', spaceId, 'pages']);
       });

@@ -3,7 +3,7 @@
     <m-dropdown [mHideIfEmpty]="false">
       <m-button *m-dropdown-container mDisplay="text">
         <div class="m-items-middle">
-          Spaces
+          {{'web.thesaurus-page.spaces' | translate}}
           <m-icon mCode="down"></m-icon>
         </div>
       </m-button>
@@ -23,8 +23,8 @@
   <div class="page__container">
     <div class="page__sidebar">
       <tw-collapse-panel resizable>
-        <m-skeleton [mLoading]="!space">
-          <tw-thesaurus-sidebar *ngIf="space" [path]="path" [space]="space " (viewRoot)="viewRoot()" (viewPage)="viewPage($event)"/>
+        <m-skeleton [mLoading]="loader.state['spaces']">
+          <tw-thesaurus-sidebar *ngIf="space" [path]="path" [space]="space" (viewRoot)="viewRoot()" (viewPage)="viewPage($event)"/>
         </m-skeleton>
       </tw-collapse-panel>
     </div>
@@ -38,8 +38,8 @@
       ></tw-thesaurus-space-overview>
 
       <ng-template #noSpace>
-        <m-alert mType="error" mShowIcon class="tw-alert--no-line m-rounded" mTitle="Space not selected">
-          Please select working space in the application header
+        <m-alert mType="error" mShowIcon class="tw-alert--no-line m-rounded" mTitle="web.thesaurus-page.no-space.title">
+          {{'web.thesaurus-page.no-space.desc' | translate}}
         </m-alert>
       </ng-template>
 

@@ -843,6 +843,7 @@
       }
     },
     "thesaurus-page": {
+      "spaces": "Spaces",
       "header": {
         "modified": "<b>{{user}}</b> edited this page on {{date}}",
         "add-subpage": "Add subpage"
@@ -873,6 +874,10 @@
         "proceed-without-saving": "Proceed without saving",
         "usages": "Usages",
         "copy-to-clipboard": "Copy {{val}} to clipboard"
+      },
+      "no-space": {
+        "title": "Space not selected",
+        "desc": "Please select space to proceed"
       },
       "link-modal": {
         "header": "Compose link",
