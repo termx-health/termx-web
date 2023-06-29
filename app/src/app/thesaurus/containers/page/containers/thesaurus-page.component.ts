@@ -34,15 +34,20 @@ export class ThesaurusPageComponent implements OnInit {
 
       this.route.paramMap.subscribe(params => {
         const space = params.get("space"); // could be either code or id
+
         const matchedSpace = resp.data.find(s => s.code === space) || resp.data.find(s => s.id === Number(space));
         if (!matchedSpace) {
+          if (this.preferences.spaceId){
+            this.router.navigate(['/thesaurus', this.preferences.spaceId, 'pages']);
+          }
           return;
         }
 
         const foundById = matchedSpace.code !== space;
         if (foundById) {
           // replace id with code
-          this.router.navigateByUrl(this.router.url.replace(`/${matchedSpace.id}/`, `/${matchedSpace.code}/`));
+          const url = this.router.url.replace(`/${matchedSpace.id}/`, `/${matchedSpace.code}/`);
+          this.router.navigateByUrl(url, {replaceUrl: true});
         } else {
           this.space = matchedSpace;
           this.preferences.setSpace(matchedSpace.id);
@@ -115,10 +120,6 @@ export class ThesaurusPageComponent implements OnInit {
 
 
   /* Utils */
-
-  protected get isLoading(): boolean {
-    return this.loader.isLoadingExcept('init');
-  }
 
   protected get isOverviewSelected(): boolean {
     return !this.route.snapshot.paramMap.has('slug');

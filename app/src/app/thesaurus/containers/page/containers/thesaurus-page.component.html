@@ -8,10 +8,10 @@
         </div>
       </m-button>
 
-      <ng-container *ngFor="let space of spaces">
-        <ng-container *ngIf="space.id !== preferences.spaceId">
-          <a *m-dropdown-item (mClick)="preferences.setSpace(space.id)">
-            {{space.names | localName: space.code}}
+      <ng-container *ngFor="let s of spaces">
+        <ng-container *ngIf="s.id !== space?.id">
+          <a *m-dropdown-item (mClick)="preferences.setSpace(s.id)">
+            {{s.names | localName: s.code}}
           </a>
         </ng-container>
       </ng-container>
@@ -23,35 +23,37 @@
     <div class="page__sidebar">
       <tw-collapse-panel resizable>
         <m-skeleton [mLoading]="loader.state['spaces']">
-          <tw-thesaurus-sidebar *ngIf="space" [path]="path" [space]="space" (viewRoot)="viewRoot()" (viewPage)="viewPage($event)"/>
+          <tw-thesaurus-sidebar *ngIf="space" [space]="space" [path]="path" (viewRoot)="viewRoot()" (viewPage)="viewPage($event)"/>
         </m-skeleton>
       </tw-collapse-panel>
     </div>
 
 
-    <div *ngIf="isOverviewSelected" class="page__wrapper">
+    <ng-template #noSpace>
+      <div class="page__wrapper">
+        <m-alert mType="error" mShowIcon class="tw-alert--no-line m-rounded" mTitle="web.thesaurus-page.no-space.title">
+          {{'web.thesaurus-page.no-space.desc' | translate}}
+        </m-alert>
+      </div>
+    </ng-template>
+
+
+    <ng-container *ngIf="loader.state['spaces'] || space; else noSpace">
       <tw-thesaurus-space-overview
-          *ngIf="preferences.spaceId; else noSpace"
+          *ngIf="isOverviewSelected" class="page__wrapper"
           [space]="space"
           (viewPage)="viewPage($event)"
       ></tw-thesaurus-space-overview>
 
-      <ng-template #noSpace>
-        <m-alert mType="error" mShowIcon class="tw-alert--no-line m-rounded" mTitle="web.thesaurus-page.no-space.title">
-          {{'web.thesaurus-page.no-space.desc' | translate}}
-        </m-alert>
-      </ng-template>
-
-    </div>
-
-    <tw-thesaurus-page-details
-        *ngIf="!isOverviewSelected"
-        [slug]="slug"
-        [page]="page"
-        (viewPage)="viewPage($event)"
-        (editPage)="editPage($event)"
-        (viewRelation)="viewTarget($event)"
-    ></tw-thesaurus-page-details>
+      <tw-thesaurus-page-details
+          *ngIf="!isOverviewSelected"
+          [slug]="slug"
+          [page]="page"
+          (viewPage)="viewPage($event)"
+          (editPage)="editPage($event)"
+          (viewRelation)="viewTarget($event)"
+      ></tw-thesaurus-page-details>
+    </ng-container>
   </div>
 </m-page>
 
