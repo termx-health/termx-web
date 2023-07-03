@@ -108,7 +108,7 @@ export class ThesaurusPageComponent implements OnInit {
       'concept': () => {
         const [cs, concept] = relation.target.split('|');
         if (cs === 'snomed-ct') {
-          this.router.navigate(['/integration/snomed/', concept]);
+          this.router.navigate(['/integration/snomed/dashboard/', concept]);
         } else {
           this.router.navigate(['/resources/code-systems/', cs, 'concepts', concept, 'view']);
         }

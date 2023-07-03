@@ -1,12 +1,6 @@
-export class SnomedDescriptionSearchParams {
-  public term?: string;
-  public active?: Boolean;
-  public module?: string[];
-  public language?: string;
-  public semanticTag?: string;
-  public semanticTags?: string[];
-  public conceptActive?: Boolean;
-  public groupByConcept?: Boolean;
+import {QueryParams} from '@kodality-web/core-util';
 
-  public rootId?: string;
+export class SnomedDescriptionSearchParams extends QueryParams {
+  public conceptId?: string;
+  public conceptIds?: string;
 }

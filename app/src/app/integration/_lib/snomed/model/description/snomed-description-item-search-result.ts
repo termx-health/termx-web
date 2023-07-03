@@ -1,6 +1,6 @@
 import {SnomedConcept} from '../concept/snomed-concept';
 
-export class SnomedDescriptionSearchResult {
+export class SnomedDescriptionItemSearchResult {
   public buckets?: {
     module: { [key: string]: number},
     semanticTags: { [key: string]: number},

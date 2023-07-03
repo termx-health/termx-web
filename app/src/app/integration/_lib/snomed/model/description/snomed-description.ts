@@ -17,4 +17,6 @@ export class SnomedDescription {
   public reviewed?: Date;
   public status?: string;
   public acceptabilityMap?: {[key: string]: string};
+
+  public local?: boolean;
 }

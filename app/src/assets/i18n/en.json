@@ -794,6 +794,40 @@
         "ecl-placeholder": "ECL expression",
         "import-refset-concepts": "Import refset concepts"
       },
+      "branch": {
+        "list": {
+        "header": "Branches",
+        "add-branch": "Add branch"
+        },
+        "form" : {
+          "add-header": "Add branch",
+          "edit-header": "Branch {{path}}",
+          "release-date": "Release date",
+          "parent-branch": "Parent branch",
+          "based-on": "Based on",
+          "name": "Name"
+        },
+        "management": {
+          "header": "Branch {{path}}",
+          "integrity-check": "Integrity check",
+          "lock": "Lock",
+          "unlock": "Unlock",
+          "import-from-rf2": "Import form RF2",
+          "export-to-rf2": "Export to RF2",
+          "total-descriptions": "{{total}} description(s) in the branch",
+          "unlinked-translations": "{{count}} unlinked translation(s)",
+          "lock-modal": {
+            "header": "Lock branch",
+            "message": "Message"
+          },
+          "export-modal": {
+            "header": "Export to RF2 zip",
+            "type": "Type",
+            "delta": "Delta",
+            "snapshot": "Snapshot"
+          }
+        }
+      },
       "rf2-export": "RF2 export"
     },
     "loinc": {
@@ -1454,6 +1488,7 @@
     },
     "snomed-description": {
       "refset": "Refset",
+      "concept-id": "Concept id",
       "description-id": "Description id",
       "lang": "Language",
       "term": "Term",
@@ -1471,6 +1506,16 @@
     "snomed-reference": {
       "type": "Type",
       "concept": "Concept"
+    },
+    "snomed-branch": {
+      "path": "Path",
+      "state": "State",
+      "creation": "Creation",
+      "base": "Base",
+      "head": "Head",
+      "deleted": "Deleted",
+      "locked": "Locked",
+      "metadata": "Metadata"
     },
     "page": {
       "plural": "Pages",

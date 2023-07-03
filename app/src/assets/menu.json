@@ -93,7 +93,7 @@
           "et": "Import"
         },
         "icon": "interaction",
-        "link": "integration",
+        "link": "integration/dashboard",
         "privileges": [
           "*.CodeSystem.view",
           "*.ValueSet.view",
@@ -118,7 +118,7 @@
           "en": "SNOMED CT",
           "et": "SNOMED CT"
         },
-        "link": "integration/snomed",
+        "link": "integration/snomed/dashboard",
         "privileges": [
           "snomed-ct.CodeSystem.view"
         ]

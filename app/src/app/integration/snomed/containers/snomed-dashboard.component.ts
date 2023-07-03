@@ -21,6 +21,6 @@ export class SnomedDashboardComponent implements OnInit {
   public conceptSelected(conceptId: string): void {
     this.conceptId = conceptId;
     const tab = this.route.snapshot.queryParamMap.get("tab");
-    this.router.navigate(['/integration/snomed', conceptId], {queryParams: {tab: tab}});
+    this.router.navigate(['/integration/snomed/dashboard', conceptId], {queryParams: {tab: tab}});
   }
 }

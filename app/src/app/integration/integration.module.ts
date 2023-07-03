@@ -33,10 +33,14 @@ import {SnomedTranslationService} from 'term-web/integration/snomed/services/sno
 import {ImportJobLogComponent} from 'term-web/integration/import-job-log.component';
 import {FileAnalysisService} from 'term-web/integration/import/file-import/file-analysis.service';
 import {AssociationFileImportComponent} from 'term-web/integration/import/file-import/association/association-file-import.component';
+import {SnomedBranchListComponent} from 'term-web/integration/snomed/containers/branch/snomed-branch-list.component';
+import {SnomedBranchEditComponent} from 'term-web/integration/snomed/containers/branch/snomed-branch-edit.component';
+import {SnomedBranchManagementComponent} from 'term-web/integration/snomed/containers/branch/snomed-branch-management.component';
+import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
-    path: '', component: IntegrationDashboardComponent, children: [
+    path: 'dashboard', component: IntegrationDashboardComponent, children: [
       {path: 'fhir/$sync', component: IntegrationFhirSyncComponent, data: {privilege: ['*.CodeSystem.edit', '*.ValueSet.edit', '*.MapSet.edit']}},
       {path: 'fhir/CodeSystem/$lookup', component: FhirCodeSystemLookupComponent, data: {privilege: ['*.CodeSystem.view']}},
       {path: 'fhir/CodeSystem/$validate-code', component: FhirCodeSystemValidateCodeComponent, data: {privilege: ['*.CodeSystem.view']}},
@@ -57,8 +61,12 @@ export const INTEGRATION_ROUTES: Routes = [
     ]
   },
   {path: 'loinc', component: LoincDashboardComponent, data: {privilege: ['loinc.CodeSystem.view']}},
-  {path: 'snomed', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
-  {path: 'snomed/:conceptId', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}}
+  {path: 'snomed/branches', component: SnomedBranchListComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
+  {path: 'snomed/branches/add', component: SnomedBranchEditComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
+  {path: 'snomed/branches/:path/edit', component: SnomedBranchEditComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
+  {path: 'snomed/branches/:path/management', component: SnomedBranchManagementComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
+  {path: 'snomed/dashboard', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
+  {path: 'snomed/dashboard/:conceptId', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}}
 ];
 
 @NgModule({
@@ -96,6 +104,9 @@ export const INTEGRATION_ROUTES: Routes = [
     SnomedDashboardComponent,
     SnomedConceptInfoComponent,
     SnomedTranslationListComponent,
+    SnomedBranchListComponent,
+    SnomedBranchEditComponent,
+    SnomedBranchManagementComponent,
 
     LoincDashboardComponent,
     LoincListComponent,
@@ -109,6 +120,7 @@ export const INTEGRATION_ROUTES: Routes = [
     AssociationFileImportComponent
   ],
   providers: [
+    SnomedService,
     SnomedTranslationService,
     FileAnalysisService
   ]

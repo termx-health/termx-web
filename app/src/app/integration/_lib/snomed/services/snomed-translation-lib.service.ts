@@ -6,6 +6,7 @@ import {environment} from 'environments/environment';
 import {SnomedTranslation} from 'term-web/integration/_lib';
 import {saveAs} from 'file-saver';
 import {LorqueProcess} from 'term-web/sys/_lib';
+import {SearchHttpParams} from '@kodality-web/core-util';
 
 @Injectable()
 export class SnomedTranslationLibService {
@@ -13,7 +14,11 @@ export class SnomedTranslationLibService {
 
   public constructor(protected http: HttpClient) { }
 
-  public loadTranslations(conceptId: string): Observable<SnomedTranslation[]> {
+  public loadTranslations(params: {active?: boolean, unlinked?: boolean}): Observable<SnomedTranslation[]> {
+    return this.http.get(`${this.baseUrl}/translations`, {params: SearchHttpParams.build(params)}).pipe(map(resp => resp as SnomedTranslation[]));
+  }
+
+  public loadConceptTranslations(conceptId: string): Observable<SnomedTranslation[]> {
     return this.http.get(`${this.baseUrl}/concepts/${conceptId}/translations`).pipe(map(resp => resp as SnomedTranslation[]));
   }
 

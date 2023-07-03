@@ -7,17 +7,27 @@ import {environment} from 'environments/environment';
 import {SnomedConcept} from '../model/concept/snomed-concept';
 import {SnomedConceptSearchParams} from '../model/concept/snomed-concept-search-params';
 import {SnomedSearchResult} from '../model/snomed-search-result';
-import {SnomedDescriptionSearchParams} from '../model/description/snomed-description-search-params';
-import {SnomedDescriptionSearchResult} from '../model/description/snomed-description-search-result';
+import {SnomedDescriptionItemSearchParams} from '../model/description/snomed-description-item-search-params';
+import {SnomedDescriptionItemSearchResult} from '../model/description/snomed-description-item-search-result';
 import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-params';
 import {SnomedRefsetSearchResult} from '../model/refset/snomed-refset-search-result';
 import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-member-search-result';
+import {SnomedBranch, SnomedDescription, SnomedDescriptionSearchParams} from 'term-web/integration/_lib';
 
 @Injectable()
 export class SnomedLibService {
   protected baseUrl = `${environment.termxApi}/snomed`;
 
   public constructor(protected http: HttpClient) { }
+
+  public loadBranches(): Observable<SnomedBranch[]> {
+    return this.http.get(`${this.baseUrl}/branches`).pipe(map(c => c as SnomedBranch[]));
+  }
+
+  public loadBranch(path: string): Observable<SnomedBranch> {
+    path = encodeURIComponent(path);
+    return this.http.get(`${this.baseUrl}/branches/${path}`).pipe(map(c => c as SnomedBranch));
+  }
 
   public loadConcept(conceptId: string): Observable<SnomedConcept> {
     return this.http.get(`${this.baseUrl}/concepts/${conceptId}`).pipe(map(c => c as SnomedConcept));
@@ -31,8 +41,13 @@ export class SnomedLibService {
     return this.http.get(`${this.baseUrl}/concepts/${conceptId}/children`).pipe(map(r => r as Array<SnomedConcept>));
   }
 
-  public findDescriptions(params: SnomedDescriptionSearchParams): Observable<SnomedDescriptionSearchResult> {
-    return this.http.get(`${this.baseUrl}/concept-descriptions`, {params: SearchHttpParams.build(params)}).pipe(map(r => r as SnomedDescriptionSearchResult));
+  public findBranchDescriptions(path: string, params: SnomedDescriptionSearchParams): Observable<SnomedSearchResult<SnomedDescription>> {
+    path = encodeURIComponent(path);
+    return this.http.get(`${this.baseUrl}/branches/${path}/descriptions`, {params: SearchHttpParams.build(params)}).pipe(map(r => r as SnomedSearchResult<SnomedDescription>));
+  }
+
+  public findDescriptions(params: SnomedDescriptionItemSearchParams): Observable<SnomedDescriptionItemSearchResult> {
+    return this.http.get(`${this.baseUrl}/descriptions`, {params: SearchHttpParams.build(params)}).pipe(map(r => r as SnomedDescriptionItemSearchResult));
   }
 
   public findRefsets(params: SnomedRefsetSearchParams): Observable<SnomedRefsetSearchResult> {

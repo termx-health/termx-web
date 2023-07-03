@@ -44,7 +44,7 @@ export class SnomedTranslationListComponent implements OnInit, OnChanges {
     if (!isDefined(conceptId)) {
       return;
     }
-    this.loader.wrap('load', this.snomedTranslationService.loadTranslations(conceptId)).subscribe(resp => this.translations = resp);
+    this.loader.wrap('load', this.snomedTranslationService.loadConceptTranslations(conceptId)).subscribe(resp => this.translations = resp);
   }
 
   protected addRow(): void {

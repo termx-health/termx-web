@@ -1,0 +1,32 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <m-title>{{'web.snomed.branch.list.header' | translate}}</m-title>
+    <div class="m-items-middle">
+      <tw-add-button [routerLink]="['add']">
+        {{'web.snomed.branch.list.add-branch' | translate}}
+      </tw-add-button>
+    </div>
+  </div>
+
+  <m-table [mData]="branches" [mLoading]="loader.isLoading" mEnablePagination>
+    <tr *mTableHead>
+      <th>{{'entities.snomed-branch.path' | translate}}</th>
+      <th>{{'entities.snomed-branch.creation' | translate}}</th>
+      <th>{{'entities.snomed-branch.base' | translate}}</th>
+      <th>{{'entities.snomed-branch.deleted' | translate}}</th>
+    </tr>
+
+    <tr *mTableRow="let branch">
+      <td><a [routerLink]="[branch.path | apply:encodeUriComponent, 'management']">{{branch.path}}</a></td>
+      <td>{{branch.creation | localDate}}</td>
+      <td>{{branch.base | localDate}}</td>
+      <td><m-checkbox [ngModel]="branch.deleted" readOnly></m-checkbox></td>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-table>
+</m-card>
