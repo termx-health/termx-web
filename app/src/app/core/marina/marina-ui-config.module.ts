@@ -10,6 +10,10 @@ export function TranslationHandlerFactory(translateService: TranslateService): C
 
 export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
   return {
+    table:{
+      showPageSizeChanger: true,
+      pageSizeOptions: [10, 20, 50, 100]
+    },
     multiLanguageInput: {
       languages: [
         {code: 'en', names: {'en': 'English', 'et': 'Inglise', 'ru': 'Английский', 'lt': 'Anglų'}},
