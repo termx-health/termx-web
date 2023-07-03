@@ -16,8 +16,8 @@
               <span class="m-items-middle"><a>{{'core.btn.edit' | translate}} </a><m-icon mCode="form"></m-icon></span>
             </m-button>
             <m-button mDisplay="text" mShape="circle" (mClick)="navigate('concepts')">
-              <span class="m-items-middle" *ngIf="mode !== 'concepts'"><a>{{'web.resource-context.concepts' | translate}} </a><m-icon mCode="database"></m-icon></span>
-              <span class="m-items-middle" *ngIf="mode === 'concepts'"><span>{{'web.resource-context.concepts' | translate}} </span><m-icon mCode="database"></m-icon></span>
+              <span class="m-items-middle" *ngIf="mode !== 'concept-list'"><a>{{'web.resource-context.concepts' | translate}} </a><m-icon mCode="database"></m-icon></span>
+              <span class="m-items-middle" *ngIf="mode === 'concept-list'"><span>{{'web.resource-context.concepts' | translate}} </span><m-icon mCode="database"></m-icon></span>
             </m-button>
             <m-button mDisplay="text" mShape="circle">
               <span class="m-items-middle"><a>{{'web.resource-context.provenance' | translate}} </a><m-icon mCode="history"></m-icon></span>
@@ -45,7 +45,10 @@
             <!-- Title -->
             <div class="m-subtitle">{{'entities.resource.version.single' | translate}}</div>
             <!-- Code -->
-            <div class="m-bold">{{version.version}}</div>
+            <div class="m-items-middle">
+              <label class="m-bold">{{version.version}}</label>
+              <span class="tw-circled" [style.color]="version.status === 'draft' ? 'var(--color-amber-7)' : 'initial'">{{version.status[0] | uppercase}}</span>
+            </div>
           </div>
         </div>
 

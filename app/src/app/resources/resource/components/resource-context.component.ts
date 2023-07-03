@@ -11,9 +11,10 @@ import {Router} from '@angular/router';
 export class ResourceContextComponent {
   @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet';
   @Input() public resource: Resource;
+  @Input() public conceptCode: string;
   @Input() public version: ResourceVersion;
   @Input() public versions: ResourceVersion[];
-  @Input() public mode: 'summary' | 'concepts' = 'summary';
+  @Input() public mode: 'summary' | 'concept-list' | 'concept-edit' | 'concept-view' = 'summary';
 
   public constructor(private router: Router) {}
 
@@ -22,14 +23,26 @@ export class ResourceContextComponent {
 
   protected unselectResourceOrVersion(): void {
     if (this.version) {
-      this.router.navigate(['/resources', this.typeMap[this.resourceType], this.resource.id, this.mode]);
+      const commands = {
+        'summary': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'summary'],
+        'concept-list': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts'],
+        'concept-edit': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts', this.conceptCode, 'edit'],
+        'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts', this.conceptCode, 'view']
+      };
+      this.router.navigate(commands[this.mode]);
     } else {
       this.router.navigate(['/resources', this.typeMap[this.resourceType]]);
     }
   }
 
   protected selectVersion(version: string): void {
-    this.router.navigate(['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, this.mode]);
+    const commands = {
+      'summary': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'summary'],
+      'concept-list': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts'],
+      'concept-edit': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts', this.conceptCode, 'edit'],
+      'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts', this.conceptCode, 'view']
+    };
+    this.router.navigate(commands[this.mode]);
   }
 
   public navigate(mode: string): void {

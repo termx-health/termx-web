@@ -25,6 +25,7 @@ export class CodeSystemConceptViewComponent implements OnInit {
   public parent?: string | null;
   public codeSystem?: CodeSystem;
   public codeSystemVersion?: CodeSystemVersion;
+  public codeSystemVersions?: CodeSystemVersion[];
   public concept?: CodeSystemConcept;
   public conceptVersion?: CodeSystemEntityVersion;
 
@@ -59,18 +60,12 @@ export class CodeSystemConceptViewComponent implements OnInit {
   private loadData(): void {
     this.loader.wrap('init', forkJoin([
       this.codeSystemService.load(this.codeSystemId),
-      this.versionCode ? this.codeSystemService.loadVersion(this.codeSystemId, this.versionCode) : of(undefined)]
-    )).subscribe(([cs, version]) => {
+      this.versionCode ? this.codeSystemService.loadVersion(this.codeSystemId, this.versionCode) : of(undefined),
+      !this.versionCode ? this.codeSystemService.searchVersions(this.codeSystemId, {limit: -1}) : of({data: []})]
+    )).subscribe(([cs, version, versions]) => {
       this.codeSystem = cs;
       this.codeSystemVersion = version;
+      this.codeSystemVersions = versions.data;
     });
-  }
-
-  public addPropertyValue(prop: EntityProperty): void {
-    this.conceptVersion.propertyValues = [...this.conceptVersion.propertyValues || [], {entityPropertyId: prop.id, entityProperty: prop.name}];
-  }
-
-  public addAssociation(): void {
-    this.conceptVersion.associations = [...this.conceptVersion.associations || [], {status: 'active', associationType: this.codeSystem.hierarchyMeaning}];
   }
 }

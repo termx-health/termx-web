@@ -1,3 +1,4 @@
+<tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [conceptCode]="concept?.code" [version]="codeSystemVersion" [versions]="codeSystemVersions" mode="concept-edit"></tw-resource-context>
 <m-page [mLoading]="loader.isLoading">
 
   <div style="display: flex; gap: 1rem">
@@ -28,7 +29,7 @@
       <m-card *ngIf="concept?.versions">
         <div *m-card-header class="m-justify-between">
           <m-title mTitle="entities.code-system-concept.versions"></m-title>
-          <tw-add-button *ngIf="!newVersionExists" (click)="addVersion()">
+          <tw-add-button *ngIf="!newVersionExists && (!codeSystemVersion || codeSystemVersion.status === 'draft')" (click)="addVersion()">
             {{'web.code-system-concept-version.add-version' | translate}}
           </tw-add-button>
         </div>
@@ -41,7 +42,7 @@
                 <tw-status-tag [status]="version.status"></tw-status-tag>
               </div>
               <div class="m-items-middle">
-                <m-icon (click)="duplicateVersion(version)" *ngIf="version.id" mCode="copy" m-tooltip mTitle="core.btn.duplicate" class="m-clickable"></m-icon>
+                <m-icon (click)="duplicateVersion(version)" *ngIf="version.id && !codeSystemVersion" mCode="copy" m-tooltip mTitle="core.btn.duplicate" class="m-clickable"></m-icon>
                 <m-icon (click)="deleteVersion(version.id)" *ngIf="version.status === 'draft' && concept.versions?.length > 1" mCode="delete" class="m-clickable"></m-icon>
               </div>
             </div>
