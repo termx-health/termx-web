@@ -11,6 +11,18 @@
           "et": "Sihtleht"
         },
         "link": "landing"
+      },
+      {
+        "label": {
+          "en": "Global search",
+          "et": "Globaalne otsing"
+        },
+        "link": "global-search",
+        "privileges": [
+          "*.CodeSystem.view",
+          "*.ValueSet.view",
+          "*.MapSet.view"
+        ]
       }
     ]
   },
@@ -144,26 +156,54 @@
   },
   {
     "label": {
-      "en": "Searches",
-      "et": "Otsingud"
+      "en": "Thesaurus",
+      "et": "Thesaurus"
     },
     "privileges": [
-      "*.CodeSystem.view",
-      "*.ValueSet.view",
-      "*.MapSet.view"
+      "*.Thesaurus.view"
     ],
+    "link": "thesaurus/pages",
     "items": [
       {
         "label": {
-          "en": "Global search",
-          "et": "Globaalne otsing"
+          "en": "Wiki",
+          "et": "Wiki"
         },
-        "icon": "search",
-        "link": "global-search",
+        "link": "thesaurus/pages",
         "privileges": [
-          "*.CodeSystem.view",
-          "*.ValueSet.view",
-          "*.MapSet.view"
+          "*.Thesaurus.view"
+        ]
+      },
+      {
+        "label": {
+          "en": "Templates",
+          "et": "Mallid"
+        },
+        "link": "thesaurus/templates",
+        "privileges": [
+          "*.Thesaurus.view"
+        ]
+      }
+    ]
+  },
+  {
+    "label": {
+      "en": "Modeller",
+      "et": "Modelleerija"
+    },
+    "privileges": [
+      "*.Thesaurus.view"
+    ],
+    "link": "thesaurus/pages",
+    "items": [
+      {
+        "label": {
+          "en": "Structure definitions",
+          "et": "Struktuuri määratlused"
+        },
+        "link": "thesaurus/structure-definitions",
+        "privileges": [
+          "*.Thesaurus.view"
         ]
       }
     ]
@@ -233,51 +273,6 @@
         },
         "icon": "field-binary",
         "link": "sequences"
-      }
-    ]
-  },
-  {
-    "label": {
-      "en": "Thesaurus",
-      "et": "Thesaurus"
-    },
-    "privileges": [
-      "*.Thesaurus.view"
-    ],
-    "link": "thesaurus/pages",
-    "items": [
-      {
-        "label": {
-          "en": "Thesaurus",
-          "et": "Thesaurus"
-        },
-        "icon": "file-search",
-        "link": "thesaurus/pages",
-        "privileges": [
-          "*.Thesaurus.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Structure definitions",
-          "et": "Struktuuri määratlused"
-        },
-        "icon": "profile",
-        "link": "thesaurus/structure-definitions",
-        "privileges": [
-          "*.Thesaurus.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Templates",
-          "et": "Mallid"
-        },
-        "icon": "file-text",
-        "link": "thesaurus/templates",
-        "privileges": [
-          "*.Thesaurus.view"
-        ]
       }
     ]
   }
