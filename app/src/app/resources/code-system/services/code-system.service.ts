@@ -66,7 +66,7 @@ export class CodeSystemService extends CodeSystemLibService {
   }
 
   public duplicateEntityVersion(codeSystemId: string, entityId: number, id: number): Observable<void> {
-    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entities/${entityId}/versions/${id}/duplicate`, {});
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/${id}/duplicate`, {});
   }
 
   public unlinkEntityVersions(codeSystemId: string, codeSystemVersion: string, entityVersionIds: number[]): Observable<void> {
