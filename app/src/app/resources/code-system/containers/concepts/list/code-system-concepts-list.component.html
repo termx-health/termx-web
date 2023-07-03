@@ -1,12 +1,22 @@
 <tw-table [(filterOpen)]="filter.open">
   <div class="m-justify-between" style="margin-bottom: 1rem">
-    <div class="m-items-middle">
+    <div class="m-items-middle" style="flex: 1">
       <m-button *ngIf="codeSystem.hierarchyMeaning"
           (click)="groupOpened = !groupOpened; selectedConcept = undefined; filter.open = false"
-          [mDisplay]="groupOpened ? 'primary' : 'default'">
+          [mDisplay]="groupOpened ? 'primary' : 'default'"
+      >
         <m-icon mCode="folder-open"></m-icon>
       </m-button>
+
+      <m-select [(ngModel)]="tableView.langs" multiple placeholder="Designation languages" style="flex: 1">
+        <m-option *ngFor="let lang of version | apply: getSupportedLangs: versions" [mValue]="lang" [mLabel]="lang"/>
+      </m-select>
+
+      <m-select [(ngModel)]="tableView.properties" multiple placeholder="Properties" style="flex: 1">
+        <m-option *ngFor="let prop of codeSystem?.properties" [mValue]="prop.name" [mLabel]="prop.name"/>
+      </m-select>
     </div>
+
     <div class="m-items-middle">
       <tw-add-button *ngIf="!viewMode && null | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">
         {{'web.code-system.form.concepts.add-concept' | translate}}
@@ -51,10 +61,6 @@
     <!-- Table views -->
     <div style="flex: 4; max-width: 100%;">
       <m-backend-table *ngIf="!groupOpened" [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
-        <div tableHeader>
-          <ng-container *ngTemplateOutlet="tableHead"/>
-        </div>
-
         <tr *mTableHead>
           <th>{{'entities.code-system-concept.code' | translate}}</th>
           <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
@@ -78,10 +84,6 @@
 
 
       <m-table *ngIf="groupOpened && rootConcepts" [mData]="rootConcepts" mSize="small">
-        <div tableHeader>
-          <ng-container *ngTemplateOutlet="tableHead"/>
-        </div>
-
         <tr *mTableHead>
           <th>{{'entities.code-system-concept.code' | translate}}</th>
           <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
@@ -118,22 +120,6 @@
     <ng-container *ngFor="let child of node.children">
       <ng-container *ngTemplateOutlet="treeView; context: {node: child, level: level + 1}"/>
     </ng-container>
-  </ng-template>
-
-
-  <ng-template #tableHead>
-    <div style="padding: 0.5rem 1rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(30rem, 100%), 1fr)); column-gap: 0.5rem;">
-      <m-form-item mLabel="Designation languages">
-        <m-select [(ngModel)]="tableView.langs" multiple>
-          <m-option *ngFor="let lang of (version | apply:getSupportedLangs:versions)" [mValue]="lang" [mLabel]="lang"/>
-        </m-select>
-      </m-form-item>
-      <m-form-item mLabel="Properties">
-        <m-select [(ngModel)]="tableView.properties" multiple>
-          <m-option *ngFor="let prop of codeSystem?.properties" [mValue]="prop.name" [mLabel]="prop.name"/>
-        </m-select>
-      </m-form-item>
-    </div>
   </ng-template>
 
 

@@ -30,6 +30,7 @@ import {RootComponent} from 'term-web/root.component';
 import {NoPrivilegeComponent} from 'term-web/core/components/no-privilege/no-privilege.component';
 import {SysModule} from 'term-web/sys/sys.module';
 import {TerminologyServiceApiModule} from 'term-web/terminology-service-api/terminology-service-api.module';
+import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 
 registerLocaleData(et);
 registerLocaleData(lt);
@@ -93,8 +94,8 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
   ]
 })
 export class RootModule {
-  public constructor(translate: TranslateService,) {
-    translate.use(localStorage.getItem('locale') ?? 'en');
-    translate.onLangChange.subscribe(({lang}) => localStorage.setItem('locale', lang));
+  public constructor(preferences: PreferencesService, translate: TranslateService) {
+    translate.use(preferences.lang);
+    translate.onLangChange.subscribe(({lang}) => preferences.setLang(lang));
   }
 }

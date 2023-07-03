@@ -1,158 +1,131 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../services/page.service';
-import {collect, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {NgForm} from '@angular/forms';
-import {GithubExportable} from 'term-web/integration/_lib/github/github.service';
-import {Page, PageContent, PageLink, PageRelation, PageTag} from 'term-web/thesaurus/_lib';
-import {MuiConfigService} from '@kodality-web/marina-ui';
-import {forkJoin} from 'rxjs';
+import {LoadingManager} from '@kodality-web/core-util';
+import {Page, PageRelation} from 'term-web/thesaurus/_lib';
+import {map, skip} from 'rxjs';
+import {Space, SpaceLibService} from 'term-web/space/_lib';
+import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 
 @Component({
   templateUrl: './thesaurus-page.component.html',
-  styleUrls: ['thesaurus-page.component.less']
+  styleUrls: ['../styles/thesaurus-page.styles.less']
 })
-export class ThesaurusPageComponent implements OnInit, AfterViewInit {
-  public pageId?: number;
-  public pageContent?: PageContent;
-  public pageContents: PageContent[] = [];
-  public pageLinks: PageLink[] = [];
-  public pageRelations?: {[k: string]: PageRelation[]};
-  public pageTags?: PageTag[];
-  public pageUsages?: PageRelation[];
-
-  protected loader = new LoadingManager();
+export class ThesaurusPageComponent implements OnInit {
+  public space?: Space;
+  public page?: Page;
   public path?: number[];
-  public contentModalData: {
-    visible?: boolean,
-    content?: PageContent
-  } = {};
 
-  @ViewChild("contentForm") public contentFrom?: NgForm;
+  protected spaces: Space[] = [];
+  protected loader = new LoadingManager();
 
   public constructor(
     private router: Router,
     private route: ActivatedRoute,
     private pageService: PageService,
-    protected muiConfig: MuiConfigService
+    private spaceService: SpaceLibService,
+    protected preferences: PreferencesService,
   ) { }
 
 
   public ngOnInit(): void {
-    this.route.paramMap.subscribe(routeParam => {
-      this.init();
+    this.loader.wrap('spaces', this.spaceService.search({})).subscribe(resp => {
+      this.spaces = resp.data;
 
-      const slug = routeParam.get("slug");
-      if (slug) {
-        this.loader.wrap('init', this.pageService.searchPages({slug: slug, limit: 1})).subscribe(pages => {
-          const page = pages.data[0];
-          if (!page) {
-            this.router.navigate(['/thesaurus/pages']);
-          } else {
-            this.init(page, slug);
+      this.route.paramMap.subscribe(params => {
+        const space = params.get("space"); // could be either code or id
+
+        const matchedSpace = resp.data.find(s => s.code === space) || resp.data.find(s => s.id === Number(space));
+        if (!matchedSpace) {
+          if (this.preferences.spaceId){
+            this.router.navigate(['/thesaurus', this.preferences.spaceId, 'pages']);
           }
-        });
-      }
-    });
-  }
+          return;
+        }
 
-  public ngAfterViewInit(): void {
-    if (localStorage.getItem('_thesaurus-page-width')) {
-    }
-  }
+        const foundById = matchedSpace.code !== space;
+        if (foundById) {
+          // replace id with code
+          const url = this.router.url.replace(`/${matchedSpace.id}/`, `/${matchedSpace.code}/`);
+          this.router.navigateByUrl(url, {replaceUrl: true});
+        } else {
+          this.space = matchedSpace;
+          this.preferences.setSpace(matchedSpace.id);
+        }
 
 
-  private init(page?: Page, slug?: string): void {
-    this.pageId = page?.id;
-    this.pageContent = page?.contents.find(c => c.slug === slug);
-    this.pageContents = page?.contents || [];
-    this.pageRelations = collect(page?.relations || [], r => r.type);
-    this.pageLinks = page?.links || [];
-    this.pageTags = page?.tags || [];
-    this.path = [];
-
-    if (page) {
-      forkJoin([
-        this.pageService.getPath(page.id),
-        this.pageService.searchPageRelations({
-          type: 'page', target: page.contents?.map(c => c.slug).join(',')!,
-          limit: 999
-        })
-      ]).subscribe(([path, resp]) => {
-        this.path = path;
-        this.pageUsages = resp.data;
+        const slug = params.get("slug");
+        if (slug) {
+          const req$ = this.pageService.searchPages({slugs: this.slug, spaceIds: matchedSpace.id, limit: 1}).pipe(map(r => r.data[0]));
+          this.loader.wrap('init', req$).subscribe(page => {
+            if (page) {
+              this.init(page);
+            } else {
+              this.router.navigate(['/thesaurus/pages']);
+            }
+          });
+        } else {
+          this.init();
+        }
       });
-    }
-  }
 
-
-  public saveContent(): void {
-    if (!validateForm(this.contentFrom)) {
-      return;
-    }
-    this.loader.wrap('save', this.pageService.savePageContent(this.contentModalData.content, this.pageId)).subscribe(content => {
-      this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']);
+      this.preferences.spaceId$.pipe(
+        skip(1), // fixme: service emits the undefined/localstorage value first
+      ).subscribe(spaceId => {
+        this.router.navigate(['/thesaurus', spaceId, 'pages']);
+      });
     });
   }
 
-  public openContentModal(lang: string): void {
-    this.contentModalData = {
-      visible: true,
-      content: {lang: lang, contentType: 'markdown'}
-    };
-  }
-
-  public editPageContent(content: PageContent): void {
-    this.router.navigate(['/thesaurus/pages/', content.slug, 'edit']);
+  private init(page?: Page): void {
+    this.page = page;
+    if (page) {
+      this.loader.wrap('path', this.pageService.getPath(page.id)).subscribe(path => this.path = path);
+    }
   }
 
 
   /* Link open */
 
+  public viewRoot(): void {
+    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, 'pages']);
+  }
+
+  public viewPage(slug: string): void {
+    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, 'pages', slug]);
+  }
+
+  public editPage(slug: string): void {
+    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, 'pages', slug, 'edit']);
+  }
+
   public viewTarget(relation: PageRelation): void {
-    if (relation.type === 'cs') {
-      this.router.navigate(['/resources/code-systems/', relation.target, 'view']);
-    } else if (relation.type === 'vs') {
-      this.router.navigate(['/resources/value-sets/', relation.target, 'view']);
-    } else if (relation.type === 'ms') {
-      this.router.navigate(['/resources/map-sets/', relation.target, 'view']);
-    } else if (relation.type === 'concept') {
-      const cs = relation.target!.split('|')[0];
-      const concept = relation.target!.split('|')[1];
-      if (cs !== 'snomed-ct') {
-        this.router.navigate(['/resources/code-systems/', cs, 'concepts', concept, 'view']);
-      } else {
-        this.router.navigate(['/integration/snomed/', concept]);
-      }
-    } else if (relation.type === 'page') {
-      this.router.navigate(['/thesaurus/pages/', relation.target]);
-    }
-  }
+    const handlers = {
+      'page': () => this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, 'pages', relation.target]),
+      'cs': () => this.router.navigate(['/resources/code-systems/', relation.target, 'view']),
+      'vs': () => this.router.navigate(['/resources/value-sets/', relation.target, 'view']),
+      'ms': () => this.router.navigate(['/resources/map-sets/', relation.target, 'view']),
+      'concept': () => {
+        const [cs, concept] = relation.target.split('|');
+        if (cs === 'snomed-ct') {
+          this.router.navigate(['/integration/snomed/', concept]);
+        } else {
+          this.router.navigate(['/resources/code-systems/', cs, 'concepts', concept, 'view']);
+        }
+      },
+    };
 
-  public viewPage(relation: PageRelation): void {
-    this.router.navigate(['/thesaurus/pages/', relation.content!.code]);
+    handlers[relation.type]?.();
   }
-
-  public viewPageContent(content: PageContent): void {
-    if (isDefined(content)) {
-      this.router.navigate(['/thesaurus/pages/', content.slug]);
-    }
-  }
-
 
 
   /* Utils */
 
-  public filterLanguages = (supportedLangs: string[], currentLang: string, contents: PageContent[]): string[] => {
-    return supportedLangs.filter(l => l !== currentLang && !contents.find(c => c.lang === l));
-  };
+  protected get isOverviewSelected(): boolean {
+    return !this.route.snapshot.paramMap.has('slug');
+  }
 
-  public prepareExport = (): GithubExportable[] => {
-    let filename = `${this.pageContent?.slug}.${this.pageContent?.contentType === 'markdown' ? 'md' : 'html'}`;
-    return [{content: this.pageContent?.content, filename: filename}];
-  };
-
-  public get isLoading(): boolean {
-    return this.loader.isLoadingExcept('init');
+  protected get slug(): string {
+    return this.route.snapshot.paramMap.get('slug');
   }
 }

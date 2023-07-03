@@ -98,11 +98,11 @@ export class CollapsePanelComponent implements OnChanges, AfterViewInit, OnDestr
 
   /* Expand */
 
-  protected toggleCollapse(): void {
+  public toggleCollapse(): void {
     this.setCollapsed(!this.collapseData.collapsed);
   }
 
-  private setCollapsed(collapsed: boolean): void {
+  public setCollapsed(collapsed: boolean): void {
     this.collapseData.inProgress = true;
     this.collapseData.collapsed = collapsed;
     setTimeout(() => {

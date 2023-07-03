@@ -1,156 +1,59 @@
-<m-page mFull>
+<m-page mFull [mTitle]="spaceSelector" class="thesaurus">
+  <ng-template #spaceSelector>
+    <m-dropdown [mHideIfEmpty]="false">
+      <m-button *m-dropdown-container mDisplay="text">
+        <div class="m-items-middle">
+          {{loader.state['spaces'] ? '...' : (space?.names | localName) ?? 'web.thesaurus-page.spaces' | translate}}
+          <m-icon mCode="down"></m-icon>
+        </div>
+      </m-button>
+
+      <ng-container *ngFor="let s of spaces">
+        <ng-container *ngIf="s.id !== space?.id">
+          <a *m-dropdown-item (mClick)="preferences.setSpace(s.id)">
+            {{s.names | localName: s.code}}
+          </a>
+        </ng-container>
+      </ng-container>
+    </m-dropdown>
+  </ng-template>
+
+
   <div class="page__container">
     <div class="page__sidebar">
       <tw-collapse-panel resizable>
-        <tw-thesaurus-sidebar [path]="path"/>
+        <m-skeleton [mLoading]="loader.state['spaces']">
+          <tw-thesaurus-sidebar *ngIf="space" [space]="space" [path]="path" (viewRoot)="viewRoot()" (viewPage)="viewPage($event)"/>
+        </m-skeleton>
       </tw-collapse-panel>
     </div>
 
 
-    <m-spinner class="page__wrapper" [mLoading]="isLoading">
-      <tw-thesaurus-page-header *ngIf="pageId" [pageContent]="pageContent">
-        <m-button [routerLink]="'edit'" >
-          <div class="m-items-middle">
-            <m-icon mCode="edit"></m-icon>
-            {{'core.btn.edit' | translate}}
-          </div>
-        </m-button>
-
-        <m-dropdown>
-          <m-button *m-dropdown-container mDisplay="text">
-            <m-icon mCode="ellipsis"></m-icon>
-          </m-button>
-
-          <a *m-dropdown-item class="m-items-middle" (click)="pageModal.open({links:[{sourceId: pageId, orderNumber: 1}]})">
-            <m-icon mCode="file-add"/>
-            {{'web.thesaurus-page.header.add-subpage' | translate}}
-          </a>
-          <a *m-dropdown-item>
-            <tw-github-export type="text" [title]="pageContent?.name" [prepareExport]="prepareExport"/>
-          </a>
-        </m-dropdown>
-      </tw-thesaurus-page-header>
-
-
-      <div *ngIf="pageId">
-        <div nz-row nzGutter="12">
-          <div nz-col [nzLg]="18" [nzXs]="24" class="page__content">
-            <m-card>
-              <tw-smart-text-editor
-                  *ngIf="pageContent"
-                  [(ngModel)]="pageContent.content"
-                  [valueType]="pageContent.contentType"
-                  [lang]="pageContent.lang"
-                  viewMode
-              />
-            </m-card>
-          </div>
-
-          <div nz-col [nzLg]="6" [nzXs]="24">
-            <m-card>
-              <div class="page__actions">
-                <div>
-                  <b>{{'web.thesaurus-page.actions.contents' | translate}}</b>
-                  <div>
-                    <div *ngFor="let content of pageContents | sort: 'lang'">
-                      <a (click)="viewPageContent(content)">
-                        {{content.lang | uppercase}} | {{content.name}}
-                      </a>
-                    </div>
-                    <div *ngFor="let lang of muiConfig.config.supportedLangs | keys | apply: filterLanguages: pageContent?.lang: pageContents">
-                      <a (click)="openContentModal(lang)" class="m-text-secondary">
-                        {{lang | uppercase}}
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <div>
-                  <b>{{'web.thesaurus-page.actions.relations' | translate}}</b>
-                  <div *ngIf="!(pageRelations | keys)?.length" class="m-text-secondary">
-                    {{'web.thesaurus-page.actions.none' | translate}}
-                  </div>
-                  <dl *ngFor="let key of pageRelations | keys">
-                    <dt>{{key}}</dt>
-                    <dd>
-                      <li style="margin-left: 1rem" *ngFor="let relation of pageRelations[key];"><a (click)="viewTarget(relation)">{{relation.target}}</a></li>
-                    </dd>
-                  </dl>
-                </div>
-
-                <div>
-                  <b>{{'web.thesaurus-page.actions.usages' | translate}}</b>
-                  <div *ngIf="!pageUsages?.length" class="m-text-secondary">
-                    {{'web.thesaurus-page.actions.none' | translate}}
-                  </div>
-                  <div>
-                    <a *ngFor="let usage of pageUsages" (click)="viewPage(usage)">
-                      <m-icon mCode="link"></m-icon>
-                      {{usage.content.names | localName}}
-                    </a>
-                  </div>
-                </div>
-
-
-                <div>
-                  <b>{{'web.thesaurus-page.actions.tags' | translate}}</b>
-                  <div *ngIf="!pageTags?.length" class="m-text-secondary">
-                    {{'web.thesaurus-page.actions.none' | translate}}
-                  </div>
-                  <div class="m-items-middle">
-                    <m-tag *ngFor="let tag of pageTags">
-                      {{tag.tag.text}}
-                    </m-tag>
-                  </div>
-                </div>
-              </div>
-            </m-card>
-          </div>
-        </div>
+    <ng-template #noSpace>
+      <div class="page__wrapper">
+        <m-alert mType="error" mShowIcon class="tw-alert--no-line m-rounded" mTitle="web.thesaurus-page.no-space.title">
+          {{'web.thesaurus-page.no-space.desc' | translate}}
+        </m-alert>
       </div>
-    </m-spinner>
+    </ng-template>
+
+
+    <ng-container *ngIf="loader.state['spaces'] || space; else noSpace">
+      <tw-thesaurus-space-overview
+          *ngIf="isOverviewSelected" class="page__wrapper"
+          [space]="space"
+          (viewPage)="viewPage($event)"
+      ></tw-thesaurus-space-overview>
+
+      <tw-thesaurus-page-details
+          *ngIf="!isOverviewSelected"
+          [slug]="slug"
+          [page]="page"
+          (viewPage)="viewPage($event)"
+          (editPage)="editPage($event)"
+          (viewRelation)="viewTarget($event)"
+      ></tw-thesaurus-page-details>
+    </ng-container>
   </div>
 </m-page>
 
-
-<m-modal [(mVisible)]="contentModalData.visible" (mClose)="contentModalData.visible = false">
-  <ng-container *m-modal-header>
-    {{'web.thesaurus-page.form.content-header' | translate}}
-  </ng-container>
-
-  <ng-container *m-modal-content>
-    <form #contentForm="ngForm" *ngIf="contentModalData.content">
-      <m-form-item mName="name" mLabel="entities.page-content.name" required>
-        <m-input name="name" [(ngModel)]="contentModalData.content.name" autofocus required></m-input>
-      </m-form-item>
-
-      <m-form-item mName="type" mLabel="entities.page-content.content-type" required>
-        <m-select name="type" [(ngModel)]="contentModalData.content.contentType" required>
-          <m-option mLabel="WYSIWYG" [mValue]="'html'"></m-option>
-          <m-option mLabel="Markdown" [mValue]="'markdown'"></m-option>
-        </m-select>
-      </m-form-item>
-    </form>
-  </ng-container>
-
-  <div *m-modal-footer class="m-items-middle">
-    <m-button mDisplay="text" (click)="contentModalData.visible = false">
-      {{'core.btn.close' | translate}}
-    </m-button>
-
-    <m-button mDisplay="primary"
-        [mLoading]="loader.state['save']"
-        [disabled]="loader.state['init'] || isLoading"
-        (mClick)="saveContent()"
-    >
-      {{'core.btn.save' | translate}}
-    </m-button>
-  </div>
-</m-modal>
-
-
-<tw-thesaurus-page-modal
-  #pageModal
-    (closed)="pageModal.close()"
-    (saved)="editPageContent($event.pageContent)"
-></tw-thesaurus-page-modal>

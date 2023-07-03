@@ -7,6 +7,7 @@ export class Page {
   public id?: number;
   public status?: string;
   public templateId?: number;
+  public spaceId?: number;
   public leaf?: boolean;
   public contents?: PageContent[];
   public links?: PageLink[];
@@ -15,4 +16,9 @@ export class Page {
 
   public linkPages?: Page[];
   public active?: boolean;
+
+  public createdAt?: Date;
+  public createdBy?: string;
+  public modifiedAt?: Date;
+  public modifiedBy?: string;
 }

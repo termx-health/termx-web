@@ -1,0 +1,27 @@
+<div class="m-text-secondary">{{space?.names | localName: space?.code}}</div>
+
+<div class="m-items-top">
+  <h1 class="m-bold" style="margin-top: 1rem">
+    {{'web.thesaurus-page.space.pages' | translate}}
+  </h1>
+  <span style="margin-top: 1rem">{{totalPages}}</span>
+</div>
+
+
+<h3 style="margin-top: 2rem; margin-bottom: 1rem">
+  {{'web.thesaurus-page.space.recently-modified.header' | translate}}
+</h3>
+<div class="equal-columns">
+  <ng-container *ngFor="let page of recentlyModified">
+    <ng-container *ngIf="page | apply: localizedContent as c">
+      <m-card [mTitle]="c.name" class="m-clickable" (click)="viewPage.emit(c.slug)">
+        <div class="m-whitespace">{{c.content | abbreviate: 200}}</div>
+
+        <div *m-card-footer class="m-text-secondary" style="font-size: 0.9rem">
+          <m-icon mCode="clock-circle"></m-icon>
+          {{(page.modifiedAt ? 'web.thesaurus-page.space.recently-modified.updated' : 'web.thesaurus-page.space.recently-modified.created') | translate: ({date: (page.modifiedAt ?? page.createdAt) | localDateTime})}}
+        </div>
+      </m-card>
+    </ng-container>
+  </ng-container>
+</div>

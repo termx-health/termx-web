@@ -1,6 +1,6 @@
-<m-page mFull>
-  <m-spinner class="page__wrapper" [mLoading]="isLoading">
-    <tw-thesaurus-page-header [pageContent]="pageContent">
+<m-page mFull class="thesaurus">
+  <m-spinner class="page page__wrapper" [mLoading]="isLoading">
+    <tw-thesaurus-page-header [page]="page" [slug]="pageContent?.slug">
       <m-button (click)="saveContent()" mDisplay="primary">
         <div class="m-items-middle">
           <m-icon mCode="save"></m-icon>

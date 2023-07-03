@@ -843,6 +843,7 @@
       }
     },
     "thesaurus-page": {
+      "spaces": "Spaces",
       "header": {
         "modified": "<b>{{user}}</b> edited this page on {{date}}",
         "add-subpage": "Add subpage"
@@ -853,6 +854,17 @@
         "usages": "Usages",
         "tags": "Tags",
         "none": "None"
+      },
+      "space": {
+        "pages": "Pages",
+        "recently-modified": {
+          "header": "Recently modified",
+          "created": "Created {{date}}",
+          "updated": "Updated {{date}}"
+        }
+      },
+      "sidebar": {
+        "pages": "Pages"
       },
       "form": {
         "add-header": "Add page",
@@ -865,6 +877,10 @@
         "proceed-without-saving": "Proceed without saving",
         "usages": "Usages",
         "copy-to-clipboard": "Copy {{val}} to clipboard"
+      },
+      "no-space": {
+        "title": "Space not selected",
+        "desc": "Please select space to proceed"
       },
       "link-modal": {
         "header": "Compose link",
