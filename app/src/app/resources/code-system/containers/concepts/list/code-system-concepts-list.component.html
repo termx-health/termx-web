@@ -103,11 +103,13 @@
       </m-table>
     </div>
 
-    <tw-code-system-concepts-list-concept-preview *ngIf="selectedConcept?.version"
+    <tw-code-system-concepts-list-concept-preview
+        style="flex: 2"
+        *ngIf="selectedConcept?.version"
         [codeSystemId]="codeSystem.id"
         [version]="selectedConcept.version"
         [editRoute]="(selectedConcept.code | apply: getConceptEditRoute)?.path"
-        style="flex: 2"></tw-code-system-concepts-list-concept-preview>
+    ></tw-code-system-concepts-list-concept-preview>
   </div>
 
 

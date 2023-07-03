@@ -5,7 +5,8 @@ import {
   CodeSystemEntityVersion,
   CodeSystemVersion,
   ConceptSearchParams,
-  Designation, EntityProperty,
+  Designation,
+  EntityProperty,
   EntityPropertyValue
 } from 'app/src/app/resources/_lib';
 import {Observable} from 'rxjs';
@@ -43,6 +44,11 @@ interface ConceptNode {
       .m-tree-toggle {
         align-self: center;
       }
+    }
+
+    tw-code-system-concepts-list-concept-preview {
+      position: sticky;
+      top: calc(var(--page-header-height) + var(--gap-default) + 7rem); // fixme: magic number 7rem, approximate height of context header (OP-5276)
     }
   `]
 })
