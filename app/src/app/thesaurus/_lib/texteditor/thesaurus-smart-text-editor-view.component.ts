@@ -1,4 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 
 @Component({
   selector: 'tw-smart-text-editor-view',
@@ -16,7 +17,9 @@ export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
 
   public processedValue: ProcessedValue[] = [];
 
-  public constructor() {}
+  public constructor(
+    private preferences: PreferencesService
+  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['value'] && this.value) {
@@ -53,39 +56,56 @@ export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
   private processLink(processedValue: ProcessedValue[]): ProcessedValue[] {
     processedValue.forEach(pv => {
       if (pv.type === 'text') {
-        const matches = pv.value!.match(/\[(.*?)\]\(.*?\)/g);
+        const matches = pv.value.match(/\[(.*?)]\(.*?\)/g);
         matches?.forEach(m => pv.value = pv.value!.replace(m, this.processLinkValue(m)));
       }
     });
     return processedValue;
   }
 
-  private processLinkValue(link: string): string {
-    const split = link.split(']')[1].split(/\(|\)/);
-    if (!split[1].includes(':')) {
-      return link;
+  private processLinkValue(mdLink: string): string {
+    const getLink = (combinedLink: string): string => {
+      const [system, value] = combinedLink.split(':');
+
+      switch (system) {
+        case 'cs':
+          return `/resources/code-systems/${value}/summary`;
+        case 'vs':
+          return `/resources/value-sets/${value}/summary`;
+        case 'ms':
+          return `/resources/map-sets/${value}/view`;
+        case 'concept':
+          const [cs, concept] = value.split('|');
+          return cs === 'snomed-ct'
+            ? `/integration/snomed/dashboard/${concept}`
+            : `/resources/code-systems/${cs}/concepts/${concept}/view`;
+        case 'page':
+          return this.preferences.spaceId
+            ? `/thesaurus/${this.preferences.spaceId}/pages/${value}`
+            : `/thesaurus/pages/${value}`;
+        default:
+          return combinedLink;
+      }
+    };
+
+    const isUrl = (link: string): boolean => {
+      try {
+        return !!new URL(link);
+      } catch {
+        return false;
+      }
+    };
+
+    // matches "[label](uri)"
+    const [_, label, uri] = [...mdLink.matchAll(/\[(.*)]\((.*)\)/g)][0];
+    if (!uri.includes(':')) {
+      if (!isUrl(uri) && !uri.startsWith("/")) {
+        return `[${label}](${getLink(`page:${uri}`)})`;
+      }
+      return mdLink;
     }
 
-    let value = link.split(']')[0] + ']';
-
-    const type = split[1].split(':')[0];
-    const typeValue = split[1].split(':')[1];
-    if (type === 'cs') {
-      value += '(/resources/code-systems/' + typeValue + '/view)';
-    } else if (type === 'vs') {
-      value += '(/resources/value-sets/' + typeValue + '/view)';
-    } else if (type === 'ms') {
-      value += '(/resources/map-sets/' + typeValue + '/view)';
-    } else if (type === 'concept') {
-      const cs = typeValue.split('|')[0];
-      const concept = typeValue.split('|')[1];
-      value += cs !== 'snomed-ct' ? '(/resources/code-systems/' + cs + '/concepts/' + concept + '/view)' : '(/integration/snomed/' + concept + ')';
-    } else if (type === 'page') {
-      value += '(/thesaurus/pages/' + typeValue + ')';
-    } else {
-      return link;
-    }
-    return value;
+    return `[${label}](${getLink(uri)})`;
   }
 
   private processFsh(processedValue: ProcessedValue[]): ProcessedValue[] {
