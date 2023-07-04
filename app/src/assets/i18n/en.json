@@ -4,6 +4,8 @@
       "save": "Save",
       "delete": "Delete",
       "edit": "Edit",
+      "copy": "Copy",
+      "copied": "Copied",
       "cancel": "Cancel",
       "close": "Close",
       "duplicate": "Duplicate",

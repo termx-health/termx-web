@@ -3,7 +3,9 @@
 <div *ngIf="codeSystem as cs">
   <div class="m-items-middle m-bold">
     <m-icon mCode="key"></m-icon>
-    <span>{{cs.id}}</span>
+    <tw-copy-container [text]="cs.id">
+      {{cs.id}}
+    </tw-copy-container>
   </div>
   <span>{{cs.description | localName}}</span>
   <div class="m-items-middle" *ngIf="cs.properties as properties">

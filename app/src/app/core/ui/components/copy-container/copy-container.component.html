@@ -1,0 +1,10 @@
+<span [mPopover]="!!text" mPosition="right" [mTitle]="tpl" mPlain mHideArrow><ng-content/></span>
+
+<ng-template #tpl>
+  <m-button *ngIf="{copied: false} as d" mSize="small" (mClick)="copy(d)">
+    <div class="m-items-middle">
+      <m-icon [mCode]="d.copied ? 'check' : 'copy'"/>
+      {{(d.copied ? 'core.btn.copied' : 'core.btn.copy') | translate}}
+    </div>
+  </m-button>
+</ng-template>
