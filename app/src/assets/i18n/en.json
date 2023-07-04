@@ -1470,6 +1470,8 @@
       "kts-references": "References in TermX"
     },
     "snomed-translation": {
+      "concept-id": "Concept id",
+      "description-id": "Description id",
       "module": "Module",
       "language": "Language",
       "term": "Term",
