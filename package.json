@@ -30,6 +30,7 @@
     "diff": "^5.1.0",
     "fhir": "^4.11.1",
     "file-saver": "^2.0.5",
+    "prismjs": "^1.29.0",
     "print-js-safari": "^0.0.1",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.8.0",
