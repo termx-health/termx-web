@@ -114,4 +114,8 @@ export class SnomedBranchManagementComponent implements OnInit {
   private writeBranch(b: SnomedBranch): SnomedBranch {
     return b;
   }
+
+  protected encodeUriComponent = (c: string): string => {
+    return c.replace('/', '--');
+  };
 }

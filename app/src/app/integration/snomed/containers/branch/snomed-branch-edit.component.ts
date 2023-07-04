@@ -67,7 +67,7 @@ export class SnomedBranchEditComponent implements OnInit {
     request.metadata = JSON.parse(this.formData.metadata);
     const path = this.snomedBranch?.path || [request.parent, request.name].join('/');
     this.loader.wrap('save', this.mode === 'add' ? this.snomedService.createdBranch(request) : this.snomedService.updateBranch(path, request))
-      .subscribe(() => this.router.navigate(['/integration/snomed/branches', encodeURIComponent(path), 'management'], {replaceUrl: true}));
+      .subscribe(() => this.router.navigate(['/integration/snomed/branches', path.replace('/', '--'), 'management'], {replaceUrl: true}));
   }
 
   private validate(): boolean {

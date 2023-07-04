@@ -3,7 +3,7 @@
     <div *m-card-header class="m-justify-between">
       <m-title>{{'web.snomed.branch.management.header' | translate: {path: snomedBranch?.path} }}</m-title>
       <m-dropdown>
-        <a *m-dropdown-item [routerLink]="['/integration','snomed', 'branches', snomedBranch?.path, 'edit']">
+        <a *m-dropdown-item [routerLink]="['/integration','snomed', 'branches', snomedBranch?.path | apply: encodeUriComponent, 'edit']">
           {{'core.btn.edit' | translate}}
         </a>
         <a *m-dropdown-item (mClick)="delete()">

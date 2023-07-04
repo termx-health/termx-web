@@ -25,7 +25,7 @@ export class SnomedLibService {
   }
 
   public loadBranch(path: string): Observable<SnomedBranch> {
-    path = encodeURIComponent(path);
+    path = path.replace('/', '--');
     return this.http.get(`${this.baseUrl}/branches/${path}`).pipe(map(c => c as SnomedBranch));
   }
 
