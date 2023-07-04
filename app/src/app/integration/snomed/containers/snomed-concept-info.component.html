@@ -1,19 +1,13 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <div></div>
+    <m-title>{{'entities.snomed-concept.concept-id' | translate}} {{conceptId}}</m-title>
     <div class="m-items-middle">
-      <m-button (mClick)="exportToRF2()" [mLoading]="loader.state['rf2-export']">{{'web.snomed.rf2-export' | translate}}</m-button>
       <m-button *ngIf="dataChanged" mDisplay="primary" (mClick)="saveTranslations()" [mLoading]="loader.state['save']">{{'core.btn.save' | translate}}</m-button>
+      <m-dropdown>
+        <a *m-dropdown-item (mClick)="exportToRF2()">{{'web.snomed.rf2-export' | translate}}</a>
+      </m-dropdown>
     </div>
   </div>
-  <m-card class="m-card-inside">
-    <div *m-card-header class="m-justify-between">
-      <div class="m-card__title">
-        {{'entities.snomed-concept.concept-id' | translate}}
-      </div>
-    </div>
-    <label>{{conceptId}}</label>
-  </m-card>
 
   <m-card class="m-card-inside">
     <div *m-card-header class="m-justify-between">
@@ -61,14 +55,18 @@
         {{'entities.snomed-concept.relationships' | translate}}
       </div>
     </div>
-    <m-table [mData]="relationships" [mLoading]="loader.state['load']" mEnablePagination>
+    <m-table [mData]="relationships | sort: 'groupId'" [mLoading]="loader.state['load']" mEnablePagination>
       <tr *mTableHead>
+        <th>{{'entities.snomed-relationship.group' | translate}}</th>
         <th>{{'entities.snomed-relationship.type' | translate}}</th>
         <th>{{'entities.snomed-relationship.target' | translate}}</th>
+        <th>{{'entities.snomed-relationship.active' | translate}}</th>
       </tr>
       <tr *mTableRow="let relationship">
+        <td>{{relationship.groupId}}</td>
         <td>{{relationship.type.fsn.term}}</td>
         <td><a (mClick)="conceptSelected.emit(relationship.target.conceptId)">{{relationship.target.fsn.term}}</a></td>
+        <td><m-checkbox [ngModel]="relationship.active" readOnly></m-checkbox></td>
       </tr>
       <tr *mTableNoData>
         <td colspan="100%">

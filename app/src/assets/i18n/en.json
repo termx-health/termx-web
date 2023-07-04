@@ -1496,8 +1496,10 @@
       "acceptability": "Acceptability"
     },
     "snomed-relationship": {
+      "group": "Group",
       "target": "Target",
-      "type": "Type"
+      "type": "Type",
+      "active": "Active"
     },
     "snomed-refset": {
       "target": "Target",
