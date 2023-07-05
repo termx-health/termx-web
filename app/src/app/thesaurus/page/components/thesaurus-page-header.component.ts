@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {Page, PageContent} from '../../../_lib';
+import {Page, PageContent} from '../../_lib';
 
 @Component({
   selector: 'tw-thesaurus-page-header',

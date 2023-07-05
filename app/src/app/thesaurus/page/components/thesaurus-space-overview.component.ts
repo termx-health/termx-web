@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {PageService} from 'term-web/thesaurus/containers/page/services/page.service';
+import {PageService} from '../services/page.service';
 import {Space} from 'term-web/space/_lib';
 import {Page, PageContent} from 'term-web/thesaurus/_lib';
 import {TranslateService} from '@ngx-translate/core';

@@ -13,12 +13,12 @@ import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {TagLibService} from './tag/tag-lib.service';
 import {TemplateLibService} from './template/template-lib.service';
 import {ThesaurusRendererTemplateComponent} from './texteditor/renderers/thesaurus-renderer-template.component';
-import {ThesaurusDropdownComponent} from './texteditor/menu/dropdown/thesaurus-dropdown.component';
-import {ThesaurusQuickActionsMenuComponent} from './texteditor/menu/thesaurus-quick-actions-menu.component';
-import {ThesaurusDropdownOptionComponent} from './texteditor/menu/dropdown/thesaurus-dropdown-option.component';
-import {ThesaurusModalLinkComponent} from './texteditor/menu/modals/thesaurus-modal-link.component';
-import {ThesaurusModalStructureDefinitionComponent} from './texteditor/menu/modals/thesaurus-modal-structure-definition.component';
-import {ThesaurusModalTemplateComponent} from './texteditor/menu/modals/thesaurus-modal-template.component';
+import {ThesaurusDropdownComponent} from './texteditor/quick-actions/dropdown/thesaurus-dropdown.component';
+import {ThesaurusQuickActionsMenuComponent} from './texteditor/quick-actions/thesaurus-quick-actions-menu.component';
+import {ThesaurusDropdownOptionComponent} from './texteditor/quick-actions/dropdown/thesaurus-dropdown-option.component';
+import {ThesaurusQuickActionsLinkComponent} from './texteditor/quick-actions/actions/thesaurus-quick-actions-link.component';
+import {ThesaurusQuickActionsStructureDefinitionComponent} from './texteditor/quick-actions/actions/thesaurus-quick-actions-structure-definition.component';
+import {ThesaurusQuickActionsTemplateComponent} from './texteditor/quick-actions/actions/thesaurus-quick-actions-template.component';
 import {ThesaurusSmartTextEditorComponent} from './texteditor/thesaurus-smart-text-editor.component';
 import {ThesaurusSmartTextEditorViewComponent} from './texteditor/thesaurus-smart-text-editor-view.component';
 import {ThesaurusTextareaComponent} from './texteditor/thesaurus-textarea.component';
@@ -58,17 +58,17 @@ import {ModelerLibModule} from 'term-web/modeler/_lib';
     ThesaurusDropdownOptionComponent,
 
     ThesaurusQuickActionsMenuComponent,
-    ThesaurusModalLinkComponent,
-    ThesaurusModalStructureDefinitionComponent,
-    ThesaurusModalTemplateComponent,
+    ThesaurusQuickActionsLinkComponent,
+    ThesaurusQuickActionsStructureDefinitionComponent,
+    ThesaurusQuickActionsTemplateComponent,
   ],
   exports: [
     PageSelectComponent,
     ThesaurusDropdownComponent,
     ThesaurusDropdownOptionComponent,
-    ThesaurusModalLinkComponent,
-    ThesaurusModalStructureDefinitionComponent,
-    ThesaurusModalTemplateComponent,
+    ThesaurusQuickActionsLinkComponent,
+    ThesaurusQuickActionsStructureDefinitionComponent,
+    ThesaurusQuickActionsTemplateComponent,
     ThesaurusRendererTemplateComponent,
     ThesaurusSmartTextEditorComponent,
     ThesaurusSmartTextEditorViewComponent,

@@ -18,12 +18,12 @@ export * from './template/template-content';
 export * from './template/template-lib.service';
 export * from './template/template-search-params';
 
-export * from './texteditor/menu/dropdown/thesaurus-dropdown-option.component';
-export * from './texteditor/menu/dropdown/thesaurus-dropdown.component';
-export * from './texteditor/menu/modals/thesaurus-modal-link.component';
-export * from './texteditor/menu/modals/thesaurus-modal-structure-definition.component';
-export * from './texteditor/menu/modals/thesaurus-modal-template.component';
-export * from './texteditor/menu/thesaurus-quick-actions-menu.component';
+export * from './texteditor/quick-actions/dropdown/thesaurus-dropdown-option.component';
+export * from './texteditor/quick-actions/dropdown/thesaurus-dropdown.component';
+export * from './texteditor/quick-actions/actions/thesaurus-quick-actions-link.component';
+export * from './texteditor/quick-actions/actions/thesaurus-quick-actions-structure-definition.component';
+export * from './texteditor/quick-actions/actions/thesaurus-quick-actions-template.component';
+export * from './texteditor/quick-actions/thesaurus-quick-actions-menu.component';
 export * from './texteditor/renderers/thesaurus-renderer-template.component';
 export * from './texteditor/thesaurus-smart-text-editor-view.component';
 export * from './texteditor/thesaurus-smart-text-editor.component';

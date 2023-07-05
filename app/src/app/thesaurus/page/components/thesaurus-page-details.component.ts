@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {Page, PageContent, PageRelation} from '../../../_lib';
-import {GithubExportable} from '../../../../integration/_lib/github/github.service';
+import {Page, PageContent, PageRelation} from '../../_lib';
+import {GithubExportable} from '../../../integration/_lib/github/github.service';
 import {collect, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../services/page.service';

@@ -1,24 +1,23 @@
 import {Component, forwardRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {Template} from '../../../template/template';
 import {ThesaurusQuickActionsModalBaseComponent} from '../thesaurus-quick-actions-menu.component';
-import {TemplateLibService} from '../../../template/template-lib.service';
+import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 
 
 @Component({
-  selector: 'tw-template-modal',
+  selector: 'tw-structure-definition-modal',
   template: `
     <m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal(false)">
       <ng-container *m-modal-header>
-        {{'web.thesaurus-page.template-modal.header' | translate}}
+        {{'web.thesaurus-page.structure-definition-modal.header' | translate}}
       </ng-container>
 
       <ng-container *m-modal-content>
         <form *ngIf="data">
-          <m-form-item mName="template" mLabel="web.thesaurus-page.template-modal.template" required>
-            <m-select [(ngModel)]="data.template" compareWith="id" name="template" required>
-              <m-option *ngFor="let template of templates" [mLabel]="template.code" [mValue]="template"></m-option>
+          <m-form-item mName="structure-definition" mLabel="web.thesaurus-page.structure-definition-modal.structure-definition" required>
+            <m-select [(ngModel)]="data.defCode" name="structure-definition" required>
+              <m-option *ngFor="let sd of structureDefinitions" [mLabel]="sd.code" [mValue]="sd.code"></m-option>
             </m-select>
           </m-form-item>
         </form>
@@ -32,37 +31,36 @@ import {TemplateLibService} from '../../../template/template-lib.service';
   `,
   providers: [{
     provide: ThesaurusQuickActionsModalBaseComponent,
-    useExisting: forwardRef(() => ThesaurusModalTemplateComponent)
+    useExisting: forwardRef(() => ThesaurusQuickActionsStructureDefinitionComponent)
   }]
 })
-export class ThesaurusModalTemplateComponent extends ThesaurusQuickActionsModalBaseComponent implements OnInit {
+export class ThesaurusQuickActionsStructureDefinitionComponent extends ThesaurusQuickActionsModalBaseComponent implements OnInit {
   public definition = {
-    id: '_md_template',
-    name: 'Template',
-    icon: 'file-text',
-    description: 'Insert template'
+    id: '_md_structure-definition',
+    name: 'Structure definition',
+    icon: 'profile',
+    description: 'Insert structure definition'
   };
 
-  protected data: ModalData;
+  protected data?: ModalData;
   protected modalVisible: boolean;
-  protected templates?: Template[];
-  protected lang: string;
-  @ViewChild(NgForm) protected form: NgForm;
+  protected structureDefinitions?: StructureDefinition[];
+  @ViewChild(NgForm) protected form?: NgForm;
 
   public constructor(
-    private templateService: TemplateLibService
+    private structureDefinitionService: StructureDefinitionLibService
   ) {
     super();
   }
 
   public ngOnInit(): void {
-    this.templateService.searchTemplates({limit: 999}).subscribe(t => this.templates = t.data);
+    this.structureDefinitionService.search({limit: 999}).subscribe(sd => this.structureDefinitions = sd.data);
   }
 
-  public override handle(ctx: {lang?: string}): void {
-    this.lang = ctx.lang;
+  public override handle(): void {
     this.toggleModal(true);
   }
+
 
   protected toggleModal(visible: boolean): void {
     if (this.modalVisible === visible) {
@@ -83,12 +81,12 @@ export class ThesaurusModalTemplateComponent extends ThesaurusQuickActionsModalB
 
   protected confirm(): void {
     if (validateForm(this.form)) {
-      this.resolve.next(this.data.template.contents?.find(c => c.lang === this.lang)?.content);
+      this.resolve.next(`{{def:${this.data.defCode}}}`);
       this.modalVisible = false;
     }
   }
 }
 
 class ModalData {
-  public template?: Template;
+  public defCode?: string;
 }

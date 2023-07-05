@@ -1,3 +1,6 @@
+<m-skeleton [mLoading]="loader.isLoading"/>
+
+
 <div style="display: grid" *ngIf="treeOptions">
   <m-radio-group name="type" [(ngModel)]="type" mSize="small" style="margin-bottom: 0.5rem; margin-left: auto" (ngModelChange)="onTypeChange($event)">
     <label m-radio-button [mValue]="'diff'">diff</label>

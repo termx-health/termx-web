@@ -1,7 +1,8 @@
 <ng-container *ngFor="let v of processedValue">
-  <m-markdown *ngIf="v.type === 'text' && valueType === 'markdown'" [mData]="v.value"/>
+  <m-markdown *ngIf="v.type === 'text' && valueType === 'markdown'" [mData]="v.value" [mPlugins]="plugins"/>
   <m-quill *ngIf="v.type === 'text' && valueType === 'html'" [(ngModel)]="v.value" mViewMode/>
-  <tw-structure-definition-tree *ngIf="v.type === 'def'" [defCode]="v.value"/>
-  <tw-structure-definition-tree *ngIf="v.type === 'fsh'" [fsh]="v.value"/>
+
+
+  <!-- fixme: template plugin? -->
   <tw-template-view *ngIf="v.type === 'temp'" [lang]="lang" [templateCode]="v.value"/>
 </ng-container>

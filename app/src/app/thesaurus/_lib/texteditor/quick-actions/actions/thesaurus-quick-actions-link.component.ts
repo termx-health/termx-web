@@ -91,10 +91,10 @@ import {ThesaurusQuickActionsModalBaseComponent} from '../thesaurus-quick-action
   `,
   providers: [{
     provide: ThesaurusQuickActionsModalBaseComponent,
-    useExisting: forwardRef(() => ThesaurusModalLinkComponent)
+    useExisting: forwardRef(() => ThesaurusQuickActionsLinkComponent)
   }]
 })
-export class ThesaurusModalLinkComponent extends ThesaurusQuickActionsModalBaseComponent {
+export class ThesaurusQuickActionsLinkComponent extends ThesaurusQuickActionsModalBaseComponent {
   public definition = {
     id: '_md_link',
     name: 'Link',

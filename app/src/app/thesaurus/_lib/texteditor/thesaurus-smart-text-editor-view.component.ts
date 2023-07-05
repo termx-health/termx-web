@@ -1,5 +1,9 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, EnvironmentInjector, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
+import {structureDefinitionCodePlugin} from './plugins/structure-definition-code.plugin';
+import {createCustomElement} from '@angular/elements';
+import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib';
+import {structureDefinitionFshPlugin} from 'term-web/thesaurus/_lib/texteditor/plugins/structure-definition-fsh.plugin';
 
 @Component({
   selector: 'tw-smart-text-editor-view',
@@ -16,10 +20,19 @@ export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
   @Input() public lang?: string;
 
   public processedValue: ProcessedValue[] = [];
+  protected plugins = [
+    structureDefinitionCodePlugin,
+    structureDefinitionFshPlugin
+  ];
 
   public constructor(
-    private preferences: PreferencesService
-  ) {}
+    private preferences: PreferencesService,
+    private injector: EnvironmentInjector
+  ) {
+    if (!customElements.get('ce-structure-definition')) {
+      customElements.define('ce-structure-definition', createCustomElement(StructureDefinitionTreeComponent, {injector}));
+    }
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['value'] && this.value) {
@@ -29,28 +42,7 @@ export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
 
   private processValue(value: string): void {
     this.processedValue = [{type: 'text', value: value}];
-    this.processedValue = this.processInsertion(this.processedValue);
     this.processedValue = this.processLink(this.processedValue);
-    this.processedValue = this.processFsh(this.processedValue);
-  }
-
-  private processInsertion(processedValue: ProcessedValue[]): ProcessedValue[] {
-    const result: ProcessedValue[] = [];
-    processedValue.forEach(pv => {
-      if (pv.type === 'text') {
-        pv.value!.split(/{{|}}/).forEach((v, i) => {
-          if (i % 2 == 0) {
-            result.push({type: 'text', value: v});
-          } else {
-            const template = v.split(/:(.*)|\|/s);
-            result.push({type: template[0], value: template[1]});
-          }
-        });
-      } else {
-        result.push(pv);
-      }
-    });
-    return result;
   }
 
   private processLink(processedValue: ProcessedValue[]): ProcessedValue[] {
@@ -106,33 +98,6 @@ export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
     }
 
     return `[${label}](${getLink(uri)})`;
-  }
-
-  private processFsh(processedValue: ProcessedValue[]): ProcessedValue[] {
-    let processAgain = false;
-    const res: ProcessedValue[] = [];
-    processedValue.forEach(pv => {
-      if (pv.type === 'text') {
-        const matches = pv.value!.match(/```fsh(.*?)```/gs);
-        if (matches && matches.length > 0) {
-          pv.value?.split(matches[0]).forEach((s, i) => {
-            if (i !== 0) {
-              res.push({type: 'fsh', value: matches[0]});
-            }
-            res.push({type: 'text', value: s});
-          });
-        } else {
-          res.push(pv);
-        }
-        processAgain = !!matches && matches.length > 1;
-      } else {
-        res.push(pv);
-      }
-    });
-    if (processAgain) {
-      return this.processFsh(res);
-    }
-    return res;
   }
 }
 

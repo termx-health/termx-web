@@ -7,7 +7,7 @@ import {CodeSystemLibService, MapSetLibService, ValueSetLibService} from 'term-w
 import {SpaceService} from 'term-web/space/services/space.service';
 import {TaskService} from 'term-web/taskflow/services/task-service';
 import {Task, TaskflowLibModule} from 'term-web/taskflow/_lib';
-import {PageService} from 'term-web/thesaurus/containers/page/services/page.service';
+import {PageService} from 'term-web/thesaurus/page/services/page.service';
 
 @Component({
   standalone: true,

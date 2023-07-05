@@ -2,13 +2,13 @@ import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {CoreUiModule} from '../core/ui/core-ui.module';
 import {PortalModule} from '@angular/cdk/portal';
-import {TemplateService} from './services/template.service';
-import {TemplateListComponent} from './containers/template/template-list.component';
-import {TemplateEditComponent} from './containers/template/template-edit.component';
+import {TemplateService} from './template/template.service';
+import {TemplateListComponent} from './template/template-list.component';
+import {TemplateEditComponent} from './template/template-edit.component';
 import {ThesaurusLibModule} from 'term-web/thesaurus/_lib';
 import {ResourcesLibModule} from '../resources/_lib';
 import {IntegrationLibModule} from '../integration/_lib';
-import {PageModule, THESAURUS_PAGE_ROUTES} from 'term-web/thesaurus/containers/page/page.module';
+import {PageModule, THESAURUS_PAGE_ROUTES} from './page/page.module';
 
 export const THESAURUS_ROUTES: Routes = [
   {path: 'pages', children: THESAURUS_PAGE_ROUTES},

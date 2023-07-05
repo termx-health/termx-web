@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {StructureDefinitionLibService} from './structure-definition-lib.service';
-import {isDefined} from '@kodality-web/core-util';
+import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {ChefService} from 'term-web/integration/_lib';
 import {MuiTreeComponent, MuiTreeNode, MuiTreeNodeOptions} from '@kodality-web/marina-ui';
 import {StructureDefinitionFhirMapperUtil} from 'term-web/modeler/structure-definition/services/structure-definition-fhir-mapper.util';
@@ -41,18 +41,23 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   @ViewChild(MuiTreeComponent) private tree: MuiTreeComponent;
   protected treeOptions: MuiTreeNodeOptions[];
 
+  protected loader = new LoadingManager();
+
   public constructor(
     private chefService: ChefService,
     private structureDefinitionService: StructureDefinitionLibService
-  ) {}
+  ) {
+  }
 
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['defCode'] && this.defCode) {
+      this.defCode = decodeURIComponent(this.defCode);
       this.processStructureDefinition(this.defCode);
     }
 
     if (changes['fsh'] && this.fsh) {
+      this.fsh = decodeURIComponent(this.fsh);
       this.processFsh(this.fsh);
     }
   }
@@ -70,7 +75,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
 
 
   private processStructureDefinition(value: string): void {
-    this.structureDefinitionService.search({code: value, limit: 1}).subscribe(sd => {
+    this.loader.wrap('tree', this.structureDefinitionService.search({code: value, limit: 1})).subscribe(sd => {
       const structureDefinition = sd.data[0]!;
       if (structureDefinition.contentFormat === 'json') {
         this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(JSON.parse(structureDefinition.content!));
@@ -83,7 +88,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   }
 
   private processFsh(fsh: string): void {
-    this.chefService.fshToFhir({fsh: fsh}).subscribe(resp => {
+    this.loader.wrap('fsh', this.chefService.fshToFhir({fsh: fsh})).subscribe(resp => {
       this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(resp.fhir![0]);
       this.initTree(this.structureDefinitionValue!);
     });

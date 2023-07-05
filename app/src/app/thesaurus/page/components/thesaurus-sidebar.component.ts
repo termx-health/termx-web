@@ -7,7 +7,7 @@ import {compareValues, copyDeep, isNil, LoadingManager, remove, SearchResult, un
 import {Page, PageContent, PageLink} from 'term-web/thesaurus/_lib';
 import {DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
 import {PageLinkService} from '../services/page-link.service';
-import {ThesaurusPageModalComponent} from 'term-web/thesaurus/containers/page/components/thesaurus-page-modal.component';
+import {ThesaurusPageModalComponent} from '../components/thesaurus-page-modal.component';
 import {SpaceService} from 'term-web/space/services/space.service';
 import {Space} from 'term-web/space/_lib';
 
@@ -129,7 +129,7 @@ const NODE_OBJECT_KEY = 'obj';
   selector: 'tw-thesaurus-sidebar',
   templateUrl: './thesaurus-sidebar.component.html',
   styles: [`
-    @import "../../../../../styles/variables";
+    @import "../../../../styles/variables";
 
     .space-item {
       position: relative;

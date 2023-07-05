@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {finalize, Observable, tap} from 'rxjs';
 import {Template, TemplateSearchParams} from 'term-web/thesaurus/_lib';
-import {TemplateService} from '../../services/template.service';
+import {TemplateService} from './template.service';
 
 @Component({
   templateUrl: 'template-list.component.html'
