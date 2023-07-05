@@ -188,11 +188,11 @@
   },
   {
     "label": {
-      "en": "Modeller",
+      "en": "Modeler",
       "et": "Modelleerija"
     },
     "privileges": [
-      "*.Thesaurus.view"
+      "*.Modeler.view"
     ],
     "link": "thesaurus/pages",
     "items": [
