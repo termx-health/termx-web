@@ -17,6 +17,7 @@ import {SpaceContextComponent} from 'term-web/core/context/space-context.compone
 import {SpaceContextModule} from 'term-web/core/context/space-context.module';
 import {AppComponent} from 'term-web/app.component';
 import {LandingPageComponent} from 'term-web/landing/landing-page.component';
+import {MODELER_ROUTES} from 'term-web/modeler/modeler.module';
 
 
 const APP_ROUTES: Routes = [
@@ -28,6 +29,7 @@ const APP_ROUTES: Routes = [
   {path: 'terminology-service-api', children: TERMINOLOGY_SERVICE_API_ROUTES},
   {path: 'sequences', children: SEQUENCE_ROUTES},
   {path: 'thesaurus', children: THESAURUS_ROUTES, data: {privilege: ['*.Thesaurus.view']}},
+  {path: 'modeler', children: MODELER_ROUTES, data: {privilege: ['*.Modeler.view']}},
   {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
   {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.Space.view']}},
   {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.view']}},

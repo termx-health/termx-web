@@ -1,9 +1,8 @@
 import {Component, forwardRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {StructureDefinitionLibService} from '../../../structure-definition/structure-definition-lib.service';
-import {StructureDefinition} from '../../../structure-definition/structure-definition';
 import {ThesaurusQuickActionsModalBaseComponent} from '../thesaurus-quick-actions-menu.component';
+import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 
 
 @Component({

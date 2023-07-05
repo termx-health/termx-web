@@ -201,9 +201,9 @@
           "en": "Structure definitions",
           "et": "Struktuuri määratlused"
         },
-        "link": "thesaurus/structure-definitions",
+        "link": "modeler/structure-definitions",
         "privileges": [
-          "*.Thesaurus.view"
+          "*.Modeler.view"
         ]
       }
     ]

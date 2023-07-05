@@ -2,12 +2,12 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Page, PageContent, StructureDefinition} from 'term-web/thesaurus/_lib';
+import {Page, PageContent} from 'term-web/thesaurus/_lib';
 import {PageService} from '../services/page.service';
 import {Clipboard} from '@angular/cdk/clipboard';
-import {StructureDefinitionService} from '../../structure-definition/services/structure-definition.service';
 import {mergeMap} from 'rxjs';
 import {SpaceService} from 'term-web/space/services/space.service';
+import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 
 @Component({
   templateUrl: 'thesaurus-page-edit.component.html',
@@ -32,7 +32,7 @@ export class ThesaurusPageEditComponent implements OnInit {
   public constructor(
     private spaceService: SpaceService,
     private pageService: PageService,
-    private structureDefinitionService: StructureDefinitionService,
+    private structureDefinitionService: StructureDefinitionLibService,
     private clipboard: Clipboard,
     private router: Router,
     private route: ActivatedRoute,

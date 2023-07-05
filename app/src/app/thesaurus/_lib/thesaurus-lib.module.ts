@@ -10,8 +10,6 @@ import {PageLibService} from './page/page-lib.service';
 import {PageSelectComponent} from './page/page-select.component';
 import {PortalModule} from '@angular/cdk/portal';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
-import {StructureDefinitionLibService} from './structure-definition/structure-definition-lib.service';
-import {StructureDefinitionTreeComponent} from './structure-definition/structure-definition-tree.component';
 import {TagLibService} from './tag/tag-lib.service';
 import {TemplateLibService} from './template/template-lib.service';
 import {ThesaurusRendererTemplateComponent} from './texteditor/renderers/thesaurus-renderer-template.component';
@@ -24,6 +22,7 @@ import {ThesaurusModalTemplateComponent} from './texteditor/menu/modals/thesauru
 import {ThesaurusSmartTextEditorComponent} from './texteditor/thesaurus-smart-text-editor.component';
 import {ThesaurusSmartTextEditorViewComponent} from './texteditor/thesaurus-smart-text-editor-view.component';
 import {ThesaurusTextareaComponent} from './texteditor/thesaurus-textarea.component';
+import {ModelerLibModule} from 'term-web/modeler/_lib';
 
 @NgModule({
   imports: [
@@ -36,20 +35,16 @@ import {ThesaurusTextareaComponent} from './texteditor/thesaurus-textarea.compon
     CoreUiModule,
     MarinaMarkdownModule,
     MarinaQuillModule,
-
+    ModelerLibModule,
   ],
   providers: [
     TagLibService,
     PageLibService,
     TemplateLibService,
-    StructureDefinitionLibService
   ],
   declarations: [
     // page
     PageSelectComponent,
-
-    // structure definition
-    StructureDefinitionTreeComponent,
 
     // template
     ThesaurusRendererTemplateComponent,
@@ -69,7 +64,6 @@ import {ThesaurusTextareaComponent} from './texteditor/thesaurus-textarea.compon
   ],
   exports: [
     PageSelectComponent,
-    StructureDefinitionTreeComponent,
     ThesaurusDropdownComponent,
     ThesaurusDropdownOptionComponent,
     ThesaurusModalLinkComponent,
