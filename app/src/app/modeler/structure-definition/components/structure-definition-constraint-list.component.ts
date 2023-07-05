@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
-import {ElementConstraint} from 'term-web/thesaurus/_lib/structure-definition/structure-definition-tree.component';
+import {ElementConstraint} from 'term-web/modeler/_lib/structure-definition/structure-definition-tree.component';
 
 
 @Component({

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
+import {isDefined, SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {StructureDefinition} from './structure-definition';
 import {StructureDefinitionSearchParams} from './structure-definition-search-params';
@@ -18,5 +18,12 @@ export class StructureDefinitionLibService {
 
   public search(params: StructureDefinitionSearchParams = {}): Observable<SearchResult<StructureDefinition>> {
     return this.http.get<SearchResult<StructureDefinition>>(`${this.baseUrl}/structure-definitions`, {params: SearchHttpParams.build(params)});
+  }
+
+  public save(structureDefinition: StructureDefinition): Observable<StructureDefinition> {
+    if (isDefined(structureDefinition.id)) {
+      return this.http.put(`${this.baseUrl}/structure-definitions/${structureDefinition.id}`, structureDefinition);
+    }
+    return this.http.post(`${this.baseUrl}/structure-definitions`, structureDefinition);
   }
 }

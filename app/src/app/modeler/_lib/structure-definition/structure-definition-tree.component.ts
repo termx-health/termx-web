@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {ThesaurusFhirMapperUtil} from '../../services/thesaurus-fhir-mapper.util';
 import {StructureDefinitionLibService} from './structure-definition-lib.service';
 import {isDefined} from '@kodality-web/core-util';
 import {ChefService} from 'term-web/integration/_lib';
 import {MuiTreeComponent, MuiTreeNode, MuiTreeNodeOptions} from '@kodality-web/marina-ui';
+import {StructureDefinitionFhirMapperUtil} from 'term-web/modeler/structure-definition/services/structure-definition-fhir-mapper.util';
 
 @Component({
   selector: 'tw-structure-definition-tree',
@@ -73,7 +73,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
     this.structureDefinitionService.search({code: value, limit: 1}).subscribe(sd => {
       const structureDefinition = sd.data[0]!;
       if (structureDefinition.contentFormat === 'json') {
-        this.structureDefinitionValue = ThesaurusFhirMapperUtil.mapToKeyValue(JSON.parse(structureDefinition.content!));
+        this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(JSON.parse(structureDefinition.content!));
         this.initTree(this.structureDefinitionValue!);
       }
       if (structureDefinition.contentFormat === 'fsh') {
@@ -84,7 +84,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
 
   private processFsh(fsh: string): void {
     this.chefService.fshToFhir({fsh: fsh}).subscribe(resp => {
-      this.structureDefinitionValue = ThesaurusFhirMapperUtil.mapToKeyValue(resp.fhir![0]);
+      this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(resp.fhir![0]);
       this.initTree(this.structureDefinitionValue!);
     });
   }

@@ -10,11 +10,6 @@ export * from './page/page-search-params';
 export * from './page/page-select.component';
 export * from './page/page-tag';
 
-export * from './structure-definition/structure-definition';
-export * from './structure-definition/structure-definition-lib.service';
-export * from './structure-definition/structure-definition-search-params';
-export * from './structure-definition/structure-definition-tree.component';
-
 export * from './tag/tag';
 export * from './tag/tag-lib.service';
 
