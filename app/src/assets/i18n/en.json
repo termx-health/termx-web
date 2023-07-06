@@ -888,7 +888,8 @@
       "spaces": "Spaces",
       "header": {
         "modified": "<b>{{user}}</b> edited this page on {{date}}",
-        "add-subpage": "Add subpage"
+        "add-subpage": "Add subpage",
+        "copy-raw": "Copy raw file"
       },
       "actions": {
         "contents": "Contents",

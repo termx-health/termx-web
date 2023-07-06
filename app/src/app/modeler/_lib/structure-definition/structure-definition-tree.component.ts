@@ -77,11 +77,11 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   private processStructureDefinition(value: string): void {
     this.loader.wrap('tree', this.structureDefinitionService.search({code: value, limit: 1})).subscribe(sd => {
       const structureDefinition = sd.data[0]!;
-      if (structureDefinition.contentFormat === 'json') {
+      if (structureDefinition?.contentFormat === 'json') {
         this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(JSON.parse(structureDefinition.content!));
         this.initTree(this.structureDefinitionValue!);
       }
-      if (structureDefinition.contentFormat === 'fsh') {
+      if (structureDefinition?.contentFormat === 'fsh') {
         this.processFsh(structureDefinition.content!);
       }
     });

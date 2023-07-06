@@ -6,6 +6,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../services/page.service';
 import {MuiConfigService} from '@kodality-web/marina-ui';
 import {NgForm} from '@angular/forms';
+import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'tw-thesaurus-page-details',
@@ -34,6 +35,7 @@ export class ThesaurusPageDetailsComponent implements OnChanges {
     private router: Router,
     private route: ActivatedRoute,
     private pageService: PageService,
+    private clipboard: Clipboard,
     protected muiConfig: MuiConfigService
   ) { }
 
@@ -86,6 +88,11 @@ export class ThesaurusPageDetailsComponent implements OnChanges {
 
 
   /* Utils */
+
+
+  protected copy(): void {
+    this.clipboard.copy(this.pageContent.content);
+  }
 
   protected prepareExport = (): GithubExportable[] => {
     let filename = `${this.pageContent?.slug}.${this.pageContent?.contentType === 'markdown' ? 'md' : 'html'}`;

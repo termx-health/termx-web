@@ -12,6 +12,10 @@
         <m-icon mCode="ellipsis"></m-icon>
       </m-button>
 
+      <a *m-dropdown-item class="m-items-middle" (click)="copy()">
+        <m-icon mCode="copy"/>
+        {{'web.thesaurus-page.header.copy-raw' | translate}}
+      </a>
       <a *m-dropdown-item class="m-items-middle" (click)="pageModal.open({links:[{sourceId: page?.id, orderNumber: 1}]})">
         <m-icon mCode="file-add"/>
         {{'web.thesaurus-page.header.add-subpage' | translate}}
