@@ -7,14 +7,14 @@ export function structureDefinitionCodePlugin(md) {
   };
 
   md.block.ruler.after('reference', 'structure_definition_code', (state, startl, endl, silent) => {
-    const {failed, endLine, autoClosed, content} = matchSection('{{def:', '}}', state, startl, endl, silent);
+    const {failed, end, autoClosed, content} = matchSection('{{def:', '}}', state, startl, endl, silent);
     if (failed) {
       return false;
     }
 
     const token = state.push('structure_definition_code', '', 0);
     token.attrs = [['code', content.match(/{{def:(.*)}}/)[1]]];
-    state.line = endLine + (autoClosed ? 1 : 0);
+    state.line = end.line + (autoClosed ? 1 : 0);
     return true;
   });
 }

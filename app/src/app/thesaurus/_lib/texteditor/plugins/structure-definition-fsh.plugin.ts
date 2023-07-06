@@ -7,14 +7,14 @@ export function structureDefinitionFshPlugin(md) {
   };
 
   md.block.ruler.before('fence', 'structure_definition_fsh', (state, startl, endl, silent) => {
-    const {failed, endLine, autoClosed, content} = matchSection('```fsh', '```', state, startl, endl, silent);
+    const {failed, end, autoClosed, content} = matchSection('```fsh', '```', state, startl, endl, silent);
     if (failed) {
       return false;
     }
 
     const token = state.push('structure_definition_fsh', '', 0);
     token.attrs = [['fsh', content.match(/```fsh(.*?)```/s)[1]]];
-    state.line = endLine + (autoClosed ? 1 : 0);
+    state.line = end.line + (autoClosed ? 1 : 0);
     return true;
   });
 }
