@@ -17,5 +17,4 @@ export function structureDefinitionFshPlugin(md) {
     state.line = endLine + (autoClosed ? 1 : 0);
     return true;
   });
-
 }

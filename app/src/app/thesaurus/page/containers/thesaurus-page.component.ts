@@ -101,7 +101,7 @@ export class ThesaurusPageComponent implements OnInit {
 
   public viewTarget(relation: PageRelation): void {
     const handlers = {
-      'page': () => this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, 'pages', relation.target]),
+      'page': () => this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, 'pages', relation.content?.code]),
       'cs': () => this.router.navigate(['/resources/code-systems/', relation.target, 'view']),
       'vs': () => this.router.navigate(['/resources/value-sets/', relation.target, 'view']),
       'ms': () => this.router.navigate(['/resources/map-sets/', relation.target, 'view']),
