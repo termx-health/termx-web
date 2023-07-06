@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {merge, Observable, Subject, switchMap, take, takeUntil, timer} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {SearchHttpParams} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
@@ -13,6 +13,8 @@ import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-par
 import {SnomedRefsetSearchResult} from '../model/refset/snomed-refset-search-result';
 import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-member-search-result';
 import {SnomedBranch, SnomedDescription, SnomedDescriptionSearchParams} from 'term-web/integration/_lib';
+import {saveAs} from 'file-saver';
+import {JobLog} from 'term-web/sys/_lib';
 
 @Injectable()
 export class SnomedLibService {
@@ -25,8 +27,32 @@ export class SnomedLibService {
   }
 
   public loadBranch(path: string): Observable<SnomedBranch> {
-    path = path.replace('/', '--');
+    path = path.split('/').join('--');
     return this.http.get(`${this.baseUrl}/branches/${path}`).pipe(map(c => c as SnomedBranch));
+  }
+
+  public getRF2File(jobId: string): Observable<any> {
+    return this.http.get(`${this.baseUrl}/exports/${jobId}/archive`, {
+      responseType: 'blob',
+      headers: new HttpHeaders({Accept: 'application/zip'})
+    });
+  }
+
+  public pollJob = (jobId: string, destroy$: Observable<any> = timer(60_000)): Observable<any> => {
+    const pollComplete$ = new Subject();
+    timer(0, 3000).pipe(
+      switchMap(() => this.loadImportJob(jobId)),
+      takeUntil(merge(pollComplete$, destroy$))
+    ).subscribe(resp => {
+      if (resp?.status !== 'RUNNING') {
+        pollComplete$.next(resp);
+      }
+    });
+    return pollComplete$.pipe(take(1));
+  };
+
+  public loadImportJob(jobId: string): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}/imports/${jobId}`);
   }
 
   public loadConcept(conceptId: string): Observable<SnomedConcept> {

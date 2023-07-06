@@ -1,30 +1,36 @@
 <m-spinner [mLoading]="loader.state['save']">
-  <m-card [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+  <m-card [mShowSkeleton]="loader.isLoading">
     <div *m-card-header class="m-justify-between">
       <m-title>{{'web.snomed.branch.management.header' | translate: {path: snomedBranch?.path} }}</m-title>
       <m-dropdown>
-        <a *m-dropdown-item [routerLink]="['/integration','snomed', 'branches', snomedBranch?.path | apply: encodeUriComponent, 'edit']">
-          {{'core.btn.edit' | translate}}
-        </a>
-        <a *m-dropdown-item (mClick)="delete()">
-          {{'core.btn.delete' | translate}}
-        </a>
+        <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+          <a *m-dropdown-item [routerLink]="['/integration','snomed', 'branches', snomedBranch?.path | apply: encodeUriComponent, 'edit']">
+            {{'core.btn.edit' | translate}}
+          </a>
+        </ng-container>
+        <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+          <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()" mPosition="leftTop">
+            {{'core.btn.delete' | translate}}
+          </a>
+        </ng-container>
         <a *m-dropdown-item (mClick)="executeIntegrityCheck()">
           {{'web.snomed.branch.management.integrity-check' | translate}}
         </a>
-        <ng-container *ngIf="snomedBranch && !snomedBranch.locked">
+        <ng-container *ngIf="snomedBranch && !snomedBranch.locked && ('snomed-ct.CodeSystem.edit' | twHasAnyPrivilege)">
           <a *m-dropdown-item (mClick)="lockModalData.visible = true">
             {{'web.snomed.branch.management.lock' | translate}}
           </a>
         </ng-container>
-        <ng-container *ngIf="snomedBranch && snomedBranch.locked">
+        <ng-container *ngIf="snomedBranch && snomedBranch.locked && ('snomed-ct.CodeSystem.edit' | twHasAnyPrivilege)">
           <a *m-dropdown-item (mClick)="unlock()">
             {{'web.snomed.branch.management.unlock' | translate}}
           </a>
         </ng-container>
-        <a *m-dropdown-item>
-          {{'web.snomed.branch.management.import-from-rf2' | translate}}
-        </a>
+        <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+          <a *m-dropdown-item (mClick)="importModalData.visible = true">
+            {{'web.snomed.branch.management.import-from-rf2' | translate}}
+          </a>
+        </ng-container>
         <a *m-dropdown-item (mClick)="exportModalData.visible = true">
           {{'web.snomed.branch.management.export-to-rf2' | translate}}
         </a>
@@ -59,6 +65,9 @@
       <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem">
         <div>
           <m-divider [mText]="'web.snomed.branch.management.total-descriptions' | translate : {total:descriptions.meta.total}"></m-divider>
+          <div style="margin-bottom: 1rem">
+            <tw-snomed-drawer-search [value]="descriptionParams.conceptId" (twChange)="conceptSelected($event)"></tw-snomed-drawer-search>
+          </div>
           <m-backend-table [mResult]="descriptions" [(mQuery)]="descriptionParams" (mQueryChange)="loadDescriptions()" [mLoading]="loader.isLoading">
             <tr *mTableHead>
               <th></th>
@@ -83,11 +92,11 @@
             </tr>
           </m-backend-table>
         </div>
-        <div style="align-self: center; display: flex; flex-direction: column; gap: 1rem" *ngIf="snomedBranch.state === 'UP_TO_DATE' && !snomedBranch.locked">
-          <m-button>
+        <div style="align-self: center; display: flex; flex-direction: column; gap: 1rem" *ngIf="!snomedBranch.locked">
+          <m-button (mClick)="addDescriptions()">
             <m-icon mCode="left"></m-icon>
           </m-button>
-          <m-button>
+          <m-button (mClick)="removeDescriptions()">
             <m-icon mCode="right"></m-icon>
           </m-button>
         </div>
@@ -103,9 +112,9 @@
             </tr>
             <tr *mTableRow="let translation;let i = index">
               <td>
-                <m-checkbox name="checked-{{i}}" [(ngModel)]="translations['checked']"></m-checkbox>
+                <m-checkbox name="checked-{{i}}" [(ngModel)]="translation['checked']"></m-checkbox>
               </td>
-              <td><a>{{translation.conceptId}}</a></td>
+              <td><a [routerLink]="['/integration/snomed/dashboard', translation.conceptId]">{{translation.conceptId}}</a></td>
               <td>{{translation.descriptionId}}</td>
               <td>{{translation.language}}</td>
               <td>{{translation.term}}</td>
@@ -119,10 +128,6 @@
         </div>
       </div>
     </div>
-
-    <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
-      {{'core.btn.save' | translate}}
-    </m-button>
   </m-card>
 </m-spinner>
 
@@ -159,9 +164,10 @@
     <form #exportModalForm="ngForm">
       <m-form-item mName="type" mLabel="web.snomed.branch.management.export-modal.type" required>
         <m-select name="type" [(ngModel)]="exportModalData.type" required>
-          <m-option [mValue]="'delta'" [mLabel]=""></m-option>
+          <m-option [mValue]="'DELTA'" [mLabel]="'DELTA'"></m-option>
+          <m-option [mValue]="'SNAPSHOT'" [mLabel]="'SNAPSHOT'"></m-option>
+          <m-option [mValue]="'FULL'" [mLabel]="'FULL'"></m-option>
         </m-select>
-        <m-input name="type" [(ngModel)]="exportModalData.type" required></m-input>
       </m-form-item>
     </form>
   </ng-container>
@@ -170,7 +176,40 @@
     <m-button mDisplay="text" (click)="exportModalData.visible = false">
       {{'core.btn.cancel' | translate}}
     </m-button>
-    <m-button mDisplay="primary" (click)="exportToRF2()">
+    <m-button mDisplay="primary" (click)="exportToRF2()" [mLoading]="loader.isLoading" [disabled]="loader.state['export']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>
+
+<m-modal [(mVisible)]="importModalData.visible" (mClose)="importModalData = {visible: false}">
+  <m-title *mModalHeader>
+    {{'web.snomed.branch.management.import-modal.header' | translate}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #importModalForm="ngForm">
+      <m-form-item mName="type" mLabel="web.snomed.branch.management.import-modal.type" required>
+        <m-select name="type" [(ngModel)]="importModalData.type" required>
+          <m-option [mValue]="'DELTA'" [mLabel]="'DELTA'"></m-option>
+          <m-option [mValue]="'SNAPSHOT'" [mLabel]="'SNAPSHOT'"></m-option>
+          <m-option [mValue]="'FULL'" [mLabel]="'FULL'"></m-option>
+        </m-select>
+      </m-form-item>
+      <m-form-item mName="createVersion" mLabel="web.snomed.branch.management.import-modal.create-version">
+        <m-checkbox name="createVersion" [(ngModel)]="importModalData.createCodeSystemVersion"></m-checkbox>
+      </m-form-item>
+      <m-form-item mName="file" mLabel="web.snomed.branch.management.import-modal.file" required>
+        <input #fileInput type="file" name="file" [(ngModel)]="importModalData.file" required>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="importModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="importFromRF2()" [mLoading]="loader.isLoading" [disabled]="loader.state['import']">
       {{'core.btn.confirm' | translate}}
     </m-button>
   </div>

@@ -16,6 +16,6 @@ export class SnomedBranchListComponent implements OnInit {
   }
 
   protected encodeUriComponent = (c: string): string => {
-    return c.replace('/', '--');
+    return c.split('/').join('--');
   };
 }

@@ -115,10 +115,20 @@
     "items": [
       {
         "label": {
-          "en": "SNOMED CT",
-          "et": "SNOMED CT"
+          "en": "SNOMED CT browser",
+          "et": "SNOMED CT brauser"
         },
         "link": "integration/snomed/dashboard",
+        "privileges": [
+          "snomed-ct.CodeSystem.view"
+        ]
+      },
+      {
+        "label": {
+          "en": "SNOMED CT management",
+          "et": "SNOMED CT haldamine"
+        },
+        "link": "integration/snomed/branches",
         "privileges": [
           "snomed-ct.CodeSystem.view"
         ]

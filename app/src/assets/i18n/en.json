@@ -824,9 +824,15 @@
           },
           "export-modal": {
             "header": "Export to RF2 zip",
+            "type": "Type"
+          },
+          "import-failed": "Import from RF2 zip failed",
+          "import-succeeded": "Import from RF2 zip succeeded",
+          "import-modal": {
+            "header": "Import form RF2 zip",
+            "create-version": "Create CodeSystem version",
             "type": "Type",
-            "delta": "Delta",
-            "snapshot": "Snapshot"
+            "file": "File"
           }
         }
       },
