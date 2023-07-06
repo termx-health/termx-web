@@ -15,6 +15,7 @@ import {structureDefinitionFshPlugin} from 'term-web/thesaurus/_lib/texteditor/p
   `]
 })
 export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
+  @Input() public prerendered?: boolean;
   @Input() public valueType?: 'html' | 'markdown';
   @Input() public value?: string;
   @Input() public lang?: string;
