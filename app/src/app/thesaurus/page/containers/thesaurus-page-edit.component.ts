@@ -11,15 +11,7 @@ import {StructureDefinition, StructureDefinitionLibService} from 'term-web/model
 
 @Component({
   templateUrl: 'thesaurus-page-edit.component.html',
-  styleUrls: ['../styles/thesaurus-page.styles.less'],
-  styles: [`
-    .equal-columns {
-      display: grid;
-      grid-auto-flow: column;
-      grid-auto-columns: minmax(0, 1fr);
-      gap: 1rem;
-    }
-  `]
+  styleUrls: ['../styles/thesaurus-page.styles.less', 'thesaurus-page-edit.component.less'],
 })
 export class ThesaurusPageEditComponent implements OnInit {
   public page?: Page;
@@ -148,7 +140,11 @@ export class ThesaurusPageEditComponent implements OnInit {
 
   /* Utils */
 
-  public get isLoading(): boolean {
+  protected togglePreview(): void {
+    this.showPreview = !this.showPreview;
+  }
+
+  protected get isLoading(): boolean {
     return this.loader.isLoadingExcept('init');
   }
 }

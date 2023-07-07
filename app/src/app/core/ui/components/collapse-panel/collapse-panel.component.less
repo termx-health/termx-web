@@ -72,6 +72,10 @@
   .container:not(.container--collapsed) &:hover {
     border-color: @mui-primary-color;
   }
+
+  .container:not(.container--resizeable) & {
+    display: none;
+  }
 }
 
 .expand-button {

@@ -49,6 +49,7 @@
             "styles": [
               "app/src/styles/styles.less",
               "node_modules/@kodality-web/marina-quill/quill.styles.less",
+              "node_modules/@kodality-web/marina-markdown/markdown.styles.less",
               "node_modules/prismjs/themes/prism.css"
             ],
             "preserveSymlinks": true,

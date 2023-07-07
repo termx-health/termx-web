@@ -919,7 +919,7 @@
         "save-and-proceed": "Save and proceed",
         "proceed-without-saving": "Proceed without saving",
         "usages": "Usages",
-        "copy-to-clipboard": "Copy {{val}} to clipboard"
+        "copy-to-clipboard": "Copy {{val}}"
       },
       "no-space": {
         "title": "Space not selected",

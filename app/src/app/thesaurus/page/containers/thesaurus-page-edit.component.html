@@ -1,64 +1,59 @@
-<m-page mFull class="thesaurus">
-  <m-spinner class="page page__wrapper" [mLoading]="isLoading">
-    <tw-thesaurus-page-header [page]="page" [slug]="pageContent?.slug">
+<m-page mFull class="thesaurus" [mLoading]="isLoading">
+  <div class="editor__header m-justify-between">
+    <div>
+      {{pageContent?.name}}
+    </div>
+
+    <div class="m-items-middle">
       <m-button (click)="saveContent()" mDisplay="primary">
         <div class="m-items-middle">
-          <m-icon mCode="save"></m-icon>
+          <m-icon mCode="save"/>
           {{'core.btn.save' | translate}}
         </div>
       </m-button>
+
       <m-button (click)="back()" mDisplay="text">
         {{'core.btn.cancel' | translate}}
       </m-button>
+
       <m-divider mVertical></m-divider>
-      <m-button (click)="modal.open()" mDisplay="text" >
-        <m-icon mCode="setting"></m-icon>
+      <m-button (click)="pageModal.open()" mDisplay="text">
+        <m-icon mCode="setting"/>
       </m-button>
-    </tw-thesaurus-page-header>
+    </div>
+  </div>
 
 
-    <m-card>
-      <div class="equal-columns" style="margin-bottom: 1rem" *ngIf="pageContent?.contentType === 'markdown'">
-        <div style="justify-self: start" class="m-items-middle">
-          <m-button *ngIf="pageContent?.slug" m-popover [mContent]="confirmTemplate" mTrigger="click">
-            {{'web.thesaurus-page.form.add-structure-definition' | translate}}
-            <ng-template #confirmTemplate>
-              <label>{{'core.data-lost-warning' | translate}}</label>
-              <div style="display: flex; margin-top: 1rem">
-                <m-button (click)="openStructureDefinition()">{{'web.thesaurus-page.form.proceed-without-saving' | translate}}</m-button>
-                <m-button mDisplay="primary"
-                    (click)="saveAndOpenStructureDefinition()"
-                    style="margin-left: 0.5rem"
-                >{{'web.thesaurus-page.form.save-and-proceed' | translate}}</m-button>
-              </div>
-            </ng-template>
-          </m-button>
+  <div class="editor__main-wrapper">
+    <div class="editor__sidebar" *ngIf="pageContent?.contentType === 'markdown'">
+      <ul m-menu mCollapsed mSelectable="false">
+        <li m-menu-item [mIcon]="showPreview ?  'pic-center' : 'read'" (click)="togglePreview()">
+          {{showPreview ? 'Hide preview' : 'Show preview'}}
+        </li>
 
-          <m-button
-              *ngIf="pageContent?.slug"
-              m-tooltip
-              [mTitle]="'web.thesaurus-page.form.copy-to-clipboard' | translate: ({val: '{{def:' + pageContent.slug + '-model}' + '}' })"
-              (mClick)="copyStructureDefToClipboard()"
-          >
-            <m-icon mCode="copy"/>
-          </m-button>
-        </div>
+        <li m-sub-menu mTitle="Structure Definition" mIcon="partition" *ngIf="pageContent?.slug">
+          <ul>
+            <li m-menu-item mIcon="link" (click)="structureModal.open()">
+              {{'web.thesaurus-page.form.add-structure-definition' | translate}}
+            </li>
+            <li m-menu-item
+                mIcon="copy"
+                (click)="copyStructureDefToClipboard()"
+                m-tooltip
+                [mTitle]="'{{def:' + pageContent.slug + '-model}}'"
+                mPosition="bottom"
+            >
+              {{'Copy reference' | translate: ({val: '{{def:' + pageContent.slug + '-model}' + '}'})}}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
 
-        <div style="justify-self: center">
-          <m-radio-group name="sourceImportType" [(ngModel)]="showPreview">
-            <label m-radio-button [mValue]="false">
-              <m-icon mCode="pic-center"></m-icon>
-            </label>
-            <label m-radio-button [mValue]="true">
-              <m-icon mCode="pic-left"></m-icon>
-            </label>
-          </m-radio-group>
-        </div>
-
-        <div style="justify-self: end"></div>
-      </div>
-
-
+    <div
+        class="editor__main"
+        [class.editor__main--markdown]="pageContent?.contentType === 'markdown'"
+    >
       <tw-smart-text-editor
           *ngIf="pageContent"
           [(ngModel)]="pageContent.content"
@@ -67,15 +62,44 @@
           [showPreview]="showPreview"
           name="content"
       ></tw-smart-text-editor>
-    </m-card>
-  </m-spinner>
-
-
-  <tw-thesaurus-page-modal
-    #modal
-      [pageId]="pageContent?.pageId"
-      [contentId]="pageContent?.id"
-      (closed)="modal.close()"
-      (saved)="afterPageSave($event.pageContent); modal.close()"
-  ></tw-thesaurus-page-modal>
+    </div>
+  </div>
 </m-page>
+
+
+<!-- fixme: translate -->
+<m-modal #structureModal mStyle="width: 36rem; margin-top: calc(var(--page-header-height) + 1rem)" mPlacement="top">
+  <div *m-modal-header class="m-modal__title">
+    Your unsaved changes will be lost!
+  </div>
+
+  <div *m-modal-content>
+    Do you want to save the current page content before navigating to the Structure Definition?
+  </div>
+
+  <div *m-modal-footer class="m-justify-between">
+    <m-button (click)="openStructureDefinition()">
+      {{'web.thesaurus-page.form.proceed-without-saving' | translate}}
+    </m-button>
+
+    <div class="m-items-middle">
+      <m-button (click)="structureModal.close()" autofocus>
+        {{'core.btn.cancel' | translate}}
+      </m-button>
+
+      <m-button mDisplay="primary" (click)="saveAndOpenStructureDefinition()">
+        {{'web.thesaurus-page.form.save-and-proceed' | translate}}
+      </m-button>
+    </div>
+  </div>
+</m-modal>
+
+
+<tw-thesaurus-page-modal #pageModal
+    [pageId]="pageContent?.pageId"
+    [contentId]="pageContent?.id"
+    (closed)="pageModal.close()"
+    (saved)="afterPageSave($event.pageContent); pageModal.close()"
+></tw-thesaurus-page-modal>
+
+

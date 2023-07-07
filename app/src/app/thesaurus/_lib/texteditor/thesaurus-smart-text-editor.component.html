@@ -1,4 +1,7 @@
-<div *ngIf="!viewMode">
+<tw-smart-text-editor-view *ngIf="viewMode; else edit" [value]="value" [valueType]="valueType" [lang]="lang"/>
+
+
+<ng-template #edit>
   <tw-dropdown-menu
     #optionMenu
       [containerRef]="ref"
@@ -6,8 +9,8 @@
       (resultComposed)="insertAtCursor($event.result, $event.range)"
   />
 
-  <div class="equal-columns">
-    <div #ref>
+  <div class="editor-wrapper">
+    <div #ref class="editor__editor">
       <ng-container *ngIf="valueType === 'markdown'">
         <tw-thesaurus-textarea
             style="font-family: monospace"
@@ -33,10 +36,8 @@
     </div>
 
 
-    <div *ngIf="showPreview" style="background: #f7f7f7; padding: 1rem; border-radius: var(--border-radius-component)">
+    <div *ngIf="showPreview" class="editor__preview">
       <tw-smart-text-editor-view [value]="value" [valueType]="valueType" [lang]="lang" [prerendered]="true"/>
     </div>
   </div>
-</div>
-
-<tw-smart-text-editor-view *ngIf="viewMode" [value]="value" [valueType]="valueType" [lang]="lang"/>
+</ng-template>

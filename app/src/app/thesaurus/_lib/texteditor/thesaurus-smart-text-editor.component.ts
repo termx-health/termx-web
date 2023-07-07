@@ -6,11 +6,46 @@ import {BooleanInput, isDefined, isNil} from '@kodality-web/core-util';
   selector: 'tw-smart-text-editor',
   templateUrl: './thesaurus-smart-text-editor.component.html',
   styles: [`
-    .equal-columns {
+    ::ng-deep .editor-wrapper {
       display: grid;
       grid-auto-flow: column;
       grid-auto-columns: minmax(0, 1fr);
-      gap: 1rem;
+      height: 100%;
+
+      & > * {
+        height: 100%;
+        overflow: auto;
+      }
+
+      .editor__editor {
+        flex: 50%;
+
+        /* Markdown */
+
+        .tw-textarea {
+          font-size: 0.9rem;
+          border: unset;
+          border-radius: unset;
+        }
+
+        /* Quill*/
+
+        .ql-toolbar {
+          border-inline: 0;
+          border-top: 0;
+        }
+
+        .ql-container {
+          border-inline: 0;
+          border-bottom: 0;
+        }
+      }
+
+      .editor__preview {
+        flex: 50%;
+        padding: 1rem;
+        border-left: 1px solid var(--color-borders);
+      }
     }
   `],
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ThesaurusSmartTextEditorComponent), multi: true}]
