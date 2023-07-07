@@ -57,8 +57,7 @@ export class SnomedBranchManagementComponent implements OnInit {
     this.loader.wrap('load', forkJoin([
       this.snomedService.loadBranch(path),
       this.snomedService.findBranchDescriptions(path, this.descriptionParams),
-      // this.snomedTranslationService.loadTranslations({active: true, unlinked: true})
-      this.snomedTranslationService.loadTranslations({active: false, unlinked: true})
+      this.snomedTranslationService.loadTranslations({active: true, unlinked: true})
     ])).subscribe(([b, descriptions, translations]) => {
       this.snomedBranch = this.writeBranch(b);
       this.descriptions = {data: descriptions.items || [], meta: {total: descriptions.total, offset: descriptions.offset}};

@@ -5,13 +5,13 @@ import {CoreUiModule} from '../core/ui/core-ui.module';
 import {AuthService} from '../core/auth';
 import {CodeSystemLibService, MapSetLibService, ValueSetLibService} from 'term-web/resources/_lib';
 import {SpaceService} from 'term-web/space/services/space.service';
-import {TaskService} from 'term-web/taskflow/services/task-service';
-import {Task, TaskflowLibModule} from 'term-web/taskflow/_lib';
+import {TaskService} from 'term-web/task/services/task-service';
+import {Task, TaskLibModule} from 'term-web/task/_lib';
 import {PageService} from 'term-web/thesaurus/page/services/page.service';
 
 @Component({
   standalone: true,
-  imports: [CoreUiModule, TaskflowLibModule],
+  imports: [CoreUiModule, TaskLibModule],
   templateUrl: 'landing-page.component.html',
   styleUrls: ['landing-page.component.less']
 })
@@ -73,7 +73,7 @@ export class LandingPageComponent {
   private loadSummary(): void {
     const spaces$ = this.withPrivilege(this.spaceService.search({limit: 0}), '*.Space.view');
     const pages$ = this.withPrivilege(this.pageService.searchPages({limit: 0}), '*.Thesaurus.view');
-    const tasksOpen$ = this.withPrivilege(this.taskService.search({limit: 0,statusesNe: 'cancelled,completed,error,rejected'}), '*.Task.view');
+    const tasksOpen$ = this.withPrivilege(this.taskService.searchTasks({limit: 0,statusesNe: 'cancelled,completed,error,rejected'}), '*.Task.view');
 
     this.loader.wrap('space', forkJoin([spaces$, pages$, tasksOpen$])).subscribe(([spaces, pages, tasks]) => {
       this.data.spacesCount = spaces.meta.total;
@@ -85,9 +85,9 @@ export class LandingPageComponent {
   private loadTasks(): void {
     const user = this.authService.user.username;
 
-    const tasks$ = this.withPrivilege(this.taskService.search({limit: 0}), '*.Task.view');
-    const tasksCreatedByUser$ = this.withPrivilege(this.taskService.search({createdBy: user}), '*.Task.view');
-    const tasksAssignedToUser$ = this.withPrivilege(this.taskService.search({assignees: user}), '*.Task.view');
+    const tasks$ = this.withPrivilege(this.taskService.searchTasks({limit: 0}), '*.Task.view');
+    const tasksCreatedByUser$ = this.withPrivilege(this.taskService.searchTasks({createdBy: user}), '*.Task.view');
+    const tasksAssignedToUser$ = this.withPrivilege(this.taskService.searchTasks({assignees: user}), '*.Task.view');
 
     this.loader.wrap('task', forkJoin([tasks$, tasksCreatedByUser$, tasksAssignedToUser$])).subscribe(([tasks, created, assigned]) => {
       this.data.tasksCount = tasks.meta.total;
@@ -98,6 +98,6 @@ export class LandingPageComponent {
 
 
   protected taskRoute = (task: Task): any[] => {
-    return this.authService.hasPrivilege('*.Task.edit') ? ['/taskflow', task.id, 'edit'] : [];
+    return this.authService.hasPrivilege('*.Task.edit') ? ['/tasks', task.number, 'edit'] : [];
   };
 }

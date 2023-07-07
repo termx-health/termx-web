@@ -11,7 +11,7 @@ import {SPACE_CTX_ROUTES, SPACE_ROUTES, TERMINOLOGY_SERVER_ROUTES} from './space
 import {TERMINOLOGY_SERVICE_API_ROUTES} from 'term-web/terminology-service-api/terminology-service-api.module';
 import {OBSERVATION_DEFINITION_ROUTES} from 'term-web/observation-definition/observation-definition.module';
 import {SEQUENCE_ROUTES} from 'term-web/sequence/sequence.module';
-import {TASKFLOW_ROUTES} from 'term-web/taskflow/taskflow.module';
+import {TASK_ROUTES} from 'term-web/task/task.module';
 import {autoLoginGuard} from 'term-web/core/auth';
 import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
 import {SpaceContextModule} from 'term-web/core/context/space-context.module';
@@ -33,7 +33,7 @@ const APP_ROUTES: Routes = [
   {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
   {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.Space.view']}},
   {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.view']}},
-  {path: 'taskflow', children: TASKFLOW_ROUTES, data: {privilege: ['*.Task.view']}},
+  {path: 'tasks', children: TASK_ROUTES, data: {privilege: ['*.Task.view']}},
   {
     path: 'spaces',
     children: [

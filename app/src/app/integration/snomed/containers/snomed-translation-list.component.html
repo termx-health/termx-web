@@ -10,7 +10,7 @@
     <m-editable-column [mTitle]="'entities.snomed-translation.module'" mName="module">
       <ng-template #viewTemplate let-t>{{t.module}}</ng-template>
       <ng-template #editTemplate let-t let-ngModelName="ngModelName">
-        <m-select [name]="ngModelName" [(ngModel)]="t.module">
+        <m-select [name]="ngModelName" [(ngModel)]="t.module" autoSelect>
           <m-option *ngFor="let m of modules" [mLabel]="m.code" [mValue]="m.code"></m-option>
         </m-select>
       </ng-template>
@@ -54,7 +54,9 @@
       </ng-template>
     </m-editable-column>
     <m-editable-column [mTitle]="'entities.snomed-translation.task'">
-      <ng-template #viewTemplate let-t><a [routerLink]="['/taskflow', t.task?.id,'edit']">{{t.task?.code}}</a></ng-template>
+      <ng-template #viewTemplate let-t>
+        <a *ngIf="(tasks | apply:findTask:t.id) as task" [routerLink]="['/tasks', task?.number,'edit']">{{task?.number}}</a>
+      </ng-template>
     </m-editable-column>
     <m-editable-column [mTitle]="'entities.snomed-translation.status'">
       <ng-template #viewTemplate let-t>{{t.status | localizedConceptName: {codeSystem: 'v3-ConceptStatus'} | async }}</ng-template>

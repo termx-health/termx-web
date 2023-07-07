@@ -2,43 +2,31 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {
-  Project,
-  ProjectLibService,
-  Task,
-  TaskActivity,
-  TaskActivityTransition,
-  TaskContextItem,
-  TaskflowUser,
-  UserLibService,
-  Workflow,
-  WorkflowLibService
-} from 'term-web/taskflow/_lib';
+import {Task, TaskActivity, TaskContextItem, Workflow} from 'term-web/task/_lib';
 import {forkJoin} from 'rxjs';
-import {TaskService} from 'term-web/taskflow/services/task-service';
+import {TaskService} from 'term-web/task/services/task-service';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
+import {CodeName} from '@kodality-web/marina-util';
+import {User, UserLibService} from 'term-web/user/_lib';
 
 @Component({
   templateUrl: './task-edit.component.html',
 })
 export class TaskEditComponent implements OnInit {
   protected task?: Task;
-  protected taskActivities?: TaskActivity[];
   protected newStatus?: string;
   protected newActivity?: {visible?: boolean, note?: string} = {};
   protected loader = new LoadingManager();
   protected mode: string;
 
-  protected users: TaskflowUser[];
-  protected projects: Project[];
+  protected users: User[];
+  protected projects: CodeName[];
   protected workflows: Workflow[];
 
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private taskService: TaskService,
-    private workflowService: WorkflowLibService,
-    private projectService: ProjectLibService,
     private userService: UserLibService,
     private route: ActivatedRoute,
     private router: Router,
@@ -46,10 +34,10 @@ export class TaskEditComponent implements OnInit {
   ) { }
 
   public ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.mode = id ? 'edit' : 'add';
+    const number = this.route.snapshot.paramMap.get('number');
+    this.mode = number ? 'edit' : 'add';
     if (this.mode === 'edit') {
-      this.loadTask(Number(id));
+      this.loadTask(number);
     } else {
       this.task = this.writeTask(new Task());
     }
@@ -57,14 +45,11 @@ export class TaskEditComponent implements OnInit {
     this.loadData();
   }
 
-  private loadTask(id: number): void {
-    this.loader.wrap('load', forkJoin([
-      this.taskService.load(id),
-      this.taskService.loadActivities(id)]))
-      .subscribe(([task, activities]) => {
-        this.task = this.prepare(task);
-        this.taskActivities = activities;
-        this.loadWorkflows(task.projectId);
+  private loadTask(number: string): void {
+    this.loader.wrap('load', this.taskService.loadTask(number))
+      .subscribe(task => {
+        this.task = task;
+        this.loadWorkflows(task.project.code);
       });
   }
 
@@ -77,34 +62,33 @@ export class TaskEditComponent implements OnInit {
     }
     const t = copyDeep(this.task);
     t.status = this.newStatus || t.status;
-    t.assignee = t.assignee.sub ? t.assignee : undefined;
     this.loader.wrap('save', this.taskService.save(t)).subscribe(t => {
-      this.router.navigate(['/taskflow/', t.id, 'edit'], {replaceUrl: true});
-      this.loadTask(t.id);
+      this.router.navigate(['/tasks/', t.number, 'edit'], {replaceUrl: true});
+      this.loadTask(t.number);
     });
   }
 
   protected createActivity(): void {
-    const id = this.task.id;
+    const number = this.task.number;
     const note = this.newActivity.note;
-    if (!isDefined(id) || !isDefined(note)) {
+    if (!isDefined(number) || !isDefined(note)) {
       return;
     }
-    this.loader.wrap('save', this.taskService.createActivity(id, note)).subscribe(() => {
-      this.loadTask(this.task.id);
+    this.loader.wrap('save', this.taskService.createActivity(number, note)).subscribe(() => {
+      this.loadTask(this.task.number);
       this.newActivity = {};
     });
   }
 
-  protected loadWorkflows(projectId: number): void {
-    if (!projectId) {
+  protected loadWorkflows(projectCode: string): void {
+    if (!projectCode) {
       return;
     }
-    this.workflowService.search({projectIds: String(projectId), limit: -1}).subscribe(w => this.workflows = w.data);
+    this.taskService.loadProjectWorkflows(projectCode).subscribe(workflows => this.workflows = workflows);
   }
 
-  protected getTargetStatuses = (wfId: number, status: string, workflows: Workflow[]): string[] => {
-    const wf = workflows?.find(w => w.id === wfId);
+  protected getTargetStatuses = (wfCode: string, status: string, workflows: Workflow[]): string[] => {
+    const wf = workflows?.find(w => w.code === wfCode);
     if (!isDefined(wf)) {
       return [];
     }
@@ -122,7 +106,7 @@ export class TaskEditComponent implements OnInit {
     return activities.filter(a => a.note || (this.changeTransitions(a.transition)?.length > 0));
   };
 
-  protected changeTransitions = (transition: {[key: string]: TaskActivityTransition}): {key: string, transition: TaskActivityTransition}[] => {
+  protected changeTransitions = (transition: {[key: string]: {from?: string, to?: string}}): {key: string, transition: {from?: string, to?: string}}[] => {
     if (!isDefined(transition)) {
       return [];
     }
@@ -132,21 +116,16 @@ export class TaskEditComponent implements OnInit {
       .map(t => ({key: t, transition: transition[t]}));
   };
 
-  private prepare(task: Task): Task {
-    task.assignee ??= new TaskflowUser();
-    return task;
-  }
-
   protected openContext(ctx: TaskContextItem): void {
     if (ctx.type === 'snomed-translation') {
-      this.snomedTranslationService.load(ctx.id).subscribe(t => this.router.navigate(['/integration/snomed', t.conceptId]));
+      this.snomedTranslationService.load(ctx.id).subscribe(t => this.router.navigate(['/integration/snomed/dashboard', t.conceptId]));
     }
   }
 
   private loadData(): void {
     this.loader.wrap('load', forkJoin([
-      this.userService.load(),
-      this.projectService.loadAll()
+      this.userService.loadAll(),
+      this.taskService.loadProjects()
     ])).subscribe(([users, projects]) => {
       this.users = users;
       this.projects = projects;
@@ -155,8 +134,9 @@ export class TaskEditComponent implements OnInit {
 
   private writeTask(task: Task): Task {
     task.type ??= 'task';
+    task.status ??= 'requested';
     task.priority ??= 'routine';
-    task.assignee ??= {};
+    task.project ??= {};
     return task;
   }
 }

@@ -1,8 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable, tap} from 'rxjs';
 import {ComponentStateStore, copyDeep, DestroyService, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {Project, ProjectLibService, Task, TaskflowUser, TaskLibService, TaskSearchParams, UserLibService} from 'term-web/taskflow/_lib';
+import {Task, TaskLibService, TaskSearchParams} from 'term-web/task/_lib';
 import {AuthService} from 'term-web/core/auth';
+import {CodeName} from '@kodality-web/marina-util';
+import {User, UserLibService} from 'term-web/user/_lib';
 
 @Component({
   templateUrl: './task-list.component.html',
@@ -16,14 +18,13 @@ export class TaskListComponent implements OnInit {
   protected filter: {[key: string]: any} = {};
   protected loader = new LoadingManager();
 
-  protected projects: Project[];
-  protected users: TaskflowUser[];
+  protected projects: CodeName[];
+  protected users: User[];
 
   protected readonly STORE_KEY = 'task-list';
 
   public constructor(
     private taskService: TaskLibService,
-    private projectService: ProjectLibService,
     private userService: UserLibService,
     private stateStore: ComponentStateStore,
     private auth: AuthService,
@@ -59,7 +60,7 @@ export class TaskListComponent implements OnInit {
     this.processStatusOption(q, this.filter);
     this.stateStore.put(this.STORE_KEY, {query: q});
 
-    return this.loader.wrap('load', this.taskService.search(q));
+    return this.loader.wrap('load', this.taskService.searchTasks(q));
   }
 
   protected onSearch = (): Observable<SearchResult<Task>> => {
@@ -72,11 +73,11 @@ export class TaskListComponent implements OnInit {
   }
 
   private loadProjects(): void {
-    this.loader.wrap('project-list', this.projectService.loadAll()).subscribe(projects => this.projects = projects);
+    this.loader.wrap('project-list', this.taskService.loadProjects()).subscribe(projects => this.projects = projects);
   }
 
   private loadUsers(): void {
-    this.loader.wrap('user-list', this.userService.load()).subscribe(users => this.users = users);
+    this.loader.wrap('user-list', this.userService.loadAll()).subscribe(users => this.users = users);
   }
 
   private processStatusOption(q: TaskSearchParams, filter: any): void {

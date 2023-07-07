@@ -6,6 +6,7 @@ import {
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
+import {Task, TaskLibService} from 'term-web/task/_lib';
 
 @Component({
   selector: 'tw-snomed-translations',
@@ -13,6 +14,7 @@ import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/res
 })
 export class SnomedTranslationListComponent implements OnInit, OnChanges {
   public translations: SnomedTranslation[];
+  protected tasks: Task[];
   protected modules: CodeSystemConcept[];
   protected loader = new LoadingManager();
   protected rowInstance: SnomedTranslation = {type: 'synonym'};
@@ -24,7 +26,8 @@ export class SnomedTranslationListComponent implements OnInit, OnChanges {
 
   public constructor(
     private codeSystemService: CodeSystemLibService,
-    private snomedTranslationService: SnomedTranslationLibService
+    private snomedTranslationService: SnomedTranslationLibService,
+    private taskService: TaskLibService
   ) {}
 
   public ngOnInit(): void {
@@ -44,7 +47,15 @@ export class SnomedTranslationListComponent implements OnInit, OnChanges {
     if (!isDefined(conceptId)) {
       return;
     }
-    this.loader.wrap('load', this.snomedTranslationService.loadConceptTranslations(conceptId)).subscribe(resp => this.translations = resp);
+    this.loader.wrap('load', this.snomedTranslationService.loadConceptTranslations(conceptId)).subscribe(resp => {
+      this.translations = resp;
+      const translationIds = resp.map(r => r.id);
+      if (translationIds.length > 0) {
+        this.taskService.searchTasks({context: translationIds.map(id => 'snomed-translation|' + id).join(','), limit: -1}).subscribe(tasks => {
+          this.tasks = tasks.data;
+        });
+      }
+    });
   }
 
   protected addRow(): void {
@@ -66,6 +77,10 @@ export class SnomedTranslationListComponent implements OnInit, OnChanges {
 
   protected editAllowed = (translation: SnomedTranslation): boolean => {
     return translation.status !== 'A';
+  };
+
+  protected findTask = (tasks: Task[], translationId: number): Task => {
+    return tasks?.find(t => isDefined(t.context?.find(c => c.id === translationId)));
   };
 
   public validate(): boolean {

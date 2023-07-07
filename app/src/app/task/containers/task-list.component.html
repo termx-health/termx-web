@@ -23,7 +23,7 @@
 
     <m-form-item [mLabel]="'web.task.filter.project'" mName="project">
       <m-select name="project" [(ngModel)]="filter['project']" multiple>
-        <m-option *ngFor="let s of projects" [mLabel]="s.names | localName" [mValue]="s.id"></m-option>
+        <m-option *ngFor="let p of projects" [mLabel]="p.names | localName" [mValue]="p.code"></m-option>
       </m-select>
     </m-form-item>
     <m-form-item [mLabel]="'web.task.filter.status'">
@@ -97,16 +97,16 @@
 
     <tr *mTableRow="let task">
       <td>
-        <a *ngIf="'*.Task.edit' | twHasAnyPrivilege; else view" [routerLink]="[task.id, 'edit']">{{task.number}}</a>
+        <a *ngIf="'*.Task.edit' | twHasAnyPrivilege; else view" [routerLink]="[task.number, 'edit']">{{task.number}}</a>
         <ng-template #view>{{task.number}}</ng-template>
       </td>
       <td>{{task.title}}</td>
       <td><tw-task-type [ngModel]="task.type" readonly></tw-task-type></td>
       <td><tw-task-status [status]="task.status"></tw-task-status></td>
       <td>
-        <label *ngIf="task.assignee?.sub">{{task.assignee.sub}}</label>
-        <m-icon *ngIf="!task.assignee?.sub" mCode="question"></m-icon>
-      <td>{{task.createdBy?.sub}}</td>
+        <label *ngIf="task.assignee">{{task.assignee}}</label>
+        <m-icon *ngIf="!task.assignee" mCode="question"></m-icon>
+      <td>{{task.createdBy}}</td>
       <td>{{task.createdAt | localDate}}</td>
       <td>{{task.updatedAt | localDate}}</td>
     </tr>

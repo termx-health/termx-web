@@ -230,7 +230,7 @@
           "et": "Ülesanded"
         },
         "icon": "inbox",
-        "link": "taskflow",
+        "link": "tasks",
         "privileges": [
           "*.Task.view"
         ]

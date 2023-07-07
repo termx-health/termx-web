@@ -1,7 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ValueSetLibService, ValueSetVersion} from 'term-web/resources/_lib';
 import {isDefined} from '@kodality-web/core-util';
-import {Task, TaskLibService} from 'term-web/taskflow/_lib';
+import {Task, TaskLibService} from 'term-web/task/_lib';
 import {Router} from '@angular/router';
 
 @Component({
@@ -23,7 +22,7 @@ export class ResourceTasksWidgetComponent implements OnChanges {
   }
 
 
-  public openTask(id: number): void {
-    this.router.navigate(['/taskflow', id, 'edit']);
+  public openTask(number: string): void {
+    this.router.navigate(['/tasks', number, 'edit']);
   }
 }

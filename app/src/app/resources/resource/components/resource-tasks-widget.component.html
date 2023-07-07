@@ -1,11 +1,11 @@
 <m-no-data *ngIf="!(tasks?.length > 0)"></m-no-data>
 
 <m-list *ngIf="tasks?.length > 0" mSeparated>
-  <m-list-item *ngFor="let task of tasks" mClickable (mClick)="openTask(task.id)">
+  <m-list-item *ngFor="let task of tasks" mClickable (mClick)="openTask(task.number)">
     <div class="m-items-middle">
       <span class="m-bold">{{task.number}}</span>
       <m-divider mVertical></m-divider>
-      <span>{{task.assignee?.name || '...'}}</span>
+      <span>{{task.assignee || '...'}}</span>
     </div>
     <div>{{task.title}}</div>
   </m-list-item>

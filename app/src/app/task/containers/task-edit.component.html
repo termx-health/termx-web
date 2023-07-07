@@ -4,7 +4,9 @@
       <div *m-card-header>
         <div class="m-items-middle">
           <tw-task-type name="type" [(ngModel)]="task.type" required></tw-task-type>
-          <m-input style="flex: 1" name="title" [(ngModel)]="task.title" required placeholder="Title"></m-input>
+          <m-form-control style="flex: 1" mName="title" required>
+            <m-input name="title" [(ngModel)]="task.title" required placeholder="Title"></m-input>
+          </m-form-control>
           <m-button mDisplay="primary" (mClick)="save()">{{'core.btn.save' | translate}}</m-button>
         </div>
       </div>
@@ -15,7 +17,7 @@
             <m-radio-group name="generateValueSet" [(ngModel)]="newStatus">
               <label m-radio-button
                   [mValue]="s"
-                  *ngFor="let s of (task.workflowId |apply:getTargetStatuses:task.status:workflows)">{{s | localizedConceptName: {valueSet: 'task-status'} | async}}</label>
+                  *ngFor="let s of (task.workflow |apply:getTargetStatuses:task.status:workflows)">{{s | localizedConceptName: {valueSet: 'task-status'} | async}}</label>
             </m-radio-group>
           </div>
           <m-form-item>
@@ -32,7 +34,7 @@
 
           <m-divider>{{'web.task.activity' | translate}}</m-divider>
           <m-list>
-            <m-list-item *ngFor="let activity of (taskActivities| apply:hasTransitions)">
+            <m-list-item *ngFor="let activity of (task.activities| apply:hasTransitions)">
               <div class="m-justify-between">
                 <label>{{activity.updatedBy?.sub}}</label>
                 <label class="m-subtitle">{{activity.updatedAt | localDateTime}}</label>
@@ -55,24 +57,25 @@
                 <m-icon mCode="close"></m-icon>
               </m-button>
             </m-list-item>
-            <m-list-item *ngIf="!newActivity.visible && task.id" mClickable (mClick)="newActivity.visible = true">
+            <m-list-item *ngIf="!newActivity.visible && task.number" mClickable (mClick)="newActivity.visible = true">
               <m-icon mCode="plus"></m-icon>&nbsp; <label>{{'web.task.add-comment' | translate}}</label>
             </m-list-item>
           </m-list>
         </div>
         <div style="flex: 1; border-left: 1px solid var(--color-borders-light); padding-left: 1rem">
-          <m-form-item *ngIf="!task.id" mLabel="entities.task.project" mName="project" required>
-            <m-select name="project" [(ngModel)]="task.projectId" (ngModelChange)="loadWorkflows($event)" autoSelect required>
-              <m-option *ngFor="let s of projects" [mLabel]="s.names | localName" [mValue]="s.id"></m-option>
+          <m-form-item mLabel="entities.task.project" mName="project" required>
+            <m-select *ngIf="!task.number" name="project" [(ngModel)]="task.project.code" (ngModelChange)="loadWorkflows($event)" autoSelect required>
+              <m-option *ngFor="let p of projects" [mLabel]="p.names | localName" [mValue]="p.code"></m-option>
             </m-select>
+            <label *ngIf="task.number">{{task.project.names | localName}}</label>
           </m-form-item>
-          <m-form-item *ngIf="!task.id && task.projectId" mLabel="entities.task.workflow" mName="workflow" required>
-            <m-select name="workflow" [(ngModel)]="task.workflowId" autoSelect required>
-              <m-option *ngFor="let wf of workflows" [mLabel]="wf.taskType" [mValue]="wf.id"></m-option>
+          <m-form-item *ngIf="task.project.code" mLabel="entities.task.workflow" mName="workflow" required>
+            <m-select name="workflow" [(ngModel)]="task.workflow" autoSelect required>
+              <m-option *ngFor="let wf of workflows" [mLabel]="wf.code" [mValue]="wf.code"></m-option>
             </m-select>
           </m-form-item>
           <m-form-item mLabel="entities.task.assignee" mName="assignee">
-            <m-select name="assignee" [(ngModel)]="task.assignee.sub">
+            <m-select name="assignee" [(ngModel)]="task.assignee">
               <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"></m-option>
             </m-select>
           </m-form-item>
@@ -87,13 +90,13 @@
             <label>{{(task.createdAt | localDate) || '-'}}</label>
           </m-form-item>
           <m-form-item mLabel="entities.task.author">
-            <label>{{(task.createdBy?.sub) || '-'}}</label>
+            <label>{{(task.createdBy) || '-'}}</label>
           </m-form-item>
           <m-form-item mLabel="entities.task.modified">
             <label>{{(task.updatedAt | localDate) || '-'}}</label>
           </m-form-item>
           <m-form-item mLabel="entities.task.modified-by">
-            <label>{{(task.updatedBy?.sub) || '-'}}</label>
+            <label>{{(task.updatedBy) || '-'}}</label>
           </m-form-item>
         </div>
       </div>

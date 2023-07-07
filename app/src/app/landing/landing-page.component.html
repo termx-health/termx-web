@@ -39,7 +39,7 @@
             <div class="title">{{data.pagesCount}}</div>
           </button>
 
-          <button class="card m-rounded m-raised m-clickable v-align" [routerLink]="['/taskflow']" *twPrivileged="'*.Task.view'">
+          <button class="card m-rounded m-raised m-clickable v-align" [routerLink]="['/tasks']" *twPrivileged="'*.Task.view'">
             <div class="m-subtitle">{{'web.landing.summary.open-tasks' | translate}}</div>
             <div class="title">{{data.tasksOpenCount}}</div>
           </button>
@@ -53,7 +53,7 @@
           <div class="title">{{'web.landing.tasks.title' | translate}}</div>
 
           <m-dropdown>
-            <a *mDropdownItemIf="'*.Task.edit' | twHasAnyPrivilege" [routerLink]="'/taskflow/add'">
+            <a *mDropdownItemIf="'*.Task.edit' | twHasAnyPrivilege" [routerLink]="'/tasks/add'">
               {{'web.landing.tasks.actions.create' | translate}}
             </a>
           </m-dropdown>

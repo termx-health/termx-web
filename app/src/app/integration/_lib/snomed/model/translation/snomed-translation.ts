@@ -7,6 +7,5 @@ export class SnomedTranslation {
   public term?: string;
   public type?: string;
   public acceptability?: string;
-  public taskId?: number;
   public status?: string;
 }

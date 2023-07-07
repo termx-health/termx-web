@@ -25,13 +25,14 @@ import {AuthModule, AuthService} from './core/auth';
 import {MarinaUiConfigModule} from './core/marina';
 import {ObservationDefinitionModule} from 'term-web/observation-definition/observation-definition.module';
 import {SequenceModule} from 'term-web/sequence/sequence.module';
-import {TaskflowModule} from 'term-web/taskflow/taskflow.module';
+import {TaskModule} from 'term-web/task/task.module';
 import {RootComponent} from 'term-web/root.component';
 import {NoPrivilegeComponent} from 'term-web/core/components/no-privilege/no-privilege.component';
 import {SysModule} from 'term-web/sys/sys.module';
 import {TerminologyServiceApiModule} from 'term-web/terminology-service-api/terminology-service-api.module';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {ModelerModule} from 'term-web/modeler/modeler.module';
+import {UserModule} from 'term-web/user/user.module';
 
 registerLocaleData(et);
 registerLocaleData(lt);
@@ -78,13 +79,14 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     GlobalSearchModule,
     ThesaurusModule,
     ModelerModule,
-    TaskflowModule,
+    TaskModule,
     FhirModule,
     ObservationDefinitionModule,
     TerminologyServiceApiModule,
     MeasurementUnitModule,
     SpaceModule,
     SysModule,
+    UserModule,
     SequenceModule
   ],
   providers: [
