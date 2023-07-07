@@ -105,7 +105,7 @@ export class ThesaurusPageEditComponent implements OnInit {
 
     this.structureDefinitionService.search({code: structureDefinitionCode, limit: 1}).subscribe(res => {
       if (res.data?.[0]?.id) {
-        this.router.navigate(['/thesaurus/structure-definitions/', res.data[0].id, 'edit'], {queryParams: {tab: 'elements'}});
+        this.router.navigate(['/modeler/structure-definitions/', res.data[0].id, 'edit'], {queryParams: {tab: 'elements'}});
         return;
       }
 
@@ -128,7 +128,7 @@ export class ThesaurusPageEditComponent implements OnInit {
         contentType: 'logical'
       };
       this.structureDefinitionService.save(structureDefinition).subscribe(sd => {
-        this.router.navigate(['/thesaurus/structure-definitions/', sd.id, 'edit'], {queryParams: {tab: 'elements'}});
+        this.router.navigate(['/modeler/structure-definitions/', sd.id, 'edit'], {queryParams: {tab: 'elements'}});
       });
     });
   }
