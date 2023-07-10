@@ -38,7 +38,7 @@ export class ThesaurusPageComponent implements OnInit {
         const matchedSpace = resp.data.find(s => s.code === space) || resp.data.find(s => s.id === Number(space));
         if (!matchedSpace) {
           if (this.preferences.spaceId) {
-            this.router.navigate(['/thesaurus', this.preferences.spaceId, 'pages']);
+            this.router.navigate(['/thesaurus', this.preferences.spaceId, 'pages'], {replaceUrl: true});
           }
           return;
         }

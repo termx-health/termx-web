@@ -1,4 +1,4 @@
 twConfig = {
-  "oauthIssuer": null,
-  "oauthClientId": null
+  "oauthIssuer": "${OAUTH_ISSUER}",
+  "oauthClientId": "${OAUTH_CLIENT_ID}"
 };
