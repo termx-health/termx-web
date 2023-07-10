@@ -69,7 +69,7 @@
                 <dt>{{key}}</dt>
                 <dd>
                   <li style="margin-left: 1rem" *ngFor="let relation of pageRelations[key];">
-                    <a (click)="viewRelation.emit(relation)">{{relation.target}}</a>
+                    <a (click)="viewRelation.emit({type: relation.type, id: relation.target})">{{relation.target}}</a>
                   </li>
                 </dd>
               </dl>
@@ -81,7 +81,7 @@
                 {{'web.thesaurus-page.actions.none' | translate}}
               </div>
               <div>
-                <a *ngFor="let usage of pageUsages" (click)="viewRelation.emit(usage)">
+                <a *ngFor="let usage of pageUsages" (click)="viewRelation.emit({type: usage.type, id: usage.content.code})">
                   <m-icon mCode="link"></m-icon>
                   {{usage.content.names | localName}}
                 </a>

@@ -189,7 +189,7 @@
           "en": "Templates",
           "et": "Mallid"
         },
-        "link": "thesaurus/templates",
+        "link": "thesaurus-management/templates",
         "privileges": [
           "*.Thesaurus.view"
         ]

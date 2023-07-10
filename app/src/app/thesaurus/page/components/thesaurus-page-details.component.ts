@@ -21,7 +21,7 @@ export class ThesaurusPageDetailsComponent implements OnChanges {
 
   @Output() public editPage = new EventEmitter<string>();
   @Output() public viewPage = new EventEmitter<string>();
-  @Output() public viewRelation = new EventEmitter<PageRelation>();
+  @Output() public viewRelation = new EventEmitter<{type: string, id: string}>();
 
   @ViewChild("contentForm") public contentFrom: NgForm;
 

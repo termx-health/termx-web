@@ -33,6 +33,8 @@ import {TerminologyServiceApiModule} from 'term-web/terminology-service-api/term
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {ModelerModule} from 'term-web/modeler/modeler.module';
 import {UserModule} from 'term-web/user/user.module';
+import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
+import {environment} from 'environments/environment';
 
 registerLocaleData(et);
 registerLocaleData(lt);
@@ -68,6 +70,9 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
 
     AuthModule.init(),
     MarinaUiConfigModule.init(),
+    MarinaMarkdownModule.configure({
+      plantUml: {server: environment.plantUmlUrl}
+    }),
     CoreUtilModule,
 
     CoreUiModule,

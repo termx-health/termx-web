@@ -174,6 +174,7 @@ export class ThesaurusSidebarComponent implements OnChanges {
     if (changes['path']) {
       this.selectedKey = this.path?.length ? String(this.path[this.path.length - 1]) : this.selectedKey;
       if (this.data.every(obj => !obj['_expanded'])) {
+        // fixme: when route is changed, the tree does not expand correctly
         this.expandPath(copyDeep(this.path), this.data);
       }
     }

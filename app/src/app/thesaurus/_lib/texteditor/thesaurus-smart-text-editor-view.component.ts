@@ -4,6 +4,7 @@ import {structureDefinitionCodePlugin} from './plugins/structure-definition-code
 import {createCustomElement} from '@angular/elements';
 import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib';
 import {structureDefinitionFshPlugin} from 'term-web/thesaurus/_lib/texteditor/plugins/structure-definition-fsh.plugin';
+import getLink from './plugins/external-link.plugin';
 
 @Component({
   selector: 'tw-smart-text-editor-view',
@@ -57,48 +58,17 @@ export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
   }
 
   private processLinkValue(mdLink: string): string {
-    const getLink = (combinedLink: string): string => {
-      const [system, value] = combinedLink.split(':');
-
-      switch (system) {
-        case 'cs':
-          return `/resources/code-systems/${value}/summary`;
-        case 'vs':
-          return `/resources/value-sets/${value}/summary`;
-        case 'ms':
-          return `/resources/map-sets/${value}/view`;
-        case 'concept':
-          const [cs, concept] = value.split('|');
-          return cs === 'snomed-ct'
-            ? `/integration/snomed/dashboard/${concept}`
-            : `/resources/code-systems/${cs}/concepts/${concept}/view`;
-        case 'page':
-          return this.preferences.spaceId
-            ? `/thesaurus/${this.preferences.spaceId}/pages/${value}`
-            : `/thesaurus/pages/${value}`;
-        default:
-          return combinedLink;
-      }
-    };
-
-    const isUrl = (link: string): boolean => {
-      try {
-        return !!new URL(link);
-      } catch {
-        return false;
-      }
-    };
+    const _getLink = link => getLink(link, {spaceId: this.preferences.spaceId});
 
     // matches "[label](uri)"
     const [_, label, uri] = [...mdLink.matchAll(/\[(.*)]\((.*)\)/g)][0];
-    if (!uri.includes(':')) {
-      if (!isUrl(uri) && !uri.startsWith("/")) {
-        return `[${label}](${getLink(`page:${uri}`)})`;
-      }
-      return mdLink;
+    if (uri.includes(':')) {
+      return `[${label}](${_getLink(uri)})`;
     }
-
-    return `[${label}](${getLink(uri)})`;
+    if (!isUrl(uri) && !uri.startsWith("/")) {
+      return `[${label}](${_getLink(`page:${uri}`)})`;
+    }
+    return mdLink;
   }
 }
 
@@ -106,3 +76,11 @@ export class ProcessedValue {
   public type?: string;
   public value?: string;
 }
+
+const isUrl = (link: string): boolean => {
+  try {
+    return !!new URL(link);
+  } catch {
+    return false;
+  }
+};

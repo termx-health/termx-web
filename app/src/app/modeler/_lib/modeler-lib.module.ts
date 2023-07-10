@@ -3,7 +3,6 @@ import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {FormsModule} from '@angular/forms';
 import {MarinaComponentsModule} from '@kodality-web/marina-ui';
-import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
 import {MarinaQuillModule} from '@kodality-web/marina-quill';
 import {NzListModule} from 'ng-zorro-antd/list';
 import {PortalModule} from '@angular/cdk/portal';
@@ -18,9 +17,7 @@ import {StructureDefinitionTreeComponent} from './structure-definition/structure
     PortalModule,
     NzListModule,
     CoreUiModule,
-    MarinaMarkdownModule,
     MarinaQuillModule,
-
   ],
   providers: [
     StructureDefinitionLibService
