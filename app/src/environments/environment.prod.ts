@@ -6,6 +6,7 @@ export const environment = {
   termxApi: '/api',
   oauthIssuer: dynamicEnv.oauthIssuer,
   oauthClientId: dynamicEnv.oauthClientId,
-  swaggerUrl: 'https://termx.kodality.dev/swagger/',
-  chefUrl: 'https://termx.kodality.dev/chef',
+  swaggerUrl: '/swagger/',
+  chefUrl: '/chef',
+  plantUmlUrl: '/plantuml'
 };
