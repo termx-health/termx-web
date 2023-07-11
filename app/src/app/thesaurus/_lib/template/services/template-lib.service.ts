@@ -3,8 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {Template} from './template';
-import {TemplateSearchParams} from './template-search-params';
+import {Template} from '../models/template';
+import {TemplateSearchParams} from '../models/template-search-params';
 
 @Injectable()
 export class TemplateLibService {

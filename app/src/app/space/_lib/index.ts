@@ -1,4 +1,4 @@
-export * from './containers/space-search.component';
+export * from './containers/space-select.component';
 export * from './containers/space-drawer-search.component';
 export * from './model/package';
 export * from './model/space';

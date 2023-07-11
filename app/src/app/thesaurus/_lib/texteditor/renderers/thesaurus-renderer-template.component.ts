@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {TemplateLibService} from '../../template/template-lib.service';
+import {TemplateLibService} from '../../template/services/template-lib.service';
 
 @Component({
   selector: 'tw-template-view',

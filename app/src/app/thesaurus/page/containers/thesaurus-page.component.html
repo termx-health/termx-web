@@ -1,4 +1,5 @@
 <m-page mFull [mTitle]="spaceSelector" class="thesaurus">
+  <!-- Space selector -->
   <ng-template #spaceSelector>
     <m-dropdown [mHideIfEmpty]="false">
       <m-button *m-dropdown-container mDisplay="text">
@@ -20,6 +21,7 @@
 
 
   <div class="page__container">
+    <!-- Sidebar -->
     <div class="page__sidebar">
       <tw-collapse-panel resizable>
         <m-skeleton [mLoading]="loader.state['spaces']">
@@ -29,6 +31,29 @@
     </div>
 
 
+    <!-- Main container -->
+    <ng-container *ngIf="loader.state['spaces'] || space; else noSpace">
+      <!-- Space view -->
+      <tw-thesaurus-space-details
+          *ngIf="isOverviewSelected" class="page__wrapper"
+          [space]="space"
+          (viewPage)="viewPage($event)"
+      ></tw-thesaurus-space-details>
+
+      <!-- Page view -->
+      <tw-thesaurus-page-details
+          *ngIf="!isOverviewSelected"
+          [space]="space"
+          [slug]="slug"
+          [page]="page"
+          (viewPage)="viewPage($event)"
+          (editPage)="editPage($event)"
+          (viewResource)="viewResource({type: $event.type, id: $event.id, opts: $event.options})"
+      ></tw-thesaurus-page-details>
+    </ng-container>
+
+
+    <!-- "Space not selected" -->
     <ng-template #noSpace>
       <div class="page__wrapper">
         <m-alert mType="error" mShowIcon class="tw-alert--no-line m-rounded" mTitle="web.thesaurus-page.no-space.title">
@@ -36,24 +61,6 @@
         </m-alert>
       </div>
     </ng-template>
-
-
-    <ng-container *ngIf="loader.state['spaces'] || space; else noSpace">
-      <tw-thesaurus-space-overview
-          *ngIf="isOverviewSelected" class="page__wrapper"
-          [space]="space"
-          (viewPage)="viewPage($event)"
-      ></tw-thesaurus-space-overview>
-
-      <tw-thesaurus-page-details
-          *ngIf="!isOverviewSelected"
-          [slug]="slug"
-          [page]="page"
-          (viewPage)="viewPage($event)"
-          (editPage)="editPage($event)"
-          (viewRelation)="viewTarget($event)"
-      ></tw-thesaurus-page-details>
-    </ng-container>
   </div>
 </m-page>
 

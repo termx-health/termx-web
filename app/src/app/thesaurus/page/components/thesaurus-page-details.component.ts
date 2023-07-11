@@ -1,29 +1,32 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {Page, PageContent, PageRelation} from '../../_lib';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {GithubExportable} from '../../../integration/_lib/github/github.service';
-import {collect, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {collect, group, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../services/page.service';
 import {MuiConfigService} from '@kodality-web/marina-ui';
 import {NgForm} from '@angular/forms';
 import {Clipboard} from '@angular/cdk/clipboard';
+import {Page, PageContent, PageRelation, parsePageRelationLink} from 'term-web/thesaurus/_lib';
+import {Space, SpaceLibService} from 'term-web/space/_lib';
 
 @Component({
   selector: 'tw-thesaurus-page-details',
   templateUrl: 'thesaurus-page-details.component.html'
 })
-export class ThesaurusPageDetailsComponent implements OnChanges {
+export class ThesaurusPageDetailsComponent implements OnChanges, OnInit {
+  @Input() public space: Space;
   @Input() public slug: string;
   @Input() public page: Page;
+  @Output() public editPage = new EventEmitter<string>();
+  @Output() public viewPage = new EventEmitter<string>();
+  @Output() public viewResource = new EventEmitter<{type: string, id: string, options: {space?: string}}>();
+
   protected pageContent?: PageContent;
   protected pageRelations?: {[k: string]: PageRelation[]};
   protected pageUsages?: PageRelation[];
 
-  @Output() public editPage = new EventEmitter<string>();
-  @Output() public viewPage = new EventEmitter<string>();
-  @Output() public viewRelation = new EventEmitter<{type: string, id: string}>();
-
   @ViewChild("contentForm") public contentFrom: NgForm;
+  protected spaces: {[id: number]: Space} = {};
 
   protected loader = new LoadingManager();
   protected contentModalData: {
@@ -36,8 +39,13 @@ export class ThesaurusPageDetailsComponent implements OnChanges {
     private route: ActivatedRoute,
     private pageService: PageService,
     private clipboard: Clipboard,
+    private spaceService: SpaceLibService,
     protected muiConfig: MuiConfigService
   ) { }
+
+  public ngOnInit(): void {
+    this.loader.wrap('spaces', this.spaceService.search({})).subscribe(resp => this.spaces = group(resp.data, s => s.id));
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['page'] || changes['slug']) {
@@ -61,10 +69,11 @@ export class ThesaurusPageDetailsComponent implements OnChanges {
       this.pageRelations = collect(page.relations, r => r.type);
       this.pageService.searchPageRelations({
         type: 'page',
-        target: page.contents?.map(c => c.slug).join(',')!,
+        target: page.contents?.map(c => `${c.slug},${this.space?.code}/${c.slug}`).join(',')!,
         limit: 999
       }).subscribe(resp => {
-        this.pageUsages = resp.data;
+        // local links (doesn't start with "$space/") should be from the same space
+        this.pageUsages = resp.data.filter(r => r.target.startsWith(`${this.space?.code}/`) || r.spaceId === this.space.id);
       });
     }
   }
@@ -86,9 +95,13 @@ export class ThesaurusPageDetailsComponent implements OnChanges {
     };
   }
 
+  protected openRelation(type: string, target: string): void {
+    const {space, page} = parsePageRelationLink(target);
+    this.viewResource.emit({type: type, id: page, options: {space}});
+  }
+
 
   /* Utils */
-
 
   protected copy(): void {
     this.clipboard.copy(this.pageContent.content);

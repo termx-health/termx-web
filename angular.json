@@ -35,7 +35,20 @@
               "angular2-text-mask",
               "slugify",
               "file-saver",
-              "fhir"
+              "fhir",
+              "escape-html",
+              "markdown-it",
+              "markdown-it-abbr",
+              "markdown-it-attrs",
+              "markdown-it-collapsible",
+              "markdown-it-emoji",
+              "markdown-it-expand-tabs",
+              "markdown-it-footnote",
+              "markdown-it-mark",
+              "markdown-it-multimd-table",
+              "markdown-it-sub",
+              "markdown-it-sup",
+              "markdown-it-task-lists"
             ],
             "assets": [
               "app/src/favicon.ico",

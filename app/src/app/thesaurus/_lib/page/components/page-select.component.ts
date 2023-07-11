@@ -1,37 +1,40 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, forwardRef, Input, OnChanges, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
+import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {PageLibService} from './page-lib.service';
-import {Page} from './page';
-import {PageSearchParams} from './page-search-params';
+import {PageLibService} from '../services/page-lib.service';
+import {Page} from '../models/page';
+import {PageSearchParams} from '../models/page-search-params';
+import {NgChanges} from '@kodality-web/marina-ui';
 
 
 @Component({
   selector: 'tw-page-select',
-  templateUrl: './page-select.component.html',
+  templateUrl: 'page-select.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => PageSelectComponent), multi: true}, DestroyService]
 })
-export class PageSelectComponent implements OnInit, ControlValueAccessor {
-  @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
+export class PageSelectComponent implements OnInit, OnChanges, ControlValueAccessor {
+  @Input() @BooleanInput() public valuePrimitive: string | boolean;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
   @Input() public idNe?: number;
+  @Input() public spaceId?: number;
 
-  public data: {[id: string]: Page} = {};
-  public value?: number;
-  public searchUpdate = new Subject<string>();
-  private loading: {[key: string]: boolean} = {};
+  protected data: {[id: string]: Page} = {};
+  protected value?: number;
+  protected searchUpdate = new Subject<string>();
+  protected loader = new LoadingManager();
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
+  private onChange = (x: any) => x;
+  private onTouched = (x: any) => x;
 
   public constructor(
     private pageService: PageLibService,
     private translateService: TranslateService,
     private destroy$: DestroyService
   ) {}
+
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(
@@ -41,7 +44,15 @@ export class PageSelectComponent implements OnInit, ControlValueAccessor {
     ).subscribe(data => this.data = data);
   }
 
-  public onSearch(text: string): void {
+  public ngOnChanges(changes: NgChanges<PageSelectComponent>): void {
+    if (changes.spaceId && !changes.spaceId.firstChange) {
+      this.data = {};
+      this.value = undefined;
+      setTimeout(() => this.fireOnChange());
+    }
+  }
+
+  protected onSearch(text: string): void {
     this.searchUpdate.next(text);
   }
 
@@ -52,27 +63,28 @@ export class PageSelectComponent implements OnInit, ControlValueAccessor {
 
     const q = new PageSearchParams();
     q.idsNe = this.idNe;
+    q.spaceIds = this.spaceId;
     q.textContains = text;
     q.limit = 100;
 
-    this.loading['search'] = true;
-    return this.pageService.searchPages(q).pipe(
+    const req$ = this.pageService.searchPages(q).pipe(
       takeUntil(this.destroy$),
       map(ca => group(ca.data, c => c.id!)),
       catchError(() => of(this.data)),
-      finalize(() => this.loading['search'] = false)
     );
+    return this.loader.wrap('space', req$);
   }
 
   private loadPage(id?: number): void {
     if (isDefined(id)) {
-      this.loading['load'] = true;
-      this.pageService.loadPage(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
+      this.loader.wrap('load', this.pageService.loadPage(id)).pipe(takeUntil(this.destroy$)).subscribe(c => {
         this.data = {...(this.data || {}), [c.id!]: c};
-      }).add(() => this.loading['load'] = false);
+      });
     }
   }
 
+
+  /* CVA */
 
   public writeValue(obj: Page | number): void {
     this.value = typeof obj === 'object' ? obj?.id : obj;
@@ -95,11 +107,10 @@ export class PageSelectComponent implements OnInit, ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  public get isLoading(): boolean {
-    return Object.values(this.loading).some(Boolean);
-  }
 
-  public localizedContentName = (page: Page): string | undefined => {
+  /* Utils */
+
+  protected localizedContentName = (page: Page): string | undefined => {
     return page?.contents?.find(c => c.lang === this.translateService.currentLang)?.name || page?.contents?.[0]?.name;
   };
 }

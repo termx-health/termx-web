@@ -5,8 +5,8 @@ import {Page, PageContent} from 'term-web/thesaurus/_lib';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-thesaurus-space-overview',
-  templateUrl: 'thesaurus-space-overview.component.html',
+  selector: 'tw-thesaurus-space-details',
+  templateUrl: 'thesaurus-space-details.component.html',
   styles: [`
     .equal-columns {
       display: grid;
@@ -15,7 +15,7 @@ import {TranslateService} from '@ngx-translate/core';
     }
   `]
 })
-export class ThesaurusSpaceOverviewComponent implements OnChanges {
+export class ThesaurusSpaceDetailsComponent implements OnChanges {
   @Input() public space: Space;
   @Output() public viewPage = new EventEmitter<string>();
 

@@ -937,7 +937,9 @@
         "value-set": "ValueSet",
         "map-set": "MapSet",
         "concept-code-system": "Concept's CodeSystem",
-        "concept": "Concept"
+        "concept": "Concept",
+        "space": "Space",
+        "search-externally": "Search from other space"
       },
       "structure-definition-modal": {
         "header": "Choose structure definition",
