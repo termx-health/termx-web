@@ -13,8 +13,6 @@ import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-par
 import {SnomedRefsetSearchResult} from '../model/refset/snomed-refset-search-result';
 import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-member-search-result';
 import {SnomedBranch, SnomedDescription, SnomedDescriptionSearchParams} from 'term-web/integration/_lib';
-import {saveAs} from 'file-saver';
-import {JobLog} from 'term-web/sys/_lib';
 
 @Injectable()
 export class SnomedLibService {
@@ -68,7 +66,7 @@ export class SnomedLibService {
   }
 
   public findBranchDescriptions(path: string, params: SnomedDescriptionSearchParams): Observable<SnomedSearchResult<SnomedDescription>> {
-    path = encodeURIComponent(path);
+    path = path.split('/').join('--');
     return this.http.get(`${this.baseUrl}/branches/${path}/descriptions`, {params: SearchHttpParams.build(params)}).pipe(map(r => r as SnomedSearchResult<SnomedDescription>));
   }
 
