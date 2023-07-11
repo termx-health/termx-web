@@ -56,7 +56,7 @@ export class ThesaurusPageEditComponent implements OnInit {
         this.page = page;
         this.pageContent = page.contents.find(c => c.slug === slug);
       } else {
-        this.router.navigate(['/thesaurus', this.route.snapshot.paramMap.get("space"), 'pages']);
+        this.router.navigate(['/thesaurus', this.route.snapshot.paramMap.get("space")]);
       }
     });
   }
@@ -72,7 +72,7 @@ export class ThesaurusPageEditComponent implements OnInit {
   }
 
   protected back(): void {
-    this.router.navigate(['/thesaurus', this.route.snapshot.paramMap.get("space"), 'pages', this.route.snapshot.paramMap.get('slug')]);
+    this.router.navigate(['/thesaurus', this.route.snapshot.paramMap.get("space"), this.route.snapshot.paramMap.get('slug')]);
   }
 
   protected afterPageSave(content: PageContent): void {
@@ -84,7 +84,7 @@ export class ThesaurusPageEditComponent implements OnInit {
       this.loader.stop('update');
     }, 200);
 
-    this.router.navigate(['/thesaurus', this.route.snapshot.paramMap.get("space"), 'pages', content.slug, 'edit']);
+    this.router.navigate(['/thesaurus', this.route.snapshot.paramMap.get("space"), content.slug, 'edit']);
   }
 
 

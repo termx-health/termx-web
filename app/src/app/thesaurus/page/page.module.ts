@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {ThesaurusLibModule} from '../_lib';
-import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
 import {MarinaQuillModule} from '@kodality-web/marina-quill';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {Routes} from '@angular/router';
@@ -18,9 +17,9 @@ import {ThesaurusSpaceOverviewComponent} from './components/thesaurus-space-over
 
 
 export const THESAURUS_PAGE_ROUTES: Routes = [
-  {path: '', component: ThesaurusPageComponent},
   {path: ':slug', component: ThesaurusPageComponent},
   {path: ':slug/edit', component: ThesaurusPageEditComponent, data: {privilege: ['*.Thesaurus.edit']}},
+  {path: '', component: ThesaurusPageComponent},
 ];
 
 
@@ -29,7 +28,6 @@ export const THESAURUS_PAGE_ROUTES: Routes = [
     CoreUiModule,
     ThesaurusLibModule,
     IntegrationLibModule,
-    MarinaMarkdownModule,
     MarinaQuillModule,
 
     DragDropModule,

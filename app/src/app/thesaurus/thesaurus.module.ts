@@ -11,8 +11,11 @@ import {IntegrationLibModule} from '../integration/_lib';
 import {PageModule, THESAURUS_PAGE_ROUTES} from './page/page.module';
 
 export const THESAURUS_ROUTES: Routes = [
-  {path: 'pages', children: THESAURUS_PAGE_ROUTES},
-  {path: ':space/pages', children: THESAURUS_PAGE_ROUTES},
+  {path: ':space', children: THESAURUS_PAGE_ROUTES},
+  {path: '', children: THESAURUS_PAGE_ROUTES},
+];
+
+export const THESAURUS_MANAGEMENT_ROUTES: Routes = [
   {path: 'templates', component: TemplateListComponent},
   {path: 'templates/add', component: TemplateEditComponent, data: {privilege: ['*.Thesaurus.edit']}},
   {path: 'templates/:id/edit', component: TemplateEditComponent, data: {privilege: ['*.Thesaurus.edit']}}

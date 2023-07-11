@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../services/page.service';
 import {LoadingManager} from '@kodality-web/core-util';
-import {Page, PageRelation} from 'term-web/thesaurus/_lib';
+import {Page} from 'term-web/thesaurus/_lib';
 import {map, skip} from 'rxjs';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
@@ -38,7 +38,7 @@ export class ThesaurusPageComponent implements OnInit {
         const matchedSpace = resp.data.find(s => s.code === space) || resp.data.find(s => s.id === Number(space));
         if (!matchedSpace) {
           if (this.preferences.spaceId) {
-            this.router.navigate(['/thesaurus', this.preferences.spaceId, 'pages'], {replaceUrl: true});
+            this.router.navigate(['/thesaurus', this.preferences.spaceId], {replaceUrl: true});
           }
           return;
         }
@@ -46,7 +46,7 @@ export class ThesaurusPageComponent implements OnInit {
         const foundById = matchedSpace.code !== space;
         if (foundById) {
           // replace id with code
-          const url = this.router.url.replace(`/${matchedSpace.id}/`, `/${matchedSpace.code}/`);
+          const url = this.router.url.replace(`/${matchedSpace.id}`, `/${matchedSpace.code}`);
           this.router.navigateByUrl(url, {replaceUrl: true});
         } else {
           this.space = matchedSpace;
@@ -61,7 +61,7 @@ export class ThesaurusPageComponent implements OnInit {
             if (page) {
               this.init(page);
             } else {
-              this.router.navigate(['/thesaurus/pages']);
+              this.router.navigate(['/thesaurus']);
             }
           });
         } else {
@@ -72,7 +72,7 @@ export class ThesaurusPageComponent implements OnInit {
       this.preferences.spaceId$.pipe(
         skip(1), // fixme: service emits the undefined/localstorage value first
       ).subscribe(spaceId => {
-        this.router.navigate(['/thesaurus', spaceId, 'pages']);
+        this.router.navigate(['/thesaurus', spaceId]);
       });
     });
   }
@@ -88,25 +88,25 @@ export class ThesaurusPageComponent implements OnInit {
   /* Link open */
 
   public viewRoot(): void {
-    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, 'pages']);
+    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId]);
   }
 
   public viewPage(slug: string): void {
-    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, 'pages', slug]);
+    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, slug]);
   }
 
   public editPage(slug: string): void {
-    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, 'pages', slug, 'edit']);
+    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, slug, 'edit']);
   }
 
-  public viewTarget(relation: PageRelation): void {
+  public viewTarget({type, id}: {type: string, id: string}): void {
     const handlers = {
-      'page': () => this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, 'pages', relation.content?.code]),
-      'cs': () => this.router.navigate(['/resources/code-systems/', relation.target, 'view']),
-      'vs': () => this.router.navigate(['/resources/value-sets/', relation.target, 'view']),
-      'ms': () => this.router.navigate(['/resources/map-sets/', relation.target, 'view']),
+      'page': () => this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, id]),
+      'cs': () => this.router.navigate(['/resources/code-systems/', id, 'view']),
+      'vs': () => this.router.navigate(['/resources/value-sets/', id, 'view']),
+      'ms': () => this.router.navigate(['/resources/map-sets/', id, 'view']),
       'concept': () => {
-        const [cs, concept] = relation.target.split('|');
+        const [cs, concept] = id.split('|');
         if (cs === 'snomed-ct') {
           this.router.navigate(['/integration/snomed/dashboard/', concept]);
         } else {
@@ -115,7 +115,7 @@ export class ThesaurusPageComponent implements OnInit {
       },
     };
 
-    handlers[relation.type]?.();
+    handlers[type]?.();
   }
 
 
