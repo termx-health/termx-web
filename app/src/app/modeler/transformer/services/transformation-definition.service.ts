@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {StructureDefinition} from '../../_lib';
-import {map} from 'rxjs/operators';
 import {environment} from 'environments/environment';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {TransformationDefinition} from 'term-web/modeler/transformer/services/transformation-definition';
@@ -22,8 +21,8 @@ export class TransformationDefinitionService {
     return this.http.get<SearchResult<TransformationDefinition>>(`${this.baseUrl}`, {params: SearchHttpParams.build(params)});
   }
 
-  public transform(source: string, def: StructureDefinition): Observable<string> {
-    return this.http.post(`${this.baseUrl}/transform`, {definition: def, source: source}).pipe(map(r => r['result']));
+  public transform(source: string, def: StructureDefinition): Observable<TransformationResult> {
+    return this.http.post<TransformationResult>(`${this.baseUrl}/transform`, {definition: def, source: source});
   }
 
   public save(def: TransformationDefinition): Observable<any> {
@@ -32,4 +31,10 @@ export class TransformationDefinitionService {
     }
     return this.http.post(`${this.baseUrl}`, def);
   }
+
+}
+
+export class TransformationResult {
+  public result?: string;
+  public error?: string;
 }

@@ -9,22 +9,22 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 })
 export class TransformationDefinitionExecutionComponent {
   @Input() public definition: TransformationDefinition;
-  public output: string;
+  public result: {result?: string, error?: string};
   public loading: boolean;
 
   public constructor(
     private transformationDefinitionService: TransformationDefinitionService,
     private notificationService: MuiNotificationService
-    ) {}
+  ) {}
 
   public evaluate(): void {
     if (!TransformationDefinition.isValid(this.definition)) {
       this.notificationService.error('core.form-invalid');
       return;
     }
-    this.output = null;
+    this.result = null;
     this.loading = true;
-    this.transformationDefinitionService.transform(this.definition.testSource, this.definition).subscribe(r => this.output = r)
+    this.transformationDefinitionService.transform(this.definition.testSource, this.definition).subscribe(r => this.result = r)
       .add(() => this.loading = false);
   }
 }
