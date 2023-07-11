@@ -8,6 +8,7 @@ import {NzListModule} from 'ng-zorro-antd/list';
 import {PortalModule} from '@angular/cdk/portal';
 import {StructureDefinitionLibService} from './structure-definition/structure-definition-lib.service';
 import {StructureDefinitionTreeComponent} from './structure-definition/structure-definition-tree.component';
+import {StructureDefinitionSelectComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-select.component';
 
 @NgModule({
   imports: [
@@ -24,9 +25,11 @@ import {StructureDefinitionTreeComponent} from './structure-definition/structure
   ],
   declarations: [
     StructureDefinitionTreeComponent,
+    StructureDefinitionSelectComponent,
   ],
   exports: [
     StructureDefinitionTreeComponent,
+    StructureDefinitionSelectComponent,
   ]
 })
 export class ModelerLibModule {

@@ -34,7 +34,8 @@
     "no-data": "No data",
     "back": "Back",
     "delete-confirm": "Are you sure you want to delete?",
-    "data-lost-warning": "Your changes wouldn't be saved!"
+    "data-lost-warning": "Your changes wouldn't be saved!",
+    "form-invalid": "Form invalid. Please review the data"
   },
   "web": {
     "landing": {
@@ -1155,6 +1156,27 @@
       "type": "Type",
       "url": "URL",
       "file": "File"
+    },
+    "transformation-definition": {
+      "list": {
+        "add-btn": "Add transformation definition"
+      },
+      "resources": {
+        "type.definition": "Definitions",
+        "type.mapping": "Mapping",
+        "new": "-- new --"
+      },
+      "resource-form": {
+        "definition": "Structure definition",
+        "fhir-server": "Fhir server",
+        "fhir-resource": "Resource",
+        "content": "Content"
+      },
+      "execution": {
+        "input": "Input",
+        "transform": "Transform",
+        "output": "Output"
+      }
     }
   },
   "entities": {
@@ -1732,6 +1754,15 @@
       "modified-by": "Modified by",
       "project": "Project",
       "workflow": "Workflow"
+    },
+    "transformation-definition": {
+      "singular": "Transformation definition",
+      "plural": "Transformation definitions",
+      "source": "Source",
+      "source-definition": "TermX",
+      "source-fhir": "Fhir",
+      "source-static": "Static",
+      "name": "Name"
     }
   },
   "marina.ui.form.validationError": {

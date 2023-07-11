@@ -1,0 +1,35 @@
+<div *ngFor="let type of types">
+  <div class="m-items-middle resource-dir">
+    <m-icon mCode="folder"/>
+    {{('web.transformation-definition.resources.type.' + type) | translate}}
+  </div>
+
+  <div *ngFor="let res of definition.resources | filter:filterType:type"
+      class="m-items-middle resource"
+      [class.resource--selected]="selected === res"
+      [class.resource--invalid]="res | apply:isInvalid:selected"
+      (click)="onSelect(res)">
+    <m-icon [mCode]="res.source === 'definition' ? 'file-done' : res.source === 'fhir' ? 'fire' : 'file'"/>
+    <div>{{res.name || ('web.transformation-definition.resources.new' | translate)}}</div>
+  </div>
+
+  <div class="resource-add">
+    <m-button mSize="small" mDisplay="dashed" (mClick)="onAdd(type)" style="padding: 3px">
+      <div class="m-items-middle">
+        <m-icon mCode="plus"/>
+        {{'core.btn.add' | translate}}
+      </div>
+    </m-button>
+  </div>
+</div>
+
+<div class="m-items-middle resource-dir">
+  <m-icon mCode="folder"/>
+  {{('web.transformation-definition.resources.type.mapping') | translate}}
+</div>
+
+<div class="m-items-middle resource" [class.resource--selected]="selected === definition.mapping" (click)="onSelect(definition.mapping)">
+  <m-icon [mCode]="definition.mapping.source === 'fhir' ? 'fire' : 'file'"/>
+  <div>{{definition.mapping.name || ('web.transformation-definition.resources.new' | translate)}}</div>
+</div>
+

@@ -215,6 +215,15 @@
         "privileges": [
           "*.Modeler.view"
         ]
+      },
+      {
+        "label": {
+          "en": "Transformation definitions"
+        },
+        "link": "modeler/transformation-definitions",
+        "privileges": [
+          "*.Modeler.view"
+        ]
       }
     ]
   },

@@ -1,0 +1,58 @@
+<m-spinner [mLoading]="!definition"></m-spinner>
+<ng-container *ngIf="!!definition">
+  <div class="m-justify-between m-items-middle">
+    <div>
+      <h2 class="m-items-middle">
+        <span class="m-bold">{{'entities.transformation-definition.singular' | translate}}</span>
+      </h2>
+    </div>
+
+    <div class="m-items-middle">
+      <m-button (click)="save()" [mLoading]="loading" mDisplay="primary">
+        <div class="m-items-middle">
+          <m-icon mCode="save"/>
+          {{'core.btn.save' | translate}}
+        </div>
+      </m-button>
+    </div>
+  </div>
+
+  <div nz-row nzGutter="12" class="m-row" style="margin-top: 12px">
+    <div nz-col [nzMd]="24">
+      <m-card>
+        <m-form-item mName="name" mLabel="entities.transformation-definition.name" required>
+          <m-input [(ngModel)]="definition.name" name="name" required></m-input>
+        </m-form-item>
+      </m-card>
+    </div>
+  </div>
+  <div nz-row nzGutter="12" class="m-row" style="margin-top: 12px">
+    <div nz-col [nzMd]="8" [nzXs]="24">
+      <m-card>
+        <tw-transformation-definition-resources [definition]="definition" [(selected)]="selectedResource"></tw-transformation-definition-resources>
+      </m-card>
+    </div>
+    <div nz-col [nzMd]="16" [nzXs]="24">
+      <m-card *ngIf="selectedResource">
+        <m-button *ngIf="selectedResource !== definition.mapping"
+            mSize="small"
+            mDisplay="dashed"
+            m-popconfirm
+            mPopconfirmTitle="core.delete-confirm"
+            (mOnConfirm)="deleteResource(selectedResource)"
+            style="position: absolute; right: 19px; z-index: 100">
+          <m-icon mCode="delete"/>
+        </m-button>
+        <tw-transformation-definition-resource-form [resource]="selectedResource"></tw-transformation-definition-resource-form>
+      </m-card>
+    </div>
+  </div>
+
+  <div nz-row nzGutter="12" class="m-row" style="margin-top: 12px">
+    <div nz-col [nzMd]="24">
+      <m-card>
+        <tw-transformation-definition-execution [definition]="definition"></tw-transformation-definition-execution>
+      </m-card>
+    </div>
+  </div>
+</ng-container>
