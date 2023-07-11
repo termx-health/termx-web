@@ -1,0 +1,11 @@
+<m-select
+    icon="search"
+    [placeholder]="placeholder"
+    [(ngModel)]="value"
+    (mInputChange)="onSearch($event)"
+    (mChange)="fireOnChange()"
+    [loading]="loader.isLoading"
+    [autoUnselect]="false"
+>
+  <m-option *ngFor="let key of data | keys" [mValue]="data[key].id" [mLabel]="data[key] | apply: localizedContentName"/>
+</m-select>

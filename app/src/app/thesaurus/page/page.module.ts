@@ -13,7 +13,7 @@ import {PageService} from './services/page.service';
 import {PageLinkService} from './services/page-link.service';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
 import {ThesaurusPageDetailsComponent} from './components/thesaurus-page-details.component';
-import {ThesaurusSpaceOverviewComponent} from './components/thesaurus-space-overview.component';
+import {ThesaurusSpaceDetailsComponent} from './components/thesaurus-space-details.component';
 
 
 export const THESAURUS_PAGE_ROUTES: Routes = [
@@ -42,7 +42,7 @@ export const THESAURUS_PAGE_ROUTES: Routes = [
     ThesaurusPageModalComponent,
     ThesaurusPageHeaderComponent,
     ThesaurusPageDetailsComponent,
-    ThesaurusSpaceOverviewComponent
+    ThesaurusSpaceDetailsComponent
   ],
   providers: [
     PageService,

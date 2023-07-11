@@ -4,7 +4,7 @@ import {structureDefinitionCodePlugin} from './plugins/structure-definition-code
 import {createCustomElement} from '@angular/elements';
 import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib';
 import {structureDefinitionFshPlugin} from 'term-web/thesaurus/_lib/texteditor/plugins/structure-definition-fsh.plugin';
-import getLink from './plugins/external-link.plugin';
+import transformLink from './plugins/external-link.plugin';
 
 @Component({
   selector: 'tw-smart-text-editor-view',
@@ -48,39 +48,32 @@ export class ThesaurusSmartTextEditorViewComponent implements OnChanges {
   }
 
   private processLink(processedValue: ProcessedValue[]): ProcessedValue[] {
+    const processLinkValue = (mdLink: string): string => {
+      // matches "[label](uri)"
+      const [_, label, uri] = [...mdLink.matchAll(/\[(.*)]\((.*)\)/g)][0];
+      if (!uri.includes(':')) {
+        return mdLink;
+      }
+      if (!["cs", "vs", "ms", "concept", "page"].includes(uri.split(":")[0])) {
+        return mdLink;
+      }
+
+      // decorates link with missing parts
+      return `[${label}](${transformLink(uri, {spaceId: this.preferences.spaceId})})`;
+    };
+
     processedValue.forEach(pv => {
       if (pv.type === 'text') {
         const matches = pv.value.match(/\[(.*?)]\(.*?\)/g);
-        matches?.forEach(m => pv.value = pv.value!.replace(m, this.processLinkValue(m)));
+        matches?.forEach(m => pv.value = pv.value!.replace(m, processLinkValue(m)));
       }
     });
     return processedValue;
   }
 
-  private processLinkValue(mdLink: string): string {
-    const _getLink = link => getLink(link, {spaceId: this.preferences.spaceId});
-
-    // matches "[label](uri)"
-    const [_, label, uri] = [...mdLink.matchAll(/\[(.*)]\((.*)\)/g)][0];
-    if (uri.includes(':')) {
-      return `[${label}](${_getLink(uri)})`;
-    }
-    if (!isUrl(uri) && !uri.startsWith("/")) {
-      return `[${label}](${_getLink(`page:${uri}`)})`;
-    }
-    return mdLink;
-  }
 }
 
 export class ProcessedValue {
   public type?: string;
   public value?: string;
 }
-
-const isUrl = (link: string): boolean => {
-  try {
-    return !!new URL(link);
-  } catch {
-    return false;
-  }
-};

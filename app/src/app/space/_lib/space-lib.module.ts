@@ -4,7 +4,7 @@ import {SpaceLibService} from './services/space-lib-service';
 import {PackageLibService} from './services/package-lib-service';
 import {PackageVersionLibService} from './services/package-version-lib-service';
 import {SpaceDrawerSearchComponent} from './containers/space-drawer-search.component';
-import {SpaceSearchComponent} from './containers/space-search.component';
+import {SpaceSelectComponent} from './containers/space-select.component';
 import {TerminologyServerLibService} from './services/terminology-server-lib-service';
 import {PackageResourceLibService} from './services/package-resource-lib-service';
 import {FormsModule} from '@angular/forms';
@@ -24,11 +24,11 @@ import {TranslateModule} from '@ngx-translate/core';
   ],
   declarations: [
     SpaceDrawerSearchComponent,
-    SpaceSearchComponent
+    SpaceSelectComponent
   ],
   exports: [
     SpaceDrawerSearchComponent,
-    SpaceSearchComponent
+    SpaceSelectComponent
   ],
   providers: [
     SpaceLibService,

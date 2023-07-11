@@ -29,6 +29,7 @@
 
   <div *ngIf="page?.id">
     <div nz-row nzGutter="12">
+      <!-- Main page container -->
       <div nz-col [nzLg]="18" [nzXs]="24" class="page__content">
         <m-card>
           <tw-smart-text-editor
@@ -41,9 +42,11 @@
         </m-card>
       </div>
 
+      <!-- Actions/Metadata container -->
       <div nz-col [nzLg]="6" [nzXs]="24">
         <m-card>
           <div class="page__actions">
+            <!-- Content -->
             <div>
               <b>{{'web.thesaurus-page.actions.contents' | translate}}</b>
               <div>
@@ -60,6 +63,7 @@
               </div>
             </div>
 
+            <!-- Links/Relations -->
             <div>
               <b>{{'web.thesaurus-page.actions.relations' | translate}}</b>
               <div *ngIf="!(pageRelations | keys)?.length" class="m-text-secondary">
@@ -69,25 +73,34 @@
                 <dt>{{key}}</dt>
                 <dd>
                   <li style="margin-left: 1rem" *ngFor="let relation of pageRelations[key];">
-                    <a (click)="viewRelation.emit({type: relation.type, id: relation.target})">{{relation.target}}</a>
+                    <a (click)="openRelation(relation.type, relation.target)">
+                      {{relation.target}}
+                    </a>
                   </li>
                 </dd>
               </dl>
             </div>
 
+            <!-- Usages -->
             <div>
               <b>{{'web.thesaurus-page.actions.usages' | translate}}</b>
               <div *ngIf="!pageUsages?.length" class="m-text-secondary">
                 {{'web.thesaurus-page.actions.none' | translate}}
               </div>
               <div>
-                <a *ngFor="let usage of pageUsages" (click)="viewRelation.emit({type: usage.type, id: usage.content.code})">
-                  <m-icon mCode="link"></m-icon>
-                  {{usage.content.names | localName}}
-                </a>
+                <div *ngFor="let usage of pageUsages">
+                  <a
+                      *ngIf="usage.spaceId !== space?.id ? spaces[usage.spaceId]?.code + '/' + usage.content.code : usage.content.code as target"
+                      (click)="openRelation(usage.type, target)"
+                  >
+                    <m-icon mCode="link"/>
+                    {{target}}
+                  </a>
+                </div>
               </div>
             </div>
 
+            <!-- Tags -->
             <div>
               <b>{{'web.thesaurus-page.actions.tags' | translate}}</b>
               <div *ngIf="!page?.tags?.length" class="m-text-secondary">
@@ -141,7 +154,6 @@
     </m-button>
   </div>
 </m-modal>
-
 
 <tw-thesaurus-page-modal
   #pageModal

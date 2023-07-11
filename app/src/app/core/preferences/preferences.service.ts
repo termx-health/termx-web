@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, map, Observable} from 'rxjs';
+import {BehaviorSubject, distinctUntilChanged, filter, map, Observable} from 'rxjs';
 import {isDefined, toNumber} from '@kodality-web/core-util';
-import {distinctUntilChanged} from 'rxjs/operators';
 
 const LOCALE = 'locale';
 const SPACE = 'space';
@@ -9,7 +8,7 @@ const SPACE = 'space';
 @Injectable({providedIn: 'root'})
 export class PreferencesService {
   private _lang = new BehaviorSubject<string>(localStorage.getItem(LOCALE) ?? 'en');
-  private _spaceId = new BehaviorSubject<number>(toNumber(localStorage.getItem(SPACE)));
+  private _spaceId = new BehaviorSubject<{id: number, emit?: boolean}>({id: toNumber(localStorage.getItem(SPACE)), emit: false});
 
 
   public setLang(lang: string): void {
@@ -26,17 +25,23 @@ export class PreferencesService {
   }
 
 
-  public setSpace(spaceId: number): void {
+  public setSpace(spaceId: number, options?: {emitEvent?: boolean}): void {
+    console.log('next', {id: spaceId, emit: options?.emitEvent ?? true})
     localStorage.setItem(SPACE, spaceId ? String(spaceId) : undefined);
-    this._spaceId.next(spaceId);
+    this._spaceId.next({id: spaceId, emit: options?.emitEvent ?? true});
   }
 
   public get spaceId$(): Observable<number> {
-    return this._spaceId.pipe(map(this.toNumber), distinctUntilChanged());
+    return this._spaceId.pipe(
+      filter(e => e.emit),
+      map(e => e.id),
+      map(this.toNumber),
+      distinctUntilChanged()
+    );
   }
 
   public get spaceId(): number {
-    return this.toNumber(this._spaceId.getValue());
+    return this.toNumber(this._spaceId.getValue()?.id);
   }
 
 

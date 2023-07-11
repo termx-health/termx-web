@@ -40,7 +40,7 @@
                 mIcon="copy"
                 (click)="copyStructureDefToClipboard()"
                 m-tooltip
-                [mTitle]="'{{def:' + pageContent.slug + '-model}}'"
+                mTitle="def:{{pageContent.slug}}-model"
                 mPosition="bottom"
             >
               {{'Copy reference' | translate: ({val: '{{def:' + pageContent.slug + '-model}' + '}'})}}
@@ -77,7 +77,7 @@
     Do you want to save the current page content before navigating to the Structure Definition?
   </div>
 
-  <div *m-modal-footer class="m-justify-between">
+  <div *m-modal-footer class="m-justify-between" style="width: 100%">
     <m-button (click)="openStructureDefinition()">
       {{'web.thesaurus-page.form.proceed-without-saving' | translate}}
     </m-button>

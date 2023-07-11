@@ -3,12 +3,12 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {Page} from './page';
-import {PageSearchParams} from './page-search-params';
-import {PageContentSearchParams} from './page-content-search-params';
-import {PageContent} from './page-content';
-import {PageRelationSearchParams} from './page-relation-search-params';
-import {PageRelation} from './page-relation';
+import {Page} from '../models/page';
+import {PageSearchParams} from '../models/page-search-params';
+import {PageContentSearchParams} from '../models/page-content-search-params';
+import {PageContent} from '../models/page-content';
+import {PageRelationSearchParams} from '../models/page-relation-search-params';
+import {PageRelation} from '../models/page-relation';
 
 @Injectable()
 export class PageLibService {

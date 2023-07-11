@@ -107,19 +107,6 @@ export class ThesaurusPageModalComponent implements OnInit, OnChanges {
   }
 
 
-  /* Form */
-
-  protected addLink(): void {
-    this.page.links = [...this.page.links ?? [], new PageLink()];
-  }
-
-  protected deleteLink(index: number): void {
-    if (this.page?.links) {
-      this.page.links.splice(index, 1);
-      this.page.links = [...this.page.links];
-    }
-  }
-
 
   /* External API */
 

@@ -6,12 +6,12 @@ import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
 import {MarinaQuillModule} from '@kodality-web/marina-quill';
 import {NzListModule} from 'ng-zorro-antd/list';
-import {PageLibService} from './page/page-lib.service';
-import {PageSelectComponent} from './page/page-select.component';
+import {PageLibService} from './page/services/page-lib.service';
+import {PageSelectComponent} from './page/components/page-select.component';
 import {PortalModule} from '@angular/cdk/portal';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
-import {TagLibService} from './tag/tag-lib.service';
-import {TemplateLibService} from './template/template-lib.service';
+import {TagLibService} from './tag/services/tag-lib.service';
+import {TemplateLibService} from './template/services/template-lib.service';
 import {ThesaurusRendererTemplateComponent} from './texteditor/renderers/thesaurus-renderer-template.component';
 import {ThesaurusDropdownComponent} from './texteditor/quick-actions/dropdown/thesaurus-dropdown.component';
 import {ThesaurusQuickActionsMenuComponent} from './texteditor/quick-actions/thesaurus-quick-actions-menu.component';
@@ -23,6 +23,7 @@ import {ThesaurusSmartTextEditorComponent} from './texteditor/thesaurus-smart-te
 import {ThesaurusSmartTextEditorViewComponent} from './texteditor/thesaurus-smart-text-editor-view.component';
 import {ThesaurusTextareaComponent} from './texteditor/thesaurus-textarea.component';
 import {ModelerLibModule} from 'term-web/modeler/_lib';
+import {SpaceLibModule} from 'term-web/space/_lib';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import {ModelerLibModule} from 'term-web/modeler/_lib';
     MarinaMarkdownModule,
     MarinaQuillModule,
     ModelerLibModule,
+    SpaceLibModule,
   ],
   providers: [
     TagLibService,

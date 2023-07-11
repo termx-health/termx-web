@@ -1,15 +1,16 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../services/page.service';
-import {LoadingManager} from '@kodality-web/core-util';
+import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {Page} from 'term-web/thesaurus/_lib';
-import {map, skip} from 'rxjs';
+import {map, takeUntil} from 'rxjs';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 
 @Component({
   templateUrl: './thesaurus-page.component.html',
-  styleUrls: ['../styles/thesaurus-page.styles.less']
+  styleUrls: ['../styles/thesaurus-page.styles.less'],
+  providers: [DestroyService]
 })
 export class ThesaurusPageComponent implements OnInit {
   public space?: Space;
@@ -25,6 +26,7 @@ export class ThesaurusPageComponent implements OnInit {
     private pageService: PageService,
     private spaceService: SpaceLibService,
     protected preferences: PreferencesService,
+    private destroy$: DestroyService,
   ) { }
 
 
@@ -37,7 +39,9 @@ export class ThesaurusPageComponent implements OnInit {
 
         const matchedSpace = resp.data.find(s => s.code === space) || resp.data.find(s => s.id === Number(space));
         if (!matchedSpace) {
+          // param does not match any of loaded spaces
           if (this.preferences.spaceId) {
+            // fallback to previously selected space (in case of navigating to '/thesaurus/')
             this.router.navigate(['/thesaurus', this.preferences.spaceId], {replaceUrl: true});
           }
           return;
@@ -50,7 +54,7 @@ export class ThesaurusPageComponent implements OnInit {
           this.router.navigateByUrl(url, {replaceUrl: true});
         } else {
           this.space = matchedSpace;
-          this.preferences.setSpace(matchedSpace.id);
+          this.preferences.setSpace(matchedSpace.id, {emitEvent: false});
         }
 
 
@@ -69,11 +73,10 @@ export class ThesaurusPageComponent implements OnInit {
         }
       });
 
-      this.preferences.spaceId$.pipe(
-        skip(1), // fixme: service emits the undefined/localstorage value first
-      ).subscribe(spaceId => {
-        this.router.navigate(['/thesaurus', spaceId]);
-      });
+    });
+
+    this.preferences.spaceId$.pipe(takeUntil(this.destroy$)).subscribe(spaceId => {
+      this.router.navigate(['/thesaurus', spaceId], {replaceUrl: true});
     });
   }
 
@@ -88,20 +91,20 @@ export class ThesaurusPageComponent implements OnInit {
   /* Link open */
 
   public viewRoot(): void {
-    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId]);
+    this.router.navigate(['/thesaurus', this.activeSpace]);
   }
 
   public viewPage(slug: string): void {
-    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, slug]);
+    this.router.navigate(['/thesaurus', this.activeSpace, slug]);
   }
 
   public editPage(slug: string): void {
-    this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, slug, 'edit']);
+    this.router.navigate(['/thesaurus', this.activeSpace, slug, 'edit']);
   }
 
-  public viewTarget({type, id}: {type: string, id: string}): void {
+  public viewResource({type, id, opts}: {type: string, id: string, opts: any}): void {
     const handlers = {
-      'page': () => this.router.navigate(['/thesaurus', this.space.code ?? this.preferences.spaceId, id]),
+      'page': () => this.router.navigate(['/thesaurus', opts['space'] ?? this.activeSpace, id]),
       'cs': () => this.router.navigate(['/resources/code-systems/', id, 'view']),
       'vs': () => this.router.navigate(['/resources/value-sets/', id, 'view']),
       'ms': () => this.router.navigate(['/resources/map-sets/', id, 'view']),
@@ -123,6 +126,10 @@ export class ThesaurusPageComponent implements OnInit {
 
   protected get isOverviewSelected(): boolean {
     return !this.route.snapshot.paramMap.has('slug');
+  }
+
+  protected get activeSpace(): string | number {
+    return this.space.code ?? this.preferences.spaceId;
   }
 
   protected get slug(): string {

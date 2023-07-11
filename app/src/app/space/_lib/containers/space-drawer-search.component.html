@@ -16,7 +16,7 @@
         <m-form-row>
           <div *m-form-col>
             <m-form-item mName="space" mLabel="entities.space.singular">
-              <tw-space-search name="space" [(ngModel)]="val.space" (ngModelChange)="loadPackages($event?.id)"></tw-space-search>
+              <tw-space-select name="space" [(ngModel)]="val.space" (ngModelChange)="loadPackages($event?.id)"></tw-space-select>
             </m-form-item>
             <m-form-item mName="package" mLabel="entities.package.singular">
               <m-select name="package" [(ngModel)]="val.package" [disabled]="!packages" (ngModelChange)="loadVersions($event?.id)" compareWith="id" autoSelect>

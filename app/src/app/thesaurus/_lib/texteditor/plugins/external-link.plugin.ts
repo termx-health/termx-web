@@ -1,4 +1,6 @@
-export default function getLink(combinedLink: string, ctx: {spaceId?: number}): string {
+import {parsePageRelationLink} from '../../page/utils/page-relation.utils';
+
+export default function transformLink(combinedLink: string, ctx: {spaceId?: number}): string {
   const [system, value] = combinedLink.split(':');
 
   switch (system) {
@@ -14,6 +16,10 @@ export default function getLink(combinedLink: string, ctx: {spaceId?: number}): 
         ? `/integration/snomed/dashboard/${concept}`
         : `/resources/code-systems/${cs}/concepts/${concept}/view`;
     case 'page':
+      const {page, space} = parsePageRelationLink(value);
+      if (space) {
+        return `/thesaurus/${space}/${page}`;
+      }
       return ctx.spaceId ? `/thesaurus/${ctx.spaceId}/${value}` : `/thesaurus/${value}`;
     default:
       return combinedLink;
