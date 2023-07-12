@@ -28,14 +28,16 @@ import {SpaceLibModule} from 'term-web/space/_lib';
 @NgModule({
   imports: [
     FormsModule,
-    MarinaComponentsModule,
-    CoreUtilModule,
     PortalModule,
-    NzListModule,
-    ResourcesLibModule,
-    CoreUiModule,
+
+    MarinaComponentsModule,
     MarinaMarkdownModule,
     MarinaQuillModule,
+    CoreUtilModule,
+    NzListModule,
+
+    CoreUiModule,
+    ResourcesLibModule,
     ModelerLibModule,
     SpaceLibModule,
   ],

@@ -1,17 +1,10 @@
-import {AfterViewInit, Component, Directive, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import {AfterViewInit, Component, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {isDefined} from '@kodality-web/core-util';
-import {startWith, Subject} from 'rxjs';
+import {startWith} from 'rxjs';
 import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
-import {OptionItem, ThesaurusDropdownOptionComponent} from './dropdown/thesaurus-dropdown-option.component';
+import {ThesaurusDropdownOptionComponent} from './dropdown/thesaurus-dropdown-option.component';
 import {ThesaurusDropdownComponent} from './dropdown/thesaurus-dropdown.component';
-
-@Directive()
-export abstract class ThesaurusQuickActionsModalBaseComponent {
-  public abstract definition: Omit<OptionItem, 'result'>;
-  public resolve = new Subject<any>();
-
-  public abstract handle(ctx?: {lang?: string});
-}
+import {ThesaurusQuickActionDefinition, ThesaurusQuickActionsBaseComponent} from './thesaurus-quick-actions-base.directive';
 
 
 @Component({
@@ -19,7 +12,7 @@ export abstract class ThesaurusQuickActionsModalBaseComponent {
   template: `
     <tw-dropdown [reference]="containerRef">
       <div class="dropdown-options-container" id="options-container">
-        <tw-dropdown-option [item]="item" *ngFor="let item of popupOptions" (click)="selectOption(item)"></tw-dropdown-option>
+        <tw-dropdown-option *ngFor="let item of popupOptions" [item]="item" (click)="onOptionSelect(item)"></tw-dropdown-option>
       </div>
     </tw-dropdown>
 
@@ -31,7 +24,6 @@ export abstract class ThesaurusQuickActionsModalBaseComponent {
   styles: [`
     .dropdown-options-container {
       width: 100%;
-      max-height: 15rem;
       border-radius: 3px;
       box-shadow: 0 1px 4px 0 rgba(0, 0, 0, .24);
       overflow-y: scroll;
@@ -42,18 +34,19 @@ export abstract class ThesaurusQuickActionsModalBaseComponent {
 export class ThesaurusQuickActionsMenuComponent implements AfterViewInit {
   @Input() public containerRef: HTMLElement;
   @Input() public lang: string;
-  @Output() public resultComposed = new EventEmitter<{result: any, range: Range}>();
+  @Output() public resultComposed = new EventEmitter<{result: any, range: Range, cursorOffset: number}>();
 
   // internal variables
-  protected popupOptions: OptionItem[] = [];
-  @ViewChildren(ThesaurusQuickActionsModalBaseComponent) private componentOptions: QueryList<ThesaurusQuickActionsModalBaseComponent>;
-  private baseOptions = [
-    {id: '_md_bullet-list', name: 'Bullet list', icon: 'unordered-list', description: 'Create an unordered list', result: '* '},
-    {id: '_md_numbered-list', name: 'Numbered list', icon: 'ordered-list', description: 'Create an ordered list', result: '1. '},
-    {id: '_md_divider', name: 'Divider', icon: 'line', description: 'Separate content with horizontal line', result: '*** '},
-    {id: '_md_code', name: 'Code', icon: 'code', description: 'Syntax highlight', result: '```\n\n``` '},
-    {id: '_md_heading-1', name: 'Heading 1', icon: 'font-size', description: 'Top level heading', result: '# '},
-    {id: '_md_heading-2', name: 'Heading 2', icon: 'font-size', description: 'Sections', result: '## '}
+  protected popupOptions: ThesaurusQuickActionDefinition[] = []; // both componentOptions & baseOptions
+
+  @ViewChildren(ThesaurusQuickActionsBaseComponent) private readonly componentOptions: QueryList<ThesaurusQuickActionsBaseComponent>;
+  private readonly baseOptions: ThesaurusQuickActionDefinition[] = [
+    {id: '_md_bullet-list', icon: 'unordered-list', name: 'Bullet list', description: 'Create an unordered list', result: '* '},
+    {id: '_md_numbered-list', icon: 'ordered-list', name: 'Numbered list', description: 'Create an ordered list', result: '1. '},
+    {id: '_md_divider', icon: 'line', name: 'Divider', description: 'Separate content with horizontal line', result: '***\n'},
+    {id: '_md_code', icon: 'code', name: 'Code', description: 'Syntax highlight', result: '```\n``` ', cursorOffset: () => 3},
+    {id: '_md_heading-1', icon: 'font-size', name: 'Heading 1', description: 'Top level heading', result: '# '},
+    {id: '_md_heading-2', icon: 'font-size', name: 'Heading 2', description: 'Sections', result: '## '}
   ];
 
   // dropdown component refs and variables
@@ -71,30 +64,38 @@ export class ThesaurusQuickActionsMenuComponent implements AfterViewInit {
         .withWrap();
     });
 
-    this.componentOptions.changes
-      .pipe(startWith(null))
-      .subscribe(() => {
-        const components = this.componentOptions.toArray();
-        setTimeout(() => {
-          components.forEach(c => c.resolve.subscribe(result => this.emitResult(result)));
-          this.popupOptions = [...components.map(c => c.definition), ...this.baseOptions];
-        });
+    this.componentOptions.changes.pipe(startWith(null)).subscribe(() => {
+      const components = this.componentOptions.toArray();
+      setTimeout(() => {
+        this.popupOptions = [...components.map(c => c.definition), ...this.baseOptions];
+
+        components.forEach(comp =>
+          // add resolve handler to QA component
+          comp.resolve.subscribe(r => {
+            const offset = comp.definition.cursorOffset?.(r);
+            this.emitResult(r, offset);
+          }));
       });
+    });
   }
 
 
-  protected selectOption(item: OptionItem): void {
+  protected onOptionSelect(item: ThesaurusQuickActionDefinition): void {
     this.hide();
 
     if (isDefined(item.result)) {
-      this.emitResult(item.result);
+      this.emitResult(item.result, item.cursorOffset?.(item.result));
     } else {
       this.componentOptions.find(c => c.definition.id === item.id)?.handle({lang: this.lang});
     }
   }
 
-  private emitResult<T>(result: T): void {
-    this.resultComposed.emit({result: result, range: this.range});
+  private emitResult(result: string, offset: number = result?.length): void {
+    this.resultComposed.emit({
+      result: result,
+      range: this.range,
+      cursorOffset: offset
+    });
   }
 
 
@@ -114,10 +115,10 @@ export class ThesaurusQuickActionsMenuComponent implements AfterViewInit {
     }
 
     event.preventDefault();
-    event.stopImmediatePropagation()
+    event.stopImmediatePropagation();
 
     if (event.key === 'Enter' && this.keyManager!.activeItem) {
-      this.selectOption(this.keyManager!.activeItem.item!);
+      this.onOptionSelect(this.keyManager!.activeItem.item!);
     } else if (['ArrowUp', 'Up', 'ArrowDown', 'Down', 'ArrowRight', 'Right', 'ArrowLeft', 'Left'].includes(event.key)) {
       this.keyManager.onKeydown(event);
 

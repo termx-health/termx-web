@@ -3,7 +3,7 @@ import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {Page} from '../../../page/models/page';
-import {ThesaurusQuickActionsModalBaseComponent} from '../thesaurus-quick-actions-menu.component';
+import {ThesaurusQuickActionDefinition, ThesaurusQuickActionsBaseComponent} from '../thesaurus-quick-actions-base.directive';
 import {Space} from 'term-web/space/_lib';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 
@@ -111,16 +111,17 @@ import {PreferencesService} from 'term-web/core/preferences/preferences.service'
     </m-modal>
   `,
   providers: [{
-    provide: ThesaurusQuickActionsModalBaseComponent,
+    provide: ThesaurusQuickActionsBaseComponent,
     useExisting: forwardRef(() => ThesaurusQuickActionsLinkComponent)
   }]
 })
-export class ThesaurusQuickActionsLinkComponent extends ThesaurusQuickActionsModalBaseComponent {
-  public definition = {
+export class ThesaurusQuickActionsLinkComponent extends ThesaurusQuickActionsBaseComponent {
+  public definition: Omit<ThesaurusQuickActionDefinition, 'result'> = {
     id: '_md_link',
     name: 'Link',
     icon: 'link',
-    description: 'Insert a link'
+    description: 'Insert a link',
+
   };
 
   protected data: LinkModalData;

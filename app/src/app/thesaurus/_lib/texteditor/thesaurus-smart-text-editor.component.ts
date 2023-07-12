@@ -63,35 +63,75 @@ export class ThesaurusSmartTextEditorComponent implements ControlValueAccessor {
   protected onTouched = (x?: any): void => x;
 
 
-  public insertAtCursor(result: string, range: Range): void {
-    if (isNil(result)) {
-      result = "";
+  /* Cursor Magic */
+
+  public insertAtCursor(text: string, range: Range, offset = 0): void {
+    if (isNil(text)) {
+      text = "";
     }
 
-    const selection = window.getSelection();
     const textarea = this.textArea.nativeElement;
-    if (!selection || !range) {
+    let cursorPos = this.getCursorPosition(textarea);
+    if (!range) {
       return;
     }
 
-
+    // insert text into the content
     const currentText = textarea.innerText;
     range.deleteContents();
-    range.insertNode(document.createTextNode(result));
+    range.insertNode(document.createTextNode(text));
 
-    selection.removeAllRanges();
-    selection.addRange(range);
+    // get current content
     let newText = textarea?.innerText;
 
-    const i = this.indexOfDifference(currentText, newText);
-    if (isDefined(i) && newText && newText.charAt(i - 1) === '/') {
-      newText = newText.slice(0, i - 1) + newText.slice(i);
+    // remove "/" from the content
+    const diffIdx = this.indexOfDifference(currentText, newText);
+    if (isDefined(diffIdx) && isDefined(newText) && newText.charAt(diffIdx - 1) === '/') {
+      cursorPos = diffIdx - 1;
+      newText = newText.slice(0, diffIdx - 1) + newText.slice(diffIdx);
     }
 
+    // update ngModel value
     this.value = newText;
     this.fireOnChange(newText ?? "");
+
+    // restore/set cursor position
+    setTimeout(() => this.setCursorPosition(cursorPos + offset, textarea));
   }
 
+  private getCursorPosition = (el): number => {
+    // https://zserge.com/posts/js-editor/
+    const range = window.getSelection().getRangeAt(0);
+    const prefix = range.cloneRange();
+    prefix.selectNodeContents(el);
+    prefix.setEnd(range.endContainer, range.endOffset);
+    return prefix.toString().length;
+  };
+
+  private setCursorPosition = (pos, parent): number => {
+    // https://zserge.com/posts/js-editor/
+    for (const node of parent.childNodes) {
+      if (node.nodeType == Node.TEXT_NODE) {
+        if (node.length >= pos) {
+          const range = document.createRange();
+          const sel = window.getSelection();
+          range.setStart(node, pos);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+          return -1;
+        } else {
+          pos = pos - node.length;
+        }
+      } else {
+        pos = this.setCursorPosition(pos, node);
+        if (pos < 0) {
+          return pos;
+        }
+      }
+    }
+    return pos;
+  };
 
   /* CVA */
 

@@ -1,7 +1,7 @@
 import {Component, forwardRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {ThesaurusQuickActionsModalBaseComponent} from '../thesaurus-quick-actions-menu.component';
+import {ThesaurusQuickActionDefinition, ThesaurusQuickActionsBaseComponent} from '../thesaurus-quick-actions-base.directive';
 import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 
 
@@ -30,16 +30,17 @@ import {StructureDefinition, StructureDefinitionLibService} from 'term-web/model
     </m-modal>
   `,
   providers: [{
-    provide: ThesaurusQuickActionsModalBaseComponent,
+    provide: ThesaurusQuickActionsBaseComponent,
     useExisting: forwardRef(() => ThesaurusQuickActionsStructureDefinitionComponent)
   }]
 })
-export class ThesaurusQuickActionsStructureDefinitionComponent extends ThesaurusQuickActionsModalBaseComponent implements OnInit {
-  public definition = {
+export class ThesaurusQuickActionsStructureDefinitionComponent extends ThesaurusQuickActionsBaseComponent implements OnInit {
+  public definition: Omit<ThesaurusQuickActionDefinition, 'result'> = {
     id: '_md_structure-definition',
     name: 'Structure definition',
     icon: 'profile',
-    description: 'Insert structure definition'
+    description: 'Insert structure definition',
+    cursorOffset: res => res.length - 2
   };
 
   protected data?: ModalData;

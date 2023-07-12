@@ -2,7 +2,7 @@ import {Component, forwardRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {Template} from '../../../template/models/template';
-import {ThesaurusQuickActionsModalBaseComponent} from '../thesaurus-quick-actions-menu.component';
+import {ThesaurusQuickActionDefinition, ThesaurusQuickActionsBaseComponent} from '../thesaurus-quick-actions-base.directive';
 import {TemplateLibService} from '../../../template/services/template-lib.service';
 
 
@@ -31,12 +31,12 @@ import {TemplateLibService} from '../../../template/services/template-lib.servic
     </m-modal>
   `,
   providers: [{
-    provide: ThesaurusQuickActionsModalBaseComponent,
+    provide: ThesaurusQuickActionsBaseComponent,
     useExisting: forwardRef(() => ThesaurusQuickActionsTemplateComponent)
   }]
 })
-export class ThesaurusQuickActionsTemplateComponent extends ThesaurusQuickActionsModalBaseComponent implements OnInit {
-  public definition = {
+export class ThesaurusQuickActionsTemplateComponent extends ThesaurusQuickActionsBaseComponent implements OnInit {
+  public definition: Omit<ThesaurusQuickActionDefinition, 'result'> = {
     id: '_md_template',
     name: 'Template',
     icon: 'file-text',

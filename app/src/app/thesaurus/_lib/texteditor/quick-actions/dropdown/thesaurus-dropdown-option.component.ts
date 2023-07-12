@@ -9,7 +9,7 @@ import {Component, HostBinding, Input} from '@angular/core';
         <m-icon [mCode]="item.icon"></m-icon>
       </nz-list-item-meta-avatar>
       <nz-list-item-meta-title>{{item.name}}</nz-list-item-meta-title>
-      <nz-list-item-meta-description>{{ item.description }}</nz-list-item-meta-description>
+      <nz-list-item-meta-description *ngIf="item.description">{{ item.description }}</nz-list-item-meta-description>
     </nz-list-item-meta>
   `,
   styles: [`
@@ -33,7 +33,7 @@ import {Component, HostBinding, Input} from '@angular/core';
     }`]
 })
 export class ThesaurusDropdownOptionComponent implements Highlightable {
-  @Input() public item?: OptionItem;
+  @Input() public item?: ThesaurusDropdownOptionItem;
 
   @HostBinding('class.active')
   public active = false;
@@ -49,10 +49,9 @@ export class ThesaurusDropdownOptionComponent implements Highlightable {
   }
 }
 
-export class OptionItem {
-  public id?: string;
-  public icon?: string;
-  public name?: string;
+export class ThesaurusDropdownOptionItem {
+  public id: string;
+  public icon: string;
+  public name: string;
   public description?: string;
-  public result?: string;
 }

@@ -43,14 +43,18 @@ export class ThesaurusPageDetailsComponent implements OnChanges, OnInit {
     protected muiConfig: MuiConfigService
   ) { }
 
-  public ngOnInit(): void {
-    this.loader.wrap('spaces', this.spaceService.search({})).subscribe(resp => this.spaces = group(resp.data, s => s.id));
-  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['page'] || changes['slug']) {
       this.init(this.page, this.slug);
     }
+  }
+
+  public ngOnInit(): void {
+    this.loader.wrap('spaces', this.spaceService.search({})).subscribe(resp => {
+      // used for relation decorating
+      this.spaces = group(resp.data, s => s.id);
+    });
   }
 
 
@@ -73,7 +77,7 @@ export class ThesaurusPageDetailsComponent implements OnChanges, OnInit {
         limit: 999
       }).subscribe(resp => {
         // local links (doesn't start with "$space/") should be from the same space
-        this.pageUsages = resp.data.filter(r => r.target.startsWith(`${this.space?.code}/`) || r.spaceId === this.space.id);
+        this.pageUsages = resp.data.filter(r => r.spaceId === this.space.id || r.target.startsWith(`${this.space?.code}/`));
       });
     }
   }
@@ -108,8 +112,14 @@ export class ThesaurusPageDetailsComponent implements OnChanges, OnInit {
   }
 
   protected prepareExport = (): GithubExportable[] => {
-    let filename = `${this.pageContent?.slug}.${this.pageContent?.contentType === 'markdown' ? 'md' : 'html'}`;
-    return [{content: this.pageContent?.content, filename: filename}];
+    const extensions = {
+      markdown: 'md',
+      html: 'html'
+    };
+    return [{
+      content: this.pageContent?.content,
+      filename: `${this.pageContent?.slug}.${extensions[this.pageContent?.contentType]}`
+    }];
   };
 
   protected filterLanguages = (supportedLangs: string[], currentLang: string, contents: PageContent[]): string[] => {
