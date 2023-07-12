@@ -1,5 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptUtil, EntityProperty} from 'app/src/app/resources/_lib';
+import {
+  CodeSystem,
+  CodeSystemConcept,
+  CodeSystemEntityVersion,
+  CodeSystemVersion,
+  CodeSystemVersionReference,
+  ConceptUtil,
+  EntityProperty
+} from 'app/src/app/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
@@ -9,6 +17,7 @@ import {CodeSystemDesignationEditComponent} from './designation/code-system-desi
 import {CodeSystemPropertyValueEditComponent} from './propertyvalue/code-system-property-value-edit.component';
 import {CodeSystemAssociationEditComponent} from './association/code-system-association-edit.component';
 import {forkJoin, of} from 'rxjs';
+import {ResourceContextComponent} from 'term-web/resources/resource/components/resource-context.component';
 
 @Component({
   templateUrl: './code-system-concept-edit.component.html',
@@ -41,6 +50,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   @ViewChild("designationEdit") public designationEdit?: CodeSystemDesignationEditComponent;
   @ViewChild("propertyValueEdit") public propertyValueEdit?: CodeSystemPropertyValueEditComponent;
   @ViewChild("associationEdit") public associationEdit?: CodeSystemAssociationEditComponent;
+  @ViewChild(ResourceContextComponent) public resourceContextComponent?: ResourceContextComponent;
 
   public constructor(
     public codeSystemService: CodeSystemService,
@@ -62,7 +72,8 @@ export class CodeSystemConceptEditComponent implements OnInit {
     if (this.mode === 'edit') {
       this.loader.wrap('init', this.codeSystemService.loadConcept(this.codeSystemId, conceptCode, this.versionCode)).subscribe(c => {
         this.concept = this.writeConcept(c);
-        const conceptVersion = this.concept?.versions?.find(v => v.id === Number(conceptVersionId)) || this.concept?.versions?.[this.concept?.versions?.length - 1];
+        const conceptVersion = this.concept?.versions?.find(v => v.id === Number(conceptVersionId)) ||
+          this.concept?.versions?.[this.concept?.versions?.length - 1];
         this.selectVersion(conceptVersion);
       });
     } else {
@@ -180,4 +191,25 @@ export class CodeSystemConceptEditComponent implements OnInit {
   public addAssociation(): void {
     this.conceptVersion.associations = [...this.conceptVersion.associations || [], {status: 'active', associationType: this.codeSystem.hierarchyMeaning}];
   }
+
+  protected unlink(entityVersionId: number, codeSystemVersion: string): void {
+    this.codeSystemService.unlinkEntityVersions(this.codeSystem.id, codeSystemVersion, [entityVersionId]).subscribe(() => {
+      if (codeSystemVersion === this.codeSystemVersion?.version) {
+        this.resourceContextComponent.unselectResourceOrVersion();
+      } else {
+        this.loadData();
+      }
+    });
+  }
+
+  protected link(entityVersionId: number, codeSystemVersion: string): void {
+    this.codeSystemService.linkEntityVersions(this.codeSystem.id, codeSystemVersion, [entityVersionId]).subscribe(() => {
+      this.resourceContextComponent.selectVersion(codeSystemVersion);
+    });
+  }
+
+  protected filterDraftVersions = (v: CodeSystemVersion, versions: CodeSystemVersionReference[]): boolean => {
+    return v.status === 'draft' && !versions?.find(ver => ver.version === v.version);
+  };
+
 }

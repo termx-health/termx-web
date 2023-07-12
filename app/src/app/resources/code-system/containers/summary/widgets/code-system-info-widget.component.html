@@ -14,7 +14,7 @@
   </div>
   <div class="m-items-middle">
     <m-icon mCode="setting"></m-icon>
-    <span>{{'web.case-sensitive-options.' + cs.caseSensitive | translate}}</span>
+    <span>{{'web.case-sensitive.code-is.' + cs.caseSensitive | translate}}</span>
     <m-divider mVertical></m-divider>
     <span>{{cs.content | localizedConceptName: {valueSet: 'codesystem-content-mode'} | async}}</span>
     <ng-container *ngIf="cs.experimental">

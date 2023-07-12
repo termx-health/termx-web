@@ -19,6 +19,7 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
   @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
   @Input() public disabled?: boolean;
   @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
+  @Input() @BooleanInput() public allowClear: string | boolean = true;
   @Input() @BooleanInput() public multiple: string | boolean = false;
   @Output() public selected: EventEmitter<ValueSetVersionConcept> = new EventEmitter();
 

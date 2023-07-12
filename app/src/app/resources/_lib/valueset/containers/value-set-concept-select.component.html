@@ -6,6 +6,7 @@
     [loading]="isLoading"
     [autoUnselect]="false"
     [multiple]="multiple | toBoolean"
+    [allowClear]="allowClear | toBoolean"
     [disabled]="disabled"
     [filterOption]="filterOption">
   <m-option *ngFor="let key of data | keys"

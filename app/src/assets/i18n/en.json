@@ -82,10 +82,16 @@
         }
       }
     },
-    "case-sensitive-options": {
-      "ics": "Initial character sensitive",
-      "cs": "Case sensitive",
-      "ci": "Case insensitive"
+    "case-sensitive": {
+      "options": {
+        "cl": "Initial character insensitive",
+        "cs": "Case sensitive",
+        "ci": "Case insensitive"
+      },
+      "code-is": {
+        "cs": "Code is case sensitive",
+        "ci": "Code is case insensitive"
+      }
     },
     "publication-status": {
       "operations": {
@@ -287,6 +293,7 @@
         "add-header": "Add concept",
         "concept": "Concept",
         "related-artifacts": "Related artifacts",
+        "linked-with-code-systems": "Linked with code system versions",
         "version": {
           "header": "Version {{created}}",
           "new": "New version",

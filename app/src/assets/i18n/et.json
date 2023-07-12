@@ -15,10 +15,12 @@
     "app": {
       "header": "Terminoloogia"
     },
-    "case-sensitive-options": {
-      "ics": "esitähe tõstutundlik",
-      "cs": "tõstutundlik",
-      "ci": "tõstutundetu"
+    "case-sensitive": {
+      "options": {
+        "cl": "esitähe tõstutundetu",
+        "cs": "tõstutundlik",
+        "ci": "tõstutundetu"
+      }
     },
     "code-system-version": {
       "entity": {

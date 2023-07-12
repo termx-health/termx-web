@@ -4,6 +4,7 @@ import {LocalizedName} from '@kodality-web/marina-util';
 export class CodeSystemVersionReference {
   public id?: number;
   public version?: string;
+  public status?: string;
 }
 
 export class CodeSystemVersion extends CodeSystemVersionReference {
@@ -11,7 +12,6 @@ export class CodeSystemVersion extends CodeSystemVersionReference {
   public preferredLanguage?: string;
   public supportedLanguages?: string[];
   public description?: LocalizedName;
-  public status?: string;
   public releaseDate?: Date;
   public expirationDate?: Date;
   public created?: Date;

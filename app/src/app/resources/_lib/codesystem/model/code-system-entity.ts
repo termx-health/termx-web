@@ -1,6 +1,7 @@
 import {CodeSystemAssociation} from './code-system-association';
 import {EntityPropertyValue} from './entity-property';
 import {Designation} from '../../designation';
+import {CodeSystemVersionReference} from 'term-web/resources/_lib';
 
 export abstract class CodeSystemEntity {
   public id?: number;
@@ -20,4 +21,6 @@ export class CodeSystemEntityVersion {
   public propertyValues?: EntityPropertyValue[];
   public designations?: Designation[];
   public associations?:  CodeSystemAssociation[];
+
+  public versions?: CodeSystemVersionReference[];
 }

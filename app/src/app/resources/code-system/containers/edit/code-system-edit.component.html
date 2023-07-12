@@ -16,12 +16,11 @@
                   valueSet="codesystem-content-mode"
                   required></tw-value-set-concept-select>
             </m-form-item>
-            <m-form-item *mFormCol mName="caseSensitive" mLabel="entities.code-system.case-sensitivity">
-              <m-select name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive">
-                <m-option mLabel="web.case-sensitive-options.ci" mValue="ci"></m-option>
-                <m-option mLabel="web.case-sensitive-options.cs" mValue="cs"></m-option>
-                <m-option mLabel="web.case-sensitive-options.ics" mValue="ics"></m-option>
-              </m-select>
+            <m-form-item *mFormCol mName="caseSensitive" mLabel="entities.code-system.case-sensitivity" required>
+              <m-radio-group name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive" required>
+                <label m-radio-button [mValue]="'ci'">{{'web.case-sensitive.options.ci' | translate}}</label>
+                <label m-radio-button [mValue]="'cs'">{{'web.case-sensitive.options.cs' | translate}}</label>
+              </m-radio-group>
             </m-form-item>
           </m-form-row>
 

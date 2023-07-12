@@ -91,6 +91,22 @@
           <m-textarea name="versionDescription" [(ngModel)]="conceptVersion.description"></m-textarea>
         </m-form-item>
         <label *ngIf="conceptVersion.status !== 'draft'">{{conceptVersion.description}}</label>
+        <m-form-item mLabel="web.code-system-concept.form.linked-with-code-systems">
+          <div class="m-items-middle">
+            <m-tag *ngFor="let csv of conceptVersion.versions" mShowIcon>
+              <span>{{csv.version}}</span>&nbsp;
+              <m-icon *ngIf="csv.status === 'draft'" class="m-clickable" mCode="close" (click)="unlink(conceptVersion.id, csv.version)"></m-icon>
+            </m-tag>
+            <m-dropdown>
+              <m-button *m-dropdown-container mDisplay="link">
+                {{'web.code-system.summary.unlinked-concepts.link-to' | translate:{version: '...'} }}
+              </m-button>
+              <ng-container *ngFor="let v of codeSystemVersions | filter: filterDraftVersions:conceptVersion.versions">
+                <a *m-dropdown-item (mClick)="link(conceptVersion.id, v.version)">{{v.version}}</a>
+              </ng-container>
+            </m-dropdown>
+          </div>
+        </m-form-item>
 
         <!-- Designations -->
         <m-divider></m-divider>

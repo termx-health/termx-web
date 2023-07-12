@@ -20,8 +20,7 @@ export class ResourceContextComponent {
 
   protected typeMap = {'CodeSystem': 'code-systems', 'ValueSet': 'value-sets', 'MapSet': 'map-sets'};
 
-
-  protected unselectResourceOrVersion(): void {
+  public unselectResourceOrVersion(): void {
     if (this.version) {
       const commands = {
         'summary': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'summary'],
@@ -36,7 +35,7 @@ export class ResourceContextComponent {
     }
   }
 
-  protected selectVersion(version: string): void {
+  public selectVersion(version: string): void {
     const commands = {
       'summary': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'summary'],
       'concept-list': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts'],
