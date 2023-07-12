@@ -1,16 +1,22 @@
 <m-no-data *ngIf="!(versions?.length > 0)"></m-no-data>
 
 <m-list *ngIf="versions?.length > 0" mSeparated>
-  <m-list-item *ngFor="let version of versions" mClickable (mClick)="openVersionSummary(version.version)">
+  <m-list-item *ngFor="let version of versions">
     <div class="m-justify-between">
       <div class="m-items-middle">
-        <span class="m-bold">{{version.version}}</span>
+        <a class="m-bold" (mClick)="openVersionSummary(version.version)">{{version.version}}</a>
         <m-divider mVertical></m-divider>
         <span>{{(version.releaseDate | localDate) || '...'}} - {{(version.expirationDate | localDate) || '...'}}</span>
         <m-divider mVertical></m-divider>
         <a (mClick)="openVersionConcepts(version.version)">{{version.conceptsTotal}} {{'web.code-system.summary.concepts' | translate}}</a>
       </div>
-      <tw-status-tag [status]="version.status"></tw-status-tag>
+      <div class="m-items-middle">
+        <tw-status-tag [status]="version.status"></tw-status-tag>
+        <ng-container *ngIf="version.status === 'draft' && versions?.length > 1">
+          <m-divider mVertical></m-divider>
+          <m-icon class="m-clickable" mCode="delete" (click)="deleteVersion(version.version)"></m-icon>
+        </ng-container>
+      </div>
     </div>
     <div class="m-items-middle">
       <m-icon mCode="global"></m-icon>

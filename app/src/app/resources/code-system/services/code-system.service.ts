@@ -41,6 +41,10 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/duplicate`, duplicateRequest);
   }
 
+  public deleteCodeSystemVersion(codeSystemId: string, version: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}`);
+  }
+
   public saveConcept(codeSystemId: string, version: string, request: ConceptTransactionRequest): Observable<CodeSystemConcept> {
     if (version) {
       return this.http.post(`${this.baseUrl}/${codeSystemId}/versions/${version}/concepts/transaction`, request);

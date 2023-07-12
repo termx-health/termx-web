@@ -33,6 +33,10 @@ export class ValueSetService extends ValueSetLibService {
     return of();
   }
 
+  public deleteValueSetVersion(valueSetId: string, version: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${valueSetId}/versions/${version}`);
+  }
+
   public saveRule(valueSetId: string, valueSetVersion: string, rule: ValueSetVersionRule): Observable<ValueSetVersionRule> {
     if (rule.id) {
       return this.http.put<ValueSetVersionRule>(`${this.baseUrl}/${valueSetId}/versions/${valueSetVersion}/rules/${rule.id}`, rule);
