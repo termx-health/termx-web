@@ -257,8 +257,8 @@
       },
       {
         "label": {
-          "en": "Terminology servers",
-          "et": "Terminoloogia serverid"
+          "en": "Servers",
+          "et": "Serverid"
         },
         "icon": "cloud-server",
         "link": "terminology-servers",

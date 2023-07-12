@@ -14,8 +14,15 @@
           <m-form-item mName="name" mLabel="entities.terminology-server.name" required>
             <m-multi-language-input name="name" [(ngModel)]="terminologyServer.names" required></m-multi-language-input>
           </m-form-item>
-          <m-form-item mName="url" mLabel="entities.terminology-server.root-url">
-            <m-input name="url" [(ngModel)]="terminologyServer.rootUrl"></m-input>
+          <m-form-item mName="kind" mLabel="entities.terminology-server.kind" required>
+            <m-select name="kind" [(ngModel)]="terminologyServer.kind" required multiple>
+              <m-option mLabel="web.terminology-server.kind.terminology" [mValue]="'terminology'"></m-option>
+              <m-option mLabel="web.terminology-server.kind.fhir" [mValue]="'fhir'"></m-option>
+              <m-option mLabel="web.terminology-server.kind.snomed" [mValue]="'snomed'"></m-option>
+            </m-select>
+          </m-form-item>
+          <m-form-item mName="url" mLabel="entities.terminology-server.root-url" required>
+            <m-input name="url" [(ngModel)]="terminologyServer.rootUrl" required></m-input>
           </m-form-item>
           <m-form-item mName="active" mLabel="entities.terminology-server.active">
             <m-checkbox name="active" [(ngModel)]="terminologyServer.active"></m-checkbox>

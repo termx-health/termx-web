@@ -1087,9 +1087,14 @@
       "edit-header": "Edit package"
     },
     "terminology-server": {
-      "add-header": "Add terminology server",
-      "edit-header": "Edit terminology server",
-      "add-btn": "Add terminology server"
+      "add-header": "Add server",
+      "edit-header": "Edit server",
+      "add-btn": "Add server",
+      "kind": {
+        "terminology": "Terminology server",
+        "snomed": "SNOMED server",
+        "fhir": "FHIR server"
+      }
     },
     "observation-definition": {
       "header-add": "Add observation definition",
@@ -1664,10 +1669,11 @@
       "viewers": "Viewers"
     },
     "terminology-server": {
-      "plural": "Terminology servers",
-      "singular": "Terminology server",
+      "plural": "Servers",
+      "singular": "Server",
       "code": "Code",
       "name": "Name",
+      "kind": "Kind",
       "active": "Active",
       "root-url": "Root URL",
       "current-installation": "Current installation"
