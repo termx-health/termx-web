@@ -5,7 +5,8 @@ import {ObservationDefinition, ObservationDefinitionImportRequest, ObservationDe
 import {Observable, tap} from 'rxjs';
 import {NgForm} from '@angular/forms';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {MuiNotificationService, MuiTableComponent} from '@kodality-web/marina-ui';
+import {CodeSystemConcept} from 'term-web/resources/_lib';
 
 @Component({
   templateUrl: 'observation-definition-list.component.html',
@@ -23,6 +24,7 @@ export class ObservationDefinitionListComponent implements OnInit {
   protected filter: {[key: string]: any} = {};
 
   @ViewChild("form") public form?: NgForm;
+  @ViewChild(MuiTableComponent) public table?: MuiTableComponent<CodeSystemConcept>;
 
   protected jobResponse: JobLog;
   protected importData: {
@@ -133,4 +135,14 @@ export class ObservationDefinitionListComponent implements OnInit {
     obs.protocol?.components?.forEach(c => details.push({label: c.code, tooltip: c.names}));
     return details;
   };
+
+  protected showExpandRow(obs: ObservationDefinition, i: number, type: string): void {
+    if (obs['_expanded']) {
+      this.table.collapse(i);
+    } else {
+      this.table.expand(i);
+    }
+    obs['_expanded'] = !obs['_expanded'];
+    obs['_expandType'] = type;
+  }
 }

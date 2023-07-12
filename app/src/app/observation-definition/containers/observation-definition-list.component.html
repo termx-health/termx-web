@@ -56,7 +56,7 @@
         <th>{{'entities.observation-definition.mappings.multiple' | translate}}</th>
       </tr>
 
-      <tr *mTableRow="let obs">
+      <tr *mTableRow="let obs;let i = index">
         <td><a [routerLink]="[obs.id, ('*.ObservationDefinition.edit' | twHasAnyPrivilege)? 'edit': 'view']" style="white-space: nowrap">{{obs.code}}</a></td>
         <td>
           <div style="display:grid">
@@ -77,13 +77,7 @@
             <label  *ngIf="structure !== 'value'">{{'web.observation-definition.structure.' + structure | translate}}</label>
           </div>
         </td>
-        <td style="width: 30%">
-          <div>
-            <label *ngFor="let d of (obs | apply: getDetails); let i = index" m-tooltip [mTitle]="d.tooltip | localName">
-              {{d.label}}{{i === ((obs | apply: getDetails).length - 1) ? '' : ', '}}
-            </label>
-          </div>
-        </td>
+        <td><m-tag class="m-clickable" mColor="blue" (click)="showExpandRow(obs, i, 'details')" *ngIf="(obs | apply: getDetails) as details">{{details?.length}}</m-tag></td>
         <td>
           <div>
             <label *ngFor="let d of (obs | apply: getProtocol); let i = index" m-tooltip [mTitle]="d.tooltip | localName">
@@ -94,11 +88,21 @@
         <td>
           <label *ngFor="let s of obs.state; let i = index" m-tooltip [mTitle]="s.names | localName">{{s.code}}{{i === (obs.state?.length - 1) ? '' : ', '}}</label>
         </td>
-        <td>
-          <label *ngFor="let m of obs.mappings; let i = index" m-tooltip [mTitle]="m.codeSystem">{{m.concept}}{{i === (obs.mappings?.length - 1) ? '' : ', '}}</label>
-        </td>
+        <td><m-tag class="m-clickable" mColor="blue" (click)="showExpandRow(obs, i, 'mappings')" *ngIf="obs.mappings?.length > 0">{{obs.mappings.length}}</m-tag></td>
       </tr>
 
+      <tr *mTableRowExpand="let obs" class="m-table-expanded-row">
+        <td colspan="8">
+          <div style="display: grid">
+            <ng-container *ngIf="obs['_expandType'] === 'details'">
+              <label *ngFor="let d of (obs | apply: getDetails)">{{d.label}}</label>
+            </ng-container>
+            <ng-container *ngIf="obs['_expandType'] === 'mappings'">
+              <label *ngFor="let m of obs.mappings">{{m.concept}}</label>
+            </ng-container>
+          </div>
+        </td>
+      </tr>
       <tr *mTableNoData>
         <td colspan="100%">
           <m-no-data></m-no-data>
