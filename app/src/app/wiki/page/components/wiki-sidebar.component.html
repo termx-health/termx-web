@@ -1,0 +1,60 @@
+<div class="tw-flex-container">
+  <ng-template #noSpace>
+    <m-no-data/>
+  </ng-template>
+
+
+  <ng-container *ngIf="space; else noSpace">
+    <div class="m-justify-between">
+      <m-icon-button mIcon="sync" (mClick)="reload()"/>
+      <m-input style="flex: 1" twDebounce [debounced]="search" [(ngModel)]="searchText" placeholder="marina.ui.inputs.search.placeholder"/>
+    </div>
+
+    <m-skeleton [mLoading]="loader.isLoading">
+      <div class="space-item m-justify-between" [class.space-item--selected]="!selectedKey" (click)="viewRoot.emit()">
+        <div class="m-items-middle">
+          <m-icon mCode="database"/>
+          {{'web.wiki-page.sidebar.pages' | translate}}
+        </div>
+
+        <m-button mSize="small" (mClick)="onChildAdd($event,modal)">
+          <m-icon mCode="plus"/>
+        </m-button>
+      </div>
+
+      <tw-drop-list
+          style="display: block; margin-left: 1.5rem; border-left: 1px dashed var(--color-borders);"
+          [nodes]="nodes"
+          [nodeRenderer]="nodeDisplay"
+          [nodeActions]="nodeActions"
+          [selectedKey]="selectedKey | apply: findLinkId: nodes | toString"
+          [disableDrag]="!!searchText?.length"
+          (twExpand)="onExpand($event)"
+          (twSelect)="onSelect($event)"
+          (twMove)="onMove($event)"
+      >
+        <ng-template #nodeDisplay let-node>
+          <div class="m-justify-between">
+            <div>{{(node.obj.page | apply: localizedContent).name}}</div>
+            <m-icon *ngIf="node.obj.page.status === 'active'" mCode="check-circle"/>
+          </div>
+        </ng-template>
+
+        <ng-template #nodeActions let-node>
+          <m-button mSize="small" (mClick)="onChildAdd($event,modal,node)">
+            <m-icon mCode="plus"/>
+          </m-button>
+        </ng-template>
+      </tw-drop-list>
+    </m-skeleton>
+
+    <m-no-data *ngIf="data.length === 0 && searchText"/>
+  </ng-container>
+</div>
+
+
+<tw-wiki-page-modal #modal
+    (saved)="openPageAfterSave($event.page, modal)"
+    (closed)="modal.close()"
+/>
+

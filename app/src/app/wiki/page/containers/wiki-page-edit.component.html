@@ -1,0 +1,105 @@
+<m-page mFull class="wiki" [mLoading]="isLoading">
+  <div class="editor__header m-justify-between">
+    <div>
+      {{pageContent?.name}}
+    </div>
+
+    <div class="m-items-middle">
+      <m-button (click)="saveContent()" mDisplay="primary">
+        <div class="m-items-middle">
+          <m-icon mCode="save"/>
+          {{'core.btn.save' | translate}}
+        </div>
+      </m-button>
+
+      <m-button (click)="back()" mDisplay="text">
+        {{'core.btn.cancel' | translate}}
+      </m-button>
+
+      <m-divider mVertical></m-divider>
+      <m-button (click)="pageModal.open()" mDisplay="text">
+        <m-icon mCode="setting"/>
+      </m-button>
+    </div>
+  </div>
+
+
+  <div class="editor__main-wrapper">
+    <div class="editor__sidebar" *ngIf="pageContent?.contentType === 'markdown'">
+      <ul m-menu mCollapsed mSelectable="false">
+        <li m-menu-item [mIcon]="showPreview ?  'pic-center' : 'read'" (click)="togglePreview()">
+          {{showPreview ? 'Hide preview' : 'Show preview'}}
+        </li>
+
+        <li m-sub-menu mTitle="Structure Definition" mIcon="partition" *ngIf="pageContent?.slug">
+          <ul>
+            <li m-menu-item mIcon="link" (click)="structureModal.open()">
+              {{'web.wiki-page.form.add-structure-definition' | translate}}
+            </li>
+            <li m-menu-item
+                mIcon="copy"
+                (click)="copyStructureDefToClipboard()"
+                m-tooltip
+                mTitle="def:{{pageContent.slug}}-model"
+                mPosition="bottom"
+            >
+              {{'Copy reference' | translate: ({val: '{{def:' + pageContent.slug + '-model}' + '}'})}}
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div
+        class="editor__main"
+        [class.editor__main--markdown]="pageContent?.contentType === 'markdown'"
+    >
+      <tw-smart-text-editor
+          *ngIf="pageContent"
+          [(ngModel)]="pageContent.content"
+          [valueType]="pageContent.contentType"
+          [lang]="pageContent.lang"
+          [showPreview]="showPreview"
+          name="content"
+      ></tw-smart-text-editor>
+    </div>
+  </div>
+</m-page>
+
+
+<!-- fixme: translate -->
+<m-modal #structureModal mStyle="width: 36rem; margin-top: calc(var(--page-header-height) + 1rem)" mPlacement="top">
+  <div *m-modal-header class="m-modal__title">
+    Your unsaved changes will be lost!
+  </div>
+
+  <div *m-modal-content>
+    Do you want to save the current page content before navigating to the Structure Definition?
+  </div>
+
+  <div *m-modal-footer class="m-justify-between" style="width: 100%">
+    <m-button (click)="openStructureDefinition()">
+      {{'web.wiki-page.form.proceed-without-saving' | translate}}
+    </m-button>
+
+    <div class="m-items-middle">
+      <m-button (click)="structureModal.close()" autofocus>
+        {{'core.btn.cancel' | translate}}
+      </m-button>
+
+      <m-button mDisplay="primary" (click)="saveAndOpenStructureDefinition()">
+        {{'web.wiki-page.form.save-and-proceed' | translate}}
+      </m-button>
+    </div>
+  </div>
+</m-modal>
+
+
+<tw-wiki-page-modal #pageModal
+    [pageId]="pageContent?.pageId"
+    [contentId]="pageContent?.id"
+    (closed)="pageModal.close()"
+    (saved)="afterPageSave($event.pageContent); pageModal.close()"
+></tw-wiki-page-modal>
+
+

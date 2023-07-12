@@ -7,7 +7,7 @@ import {CodeSystemLibService, MapSetLibService, ValueSetLibService} from 'term-w
 import {SpaceService} from 'term-web/space/services/space.service';
 import {TaskService} from 'term-web/task/services/task-service';
 import {Task, TaskLibModule} from 'term-web/task/_lib';
-import {PageService} from 'term-web/thesaurus/page/services/page.service';
+import {PageService} from 'term-web/wiki/page/services/page.service';
 
 @Component({
   standalone: true,
@@ -72,7 +72,7 @@ export class LandingPageComponent {
 
   private loadSummary(): void {
     const spaces$ = this.withPrivilege(this.spaceService.search({limit: 0}), '*.Space.view');
-    const pages$ = this.withPrivilege(this.pageService.searchPages({limit: 0}), '*.Thesaurus.view');
+    const pages$ = this.withPrivilege(this.pageService.searchPages({limit: 0}), '*.Wiki.view');
     const tasksOpen$ = this.withPrivilege(this.taskService.searchTasks({limit: 0,statusesNe: 'cancelled,completed,error,rejected'}), '*.Task.view');
 
     this.loader.wrap('space', forkJoin([spaces$, pages$, tasksOpen$])).subscribe(([spaces, pages, tasks]) => {

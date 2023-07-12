@@ -313,8 +313,8 @@
           "concept-display": "Concept display",
           "equivalence": "Equivalence"
         },
-        "thesaurus": {
-          "header": "Thesaurus",
+        "wiki": {
+          "header": "Wiki",
           "slug": "Slug",
           "name": "Name"
         }
@@ -791,7 +791,7 @@
             "naming-system": "NamingSystem",
             "association-type": "AssociationType",
             "space": "Space",
-            "thesaurus": "Thesaurus",
+            "wiki": "Wiki",
             "observation-definition": "Observation definition",
             "task": "Task",
             "privilege": "Privilege"
@@ -913,7 +913,7 @@
         "used-by": "Used by"
       }
     },
-    "thesaurus-page": {
+    "wiki-page": {
       "spaces": "Spaces",
       "header": {
         "modified": "<b>{{user}}</b> edited this page on {{date}}",

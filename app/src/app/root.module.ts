@@ -17,7 +17,7 @@ import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
 import {PrivilegesModule} from './privileges/privileges.module';
 import {IntegrationModule} from './integration/integration.module';
 import {GlobalSearchModule} from './global-search/global-search.module';
-import {ThesaurusModule} from './thesaurus/thesaurus.module';
+import {WikiModule} from './wiki/wiki.module';
 import {FhirModule} from './fhir/fhir.module';
 import {MeasurementUnitModule} from './measurement-unit/measurement-unit.module';
 import {SpaceModule} from './space/space.module';
@@ -82,7 +82,7 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     IntegrationModule,
     PrivilegesModule,
     GlobalSearchModule,
-    ThesaurusModule,
+    WikiModule,
     ModelerModule,
     TaskModule,
     FhirModule,
