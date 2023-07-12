@@ -26,7 +26,6 @@ export class PreferencesService {
 
 
   public setSpace(spaceId: number, options?: {emitEvent?: boolean}): void {
-    console.log('next', {id: spaceId, emit: options?.emitEvent ?? true})
     localStorage.setItem(SPACE, spaceId ? String(spaceId) : undefined);
     this._spaceId.next({id: spaceId, emit: options?.emitEvent ?? true});
   }

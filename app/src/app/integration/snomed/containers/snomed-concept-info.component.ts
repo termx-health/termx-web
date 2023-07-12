@@ -3,7 +3,7 @@ import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} 
 import {forkJoin} from 'rxjs';
 import {DestroyService, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {MapSetLibService, ValueSetLibService} from 'app/src/app/resources/_lib';
-import {PageLibService} from 'app/src/app/thesaurus/_lib';
+import {PageLibService} from 'app/src/app/wiki/_lib';
 import {TranslateService} from '@ngx-translate/core';
 import {Router} from '@angular/router';
 import {AuthService} from 'app/src/app/core/auth';
@@ -109,7 +109,7 @@ export class SnomedConceptInfoComponent implements OnChanges {
       this.router.navigate(['/resources/map-sets', id, canEdit ? 'edit' : 'view']);
     }
     if (type === 'Page') {
-      this.router.navigate(['/thesaurus/pages/', id]);
+      this.router.navigate(['/wiki/pages/', id]);
     }
   }
 

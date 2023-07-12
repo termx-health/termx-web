@@ -4,7 +4,7 @@ import {RESOURCES_ROUTES} from './resources/resources.module';
 import {GLOBAL_SEARCH_ROUTES} from './global-search/global-search.module';
 import {INTEGRATION_ROUTES} from './integration/integration.module';
 import {PRIVILEGES_ROUTES} from './privileges/privileges.module';
-import {THESAURUS_MANAGEMENT_ROUTES, THESAURUS_ROUTES} from './thesaurus/thesaurus.module';
+import {WIKI_MANAGEMENT_ROUTES, WIKI_ROUTES} from './wiki/wiki.module';
 import {MEASUREMENT_UNIT_ROUTES} from './measurement-unit/measurement-unit.module';
 import {FHIR_ROUTES} from './fhir/fhir.module';
 import {SPACE_CTX_ROUTES, SPACE_ROUTES, TERMINOLOGY_SERVER_ROUTES} from './space/space.module';
@@ -28,8 +28,8 @@ const APP_ROUTES: Routes = [
   {path: 'privileges', children: PRIVILEGES_ROUTES, data: {privilege: ['*.Privilege.view']}},
   {path: 'terminology-service-api', children: TERMINOLOGY_SERVICE_API_ROUTES},
   {path: 'sequences', children: SEQUENCE_ROUTES},
-  {path: 'thesaurus', children: THESAURUS_ROUTES, data: {privilege: ['*.Thesaurus.view']}},
-  {path: 'thesaurus-management', children: THESAURUS_MANAGEMENT_ROUTES, data: {privilege: ['*.Thesaurus.view']}},
+  {path: 'wiki', children: WIKI_ROUTES, data: {privilege: ['*.Wiki.view']}},
+  {path: 'wiki-management', children: WIKI_MANAGEMENT_ROUTES, data: {privilege: ['*.Wiki.view']}},
   {path: 'modeler', children: MODELER_ROUTES, data: {privilege: ['*.Modeler.view']}},
   {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
   {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.Space.view']}},

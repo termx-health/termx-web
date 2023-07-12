@@ -1,0 +1,43 @@
+<tw-smart-text-editor-view *ngIf="viewMode; else edit" [value]="value" [valueType]="valueType" [lang]="lang"/>
+
+
+<ng-template #edit>
+  <tw-dropdown-menu
+    #optionMenu
+      [containerRef]="ref"
+      [lang]="lang"
+      (resultComposed)="insertAtCursor($event.result, $event.range, $event.cursorOffset)"
+  />
+
+  <div class="editor-wrapper">
+    <div #ref class="editor__editor">
+      <ng-container *ngIf="valueType === 'markdown'">
+        <tw-wiki-textarea
+            style="font-family: monospace"
+            [(ngModel)]="value"
+            (click)="optionMenu.hide()"
+            (keydown)="optionMenu.handleKeyDown($event)"
+            (keyup)="optionMenu.handleKeyUp($event)"
+            (blur)="onTouched()"
+            (ngModelChange)="fireOnChange($event)"
+        />
+      </ng-container>
+
+      <ng-container *ngIf="valueType === 'html'">
+        <m-quill
+            [(ngModel)]="value"
+            (click)="optionMenu.hide()"
+            (keydown)="optionMenu.handleKeyDown($event)"
+            (keyup)="optionMenu.handleKeyUp($event)"
+            (blur)="onTouched()"
+            (ngModelChange)="fireOnChange($event)"
+        />
+      </ng-container>
+    </div>
+
+
+    <div *ngIf="showPreview" class="editor__preview">
+      <tw-smart-text-editor-view [value]="value" [valueType]="valueType" [lang]="lang" [prerendered]="true"/>
+    </div>
+  </div>
+</ng-template>

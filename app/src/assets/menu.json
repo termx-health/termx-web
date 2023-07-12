@@ -166,22 +166,22 @@
   },
   {
     "label": {
-      "en": "Thesaurus",
-      "et": "Thesaurus"
+      "en": "Wiki",
+      "et": "Wiki"
     },
     "privileges": [
-      "*.Thesaurus.view"
+      "*.Wiki.view"
     ],
-    "link": "thesaurus/pages",
+    "link": "wiki/pages",
     "items": [
       {
         "label": {
           "en": "Wiki",
           "et": "Wiki"
         },
-        "link": "thesaurus/pages",
+        "link": "wiki/pages",
         "privileges": [
-          "*.Thesaurus.view"
+          "*.Wiki.view"
         ]
       },
       {
@@ -189,9 +189,9 @@
           "en": "Templates",
           "et": "Mallid"
         },
-        "link": "thesaurus-management/templates",
+        "link": "wiki-management/templates",
         "privileges": [
-          "*.Thesaurus.view"
+          "*.Wiki.view"
         ]
       }
     ]
@@ -204,7 +204,7 @@
     "privileges": [
       "*.Modeler.view"
     ],
-    "link": "thesaurus/pages",
+    "link": "wiki/pages",
     "items": [
       {
         "label": {
