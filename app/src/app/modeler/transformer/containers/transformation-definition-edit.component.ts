@@ -53,7 +53,7 @@ export class TransformationDefinitionEditComponent implements OnInit {
     this.definition.resources.forEach(r => this.cleanResource(r));
     this.loading = true;
     this.transformationDefinitionService.save(this.definition!)
-      .subscribe(() => this.location.back())
+      .subscribe()
       .add(() => this.loading = false);
   }
 
