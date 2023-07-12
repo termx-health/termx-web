@@ -1,21 +1,19 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {CodeSystem, CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
 import {forkJoin} from 'rxjs';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
-import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 
 @Component({
-  templateUrl: 'code-system-version-summary.component.html'
+  templateUrl: 'code-system-version-provenances.component.html'
 })
-export class CodeSystemVersionSummaryComponent implements OnInit {
+export class CodeSystemVersionProvenancesComponent implements OnInit {
   protected codeSystem?: CodeSystem;
   protected codeSystemVersion?: CodeSystemVersion;
   protected loader = new LoadingManager();
-  protected showOnlyOpenedTasks?: boolean = true;
 
-  @ViewChild(ResourceTasksWidgetComponent) public tasksWidgetComponent?: ResourceTasksWidgetComponent;
+  protected searchInput: string;
 
   public constructor(
     private route: ActivatedRoute,
@@ -30,8 +28,10 @@ export class CodeSystemVersionSummaryComponent implements OnInit {
 
   private loadData(codeSystem: string, versionCode: string): void {
     this.loader.wrap('load',
-      forkJoin([this.codeSystemService.load(codeSystem), this.codeSystemService.loadVersion(codeSystem, versionCode)])
-    ).subscribe(([cs, csv]) => {
+      forkJoin([
+        this.codeSystemService.load(codeSystem),
+        this.codeSystemService.loadVersion(codeSystem, versionCode)
+      ])).subscribe(([cs, csv]) => {
       this.codeSystem = cs;
       this.codeSystemVersion = csv;
     });

@@ -12,6 +12,7 @@ export class ValueSetSummaryComponent implements OnInit {
   protected valueSet?: ValueSet;
   protected versions?: ValueSetVersion[];
   protected loader = new LoadingManager();
+  protected showOnlyOpenedTasks?: boolean = true;
 
   public constructor(
     private route: ActivatedRoute,

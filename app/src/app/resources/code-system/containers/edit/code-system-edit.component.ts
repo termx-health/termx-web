@@ -78,6 +78,7 @@ export class CodeSystemEditComponent implements OnInit {
     cs.caseSensitive = 'ci';
     cs.copyright ??= {};
     cs.permissions ??= {};
+    cs.settings ??= {};
     cs.identifiers ??= [];
     cs.properties ??= [];
     return cs;

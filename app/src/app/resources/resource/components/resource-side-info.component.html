@@ -21,4 +21,12 @@
       <m-input name="viewer" [(ngModel)]="permissions.viewer"></m-input>
     </m-form-item>
   </nz-collapse-panel>
+  <nz-collapse-panel nzActive [nzHeader]="'entities.resource.settings.multiple' | translate" *ngIf="settings">
+    <m-form-item mName="reviewRequired" mLabel="entities.resource.settings.review-required">
+      <m-checkbox name="reviewRequired" [(ngModel)]="settings.reviewRequired"></m-checkbox>
+    </m-form-item>
+    <m-form-item mName="approvalRequired" mLabel="entities.resource.settings.approval-required">
+      <m-checkbox name="approvalRequired" [(ngModel)]="settings.approvalRequired"></m-checkbox>
+    </m-form-item>
+  </nz-collapse-panel>
 </nz-collapse>

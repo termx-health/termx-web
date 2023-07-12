@@ -13,8 +13,8 @@
       <!-- Concept Versions -->
       <m-card *ngIf="concept?.versions">
         <m-title *m-card-header mTitle="entities.code-system-concept.versions"></m-title>
-        <m-list mSeparated>
-          <m-list-item *ngFor="let version of concept.versions" mClickable (mClick)="selectVersion(version)">
+        <m-list mSeparated [ngModel]="conceptVersion">
+          <m-list-item *ngFor="let version of concept.versions" [mValue]="version" mClickable (mClick)="selectVersion(version)">
             <div class="m-items-middle">
               <span class="m-bold">{{version.created ? (version.created | localDate) : ('web.code-system-concept.form.version.new' | translate)}}</span>
               <m-divider mVertical></m-divider>

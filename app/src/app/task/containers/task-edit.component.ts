@@ -8,6 +8,8 @@ import {TaskService} from 'term-web/task/services/task-service';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {CodeName} from '@kodality-web/marina-util';
 import {User, UserLibService} from 'term-web/user/_lib';
+import {CodeSystemVersionLibService} from 'term-web/resources/_lib/codesystem/services/code-system-version-lib.service';
+import {CodeSystemEntityVersionLibService, ValueSetVersionLibService} from 'term-web/resources/_lib';
 
 @Component({
   templateUrl: './task-edit.component.html',
@@ -31,6 +33,9 @@ export class TaskEditComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private snomedTranslationService: SnomedTranslationService,
+    private codeSystemVersionService: CodeSystemVersionLibService,
+    private codeSystemEntityVersionService: CodeSystemEntityVersionLibService,
+    private valueSetVersionService: ValueSetVersionLibService,
   ) { }
 
   public ngOnInit(): void {
@@ -119,6 +124,27 @@ export class TaskEditComponent implements OnInit {
   protected openContext(ctx: TaskContextItem): void {
     if (ctx.type === 'snomed-translation') {
       this.snomedTranslationService.load(ctx.id).subscribe(t => this.router.navigate(['/integration/snomed/dashboard', t.conceptId]));
+    }
+    if (ctx.type === 'code-system') {
+      this.router.navigate(['/resources/code-systems', ctx.id, 'summary']);
+    }
+    if (ctx.type === 'code-system-version') {
+      this.codeSystemVersionService.load(ctx.id).subscribe(version => {
+        this.router.navigate(['/resources/code-systems', version.codeSystem, 'versions', version.version, 'summary']);
+      });
+    }
+    if (ctx.type === 'code-system-entity-version') {
+      this.codeSystemEntityVersionService.load(ctx.id).subscribe(version => {
+        this.router.navigate(['/resources/code-systems', version.codeSystem, 'concepts', version.code, 'view'], {queryParams: {conceptVersionId: version.id}});
+      });
+    }
+    if (ctx.type === 'value-set') {
+      this.router.navigate(['/resources/value-sets', ctx.id, 'summary']);
+    }
+    if (ctx.type === 'value-set-version') {
+      this.valueSetVersionService.load(ctx.id).subscribe(version => {
+        this.router.navigate(['/resources/value-sets', version.valueSet, 'versions', version.version, 'summary']);
+      });
     }
   }
 

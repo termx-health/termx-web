@@ -30,4 +30,5 @@ export class CodeSystem {
 
   public copyright?: {holder?: string, jurisdiction?: string, statement?: string};
   public permissions?: {admin?: any, editor?: any, viewer?: any};
+  public settings?: {reviewRequired?: boolean, approvalRequired?: boolean};
 }

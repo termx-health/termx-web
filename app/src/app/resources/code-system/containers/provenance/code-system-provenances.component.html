@@ -1,0 +1,4 @@
+<tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [versions]="versions" mode="provenance"></tw-resource-context>
+<m-page [mLoading]="loader.isLoading">
+  <tw-provenance-list targetType="CodeSystem" [targetId]="codeSystem?.id"></tw-provenance-list>
+</m-page>

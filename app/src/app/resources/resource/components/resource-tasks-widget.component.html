@@ -1,12 +1,20 @@
 <m-no-data *ngIf="!(tasks?.length > 0)"></m-no-data>
 
 <m-list *ngIf="tasks?.length > 0" mSeparated>
-  <m-list-item *ngFor="let task of tasks" mClickable (mClick)="openTask(task.number)">
-    <div class="m-items-middle">
-      <span class="m-bold">{{task.number}}</span>
-      <m-divider mVertical></m-divider>
-      <span>{{task.assignee || '...'}}</span>
+  <m-list-item *ngFor="let task of tasks| filter:filterTask:taskFilters" mClickable (mClick)="openTask(task.number)">
+    <div class="m-justify-between">
+      <div class="m-items-middle">
+        <span class="m-bold">{{task.number}}</span>
+        <m-divider mVertical></m-divider>
+        <span>{{task.workflow || '...'}}</span>
+      </div>
+
+      <tw-task-status [status]="task.status"></tw-task-status>
     </div>
     <div>{{task.title}}</div>
+    <div class="m-items-middle">
+      <m-icon mCode="user"></m-icon>
+      <span>{{task.assignee}}</span>
+    </div>
   </m-list-item>
 </m-list>

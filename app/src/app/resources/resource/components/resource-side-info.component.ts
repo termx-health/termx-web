@@ -8,4 +8,5 @@ import {Component, Input} from '@angular/core';
 export class ResourceSideInfoComponent {
   @Input() public copyright: {holder?: string, jurisdiction?: string, statement?: string};
   @Input() public permissions?: {admin?: any, editor?: any, viewer?: any};
+  @Input() public settings?: {reviewRequired?: boolean, approvalRequired?: boolean};
 }

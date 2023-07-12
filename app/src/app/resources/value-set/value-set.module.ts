@@ -25,6 +25,10 @@ import {ValueSetVersionRuleSetWidgetComponent} from 'term-web/resources/value-se
 import {ValueSetConceptsComponent} from 'term-web/resources/value-set/containers/concepts/value-set-concepts.component';
 import {ValueSetVersionConceptsComponent} from 'term-web/resources/value-set/containers/version/concepts/value-set-version-concepts.component';
 import {ValueSetVersionEditComponent} from 'term-web/resources/value-set/containers/version/edit/value-set-version-edit.component';
+import {UserLibModule} from 'term-web/user/_lib';
+import {ValueSetProvenancesComponent} from 'term-web/resources/value-set/containers/provenance/value-set-provenances.component';
+import {SysLibModule} from 'term-web/sys/_lib';
+import {ValueSetVersionProvenancesComponent} from 'term-web/resources/value-set/containers/version/provenance/value-set-version-provenances.component';
 
 
 export const VALUE_SET_ROUTES: Routes = [
@@ -33,9 +37,11 @@ export const VALUE_SET_ROUTES: Routes = [
   {path: ':id/edit', component: ValueSetEditComponent, data: {privilege: ['*.ValueSet.edit']}},
   {path: ':id/summary', component: ValueSetSummaryComponent},
   {path: ':id/concepts', component: ValueSetConceptsComponent},
+  {path: ':id/provenances', component: ValueSetProvenancesComponent},
   {path: ':id/versions/add', component: ValueSetVersionEditComponent, data: {privilege: ['*.ValueSet.edit']}},
   {path: ':id/versions/:versionCode/summary', component: ValueSetVersionSummaryComponent},
   {path: ':id/versions/:versionCode/concepts', component: ValueSetVersionConceptsComponent},
+  {path: ':id/versions/:versionCode/provenances', component: ValueSetVersionProvenancesComponent},
   {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent, data: {privilege: ['*.ValueSet.edit']}}
 ];
 
@@ -55,7 +61,9 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
     IntegrationLibModule,
     MeasurementUnitLibModule,
     MarinaQuillModule,
-    ResourceModule
+    ResourceModule,
+    UserLibModule,
+    SysLibModule
   ],
   declarations: [
     ValueSetListComponent,
@@ -73,11 +81,13 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
     ValueSetInfoWidgetComponent,
     ValueSetVersionsWidgetComponent,
     ValueSetConceptsComponent,
+    ValueSetProvenancesComponent,
 
     ValueSetVersionSummaryComponent,
     ValueSetVersionInfoWidgetComponent,
     ValueSetVersionRuleSetWidgetComponent,
-    ValueSetVersionConceptsComponent
+    ValueSetVersionConceptsComponent,
+    ValueSetVersionProvenancesComponent
   ],
   exports: [
     ValueSetListComponent

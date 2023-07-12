@@ -224,9 +224,16 @@
           "task": "Task",
           "status": "Status",
           "link-to": "Link to {{version}}",
-          "no-versions": "No draft versions found"
+          "no-versions": "No draft versions found",
+          "create-task": "Create task",
+          "task-modal": {
+            "header": "Create approval task",
+            "cs-version": "Link to code system version",
+            "assignee": "Assignee"
+          }
         },
         "opened-tasks": "Opened tasks",
+        "all-tasks": "All tasks",
         "versions": "Versions",
         "concepts": "Concepts",
         "compare": "Compare",
@@ -251,12 +258,14 @@
       "summary": {
         "code-system-version": "Code system version",
         "opened-tasks": "Opened tasks",
+        "all-tasks": "All tasks",
         "edit-version": "Edit version",
         "info": {
           "definition": "Definition",
           "last-modified": "Last modified",
           "last-reviewed": "Last review date",
           "last-approved": "Last approval date",
+          "none": "None",
           "show-changes": "Show changes",
           "create-review": "Create review task",
           "create-approve": "Create approval task",
@@ -265,6 +274,11 @@
           "retire": "Retire",
           "load-from-github": "Load from Github",
           "push-to-github": "Push to Github"
+        },
+        "task-modal": {
+          "header": "Create {{type}} task",
+          "assignee": "Assignee",
+          "success-msg": "Task created"
         }
       }
     },
@@ -421,6 +435,7 @@
       "summary": {
         "value-set": "Value set",
         "opened-tasks": "Opened tasks",
+        "all-tasks": "All tasks",
         "related-artifacts": "Related artifacts",
         "versions": "Versions",
         "expansions": "Expansions",
@@ -465,6 +480,7 @@
           "last-modified": "Last modified",
           "last-reviewed": "Last review date",
           "last-approved": "Last approval date",
+          "none": "None",
           "show-changes": "Show changes",
           "create-review": "Create review task",
           "create-approve": "Create approval task",
@@ -473,6 +489,11 @@
           "retire": "Retire",
           "load-from-github": "Load from Github",
           "push-to-github": "Push to Github"
+        },
+        "task-modal": {
+          "header": "Create {{type}} task",
+          "assignee": "Assignee",
+          "success-msg": "Task created"
         },
         "value-set-version": "Value set version",
         "rule-set": "Rule set",
@@ -1217,6 +1238,11 @@
         "from": "Expected to be used since",
         "to": "Expected to be used until",
         "description": "Description"
+      },
+      "settings": {
+        "multiple": "Settings",
+        "review-required": "Review required",
+        "approval-required": "Approval required"
       }
     },
     "common": {
@@ -1765,6 +1791,10 @@
       "source-fhir": "Fhir",
       "source-static": "Static",
       "name": "Name"
+    },
+    "provenance": {
+      "date": "Date",
+      "activity": "Activity"
     }
   },
   "marina.ui.form.validationError": {

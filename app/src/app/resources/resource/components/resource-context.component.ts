@@ -14,7 +14,7 @@ export class ResourceContextComponent {
   @Input() public conceptCode: string;
   @Input() public version: ResourceVersion;
   @Input() public versions: ResourceVersion[];
-  @Input() public mode: 'summary' | 'concept-list' | 'concept-edit' | 'concept-view' = 'summary';
+  @Input() public mode: 'summary' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance'  = 'summary';
 
   public constructor(private router: Router) {}
 
@@ -27,7 +27,8 @@ export class ResourceContextComponent {
         'summary': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'summary'],
         'concept-list': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts'],
         'concept-edit': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts', this.conceptCode, 'edit'],
-        'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts', this.conceptCode, 'view']
+        'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts', this.conceptCode, 'view'],
+        'provenance': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'provenances']
       };
       this.router.navigate(commands[this.mode]);
     } else {
@@ -40,7 +41,8 @@ export class ResourceContextComponent {
       'summary': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'summary'],
       'concept-list': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts'],
       'concept-edit': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts', this.conceptCode, 'edit'],
-      'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts', this.conceptCode, 'view']
+      'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts', this.conceptCode, 'view'],
+      'provenance': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'provenances'],
     };
     this.router.navigate(commands[this.mode]);
   }

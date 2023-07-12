@@ -1,0 +1,3 @@
+<m-select icon="search" [placeholder]="placeholder" [(ngModel)]="value" (mChange)="fireOnChange()" [loading]="loader.isLoading" [autoUnselect]="false">
+  <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.sub" [mLabel]="data[key].name"></m-option>
+</m-select>

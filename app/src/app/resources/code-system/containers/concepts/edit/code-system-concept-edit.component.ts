@@ -52,6 +52,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.versionCode = this.route.snapshot.paramMap.get('versionCode');
     const conceptCode = this.route.snapshot.paramMap.get('conceptCode');
+    const conceptVersionId = this.route.snapshot.queryParamMap.get('conceptVersionId');
 
     this.parent = this.route.snapshot.queryParamMap.get('parent');
     this.mode = conceptCode ? 'edit' : 'add';
@@ -61,7 +62,8 @@ export class CodeSystemConceptEditComponent implements OnInit {
     if (this.mode === 'edit') {
       this.loader.wrap('init', this.codeSystemService.loadConcept(this.codeSystemId, conceptCode, this.versionCode)).subscribe(c => {
         this.concept = this.writeConcept(c);
-        this.selectVersion(this.concept?.versions?.[this.concept?.versions?.length - 1]);
+        const conceptVersion = this.concept?.versions?.find(v => v.id === Number(conceptVersionId)) || this.concept?.versions?.[this.concept?.versions?.length - 1];
+        this.selectVersion(conceptVersion);
       });
     } else {
       this.concept = this.writeConcept(new CodeSystemConcept());

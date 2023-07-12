@@ -5,6 +5,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {forkJoin} from 'rxjs';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {CodeSystemUnlinkedConceptsComponent} from 'term-web/resources/code-system/containers/summary/widgets/code-system-unlinked-concepts.component';
+import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 
 @Component({
   templateUrl: 'code-system-summary.component.html'
@@ -12,9 +13,11 @@ import {CodeSystemUnlinkedConceptsComponent} from 'term-web/resources/code-syste
 export class CodeSystemSummaryComponent implements OnInit {
   protected codeSystem?: CodeSystem;
   protected versions?: CodeSystemVersion[];
+  protected showOnlyOpenedTasks?: boolean = true;
   protected loader = new LoadingManager();
 
   @ViewChild(CodeSystemUnlinkedConceptsComponent) public unlinkedConceptsComponent?: CodeSystemUnlinkedConceptsComponent;
+  @ViewChild(ResourceTasksWidgetComponent) public tasksWidgetComponent?: ResourceTasksWidgetComponent;
 
   public constructor(
     private route: ActivatedRoute,

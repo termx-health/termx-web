@@ -37,6 +37,10 @@ import {CodeSystemUnlinkedConceptsComponent} from 'term-web/resources/code-syste
 import {
   CodeSystemConceptsListConceptPreviewComponent
 } from 'term-web/resources/code-system/containers/concepts/list/code-system-concepts-list-concept-preview.component';
+import {UserLibModule} from 'term-web/user/_lib';
+import {CodeSystemProvenancesComponent} from 'term-web/resources/code-system/containers/provenance/code-system-provenances.component';
+import {CodeSystemVersionProvenancesComponent} from 'term-web/resources/code-system/containers/version/provenance/code-system-version-provenances.component';
+import {SysLibModule} from 'term-web/sys/_lib';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -45,6 +49,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/edit', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/summary', component: CodeSystemSummaryComponent},
   {path: ':id/concepts', component: CodeSystemConceptsComponent},
+  {path: ':id/provenances', component: CodeSystemProvenancesComponent},
 
   {path: ':id/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
@@ -53,6 +58,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/summary', component: CodeSystemVersionSummaryComponent},
   {path: ':id/versions/:versionCode/concepts', component: CodeSystemVersionConceptsComponent},
+  {path: ':id/versions/:versionCode/provenances', component: CodeSystemVersionProvenancesComponent},
   {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
@@ -79,7 +85,9 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     ResourcesLibModule,
     MarinaQuillModule,
     SequenceLibModule,
-    ResourceModule
+    ResourceModule,
+    UserLibModule,
+    SysLibModule,
   ],
   declarations: [
     CodeSystemListComponent,
@@ -110,11 +118,13 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemVersionsWidgetComponent,
     CodeSystemValueSetAddComponent,
     CodeSystemConceptsComponent,
+    CodeSystemProvenancesComponent,
     CodeSystemUnlinkedConceptsComponent,
 
     CodeSystemVersionSummaryComponent,
     CodeSystemVersionInfoWidgetComponent,
-    CodeSystemVersionConceptsComponent
+    CodeSystemVersionConceptsComponent,
+    CodeSystemVersionProvenancesComponent
   ],
   exports: [
     CodeSystemListComponent,

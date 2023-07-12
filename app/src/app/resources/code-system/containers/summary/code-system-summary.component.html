@@ -46,20 +46,36 @@
                 <span *m-dropdown-item>{{'web.code-system.summary.unlinked-concepts.no-versions' | translate}}</span>
               </ng-container>
             </m-dropdown>
-            <m-divider mVertical />
+            <m-divider mVertical/>
             <m-button mControls mDisplay="text" mShape="circle" [routerLink]="['/resources/code-systems', codeSystem?.id, 'concepts', 'add']">
               {{'web.code-system.summary.add-concept' | translate}}&nbsp;
               <m-icon mCode="plus"></m-icon>
             </m-button>
           </div>
         </m-title>
-        <tw-code-system-unlinked-concepts #unlinkedConcepts [codeSystem]="codeSystem.id" [versions]="versions"></tw-code-system-unlinked-concepts>
+        <tw-code-system-unlinked-concepts #unlinkedConcepts
+            [codeSystem]="codeSystem.id"
+            [versions]="versions"
+            [approvalRequired]="codeSystem.settings?.approvalRequired"
+            (taskCreated)="tasksWidgetComponent.loadTasks()"></tw-code-system-unlinked-concepts>
       </m-card>
 
       <!-- Tasks -->
       <m-card>
-        <m-title *m-card-header mTitle="web.code-system.summary.opened-tasks"></m-title>
-        <tw-resource-tasks-widget [resourceId]="codeSystem?.id" resourceType="ValueSet"></tw-resource-tasks-widget>
+        <div *m-card-header class="m-items-middle">
+          <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+            <m-title mTitle="web.code-system.summary.opened-tasks"></m-title>
+          </a>
+          <m-title *ngIf="showOnlyOpenedTasks" mTitle="web.code-system.summary.opened-tasks"></m-title>
+          <span>|</span>
+          <a *ngIf="showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+            <m-title mTitle="web.code-system.summary.all-tasks"></m-title>
+          </a>
+          <m-title *ngIf="!showOnlyOpenedTasks" mTitle="web.code-system.summary.all-tasks"></m-title>
+        </div>
+        <tw-resource-tasks-widget [resourceId]="codeSystem?.id"
+            [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined"
+            resourceType="CodeSystem"></tw-resource-tasks-widget>
       </m-card>
 
       <!-- Related artifacts-->

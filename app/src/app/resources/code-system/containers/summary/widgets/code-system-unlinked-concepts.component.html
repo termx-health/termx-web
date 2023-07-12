@@ -18,11 +18,17 @@
 
   <tr *mTableRow="let entityVersion; let i = index">
     <td *ngIf="!viewMode"><m-checkbox [(ngModel)]="entityVersion['checked']" name="{{i}}-checked"></m-checkbox></td>
-    <td><a (click)="openConcept(entityVersion.code)">{{entityVersion.code}}</a></td>
+    <td><a (click)="openConcept(entityVersion)">{{entityVersion.code}}</a></td>
     <td>{{entityVersion.created | localDate}}</td>
     <td><div class="m-items-middle"><span *ngFor="let d of entityVersion.designations; let i = index">{{d.name}}{{i !== (entityVersion.designations?.length - 1) ? ', ' : ''}}</span></div></td>
-    <td></td>
-    <td></td>
+    <ng-container *ngIf="(tasks | apply: findTask:entityVersion.id) as task">
+      <td>{{task.createdBy}}</td>
+      <td><a [routerLink]="['/tasks', task?.number,'edit']">{{task.number}}</a></td>
+    </ng-container>
+    <ng-container *ngIf="!(tasks | apply: findTask:entityVersion.id)">
+      <td></td>
+      <td><a *ngIf="approvalRequired" (mClick)="taskModalData.entityVersionId = entityVersion.id;taskModalData.visible = true">{{'web.code-system.summary.unlinked-concepts.create-task' | translate}}</a></td>
+    </ng-container>
     <td><tw-status-tag [status]="entityVersion.status"></tw-status-tag></td>
     <td *ngIf="!viewMode">
       <m-dropdown>
@@ -41,3 +47,31 @@
     </td>
   </tr>
 </m-backend-table>
+
+<m-modal [(mVisible)]="taskModalData.visible" (mClose)="taskModalData = {visible: false}">
+  <m-title *mModalHeader>
+    {{'web.code-system.summary.unlinked-concepts.task-modal.header' | translate}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #taskModalForm="ngForm">
+      <m-form-item mName="version" mLabel="web.code-system.summary.unlinked-concepts.task-modal.cs-version">
+        <m-select name="version" [(ngModel)]="taskModalData.codeSystemVersionId">
+          <m-option *ngFor="let v of versions | filter: filterDraftVersions" [mValue]="v.id" [mLabel]="v.version"></m-option>
+        </m-select>
+      </m-form-item>
+      <m-form-item mName="assignee" mLabel="web.code-system.summary.unlinked-concepts.task-modal.assignee" required>
+        <tw-user-select name="assignee" [(ngModel)]="taskModalData.assignee" required></tw-user-select>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="taskModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="createTask()" [mLoading]="loader.isLoading" [disabled]="loader.state['create-task']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>

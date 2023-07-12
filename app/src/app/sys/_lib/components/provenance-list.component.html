@@ -1,0 +1,15 @@
+<m-table [mData]="provenances" [mLoading]="loader.isLoading">
+  <tr *mTableHead>
+    <th>{{'entities.provenance.date' | translate}}</th>
+    <th>{{'entities.provenance.activity' | translate}}</th>
+  </tr>
+  <tr *mTableRow="let p">
+    <td>{{p.date | localDateTime}}</td>
+    <td>{{p.activity}}</td>
+  </tr>
+  <tr *mTableNoData>
+    <td colspan="6">
+      <m-no-data></m-no-data>
+    </td>
+  </tr>
+</m-table>

@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {FormsModule} from '@angular/forms';
 import {MarinaComponentsModule} from '@kodality-web/marina-ui';
