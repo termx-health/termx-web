@@ -8,6 +8,11 @@
     <span>{{association.orderNumber}}</span>
   </ng-container>
   <ng-container *ngIf="!viewMode">
+    <m-form-item mName="order-{{i}}">
+      <m-number-input name="order-{{i}}"
+          [(ngModel)]="association.orderNumber"
+          placeholder="entities.code-system-entity-version.association-order"></m-number-input>
+    </m-form-item>
     <m-form-item mName="type-{{i}}">
       <tw-association-type-search [(ngModel)]="association.associationType"
           name="type-{{i}}"
@@ -26,11 +31,6 @@
           name="status-{{i}}"
           placeholder="entities.code-system-entity-version.association-status"
           valueSet="publication-status"></tw-value-set-concept-select>
-    </m-form-item>
-    <m-form-item mName="order-{{i}}">
-      <m-number-input name="order-{{i}}"
-          [(ngModel)]="association.orderNumber"
-          placeholder="entities.code-system-entity-version.association-order"></m-number-input>
     </m-form-item>
   </ng-container>
 </div>

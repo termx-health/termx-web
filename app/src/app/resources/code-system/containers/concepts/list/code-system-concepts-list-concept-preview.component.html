@@ -34,8 +34,8 @@
                 <div><span class="italic">{{d.language}}</span> | {{d.name}}</div>
 
                 <div class="m-items-middle">
-                  <span class="tw-circled" [style.color]="d.status === 'draft' ? 'var(--color-amber-7)' : 'initial'">{{d.status[0] | uppercase}}</span>
                   <m-icon [mOptions]="{nzTheme : d.preferred ? 'fill' : 'outline'}" [mCode]="'star'"/>
+                  <span class="tw-circled" [style.color]="d.status === 'draft' ? 'var(--color-amber-7)' : 'initial'">{{d.status[0] | uppercase}}</span>
                 </div>
               </div>
             </div>
@@ -75,9 +75,9 @@
           <div *ngFor="let a of version.associations" class="m-justify-between">
             <div><span class="italic">{{a.associationType}}</span> | {{a.targetId | localizedConceptName: {codeSystem: codeSystemId} | async}}</div>
 
-            <div>
-              <tw-status-tag [status]="a.status"/>
+            <div class="m-items-middle">
               <label>{{a.orderNumber}}</label>
+              <span class="tw-circled" [style.color]="a.status === 'draft' ? 'var(--color-amber-7)' : 'initial'">{{a.status[0] | uppercase}}</span>
             </div>
           </div>
         </div>
