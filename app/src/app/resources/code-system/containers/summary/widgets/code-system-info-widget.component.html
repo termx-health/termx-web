@@ -10,7 +10,7 @@
   <span>{{cs.description | localName}}</span>
   <div class="m-items-middle" *ngIf="cs.properties as properties">
     <m-icon mCode="bars"></m-icon>
-    <span *ngFor="let p of properties;let i = index" class="m-items-middle">{{p?.name}}{{i !== (properties.length - 1) ? ', ' : ''}}</span>
+    <span>{{properties | map: 'name' | join: ', '}}</span>
   </div>
   <div class="m-items-middle">
     <m-icon mCode="setting"></m-icon>
