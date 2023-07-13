@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/transformer/services/transformation-definition';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 import {Location} from '@angular/common';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
@@ -19,6 +19,7 @@ export class TransformationDefinitionEditComponent implements OnInit {
     private route: ActivatedRoute,
     private transformationDefinitionService: TransformationDefinitionService,
     private location: Location,
+    private router: Router,
     private notificationService: MuiNotificationService
   ) { }
 
@@ -52,8 +53,8 @@ export class TransformationDefinitionEditComponent implements OnInit {
     this.cleanResource(this.definition.mapping);
     this.definition.resources.forEach(r => this.cleanResource(r));
     this.loading = true;
-    this.transformationDefinitionService.save(this.definition!)
-      .subscribe()
+    this.transformationDefinitionService.save(this.definition)
+      .subscribe(r => this.router.navigate(['/modeler/transformation-definitions', r.id, 'edit'], {replaceUrl: true}))
       .add(() => this.loading = false);
   }
 
