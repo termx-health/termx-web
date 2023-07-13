@@ -13,6 +13,7 @@
     <tr *mTableHead>
       <th mColumnKey="code">{{'entities.terminology-server.code' | translate}}</th>
       <th>{{'entities.terminology-server.name' | translate}}</th>
+      <th>{{'entities.terminology-server.kind' | translate}}</th>
       <th>{{'entities.terminology-server.active' | translate}}</th>
       <th>{{'entities.terminology-server.current-installation' | translate}}</th>
     </tr>
@@ -27,6 +28,11 @@
         </ng-template>
       </td>
       <td>{{ts.names | localName}}</td>
+      <td>
+        <div style="display: grid">
+          <span *ngFor="let k of ts.kind">{{'web.terminology-server.kind.' + k | translate}}</span>
+        </div>
+      </td>
       <td><m-checkbox [(ngModel)]="ts.active" readOnly></m-checkbox></td>
       <td><m-checkbox [(ngModel)]="ts.currentInstallation" readOnly></m-checkbox></td>
     </tr>
