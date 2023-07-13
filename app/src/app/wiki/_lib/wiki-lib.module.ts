@@ -24,6 +24,7 @@ import {WikiSmartTextEditorViewComponent} from './texteditor/wiki-smart-text-edi
 import {WikiTextareaComponent} from './texteditor/wiki-textarea.component';
 import {ModelerLibModule} from 'term-web/modeler/_lib';
 import {SpaceLibModule} from 'term-web/space/_lib';
+import {PageContentSelectComponent} from 'term-web/wiki/_lib/page/components/page-content-select.component';
 
 @NgModule({
   imports: [
@@ -49,6 +50,7 @@ import {SpaceLibModule} from 'term-web/space/_lib';
   declarations: [
     // page
     PageSelectComponent,
+    PageContentSelectComponent,
 
     // template
     WikiTemplateRendererComponent,
@@ -68,6 +70,7 @@ import {SpaceLibModule} from 'term-web/space/_lib';
   ],
   exports: [
     PageSelectComponent,
+    PageContentSelectComponent,
     WikiQuickActionsDropdownComponent,
     WikiQuickActionsDropdownOptionComponent,
     WikiQuickActionsLinkComponent,

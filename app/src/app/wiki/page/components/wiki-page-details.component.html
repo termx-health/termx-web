@@ -51,7 +51,7 @@
               <b>{{'web.wiki-page.actions.contents' | translate}}</b>
               <div>
                 <div *ngFor="let content of page?.contents | sort: 'lang'">
-                  <a (click)="viewPage.emit(content.slug)">
+                  <a (click)="viewPage.emit(content.slug)" [class.m-bold]="content.id === pageContent?.id">
                     {{content.lang | uppercase}} | {{content.name}}
                   </a>
                 </div>
