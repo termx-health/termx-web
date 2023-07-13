@@ -16,6 +16,10 @@
           [ngModel]="resource.reference.structureDefinitionId"
           (ngModelChange)="onDefinitionSelect($event)"></tw-structure-definition-select>
     </m-form-item>
+    <ng-container *ngIf="resource.reference.structureDefinitionId">
+      <m-divider></m-divider>
+      <tw-structure-definition-tree [defId]="resource.reference.structureDefinitionId" mode="view"></tw-structure-definition-tree>
+    </ng-container>
   </ng-container>
   <ng-container *ngIf="resource.source === 'fhir'">
     <m-form-item mName="fhirServer" mLabel="web.transformation-definition.resource-form.fhir-server" required>

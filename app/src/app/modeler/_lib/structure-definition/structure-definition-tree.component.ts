@@ -4,6 +4,8 @@ import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {ChefService} from 'term-web/integration/_lib';
 import {MuiTreeComponent, MuiTreeNode, MuiTreeNodeOptions} from '@kodality-web/marina-ui';
 import {StructureDefinitionFhirMapperUtil} from 'term-web/modeler/structure-definition/services/structure-definition-fhir-mapper.util';
+import {map, Observable} from 'rxjs';
+import {StructureDefinition} from 'term-web/modeler/_lib';
 
 @Component({
   selector: 'tw-structure-definition-tree',
@@ -30,6 +32,7 @@ import {StructureDefinitionFhirMapperUtil} from 'term-web/modeler/structure-defi
   `]
 })
 export class StructureDefinitionTreeComponent implements OnChanges {
+  @Input() public defId?: number;
   @Input() public defCode?: string;
   @Input() public fsh?: string;
   @Input() public mode?: 'edit' | 'view' = 'view';
@@ -53,9 +56,11 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['defCode'] && this.defCode) {
       this.defCode = decodeURIComponent(this.defCode);
-      this.processStructureDefinition(this.defCode);
+      this.reloadTree();
     }
-
+    if (changes['defId'] && this.defId) {
+      this.reloadTree();
+    }
     if (changes['fsh'] && this.fsh) {
       this.fsh = decodeURIComponent(this.fsh);
       this.processFsh(this.fsh);
@@ -65,7 +70,10 @@ export class StructureDefinitionTreeComponent implements OnChanges {
 
   public reloadTree(): void {
     if (this.defCode) {
-      this.processStructureDefinition(this.defCode);
+      this.processStructureDefinition(this.structureDefinitionService.search({code: this.defCode, limit: 1}).pipe(map(sd => sd.data[0]!)));
+    }
+    if (this.defId) {
+      this.processStructureDefinition(this.structureDefinitionService.load(this.defId));
     }
   }
 
@@ -73,16 +81,14 @@ export class StructureDefinitionTreeComponent implements OnChanges {
     this.tree.mSelectedKeys.forEach(k => this.tree.unselect(k));
   }
 
-
-  private processStructureDefinition(value: string): void {
-    this.loader.wrap('tree', this.structureDefinitionService.search({code: value, limit: 1})).subscribe(sd => {
-      const structureDefinition = sd.data[0]!;
-      if (structureDefinition?.contentFormat === 'json') {
-        this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(JSON.parse(structureDefinition.content!));
+  private processStructureDefinition(loader: Observable<StructureDefinition>): void {
+    this.loader.wrap('tree', loader).subscribe(sd => {
+      if (sd?.contentFormat === 'json') {
+        this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(JSON.parse(sd.content!));
         this.initTree(this.structureDefinitionValue!);
       }
-      if (structureDefinition?.contentFormat === 'fsh') {
-        this.processFsh(structureDefinition.content!);
+      if (sd?.contentFormat === 'fsh') {
+        this.processFsh(sd.content!);
       }
     });
   }
