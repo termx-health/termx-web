@@ -29,9 +29,7 @@
       </td>
       <td>{{ts.names | localName}}</td>
       <td>
-        <div style="display: grid">
-          <span *ngFor="let k of ts.kind">{{'web.terminology-server.kind.' + k | translate}}</span>
-        </div>
+        <div *ngFor="let k of ts.kind">{{'web.terminology-server.kind.' + k | translate}}</div>
       </td>
       <td><m-checkbox [(ngModel)]="ts.active" readOnly></m-checkbox></td>
       <td><m-checkbox [(ngModel)]="ts.currentInstallation" readOnly></m-checkbox></td>
