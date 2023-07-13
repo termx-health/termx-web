@@ -14,6 +14,12 @@
           {{'core.btn.save' | translate}}
         </div>
       </m-button>
+      <m-button [mLoading]="loading" mDisplay="text" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()">
+        <div class="m-items-middle">
+          <m-icon mCode="delete"/>
+          {{'core.btn.delete' | translate}}
+        </div>
+      </m-button>
     </div>
   </div>
 

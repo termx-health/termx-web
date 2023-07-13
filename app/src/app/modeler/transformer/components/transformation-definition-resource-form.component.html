@@ -30,7 +30,7 @@
       <m-input [(ngModel)]="resource.name" name="name" required></m-input>
     </m-form-item>
     <m-form-item mName="content" mLabel="web.transformation-definition.resource-form.content" required>
-      <m-textarea [(ngModel)]="resource.reference.content" name="content" [autosize]="{minRows: 5}" required></m-textarea>
+      <m-textarea [(ngModel)]="resource.reference.content" name="content" [autosize]="{minRows: 5, maxRows: 30}" required></m-textarea>
     </m-form-item>
   </ng-container>
 </form>

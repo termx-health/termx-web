@@ -58,6 +58,12 @@ export class TransformationDefinitionEditComponent implements OnInit {
       .add(() => this.loading = false);
   }
 
+  public delete(): void {
+    this.loading = true;
+    this.transformationDefinitionService.delete(this.definition.id)
+      .subscribe(r => this.location.back())
+      .add(() => this.loading = false);
+  }
 
   private cleanResource(r: TransformationDefinitionResource): void {
     r.reference = r.source === 'definition' ? {structureDefinitionId: r.reference.structureDefinitionId}

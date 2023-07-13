@@ -11,7 +11,7 @@
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
-      <th mColumnKey="code">{{'entities.transformation-definition.name' | translate}}</th>
+      <th mColumnKey="name">{{'entities.transformation-definition.name' | translate}}</th>
     </tr>
 
     <tr *mTableRow="let td">

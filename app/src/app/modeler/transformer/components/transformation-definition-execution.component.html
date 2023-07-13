@@ -1,8 +1,9 @@
+<m-button (mClick)="evaluate()" [mLoading]="loading">{{'web.transformation-definition.execution.transform' | translate}}</m-button>
 <m-form-item mName="input" mLabel="web.transformation-definition.execution.input">
-  <m-textarea [(ngModel)]="definition.testSource" name="input" [autosize]="{minRows: 5}"></m-textarea>
+  <m-textarea [(ngModel)]="definition.testSource" name="input" [autosize]="{minRows: 5, maxRows: 30}"></m-textarea>
 </m-form-item>
 <m-button (mClick)="evaluate()" [mLoading]="loading">{{'web.transformation-definition.execution.transform' | translate}}</m-button>
 <m-form-item *ngIf="!!result?.result" mName="output" mLabel="web.transformation-definition.execution.output">
-  <pre>{{result.result}}</pre>
+    <pre id="resultEl">{{result.result}}</pre>
 </m-form-item>
 <m-alert mType="error" [mTitle]="result.error" *ngIf="!!result?.error"></m-alert>

@@ -24,7 +24,9 @@ export class TransformationDefinitionExecutionComponent {
     }
     this.result = null;
     this.loading = true;
-    this.transformationDefinitionService.transform(this.definition.testSource, this.definition).subscribe(r => this.result = r)
-      .add(() => this.loading = false);
+    this.transformationDefinitionService.transform(this.definition.testSource, this.definition).subscribe(r => {
+      this.result = r;
+      setTimeout(() => document.getElementById('resultEl').scrollIntoView({behavior: 'smooth'}));
+    }).add(() => this.loading = false);
   }
 }
