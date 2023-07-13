@@ -238,6 +238,10 @@
             "assignee": "Assignee"
           }
         },
+        "duplicate-version-modal": {
+          "header": "Duplicate code system version",
+          "version": "New version"
+        },
         "opened-tasks": "Opened tasks",
         "all-tasks": "All tasks",
         "versions": "Versions",

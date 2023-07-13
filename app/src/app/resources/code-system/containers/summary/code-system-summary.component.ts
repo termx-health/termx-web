@@ -27,12 +27,7 @@ export class CodeSystemSummaryComponent implements OnInit {
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.loader.wrap('load',
-      forkJoin([this.codeSystemService.load(id), this.codeSystemService.searchVersions(id, {limit: -1})]))
-      .subscribe(([cs, versions]) => {
-        this.codeSystem = cs;
-        this.versions = versions.data;
-      });
+    this.loadData(id);
   }
 
   public openVersionSummary(version: string): void {
@@ -50,4 +45,13 @@ export class CodeSystemSummaryComponent implements OnInit {
   protected filterDraftVersions = (v: CodeSystemVersion): boolean => {
     return v.status === 'draft';
   };
+
+  protected loadData(id: string): void {
+    this.loader.wrap('load',
+      forkJoin([this.codeSystemService.load(id), this.codeSystemService.searchVersions(id, {limit: -1})]))
+      .subscribe(([cs, versions]) => {
+        this.codeSystem = cs;
+        this.versions = versions.data;
+      });
+  }
 }

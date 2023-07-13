@@ -25,7 +25,7 @@
             </m-button>
           </div>
         </m-title>
-        <tw-code-system-versions-widget [codeSystem]="codeSystem?.id" [versions]="versions"></tw-code-system-versions-widget>
+        <tw-code-system-versions-widget [codeSystem]="codeSystem?.id" [versions]="versions" (versionsChanged)="loadData(codeSystem.id)"></tw-code-system-versions-widget>
       </m-card>
 
     </div>
