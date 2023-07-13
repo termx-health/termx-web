@@ -22,7 +22,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   @Output() public viewResource = new EventEmitter<{type: string, id: string, options: {space?: string}}>();
 
   protected pageContent?: PageContent;
-  protected pageRelations?: {[k: string]: PageRelation[]};
+  protected pageRelations?: {[type: string]: PageRelation[]};
   protected pageUsages?: PageRelation[];
 
   @ViewChild("contentForm") public contentFrom: NgForm;
@@ -70,14 +70,19 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
       page.tags ??= [];
 
       this.pageContent = page.contents.find(c => c.slug === slug);
-      this.pageRelations = collect(page.relations, r => r.type);
+      // include relations that are ONLY used in the current page
+      this.pageRelations = collect(page.relations.filter(r => r.content.code === slug), r => r.type);
+      // $slug and $space/$slug params are used in order to find references from other spaces
       this.pageService.searchPageRelations({
         type: 'page',
-        target: page.contents?.map(c => `${c.slug},${this.space?.code}/${c.slug}`).join(',')!,
+        target: page.contents.map(c => `${c.slug},${this.space?.code}/${c.slug}`).join(',')!,
         limit: 999
       }).subscribe(resp => {
-        // local links (doesn't start with "$space/") should be from the same space
-        this.pageUsages = resp.data.filter(r => r.spaceId === this.space.id || r.target.startsWith(`${this.space?.code}/`));
+        this.pageUsages = resp.data
+          // local links (doesn't start with "$space/") should be from the same space
+          .filter(r => r.spaceId === this.space.id || r.target.startsWith(`${this.space?.code}/`))
+          // include usages where current page is referenced from
+          .filter(u => u.target.endsWith(slug));
       });
     }
   }

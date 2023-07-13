@@ -215,8 +215,8 @@ export class WikiSidebarComponent implements OnChanges {
         source.children = source.children.filter(lp => lp.link.id !== obj.link.id);
 
         if (!source.leaf) {
-          // page was expanded, it is safe to assume all pages were loaded already
-          // if no linked pages exists, we could assume that page is the leaf node
+          // page was expanded, it is safe to assume all pages were already loaded
+          // if no linked pages exist, we could assume that page is the leaf node
           source.leaf = source.children.length === 0;
           source.expanded = !source.leaf;
         }

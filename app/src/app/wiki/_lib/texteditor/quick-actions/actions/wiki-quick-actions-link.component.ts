@@ -1,11 +1,10 @@
 import {Component, forwardRef, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
-import {Page} from '../../../page/models/page';
 import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from '../wiki-quick-actions-base.directive';
 import {Space} from 'term-web/space/_lib';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
+import {PageContent} from 'term-web/wiki/_lib';
 
 
 @Component({
@@ -44,7 +43,7 @@ import {PreferencesService} from 'term-web/core/preferences/preferences.service'
                 </ng-container>
 
                 <m-form-item *mFormCol mName="page" mLabel="web.wiki-page.link-modal.page" required>
-                  <tw-page-select [(ngModel)]="data.page" name="page" [spaceId]="data.space?.id ?? preferences.spaceId" required/>
+                  <tw-page-content-select [(ngModel)]="data.pageContent" name="page" [spaceId]="data.space?.id ?? preferences.spaceId" required/>
                   <a *ngIf="!d.spaceSelectVisible" (mClick)="d.spaceSelectVisible = true" style="font-size: 0.85rem">
                     {{'web.wiki-page.link-modal.search-externally' | translate}}
                   </a>
@@ -129,7 +128,6 @@ export class WikiQuickActionsLinkComponent extends WikiQuickActionsBaseComponent
   @ViewChild(NgForm) private form?: NgForm;
 
   public constructor(
-    private translateService: TranslateService,
     protected preferences: PreferencesService
   ) {
     super();
@@ -174,8 +172,7 @@ export class WikiQuickActionsLinkComponent extends WikiQuickActionsBaseComponent
     }
 
     if (data.linkType === 'page') {
-      const content = data.page?.contents?.find(c => c.lang === this.translateService.currentLang) || data.page?.contents?.[0];
-      return `page:${data.space ? data.space.code + '/' : ''}${content.slug}`;
+      return `page:${data.space ? data.space.code + '/' : ''}${data.pageContent.slug}`;
     }
 
     if (data.linkType === 'resource') {
@@ -193,7 +190,7 @@ export class LinkModalData {
   public name?: string;
   public linkType?: 'url' | 'resource' | 'page';
   public link?: string;
-  public page?: Page;
+  public pageContent?: PageContent;
   public space?: Space;
   public resourceType?: 'cs' | 'vs' | 'ms' | 'concept';
   public resource?: any;
