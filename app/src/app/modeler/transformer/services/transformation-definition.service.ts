@@ -25,11 +25,11 @@ export class TransformationDefinitionService {
     return this.http.post<TransformationResult>(`${this.baseUrl}/transform`, {definition: def, source: source});
   }
 
-  public save(def: TransformationDefinition): Observable<any> {
+  public save(def: TransformationDefinition): Observable<TransformationDefinition> {
     if (def.id) {
-      return this.http.put(`${this.baseUrl}/${def.id}`, def);
+      return this.http.put<TransformationDefinition>(`${this.baseUrl}/${def.id}`, def);
     }
-    return this.http.post(`${this.baseUrl}`, def);
+    return this.http.post<TransformationDefinition>(`${this.baseUrl}`, def);
   }
 
 }

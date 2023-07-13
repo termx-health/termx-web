@@ -218,7 +218,7 @@
       },
       {
         "label": {
-          "en": "Transformation definitions"
+          "en": "FML transformations"
         },
         "link": "modeler/transformation-definitions",
         "privileges": [
