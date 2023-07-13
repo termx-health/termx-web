@@ -36,7 +36,10 @@
           <m-list>
             <m-list-item *ngFor="let activity of (task.activities| apply:hasTransitions)">
               <div class="m-justify-between">
-                <label>{{activity.updatedBy?.sub}}</label>
+                <div class="m-items-middle">
+                  <m-icon mCode="user"></m-icon>
+                  <label>{{activity.updatedBy}}</label>
+                </div>
                 <label class="m-subtitle">{{activity.updatedAt | localDateTime}}</label>
               </div>
               <div style="display:grid">
