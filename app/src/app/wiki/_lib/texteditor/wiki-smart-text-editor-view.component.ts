@@ -1,9 +1,10 @@
 import {Component, EnvironmentInjector, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {structureDefinitionCodePlugin} from './plugins/structure-definition-code.plugin';
+import {structureDefinitionFshPlugin} from './plugins/structure-definition-fsh.plugin';
 import {createCustomElement} from '@angular/elements';
+import {drawioPlugin} from './plugins/drawio.plugin';
 import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib';
-import {structureDefinitionFshPlugin} from 'term-web/wiki/_lib/texteditor/plugins/structure-definition-fsh.plugin';
 import transformLink from './plugins/external-link.plugin';
 import {isDefined} from '@kodality-web/core-util';
 
@@ -25,7 +26,8 @@ export class WikiSmartTextEditorViewComponent implements OnChanges {
   public processedValue: ProcessedValue[] = [];
   protected plugins = [
     structureDefinitionCodePlugin,
-    structureDefinitionFshPlugin
+    structureDefinitionFshPlugin,
+    drawioPlugin
   ];
 
   public constructor(
