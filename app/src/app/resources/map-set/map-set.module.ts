@@ -13,19 +13,23 @@ import {MapSetVersionEntityVersionTableComponent} from './containers/version/map
 import {MapSetViewComponent} from './containers/edit/map-set-view.component';
 import {MapSetAssociationViewComponent} from './containers/association/map-set-association-view.component';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
+import {DevMapSetListComponent} from 'term-web/resources/dev/mapset/dev-map-set-list.component';
+import {DevMapSetEditComponent} from 'term-web/resources/dev/mapset/dev-map-set-edit.component';
+import {DevMapSetConceptListComponent} from 'term-web/resources/dev/mapset/dev-map-set-concept-list.component';
 
 
 export const MAP_SET_ROUTES: Routes = [
-  {path: '', component: MapSetListComponent},
-  {path: 'add', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/view', component: MapSetViewComponent},
-  {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/versions/:versionId/edit', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/versions/:versionId/view', component: MapSetVersionViewComponent},
-  {path: ':id/associations/add', component: MapSetAssociationEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/associations/:associationId/edit', component: MapSetAssociationEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/associations/:associationId/view', component: MapSetAssociationViewComponent}
+  {path: '', component: DevMapSetListComponent},
+  {path: 'add', component: DevMapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  {path: ':id/edit', component: DevMapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  {path: ':id/concepts', component: DevMapSetConceptListComponent, data: {privilege: ['*.MapSet.edit']}},
+  {path: ':id/view', component: MapSetViewComponent}
+  // {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  // {path: ':id/versions/:versionId/edit', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  // {path: ':id/versions/:versionId/view', component: MapSetVersionViewComponent},
+  // {path: ':id/associations/add', component: MapSetAssociationEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  // {path: ':id/associations/:associationId/edit', component: MapSetAssociationEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  // {path: ':id/associations/:associationId/view', component: MapSetAssociationViewComponent}
 ];
 
 @NgModule({

@@ -16,7 +16,6 @@ export const DEV_RESOURCES_ROUTES: Routes = [
   {path: 'map-sets/add', component: DevMapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
   {path: 'map-sets/:id/edit', component: DevMapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
   {path: 'map-sets/:id/concepts', component: DevMapSetConceptListComponent, data: {privilege: ['*.MapSet.edit']}},
-
 ];
 
 @NgModule({

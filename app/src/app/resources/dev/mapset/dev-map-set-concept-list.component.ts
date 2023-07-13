@@ -88,7 +88,7 @@ export class DevMapSetConceptListComponent implements OnInit {
     ]).subscribe((responses) => {
       responses.forEach(r => {
         this.sourceConcepts = [...this.sourceConcepts, ...this.extractConcepts(r)];
-        this.sourceProperties = [...new Set(this.sourceConcepts?.flatMap(c => c.versions.flatMap(v => [...v.propertyValues!.map(v => v.entityProperty!), ...v.designations!.map(d => d.designationType!)])))];
+        this.sourceProperties = [...new Set(this.sourceConcepts?.flatMap(c => c.versions.flatMap(v => [...(v.propertyValues?.map(v => v.entityProperty!) || []), ...(v.designations?.map(d => d.designationType!) || [])])))];
         this.unmappedSourceConcepts = this.sourceConcepts?.filter(c => this.isUnmapped(c, 'source'));
       });
     });
@@ -99,7 +99,7 @@ export class DevMapSetConceptListComponent implements OnInit {
     ]).subscribe((responses) => {
       responses.forEach(r => {
         this.targetConcepts = [...this.targetConcepts, ...this.extractConcepts(r)];
-        this.targetProperties = [...new Set(this.targetConcepts?.flatMap(c => c.versions.flatMap(v => [...v.propertyValues!.map(v => v.entityProperty!), ...v.designations!.map(d => d.designationType!)])))];
+        this.targetProperties = [...new Set(this.targetConcepts?.flatMap(c => c.versions.flatMap(v => [...(v.propertyValues?.map(v => v.entityProperty!) || []), ...(v.designations!.map(d => d.designationType!) || [])])))];
         this.unmappedTargetConcepts = this.targetConcepts?.filter(c => this.isUnmapped(c, 'target'));
       });
     });
@@ -109,7 +109,7 @@ export class DevMapSetConceptListComponent implements OnInit {
     if (!this.mapSetId) {
       return;
     }
-    this.router.navigate(['/resources/dev/map-sets/', this.mapSetId, 'edit']);
+    this.router.navigate(['/resources/map-sets/', this.mapSetId, 'edit']);
   }
 
   private isUnmapped(concept: CodeSystemConcept, type: 'target' | 'source'): boolean {
@@ -166,14 +166,14 @@ export class DevMapSetConceptListComponent implements OnInit {
     const associations = this.mapSetVersion?.associations || [];
 
     this.unmappedSourceConceptList?.unmappedConcepts?.forEach(sourceConcept => {
-      const sourceDesignations = sourceConcept?.versions?.flatMap(v => v.designations)?.filter(d => d!.designationType === sourceProperty)
+      const sourceDesignations = sourceConcept?.versions?.flatMap(v => v.designations)?.filter(d => d?.designationType === sourceProperty)
         ?.map(d => d?.name!);
-      const sourceProperties = sourceConcept?.versions?.flatMap(v => v.propertyValues)?.filter(d => d!.entityProperty === sourceProperty)
+      const sourceProperties = sourceConcept?.versions?.flatMap(v => v.propertyValues)?.filter(d => d?.entityProperty === sourceProperty)
         ?.map(d => d?.value!);
       const sourceValues = [...(sourceDesignations || []), ...(sourceProperties || []), ...(sourceProperty === 'code' ? [sourceConcept.code] : [])];
       const targetConcept = this.unmappedTargetConceptList?.unmappedConcepts?.find(t => {
-        const targetDesignations = t?.versions?.flatMap(v => v.designations)?.filter(d => d!.designationType === targetProperty)?.map(d => d?.name!);
-        const targetProperties = t?.versions?.flatMap(v => v.propertyValues)?.filter(d => d!.entityProperty === targetProperty)?.map(d => d?.value!);
+        const targetDesignations = t?.versions?.flatMap(v => v.designations)?.filter(d => d?.designationType === targetProperty)?.map(d => d?.name!);
+        const targetProperties = t?.versions?.flatMap(v => v.propertyValues)?.filter(d => d?.entityProperty === targetProperty)?.map(d => d?.value!);
         const targetValues = [...targetDesignations, ...targetProperties, ...(targetProperty === 'code' ? [t?.code] : [])];
         return targetValues.find(v => sourceValues.includes(v));
       });
