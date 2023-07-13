@@ -14,6 +14,7 @@ import {PreferencesService} from 'term-web/core/preferences/preferences.service'
 })
 export class WikiPageComponent implements OnInit {
   public space?: Space;
+  public slug?: string;
   public page?: Page;
   public path?: number[];
 
@@ -60,10 +61,10 @@ export class WikiPageComponent implements OnInit {
 
         const slug = params.get("slug");
         if (slug) {
-          const req$ = this.pageService.searchPages({slugs: this.slug, spaceIds: matchedSpace.id, limit: 1}).pipe(map(r => r.data[0]));
+          const req$ = this.pageService.searchPages({slugs: slug, spaceIds: matchedSpace.id, limit: 1}).pipe(map(r => r.data[0]));
           this.loader.wrap('init', req$).subscribe(page => {
             if (page) {
-              this.init(page);
+              this.init(page, slug);
             } else {
               this.router.navigate(['/wiki']);
             }
@@ -80,8 +81,10 @@ export class WikiPageComponent implements OnInit {
     });
   }
 
-  private init(page?: Page): void {
+  private init(page?: Page, slug?: string): void {
     this.page = page;
+    this.slug = slug;
+
     if (page) {
       this.loader.wrap('path', this.pageService.getPath(page.id)).subscribe(path => this.path = path);
     }
@@ -130,9 +133,5 @@ export class WikiPageComponent implements OnInit {
 
   protected get activeSpace(): string | number {
     return this.space.code ?? this.preferences.spaceId;
-  }
-
-  protected get slug(): string {
-    return this.route.snapshot.paramMap.get('slug');
   }
 }

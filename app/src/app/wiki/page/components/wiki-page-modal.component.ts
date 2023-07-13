@@ -68,6 +68,7 @@ export class WikiPageModalComponent implements OnInit, OnChanges {
   private initPage(): void {
     this.page = new Page();
     this.page.status = 'draft';
+    this.page.settings = {};
     this.page.links = [];
     this.pageContent = {contentType: 'markdown', lang: this.translateService.currentLang};
   }
@@ -75,6 +76,7 @@ export class WikiPageModalComponent implements OnInit, OnChanges {
   private loadPage(id: number, contentId?: number): void {
     this.loader.wrap('init', this.pageService.loadPage(id)).subscribe(p => {
       this.page = p;
+      this.page ??= {};
       this.pageTags = p.tags?.map(t => t.tag.text!) ?? [];
       this.pageContent = contentId ? p.contents?.find(c => c.id === contentId) : undefined;
     });

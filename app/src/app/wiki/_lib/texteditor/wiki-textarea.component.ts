@@ -15,10 +15,10 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
       min-height: 80px;
       width: 100%;
       padding: 1rem;
-      
+
       border: 1px solid #d2d2d2;
       border-radius: 5px;
-      
+
       &:before {
         content: attr(placeholder);
         display: block;

@@ -5,6 +5,7 @@ import {createCustomElement} from '@angular/elements';
 import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib';
 import {structureDefinitionFshPlugin} from 'term-web/wiki/_lib/texteditor/plugins/structure-definition-fsh.plugin';
 import transformLink from './plugins/external-link.plugin';
+import {isDefined} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-smart-text-editor-view',
@@ -37,7 +38,7 @@ export class WikiSmartTextEditorViewComponent implements OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['value'] && this.value) {
+    if (changes['value'] && isDefined(this.value)) {
       this.processValue(this.value);
     }
   }
