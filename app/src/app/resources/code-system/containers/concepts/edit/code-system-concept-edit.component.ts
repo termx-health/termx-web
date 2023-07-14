@@ -138,7 +138,13 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   public duplicateVersion(version: CodeSystemEntityVersion): void {
     this.loader.wrap('duplicate', this.codeSystemService.duplicateEntityVersion(this.codeSystemId!, this.concept.id, version.id!))
-      .subscribe(() => this.loadConcept(this.concept.code));
+      .subscribe(() => {
+        if (isDefined(this.codeSystemVersion)) {
+          this.resourceContextComponent.unselectResourceOrVersion();
+        } else  {
+          this.loadConcept(this.concept.code);
+        }
+      });
   }
 
   public deleteVersion(id: number): void {
@@ -150,7 +156,10 @@ export class CodeSystemConceptEditComponent implements OnInit {
     } else {
       this.loader.wrap('version-delete', this.codeSystemService.deleteEntityVersion(this.codeSystemId, id)).subscribe(() => {
         this.loader.wrap('load', this.codeSystemService.loadConcept(this.codeSystemId, this.concept.code))
-          .subscribe(c => this.concept = c);
+          .subscribe(c => {
+            this.concept = c;
+            this.selectVersion(this.concept.versions[this.concept.versions.length - 1]);
+          });
       });
     }
   }

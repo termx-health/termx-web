@@ -42,7 +42,7 @@
                 <tw-status-tag [status]="version.status"></tw-status-tag>
               </div>
               <div class="m-items-middle">
-                <m-icon (click)="duplicateVersion(version)" *ngIf="version.id && !codeSystemVersion" mCode="copy" m-tooltip mTitle="core.btn.duplicate" class="m-clickable"></m-icon>
+                <m-icon (click)="duplicateVersion(version)" *ngIf="version.id" mCode="copy" m-tooltip mTitle="core.btn.duplicate" class="m-clickable"></m-icon>
                 <m-icon (click)="deleteVersion(version.id)" *ngIf="version.status === 'draft' && concept.versions?.length > 1" mCode="delete" class="m-clickable"></m-icon>
               </div>
             </div>
