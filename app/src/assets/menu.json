@@ -13,6 +13,19 @@
 		  "lt": "Įėjimo tinklalapis"
         },
         "link": "landing"
+      },
+      {
+        "label": {
+          "en": "Global search",
+          "et": "Globaalne otsing",
+          "lt": "Visuotinė paieška"
+        },
+        "link": "global-search",
+        "privileges": [
+          "*.CodeSystem.view",
+          "*.ValueSet.view",
+          "*.MapSet.view"
+        ]
       }
     ]
   },
@@ -90,7 +103,7 @@
 		  "lt": "Importuoti"
         },
         "icon": "interaction",
-        "link": "integration",
+        "link": "integration/dashboard",
         "privileges": [
           "*.CodeSystem.view",
           "*.ValueSet.view",
@@ -113,11 +126,22 @@
     "items": [
       {
         "label": {
-          "en": "SNOMED CT",
-          "et": "SNOMED CT",
-		  "lt": "SNOMED CT"
+          "en": "SNOMED CT browser",
+          "et": "SNOMED CT brauser",
+          "lt": "SNOMED CT naršyklė"
         },
-        "link": "integration/snomed",
+        "link": "integration/snomed/dashboard",
+        "privileges": [
+          "snomed-ct.CodeSystem.view"
+        ]
+      },
+      {
+        "label": {
+          "en": "SNOMED CT management",
+          "et": "SNOMED CT haldamine",
+          "lt": "SNOMED CT valdymas"
+        },
+        "link": "integration/snomed/branches",
         "privileges": [
           "snomed-ct.CodeSystem.view"
         ]
@@ -158,32 +182,65 @@
   },
   {
     "label": {
-      "en": "Searches",
-      "et": "Otsingud",
-	  "lt": "Paieškos"
+      "en": "Wiki",
+      "et": "Wiki",
+      "lt": "Wiki"
     },
     "privileges": [
-      "*.CodeSystem.view",
-      "*.ValueSet.view",
-      "*.MapSet.view"
+      "*.Wiki.view"
     ],
+    "link": "wiki/pages",
     "items": [
       {
         "label": {
-          "en": "Global search",
-          "et": "Globaalne otsing",
-		  "lt": "Visuotinė paieška"
+          "en": "Wiki",
+          "et": "Wiki",
+          "lt": "Wiki"
         },
-        "icon": "search",
-        "link": "global-search",
+        "link": "wiki/pages",
         "privileges": [
-          "*.CodeSystem.view",
-          "*.ValueSet.view",
-          "*.MapSet.view"
+          "*.Wiki.view"
+        ]
+      },
+      {
+        "label": {
+          "en": "Templates",
+          "et": "Mallid",
+          "lt": "Šablonai"
+        },
+        "link": "wiki-management/templates",
+        "privileges": [
+          "*.Wiki.view"
         ]
       }
     ]
   },
+  {
+    "label": {
+      "en": "Modeler",
+      "et": "Modelleerija",
+      "lt": "Modeliuotojas"
+    },
+    "privileges": [
+      "*.Modeler.view",
+      "*.CodeSystem.view",
+      "*.ValueSet.view",
+      "*.MapSet.view"
+    ],
+    "link": "wiki/pages",
+    "items": [
+      {
+        "label": {
+          "en": "Structure definitions",
+          "et": "Struktuuri määratlused",
+          "lt": "Struktūros apibrėžtys"
+        },
+        "link": "modeler/structure-definitions",
+        "privileges": [
+          "*.Modeler.view"
+        ]
+      }]
+    },
   {
     "label": {
       "en": "Management",
@@ -198,7 +255,7 @@
 		  "lt": "Užduotys"
         },
         "icon": "inbox",
-        "link": "taskflow",
+        "link": "tasks",
         "privileges": [
           "*.Task.view"
         ]
@@ -246,7 +303,7 @@
 		  "lt": "Terminologijos paslaugų API"
         },
         "icon": "cloud",
-        "link": "tools/terminology-service-api"
+        "link": "terminology-service-api"
       },
       {
         "label": {
@@ -256,55 +313,6 @@
         },
         "icon": "field-binary",
         "link": "sequences"
-      }
-    ]
-  },
-  {
-    "label": {
-      "en": "Thesaurus",
-      "et": "Thesaurus",
-	  "lt": "Tezauras"
-    },
-    "privileges": [
-      "*.Thesaurus.view"
-    ],
-    "link": "thesaurus/pages",
-    "items": [
-      {
-        "label": {
-          "en": "Thesaurus",
-          "et": "Thesaurus",
-		  "lt": "Tezauras"
-        },
-        "icon": "file-search",
-        "link": "thesaurus/pages",
-        "privileges": [
-          "*.Thesaurus.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Structure definitions",
-          "et": "Struktuuri määratlused",
-		  "lt": "Struktūros apibrėžtys"
-        },
-        "icon": "profile",
-        "link": "thesaurus/structure-definitions",
-        "privileges": [
-          "*.Thesaurus.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Templates",
-          "et": "Mallid",
-		  "lt": "Šablonai"
-        },
-        "icon": "file-text",
-        "link": "thesaurus/templates",
-        "privileges": [
-          "*.Thesaurus.view"
-        ]
       }
     ]
   }
