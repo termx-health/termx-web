@@ -1,18 +1,27 @@
 <m-no-data *ngIf="!(versions?.length > 0)"></m-no-data>
 
 <m-list *ngIf="versions?.length > 0" mSeparated>
-  <m-list-item *ngFor="let version of versions">
+  <m-list-item *ngFor="let version of versions" mClickable (mClick)="openVersionSummary(version.version)">
     <div class="m-justify-between">
       <div class="m-items-middle">
-        <a (mClick)="openVersionSummary(version.version)" class="m-bold">{{version.version}}</a>
+        <span class="m-bold">{{version.version}}</span>
         <m-divider mVertical></m-divider>
         <span>{{(version.releaseDate | localDate) || '...'}} - {{(version.expirationDate | localDate) || '...'}}</span>
       </div>
       <div class="m-items-middle">
         <tw-status-tag [status]="version.status"></tw-status-tag>
-        <ng-container *ngIf="version.status === 'draft' && versions?.length > 1">
+        <ng-container *twPrivileged="valueSet + '.ValueSet.edit'">
           <m-divider mVertical></m-divider>
-          <m-icon class="m-clickable" mCode="delete" (click)="deleteVersion(version.version)"></m-icon>
+          <m-dropdown>
+            <a *m-dropdown-item (click)="duplicateModalData.version = version.version;duplicateModalData.visible = true">
+              <m-icon mCode="copy"></m-icon>&nbsp;{{'core.btn.duplicate' | translate}}
+            </a>
+            <ng-container *ngIf="version.status === 'draft' && versions?.length > 1 && (valueSet  + '.ValueSet.publish' | twHasAnyPrivilege)">
+              <a *m-dropdown-item (click)="deleteVersion(version.version)">
+                <m-icon  mCode="delete"></m-icon>&nbsp;{{'core.btn.delete' | translate}}
+              </a>
+            </ng-container>
+          </m-dropdown>
         </ng-container>
       </div>
     </div>
@@ -38,3 +47,31 @@
     <div>{{version.description | localName}}</div>
   </m-list-item>
 </m-list>
+
+
+<m-modal [(mVisible)]="duplicateModalData.visible" (mClose)="duplicateModalData = {visible: false}">
+  <m-title *mModalHeader>
+    {{'web.value-set.summary.duplicate-version-modal.header' | translate}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #duplicateModalForm="ngForm">
+      <m-form-item mName="version" mLabel="web.value-set.summary.duplicate-version-modal.version" required>
+        <tw-semantic-version-select name="version"
+            [(ngModel)]="duplicateModalData.targetVersion"
+            [versions]="versions | apply: getVersions"
+            required></tw-semantic-version-select>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="duplicateModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="duplicateVersion()" [mLoading]="loader.isLoading" [disabled]="loader.state['duplicate']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>
+

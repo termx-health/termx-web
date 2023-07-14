@@ -33,6 +33,10 @@ export class ValueSetService extends ValueSetLibService {
     return of();
   }
 
+  public duplicateValueSetVersion(valueSetId: string, version: string, duplicateRequest: {valueSet: string, version: string}): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${valueSetId}/versions/${version}/duplicate`, duplicateRequest);
+  }
+
   public deleteValueSetVersion(valueSetId: string, version: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${valueSetId}/versions/${version}`);
   }

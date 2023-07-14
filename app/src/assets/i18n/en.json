@@ -451,7 +451,11 @@
         "versions": "Versions",
         "expansions": "Expansions",
         "total-concepts": "Total concepts",
-        "add-version": "Add version"
+        "add-version": "Add version",
+        "duplicate-version-modal": {
+          "header": "Duplicate value set version",
+          "version": "New version"
+        }
       }
     },
     "value-set-version": {
