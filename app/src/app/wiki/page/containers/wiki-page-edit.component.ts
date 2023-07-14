@@ -1,8 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {LoadingManager, validateForm} from '@kodality-web/core-util';
+import {LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Page, PageContent} from 'term-web/wiki/_lib';
+import {Page, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
 import {PageService} from '../services/page.service';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {mergeMap} from 'rxjs';
@@ -19,7 +18,7 @@ export class WikiPageEditComponent implements OnInit {
   public showPreview?: boolean = false;
   protected loader = new LoadingManager();
 
-  @ViewChild("form") public form?: NgForm;
+  @ViewChild(WikiSmartTextEditorComponent) public editor?: WikiSmartTextEditorComponent;
 
   public constructor(
     private spaceService: SpaceService,
@@ -65,10 +64,9 @@ export class WikiPageEditComponent implements OnInit {
   /* Internal API */
 
   protected saveContent(): void {
-    if (!validateForm(this.form)) {
-      return;
-    }
-    this.loader.wrap('save', this.pageService.savePageContent(this.pageContent, this.page.id)).subscribe(() => this.back());
+    this.loader.wrap('save', this.pageService.savePageContent(this.pageContent, this.page.id)).subscribe(() => {
+      this.back();
+    });
   }
 
   protected back(): void {
@@ -91,10 +89,6 @@ export class WikiPageEditComponent implements OnInit {
   /* Structure definition */
 
   public saveAndOpenStructureDefinition(): void {
-    if (!validateForm(this.form)) {
-      return;
-    }
-
     this.loader.wrap('save', this.pageService.savePageContent(this.pageContent!, this.page.id)).subscribe(() => {
       this.openStructureDefinition();
     });

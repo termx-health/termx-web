@@ -6,7 +6,7 @@
     #optionMenu
       [containerRef]="ref"
       [lang]="lang"
-      (resultComposed)="insertAtCursor($event.result, $event.range, $event.cursorOffset)"
+      (resultComposed)="insertAtRange($event.result, $event.range, $event.cursorOffset)"
   />
 
   <div class="editor-wrapper">
@@ -20,6 +20,7 @@
             (keyup)="optionMenu.handleKeyUp($event)"
             (blur)="onTouched()"
             (ngModelChange)="fireOnChange($event)"
+            (mouseleave)="updateCursorPosition()"
         />
       </ng-container>
 
@@ -37,7 +38,7 @@
 
 
     <div *ngIf="showPreview" class="editor__preview">
-      <tw-smart-text-editor-view [value]="value" [valueType]="valueType" [lang]="lang" [prerendered]="true"/>
+      <tw-smart-text-editor-view [value]="value" [valueType]="valueType" [lang]="lang" [prerender]="true"/>
     </div>
   </div>
 </ng-template>

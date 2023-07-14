@@ -1,5 +1,6 @@
 import {parsePageRelationLink} from '../../page/utils/page-relation.utils';
 
+// todo: transform it to the markdown it plugin
 export default function transformLink(combinedLink: string, ctx: {spaceId?: number}): string {
   const [system, value] = combinedLink.split(':');
 

@@ -12,7 +12,6 @@ import {PortalModule} from '@angular/cdk/portal';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {TagLibService} from './tag/services/tag-lib.service';
 import {TemplateLibService} from './template/services/template-lib.service';
-import {WikiTemplateRendererComponent} from './texteditor/renderers/wiki-template-renderer.component';
 import {WikiQuickActionsDropdownComponent} from './texteditor/quick-actions/dropdown/wiki-quick-actions-dropdown.component';
 import {WikiQuickActionsMenuComponent} from './texteditor/quick-actions/wiki-quick-actions-menu.component';
 import {WikiQuickActionsDropdownOptionComponent} from './texteditor/quick-actions/dropdown/wiki-quick-actions-dropdown-option.component';
@@ -52,9 +51,6 @@ import {PageContentSelectComponent} from 'term-web/wiki/_lib/page/components/pag
     PageSelectComponent,
     PageContentSelectComponent,
 
-    // template
-    WikiTemplateRendererComponent,
-
     // text editor
     WikiSmartTextEditorComponent,
     WikiSmartTextEditorViewComponent,
@@ -76,7 +72,6 @@ import {PageContentSelectComponent} from 'term-web/wiki/_lib/page/components/pag
     WikiQuickActionsLinkComponent,
     WikiQuickActionsStructureDefinitionComponent,
     WikiQuickActionsTemplateComponent,
-    WikiTemplateRendererComponent,
     WikiSmartTextEditorComponent,
     WikiSmartTextEditorViewComponent,
     WikiTextareaComponent,
