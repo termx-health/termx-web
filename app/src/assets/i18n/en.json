@@ -1218,7 +1218,8 @@
         "fhir-server": "Fhir server",
         "fhir-resource": "Resource",
         "content": "Content",
-        "generate": "Generate"
+        "generate": "Generate",
+        "url": "Url"
       },
       "execution": {
         "input": "Input",

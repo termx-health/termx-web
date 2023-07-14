@@ -28,4 +28,18 @@ export class TransformationDefinitionResourceFormComponent {
   protected generateMapping(): void {
     this.transformationDefinitionService.generateFml(this.definition).subscribe(r => this.resource.reference.content = r);
   }
+
+  public onContentChange(): void {
+    this.resource.name = this.resource.name || this.findUrl(this.resource.reference.content);
+  }
+
+  protected findUrl = (content: string): string => {
+    if (content.startsWith("<")) {
+      const xml = new DOMParser().parseFromString(content, "text/xml");
+      return xml.getElementsByTagName("url")[0].getAttribute("value");
+    }
+    if (content.startsWith("{")) {
+      return JSON.parse(content)['url'];
+    }
+  };
 }

@@ -26,6 +26,7 @@ export class TransformationDefinitionEditComponent implements OnInit {
     this.initDefinition().subscribe(r => {
       this.definition = r;
       this.definition.mapping.type = 'mapping';
+      this.definition.mapping.name = 'main';
     }).add(() => this.loading = false);
   }
 

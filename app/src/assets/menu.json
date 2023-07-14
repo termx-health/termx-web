@@ -239,6 +239,15 @@
         "privileges": [
           "*.Modeler.view"
         ]
+      },
+      {
+        "label": {
+          "en": "FML transformations"
+        },
+        "link": "modeler/transformation-definitions",
+        "privileges": [
+          "*.Modeler.view"
+        ]
       }]
     },
   {
