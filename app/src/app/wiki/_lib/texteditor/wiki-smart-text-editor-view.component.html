@@ -1,8 +1,4 @@
 <ng-container *ngFor="let v of processedValue">
-  <m-markdown *ngIf="v.type === 'text' && valueType === 'markdown'" [mData]="v.value" [mPlugins]="plugins" [mPrerender]="prerendered"/>
+  <m-markdown *ngIf="v.type === 'text' && valueType === 'markdown'" [mData]="v.value" [mPlugins]="plugins" [mPrerender]="prerender"/>
   <m-quill *ngIf="v.type === 'text' && valueType === 'html'" [(ngModel)]="v.value" mViewMode/>
-
-
-  <!-- fixme: template plugin? -->
-  <tw-template-view *ngIf="v.type === 'temp'" [lang]="lang" [templateCode]="v.value"/>
 </ng-container>

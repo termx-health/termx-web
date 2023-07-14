@@ -1,9 +1,11 @@
 import {matchSection} from '@kodality-web/marina-markdown';
+import {tokenAttrValue} from './plugin.util';
+
 
 export function drawioPlugin(md) {
   md.renderer.rules.drawio = (tokens, idx, /*options, env, self */) => {
-    const data = tokens[idx].attrs.find(a => a[0] === 'data')?.[1];
-    return `<img class="drawio" src="data:image/svg+xml;base64, ${data}">`;
+    const base64 = tokenAttrValue(tokens[idx], 'data');
+    return `<div><img class="drawio" src="data:image/svg+xml;base64, ${base64}"></div>`;
   };
 
   md.block.ruler.before('fence', 'drawio', (state, startl, endl, silent) => {
@@ -12,8 +14,10 @@ export function drawioPlugin(md) {
       return false;
     }
 
-    const base64 = content.match(/```drawio\n?(.+)\n?```/)[1];
-    console.log(base64)
+    const base64 = content.match(/```drawio\n?(.+)\n?```/)?.[1];
+    if (!base64) {
+      return false;
+    }
 
     const token = state.push('drawio', '', 0);
     token.attrs = [['data', base64]];

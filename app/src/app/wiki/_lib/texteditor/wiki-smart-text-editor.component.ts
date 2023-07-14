@@ -1,11 +1,24 @@
 import {Component, ElementRef, forwardRef, Input, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput, isDefined, isNil} from '@kodality-web/core-util';
+import {getCursorPosition, setCursorPosition} from './utils/cursor.utils';
+import {launchDrawioEditor} from './editors/drawio.editor';
+import {contentFromSelection, indexOfDifference} from './utils/selection.utils';
 
 @Component({
   selector: 'tw-smart-text-editor',
   templateUrl: 'wiki-smart-text-editor.component.html',
   styles: [`
+    ::ng-deep .drawio-editor {
+      z-index: 1000;
+      position: absolute;
+      inset: 0;
+      border: 0;
+      height: 100%;
+      width: 100%;
+      visibility: hidden;
+    }
+
     ::ng-deep .editor-wrapper {
       display: grid;
       grid-auto-flow: column;
@@ -63,75 +76,55 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
   protected onTouched = (x?: any): void => x;
 
 
-  /* Cursor Magic */
+  /* Cursor*/
 
-  public insertAtCursor(text: string, range: Range, offset = 0): void {
-    if (isNil(text)) {
-      text = "";
+  private _lastCursor;
+
+  protected updateCursorPosition(): void {
+    const pos = getCursorPosition(this.textarea);
+    if (pos) {
+      this._lastCursor = pos;
     }
+  }
 
-    const textarea = this.textArea.nativeElement;
-    let cursorPos = this.getCursorPosition(textarea);
-    if (!range) {
+  protected restoreCursor(): void {
+    setCursorPosition(this._lastCursor, this.textarea);
+  }
+
+  /* Extensions */
+
+
+  public launchEditor(name: string): void {
+    if (isNil(this._lastCursor)) {
       return;
     }
 
-    // insert text into the content
-    const currentText = textarea.innerText;
-    range.deleteContents();
-    range.insertNode(document.createTextNode(text));
+    switch (name) {
+      case 'drawio':
+        const {selection, startPos} = contentFromSelection(this.value, this._lastCursor, '```drawio', '```');
+        const base64 = selection?.match(/```drawio\n?(.+)\n?```/)?.[1];
 
-    // get current content
-    let newText = textarea?.innerText;
+        launchDrawioEditor({
+          editorFacade: {
+            getDiagram: () => ({
+              svg: base64 ? atob(base64) : undefined,
+              markdown: selection
+            }),
+            updateDiagram: ({diagramMarkdown, diagramSvg}) => {
+              const text = this.value.replace(diagramMarkdown, `\`\`\`drawio\n${btoa(diagramSvg)}\n\`\`\``);
+              this.setValue(text, startPos);
+            },
+            insertDiagram: ({diagramSvg}) => {
+              const start = this.value.slice(0, this._lastCursor);
+              const end = this.value.slice(this._lastCursor);
 
-    // remove "/" from the content
-    const diffIdx = this.indexOfDifference(currentText, newText);
-    if (isDefined(diffIdx) && isDefined(newText) && newText.charAt(diffIdx - 1) === '/') {
-      cursorPos = diffIdx - 1;
-      newText = newText.slice(0, diffIdx - 1) + newText.slice(diffIdx);
+              const text = `${start}\n\`\`\`drawio\n${btoa(diagramSvg)}\n\`\`\`\n${end}`;
+              this.setValue(text, startPos);
+            },
+          },
+        });
     }
-
-    // update ngModel value
-    this.value = newText;
-    this.fireOnChange(newText ?? "");
-
-    // restore/set cursor position
-    setTimeout(() => this.setCursorPosition(cursorPos + offset, textarea));
   }
-
-  private getCursorPosition = (el): number => {
-    // https://zserge.com/posts/js-editor/
-    const range = window.getSelection().getRangeAt(0);
-    const prefix = range.cloneRange();
-    prefix.selectNodeContents(el);
-    prefix.setEnd(range.endContainer, range.endOffset);
-    return prefix.toString().length;
-  };
-
-  private setCursorPosition = (pos, parent): number => {
-    // https://zserge.com/posts/js-editor/
-    for (const node of parent.childNodes) {
-      if (node.nodeType == Node.TEXT_NODE) {
-        if (node.length >= pos) {
-          const range = document.createRange();
-          const sel = window.getSelection();
-          range.setStart(node, pos);
-          range.collapse(true);
-          sel.removeAllRanges();
-          sel.addRange(range);
-          return -1;
-        } else {
-          pos = pos - node.length;
-        }
-      } else {
-        pos = this.setCursorPosition(pos, node);
-        if (pos < 0) {
-          return pos;
-        }
-      }
-    }
-    return pos;
-  };
 
   /* CVA */
 
@@ -151,21 +144,49 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
     this.onChange(val);
   }
 
+  private setValue(text: string, pos?: number): void {
+    // update ngModel value
+    this.value = text;
+    this.fireOnChange(text ?? "");
 
-  /* Utils */
-
-  private indexOfDifference(str1?: string, str2?: string): number | undefined {
-    if (str1 == str2 || !isDefined(str1) || !isDefined(str2)) {
-      return;
-    }
-    for (var i = 0; i < str1.length && i < str2.length; ++i) {
-      if (str1.charAt(i) != str2.charAt(i)) {
-        break;
-      }
-    }
-    if (i < str2.length || i < str1.length) {
-      return i;
+    // restore/set cursor position
+    if (isDefined(pos)) {
+      setTimeout(() => setCursorPosition(pos, this.textarea));
     }
   }
 
+
+  /* Cursor Magic */
+
+  protected insertAtRange(text: string, range: Range, offset = 0): void {
+    if (isNil(text)) {
+      text = "";
+    }
+
+    let cursorPosition = getCursorPosition(this.textarea);
+    if (!range) {
+      return;
+    }
+
+    // insert text into the range
+    const currentText = this.textarea.innerText;
+    range.deleteContents();
+    range.insertNode(document.createTextNode(text));
+
+    // get new content
+    let newText = this.textarea.innerText;
+
+    // remove "/" from the content
+    const diffIdx = indexOfDifference(currentText, newText);
+    if (isDefined(diffIdx) && isDefined(newText) && newText.charAt(diffIdx - 1) === '/') {
+      cursorPosition = diffIdx - 1;
+      newText = newText.slice(0, diffIdx - 1) + newText.slice(diffIdx);
+    }
+
+    this.setValue(newText, cursorPosition + offset);
+  }
+
+  private get textarea(): HTMLElement {
+    return this.textArea.nativeElement;
+  }
 }

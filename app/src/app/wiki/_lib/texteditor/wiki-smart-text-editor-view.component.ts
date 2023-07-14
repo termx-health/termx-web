@@ -1,11 +1,11 @@
 import {Component, EnvironmentInjector, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
-import {structureDefinitionCodePlugin} from './plugins/structure-definition-code.plugin';
-import {structureDefinitionFshPlugin} from './plugins/structure-definition-fsh.plugin';
+import {structureDefinitionCodePlugin} from './markdown-plugins/structure-definition-code.plugin';
+import {structureDefinitionFshPlugin} from './markdown-plugins/structure-definition-fsh.plugin';
 import {createCustomElement} from '@angular/elements';
-import {drawioPlugin} from './plugins/drawio.plugin';
+import {drawioPlugin} from './markdown-plugins/drawio.plugin';
 import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib';
-import transformLink from './plugins/external-link.plugin';
+import transformLink from './markdown-plugins/external-link.plugin';
 import {isDefined} from '@kodality-web/core-util';
 
 @Component({
@@ -18,7 +18,7 @@ import {isDefined} from '@kodality-web/core-util';
   `]
 })
 export class WikiSmartTextEditorViewComponent implements OnChanges {
-  @Input() public prerendered?: boolean;
+  @Input() public prerender?: boolean;
   @Input() public valueType?: 'html' | 'markdown';
   @Input() public value?: string;
   @Input() public lang?: string;

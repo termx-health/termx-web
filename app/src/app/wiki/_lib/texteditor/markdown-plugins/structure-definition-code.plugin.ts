@@ -1,8 +1,9 @@
 import {matchSection} from '@kodality-web/marina-markdown';
+import {tokenAttrValue} from './plugin.util';
 
 export function structureDefinitionCodePlugin(md) {
   md.renderer.rules.structure_definition_code = (tokens, idx, /*options, env, self */) => {
-    const code = tokens[idx].attrs.find(a => a[0] === 'code')?.[1];
+    const code = tokenAttrValue(tokens[idx], 'code');
     return `<ce-structure-definition def-code="${encodeURIComponent(code)}"></ce-structure-definition>`;
   };
 

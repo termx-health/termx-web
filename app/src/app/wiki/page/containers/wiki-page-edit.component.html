@@ -38,7 +38,7 @@
             </li>
             <li m-menu-item
                 mIcon="copy"
-                (click)="copyStructureDefToClipboard()"
+                (click)="copyStructureDefToClipboard();"
                 m-tooltip
                 mTitle="def:{{pageContent.slug}}-model"
                 mPosition="bottom"
@@ -46,6 +46,10 @@
               {{'Copy reference' | translate: ({val: '{{def:' + pageContent.slug + '-model}' + '}'})}}
             </li>
           </ul>
+        </li>
+
+        <li m-menu-item mIcon="cluster" (click)="editor.launchEditor('drawio')">
+          Diagrams
         </li>
       </ul>
     </div>
