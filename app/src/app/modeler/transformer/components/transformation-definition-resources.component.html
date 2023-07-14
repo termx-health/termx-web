@@ -1,35 +1,63 @@
-<div *ngFor="let type of types">
-  <div class="m-items-middle resource-dir">
-    <m-icon mCode="folder"/>
-    {{('web.transformation-definition.resources.type.' + type) | translate}}
-  </div>
+<div nz-row nzGutter="12" class="m-row" style="margin-top: 12px">
+  <div nz-col [nzMd]="8" [nzXs]="24">
+    <m-card>
 
-  <div *ngFor="let res of definition.resources | filter:filterType:type"
-      class="m-items-middle resource"
-      [class.resource--selected]="selected === res"
-      [class.resource--invalid]="res | apply:isInvalid:selected"
-      (click)="onSelect(res)">
-    <m-icon [mCode]="res.source === 'definition' ? 'file-done' : res.source === 'fhir' ? 'fire' : 'file'"/>
-    <div>{{res.name || ('web.transformation-definition.resources.new' | translate)}}</div>
-  </div>
+      <div *ngFor="let type of types">
+        <div class="m-items-middle resource-dir">
+          <m-icon mCode="folder"/>
+          {{('web.transformation-definition.resources.type.' + type) | translate}}
+        </div>
 
-  <div class="resource-add">
-    <m-button mSize="small" mDisplay="dashed" (mClick)="onAdd(type)" style="padding: 3px">
-      <div class="m-items-middle">
-        <m-icon mCode="plus"/>
-        {{'core.btn.add' | translate}}
+        <div *ngFor="let res of definition.resources | filter:filterType:type"
+            class="m-items-middle resource"
+            [class.resource--selected]="selectedResource === res"
+            [class.resource--invalid]="res | apply:isResourceInvalid:[selectedResource, selectedMapping]"
+            (click)="selectResource(res)">
+          <m-icon [mCode]="res.source === 'definition' ? 'file-done' : res.source === 'fhir' ? 'fire' : 'file'"/>
+          <div>{{res.name || ('web.transformation-definition.resources.new' | translate)}}</div>
+        </div>
+
+        <div class="resource-add">
+          <m-button mSize="small" mDisplay="dashed" (mClick)="onAdd(type)" style="padding: 3px">
+            <div class="m-items-middle">
+              <m-icon mCode="plus"/>
+              {{'core.btn.add' | translate}}
+            </div>
+          </m-button>
+        </div>
       </div>
-    </m-button>
+
+      <div class="m-items-middle resource-dir">
+        <m-icon mCode="folder"/>
+        {{('web.transformation-definition.resources.type.mapping') | translate}}
+      </div>
+
+      <div class="m-items-middle resource"
+          [class.resource--selected]="selectedMapping === definition.mapping"
+          [class.resource--invalid]="definition.mapping | apply:isMappingInvalid:[selectedResource, selectedMapping]"
+          (click)="selectMapping(definition.mapping)">
+        <m-icon [mCode]="definition.mapping.source === 'fhir' ? 'fire' : 'file'"/>
+        <div>{{definition.mapping.name || ('web.transformation-definition.resources.new' | translate)}}</div>
+      </div>
+
+    </m-card>
   </div>
-</div>
 
-<div class="m-items-middle resource-dir">
-  <m-icon mCode="folder"/>
-  {{('web.transformation-definition.resources.type.mapping') | translate}}
-</div>
+  <div nz-col [nzMd]="16" [nzXs]="24">
+    <m-card *ngIf="!!selectedResource">
+      <m-button mSize="small"
+          mDisplay="dashed"
+          m-popconfirm
+          mPopconfirmTitle="core.delete-confirm"
+          (mOnConfirm)="deleteResource(selectedResource)"
+          style="position: absolute; right: 19px; z-index: 100">
+        <m-icon mCode="delete"/>
+      </m-button>
+      <tw-transformation-definition-resource-form [resource]="selectedResource"></tw-transformation-definition-resource-form>
+    </m-card>
+    <m-card *ngIf="!!selectedMapping">
+      <tw-transformation-definition-mapping-form [definition]="definition" [mapping]="selectedMapping"></tw-transformation-definition-mapping-form>
+    </m-card>
+  </div>
 
-<div class="m-items-middle resource" [class.resource--selected]="selected === definition.mapping" (click)="onSelect(definition.mapping)">
-  <m-icon [mCode]="definition.mapping.source === 'fhir' ? 'fire' : 'file'"/>
-  <div>{{definition.mapping.name || ('web.transformation-definition.resources.new' | translate)}}</div>
 </div>
-

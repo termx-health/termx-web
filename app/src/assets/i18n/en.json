@@ -1209,7 +1209,8 @@
         "definition": "Structure definition",
         "fhir-server": "Fhir server",
         "fhir-resource": "Resource",
-        "content": "Content"
+        "content": "Content",
+        "generate": "Generate"
       },
       "execution": {
         "input": "Input",

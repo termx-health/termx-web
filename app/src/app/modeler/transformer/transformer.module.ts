@@ -8,6 +8,7 @@ import {TransformationDefinitionResourceFormComponent} from 'term-web/modeler/tr
 import {TransformationDefinitionExecutionComponent} from 'term-web/modeler/transformer/components/transformation-definition-execution.component';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 import {TransformationDefinitionListComponent} from 'term-web/modeler/transformer/containers/transformation-definition-list.component';
+import {TransformationDefinitionMappingFormComponent} from 'term-web/modeler/transformer/components/transformation-definition-mapping-form.component';
 
 export const TRANSFORMATION_DEFINITION_ROUTES: Routes = [
   {path: 'transformation-definitions', component: TransformationDefinitionListComponent},
@@ -23,6 +24,7 @@ export const TRANSFORMATION_DEFINITION_ROUTES: Routes = [
   declarations: [
     TransformationDefinitionResourcesComponent,
     TransformationDefinitionResourceFormComponent,
+    TransformationDefinitionMappingFormComponent,
     TransformationDefinitionExecutionComponent,
 
     TransformationDefinitionEditComponent,

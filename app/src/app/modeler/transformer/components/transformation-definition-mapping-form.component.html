@@ -1,0 +1,31 @@
+<form #form="ngForm" *ngIf="mapping">
+
+  <m-form-item mName="source" mLabel="entities.transformation-definition.source" required>
+    <m-radio-group name="source" [(ngModel)]="mapping.source">
+      <label m-radio-button mValue="fhir">{{('entities.transformation-definition.source-fhir' | translate)}}</label>
+      <label m-radio-button mValue="static">{{('entities.transformation-definition.source-static' | translate)}}</label>
+    </m-radio-group>
+  </m-form-item>
+  <ng-container *ngIf="mapping.source === 'fhir'">
+    <m-form-item mName="fhirServer" mLabel="web.transformation-definition.resource-form.fhir-server" required>
+      <m-input [(ngModel)]="mapping.reference.fhirServer" name="fhirServer" required></m-input>
+    </m-form-item>
+    <m-form-item mName="fhirResource" mLabel="web.transformation-definition.resource-form.fhir-resource" required>
+      <m-input [(ngModel)]="mapping.reference.fhirResource" name="fhirResource" required (ngModelChange)="mapping.name = $event"></m-input>
+    </m-form-item>
+  </ng-container>
+  <ng-container *ngIf="mapping.source === 'static'">
+    <m-form-item mName="name" mLabel="entities.transformation-definition.name" required>
+      <m-input [(ngModel)]="mapping.name" name="name" required></m-input>
+    </m-form-item>
+    <m-form-item mName="content" [mLabel]="lbl" required>
+      <ng-template #lbl>
+        <span>{{'web.transformation-definition.resource-form.content' | translate}}</span>
+        <ng-container *ngIf="!mapping.reference.content">
+          &nbsp;|&nbsp; <a (click)="generateMapping()">{{'web.transformation-definition.resource-form.generate' | translate}}</a>
+        </ng-container>
+      </ng-template>
+      <m-textarea [(ngModel)]="mapping.reference.content" name="content" [autosize]="{minRows: 5, maxRows: 30}" required></m-textarea>
+    </m-form-item>
+  </ng-container>
+</form>

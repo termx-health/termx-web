@@ -1,5 +1,10 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/transformer/services/transformation-definition';
+import {Component, Input, OnInit} from '@angular/core';
+import {
+  TransformationDefinition,
+  TransformationDefinitionMapping,
+  TransformationDefinitionResource
+} from 'term-web/modeler/transformer/services/transformation-definition';
+import {remove} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-transformation-definition-resources',
@@ -37,15 +42,14 @@ import {TransformationDefinition, TransformationDefinitionResource} from 'term-w
     }
   `]
 })
-export class TransformationDefinitionResourcesComponent {
+export class TransformationDefinitionResourcesComponent implements OnInit {
   @Input() public definition: TransformationDefinition;
-  @Input() public selected: TransformationDefinitionResource;
-  @Output() public selectedChange = new EventEmitter<TransformationDefinitionResource>();
   public types = ['definition'];
+  public selectedResource: TransformationDefinitionResource;
+  public selectedMapping: TransformationDefinitionMapping;
 
-  public onSelect(resource: TransformationDefinitionResource): void {
-    this.selected = resource;
-    this.selectedChange.emit(this.selected);
+  public ngOnInit(): void {
+    this.selectMapping(this.definition.mapping);
   }
 
   public onAdd(type: string): void {
@@ -53,15 +57,34 @@ export class TransformationDefinitionResourcesComponent {
     resource.type = type;
     resource.reference = {};
     this.definition.resources = [...this.definition.resources, resource];
-    this.onSelect(resource);
+    this.selectResource(resource);
+  }
+
+  protected selectResource(r: TransformationDefinitionResource): void {
+    this.selectedMapping = null;
+    this.selectedResource = r;
+  }
+
+  protected selectMapping(r: TransformationDefinitionMapping): void {
+    this.selectedMapping = r;
+    this.selectedResource = null;
   }
 
   protected filterType = (r: TransformationDefinitionResource, type: string): boolean => {
     return r.type === type;
   };
 
-  protected isInvalid = (r: TransformationDefinitionResource, dummy: TransformationDefinitionResource): boolean => {
+  protected deleteResource(r: TransformationDefinitionResource): void {
+    this.selectedResource = null;
+    this.definition.resources = remove(this.definition.resources, r);
+  }
+
+  protected isResourceInvalid = (r: TransformationDefinitionResource, dummy: any): boolean => {
     return !TransformationDefinitionResource.isValid(r);
+  };
+
+  protected isMappingInvalid = (r: TransformationDefinitionMapping, dummy: any): boolean => {
+    return !TransformationDefinitionMapping.isValid(r);
   };
 
 }

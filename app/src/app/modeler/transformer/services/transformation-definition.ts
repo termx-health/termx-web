@@ -1,13 +1,31 @@
 export class TransformationDefinition {
   public id?: number;
   public name?: string;
+  public mapping?: TransformationDefinitionMapping;
   public resources?: TransformationDefinitionResource[];
-  public mapping?: TransformationDefinitionResource;
   public testSource?: string;
 
   public static isValid(d: TransformationDefinition): boolean {
-    return !!d.name && !!d.mapping && TransformationDefinitionResource.isValid(d.mapping)
+    return !!d.name && !!d.mapping && TransformationDefinitionMapping.isValid(d.mapping)
       && (!d.resources || d.resources.every(r => TransformationDefinitionResource.isValid(r)));
+  }
+}
+
+export class TransformationDefinitionMapping {
+  public name?: string;
+  public source?: 'fhir' | 'static';
+  public reference?: {
+    fhirServer?: string;
+    fhirResource?: string;
+    content?: string;
+  };
+
+  public static isValid(d: TransformationDefinitionMapping): boolean {
+    return !!d.name && !!d.source &&
+      (
+        (d.source === 'fhir' && !!d.reference.fhirServer && !!d.reference.fhirResource)
+        || (d.source === 'static' && !!d.name && !!d.reference.content)
+      );
   }
 }
 

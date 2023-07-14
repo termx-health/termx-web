@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {StructureDefinition} from '../../_lib';
 import {environment} from 'environments/environment';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
@@ -23,6 +23,10 @@ export class TransformationDefinitionService {
 
   public transform(source: string, def: StructureDefinition): Observable<TransformationResult> {
     return this.http.post<TransformationResult>(`${this.baseUrl}/transform`, {definition: def, source: source});
+  }
+
+  public generateFml(def: StructureDefinition): Observable<string> {
+    return this.http.post(`${this.baseUrl}/generate-fml`, def).pipe(map(r => r['fml']));
   }
 
   public save(def: TransformationDefinition): Observable<TransformationDefinition> {

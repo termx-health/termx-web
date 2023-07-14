@@ -32,27 +32,8 @@
       </m-card>
     </div>
   </div>
-  <div nz-row nzGutter="12" class="m-row" style="margin-top: 12px">
-    <div nz-col [nzMd]="8" [nzXs]="24">
-      <m-card>
-        <tw-transformation-definition-resources [definition]="definition" [(selected)]="selectedResource"></tw-transformation-definition-resources>
-      </m-card>
-    </div>
-    <div nz-col [nzMd]="16" [nzXs]="24">
-      <m-card *ngIf="selectedResource">
-        <m-button *ngIf="selectedResource !== definition.mapping"
-            mSize="small"
-            mDisplay="dashed"
-            m-popconfirm
-            mPopconfirmTitle="core.delete-confirm"
-            (mOnConfirm)="deleteResource(selectedResource)"
-            style="position: absolute; right: 19px; z-index: 100">
-          <m-icon mCode="delete"/>
-        </m-button>
-        <tw-transformation-definition-resource-form [resource]="selectedResource"></tw-transformation-definition-resource-form>
-      </m-card>
-    </div>
-  </div>
+
+  <tw-transformation-definition-resources [definition]="definition"></tw-transformation-definition-resources>
 
   <div nz-row nzGutter="12" class="m-row" style="margin-top: 12px">
     <div nz-col [nzMd]="24">
