@@ -1,9 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {
-  TransformationDefinition,
-  TransformationDefinitionMapping,
-  TransformationDefinitionResource
-} from 'term-web/modeler/transformer/services/transformation-definition';
+import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/transformer/services/transformation-definition';
 import {remove} from '@kodality-web/core-util';
 
 @Component({
@@ -44,15 +40,14 @@ import {remove} from '@kodality-web/core-util';
 })
 export class TransformationDefinitionResourcesComponent implements OnInit {
   @Input() public definition: TransformationDefinition;
-  public types = ['definition'];
+  public types = ['definition', 'conceptmap'];
   public selectedResource: TransformationDefinitionResource;
-  public selectedMapping: TransformationDefinitionMapping;
 
   public ngOnInit(): void {
-    this.selectMapping(this.definition.mapping);
+    this.selectResource(this.definition.mapping);
   }
 
-  public onAdd(type: string): void {
+  public onAdd(type: any): void {
     const resource = new TransformationDefinitionResource();
     resource.type = type;
     resource.reference = {};
@@ -61,13 +56,7 @@ export class TransformationDefinitionResourcesComponent implements OnInit {
   }
 
   protected selectResource(r: TransformationDefinitionResource): void {
-    this.selectedMapping = null;
     this.selectedResource = r;
-  }
-
-  protected selectMapping(r: TransformationDefinitionMapping): void {
-    this.selectedMapping = r;
-    this.selectedResource = null;
   }
 
   protected filterType = (r: TransformationDefinitionResource, type: string): boolean => {
@@ -81,10 +70,6 @@ export class TransformationDefinitionResourcesComponent implements OnInit {
 
   protected isResourceInvalid = (r: TransformationDefinitionResource, dummy: any): boolean => {
     return !TransformationDefinitionResource.isValid(r);
-  };
-
-  protected isMappingInvalid = (r: TransformationDefinitionMapping, dummy: any): boolean => {
-    return !TransformationDefinitionMapping.isValid(r);
   };
 
 }

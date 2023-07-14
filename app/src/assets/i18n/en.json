@@ -1208,11 +1208,13 @@
       },
       "resources": {
         "type.definition": "Definitions",
+        "type.conceptmap": "Concept Maps",
         "type.mapping": "Mapping",
         "new": "-- new --"
       },
       "resource-form": {
         "definition": "Structure definition",
+        "map-set": "Map Set",
         "fhir-server": "Fhir server",
         "fhir-resource": "Resource",
         "content": "Content",
@@ -1811,7 +1813,7 @@
       "singular": "FML transformation",
       "plural": "FML transformations",
       "source": "Source",
-      "source-definition": "TermX",
+      "source-local": "TermX",
       "source-fhir": "Fhir",
       "source-static": "Static",
       "name": "Name"

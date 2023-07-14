@@ -25,6 +25,7 @@ export class TransformationDefinitionEditComponent implements OnInit {
     this.loading = true;
     this.initDefinition().subscribe(r => {
       this.definition = r;
+      this.definition.mapping.type = 'mapping';
     }).add(() => this.loading = false);
   }
 
@@ -37,6 +38,7 @@ export class TransformationDefinitionEditComponent implements OnInit {
     const def = new TransformationDefinition();
     def.resources = [];
     def.mapping = {
+      type: 'mapping',
       reference: {}
     };
     return of(def);
@@ -63,7 +65,7 @@ export class TransformationDefinitionEditComponent implements OnInit {
   }
 
   private cleanResource(r: TransformationDefinitionResource): void {
-    r.reference = r.source === 'definition' ? {structureDefinitionId: r.reference.structureDefinitionId}
+    r.reference = r.source === 'local' ? {localId: r.reference.localId}
       : r.source === 'fhir' ? {fhirServer: r.reference.fhirServer, fhirResource: r.reference.fhirResource}
         : r.source === 'static' ? {content: r.reference.content}
           : {};
