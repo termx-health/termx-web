@@ -6,6 +6,7 @@ import {TaskListComponent} from 'term-web/task/containers/task-list.component';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {TaskEditComponent} from 'term-web/task/containers/task-edit.component';
 import {TaskService} from 'term-web/task/services/task-service';
+import {WikiLibModule} from 'term-web/wiki/_lib';
 
 export const TASK_ROUTES: Routes = [
   {path: '', component: TaskListComponent},
@@ -18,7 +19,8 @@ export const TASK_ROUTES: Routes = [
     CoreUiModule,
 
     TaskLibModule,
-    ResourcesLibModule
+    ResourcesLibModule,
+    WikiLibModule
   ],
   declarations: [TaskListComponent, TaskEditComponent],
   providers: [

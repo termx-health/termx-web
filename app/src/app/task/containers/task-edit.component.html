@@ -20,13 +20,16 @@
                   *ngFor="let s of (task.workflow |apply:getTargetStatuses:task.status:workflows)">{{s | localizedConceptName: {valueSet: 'task-status'} | async}}</label>
             </m-radio-group>
           </div>
-          <m-form-item>
-            <m-textarea [autosize]="{minRows: 5}" name="content" [(ngModel)]="task.content" placeholder="Content"></m-textarea>
-          </m-form-item>
+          <div class="m-bordered" *ngIf="task['edit-mode'] || !task.content">
+            <tw-smart-text-editor [(ngModel)]="task.content" valueType="markdown" name="content"></tw-smart-text-editor>
+          </div>
+          <div class="m-clickable" *ngIf="!task['edit-mode'] && task.content" (click)="task['edit-mode'] = true" >
+            <tw-smart-text-editor [(ngModel)]="task.content" valueType="markdown" name="content" viewMode></tw-smart-text-editor>
+          </div>
 
           <m-divider>{{'web.task.activity' | translate}}</m-divider>
           <m-list>
-            <m-list-item *ngFor="let activity of (task.activities| apply:hasTransitions)">
+            <m-list-item *ngFor="let activity of (task.activities| apply:hasTransitions); let i = index">
               <div class="m-justify-between">
                 <div class="m-items-middle">
                   <m-icon mCode="user"></m-icon>
@@ -44,12 +47,14 @@
                   <label class="m-subtitle">{{at.transition.from}}</label>&nbsp;
                   <m-icon mCode="arrow-right"></m-icon>&nbsp; <label class="m-subtitle">{{at.transition.to}}</label>
                 </label>
-                <ng-container *ngIf="!activity['edit-mode']">
-                  <label style="font-style: italic" class="m-clickable" (click)="activity['edit-mode'] = true; activity['new-note'] = activity.note">{{activity.note}}</label>
-                </ng-container>
+                <div class="m-clickable" *ngIf="!activity['edit-mode']" (click)="activity['edit-mode'] = true; activity['new-note'] = activity.note">
+                  <tw-smart-text-editor [(ngModel)]="activity.note" valueType="markdown" name="{{i}}-activity" viewMode></tw-smart-text-editor>
+                </div>
               </div>
               <ng-container *ngIf="activity['edit-mode']">
-                <m-textarea [(ngModel)]="activity['new-note']" name="edit-note"></m-textarea>
+                <div class="m-bordered">
+                  <tw-smart-text-editor [(ngModel)]="activity['new-note']" valueType="markdown" name="{{i}}activity"></tw-smart-text-editor>
+                </div>
                 <m-button mDisplay="text" (mClick)="updateActivity(activity.id, activity['new-note']); activity['edit-mode'] = false">
                   <m-icon mCode="check"></m-icon>
                 </m-button>
@@ -59,7 +64,9 @@
               </ng-container>
             </m-list-item>
             <m-list-item *ngIf="newActivity.visible">
-              <m-textarea [(ngModel)]="newActivity.note" name="new-note"></m-textarea>
+              <div class="m-bordered">
+                <tw-smart-text-editor [(ngModel)]="newActivity.note"  valueType="markdown" name="new-activity"></tw-smart-text-editor>
+              </div>
               <m-button mDisplay="text" (mClick)="createActivity()">
                 <m-icon mCode="check"></m-icon>
               </m-button>
