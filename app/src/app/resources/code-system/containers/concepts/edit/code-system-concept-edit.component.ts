@@ -45,6 +45,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
 
   protected loader = new LoadingManager();
   public mode: 'add' | 'edit' = 'add';
+  protected showOnlyOpenedTasks: boolean = true;
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("designationEdit") public designationEdit?: CodeSystemDesignationEditComponent;

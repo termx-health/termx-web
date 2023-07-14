@@ -297,6 +297,8 @@
         "add-header": "Add concept",
         "concept": "Concept",
         "related-artifacts": "Related artifacts",
+        "all-tasks": "All tasks",
+        "opened-tasks": "Opened tasks",
         "linked-with-code-systems": "Linked with code system versions",
         "version": {
           "header": "Version {{created}}",

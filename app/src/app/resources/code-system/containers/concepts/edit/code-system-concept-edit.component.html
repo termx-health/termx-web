@@ -1,4 +1,9 @@
-<tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [conceptCode]="concept?.code" [version]="codeSystemVersion" [versions]="codeSystemVersions" mode="concept-edit"></tw-resource-context>
+<tw-resource-context resourceType="CodeSystem"
+    [resource]="codeSystem"
+    [conceptCode]="concept?.code"
+    [version]="codeSystemVersion"
+    [versions]="codeSystemVersions"
+    mode="concept-edit"></tw-resource-context>
 <m-page [mLoading]="loader.isLoading">
 
   <div style="display: flex; gap: 1rem">
@@ -43,7 +48,10 @@
               </div>
               <div class="m-items-middle">
                 <m-icon (click)="duplicateVersion(version)" *ngIf="version.id" mCode="copy" m-tooltip mTitle="core.btn.duplicate" class="m-clickable"></m-icon>
-                <m-icon (click)="deleteVersion(version.id)" *ngIf="version.status === 'draft' && concept.versions?.length > 1" mCode="delete" class="m-clickable"></m-icon>
+                <m-icon (click)="deleteVersion(version.id)"
+                    *ngIf="version.status === 'draft' && concept.versions?.length > 1"
+                    mCode="delete"
+                    class="m-clickable"></m-icon>
               </div>
             </div>
             <div>{{version.description | localName}}</div>
@@ -55,6 +63,24 @@
       <m-card *ngIf="concept?.id">
         <m-title *m-card-header mTitle="web.code-system-concept.form.related-artifacts"></m-title>
         <tw-resource-related-artifact-widget resourceType="Concept" [resourceId]="concept.id | toString"></tw-resource-related-artifact-widget>
+      </m-card>
+
+      <!-- Opened tasks -->
+      <m-card *ngIf="conceptVersion?.id">
+        <div *m-card-header class="m-items-middle">
+          <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+            <m-title mTitle="web.code-system-concept.form.opened-tasks"></m-title>
+          </a>
+          <m-title *ngIf="showOnlyOpenedTasks" mTitle="web.code-system-concept.form.opened-tasks"></m-title>
+          <span>|</span>
+          <a *ngIf="showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+            <m-title mTitle="web.code-system-concept.form.all-tasks"></m-title>
+          </a>
+          <m-title *ngIf="!showOnlyOpenedTasks" mTitle="web.code-system-concept.form.all-tasks"></m-title>
+        </div>
+        <tw-resource-tasks-widget resourceType="CodeSystemEntityVersion"
+            [resourceId]="conceptVersion.id | toString"
+            [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined"></tw-resource-tasks-widget>
       </m-card>
 
     </div>
