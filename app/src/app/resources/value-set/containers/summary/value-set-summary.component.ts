@@ -22,12 +22,7 @@ export class ValueSetSummaryComponent implements OnInit {
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
-    this.loader.wrap('load',
-      forkJoin([this.valueSetService.load(id), this.valueSetService.searchVersions(id, {decorated: true, limit: -1})]))
-      .subscribe(([vs, versions]) => {
-        this.valueSet = vs;
-        this.versions = versions.data;
-      });
+    this.loadData(id);
   }
 
   protected mapVersionToSnapshot = (versions: ValueSetVersion[]): ValueSetSnapshot[] => {
@@ -40,5 +35,14 @@ export class ValueSetSummaryComponent implements OnInit {
 
   public openVersionConcepts(version: string): void {
     this.router.navigate(['/resources/value-sets', this.valueSet.id, 'versions', version, 'concepts']);
+  }
+
+  protected loadData(id: string): void {
+    this.loader.wrap('load',
+      forkJoin([this.valueSetService.load(id), this.valueSetService.searchVersions(id, {decorated: true, limit: -1})]))
+      .subscribe(([vs, versions]) => {
+        this.valueSet = vs;
+        this.versions = versions.data;
+      });
   }
 }
