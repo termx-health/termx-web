@@ -2,34 +2,25 @@
   {
     "label": {
       "en": "Dashboards",
-      "et": "Esipaneelid"
+      "et": "Esipaneelid",
+	  "lt": "Ataskaitų sritis"
     },
     "items": [
       {
         "label": {
           "en": "Landing page",
-          "et": "Sihtleht"
+          "et": "Sihtleht",
+		  "lt": "Įėjimo tinklalapis"
         },
         "link": "landing"
-      },
-      {
-        "label": {
-          "en": "Global search",
-          "et": "Globaalne otsing"
-        },
-        "link": "global-search",
-        "privileges": [
-          "*.CodeSystem.view",
-          "*.ValueSet.view",
-          "*.MapSet.view"
-        ]
       }
     ]
   },
   {
     "label": {
       "en": "Terminology",
-      "et": "Terminoloogia"
+      "et": "Terminoloogia",
+	  "lt": "Terminologija"
     },
     "privileges": [
       "*.CodeSystem.view",
@@ -42,7 +33,8 @@
       {
         "label": {
           "en": "Code systems",
-          "et": "Koodisüsteemid"
+          "et": "Koodisüsteemid",
+		  "lt": "Kodų sistemos"
         },
         "link": "resources/code-systems",
         "privileges": [
@@ -52,7 +44,8 @@
       {
         "label": {
           "en": "Value sets",
-          "et": "Väärtuste kogumid"
+          "et": "Väärtuste kogumid",
+		  "lt": "Reikšmių aibės"
         },
         "link": "resources/value-sets",
         "privileges": [
@@ -62,7 +55,8 @@
       {
         "label": {
           "en": "Map sets",
-          "et": "Kaardistus kogumid"
+          "et": "Kaardistus kogumid",
+		  "lt": "Atvaizdžių aibės"
         },
         "link": "resources/map-sets",
         "privileges": [
@@ -71,7 +65,8 @@
       },
       {
         "label": {
-          "en": "Naming systems"
+          "en": "Naming systems",
+		  "lt": "Pavadinimų sistemos"
         },
         "link": "resources/naming-systems",
         "privileges": [
@@ -80,7 +75,8 @@
       },
       {
         "label": {
-          "en": "Association types"
+          "en": "Association types",
+		  "lt": "Susiejimo tipai"
         },
         "link": "resources/association-types",
         "privileges": [
@@ -90,10 +86,11 @@
       {
         "label": {
           "en": "Import",
-          "et": "Import"
+          "et": "Import",
+		  "lt": "Importuoti"
         },
         "icon": "interaction",
-        "link": "integration/dashboard",
+        "link": "integration",
         "privileges": [
           "*.CodeSystem.view",
           "*.ValueSet.view",
@@ -105,7 +102,8 @@
   {
     "label": {
       "en": "External resources",
-      "et": "Välised ressursid"
+      "et": "Välised ressursid",
+	  "lt": "Išoriniai ištekliai"
     },
     "privileges": [
       "snomed-ct.CodeSystem.view",
@@ -115,20 +113,11 @@
     "items": [
       {
         "label": {
-          "en": "SNOMED CT browser",
-          "et": "SNOMED CT brauser"
+          "en": "SNOMED CT",
+          "et": "SNOMED CT",
+		  "lt": "SNOMED CT"
         },
-        "link": "integration/snomed/dashboard",
-        "privileges": [
-          "snomed-ct.CodeSystem.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "SNOMED CT management",
-          "et": "SNOMED CT haldamine"
-        },
-        "link": "integration/snomed/branches",
+        "link": "integration/snomed",
         "privileges": [
           "snomed-ct.CodeSystem.view"
         ]
@@ -136,7 +125,8 @@
       {
         "label": {
           "en": "LOINC",
-          "et": "LOINC"
+          "et": "LOINC",
+		  "lt": "LOINC"
         },
         "link": "integration/loinc",
         "privileges": [
@@ -146,7 +136,8 @@
       {
         "label": {
           "en": "Measurement units",
-          "et": "Mõõtühikud"
+          "et": "Mõõtühikud",
+		  "lt": "Matavimo vienetai"
         },
         "link": "measurement-units",
         "privileges": [
@@ -155,7 +146,8 @@
       },
       {
         "label": {
-          "en": "Observation definition"
+          "en": "Observation definition",
+		  "lt": "Stebėjimo apibrėžtis"
         },
         "link": "observation-definitions",
         "privileges": [
@@ -166,63 +158,28 @@
   },
   {
     "label": {
-      "en": "Wiki",
-      "et": "Wiki"
+      "en": "Searches",
+      "et": "Otsingud",
+	  "lt": "Paieškos"
     },
     "privileges": [
-      "*.Wiki.view"
+      "*.CodeSystem.view",
+      "*.ValueSet.view",
+      "*.MapSet.view"
     ],
-    "link": "wiki/pages",
     "items": [
       {
         "label": {
-          "en": "Wiki",
-          "et": "Wiki"
+          "en": "Global search",
+          "et": "Globaalne otsing",
+		  "lt": "Visuotinė paieška"
         },
-        "link": "wiki/pages",
+        "icon": "search",
+        "link": "global-search",
         "privileges": [
-          "*.Wiki.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Templates",
-          "et": "Mallid"
-        },
-        "link": "wiki-management/templates",
-        "privileges": [
-          "*.Wiki.view"
-        ]
-      }
-    ]
-  },
-  {
-    "label": {
-      "en": "Modeler",
-      "et": "Modelleerija"
-    },
-    "privileges": [
-      "*.Modeler.view"
-    ],
-    "link": "wiki/pages",
-    "items": [
-      {
-        "label": {
-          "en": "Structure definitions",
-          "et": "Struktuuri määratlused"
-        },
-        "link": "modeler/structure-definitions",
-        "privileges": [
-          "*.Modeler.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "FML transformations"
-        },
-        "link": "modeler/transformation-definitions",
-        "privileges": [
-          "*.Modeler.view"
+          "*.CodeSystem.view",
+          "*.ValueSet.view",
+          "*.MapSet.view"
         ]
       }
     ]
@@ -230,16 +187,18 @@
   {
     "label": {
       "en": "Management",
-      "et": "Haldus"
+      "et": "Haldus",
+	  "lt": "Tvarkymas"
     },
     "items": [
       {
         "label": {
           "en": "Tasks",
-          "et": "Ülesanded"
+          "et": "Ülesanded",
+		  "lt": "Užduotys"
         },
         "icon": "inbox",
-        "link": "tasks",
+        "link": "taskflow",
         "privileges": [
           "*.Task.view"
         ]
@@ -247,7 +206,8 @@
       {
         "label": {
           "en": "Spaces",
-          "et": "Projektid"
+          "et": "Projektid",
+		  "lt": "Tarpai"
         },
         "icon": "appstore",
         "link": "spaces",
@@ -257,8 +217,9 @@
       },
       {
         "label": {
-          "en": "Servers",
-          "et": "Serverid"
+          "en": "Terminology servers",
+          "et": "Terminoloogia serverid",
+		  "lt": "Terminologijos serveriai"
         },
         "icon": "cloud-server",
         "link": "terminology-servers",
@@ -269,7 +230,8 @@
       {
         "label": {
           "en": "Privileges",
-          "et": "Privileegid"
+          "et": "Privileegid",
+		  "lt": "Privilegijos"
         },
         "icon": "key",
         "link": "privileges",
@@ -280,18 +242,69 @@
       {
         "label": {
           "en": "Terminology service API",
-          "et": "Terminoloogi teenuse API"
+          "et": "Terminoloogi teenuse API",
+		  "lt": "Terminologijos paslaugų API"
         },
         "icon": "cloud",
-        "link": "terminology-service-api"
+        "link": "tools/terminology-service-api"
       },
       {
         "label": {
           "en": "Sequences",
-          "et": "Jadad"
+          "et": "Jadad",
+		  "lt": "Sekos"
         },
         "icon": "field-binary",
         "link": "sequences"
+      }
+    ]
+  },
+  {
+    "label": {
+      "en": "Thesaurus",
+      "et": "Thesaurus",
+	  "lt": "Tezauras"
+    },
+    "privileges": [
+      "*.Thesaurus.view"
+    ],
+    "link": "thesaurus/pages",
+    "items": [
+      {
+        "label": {
+          "en": "Thesaurus",
+          "et": "Thesaurus",
+		  "lt": "Tezauras"
+        },
+        "icon": "file-search",
+        "link": "thesaurus/pages",
+        "privileges": [
+          "*.Thesaurus.view"
+        ]
+      },
+      {
+        "label": {
+          "en": "Structure definitions",
+          "et": "Struktuuri määratlused",
+		  "lt": "Struktūros apibrėžtys"
+        },
+        "icon": "profile",
+        "link": "thesaurus/structure-definitions",
+        "privileges": [
+          "*.Thesaurus.view"
+        ]
+      },
+      {
+        "label": {
+          "en": "Templates",
+          "et": "Mallid",
+		  "lt": "Šablonai"
+        },
+        "icon": "file-text",
+        "link": "thesaurus/templates",
+        "privileges": [
+          "*.Thesaurus.view"
+        ]
       }
     ]
   }
