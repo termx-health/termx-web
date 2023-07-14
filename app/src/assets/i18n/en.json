@@ -1223,6 +1223,13 @@
         "transform": "Transform",
         "output": "Output"
       }
+    },
+    "resource-form": {
+      "open-uri": "Open URI",
+      "id-change-modal": {
+        "id": "New ID",
+        "header": "Change ID"
+      }
     }
   },
   "entities": {

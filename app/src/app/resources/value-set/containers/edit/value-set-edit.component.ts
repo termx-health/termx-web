@@ -30,13 +30,15 @@ export class ValueSetEditComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+    this.route.paramMap.subscribe(paramMap => {
+      const id = paramMap.get('id');
 
-    if (isDefined(id)) {
-      this.mode = 'edit';
-      this.loader.wrap('load', this.valueSetService.load(id)).subscribe(vs => this.valueSet = this.writeVS(vs));
-    }
-    this.valueSet = this.writeVS(new ValueSet());
+      if (isDefined(id)) {
+        this.mode = 'edit';
+        this.loader.wrap('load', this.valueSetService.load(id)).subscribe(vs => this.valueSet = this.writeVS(vs));
+      }
+      this.valueSet = this.writeVS(new ValueSet());
+    });
   }
 
   protected save(): void {

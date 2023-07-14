@@ -8,8 +8,12 @@
     </m-form-item>
   </m-form-row>
 
-  <m-form-item mLabel="entities.resource.id" mName="id" required>
-    <m-input name="id" [(ngModel)]="resource.id" required></m-input>
+  <m-form-item mLabel="entities.resource.id" mName="id" [required]="mode === 'add'">
+    <m-input *ngIf="mode === 'add'" name="id" [(ngModel)]="resource.id" required></m-input>
+    <div class="m-items-middle">
+      <span *ngIf="mode !== 'add'">{{resource.id}}</span>
+      <m-button m-tooltip mTitle="core.btn.edit" (mClick)="idChangeModalData.visible = true"><m-icon mCode="edit"></m-icon></m-button>
+    </div>
   </m-form-item>
 
   <m-form-row>
@@ -41,3 +45,27 @@
     <m-checkbox name="experimental" [(ngModel)]="resource.experimental"></m-checkbox>
   </m-form-item>
 </form>
+
+
+<m-modal [(mVisible)]="idChangeModalData.visible" (mClose)="idChangeModalData = {visible: false}">
+  <m-title *mModalHeader>
+    {{'web.resource-form.id-change-modal.header' | translate}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #idChangeModalForm="ngForm">
+      <m-form-item mName="id" mLabel="web.resource-form.id-change-modal.id" required>
+        <m-input name="id" [(ngModel)]="idChangeModalData.id" required></m-input>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="idChangeModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="changeId()" [mLoading]="loader.isLoading" [disabled]="loader.state['id-change']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>

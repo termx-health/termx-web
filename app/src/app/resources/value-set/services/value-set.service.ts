@@ -9,6 +9,10 @@ export class ValueSetService extends ValueSetLibService {
     return this.http.post<void>(`${this.baseUrl}/transaction`, request);
   }
 
+  public changeValueSetId(currentId: string, newId: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${currentId}/change-id`, {id: newId});
+  }
+
   public deleteValueSet(valueSetId: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${valueSetId}`);
   }

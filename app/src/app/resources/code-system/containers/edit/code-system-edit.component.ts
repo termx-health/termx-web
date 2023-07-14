@@ -35,13 +35,15 @@ export class CodeSystemEditComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
+   this.route.paramMap.subscribe(paramMap => {
+      const id = paramMap.get('id');
 
-    if (isDefined(id)) {
-      this.mode = 'edit';
-      this.loader.wrap('load', this.codeSystemService.load(id)).subscribe(vs => this.codeSystem = this.writeCS(vs));
-    }
-    this.codeSystem = this.writeCS(new CodeSystem());
+     if (isDefined(id)) {
+       this.mode = 'edit';
+       this.loader.wrap('load', this.codeSystemService.load(id)).subscribe(vs => this.codeSystem = this.writeCS(vs));
+     }
+     this.codeSystem = this.writeCS(new CodeSystem());
+    });
   }
 
   public save(): void {

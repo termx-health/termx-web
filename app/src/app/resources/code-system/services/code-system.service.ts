@@ -13,6 +13,10 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/duplicate`, duplicateRequest);
   }
 
+  public changeCodeSystemId(currentId: string, newId: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${currentId}/change-id`, {id: newId});
+  }
+
   public deleteCodeSystem(codeSystemId: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}`);
   }

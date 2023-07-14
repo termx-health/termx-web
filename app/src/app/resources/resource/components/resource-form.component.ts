@@ -5,8 +5,10 @@ import {LocalizedName} from '@kodality-web/marina-util';
 import {TranslateService} from '@ngx-translate/core';
 import slugify from 'slugify';
 import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
-import {ConceptUtil, ValueSetLibService, ValueSetVersionConcept} from 'app/src/app/resources/_lib';
+import {ConceptUtil, ValueSetVersionConcept} from 'app/src/app/resources/_lib';
 import {Resource} from 'term-web/resources/resource/model/resource';
+import {Router} from '@angular/router';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 
 
 @Component({
@@ -22,12 +24,16 @@ export class ResourceFormComponent implements OnChanges {
   protected customPublisher: boolean = false;
   protected publishers: ValueSetVersionConcept[];
 
+  protected idChangeModalData: {visible?: boolean, id?: string} = {};
+  @ViewChild("idChangeModalForm") public idChangeModalForm?: NgForm;
+
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
+    private router: Router,
     private translateService: TranslateService,
     private codeSystemService: CodeSystemService,
-    private valueSetLibService: ValueSetLibService
+    private valueSetService: ValueSetService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -69,10 +75,26 @@ export class ResourceFormComponent implements OnChanges {
   }
 
   private handlePublisher(): void {
-    this.valueSetLibService.expand({valueSet: 'publisher'}).subscribe(exp => {
+    this.valueSetService.expand({valueSet: 'publisher'}).subscribe(exp => {
       this.publishers = exp;
       this.customPublisher = this.resource.publisher && !exp.find(e => e.concept?.code === this.resource.publisher);
     });
 
+  }
+
+  public changeId(): void {
+    if (!validateForm(this.idChangeModalForm)) {
+      return;
+    }
+    if (this.resourceType === 'CodeSystem') {
+      this.codeSystemService.changeCodeSystemId(this.resource.id, this.idChangeModalData.id).subscribe(() => {
+        this.router.navigate(['/resources/code-systems', this.idChangeModalData.id, 'edit'], {replaceUrl: true});
+      });
+    }
+    if (this.resourceType === 'ValueSet') {
+      this.valueSetService.changeValueSetId(this.resource.id, this.idChangeModalData.id).subscribe(() => {
+        this.router.navigate(['/resources/value-sets', this.idChangeModalData.id, 'edit'], {replaceUrl: true});
+      });
+    }
   }
 }
