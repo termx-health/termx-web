@@ -28,7 +28,7 @@ export class TaskContextItem {
 }
 
 export class TaskActivity {
-  public id?: number;
+  public id?: string;
   public taskId?: number;
   public note?: string;
   public transition?: {[key: string]: {from?: string, to?: string}};

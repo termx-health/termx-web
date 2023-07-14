@@ -85,6 +85,23 @@ export class TaskEditComponent implements OnInit {
     });
   }
 
+  protected updateActivity(id: string, note: string): void {
+    const number = this.task.number;
+    if (!isDefined(number) || !isDefined(id) || !isDefined(note)) {
+      return;
+    }
+    this.loader.wrap('save', this.taskService.updateActivity(number, id, note)).subscribe(() => {
+      this.loadTask(this.task.number);
+      this.newActivity = {};
+    });
+  }
+
+  protected deleteActivity(id: string): void {
+    const number = this.task.number;
+    this.loader.wrap('delete-activity', this.taskService.deleteActivity(number, id))
+      .subscribe(() => this.loadTask(this.task.number));
+  }
+
   protected loadWorkflows(projectCode: string): void {
     if (!projectCode) {
       return;

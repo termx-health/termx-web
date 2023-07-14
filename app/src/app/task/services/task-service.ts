@@ -15,4 +15,12 @@ export class TaskService extends TaskLibService {
   public createActivity(number: string, note: string): Observable<TaskActivity> {
     return this.http.post<TaskActivity>(`${this.baseUrl}/tasks/${number}/activities`, {note: note});
   }
+
+  public updateActivity(number: string, id: string, note: string): Observable<TaskActivity> {
+    return this.http.put<TaskActivity>(`${this.baseUrl}/tasks/${number}/activities/${id}`, {note: note});
+  }
+
+  public deleteActivity(number: string, id: string): Observable<TaskActivity> {
+    return this.http.delete<TaskActivity>(`${this.baseUrl}/tasks/${number}/activities/${id}`);
+  }
 }

@@ -24,14 +24,6 @@
             <m-textarea [autosize]="{minRows: 5}" name="content" [(ngModel)]="task.content" placeholder="Content"></m-textarea>
           </m-form-item>
 
-
-          <ng-container *ngIf="task.context?.length > 0">
-            <m-divider>{{'web.task.context' | translate}}</m-divider>
-            <div style="display: grid">
-              <a *ngFor="let ctx of task.context" (mClick)="openContext(ctx)">{{ctx.type}} | {{ctx.id}}</a>
-            </div>
-          </ng-container>
-
           <m-divider>{{'web.task.activity' | translate}}</m-divider>
           <m-list>
             <m-list-item *ngFor="let activity of (task.activities| apply:hasTransitions)">
@@ -40,7 +32,11 @@
                   <m-icon mCode="user"></m-icon>
                   <label>{{activity.updatedBy}}</label>
                 </div>
-                <label class="m-subtitle">{{activity.updatedAt | localDateTime}}</label>
+                <div class="m-items-middle">
+                  <label class="m-subtitle">{{activity.updatedAt | localDateTime}}</label>
+                  <m-divider mVertical></m-divider>
+                  <m-icon class="m-clickable" mCode="delete" (click)="deleteActivity(activity.id)"></m-icon>
+                </div>
               </div>
               <div style="display:grid">
                 <label *ngFor="let at of (activity.transition | apply:changeTransitions)">
@@ -48,11 +44,22 @@
                   <label class="m-subtitle">{{at.transition.from}}</label>&nbsp;
                   <m-icon mCode="arrow-right"></m-icon>&nbsp; <label class="m-subtitle">{{at.transition.to}}</label>
                 </label>
-                <label style="font-style: italic">{{activity.note}}</label>
+                <ng-container *ngIf="!activity['edit-mode']">
+                  <label style="font-style: italic" class="m-clickable" (click)="activity['edit-mode'] = true; activity['new-note'] = activity.note">{{activity.note}}</label>
+                </ng-container>
               </div>
+              <ng-container *ngIf="activity['edit-mode']">
+                <m-textarea [(ngModel)]="activity['new-note']" name="edit-note"></m-textarea>
+                <m-button mDisplay="text" (mClick)="updateActivity(activity.id, activity['new-note']); activity['edit-mode'] = false">
+                  <m-icon mCode="check"></m-icon>
+                </m-button>
+                <m-button mDisplay="text" (mClick)="activity['edit-mode'] = false">
+                  <m-icon mCode="close"></m-icon>
+                </m-button>
+              </ng-container>
             </m-list-item>
             <m-list-item *ngIf="newActivity.visible">
-              <m-textarea [(ngModel)]="newActivity.note" name="note"></m-textarea>
+              <m-textarea [(ngModel)]="newActivity.note" name="new-note"></m-textarea>
               <m-button mDisplay="text" (mClick)="createActivity()">
                 <m-icon mCode="check"></m-icon>
               </m-button>
@@ -101,6 +108,13 @@
           <m-form-item mLabel="entities.task.modified-by">
             <label>{{(task.updatedBy) || '-'}}</label>
           </m-form-item>
+
+          <ng-container *ngIf="task.context?.length > 0">
+            <m-divider>{{'web.task.context' | translate}}</m-divider>
+            <div style="display: grid">
+              <a *ngFor="let ctx of task.context" (mClick)="openContext(ctx)">{{ctx.type}} | {{ctx.id}}</a>
+            </div>
+          </ng-container>
         </div>
       </div>
     </form>
