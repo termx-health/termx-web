@@ -42,4 +42,12 @@ export class TransformationDefinitionResourceFormComponent {
       return JSON.parse(content)['url'];
     }
   };
+
+  protected isJSON(val: string): boolean {
+    try {
+      return !!JSON.parse(val);
+    } catch {
+      return false;
+    }
+  }
 }

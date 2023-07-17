@@ -45,18 +45,39 @@
         mLabel="web.transformation-definition.resource-form.url">
       {{resource.reference.content | apply:findUrl}}
     </m-form-item>
-    <m-form-item mName="content" [mLabel]="lbl" required>
+    <m-form-item mName="content" [mLabel]="lbl" required *ngIf="{showPreview: false} as d">
       <ng-template #lbl>
         <span>{{'web.transformation-definition.resource-form.content' | translate}}</span>
         <ng-container *ngIf="resource.type === 'mapping' && !resource.reference.content">
           &nbsp;|&nbsp; <a (click)="generateMapping()">{{'web.transformation-definition.resource-form.generate' | translate}}</a>
         </ng-container>
       </ng-template>
-      <m-textarea [(ngModel)]="resource.reference.content"
-          (ngModelChange)="onContentChange()"
-          name="content"
-          [autosize]="{minRows: 5, maxRows: 30}"
-          required></m-textarea>
+
+      <m-button *ngIf="resource.reference.content && resource.reference.content | apply: isJSON"
+          style="position: absolute; right: 0; top: -2rem"
+          mSize="small"
+          mDisplay="dashed"
+          (mClick)="d.showPreview = !d.showPreview"
+      >
+        <m-icon [mCode]="!d.showPreview ? 'read' : 'menu-unfold'"/>
+      </m-button>
+
+      <div class="m-items-top">
+        <m-textarea
+            style="flex: 1"
+            [(ngModel)]="resource.reference.content"
+            (ngModelChange)="onContentChange()"
+            name="content"
+            [autosize]="{minRows: 5, maxRows: 30}"
+            required
+        ></m-textarea>
+
+        <tw-structure-definition-tree
+            *ngIf="d.showPreview && resource.reference.content | apply: isJSON"
+            style="flex: 1"
+            [json]="resource.reference.content"
+        ></tw-structure-definition-tree>
+      </div>
     </m-form-item>
   </ng-container>
 </form>

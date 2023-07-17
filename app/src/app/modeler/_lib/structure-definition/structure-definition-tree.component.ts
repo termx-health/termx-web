@@ -34,6 +34,7 @@ import {StructureDefinition} from 'term-web/modeler/_lib';
 export class StructureDefinitionTreeComponent implements OnChanges {
   @Input() public defId?: number;
   @Input() public defCode?: string;
+  @Input() public json?: string;
   @Input() public fsh?: string;
   @Input() public mode?: 'edit' | 'view' = 'view';
   @Output() public elementSelected = new EventEmitter<any>();
@@ -65,8 +66,11 @@ export class StructureDefinitionTreeComponent implements OnChanges {
       this.fsh = decodeURIComponent(this.fsh);
       this.processFsh(this.fsh);
     }
+    if (changes['json'] && this.json) {
+      this.json = decodeURIComponent(this.json);
+      this.processJson(this.json);
+    }
   }
-
 
   public reloadTree(): void {
     if (this.defCode) {
@@ -77,33 +81,38 @@ export class StructureDefinitionTreeComponent implements OnChanges {
     }
   }
 
-  public unselect(): void {
-    this.tree.mSelectedKeys.forEach(k => this.tree.unselect(k));
-  }
 
   private processStructureDefinition(loader: Observable<StructureDefinition>): void {
     this.loader.wrap('tree', loader).subscribe(sd => {
       if (sd?.contentFormat === 'json') {
-        this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(JSON.parse(sd.content!));
-        this.initTree(this.structureDefinitionValue!);
+        this.processJson(sd.content);
       }
       if (sd?.contentFormat === 'fsh') {
-        this.processFsh(sd.content!);
+        this.processFsh(sd.content);
       }
     });
   }
 
+  private processJson(json: string): void {
+    try {
+      this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(JSON.parse(json));
+      this.initTree(this.structureDefinitionValue);
+    } catch (e) {
+      console.error("Failed to init structure definition from JSON", e);
+    }
+  }
+
   private processFsh(fsh: string): void {
     this.loader.wrap('fsh', this.chefService.fshToFhir({fsh: fsh})).subscribe(resp => {
-      this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(resp.fhir![0]);
-      this.initTree(this.structureDefinitionValue!);
+      this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(resp.fhir[0]);
+      this.initTree(this.structureDefinitionValue);
     });
   }
 
 
   protected onTypeChange(type: 'diff' | 'snap' | 'hybrid'): void {
     this.type = type;
-    this.initTree(this.structureDefinitionValue!);
+    this.initTree(this.structureDefinitionValue);
   }
 
   protected selectElement(node: MuiTreeNode<StructureDefinitionData>): void {
@@ -111,6 +120,10 @@ export class StructureDefinitionTreeComponent implements OnChanges {
     if (element) {
       this.elementSelected.emit(element);
     }
+  }
+
+  public unselect(): void {
+    this.tree.mSelectedKeys.forEach(k => this.tree.unselect(k));
   }
 
 
