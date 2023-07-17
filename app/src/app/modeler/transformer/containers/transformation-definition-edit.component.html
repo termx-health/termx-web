@@ -14,12 +14,15 @@
           {{'core.btn.save' | translate}}
         </div>
       </m-button>
-      <m-button [mLoading]="loading" mDisplay="text" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()">
-        <div class="m-items-middle">
-          <m-icon mCode="delete"/>
-          {{'core.btn.delete' | translate}}
-        </div>
-      </m-button>
+
+      <m-dropdown *ngIf="definition.id">
+        <a *m-dropdown-item>
+          <div class="m-items-middle" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()">
+            <m-icon mCode="delete"/>
+            {{'core.btn.delete' | translate}}
+          </div>
+        </a>
+      </m-dropdown>
     </div>
   </div>
 
