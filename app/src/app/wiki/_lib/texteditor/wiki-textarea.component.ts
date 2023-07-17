@@ -1,11 +1,11 @@
 import {Component, forwardRef} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-
+import escape from "escape-html";
 
 @Component({
   selector: 'tw-wiki-textarea',
   template: `
-    <div class="tw-textarea" contenteditable (input)="fireOnChange($event.target)" [innerHtml]="value"></div>
+    <div class="tw-textarea" contenteditable (input)="fireOnChange($event.target)" [innerHtml]="value | apply: escape"></div>
   `,
   styles: [`
     .tw-textarea {
@@ -36,10 +36,11 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WikiTextareaComponent), multi: true}]
 })
 export class WikiTextareaComponent implements ControlValueAccessor {
-  public value?: string;
+  protected escape = escape;
 
-  public onChange = (x: any): void => x;
-  public onTouched = (x: any): void => x;
+  protected value?: string;
+  protected onChange = (x: any): void => x;
+  protected onTouched = (x: any): void => x;
 
   public writeValue(val: string): void {
     this.value = val;

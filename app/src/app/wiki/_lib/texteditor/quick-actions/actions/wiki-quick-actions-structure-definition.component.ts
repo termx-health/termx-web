@@ -10,12 +10,12 @@ import {StructureDefinition, StructureDefinitionLibService} from 'term-web/model
   template: `
     <m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal(false)">
       <ng-container *m-modal-header>
-        {{'web.wiki-page.structure-definition-modal.header' | translate}}
+        {{'web.wiki-page.texteditor.quick-actions.structure-definition-modal.header' | translate}}
       </ng-container>
 
       <ng-container *m-modal-content>
         <form *ngIf="data">
-          <m-form-item mName="structure-definition" mLabel="web.wiki-page.structure-definition-modal.structure-definition" required>
+          <m-form-item mName="structure-definition" mLabel="web.wiki-page.texteditor.quick-actions.structure-definition-modal.structure-definition" required>
             <m-select [(ngModel)]="data.defCode" name="structure-definition" required>
               <m-option *ngFor="let sd of structureDefinitions" [mLabel]="sd.code" [mValue]="sd.code"></m-option>
             </m-select>

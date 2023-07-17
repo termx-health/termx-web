@@ -97,6 +97,7 @@ export class WikiPageEditComponent implements OnInit {
   public openStructureDefinition(): void {
     const structureDefinitionCode = this.pageContent!.slug + '-model';
 
+    // fixme: to structure definition edit container
     this.structureDefinitionService.search({code: structureDefinitionCode, limit: 1}).subscribe(res => {
       if (res.data?.[0]?.id) {
         this.router.navigate(['/modeler/structure-definitions/', res.data[0].id, 'edit'], {queryParams: {tab: 'elements'}});
@@ -128,7 +129,7 @@ export class WikiPageEditComponent implements OnInit {
   }
 
   public copyStructureDefToClipboard(): void {
-    this.clipboard.copy('{{def:' + this.pageContent!.slug + '-model}}');
+    this.clipboard.copy(`{{def:${this.pageContent!.slug}-model}}`);
   }
 
 

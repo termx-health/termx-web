@@ -4,6 +4,7 @@ import {BooleanInput, isDefined, isNil} from '@kodality-web/core-util';
 import {getCursorPosition, setCursorPosition} from './utils/cursor.utils';
 import {launchDrawioEditor} from './editors/drawio.editor';
 import {contentFromSelection, indexOfDifference} from './utils/selection.utils';
+import {BehaviorSubject, concat, debounceTime, take} from 'rxjs';
 
 @Component({
   selector: 'tw-smart-text-editor',
@@ -61,13 +62,15 @@ import {contentFromSelection, indexOfDifference} from './utils/selection.utils';
       }
     }
   `],
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WikiSmartTextEditorComponent), multi: true}]
+  providers: [
+    {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WikiSmartTextEditorComponent), multi: true}
+  ]
 })
 export class WikiSmartTextEditorComponent implements ControlValueAccessor {
-  @Input() @BooleanInput() public viewMode: boolean | string;
+  @Input() public lang?: string;
   @Input() public valueType?: 'html' | 'markdown';
   @Input() @BooleanInput() public showPreview: boolean | string;
-  @Input() public lang?: string;
+  @Input() @BooleanInput() public viewMode: boolean | string;
 
   @ViewChild('ref') private textArea: ElementRef<HTMLElement>;
 
@@ -75,33 +78,36 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
   protected onChange = (x: any): void => x;
   protected onTouched = (x?: any): void => x;
 
+  private value$ = new BehaviorSubject<string>(undefined);
+  // debounced value, copied on change
+  protected valueView$ = concat(
+    this.value$.pipe(take(1)),
+    this.value$.pipe(debounceTime(350))
+  );
+
 
   /* Cursor*/
 
-  private _lastCursor;
+  private _lastCursorPosition;
 
   protected updateCursorPosition(): void {
     const pos = getCursorPosition(this.textarea);
     if (pos) {
-      this._lastCursor = pos;
+      this._lastCursorPosition = pos;
     }
   }
 
-  protected restoreCursor(): void {
-    setCursorPosition(this._lastCursor, this.textarea);
-  }
 
-  /* Extensions */
-
+  /* Editors */
 
   public launchEditor(name: string): void {
-    if (isNil(this._lastCursor)) {
+    if (isNil(this._lastCursorPosition)) {
       return;
     }
 
     switch (name) {
       case 'drawio':
-        const {selection, startPos} = contentFromSelection(this.value, this._lastCursor, '```drawio', '```');
+        const {selection, startPos} = contentFromSelection(this.value, this._lastCursorPosition, '```drawio', '```');
         const base64 = selection?.match(/```drawio\n?(.+)\n?```/)?.[1];
 
         launchDrawioEditor({
@@ -115,8 +121,8 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
               this.setValue(text, startPos);
             },
             insertDiagram: ({diagramSvg}) => {
-              const start = this.value.slice(0, this._lastCursor);
-              const end = this.value.slice(this._lastCursor);
+              const start = this.value.slice(0, this._lastCursorPosition);
+              const end = this.value.slice(this._lastCursorPosition);
 
               const text = `${start}\n\`\`\`drawio\n${btoa(diagramSvg)}\n\`\`\`\n${end}`;
               this.setValue(text, startPos);
@@ -130,6 +136,7 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
 
   public writeValue(val: string): void {
     this.value = val;
+    this.value$.next(val);
   }
 
   public registerOnChange(fn: any): void {
@@ -142,6 +149,7 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
 
   public fireOnChange(val: string): void {
     this.onChange(val);
+    this.value$.next(val);
   }
 
   private setValue(text: string, pos?: number): void {

@@ -1,8 +1,6 @@
 <m-page mFull class="wiki" [mLoading]="isLoading">
   <div class="editor__header m-justify-between">
-    <div>
-      {{pageContent?.name}}
-    </div>
+    <div>{{pageContent?.name}}</div>
 
     <div class="m-items-middle">
       <m-button (click)="saveContent()" mDisplay="primary">
@@ -28,28 +26,28 @@
     <div class="editor__sidebar" *ngIf="pageContent?.contentType === 'markdown'">
       <ul m-menu mCollapsed mSelectable="false">
         <li m-menu-item [mIcon]="showPreview ?  'pic-center' : 'read'" (click)="togglePreview()">
-          {{showPreview ? 'Hide preview' : 'Show preview'}}
+          {{(showPreview ? 'web.wiki-page.edit.menu.preview.hide' : 'web.wiki-page.edit.menu.preview.show') | translate}}
         </li>
 
-        <li m-sub-menu mTitle="Structure Definition" mIcon="partition" *ngIf="pageContent?.slug">
+        <li m-sub-menu mTitle="web.wiki-page.edit.menu.structure-definition.title" mIcon="partition" *ngIf="pageContent?.slug">
           <ul>
             <li m-menu-item mIcon="link" (click)="structureModal.open()">
-              {{'web.wiki-page.form.add-structure-definition' | translate}}
+              {{'web.wiki-page.edit.menu.structure-definition.add' | translate}}
             </li>
             <li m-menu-item
                 mIcon="copy"
-                (click)="copyStructureDefToClipboard();"
+                (click)="copyStructureDefToClipboard()"
                 m-tooltip
                 mTitle="def:{{pageContent.slug}}-model"
                 mPosition="bottom"
             >
-              {{'Copy reference' | translate: ({val: '{{def:' + pageContent.slug + '-model}' + '}'})}}
+              {{'web.wiki-page.edit.menu.structure-definition.copy' | translate: ({val: '{{def:' + pageContent.slug + '-model}' + '}'})}}
             </li>
           </ul>
         </li>
 
         <li m-menu-item mIcon="cluster" (click)="editor.launchEditor('drawio')">
-          Diagrams
+          {{'web.wiki-page.edit.menu.diagrams' | translate}}
         </li>
       </ul>
     </div>
@@ -71,19 +69,18 @@
 </m-page>
 
 
-<!-- fixme: translate -->
 <m-modal #structureModal mStyle="width: 36rem; margin-top: calc(var(--page-header-height) + 1rem)" mPlacement="top">
   <div *m-modal-header class="m-modal__title">
-    Your unsaved changes will be lost!
+    {{'web.wiki-page.edit.structure-definition-modal.header' | translate}}
   </div>
 
   <div *m-modal-content>
-    Do you want to save the current page content before navigating to the Structure Definition?
+    {{'web.wiki-page.edit.structure-definition-modal.description' | translate}}
   </div>
 
   <div *m-modal-footer class="m-justify-between" style="width: 100%">
     <m-button (click)="openStructureDefinition()">
-      {{'web.wiki-page.form.proceed-without-saving' | translate}}
+      {{'web.wiki-page.edit.structure-definition-modal.proceed-without-saving' | translate}}
     </m-button>
 
     <div class="m-items-middle">
@@ -92,7 +89,7 @@
       </m-button>
 
       <m-button mDisplay="primary" (click)="saveAndOpenStructureDefinition()">
-        {{'web.wiki-page.form.save-and-proceed' | translate}}
+        {{'web.wiki-page.edit.structure-definition-modal.save-and-proceed' | translate}}
       </m-button>
     </div>
   </div>

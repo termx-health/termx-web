@@ -15,11 +15,11 @@
         <tw-wiki-textarea
             style="font-family: monospace"
             [(ngModel)]="value"
+            (ngModelChange)="fireOnChange($event)"
             (click)="optionMenu.hide()"
             (keydown)="optionMenu.handleKeyDown($event)"
             (keyup)="optionMenu.handleKeyUp($event)"
             (blur)="onTouched()"
-            (ngModelChange)="fireOnChange($event)"
             (mouseleave)="updateCursorPosition()"
         />
       </ng-container>
@@ -38,7 +38,7 @@
 
 
     <div *ngIf="showPreview" class="editor__preview">
-      <tw-smart-text-editor-view [value]="value" [valueType]="valueType" [lang]="lang" [prerender]="true"/>
+      <tw-smart-text-editor-view [value]="valueView$ | async" [valueType]="valueType" [lang]="lang" [prerender]="true"/>
     </div>
   </div>
 </ng-template>

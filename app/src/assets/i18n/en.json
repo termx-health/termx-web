@@ -417,7 +417,7 @@
     },
     "value-set": {
       "list": {
-        "title":  "Value sets",
+        "title": "Value sets",
         "manual": "Manual",
         "import-fhir": "Import external FHIR definition",
         "add-value-set": "Add value set",
@@ -837,10 +837,10 @@
       },
       "branch": {
         "list": {
-        "header": "Branches",
-        "add-branch": "Add branch"
+          "header": "Branches",
+          "add-branch": "Add branch"
         },
-        "form" : {
+        "form": {
           "add-header": "Add branch",
           "edit-header": "Branch {{path}}",
           "release-date": "Release date",
@@ -925,18 +925,6 @@
     },
     "wiki-page": {
       "spaces": "Spaces",
-      "header": {
-        "modified": "<b>{{user}}</b> edited this page on {{date}}",
-        "add-subpage": "Add subpage",
-        "copy-raw": "Copy raw file"
-      },
-      "actions": {
-        "contents": "Contents",
-        "relations": "Relations",
-        "usages": "Usages",
-        "tags": "Tags",
-        "none": "None"
-      },
       "space": {
         "pages": "Pages",
         "recently-modified": {
@@ -948,47 +936,81 @@
       "sidebar": {
         "pages": "Pages"
       },
-      "form": {
+      "header": {
+        "modified": "<b>{{user}}</b> edited this page on {{date}}",
+        "add-subpage": "Add subpage",
+        "copy-raw": "Copy raw file"
+      },
+      "details": {
+        "contents": "Contents",
+        "relations": "Relations",
+        "usages": "Usages",
+        "tags": "Tags",
+        "none": "None"
+      },
+      "view": {
         "add-header": "Add page",
         "edit-header": "Edit page",
         "add-structure-definition": "Open structure definition form",
         "content-header": "Add content",
         "relation-header": "Page relations",
         "content-type-tooltip": "Changing the content type can change the content value",
-        "save-and-proceed": "Save and proceed",
-        "proceed-without-saving": "Proceed without saving",
         "usages": "Usages",
         "copy-to-clipboard": "Copy {{val}}"
+      },
+      "edit": {
+        "menu": {
+          "preview": {
+            "show": "Show preview",
+            "hide": "Hide preview"
+          },
+          "structure-definition": {
+            "title": "Structure definition",
+            "add": "Add structure definition",
+            "copy": "Copy reference"
+          },
+          "diagrams": "Diagrams"
+        },
+        "structure-definition-modal": {
+          "header": "Your unsaved changes will be lost!",
+          "description": "Do you want to save the current page content before navigating to the Structure Definition?",
+          "proceed-without-saving": "Proceed without saving",
+          "save-and-proceed": "Save and proceed"
+        }
       },
       "no-space": {
         "title": "Space not selected",
         "desc": "Please select space to proceed"
       },
-      "link-modal": {
-        "header": "Compose link",
-        "link-name": "Link name",
-        "url": "URL",
-        "page": "Page",
-        "resource": "Resource",
-        "resource-type": "Resource type",
-        "code-system": "CodeSystem",
-        "value-set": "ValueSet",
-        "map-set": "MapSet",
-        "concept-code-system": "Concept's CodeSystem",
-        "concept": "Concept",
-        "space": "Space",
-        "search-externally": "Search from other space"
-      },
-      "structure-definition-modal": {
-        "header": "Choose structure definition",
-        "simplifier": "Simplifier",
-        "structure-definition": "Structure definition",
-        "url": "Simplifier definition URL",
-        "base-definition-url": "Base definition URL"
-      },
-      "template-modal": {
-        "header": "Choose template",
-        "template": "Template"
+      "texteditor": {
+        "quick-actions": {
+          "link-modal": {
+            "header": "Compose link",
+            "link-name": "Link name",
+            "url": "URL",
+            "page": "Page",
+            "resource": "Resource",
+            "resource-type": "Resource type",
+            "code-system": "CodeSystem",
+            "value-set": "ValueSet",
+            "map-set": "MapSet",
+            "concept-code-system": "Concept's CodeSystem",
+            "concept": "Concept",
+            "space": "Space",
+            "search-externally": "Search from other space"
+          },
+          "structure-definition-modal": {
+            "header": "Choose structure definition",
+            "simplifier": "Simplifier",
+            "structure-definition": "Structure definition",
+            "url": "Simplifier definition URL",
+            "base-definition-url": "Base definition URL"
+          },
+          "template-modal": {
+            "header": "Choose template",
+            "template": "Template"
+          }
+        }
       }
     },
     "sequence": {

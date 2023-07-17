@@ -11,12 +11,12 @@ import {TemplateLibService} from '../../../template/services/template-lib.servic
   template: `
     <m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal(false)">
       <ng-container *m-modal-header>
-        {{'web.wiki-page.template-modal.header' | translate}}
+        {{'web.wiki-page.texteditor.quick-actions.template-modal.header' | translate}}
       </ng-container>
 
       <ng-container *m-modal-content>
         <form *ngIf="data">
-          <m-form-item mName="template" mLabel="web.wiki-page.template-modal.template" required>
+          <m-form-item mName="template" mLabel="web.wiki-page.texteditor.quick-actions.template-modal.template" required>
             <m-select [(ngModel)]="data.template" compareWith="id" name="template" required>
               <m-option *ngFor="let template of templates" [mLabel]="template.code" [mValue]="template"></m-option>
             </m-select>

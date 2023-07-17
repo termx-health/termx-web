@@ -12,47 +12,47 @@ import {PageContent} from 'term-web/wiki/_lib';
   template: `
     <m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal(false)">
       <ng-container *m-modal-header>
-        {{'web.wiki-page.link-modal.header' | translate}}
+        {{'web.wiki-page.texteditor.quick-actions.link-modal.header' | translate}}
       </ng-container>
 
       <ng-container *m-modal-content>
         <form *ngIf="data">
-          <m-form-item mName="linkName" mLabel="web.wiki-page.link-modal.link-name" required>
+          <m-form-item mName="linkName" mLabel="web.wiki-page.texteditor.quick-actions.link-modal.link-name" required>
             <m-input [(ngModel)]="data.name" name="linkName" required/>
           </m-form-item>
 
           <m-form-item mName="type">
             <m-radio-group name="type" [(ngModel)]="data.linkType">
-              <label m-radio-button mValue="url">{{'web.wiki-page.link-modal.url' | translate}}</label>
-              <label m-radio-button mValue="page">{{'web.wiki-page.link-modal.page' | translate}}</label>
-              <label m-radio-button mValue="resource">{{'web.wiki-page.link-modal.resource' | translate}}</label>
+              <label m-radio-button mValue="url">{{'web.wiki-page.texteditor.quick-actions.link-modal.url' | translate}}</label>
+              <label m-radio-button mValue="page">{{'web.wiki-page.texteditor.quick-actions.link-modal.page' | translate}}</label>
+              <label m-radio-button mValue="resource">{{'web.wiki-page.texteditor.quick-actions.link-modal.resource' | translate}}</label>
             </m-radio-group>
           </m-form-item>
 
           <ng-container [ngSwitch]="data.linkType">
-            <m-form-item *ngSwitchCase="'url'" mName="link" mLabel="web.wiki-page.link-modal.url" required>
+            <m-form-item *ngSwitchCase="'url'" mName="link" mLabel="web.wiki-page.texteditor.quick-actions.link-modal.url" required>
               <m-input [(ngModel)]="data.link" name="link" required/>
             </m-form-item>
 
             <m-form-row *ngSwitchCase="'page'">
               <ng-container *ngIf="{spaceSelectVisible: false} as d">
                 <ng-container *ngIf="d.spaceSelectVisible">
-                  <m-form-item *mFormCol mName="space" mLabel="web.wiki-page.link-modal.space">
+                  <m-form-item *mFormCol mName="space" mLabel="web.wiki-page.texteditor.quick-actions.link-modal.space">
                     <tw-space-select [(ngModel)]="data.space" name="space" autofocus/>
                   </m-form-item>
                 </ng-container>
 
-                <m-form-item *mFormCol mName="page" mLabel="web.wiki-page.link-modal.page" required>
+                <m-form-item *mFormCol mName="page" mLabel="web.wiki-page.texteditor.quick-actions.link-modal.page" required>
                   <tw-page-content-select [(ngModel)]="data.pageContent" name="page" [spaceId]="data.space?.id ?? preferences.spaceId" required/>
                   <a *ngIf="!d.spaceSelectVisible" (mClick)="d.spaceSelectVisible = true" style="font-size: 0.85rem">
-                    {{'web.wiki-page.link-modal.search-externally' | translate}}
+                    {{'web.wiki-page.texteditor.quick-actions.link-modal.search-externally' | translate}}
                   </a>
                 </m-form-item>
               </ng-container>
             </m-form-row>
 
             <ng-container *ngSwitchCase="'resource'">
-              <m-form-item mName="resource" mLabel="web.wiki-page.link-modal.resource-type" required>
+              <m-form-item mName="resource" mLabel="web.wiki-page.texteditor.quick-actions.link-modal.resource-type" required>
                 <m-select [(ngModel)]="data.resourceType" name="resource" required>
                   <m-option mLabel="CodeSystem" [mValue]="'cs'"/>
                   <m-option mLabel="ValueSet" [mValue]="'vs'"/>
@@ -61,21 +61,21 @@ import {PageContent} from 'term-web/wiki/_lib';
                 </m-select>
               </m-form-item>
 
-              <m-form-item *ngIf="data.resourceType === 'cs'" mName="codeSystem" mLabel="web.wiki-page.link-modal.code-system" required>
+              <m-form-item *ngIf="data.resourceType === 'cs'" mName="codeSystem" mLabel="web.wiki-page.texteditor.quick-actions.link-modal.code-system" required>
                 <tw-code-system-search [(ngModel)]="data.resource" name="codeSystem" valuePrimitive required/>
               </m-form-item>
 
-              <m-form-item *ngIf="data.resourceType === 'vs'" mName="valueSet" mLabel="web.wiki-page.link-modal.value-set" required>
+              <m-form-item *ngIf="data.resourceType === 'vs'" mName="valueSet" mLabel="web.wiki-page.texteditor.quick-actions.link-modal.value-set" required>
                 <tw-value-set-search [(ngModel)]="data.resource" name="valueSet" valuePrimitive required/>
               </m-form-item>
 
-              <m-form-item *ngIf="data.resourceType === 'ms'" mName="mapSet" mLabel="web.wiki-page.link-modal.map-set" required>
+              <m-form-item *ngIf="data.resourceType === 'ms'" mName="mapSet" mLabel="web.wiki-page.texteditor.quick-actions.link-modal.map-set" required>
                 <tw-map-set-search [(ngModel)]="data.resource" name="mapSet" valuePrimitive required/>
               </m-form-item>
 
               <m-form-item *ngIf="data.resourceType === 'concept'"
                   mName="conceptCodeSystem"
-                  mLabel="web.wiki-page.link-modal.concept-code-system"
+                  mLabel="web.wiki-page.texteditor.quick-actions.link-modal.concept-code-system"
                   required
               >
                 <tw-code-system-search [(ngModel)]="data.conceptCodeSystem" name="conceptCodeSystem" valuePrimitive required/>
@@ -83,7 +83,7 @@ import {PageContent} from 'term-web/wiki/_lib';
 
               <m-form-item *ngIf="data.resourceType === 'concept' && data.conceptCodeSystem"
                   mName="concept"
-                  mLabel="web.wiki-page.link-modal.concept"
+                  mLabel="web.wiki-page.texteditor.quick-actions.link-modal.concept"
                   required
               >
                 <div *ngIf="data.conceptCodeSystem === 'snomed-ct' && data.resource">

@@ -48,7 +48,7 @@
           <div class="page__actions">
             <!-- Content -->
             <div>
-              <b>{{'web.wiki-page.actions.contents' | translate}}</b>
+              <b>{{'web.wiki-page.details.contents' | translate}}</b>
               <div>
                 <div *ngFor="let content of page?.contents | sort: 'lang'">
                   <a (click)="viewPage.emit(content.slug)" [class.m-bold]="content.id === pageContent?.id">
@@ -65,9 +65,9 @@
 
             <!-- Links/Relations -->
             <div>
-              <b>{{'web.wiki-page.actions.relations' | translate}}</b>
+              <b>{{'web.wiki-page.details.relations' | translate}}</b>
               <div *ngIf="!(pageRelations | keys)?.length" class="m-text-secondary">
-                {{'web.wiki-page.actions.none' | translate}}
+                {{'web.wiki-page.details.none' | translate}}
               </div>
               <dl *ngFor="let key of pageRelations | keys">
                 <dt>{{key}}</dt>
@@ -83,9 +83,9 @@
 
             <!-- Usages -->
             <div>
-              <b>{{'web.wiki-page.actions.usages' | translate}}</b>
+              <b>{{'web.wiki-page.details.usages' | translate}}</b>
               <div *ngIf="!pageUsages?.length" class="m-text-secondary">
-                {{'web.wiki-page.actions.none' | translate}}
+                {{'web.wiki-page.details.none' | translate}}
               </div>
               <div>
                 <div *ngFor="let usage of pageUsages">
@@ -102,9 +102,9 @@
 
             <!-- Tags -->
             <div>
-              <b>{{'web.wiki-page.actions.tags' | translate}}</b>
+              <b>{{'web.wiki-page.details.tags' | translate}}</b>
               <div *ngIf="!page?.tags?.length" class="m-text-secondary">
-                {{'web.wiki-page.actions.none' | translate}}
+                {{'web.wiki-page.details.none' | translate}}
               </div>
               <div class="m-items-middle">
                 <m-tag *ngFor="let tag of page?.tags">
