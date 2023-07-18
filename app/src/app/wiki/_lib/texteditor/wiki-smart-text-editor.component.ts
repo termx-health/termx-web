@@ -97,6 +97,18 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
     }
   }
 
+  public insertAtLastCursorPosition(val: string): void {
+    if (isNil(this._lastCursorPosition)) {
+      return;
+    }
+
+    const start = this.value.slice(0, this._lastCursorPosition);
+    const end = this.value.slice(this._lastCursorPosition);
+
+    const text = `${start}${val}${end}`;
+    this.setValue(text, this._lastCursorPosition + val.length);
+  }
+
 
   /* Editors */
 
@@ -121,11 +133,7 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
               this.setValue(text, startPos);
             },
             insertDiagram: ({diagramSvg}) => {
-              const start = this.value.slice(0, this._lastCursorPosition);
-              const end = this.value.slice(this._lastCursorPosition);
-
-              const text = `${start}\n\`\`\`drawio\n${btoa(diagramSvg)}\n\`\`\`\n${end}`;
-              this.setValue(text, startPos);
+              this.insertAtLastCursorPosition(`\n\`\`\`drawio\n${btoa(diagramSvg)}\n\`\`\`\n`)
             },
           },
         });

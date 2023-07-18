@@ -7,6 +7,8 @@ import {drawioPlugin} from './markdown-plugins/drawio.plugin';
 import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib';
 import transformLink from './markdown-plugins/external-link.plugin';
 import {isDefined} from '@kodality-web/core-util';
+import {localImage} from './markdown-plugins/image.plugin';
+import {environment} from 'environments/environment';
 
 @Component({
   selector: 'tw-smart-text-editor-view',
@@ -23,11 +25,15 @@ export class WikiSmartTextEditorViewComponent implements OnChanges {
   @Input() public value?: string;
   @Input() public lang?: string;
 
-  public processedValue: ProcessedValue[] = [];
+  protected processedValue: ProcessedValue[] = [];
+  protected pluginOptions = {
+    filesPath: `${environment.termxApi}/pages/`
+  };
   protected plugins = [
     structureDefinitionCodePlugin,
     structureDefinitionFshPlugin,
-    drawioPlugin
+    drawioPlugin,
+    localImage
   ];
 
   public constructor(

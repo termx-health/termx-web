@@ -27,3 +27,10 @@ export class Page {
 export class PageSettings {
   public templateId?: number;
 }
+
+
+export class PageAttachment {
+  public fileId?: number;
+  public fileName?: string;
+  public contentType?: string;
+}

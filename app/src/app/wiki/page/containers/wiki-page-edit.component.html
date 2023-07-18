@@ -2,6 +2,7 @@
   <div class="editor__header m-justify-between">
     <div>{{pageContent?.name}}</div>
 
+
     <div class="m-items-middle">
       <m-button (click)="saveContent()" mDisplay="primary">
         <div class="m-items-middle">
@@ -49,6 +50,10 @@
         <li m-menu-item mIcon="cluster" (click)="editor.launchEditor('drawio')">
           {{'web.wiki-page.edit.menu.diagrams' | translate}}
         </li>
+
+        <li m-menu-item mIcon="file-image" (click)="fileModal.open()">
+          {{'Files' | translate}}
+        </li>
       </ul>
     </div>
 
@@ -85,7 +90,7 @@
 
     <div class="m-items-middle">
       <m-button (click)="structureModal.close()" autofocus>
-        {{'core.btn.cancel' | translate}}
+        {{'core.btn.close' | translate}}
       </m-button>
 
       <m-button mDisplay="primary" (click)="saveAndOpenStructureDefinition()">
@@ -95,6 +100,44 @@
   </div>
 </m-modal>
 
+
+<m-modal #fileModal mStyle="width: 36rem; margin-top: calc(var(--page-header-height) + 1rem)" mPlacement="top">
+  <div *m-modal-header class="m-modal__title">
+    {{'Files' | translate}}
+  </div>
+
+  <div *m-modal-content>
+    <m-list>
+      <m-list-item
+          *ngFor="let a of pageAttachments"
+          [style.color]="a['_new'] ? 'var(--color-green-7)' : undefined"
+          mClickable
+          (mClick)="insertAttachment(a, fileModal)"
+      >
+        <div class="m-items-middle">
+          <m-icon [mCode]="['image/png', 'image/jpg', 'image/jpeg'].includes(a.contentType) ? 'file-image' : 'file'"/>
+          <div>{{a.fileName}}</div>
+        </div>
+      </m-list-item>
+    </m-list>
+
+
+    <div style="margin-top: var(--gap-default)">
+      <input #fui id="file" type="file" class="upload-input" (change)="uploadAttachment($event, fui)" [disabled]="loader.state['fileUpload']"/>
+      <label for="file">
+        <m-icon *ngIf="loader.state['fileUpload']" mCode="loading"/>
+        Choose a file to upload
+      </label>
+    </div>
+
+  </div>
+
+  <div *m-modal-footer>
+    <m-button (click)="fileModal.close()" autofocus>
+      {{'core.btn.close' | translate}}
+    </m-button>
+  </div>
+</m-modal>
 
 <tw-wiki-page-modal #pageModal
     [pageId]="pageContent?.pageId"

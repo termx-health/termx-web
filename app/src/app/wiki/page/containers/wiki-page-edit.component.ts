@@ -1,12 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
+import {isNil, LoadingManager, sort} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Page, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
+import {Page, PageAttachment, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
 import {PageService} from '../services/page.service';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {mergeMap} from 'rxjs';
 import {SpaceService} from 'term-web/space/services/space.service';
 import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
+import {MuiModalContainerComponent} from '@kodality-web/marina-ui';
 
 @Component({
   templateUrl: 'wiki-page-edit.component.html',
@@ -15,6 +16,7 @@ import {StructureDefinition, StructureDefinitionLibService} from 'term-web/model
 export class WikiPageEditComponent implements OnInit {
   public page?: Page;
   public pageContent?: PageContent;
+  public pageAttachments?: PageAttachment[];
   public showPreview?: boolean = false;
   protected loader = new LoadingManager();
 
@@ -51,6 +53,8 @@ export class WikiPageEditComponent implements OnInit {
 
     this.loader.wrap('init', req$).subscribe(pages => {
       const page = pages.data[0];
+      this.loader.wrap('init', this.pageService.loadAttachments(page.id)).subscribe(resp => this.pageAttachments = sort(resp, 'fileName'));
+
       if (page?.contents?.some(c => c.slug === slug)) {
         this.page = page;
         this.pageContent = page.contents.find(c => c.slug === slug);
@@ -88,13 +92,14 @@ export class WikiPageEditComponent implements OnInit {
 
   /* Structure definition */
 
-  public saveAndOpenStructureDefinition(): void {
+  protected saveAndOpenStructureDefinition(): void {
     this.loader.wrap('save', this.pageService.savePageContent(this.pageContent!, this.page.id)).subscribe(() => {
       this.openStructureDefinition();
     });
   }
 
-  public openStructureDefinition(): void {
+
+  protected openStructureDefinition(): void {
     const structureDefinitionCode = this.pageContent!.slug + '-model';
 
     // fixme: to structure definition edit container
@@ -128,8 +133,36 @@ export class WikiPageEditComponent implements OnInit {
     });
   }
 
-  public copyStructureDefToClipboard(): void {
+  protected copyStructureDefToClipboard(): void {
     this.clipboard.copy(`{{def:${this.pageContent!.slug}-model}}`);
+  }
+
+
+  /* Attachments */
+
+  protected insertAttachment(att: PageAttachment, modal: MuiModalContainerComponent): void {
+    const md = `![](files/${this.page.id}/${att.fileName})`;
+    this.editor.insertAtLastCursorPosition(md);
+    modal.close();
+  }
+
+  protected uploadAttachment(event, input: HTMLInputElement): void {
+    if (isNil(event)) {
+      return;
+    }
+
+    const file = event.target.files[0] as File;
+    const fileExists = this.pageAttachments.some(a => a.fileName === file.name);
+    if (fileExists) {
+      input.value = '';
+      return;
+    }
+
+    this.loader.wrap('fileUpload', this.pageService.uploadAttachment(this.page.id, file)).subscribe(resp => {
+      resp['_new'] = true;
+      this.pageAttachments = [...this.pageAttachments, resp];
+      input.value = '';
+    });
   }
 
 
@@ -140,6 +173,6 @@ export class WikiPageEditComponent implements OnInit {
   }
 
   protected get isLoading(): boolean {
-    return this.loader.isLoadingExcept('init');
+    return this.loader.isLoadingExcept('init', 'fileUpload');
   }
 }

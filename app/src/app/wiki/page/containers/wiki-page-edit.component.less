@@ -32,7 +32,7 @@
     width: 100%;
 
     .editor__preview {
-      box-shadow:  -7px 0 9px -7px rgba(0, 0, 0, 0.15);
+      box-shadow: -7px 0 9px -7px rgba(0, 0, 0, 0.15);
     }
   }
 }
@@ -44,5 +44,26 @@
 
   ::ng-deep .m-menu__inner {
     background: transparent
+  }
+}
+
+
+.upload-input {
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+
+  & + label {
+    cursor: pointer;
+    text-align: center;
+    color: var(--color-primary);
+    border: var(--border-width) solid var(--color-borders);
+    border-radius: var(--border-radius);
+    padding: 0.3rem 0.5rem;
+    display: inline-block;
+    width: 100%;
   }
 }

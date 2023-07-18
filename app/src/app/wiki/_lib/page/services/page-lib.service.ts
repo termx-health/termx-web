@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {Page} from '../models/page';
+import {Page, PageAttachment} from '../models/page';
 import {PageSearchParams} from '../models/page-search-params';
 import {PageContentSearchParams} from '../models/page-content-search-params';
 import {PageContent} from '../models/page-content';
@@ -14,7 +14,7 @@ import {PageRelation} from '../models/page-relation';
 export class PageLibService {
   protected baseUrl = environment.termxApi;
 
-  public constructor(protected http: HttpClient) {  }
+  public constructor(protected http: HttpClient) { }
 
   public loadPage(id: number): Observable<Page> {
     return this.http.get<Page>(`${this.baseUrl}/pages/${id}`);
@@ -34,5 +34,15 @@ export class PageLibService {
 
   public getPath(pageId: number): Observable<number[]> {
     return this.http.get<number[]>(`${this.baseUrl}/pages/${pageId}/path`);
+  }
+
+  public loadAttachments(pageId: number): Observable<PageAttachment[]> {
+    return this.http.get<PageAttachment[]>(`${this.baseUrl}/pages/${pageId}/files`);
+  }
+
+  public uploadAttachment(pageId: number, content: Blob): Observable<PageAttachment> {
+    const fd = new FormData();
+    fd.append('file', content);
+    return this.http.post<{[k: string]: PageAttachment}>(`${this.baseUrl}/pages/${pageId}/files`, fd).pipe(map(resp => resp['file']));
   }
 }
