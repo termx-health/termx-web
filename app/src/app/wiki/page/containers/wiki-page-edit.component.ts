@@ -153,7 +153,7 @@ export class WikiPageEditComponent implements OnInit {
 
     const file = event.target.files[0] as File;
     const fileExists = this.pageAttachments.some(a => a.fileName === file.name);
-    if (fileExists) {
+    if (fileExists || !this.isImage(file.type)) {
       input.value = '';
       return;
     }
@@ -163,6 +163,10 @@ export class WikiPageEditComponent implements OnInit {
       this.pageAttachments = [...this.pageAttachments, resp];
       input.value = '';
     });
+  }
+
+  protected isImage(contentType:string):boolean{
+    return contentType?.startsWith('image/');
   }
 
 

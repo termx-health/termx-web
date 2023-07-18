@@ -111,11 +111,11 @@
       <m-list-item
           *ngFor="let a of pageAttachments"
           [style.color]="a['_new'] ? 'var(--color-green-7)' : undefined"
-          mClickable
+          [mClickable]="a.contentType | apply: isImage"
           (mClick)="insertAttachment(a, fileModal)"
       >
         <div class="m-items-middle">
-          <m-icon [mCode]="['image/png', 'image/jpg', 'image/jpeg'].includes(a.contentType) ? 'file-image' : 'file'"/>
+          <m-icon [mCode]="(a.contentType | apply: isImage) ? 'file-image' : 'file'"/>
           <div>{{a.fileName}}</div>
         </div>
       </m-list-item>
@@ -123,7 +123,7 @@
 
 
     <div style="margin-top: var(--gap-default)">
-      <input #fui id="file" type="file" class="upload-input" (change)="uploadAttachment($event, fui)" [disabled]="loader.state['fileUpload']"/>
+      <input #fui id="file" type="file" class="upload-input" accept="image/*" (change)="uploadAttachment($event, fui)" [disabled]="loader.state['fileUpload']"/>
       <label for="file">
         <m-icon *ngIf="loader.state['fileUpload']" mCode="loading"/>
         Choose a file to upload
