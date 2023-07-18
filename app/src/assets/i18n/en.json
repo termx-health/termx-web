@@ -1241,7 +1241,9 @@
         "fhir-resource": "Resource",
         "content": "Content",
         "generate": "Generate",
-        "url": "Url"
+        "url": "Url",
+        "preview-show": "Preview",
+        "preview-hide": "Hide"
       },
       "execution": {
         "input": "Input",

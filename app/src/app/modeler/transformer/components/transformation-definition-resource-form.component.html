@@ -59,7 +59,7 @@
           mDisplay="dashed"
           (mClick)="d.showPreview = !d.showPreview"
       >
-        <m-icon [mCode]="!d.showPreview ? 'read' : 'menu-unfold'"/>
+        <m-icon [mCode]="!d.showPreview ? 'read' : 'menu-unfold'"/>&nbsp;{{(!d.showPreview ? 'web.transformation-definition.resource-form.preview-show' : 'web.transformation-definition.resource-form.preview-hide') | translate}}
       </m-button>
 
       <div class="m-items-top">
