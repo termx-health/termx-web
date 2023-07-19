@@ -1,5 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {isNil, LoadingManager, sort} from '@kodality-web/core-util';
+import {isNil, LoadingManager, remove, sort} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Page, PageAttachment, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
 import {PageService} from '../services/page.service';
@@ -141,7 +141,7 @@ export class WikiPageEditComponent implements OnInit {
   /* Attachments */
 
   protected insertAttachment(att: PageAttachment, modal: MuiModalContainerComponent): void {
-    const md = `![](files/${this.page.id}/${att.fileName})`;
+    const md = `![](files/${this.page.id}/${encodeURIComponent(att.fileName)})`;
     this.editor.insertAtLastCursorPosition(md);
     modal.close();
   }
@@ -165,7 +165,17 @@ export class WikiPageEditComponent implements OnInit {
     });
   }
 
-  protected isImage(contentType:string):boolean{
+  protected deleteAttachment(att: PageAttachment): void {
+    if (att['_deleting']) {
+      return;
+    }
+    att['_deleting'] = true;
+    this.pageService.deleteAttachment(this.page.id, att.fileName).subscribe(resp => {
+      this.pageAttachments = remove(this.pageAttachments, att);
+    }).add(() => att['_deleting'] = false);
+  }
+
+  protected isImage(contentType: string): boolean {
     return contentType?.startsWith('image/');
   }
 

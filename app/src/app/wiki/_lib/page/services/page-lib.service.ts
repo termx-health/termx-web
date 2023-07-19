@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Page, PageAttachment} from '../models/page';
@@ -38,11 +38,5 @@ export class PageLibService {
 
   public loadAttachments(pageId: number): Observable<PageAttachment[]> {
     return this.http.get<PageAttachment[]>(`${this.baseUrl}/pages/${pageId}/files`);
-  }
-
-  public uploadAttachment(pageId: number, content: Blob): Observable<PageAttachment> {
-    const fd = new FormData();
-    fd.append('file', content);
-    return this.http.post<{[k: string]: PageAttachment}>(`${this.baseUrl}/pages/${pageId}/files`, fd).pipe(map(resp => resp['file']));
   }
 }

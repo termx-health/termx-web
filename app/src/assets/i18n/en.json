@@ -969,13 +969,18 @@
             "add": "Add structure definition",
             "copy": "Copy reference"
           },
-          "diagrams": "Diagrams"
+          "diagrams": "Diagrams",
+          "files": "Files"
         },
         "structure-definition-modal": {
           "header": "Your unsaved changes will be lost!",
           "description": "Do you want to save the current page content before navigating to the Structure Definition?",
           "proceed-without-saving": "Proceed without saving",
           "save-and-proceed": "Save and proceed"
+        },
+        "image-modal": {
+          "header": "Files",
+          "choose-file": "Choose a file to upload"
         }
       },
       "no-space": {

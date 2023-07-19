@@ -52,7 +52,7 @@
         </li>
 
         <li m-menu-item mIcon="file-image" (click)="fileModal.open()">
-          {{'Files' | translate}}
+          {{'web.wiki-page.edit.menu.files' | translate}}
         </li>
       </ul>
     </div>
@@ -103,7 +103,7 @@
 
 <m-modal #fileModal mStyle="width: 36rem; margin-top: calc(var(--page-header-height) + 1rem)" mPlacement="top">
   <div *m-modal-header class="m-modal__title">
-    {{'Files' | translate}}
+    {{'web.wiki-page.edit.image-modal.header' | translate}}
   </div>
 
   <div *m-modal-content>
@@ -114,19 +114,23 @@
           [mClickable]="a.contentType | apply: isImage"
           (mClick)="insertAttachment(a, fileModal)"
       >
-        <div class="m-items-middle">
-          <m-icon [mCode]="(a.contentType | apply: isImage) ? 'file-image' : 'file'"/>
-          <div>{{a.fileName}}</div>
+        <div class="m-justify-between">
+          <div class="m-items-middle">
+            <m-icon [mCode]="(a.contentType | apply: isImage) ? 'file-image' : 'file'"/>
+            <div>{{a.fileName}}</div>
+          </div>
+
+          <m-icon-button *twPrivileged="'*.Wiki.edit'" [mIcon]="a['_deleting'] ? 'loading' : 'delete'" (mClick)="$event.preventDefault(); $event.stopPropagation(); deleteAttachment(a)"/>
         </div>
       </m-list-item>
     </m-list>
 
 
-    <div style="margin-top: var(--gap-default)">
+    <div *twPrivileged="'*.Wiki.edit'" style="margin-top: var(--gap-default)">
       <input #fui id="file" type="file" class="upload-input" accept="image/*" (change)="uploadAttachment($event, fui)" [disabled]="loader.state['fileUpload']"/>
       <label for="file">
         <m-icon *ngIf="loader.state['fileUpload']" mCode="loading"/>
-        Choose a file to upload
+        {{'web.wiki-page.edit.image-modal.choose-file' | translate}}
       </label>
     </div>
 

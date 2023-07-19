@@ -27,7 +27,12 @@ export class WikiSmartTextEditorViewComponent implements OnChanges {
 
   protected processedValue: ProcessedValue[] = [];
   protected pluginOptions = {
-    filesPath: `${environment.termxApi}/pages/`
+    // matches "files/:pageId/:fileName"
+    filesRe: /^files\/(\d*)\/(.+)/,
+    filesLink: (url: string) => {
+      const [_, id, name] = url.match(/^files\/(\d*)\/(.+)/);
+      return `${environment.termxApi}/pages/static/${id}/files/${name}`;
+    }
   };
   protected plugins = [
     structureDefinitionCodePlugin,
