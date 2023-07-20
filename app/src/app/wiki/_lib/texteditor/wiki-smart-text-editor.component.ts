@@ -140,6 +140,7 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
     }
   }
 
+
   /* CVA */
 
   public writeValue(val: string): void {
@@ -155,7 +156,10 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
     this.onTouched = fn;
   }
 
-  public fireOnChange(val: string): void {
+
+  /* Value change */
+
+  protected fireOnChange(val: string): void {
     this.onChange(val);
     this.value$.next(val);
   }

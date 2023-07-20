@@ -1,4 +1,13 @@
-<ng-container *ngFor="let v of processedValue">
-  <m-markdown *ngIf="v.type === 'text' && valueType === 'markdown'" [mData]="v.value" [mPlugins]="plugins" [mPluginOptions]="pluginOptions" [mPrerender]="prerender"/>
-  <m-quill *ngIf="v.type === 'text' && valueType === 'html'" [(ngModel)]="v.value" mViewMode/>
-</ng-container>
+<m-markdown
+    *ngIf="valueType === 'markdown'"
+    [mData]="value ?? ''"
+    [mPlugins]="plugins.list"
+    [mPluginOptions]="plugins.options"
+    [mPrerender]="prerender"
+/>
+
+<m-quill
+    *ngIf="valueType === 'html'"
+    [(ngModel)]="value"
+    mViewMode
+/>

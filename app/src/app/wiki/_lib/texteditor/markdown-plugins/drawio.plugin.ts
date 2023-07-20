@@ -2,9 +2,9 @@ import {matchSection} from '@kodality-web/marina-markdown';
 import {tokenAttrValue} from './plugin.util';
 
 
-export function drawioPlugin(md) {
+export function drawioPlugin(md): void {
   md.renderer.rules.drawio = (tokens, idx, /*options, env, self */) => {
-    const base64 = tokenAttrValue(tokens[idx], 'data');
+    const [base64] = tokenAttrValue(tokens[idx], 'data');
     return `<div><img class="drawio" src="data:image/svg+xml;base64, ${base64}"></div>`;
   };
 
