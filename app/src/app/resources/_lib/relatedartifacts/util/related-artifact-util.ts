@@ -12,6 +12,9 @@ export class RelatedArtifactUtil {
     if (type === 'ValueSet') {
       return '/resources/value-sets/' + id + '/summary';
     }
+    if (type === 'MapSet') {
+      return '/resources/map-sets/' + id + '/view';
+    }
 
     return '';
   }
