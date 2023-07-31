@@ -271,7 +271,7 @@ export class CodeSystemFileImportComponent implements OnInit {
     const entityProperties = this.combineWithDefaults(this.sourceCodeSystem?.properties);
     const grouped = group(entityProperties, p => p.name);
 
-    item.propertyType = grouped[item.propertyName]?.type;
+    item.propertyType = grouped[item.propertyName]?.kind === 'designation' ? 'designation' : grouped[item.propertyName]?.type;
     this.onPropertyTypeChange(item);
   }
 
