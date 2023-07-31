@@ -7,6 +7,7 @@ import {ValueSetVersionConcept} from '../model/value-set-version-concept';
 import {ValueSetLibService} from '../services/value-set-lib.service';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 import {TranslateService} from '@ngx-translate/core';
+import {VsConceptUtil} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-value-set-concept-select',
@@ -117,9 +118,7 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
   };
 
   protected getDisplay = (concept: ValueSetVersionConcept): string => {
-    const lang = this.translateService.currentLang;
-    const d = concept?.additionalDesignations?.find(ad => ad?.language === lang)?.name;
-    return d || concept?.display?.name || concept?.concept?.code;
+    return VsConceptUtil.getDisplay(concept, this.translateService.currentLang);
   };
 
 }

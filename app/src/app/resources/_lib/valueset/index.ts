@@ -16,4 +16,5 @@ export * from './model/value-set-version-search-params';
 export * from './pipe/value-set-version-code-pipe';
 export * from './services/value-set-lib.service';
 export * from './services/value-set-version-lib.service';
+export * from './util/vs-concept-util';
 export * from './value-set-lib.module';

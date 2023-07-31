@@ -5,7 +5,7 @@ import {LocalizedName} from '@kodality-web/marina-util';
 import {TranslateService} from '@ngx-translate/core';
 import slugify from 'slugify';
 import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
-import {ConceptUtil, ValueSetVersionConcept} from 'app/src/app/resources/_lib';
+import {ConceptUtil, ValueSetVersionConcept, VsConceptUtil} from 'app/src/app/resources/_lib';
 import {Resource} from 'term-web/resources/resource/model/resource';
 import {Router} from '@angular/router';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
@@ -54,7 +54,7 @@ export class ResourceFormComponent implements OnChanges {
   }
 
   protected publisherChanged(publisher: string): void {
-    if (!isDefined(publisher)) {
+    if (!isDefined(publisher) || isDefined(this.publishers.find(p => p.concept?.code === publisher && p['_custom']))) {
       return;
     }
     this.codeSystemService.loadConcept('publisher', publisher).subscribe(concept => {
@@ -77,7 +77,11 @@ export class ResourceFormComponent implements OnChanges {
   private handlePublisher(): void {
     this.valueSetService.expand({valueSet: 'publisher'}).subscribe(exp => {
       this.publishers = exp;
-      this.customPublisher = this.resource.publisher && !exp.find(e => e.concept?.code === this.resource.publisher);
+      if (this.resource.publisher && !exp.find(e => e.concept?.code === this.resource.publisher)) {
+        const customPublisher = {concept: {code: this.resource.publisher}};
+        customPublisher['_custom'] = true;
+        this.publishers = [...this.publishers, customPublisher];
+      }
     });
 
   }
@@ -97,4 +101,8 @@ export class ResourceFormComponent implements OnChanges {
       });
     }
   }
+
+  protected getDisplay = (concept: ValueSetVersionConcept): string => {
+    return VsConceptUtil.getDisplay(concept, this.translateService.currentLang);
+  };
 }

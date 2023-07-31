@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion, ConceptUtil, EntityProperty} from 'app/src/app/resources/_lib';
+import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {LoadingManager} from '@kodality-web/core-util';

@@ -32,7 +32,7 @@ class LocalizedConceptNameService {
     return this.cacheService.enqueueRequest(
       `${typeof identifier}#${this.getKey(resource)}`,
       identifier,
-      (ids) => this.getOptimizedRequest(resource, (ids as any[]).filter(unique)),
+      (ids) => this.getOptimizedRequest(resource, (ids as any[])?.filter(unique) || []),
       (resp, val) => resp.find(d => d.id === val)?.name);
   }
 

@@ -19,7 +19,9 @@
   <m-form-row>
     <m-form-item *mFormCol mLabel="entities.resource.publisher" mName="publisher" required>
       <div class="m-items-middle" *ngIf="!customPublisher">
-        <tw-value-set-concept-select style="width: 100%" name="publisher" [(ngModel)]="resource.publisher" (ngModelChange)="publisherChanged($event)" valueSet="publisher" required></tw-value-set-concept-select>
+        <m-select style="width: 100%"  name="publisher" [(ngModel)]="resource.publisher" (ngModelChange)="publisherChanged($event)">
+          <m-option *ngFor="let p of publishers" [mValue]="p.concept.code" [mLabel]="p | apply:getDisplay"></m-option>
+        </m-select>
         <m-button (mClick)="customPublisher = true">{{'core.btn.custom' | translate}}</m-button>
       </div>
       <m-input *ngIf="customPublisher" name="publisher" [(ngModel)]="resource.publisher" required></m-input>
