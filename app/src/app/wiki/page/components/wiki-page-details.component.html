@@ -70,7 +70,7 @@
                 {{'web.wiki-page.details.none' | translate}}
               </div>
               <dl *ngFor="let key of pageRelations | keys">
-                <dt>{{key}}</dt>
+                <dt>{{('web.wiki-page.details.' + key) | translate}}</dt>
                 <dd>
                   <li style="margin-left: 1rem" *ngFor="let relation of pageRelations[key];">
                     <a (click)="openRelation(relation.type, relation.target)">

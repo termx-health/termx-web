@@ -15,6 +15,10 @@ export class RelatedArtifactUtil {
     if (type === 'MapSet') {
       return '/resources/map-sets/' + id + '/view';
     }
+    if (type === 'Page') {
+      const s = id.split('|');
+      return '/wiki/' + s[0] + '/' + s[1];
+    }
 
     return '';
   }

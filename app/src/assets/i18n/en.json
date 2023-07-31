@@ -946,7 +946,11 @@
         "relations": "Relations",
         "usages": "Usages",
         "tags": "Tags",
-        "none": "None"
+        "none": "None",
+        "cs": "Code System",
+        "vs": "Value Set",
+        "ms": "Map Set",
+        "concept": "Concept"
       },
       "view": {
         "add-header": "Add page",
