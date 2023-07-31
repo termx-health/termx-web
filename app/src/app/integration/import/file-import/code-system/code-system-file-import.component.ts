@@ -1,11 +1,11 @@
-import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {copyDeep, DestroyService, group, LoadingManager, sort} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {of} from 'rxjs';
 import {Router} from '@angular/router';
-import {CodeSystem, CodeSystemLibService, CodeSystemVersion, EntityProperty} from '../../../../resources/_lib';
+import {CodeSystem, CodeSystemLibService, CodeSystemVersion, EntityProperty, ValueSetLibService} from '../../../../resources/_lib';
 import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../file-analysis.service';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
 import {
@@ -17,9 +17,9 @@ import {
 
 const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
   {name: 'concept-code', type: 'string', orderNumber: -100},
-  {name: 'display', type: 'string', orderNumber: -50},
-  {name: 'definition', type: 'string', orderNumber: -25},
-  {name: 'description', type: 'string', orderNumber: 9900},
+  {name: 'display', type: 'designation', orderNumber: -50},
+  {name: 'definition', type: 'designation', orderNumber: -25},
+  {name: 'description', type: 'designation', orderNumber: 9900},
   {name: 'is-a', type: 'string', description: 'association', orderNumber: 9999},
 ];
 
@@ -28,7 +28,7 @@ const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
   templateUrl: 'code-system-file-import.component.html',
   providers: [DestroyService, CodeSystemFileImportService]
 })
-export class CodeSystemFileImportComponent {
+export class CodeSystemFileImportComponent implements OnInit {
   public sourceCodeSystem: CodeSystem;
 
   public data: {
@@ -75,6 +75,7 @@ export class CodeSystemFileImportComponent {
   public validations: string[];
   public jobLog: JobLog;
 
+  public dataTypes: string[];
 
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('jsonFileInput') public jsonFileInput?: ElementRef<HTMLInputElement>;
@@ -85,12 +86,19 @@ export class CodeSystemFileImportComponent {
     private http: HttpClient,
     private notificationService: MuiNotificationService,
     private codeSystemLibService: CodeSystemLibService,
+    private valueSetLibService: ValueSetLibService,
     private importService: CodeSystemFileImportService,
     private fileAnalysisService: FileAnalysisService,
     private jobService: JobLibService,
     private destroy$: DestroyService,
     private router: Router
   ) {}
+
+
+  public ngOnInit(): void {
+    this.valueSetLibService.expand({valueSet: 'concept-property-type'})
+      .subscribe(concepts => this.dataTypes = [...concepts.map(c => c.concept.code), 'designation']);
+  }
 
   public createCodeSystem(): void {
     this.sourceCodeSystem = undefined;

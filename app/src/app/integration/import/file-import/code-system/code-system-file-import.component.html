@@ -185,10 +185,9 @@
               {{item.propertyType}}
             </ng-container>
 
-            <tw-value-set-concept-select *ngIf="item['_newProp'] || !item.propertyName"
-                [(ngModel)]="item.propertyType"
-                (ngModelChange)="onPropertyTypeChange(item)"
-                valueSet="concept-property-type"/>
+            <m-select *ngIf="item['_newProp'] || !item.propertyName" [(ngModel)]="item.propertyType" (ngModelChange)="onPropertyTypeChange(item)">
+              <m-option *ngFor="let t of dataTypes" [mLabel]="t" [mValue]="t"></m-option>
+            </m-select>
           </td>
 
           <td>
@@ -201,7 +200,7 @@
           </td>
 
           <td>
-            <tw-value-set-concept-select *ngIf="item.propertyType === 'string' && item.propertyName !== 'concept-code'"
+            <tw-value-set-concept-select *ngIf="item.propertyType === 'designation' && item.propertyName !== 'concept-code'"
                 [(ngModel)]="item.lang"
                 valueSet="languages"/>
           </td>
