@@ -108,8 +108,8 @@ export class WikiPageComponent implements OnInit {
   public viewResource({type, id, opts}: {type: string, id: string, opts: any}): void {
     const handlers = {
       'page': () => this.router.navigate(['/wiki', opts['space'] ?? this.activeSpace, id]),
-      'cs': () => this.router.navigate(['/resources/code-systems/', id, 'view']),
-      'vs': () => this.router.navigate(['/resources/value-sets/', id, 'view']),
+      'cs': () => this.router.navigate(['/resources/code-systems/', id, 'summary']),
+      'vs': () => this.router.navigate(['/resources/value-sets/', id, 'summary']),
       'ms': () => this.router.navigate(['/resources/map-sets/', id, 'view']),
       'concept': () => {
         const [cs, concept] = id.split('|');
