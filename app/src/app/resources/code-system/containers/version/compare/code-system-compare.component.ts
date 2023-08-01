@@ -9,8 +9,8 @@ class CodeSystemCompareResult {
   public changed: {
     code: string;
     diff: {
-      old: {status: string, properties: string[]},
-      mew: {status: string, properties: string[]}
+      old: {status: string, properties: string[], designations: string[]},
+      mew: {status: string, properties: string[], designations: string[]}
     };
   }[];
 }

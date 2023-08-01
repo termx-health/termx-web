@@ -101,6 +101,18 @@
                   </div>
                 </div>
               </div>
+              <div nz-row>
+                <div nz-col nzSpan="12">
+                  <div *ngFor="let p of i.diff.old.designations" [class]="!(i.diff.mew.designations | includes:p) ? 'red' : ''">
+                    {{p}}
+                  </div>
+                </div>
+                <div nz-col nzSpan="12">
+                  <div *ngFor="let p of i.diff.mew.designations" [class]="!(i.diff.old.designations | includes:p) ? 'green' : ''">
+                    {{p}}
+                  </div>
+                </div>
+              </div>
             </td>
           </tr>
         </m-table>
