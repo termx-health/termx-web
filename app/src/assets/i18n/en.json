@@ -1252,7 +1252,11 @@
         "generate": "Generate",
         "url": "Url",
         "preview-show": "Preview",
-        "preview-hide": "Hide"
+        "preview-hide": "Hide",
+        "save-as": "Save as",
+        "download-json": "JSON",
+        "download-xml": "XML",
+        "compile": "Compile"
       },
       "execution": {
         "input": "Input",

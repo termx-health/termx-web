@@ -29,6 +29,10 @@ export class TransformationDefinitionService {
     return this.http.post(`${this.baseUrl}/generate-fml`, def).pipe(map(r => r['fml']));
   }
 
+  public parseFml(fml: string): Observable<{json: string, error: string}> {
+    return this.http.post(`${this.baseUrl}/parse-fml`, {fml}).pipe(map(r => r as {json: string, error: string}));
+  }
+
   public save(def: TransformationDefinition): Observable<TransformationDefinition> {
     if (def.id) {
       return this.http.put<TransformationDefinition>(`${this.baseUrl}/${def.id}`, def);

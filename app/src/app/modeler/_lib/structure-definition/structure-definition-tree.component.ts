@@ -6,6 +6,7 @@ import {MuiTreeComponent, MuiTreeNode, MuiTreeNodeOptions} from '@kodality-web/m
 import {StructureDefinitionFhirMapperUtil} from 'term-web/modeler/structure-definition/services/structure-definition-fhir-mapper.util';
 import {map, Observable} from 'rxjs';
 import {StructureDefinition} from 'term-web/modeler/_lib';
+import {Fhir} from 'fhir/fhir';
 
 @Component({
   selector: 'tw-structure-definition-tree',
@@ -34,8 +35,7 @@ import {StructureDefinition} from 'term-web/modeler/_lib';
 export class StructureDefinitionTreeComponent implements OnChanges {
   @Input() public defId?: number;
   @Input() public defCode?: string;
-  @Input() public json?: string;
-  @Input() public fsh?: string;
+  @Input() public content?: string;
   @Input() public mode?: 'edit' | 'view' = 'view';
   @Output() public elementSelected = new EventEmitter<any>();
 
@@ -62,13 +62,9 @@ export class StructureDefinitionTreeComponent implements OnChanges {
     if (changes['defId'] && this.defId) {
       this.reloadTree();
     }
-    if (changes['fsh'] && this.fsh) {
-      this.fsh = decodeURIComponent(this.fsh);
-      this.processFsh(this.fsh);
-    }
-    if (changes['json'] && this.json) {
-      this.json = decodeURIComponent(this.json);
-      this.processJson(this.json);
+    if (changes['content']) {
+      this.content = decodeURIComponent(this.content);
+      this.processContent(this.content);
     }
   }
 
@@ -83,32 +79,33 @@ export class StructureDefinitionTreeComponent implements OnChanges {
 
 
   private processStructureDefinition(loader: Observable<StructureDefinition>): void {
-    this.loader.wrap('tree', loader).subscribe(sd => {
-      if (sd?.contentFormat === 'json') {
-        this.processJson(sd.content);
-      }
-      if (sd?.contentFormat === 'fsh') {
-        this.processFsh(sd.content);
-      }
-    });
+    this.loader.wrap('tree', loader).subscribe(sd => this.processContent(sd.content));
   }
 
-  private processJson(json: string): void {
+  private processContent(content: string): void {
+    this.structureDefinitionValue = undefined;
+    this.treeOptions = undefined;
+    if (content.startsWith('{')) {
+      this.processObj(JSON.parse(content));
+      return;
+    }
+    if (content.startsWith('<')) {
+      this.processObj(new Fhir().xmlToObj(content));
+      return;
+    }
+    if (content.startsWith('Resource:') || content.startsWith("Logical:")) { // or how to assume fsh?
+      this.loader.wrap('fsh', this.chefService.fshToFhir({fsh: content})).subscribe(resp => this.processObj(resp.fhir[0]));
+    }
+  }
+
+  private processObj(def: any): void {
     try {
-      this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(JSON.parse(json));
+      this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(def);
       this.initTree(this.structureDefinitionValue);
     } catch (e) {
       console.error("Failed to init structure definition from JSON", e);
     }
   }
-
-  private processFsh(fsh: string): void {
-    this.loader.wrap('fsh', this.chefService.fshToFhir({fsh: fsh})).subscribe(resp => {
-      this.structureDefinitionValue = StructureDefinitionFhirMapperUtil.mapToKeyValue(resp.fhir[0]);
-      this.initTree(this.structureDefinitionValue);
-    });
-  }
-
 
   protected onTypeChange(type: 'diff' | 'snap' | 'hybrid'): void {
     this.type = type;
