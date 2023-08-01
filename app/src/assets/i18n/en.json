@@ -949,6 +949,7 @@
         "usages": "Usages",
         "tags": "Tags",
         "none": "None",
+        "page": "Page",
         "cs": "Code System",
         "vs": "Value Set",
         "ms": "Map Set",
