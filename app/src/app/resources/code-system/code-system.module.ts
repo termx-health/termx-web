@@ -41,6 +41,7 @@ import {UserLibModule} from 'term-web/user/_lib';
 import {CodeSystemProvenancesComponent} from 'term-web/resources/code-system/containers/provenance/code-system-provenances.component';
 import {CodeSystemVersionProvenancesComponent} from 'term-web/resources/code-system/containers/version/provenance/code-system-version-provenances.component';
 import {SysLibModule} from 'term-web/sys/_lib';
+import {CodeSystemValidatorComponent} from 'term-web/resources/code-system/containers/version/validator/code-system-validator.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -63,7 +64,8 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: 'compare', component: CodeSystemCompareComponent, data: {privilege: ['*.CodeSystem.view']}}
+  {path: 'compare', component: CodeSystemCompareComponent, data: {privilege: ['*.CodeSystem.view']}},
+  {path: 'validator', component: CodeSystemValidatorComponent, data: {privilege: ['*.CodeSystem.view']}}
 ];
 
 export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
@@ -105,6 +107,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemPropertyValueEditComponent,
     CodeSystemAssociationEditComponent,
     CodeSystemCompareComponent,
+    CodeSystemValidatorComponent,
     CodeSystemPropertiesComponent,
 
     FinderCodeSystemListComponent,

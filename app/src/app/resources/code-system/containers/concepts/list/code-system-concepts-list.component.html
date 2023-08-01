@@ -26,6 +26,9 @@
           [mDisplay]="filter.languages || filter.propertyName || filter.propertyValue || filter.version ? 'primary' : 'default'">
         <m-icon mCode="filter"></m-icon>
       </m-button>
+      <m-button m-tooltip mTitle="web.code-system.form.concepts.validate">
+        <m-icon [routerLink]="['/resources/code-systems/validator', {'code-system': codeSystem?.id, 'version': version?.id || ''}]" mCode="check-circle"></m-icon>
+      </m-button>
     </div>
   </div>
 

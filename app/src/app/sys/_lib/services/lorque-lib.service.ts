@@ -19,7 +19,7 @@ export class LorqueLibService {
   }
 
   public load(id: number): Observable<LorqueProcess> {
-    return this.http.get<LorqueProcess>(`${this.baseUrl}/lorque-processes/${id}`);
+    return this.http.get<LorqueProcess>(`${this.baseUrl}/${id}`);
   }
 
   public pollFinishedProcess(id: number, destroy$: Observable<any> = timer(60_000)): Observable<string> {

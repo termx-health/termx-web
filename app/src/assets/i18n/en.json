@@ -188,6 +188,7 @@
         "delete-property-usages": "Delete property usages",
         "concepts": {
           "add-concept": "Add concept",
+          "validate": "Validate code system",
           "concept": "Concept",
           "contains": "Contains",
           "eq": "Equals"
@@ -382,6 +383,24 @@
       "deleted": "Deleted",
       "added": "Added",
       "changed": "Changed"
+    },
+    "code-system-validator": {
+      "code-system": "Code system",
+      "uniqueness-validator": {
+        "title": "Uniqueness validator",
+        "properties": "Properties",
+        "ignore-empty-properties": "Ignore empty properties",
+        "designations": "Designations",
+        "validate": "Validate",
+        "empty-properties": "Empty properties"
+      },
+      "circular-dependencies-detector": {
+        "title": "Circular dependencies detector",
+        "detect": "Detect"
+      },
+      "result": {
+        "title": "Result"
+      }
     },
     "code-system-association": {
       "form": {
