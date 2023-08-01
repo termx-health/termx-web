@@ -34,6 +34,7 @@
     "no-data": "No data",
     "back": "Back",
     "delete-confirm": "Are you sure you want to delete?",
+    "confirm": "Are you sure?",
     "data-lost-warning": "Your changes wouldn't be saved!",
     "form-invalid": "Form invalid. Please review the data"
   },
@@ -343,7 +344,8 @@
       "list": {
         "external": "External",
         "add-concept-child": "Add subconcept",
-        "unlink-concept": "Unlink concept from version"
+        "unlink-concept": "Unlink concept from version",
+        "propagate-properties": "Propagate properties to children"
       }
     },
     "code-system-concept-version": {

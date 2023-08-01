@@ -56,6 +56,10 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post(`${this.baseUrl}/${codeSystemId}/concepts/transaction`, request);
   }
 
+  public propagateProperties(codeSystemId: string, conceptCode: string, targetConceptIds: number[]): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/concepts/${conceptCode}/propagate-properties`, {targetConceptIds: targetConceptIds});
+  }
+
   public changeEntityVersionStatus(codeSystemId: string, id: number, status: 'draft' | 'active' | 'retired'): Observable<void> {
     if (status === 'draft') {
       return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/${id}/draft`, {});

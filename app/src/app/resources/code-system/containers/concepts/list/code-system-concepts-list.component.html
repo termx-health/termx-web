@@ -176,6 +176,11 @@
             {{'web.code-system-concept.list.unlink-concept' | translate}}
           </a>
         </ng-container>
+        <ng-container *ngIf="node.expandable">
+          <a *m-dropdown-item  m-popconfirm mPopconfirmTitle="core.confirm" (mOnConfirm)="propagateProperties(node.concept)">
+            {{'web.code-system-concept.list.propagate-properties' | translate}}
+          </a>
+        </ng-container>
       </m-dropdown>
     </td>
   </ng-template>

@@ -147,17 +147,21 @@ export class CodeSystemConceptsListComponent implements OnInit {
     if (!node.loading) {
       node.loading = true;
 
-      const params = new ConceptSearchParams();
-      params.associationSource = `${this.codeSystem.hierarchyMeaning}|${node.code}`;
-      params.codeSystemVersion = this.version?.version;
-      params.sort = 'code';
-      params.limit = 1000;
-
-      this.codeSystemService.searchConcepts(this.codeSystem.id, params).subscribe(concepts => {
+      this.loadChildren(node.code).subscribe(concepts => {
         node.children = concepts.data.map(c => this.mapToNode(c));
         node.expanded = true;
       }).add(() => node.loading = false);
     }
+  }
+
+  public loadChildren(code: string): Observable<SearchResult<CodeSystemConcept>> {
+    const params = new ConceptSearchParams();
+    params.associationSource = `${this.codeSystem.hierarchyMeaning}|${code}`;
+    params.codeSystemVersion = this.version?.version;
+    params.sort = 'code';
+    params.limit = 1000;
+
+    return this.codeSystemService.searchConcepts(this.codeSystem.id, params);
   }
 
   private mapToNode(c: CodeSystemConcept): ConceptNode {
@@ -212,4 +216,12 @@ export class CodeSystemConceptsListComponent implements OnInit {
   public getProperty = (id: number, properties: EntityProperty[]): EntityProperty => {
     return properties?.find(p => p.id === id);
   };
+
+  public propagateProperties(concept: CodeSystemConcept): void {
+    this.loadChildren(concept.code).subscribe(children => {
+      this.codeSystemService.propagateProperties(this.codeSystem.id, concept.code, children.data.map(c => c.id)).subscribe(() => {
+        this.expandTree();
+      });
+    });
+  }
 }
