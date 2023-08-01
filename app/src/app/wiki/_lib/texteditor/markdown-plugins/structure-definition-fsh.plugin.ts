@@ -5,7 +5,7 @@ import {tokenAttrValue} from './plugin.util';
 export function structureDefinitionFshPlugin(md): void {
   md.renderer.rules.structure_definition_fsh = (tokens, idx, /*options, env, self */) => {
     const [fsh] = tokenAttrValue(tokens[idx], 'fsh');
-    return `<ce-structure-definition fsh="${encodeURIComponent(fsh)}"></ce-structure-definition>`;
+    return `<ce-structure-definition content="${encodeURIComponent(fsh)}"></ce-structure-definition>`;
   };
 
   md.block.ruler.before('fence', 'structure_definition_fsh', (state, startl, endl, silent) => {
