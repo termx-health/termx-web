@@ -32,7 +32,7 @@ export class FhirValueSetComponent implements OnInit {
   }
 
   public openJson(): void {
-    window.open(environment.termxApi + '/fhir/ValueSet/' + this.valueSet.id, '_blank');
+    window.open(environment.termxApi + '/fhir/ValueSet/' + this.valueSet.id + '?_format=json', '_blank');
   }
 
   public exportXml(): void {
