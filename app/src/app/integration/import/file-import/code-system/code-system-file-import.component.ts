@@ -297,8 +297,8 @@ export class CodeSystemFileImportComponent implements OnInit {
 
   /* Utils */
 
-  protected openCodeSystem(id: string, mode: 'edit' | 'view'): void {
-    this.router.navigate(['/resources/code-systems/', id, mode]);
+  protected openCodeSystem(id: string): void {
+    this.router.navigate(['/resources/code-systems', id, 'summary']);
   }
 
   protected getVersions = (versions: CodeSystemVersion[]): string[] => {

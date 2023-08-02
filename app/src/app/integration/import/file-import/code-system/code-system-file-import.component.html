@@ -263,8 +263,5 @@
 </div>
 
 <ng-template #successNotificationContent>
-  <a *ngIf="'*.CodeSystem.edit' | twHasAnyPrivilege; else view" (click)="openCodeSystem(data.codeSystem.id, 'edit')">{{data.codeSystem.id}}</a>
-  <ng-template #view>
-    <a (click)="openCodeSystem(data.codeSystem.id, 'view')">{{data.codeSystem.id}}</a>
-  </ng-template>
+  <a (click)="openCodeSystem(data.codeSystem.id)">{{data.codeSystem.id}}</a>
 </ng-template>
