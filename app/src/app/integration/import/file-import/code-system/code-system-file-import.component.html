@@ -157,6 +157,7 @@
           <th *ngIf="hasDuplicateIdentifiers">{{'web.integration.file-import.code-system.properties.preferred' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.properties.type' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.properties.format' | translate}}</th>
+          <th>{{'web.integration.file-import.code-system.properties.delimiter' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.properties.lang' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.properties.import' | translate}}</th>
         </tr>
@@ -197,6 +198,10 @@
               <m-option [mValue]="'dd.MM.yyyy'" [mLabel]="'dd.MM.yyyy'"/>
               <m-option [mValue]="'MM/dd/yyyy'" [mLabel]="'MM/dd/yyyy'"/>
             </m-select>
+          </td>
+
+          <td>
+            <m-input [(ngModel)]="item.propertyDelimiter" *ngIf="['string', 'Coding'] | includes:item.propertyType"></m-input>
           </td>
 
           <td>

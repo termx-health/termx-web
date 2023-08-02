@@ -740,6 +740,7 @@
             "header": "Properties",
             "type-column": "{{type}} column",
             "kts-property": "TermX property",
+            "delimiter": "Delimiter",
             "preferred": "Preferred",
             "type": "Type",
             "format": "Format",

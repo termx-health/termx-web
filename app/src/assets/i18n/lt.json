@@ -677,7 +677,7 @@
           "properties": {
             "header": "Savybės",
             "type-column": "{{type}} stulpelis",
-            "kts-property": "KTS savybė",
+            "kts-property": "TermX savybė",
             "preferred": "Pageidautinas (-a)",
             "type": "Tipas",
             "format": "Formatas",

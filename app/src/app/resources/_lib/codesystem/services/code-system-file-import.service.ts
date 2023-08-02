@@ -12,6 +12,7 @@ export interface FileProcessingRequestProperty {
   propertyName?: string;
   propertyType?: string;
   propertyTypeFormat?: string;
+  propertyDelimiter?: string;
   preferred?: boolean;
   lang?: string;
 }
