@@ -71,12 +71,7 @@
       <label *ngIf="'dateTime' === property?.type">{{value | localDate}}</label>
       <label *ngIf="'code' === property?.type">{{value | localizedConceptName: {codeSystem: codeSystem} | async}}</label>
       <ng-container *ngIf="'Coding' === property?.type" [ngSwitch]="property | apply:codingType">
-        <label *ngSwitchCase="'value-set'">
-          {{value?.code | localizedConceptName: {valueSet: property.rule.valueSet} | async}}
-        </label>
-        <label *ngSwitchDefault>
-          {{value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async}}
-        </label>
+        {{value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async}}
       </ng-container>
     </ng-container>
   </m-form-control>

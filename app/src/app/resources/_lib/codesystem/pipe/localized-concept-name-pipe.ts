@@ -40,7 +40,7 @@ class LocalizedConceptNameService {
     const isString = typeof ids[0] === 'string';
 
     if (resource.codeSystem === 'snomed-ct' && isString) {
-      return forkJoin(ids.map(id => this.snomedService.loadConcept(id).pipe(map(concept => ({id, name: concept.pt.term})))));
+      return this.snomedService.findConcepts({conceptIds: ids as string[], limit: ids.length}).pipe(map(res => res.items.map(i => ({id: i.conceptId, name: i.pt.term}))));
     }
 
     if (resource.codeSystem === 'ucum' && isString) {
@@ -103,6 +103,9 @@ class LocalizedConceptNameService {
 
 
   private getKey(resource: ResourceParams, identifier?: string | number): string {
+    console.log(`${identifier || '-'}` +
+      `#CS|${resource.codeSystem || '-'}#CSV|${resource.codeSystemVersion || '-'}` +
+      `#VS|${resource.valueSet || '-'}#VSV|${resource.valueSetVersion || '-'}`);
     return `${identifier || '-'}` +
       `#CS|${resource.codeSystem || '-'}#CSV|${resource.codeSystemVersion || '-'}` +
       `#VS|${resource.valueSet || '-'}#VSV|${resource.valueSetVersion || '-'}`;
