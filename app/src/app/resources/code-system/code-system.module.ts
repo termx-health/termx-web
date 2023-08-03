@@ -42,6 +42,9 @@ import {CodeSystemProvenancesComponent} from 'term-web/resources/code-system/con
 import {CodeSystemVersionProvenancesComponent} from 'term-web/resources/code-system/containers/version/provenance/code-system-version-provenances.component';
 import {SysLibModule} from 'term-web/sys/_lib';
 import {CodeSystemValidatorComponent} from 'term-web/resources/code-system/containers/version/validator/code-system-validator.component';
+import {
+  CodeSystemConceptsPropertyViewComponent
+} from 'term-web/resources/code-system/containers/concepts/code-system-concepts-property-view.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -50,6 +53,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/edit', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/summary', component: CodeSystemSummaryComponent},
   {path: ':id/concepts', component: CodeSystemConceptsComponent},
+  {path: ':id/properties', component: CodeSystemConceptsPropertyViewComponent},
   {path: ':id/provenances', component: CodeSystemProvenancesComponent},
 
   {path: ':id/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
@@ -59,6 +63,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/versions/add', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/summary', component: CodeSystemVersionSummaryComponent},
   {path: ':id/versions/:versionCode/concepts', component: CodeSystemVersionConceptsComponent},
+  {path: ':id/versions/:versionCode/properties', component: CodeSystemConceptsPropertyViewComponent},
   {path: ':id/versions/:versionCode/provenances', component: CodeSystemVersionProvenancesComponent},
   {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
@@ -100,6 +105,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemVersionDuplicateModalComponent,
 
     CodeSystemConceptsListComponent,
+    CodeSystemConceptsPropertyViewComponent,
     CodeSystemConceptsListConceptPreviewComponent,
     CodeSystemConceptViewComponent,
     CodeSystemConceptEditComponent,

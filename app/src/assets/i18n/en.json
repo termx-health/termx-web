@@ -347,6 +347,10 @@
         "add-concept-child": "Add subconcept",
         "unlink-concept": "Unlink concept from version",
         "propagate-properties": "Propagate properties to children"
+      },
+      "property-list": {
+        "properties": "Properties",
+        "concepts": "Concepts"
       }
     },
     "code-system-concept-version": {
@@ -1246,6 +1250,7 @@
       "all-versions": "All versions",
       "concepts": "Concepts",
       "provenance": "Provenance",
+      "properties": "Properties",
       "summary": "Summary"
     },
     "resource-import-modal": {

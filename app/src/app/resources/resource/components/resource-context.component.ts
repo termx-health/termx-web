@@ -14,7 +14,7 @@ export class ResourceContextComponent {
   @Input() public conceptCode: string;
   @Input() public version: ResourceVersion;
   @Input() public versions: ResourceVersion[];
-  @Input() public mode: 'summary' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance'  = 'summary';
+  @Input() public mode: 'summary' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties'  = 'summary';
 
   public constructor(private router: Router) {}
 
@@ -27,6 +27,7 @@ export class ResourceContextComponent {
         'concept-list': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts'],
         'concept-edit': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts', this.conceptCode, 'edit'],
         'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts', this.conceptCode, 'view'],
+        'properties': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'properties'],
         'provenance': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'provenances']
       };
       this.router.navigate(commands[this.mode]);
@@ -41,6 +42,7 @@ export class ResourceContextComponent {
       'concept-list': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts'],
       'concept-edit': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts', this.conceptCode, 'edit'],
       'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts', this.conceptCode, 'view'],
+      'properties': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'properties'],
       'provenance': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'provenances'],
     };
     this.router.navigate(commands[this.mode]);
@@ -53,4 +55,9 @@ export class ResourceContextComponent {
       this.router.navigate(['/resources', this.typeMap[this.resourceType], this.resource.id, mode]);
     }
   }
+
+  protected hasExternalReference = (resource: any): boolean => {
+   return resource?.['properties']?.find(p => p.type === 'Coding');
+  };
+
 }

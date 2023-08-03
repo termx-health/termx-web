@@ -1,0 +1,110 @@
+<tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [version]="version" [versions]="versions" mode="properties"></tw-resource-context>
+<m-page>
+  <div class="m-items-middle">
+    <ng-container *ngFor="let pv of selectedPropertyValues">
+      <label *ngIf="pv.values?.length > 0">{{pv.propertyName}}: </label>
+      <m-tag *ngFor="let v of pv.values" mShowIcon>
+        <label>{{v}}</label>
+        <m-icon class="m-clickable" mCode="close" (click)="selectPropertyValue(v, pv.propertyName)"></m-icon>
+      </m-tag>
+    </ng-container>
+  </div>
+
+  <div class="m-items-top">
+    <div>
+      <h2>{{'web.code-system-concept.property-list.properties' | translate}}</h2>
+      <m-list [mLoading]="loader.state['prop']">
+        <m-list-item mClickable (mClick)="selectProperty(p)" [mValue]="p" *ngFor="let p of codeSystem?.properties | filter:filterExternalProperties">
+          <div class="m-justify-between">
+            <label>{{p.name}}</label>
+            <m-tag mColor="blue">{{p | apply:getConceptCount | async}}</m-tag>
+          </div>
+        </m-list-item>
+      </m-list>
+    </div>
+
+    <div *ngIf="selectedProperty">
+      <h2>{{selectedProperty.name}}</h2>
+      <m-list *ngIf="selectedProperty.rule?.valueSet" [mLoading]="loader.state['pv']">
+        <ng-container *ngFor="let c of vsConcepts">
+          <m-list-item *ngIf="(selectedProperty | apply:getConceptCount:c.concept.code | async) as count"
+              mClickable
+              (mClick)="selectPropertyValue(c.concept.code)">
+            <div class="m-justify-between">
+              <label>{{c | apply:getVsDisplay}}</label>
+              <div class="m-items-middle">
+                <m-tag mColor="blue">{{count}}</m-tag>
+                <m-icon mCode="pushpin" *ngIf="c.concept.code | apply:valueSelected:selectedPropertyValues"></m-icon>
+              </div>
+            </div>
+          </m-list-item>
+        </ng-container>
+      </m-list>
+
+      <m-list *ngIf="selectedProperty.rule?.codeSystems?.length > 0" [mLoading]="loader.state['pv']">
+        <ng-container *ngFor="let c of csConcepts">
+          <m-list-item *ngIf="(selectedProperty | apply:getConceptCount:c.code | async) as count" mClickable (mClick)="selectPropertyValue(c.code)">
+            <div class="m-justify-between">
+              <label>{{c | apply:getCsDisplay}}</label>
+              <div class="m-items-middle">
+                <m-tag mColor="blue">{{count}}</m-tag>
+                <m-icon mCode="pushpin" *ngIf="c.code | apply:valueSelected:selectedPropertyValues"></m-icon>
+              </div>
+            </div>
+          </m-list-item>
+        </ng-container>
+      </m-list>
+    </div>
+
+
+    <div>
+      <h2>{{'web.code-system-concept.property-list.concepts' | translate}}</h2>
+      <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.state['search']" mSize="small">
+        <tr *mTableHead>
+          <th>{{'entities.code-system-concept.code' | translate}}</th>
+          <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
+          <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
+        </tr>
+        <tr *mTableRow="let concept">
+          <td>
+            <div class="m-items-middle m-bold">
+              <a *ngIf="concept.code | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">{{concept.code}}</a>
+            </div>
+          </td>
+          <td>
+            <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
+              <ng-container *ngFor="let designation of (concept | apply: getDesignations) | sort: 'language'">
+                <ng-container *ngIf="(!tableView.langs?.length || (tableView.langs | includes: designation.language)) &&
+          (!tableView.properties?.length || (tableView.properties | includes: designation.designationType))">
+                  <span class="m-bold">{{designation.language}}</span>
+                  {{designation.name}}
+                </ng-container>
+              </ng-container>
+            </div>
+          </td>
+          <td>
+            <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
+              <ng-container *ngFor="let property of (concept | apply:getPropertyValues)">
+                <ng-container *ngIf="!tableView.properties?.length || (tableView.properties | includes: property.entityProperty)">
+                  <div class="m-bold">{{property.entityProperty}}</div>
+                  <tw-property-value-input style="text-align: right"
+                      viewMode
+                      [ngModel]="property.value"
+                      [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
+                      [codeSystem]="codeSystem.id"></tw-property-value-input>
+                </ng-container>
+              </ng-container>
+            </div>
+          </td>
+        </tr>
+        <tr *mTableNoData>
+          <td colspan="100%">
+            <m-no-data></m-no-data>
+          </td>
+        </tr>
+      </m-backend-table>
+    </div>
+  </div>
+</m-page>
+
+

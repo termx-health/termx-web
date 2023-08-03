@@ -19,6 +19,10 @@
               <span class="m-items-middle" *ngIf="mode !== 'concept-list'"><a>{{'web.resource-context.concepts' | translate}} </a><m-icon mCode="database"></m-icon></span>
               <span class="m-items-middle" *ngIf="mode === 'concept-list'"><span>{{'web.resource-context.concepts' | translate}} </span><m-icon mCode="database"></m-icon></span>
             </m-button>
+            <m-button *ngIf="resourceType === 'CodeSystem' && resource | apply:hasExternalReference" mDisplay="text" mShape="circle" (mClick)="navigate('properties')">
+              <span class="m-items-middle" *ngIf="mode !== 'properties'"><a>{{'web.resource-context.properties' | translate}} </a><m-icon mCode="unordered-list"></m-icon></span>
+              <span class="m-items-middle" *ngIf="mode === 'properties'"><span>{{'web.resource-context.properties' | translate}} </span><m-icon mCode="unordered-list"></m-icon></span>
+            </m-button>
             <m-button mDisplay="text" mShape="circle" (mClick)="navigate('provenances')">
               <span class="m-items-middle" *ngIf="mode !== 'provenance'"><a>{{'web.resource-context.provenance' | translate}} </a><m-icon mCode="history"></m-icon></span>
               <span class="m-items-middle" *ngIf="mode === 'provenance'"><span>{{'web.resource-context.provenance' | translate}} </span><m-icon mCode="history"></m-icon></span>

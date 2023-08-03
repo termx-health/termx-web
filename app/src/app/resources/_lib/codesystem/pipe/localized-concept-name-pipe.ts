@@ -103,9 +103,6 @@ class LocalizedConceptNameService {
 
 
   private getKey(resource: ResourceParams, identifier?: string | number): string {
-    console.log(`${identifier || '-'}` +
-      `#CS|${resource.codeSystem || '-'}#CSV|${resource.codeSystemVersion || '-'}` +
-      `#VS|${resource.valueSet || '-'}#VSV|${resource.valueSetVersion || '-'}`);
     return `${identifier || '-'}` +
       `#CS|${resource.codeSystem || '-'}#CSV|${resource.codeSystemVersion || '-'}` +
       `#VS|${resource.valueSet || '-'}#VSV|${resource.valueSetVersion || '-'}`;
