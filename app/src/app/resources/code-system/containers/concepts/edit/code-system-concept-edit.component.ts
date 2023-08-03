@@ -195,7 +195,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   };
 
   public addPropertyValue(prop: EntityProperty): void {
-    this.conceptVersion.propertyValues = [...this.conceptVersion.propertyValues || [], {entityPropertyId: prop.id, entityProperty: prop.name}];
+    this.conceptVersion.propertyValues = [...this.conceptVersion.propertyValues || [], {entityPropertyId: prop.id, entityProperty: prop.name, value: prop.type === 'Coding' ? {} : undefined}];
   }
 
   public addAssociation(): void {

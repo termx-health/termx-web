@@ -3,7 +3,7 @@
 <ng-container *ngFor="let pv of propertyValues | sort: 'entityPropertyId'; let i = index">
   <ng-container *ngIf="viewMode">
     <div class="m-items-middle">
-      <span class="m-subtitle">{{pv.entityProperty}}</span>
+      <span style="white-space: nowrap" class="m-subtitle">{{pv.entityProperty}}</span>
       <tw-property-value-input [ngModel]="pv.value" [property]="pv.entityPropertyId | apply: getProperty: properties" [codeSystem]="codeSystemId" viewMode/>
     </div>
   </ng-container>
@@ -11,17 +11,7 @@
   <ng-container *ngIf="!viewMode">
     <form #form="ngForm">
       <div class="m-items-middle">
-        <m-form-item mName="{{i}}-property" required>
-          <m-select *ngIf="!(i | apply:isRequired:properties)"
-              name="{{i}}-property"
-              [(ngModel)]="pv.entityPropertyId"
-              placeholder="entities.entity-property.type"
-              icon="search"
-              required>
-            <m-option *ngFor="let prop of properties" [mValue]="prop.id" [mLabel]="prop.name"></m-option>
-          </m-select>
-          <label *ngIf="i | apply:isRequired:properties">{{pv.entityProperty}}</label>
-        </m-form-item>
+        <span style="white-space: nowrap" class="m-subtitle">{{pv.entityProperty}}</span>
         <m-form-item style="width: 100%" *ngIf="pv.entityPropertyId" mName="{{i}}-propertyValue">
           <tw-property-value-input [(ngModel)]="pv.value"
               name="{{i}}-propertyValue"
