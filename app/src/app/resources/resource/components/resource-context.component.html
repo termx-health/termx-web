@@ -6,27 +6,41 @@
       <ng-container *ngIf="resource">
         <!-- Left -->
         <div class="resource-context__item resource-context__info" style="display: grid">
-          <span class="m-title">{{resourceType}}: {{resource.title | localName}}</span>
+          <div class="m-title">
+            {{resourceType}}: {{resource.title | localName}}
+          </div>
+
           <div style="display: flex; gap: 1rem">
-            <m-button mDisplay="text" mShape="circle" (mClick)="navigate('summary')">
-              <span class="m-items-middle" *ngIf="mode !== 'summary'"><a>{{'web.resource-context.summary' | translate}} </a><m-icon mCode="appstore"></m-icon></span>
-              <span class="m-items-middle" *ngIf="mode === 'summary'"><span>{{'web.resource-context.summary' | translate}} </span><m-icon mCode="appstore"></m-icon></span>
-            </m-button>
-            <m-button mDisplay="text" mShape="circle" *twPrivileged="'*.' + resourceType + '.edit'" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']">
-              <span class="m-items-middle"><a>{{'core.btn.edit' | translate}} </a><m-icon mCode="form"></m-icon></span>
-            </m-button>
-            <m-button mDisplay="text" mShape="circle" (mClick)="navigate('concepts')">
-              <span class="m-items-middle" *ngIf="mode !== 'concept-list'"><a>{{'web.resource-context.concepts' | translate}} </a><m-icon mCode="database"></m-icon></span>
-              <span class="m-items-middle" *ngIf="mode === 'concept-list'"><span>{{'web.resource-context.concepts' | translate}} </span><m-icon mCode="database"></m-icon></span>
-            </m-button>
-            <m-button *ngIf="resourceType === 'CodeSystem' && resource | apply:hasExternalReference" mDisplay="text" mShape="circle" (mClick)="navigate('properties')">
-              <span class="m-items-middle" *ngIf="mode !== 'properties'"><a>{{'web.resource-context.properties' | translate}} </a><m-icon mCode="unordered-list"></m-icon></span>
-              <span class="m-items-middle" *ngIf="mode === 'properties'"><span>{{'web.resource-context.properties' | translate}} </span><m-icon mCode="unordered-list"></m-icon></span>
-            </m-button>
-            <m-button mDisplay="text" mShape="circle" (mClick)="navigate('provenances')">
-              <span class="m-items-middle" *ngIf="mode !== 'provenance'"><a>{{'web.resource-context.provenance' | translate}} </a><m-icon mCode="history"></m-icon></span>
-              <span class="m-items-middle" *ngIf="mode === 'provenance'"><span>{{'web.resource-context.provenance' | translate}} </span><m-icon mCode="history"></m-icon></span>
-            </m-button>
+            <div (click)="navigate('summary')">
+              <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'summary', title: 'web.resource-context.summary', icon: 'appstore'}"/>
+            </div>
+
+            <div *twPrivileged="'*.' + resourceType + '.edit'" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']">
+              <a class="m-items-middle">{{'core.btn.edit' | translate}}
+                <m-icon mCode="form"/>
+              </a>
+            </div>
+
+            <div (click)="navigate('concepts')">
+              <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'concept-list', title: 'web.resource-context.concepts', icon: 'database'}"/>
+            </div>
+
+            <div *ngIf="resourceType === 'CodeSystem' && resource | apply:hasExternalReference" (click)="navigate('properties')">
+              <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'properties', title: 'web.resource-context.properties', icon: 'unordered-list'}"/>
+            </div>
+
+            <div (click)="navigate('provenances')">
+              <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'provenance', title: 'web.resource-context.provenance', icon: 'history'}"/>
+            </div>
+
+
+            <ng-template #tabTpl let-tmode="mode" let-title="title" let-icon="icon">
+              <a *ngIf="mode !== tmode; else iconTpl">
+                <ng-container *ngTemplateOutlet="iconTpl"/>
+              </a>
+              <ng-template #iconTpl>
+                <span class="m-items-middle">{{title | translate}}<m-icon [mCode]="icon"/></span></ng-template>
+            </ng-template>
           </div>
         </div>
 
@@ -42,7 +56,6 @@
                 <a *m-dropdown-item (mClick)="selectVersion(ver.version)">{{ver.version}}</a>
               </ng-container>
             </m-dropdown>
-
           </ng-container>
 
           <!-- Version-->
@@ -58,9 +71,8 @@
         </div>
 
         <div class="resource-context__item resource-context__info selectable" (click)="unselectResourceOrVersion()">
-          <m-icon mCode="close"></m-icon>
+          <m-icon mCode="close"/>
         </div>
-
       </ng-container>
     </div>
   </div>

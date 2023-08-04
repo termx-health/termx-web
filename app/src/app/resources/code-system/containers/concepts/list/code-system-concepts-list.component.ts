@@ -48,7 +48,7 @@ interface ConceptNode {
 
     tw-code-system-concepts-list-concept-preview {
       position: sticky;
-      top: calc(var(--page-header-height) + var(--gap-default) + 7rem); // fixme: magic number 7rem, approximate height of context header (OP-5276)
+      top: calc(var(--page-header-height) + var(--gap-default) + 6rem); // fixme: magic number 6rem, approximate height of context header (OP-5276)
     }
   `]
 })
