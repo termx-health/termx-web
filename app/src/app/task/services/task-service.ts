@@ -12,6 +12,10 @@ export class TaskService extends TaskLibService {
     return this.http.post<Task>(`${this.baseUrl}/tasks`, task);
   }
 
+  public patch(number: string, request: {fields: {fieldName: string, value: any}[]}): Observable<Task> {
+    return this.http.patch<Task>(`${this.baseUrl}/tasks/${number}`, request);
+  }
+
   public createActivity(number: string, note: string): Observable<TaskActivity> {
     return this.http.post<TaskActivity>(`${this.baseUrl}/tasks/${number}/activities`, {note: note});
   }

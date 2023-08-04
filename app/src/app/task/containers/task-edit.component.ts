@@ -13,11 +13,22 @@ import {CodeSystemEntityVersionLibService, ValueSetVersionLibService} from 'term
 
 @Component({
   templateUrl: './task-edit.component.html',
+  styles: [`
+    @import "../../../styles/variables";
+
+    .text-editor {
+      padding: 0.5rem;
+      &:hover {
+        background: @mui-border-color-light;
+      }
+    }
+  `]
 })
 export class TaskEditComponent implements OnInit {
   protected task?: Task;
   protected newStatus?: string;
-  protected newActivity?: {visible?: boolean, note?: string} = {};
+  protected newContent?: string = '';
+  protected newActivity?: {visible?: boolean, note?: string} = {note: ''};
   protected loader = new LoadingManager();
   protected mode: string;
 
@@ -53,7 +64,7 @@ export class TaskEditComponent implements OnInit {
   private loadTask(number: string): void {
     this.loader.wrap('load', this.taskService.loadTask(number))
       .subscribe(task => {
-        this.task = task;
+        this.task = this.writeTask(task);
         this.loadWorkflows(task.project.code);
       });
   }
@@ -73,6 +84,14 @@ export class TaskEditComponent implements OnInit {
     });
   }
 
+  protected patch(task: {[key: string]: any}): void {
+    if (!this.task.number) {
+      return;
+    }
+    const fields = Object.keys(task).map(name => ({fieldName: name, value: task[name]}));
+    this.loader.wrap('save', this.taskService.patch(this.task.number, {fields: fields})).subscribe(t => this.loadTask(t.number));
+  }
+
   protected createActivity(): void {
     const number = this.task.number;
     const note = this.newActivity.note;
@@ -81,7 +100,7 @@ export class TaskEditComponent implements OnInit {
     }
     this.loader.wrap('save', this.taskService.createActivity(number, note)).subscribe(() => {
       this.loadTask(this.task.number);
-      this.newActivity = {};
+      this.newActivity = {note: ''};
     });
   }
 
@@ -176,6 +195,9 @@ export class TaskEditComponent implements OnInit {
   }
 
   private writeTask(task: Task): Task {
+    task['edit-mode'] = !task.content;
+    task.content ??= '';
+
     task.type ??= 'task';
     task.status ??= 'requested';
     task.priority ??= 'routine';
