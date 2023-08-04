@@ -25,10 +25,10 @@
 
   <ng-template #option let-node let-data="data">
     <div style="display: flex">
-      <label>{{node.title}}</label>
+      <label [style]="(['*..0', '0..0'] | includes: data.cardinality) ? 'text-decoration: line-through' : ''">{{node.title}}</label>
 
       <div *ngIf="mode === 'view'" style="width: 75%; display: flex; margin-left: auto">
-        <label style="flex: 1">{{ data.cardinality }}</label>
+        <label style="flex: 1" [style]="(['*..0', '0..0'] | includes: data.cardinality) ? 'text-decoration: line-through' : ''">{{ data.cardinality }}</label>
 
         <label style="flex: 5">
           <label>{{data.type}}</label>
@@ -47,12 +47,23 @@
             <a [href]="data.binding.valueSet" target="_blank">{{data.binding.valueSet | apply:lastWordFromUrl}}</a>
             ({{data.binding.strength}})
           </label>
+          <label *ngIf="data.fixedCode" style="color: grey">
+            {{'web.structure-definition.view.fixed' | translate}}: {{data.fixedCode}}
+          </label>
           <label *ngIf="data.fixedUri" style="color: grey">
             {{'web.structure-definition.view.fixed' | translate}}:
             <a [href]="data.fixedUri">{{data.fixedUri | apply:lastWordFromUrl}}</a>
           </label>
           <label *ngIf="data.fixedCoding?.code" style="color: grey">
             {{'web.structure-definition.view.fixed' | translate}}: {{data.fixedCoding.code}} | {{data.fixedCoding.system}}
+          </label>
+          <label *ngIf="data.fixedCodeableConcept?.coding" style="color: grey">
+            {{'web.structure-definition.view.fixed' | translate}}:
+            <ng-container *ngFor="let coding of data.fixedCodeableConcept.coding">{{coding.code}} | {{coding.system}}&nbsp;</ng-container>
+          </label>
+          <label *ngIf="data.patternCodeableConcept?.coding" style="color: grey">
+            {{'web.structure-definition.view.fixed' | translate}}:
+            <ng-container *ngFor="let coding of data.patternCodeableConcept.coding">{{coding.code}} | {{coding.system}}&nbsp;</ng-container>
           </label>
 
           <label *ngFor="let m of data.mappings" style="color: grey">

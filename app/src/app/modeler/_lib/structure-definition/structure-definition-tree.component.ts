@@ -171,7 +171,10 @@ export class StructureDefinitionTreeComponent implements OnChanges {
     type: snap?.type?.[0]?.code,
     targetProfile: snap?.type?.[0]?.targetProfile,
     fixedUri: snap?.fixedUri,
+    fixedCode: snap?.fixedCode,
     fixedCoding: snap?.fixedCoding ? snap.fixedCoding : undefined,
+    fixedCodeableConcept: snap?.fixedCodeableConcept,
+    patternCodeableConcept: snap?.patternCodeableConcept,
     cardinality: isDefined(snap?.min) || isDefined(snap?.max) ? (isDefined(snap?.min) ? snap?.min : '*') + '..' + (isDefined(snap?.max) ? snap?.max : '*') : '',
     short: snap?.short,
     definition: isDefined(snap?.definition) && snap?.definition !== snap?.short ? snap?.definition : undefined,
@@ -184,7 +187,10 @@ export class StructureDefinitionTreeComponent implements OnChanges {
     type: diff?.type?.[0]?.code,
     targetProfile: diff?.type?.[0]?.targetProfile,
     fixedUri: diff?.fixedUri,
-    fixedCoding: diff?.fixedCoding ? diff.fixedCoding : undefined,
+    fixedCode: diff?.fixedCode,
+    fixedCoding: diff?.fixedCoding,
+    fixedCodeableConcept: diff?.fixedCodeableConcept,
+    patternCodeableConcept: diff?.patternCodeableConcept,
     cardinality: isDefined(diff?.min) || isDefined(diff?.max) ? (isDefined(diff?.min) ? diff?.min : '*') + '..' + (isDefined(diff?.max) ? diff?.max : '*') : '',
     short: diff?.short,
     definition: isDefined(diff?.definition) && diff?.definition !== diff?.short ? diff?.definition : undefined,
@@ -197,7 +203,10 @@ export class StructureDefinitionTreeComponent implements OnChanges {
     type: diff?.type?.[0]?.code,
     targetProfile: diff?.type?.[0]?.targetProfile,
     fixedUri: diff?.fixedUri,
-    fixedCoding: diff?.fixedCoding ? diff.fixedCoding : undefined,
+    fixedCode: diff?.fixedCode,
+    fixedCoding: diff?.fixedCoding,
+    fixedCodeableConcept: diff?.fixedCodeableConcept,
+    patternCodeableConcept: diff?.patternCodeableConcept,
     cardinality: isDefined(diff?.min) || isDefined(diff?.max) ? (isDefined(diff?.min) ? diff?.min : '*') + '..' + (isDefined(diff?.max) ? diff?.max : '*') : '',
     short: diff?.short,
     definition: isDefined(diff?.definition) && diff?.definition !== diff?.short ? diff?.definition : undefined,
@@ -213,7 +222,10 @@ export class StructureDefinitionTreeComponent implements OnChanges {
 
 interface StructureDefinitionData {
   fixedUri?: string;
+  fixedCode?: string;
   fixedCoding?: any;
+  fixedCodeableConcept?: any;
+  patternCodeableConcept?: any;
   type?: string;
   targetProfile?: string[];
   cardinality?: string;
@@ -230,7 +242,10 @@ export class Element {
   public id?: string;
   public path?: string;
   public fixedUri?: string;
+  public fixedCode?: string;
   public fixedCoding?: {code?: string, system?: string, display?: string};
+  public fixedCodeableConcept?: {coding: {code?: string, system?: string, display?: string}[]};
+  public patternCodeableConcept?: {coding: {code?: string, system?: string, display?: string}[]};
   public min?: number;
   public max?: string;
   public short?: string;
