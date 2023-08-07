@@ -26,7 +26,7 @@
 
           <m-form-row>
             <m-form-item *mFormCol mName="hierarchyMeaning" mLabel="entities.code-system.hierarchy-meaning">
-              <tw-association-type-search name="hierarchyMeaning" [(ngModel)]="codeSystem.hierarchyMeaning" valuePrimitive></tw-association-type-search>
+              <tw-association-type-search name="hierarchyMeaning" [(ngModel)]="codeSystem.hierarchyMeaning" associationKind="codesystem-hierarchy-meaning" valuePrimitive></tw-association-type-search>
             </m-form-item>
             <m-form-item *mFormCol mName="sequence" mLabel="entities.code-system.sequence">
               <tw-sequence-select name="sequence" [(ngModel)]="codeSystem.sequence"></tw-sequence-select>

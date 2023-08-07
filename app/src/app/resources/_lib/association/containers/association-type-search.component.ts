@@ -12,6 +12,7 @@ import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 })
 export class AssociationTypeSearchComponent implements OnInit {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() public associationKind: 'concept-map-equivalence' | 'codesystem-hierarchy-meaning';
   @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
   @Input() public filter?: (resource: AssociationType) => boolean;
 
@@ -34,6 +35,7 @@ export class AssociationTypeSearchComponent implements OnInit {
   private loadTypes(): void {
     const q = new AssociationTypeSearchParams();
     q.limit = 10_000;
+    q.associationKinds = this.associationKind;
 
     this.loading['search'] = true;
     this.associationTypeService.search(q).pipe(
@@ -44,18 +46,8 @@ export class AssociationTypeSearchComponent implements OnInit {
     ).subscribe(data => this.data = data);
   }
 
-  private loadAssociationType(code?: string): void {
-    if (isDefined(code)) {
-      this.loading['load'] = true;
-      this.associationTypeService.load(code).pipe(takeUntil(this.destroy$)).subscribe(a => {
-        this.data = {[a.code!]: a};
-      }).add(() => this.loading['load'] = false);
-    }
-  }
-
   public writeValue(obj: AssociationType | string): void {
     this.value = typeof obj === 'object' ? obj?.code : obj;
-    this.loadAssociationType(this.value);
   }
 
   public fireOnChange(): void {
