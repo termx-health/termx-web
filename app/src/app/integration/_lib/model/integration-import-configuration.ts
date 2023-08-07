@@ -57,7 +57,7 @@ export class IntegrationImportConfiguration {
       validFrom: new Date(),
       codeSystem: 'icd10-est',
       codeSystemName: {'et': 'Eesti ICD-10', 'en': 'Estonian ICD-10'},
-      codeSystemDescription: ' RHK-10 on rahvusvaheline haiguste ja nendega seotud terviseprobleemide statistiline klassifikatsioon, mille sisu haldaja on Sotsiaalministeerium. Täiendus- ja muudatusettepanekud edastada info@sm.ee.',
+      codeSystemDescription: {'et': 'RHK-10 on rahvusvaheline haiguste ja nendega seotud terviseprobleemide statistiline klassifikatsioon, mille sisu haldaja on Sotsiaalministeerium. Täiendus- ja muudatusettepanekud edastada info@sm.ee.'},
       codeSystemVersionDescription: {'et': '22.04.2021 on 8. versiooni lisatud järgmised uued koodid:\n' +
         'U08 COVID-19 anamneesis\n' +
         'U08.9 COVID-19 anamneesis, täpsustamata\n' +
