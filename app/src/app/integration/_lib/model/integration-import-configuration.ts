@@ -50,8 +50,8 @@ export class IntegrationImportConfiguration {
       codeSystemDescription: {'en': 'International Statistical Classification of Diseases and Related Health Problems 10th Revision'},
     };
     const est = {
-      sourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/icd10_v8.zip',
-      uri: 'https://pub.e-tervis.ee/classifications/RHK-10/8',
+      sourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/rhk10_v8.zip',
+      uri: 'https://pub.e-tervis.ee/classifications/RHK-10',
       publisher: 'Ministry of Social Affairs of Estonia',
       version: '8',
       validFrom: new Date(),
