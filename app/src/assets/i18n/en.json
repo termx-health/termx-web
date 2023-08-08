@@ -59,7 +59,7 @@
         "actions": {
           "create": "Create task"
         },
-        "created-by-me": "Create by my",
+        "created-by-me": "Created by me",
         "assigned-to-me": "Assigned to me"
       }
     },
