@@ -14,41 +14,25 @@
     <div>
       <h2>{{'web.code-system-concept.property-list.properties' | translate}}</h2>
       <m-list [mLoading]="loader.state['prop']">
-        <m-list-item mClickable (mClick)="selectProperty(p)" [mValue]="p" *ngFor="let p of codeSystem?.properties | filter:filterExternalProperties">
+        <m-list-item style="cursor: pointer" (click)="selectProperty(p)" [mValue]="p" *ngFor="let p of propertySummary?.items">
           <div class="m-justify-between">
-            <label>{{p.name}}</label>
-            <m-tag mColor="blue">{{p | apply:getConceptCount | async}}</m-tag>
+            <label style="cursor: pointer">{{p.propertyName}}</label>
+            <m-tag mColor="blue">{{p.propCnt}}</m-tag>
           </div>
         </m-list-item>
       </m-list>
     </div>
 
     <div *ngIf="selectedProperty">
-      <h2>{{selectedProperty.name}}</h2>
-      <m-list *ngIf="selectedProperty.rule?.valueSet" [mLoading]="loader.state['pv']">
-        <ng-container *ngFor="let c of vsConcepts">
-          <m-list-item *ngIf="(selectedProperty | apply:getConceptCount:c.concept.code | async) as count"
-              mClickable
-              (mClick)="selectPropertyValue(c.concept.code)">
+      <h2>{{selectedProperty.propertyName}}</h2>
+      <m-list [mLoading]="loader.state['pv']">
+        <ng-container *ngFor="let p of selectedProperty.propList">
+          <m-list-item style="cursor: pointer" (click)="selectPropertyValue(p.code)">
             <div class="m-justify-between">
-              <label>{{c | apply:getVsDisplay}}</label>
+              <label style="cursor: pointer">{{p.code | localizedConceptName: {codeSystem: p.system} | async}}</label>
               <div class="m-items-middle">
-                <m-tag mColor="blue">{{count}}</m-tag>
-                <m-icon mCode="pushpin" *ngIf="c.concept.code | apply:valueSelected:selectedPropertyValues"></m-icon>
-              </div>
-            </div>
-          </m-list-item>
-        </ng-container>
-      </m-list>
-
-      <m-list *ngIf="selectedProperty.rule?.codeSystems?.length > 0" [mLoading]="loader.state['pv']">
-        <ng-container *ngFor="let c of csConcepts">
-          <m-list-item *ngIf="(selectedProperty | apply:getConceptCount:c.code | async) as count" mClickable (mClick)="selectPropertyValue(c.code)">
-            <div class="m-justify-between">
-              <label>{{c | apply:getCsDisplay}}</label>
-              <div class="m-items-middle">
-                <m-tag mColor="blue">{{count}}</m-tag>
-                <m-icon mCode="pushpin" *ngIf="c.code | apply:valueSelected:selectedPropertyValues"></m-icon>
+                <m-icon mCode="pushpin" *ngIf="p.code | apply:valueSelected:selectedPropertyValues"></m-icon>
+                <m-tag mColor="blue">{{p.code | apply:getConceptCnt:propertyConceptSummary}}</m-tag>
               </div>
             </div>
           </m-list-item>
