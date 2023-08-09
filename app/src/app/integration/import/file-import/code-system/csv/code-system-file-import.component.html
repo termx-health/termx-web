@@ -1,117 +1,5 @@
 <div class="tw-flex-container">
-  <m-card>
-    <div *m-card-header class="m-justify-between">
-      <nz-breadcrumb>
-        <nz-breadcrumb-item>{{'web.integration.file-import.title' | translate}}</nz-breadcrumb-item>
-        <nz-breadcrumb-item>{{'web.integration.file-import.code-system.import' | translate}}</nz-breadcrumb-item>
-      </nz-breadcrumb>
-    </div>
-
-    <form #form="ngForm">
-      <div>
-        <ng-container *ngIf="!isNewResource; else resourceForm">
-          <m-form-item mName="targetCodeSystem" mLabel="web.integration.file-import.code-system.general.resource-id" required>
-            <tw-code-system-search name="targetCodeSystem"
-                [(ngModel)]="data.codeSystem.id"
-                (ngModelChange)="onCodeSystemSelect($event)"
-                valuePrimitive
-                autofocus
-                required/>
-
-            <div style="margin-top: 0.35rem; font-size: 0.85rem">
-              {{'web.integration.file-import.not-found' | translate}}
-              <a (mClick)="createCodeSystem()">{{'web.integration.file-import.create-new' | translate}}</a>
-            </div>
-          </m-form-item>
-
-          <m-form-item *ngIf="data.codeSystem.id">
-            <m-alert class="tw-alert--vertical" mType="info">
-              <m-form-item mLabel="entities.code-system.uri-short">
-                {{sourceCodeSystem?.uri || '-'}}
-              </m-form-item>
-
-              <m-form-item mLabel="entities.code-system.name">
-                {{sourceCodeSystem?.title | localName:'-'}}
-              </m-form-item>
-
-              <m-form-item mLabel="entities.code-system.description">
-                {{sourceCodeSystem?.description | localName:'-'}}
-              </m-form-item>
-            </m-alert>
-          </m-form-item>
-        </ng-container>
-
-
-        <ng-template #resourceForm>
-          <m-form-item mName="id" mLabel="web.integration.file-import.code-system.general.resource-id" required>
-            <m-input name="id" [(ngModel)]="data.codeSystem.id" autofocus [focusTimeout]="50" required/>
-          </m-form-item>
-
-          <m-form-item mName="title" mLabel="entities.code-system.title" required>
-            <m-multi-language-input name="title" [(ngModel)]="data.codeSystem.title" required/>
-          </m-form-item>
-
-          <m-form-item mName="uri" mLabel="entities.code-system.uri" required>
-            <m-input name="uri" [(ngModel)]="data.codeSystem.uri" required/>
-          </m-form-item>
-
-          <m-form-item mName="description" mLabel="entities.code-system.description">
-            <m-multi-language-input name="description" [(ngModel)]="data.codeSystem.description"/>
-          </m-form-item>
-        </ng-template>
-      </div>
-
-
-      <div *ngIf="data.codeSystem?.id || isNewResource">
-        <ng-container *ngIf="!isNewVersion; else codeSystemVersionForm">
-          <m-form-item mName="versionVersion" mLabel="entities.code-system-version.version" required mLabelHint="Draft versions only">
-            <m-select name="versionVersion" [(ngModel)]="data.codeSystemVersion.version" (ngModelChange)="data.cleanRun = false" autoSelect required>
-              <m-option *ngFor="let v of sourceCodeSystem?.versions | filter: filterVersion: 'draft'" [mLabel]="v.version" [mValue]="v.version"/>
-            </m-select>
-
-            <div style="margin-top: 0.35rem; font-size: 0.85rem">
-              {{'web.integration.file-import.not-found' | translate}}
-              <a (mClick)="createCodeSystemVersion()">{{'web.integration.file-import.create-new' | translate}}</a>
-            </div>
-          </m-form-item>
-
-          <m-form-item mName="versionCleanRun" mLabel="web.integration.file-import.code-system.general.clear-version-data">
-            <m-radio-group name="versionCleanRun" [(ngModel)]="data.cleanRun" required>
-              <label m-radio-button [mValue]="true">Yes</label>
-              <label m-radio-button [mValue]="false">No</label>
-            </m-radio-group>
-          </m-form-item>
-        </ng-container>
-
-
-        <ng-template #codeSystemVersionForm>
-          <m-form-item mName="versionVersion" mLabel="entities.code-system-version.version" required>
-            <tw-semantic-version-select name="versionVersion"
-                [(ngModel)]="data.codeSystemVersion.version"
-                [versions]="isNewResource ? [] : (sourceCodeSystem?.versions | apply: getVersions)"
-                required/>
-          </m-form-item>
-
-          <m-form-item mName="versionStatus" mLabel="entities.code-system-version.status" required>
-            <tw-value-set-concept-select name="versionStatus" [(ngModel)]="data.codeSystemVersion.status" valueSet="publication-status" required/>
-          </m-form-item>
-
-          <m-form-item mName="versionReleaseDate" mLabel="entities.code-system-version.release-date" required>
-            <m-date-picker name="versionReleaseDate" [(ngModel)]="data.codeSystemVersion.releaseDate" required/>
-          </m-form-item>
-        </ng-template>
-      </div>
-
-
-      <m-form-item mName="generateValueSet" mLabel="web.integration.file-import.code-system.general.generate-valueset">
-        <m-radio-group name="generateValueSet" [(ngModel)]="data.generateValueSet" required>
-          <label m-radio-button [mValue]="true">Yes</label>
-          <label m-radio-button [mValue]="false">No</label>
-        </m-radio-group>
-      </m-form-item>
-    </form>
-  </m-card>
-
+  <tw-cs-file-import-form #form [data]="data" [breadcrumbs]="breadcrumbs"></tw-cs-file-import-form>
 
   <m-card mTitle="web.integration.file-import.code-system.source.header">
     <m-form-item mName="sourceImportType">
@@ -254,7 +142,7 @@
 
       <m-button style="flex: 1"
           [mLoading]="loader.state['process']"
-          [disabled]="form.invalid || !analyzeResponse?.parsedProperties?.length"
+          [disabled]="!form.valid || !analyzeResponse?.parsedProperties?.length"
           (click)="process()">
         {{'web.integration.file-import.process' | translate}}
       </m-button>

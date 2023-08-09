@@ -12,6 +12,10 @@ export class IntegrationImportConfiguration {
   public codeSystemName?: LocalizedName;
   public codeSystemDescription?: LocalizedName;
   public codeSystemVersionDescription?: LocalizedName;
+  public status?: string;
+
+  public generateValueSet?: boolean;
+  public cleanRun?: boolean;
 
 
   public static getDefaultAtcConfigurations(edition: string): IntegrationImportConfiguration {

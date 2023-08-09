@@ -13,11 +13,10 @@ import {FhirConceptMapClosureComponent} from './fhir/concept-map/fhir-concept-ma
 import {FhirValueSetExpandComponent} from './fhir/value-set/fhir-value-set-expand.component';
 import {FhirValueSetValidateCodeComponent} from './fhir/value-set/fhir-value-set-validate-code.component';
 import {FhirCodeSystemFindMatchesComponent} from './fhir/code-system/fhir-code-system-find-matches.component';
-import {CodeSystemFileImportComponent} from './import/file-import/code-system/code-system-file-import.component';
+import {CodeSystemFileImportFormComponent} from './import/file-import/code-system/code-system-file-import-form.component';
 import {ConceptMapFileImportComponent} from './import/file-import/concept-map/concept-map-file-import.component';
 import {SnomedDashboardComponent} from './snomed/containers/snomed-dashboard.component';
 import {SnomedConceptInfoComponent} from './snomed/containers/snomed-concept-info.component';
-import {IntegrationOrphanetImportComponent} from './import/orphanet/integration-orphanet-import-component';
 import {IntegrationIchiImportComponent} from './import/ichi/integration-ichi-import.component';
 import {FhirLibModule} from 'term-web/fhir/_lib';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
@@ -37,6 +36,8 @@ import {SnomedBranchListComponent} from 'term-web/integration/snomed/containers/
 import {SnomedBranchEditComponent} from 'term-web/integration/snomed/containers/branch/snomed-branch-edit.component';
 import {SnomedBranchManagementComponent} from 'term-web/integration/snomed/containers/branch/snomed-branch-management.component';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
+import {CodeSystemFileImportComponent} from 'term-web/integration/import/file-import/code-system/csv/code-system-file-import.component';
+import {OrphanetImportComponent} from 'term-web/integration/import/file-import/code-system/orphanet/orphanet-import.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -53,7 +54,7 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'atc/import', component: IntegrationAtcImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'icd-10/import', component: IntegrationIcdImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'ichi/import', component: IntegrationIchiImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
-      {path: 'orphanet/import', component: IntegrationOrphanetImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
+      {path: 'orphanet/import', component: OrphanetImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'loinc/import', component: LoincImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.edit']}},
@@ -90,7 +91,6 @@ export const INTEGRATION_ROUTES: Routes = [
     IntegrationAtcImportComponent,
     IntegrationIcdImportComponent,
     IntegrationIchiImportComponent,
-    IntegrationOrphanetImportComponent,
 
     FhirCodeSystemLookupComponent,
     FhirCodeSystemSubsumesComponent,
@@ -115,7 +115,9 @@ export const INTEGRATION_ROUTES: Routes = [
     LoincPartSearchComponent,
     LoincImportComponent,
 
+    CodeSystemFileImportFormComponent,
     CodeSystemFileImportComponent,
+    OrphanetImportComponent,
     ConceptMapFileImportComponent,
     AssociationFileImportComponent
   ],

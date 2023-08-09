@@ -5,8 +5,8 @@ import {NgForm} from '@angular/forms';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {of} from 'rxjs';
 import {Router} from '@angular/router';
-import {CodeSystem, CodeSystemLibService, CodeSystemVersion, EntityProperty, ValueSetLibService} from '../../../../resources/_lib';
-import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../file-analysis.service';
+import {CodeSystem, CodeSystemLibService, EntityProperty, ValueSetLibService} from '../../../../../resources/_lib';
+import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../../file-analysis.service';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
 import {
   CodeSystemFileImportService,
@@ -29,6 +29,8 @@ const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
   providers: [DestroyService, CodeSystemFileImportService]
 })
 export class CodeSystemFileImportComponent implements OnInit {
+  public breadcrumbs = ['web.integration.file-import.title', 'web.integration.file-import.code-system.import'];
+
   public sourceCodeSystem: CodeSystem;
 
   public data: {
@@ -79,7 +81,6 @@ export class CodeSystemFileImportComponent implements OnInit {
 
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('jsonFileInput') public jsonFileInput?: ElementRef<HTMLInputElement>;
-  @ViewChild('form') public form?: NgForm;
   @ViewChild('successNotificationContent') public successNotificationContent?: TemplateRef<any>;
 
   public constructor(
@@ -98,38 +99,6 @@ export class CodeSystemFileImportComponent implements OnInit {
   public ngOnInit(): void {
     this.valueSetLibService.expand({valueSet: 'concept-property-type'})
       .subscribe(concepts => this.dataTypes = [...concepts.map(c => c.concept.code), 'designation']);
-  }
-
-  public createCodeSystem(): void {
-    this.sourceCodeSystem = undefined;
-    this.data.codeSystem = new CodeSystem();
-    this.data.codeSystem['_new'] = true;
-
-    this.createCodeSystemVersion();
-  }
-
-  public createCodeSystemVersion(): void {
-    this.data.codeSystemVersion = {
-      status: 'draft'
-    };
-    this.data.codeSystemVersion['_new'] = true;
-    this.data.cleanRun = false;
-  }
-
-
-  protected onCodeSystemSelect(id: string): void {
-    const req$ = id ? this.codeSystemLibService.load(id, true) : of(undefined);
-
-    this.loader.wrap('cs', req$).subscribe(cs => {
-      this.sourceCodeSystem = cs;
-      this.data.codeSystemVersion = {};
-      this.data.cleanRun = false;
-
-      const draftVersions = cs?.versions?.filter(v => this.filterVersion(v, 'draft'));
-      if (!draftVersions?.length) {
-        this.createCodeSystemVersion();
-      }
-    });
   }
 
   protected analyze(): void {
@@ -301,19 +270,4 @@ export class CodeSystemFileImportComponent implements OnInit {
     this.router.navigate(['/resources/code-systems', id, 'summary']);
   }
 
-  protected getVersions = (versions: CodeSystemVersion[]): string[] => {
-    return versions?.map(v => v.version);
-  };
-
-  protected filterVersion = (v: CodeSystemVersion, status: string): boolean => {
-    return v.status === status;
-  };
-
-  protected get isNewResource(): boolean {
-    return this.data?.codeSystem?.['_new'];
-  }
-
-  protected get isNewVersion(): boolean {
-    return this.data?.codeSystemVersion?.['_new'];
-  }
 }

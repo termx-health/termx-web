@@ -18,7 +18,7 @@ export interface FileProcessingRequestProperty {
 }
 
 export interface FileProcessingRequest {
-  type: string;
+  type?: string;
   link?: string;
 
   codeSystem?: {

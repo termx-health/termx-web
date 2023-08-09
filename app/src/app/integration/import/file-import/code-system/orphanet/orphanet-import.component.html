@@ -1,0 +1,27 @@
+<div class="tw-flex-container">
+  <tw-cs-file-import-form #form [data]="data" [breadcrumbs]="breadcrumbs"></tw-cs-file-import-form>
+
+  <m-card mTitle="web.integration.file-import.code-system.source.header">
+    <m-form-item mName="sourceImportType">
+      <div class="m-items-middle">
+        <m-radio-group name="sourceImportType" [(ngModel)]="data.source.type" (ngModelChange)="data.source.file = undefined" required>
+          <label m-radio-button [mValue]="'link'">{{'web.integration.file-import.code-system.source.link' | translate}}</label>
+          <label m-radio-button [mValue]="'file'">{{'web.integration.file-import.code-system.source.file' | translate}}</label>
+        </m-radio-group>
+
+        <ng-container [ngSwitch]="data.source.type">
+          <m-input *ngSwitchCase="'link'" name="sourceImportFile" [(ngModel)]="data.source.file" style="flex: 1" required/>
+          <input *ngSwitchCase="'file'" #fileInput name="sourceImportFile" type="file" [(ngModel)]="data.source.file" required>
+        </ng-container>
+      </div>
+    </m-form-item>
+
+    <m-button *m-card-footer [mLoading]="loader.state['process']" [disabled]="!form.valid" (click)="process()">
+      {{'web.integration.file-import.process' | translate}}
+    </m-button>
+  </m-card>
+</div>
+
+<ng-template #successNotificationContent>
+  <a (click)="openCodeSystem(data.codeSystem.id)">{{data.codeSystem.id}}</a>
+</ng-template>
