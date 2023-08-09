@@ -1,11 +1,28 @@
 <m-table [mData]="provenances" [mLoading]="loader.isLoading">
   <tr *mTableHead>
     <th>{{'entities.provenance.date' | translate}}</th>
+    <th>{{'entities.provenance.author' | translate}}</th>
     <th>{{'entities.provenance.activity' | translate}}</th>
+    <th>{{'entities.provenance.target' | translate}}</th>
+    <th>{{'entities.provenance.changes' | translate}}</th>
   </tr>
   <tr *mTableRow="let p">
     <td>{{p.date | localDateTime}}</td>
+    <td>{{p.author?.display || p.author?.id}}</td>
     <td>{{p.activity}}</td>
+    <td>{{p.target.type}} {{p.target?.display || p.target?.id}}</td>
+    <td>
+      <div *ngFor="let k of (p.detail?.changes | keys)" class="diff">
+        <span>{{k}}: </span>
+        <span class="diff-value">{{(p.detail.changes[k].left | json) || "&nbsp;&nbsp;&nbsp;"}}</span>
+        <m-icon class="diff-icon" mCode="double-right"/>
+        <span class="diff-value">{{(p.detail.changes[k].right | json) || "&nbsp;&nbsp;&nbsp;"}}</span>
+      </div>
+      <div *ngFor="let k of (p.detail?.messages | keys)" class="diff">
+        <span>{{k}}: </span>
+        <span class="diff-value">{{(p.detail.messages[k])}}</span>
+      </div>
+    </td>
   </tr>
   <tr *mTableNoData>
     <td colspan="6">

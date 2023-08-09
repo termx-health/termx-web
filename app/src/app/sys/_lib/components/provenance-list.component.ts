@@ -4,7 +4,21 @@ import {Provenance, ProvenanceLibService} from '../../_lib';
 
 @Component({
   selector: 'tw-provenance-list',
-  templateUrl: './provenance-list.component.html'
+  templateUrl: './provenance-list.component.html',
+  styles:  [`
+    .diff {
+      line-height: 27px;
+    }
+    .diff-value {
+      border: 1px solid #d2d2d2;
+      border-radius: 4px;
+      padding: 3px;
+      background-color: #f7f7f7;
+    }
+    .diff-icon{
+      margin: 5px; 
+    }
+  `]
 })
 export class ProvenanceListComponent implements OnChanges {
   @Input() public targetType?: string;

@@ -5,6 +5,10 @@ export class Provenance {
   public activity?: string;
   public author?: ProvenanceReference;
   public context?: ProvenanceContext[];
+  public detail?: {
+    changes: {[key: string]: {left: any, right: any}},
+    messages: {[key: string]: string}
+  };
 }
 
 

@@ -1893,7 +1893,10 @@
     },
     "provenance": {
       "date": "Date",
-      "activity": "Activity"
+      "author": "Author",
+      "activity": "Activity",
+      "target": "Target",
+      "changes": "Changes"
     }
   },
   "marina.ui.form.validationError": {
