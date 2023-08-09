@@ -83,10 +83,10 @@
               <span style="font-weight: 800">{{i.code}}</span>
               <div nz-row>
                 <div nz-col nzSpan="12" [class]="i.diff.old.status !== i.diff.mew.status ? 'red' : ''" style="padding: 4px">
-                  <tw-status-tag [status]="i.diff.old.status"></tw-status-tag>
+                  <tw-status-tag *ngIf="i.diff.old.status" [status]="i.diff.old.status"></tw-status-tag>
                 </div>
                 <div nz-col nzSpan="12" [class]="i.diff.old.status !== i.diff.mew.status ? 'green' : ''" style="padding: 4px">
-                  <tw-status-tag [status]="i.diff.mew.status"></tw-status-tag>
+                  <tw-status-tag  *ngIf="i.diff.mew.status" [status]="i.diff.mew.status"></tw-status-tag>
                 </div>
               </div>
               <div nz-row>
