@@ -29,6 +29,7 @@ export class CodeSystemFileImportFormComponent {
     generateValueSet?: boolean;
     dryRun?: boolean;
     cleanRun?: boolean
+    cleanConceptRun?: boolean
     // source
     source?: {
       type?: string,
@@ -43,6 +44,7 @@ export class CodeSystemFileImportFormComponent {
     generateValueSet: false,
     dryRun: true,
     cleanRun: false,
+    cleanConceptRun: false,
     source: {
       type: 'link',
       format: 'csv',
@@ -78,6 +80,7 @@ export class CodeSystemFileImportFormComponent {
     };
     this.data.codeSystemVersion['_new'] = true;
     this.data.cleanRun = false;
+    this.data.cleanConceptRun = false;
   }
 
 
@@ -88,6 +91,7 @@ export class CodeSystemFileImportFormComponent {
       this.sourceCodeSystem = cs;
       this.data.codeSystemVersion = {};
       this.data.cleanRun = false;
+      this.data.cleanConceptRun = false;
 
       const draftVersions = cs?.versions?.filter(v => this.filterVersion(v, 'draft'));
       if (!draftVersions?.length) {

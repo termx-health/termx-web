@@ -29,6 +29,7 @@ export class OrphanetImportComponent {
     },
     generateValueSet?: boolean;
     cleanRun?: boolean
+    cleanConceptRun?: boolean
     // source
     source?: {
       type?: string,
@@ -69,6 +70,7 @@ export class OrphanetImportComponent {
       // request
       generateValueSet: this.data.generateValueSet,
       cleanRun: this.data.cleanRun,
+      cleanConceptRun: this.data.cleanConceptRun,
       sourceUrl: this.data.source.file,
 
       // meta

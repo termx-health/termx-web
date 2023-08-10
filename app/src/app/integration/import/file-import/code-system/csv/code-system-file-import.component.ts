@@ -44,6 +44,7 @@ export class CodeSystemFileImportComponent implements OnInit {
     generateValueSet?: boolean;
     dryRun?: boolean;
     cleanRun?: boolean
+    cleanConceptRun?: boolean
     // source
     source?: {
       type?: string,
@@ -58,6 +59,7 @@ export class CodeSystemFileImportComponent implements OnInit {
     generateValueSet: false,
     dryRun: true,
     cleanRun: false,
+    cleanConceptRun: false,
     source: {
       type: 'link',
       format: 'csv',
@@ -147,6 +149,7 @@ export class CodeSystemFileImportComponent implements OnInit {
       generateValueSet: this.data.generateValueSet,
       dryRun: this.data.dryRun,
       cleanRun: this.data.cleanRun,
+      cleanConceptRun: this.data.cleanConceptRun,
 
       // meta
       codeSystem: {

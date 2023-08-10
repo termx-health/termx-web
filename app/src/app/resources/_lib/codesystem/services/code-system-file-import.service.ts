@@ -37,6 +37,7 @@ export interface FileProcessingRequest {
   generateValueSet?: boolean;
   dryRun?: boolean;
   cleanRun?: boolean
+  cleanConceptRun?: boolean
 }
 
 

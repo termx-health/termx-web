@@ -16,6 +16,7 @@ export class IntegrationImportConfiguration {
 
   public generateValueSet?: boolean;
   public cleanRun?: boolean;
+  public cleanConceptRun?: boolean;
 
 
   public static getDefaultAtcConfigurations(edition: string): IntegrationImportConfiguration {

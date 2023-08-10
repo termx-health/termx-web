@@ -63,7 +63,7 @@
     <div *ngIf="data.codeSystem?.id || isNewResource">
       <ng-container *ngIf="!isNewVersion; else codeSystemVersionForm">
         <m-form-item mName="versionVersion" mLabel="entities.code-system-version.version" required mLabelHint="Draft versions only">
-          <m-select name="versionVersion" [(ngModel)]="data.codeSystemVersion.version" (ngModelChange)="data.cleanRun = false" autoSelect required>
+          <m-select name="versionVersion" [(ngModel)]="data.codeSystemVersion.version" (ngModelChange)="data.cleanRun = false; data.cleanConceptRun = false" autoSelect required>
             <m-option *ngFor="let v of sourceCodeSystem?.versions | filter: filterVersion: 'draft'" [mLabel]="v.version" [mValue]="v.version"/>
           </m-select>
 
@@ -75,6 +75,13 @@
 
         <m-form-item mName="versionCleanRun" mLabel="web.integration.file-import.code-system.general.clear-version-data">
           <m-radio-group name="versionCleanRun" [(ngModel)]="data.cleanRun" required>
+            <label m-radio-button [mValue]="true">Yes</label>
+            <label m-radio-button [mValue]="false">No</label>
+          </m-radio-group>
+        </m-form-item>
+
+        <m-form-item mName="conceptCleanRun" mLabel="web.integration.file-import.code-system.general.clear-concept-version-data">
+          <m-radio-group name="conceptCleanRun" [(ngModel)]="data.cleanConceptRun" required>
             <label m-radio-button [mValue]="true">Yes</label>
             <label m-radio-button [mValue]="false">No</label>
           </m-radio-group>
