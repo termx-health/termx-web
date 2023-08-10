@@ -145,6 +145,7 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
       }
     }
     this.loadData();
+    this.loadSummary(this.codeSystem.id, this.version?.version);
     this.loadConceptSummary(this.codeSystem.id, this.version?.version, this.selectedProperty?.propertyId);
   }
 
@@ -157,16 +158,15 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
     return conceptSummary?.items?.find(i => i.propertyCode === code)?.conceptCnt || 0;
   };
 
-  protected getConceptIds = (code: string, conceptSummary: CodeSystemEntityPropertyConceptSummary): number[] => {
-    return conceptSummary?.items?.find(i => i.propertyCode === code)?.conceptIds || [];
-  };
-
   public loadSummary(cs: string, version: string): void {
     this.propertySummary = null;
     if (!cs) {
       return;
     }
-    const url = `${environment.termxApi}/ts/code-systems/${cs}` + (isDefined(version) ? `/versions/${version}` : '') + '/entity-property-summary';
+    const epValues = this.selectedPropertyValues?.flatMap(v => v.values?.map(v => v.code))?.join(",");
+    const url = `${environment.termxApi}/ts/code-systems/${cs}` +
+      (isDefined(version) ? `/versions/${version}` : '') + '/entity-property-summary' +
+      (isDefined(epValues) ? `?entityPropertyValues=${epValues}` : '');
     this.loader.wrap('prop', this.http.get<CodeSystemEntityPropertySummary>(url)).subscribe(r => this.propertySummary = r);
   }
 
