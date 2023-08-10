@@ -86,31 +86,35 @@
                   <tw-status-tag *ngIf="i.diff.old.status" [status]="i.diff.old.status"></tw-status-tag>
                 </div>
                 <div nz-col nzSpan="12" [class]="i.diff.old.status !== i.diff.mew.status ? 'green' : ''" style="padding: 4px">
-                  <tw-status-tag  *ngIf="i.diff.mew.status" [status]="i.diff.mew.status"></tw-status-tag>
+                  <tw-status-tag *ngIf="i.diff.mew.status" [status]="i.diff.mew.status"></tw-status-tag>
                 </div>
               </div>
               <div nz-row>
                 <div nz-col nzSpan="12">
-                  <div *ngFor="let p of i.diff.old.properties" [class]="!(i.diff.mew.properties | includes:p) ? 'red' : ''">
-                    {{p}}
-                  </div>
+                  <div *ngFor="let p of i.diff.old.properties"
+                      [class]="!(i.diff.mew.properties | includes:p) ? 'red' : ''"
+                      [innerHTML]="p | apply:changeToHtml"
+                      style="line-break: anywhere"></div>
                 </div>
                 <div nz-col nzSpan="12">
-                  <div *ngFor="let p of i.diff.mew.properties" [class]="!(i.diff.old.properties | includes:p) ? 'green' : ''">
-                    {{p}}
-                  </div>
+                  <div *ngFor="let p of i.diff.mew.properties"
+                      [class]="!(i.diff.old.properties | includes:p) ? 'green' : ''"
+                      [innerHTML]="p | apply:changeToHtml"
+                      style="line-break: anywhere"></div>
                 </div>
               </div>
               <div nz-row>
                 <div nz-col nzSpan="12">
-                  <div *ngFor="let p of i.diff.old.designations" [class]="!(i.diff.mew.designations | includes:p) ? 'red' : ''">
-                    {{p}}
-                  </div>
+                  <div *ngFor="let p of i.diff.old.designations"
+                      [class]="!(i.diff.mew.designations | includes:p) ? 'red' : ''"
+                      [innerHTML]="p | apply:changeToHtml"
+                      style="line-break: anywhere"></div>
                 </div>
                 <div nz-col nzSpan="12">
-                  <div *ngFor="let p of i.diff.mew.designations" [class]="!(i.diff.old.designations | includes:p) ? 'green' : ''">
-                    {{p}}
-                  </div>
+                  <div *ngFor="let p of i.diff.mew.designations"
+                      [class]="!(i.diff.old.designations | includes:p) ? 'green' : ''"
+                      [innerHTML]="p | apply:changeToHtml"
+                      style="line-break: anywhere"></div>
                 </div>
               </div>
             </td>

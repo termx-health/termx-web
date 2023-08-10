@@ -60,4 +60,32 @@ export class CodeSystemCompareComponent implements OnInit {
       .subscribe(r => this.result = r)
       .add(() => this.loading = false);
   }
+
+  public changeToHtml = (html: string): string => {
+
+    // Escape possible HTML
+    html = html.replace(/&/g, '&amp;');
+    html = html.replace(/</g, '&lt;');
+    html = html.replace(/>/g, '&gt;');
+
+    // _spc ==> Single Space Char chr(32)
+    html = html.replace(/ /g, '<span class="_m _spc">&middot;</span>');
+
+    // _tab ==> Tab Stops chr(9)
+    html = html.replace(/\t/g, '<span class="_m _tab">🠖</span>');
+
+    // CarriageReturn chr(13)
+    html = html.replace(/\r/g, '');
+
+    // _brk ==> NewLine chr(10)
+    html = html.replace(/\n/g, '<span class="_m _brk">¶</span><br>');
+
+    // _np  ==> non-printable lower ASCII range chr(0)...chr(31) + personally known char(s)
+    html = html.replace(/([\u0000-\u001F\u00AD])/g, '<span class="_m _np">$1</span>');
+
+    // _uc  ==> Upper unicode range starting chr(255)
+    html = html.replace(/([\u00FF-\u9999])/g, '<span class="_m _uc">$1</span>');
+
+    return html;
+  };
 }
