@@ -24,7 +24,7 @@ class CodeSystemEntityPropertySummaryItem {
   public propertyName: string;
   public conceptCnt: number;
   public propCnt: number;
-  public propList: {code: string, system: string}[];
+  public propList: {code: string, codeSystem: string}[];
 }
 
 class CodeSystemEntityPropertyConceptSummary {

@@ -29,7 +29,7 @@
         <ng-container *ngFor="let p of selectedProperty.propList">
           <m-list-item style="cursor: pointer" (click)="selectPropertyValue(p.code)">
             <div class="m-justify-between">
-              <label style="cursor: pointer">{{p.code | localizedConceptName: {codeSystem: p.system} | async}}</label>
+              <label style="cursor: pointer">{{p.code | localizedConceptName: {codeSystem: p.codeSystem} | async}}</label>
               <div class="m-items-middle">
                 <m-icon mCode="pushpin" *ngIf="p.code | apply:valueSelected:selectedPropertyValues"></m-icon>
                 <m-tag mColor="blue">{{p.code | apply:getConceptCnt:propertyConceptSummary}}</m-tag>
