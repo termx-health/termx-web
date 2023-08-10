@@ -4,7 +4,7 @@
     <ng-container *ngFor="let pv of selectedPropertyValues">
       <label *ngIf="pv.values?.length > 0">{{pv.propertyName}}: </label>
       <m-tag *ngFor="let v of pv.values" mShowIcon>
-        <label>{{v}}</label>
+        <label>{{v.code | localizedConceptName: {codeSystem: v.codeSystem} | async}}</label>
         <m-icon class="m-clickable" mCode="close" (click)="selectPropertyValue(v, pv.propertyName)"></m-icon>
       </m-tag>
     </ng-container>
@@ -27,7 +27,7 @@
       <h2>{{selectedProperty.propertyName}}</h2>
       <m-list [mLoading]="loader.state['pv']">
         <ng-container *ngFor="let p of selectedProperty.propList">
-          <m-list-item style="cursor: pointer" (click)="selectPropertyValue(p.code)">
+          <m-list-item style="cursor: pointer" (click)="selectPropertyValue(p)">
             <div class="m-justify-between">
               <label style="cursor: pointer">{{p.code | localizedConceptName: {codeSystem: p.codeSystem} | async}}</label>
               <div class="m-items-middle">

@@ -52,7 +52,7 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
   protected query = new ConceptSearchParams();
   protected searchResult = SearchResult.empty<CodeSystemConcept>();
   protected selectedProperty: CodeSystemEntityPropertySummaryItem;
-  protected selectedPropertyValues: {propertyName: string, values: string[]}[];
+  protected selectedPropertyValues: {propertyName: string, values: {code: string, codeSystem: string}[]}[];
 
   protected loader = new LoadingManager();
 
@@ -95,7 +95,7 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
   private search(): Observable<SearchResult<CodeSystemConcept>> {
     const q = copyDeep(this.query);
     q.codeSystemVersion = this.version?.version;
-    q.propertyValues = this.selectedPropertyValues?.filter(pv => pv.values?.length > 0).map(pv => pv.propertyName + '|' + pv.values.join(',')).join(';');
+    q.propertyValues = this.selectedPropertyValues?.filter(pv => pv.values?.length > 0).map(pv => pv.propertyName + '|' + pv.values.map(v => v.code).join(',')).join(';');
     return this.loader.wrap('search', this.codeSystemService.searchConcepts(this.codeSystem.id, q));
   }
 
@@ -129,31 +129,36 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
     this.loadConceptSummary(this.codeSystem.id, this.version?.version, p.propertyId);
   }
 
-  protected selectPropertyValue(code: string, propertyName?: string): void {
+  protected selectPropertyValue(p: {code: string, codeSystem: string}, propertyName?: string): void {
     propertyName = propertyName || this.selectedProperty.propertyName;
-    if (this.valueSelected(code, this.selectedPropertyValues, propertyName)) {
+    if (this.valueSelected(p.code, this.selectedPropertyValues, propertyName)) {
       let pv = this.selectedPropertyValues.find(p => p.propertyName === propertyName);
-      pv.values = [...pv.values.filter(v => v !== code)];
+      pv.values = [...pv.values.filter(v => v.code !== p.code)];
       this.selectedPropertyValues = [...this.selectedPropertyValues.filter(p => p.propertyName !== pv.propertyName), pv];
     } else {
       let pv = this.selectedPropertyValues?.find(pv => pv.propertyName === propertyName);
       if (pv) {
-        pv.values = [...pv.values, code];
+        pv.values = [...pv.values, {...p}];
         this.selectedPropertyValues = [...this.selectedPropertyValues.filter(p => p.propertyName !== pv.propertyName), pv];
       } else {
-        this.selectedPropertyValues = [...(this.selectedPropertyValues || []), {propertyName: propertyName, values: [code]}];
+        this.selectedPropertyValues = [...(this.selectedPropertyValues || []), {propertyName: propertyName, values: [{...p}]}];
       }
     }
     this.loadData();
+    this.loadConceptSummary(this.codeSystem.id, this.version?.version, this.selectedProperty?.propertyId);
   }
 
-  protected valueSelected = (code: string, selectedPropertyValues: {propertyName: string, values: string[]}[], propertyName?: string): boolean => {
+  protected valueSelected = (code: string, selectedPropertyValues: {propertyName: string, values: {code: string, codeSystem: string}[]}[], propertyName?: string): boolean => {
     propertyName = propertyName || this.selectedProperty.propertyName;
-    return !!selectedPropertyValues?.find(p => p.propertyName === propertyName && p.values.includes(code));
+    return !!selectedPropertyValues?.find(p => p.propertyName === propertyName && p.values.map(v => v.code).includes(code));
   };
 
   protected getConceptCnt = (code: string, conceptSummary: CodeSystemEntityPropertyConceptSummary): number => {
-    return conceptSummary?.items?.find(i => i.propertyCode === code)?.conceptCnt;
+    return conceptSummary?.items?.find(i => i.propertyCode === code)?.conceptCnt || 0;
+  };
+
+  protected getConceptIds = (code: string, conceptSummary: CodeSystemEntityPropertyConceptSummary): number[] => {
+    return conceptSummary?.items?.find(i => i.propertyCode === code)?.conceptIds || [];
   };
 
   public loadSummary(cs: string, version: string): void {
@@ -170,8 +175,10 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
     if (!cs) {
       return;
     }
+    const epValues = this.selectedPropertyValues?.flatMap(v => v.values?.map(v => v.code))?.join(",");
     const url = `${environment.termxApi}/ts/code-systems/${cs}` +
-      (isDefined(version) ? `/versions/${version}` : '') + `/entity-property-concept-summary?entityPropertyId=${pId}`;
+      (isDefined(version) ? `/versions/${version}` : '') + `/entity-property-concept-summary?entityPropertyId=${pId}`+
+      (isDefined(epValues) ? `&entityPropertyValues=${epValues}` : '');
     this.loader.wrap('prop', this.http.get<CodeSystemEntityPropertyConceptSummary>(url)).subscribe(r => this.propertyConceptSummary = r);
   }
 }
