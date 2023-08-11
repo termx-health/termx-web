@@ -34,7 +34,7 @@
                 [required]="required"></tw-term-concept-search>
           </ng-container>
           <ng-container *ngSwitchCase="'code-system'">
-            <m-select style="flex: 1"
+            <m-select *ngIf="!value.codeSystem || property.rule.codeSystems?.length > 1" style="flex: 1"
                 name="system"
                 autoSelect
                 placeholder="Code system"
