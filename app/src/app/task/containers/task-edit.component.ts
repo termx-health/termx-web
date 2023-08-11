@@ -197,7 +197,7 @@ export class TaskEditComponent implements OnInit {
   }
 
   private writeTask(task: Task): Task {
-    task['edit-mode'] = !task.content;
+    task['content-edit'] = !task.content;
     task.content ??= '';
 
     task.type ??= 'task';
@@ -205,5 +205,31 @@ export class TaskEditComponent implements OnInit {
     task.priority ??= 'routine';
     task.project ??= {};
     return task;
+  }
+
+  public onEditorClick(ev: MouseEvent, wrapper: HTMLElement, editorType: 'content' | 'activity', a?: TaskActivity): void {
+    const path = [];
+    let el = ev.target as HTMLElement;
+    while (el) {
+      path.push(el.localName);
+      if (el.parentElement === wrapper || el.parentElement?.localName === "m-markdown") {
+        break;
+      }
+      el = el.parentElement;
+    }
+
+    if (path.includes('a')) {
+      return;
+    }
+
+    if (editorType === 'content') {
+      this.newContent = this.task.content;
+      this.task['content-edit'] = true;
+    }
+
+    if (editorType === 'activity') {
+      a['new-note'] = a.note;
+      a['edit-mode'] = true;
+    }
   }
 }

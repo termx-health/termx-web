@@ -9,8 +9,8 @@
                 [(ngModel)]="task.title"
                 (keyup.enter)="patch({title: task.title})"
                 (focusout)="patch({title: task.title})"
-                required
-                placeholder="Title"></m-input>
+                placeholder="Title"
+                required></m-input>
           </m-form-control>
           <m-button *ngIf="!task.number" mDisplay="primary" (mClick)="save()">{{'core.btn.save' | translate}}</m-button>
         </div>
@@ -20,7 +20,11 @@
           <div class="m-justify-between" style="margin-bottom: 1rem">
             <div></div>
             <div>
-              <tw-task-status *ngIf="!task['status-edit']" class="m-clickable" [status]="task.status" (click)="task['status-edit'] = true" editMode></tw-task-status>
+              <tw-task-status *ngIf="!task['status-edit']"
+                  class="m-clickable"
+                  [status]="task.status"
+                  (click)="task['status-edit'] = true"
+                  editMode></tw-task-status>
               <m-select *ngIf="task['status-edit']"
                   [allowClear]="false"
                   name="generateValueSet"
@@ -33,25 +37,27 @@
               </m-select>
             </div>
           </div>
-          <ng-container *ngIf="task['edit-mode'] || !task.content">
+          <ng-container *ngIf="task['content-edit'] || !task.content">
             <div class="m-bordered">
               <tw-smart-text-editor [(ngModel)]="newContent" valueType="markdown" name="content"></tw-smart-text-editor>
             </div>
             <div class="m-justify-between">
               <div></div>
               <div>
-                <m-button mDisplay="text" (mClick)="task.content = newContent; task['edit-mode'] = false; patch({content: newContent})">
+                <m-button mDisplay="text" (mClick)="task.content = newContent; task['content-edit'] = false; patch({content: newContent})">
                   <m-icon mCode="check"></m-icon>
                 </m-button>
-                <m-button mDisplay="text" (click)="task['edit-mode'] = false">
+                <m-button mDisplay="text" (click)="task['content-edit'] = false">
                   <m-icon mCode="close"></m-icon>
                 </m-button>
               </div>
             </div>
           </ng-container>
-          <div class="m-clickable text-editor" *ngIf="!task['edit-mode'] && task.content" (click)="newContent = task.content;task['edit-mode'] = true">
-            <tw-smart-text-editor [(ngModel)]="task.content" valueType="markdown" name="content" viewMode></tw-smart-text-editor>
-          </div>
+          <ng-container *ngIf="!task['content-edit'] && task.content">
+            <div #c class="m-clickable text-editor" (click)="onEditorClick($event, c, 'content')">
+              <tw-smart-text-editor [(ngModel)]="task.content" valueType="markdown" name="content" viewMode></tw-smart-text-editor>
+            </div>
+          </ng-container>
 
           <m-divider>{{'web.task.activity' | translate}}</m-divider>
           <m-list>
@@ -64,7 +70,10 @@
                 <div class="m-items-middle">
                   <label class="m-subtitle">{{activity.updatedAt | localDateTime}}</label>
                   <m-divider mVertical></m-divider>
-                  <m-icon *ngIf="authService.user?.username === activity.updatedBy" class="m-clickable" mCode="delete" (click)="deleteActivity(activity.id)"></m-icon>
+                  <m-icon *ngIf="authService.user?.username === activity.updatedBy"
+                      class="m-clickable"
+                      mCode="delete"
+                      (click)="deleteActivity(activity.id)"></m-icon>
                 </div>
               </div>
               <div style="display:grid">
@@ -73,12 +82,14 @@
                   <label class="m-subtitle">{{at.transition.from}}</label>&nbsp;
                   <m-icon mCode="arrow-right"></m-icon>&nbsp; <label class="m-subtitle">{{at.transition.to}}</label>
                 </label>
-                <div class="m-clickable" *ngIf="!activity['edit-mode'] && authService.user?.username === activity.updatedBy" (click)="activity['edit-mode'] = true; activity['new-note'] = activity.note">
-                  <tw-smart-text-editor [(ngModel)]="activity.note" valueType="markdown" name="{{i}}-activity" viewMode></tw-smart-text-editor>
-                </div>
-                <div *ngIf="!activity['edit-mode'] && authService.user?.username !== activity.updatedBy">
-                  <tw-smart-text-editor [(ngModel)]="activity.note" valueType="markdown" name="{{i}}-activity" viewMode></tw-smart-text-editor>
-                </div>
+                <ng-container *ngIf="!activity['edit-mode']">
+                  <div #a class="m-clickable" *ngIf="authService.user?.username === activity.updatedBy" (click)="onEditorClick($event, a, 'activity', activity)">
+                    <tw-smart-text-editor [(ngModel)]="activity.note" valueType="markdown" name="{{i}}-activity" viewMode></tw-smart-text-editor>
+                  </div>
+                  <div *ngIf="authService.user?.username !== activity.updatedBy">
+                    <tw-smart-text-editor [(ngModel)]="activity.note" valueType="markdown" name="{{i}}-activity" viewMode></tw-smart-text-editor>
+                  </div>
+                </ng-container>
               </div>
               <ng-container *ngIf="activity['edit-mode']">
                 <div class="m-bordered">
