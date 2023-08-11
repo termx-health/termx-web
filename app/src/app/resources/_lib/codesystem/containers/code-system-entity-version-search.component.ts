@@ -16,6 +16,7 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, OnChanges
   @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
   @Input() public entityCode?: string;
   @Input() public codeSystem?: string;
+  @Input() public codesNe?: string;
 
   public data: {[id: string]: CodeSystemEntityVersion} = {};
   public value?: number;
@@ -40,8 +41,8 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, OnChanges
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['codeSystem'] || changes['entityCode']) && this.codeSystem && this.entityCode) {
-      this.codeSystemService.searchEntityVersions(this.codeSystem, {code: this.entityCode, limit: -1})
+    if ((changes['codeSystem'] || changes['entityCode'] || changes['codesNe']) && this.codeSystem && this.entityCode) {
+      this.codeSystemService.searchEntityVersions(this.codeSystem, {code: this.entityCode, codesNe: this.codesNe, limit: -1})
         .subscribe(resp => this.data = ({...group(resp.data, csev => csev.id)}));
     }
   }
@@ -58,6 +59,7 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, OnChanges
     const q = new CodeSystemEntityVersionSearchParams();
     q.textContains = text;
     q.codeSystem = this.codeSystem;
+    q.codesNe = this.codesNe;
     q.limit = 10_000;
 
     this.loading['search'] = true;

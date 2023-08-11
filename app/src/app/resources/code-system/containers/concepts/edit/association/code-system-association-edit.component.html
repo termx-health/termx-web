@@ -21,6 +21,7 @@
     </m-form-item>
     <m-form-item mName="targetConcept-{{i}}">
       <tw-code-system-entity-version-search [codeSystem]="codeSystemId"
+          [codesNe]="code"
           [(ngModel)]="association.targetId"
           name="targetConcept-{{i}}"
           placeholder="entities.code-system-entity-version.association-target"

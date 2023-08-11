@@ -180,6 +180,7 @@
           <tw-code-system-association-edit #associationEdit
               class="padded"
               [codeSystemId]="codeSystemId"
+              [code]="conceptVersion?.code"
               [associations]="conceptVersion?.associations"
               [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-association-edit>
         </m-card>

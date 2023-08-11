@@ -10,6 +10,7 @@ export class CodeSystemAssociationEditComponent {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public associations?: CodeSystemAssociation[];
   @Input() public codeSystemId?: string;
+  @Input() public code?: string;
 
   public getAssociations(): CodeSystemAssociation[] | undefined {
     return this.associations?.filter(a => isDefined(a.targetId));
