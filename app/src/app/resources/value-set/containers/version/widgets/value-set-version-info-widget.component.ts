@@ -100,6 +100,9 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
     task.priority = 'routine';
     task.assignee = this.taskModalData.assignee;
     task.title = 'Value Set "' + this.version.valueSet + '" version "' + this.version.version + '" ' + this.taskModalData.type;
+    task.content = (this.taskModalData.type === 'review' ? 'Review' : 'Approve')  +
+      ' the content of the value set [' + this.version.valueSet + '|' + this.version.version + ']'+
+      '(vsv:' + this.version.valueSet + '|' + this.version.version + ').';
     task.context = [{type: 'value-set', id: this.version.valueSet}, {type: 'value-set-version', id: this.version.id}];
     this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
       this.taskCreated.emit();

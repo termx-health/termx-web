@@ -3,12 +3,17 @@ import {tokenAttrValue} from './plugin.util';
 
 const transformHref = (href: string, ctx: {spaceId?: number}): string => {
   const [system, value] = href.split(':');
-
   switch (system) {
     case 'cs':
       return `/resources/code-systems/${value}/summary`;
+    case 'csv':
+      const [codeSystem, csVersion] = value.split('|');
+      return `/resources/code-systems/${codeSystem}/versions/${csVersion}/summary`;
     case 'vs':
       return `/resources/value-sets/${value}/summary`;
+    case 'vsv':
+      const [valueSet, vsVersion] = value.split('|');
+      return `/resources/value-sets/${valueSet}/versions/${vsVersion}/summary`;
     case 'ms':
       return `/resources/map-sets/${value}/view`;
     case 'concept':
@@ -28,7 +33,7 @@ const transformHref = (href: string, ctx: {spaceId?: number}): string => {
 };
 
 const processHref = (href: string, ctx: {spaceId?: number}): string => {
-  if (["cs", "vs", "ms", "concept", "page"].includes(href.split(":")[0])) {
+  if (["cs", "csv", "vs", "vsv", "ms", "concept", "page"].includes(href.split(":")[0])) {
     // decorates link with missing parts
     return transformHref(decodeURIComponent(href), ctx);
   }

@@ -90,6 +90,9 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     task.priority = 'routine';
     task.assignee = this.taskModalData.assignee;
     task.title = 'Code System "' + this.version.codeSystem + '" version "' + this.version.version + '" ' + this.taskModalData.type;
+    task.content = (this.taskModalData.type === 'review' ? 'Review' : 'Approve')  +
+      ' the content of the code system [' + this.version.codeSystem + '|' + this.version.version + ']'+
+      '(csv:' + this.version.codeSystem + '|' + this.version.version + ').';
     task.context = [{type: 'code-system', id: this.version.codeSystem}, {type: 'code-system-version', id: this.version.id}];
     this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
       this.taskCreated.emit();

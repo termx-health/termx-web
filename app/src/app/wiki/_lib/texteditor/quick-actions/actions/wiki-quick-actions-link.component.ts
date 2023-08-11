@@ -179,6 +179,12 @@ export class WikiQuickActionsLinkComponent extends WikiQuickActionsBaseComponent
       if (data.resourceType && ['cs', 'vs', 'ms'].includes(data.resourceType)) {
         return `${data.resourceType}:${data.resource}`;
       }
+      if ('csv' === data.resourceType) {
+        return `${data.resourceType}:${data.versionCodeSystem}|${data.resource}`;
+      }
+      if ('vsv' === data.resourceType) {
+        return `${data.resourceType}:${data.versionValueSet}|${data.resource}`;
+      }
       if ('concept' === data.resourceType) {
         return `${data.resourceType}:${data.conceptCodeSystem}|${data.resource}`;
       }
@@ -192,7 +198,9 @@ export class LinkModalData {
   public link?: string;
   public pageContent?: PageContent;
   public space?: Space;
-  public resourceType?: 'cs' | 'vs' | 'ms' | 'concept';
+  public resourceType?: 'cs' | 'csv' | 'vs' | 'vsv' | 'ms' | 'concept';
   public resource?: any;
   public conceptCodeSystem?: string;
+  public versionCodeSystem?: string;
+  public versionValueSet?: string;
 }
