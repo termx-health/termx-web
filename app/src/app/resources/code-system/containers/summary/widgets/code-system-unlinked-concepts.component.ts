@@ -49,6 +49,7 @@ export class CodeSystemUnlinkedConceptsComponent implements OnInit {
     const q = copyDeep(this.query);
     q.codeSystem = this.codeSystem;
     q.textContains = this.searchInput || undefined;
+    q.status = 'draft,active';
     q.unlinked = true;
     return this.loader.wrap('load', this.codeSystemService.searchEntityVersions(this.codeSystem, q).pipe(map(resp => {
       this.loadTasks(resp.data.map(d => d.id));
