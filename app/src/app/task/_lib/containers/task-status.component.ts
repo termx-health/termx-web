@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {BooleanInput} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-task-status',
@@ -7,6 +8,7 @@ import {Component, Input} from '@angular/core';
 })
 export class TaskStatusComponent {
   @Input() public status?: string;
+  @Input() @BooleanInput() public editMode: string | boolean;
 
   public statusMap: {[status: string]: string} = {
     'draft': 'warning',

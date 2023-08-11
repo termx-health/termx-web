@@ -20,7 +20,7 @@
           <div class="m-justify-between" style="margin-bottom: 1rem">
             <div></div>
             <div>
-              <tw-task-status *ngIf="!task['status-edit']" class="m-clickable" [status]="task.status" (click)="task['status-edit'] = true"></tw-task-status>
+              <tw-task-status *ngIf="!task['status-edit']" class="m-clickable" [status]="task.status" (click)="task['status-edit'] = true" editMode></tw-task-status>
               <m-select *ngIf="task['status-edit']"
                   [allowClear]="false"
                   name="generateValueSet"
@@ -64,7 +64,7 @@
                 <div class="m-items-middle">
                   <label class="m-subtitle">{{activity.updatedAt | localDateTime}}</label>
                   <m-divider mVertical></m-divider>
-                  <m-icon class="m-clickable" mCode="delete" (click)="deleteActivity(activity.id)"></m-icon>
+                  <m-icon *ngIf="authService.user?.username === activity.updatedBy" class="m-clickable" mCode="delete" (click)="deleteActivity(activity.id)"></m-icon>
                 </div>
               </div>
               <div style="display:grid">
@@ -73,7 +73,10 @@
                   <label class="m-subtitle">{{at.transition.from}}</label>&nbsp;
                   <m-icon mCode="arrow-right"></m-icon>&nbsp; <label class="m-subtitle">{{at.transition.to}}</label>
                 </label>
-                <div class="m-clickable" *ngIf="!activity['edit-mode']" (click)="activity['edit-mode'] = true; activity['new-note'] = activity.note">
+                <div class="m-clickable" *ngIf="!activity['edit-mode'] && authService.user?.username === activity.updatedBy" (click)="activity['edit-mode'] = true; activity['new-note'] = activity.note">
+                  <tw-smart-text-editor [(ngModel)]="activity.note" valueType="markdown" name="{{i}}-activity" viewMode></tw-smart-text-editor>
+                </div>
+                <div *ngIf="!activity['edit-mode'] && authService.user?.username !== activity.updatedBy">
                   <tw-smart-text-editor [(ngModel)]="activity.note" valueType="markdown" name="{{i}}-activity" viewMode></tw-smart-text-editor>
                 </div>
               </div>

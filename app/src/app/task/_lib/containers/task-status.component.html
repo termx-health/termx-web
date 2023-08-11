@@ -1,1 +1,6 @@
-<m-tag *ngIf="status" [mColor]="statusMap[status]" [mLabel]="status | localizedConceptName: {valueSet: 'task-status'} | async"></m-tag>
+<m-tag *ngIf="status" [mColor]="statusMap[status]">
+  <div class="m-items-middle">
+    <span>{{status | localizedConceptName: {valueSet: 'task-status'} | async}}</span>
+    <m-icon *ngIf="editMode" mCode="caret-down"></m-icon>
+  </div>
+</m-tag>

@@ -10,6 +10,7 @@ import {CodeName} from '@kodality-web/marina-util';
 import {User, UserLibService} from 'term-web/user/_lib';
 import {CodeSystemVersionLibService} from 'term-web/resources/_lib/codesystem/services/code-system-version-lib.service';
 import {CodeSystemEntityVersionLibService, ValueSetVersionLibService} from 'term-web/resources/_lib';
+import {AuthService} from 'term-web/core/auth';
 
 @Component({
   templateUrl: './task-edit.component.html',
@@ -41,6 +42,7 @@ export class TaskEditComponent implements OnInit {
   public constructor(
     private taskService: TaskService,
     private userService: UserLibService,
+    protected authService: AuthService,
     private route: ActivatedRoute,
     private router: Router,
     private snomedTranslationService: SnomedTranslationService,
