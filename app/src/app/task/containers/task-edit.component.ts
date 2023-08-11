@@ -17,8 +17,16 @@ import {AuthService} from 'term-web/core/auth';
   styles: [`
     @import "../../../styles/variables";
 
+    .text-editor-wrapper {
+      border-radius: @mui-border-radius-component;
+      border: @mui-border;
+      margin-block: 0.5rem;
+    }
+
     .text-editor {
-      padding: 0.5rem;
+      padding: 1rem;
+      border-radius: @mui-border-radius-component;
+
       &:hover {
         background: @mui-border-color-light;
       }

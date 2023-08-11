@@ -17,7 +17,7 @@
       </div>
       <div *m-card-content style="display: flex; gap: 1rem">
         <div style="flex: 2">
-          <div class="m-justify-between" style="margin-bottom: 1rem">
+          <div class="m-justify-between" style="margin-bottom: 0.5rem">
             <div></div>
             <div>
               <tw-task-status *ngIf="!task['status-edit']"
@@ -38,7 +38,7 @@
             </div>
           </div>
           <ng-container *ngIf="task['content-edit'] || !task.content">
-            <div class="m-bordered">
+            <div class="text-editor-wrapper">
               <tw-smart-text-editor [(ngModel)]="newContent" valueType="markdown" name="content"></tw-smart-text-editor>
             </div>
             <div class="m-justify-between">
@@ -69,11 +69,10 @@
                 </div>
                 <div class="m-items-middle">
                   <label class="m-subtitle">{{activity.updatedAt | localDateTime}}</label>
-                  <m-divider mVertical></m-divider>
-                  <m-icon *ngIf="authService.user?.username === activity.updatedBy"
-                      class="m-clickable"
-                      mCode="delete"
-                      (click)="deleteActivity(activity.id)"></m-icon>
+                  <ng-container *ngIf="authService.user?.username === activity.updatedBy">
+                    <m-divider mVertical></m-divider>
+                    <m-icon class="m-clickable" mCode="delete" (click)="deleteActivity(activity.id)"></m-icon>
+                  </ng-container>
                 </div>
               </div>
               <div style="display:grid">
@@ -92,7 +91,7 @@
                 </ng-container>
               </div>
               <ng-container *ngIf="activity['edit-mode']">
-                <div class="m-bordered">
+                <div class="text-editor-wrapper">
                   <tw-smart-text-editor [(ngModel)]="activity['new-note']" valueType="markdown" name="{{i}}activity"></tw-smart-text-editor>
                 </div>
                 <div class="m-justify-between">
@@ -109,7 +108,7 @@
               </ng-container>
             </m-list-item>
             <m-list-item *ngIf="newActivity.visible">
-              <div class="m-bordered">
+              <div class="text-editor-wrapper">
                 <tw-smart-text-editor [(ngModel)]="newActivity.note" valueType="markdown" name="new-activity"></tw-smart-text-editor>
               </div>
               <div class="m-justify-between">
