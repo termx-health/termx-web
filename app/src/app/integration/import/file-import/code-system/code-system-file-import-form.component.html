@@ -73,17 +73,17 @@
           </div>
         </m-form-item>
 
-        <m-form-item mName="versionCleanRun" mLabel="web.integration.file-import.code-system.general.clear-version-data">
+        <m-form-item mName="versionCleanRun" mLabel="web.integration.file-import.code-system.general.delete-concepts">
           <m-radio-group name="versionCleanRun" [(ngModel)]="data.cleanRun" required>
-            <label m-radio-button [mValue]="true">Yes</label>
-            <label m-radio-button [mValue]="false">No</label>
+            <label m-radio-button [mValue]="true">{{'core.btn.delete' | translate}}</label>
+            <label m-radio-button [mValue]="false">{{'web.integration.file-import.code-system.general.hold' | translate}}</label>
           </m-radio-group>
         </m-form-item>
 
-        <m-form-item mName="conceptCleanRun" mLabel="web.integration.file-import.code-system.general.clear-concept-version-data">
+        <m-form-item mName="conceptCleanRun" mLabel="web.integration.file-import.code-system.general.overlap-of-concepts">
           <m-radio-group name="conceptCleanRun" [(ngModel)]="data.cleanConceptRun" required>
-            <label m-radio-button [mValue]="true">Yes</label>
-            <label m-radio-button [mValue]="false">No</label>
+            <label m-radio-button [mValue]="true">{{'web.integration.file-import.code-system.general.replace' | translate}}</label>
+            <label m-radio-button [mValue]="false">{{'web.integration.file-import.code-system.general.merge' | translate}}</label>
           </m-radio-group>
         </m-form-item>
       </ng-container>

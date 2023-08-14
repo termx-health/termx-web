@@ -728,8 +728,11 @@
           "general": {
             "resource-id": "Resource ID",
             "generate-valueset": "Generate ValueSet",
-            "clear-version-data": "Clear version data",
-            "clear-concept-version-data": "Clear concept version data"
+            "delete-concepts": "Delete all concepts before import?",
+            "hold": "Hold",
+            "overlap-of-concepts": "Behavior on the overlap of concepts",
+            "replace": "Replace",
+            "merge": "Merge"
           },
           "source": {
             "header": "Source",
