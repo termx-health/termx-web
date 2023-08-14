@@ -7,8 +7,8 @@ export class ValueSet {
   public id?: string;
   public uri?: string;
   public publisher?: string;
+  public name?: string;
   public title?: LocalizedName;
-  public name?: LocalizedName;
   public description?: LocalizedName;
   public purpose?: LocalizedName;
   public narrative?: string;

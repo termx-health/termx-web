@@ -8,8 +8,8 @@ import {Identifier} from '@kodality-web/core-util';
 export class CodeSystem {
   public id?: string;
   public uri?: string;
+  public name?: string;
   public title?: LocalizedName;
-  public name?: LocalizedName;
   public publisher?: string;
   public description?: LocalizedName;
   public purpose?: LocalizedName;

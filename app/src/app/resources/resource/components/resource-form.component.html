@@ -4,7 +4,7 @@
       <m-multi-language-input name="title" [(ngModel)]="resource.title" (ngModelChange)="titleChanged($event)" required></m-multi-language-input>
     </m-form-item>
     <m-form-item *mFormCol mLabel="entities.resource.name" mName="name">
-      <m-multi-language-input name="name" [(ngModel)]="resource.name"></m-multi-language-input>
+      <m-input name="name" [(ngModel)]="resource.name"></m-input>
     </m-form-item>
   </m-form-row>
 
