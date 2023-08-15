@@ -468,7 +468,7 @@
 		"snomed-description": {
 			"acceptability": "Priimtinumas",
 			"concept-id": "Sąvokos ID",
-			"description-id": "",
+			"description-id": "Description ID",
 			"lang": "Kalba",
 			"refset": "Refsets",
 			"term": "Terminas",
@@ -566,8 +566,8 @@
 			"plural": "",
 			"singular": "",
 			"source": "",
-			"source-fhir": "",
-			"source-local": "",
+			"source-fhir": "FHIR",
+			"source-local": "TermX",
 			"source-static": ""
 		},
 		"value-set": {

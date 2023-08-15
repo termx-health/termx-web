@@ -57,7 +57,7 @@
 			"designations": "Designations",
 			"hierarchy-meaning": "Hierarchy meaning",
 			"id": "ID",
-			"name": "Name",
+			"name": "Computable name",
 			"narrative": "Narrative",
 			"plural": "Code Systems",
 			"properties": "Properties",
@@ -161,7 +161,7 @@
 		"map-set": {
 			"associations": "Associations",
 			"description": "Description",
-			"domain": "Domain",
+			"domain": "Publisher",
 			"id": "Identifier",
 			"name": "Name",
 			"plural": "Map Sets",
@@ -180,13 +180,13 @@
 			"type": "Type"
 		},
 		"map-set-entity": {
-			"id": "Id",
+			"id": "ID",
 			"versions": "Versions"
 		},
 		"map-set-entity-version": {
 			"created-at": "Created at",
 			"description": "Description",
-			"id": "Id",
+			"id": "ID",
 			"status": "Status"
 		},
 		"map-set-version": {
@@ -204,7 +204,7 @@
 			"code": "Code",
 			"definitionUnit": "Base unit",
 			"definitionValue": "Base value",
-			"id": "Id",
+			"id": "ID",
 			"kind": "Kind",
 			"mappings": "Mappings",
 			"name": "Name",
@@ -219,7 +219,7 @@
 		"naming-system": {
 			"code-system": "CodeSystem",
 			"description": "Description",
-			"id": "Id",
+			"id": "ID",
 			"identifiers": "Identifiers",
 			"kind": "Kind",
 			"name": "Name",
@@ -467,8 +467,8 @@
 		},
 		"snomed-description": {
 			"acceptability": "Acceptability",
-			"concept-id": "Concept id",
-			"description-id": "Description id",
+			"concept-id": "Concept ID",
+			"description-id": "Description ID",
 			"lang": "Language",
 			"refset": "Refset",
 			"term": "Term",
@@ -494,8 +494,8 @@
 				"acceptable": "Acceptable",
 				"preferred": "Preferred"
 			},
-			"concept-id": "Concept id",
-			"description-id": "Description id",
+			"concept-id": "Concept ID",
+			"description-id": "Description ID",
 			"language": "Language",
 			"module": "Module",
 			"status": "Status",
@@ -566,7 +566,7 @@
 			"plural": "FML transformations",
 			"singular": "FML transformation",
 			"source": "Source",
-			"source-fhir": "Fhir",
+			"source-fhir": "FHIR",
 			"source-local": "TermX",
 			"source-static": "Static"
 		},
@@ -575,7 +575,7 @@
 			"contacts": "Contacts",
 			"description": "Description",
 			"id": "ID",
-			"name": "Name",
+			"name": "Computable name",
 			"narrative": "Narrative",
 			"plural": "Value Sets",
 			"publisher": "Publisher",

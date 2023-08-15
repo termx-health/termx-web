@@ -42,599 +42,599 @@
 		"association-type": {
 			"code": "Kood",
 			"description": "Kirjeldus",
-			"directed": "",
-			"forward-name": "",
-			"kind": "",
-			"reverse-name": ""
+			"directed": "Suunatud",
+			"forward-name": "Seosenimi",
+			"kind": "Tüüp",
+			"reverse-name": "Vastand"
 		},
 		"code-system": {
-			"base-code-system": "",
-			"case-sensitivity": "",
-			"concepts": "",
-			"contacts": "",
-			"content": "",
-			"description": "",
-			"designations": "",
-			"hierarchy-meaning": "",
-			"id": "",
-			"name": "",
-			"narrative": "",
-			"plural": "",
-			"properties": "",
-			"publisher": "",
-			"sequence": "",
-			"supported-languages": "",
-			"title": "",
-			"uri": "",
-			"uri-short": "",
-			"versions": ""
+			"base-code-system": "Vanem koodisüsteem",
+			"case-sensitivity": "Tõstutundlikkus",
+			"concepts": "Mõisted",
+			"contacts": "Kontaktid",
+			"content": "Sisu",
+			"description": "Kirjeldus",
+			"designations": "Tekstid",
+			"hierarchy-meaning": "Hierarhia tüüp",
+			"id": "ID",
+			"name": "Tehniline nimi",
+			"narrative": "Tekstiline presentatsioon",
+			"plural": "Koodisüsteemid",
+			"properties": "Tunnused",
+			"publisher": "Kirjastaja",
+			"sequence": "Numeratsioon mõiste koodile",
+			"supported-languages": "Toetatud keeled",
+			"title": "Pealkiri",
+			"uri": "Ühtne ressursiidentifikaator (URI)",
+			"uri-short": "URI",
+			"versions": "Versioonid"
 		},
 		"code-system-association": {
-			"status": "",
-			"target-code": "",
-			"target-id": "",
-			"type": "",
-			"versions": ""
+			"status": "Staatus",
+			"target-code": "Sihtkood",
+			"target-id": "Siht ID",
+			"type": "Tüüp",
+			"versions": "Assotsioonide versioonid"
 		},
 		"code-system-concept": {
-			"code": "",
-			"code-system": "",
-			"description": "",
-			"type": "",
-			"versions": ""
+			"code": "Kood",
+			"code-system": "Koodisüsteem",
+			"description": "Kirjeldus",
+			"type": "Tüüp",
+			"versions": "Mõiste versioonid"
 		},
 		"code-system-entity": {
-			"type": "",
-			"versions": ""
+			"type": "Tüüp",
+			"versions": "Mõiste versioonid"
 		},
 		"code-system-entity-version": {
-			"association-order": "",
-			"association-status": "",
-			"association-target": "",
-			"association-type": "",
-			"associations": "",
-			"code": "",
-			"created": "",
-			"description": "",
-			"designations": "",
-			"id": "",
-			"property-values": "",
-			"status": ""
+			"association-order": "Jnr",
+			"association-status": "Staatus",
+			"association-target": "Siht",
+			"association-type": "Assotsioon",
+			"associations": "Assotsioonid",
+			"code": "Kood",
+			"created": "Loodud",
+			"description": "Kirjeldus",
+			"designations": "Tekstid",
+			"id": "ID",
+			"property-values": "Tunnused",
+			"status": "Staatus"
 		},
 		"code-system-version": {
-			"description": "",
-			"entities": "",
-			"expiration-date": "",
-			"id": "",
-			"preferred-language": "",
-			"release-date": "",
-			"source": "",
-			"status": "",
-			"supported-languages": "",
-			"type": "",
-			"version": ""
+			"description": "Kirjeldus",
+			"entities": "Mõiste versioonid",
+			"expiration-date": "Eeldatav kasutus kuni",
+			"id": "Identifikaator",
+			"preferred-language": "Eelistatav keel",
+			"release-date": "Eeldatav kasutus alates",
+			"source": "Kirjastaja",
+			"status": "Staatus",
+			"supported-languages": "Kasutatavad keeled",
+			"type": "Tüüp",
+			"version": "Versioon"
 		},
 		"common": {
-			"privileges": ""
+			"privileges": "Privileegid"
 		},
 		"contact-detail": {
-			"name": "",
+			"name": "Nimi",
 			"telecom": {
-				"system": "",
-				"use": "",
-				"value": ""
+				"system": "Süsteem",
+				"use": "Kasutus",
+				"value": "Väärtus"
 			},
-			"telecoms": ""
+			"telecoms": "Kontaktid"
 		},
 		"designation": {
-			"case-significance": "",
-			"description": "",
-			"designation-kind": "",
-			"language": "",
-			"name": "",
-			"preferred": "",
-			"rendering": "",
-			"status": "",
-			"type": ""
+			"case-significance": "Tähtsus",
+			"description": "Kirjeldus",
+			"designation-kind": "Kirjelduse tüüp",
+			"language": "Keel",
+			"name": "Nimi",
+			"preferred": "Eelistatav",
+			"rendering": "Renderdamine",
+			"status": "Staatus",
+			"type": "Tüüp"
 		},
 		"entity-property": {
-			"description": "",
-			"name": "",
-			"order-number": "",
-			"preferred": "",
-			"required": "",
+			"description": "Kirjeldus",
+			"name": "Nimi",
+			"order-number": "Jnr",
+			"preferred": "Eelistatav",
+			"required": "Kohustuslik",
 			"rule": {
-				"code-systems": "",
-				"compose": "",
-				"filters": "",
-				"operator": "",
-				"property": "",
-				"singular": "",
-				"type": "",
-				"value": "",
-				"value-set": ""
+				"code-systems": "Koodisüsteemid",
+				"compose": "Koosta",
+				"filters": "Filtrid",
+				"operator": "Operaator",
+				"property": "Tunnus",
+				"singular": "Reegel",
+				"type": "Tüüp",
+				"value": "Väärtus",
+				"value-set": "Loend"
 			},
-			"status": "",
-			"type": "",
-			"value": ""
+			"status": "Staatus",
+			"type": "Tüüp",
+			"value": "Väärtus"
 		},
 		"map-set": {
-			"associations": "",
-			"description": "",
-			"domain": "",
-			"id": "",
-			"name": "",
-			"plural": "",
-			"source-code-systems": "",
-			"source-value-set": "",
-			"target-code-systems": "",
-			"target-value-set": "",
-			"uri": "",
-			"versions": ""
+			"associations": "Assotsioon",
+			"description": "Kirjeldus",
+			"domain": "Kirjastaja",
+			"id": "Identifikaator",
+			"name": "Nimi",
+			"plural": "Vastandustabelid",
+			"source-code-systems": "Lähtekoodisüsteemid",
+			"source-value-set": "Lähteloend",
+			"target-code-systems": "Sihtkoodisüsteemid",
+			"target-value-set": "Sihtloend",
+			"uri": "Ühtne ressursiidentifikaator (URI)",
+			"versions": "Versioonid"
 		},
 		"map-set-association": {
-			"concept": "",
-			"source": "",
-			"status": "",
-			"target": "",
-			"type": ""
+			"concept": "Mõiste",
+			"source": "Allikas",
+			"status": "Staatus",
+			"target": "Siht",
+			"type": "Tüüp"
 		},
 		"map-set-entity": {
-			"id": "",
-			"versions": ""
+			"id": "ID",
+			"versions": "Versioonid"
 		},
 		"map-set-entity-version": {
-			"created-at": "",
-			"description": "",
-			"id": "",
-			"status": ""
+			"created-at": "Loodud",
+			"description": "Kirjeldus",
+			"id": "ID",
+			"status": "Staatus"
 		},
 		"map-set-version": {
-			"description": "",
-			"expiration-date": "",
-			"id": "",
-			"release-date": "",
-			"source": "",
-			"status": "",
-			"supported-languages": "",
-			"version": ""
+			"description": "Kirjeldus",
+			"expiration-date": "Eeldatav kasutus kuni",
+			"id": "Identifikaator",
+			"release-date": "Eeldatav kasutus alates",
+			"source": "Kirjastaja",
+			"status": "Staatus",
+			"supported-languages": "Toetavad keeled",
+			"version": "Versioon"
 		},
 		"measurement-unit": {
-			"alias": "",
-			"code": "",
-			"definitionUnit": "",
-			"definitionValue": "",
-			"id": "",
-			"kind": "",
-			"mappings": "",
-			"name": "",
-			"period": "",
-			"rounding": ""
+			"alias": "Lähend",
+			"code": "Kood",
+			"definitionUnit": "Alusühik",
+			"definitionValue": "Alusväärtus",
+			"id": "ID",
+			"kind": "Tüüp",
+			"mappings": "Vastavus",
+			"name": "Nimi",
+			"period": "Periood",
+			"rounding": "Ümardus"
 		},
 		"measurement-unit-mapping": {
-			"system": "",
-			"system-unit": "",
-			"system-value": ""
+			"system": "Süsteem",
+			"system-unit": "Süsteemne ühik",
+			"system-value": "Väärtus süsteemis"
 		},
 		"naming-system": {
-			"code-system": "",
-			"description": "",
-			"id": "",
-			"identifiers": "",
-			"kind": "",
-			"name": "",
-			"source": "",
-			"status": ""
+			"code-system": "Koodisüsteem",
+			"description": "Kirjeldus",
+			"id": "ID",
+			"identifiers": "Identifikaatorid",
+			"kind": "Tüüp",
+			"name": "nimi",
+			"source": "Kirjastaja",
+			"status": "Staatus"
 		},
 		"naming-system-identifier": {
-			"type": "",
-			"value": ""
+			"type": "Tüüp",
+			"value": "Väärtus"
 		},
 		"observation-definition": {
-			"alias": "",
-			"category": "",
-			"code": "",
+			"alias": "Lühend",
+			"category": "Kategooria",
+			"code": "Kood",
 			"components": {
-				"binding": "",
-				"cardinality": "",
-				"code": "",
-				"multiple": "",
-				"names": "",
-				"order-number": "",
-				"type": "",
+				"binding": "Vastavusloend",
+				"cardinality": "Korduvus",
+				"code": "Kood",
+				"multiple": "Komponendid",
+				"names": "Nimed",
+				"order-number": "Jnr",
+				"type": "Tüüp",
 				"unit": {
-					"singular": "",
-					"system": ""
+					"singular": "Ühik",
+					"system": "Mõõtmissüsteem"
 				},
-				"value-set": ""
+				"value-set": "Loend"
 			},
-			"definition": "",
-			"details": "",
+			"definition": "Kirjeldus",
+			"details": "Detailid",
 			"interpretations": {
 				"category": {
-					"age": "",
-					"gender": "",
-					"gestation-age": "",
-					"singular": ""
+					"age": "Vanus",
+					"gender": "Sugu",
+					"gestation-age": "Rasedusaeg",
+					"singular": "Kategooria"
 				},
-				"condition": "",
-				"fhir-interpretation-code": "",
-				"order-number": "",
+				"condition": "Tingimus (CQL)",
+				"fhir-interpretation-code": "FHIR interpretatsiooni kood",
+				"order-number": "Jnr",
 				"range": {
-					"code-system": "",
-					"code-system-concepts": "",
-					"numeric-range": "",
-					"singular": "",
-					"value-set": ""
+					"code-system": "Koodisüsteem",
+					"code-system-concepts": "Koodisüsteemi mõisted",
+					"numeric-range": "Arvuline vahemik",
+					"singular": "Vahemik",
+					"value-set": "Loend"
 				},
-				"snomed-interpretation-code": "",
-				"state": "",
-				"target": ""
+				"snomed-interpretation-code": "SNOMEDi interpretatsiooni kood",
+				"state": "Tingimus tekstina",
+				"target": "Komponent"
 			},
-			"keywords": "",
+			"keywords": "Võtmesõnad",
 			"mappings": {
-				"code-system": "",
-				"concept": "",
-				"condition": "",
-				"map-set": "",
-				"multiple": "",
-				"order-number": "",
-				"relation": "",
-				"target": ""
+				"code-system": "Koodisüsteem",
+				"concept": "Mõiste",
+				"condition": "tingimus",
+				"map-set": "Vastavustabel",
+				"multiple": "Vastavused",
+				"order-number": "Jnr",
+				"relation": "Seos",
+				"target": "Komponent"
 			},
 			"members": {
-				"cardinality": "",
-				"code": "",
-				"multiple": "",
-				"names": "",
-				"order-number": ""
+				"cardinality": "Korduvus",
+				"code": "Kood",
+				"multiple": "Liikmed",
+				"names": "Nimed",
+				"order-number": "Jne"
 			},
-			"name": "",
+			"name": "Nimi",
 			"protocol": {
-				"circumstances": "",
-				"circumstances-value-set": "",
-				"circumstances-values": "",
-				"components": "",
-				"device": "",
-				"device-value-set": "",
-				"device-values": "",
-				"measurement-location": "",
-				"measurement-location-value-set": "",
-				"measurement-location-values": "",
-				"method": "",
-				"method-value-set": "",
-				"method-values": "",
-				"position": "",
-				"position-value-set": "",
-				"position-values": "",
-				"single": "",
-				"specimen": "",
-				"specimen-value-set": "",
-				"specimen-values": ""
+				"circumstances": "Andmete kogumise asjaolud",
+				"circumstances-value-set": "Loend kogumisandmete kohta",
+				"circumstances-values": "Nimekiri kogumisandmete väärtustega",
+				"components": "Täiendavad parameetrid",
+				"device": "Seade",
+				"device-value-set": "Loend seadmete kohta",
+				"device-values": "Nimekiri seadmete väärtustega",
+				"measurement-location": "Mõõtmiskoht",
+				"measurement-location-value-set": "Mõõtmiskoha loend",
+				"measurement-location-values": "Nimekiri mõõtmiskoha väärtustega",
+				"method": "Meetod",
+				"method-value-set": "Loend meetoditega",
+				"method-values": "Nimekiri meetoditest",
+				"position": "Positsioon",
+				"position-value-set": "Positsiooni loend",
+				"position-values": "Nimekiri positsiooni loenditega",
+				"single": "Protokoll",
+				"specimen": "Materjal",
+				"specimen-value-set": "Matrejali loend",
+				"specimen-values": "Nimekiri materjalide väärtustest"
 			},
-			"publisher": "",
-			"state": "",
-			"status": "",
-			"structure": "",
-			"time-precision": "",
-			"url": "",
+			"publisher": "Kirjastaja",
+			"state": "Tunnus",
+			"status": "Staatus",
+			"structure": "Struktuur",
+			"time-precision": "Aja täpsus",
+			"url": "URL",
 			"value": {
-				"behaviour": "",
-				"expression": "",
-				"multiple-results-allowed": "",
-				"type": "",
+				"behaviour": "Käitumine",
+				"expression": "Valem",
+				"multiple-results-allowed": "Lubatud mitu tulemust",
+				"type": "Tüüp",
 				"unit": {
-					"singular": "",
-					"system": ""
+					"singular": "Ühik",
+					"system": "Mõõtmissüsteem"
 				},
-				"usage": "",
-				"value-set": "",
-				"values": ""
+				"usage": "Kasutus",
+				"value-set": "Loend",
+				"values": "Väärtused"
 			},
-			"version": ""
+			"version": "Versioon"
 		},
 		"package": {
-			"code": "",
-			"git": "",
-			"plural": "",
-			"singular": "",
+			"code": "Kood",
+			"git": "Git",
+			"plural": "Paketid",
+			"singular": "Pakett",
 			"version": {
-				"plural": "",
-				"singular": "",
-				"version": ""
+				"plural": "Versioonid",
+				"singular": "Versioon",
+				"version": "Versioon"
 			}
 		},
 		"page": {
-			"contents": "",
-			"links": "",
-			"plural": "",
-			"relations": "",
-			"status": "",
-			"tags": "",
-			"template": ""
+			"contents": "Sisu",
+			"links": "Kuuluvus",
+			"plural": "Leheküljed",
+			"relations": "Seosed",
+			"status": "Staatus",
+			"tags": "Tagid",
+			"template": "Mall"
 		},
 		"page-content": {
-			"content": "",
-			"content-type": "",
-			"lang": "",
-			"name": ""
+			"content": "Sisu",
+			"content-type": "Sisu tüüp",
+			"lang": "Keel",
+			"name": "Nimi"
 		},
 		"page-link": {
-			"order-number": "",
-			"source": "",
-			"target": ""
+			"order-number": "Jnr",
+			"source": "Allikas",
+			"target": "Siht"
 		},
 		"page-relation": {
-			"target": "",
-			"type": ""
+			"target": "Siht",
+			"type": "Tüüp"
 		},
 		"privilege": {
-			"actions": "",
-			"code": "",
-			"kind": "",
-			"name": "",
-			"resources": ""
+			"actions": "Tegevused",
+			"code": "Kood",
+			"kind": "Tüüp",
+			"name": "Nimi",
+			"resources": "Ressurssid"
 		},
 		"privilege-resource": {
-			"edit": "",
-			"publish": "",
-			"resource-id": "",
-			"type": "",
-			"view": ""
+			"edit": "Muuda",
+			"publish": "Avalda",
+			"resource-id": "Ressurss",
+			"type": "Tüüp",
+			"view": "Vaata"
 		},
 		"provenance": {
-			"activity": "",
-			"author": "",
-			"changes": "",
-			"date": "",
-			"target": ""
+			"activity": "Tegevus",
+			"author": "Autor",
+			"changes": "Muudatused",
+			"date": "Aeg",
+			"target": "Siht"
 		},
 		"resource": {
 			"copyright": {
-				"holder": "",
-				"jurisdiction": "",
-				"single": "",
-				"statement": ""
+				"holder": "Autoriõiguse omanik",
+				"jurisdiction": "Jurisdiktsioon",
+				"single": "Autoriõigus",
+				"statement": "Autoriõigusavaldus"
 			},
-			"description": "",
-			"experimental": "",
-			"id": "",
+			"description": "Kirjeldus",
+			"experimental": "Eksperimentaalne",
+			"id": "ID",
 			"identifiers": {
-				"multiple": "",
-				"system": "",
-				"value": ""
+				"multiple": "Identifikaatorid",
+				"system": "Süsteem",
+				"value": "Väärtus"
 			},
-			"name": "",
+			"name": "Nimi",
 			"permissions": {
-				"admin": "",
-				"editor": "",
-				"multiple": "",
-				"viewer": ""
+				"admin": "Administraatorid",
+				"editor": "Toimetajad",
+				"multiple": "Õigused",
+				"viewer": "Vaatajad"
 			},
-			"publisher": "",
-			"purpose": "",
+			"publisher": "Kirjastaja",
+			"purpose": "Eesmärk",
 			"settings": {
-				"approval-required": "",
-				"multiple": "",
-				"review-required": ""
+				"approval-required": "Kinnitus on vajalik",
+				"multiple": "Konfiguratsioon",
+				"review-required": "Ülevaatus on vajalik"
 			},
-			"supported-languages": "",
-			"title": "",
-			"uri": "",
-			"use-context": "",
+			"supported-languages": "Toetatud keeled",
+			"title": "Pealkiri",
+			"uri": "URI",
+			"use-context": "Kastuskontekst",
 			"version": {
-				"algorithm": "",
-				"description": "",
-				"from": "",
-				"single": "",
-				"to": "",
-				"version": ""
+				"algorithm": "Algoritm",
+				"description": "Kirjeldus",
+				"from": "Eeldatavasti kasutuses alates",
+				"single": "Versioon",
+				"to": "Eeldatavasti kasutuses kuni",
+				"version": "Versioon"
 			}
 		},
 		"sequence": {
-			"code": "",
-			"description": "",
-			"luvs": "",
-			"pattern": "",
-			"restart": "",
-			"start-from": ""
+			"code": "Kood",
+			"description": "Kirjeldus",
+			"luvs": "Viimane kasutatud väärtus",
+			"pattern": "Mall",
+			"restart": "Taaskäivita",
+			"start-from": "Alates"
 		},
 		"sequence-luv": {
-			"luv": "",
-			"period": ""
+			"luv": "Viimane kasutatud väärtus",
+			"period": "Periood"
 		},
 		"snomed-branch": {
-			"base": "",
-			"creation": "",
-			"deleted": "",
-			"head": "",
-			"locked": "",
-			"metadata": "",
-			"path": "",
-			"state": ""
+			"base": "Alus",
+			"creation": "Loodud",
+			"deleted": "Kustutatud",
+			"head": "Päis",
+			"locked": "Lukustatud",
+			"metadata": "Metaandmed",
+			"path": "Teekond",
+			"state": "Tunnus"
 		},
 		"snomed-concept": {
-			"concept-id": "",
-			"descriptions": "",
-			"fsn": "",
-			"kts-references": "",
-			"pt": "",
-			"refsets": "",
-			"relationships": "",
-			"snomed-references": "",
-			"term": "",
-			"translations": ""
+			"concept-id": "Mõiste ID",
+			"descriptions": "Kirjeldused",
+			"fsn": "Fully Specified Name (FSN)",
+			"kts-references": "Viited TermX-is",
+			"pt": "Preferred term (PT)",
+			"refsets": "Refsets",
+			"relationships": "Suhted",
+			"snomed-references": "Viited SNOMED-is",
+			"term": "Mõiste",
+			"translations": "Tõlked"
 		},
 		"snomed-description": {
-			"acceptability": "",
-			"concept-id": "",
-			"description-id": "",
-			"lang": "",
-			"refset": "",
-			"term": "",
-			"type": ""
+			"acceptability": "Vastuvõetavus",
+			"concept-id": "Mõiste ID",
+			"description-id": "Kirjelduse ID",
+			"lang": "Keel",
+			"refset": "Refset",
+			"term": "Mõiste",
+			"type": "Tüüp"
 		},
 		"snomed-reference": {
-			"concept": "",
-			"type": ""
+			"concept": "Mõiste",
+			"type": "Tüüp"
 		},
 		"snomed-refset": {
-			"target": "",
-			"type": ""
+			"target": "Siht",
+			"type": "Tüüp"
 		},
 		"snomed-relationship": {
-			"active": "",
-			"group": "",
-			"target": "",
-			"type": ""
+			"active": "Aktiivne",
+			"group": "Grupp",
+			"target": "Siht",
+			"type": "Tüüp"
 		},
 		"snomed-translation": {
-			"acceptability": "",
+			"acceptability": "Vastuvõetavus",
 			"acceptability-options": {
-				"acceptable": "",
-				"preferred": ""
+				"acceptable": "Vastuvõetav",
+				"preferred": "Eelistatav"
 			},
-			"concept-id": "",
-			"description-id": "",
-			"language": "",
-			"module": "",
-			"status": "",
-			"task": "",
-			"term": "",
-			"type": "",
+			"concept-id": "Mõiste ID",
+			"description-id": "Kirjelduse ID",
+			"language": "Keel",
+			"module": "Moodule",
+			"status": "Staatus",
+			"task": "Ülesanne",
+			"term": "Mõiste",
+			"type": "Tüüp",
 			"type-options": {
-				"fully-specified-name": "",
-				"synonym": ""
+				"fully-specified-name": "Fully specified name",
+				"synonym": "Sünonüüm"
 			}
 		},
 		"space": {
-			"acl": "",
-			"active": "",
-			"code": "",
-			"editors": "",
-			"name": "",
-			"owners": "",
-			"plural": "",
-			"shared": "",
-			"singular": "",
-			"terminology-servers": "",
-			"viewers": ""
+			"acl": "ACL",
+			"active": "Aktiivne",
+			"code": "Kood",
+			"editors": "Toimetajad",
+			"name": "Nimi",
+			"owners": "Omanikud",
+			"plural": "Spaces",
+			"shared": "Jagatud",
+			"singular": "Space",
+			"terminology-servers": "Terminoloogia server",
+			"viewers": "Vaatajad"
 		},
 		"structure-definition": {
-			"code": "",
-			"content": "",
-			"content-format": "",
-			"content-type": "",
-			"parent": "",
-			"plural": "",
-			"url": "",
-			"version": ""
+			"code": "Kood",
+			"content": "Sisu",
+			"content-format": "Sisu vorming",
+			"content-type": "Sisu tüüp",
+			"parent": "Vanem",
+			"plural": "Structure Definition-id",
+			"url": "URL",
+			"version": "Versioon"
 		},
 		"task": {
-			"assignee": "",
-			"author": "",
-			"created": "",
-			"modified": "",
-			"modified-by": "",
-			"number": "",
-			"plural": "",
-			"priority": "",
-			"project": "",
-			"status": "",
-			"title": "",
-			"type": "",
-			"workflow": ""
+			"assignee": "Teostaja",
+			"author": "Autor",
+			"created": "Loodud",
+			"modified": "Muudetud",
+			"modified-by": "Muutja",
+			"number": "Number",
+			"plural": "Ülesanded",
+			"priority": "Prioriteet",
+			"project": "Projekt",
+			"status": "Staatus",
+			"title": "Pealkiri",
+			"type": "Tüüp",
+			"workflow": "Töövoog"
 		},
 		"template": {
-			"code": "",
-			"content": "",
-			"content-type": "",
-			"names": ""
+			"code": "Kood",
+			"content": "sisu",
+			"content-type": "Sisu tüüp",
+			"names": "Nimed"
 		},
 		"terminology-server": {
-			"active": "",
-			"code": "",
-			"current-installation": "",
-			"kind": "",
-			"name": "",
-			"plural": "",
-			"root-url": "",
-			"singular": ""
+			"active": "Aktiivne",
+			"code": "Kood",
+			"current-installation": "antud installatsioon",
+			"kind": "Tüüp",
+			"name": "Nimi",
+			"plural": "Serverid",
+			"root-url": "Juur URL",
+			"singular": "Server"
 		},
 		"transformation-definition": {
-			"name": "",
-			"plural": "",
-			"singular": "",
-			"source": "",
-			"source-fhir": "",
-			"source-local": "",
-			"source-static": ""
+			"name": "Nimi",
+			"plural": "FML transformatsioonid",
+			"singular": "FML transformatsioon",
+			"source": "Allikad",
+			"source-fhir": "FHIR",
+			"source-local": "TermX",
+			"source-static": "Staatiline"
 		},
 		"value-set": {
-			"concepts": "",
-			"contacts": "",
-			"description": "",
-			"id": "",
-			"name": "",
-			"narrative": "",
-			"plural": "",
-			"publisher": "",
-			"status": "",
-			"title": "",
-			"uri": "",
-			"uri-short": "",
-			"versions": ""
+			"concepts": "Mõisted",
+			"contacts": "Kontaktid",
+			"description": "Kirjeldus",
+			"id": "ID",
+			"name": "Masintöödeldav nimi",
+			"narrative": "Tekst",
+			"plural": "Loendid",
+			"publisher": "Kirjastaja",
+			"status": "Staatus",
+			"title": "Pealkiri",
+			"uri": "Ühtne ressursiidentifikaator (URI)",
+			"uri-short": "URI",
+			"versions": "Versioonid"
 		},
 		"value-set-rule-filter": {
 			"operator": {
-				"equal": "",
-				"in": "",
-				"is-a": "",
-				"label": ""
+				"equal": "=",
+				"in": "Sees",
+				"is-a": "Vanem",
+				"label": "Operaator"
 			},
 			"property": {
-				"concept": "",
-				"constraint": "",
-				"label": ""
+				"concept": "Mõiste",
+				"constraint": "Piirang",
+				"label": "Tunnus"
 			},
-			"value": ""
+			"value": "Väärtus"
 		},
 		"value-set-rule-set": {
-			"exclude": "",
-			"inactive": "",
-			"include": "",
-			"locked-date": "",
+			"exclude": "Välistada",
+			"inactive": "Mitte aktiivsed mõisted",
+			"include": "Kaasata",
+			"locked-date": "Lukustamise aeg",
 			"rule": {
-				"based-on": "",
-				"code-system": "",
-				"code-system-version": "",
-				"compose": "",
-				"concepts": "",
-				"filters": "",
-				"value-set": "",
-				"value-set-version": ""
+				"based-on": "Põhineb",
+				"code-system": "Koodisüsteem",
+				"code-system-version": "Koodisüsteemi versioon",
+				"compose": "Koosta",
+				"concepts": "Mõisted",
+				"filters": "Filtrid",
+				"value-set": "Loend",
+				"value-set-version": "Loendi versioon"
 			},
-			"rules": ""
+			"rules": "Reeglid"
 		},
 		"value-set-version": {
-			"algorithm": "",
-			"concepts": "",
-			"created": "",
-			"description": "",
-			"expiration-date": "",
-			"id": "",
-			"release-date": "",
-			"rule-set": "",
-			"source": "",
-			"status": "",
-			"supported-languages": "",
-			"version": ""
+			"algorithm": "Algoritm",
+			"concepts": "Mõisted",
+			"created": "Loodud",
+			"description": "Kirjeldus",
+			"expiration-date": "Eeldatav kasutus kuni",
+			"id": "Identifikaator",
+			"release-date": "Eeldatav kasutus alates",
+			"rule-set": "Reegel",
+			"source": "Kirjastaja",
+			"status": "Staatus",
+			"supported-languages": "Toetatud keeled",
+			"version": "Versioon"
 		},
 		"value-set-version-concept": {
-			"additional-designations": "",
-			"concept": "",
-			"display": "",
-			"order-number": ""
+			"additional-designations": "Täiendavad tekstid",
+			"concept": "Mõiste",
+			"display": "Põhitekst",
+			"order-number": "Jnr"
 		}
 	},
 	"marina.ui.form.validationError": {
