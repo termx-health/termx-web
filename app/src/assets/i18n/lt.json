@@ -1579,24 +1579,6 @@
 				"target-profile": "Paskirties profilis"
 			}
 		},
-		"supplement": {
-			"form": {
-				"description": "Priedo aprašas",
-				"designation": {
-					"add-header": "Pridėti paskirties priedą",
-					"edit-header": "Redaguoti paskirties priedą"
-				},
-				"property": {
-					"add-header": "Pridėti savybės priedą",
-					"edit-header": "Redaguoti savybės priedą"
-				},
-				"property-value": {
-					"add-header": "Pridėti savybės vertės priedą",
-					"edit-header": "Redaguoti savybės vertės priedą"
-				}
-			},
-			"supplement": "Priedas"
-		},
 		"task": {
 			"activity": "Veikla",
 			"add-btn": "Pridėti užduotį",
@@ -1630,62 +1612,13 @@
 			}
 		},
 		"terminology-server": {
-			"add-btn": "Pridėti terminologijos serverį",
-			"add-header": "Pridėti terminologijos serverį",
-			"edit-header": "Redaguoti terminologijos serverį",
+			"add-btn": "Pridėti serverį",
+			"add-header": "Pridėti serverį",
+			"edit-header": "Redaguoti serverį",
 			"kind": {
-				"fhir": "",
-				"snomed": "",
-				"terminology": ""
-			}
-		},
-		"thesaurus-page": {
-			"actions": {
-				"contents": "Turinys",
-				"none": "Nėra",
-				"relations": "Ryšiai",
-				"tags": "Gairės",
-				"usages": "Naudojimas"
-			},
-			"form": {
-				"add-header": "Pridėti puslapį",
-				"add-structure-definition": "Atvirosios struktūros apibrėžties forma",
-				"content-header": "Pridėti turinį",
-				"content-type-tooltip": "Keičiant turinio tipą gali pasikeisti turinio reikšmė",
-				"copy-to-clipboard": "Kopijuoti {{val}} į iškarpinę",
-				"edit-header": "Redaguoti puslapį",
-				"proceed-without-saving": "Tęsti neišsaugant",
-				"relation-header": "Puslapių ryšiai",
-				"save-and-proceed": "Išsaugoti ir tęsti",
-				"usages": "Naudojimas"
-			},
-			"header": {
-				"add-subpage": "Pridėti subpuslapį",
-				"modified": "<b>{{user}}</b> redagavo šį puslapį {{date}}"
-			},
-			"link-modal": {
-				"code-system": "CodeSystem",
-				"concept": "Sąvoka",
-				"concept-code-system": "Sąvokos „CodeSystem“",
-				"header": "Kurti nuorodą",
-				"link-name": "Nuorodos pavadinimas",
-				"map-set": "MapSet",
-				"page": "Puslapis",
-				"resource": "Išteklius",
-				"resource-type": "Ištekliaus tipas",
-				"url": "URL",
-				"value-set": "ValueSet"
-			},
-			"structure-definition-modal": {
-				"base-definition-url": "Pagrindinės apibrėžties URL",
-				"header": "Pasirinkti struktūros apibrėžtį",
-				"simplifier": "Simplifier",
-				"structure-definition": "Struktūros apibrėžtis",
-				"url": "„Simplifier „apibrėžties URL"
-			},
-			"template-modal": {
-				"header": "Pasirinkite šabloną",
-				"template": "Šablonas"
+				"fhir": "FHIR serverį",
+				"snomed": "SNOMED serverį",
+				"terminology": "Terminologia serverį"
 			}
 		},
 		"tools": {
@@ -1711,7 +1644,7 @@
 				"download-json": "",
 				"download-xml": "",
 				"fhir-resource": "",
-				"fhir-server": "",
+				"fhir-server": "FHIR server",
 				"generate": "",
 				"map-set": "",
 				"preview-hide": "",
@@ -1731,40 +1664,27 @@
 				"no-version": "Versija nepasirinkta",
 				"select-version": "Pasirinkite versiją, kad peržiūrėtumėte sąvokas"
 			},
-			"entity": {
-				"description": "",
-				"id": "",
-				"name": "",
-				"names": "",
-				"uri": ""
-			},
 			"form": {
 				"add-header": "Kurti naują verčių aibę",
 				"edit-header": "Redaguoti verčių aibę",
 				"versions": {
 					"add-version": "Pridėti versiją",
-					"export-fhir-expansion": "Eksportuoti „FHIR json“ su plėtote",
-					"export-fhir-json": "Eksportuoti „FHIR json“",
-					"export-fhir-xml": "Eksportuoti „FHIR xml“",
-					"open-fhir": "Atidaryti FHIR"
+					"export-fhir-expansion": "Eksportuoti „FHIR JSON su plėtote",
+					"export-fhir-json": "Eksportuoti „FHIR JSON“",
+					"export-fhir-xml": "Eksportuoti „FHIR XML“",
+					"open-fhir": "Atidaryti FHIR URL"
 				},
 				"view-header": "Peržiūrėti verčių aibę"
 			},
 			"list": {
 				"add-value-set": "Pridėti verčių aibę",
-				"add-version": "",
-				"domain": "",
 				"expansion": "Plėtotės savybės",
-				"header": "",
 				"import-fhir": "Importuoti išorinę FHIR apibrėžtį",
 				"last-version": "Naujausia versija",
 				"manual": "Vadovas",
-				"open-fhir": "Atidaryti FHIR",
-				"operations": "",
-				"properties": "",
+				"open-fhir": "Atidaryti FHIR URL",
 				"status": "Statusas",
 				"title": "Verčių aibės",
-				"versions": "",
 				"versions-expiration-date": "į {{expirationDate}}",
 				"versions-release-date": "Iš: {{releaseDate}}",
 				"versions-version": "Versijos pavadinimas: {{version}}"
@@ -1784,52 +1704,7 @@
 				"versions": "Versijos"
 			}
 		},
-		"value-set-rule-filter": {
-			"entity": {
-				"operator": "",
-				"property": "",
-				"value": ""
-			}
-		},
-		"value-set-rule-set": {
-			"entity": {
-				"inactive": "",
-				"locked-date": "",
-				"rule": {
-					"code-system": "",
-					"code-system-version": "",
-					"concepts": "",
-					"filters": "",
-					"value-set": "",
-					"value-set-version": ""
-				},
-				"rules": ""
-			},
-			"form": {
-				"active": "",
-				"add-rule-set": "",
-				"all": "",
-				"code-system-rule": "",
-				"edit-header": "",
-				"exclude": "",
-				"inactive": "",
-				"include": "",
-				"rule": "",
-				"value-set-rule": ""
-			}
-		},
 		"value-set-version": {
-			"entity": {
-				"concepts": "",
-				"description": "",
-				"expiration-date": "",
-				"id": "",
-				"release-date": "",
-				"source": "",
-				"status": "",
-				"supported-languages": "",
-				"version": ""
-			},
 			"form": {
 				"add-concept": "Pridėti sąvoką",
 				"add-header": "Pridėti versiją",
@@ -1859,13 +1734,10 @@
 				"tasks": "Užduotys",
 				"view-header": "Peržiūrėti versiją"
 			},
-			"list": {
-				"operations": ""
-			},
 			"summary": {
 				"edit-version": "Redaguoti versiją",
 				"expansion": "Plėtotė",
-				"expansion-limit-info": "Įkelta 20 savybių. {{count}} sąvokų (-a, -os) vis dar yra serveryje.",
+				"expansion-limit-info": "Įkelta 20 savybių.  {{count}} sąvokų (-a, -os) vis dar yra serveryje.",
 				"expansion-see-all": "Žiūrėti visą sąvokų sąrašą.",
 				"info": {
 					"activate": "Aktyvinti",
@@ -1894,19 +1766,11 @@
 			}
 		},
 		"value-set-version-concept": {
-			"entity": {
-				"additional-designations": "",
-				"concept": "",
-				"display": ""
-			},
 			"form": {
 				"add-header": "Pridėti sąvoką",
 				"designation-language": "Kalba",
 				"designation-name": "Pavadinimas",
 				"edit-header": "Redaguoti sąvoką"
-			},
-			"modal": {
-				"header": ""
 			}
 		},
 		"value-set-version-rule": {
@@ -2017,7 +1881,7 @@
 				"add-structure-definition": "",
 				"content-header": "",
 				"content-type-tooltip": "",
-				"copy-to-clipboard": "",
+				"copy-to-clipboard": "Kopijuoti {{val}} į iškarpinę",
 				"edit-header": "",
 				"relation-header": "",
 				"usages": ""

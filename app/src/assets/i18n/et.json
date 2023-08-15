@@ -1156,8 +1156,8 @@
 					"create": "Lisa ülesanne"
 				},
 				"assigned-to-me": "Minule määratud",
-				"created-by-me": "",
-				"title": ""
+				"created-by-me": "Loodud minu poolt",
+				"title": "Ülesanded"
 			}
 		},
 		"loinc": {
@@ -1175,35 +1175,35 @@
 				"filter": {
 					"both": "Mõlemad",
 					"class": "Klass",
-					"clinical": "",
-					"contains": "",
-					"eq": "",
-					"lab": "",
-					"method": "",
-					"observation": "",
-					"ord-obs": "",
-					"order": "",
-					"property": "",
-					"scale": "",
-					"survey": "",
-					"system": "",
-					"timing": "",
-					"type": ""
+					"clinical": "Kliiniline",
+					"contains": "Sisaldab",
+					"eq": "Võrdne",
+					"lab": "Lab",
+					"method": "Meetod",
+					"observation": "Näitajad",
+					"ord-obs": "Tel/Vas",
+					"order": "Tellimus",
+					"property": "Tunnus",
+					"scale": "Vastuse tüüp",
+					"survey": "Küsitlus",
+					"system": "Süsteem",
+					"timing": "Aeg",
+					"type": "Tüüp"
 				},
-				"method": "",
-				"name": "",
-				"ord-obs": "",
-				"property": "",
-				"scale": "",
-				"system": "",
-				"timing": "",
-				"type": "",
-				"values": ""
+				"method": "Meetod",
+				"name": "Pikk nimi",
+				"ord-obs": "Tel/Vas",
+				"property": "Tunnus",
+				"scale": "Vastuse tüüp",
+				"system": "Süsteem",
+				"timing": "Aeg",
+				"type": "Tüüp",
+				"values": "Väärtused"
 			},
 			"part": {
-				"code": "",
-				"name": "",
-				"used-by": ""
+				"code": "Osa kood",
+				"name": "Osa nimi",
+				"used-by": "Kasutusel"
 			}
 		},
 		"map-set": {
@@ -1569,458 +1569,322 @@
 		},
 		"structure-definition-type": {
 			"list": {
-				"add-type": "",
-				"header": ""
+				"add-type": "Lisa tüüp",
+				"header": "Tüübid"
 			},
 			"modal": {
-				"add-header": "",
-				"code": "",
-				"edit-header": "",
-				"target-profile": ""
+				"add-header": "Lisa tüüp",
+				"code": "Kood",
+				"edit-header": "Muuda tüüp",
+				"target-profile": "Sihtprofiil"
 			}
 		},
-		"supplement": {
-			"form": {
-				"description": "",
-				"designation": {
-					"add-header": "",
-					"edit-header": ""
-				},
-				"property": {
-					"add-header": "",
-					"edit-header": ""
-				},
-				"property-value": {
-					"add-header": "",
-					"edit-header": ""
-				}
-			},
-			"supplement": ""
-		},
 		"task": {
-			"activity": "",
-			"add-btn": "",
-			"add-comment": "",
-			"context": "",
+			"activity": "Tegevus",
+			"add-btn": "Lisa ülesanne",
+			"add-comment": "Lisa uus kommentaar",
+			"context": "Kontekst",
 			"filter": {
-				"assignee": "",
-				"author": "",
-				"created": "",
-				"finished": "",
+				"assignee": "Teostaja",
+				"author": "Autor",
+				"created": "Loodud",
+				"finished": "Lõpetatud",
 				"presets": {
-					"header": "",
-					"mine": "",
-					"to-me": ""
+					"header": "Eelseaded",
+					"mine": "Loodud minu poolt",
+					"to-me": "Suunatud mulle"
 				},
-				"priority": "",
-				"project": "",
-				"requested-performer": "",
-				"status": "",
-				"type": ""
+				"priority": "Prioriteet",
+				"project": "Projekt",
+				"requested-performer": "Soovitud teostaja",
+				"status": "Staatus",
+				"type": "Tüüp"
 			},
-			"select-project": ""
+			"select-project": "Vali projekt"
 		},
 		"template": {
 			"form": {
-				"add-header": "",
-				"edit-header": ""
+				"add-header": "Lisa mall",
+				"edit-header": "Muuda mall"
 			},
 			"list": {
-				"add-template": ""
+				"add-template": "Lisa mall"
 			}
 		},
 		"terminology-server": {
-			"add-btn": "",
-			"add-header": "",
-			"edit-header": "",
+			"add-btn": "Lisa server",
+			"add-header": "Lisa server",
+			"edit-header": "Muuda server",
 			"kind": {
-				"fhir": "",
-				"snomed": "",
-				"terminology": ""
-			}
-		},
-		"thesaurus-page": {
-			"actions": {
-				"contents": "",
-				"none": "",
-				"relations": "",
-				"tags": "",
-				"usages": ""
-			},
-			"form": {
-				"add-header": "",
-				"add-structure-definition": "",
-				"content-header": "",
-				"content-type-tooltip": "",
-				"copy-to-clipboard": "",
-				"edit-header": "",
-				"proceed-without-saving": "",
-				"relation-header": "",
-				"save-and-proceed": "",
-				"usages": ""
-			},
-			"header": {
-				"add-subpage": "",
-				"modified": ""
-			},
-			"link-modal": {
-				"code-system": "",
-				"concept": "",
-				"concept-code-system": "",
-				"header": "",
-				"link-name": "",
-				"map-set": "",
-				"page": "",
-				"resource": "",
-				"resource-type": "",
-				"url": "",
-				"value-set": ""
-			},
-			"structure-definition-modal": {
-				"base-definition-url": "",
-				"header": "",
-				"simplifier": "",
-				"structure-definition": "",
-				"url": ""
-			},
-			"template-modal": {
-				"header": "",
-				"template": ""
+				"fhir": "FHIR server",
+				"snomed": "SNOMED server",
+				"terminology": "Terminoloogia server"
 			}
 		},
 		"tools": {
 			"terminology-service-api": {
-				"button": "",
-				"content": "",
-				"header": ""
+				"button": "Terminology Service API",
+				"content": "Terminoloogiateenuse API-d võimaldavad kliinilise terminoloogia sisu ja ressursside automaatset vahetamist.",
+				"header": "Terminology Service API"
 			}
 		},
 		"transformation-definition": {
 			"execution": {
-				"input": "",
-				"output": "",
-				"transform": ""
+				"input": "Sisend",
+				"output": "Väljund",
+				"transform": "Transformeeri"
 			},
 			"list": {
-				"add-btn": ""
+				"add-btn": "Lisa transformatsioon"
 			},
 			"resource-form": {
-				"compile": "",
-				"content": "",
-				"definition": "",
-				"download-json": "",
-				"download-xml": "",
-				"fhir-resource": "",
-				"fhir-server": "",
-				"generate": "",
-				"map-set": "",
-				"preview-hide": "",
-				"preview-show": "",
-				"save-as": "",
-				"url": ""
+				"compile": "Kompileeri",
+				"content": "Sisu",
+				"definition": "Struktuuri defintsioon",
+				"download-json": "JSON",
+				"download-xml": "XML",
+				"fhir-resource": "Ressurss",
+				"fhir-server": "FHIR server",
+				"generate": "Genereeri",
+				"map-set": "ConceptMap",
+				"preview-hide": "Peida",
+				"preview-show": "Eelvaade",
+				"save-as": "Salvesta kui",
+				"url": "ConceptMap"
 			},
 			"resources": {
-				"new": "",
-				"type.conceptmap": "",
-				"type.definition": "",
-				"type.mapping": ""
+				"new": "-- uus --",
+				"type.conceptmap": "Concept Map-id",
+				"type.definition": "Definitsioonid",
+				"type.mapping": "Mapping"
 			}
 		},
 		"value-set": {
 			"concepts": {
-				"no-version": "",
-				"select-version": ""
-			},
-			"entity": {
-				"description": "Kirjeldus",
-				"id": "Identifikaator",
-				"name": "Nimi",
-				"names": "Nimed",
-				"uri": "Ühtne ressursiidentifikaator (URI)"
+				"no-version": "Versioon ei ole valitud",
+				"select-version": "Valige versioon mõistete vaatamiseks"
 			},
 			"form": {
 				"add-header": "Lisa uus väärtuste kogum",
 				"edit-header": "Muuda väärtuste kogumit",
 				"versions": {
-					"add-version": "",
-					"export-fhir-expansion": "",
-					"export-fhir-json": "",
-					"export-fhir-xml": "",
-					"open-fhir": ""
+					"add-version": "Lisa versioon",
+					"export-fhir-expansion": "Ekspordi FHIR JSON mõistetega",
+					"export-fhir-json": "Ekspordi FHIR JSON",
+					"export-fhir-xml": "Ekspordi FHIR XML",
+					"open-fhir": "Ava FHIR URL"
 				},
-				"view-header": ""
+				"view-header": "Vaata loend"
 			},
 			"list": {
-				"add-value-set": "",
-				"add-version": "Lisa versioon",
-				"domain": "Domeen",
-				"expansion": "",
-				"header": "Väärtuste kogumite nimekiri",
-				"import-fhir": "",
-				"last-version": "",
-				"manual": "",
-				"open-fhir": "",
-				"operations": "Toimingud",
-				"properties": "Omadused",
-				"status": "",
-				"title": "",
-				"versions": "Versioonid",
+				"add-value-set": "Lisa loend",
+				"expansion": "Arvutatud mõisted",
+				"import-fhir": "Impordi välist FHIR definitsiooni",
+				"last-version": "Viimane versioon",
+				"manual": "Käsitsi",
+				"open-fhir": "Ava FHIR URL",
+				"status": "Staatus",
+				"title": "Loendid",
 				"versions-expiration-date": "kuni {{expirationDate}}",
 				"versions-release-date": "Alates: {{releaseDate}}",
 				"versions-version": "Versiooni nimi: {{version}}"
 			},
 			"summary": {
-				"add-version": "",
-				"all-tasks": "",
+				"add-version": "Lisa versioon",
+				"all-tasks": "Kõik taskid",
 				"duplicate-version-modal": {
-					"header": "",
-					"version": ""
+					"header": "Kopeeri loendi versiooni",
+					"version": "Uus versioon"
 				},
-				"expansions": "",
-				"opened-tasks": "",
-				"related-artifacts": "",
-				"total-concepts": "",
-				"value-set": "",
-				"versions": ""
-			}
-		},
-		"value-set-rule-filter": {
-			"entity": {
-				"operator": "Operaator",
-				"property": "Omadus",
-				"value": "Väärtus"
-			}
-		},
-		"value-set-rule-set": {
-			"entity": {
-				"inactive": "Mitteaktiivsed kontseptid",
-				"locked-date": "Lukustatud kuupäev",
-				"rule": {
-					"code-system": "Koodisüsteem",
-					"code-system-version": "Koodisüsteemi versioon",
-					"concepts": "Kontseptid",
-					"filters": "Filtrid",
-					"value-set": "Väärtuste kogum",
-					"value-set-version": "Väärtuste kogumi versioon"
-				},
-				"rules": "Reeglid"
-			},
-			"form": {
-				"active": "Aktiivsed",
-				"add-rule-set": "Lisa reegel",
-				"all": "Kõik",
-				"code-system-rule": "Koodisüsteemi reegel",
-				"edit-header": "Reegel",
-				"exclude": "Välistatud",
-				"inactive": "Mitteaktiivsed",
-				"include": "Kaasatud",
-				"rule": "Reegel",
-				"value-set-rule": "Väärtuste kogumi reegel"
+				"expansions": "Arvutatud hetketõmmis",
+				"opened-tasks": "Avatud ülesanded",
+				"related-artifacts": "Seotud artifaktid",
+				"total-concepts": "Mõisted kokku",
+				"value-set": "Loend",
+				"versions": "Versioonid"
 			}
 		},
 		"value-set-version": {
-			"entity": {
-				"concepts": "Kontseptid",
-				"description": "Kirjeldus",
-				"expiration-date": "Aegumis kuupäev",
-				"id": "Identifikaator",
-				"release-date": "Väljastus kuupäev",
-				"source": "Allikas",
-				"status": "Staatus",
-				"supported-languages": "Toetatud keeled",
-				"version": "Versioon"
-			},
 			"form": {
-				"add-concept": "",
+				"add-concept": "Lisa mõiste",
 				"add-header": "Lisa versioon",
 				"concepts": {
-					"warning": ""
+					"warning": "Mõistel puudub aktiivne versioon"
 				},
-				"concepts-csv": "",
-				"def-json": "",
-				"def-xml": "",
-				"download": "",
+				"concepts-csv": "Mõisted CSV-sse",
+				"def-json": "Definitsioon JSON kujul",
+				"def-xml": "Definitsioon XML kujul",
+				"download": "Lae alla",
 				"edit-header": "Muuda versiooni",
-				"expansion-json": "",
-				"expansion-xml": "",
-				"provenance": "",
+				"expansion-json": "Arvutatud hetketõmmis JSON-ina",
+				"expansion-xml": "Arvutatud hetketõmmis XML-ina",
+				"provenance": "Ajalugu",
 				"rule-set": {
 					"rule": {
-						"add-designation": "",
-						"all": "",
-						"code-system": "",
-						"exact": "",
-						"exclude": "",
-						"filter": "",
-						"include": "",
-						"value-set": ""
+						"add-designation": "Lisa tekst",
+						"all": "Lisa mõisted",
+						"code-system": "Koodisüsteem",
+						"exact": "Täpsed mõisted",
+						"exclude": "Välja arvatud",
+						"filter": "Tunnustel põhinev valem",
+						"include": "Sisaldab",
+						"value-set": "Loend"
 					}
 				},
-				"tasks": "",
+				"tasks": "Ülesanded",
 				"view-header": "Vaata versiooni"
 			},
-			"list": {
-				"operations": "Toimingud"
-			},
 			"summary": {
-				"edit-version": "",
-				"expansion": "",
-				"expansion-limit-info": "",
-				"expansion-see-all": "",
+				"edit-version": "Muuda versioon",
+				"expansion": "Mõistete hetketõmmis",
+				"expansion-limit-info": "Laetud 20 mõistet.  {{count}} mõisteid on endiselt serveris.",
+				"expansion-see-all": "Vaata kõik mõisted.",
 				"info": {
-					"activate": "",
-					"create-approve": "",
-					"create-review": "",
-					"definition": "",
-					"expansion": "",
-					"last-approved": "",
-					"last-modified": "",
-					"last-reviewed": "",
-					"load-from-github": "",
-					"make-draft": "",
-					"none": "",
-					"push-to-github": "",
-					"retire": "",
-					"show-changes": ""
+					"activate": "Aktiveeri",
+					"create-approve": "Loo kinnitus ülesanne",
+					"create-review": "Loo ülevaatus ülesanne",
+					"definition": "Definitsioon",
+					"expansion": "Mõistete hetketõmmis",
+					"last-approved": "Viimane kinnitus",
+					"last-modified": "Viimati muudetud",
+					"last-reviewed": "Viimati ülevaadatud",
+					"load-from-github": "Lae Github-ist",
+					"make-draft": "Muuda \"mustandiks\"",
+					"none": "Puudub",
+					"push-to-github": "Lae Github-i",
+					"retire": "Aegunud",
+					"show-changes": "Näita erinevused"
 				},
-				"rule": "",
-				"rule-set": "",
+				"rule": "Reegel",
+				"rule-set": "Reegel",
 				"task-modal": {
-					"assignee": "",
-					"header": "",
-					"success-msg": ""
+					"assignee": "Teostaja",
+					"header": "Loo {{type}} ülesanne",
+					"success-msg": "Ülesanne loodud"
 				},
-				"value-set-version": ""
+				"value-set-version": "Loendi versioon"
 			}
 		},
 		"value-set-version-concept": {
-			"entity": {
-				"additional-designations": "Lisa tähendused",
-				"concept": "Kontsept",
-				"display": "Kuva"
-			},
 			"form": {
-				"add-header": "",
-				"designation-language": "",
-				"designation-name": "",
-				"edit-header": ""
-			},
-			"modal": {
-				"header": "Tulemuse eelvaade"
+				"add-header": "Lisa mõiste",
+				"designation-language": "Keel",
+				"designation-name": "Nimi",
+				"edit-header": "Muuda mõiste"
 			}
 		},
 		"value-set-version-rule": {
 			"form": {
-				"add-header": "",
+				"add-header": "Lisa reegel",
 				"concept": {
-					"add-concept": "",
-					"modal-header": ""
+					"add-concept": "Lisa mõiste",
+					"modal-header": "Mõiste"
 				},
-				"edit-header": "",
+				"edit-header": "Lisa reegel",
 				"filter": {
-					"add-filter": "",
-					"modal-header": ""
+					"add-filter": "Lisa filter",
+					"modal-header": "Filter"
 				}
 			}
 		},
 		"wiki-page": {
 			"details": {
-				"concept": "",
-				"contents": "",
-				"cs": "",
-				"ms": "",
-				"none": "",
-				"page": "",
-				"relations": "",
-				"tags": "",
-				"usages": "",
-				"vs": ""
+				"concept": "Mõiste",
+				"contents": "Sisu",
+				"cs": "Koodisüsteem",
+				"ms": "Vastandustabel",
+				"none": "Puudub",
+				"page": "Lehekülg",
+				"relations": "Seosed",
+				"tags": "Tagid",
+				"usages": "Viited",
+				"vs": "Loend"
 			},
 			"edit": {
 				"image-modal": {
-					"choose-file": "",
-					"header": ""
+					"choose-file": "Vali fail ülesladimiseks",
+					"header": "Failid"
 				},
 				"menu": {
-					"diagrams": "",
-					"files": "",
+					"diagrams": "Diagrammid",
+					"files": "Failid",
 					"preview": {
-						"hide": "",
-						"show": ""
+						"hide": "Peida eelvaade",
+						"show": "Näita eelvaade"
 					},
 					"structure-definition": {
-						"add": "",
-						"copy": "",
-						"title": ""
+						"add": "Lisa struktuuri definitsiooni",
+						"copy": "Kopeeri viide",
+						"title": "Struktuuri definitsioon"
 					}
 				},
 				"structure-definition-modal": {
-					"description": "",
-					"header": "",
-					"proceed-without-saving": "",
-					"save-and-proceed": ""
+					"description": "Kas soovite salvestada praeguse lehe sisu enne struktuuridefinitsiooni juurde navigeerimist?",
+					"header": "Teie salvestamata muudatused lähevad kaotsi!",
+					"proceed-without-saving": "Jätka ilma salvestamata",
+					"save-and-proceed": "Salvesta ja jätka"
 				}
 			},
 			"header": {
-				"add-subpage": "",
-				"copy-raw": "",
-				"modified": ""
+				"add-subpage": "Lisa alamlehekülg",
+				"copy-raw": "Kopeeri binaarne fail",
+				"modified": "<b>{{user}}</b> muutis seda lehte {{date}}"
 			},
 			"no-space": {
-				"desc": "",
-				"title": ""
+				"desc": "Palun valige \"ruum\" jätkamiseks",
+				"title": "\"Ruum\" ei ole valitud"
 			},
 			"sidebar": {
-				"pages": ""
+				"pages": "Leheküljed"
 			},
 			"space": {
-				"pages": "",
+				"pages": "Leheküljed",
 				"recently-modified": {
-					"created": "",
-					"header": "",
-					"updated": ""
+					"created": "Loodud {{date}}",
+					"header": "Hiljuti muudetud",
+					"updated": "Uuendatud {{date}}"
 				}
 			},
-			"spaces": "",
+			"spaces": "\"Ruumid\"",
 			"texteditor": {
 				"quick-actions": {
 					"link-modal": {
-						"code-system": "",
-						"concept": "",
-						"concept-code-system": "",
-						"header": "",
-						"link-name": "",
-						"map-set": "",
-						"page": "",
-						"resource": "",
-						"resource-type": "",
-						"search-externally": "",
-						"space": "",
-						"url": "",
-						"value-set": ""
+						"code-system": "Koodisüsteem",
+						"concept": "Mõiste",
+						"concept-code-system": "Mõiste koodisüsteemis",
+						"header": "Koosta link ",
+						"link-name": "Lingi nimi",
+						"map-set": "Vastandustabel",
+						"page": "Lehekülg",
+						"resource": "Ressurss",
+						"resource-type": "Ressurssitüüp",
+						"search-externally": "Otsi teises \"ruumis\"",
+						"space": "\"Ruum\"",
+						"url": "URL",
+						"value-set": "Loend"
 					},
 					"structure-definition-modal": {
-						"base-definition-url": "",
-						"header": "",
-						"simplifier": "",
-						"structure-definition": "",
-						"url": ""
+						"base-definition-url": "Alusdefinitsiooni URL",
+						"header": "Vali struktuuri definitsioon",
+						"simplifier": "Simplifier",
+						"structure-definition": "Struktuuri definitsioon",
+						"url": "Simplifier definitsiooni URL"
 					},
 					"template-modal": {
-						"header": "",
-						"template": ""
+						"header": "Vali mall",
+						"template": "Mall"
 					}
 				}
 			},
 			"view": {
-				"add-header": "",
-				"add-structure-definition": "",
-				"content-header": "",
-				"content-type-tooltip": "",
-				"copy-to-clipboard": "",
-				"edit-header": "",
-				"relation-header": "",
-				"usages": ""
+				"add-header": "Lisa lehekülg",
+				"add-structure-definition": "Ava vorm struktuuri definitsiooniga",
+				"content-header": "Lisa sisu",
+				"content-type-tooltip": "Lehekülje tüübi muutmine võib muuta sisu",
+				"copy-to-clipboard": "Kopeeri {{val}}",
+				"edit-header": "Muuda lehekülg",
+				"relation-header": "Seosed teiste lehekülgedega",
+				"usages": "Viited"
 			}
 		}
 	}

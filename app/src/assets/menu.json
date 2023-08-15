@@ -2,15 +2,15 @@
   {
     "label": {
       "en": "Dashboards",
-      "et": "Esipaneelid",
-	  "lt": "Ataskaitų sritis"
+      "et": "Töölauad",
+      "lt": "Ataskaitų sritis"
     },
     "items": [
       {
         "label": {
           "en": "Landing page",
           "et": "Sihtleht",
-		  "lt": "Įėjimo tinklalapis"
+		      "lt": "Įėjimo tinklalapis"
         },
         "link": "landing"
       },
@@ -33,7 +33,7 @@
     "label": {
       "en": "Terminology",
       "et": "Terminoloogia",
-	  "lt": "Terminologija"
+	    "lt": "Terminologija"
     },
     "privileges": [
       "*.CodeSystem.view",
@@ -47,7 +47,7 @@
         "label": {
           "en": "Code systems",
           "et": "Koodisüsteemid",
-		  "lt": "Kodų sistemos"
+		      "lt": "Kodų sistemos"
         },
         "link": "resources/code-systems",
         "privileges": [
@@ -57,8 +57,8 @@
       {
         "label": {
           "en": "Value sets",
-          "et": "Väärtuste kogumid",
-		  "lt": "Reikšmių aibės"
+          "et": "Loendid",
+		      "lt": "Reikšmių aibės"
         },
         "link": "resources/value-sets",
         "privileges": [
@@ -68,8 +68,8 @@
       {
         "label": {
           "en": "Map sets",
-          "et": "Kaardistus kogumid",
-		  "lt": "Atvaizdžių aibės"
+          "et": "Vastavustabelid",
+		      "lt": "Atvaizdžių aibės"
         },
         "link": "resources/map-sets",
         "privileges": [
@@ -78,8 +78,8 @@
       },
       {
         "label": {
-          "en": "Naming systems",
-		  "lt": "Pavadinimų sistemos"
+          "en": "Nimesüsteemid",
+		      "lt": "Pavadinimų sistemos"
         },
         "link": "resources/naming-systems",
         "privileges": [
@@ -89,7 +89,8 @@
       {
         "label": {
           "en": "Association types",
-		  "lt": "Susiejimo tipai"
+          "et": "Assotsioonide tüübid",
+		      "lt": "Susiejimo tipai"
         },
         "link": "resources/association-types",
         "privileges": [
@@ -109,7 +110,7 @@
         "label": {
           "en": "Import",
           "et": "Import",
-		  "lt": "Importuoti"
+		      "lt": "Importuoti"
         },
         "icon": "interaction",
         "link": "integration/dashboard",
@@ -125,7 +126,7 @@
     "label": {
       "en": "External resources",
       "et": "Välised ressursid",
-	  "lt": "Išoriniai ištekliai"
+	    "lt": "Išoriniai ištekliai"
     },
     "privileges": [
       "snomed-ct.CodeSystem.view",
@@ -147,7 +148,7 @@
       {
         "label": {
           "en": "SNOMED CT management",
-          "et": "SNOMED CT haldamine",
+          "et": "SNOMED CT haldus",
           "lt": "SNOMED CT valdymas"
         },
         "link": "integration/snomed/branches",
@@ -159,7 +160,7 @@
         "label": {
           "en": "LOINC",
           "et": "LOINC",
-		  "lt": "LOINC"
+		      "lt": "LOINC"
         },
         "link": "integration/loinc",
         "privileges": [
@@ -170,7 +171,7 @@
         "label": {
           "en": "Measurement units",
           "et": "Mõõtühikud",
-		  "lt": "Matavimo vienetai"
+		      "lt": "Matavimo vienetai"
         },
         "link": "measurement-units",
         "privileges": [
@@ -180,7 +181,8 @@
       {
         "label": {
           "en": "Observation definition",
-		  "lt": "Stebėjimo apibrėžtis"
+          "et": "Näitajate definitsioonid",
+		      "lt": "Stebėjimo apibrėžtis"
         },
         "link": "observation-definitions",
         "privileges": [
@@ -241,7 +243,7 @@
       {
         "label": {
           "en": "Structure definitions",
-          "et": "Struktuuri määratlused",
+          "et": "Struktuuri definitsioonid",
           "lt": "Struktūros apibrėžtys"
         },
         "link": "modeler/structure-definitions",
@@ -251,7 +253,8 @@
       },
       {
         "label": {
-          "en": "FML transformations"
+          "en": "FML transformations",
+          "et": "FML transformatsioonid"
         },
         "link": "modeler/transformation-definitions",
         "privileges": [
@@ -263,14 +266,14 @@
     "label": {
       "en": "Management",
       "et": "Haldus",
-	  "lt": "Tvarkymas"
+	    "lt": "Tvarkymas"
     },
     "items": [
       {
         "label": {
           "en": "Tasks",
           "et": "Ülesanded",
-		  "lt": "Užduotys"
+		      "lt": "Užduotys"
         },
         "icon": "inbox",
         "link": "tasks",
@@ -281,8 +284,8 @@
       {
         "label": {
           "en": "Spaces",
-          "et": "Projektid",
-		  "lt": "Tarpai"
+          "et": "Ruumid",
+		      "lt": "Tarpai"
         },
         "icon": "appstore",
         "link": "spaces",
@@ -292,9 +295,9 @@
       },
       {
         "label": {
-          "en": "Terminology servers",
-          "et": "Terminoloogia serverid",
-		  "lt": "Terminologijos serveriai"
+          "en": "Servers",
+          "et": "Serverid",
+		      "lt": "Serveriai"
         },
         "icon": "cloud-server",
         "link": "terminology-servers",
@@ -306,7 +309,7 @@
         "label": {
           "en": "Privileges",
           "et": "Privileegid",
-		  "lt": "Privilegijos"
+		      "lt": "Privilegijos"
         },
         "icon": "key",
         "link": "privileges",
@@ -318,7 +321,7 @@
         "label": {
           "en": "Terminology service API",
           "et": "Terminoloogi teenuse API",
-		  "lt": "Terminologijos paslaugų API"
+		      "lt": "Terminologijos paslaugų API"
         },
         "icon": "cloud",
         "link": "terminology-service-api"
@@ -326,8 +329,8 @@
       {
         "label": {
           "en": "Sequences",
-          "et": "Jadad",
-		  "lt": "Sekos"
+          "et": "Numeratsioonid",
+		      "lt": "Sekos"
         },
         "icon": "field-binary",
         "link": "sequences"

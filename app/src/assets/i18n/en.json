@@ -1579,24 +1579,6 @@
 				"target-profile": "Target profile"
 			}
 		},
-		"supplement": {
-			"form": {
-				"description": "Supplement description",
-				"designation": {
-					"add-header": "Add designation supplement",
-					"edit-header": "Edit designation supplement"
-				},
-				"property": {
-					"add-header": "Add property supplement",
-					"edit-header": "Edit property supplement"
-				},
-				"property-value": {
-					"add-header": "Add property value supplement",
-					"edit-header": "Edit property value supplement"
-				}
-			},
-			"supplement": "Supplement"
-		},
 		"task": {
 			"activity": "Activity",
 			"add-btn": "Add task",
@@ -1639,55 +1621,6 @@
 				"terminology": "Terminology server"
 			}
 		},
-		"thesaurus-page": {
-			"actions": {
-				"contents": "",
-				"none": "",
-				"relations": "",
-				"tags": "",
-				"usages": ""
-			},
-			"form": {
-				"add-header": "",
-				"add-structure-definition": "",
-				"content-header": "",
-				"content-type-tooltip": "",
-				"copy-to-clipboard": "",
-				"edit-header": "",
-				"proceed-without-saving": "",
-				"relation-header": "",
-				"save-and-proceed": "",
-				"usages": ""
-			},
-			"header": {
-				"add-subpage": "",
-				"modified": ""
-			},
-			"link-modal": {
-				"code-system": "",
-				"concept": "",
-				"concept-code-system": "",
-				"header": "",
-				"link-name": "",
-				"map-set": "",
-				"page": "",
-				"resource": "",
-				"resource-type": "",
-				"url": "",
-				"value-set": ""
-			},
-			"structure-definition-modal": {
-				"base-definition-url": "",
-				"header": "",
-				"simplifier": "",
-				"structure-definition": "",
-				"url": ""
-			},
-			"template-modal": {
-				"header": "",
-				"template": ""
-			}
-		},
 		"tools": {
 			"terminology-service-api": {
 				"button": "Terminology Service API",
@@ -1711,13 +1644,13 @@
 				"download-json": "JSON",
 				"download-xml": "XML",
 				"fhir-resource": "Resource",
-				"fhir-server": "Fhir server",
+				"fhir-server": "FHIR server",
 				"generate": "Generate",
-				"map-set": "Map Set",
+				"map-set": "ConceptMap",
 				"preview-hide": "Hide",
 				"preview-show": "Preview",
 				"save-as": "Save as",
-				"url": "Url"
+				"url": "URL"
 			},
 			"resources": {
 				"new": "-- new --",
@@ -1731,40 +1664,27 @@
 				"no-version": "Version not selected",
 				"select-version": "Please select a version to view the concepts"
 			},
-			"entity": {
-				"description": "",
-				"id": "",
-				"name": "",
-				"names": "",
-				"uri": ""
-			},
 			"form": {
 				"add-header": "Create a new value set",
 				"edit-header": "Edit value set",
 				"versions": {
 					"add-version": "Add version",
-					"export-fhir-expansion": "Export FHIR json with expansion",
-					"export-fhir-json": "Export FHIR json",
-					"export-fhir-xml": "Export FHIR xml",
-					"open-fhir": "Open FHIR"
+					"export-fhir-expansion": "Export FHIR JSON with expansion",
+					"export-fhir-json": "Export FHIR JSON",
+					"export-fhir-xml": "Export FHIR XML",
+					"open-fhir": "Open FHIR URL"
 				},
 				"view-header": "View value set"
 			},
 			"list": {
 				"add-value-set": "Add value set",
-				"add-version": "",
-				"domain": "",
 				"expansion": "Expansion concepts",
-				"header": "",
 				"import-fhir": "Import external FHIR definition",
 				"last-version": "Last version",
 				"manual": "Manual",
-				"open-fhir": "Open FHIR",
-				"operations": "",
-				"properties": "",
+				"open-fhir": "Open FHIR URL",
 				"status": "Status",
 				"title": "Value sets",
-				"versions": "",
 				"versions-expiration-date": "to {{expirationDate}}",
 				"versions-release-date": "From: {{releaseDate}}",
 				"versions-version": "Version name: {{version}}"
@@ -1784,52 +1704,7 @@
 				"versions": "Versions"
 			}
 		},
-		"value-set-rule-filter": {
-			"entity": {
-				"operator": "",
-				"property": "",
-				"value": ""
-			}
-		},
-		"value-set-rule-set": {
-			"entity": {
-				"inactive": "",
-				"locked-date": "",
-				"rule": {
-					"code-system": "",
-					"code-system-version": "",
-					"concepts": "",
-					"filters": "",
-					"value-set": "",
-					"value-set-version": ""
-				},
-				"rules": ""
-			},
-			"form": {
-				"active": "",
-				"add-rule-set": "",
-				"all": "",
-				"code-system-rule": "",
-				"edit-header": "",
-				"exclude": "",
-				"inactive": "",
-				"include": "",
-				"rule": "",
-				"value-set-rule": ""
-			}
-		},
 		"value-set-version": {
-			"entity": {
-				"concepts": "",
-				"description": "",
-				"expiration-date": "",
-				"id": "",
-				"release-date": "",
-				"source": "",
-				"status": "",
-				"supported-languages": "",
-				"version": ""
-			},
 			"form": {
 				"add-concept": "Add concept",
 				"add-header": "Add version",
@@ -1859,13 +1734,10 @@
 				"tasks": "Tasks",
 				"view-header": "View version"
 			},
-			"list": {
-				"operations": ""
-			},
 			"summary": {
 				"edit-version": "Edit version",
 				"expansion": "Expansion",
-				"expansion-limit-info": "Loaded 20 concepts. {{count}} concepts still on server.",
+				"expansion-limit-info": "Loaded 20 concepts.  {{count}} concepts still on server.",
 				"expansion-see-all": "See full list of the concepts.",
 				"info": {
 					"activate": "Activate",
@@ -1894,19 +1766,11 @@
 			}
 		},
 		"value-set-version-concept": {
-			"entity": {
-				"additional-designations": "",
-				"concept": "",
-				"display": ""
-			},
 			"form": {
 				"add-header": "Add concept",
 				"designation-language": "Language",
 				"designation-name": "Name",
 				"edit-header": "Edit concept"
-			},
-			"modal": {
-				"header": ""
 			}
 		},
 		"value-set-version-rule": {
@@ -1933,7 +1797,7 @@
 				"page": "Page",
 				"relations": "Relations",
 				"tags": "Tags",
-				"usages": "Usages",
+				"usages": "References",
 				"vs": "Value Set"
 			},
 			"edit": {
