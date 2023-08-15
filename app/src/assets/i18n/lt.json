@@ -657,50 +657,15 @@
 		"case-sensitive": {
 			"code-is": {
 				"ci": "",
-				"cs": ""
+				"cs": "Raidžių lygio paisymas"
 			},
 			"options": {
-				"ci": "",
-				"cl": "",
+				"ci": "Raidžių lygio nepaisymas",
+				"cl": "pirmojo simbolio paisymas",
 				"cs": ""
 			}
 		},
-		"case-sensitive-options": {
-			"ci": "Raidžių lygio nepaisymas",
-			"cs": "Raidžių lygio paisymas",
-			"ics": "Pirmojo simbolio paisymas"
-		},
 		"code-system": {
-			"contacts": {
-				"list": {
-					"add-contact": "",
-					"header": ""
-				},
-				"modal": {
-					"edit-header": "",
-					"name": "",
-					"operations": "",
-					"system": "",
-					"use": "",
-					"value": ""
-				}
-			},
-			"entity": {
-				"description": "",
-				"domain": "",
-				"id": "",
-				"name": "",
-				"uri": ""
-			},
-			"entity-version": {
-				"list": {
-					"add-entity": "",
-					"code": "",
-					"description": "",
-					"header": "",
-					"operations": ""
-				}
-			},
 			"form": {
 				"add-header": "Kurti naują kodų sistemą",
 				"concepts": {
@@ -734,39 +699,30 @@
 						"add-version": "Pridėti versiją",
 						"compare": "Palyginti",
 						"duplicate-version": "Dubliuoti versiją",
-						"export-fhir-json": "Eksportuoti „FHIR json“",
-						"export-fhir-xml": "Eksportuoti „FHIR xml“",
-						"open-fhir": "Atidaryti FHIR"
+						"export-fhir-json": "Eksportuoti „FHIR JSON“",
+						"export-fhir-xml": "Eksportuoti „FHIR XML“",
+						"open-fhir": "Atidaryti FHIR URL"
 					}
 				},
 				"view-header": "Peržiūrėti kodų sistemą"
 			},
 			"list": {
 				"add-code-system": "Pridėti kodų sistemą",
-				"add-concept": "",
-				"case-sensitivity": "",
-				"concepts": "",
-				"content": "",
 				"count": "Skaičius",
 				"domain": "Sritis",
 				"duplicate": {
-					"duplicate-header": "",
 					"header": "Kurti kodų sistemos kopiją",
 					"source-code-system": "Pirminė kodų sistema:",
 					"target-code-system": "Paskirties kodų sistema:",
 					"target-uri": "Paskirties URI:"
 				},
-				"header": "",
 				"import-fhir": "Importuoti išorinę FHIR apibrėžtį",
 				"last-version": "Naujausia versija",
 				"manual": "Rankinis",
-				"narrative": "",
-				"open-fhir": "Atidaryti FHIR",
-				"properties": "",
+				"open-fhir": "Atidaryti FHIR URL",
 				"status": "Statusas",
 				"title": "Kodų sistemos",
 				"uri": "URI",
-				"versions": "",
 				"versions-expiration-date": "į {{expirationDate}}",
 				"versions-release-date": "Iš: {{releaseDate}}",
 				"versions-version": "Versijos pavadinimas: {{version}}"
@@ -845,11 +801,6 @@
 				},
 				"opened-tasks": "",
 				"related-artifacts": "Susiję artefaktai",
-				"thesaurus": {
-					"header": "Tezauras",
-					"name": "Pavadinimas",
-					"slug": "Pavadinimo santrumpa"
-				},
 				"value-sets": {
 					"definition": "Apibrėžtis",
 					"header": "Susijusios reikšmių aibės",
@@ -862,9 +813,9 @@
 					"new-version": "Nauja versija"
 				},
 				"wiki": {
-					"header": "",
-					"name": "",
-					"slug": ""
+					"header": "Tezauras",
+					"name": "Pavadinimas",
+					"slug": "Pavadinimo santrumpa"
 				}
 			},
 			"group": {
@@ -927,25 +878,8 @@
 			}
 		},
 		"code-system-version": {
-			"entity": {
-				"description": "",
-				"expiration-date": "",
-				"id": "",
-				"preferredLanguage": "",
-				"release-date": "",
-				"source": "",
-				"status": "",
-				"supported-languages": "",
-				"version": ""
-			},
 			"form": {
 				"add-header": "Pridėti versiją",
-				"duplicate": {
-					"duplicate-header": "",
-					"source-code-system": "",
-					"source-version": "",
-					"target-version": ""
-				},
 				"edit-header": "Redaguoti versiją",
 				"entities": {
 					"add-entity": "Pridėti esybę",
@@ -956,12 +890,6 @@
 					}
 				},
 				"view-header": "Peržiūrėti versiją"
-			},
-			"list": {
-				"add-new-version": "",
-				"add-version": "",
-				"duplicate-version": "",
-				"export-fhir-json": ""
 			},
 			"summary": {
 				"all-tasks": "",
@@ -990,38 +918,6 @@
 				}
 			}
 		},
-		"concept": {
-			"entity": {
-				"code": "",
-				"description": ""
-			},
-			"form": {
-				"add-header": "",
-				"edit-header": ""
-			},
-			"list": {
-				"concept": "",
-				"concepts": "",
-				"operations": ""
-			},
-			"version": {
-				"form": {
-					"add-header": "",
-					"edit-header": ""
-				},
-				"list": {
-					"concept-status": "",
-					"created": "",
-					"description": "",
-					"designations": "",
-					"number": "",
-					"operations": "",
-					"property-values": "",
-					"status": "",
-					"versions": ""
-				}
-			}
-		},
 		"contacts": {
 			"list": {
 				"add-contact": "Pridėti kontaktą",
@@ -1031,24 +927,6 @@
 				"add-header": "Pridėti kontaktą",
 				"edit-header": "Redaguoti kontaktą",
 				"name": "Pavadinimas"
-			}
-		},
-		"designation": {
-			"list": {
-				"designation": "",
-				"language": "",
-				"name": "",
-				"status": "",
-				"type": ""
-			},
-			"modal": {
-				"add-designation": "",
-				"case-significance": "",
-				"delete-designation": "",
-				"description": "",
-				"designation-kind": "",
-				"edit-designation": "",
-				"status": ""
 			}
 		},
 		"dev-code-system-relation": {
@@ -1069,12 +947,6 @@
 			}
 		},
 		"entity-property": {
-			"entity": {
-				"description": "",
-				"name": "",
-				"status": "",
-				"type": ""
-			},
 			"form": {
 				"add-header": "Pridėti savybę",
 				"edit-header": "Redaguoti savybę"
@@ -1139,9 +1011,6 @@
 						"version": "Versija"
 					}
 				},
-				"sync": {
-					"send-request": ""
-				},
 				"value-set": {
 					"expand": {
 						"url": "URL",
@@ -1172,8 +1041,7 @@
 				},
 				"code-system": {
 					"general": {
-						"clear-version-data": "Išvalyti versijos duomenis",
-						"delete-concepts": "",
+						"delete-concepts": "Išvalyti versijos duomenis",
 						"generate-valueset": "Kurti „ValueSet“",
 						"hold": "",
 						"merge": "",

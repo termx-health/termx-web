@@ -665,42 +665,7 @@
 				"cs": "Case sensitive"
 			}
 		},
-		"case-sensitive-options": {
-			"ci": "",
-			"cs": "",
-			"ics": ""
-		},
 		"code-system": {
-			"contacts": {
-				"list": {
-					"add-contact": "",
-					"header": ""
-				},
-				"modal": {
-					"edit-header": "",
-					"name": "",
-					"operations": "",
-					"system": "",
-					"use": "",
-					"value": ""
-				}
-			},
-			"entity": {
-				"description": "",
-				"domain": "",
-				"id": "",
-				"name": "",
-				"uri": ""
-			},
-			"entity-version": {
-				"list": {
-					"add-entity": "",
-					"code": "",
-					"description": "",
-					"header": "",
-					"operations": ""
-				}
-			},
 			"form": {
 				"add-header": "Create a new code system",
 				"concepts": {
@@ -734,39 +699,30 @@
 						"add-version": "Add version",
 						"compare": "Compare",
 						"duplicate-version": "Duplicate version",
-						"export-fhir-json": "Export FHIR json",
-						"export-fhir-xml": "Export FHIR xml",
-						"open-fhir": "Open FHIR"
+						"export-fhir-json": "Export FHIR JSON",
+						"export-fhir-xml": "Export FHIR XML",
+						"open-fhir": "Open FHIR URL"
 					}
 				},
 				"view-header": "View code system"
 			},
 			"list": {
 				"add-code-system": "Add code system",
-				"add-concept": "",
-				"case-sensitivity": "",
-				"concepts": "",
-				"content": "",
 				"count": "Count",
-				"domain": "Domain",
+				"domain": "Publisher",
 				"duplicate": {
-					"duplicate-header": "",
 					"header": "Create duplicate code system",
 					"source-code-system": "Source code system:",
 					"target-code-system": "Target code system:",
 					"target-uri": "Target URI:"
 				},
-				"header": "",
 				"import-fhir": "Import external FHIR definition",
 				"last-version": "Last version",
 				"manual": "Manual",
-				"narrative": "",
-				"open-fhir": "Open FHIR",
-				"properties": "",
+				"open-fhir": "Open FHIR URL",
 				"status": "Status",
 				"title": "Code systems",
 				"uri": "URI",
-				"versions": "",
 				"versions-expiration-date": "to {{expirationDate}}",
 				"versions-release-date": "From: {{releaseDate}}",
 				"versions-version": "Version name: {{version}}"
@@ -845,11 +801,6 @@
 				},
 				"opened-tasks": "Opened tasks",
 				"related-artifacts": "Related artifacts",
-				"thesaurus": {
-					"header": "",
-					"name": "",
-					"slug": ""
-				},
 				"value-sets": {
 					"definition": "Definition",
 					"header": "Related value sets",
@@ -927,25 +878,8 @@
 			}
 		},
 		"code-system-version": {
-			"entity": {
-				"description": "",
-				"expiration-date": "",
-				"id": "",
-				"preferredLanguage": "",
-				"release-date": "",
-				"source": "",
-				"status": "",
-				"supported-languages": "",
-				"version": ""
-			},
 			"form": {
 				"add-header": "Add version",
-				"duplicate": {
-					"duplicate-header": "",
-					"source-code-system": "",
-					"source-version": "",
-					"target-version": ""
-				},
 				"edit-header": "Edit version",
 				"entities": {
 					"add-entity": "Add entity",
@@ -956,12 +890,6 @@
 					}
 				},
 				"view-header": "View version"
-			},
-			"list": {
-				"add-new-version": "",
-				"add-version": "",
-				"duplicate-version": "",
-				"export-fhir-json": ""
 			},
 			"summary": {
 				"all-tasks": "All tasks",
@@ -990,38 +918,6 @@
 				}
 			}
 		},
-		"concept": {
-			"entity": {
-				"code": "",
-				"description": ""
-			},
-			"form": {
-				"add-header": "",
-				"edit-header": ""
-			},
-			"list": {
-				"concept": "",
-				"concepts": "",
-				"operations": ""
-			},
-			"version": {
-				"form": {
-					"add-header": "",
-					"edit-header": ""
-				},
-				"list": {
-					"concept-status": "",
-					"created": "",
-					"description": "",
-					"designations": "",
-					"number": "",
-					"operations": "",
-					"property-values": "",
-					"status": "",
-					"versions": ""
-				}
-			}
-		},
 		"contacts": {
 			"list": {
 				"add-contact": "Add contact",
@@ -1031,24 +927,6 @@
 				"add-header": "Add contact",
 				"edit-header": "Edit contact",
 				"name": "Name"
-			}
-		},
-		"designation": {
-			"list": {
-				"designation": "",
-				"language": "",
-				"name": "",
-				"status": "",
-				"type": ""
-			},
-			"modal": {
-				"add-designation": "",
-				"case-significance": "",
-				"delete-designation": "",
-				"description": "",
-				"designation-kind": "",
-				"edit-designation": "",
-				"status": ""
 			}
 		},
 		"dev-code-system-relation": {
@@ -1069,12 +947,6 @@
 			}
 		},
 		"entity-property": {
-			"entity": {
-				"description": "",
-				"name": "",
-				"status": "",
-				"type": ""
-			},
 			"form": {
 				"add-header": "Add property",
 				"edit-header": "Edit property"
@@ -1139,9 +1011,6 @@
 						"version": "Version"
 					}
 				},
-				"sync": {
-					"send-request": ""
-				},
 				"value-set": {
 					"expand": {
 						"url": "URL",
@@ -1172,7 +1041,6 @@
 				},
 				"code-system": {
 					"general": {
-						"clear-version-data": "",
 						"delete-concepts": "Delete all concepts before import?",
 						"generate-valueset": "Generate ValueSet",
 						"hold": "Hold",
@@ -1235,7 +1103,7 @@
 				"orphanet": "Rare diseases import",
 				"publisher": "Publisher",
 				"source-url": "Source URL",
-				"uri": "Uri",
+				"uri": "URI",
 				"valid-from": "Valid from",
 				"valid-to": "Valid to",
 				"version": "Version"

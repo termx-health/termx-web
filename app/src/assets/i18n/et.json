@@ -646,18 +646,18 @@
 		},
 		"association-type": {
 			"form": {
-				"add-header": "",
-				"edit-header": "",
-				"view-header": ""
+				"add-header": "Lisa assotsioonitüüp",
+				"edit-header": "Muuda assotsioonitüüp",
+				"view-header": "Vaata assotsioonitüübi"
 			},
 			"list": {
-				"add-association-type": ""
+				"add-association-type": "Lisa assotsioonitüüp"
 			}
 		},
 		"case-sensitive": {
 			"code-is": {
-				"ci": "",
-				"cs": ""
+				"ci": "Kood ei ole tõstutundlik",
+				"cs": "Kood on tõstutundlik"
 			},
 			"options": {
 				"ci": "tõstutundetu",
@@ -665,416 +665,288 @@
 				"cs": "tõstutundlik"
 			}
 		},
-		"case-sensitive-options": {
-			"ci": "",
-			"cs": "",
-			"ics": ""
-		},
 		"code-system": {
-			"contacts": {
-				"list": {
-					"add-contact": "Lisa kontakt",
-					"header": "Kontaktid"
-				},
-				"modal": {
-					"edit-header": "Muuda kontakti",
-					"name": "Nimi",
-					"operations": "Operatsioonid",
-					"system": "Süsteem",
-					"use": "Kasutus",
-					"value": "Väärtus"
-				}
-			},
-			"entity": {
-				"description": "Kirjeldus",
-				"domain": "Domeen",
-				"id": "Identifikaator",
-				"name": "Nimi",
-				"uri": "Ühtne ressursiidentifikaator (URI)"
-			},
-			"entity-version": {
-				"list": {
-					"add-entity": "Lisa üksus",
-					"code": "Kood",
-					"description": "Kirjeldus",
-					"header": "Üksused",
-					"operations": "Tegevused"
-				}
-			},
 			"form": {
 				"add-header": "Lisa koodisüsteem",
 				"concepts": {
-					"add-concept": "",
-					"concept": "",
-					"contains": "",
-					"eq": "",
-					"validate": ""
+					"add-concept": "Lisa mõiste",
+					"concept": "Mõiste",
+					"contains": "Sisaldab",
+					"eq": "Võrdub",
+					"validate": "Valideeri koodisüsteemi"
 				},
-				"delete-property-usages": "",
+				"delete-property-usages": "Kustuta tunnuste kasutamist mõistetes",
 				"edit-header": "Muuda koodisüsteemi",
-				"header": "",
+				"header": "Koodisüsteem",
 				"properties": {
-					"add-property": "",
-					"add-supplement": "",
-					"delete-property": "",
-					"delete-supplement": "",
-					"often-used-designations": "",
-					"often-used-properties": ""
+					"add-property": "Lisa tunnus",
+					"add-supplement": "Lisa supplement",
+					"delete-property": "Kustuta tunnus",
+					"delete-supplement": "Kustuta supplement",
+					"often-used-designations": "Tihti kasutatavad tekstid",
+					"often-used-properties": "Tihti kasutatavad tunnused"
 				},
 				"versions": {
 					"duplicate": {
-						"create-new-entity-version": "",
-						"duplicate-header": "",
-						"source-code-system": "",
-						"source-version": "",
-						"target-version": ""
+						"create-new-entity-version": "Lisa uus mõiste versioon",
+						"duplicate-header": "Loo koopiat koodisüsteemi versioonist ",
+						"source-code-system": "Lähtekoodisüsteem",
+						"source-version": "Lähteversioon",
+						"target-version": "Sihtversioon"
 					},
 					"list": {
-						"add-new-version": "",
-						"add-version": "",
-						"compare": "",
-						"duplicate-version": "",
-						"export-fhir-json": "",
-						"export-fhir-xml": "",
-						"open-fhir": ""
+						"add-new-version": "Lisa uus versioon",
+						"add-version": "Lisa versioon",
+						"compare": "Võrdle",
+						"duplicate-version": "Loo versiooni koopiat",
+						"export-fhir-json": "Eksport FHIR JSON-i",
+						"export-fhir-xml": "Eksport FHIR XML-i",
+						"open-fhir": "Ava FHIR URL"
 					}
 				},
-				"view-header": ""
+				"view-header": "Vaata koodisüsteemi"
 			},
 			"list": {
-				"add-code-system": "",
-				"add-concept": "Lisa kontsept",
-				"case-sensitivity": "Tõstutundlikkus",
-				"concepts": "Kontseptid",
-				"content": "Sisu",
-				"count": "",
-				"domain": "",
+				"add-code-system": "Lisa koodisüsteem",
+				"count": "Arv",
+				"domain": "Kirjastaja",
 				"duplicate": {
-					"duplicate-header": "Loo koodisüsteemi duplikaat",
-					"header": "",
+					"header": "Loo koodisüsteemi koopiat",
 					"source-code-system": "Allikas koodisüsteem:",
 					"target-code-system": "Siht koodisüsteem:",
 					"target-uri": "Siht URI:"
 				},
-				"header": "Koodisüsteemide nimekiri",
-				"import-fhir": "",
-				"last-version": "",
-				"manual": "",
-				"narrative": "Narratiiv",
-				"open-fhir": "",
-				"properties": "Omadused",
-				"status": "",
-				"title": "",
-				"uri": "",
-				"versions": "Versioonid",
+				"import-fhir": "Impordi välist FHIR definitsiooni",
+				"last-version": "Viimane versioon",
+				"manual": "Manuaalne",
+				"open-fhir": "Ava FHIR URL",
+				"status": "Staatus",
+				"title": "Koodisüsteemid",
+				"uri": "URI",
 				"versions-expiration-date": "kuni {{expirationDate}}",
 				"versions-release-date": "Alates: {{releaseDate}}",
 				"versions-version": "Versiooni nimi: {{version}}"
 			},
 			"summary": {
-				"add-concept": "",
-				"add-version": "",
-				"all-tasks": "",
-				"code-system": "",
-				"compare": "",
-				"concepts": "",
+				"add-concept": "Lisa mõiste",
+				"add-version": "Lisa versioon",
+				"all-tasks": "Kõik ülesanded",
+				"code-system": "Koodisüsteem",
+				"compare": "Võrdle",
+				"concepts": "Mõisted",
 				"duplicate-version-modal": {
-					"header": "",
-					"version": ""
+					"header": "Loo koodisüsteemi versiooni koopiat",
+					"version": "Uus versioon"
 				},
-				"opened-tasks": "",
-				"related-artifacts": "",
+				"opened-tasks": "Avatud ülesanded",
+				"related-artifacts": "Seotud artifaktid",
 				"unlinked-concepts": {
-					"author": "",
-					"concept": "",
-					"create-task": "",
-					"designation": "",
-					"link-to": "",
-					"no-versions": "",
-					"status": "",
-					"task": "",
+					"author": "Autor",
+					"concept": "Mõiste",
+					"create-task": "Loo ülesanne",
+					"designation": "Tekst",
+					"link-to": "Seo versiooniga {{version}}",
+					"no-versions": "Puudub versioon staatusega \"mustand\"",
+					"status": "Staatus",
+					"task": "Ülesanne",
 					"task-modal": {
-						"assignee": "",
-						"cs-version": "",
-						"header": ""
+						"assignee": "Teostaja",
+						"cs-version": "Seos koodisüsteemi versiooniga",
+						"header": "Loo kinnitus ülesanne"
 					},
-					"title": "",
-					"version": ""
+					"title": "Sidumata mõisted",
+					"version": "Versioon"
 				},
-				"versions": ""
+				"versions": "Versioonid"
 			}
 		},
 		"code-system-association": {
 			"form": {
-				"target": ""
+				"target": "Siht"
 			}
 		},
 		"code-system-compare": {
-			"added": "",
-			"changed": "",
-			"compare": "",
-			"deleted": "",
-			"source": "",
-			"source-code-system": "",
-			"target": "",
-			"target-code-system": ""
+			"added": "Lisatud",
+			"changed": "Muudetud",
+			"compare": "Võrdle",
+			"deleted": "Kustutatud",
+			"source": "Allikas",
+			"source-code-system": "Lähtekoodisüsteem",
+			"target": "Siht",
+			"target-code-system": "Sihtkoodisüsteem"
 		},
 		"code-system-concept": {
 			"filter": {
-				"language-filter": "",
-				"property-filter": "",
-				"property-name-filter": "",
-				"search-property-value-placeholder": "",
-				"select-language-placeholder": "",
-				"select-property-placeholder": "",
-				"select-version-placeholder": "",
-				"version-filter": ""
+				"language-filter": "Keele filter",
+				"property-filter": "Tunnuste filter",
+				"property-name-filter": "Tunnuse nime filter",
+				"search-property-value-placeholder": "Otsi tunnuse nimi",
+				"select-language-placeholder": "Vali keel",
+				"select-property-placeholder": "Vali tunnus",
+				"select-version-placeholder": "Vali koodisüsteemi versioon",
+				"version-filter": "Versiooni filter"
 			},
 			"form": {
-				"add-header": "",
-				"all-tasks": "",
-				"concept": "",
-				"linked-with-code-systems": "",
+				"add-header": "Lisa mõiste",
+				"all-tasks": "Kõik ülesanded",
+				"concept": "Mõiste",
+				"linked-with-code-systems": "Seotud koodisüsteemi versioonidega",
 				"map-sets": {
-					"concept-code": "",
-					"concept-display": "",
-					"direction": "",
-					"equivalence": "",
-					"header": "",
-					"map-set": ""
+					"concept-code": "Mõiste kood",
+					"concept-display": "Mõiste tekst",
+					"direction": "Suund",
+					"equivalence": "Samaväärsus",
+					"header": "Seotud vastavustabelid",
+					"map-set": "Vastavustabel"
 				},
-				"opened-tasks": "",
-				"related-artifacts": "",
-				"thesaurus": {
-					"header": "",
-					"name": "",
-					"slug": ""
-				},
+				"opened-tasks": "Avatud ülesanded",
+				"related-artifacts": "Seotud artifaktid",
 				"value-sets": {
-					"definition": "",
-					"header": "",
-					"value-set": ""
+					"definition": "Kirjeldus",
+					"header": "Seotud loendid",
+					"value-set": "Loend"
 				},
 				"version": {
-					"code-system-version": "",
-					"header": "",
-					"new": "",
-					"new-version": ""
+					"code-system-version": "Koodisüsteemi versioon",
+					"header": "Versioon {{created}}",
+					"new": "Uus versioon",
+					"new-version": "Uus versioon"
 				},
 				"wiki": {
-					"header": "",
-					"name": "",
-					"slug": ""
+					"header": "Wiki",
+					"name": "Nimi",
+					"slug": "URL"
 				}
 			},
 			"group": {
-				"association": "",
-				"property": "",
-				"type": ""
+				"association": "Assotsioon",
+				"property": "Tunnus",
+				"type": "Tüüp"
 			},
 			"list": {
-				"add-concept-child": "",
-				"external": "",
-				"propagate-properties": "",
-				"unlink-concept": ""
+				"add-concept-child": "Lisa alammõiste",
+				"external": "Väline",
+				"propagate-properties": "Kopeeri tunnused alammõistetele",
+				"unlink-concept": "Seo lahti mõiste versioonist"
 			},
 			"property-list": {
-				"concepts": "",
-				"properties": ""
+				"concepts": "Mõisted",
+				"properties": "Tunnused"
 			}
 		},
 		"code-system-concept-version": {
-			"add-version": "",
+			"add-version": "Lisa versioon",
 			"association": {
-				"add-association": "",
-				"delete-association": "",
-				"edit-association": ""
+				"add-association": "Lisa assotsioon",
+				"delete-association": "Kustuta assotsioon",
+				"edit-association": "Muuda assotsioon"
 			},
 			"designation": {
-				"add-designation": "",
-				"add-supplement": "",
-				"delete-designation": "",
-				"edit-designation": "",
+				"add-designation": "Lisa tekst",
+				"add-supplement": "Lisa supplement",
+				"delete-designation": "Kustuta tekst",
+				"edit-designation": "Muuda tekst",
 				"multi-language-input": {
-					"add-translation": "",
-					"placeholder": ""
+					"add-translation": "Lisa tõlge",
+					"placeholder": "Tõlge"
 				}
 			},
 			"property-value": {
-				"add-property-value": "",
-				"add-supplement": "",
-				"coding-value-system": "",
-				"delete-property-value": "",
-				"edit-property-value": ""
+				"add-property-value": "Lisa tunnuse väärtuse",
+				"add-supplement": "Lisa supplement",
+				"coding-value-system": "Coding loend",
+				"delete-property-value": "Kustuta tunnuse väärtuse",
+				"edit-property-value": "Muuda tunnuse väärtuse"
 			}
 		},
 		"code-system-validator": {
 			"circular-dependencies-detector": {
-				"detect": "",
-				"title": ""
+				"detect": "Tuvasta",
+				"title": "Tsirkulaarsete sõltuvuste tuvastaja"
 			},
-			"code-system": "",
+			"code-system": "Koodisüsteem",
 			"result": {
-				"title": ""
+				"title": "Tulemus"
 			},
 			"uniqueness-validator": {
-				"designations": "",
-				"empty-properties": "",
-				"ignore-empty-properties": "",
-				"properties": "",
-				"title": "",
-				"validate": ""
+				"designations": "Tekstid",
+				"empty-properties": "Tühjad tunnused",
+				"ignore-empty-properties": "Ignoreeri tühjad tunnused",
+				"properties": "Tunnused",
+				"title": "Unikaalsuse validaator",
+				"validate": "Kontrolli"
 			}
 		},
 		"code-system-version": {
-			"entity": {
-				"description": "Kirjeldus",
-				"expiration-date": "Aegumis kuupäev",
-				"id": "Identifikaator",
-				"preferredLanguage": "Eelistatud keel",
-				"release-date": "Väljastus kuupäev",
-				"source": "Allikas",
-				"status": "Staatus",
-				"supported-languages": "Toetatud keeled",
-				"version": "Versioon"
-			},
 			"form": {
 				"add-header": "Lisa versioon",
-				"duplicate": {
-					"duplicate-header": "Loo koodisüsteemi versiooni duplikaat",
-					"source-code-system": "Allikas koodisüsteem:",
-					"source-version": "Allikas versioon:",
-					"target-version": "Siht versioon:"
-				},
 				"edit-header": "Muuda versiooni",
 				"entities": {
-					"add-entity": "",
-					"entity-version": "",
+					"add-entity": "Lisa mõiste",
+					"entity-version": "Mõiste versioon",
 					"modal": {
-						"add-header": "",
-						"entity-version": ""
+						"add-header": "Lisa mõiste",
+						"entity-version": "Mõiste versioon"
 					}
 				},
 				"view-header": "Vaata versiooni"
 			},
-			"list": {
-				"add-new-version": "Lisa uus versioon",
-				"add-version": "Lisa versioon",
-				"duplicate-version": "Loo versiooni duplikaat",
-				"export-fhir-json": "Ekspordi FHIR json"
-			},
 			"summary": {
-				"all-tasks": "",
-				"code-system-version": "",
-				"edit-version": "",
+				"all-tasks": "Kõik ülesanded",
+				"code-system-version": "Koodisüsteemi versioon",
+				"edit-version": "Muuda versiooni",
 				"info": {
-					"activate": "",
-					"create-approve": "",
-					"create-review": "",
-					"definition": "",
-					"last-approved": "",
-					"last-modified": "",
-					"last-reviewed": "",
-					"load-from-github": "",
-					"make-draft": "",
-					"none": "",
-					"push-to-github": "",
-					"retire": "",
-					"show-changes": ""
+					"activate": "aktiveeri",
+					"create-approve": "Loo kinnitusülesanne",
+					"create-review": "Loo ülevaatuse ülesanne",
+					"definition": "Kirjeldus",
+					"last-approved": "Viimane kinnitus",
+					"last-modified": "Viimati muudetud",
+					"last-reviewed": "Viimane ülevaatus",
+					"load-from-github": "Laadi Github-is",
+					"make-draft": "Muuda \"mustandiks\"",
+					"none": "Mitte ühtegi",
+					"push-to-github": "Salvesta Githubi",
+					"retire": "Augunud",
+					"show-changes": "Näita erinevused"
 				},
-				"opened-tasks": "",
+				"opened-tasks": "Avatud ülesanded",
 				"task-modal": {
-					"assignee": "",
-					"header": "",
-					"success-msg": ""
-				}
-			}
-		},
-		"concept": {
-			"entity": {
-				"code": "Kood",
-				"description": "Kirjeldus"
-			},
-			"form": {
-				"add-header": "Lisa kontsept",
-				"edit-header": "Muuda kontsepti"
-			},
-			"list": {
-				"concept": "Kontsept",
-				"concepts": "Kontseptid",
-				"operations": "Toimingud"
-			},
-			"version": {
-				"form": {
-					"add-header": "Lisa versioon",
-					"edit-header": "Muuda versiooni"
-				},
-				"list": {
-					"concept-status": "Kontsepti staatus",
-					"created": "Loodud",
-					"description": "Kirjeldus",
-					"designations": "Tähendused",
-					"number": "Number",
-					"operations": "Toimingud",
-					"property-values": "Omaduste väärtused",
-					"status": "Staatus",
-					"versions": "Versioonid"
+					"assignee": "Teostaja",
+					"header": "Lisa {{type}} ülesanne",
+					"success-msg": "Ülesanne loodud"
 				}
 			}
 		},
 		"contacts": {
 			"list": {
-				"add-contact": "",
-				"header": ""
+				"add-contact": "Lisa kontakt",
+				"header": "Kontaktid"
 			},
 			"modal": {
-				"add-header": "",
-				"edit-header": "",
-				"name": ""
-			}
-		},
-		"designation": {
-			"list": {
-				"designation": "Tähendus",
-				"language": "Keel",
-				"name": "Nimi",
-				"status": "Staatus",
-				"type": "Tüüp"
-			},
-			"modal": {
-				"add-designation": "Lisa tähendus",
-				"case-significance": "Tõstutundlikkus",
-				"delete-designation": "Kustuta tähendus",
-				"description": "Kirjeldus",
-				"designation-kind": "Tähenduse liik",
-				"edit-designation": "Muuda tähendust",
-				"status": "Staatus"
+				"add-header": "Lisa kontakt",
+				"edit-header": "Muuda kontakt",
+				"name": "Nimi"
 			}
 		},
 		"dev-code-system-relation": {
 			"map-set": {
-				"code": "",
-				"header": "",
-				"name": ""
+				"code": "Kood",
+				"header": "Seotud vastandustabelid",
+				"name": "Nimi"
 			},
 			"value-set": {
-				"code": "",
-				"generate": "",
-				"header": "",
-				"name": "",
-				"publisher": "",
-				"uri": "",
-				"value-set": "",
-				"value-set-code": ""
+				"code": "Kood",
+				"generate": "Loo snapshot",
+				"header": "Seotud loendid",
+				"name": "Nimi",
+				"publisher": "Kirjastaja",
+				"uri": "URI",
+				"value-set": "Loend",
+				"value-set-code": "Loendi kood"
 			}
 		},
 		"entity-property": {
-			"entity": {
-				"description": "Kirjeldus",
-				"name": "Nimi",
-				"status": "Staatus",
-				"type": "Tüüp"
-			},
 			"form": {
 				"add-header": "Lisa omadus",
 				"edit-header": "Muuda omadust"
@@ -1082,229 +954,225 @@
 		},
 		"global-search": {
 			"dashboard": {
-				"code-systems": "",
-				"concepts": "",
-				"header": "",
-				"map-sets": "",
-				"measurement-unit": "",
-				"snomed": "",
-				"value-sets": ""
+				"code-systems": "Koodisüsteemid",
+				"concepts": "Mõisted",
+				"header": "Otsing",
+				"map-sets": "Vastandustabelid",
+				"measurement-unit": "Mõõtmisühik",
+				"snomed": "SNOMED",
+				"value-sets": "Loendid"
 			}
 		},
 		"integration": {
 			"fhir": {
 				"code-system": {
 					"find-matches": {
-						"exact": "",
-						"properties": "",
-						"property-name": "",
-						"property-value": "",
-						"system": "",
-						"version": ""
+						"exact": "Täpne",
+						"properties": "Tunnused",
+						"property-name": "Nimi",
+						"property-value": "Väärtus",
+						"system": "Süsteem",
+						"version": "Versioon"
 					},
 					"lookup": {
-						"code": "",
-						"date": "",
-						"properties": "",
-						"system": "",
-						"version": ""
+						"code": "Kood",
+						"date": "Kuupäev",
+						"properties": "Tunnus",
+						"system": "Süsteem",
+						"version": "Versioon"
 					},
 					"subsumes": {
-						"code-a": "",
-						"code-b": "",
-						"system": "",
-						"version": ""
+						"code-a": "CodeA",
+						"code-b": "CodeB",
+						"system": "Süsteem",
+						"version": "Versioon"
 					},
 					"validate-code": {
-						"code": "",
-						"display": "",
-						"url": "",
-						"version": ""
+						"code": "Kood",
+						"display": "Display",
+						"url": "URL",
+						"version": "Versioon"
 					}
 				},
 				"concept-map": {
 					"closure": {
-						"code": "",
-						"concepts": "",
-						"name": "",
-						"system": "",
-						"version": ""
+						"code": "Kood",
+						"concepts": "Mõisted",
+						"name": "Nimi",
+						"system": "süsteem",
+						"version": "Versioon"
 					},
 					"translate": {
-						"code": "",
-						"concept-map-version": "",
-						"system": "",
-						"target-system": "",
-						"uri": "",
-						"version": ""
+						"code": "Kood",
+						"concept-map-version": "ConceptMapVersion",
+						"system": "Süsteem(URL)",
+						"target-system": "TargetSystem",
+						"uri": "URL",
+						"version": "Versioon"
 					}
-				},
-				"sync": {
-					"send-request": "Saada päring"
 				},
 				"value-set": {
 					"expand": {
-						"url": "",
-						"value-set-version": ""
+						"url": "URL",
+						"value-set-version": "ValueSetVersion"
 					},
 					"validate-code": {
-						"code": "",
-						"display": "",
-						"system": "",
-						"system-version": "",
-						"url": "",
-						"value-set-version": ""
+						"code": "Kood",
+						"display": "Display",
+						"system": "Süsteem",
+						"system-version": "SystemVersion",
+						"url": "URL",
+						"value-set-version": "ValueSetVersion"
 					}
 				}
 			},
 			"file-import": {
 				"association": {
-					"code-system": "",
-					"code-system-version": "",
-					"column-value-separator": "",
-					"file": "",
-					"file-column": "",
-					"import": "",
-					"mapped-column": "",
-					"order": "",
-					"source": "",
-					"target": ""
+					"code-system": "Koodisüsteem",
+					"code-system-version": "Koodisüsteemi versioon",
+					"column-value-separator": "Väärtuste eraldaja veerus",
+					"file": "Assotsioonide CSV fail",
+					"file-column": "Veerg failis",
+					"import": "Assotsiooni faili import",
+					"mapped-column": "Seotud veerud",
+					"order": "Jnr",
+					"source": "Allikas",
+					"target": "Siht"
 				},
 				"code-system": {
 					"general": {
-						"clear-version-data": "",
-						"delete-concepts": "",
-						"generate-valueset": "",
-						"hold": "",
-						"merge": "",
-						"overlap-of-concepts": "",
-						"replace": "",
-						"resource-id": ""
+						"delete-concepts": "Kustuta kõik mõisted enne impordi",
+						"generate-valueset": "Loo ValueSet",
+						"hold": "Hoia",
+						"merge": "Liida",
+						"overlap-of-concepts": "Käitumine mõistete kattumisel",
+						"replace": "Asenda",
+						"resource-id": "Ressurssi ID"
 					},
-					"import": "",
+					"import": "Koodisüsteemi import failist",
 					"properties": {
-						"delimiter": "",
-						"download-diff": "",
-						"download-log": "",
-						"format": "",
-						"header": "",
-						"import": "",
-						"import-data": "",
-						"kts-property": "",
-						"lang": "",
-						"preferred": "",
-						"type": "",
-						"type-column": "",
-						"validate-data": ""
+						"delimiter": "Eraldaja",
+						"download-diff": "Lae alla erinevused",
+						"download-log": "Lae all logi",
+						"format": "Vorming",
+						"header": "Tunnused",
+						"import": "Import",
+						"import-data": "Impordi andmed",
+						"kts-property": "TermX tunnus",
+						"lang": "Keel",
+						"preferred": "eelistatv",
+						"type": "Tüüp",
+						"type-column": "{{type}} veerg",
+						"validate-data": "Ainult kontrolli andmed"
 					},
 					"source": {
-						"analyze": "",
-						"file": "",
-						"header": "",
-						"link": "",
+						"analyze": "Analüüsi",
+						"file": "Fail",
+						"header": "Allikas",
+						"link": "Link",
 						"types": {
-							"csv": "",
-							"tsv": ""
+							"csv": "CSV",
+							"tsv": "TSV"
 						}
 					}
 				},
 				"concept-map": {
-					"import": "",
-					"map-id": "",
-					"map-name": "",
-					"map-version": "",
-					"source-value-set": "",
-					"target-value-set": ""
+					"import": "ConceptMapi import failist",
+					"map-id": "Map ID",
+					"map-name": "Vastandustabeli nimi",
+					"map-version": "Vastandustabeli version",
+					"source-value-set": "Allikas loend",
+					"target-value-set": "Sihtloend"
 				},
-				"create-new": "",
-				"not-found": "",
-				"process": "",
-				"success-message": "",
-				"title": ""
+				"create-new": "Loo uus",
+				"not-found": "Pole leitud?",
+				"process": "Töötle",
+				"success-message": "Faili töötlus lõpetatud",
+				"title": "Faili import"
 			},
 			"import": {
-				"atc": "",
-				"base-code-system": "",
-				"code-system": "",
-				"code-system-description": "",
-				"code-system-name": "",
-				"code-system-version-description": "",
-				"icd-10": "",
-				"ichi": "",
-				"loinc": "",
-				"orphanet": "",
-				"publisher": "",
-				"source-url": "",
-				"uri": "",
-				"valid-from": "",
-				"valid-to": "",
-				"version": ""
+				"atc": "ATC {{edition}} import",
+				"base-code-system": "Alus koodisüsteem",
+				"code-system": "Koodisüsteem",
+				"code-system-description": "Koodisüsteemi kirjeldus",
+				"code-system-name": "Koodisüsteemi nimi",
+				"code-system-version-description": "Koodisüsteemi versiooni kirjeldus",
+				"icd-10": "ICD-10 {{edition}} import",
+				"ichi": "ICHI {{edition}} import",
+				"loinc": "LOINC import",
+				"orphanet": "Haruldaste haiguste import",
+				"publisher": "Kirjastaja",
+				"source-url": "Lähte URL",
+				"uri": "URI",
+				"valid-from": "Kehtib alates",
+				"valid-to": "Kehtib kuni",
+				"version": "Versioon"
 			},
 			"loinc-import": {
-				"answer-list": "",
-				"answer-list-link": "",
-				"import": "",
-				"language": "",
-				"loinc": "",
-				"loinc-import": "",
-				"loinc-terminology": "",
-				"order-observation": "",
-				"panels": "",
-				"parts": "",
-				"supplementary-properties": "",
-				"translations": ""
+				"answer-list": "Answer list",
+				"answer-list-link": "Answer list link",
+				"import": "Import",
+				"language": "Keel",
+				"loinc": "LOINC",
+				"loinc-import": "LOINC import",
+				"loinc-terminology": "LOINC terminoloogia",
+				"order-observation": "Näitajate järjestamine (order observation)",
+				"panels": "Paneelid",
+				"parts": "Osad (parts)",
+				"supplementary-properties": "Täiendavad (supplementary) tunnused",
+				"translations": "Tõlked"
 			},
-			"response": "",
-			"send-request": "",
-			"set-default-data": "",
+			"response": "Vastus",
+			"send-request": "Saada päring",
+			"set-default-data": "Määra vaikimis andmed",
 			"systems": {
-				"atc": "",
-				"fhir": "",
-				"icd-10": "",
-				"ichi": "",
-				"loinc": "",
-				"orphanet": ""
+				"atc": "ATC",
+				"fhir": "FHIR",
+				"icd-10": "ICD-10",
+				"ichi": "ICHI",
+				"loinc": "LOINC",
+				"orphanet": "Orphanet"
 			}
 		},
 		"landing": {
 			"resources": {
-				"title": "",
+				"title": "Ressurssid",
 				"types": {
-					"code-system": "",
-					"map-set": "",
-					"value-set": ""
+					"code-system": "Koodisüsteemid",
+					"map-set": "Vastandustabelid",
+					"value-set": "Loendid"
 				}
 			},
 			"summary": {
-				"open-tasks": "",
-				"pages": "",
-				"spaces": "",
-				"title": ""
+				"open-tasks": "Avatud ülesanded",
+				"pages": "Leheküljed",
+				"spaces": "Spaces",
+				"title": "Kokkuvõtte"
 			},
 			"tasks": {
 				"actions": {
-					"create": ""
+					"create": "Lisa ülesanne"
 				},
-				"assigned-to-me": "",
+				"assigned-to-me": "Minule määratud",
 				"created-by-me": "",
 				"title": ""
 			}
 		},
 		"loinc": {
 			"answer-list": {
-				"answers": "",
-				"code": "",
-				"name": "",
-				"oid": "",
-				"used-by": ""
+				"answers": "Vastused",
+				"code": "Vastuse nimekirja kood",
+				"name": "Vastuse nimekirja nimi",
+				"oid": "OID",
+				"used-by": "Kasutatud"
 			},
 			"loinc": {
-				"class": "",
-				"code": "",
-				"component": "",
+				"class": "Klass",
+				"code": "LOINC",
+				"component": "Komponent",
 				"filter": {
-					"both": "",
-					"class": "",
+					"both": "Mõlemad",
+					"class": "Klass",
 					"clinical": "",
 					"contains": "",
 					"eq": "",
