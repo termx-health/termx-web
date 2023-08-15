@@ -7,6 +7,7 @@ import {MAP_SET_ROUTES, MapSetModule} from './map-set/map-set.module';
 import {NAMING_SYSTEM_ROUTES, NamingSystemModule} from './naming-system/naming-system.module';
 import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './association-type/association-type.module';
 import {DEV_RESOURCES_ROUTES} from './dev/dev-resources.module';
+import {DEFINED_ENTITY_PROPERTY_ROUTES, DefinedEntityPropertyModule} from 'term-web/resources/defined-entity-property/defined-entity-property.module';
 
 
 export const RESOURCES_ROUTES: Routes = [
@@ -15,6 +16,7 @@ export const RESOURCES_ROUTES: Routes = [
   {path: 'map-sets', children: MAP_SET_ROUTES, data: {privilege: ['*.MapSet.view']}},
   {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES, data: {privilege: ['*.NamingSystem.view']}},
   {path: 'association-types', children: ASSOCIATION_TYPE_ROUTES, data: {privilege: ['*.AssociationType.view']}},
+  {path: 'defined-entity-properties', children: DEFINED_ENTITY_PROPERTY_ROUTES, data: {privilege: ['*.CodeSystem.view']}},
 
   {path: 'dev', children: DEV_RESOURCES_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.MapSet.view' ]}},
 
@@ -34,7 +36,8 @@ export const RESOURCES_ROUTES: Routes = [
     MapSetModule,
     CoreUiModule,
     NamingSystemModule,
-    AssociationTypeModule
+    AssociationTypeModule,
+    DefinedEntityPropertyModule
   ],
   declarations: [],
   exports: [

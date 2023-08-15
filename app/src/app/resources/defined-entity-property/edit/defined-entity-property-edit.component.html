@@ -1,0 +1,42 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loader.isLoading">
+      <m-card [mShowSkeleton]="loader['load']" [mTitle]="(mode === 'edit' ? 'web.defined-entity-property.form.edit-header' : 'web.defined-entity-property.form.add-header')">
+        <form #form="ngForm" *ngIf="entityProperty">
+          <m-form-row>
+            <m-form-item *mFormCol mName="name" mLabel="entities.entity-property.name" required>
+              <m-input name="name" [(ngModel)]="entityProperty.name" required></m-input>
+            </m-form-item>
+            <m-form-item *mFormCol mName="uri" mLabel="entities.entity-property.uri">
+              <m-input name="uri" [(ngModel)]="entityProperty.uri"></m-input>
+            </m-form-item>
+          </m-form-row>
+          <m-form-item mName="description" mLabel="entities.entity-property.description">
+            <m-multi-language-input name="description" [(ngModel)]="entityProperty.description"></m-multi-language-input>
+          </m-form-item>
+
+          <m-form-row>
+            <m-form-item *mFormCol mName="kind" mLabel="entities.entity-property.kind" required>
+              <m-select name="kind" [(ngModel)]="entityProperty.kind">
+                <m-option [mValue]="'property'" [mLabel]="'web.defined-entity-property.form.kind.property'"></m-option>
+                <m-option [mValue]="'designation'" [mLabel]="'web.defined-entity-property.form.kind.designation'"></m-option>
+              </m-select>
+            </m-form-item>
+            <m-form-item *mFormCol mName="type" mLabel="entities.entity-property.type" required>
+              <tw-value-set-concept-select name="type"
+                  valueSet="concept-property-type"
+                  [(ngModel)]="entityProperty.type"
+                  required></tw-value-set-concept-select>
+            </m-form-item>
+          </m-form-row>
+        </form>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

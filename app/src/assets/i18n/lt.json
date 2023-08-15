@@ -143,6 +143,8 @@
 			"order-number": "Rikiuotė",
 			"preferred": "Pageidautinas (-a)",
 			"required": "Privalomas (-a)",
+			"uri": "URI",
+			"kind": "Rūšis",
 			"rule": {
 				"code-systems": "Kodų sistemos",
 				"compose": "Sukurti",

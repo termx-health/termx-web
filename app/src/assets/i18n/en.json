@@ -143,6 +143,8 @@
 			"order-number": "Order",
 			"preferred": "Preferred",
 			"required": "Required",
+			"uri": "URI",
+			"kind": "Kind",
 			"rule": {
 				"code-systems": "Code systems",
 				"compose": "Compose",
@@ -2019,6 +2021,21 @@
 				"edit-header": "Edit page",
 				"relation-header": "Page relations",
 				"usages": "Usages"
+			}
+		},
+		"defined-entity-property": {
+			"list": {
+				"title": "Defined entity properties",
+				"add-new": "Add new entity property",
+				"property-used": "Property is used and can not be modified."
+			},
+			"form": {
+				"edit-header": "Edit defined entity property",
+				"add-header": "Add defined entity property",
+				"kind": {
+					"property": "Property",
+					"designation": "Designation"
+				}
 			}
 		}
 	}

@@ -2,6 +2,8 @@ import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/co
 import {BooleanInput, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {ValueSetVersionRule} from 'app/src/app/resources/_lib';
+import {ValueSetRuleFilterListComponent} from 'term-web/resources/value-set/containers/version/rule/filter/value-set-rule-filter-list.component';
+import {ValueSetRuleConceptListComponent} from 'term-web/resources/value-set/containers/version/rule/concept/value-set-rule-concept-list.component';
 
 @Component({
   selector: 'tw-value-set-rule-form',
@@ -16,6 +18,8 @@ export class ValueSetRuleFormComponent implements OnChanges{
   @Input() @BooleanInput() public viewMode: string | boolean = false;
 
   @ViewChild("form") public form?: NgForm;
+  @ViewChild(ValueSetRuleFilterListComponent) public valueSetRuleFilterListComponent?: ValueSetRuleFilterListComponent;
+  @ViewChild(ValueSetRuleConceptListComponent) public valueSetRuleConceptListComponent?: ValueSetRuleConceptListComponent;
 
   protected ruleBase: 'code-system' | 'value-set';
   protected conceptsBase: 'all' | 'exact' | 'filter';
@@ -32,7 +36,9 @@ export class ValueSetRuleFormComponent implements OnChanges{
   }
 
   public validate(): boolean {
-    return validateForm(this.form);
+    return validateForm(this.form) &&
+      (!this.valueSetRuleFilterListComponent || this.valueSetRuleFilterListComponent.validate()) &&
+      (!this.valueSetRuleConceptListComponent || this.valueSetRuleConceptListComponent.validate());
   }
 
   protected conceptsBaseChanged(): void {

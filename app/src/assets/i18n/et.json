@@ -143,6 +143,8 @@
 			"order-number": "Jnr",
 			"preferred": "Eelistatav",
 			"required": "Kohustuslik",
+			"uri": "URI",
+			"kind": "Liik",
 			"rule": {
 				"code-systems": "Koodisüsteemid",
 				"compose": "Koosta",

@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {BooleanInput} from '@kodality-web/core-util';
+import {BooleanInput, validateForm} from '@kodality-web/core-util';
 import {CodeSystemLibService, ValueSetLibService, ValueSetVersionConcept, ValueSetVersionRule} from 'app/src/app/resources/_lib';
 import {NgForm} from '@angular/forms';
 
@@ -33,7 +33,6 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
     }
   }
 
-
   protected removeDesignation(c: ValueSetVersionConcept, i: number): void {
     c.additionalDesignations?.splice(i, 1);
     c.additionalDesignations = [...c.additionalDesignations];
@@ -41,5 +40,9 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
 
   protected addDesignation(c: ValueSetVersionConcept): void {
     c.additionalDesignations = [...(c.additionalDesignations || []), {}];
+  }
+
+  public validate(): boolean {
+    return validateForm(this.form);
   }
 }

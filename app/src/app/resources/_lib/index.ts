@@ -6,3 +6,4 @@ export * from './resources-lib.module';
 export * from './valueset';
 export * from './namingsystem';
 export * from './association';
+export * from './definedentityproperty';

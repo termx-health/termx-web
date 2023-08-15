@@ -98,6 +98,15 @@
       },
       {
         "label": {
+          "en": "Defined entity properties"
+        },
+        "link": "resources/defined-entity-properties",
+        "privileges": [
+          "*.CodeSystem.view"
+        ]
+      },
+      {
+        "label": {
           "en": "Import",
           "et": "Import",
 		  "lt": "Importuoti"

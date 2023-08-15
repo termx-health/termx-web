@@ -20,7 +20,7 @@ const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
   {name: 'display', type: 'designation', orderNumber: -50},
   {name: 'definition', type: 'designation', orderNumber: -25},
   {name: 'description', type: 'designation', orderNumber: 9900},
-  {name: 'is-a', type: 'string', description: 'association', orderNumber: 9999},
+  {name: 'is-a', type: 'string', description: {'en': 'association'}, orderNumber: 9999},
 ];
 
 
