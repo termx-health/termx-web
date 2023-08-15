@@ -1205,13 +1205,6 @@
 			}
 		},
 		"map-set": {
-			"entity": {
-				"description": "",
-				"domain": "",
-				"id": "",
-				"name": "",
-				"uri": ""
-			},
 			"form": {
 				"add-header": "Kurti naują atvaizdžių aibę",
 				"edit-header": "Redaguoti atvaizdžių aibę",
@@ -1228,13 +1221,6 @@
 			}
 		},
 		"map-set-association": {
-			"entity": {
-				"concept": "",
-				"source": "",
-				"status": "",
-				"target": "",
-				"type": ""
-			},
 			"form": {
 				"add-header": "Pridėti susiejimą",
 				"edit-header": "Redaguoti susiejimą",
@@ -1269,16 +1255,6 @@
 			}
 		},
 		"map-set-version": {
-			"entity": {
-				"description": "",
-				"expiration-date": "",
-				"id": "",
-				"release-date": "",
-				"source": "",
-				"status": "",
-				"supported-languages": "",
-				"version": ""
-			},
 			"form": {
 				"add-header": "Pridėti versiją",
 				"edit-header": "Redaguoti versiją",
@@ -1351,9 +1327,9 @@
 			"import-success-message": "Stebėjimo apibrėžties importas pavyko",
 			"info": {
 				"data": "Duomenų struktūros aprašas",
-				"mappings": "Sąvokų atvaizdis nuo stebėjimo apibrėžties iki kitų kodų sistemų\r\n",
+				"mappings": "Sąvokų atvaizdis nuo stebėjimo apibrėžties iki kitų kodų sistemų\n",
 				"protocol": "Stebėjimo matavimo metodologija",
-				"state": "Gebėjimas apibūdinti objekto būseną stebėjimo proceso metu.\r\n"
+				"state": "Gebėjimas apibūdinti objekto būseną stebėjimo proceso metu.\n"
 			},
 			"interpretation-category": {
 				"absolute": "Absoliutus",
@@ -1406,9 +1382,8 @@
 						"privilege": "Privilegija",
 						"space": "Tarpas",
 						"task": "Taskflow",
-						"thesaurus": "Tezauras",
 						"value-set": "ValueSet",
-						"wiki": ""
+						"wiki": "Wiki"
 					}
 				},
 				"table": {

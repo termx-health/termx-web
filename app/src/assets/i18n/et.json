@@ -1205,18 +1205,11 @@
 			}
 		},
 		"map-set": {
-			"entity": {
-				"description": "Kirjeldus",
-				"domain": "Domeen",
-				"id": "Identifikaator",
-				"name": "Nimi",
-				"uri": "Ühtne ressursiidentifikaator (URI)"
-			},
 			"form": {
 				"add-header": "Lisa kaardistus kogum",
 				"edit-header": "Muuda kaardistus kogumit",
-				"header": "",
-				"view-header": ""
+				"header": "Vastandustabel",
+				"view-header": "Vaata vastandustabeli"
 			},
 			"list": {
 				"add-version": "Lisa versioon",
@@ -1228,26 +1221,19 @@
 			}
 		},
 		"map-set-association": {
-			"entity": {
-				"concept": "Kontsept",
-				"source": "Allikas",
-				"status": "Status",
-				"target": "Siht",
-				"type": "Seos"
-			},
 			"form": {
-				"add-header": "",
-				"edit-header": "",
-				"source-concept": "",
-				"source-system": "",
-				"status": "",
-				"target-concept": "",
-				"target-system": "",
-				"type": "",
-				"view-header": ""
+				"add-header": "Lisa assotsioon",
+				"edit-header": "Muuda assotsioon",
+				"source-concept": "Lähtemõiste",
+				"source-system": "Lähtekoodisüsteem",
+				"status": "staatus",
+				"target-concept": "Sihtmõiste",
+				"target-system": "Sihtkoodisüsteem",
+				"type": "Assotsioonitüüp",
+				"view-header": "Vaata assotsiooni"
 			},
 			"list": {
-				"add-association": "",
+				"add-association": "Lisa assotsioon",
 				"associations": "Seosed",
 				"code-system": "Koodisüsteem",
 				"operations": "Toimingud"
@@ -1255,30 +1241,20 @@
 		},
 		"map-set-entity-version": {
 			"modal": {
-				"add-header": "",
-				"edit-header": "",
-				"entity-version": "",
-				"link-header": ""
+				"add-header": "Lisa mõiste versioon",
+				"edit-header": "Muuda mõiste versiooni",
+				"entity-version": "Versioon",
+				"link-header": "Seo versioon"
 			},
 			"table": {
-				"activate": "",
-				"add-version": "",
-				"header": "",
-				"link-version": "",
-				"retire": ""
+				"activate": "Aktiveeri versioon",
+				"add-version": "Lisa versioon",
+				"header": "Versioonid",
+				"link-version": "Seo versiooni",
+				"retire": "Märgi versioon aegunuks"
 			}
 		},
 		"map-set-version": {
-			"entity": {
-				"description": "Kirjeldus",
-				"expiration-date": "Aegumis kuupäev",
-				"id": "Identifikaator",
-				"release-date": "Väljastus kuupäev",
-				"source": "Allikas",
-				"status": "Staatus",
-				"supported-languages": "Toetatud keeled",
-				"version": "Versioon"
-			},
 			"form": {
 				"add-header": "Lisa versioon",
 				"edit-header": "Muuda versiooni",
@@ -1287,139 +1263,138 @@
 		},
 		"measurement-unit": {
 			"form": {
-				"add-header": "",
-				"add-kind": "",
-				"edit-header": "",
-				"from": "",
-				"select-kind": "",
-				"to": "",
-				"view-header": ""
+				"add-header": "Lisa mõõtühik",
+				"add-kind": "Lisa tüüp",
+				"edit-header": "Muuda mõõtühik",
+				"from": "Alates",
+				"select-kind": "Vali tüüp",
+				"to": "Kuni",
+				"view-header": "Vaata mõõtühiku"
 			},
 			"mapping": {
 				"list": {
-					"add-mapping": ""
+					"add-mapping": "Lisa seos"
 				},
 				"modal": {
-					"add-header": "",
-					"edit-header": ""
+					"add-header": "Lisa seos",
+					"edit-header": "Muuda seos"
 				}
 			}
 		},
 		"naming-system": {
 			"form": {
-				"add-header": "",
-				"edit-header": "",
-				"view-header": ""
+				"add-header": "Loo uus nimesüsteem",
+				"edit-header": "Muuda nimesüsteem",
+				"view-header": "Vaata nimesüsteemi"
 			},
 			"list": {
-				"add-naming-system": "",
-				"naming-system": "",
-				"type": ""
+				"add-naming-system": "Lisa nimesüsteemi",
+				"naming-system": "Nimesüsteem",
+				"type": "Tüüp"
 			}
 		},
 		"observation-definition": {
 			"behaviour": {
-				"computable": "",
-				"editable": "",
-				"read-only": ""
+				"computable": "Arvutatav",
+				"editable": "Muudetav",
+				"read-only": "Read only"
 			},
 			"cardinality": {
-				"max": "",
-				"min": ""
+				"max": "max",
+				"min": "min"
 			},
 			"divider": {
-				"components": "",
-				"data": "",
-				"description": "",
-				"identification": "",
-				"interpretation": "",
-				"mappings": "",
-				"members": "",
-				"protocol": "",
-				"state": "",
-				"value": ""
+				"components": "Komponendid",
+				"data": "Andmed",
+				"description": "Kirjeldus",
+				"identification": "Identifitseerimine",
+				"interpretation": "Interpretatsioon",
+				"mappings": "Seosed",
+				"members": "Liikmed",
+				"protocol": "Protokoll",
+				"state": "Tunnus",
+				"value": "Väärtus"
 			},
 			"filter": {
-				"category": "",
-				"structure": "",
-				"value-type": ""
+				"category": "Kategooria",
+				"structure": "Struktuur",
+				"value-type": "Väärtuse tüüp"
 			},
-			"header-add": "",
-			"header-edit": "",
-			"import": "",
-			"import-from-loinc": "",
-			"import-success-message": "",
+			"header-add": "Lisa näitaja definitsioon",
+			"header-edit": "Näitaja definitsioon | Observation definition {{code}}",
+			"import": "Alusta import",
+			"import-from-loinc": "Impordi LOINC-ist",
+			"import-success-message": "Näitajate definitsioonide import õnnestus",
 			"info": {
-				"data": "",
-				"mappings": "",
-				"protocol": "",
-				"state": ""
+				"data": "Andmestruktuuri kirjeldus",
+				"mappings": "Näitaja definitsiooni vastavustabel teiste koodisüsteemidega",
+				"protocol": "Näitaja mõõtmise metodoloogia",
+				"state": "Oskus kirjeldada subjekti seisundit vaatlusprotsessi ajal"
 			},
 			"interpretation-category": {
-				"absolute": "",
-				"critical": "",
-				"reference": ""
+				"absolute": "Absoluutne",
+				"critical": "Kriitiline",
+				"reference": "Viide"
 			},
 			"protocol-usage": {
-				"not-in-use": "",
-				"value-set": "",
-				"values": ""
+				"not-in-use": "Ei ole kasutusel",
+				"value-set": "Kasutusel (loend)",
+				"values": "Kasutusel (väärtused)"
 			},
-			"select-snomed": "",
+			"select-snomed": "SNOMED otsing",
 			"structure": {
-				"component": "",
-				"panel": "",
-				"value": ""
+				"component": "Komponent",
+				"panel": "Paneel",
+				"value": "Väärtus"
 			},
 			"time-precision": {
-				"period": "",
-				"timestamp": ""
+				"period": "Periood",
+				"timestamp": "Aeg"
 			}
 		},
 		"package": {
-			"add-header": "",
-			"edit-header": ""
+			"add-header": "Lisa pakett",
+			"edit-header": "Muuda pakett"
 		},
 		"privileges": {
-			"add-header": "",
-			"edit-header": "",
-			"privileges": "",
+			"add-header": "Lisa privileeg",
+			"edit-header": "Muuda privileeg",
+			"privileges": "Privileegid",
 			"resources": {
 				"modal": {
 					"actions": {
-						"edit": "",
-						"publish": "",
-						"view": ""
+						"edit": "Muuda",
+						"publish": "Avalda",
+						"view": "Vaata"
 					},
-					"add-header": "",
-					"edit-header": "",
-					"resource-id": "",
-					"resource-type": "",
+					"add-header": "Lisa ressurss",
+					"edit-header": "Muuda ressurss",
+					"resource-id": "Ressurss",
+					"resource-type": "Tüüp",
 					"type": {
-						"admin": "",
-						"any": "",
-						"association-type": "",
-						"code-system": "",
-						"map-set": "",
-						"naming-system": "",
-						"observation-definition": "",
-						"privilege": "",
-						"space": "",
-						"task": "",
-						"thesaurus": "",
-						"value-set": "",
-						"wiki": ""
+						"admin": "Admin",
+						"any": "Kõik",
+						"association-type": "AssociationType",
+						"code-system": "CodeSystem",
+						"map-set": "MapSet",
+						"naming-system": "Nimesüsteem",
+						"observation-definition": "Näitajate definitsioon",
+						"privilege": "Privileeg",
+						"space": "Space",
+						"task": "Ülesanne",
+						"value-set": "ValueSet",
+						"wiki": "Wiki"
 					}
 				},
 				"table": {
-					"add-resource": "",
-					"delete-resource": "",
-					"head": ""
+					"add-resource": "Lisa ressurss",
+					"delete-resource": "Kustuta ressurss",
+					"head": "Ressurssid"
 				}
 			},
 			"table": {
-				"add-privilege": "",
-				"delete-privilege": ""
+				"add-privilege": "Lisa privileeg",
+				"delete-privilege": "Kustuta privileeg"
 			}
 		},
 		"property-value": {

@@ -1205,13 +1205,6 @@
 			}
 		},
 		"map-set": {
-			"entity": {
-				"description": "",
-				"domain": "",
-				"id": "",
-				"name": "",
-				"uri": ""
-			},
 			"form": {
 				"add-header": "Create a new map set",
 				"edit-header": "Edit map set",
@@ -1228,13 +1221,6 @@
 			}
 		},
 		"map-set-association": {
-			"entity": {
-				"concept": "",
-				"source": "",
-				"status": "",
-				"target": "",
-				"type": ""
-			},
 			"form": {
 				"add-header": "Add association",
 				"edit-header": "Edit association",
@@ -1269,16 +1255,6 @@
 			}
 		},
 		"map-set-version": {
-			"entity": {
-				"description": "",
-				"expiration-date": "",
-				"id": "",
-				"release-date": "",
-				"source": "",
-				"status": "",
-				"supported-languages": "",
-				"version": ""
-			},
 			"form": {
 				"add-header": "Add version",
 				"edit-header": "Edit version",
@@ -1406,7 +1382,6 @@
 						"privilege": "Privilege",
 						"space": "Space",
 						"task": "Task",
-						"thesaurus": "",
 						"value-set": "ValueSet",
 						"wiki": "Wiki"
 					}
