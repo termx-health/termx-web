@@ -1,1909 +1,2192 @@
 {
-  "core": {
-    "btn": {
-      "save": "Save",
-      "delete": "Delete",
-      "edit": "Edit",
-      "copy": "Copy",
-      "copied": "Copied",
-      "cancel": "Cancel",
-      "close": "Close",
-      "duplicate": "Duplicate",
-      "confirm": "Confirm",
-      "proceed": "Proceed",
-      "add": "Add",
-      "select": "Select",
-      "search": "Search",
-      "clear-all": "Clear all",
-      "query": "Query",
-      "custom": "Custom",
-      "import": "Import"
-    },
-    "no-privilege": {
-      "error": "401 Unauthorized",
-      "privileges": {
-        "plural": "You lack the privileges: {{privileges}}",
-        "singular": "You lack the privilege: {{privilege}}"
-      },
-      "access": "To access: {{path}}"
-    },
-    "version-select": {
-      "custom": "Custom"
-    },
-    "filter": "Filter",
-    "no-data": "No data",
-    "back": "Back",
-    "delete-confirm": "Are you sure you want to delete?",
-    "confirm": "Are you sure?",
-    "data-lost-warning": "Your changes wouldn't be saved!",
-    "form-invalid": "Form invalid. Please review the data"
-  },
-  "web": {
-    "landing": {
-      "resources": {
-        "title": "Resources",
-        "types": {
-          "code-system": "Code Systems",
-          "value-set": "Value Sets",
-          "map-set": "Map Sets"
-        }
-      },
-      "summary": {
-        "title": "Summary",
-        "spaces": "Spaces",
-        "pages": "Pages",
-        "open-tasks": "Open tasks"
-      },
-      "tasks": {
-        "title": "Tasks",
-        "actions": {
-          "create": "Create task"
-        },
-        "created-by-me": "Created by me",
-        "assigned-to-me": "Assigned to me"
-      }
-    },
-    "measurement-unit": {
-      "form": {
-        "edit-header": "Edit measurement unit",
-        "add-header": "Add measurement unit",
-        "view-header": "View measurement unit",
-        "select-kind": "Select kind",
-        "add-kind": "Add kind",
-        "from": "Period from",
-        "to": "Period to"
-      },
-      "mapping": {
-        "list": {
-          "add-mapping": "Add mapping"
-        },
-        "modal": {
-          "edit-header": "Edit mapping",
-          "add-header": "Add mapping"
-        }
-      }
-    },
-    "case-sensitive": {
-      "options": {
-        "cl": "Initial character insensitive",
-        "cs": "Case sensitive",
-        "ci": "Case insensitive"
-      },
-      "code-is": {
-        "cs": "Code is case sensitive",
-        "ci": "Code is case insensitive"
-      }
-    },
-    "publication-status": {
-      "operations": {
-        "activate": "Activate",
-        "save-as-draft": "Make draft",
-        "retire": "Retire"
-      }
-    },
-    "app": {
-      "header": "TermX"
-    },
-    "entity-property": {
-      "form": {
-        "edit-header": "Edit property",
-        "add-header": "Add property"
-      }
-    },
-    "supplement": {
-      "supplement": "Supplement",
-      "form": {
-        "property": {
-          "edit-header": "Edit property supplement",
-          "add-header": "Add property supplement"
-        },
-        "property-value": {
-          "edit-header": "Edit property value supplement",
-          "add-header": "Add property value supplement"
-        },
-        "designation": {
-          "edit-header": "Edit designation supplement",
-          "add-header": "Add designation supplement"
-        },
-        "description": "Supplement description"
-      }
-    },
-    "contacts": {
-      "list": {
-        "header": "Contacts",
-        "add-contact": "Add contact"
-      },
-      "modal": {
-        "name": "Name",
-        "edit-header": "Edit contact",
-        "add-header": "Add contact"
-      }
-    },
-    "resources": {
-      "tabset": {
-        "code-systems": "Code systems",
-        "value-sets": "Value sets",
-        "map-sets": "Map sets",
-        "naming-systems": "Naming systems",
-        "association-types": "Association types"
-      }
-    },
-    "association-type": {
-      "list": {
-        "add-association-type": "Add association type"
-      },
-      "form": {
-        "add-header": "Add association type",
-        "edit-header": "Edit association type",
-        "view-header": "View association type"
-      }
-    },
-    "code-system": {
-      "list": {
-        "title": "Code systems",
-        "manual": "Manual",
-        "import-fhir": "Import external FHIR definition",
-        "last-version": "Last version",
-        "status": "Status",
-        "count": "Count",
-        "add-code-system": "Add code system",
-        "domain": "Domain",
-        "uri": "URI",
-        "versions-release-date": "From: {{releaseDate}}",
-        "versions-expiration-date": "to {{expirationDate}}",
-        "versions-version": "Version name: {{version}}",
-        "open-fhir": "Open FHIR",
-        "duplicate": {
-          "header": "Create duplicate code system",
-          "source-code-system": "Source code system:",
-          "target-code-system": "Target code system:",
-          "target-uri": "Target URI:"
-        }
-      },
-      "form": {
-        "header": "Code system",
-        "add-header": "Create a new code system",
-        "edit-header": "Edit code system",
-        "view-header": "View code system",
-        "delete-property-usages": "Delete property usages",
-        "concepts": {
-          "add-concept": "Add concept",
-          "validate": "Validate code system",
-          "concept": "Concept",
-          "contains": "Contains",
-          "eq": "Equals"
-        },
-        "versions": {
-          "duplicate": {
-            "duplicate-header": "Create duplicate code system version",
-            "source-code-system": "Source code system:",
-            "source-version": "Source version:",
-            "target-version": "Target version:",
-            "create-new-entity-version": "Create new entity versions"
-          },
-          "list": {
-            "add-version": "Add version",
-            "add-new-version": "Add new version",
-            "duplicate-version": "Duplicate version",
-            "export-fhir-json": "Export FHIR json",
-            "export-fhir-xml": "Export FHIR xml",
-            "open-fhir": "Open FHIR",
-            "compare": "Compare"
-          }
-        },
-        "properties": {
-          "add-property": "Add property",
-          "add-supplement": "Add supplement",
-          "delete-property": "Delete property",
-          "delete-supplement": "Delete supplement",
-          "often-used-designations": "Often used designations",
-          "often-used-properties": "Often used properties"
-        }
-      },
-      "summary": {
-        "code-system": "Code system",
-        "related-artifacts": "Related artifacts",
-        "unlinked-concepts": {
-          "title": "Unlinked concepts",
-          "concept": "Concept",
-          "version": "Version",
-          "designation": "Designation",
-          "author": "Author",
-          "task": "Task",
-          "status": "Status",
-          "link-to": "Link to {{version}}",
-          "no-versions": "No draft versions found",
-          "create-task": "Create task",
-          "task-modal": {
-            "header": "Create approval task",
-            "cs-version": "Link to code system version",
-            "assignee": "Assignee"
-          }
-        },
-        "duplicate-version-modal": {
-          "header": "Duplicate code system version",
-          "version": "New version"
-        },
-        "opened-tasks": "Opened tasks",
-        "all-tasks": "All tasks",
-        "versions": "Versions",
-        "concepts": "Concepts",
-        "compare": "Compare",
-        "add-version": "Add version",
-        "add-concept": "Add concept"
-      }
-    },
-    "code-system-version": {
-      "form": {
-        "edit-header": "Edit version",
-        "add-header": "Add version",
-        "view-header": "View version",
-        "entities": {
-          "add-entity": "Add entity",
-          "entity-version": "Entity version",
-          "modal": {
-            "add-header": "Add entity",
-            "entity-version": "Entity version"
-          }
-        }
-      },
-      "summary": {
-        "code-system-version": "Code system version",
-        "opened-tasks": "Opened tasks",
-        "all-tasks": "All tasks",
-        "edit-version": "Edit version",
-        "info": {
-          "definition": "Definition",
-          "last-modified": "Last modified",
-          "last-reviewed": "Last review date",
-          "last-approved": "Last approval date",
-          "none": "None",
-          "show-changes": "Show changes",
-          "create-review": "Create review task",
-          "create-approve": "Create approval task",
-          "make-draft": "Make draft",
-          "activate": "Activate",
-          "retire": "Retire",
-          "load-from-github": "Load from Github",
-          "push-to-github": "Push to Github"
-        },
-        "task-modal": {
-          "header": "Create {{type}} task",
-          "assignee": "Assignee",
-          "success-msg": "Task created"
-        }
-      }
-    },
-    "code-system-concept": {
-      "form": {
-        "add-header": "Add concept",
-        "concept": "Concept",
-        "related-artifacts": "Related artifacts",
-        "all-tasks": "All tasks",
-        "opened-tasks": "Opened tasks",
-        "linked-with-code-systems": "Linked with code system versions",
-        "version": {
-          "header": "Version {{created}}",
-          "new": "New version",
-          "code-system-version": "Code System version",
-          "new-version": "New version"
-        },
-        "value-sets": {
-          "header": "Related value sets",
-          "value-set": "Value set",
-          "definition": "Definition"
-        },
-        "map-sets": {
-          "header": "Related map sets",
-          "map-set": "Map set",
-          "direction": "Direction",
-          "concept-code": "Concept code",
-          "concept-display": "Concept display",
-          "equivalence": "Equivalence"
-        },
-        "wiki": {
-          "header": "Wiki",
-          "slug": "Slug",
-          "name": "Name"
-        }
-      },
-      "filter": {
-        "select-version-placeholder": "Select code system version",
-        "select-language-placeholder": "Select language",
-        "select-property-placeholder": "Select property",
-        "search-property-value-placeholder": "Search property name",
-        "version-filter": "Version filter",
-        "language-filter": "Language filter",
-        "property-filter": "Property filter",
-        "property-name-filter": "Property name filter"
-      },
-      "group": {
-        "association": "Association",
-        "property": "Property",
-        "type": "Type"
-      },
-      "list": {
-        "external": "External",
-        "add-concept-child": "Add subconcept",
-        "unlink-concept": "Unlink concept from version",
-        "propagate-properties": "Propagate properties to children"
-      },
-      "property-list": {
-        "properties": "Properties",
-        "concepts": "Concepts"
-      }
-    },
-    "code-system-concept-version": {
-      "add-version": "Add version",
-      "designation": {
-        "add-supplement": "Add supplement",
-        "add-designation": "Add designation",
-        "delete-designation": "Delete designation",
-        "edit-designation": "Edit designation",
-        "multi-language-input": {
-          "add-translation": "Add translation",
-          "placeholder": "Translation"
-        }
-      },
-      "property-value": {
-        "add-supplement": "Add supplement",
-        "add-property-value": "Add property value",
-        "delete-property-value": "Delete property value",
-        "edit-property-value": "Edit property value",
-        "coding-value-system": "Coding value system"
-      },
-      "association": {
-        "add-association": "Add association",
-        "edit-association": "Edit association",
-        "delete-association": "Delete association"
-      }
-    },
-    "code-system-compare": {
-      "source": "Source",
-      "target": "Target",
-      "source-code-system": "Source code system",
-      "target-code-system": "Target code system",
-      "compare": "Compare",
-      "deleted": "Deleted",
-      "added": "Added",
-      "changed": "Changed"
-    },
-    "code-system-validator": {
-      "code-system": "Code system",
-      "uniqueness-validator": {
-        "title": "Uniqueness validator",
-        "properties": "Properties",
-        "ignore-empty-properties": "Ignore empty properties",
-        "designations": "Designations",
-        "validate": "Validate",
-        "empty-properties": "Empty properties"
-      },
-      "circular-dependencies-detector": {
-        "title": "Circular dependencies detector",
-        "detect": "Detect"
-      },
-      "result": {
-        "title": "Result"
-      }
-    },
-    "code-system-association": {
-      "form": {
-        "target": "Target"
-      }
-    },
-    "dev-code-system-relation": {
-      "value-set": {
-        "header": "Related value sets",
-        "value-set": "Value set",
-        "generate": "Generate snapshot",
-        "value-set-code": "Value set code",
-        "publisher": "Publisher",
-        "uri": "URI",
-        "code": "Code",
-        "name": "Name"
-      },
-      "map-set": {
-        "header": "Related map sets",
-        "code": "Code",
-        "name": "Name"
-      }
-    },
-    "naming-system": {
-      "list": {
-        "add-naming-system": "Add NamingSystem",
-        "naming-system": "NamingSystem",
-        "type": "Type"
-      },
-      "form": {
-        "add-header": "Create a new naming system",
-        "edit-header": "Edit naming system",
-        "view-header": "View naming system"
-      }
-    },
-    "value-set": {
-      "list": {
-        "title": "Value sets",
-        "manual": "Manual",
-        "import-fhir": "Import external FHIR definition",
-        "add-value-set": "Add value set",
-        "last-version": "Last version",
-        "status": "Status",
-        "expansion": "Expansion concepts",
-        "versions-release-date": "From: {{releaseDate}}",
-        "versions-expiration-date": "to {{expirationDate}}",
-        "versions-version": "Version name: {{version}}",
-        "open-fhir": "Open FHIR"
-      },
-      "form": {
-        "add-header": "Create a new value set",
-        "edit-header": "Edit value set",
-        "view-header": "View value set",
-        "versions": {
-          "add-version": "Add version",
-          "open-fhir": "Open FHIR",
-          "export-fhir-json": "Export FHIR json",
-          "export-fhir-xml": "Export FHIR xml",
-          "export-fhir-expansion": "Export FHIR json with expansion"
-        }
-      },
-      "concepts": {
-        "no-version": "Version not selected",
-        "select-version": "Please select a version to view the concepts"
-      },
-      "summary": {
-        "value-set": "Value set",
-        "opened-tasks": "Opened tasks",
-        "all-tasks": "All tasks",
-        "related-artifacts": "Related artifacts",
-        "versions": "Versions",
-        "expansions": "Expansions",
-        "total-concepts": "Total concepts",
-        "add-version": "Add version",
-        "duplicate-version-modal": {
-          "header": "Duplicate value set version",
-          "version": "New version"
-        }
-      }
-    },
-    "value-set-version": {
-      "form": {
-        "edit-header": "Edit version",
-        "add-header": "Add version",
-        "add-concept": "Add concept",
-        "view-header": "View version",
-        "tasks": "Tasks",
-        "download": "Download",
-        "provenance": "Provenance",
-        "def-json": "Definition JSON",
-        "def-xml": "Definition XML",
-        "expansion-json": "Expansion JSON",
-        "expansion-xml": "Expansion XML",
-        "concepts-csv": "Concepts CSV",
-        "concepts": {
-          "warning": "Concept has no active version"
-        },
-        "rule-set": {
-          "rule": {
-            "include": "Include",
-            "exclude": "Exclude",
-            "code-system": "Code system",
-            "value-set": "Value set",
-            "all": "All concepts",
-            "exact": "Exact concepts",
-            "filter": "Property based expression",
-            "add-designation": "Add designation"
-          }
-        }
-      },
-      "summary": {
-        "info": {
-          "expansion": "Expansion",
-          "definition": "Definition",
-          "last-modified": "Last modified",
-          "last-reviewed": "Last review date",
-          "last-approved": "Last approval date",
-          "none": "None",
-          "show-changes": "Show changes",
-          "create-review": "Create review task",
-          "create-approve": "Create approval task",
-          "make-draft": "Make draft",
-          "activate": "Activate",
-          "retire": "Retire",
-          "load-from-github": "Load from Github",
-          "push-to-github": "Push to Github"
-        },
-        "task-modal": {
-          "header": "Create {{type}} task",
-          "assignee": "Assignee",
-          "success-msg": "Task created"
-        },
-        "value-set-version": "Value set version",
-        "rule-set": "Rule set",
-        "expansion": "Expansion",
-        "rule": "Rule",
-        "edit-version": "Edit version",
-        "expansion-limit-info": "Loaded 20 concepts. {{count}} concepts still on server.",
-        "expansion-see-all": "See full list of the concepts."
-      }
-    },
-    "value-set-version-concept": {
-      "form": {
-        "edit-header": "Edit concept",
-        "add-header": "Add concept",
-        "designation-name": "Name",
-        "designation-language": "Language"
-      }
-    },
-    "value-set-version-rule": {
-      "form": {
-        "edit-header": "Edit rule",
-        "add-header": "Add rule",
-        "concept": {
-          "add-concept": "Add concept",
-          "modal-header": "Concept"
-        },
-        "filter": {
-          "add-filter": "Add filter",
-          "modal-header": "Filter"
-        }
-      }
-    },
-    "map-set": {
-      "form": {
-        "header": "Map set",
-        "add-header": "Create a new map set",
-        "edit-header": "Edit map set",
-        "view-header": "View map set"
-      },
-      "list": {
-        "operations": "Operations",
-        "versions": "Versions",
-        "add-version": "Add version",
-        "versions-release-date": "From: {{releaseDate}}",
-        "versions-expiration-date": "to {{expirationDate}}",
-        "versions-version": "Version name: {{version}}"
-      }
-    },
-    "map-set-version": {
-      "form": {
-        "edit-header": "Edit version",
-        "add-header": "Add version",
-        "view-header": "View version"
-      }
-    },
-    "map-set-entity-version": {
-      "modal": {
-        "edit-header": "Edit entity version",
-        "add-header": "Add entity version",
-        "link-header": "Link entity version",
-        "entity-version": "Entity version"
-      },
-      "table": {
-        "add-version": "Add version",
-        "link-version": "Link version",
-        "activate": "Activate version",
-        "retire": "Retire version",
-        "header": "Entity versions"
-      }
-    },
-    "map-set-association": {
-      "form": {
-        "add-header": "Add association",
-        "edit-header": "Edit association",
-        "view-header": "View association",
-        "source-system": "Source code system",
-        "source-concept": "Source concept",
-        "target-system": "Target code system",
-        "target-concept": "Target concept",
-        "type": "Association type",
-        "status": "Status"
-      },
-      "list": {
-        "code-system": "Code System",
-        "operations": "Operations",
-        "associations": "Associations",
-        "add-association": "Add association"
-      }
-    },
-    "integration": {
-      "send-request": "Send request",
-      "set-default-data": "Set default data",
-      "response": "Response",
-      "systems": {
-        "orphanet": "Orphanet",
-        "atc": "ATC",
-        "icd-10": "ICD-10",
-        "ichi": "ICHI",
-        "fhir": "FHIR",
-        "loinc": "LOINC"
-      },
-      "fhir": {
-        "code-system": {
-          "lookup": {
-            "code": "Code",
-            "system": "System",
-            "version": "Version",
-            "date": "Date",
-            "properties": "Properties"
-          },
-          "validate-code": {
-            "code": "Code",
-            "version": "Version",
-            "url": "URL",
-            "display": "Display"
-          },
-          "subsumes": {
-            "code-a": "CodeA",
-            "code-b": "CodeB",
-            "system": "System",
-            "version": "Version"
-          },
-          "find-matches": {
-            "system": "System",
-            "version": "Version",
-            "properties": "Properties",
-            "property-name": "Name",
-            "property-value": "Value",
-            "exact": "Exact"
-          }
-        },
-        "value-set": {
-          "expand": {
-            "url": "URL",
-            "value-set-version": "ValueSetVersion"
-          },
-          "validate-code": {
-            "url": "URL",
-            "value-set-version": "ValueSetVersion",
-            "code": "Code",
-            "system": "System",
-            "system-version": "SystemVersion",
-            "display": "Display"
-          }
-        },
-        "concept-map": {
-          "translate": {
-            "uri": "URL",
-            "concept-map-version": "ConceptMapVersion",
-            "code": "Code",
-            "system": "System(URL)",
-            "version": "Version",
-            "target-system": "TargetSystem"
-          },
-          "closure": {
-            "name": "Name",
-            "version": "Version",
-            "concepts": "Concepts",
-            "system": "System",
-            "code": "Code"
-          }
-        }
-      },
-      "import": {
-        "atc": "ATC {{edition}} import",
-        "icd-10": "ICD-10 {{edition}} import",
-        "ichi": "ICHI {{edition}} import",
-        "loinc": "LOINC import",
-        "orphanet": "Rare diseases import",
-        "uri": "Uri",
-        "source-url": "Source URL",
-        "publisher": "Publisher",
-        "version": "Version",
-        "valid-from": "Valid from",
-        "valid-to": "Valid to",
-        "code-system": "CodeSystem",
-        "base-code-system": "Parent CodeSystem",
-        "code-system-name": "CodeSystem name",
-        "code-system-description": "CodeSystem description",
-        "code-system-version-description": "CodeSystem version description"
-      },
-      "file-import": {
-        "title": "File import",
-        "not-found": "Not found?",
-        "create-new": "Create new",
-        "process": "Process",
-        "success-message": "File processing is finished",
-        "code-system": {
-          "import": "Code System file import",
-          "general": {
-            "resource-id": "Resource ID",
-            "generate-valueset": "Generate ValueSet",
-            "delete-concepts": "Delete all concepts before import?",
-            "hold": "Hold",
-            "overlap-of-concepts": "Behavior on the overlap of concepts",
-            "replace": "Replace",
-            "merge": "Merge"
-          },
-          "source": {
-            "header": "Source",
-            "link": "Link",
-            "file": "File",
-            "types": {
-              "csv": "CSV",
-              "tsv": "TSV"
-            },
-            "analyze": "Analyze"
-          },
-          "properties": {
-            "header": "Properties",
-            "type-column": "{{type}} column",
-            "kts-property": "TermX property",
-            "delimiter": "Delimiter",
-            "preferred": "Preferred",
-            "type": "Type",
-            "format": "Format",
-            "lang": "Lang",
-            "import": "Import",
-            "download-diff": "Download diff",
-            "download-log": "Download log",
-            "import-data": "Import data",
-            "validate-data": "Validate data only"
-          }
-        },
-        "concept-map": {
-          "import": "Concept Map file import",
-          "map-id": "Map ID",
-          "map-name": "Map name",
-          "map-version": "Map version",
-          "source-value-set": "Source value set",
-          "target-value-set": "Target value set"
-        },
-        "association": {
-          "import": "Association file import",
-          "file-column": "File column",
-          "mapped-column": "Mapped column",
-          "code-system": "Code system",
-          "code-system-version": "Code system version",
-          "column-value-separator": "Column value separator",
-          "file": "Associations CSV file",
-          "target": "Target",
-          "source": "Source",
-          "order": "Order"
-        }
-      },
-      "loinc-import": {
-        "loinc": "LOINC",
-        "loinc-import": "LOINC import",
-        "import": "Import",
-        "parts": "Parts",
-        "loinc-terminology": "LOINC terminology",
-        "supplementary-properties": "Supplementary properties",
-        "panels": "Panels",
-        "answer-list": "Answer list",
-        "answer-list-link": "Answer list link",
-        "language": "Language",
-        "translations": "Translations",
-        "order-observation": "Order observation"
-      }
-    },
-    "privileges": {
-      "privileges": "Privileges",
-      "table": {
-        "add-privilege": "Add privilege",
-        "delete-privilege": "Delete privilege"
-      },
-      "list": {
-      },
-      "add-header": "Add privilege",
-      "edit-header": "Edit privilege",
-      "resources": {
-        "table": {
-          "add-resource": "Add resource",
-          "delete-resource": "Delete resource",
-          "head": "Resources"
-        },
-        "modal": {
-          "add-header": "Add resource",
-          "edit-header": "Edit resource",
-          "resource-type": "Type",
-          "resource-id": "Resource",
-          "actions": {
-            "view": "View",
-            "edit": "Edit",
-            "publish": "Publish"
-          },
-          "type": {
-            "any": "Any",
-            "admin": "Admin",
-            "code-system": "CodeSystem",
-            "value-set": "ValueSet",
-            "map-set": "MapSet",
-            "naming-system": "NamingSystem",
-            "association-type": "AssociationType",
-            "space": "Space",
-            "wiki": "Wiki",
-            "observation-definition": "Observation definition",
-            "task": "Task",
-            "privilege": "Privilege"
-          }
-        }
-      }
-    },
-    "tools": {
-      "terminology-service-api": {
-        "header": "Terminology Service API",
-        "content": "Terminology Service APIs enable automated exchange of clinical terminology content and resources.",
-        "button": "Terminology Service API"
-      }
-    },
-    "global-search": {
-      "dashboard": {
-        "header": "Search",
-        "concepts": "Concepts",
-        "code-systems": "CodeSystems",
-        "value-sets": "ValueSets",
-        "map-sets": "MapSets",
-        "snomed": "SNOMED",
-        "measurement-unit": "Measurement unit"
-      }
-    },
-    "snomed": {
-      "search": {
-        "taxonomy": "Taxonomy",
-        "refsets": "Refsets",
-        "ecl": "ECL",
-        "ecl-placeholder": "ECL expression",
-        "import-refset-concepts": "Import refset concepts"
-      },
-      "branch": {
-        "list": {
-          "header": "Branches",
-          "add-branch": "Add branch"
-        },
-        "form": {
-          "add-header": "Add branch",
-          "edit-header": "Branch {{path}}",
-          "release-date": "Release date",
-          "parent-branch": "Parent branch",
-          "based-on": "Based on",
-          "name": "Name"
-        },
-        "management": {
-          "header": "Branch {{path}}",
-          "integrity-check": "Integrity check",
-          "lock": "Lock",
-          "unlock": "Unlock",
-          "import-from-rf2": "Import form RF2",
-          "export-to-rf2": "Export to RF2",
-          "total-descriptions": "{{total}} description(s) in the branch",
-          "unlinked-translations": "{{count}} unlinked translation(s)",
-          "lock-modal": {
-            "header": "Lock branch",
-            "message": "Message"
-          },
-          "export-modal": {
-            "header": "Export to RF2 zip",
-            "type": "Type"
-          },
-          "import-failed": "Import from RF2 zip failed",
-          "import-succeeded": "Import from RF2 zip succeeded",
-          "import-modal": {
-            "header": "Import form RF2 zip",
-            "create-version": "Create CodeSystem version",
-            "type": "Type",
-            "file": "File"
-          }
-        }
-      },
-      "rf2-export": "RF2 export"
-    },
-    "loinc": {
-      "loinc": {
-        "code": "LOINC",
-        "name": "Long Common Name",
-        "component": "Component",
-        "property": "Property",
-        "timing": "Timing",
-        "system": "System",
-        "scale": "Scale",
-        "method": "Method",
-        "class": "Class",
-        "type": "Type",
-        "ord-obs": "Ord/Obs",
-        "values": "Values",
-        "filter": {
-          "type": "Type",
-          "class": "Class",
-          "ord-obs": "Ord/Obs",
-          "property": "Property",
-          "timing": "Timing",
-          "system": "System",
-          "scale": "Scale",
-          "method": "Method",
-          "clinical": "Clinical",
-          "lab": "Lab",
-          "survey": "Survey",
-          "order": "Order",
-          "observation": "Observation",
-          "both": "Both",
-          "contains": "Contains",
-          "eq": "Equals"
-        }
-      },
-      "part": {
-        "code": "Part code",
-        "name": "Part name",
-        "used-by": "Used by"
-      },
-      "answer-list": {
-        "code": "Answer list code",
-        "name": "Answer list name",
-        "answers": "Answers",
-        "oid": "OID",
-        "used-by": "Used by"
-      }
-    },
-    "wiki-page": {
-      "spaces": "Spaces",
-      "space": {
-        "pages": "Pages",
-        "recently-modified": {
-          "header": "Recently modified",
-          "created": "Created {{date}}",
-          "updated": "Updated {{date}}"
-        }
-      },
-      "sidebar": {
-        "pages": "Pages"
-      },
-      "header": {
-        "modified": "<b>{{user}}</b> edited this page on {{date}}",
-        "add-subpage": "Add subpage",
-        "copy-raw": "Copy raw file"
-      },
-      "details": {
-        "contents": "Contents",
-        "relations": "Relations",
-        "usages": "Usages",
-        "tags": "Tags",
-        "none": "None",
-        "page": "Page",
-        "cs": "Code System",
-        "vs": "Value Set",
-        "ms": "Map Set",
-        "concept": "Concept"
-      },
-      "view": {
-        "add-header": "Add page",
-        "edit-header": "Edit page",
-        "add-structure-definition": "Open structure definition form",
-        "content-header": "Add content",
-        "relation-header": "Page relations",
-        "content-type-tooltip": "Changing the content type can change the content value",
-        "usages": "Usages",
-        "copy-to-clipboard": "Copy {{val}}"
-      },
-      "edit": {
-        "menu": {
-          "preview": {
-            "show": "Show preview",
-            "hide": "Hide preview"
-          },
-          "structure-definition": {
-            "title": "Structure definition",
-            "add": "Add structure definition",
-            "copy": "Copy reference"
-          },
-          "diagrams": "Diagrams",
-          "files": "Files"
-        },
-        "structure-definition-modal": {
-          "header": "Your unsaved changes will be lost!",
-          "description": "Do you want to save the current page content before navigating to the Structure Definition?",
-          "proceed-without-saving": "Proceed without saving",
-          "save-and-proceed": "Save and proceed"
-        },
-        "image-modal": {
-          "header": "Files",
-          "choose-file": "Choose a file to upload"
-        }
-      },
-      "no-space": {
-        "title": "Space not selected",
-        "desc": "Please select space to proceed"
-      },
-      "texteditor": {
-        "quick-actions": {
-          "link-modal": {
-            "header": "Compose link",
-            "link-name": "Link name",
-            "url": "URL",
-            "page": "Page",
-            "resource": "Resource",
-            "resource-type": "Resource type",
-            "code-system": "CodeSystem",
-            "value-set": "ValueSet",
-            "map-set": "MapSet",
-            "concept-code-system": "Concept's CodeSystem",
-            "concept": "Concept",
-            "space": "Space",
-            "search-externally": "Search from other space"
-          },
-          "structure-definition-modal": {
-            "header": "Choose structure definition",
-            "simplifier": "Simplifier",
-            "structure-definition": "Structure definition",
-            "url": "Simplifier definition URL",
-            "base-definition-url": "Base definition URL"
-          },
-          "template-modal": {
-            "header": "Choose template",
-            "template": "Template"
-          }
-        }
-      }
-    },
-    "sequence": {
-      "list": {
-        "add-sequence": "Add sequence"
-      },
-      "form": {
-        "add-header": "Add sequence",
-        "edit-header": "Edit sequence"
-      }
-    },
-    "structure-definition": {
-      "list": {
-        "add-structure-definition": "Add structure definition"
-      },
-      "form": {
-        "add-header": "Add structure definition",
-        "edit-header": "Edit structure definition",
-        "add-element": "Add element",
-        "definition-header": "Definition",
-        "fsh-header": "FSH",
-        "json-header": "JSON",
-        "element-header": "Elements",
-        "name": "Name",
-        "path": "Path",
-        "primary-source": "Primary source",
-        "cardinality": "Cardinality",
-        "fixed-uri": "Fixed URI",
-        "fixed-coding": "Fixed coding",
-        "code": "Code",
-        "system": "System",
-        "display": "Display",
-        "short-description": "Short description",
-        "definition": "Definition",
-        "modal": {
-          "content": "You have unsaved changes!",
-          "save-proceed": "Save and proceed",
-          "no-save-proceed": "Proceed"
-        },
-        "error-modal": {
-          "fsh-to-fhir": "FSH to FHIR conversion failed",
-          "fhir-to-fsh": "FHIR to FSH conversion failed",
-          "delete-content": "Delete content and proceed",
-          "no-save-proceed": "Close"
-        }
-      },
-      "view": {
-        "binding": "Binding",
-        "fixed": "Fixed"
-      }
-    },
-    "structure-definition-type": {
-      "list": {
-        "header": "Type(s)",
-        "add-type": "Add type"
-      },
-      "modal": {
-        "edit-header": "Edit type",
-        "add-header": "Add type",
-        "code": "Code",
-        "target-profile": "Target profile"
-      }
-    },
-    "structure-definition-constraint": {
-      "list": {
-        "header": "Constraint(s)",
-        "add-constraint": "Add constraint"
-      },
-      "modal": {
-        "edit-header": "Edit constraint",
-        "add-header": "Add constraint",
-        "key": "Key",
-        "requirements": "Requirements",
-        "severity": "Severity",
-        "human": "Human",
-        "expression": "Expression",
-        "source": "Source",
-        "error": "Error",
-        "warning": "Warning"
-      }
-    },
-    "template": {
-      "list": {
-        "add-template": "Add template"
-      },
-      "form": {
-        "add-header": "Add template",
-        "edit-header": "Edit template"
-      }
-    },
-    "space": {
-      "add-header": "Add space",
-      "edit-header": "Edit space",
-      "select-context": "Select context",
-      "add-btn": "Add space",
-      "import-btn": "Import space",
-      "new-version": "New version",
-      "all-packages": "All packages",
-      "import-success-message": "Space import succeeded",
-      "import-error-message": "Space import failed",
-      "resource-import-success-message": "Resource import succeeded",
-      "resource-import-error-message": "Resource import failed"
-    },
-    "package": {
-      "add-header": "Add package",
-      "edit-header": "Edit package"
-    },
-    "terminology-server": {
-      "add-header": "Add server",
-      "edit-header": "Edit server",
-      "add-btn": "Add server",
-      "kind": {
-        "terminology": "Terminology server",
-        "snomed": "SNOMED server",
-        "fhir": "FHIR server"
-      }
-    },
-    "observation-definition": {
-      "header-add": "Add observation definition",
-      "header-edit": "Observation definition {{code}}",
-      "import-from-loinc": "Import from LOINC",
-      "import": "Start import",
-      "select-snomed": "SNOMED search",
-      "import-success-message": "Observation definition import succeeded",
-      "filter": {
-        "category": "Category",
-        "structure": "Structure",
-        "value-type": "Value type"
-      },
-      "protocol-usage": {
-        "not-in-use": "Not in use",
-        "value-set": "In use (value set)",
-        "values": "In use (values)"
-      },
-      "divider": {
-        "identification": "Identification",
-        "description": "Description",
-        "data": "Data",
-        "value": "Value",
-        "protocol": "Protocol",
-        "state": "State",
-        "interpretation": "Interpretation",
-        "mappings": "Mappings",
-        "members": "Members",
-        "components": "Components"
-      },
-      "info": {
-        "data": "Description of data structure",
-        "protocol": "Methodology of the observation measurement",
-        "state": "Ability to describe the state of subject during the observation process",
-        "mappings": "Concept map from observation definition to other code systems"
-      },
-      "time-precision": {
-        "timestamp": "Timestamp",
-        "period": "Period"
-      },
-      "structure": {
-        "value": "Value",
-        "panel": "Panel",
-        "component": "Component"
-      },
-      "behaviour": {
-        "editable": "Editable",
-        "read-only": "Read only",
-        "computable": "Computable"
-      },
-      "cardinality": {
-        "min": "min",
-        "max": "max"
-      },
-      "interpretation-category": {
-        "reference": "Reference",
-        "critical": "Critical",
-        "absolute": "Absolute"
-      }
-    },
-    "task": {
-      "add-btn": "Add task",
-      "select-project": "Select project",
-      "activity": "Activity",
-      "context": "Context",
-      "add-comment": "Add new comment",
-      "filter": {
-        "project": "Project",
-        "status": "Status",
-        "priority": "Priority",
-        "assignee": "Assignee",
-        "type": "Type",
-        "author": "Author",
-        "created": "Created",
-        "requested-performer": "Requested performer",
-        "finished": "Finished",
-        "presets": {
-          "header": "Presets",
-          "mine": "Authored by me",
-          "to-me": "Assigned to me"
-        }
-      }
-    },
-    "resource-context": {
-      "all-versions": "All versions",
-      "concepts": "Concepts",
-      "provenance": "Provenance",
-      "properties": "Properties",
-      "summary": "Summary"
-    },
-    "resource-import-modal": {
-      "header": "Import from external FHIR definition",
-      "id": "ID",
-      "source": "Source",
-      "type": "Type",
-      "url": "URL",
-      "file": "File"
-    },
-    "transformation-definition": {
-      "list": {
-        "add-btn": "Add transformation"
-      },
-      "resources": {
-        "type.definition": "Definitions",
-        "type.conceptmap": "Concept Maps",
-        "type.mapping": "Mapping",
-        "new": "-- new --"
-      },
-      "resource-form": {
-        "definition": "Structure definition",
-        "map-set": "Map Set",
-        "fhir-server": "Fhir server",
-        "fhir-resource": "Resource",
-        "content": "Content",
-        "generate": "Generate",
-        "url": "Url",
-        "preview-show": "Preview",
-        "preview-hide": "Hide",
-        "save-as": "Save as",
-        "download-json": "JSON",
-        "download-xml": "XML",
-        "compile": "Compile"
-      },
-      "execution": {
-        "input": "Input",
-        "transform": "Transform",
-        "output": "Output"
-      }
-    },
-    "resource-form": {
-      "open-uri": "Open URI",
-      "id-change-modal": {
-        "id": "New ID",
-        "header": "Change ID"
-      }
-    }
-  },
-  "entities": {
-    "resource": {
-      "id": "ID",
-      "name": "Name",
-      "title": "Title",
-      "uri": "URI",
-      "description": "Description",
-      "purpose": "Purpose",
-      "publisher": "Publisher",
-      "use-context": "Use context",
-      "experimental": "Experimental",
-      "supported-languages": "Supported languages",
-      "identifiers": {
-        "multiple": "Identifiers",
-        "system": "System",
-        "value": "Value"
-      },
-      "copyright": {
-        "single": "Copyright",
-        "holder": "Copyright holder",
-        "jurisdiction": "Jurisdiction",
-        "statement": "Copyright statement"
-      },
-      "permissions": {
-        "multiple": "Permissions",
-        "admin": "Admin",
-        "editor": "Editor",
-        "viewer": "Viewer"
-      },
-      "version": {
-        "single": "Version",
-        "version": "Version",
-        "algorithm": "Algorithm",
-        "from": "Expected to be used since",
-        "to": "Expected to be used until",
-        "description": "Description"
-      },
-      "settings": {
-        "multiple": "Settings",
-        "review-required": "Review required",
-        "approval-required": "Approval required"
-      }
-    },
-    "common": {
-      "privileges": "Privileges"
-    },
-    "measurement-unit": {
-      "id": "Id",
-      "code": "Code",
-      "name": "Name",
-      "alias": "Alias",
-      "period": "Period",
-      "rounding": "Rounding",
-      "kind": "Kind",
-      "definitionUnit": "Base unit",
-      "definitionValue": "Base value",
-      "mappings": "Mappings"
-    },
-    "measurement-unit-mapping": {
-      "system": "System",
-      "system-unit": "System unit",
-      "system-value": "System value"
-    },
-    "association-type": {
-      "code": "Code",
-      "kind": "Kind",
-      "forward-name": "Forward name",
-      "reverse-name": "Reverse name",
-      "directed": "Directed",
-      "description": "Description"
-    },
-    "map-set": {
-      "plural": "Map Sets",
-      "id": "Identifier",
-      "uri": "Uniform resource identifier (URI)",
-      "name": "Name",
-      "domain": "Domain",
-      "description": "Description",
-      "versions": "Versions",
-      "associations": "Associations",
-      "source-value-set": "Source value set",
-      "target-value-set": "Target value set",
-      "source-code-systems": "Source code systems",
-      "target-code-systems": "Target code systems"
-    },
-    "map-set-entity": {
-      "id": "Id",
-      "versions": "Versions"
-    },
-    "map-set-association": {
-      "source": "Source",
-      "target": "Target",
-      "type": "Type",
-      "status": "Status",
-      "concept": "Concept"
-    },
-    "map-set-version": {
-      "id": "Identifier",
-      "version": "Version",
-      "source": "Publisher",
-      "supported-languages": "Supported languages",
-      "description": "Description",
-      "release-date": "Expected use since",
-      "expiration-date": "Expected use until",
-      "status": "Status"
-    },
-    "map-set-entity-version": {
-      "id": "Id",
-      "created-at": "Created at",
-      "description": "Description",
-      "status": "Status"
-    },
-    "code-system": {
-      "plural": "Code Systems",
-      "id": "ID",
-      "uri": "Uniform resource identifier (URI)",
-      "uri-short": "URI",
-      "name": "Name",
-      "title": "Title",
-      "publisher": "Publisher",
-      "content": "Content",
-      "case-sensitivity": "Case sensitivity",
-      "supported-languages": "Supported languages",
-      "narrative": "Narrative",
-      "description": "Description",
-      "contacts": "Contacts",
-      "concepts": "Concepts",
-      "properties": "Properties",
-      "versions": "Versions",
-      "base-code-system": "Parent code system",
-      "sequence": "Sequence for concept code",
-      "hierarchy-meaning": "Hierarchy meaning",
-      "designations": "Designations"
-    },
-    "code-system-version": {
-      "id": "Identifier",
-      "version": "Version",
-      "source": "Publisher",
-      "preferred-language": "Preferred language",
-      "supported-languages": "Supported languages",
-      "description": "Description",
-      "status": "Status",
-      "type": "Type",
-      "release-date": "Expected use since",
-      "expiration-date": "Expected use until",
-      "entities": "Entity versions"
-    },
-    "code-system-concept": {
-      "type": "Type",
-      "code": "Code",
-      "description": "Description",
-      "code-system": "Code system",
-      "versions": "Concept versions"
-    },
-    "code-system-association": {
-      "type": "Type",
-      "status": "Status",
-      "target-id": "Target ID",
-      "target-code": "Target code",
-      "versions": "Association versions"
-    },
-    "code-system-entity": {
-      "type": "Type",
-      "versions": "Entity versions"
-    },
-    "code-system-entity-version": {
-      "id": "ID",
-      "code": "Code",
-      "description": "Description",
-      "status": "Status",
-      "created": "Created at",
-      "property-values": "Property values",
-      "designations": "Designations",
-      "associations": "Associations",
-      "association-type": "Association",
-      "association-status": "Status",
-      "association-target": "Target",
-      "association-order": "Order"
-    },
-    "naming-system": {
-      "id": "Id",
-      "code-system": "CodeSystem",
-      "name": "Name",
-      "source": "Publisher",
-      "kind": "Kind",
-      "status": "Status",
-      "description": "Description",
-      "identifiers": "Identifiers"
-    },
-    "naming-system-identifier": {
-      "type": "Type",
-      "value": "Value"
-    },
-    "entity-property": {
-      "name": "Name",
-      "type": "Type",
-      "description": "Description",
-      "status": "Status",
-      "value": "Value",
-      "order-number": "Order",
-      "preferred": "Preferred",
-      "required": "Required",
-      "rule": {
-        "singular": "Rule",
-        "type": "Type",
-        "code-systems": "Code systems",
-        "value-set": "Value set",
-        "filters": "Filters",
-        "compose": "Compose",
-        "property": "Property",
-        "operator": "Operator",
-        "value": "Value"
-      }
-    },
-    "designation": {
-      "type": "Type",
-      "name": "Name",
-      "language": "Language",
-      "rendering": "Rendering",
-      "preferred": "Preferred",
-      "case-significance": "Case significance",
-      "designation-kind": "Designation kind",
-      "description": "Description",
-      "status": "Status"
-    },
-    "contact-detail": {
-      "name": "Name",
-      "telecoms": "Telecoms",
-      "telecom": {
-        "system": "System",
-        "value": "Value",
-        "use": "Use"
-      }
-    },
-    "value-set": {
-      "plural": "Value Sets",
-      "id": "ID",
-      "name": "Name",
-      "title": "Title",
-      "publisher": "Publisher",
-      "uri": "Uniform resource identifier (URI)",
-      "uri-short": "URI",
-      "narrative": "Narrative",
-      "description": "Description",
-      "status": "Status",
-      "versions": "Versions",
-      "contacts": "Contacts",
-      "concepts": "Concepts"
-    },
-    "value-set-version": {
-      "id": "Identifier",
-      "version": "Version",
-      "source": "Publisher",
-      "supported-languages": "Supported languages",
-      "description": "Description",
-      "status": "Status",
-      "release-date": "Expected use since",
-      "expiration-date": "Expected use until",
-      "created": "Created",
-      "rule-set": "Rule set",
-      "concepts": "Concepts",
-      "algorithm": "Algorithm"
-    },
-    "value-set-rule-set": {
-      "locked-date": "Locked date",
-      "inactive": "Inactive concepts",
-      "rules": "Rules",
-      "include": "Include",
-      "exclude": "Exclude",
-      "rule": {
-        "compose": "Compose",
-        "based-on": "Based on",
-        "code-system": "Code system",
-        "concepts": "Concepts",
-        "filters": "Filters",
-        "value-set": "Value set",
-        "value-set-version": "Value set version",
-        "code-system-version": "Code system version"
-      }
-    },
-    "value-set-rule-filter": {
-      "property": {
-        "label": "Property",
-        "concept": "Concept",
-        "constraint": "Constraint"
-      },
-      "operator": {
-        "label": "Operator",
-        "is-a": "Is a",
-        "in": "In",
-        "equal": "="
-      },
-      "value": "Value"
-    },
-    "value-set-version-concept": {
-      "concept": "Concept",
-      "display": "Display",
-      "order-number": "Order",
-      "additional-designations": "Additional designations"
-    },
-    "privilege": {
-      "code": "Code",
-      "name": "Name",
-      "resources": "Resources",
-      "kind": "Kind",
-      "actions": "Actions"
-    },
-    "privilege-resource": {
-      "type": "Type",
-      "resource-id": "Resource",
-      "view": "View",
-      "edit": "Edit",
-      "publish": "Publish"
-    },
-    "snomed-concept": {
-      "term": "Term",
-      "concept-id": "Concept ID",
-      "descriptions": "Descriptions",
-      "translations": "Translations",
-      "relationships": "Relationships",
-      "refsets": "Refsets",
-      "fsn": "Fully Specified Name (FSN)",
-      "pt": "Preferred term (PT)",
-      "snomed-references": "References in SNOMED",
-      "kts-references": "References in TermX"
-    },
-    "snomed-translation": {
-      "concept-id": "Concept id",
-      "description-id": "Description id",
-      "module": "Module",
-      "language": "Language",
-      "term": "Term",
-      "type": "Type",
-      "acceptability": "Acceptability",
-      "task": "Task",
-      "status": "Status",
-      "type-options": {
-        "synonym": "Synonym",
-        "fully-specified-name": "Fully specified name"
-      },
-      "acceptability-options": {
-        "acceptable": "Acceptable",
-        "preferred": "Preferred"
-      }
-    },
-    "snomed-description": {
-      "refset": "Refset",
-      "concept-id": "Concept id",
-      "description-id": "Description id",
-      "lang": "Language",
-      "term": "Term",
-      "type": "Type",
-      "acceptability": "Acceptability"
-    },
-    "snomed-relationship": {
-      "group": "Group",
-      "target": "Target",
-      "type": "Type",
-      "active": "Active"
-    },
-    "snomed-refset": {
-      "target": "Target",
-      "type": "Type"
-    },
-    "snomed-reference": {
-      "type": "Type",
-      "concept": "Concept"
-    },
-    "snomed-branch": {
-      "path": "Path",
-      "state": "State",
-      "creation": "Creation",
-      "base": "Base",
-      "head": "Head",
-      "deleted": "Deleted",
-      "locked": "Locked",
-      "metadata": "Metadata"
-    },
-    "page": {
-      "plural": "Pages",
-      "status": "Status",
-      "tags": "Tags",
-      "template": "Template",
-      "contents": "Contents",
-      "links": "Parent pages",
-      "relations": "Relations"
-    },
-    "page-content": {
-      "name": "Name",
-      "lang": "Language",
-      "content": "Content",
-      "content-type": "Content type"
-    },
-    "page-link": {
-      "target": "Target",
-      "source": "Source",
-      "order-number": "Order number"
-    },
-    "page-relation": {
-      "type": "Type",
-      "target": "Target"
-    },
-    "structure-definition": {
-      "plural": "Structure Definitions",
-      "url": "URL",
-      "code": "Code",
-      "content": "Content",
-      "parent": "Parent",
-      "version": "Version",
-      "content-type": "Content type",
-      "content-format": "Content format"
-    },
-    "sequence": {
-      "code": "Code",
-      "description": "Description",
-      "pattern": "Pattern",
-      "restart": "Restart",
-      "start-from": "Start from",
-      "luvs": "Last used values"
-    },
-    "sequence-luv": {
-      "luv": "Last used value",
-      "period": "Period"
-    },
-    "template": {
-      "code": "Code",
-      "names": "Names",
-      "content-type": "Content type",
-      "content": "Content"
-    },
-    "package": {
-      "plural": "Packages",
-      "singular": "Package",
-      "code": "Code",
-      "git": "Git",
-      "version": {
-        "plural": "Versions",
-        "singular": "Version",
-        "version": "Version"
-      }
-    },
-    "space": {
-      "plural": "Spaces",
-      "singular": "Space",
-      "code": "Code",
-      "name": "Name",
-      "active": "Active",
-      "terminology-servers": "Terminology servers",
-      "acl": "ACL",
-      "shared": "Shared",
-      "owners": "Owners",
-      "editors": "Editors",
-      "viewers": "Viewers"
-    },
-    "terminology-server": {
-      "plural": "Servers",
-      "singular": "Server",
-      "code": "Code",
-      "name": "Name",
-      "kind": "Kind",
-      "active": "Active",
-      "root-url": "Root URL",
-      "current-installation": "Current installation"
-    },
-    "observation-definition": {
-      "code": "Code",
-      "version": "Version",
-      "publisher": "Publisher",
-      "status": "Status",
-      "url": "URL",
-      "name": "Name",
-      "alias": "Alias",
-      "definition": "Definition",
-      "keywords": "Keywords",
-      "category": "Category",
-      "time-precision": "Time precision",
-      "structure": "Structure",
-      "details": "Details",
-      "value": {
-        "type": "Type",
-        "multiple-results-allowed": "Multiple results allowed",
-        "behaviour": "Behaviour",
-        "expression": "Expression",
-        "value-set": "Value set",
-        "values": "Values",
-        "usage": "Usage",
-        "unit": {
-          "singular": "Unit",
-          "system": "Unit system"
-        }
-      },
-      "members": {
-        "code": "Code",
-        "order-number": "Order",
-        "names": "Names",
-        "cardinality": "Cardinality",
-        "multiple": "Members"
-      },
-      "components": {
-        "code": "Code",
-        "order-number": "Order",
-        "names": "Names",
-        "cardinality": "Cardinality",
-        "binding": "Binding",
-        "type": "Type",
-        "value-set": "Value set",
-        "unit": {
-          "singular": "Unit",
-          "system": "Unit system"
-        },
-        "multiple": "Components"
-      },
-      "protocol": {
-        "device": "Device",
-        "device-value-set": "Device value set",
-        "device-values": "Device values",
-        "method": "Method",
-        "method-value-set": "Method value set",
-        "method-values": "Method values",
-        "measurement-location": "Measurement location",
-        "measurement-location-value-set": "Measurement location value set",
-        "measurement-location-values": "Measurement location values",
-        "specimen": "Specimen",
-        "specimen-value-set": "Specimen value set",
-        "specimen-values": "Specimen values",
-        "position": "Position",
-        "position-value-set": "Position value set",
-        "position-values": "Position values",
-        "circumstances": "Circumstances of data collection",
-        "circumstances-value-set": "Collection details value set",
-        "circumstances-values": "Collection details values",
-        "components": "Custom parameters",
-        "single": "Protocol"
-      },
-      "interpretations": {
-        "order-number": "Order",
-        "target": "Component",
-        "state": "Criteria text",
-        "range": {
-          "singular": "Range",
-          "numeric-range": "Numeric range",
-          "value-set": "Value set",
-          "code-system": "Code system",
-          "code-system-concepts": "Code system concepts"
-        },
-        "category": {
-          "singular": "Category",
-          "age": "Age",
-          "gender": "Gender",
-          "gestation-age": "Gestation age"
-        },
-        "condition": "Condition (CQL)",
-        "fhir-interpretation-code": "FHIR interpretation code",
-        "snomed-interpretation-code": "SNOMED interpretation code"
-      },
-      "mappings": {
-        "order-number": "Order",
-        "target": "Component",
-        "map-set": "Map set",
-        "code-system": "Code system",
-        "concept": "Concept",
-        "relation": "Relation",
-        "condition": "Condition",
-        "multiple": "Mappings"
-      },
-      "state": "State"
-    },
-    "task": {
-      "plural": "Tasks",
-      "number": "Number",
-      "title": "Title",
-      "type": "Type",
-      "priority": "Priority",
-      "status": "Status",
-      "assignee": "Assignee",
-      "author": "Author",
-      "created": "Created",
-      "modified": "Modified",
-      "modified-by": "Modified by",
-      "project": "Project",
-      "workflow": "Workflow"
-    },
-    "transformation-definition": {
-      "singular": "FML transformation",
-      "plural": "FML transformations",
-      "source": "Source",
-      "source-local": "TermX",
-      "source-fhir": "Fhir",
-      "source-static": "Static",
-      "name": "Name"
-    },
-    "provenance": {
-      "date": "Date",
-      "author": "Author",
-      "activity": "Activity",
-      "target": "Target",
-      "changes": "Changes"
-    }
-  },
-  "marina.ui.form.validationError": {
-    "sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
-  }
+	"core": {
+		"back": "Back",
+		"btn": {
+			"add": "Add",
+			"cancel": "Cancel",
+			"clear-all": "Clear all",
+			"close": "Close",
+			"confirm": "Confirm",
+			"copied": "Copied",
+			"copy": "Copy",
+			"custom": "Custom",
+			"delete": "Delete",
+			"duplicate": "Duplicate",
+			"edit": "Edit",
+			"import": "Import",
+			"proceed": "Proceed",
+			"query": "Query",
+			"save": "Save",
+			"search": "Search",
+			"select": "Select"
+		},
+		"confirm": "Are you sure?",
+		"data-lost-warning": "Your changes wouldn't be saved!",
+		"delete-confirm": "Are you sure you want to delete?",
+		"filter": "Filter",
+		"form-invalid": "Form invalid.  Please review the data",
+		"no-data": "No data",
+		"no-privilege": {
+			"access": "To access: {{path}}",
+			"error": "401 Unauthorized",
+			"privileges": {
+				"plural": "You lack the privileges: {{privileges}}",
+				"singular": "You lack the privilege: {{privilege}}"
+			}
+		},
+		"version-select": {
+			"custom": "Custom"
+		}
+	},
+	"entities": {
+		"association-type": {
+			"code": "Code",
+			"description": "Description",
+			"directed": "Directed",
+			"forward-name": "Forward name",
+			"kind": "Kind",
+			"reverse-name": "Reverse name"
+		},
+		"code-system": {
+			"base-code-system": "Parent code system",
+			"case-sensitivity": "Case sensitivity",
+			"concepts": "Concepts",
+			"contacts": "Contacts",
+			"content": "Content",
+			"description": "Description",
+			"designations": "Designations",
+			"hierarchy-meaning": "Hierarchy meaning",
+			"id": "ID",
+			"name": "Name",
+			"narrative": "Narrative",
+			"plural": "Code Systems",
+			"properties": "Properties",
+			"publisher": "Publisher",
+			"sequence": "Sequence for concept code",
+			"supported-languages": "Supported languages",
+			"title": "Title",
+			"uri": "Uniform resource identifier (URI)",
+			"uri-short": "URI",
+			"versions": "Versions"
+		},
+		"code-system-association": {
+			"status": "Status",
+			"target-code": "Target code",
+			"target-id": "Target ID",
+			"type": "Type",
+			"versions": "Association versions"
+		},
+		"code-system-concept": {
+			"code": "Code",
+			"code-system": "Code system",
+			"description": "Description",
+			"type": "Type",
+			"versions": "Concept versions"
+		},
+		"code-system-entity": {
+			"type": "Type",
+			"versions": "Entity versions"
+		},
+		"code-system-entity-version": {
+			"association-order": "Order",
+			"association-status": "Status",
+			"association-target": "Target",
+			"association-type": "Association",
+			"associations": "Associations",
+			"code": "Code",
+			"created": "Created at",
+			"description": "Description",
+			"designations": "Designations",
+			"id": "ID",
+			"property-values": "Property values",
+			"status": "Status"
+		},
+		"code-system-version": {
+			"description": "Description",
+			"entities": "Entity versions",
+			"expiration-date": "Expected use until",
+			"id": "Identifier",
+			"preferred-language": "Preferred language",
+			"release-date": "Expected use since",
+			"source": "Publisher",
+			"status": "Status",
+			"supported-languages": "Supported languages",
+			"type": "Type",
+			"version": "Version"
+		},
+		"common": {
+			"privileges": "Privileges"
+		},
+		"contact-detail": {
+			"name": "Name",
+			"telecom": {
+				"system": "System",
+				"use": "Use",
+				"value": "Value"
+			},
+			"telecoms": "Telecoms"
+		},
+		"designation": {
+			"case-significance": "Case significance",
+			"description": "Description",
+			"designation-kind": "Designation kind",
+			"language": "Language",
+			"name": "Name",
+			"preferred": "Preferred",
+			"rendering": "Rendering",
+			"status": "Status",
+			"type": "Type"
+		},
+		"entity-property": {
+			"description": "Description",
+			"name": "Name",
+			"order-number": "Order",
+			"preferred": "Preferred",
+			"required": "Required",
+			"rule": {
+				"code-systems": "Code systems",
+				"compose": "Compose",
+				"filters": "Filters",
+				"operator": "Operator",
+				"property": "Property",
+				"singular": "Rule",
+				"type": "Type",
+				"value": "Value",
+				"value-set": "Value set"
+			},
+			"status": "Status",
+			"type": "Type",
+			"value": "Value"
+		},
+		"map-set": {
+			"associations": "Associations",
+			"description": "Description",
+			"domain": "Domain",
+			"id": "Identifier",
+			"name": "Name",
+			"plural": "Map Sets",
+			"source-code-systems": "Source code systems",
+			"source-value-set": "Source value set",
+			"target-code-systems": "Target code systems",
+			"target-value-set": "Target value set",
+			"uri": "Uniform resource identifier (URI)",
+			"versions": "Versions"
+		},
+		"map-set-association": {
+			"concept": "Concept",
+			"source": "Source",
+			"status": "Status",
+			"target": "Target",
+			"type": "Type"
+		},
+		"map-set-entity": {
+			"id": "Id",
+			"versions": "Versions"
+		},
+		"map-set-entity-version": {
+			"created-at": "Created at",
+			"description": "Description",
+			"id": "Id",
+			"status": "Status"
+		},
+		"map-set-version": {
+			"description": "Description",
+			"expiration-date": "Expected use until",
+			"id": "Identifier",
+			"release-date": "Expected use since",
+			"source": "Publisher",
+			"status": "Status",
+			"supported-languages": "Supported languages",
+			"version": "Version"
+		},
+		"measurement-unit": {
+			"alias": "Alias",
+			"code": "Code",
+			"definitionUnit": "Base unit",
+			"definitionValue": "Base value",
+			"id": "Id",
+			"kind": "Kind",
+			"mappings": "Mappings",
+			"name": "Name",
+			"period": "Period",
+			"rounding": "Rounding"
+		},
+		"measurement-unit-mapping": {
+			"system": "System",
+			"system-unit": "System unit",
+			"system-value": "System value"
+		},
+		"naming-system": {
+			"code-system": "CodeSystem",
+			"description": "Description",
+			"id": "Id",
+			"identifiers": "Identifiers",
+			"kind": "Kind",
+			"name": "Name",
+			"source": "Publisher",
+			"status": "Status"
+		},
+		"naming-system-identifier": {
+			"type": "Type",
+			"value": "Value"
+		},
+		"observation-definition": {
+			"alias": "Alias",
+			"category": "Category",
+			"code": "Code",
+			"components": {
+				"binding": "Binding",
+				"cardinality": "Cardinality",
+				"code": "Code",
+				"multiple": "Components",
+				"names": "Names",
+				"order-number": "Order",
+				"type": "Type",
+				"unit": {
+					"singular": "Unit",
+					"system": "Unit system"
+				},
+				"value-set": "Value set"
+			},
+			"definition": "Definition",
+			"details": "Details",
+			"interpretations": {
+				"category": {
+					"age": "Age",
+					"gender": "Gender",
+					"gestation-age": "Gestation age",
+					"singular": "Category"
+				},
+				"condition": "Condition (CQL)",
+				"fhir-interpretation-code": "FHIR interpretation code",
+				"order-number": "Order",
+				"range": {
+					"code-system": "Code system",
+					"code-system-concepts": "Code system concepts",
+					"numeric-range": "Numeric range",
+					"singular": "Range",
+					"value-set": "Value set"
+				},
+				"snomed-interpretation-code": "SNOMED interpretation code",
+				"state": "Criteria text",
+				"target": "Component"
+			},
+			"keywords": "Keywords",
+			"mappings": {
+				"code-system": "Code system",
+				"concept": "Concept",
+				"condition": "Condition",
+				"map-set": "Map set",
+				"multiple": "Mappings",
+				"order-number": "Order",
+				"relation": "Relation",
+				"target": "Component"
+			},
+			"members": {
+				"cardinality": "Cardinality",
+				"code": "Code",
+				"multiple": "Members",
+				"names": "Names",
+				"order-number": "Order"
+			},
+			"name": "Name",
+			"protocol": {
+				"circumstances": "Circumstances of data collection",
+				"circumstances-value-set": "Collection details value set",
+				"circumstances-values": "Collection details values",
+				"components": "Custom parameters",
+				"device": "Device",
+				"device-value-set": "Device value set",
+				"device-values": "Device values",
+				"measurement-location": "Measurement location",
+				"measurement-location-value-set": "Measurement location value set",
+				"measurement-location-values": "Measurement location values",
+				"method": "Method",
+				"method-value-set": "Method value set",
+				"method-values": "Method values",
+				"position": "Position",
+				"position-value-set": "Position value set",
+				"position-values": "Position values",
+				"single": "Protocol",
+				"specimen": "Specimen",
+				"specimen-value-set": "Specimen value set",
+				"specimen-values": "Specimen values"
+			},
+			"publisher": "Publisher",
+			"state": "State",
+			"status": "Status",
+			"structure": "Structure",
+			"time-precision": "Time precision",
+			"url": "URL",
+			"value": {
+				"behaviour": "Behaviour",
+				"expression": "Expression",
+				"multiple-results-allowed": "Multiple results allowed",
+				"type": "Type",
+				"unit": {
+					"singular": "Unit",
+					"system": "Unit system"
+				},
+				"usage": "Usage",
+				"value-set": "Value set",
+				"values": "Values"
+			},
+			"version": "Version"
+		},
+		"package": {
+			"code": "Code",
+			"git": "Git",
+			"plural": "Packages",
+			"singular": "Package",
+			"version": {
+				"plural": "Versions",
+				"singular": "Version",
+				"version": "Version"
+			}
+		},
+		"page": {
+			"contents": "Contents",
+			"links": "Parent pages",
+			"plural": "Pages",
+			"relations": "Relations",
+			"status": "Status",
+			"tags": "Tags",
+			"template": "Template"
+		},
+		"page-content": {
+			"content": "Content",
+			"content-type": "Content type",
+			"lang": "Language",
+			"name": "Name"
+		},
+		"page-link": {
+			"order-number": "Order number",
+			"source": "Source",
+			"target": "Target"
+		},
+		"page-relation": {
+			"target": "Target",
+			"type": "Type"
+		},
+		"privilege": {
+			"actions": "Actions",
+			"code": "Code",
+			"kind": "Kind",
+			"name": "Name",
+			"resources": "Resources"
+		},
+		"privilege-resource": {
+			"edit": "Edit",
+			"publish": "Publish",
+			"resource-id": "Resource",
+			"type": "Type",
+			"view": "View"
+		},
+		"provenance": {
+			"activity": "Activity",
+			"author": "Author",
+			"changes": "Changes",
+			"date": "Date",
+			"target": "Target"
+		},
+		"resource": {
+			"copyright": {
+				"holder": "Copyright holder",
+				"jurisdiction": "Jurisdiction",
+				"single": "Copyright",
+				"statement": "Copyright statement"
+			},
+			"description": "Description",
+			"experimental": "Experimental",
+			"id": "ID",
+			"identifiers": {
+				"multiple": "Identifiers",
+				"system": "System",
+				"value": "Value"
+			},
+			"name": "Name",
+			"permissions": {
+				"admin": "Admin",
+				"editor": "Editor",
+				"multiple": "Permissions",
+				"viewer": "Viewer"
+			},
+			"publisher": "Publisher",
+			"purpose": "Purpose",
+			"settings": {
+				"approval-required": "Approval required",
+				"multiple": "Settings",
+				"review-required": "Review required"
+			},
+			"supported-languages": "Supported languages",
+			"title": "Title",
+			"uri": "URI",
+			"use-context": "Use context",
+			"version": {
+				"algorithm": "Algorithm",
+				"description": "Description",
+				"from": "Expected to be used since",
+				"single": "Version",
+				"to": "Expected to be used until",
+				"version": "Version"
+			}
+		},
+		"sequence": {
+			"code": "Code",
+			"description": "Description",
+			"luvs": "Last used values",
+			"pattern": "Pattern",
+			"restart": "Restart",
+			"start-from": "Start from"
+		},
+		"sequence-luv": {
+			"luv": "Last used value",
+			"period": "Period"
+		},
+		"snomed-branch": {
+			"base": "Base",
+			"creation": "Creation",
+			"deleted": "Deleted",
+			"head": "Head",
+			"locked": "Locked",
+			"metadata": "Metadata",
+			"path": "Path",
+			"state": "State"
+		},
+		"snomed-concept": {
+			"concept-id": "Concept ID",
+			"descriptions": "Descriptions",
+			"fsn": "Fully Specified Name (FSN)",
+			"kts-references": "References in TermX",
+			"pt": "Preferred term (PT)",
+			"refsets": "Refsets",
+			"relationships": "Relationships",
+			"snomed-references": "References in SNOMED",
+			"term": "Term",
+			"translations": "Translations"
+		},
+		"snomed-description": {
+			"acceptability": "Acceptability",
+			"concept-id": "Concept id",
+			"description-id": "Description id",
+			"lang": "Language",
+			"refset": "Refset",
+			"term": "Term",
+			"type": "Type"
+		},
+		"snomed-reference": {
+			"concept": "Concept",
+			"type": "Type"
+		},
+		"snomed-refset": {
+			"target": "Target",
+			"type": "Type"
+		},
+		"snomed-relationship": {
+			"active": "Active",
+			"group": "Group",
+			"target": "Target",
+			"type": "Type"
+		},
+		"snomed-translation": {
+			"acceptability": "Acceptability",
+			"acceptability-options": {
+				"acceptable": "Acceptable",
+				"preferred": "Preferred"
+			},
+			"concept-id": "Concept id",
+			"description-id": "Description id",
+			"language": "Language",
+			"module": "Module",
+			"status": "Status",
+			"task": "Task",
+			"term": "Term",
+			"type": "Type",
+			"type-options": {
+				"fully-specified-name": "Fully specified name",
+				"synonym": "Synonym"
+			}
+		},
+		"space": {
+			"acl": "ACL",
+			"active": "Active",
+			"code": "Code",
+			"editors": "Editors",
+			"name": "Name",
+			"owners": "Owners",
+			"plural": "Spaces",
+			"shared": "Shared",
+			"singular": "Space",
+			"terminology-servers": "Terminology servers",
+			"viewers": "Viewers"
+		},
+		"structure-definition": {
+			"code": "Code",
+			"content": "Content",
+			"content-format": "Content format",
+			"content-type": "Content type",
+			"parent": "Parent",
+			"plural": "Structure Definitions",
+			"url": "URL",
+			"version": "Version"
+		},
+		"task": {
+			"assignee": "Assignee",
+			"author": "Author",
+			"created": "Created",
+			"modified": "Modified",
+			"modified-by": "Modified by",
+			"number": "Number",
+			"plural": "Tasks",
+			"priority": "Priority",
+			"project": "Project",
+			"status": "Status",
+			"title": "Title",
+			"type": "Type",
+			"workflow": "Workflow"
+		},
+		"template": {
+			"code": "Code",
+			"content": "Content",
+			"content-type": "Content type",
+			"names": "Names"
+		},
+		"terminology-server": {
+			"active": "Active",
+			"code": "Code",
+			"current-installation": "Current installation",
+			"kind": "Kind",
+			"name": "Name",
+			"plural": "Servers",
+			"root-url": "Root URL",
+			"singular": "Server"
+		},
+		"transformation-definition": {
+			"name": "Name",
+			"plural": "FML transformations",
+			"singular": "FML transformation",
+			"source": "Source",
+			"source-fhir": "Fhir",
+			"source-local": "TermX",
+			"source-static": "Static"
+		},
+		"value-set": {
+			"concepts": "Concepts",
+			"contacts": "Contacts",
+			"description": "Description",
+			"id": "ID",
+			"name": "Name",
+			"narrative": "Narrative",
+			"plural": "Value Sets",
+			"publisher": "Publisher",
+			"status": "Status",
+			"title": "Title",
+			"uri": "Uniform resource identifier (URI)",
+			"uri-short": "URI",
+			"versions": "Versions"
+		},
+		"value-set-rule-filter": {
+			"operator": {
+				"equal": "=",
+				"in": "In",
+				"is-a": "Is a",
+				"label": "Operator"
+			},
+			"property": {
+				"concept": "Concept",
+				"constraint": "Constraint",
+				"label": "Property"
+			},
+			"value": "Value"
+		},
+		"value-set-rule-set": {
+			"exclude": "Exclude",
+			"inactive": "Inactive concepts",
+			"include": "Include",
+			"locked-date": "Locked date",
+			"rule": {
+				"based-on": "Based on",
+				"code-system": "Code system",
+				"code-system-version": "Code system version",
+				"compose": "Compose",
+				"concepts": "Concepts",
+				"filters": "Filters",
+				"value-set": "Value set",
+				"value-set-version": "Value set version"
+			},
+			"rules": "Rules"
+		},
+		"value-set-version": {
+			"algorithm": "Algorithm",
+			"concepts": "Concepts",
+			"created": "Created",
+			"description": "Description",
+			"expiration-date": "Expected use until",
+			"id": "Identifier",
+			"release-date": "Expected use since",
+			"rule-set": "Rule set",
+			"source": "Publisher",
+			"status": "Status",
+			"supported-languages": "Supported languages",
+			"version": "Version"
+		},
+		"value-set-version-concept": {
+			"additional-designations": "Additional designations",
+			"concept": "Concept",
+			"display": "Display",
+			"order-number": "Order"
+		}
+	},
+	"marina.ui.form.validationError": {
+		"sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
+	},
+	"web": {
+		"app": {
+			"header": "TermX"
+		},
+		"association-type": {
+			"form": {
+				"add-header": "Add association type",
+				"edit-header": "Edit association type",
+				"view-header": "View association type"
+			},
+			"list": {
+				"add-association-type": "Add association type"
+			}
+		},
+		"case-sensitive": {
+			"code-is": {
+				"ci": "Code is case insensitive",
+				"cs": "Code is case sensitive"
+			},
+			"options": {
+				"ci": "Case insensitive",
+				"cl": "Initial character insensitive",
+				"cs": "Case sensitive"
+			}
+		},
+		"case-sensitive-options": {
+			"ci": "",
+			"cs": "",
+			"ics": ""
+		},
+		"code-system": {
+			"contacts": {
+				"list": {
+					"add-contact": "",
+					"header": ""
+				},
+				"modal": {
+					"edit-header": "",
+					"name": "",
+					"operations": "",
+					"system": "",
+					"use": "",
+					"value": ""
+				}
+			},
+			"entity": {
+				"description": "",
+				"domain": "",
+				"id": "",
+				"name": "",
+				"uri": ""
+			},
+			"entity-version": {
+				"list": {
+					"add-entity": "",
+					"code": "",
+					"description": "",
+					"header": "",
+					"operations": ""
+				}
+			},
+			"form": {
+				"add-header": "Create a new code system",
+				"concepts": {
+					"add-concept": "Add concept",
+					"concept": "Concept",
+					"contains": "Contains",
+					"eq": "Equals",
+					"validate": "Validate code system"
+				},
+				"delete-property-usages": "Delete property usages",
+				"edit-header": "Edit code system",
+				"header": "Code system",
+				"properties": {
+					"add-property": "Add property",
+					"add-supplement": "Add supplement",
+					"delete-property": "Delete property",
+					"delete-supplement": "Delete supplement",
+					"often-used-designations": "Often used designations",
+					"often-used-properties": "Often used properties"
+				},
+				"versions": {
+					"duplicate": {
+						"create-new-entity-version": "Create new entity versions",
+						"duplicate-header": "Create duplicate code system version",
+						"source-code-system": "Source code system:",
+						"source-version": "Source version:",
+						"target-version": "Target version:"
+					},
+					"list": {
+						"add-new-version": "Add new version",
+						"add-version": "Add version",
+						"compare": "Compare",
+						"duplicate-version": "Duplicate version",
+						"export-fhir-json": "Export FHIR json",
+						"export-fhir-xml": "Export FHIR xml",
+						"open-fhir": "Open FHIR"
+					}
+				},
+				"view-header": "View code system"
+			},
+			"list": {
+				"add-code-system": "Add code system",
+				"add-concept": "",
+				"case-sensitivity": "",
+				"concepts": "",
+				"content": "",
+				"count": "Count",
+				"domain": "Domain",
+				"duplicate": {
+					"duplicate-header": "",
+					"header": "Create duplicate code system",
+					"source-code-system": "Source code system:",
+					"target-code-system": "Target code system:",
+					"target-uri": "Target URI:"
+				},
+				"header": "",
+				"import-fhir": "Import external FHIR definition",
+				"last-version": "Last version",
+				"manual": "Manual",
+				"narrative": "",
+				"open-fhir": "Open FHIR",
+				"properties": "",
+				"status": "Status",
+				"title": "Code systems",
+				"uri": "URI",
+				"versions": "",
+				"versions-expiration-date": "to {{expirationDate}}",
+				"versions-release-date": "From: {{releaseDate}}",
+				"versions-version": "Version name: {{version}}"
+			},
+			"summary": {
+				"add-concept": "Add concept",
+				"add-version": "Add version",
+				"all-tasks": "All tasks",
+				"code-system": "Code system",
+				"compare": "Compare",
+				"concepts": "Concepts",
+				"duplicate-version-modal": {
+					"header": "Duplicate code system version",
+					"version": "New version"
+				},
+				"opened-tasks": "Opened tasks",
+				"related-artifacts": "Related artifacts",
+				"unlinked-concepts": {
+					"author": "Author",
+					"concept": "Concept",
+					"create-task": "Create task",
+					"designation": "Designation",
+					"link-to": "Link to {{version}}",
+					"no-versions": "No draft versions found",
+					"status": "Status",
+					"task": "Task",
+					"task-modal": {
+						"assignee": "Assignee",
+						"cs-version": "Link to code system version",
+						"header": "Create approval task"
+					},
+					"title": "Unlinked concepts",
+					"version": "Version"
+				},
+				"versions": "Versions"
+			}
+		},
+		"code-system-association": {
+			"form": {
+				"target": "Target"
+			}
+		},
+		"code-system-compare": {
+			"added": "Added",
+			"changed": "Changed",
+			"compare": "Compare",
+			"deleted": "Deleted",
+			"source": "Source",
+			"source-code-system": "Source code system",
+			"target": "Target",
+			"target-code-system": "Target code system"
+		},
+		"code-system-concept": {
+			"filter": {
+				"language-filter": "Language filter",
+				"property-filter": "Property filter",
+				"property-name-filter": "Property name filter",
+				"search-property-value-placeholder": "Search property name",
+				"select-language-placeholder": "Select language",
+				"select-property-placeholder": "Select property",
+				"select-version-placeholder": "Select code system version",
+				"version-filter": "Version filter"
+			},
+			"form": {
+				"add-header": "Add concept",
+				"all-tasks": "All tasks",
+				"concept": "Concept",
+				"linked-with-code-systems": "Linked with code system versions",
+				"map-sets": {
+					"concept-code": "Concept code",
+					"concept-display": "Concept display",
+					"direction": "Direction",
+					"equivalence": "Equivalence",
+					"header": "Related map sets",
+					"map-set": "Map set"
+				},
+				"opened-tasks": "Opened tasks",
+				"related-artifacts": "Related artifacts",
+				"thesaurus": {
+					"header": "",
+					"name": "",
+					"slug": ""
+				},
+				"value-sets": {
+					"definition": "Definition",
+					"header": "Related value sets",
+					"value-set": "Value set"
+				},
+				"version": {
+					"code-system-version": "Code System version",
+					"header": "Version {{created}}",
+					"new": "New version",
+					"new-version": "New version"
+				},
+				"wiki": {
+					"header": "Wiki",
+					"name": "Name",
+					"slug": "Slug"
+				}
+			},
+			"group": {
+				"association": "Association",
+				"property": "Property",
+				"type": "Type"
+			},
+			"list": {
+				"add-concept-child": "Add subconcept",
+				"external": "External",
+				"propagate-properties": "Propagate properties to children",
+				"unlink-concept": "Unlink concept from version"
+			},
+			"property-list": {
+				"concepts": "Concepts",
+				"properties": "Properties"
+			}
+		},
+		"code-system-concept-version": {
+			"add-version": "Add version",
+			"association": {
+				"add-association": "Add association",
+				"delete-association": "Delete association",
+				"edit-association": "Edit association"
+			},
+			"designation": {
+				"add-designation": "Add designation",
+				"add-supplement": "Add supplement",
+				"delete-designation": "Delete designation",
+				"edit-designation": "Edit designation",
+				"multi-language-input": {
+					"add-translation": "Add translation",
+					"placeholder": "Translation"
+				}
+			},
+			"property-value": {
+				"add-property-value": "Add property value",
+				"add-supplement": "Add supplement",
+				"coding-value-system": "Coding value system",
+				"delete-property-value": "Delete property value",
+				"edit-property-value": "Edit property value"
+			}
+		},
+		"code-system-validator": {
+			"circular-dependencies-detector": {
+				"detect": "Detect",
+				"title": "Circular dependencies detector"
+			},
+			"code-system": "Code system",
+			"result": {
+				"title": "Result"
+			},
+			"uniqueness-validator": {
+				"designations": "Designations",
+				"empty-properties": "Empty properties",
+				"ignore-empty-properties": "Ignore empty properties",
+				"properties": "Properties",
+				"title": "Uniqueness validator",
+				"validate": "Validate"
+			}
+		},
+		"code-system-version": {
+			"entity": {
+				"description": "",
+				"expiration-date": "",
+				"id": "",
+				"preferredLanguage": "",
+				"release-date": "",
+				"source": "",
+				"status": "",
+				"supported-languages": "",
+				"version": ""
+			},
+			"form": {
+				"add-header": "Add version",
+				"duplicate": {
+					"duplicate-header": "",
+					"source-code-system": "",
+					"source-version": "",
+					"target-version": ""
+				},
+				"edit-header": "Edit version",
+				"entities": {
+					"add-entity": "Add entity",
+					"entity-version": "Entity version",
+					"modal": {
+						"add-header": "Add entity",
+						"entity-version": "Entity version"
+					}
+				},
+				"view-header": "View version"
+			},
+			"list": {
+				"add-new-version": "",
+				"add-version": "",
+				"duplicate-version": "",
+				"export-fhir-json": ""
+			},
+			"summary": {
+				"all-tasks": "All tasks",
+				"code-system-version": "Code system version",
+				"edit-version": "Edit version",
+				"info": {
+					"activate": "Activate",
+					"create-approve": "Create approval task",
+					"create-review": "Create review task",
+					"definition": "Definition",
+					"last-approved": "Last approval date",
+					"last-modified": "Last modified",
+					"last-reviewed": "Last review date",
+					"load-from-github": "Load from Github",
+					"make-draft": "Make draft",
+					"none": "None",
+					"push-to-github": "Push to Github",
+					"retire": "Retire",
+					"show-changes": "Show changes"
+				},
+				"opened-tasks": "Opened tasks",
+				"task-modal": {
+					"assignee": "Assignee",
+					"header": "Create {{type}} task",
+					"success-msg": "Task created"
+				}
+			}
+		},
+		"concept": {
+			"entity": {
+				"code": "",
+				"description": ""
+			},
+			"form": {
+				"add-header": "",
+				"edit-header": ""
+			},
+			"list": {
+				"concept": "",
+				"concepts": "",
+				"operations": ""
+			},
+			"version": {
+				"form": {
+					"add-header": "",
+					"edit-header": ""
+				},
+				"list": {
+					"concept-status": "",
+					"created": "",
+					"description": "",
+					"designations": "",
+					"number": "",
+					"operations": "",
+					"property-values": "",
+					"status": "",
+					"versions": ""
+				}
+			}
+		},
+		"contacts": {
+			"list": {
+				"add-contact": "Add contact",
+				"header": "Contacts"
+			},
+			"modal": {
+				"add-header": "Add contact",
+				"edit-header": "Edit contact",
+				"name": "Name"
+			}
+		},
+		"designation": {
+			"list": {
+				"designation": "",
+				"language": "",
+				"name": "",
+				"status": "",
+				"type": ""
+			},
+			"modal": {
+				"add-designation": "",
+				"case-significance": "",
+				"delete-designation": "",
+				"description": "",
+				"designation-kind": "",
+				"edit-designation": "",
+				"status": ""
+			}
+		},
+		"dev-code-system-relation": {
+			"map-set": {
+				"code": "Code",
+				"header": "Related map sets",
+				"name": "Name"
+			},
+			"value-set": {
+				"code": "Code",
+				"generate": "Generate snapshot",
+				"header": "Related value sets",
+				"name": "Name",
+				"publisher": "Publisher",
+				"uri": "URI",
+				"value-set": "Value set",
+				"value-set-code": "Value set code"
+			}
+		},
+		"entity-property": {
+			"entity": {
+				"description": "",
+				"name": "",
+				"status": "",
+				"type": ""
+			},
+			"form": {
+				"add-header": "Add property",
+				"edit-header": "Edit property"
+			}
+		},
+		"global-search": {
+			"dashboard": {
+				"code-systems": "CodeSystems",
+				"concepts": "Concepts",
+				"header": "Search",
+				"map-sets": "MapSets",
+				"measurement-unit": "Measurement unit",
+				"snomed": "SNOMED",
+				"value-sets": "ValueSets"
+			}
+		},
+		"integration": {
+			"fhir": {
+				"code-system": {
+					"find-matches": {
+						"exact": "Exact",
+						"properties": "Properties",
+						"property-name": "Name",
+						"property-value": "Value",
+						"system": "System",
+						"version": "Version"
+					},
+					"lookup": {
+						"code": "Code",
+						"date": "Date",
+						"properties": "Properties",
+						"system": "System",
+						"version": "Version"
+					},
+					"subsumes": {
+						"code-a": "CodeA",
+						"code-b": "CodeB",
+						"system": "System",
+						"version": "Version"
+					},
+					"validate-code": {
+						"code": "Code",
+						"display": "Display",
+						"url": "URL",
+						"version": "Version"
+					}
+				},
+				"concept-map": {
+					"closure": {
+						"code": "Code",
+						"concepts": "Concepts",
+						"name": "Name",
+						"system": "System",
+						"version": "Version"
+					},
+					"translate": {
+						"code": "Code",
+						"concept-map-version": "ConceptMapVersion",
+						"system": "System(URL)",
+						"target-system": "TargetSystem",
+						"uri": "URL",
+						"version": "Version"
+					}
+				},
+				"sync": {
+					"send-request": ""
+				},
+				"value-set": {
+					"expand": {
+						"url": "URL",
+						"value-set-version": "ValueSetVersion"
+					},
+					"validate-code": {
+						"code": "Code",
+						"display": "Display",
+						"system": "System",
+						"system-version": "SystemVersion",
+						"url": "URL",
+						"value-set-version": "ValueSetVersion"
+					}
+				}
+			},
+			"file-import": {
+				"association": {
+					"code-system": "Code system",
+					"code-system-version": "Code system version",
+					"column-value-separator": "Column value separator",
+					"file": "Associations CSV file",
+					"file-column": "File column",
+					"import": "Association file import",
+					"mapped-column": "Mapped column",
+					"order": "Order",
+					"source": "Source",
+					"target": "Target"
+				},
+				"code-system": {
+					"general": {
+						"clear-version-data": "",
+						"delete-concepts": "Delete all concepts before import?",
+						"generate-valueset": "Generate ValueSet",
+						"hold": "Hold",
+						"merge": "Merge",
+						"overlap-of-concepts": "Behavior on the overlap of concepts",
+						"replace": "Replace",
+						"resource-id": "Resource ID"
+					},
+					"import": "Code System file import",
+					"properties": {
+						"delimiter": "Delimiter",
+						"download-diff": "Download diff",
+						"download-log": "Download log",
+						"format": "Format",
+						"header": "Properties",
+						"import": "Import",
+						"import-data": "Import data",
+						"kts-property": "TermX property",
+						"lang": "Lang",
+						"preferred": "Preferred",
+						"type": "Type",
+						"type-column": "{{type}} column",
+						"validate-data": "Validate data only"
+					},
+					"source": {
+						"analyze": "Analyze",
+						"file": "File",
+						"header": "Source",
+						"link": "Link",
+						"types": {
+							"csv": "CSV",
+							"tsv": "TSV"
+						}
+					}
+				},
+				"concept-map": {
+					"import": "Concept Map file import",
+					"map-id": "Map ID",
+					"map-name": "Map name",
+					"map-version": "Map version",
+					"source-value-set": "Source value set",
+					"target-value-set": "Target value set"
+				},
+				"create-new": "Create new",
+				"not-found": "Not found?",
+				"process": "Process",
+				"success-message": "File processing is finished",
+				"title": "File import"
+			},
+			"import": {
+				"atc": "ATC {{edition}} import",
+				"base-code-system": "Parent CodeSystem",
+				"code-system": "CodeSystem",
+				"code-system-description": "CodeSystem description",
+				"code-system-name": "CodeSystem name",
+				"code-system-version-description": "CodeSystem version description",
+				"icd-10": "ICD-10 {{edition}} import",
+				"ichi": "ICHI {{edition}} import",
+				"loinc": "LOINC import",
+				"orphanet": "Rare diseases import",
+				"publisher": "Publisher",
+				"source-url": "Source URL",
+				"uri": "Uri",
+				"valid-from": "Valid from",
+				"valid-to": "Valid to",
+				"version": "Version"
+			},
+			"loinc-import": {
+				"answer-list": "Answer list",
+				"answer-list-link": "Answer list link",
+				"import": "Import",
+				"language": "Language",
+				"loinc": "LOINC",
+				"loinc-import": "LOINC import",
+				"loinc-terminology": "LOINC terminology",
+				"order-observation": "Order observation",
+				"panels": "Panels",
+				"parts": "Parts",
+				"supplementary-properties": "Supplementary properties",
+				"translations": "Translations"
+			},
+			"response": "Response",
+			"send-request": "Send request",
+			"set-default-data": "Set default data",
+			"systems": {
+				"atc": "ATC",
+				"fhir": "FHIR",
+				"icd-10": "ICD-10",
+				"ichi": "ICHI",
+				"loinc": "LOINC",
+				"orphanet": "Orphanet"
+			}
+		},
+		"landing": {
+			"resources": {
+				"title": "Resources",
+				"types": {
+					"code-system": "Code Systems",
+					"map-set": "Map Sets",
+					"value-set": "Value Sets"
+				}
+			},
+			"summary": {
+				"open-tasks": "Open tasks",
+				"pages": "Pages",
+				"spaces": "Spaces",
+				"title": "Summary"
+			},
+			"tasks": {
+				"actions": {
+					"create": "Create task"
+				},
+				"assigned-to-me": "Assigned to me",
+				"created-by-me": "Created by me",
+				"title": "Tasks"
+			}
+		},
+		"loinc": {
+			"answer-list": {
+				"answers": "Answers",
+				"code": "Answer list code",
+				"name": "Answer list name",
+				"oid": "OID",
+				"used-by": "Used by"
+			},
+			"loinc": {
+				"class": "Class",
+				"code": "LOINC",
+				"component": "Component",
+				"filter": {
+					"both": "Both",
+					"class": "Class",
+					"clinical": "Clinical",
+					"contains": "Contains",
+					"eq": "Equals",
+					"lab": "Lab",
+					"method": "Method",
+					"observation": "Observation",
+					"ord-obs": "Ord/Obs",
+					"order": "Order",
+					"property": "Property",
+					"scale": "Scale",
+					"survey": "Survey",
+					"system": "System",
+					"timing": "Timing",
+					"type": "Type"
+				},
+				"method": "Method",
+				"name": "Long Common Name",
+				"ord-obs": "Ord/Obs",
+				"property": "Property",
+				"scale": "Scale",
+				"system": "System",
+				"timing": "Timing",
+				"type": "Type",
+				"values": "Values"
+			},
+			"part": {
+				"code": "Part code",
+				"name": "Part name",
+				"used-by": "Used by"
+			}
+		},
+		"map-set": {
+			"entity": {
+				"description": "",
+				"domain": "",
+				"id": "",
+				"name": "",
+				"uri": ""
+			},
+			"form": {
+				"add-header": "Create a new map set",
+				"edit-header": "Edit map set",
+				"header": "Map set",
+				"view-header": "View map set"
+			},
+			"list": {
+				"add-version": "Add version",
+				"operations": "Operations",
+				"versions": "Versions",
+				"versions-expiration-date": "to {{expirationDate}}",
+				"versions-release-date": "From: {{releaseDate}}",
+				"versions-version": "Version name: {{version}}"
+			}
+		},
+		"map-set-association": {
+			"entity": {
+				"concept": "",
+				"source": "",
+				"status": "",
+				"target": "",
+				"type": ""
+			},
+			"form": {
+				"add-header": "Add association",
+				"edit-header": "Edit association",
+				"source-concept": "Source concept",
+				"source-system": "Source code system",
+				"status": "Status",
+				"target-concept": "Target concept",
+				"target-system": "Target code system",
+				"type": "Association type",
+				"view-header": "View association"
+			},
+			"list": {
+				"add-association": "Add association",
+				"associations": "Associations",
+				"code-system": "Code System",
+				"operations": "Operations"
+			}
+		},
+		"map-set-entity-version": {
+			"modal": {
+				"add-header": "Add entity version",
+				"edit-header": "Edit entity version",
+				"entity-version": "Entity version",
+				"link-header": "Link entity version"
+			},
+			"table": {
+				"activate": "Activate version",
+				"add-version": "Add version",
+				"header": "Entity versions",
+				"link-version": "Link version",
+				"retire": "Retire version"
+			}
+		},
+		"map-set-version": {
+			"entity": {
+				"description": "",
+				"expiration-date": "",
+				"id": "",
+				"release-date": "",
+				"source": "",
+				"status": "",
+				"supported-languages": "",
+				"version": ""
+			},
+			"form": {
+				"add-header": "Add version",
+				"edit-header": "Edit version",
+				"view-header": "View version"
+			}
+		},
+		"measurement-unit": {
+			"form": {
+				"add-header": "Add measurement unit",
+				"add-kind": "Add kind",
+				"edit-header": "Edit measurement unit",
+				"from": "Period from",
+				"select-kind": "Select kind",
+				"to": "Period to",
+				"view-header": "View measurement unit"
+			},
+			"mapping": {
+				"list": {
+					"add-mapping": "Add mapping"
+				},
+				"modal": {
+					"add-header": "Add mapping",
+					"edit-header": "Edit mapping"
+				}
+			}
+		},
+		"naming-system": {
+			"form": {
+				"add-header": "Create a new naming system",
+				"edit-header": "Edit naming system",
+				"view-header": "View naming system"
+			},
+			"list": {
+				"add-naming-system": "Add NamingSystem",
+				"naming-system": "NamingSystem",
+				"type": "Type"
+			}
+		},
+		"observation-definition": {
+			"behaviour": {
+				"computable": "Computable",
+				"editable": "Editable",
+				"read-only": "Read only"
+			},
+			"cardinality": {
+				"max": "max",
+				"min": "min"
+			},
+			"divider": {
+				"components": "Components",
+				"data": "Data",
+				"description": "Description",
+				"identification": "Identification",
+				"interpretation": "Interpretation",
+				"mappings": "Mappings",
+				"members": "Members",
+				"protocol": "Protocol",
+				"state": "State",
+				"value": "Value"
+			},
+			"filter": {
+				"category": "Category",
+				"structure": "Structure",
+				"value-type": "Value type"
+			},
+			"header-add": "Add observation definition",
+			"header-edit": "Observation definition {{code}}",
+			"import": "Start import",
+			"import-from-loinc": "Import from LOINC",
+			"import-success-message": "Observation definition import succeeded",
+			"info": {
+				"data": "Description of data structure",
+				"mappings": "Concept map from observation definition to other code systems",
+				"protocol": "Methodology of the observation measurement",
+				"state": "Ability to describe the state of subject during the observation process"
+			},
+			"interpretation-category": {
+				"absolute": "Absolute",
+				"critical": "Critical",
+				"reference": "Reference"
+			},
+			"protocol-usage": {
+				"not-in-use": "Not in use",
+				"value-set": "In use (value set)",
+				"values": "In use (values)"
+			},
+			"select-snomed": "SNOMED search",
+			"structure": {
+				"component": "Component",
+				"panel": "Panel",
+				"value": "Value"
+			},
+			"time-precision": {
+				"period": "Period",
+				"timestamp": "Timestamp"
+			}
+		},
+		"package": {
+			"add-header": "Add package",
+			"edit-header": "Edit package"
+		},
+		"privileges": {
+			"add-header": "Add privilege",
+			"edit-header": "Edit privilege",
+			"privileges": "Privileges",
+			"resources": {
+				"modal": {
+					"actions": {
+						"edit": "Edit",
+						"publish": "Publish",
+						"view": "View"
+					},
+					"add-header": "Add resource",
+					"edit-header": "Edit resource",
+					"resource-id": "Resource",
+					"resource-type": "Type",
+					"type": {
+						"admin": "Admin",
+						"any": "Any",
+						"association-type": "AssociationType",
+						"code-system": "CodeSystem",
+						"map-set": "MapSet",
+						"naming-system": "NamingSystem",
+						"observation-definition": "Observation definition",
+						"privilege": "Privilege",
+						"space": "Space",
+						"task": "Task",
+						"thesaurus": "",
+						"value-set": "ValueSet",
+						"wiki": "Wiki"
+					}
+				},
+				"table": {
+					"add-resource": "Add resource",
+					"delete-resource": "Delete resource",
+					"head": "Resources"
+				}
+			},
+			"table": {
+				"add-privilege": "Add privilege",
+				"delete-privilege": "Delete privilege"
+			}
+		},
+		"property-value": {
+			"list": {
+				"property": "",
+				"value": ""
+			},
+			"modal": {
+				"add-property": "",
+				"edit-property": ""
+			}
+		},
+		"publication-status": {
+			"operations": {
+				"activate": "Activate",
+				"retire": "Retire",
+				"save-as-draft": "Make draft"
+			}
+		},
+		"resource-context": {
+			"all-versions": "All versions",
+			"concepts": "Concepts",
+			"properties": "Properties",
+			"provenance": "Provenance",
+			"summary": "Summary"
+		},
+		"resource-form": {
+			"id-change-modal": {
+				"header": "Change ID",
+				"id": "New ID"
+			},
+			"open-uri": "Open URI"
+		},
+		"resource-import-modal": {
+			"file": "File",
+			"header": "Import from external FHIR definition",
+			"id": "ID",
+			"source": "Source",
+			"type": "Type",
+			"url": "URL"
+		},
+		"resources": {
+			"tabset": {
+				"association-types": "Association types",
+				"code-systems": "Code systems",
+				"map-sets": "Map sets",
+				"naming-systems": "Naming systems",
+				"value-sets": "Value sets"
+			}
+		},
+		"sequence": {
+			"form": {
+				"add-header": "Add sequence",
+				"edit-header": "Edit sequence"
+			},
+			"list": {
+				"add-sequence": "Add sequence"
+			}
+		},
+		"snomed": {
+			"branch": {
+				"form": {
+					"add-header": "Add branch",
+					"based-on": "Based on",
+					"edit-header": "Branch {{path}}",
+					"name": "Name",
+					"parent-branch": "Parent branch",
+					"release-date": "Release date"
+				},
+				"list": {
+					"add-branch": "Add branch",
+					"header": "Branches"
+				},
+				"management": {
+					"export-modal": {
+						"header": "Export to RF2 zip",
+						"type": "Type"
+					},
+					"export-to-rf2": "Export to RF2",
+					"header": "Branch {{path}}",
+					"import-failed": "Import from RF2 zip failed",
+					"import-from-rf2": "Import form RF2",
+					"import-modal": {
+						"create-version": "Create CodeSystem version",
+						"file": "File",
+						"header": "Import form RF2 zip",
+						"type": "Type"
+					},
+					"import-succeeded": "Import from RF2 zip succeeded",
+					"integrity-check": "Integrity check",
+					"lock": "Lock",
+					"lock-modal": {
+						"header": "Lock branch",
+						"message": "Message"
+					},
+					"total-descriptions": "{{total}} description(s) in the branch",
+					"unlinked-translations": "{{count}} unlinked translation(s)",
+					"unlock": "Unlock"
+				}
+			},
+			"rf2-export": "RF2 export",
+			"search": {
+				"ecl": "ECL",
+				"ecl-placeholder": "ECL expression",
+				"import-refset-concepts": "Import refset concepts",
+				"refsets": "Refsets",
+				"taxonomy": "Taxonomy"
+			}
+		},
+		"space": {
+			"add-btn": "Add space",
+			"add-header": "Add space",
+			"all-packages": "All packages",
+			"edit-header": "Edit space",
+			"import-btn": "Import space",
+			"import-error-message": "Space import failed",
+			"import-success-message": "Space import succeeded",
+			"new-version": "New version",
+			"resource-import-error-message": "Resource import failed",
+			"resource-import-success-message": "Resource import succeeded",
+			"select-context": "Select context"
+		},
+		"structure-definition": {
+			"form": {
+				"add-element": "Add element",
+				"add-header": "Add structure definition",
+				"cardinality": "Cardinality",
+				"code": "Code",
+				"definition": "Definition",
+				"definition-header": "Definition",
+				"display": "Display",
+				"edit-header": "Edit structure definition",
+				"element-header": "Elements",
+				"error-modal": {
+					"delete-content": "Delete content and proceed",
+					"fhir-to-fsh": "FHIR to FSH conversion failed",
+					"fsh-to-fhir": "FSH to FHIR conversion failed",
+					"no-save-proceed": "Close"
+				},
+				"fixed-coding": "Fixed coding",
+				"fixed-uri": "Fixed URI",
+				"fsh-header": "FSH",
+				"json-header": "JSON",
+				"modal": {
+					"content": "You have unsaved changes!",
+					"no-save-proceed": "Proceed",
+					"save-proceed": "Save and proceed"
+				},
+				"name": "Name",
+				"path": "Path",
+				"primary-source": "Primary source",
+				"short-description": "Short description",
+				"system": "System"
+			},
+			"list": {
+				"add-structure-definition": "Add structure definition"
+			},
+			"view": {
+				"binding": "Binding",
+				"fixed": "Fixed"
+			}
+		},
+		"structure-definition-constraint": {
+			"list": {
+				"add-constraint": "Add constraint",
+				"header": "Constraint(s)"
+			},
+			"modal": {
+				"add-header": "Add constraint",
+				"edit-header": "Edit constraint",
+				"error": "Error",
+				"expression": "Expression",
+				"human": "Human",
+				"key": "Key",
+				"requirements": "Requirements",
+				"severity": "Severity",
+				"source": "Source",
+				"warning": "Warning"
+			}
+		},
+		"structure-definition-type": {
+			"list": {
+				"add-type": "Add type",
+				"header": "Type(s)"
+			},
+			"modal": {
+				"add-header": "Add type",
+				"code": "Code",
+				"edit-header": "Edit type",
+				"target-profile": "Target profile"
+			}
+		},
+		"supplement": {
+			"form": {
+				"description": "Supplement description",
+				"designation": {
+					"add-header": "Add designation supplement",
+					"edit-header": "Edit designation supplement"
+				},
+				"property": {
+					"add-header": "Add property supplement",
+					"edit-header": "Edit property supplement"
+				},
+				"property-value": {
+					"add-header": "Add property value supplement",
+					"edit-header": "Edit property value supplement"
+				}
+			},
+			"supplement": "Supplement"
+		},
+		"task": {
+			"activity": "Activity",
+			"add-btn": "Add task",
+			"add-comment": "Add new comment",
+			"context": "Context",
+			"filter": {
+				"assignee": "Assignee",
+				"author": "Author",
+				"created": "Created",
+				"finished": "Finished",
+				"presets": {
+					"header": "Presets",
+					"mine": "Authored by me",
+					"to-me": "Assigned to me"
+				},
+				"priority": "Priority",
+				"project": "Project",
+				"requested-performer": "Requested performer",
+				"status": "Status",
+				"type": "Type"
+			},
+			"select-project": "Select project"
+		},
+		"template": {
+			"form": {
+				"add-header": "Add template",
+				"edit-header": "Edit template"
+			},
+			"list": {
+				"add-template": "Add template"
+			}
+		},
+		"terminology-server": {
+			"add-btn": "Add server",
+			"add-header": "Add server",
+			"edit-header": "Edit server",
+			"kind": {
+				"fhir": "FHIR server",
+				"snomed": "SNOMED server",
+				"terminology": "Terminology server"
+			}
+		},
+		"thesaurus-page": {
+			"actions": {
+				"contents": "",
+				"none": "",
+				"relations": "",
+				"tags": "",
+				"usages": ""
+			},
+			"form": {
+				"add-header": "",
+				"add-structure-definition": "",
+				"content-header": "",
+				"content-type-tooltip": "",
+				"copy-to-clipboard": "",
+				"edit-header": "",
+				"proceed-without-saving": "",
+				"relation-header": "",
+				"save-and-proceed": "",
+				"usages": ""
+			},
+			"header": {
+				"add-subpage": "",
+				"modified": ""
+			},
+			"link-modal": {
+				"code-system": "",
+				"concept": "",
+				"concept-code-system": "",
+				"header": "",
+				"link-name": "",
+				"map-set": "",
+				"page": "",
+				"resource": "",
+				"resource-type": "",
+				"url": "",
+				"value-set": ""
+			},
+			"structure-definition-modal": {
+				"base-definition-url": "",
+				"header": "",
+				"simplifier": "",
+				"structure-definition": "",
+				"url": ""
+			},
+			"template-modal": {
+				"header": "",
+				"template": ""
+			}
+		},
+		"tools": {
+			"terminology-service-api": {
+				"button": "Terminology Service API",
+				"content": "Terminology Service APIs enable automated exchange of clinical terminology content and resources.",
+				"header": "Terminology Service API"
+			}
+		},
+		"transformation-definition": {
+			"execution": {
+				"input": "Input",
+				"output": "Output",
+				"transform": "Transform"
+			},
+			"list": {
+				"add-btn": "Add transformation"
+			},
+			"resource-form": {
+				"compile": "Compile",
+				"content": "Content",
+				"definition": "Structure definition",
+				"download-json": "JSON",
+				"download-xml": "XML",
+				"fhir-resource": "Resource",
+				"fhir-server": "Fhir server",
+				"generate": "Generate",
+				"map-set": "Map Set",
+				"preview-hide": "Hide",
+				"preview-show": "Preview",
+				"save-as": "Save as",
+				"url": "Url"
+			},
+			"resources": {
+				"new": "-- new --",
+				"type.conceptmap": "Concept Maps",
+				"type.definition": "Definitions",
+				"type.mapping": "Mapping"
+			}
+		},
+		"value-set": {
+			"concepts": {
+				"no-version": "Version not selected",
+				"select-version": "Please select a version to view the concepts"
+			},
+			"entity": {
+				"description": "",
+				"id": "",
+				"name": "",
+				"names": "",
+				"uri": ""
+			},
+			"form": {
+				"add-header": "Create a new value set",
+				"edit-header": "Edit value set",
+				"versions": {
+					"add-version": "Add version",
+					"export-fhir-expansion": "Export FHIR json with expansion",
+					"export-fhir-json": "Export FHIR json",
+					"export-fhir-xml": "Export FHIR xml",
+					"open-fhir": "Open FHIR"
+				},
+				"view-header": "View value set"
+			},
+			"list": {
+				"add-value-set": "Add value set",
+				"add-version": "",
+				"domain": "",
+				"expansion": "Expansion concepts",
+				"header": "",
+				"import-fhir": "Import external FHIR definition",
+				"last-version": "Last version",
+				"manual": "Manual",
+				"open-fhir": "Open FHIR",
+				"operations": "",
+				"properties": "",
+				"status": "Status",
+				"title": "Value sets",
+				"versions": "",
+				"versions-expiration-date": "to {{expirationDate}}",
+				"versions-release-date": "From: {{releaseDate}}",
+				"versions-version": "Version name: {{version}}"
+			},
+			"summary": {
+				"add-version": "Add version",
+				"all-tasks": "All tasks",
+				"duplicate-version-modal": {
+					"header": "Duplicate value set version",
+					"version": "New version"
+				},
+				"expansions": "Expansions",
+				"opened-tasks": "Opened tasks",
+				"related-artifacts": "Related artifacts",
+				"total-concepts": "Total concepts",
+				"value-set": "Value set",
+				"versions": "Versions"
+			}
+		},
+		"value-set-rule-filter": {
+			"entity": {
+				"operator": "",
+				"property": "",
+				"value": ""
+			}
+		},
+		"value-set-rule-set": {
+			"entity": {
+				"inactive": "",
+				"locked-date": "",
+				"rule": {
+					"code-system": "",
+					"code-system-version": "",
+					"concepts": "",
+					"filters": "",
+					"value-set": "",
+					"value-set-version": ""
+				},
+				"rules": ""
+			},
+			"form": {
+				"active": "",
+				"add-rule-set": "",
+				"all": "",
+				"code-system-rule": "",
+				"edit-header": "",
+				"exclude": "",
+				"inactive": "",
+				"include": "",
+				"rule": "",
+				"value-set-rule": ""
+			}
+		},
+		"value-set-version": {
+			"entity": {
+				"concepts": "",
+				"description": "",
+				"expiration-date": "",
+				"id": "",
+				"release-date": "",
+				"source": "",
+				"status": "",
+				"supported-languages": "",
+				"version": ""
+			},
+			"form": {
+				"add-concept": "Add concept",
+				"add-header": "Add version",
+				"concepts": {
+					"warning": "Concept has no active version"
+				},
+				"concepts-csv": "Concepts CSV",
+				"def-json": "Definition JSON",
+				"def-xml": "Definition XML",
+				"download": "Download",
+				"edit-header": "Edit version",
+				"expansion-json": "Expansion JSON",
+				"expansion-xml": "Expansion XML",
+				"provenance": "Provenance",
+				"rule-set": {
+					"rule": {
+						"add-designation": "Add designation",
+						"all": "All concepts",
+						"code-system": "Code system",
+						"exact": "Exact concepts",
+						"exclude": "Exclude",
+						"filter": "Property based expression",
+						"include": "Include",
+						"value-set": "Value set"
+					}
+				},
+				"tasks": "Tasks",
+				"view-header": "View version"
+			},
+			"list": {
+				"operations": ""
+			},
+			"summary": {
+				"edit-version": "Edit version",
+				"expansion": "Expansion",
+				"expansion-limit-info": "Loaded 20 concepts. {{count}} concepts still on server.",
+				"expansion-see-all": "See full list of the concepts.",
+				"info": {
+					"activate": "Activate",
+					"create-approve": "Create approval task",
+					"create-review": "Create review task",
+					"definition": "Definition",
+					"expansion": "Expansion",
+					"last-approved": "Last approval date",
+					"last-modified": "Last modified",
+					"last-reviewed": "Last review date",
+					"load-from-github": "Load from Github",
+					"make-draft": "Make draft",
+					"none": "None",
+					"push-to-github": "Push to Github",
+					"retire": "Retire",
+					"show-changes": "Show changes"
+				},
+				"rule": "Rule",
+				"rule-set": "Rule set",
+				"task-modal": {
+					"assignee": "Assignee",
+					"header": "Create {{type}} task",
+					"success-msg": "Task created"
+				},
+				"value-set-version": "Value set version"
+			}
+		},
+		"value-set-version-concept": {
+			"entity": {
+				"additional-designations": "",
+				"concept": "",
+				"display": ""
+			},
+			"form": {
+				"add-header": "Add concept",
+				"designation-language": "Language",
+				"designation-name": "Name",
+				"edit-header": "Edit concept"
+			},
+			"modal": {
+				"header": ""
+			}
+		},
+		"value-set-version-rule": {
+			"form": {
+				"add-header": "Add rule",
+				"concept": {
+					"add-concept": "Add concept",
+					"modal-header": "Concept"
+				},
+				"edit-header": "Edit rule",
+				"filter": {
+					"add-filter": "Add filter",
+					"modal-header": "Filter"
+				}
+			}
+		},
+		"wiki-page": {
+			"details": {
+				"concept": "Concept",
+				"contents": "Contents",
+				"cs": "Code System",
+				"ms": "Map Set",
+				"none": "None",
+				"page": "Page",
+				"relations": "Relations",
+				"tags": "Tags",
+				"usages": "Usages",
+				"vs": "Value Set"
+			},
+			"edit": {
+				"image-modal": {
+					"choose-file": "Choose a file to upload",
+					"header": "Files"
+				},
+				"menu": {
+					"diagrams": "Diagrams",
+					"files": "Files",
+					"preview": {
+						"hide": "Hide preview",
+						"show": "Show preview"
+					},
+					"structure-definition": {
+						"add": "Add structure definition",
+						"copy": "Copy reference",
+						"title": "Structure definition"
+					}
+				},
+				"structure-definition-modal": {
+					"description": "Do you want to save the current page content before navigating to the Structure Definition?",
+					"header": "Your unsaved changes will be lost!",
+					"proceed-without-saving": "Proceed without saving",
+					"save-and-proceed": "Save and proceed"
+				}
+			},
+			"header": {
+				"add-subpage": "Add subpage",
+				"copy-raw": "Copy raw file",
+				"modified": "<b>{{user}}</b> edited this page on {{date}}"
+			},
+			"no-space": {
+				"desc": "Please select space to proceed",
+				"title": "Space not selected"
+			},
+			"sidebar": {
+				"pages": "Pages"
+			},
+			"space": {
+				"pages": "Pages",
+				"recently-modified": {
+					"created": "Created {{date}}",
+					"header": "Recently modified",
+					"updated": "Updated {{date}}"
+				}
+			},
+			"spaces": "Spaces",
+			"texteditor": {
+				"quick-actions": {
+					"link-modal": {
+						"code-system": "CodeSystem",
+						"concept": "Concept",
+						"concept-code-system": "Concept's CodeSystem",
+						"header": "Compose link",
+						"link-name": "Link name",
+						"map-set": "MapSet",
+						"page": "Page",
+						"resource": "Resource",
+						"resource-type": "Resource type",
+						"search-externally": "Search from other space",
+						"space": "Space",
+						"url": "URL",
+						"value-set": "ValueSet"
+					},
+					"structure-definition-modal": {
+						"base-definition-url": "Base definition URL",
+						"header": "Choose structure definition",
+						"simplifier": "Simplifier",
+						"structure-definition": "Structure definition",
+						"url": "Simplifier definition URL"
+					},
+					"template-modal": {
+						"header": "Choose template",
+						"template": "Template"
+					}
+				}
+			},
+			"view": {
+				"add-header": "Add page",
+				"add-structure-definition": "Open structure definition form",
+				"content-header": "Add content",
+				"content-type-tooltip": "Changing the content type can change the content value",
+				"copy-to-clipboard": "Copy {{val}}",
+				"edit-header": "Edit page",
+				"relation-header": "Page relations",
+				"usages": "Usages"
+			}
+		}
+	}
 }

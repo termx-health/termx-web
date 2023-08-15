@@ -1,346 +1,2192 @@
 {
-  "core": {
-    "btn": {
-      "save": "Salvesta",
-      "delete": "Kustuta",
-      "cancel": "Tühista",
-      "close": "Sulge",
-      "duplicate": "Duplitseeri",
-      "confirm": "Kinnita",
-      "add": "Lisa"
-    },
-    "no-data": "Andmed puuduvad"
-  },
-  "web": {
-    "app": {
-      "header": "Terminoloogia"
-    },
-    "case-sensitive": {
-      "options": {
-        "cl": "esitähe tõstutundetu",
-        "cs": "tõstutundlik",
-        "ci": "tõstutundetu"
-      }
-    },
-    "code-system-version": {
-      "entity": {
-        "id": "Identifikaator",
-        "version": "Versioon",
-        "source": "Allikas",
-        "preferredLanguage": "Eelistatud keel",
-        "supported-languages": "Toetatud keeled",
-        "description": "Kirjeldus",
-        "release-date": "Väljastus kuupäev",
-        "expiration-date": "Aegumis kuupäev",
-        "status": "Staatus"
-      },
-      "form": {
-        "edit-header": "Muuda versiooni",
-        "add-header": "Lisa versioon",
-        "view-header": "Vaata versiooni",
-        "duplicate": {
-          "duplicate-header": "Loo koodisüsteemi versiooni duplikaat",
-          "source-code-system": "Allikas koodisüsteem:",
-          "source-version": "Allikas versioon:",
-          "target-version": "Siht versioon:"
-        }
-      },
-      "list": {
-        "add-version": "Lisa versioon",
-        "add-new-version": "Lisa uus versioon",
-        "duplicate-version": "Loo versiooni duplikaat",
-        "export-fhir-json": "Ekspordi FHIR json"
-      }
-    },
-    "entity-property": {
-      "entity": {
-        "name": "Nimi",
-        "type": "Tüüp",
-        "status": "Staatus",
-        "description": "Kirjeldus"
-      },
-      "form": {
-        "edit-header": "Muuda omadust",
-        "add-header": "Lisa omadus"
-      }
-    },
-    "code-system": {
-      "entity": {
-        "id": "Identifikaator",
-        "uri": "Ühtne ressursiidentifikaator (URI)",
-        "name": "Nimi",
-        "domain": "Domeen",
-        "description": "Kirjeldus"
-      },
-      "entity-version": {
-        "list": {
-          "header": "Üksused",
-          "add-entity": "Lisa üksus",
-          "operations": "Tegevused",
-          "code": "Kood",
-          "description": "Kirjeldus"
-        }
-      },
-      "form": {
-        "add-header": "Lisa koodisüsteem",
-        "edit-header": "Muuda koodisüsteemi"
-      },
-      "contacts": {
-        "list": {
-          "header": "Kontaktid",
-          "add-contact": "Lisa kontakt"
-        },
-        "modal": {
-          "name": "Nimi",
-          "edit-header": "Muuda kontakti",
-          "system": "Süsteem",
-          "value": "Väärtus",
-          "use": "Kasutus",
-          "operations": "Operatsioonid"
-        }
-      },
-      "list": {
-        "narrative": "Narratiiv",
-        "content": "Sisu",
-        "case-sensitivity": "Tõstutundlikkus",
-        "properties": "Omadused",
-        "concepts": "Kontseptid",
-        "add-concept": "Lisa kontsept",
-        "header": "Koodisüsteemide nimekiri",
-        "versions": "Versioonid",
-        "versions-release-date": "Alates: {{releaseDate}}",
-        "versions-expiration-date": "kuni {{expirationDate}}",
-        "versions-version": "Versiooni nimi: {{version}}",
-        "duplicate": {
-          "duplicate-header": "Loo koodisüsteemi duplikaat",
-          "source-code-system": "Allikas koodisüsteem:",
-          "target-code-system": "Siht koodisüsteem:",
-          "target-uri": "Siht URI:"
-        }
-      }
-    },
-    "value-set": {
-      "entity": {
-        "id": "Identifikaator",
-        "uri": "Ühtne ressursiidentifikaator (URI)",
-        "name": "Nimi",
-        "names": "Nimed",
-        "description": "Kirjeldus"
-      },
-      "form": {
-        "add-header": "Lisa uus väärtuste kogum",
-        "edit-header": "Muuda väärtuste kogumit"
-      },
-      "list": {
-        "properties": "Omadused",
-        "domain": "Domeen",
-        "header": "Väärtuste kogumite nimekiri",
-        "operations": "Toimingud",
-        "versions": "Versioonid",
-        "add-version": "Lisa versioon",
-        "versions-release-date": "Alates: {{releaseDate}}",
-        "versions-expiration-date": "kuni {{expirationDate}}",
-        "versions-version": "Versiooni nimi: {{version}}"
-      }
-    },
-    "value-set-version": {
-      "entity": {
-        "id": "Identifikaator",
-        "version": "Versioon",
-        "source": "Allikas",
-        "supported-languages": "Toetatud keeled",
-        "description": "Kirjeldus",
-        "release-date": "Väljastus kuupäev",
-        "expiration-date": "Aegumis kuupäev",
-        "status": "Staatus",
-        "concepts": "Kontseptid"
-      },
-      "form": {
-        "edit-header": "Muuda versiooni",
-        "add-header": "Lisa versioon",
-        "view-header": "Vaata versiooni"
-      },
-      "list": {
-        "operations": "Toimingud"
-      }
-    },
-    "value-set-version-concept": {
-      "entity": {
-        "concept": "Kontsept",
-        "display": "Kuva",
-        "additional-designations": "Lisa tähendused"
-      },
-      "modal": {
-        "header": "Tulemuse eelvaade"
-      }
-    },
-    "value-set-rule-set": {
-      "entity": {
-        "locked-date": "Lukustatud kuupäev",
-        "inactive": "Mitteaktiivsed kontseptid",
-        "rules": "Reeglid",
-        "rule": {
-          "code-system": "Koodisüsteem",
-          "code-system-version": "Koodisüsteemi versioon",
-          "value-set": "Väärtuste kogum",
-          "value-set-version": "Väärtuste kogumi versioon",
-          "concepts": "Kontseptid",
-          "filters": "Filtrid"
-        }
-      },
-      "form": {
-        "add-rule-set": "Lisa reegel",
-        "code-system-rule": "Koodisüsteemi reegel",
-        "value-set-rule": "Väärtuste kogumi reegel",
-        "inactive": "Mitteaktiivsed",
-        "all": "Kõik",
-        "active": "Aktiivsed",
-        "rule": "Reegel",
-        "include": "Kaasatud",
-        "exclude": "Välistatud",
-        "edit-header": "Reegel"
-      }
-    },
-    "value-set-rule-filter": {
-      "entity": {
-        "property": "Omadus",
-        "operator": "Operaator",
-        "value": "Väärtus"
-      }
-    },
-    "concept": {
-      "entity": {
-        "code": "Kood",
-        "description": "Kirjeldus"
-      },
-      "version": {
-        "list": {
-          "concept-status": "Kontsepti staatus",
-          "versions": "Versioonid",
-          "number": "Number",
-          "created": "Loodud",
-          "description": "Kirjeldus",
-          "status": "Staatus",
-          "operations": "Toimingud",
-          "designations": "Tähendused",
-          "property-values": "Omaduste väärtused"
-        },
-        "form": {
-          "add-header": "Lisa versioon",
-          "edit-header": "Muuda versiooni"
-        }
-      },
-      "list": {
-        "concept": "Kontsept",
-        "concepts": "Kontseptid",
-        "operations": "Toimingud"
-      },
-      "form": {
-        "add-header": "Lisa kontsept",
-        "edit-header": "Muuda kontsepti"
-      }
-    },
-    "designation": {
-      "entity": {
-      },
-      "list": {
-        "designation": "Tähendus",
-        "type": "Tüüp",
-        "name": "Nimi",
-        "language": "Keel",
-        "status": "Staatus"
-      },
-      "modal": {
-        "add-designation": "Lisa tähendus",
-        "delete-designation": "Kustuta tähendus",
-        "edit-designation": "Muuda tähendust",
-        "designation-kind": "Tähenduse liik",
-        "case-significance": "Tõstutundlikkus",
-        "description": "Kirjeldus",
-        "status": "Staatus"
-      }
-    },
-    "property-value": {
-      "list": {
-        "property": "Omadus",
-        "value": "Väärtus"
-      },
-      "modal": {
-        "add-property": "Lisa omadus",
-        "edit-property": "Muuda omadust"
-      }
-    },
-    "publication-status": {
-      "operations": {
-        "activate": "Aktiveeri",
-        "retire": "Kõrvalda"
-      }
-    },
-    "resources": {
-      "tabset": {
-        "code-systems": "Koodisüsteemid",
-        "value-sets": "Väärtuste kogumid",
-        "map-sets": "Kaardistus kogumid"
-      }
-    },
-    "map-set": {
-      "entity": {
-        "id": "Identifikaator",
-        "uri": "Ühtne ressursiidentifikaator (URI)",
-        "name": "Nimi",
-        "domain": "Domeen",
-        "description": "Kirjeldus"
-      },
-      "form": {
-        "add-header": "Lisa kaardistus kogum",
-        "edit-header": "Muuda kaardistus kogumit"
-      },
-      "list": {
-        "operations": "Toimingud",
-        "versions": "Versioonid",
-        "add-version": "Lisa versioon",
-        "versions-release-date": "Alates: {{releaseDate}}",
-        "versions-expiration-date": "kuni {{expirationDate}}",
-        "versions-version": "Versiooni nimi: {{version}}"
-      }
-    },
-    "map-set-version": {
-      "entity": {
-        "id": "Identifikaator",
-        "version": "Versioon",
-        "source": "Allikas",
-        "supported-languages": "Toetatud keeled",
-        "description": "Kirjeldus",
-        "release-date": "Väljastus kuupäev",
-        "expiration-date": "Aegumis kuupäev",
-        "status": "Staatus"
-      },
-      "form": {
-        "edit-header": "Muuda versiooni",
-        "add-header": "Lisa versioon",
-        "view-header": "Vaata versiooni"
-      }
-    },
-    "map-set-association": {
-      "entity": {
-        "source": "Allikas",
-        "target": "Siht",
-        "type": "Seos",
-        "status": "Status",
-        "concept": "Kontsept"
-      },
-      "list": {
-        "code-system": "Koodisüsteem",
-        "operations": "Toimingud",
-        "associations": "Seosed"
-      }
-    },
-    "integration": {
-      "fhir": {
-        "sync": {
-          "send-request": "Saada päring"
-        }
-      }
-    }
-  }
+	"core": {
+		"back": "Tagasi",
+		"btn": {
+			"add": "Lisa",
+			"cancel": "Tühista",
+			"clear-all": "Tühista kõik",
+			"close": "Sulge",
+			"confirm": "Kinnita",
+			"copied": "Kopeeritud",
+			"copy": "Kopeeri",
+			"custom": "Kohanda",
+			"delete": "Kustuta",
+			"duplicate": "Duplitseeri",
+			"edit": "Muuda",
+			"import": "Import",
+			"proceed": "Jätka",
+			"query": "Päri",
+			"save": "Salvesta",
+			"search": "Otsi",
+			"select": "Vali"
+		},
+		"confirm": "Kas oled kindel?",
+		"data-lost-warning": "Sinu muudatusi ei salvestata!",
+		"delete-confirm": "Kas oled kindel, et soovid kustutada?",
+		"filter": "Filter",
+		"form-invalid": "Vorm on vigane. Palun vaata andmed üle",
+		"no-data": "Andmed puuduvad",
+		"no-privilege": {
+			"access": "Juurdepääs: {{path}}",
+			"error": "401 Autoriseerimata",
+			"privileges": {
+				"plural": "Sul puuduvad privileegid: {{privileges}}",
+				"singular": "Sul puudub privileeg: {{privilege}}"
+			}
+		},
+		"version-select": {
+			"custom": "Kohanda"
+		}
+	},
+	"entities": {
+		"association-type": {
+			"code": "Kood",
+			"description": "Kirjeldus",
+			"directed": "",
+			"forward-name": "",
+			"kind": "",
+			"reverse-name": ""
+		},
+		"code-system": {
+			"base-code-system": "",
+			"case-sensitivity": "",
+			"concepts": "",
+			"contacts": "",
+			"content": "",
+			"description": "",
+			"designations": "",
+			"hierarchy-meaning": "",
+			"id": "",
+			"name": "",
+			"narrative": "",
+			"plural": "",
+			"properties": "",
+			"publisher": "",
+			"sequence": "",
+			"supported-languages": "",
+			"title": "",
+			"uri": "",
+			"uri-short": "",
+			"versions": ""
+		},
+		"code-system-association": {
+			"status": "",
+			"target-code": "",
+			"target-id": "",
+			"type": "",
+			"versions": ""
+		},
+		"code-system-concept": {
+			"code": "",
+			"code-system": "",
+			"description": "",
+			"type": "",
+			"versions": ""
+		},
+		"code-system-entity": {
+			"type": "",
+			"versions": ""
+		},
+		"code-system-entity-version": {
+			"association-order": "",
+			"association-status": "",
+			"association-target": "",
+			"association-type": "",
+			"associations": "",
+			"code": "",
+			"created": "",
+			"description": "",
+			"designations": "",
+			"id": "",
+			"property-values": "",
+			"status": ""
+		},
+		"code-system-version": {
+			"description": "",
+			"entities": "",
+			"expiration-date": "",
+			"id": "",
+			"preferred-language": "",
+			"release-date": "",
+			"source": "",
+			"status": "",
+			"supported-languages": "",
+			"type": "",
+			"version": ""
+		},
+		"common": {
+			"privileges": ""
+		},
+		"contact-detail": {
+			"name": "",
+			"telecom": {
+				"system": "",
+				"use": "",
+				"value": ""
+			},
+			"telecoms": ""
+		},
+		"designation": {
+			"case-significance": "",
+			"description": "",
+			"designation-kind": "",
+			"language": "",
+			"name": "",
+			"preferred": "",
+			"rendering": "",
+			"status": "",
+			"type": ""
+		},
+		"entity-property": {
+			"description": "",
+			"name": "",
+			"order-number": "",
+			"preferred": "",
+			"required": "",
+			"rule": {
+				"code-systems": "",
+				"compose": "",
+				"filters": "",
+				"operator": "",
+				"property": "",
+				"singular": "",
+				"type": "",
+				"value": "",
+				"value-set": ""
+			},
+			"status": "",
+			"type": "",
+			"value": ""
+		},
+		"map-set": {
+			"associations": "",
+			"description": "",
+			"domain": "",
+			"id": "",
+			"name": "",
+			"plural": "",
+			"source-code-systems": "",
+			"source-value-set": "",
+			"target-code-systems": "",
+			"target-value-set": "",
+			"uri": "",
+			"versions": ""
+		},
+		"map-set-association": {
+			"concept": "",
+			"source": "",
+			"status": "",
+			"target": "",
+			"type": ""
+		},
+		"map-set-entity": {
+			"id": "",
+			"versions": ""
+		},
+		"map-set-entity-version": {
+			"created-at": "",
+			"description": "",
+			"id": "",
+			"status": ""
+		},
+		"map-set-version": {
+			"description": "",
+			"expiration-date": "",
+			"id": "",
+			"release-date": "",
+			"source": "",
+			"status": "",
+			"supported-languages": "",
+			"version": ""
+		},
+		"measurement-unit": {
+			"alias": "",
+			"code": "",
+			"definitionUnit": "",
+			"definitionValue": "",
+			"id": "",
+			"kind": "",
+			"mappings": "",
+			"name": "",
+			"period": "",
+			"rounding": ""
+		},
+		"measurement-unit-mapping": {
+			"system": "",
+			"system-unit": "",
+			"system-value": ""
+		},
+		"naming-system": {
+			"code-system": "",
+			"description": "",
+			"id": "",
+			"identifiers": "",
+			"kind": "",
+			"name": "",
+			"source": "",
+			"status": ""
+		},
+		"naming-system-identifier": {
+			"type": "",
+			"value": ""
+		},
+		"observation-definition": {
+			"alias": "",
+			"category": "",
+			"code": "",
+			"components": {
+				"binding": "",
+				"cardinality": "",
+				"code": "",
+				"multiple": "",
+				"names": "",
+				"order-number": "",
+				"type": "",
+				"unit": {
+					"singular": "",
+					"system": ""
+				},
+				"value-set": ""
+			},
+			"definition": "",
+			"details": "",
+			"interpretations": {
+				"category": {
+					"age": "",
+					"gender": "",
+					"gestation-age": "",
+					"singular": ""
+				},
+				"condition": "",
+				"fhir-interpretation-code": "",
+				"order-number": "",
+				"range": {
+					"code-system": "",
+					"code-system-concepts": "",
+					"numeric-range": "",
+					"singular": "",
+					"value-set": ""
+				},
+				"snomed-interpretation-code": "",
+				"state": "",
+				"target": ""
+			},
+			"keywords": "",
+			"mappings": {
+				"code-system": "",
+				"concept": "",
+				"condition": "",
+				"map-set": "",
+				"multiple": "",
+				"order-number": "",
+				"relation": "",
+				"target": ""
+			},
+			"members": {
+				"cardinality": "",
+				"code": "",
+				"multiple": "",
+				"names": "",
+				"order-number": ""
+			},
+			"name": "",
+			"protocol": {
+				"circumstances": "",
+				"circumstances-value-set": "",
+				"circumstances-values": "",
+				"components": "",
+				"device": "",
+				"device-value-set": "",
+				"device-values": "",
+				"measurement-location": "",
+				"measurement-location-value-set": "",
+				"measurement-location-values": "",
+				"method": "",
+				"method-value-set": "",
+				"method-values": "",
+				"position": "",
+				"position-value-set": "",
+				"position-values": "",
+				"single": "",
+				"specimen": "",
+				"specimen-value-set": "",
+				"specimen-values": ""
+			},
+			"publisher": "",
+			"state": "",
+			"status": "",
+			"structure": "",
+			"time-precision": "",
+			"url": "",
+			"value": {
+				"behaviour": "",
+				"expression": "",
+				"multiple-results-allowed": "",
+				"type": "",
+				"unit": {
+					"singular": "",
+					"system": ""
+				},
+				"usage": "",
+				"value-set": "",
+				"values": ""
+			},
+			"version": ""
+		},
+		"package": {
+			"code": "",
+			"git": "",
+			"plural": "",
+			"singular": "",
+			"version": {
+				"plural": "",
+				"singular": "",
+				"version": ""
+			}
+		},
+		"page": {
+			"contents": "",
+			"links": "",
+			"plural": "",
+			"relations": "",
+			"status": "",
+			"tags": "",
+			"template": ""
+		},
+		"page-content": {
+			"content": "",
+			"content-type": "",
+			"lang": "",
+			"name": ""
+		},
+		"page-link": {
+			"order-number": "",
+			"source": "",
+			"target": ""
+		},
+		"page-relation": {
+			"target": "",
+			"type": ""
+		},
+		"privilege": {
+			"actions": "",
+			"code": "",
+			"kind": "",
+			"name": "",
+			"resources": ""
+		},
+		"privilege-resource": {
+			"edit": "",
+			"publish": "",
+			"resource-id": "",
+			"type": "",
+			"view": ""
+		},
+		"provenance": {
+			"activity": "",
+			"author": "",
+			"changes": "",
+			"date": "",
+			"target": ""
+		},
+		"resource": {
+			"copyright": {
+				"holder": "",
+				"jurisdiction": "",
+				"single": "",
+				"statement": ""
+			},
+			"description": "",
+			"experimental": "",
+			"id": "",
+			"identifiers": {
+				"multiple": "",
+				"system": "",
+				"value": ""
+			},
+			"name": "",
+			"permissions": {
+				"admin": "",
+				"editor": "",
+				"multiple": "",
+				"viewer": ""
+			},
+			"publisher": "",
+			"purpose": "",
+			"settings": {
+				"approval-required": "",
+				"multiple": "",
+				"review-required": ""
+			},
+			"supported-languages": "",
+			"title": "",
+			"uri": "",
+			"use-context": "",
+			"version": {
+				"algorithm": "",
+				"description": "",
+				"from": "",
+				"single": "",
+				"to": "",
+				"version": ""
+			}
+		},
+		"sequence": {
+			"code": "",
+			"description": "",
+			"luvs": "",
+			"pattern": "",
+			"restart": "",
+			"start-from": ""
+		},
+		"sequence-luv": {
+			"luv": "",
+			"period": ""
+		},
+		"snomed-branch": {
+			"base": "",
+			"creation": "",
+			"deleted": "",
+			"head": "",
+			"locked": "",
+			"metadata": "",
+			"path": "",
+			"state": ""
+		},
+		"snomed-concept": {
+			"concept-id": "",
+			"descriptions": "",
+			"fsn": "",
+			"kts-references": "",
+			"pt": "",
+			"refsets": "",
+			"relationships": "",
+			"snomed-references": "",
+			"term": "",
+			"translations": ""
+		},
+		"snomed-description": {
+			"acceptability": "",
+			"concept-id": "",
+			"description-id": "",
+			"lang": "",
+			"refset": "",
+			"term": "",
+			"type": ""
+		},
+		"snomed-reference": {
+			"concept": "",
+			"type": ""
+		},
+		"snomed-refset": {
+			"target": "",
+			"type": ""
+		},
+		"snomed-relationship": {
+			"active": "",
+			"group": "",
+			"target": "",
+			"type": ""
+		},
+		"snomed-translation": {
+			"acceptability": "",
+			"acceptability-options": {
+				"acceptable": "",
+				"preferred": ""
+			},
+			"concept-id": "",
+			"description-id": "",
+			"language": "",
+			"module": "",
+			"status": "",
+			"task": "",
+			"term": "",
+			"type": "",
+			"type-options": {
+				"fully-specified-name": "",
+				"synonym": ""
+			}
+		},
+		"space": {
+			"acl": "",
+			"active": "",
+			"code": "",
+			"editors": "",
+			"name": "",
+			"owners": "",
+			"plural": "",
+			"shared": "",
+			"singular": "",
+			"terminology-servers": "",
+			"viewers": ""
+		},
+		"structure-definition": {
+			"code": "",
+			"content": "",
+			"content-format": "",
+			"content-type": "",
+			"parent": "",
+			"plural": "",
+			"url": "",
+			"version": ""
+		},
+		"task": {
+			"assignee": "",
+			"author": "",
+			"created": "",
+			"modified": "",
+			"modified-by": "",
+			"number": "",
+			"plural": "",
+			"priority": "",
+			"project": "",
+			"status": "",
+			"title": "",
+			"type": "",
+			"workflow": ""
+		},
+		"template": {
+			"code": "",
+			"content": "",
+			"content-type": "",
+			"names": ""
+		},
+		"terminology-server": {
+			"active": "",
+			"code": "",
+			"current-installation": "",
+			"kind": "",
+			"name": "",
+			"plural": "",
+			"root-url": "",
+			"singular": ""
+		},
+		"transformation-definition": {
+			"name": "",
+			"plural": "",
+			"singular": "",
+			"source": "",
+			"source-fhir": "",
+			"source-local": "",
+			"source-static": ""
+		},
+		"value-set": {
+			"concepts": "",
+			"contacts": "",
+			"description": "",
+			"id": "",
+			"name": "",
+			"narrative": "",
+			"plural": "",
+			"publisher": "",
+			"status": "",
+			"title": "",
+			"uri": "",
+			"uri-short": "",
+			"versions": ""
+		},
+		"value-set-rule-filter": {
+			"operator": {
+				"equal": "",
+				"in": "",
+				"is-a": "",
+				"label": ""
+			},
+			"property": {
+				"concept": "",
+				"constraint": "",
+				"label": ""
+			},
+			"value": ""
+		},
+		"value-set-rule-set": {
+			"exclude": "",
+			"inactive": "",
+			"include": "",
+			"locked-date": "",
+			"rule": {
+				"based-on": "",
+				"code-system": "",
+				"code-system-version": "",
+				"compose": "",
+				"concepts": "",
+				"filters": "",
+				"value-set": "",
+				"value-set-version": ""
+			},
+			"rules": ""
+		},
+		"value-set-version": {
+			"algorithm": "",
+			"concepts": "",
+			"created": "",
+			"description": "",
+			"expiration-date": "",
+			"id": "",
+			"release-date": "",
+			"rule-set": "",
+			"source": "",
+			"status": "",
+			"supported-languages": "",
+			"version": ""
+		},
+		"value-set-version-concept": {
+			"additional-designations": "",
+			"concept": "",
+			"display": "",
+			"order-number": ""
+		}
+	},
+	"marina.ui.form.validationError": {
+		"sequenceInvalidCharacters": "Sisaldab lubamatu märke: \"{{sequenceInvalidCharacters}}\""
+	},
+	"web": {
+		"app": {
+			"header": "Terminoloogia"
+		},
+		"association-type": {
+			"form": {
+				"add-header": "",
+				"edit-header": "",
+				"view-header": ""
+			},
+			"list": {
+				"add-association-type": ""
+			}
+		},
+		"case-sensitive": {
+			"code-is": {
+				"ci": "",
+				"cs": ""
+			},
+			"options": {
+				"ci": "tõstutundetu",
+				"cl": "esitähe tõstutundetu",
+				"cs": "tõstutundlik"
+			}
+		},
+		"case-sensitive-options": {
+			"ci": "",
+			"cs": "",
+			"ics": ""
+		},
+		"code-system": {
+			"contacts": {
+				"list": {
+					"add-contact": "Lisa kontakt",
+					"header": "Kontaktid"
+				},
+				"modal": {
+					"edit-header": "Muuda kontakti",
+					"name": "Nimi",
+					"operations": "Operatsioonid",
+					"system": "Süsteem",
+					"use": "Kasutus",
+					"value": "Väärtus"
+				}
+			},
+			"entity": {
+				"description": "Kirjeldus",
+				"domain": "Domeen",
+				"id": "Identifikaator",
+				"name": "Nimi",
+				"uri": "Ühtne ressursiidentifikaator (URI)"
+			},
+			"entity-version": {
+				"list": {
+					"add-entity": "Lisa üksus",
+					"code": "Kood",
+					"description": "Kirjeldus",
+					"header": "Üksused",
+					"operations": "Tegevused"
+				}
+			},
+			"form": {
+				"add-header": "Lisa koodisüsteem",
+				"concepts": {
+					"add-concept": "",
+					"concept": "",
+					"contains": "",
+					"eq": "",
+					"validate": ""
+				},
+				"delete-property-usages": "",
+				"edit-header": "Muuda koodisüsteemi",
+				"header": "",
+				"properties": {
+					"add-property": "",
+					"add-supplement": "",
+					"delete-property": "",
+					"delete-supplement": "",
+					"often-used-designations": "",
+					"often-used-properties": ""
+				},
+				"versions": {
+					"duplicate": {
+						"create-new-entity-version": "",
+						"duplicate-header": "",
+						"source-code-system": "",
+						"source-version": "",
+						"target-version": ""
+					},
+					"list": {
+						"add-new-version": "",
+						"add-version": "",
+						"compare": "",
+						"duplicate-version": "",
+						"export-fhir-json": "",
+						"export-fhir-xml": "",
+						"open-fhir": ""
+					}
+				},
+				"view-header": ""
+			},
+			"list": {
+				"add-code-system": "",
+				"add-concept": "Lisa kontsept",
+				"case-sensitivity": "Tõstutundlikkus",
+				"concepts": "Kontseptid",
+				"content": "Sisu",
+				"count": "",
+				"domain": "",
+				"duplicate": {
+					"duplicate-header": "Loo koodisüsteemi duplikaat",
+					"header": "",
+					"source-code-system": "Allikas koodisüsteem:",
+					"target-code-system": "Siht koodisüsteem:",
+					"target-uri": "Siht URI:"
+				},
+				"header": "Koodisüsteemide nimekiri",
+				"import-fhir": "",
+				"last-version": "",
+				"manual": "",
+				"narrative": "Narratiiv",
+				"open-fhir": "",
+				"properties": "Omadused",
+				"status": "",
+				"title": "",
+				"uri": "",
+				"versions": "Versioonid",
+				"versions-expiration-date": "kuni {{expirationDate}}",
+				"versions-release-date": "Alates: {{releaseDate}}",
+				"versions-version": "Versiooni nimi: {{version}}"
+			},
+			"summary": {
+				"add-concept": "",
+				"add-version": "",
+				"all-tasks": "",
+				"code-system": "",
+				"compare": "",
+				"concepts": "",
+				"duplicate-version-modal": {
+					"header": "",
+					"version": ""
+				},
+				"opened-tasks": "",
+				"related-artifacts": "",
+				"unlinked-concepts": {
+					"author": "",
+					"concept": "",
+					"create-task": "",
+					"designation": "",
+					"link-to": "",
+					"no-versions": "",
+					"status": "",
+					"task": "",
+					"task-modal": {
+						"assignee": "",
+						"cs-version": "",
+						"header": ""
+					},
+					"title": "",
+					"version": ""
+				},
+				"versions": ""
+			}
+		},
+		"code-system-association": {
+			"form": {
+				"target": ""
+			}
+		},
+		"code-system-compare": {
+			"added": "",
+			"changed": "",
+			"compare": "",
+			"deleted": "",
+			"source": "",
+			"source-code-system": "",
+			"target": "",
+			"target-code-system": ""
+		},
+		"code-system-concept": {
+			"filter": {
+				"language-filter": "",
+				"property-filter": "",
+				"property-name-filter": "",
+				"search-property-value-placeholder": "",
+				"select-language-placeholder": "",
+				"select-property-placeholder": "",
+				"select-version-placeholder": "",
+				"version-filter": ""
+			},
+			"form": {
+				"add-header": "",
+				"all-tasks": "",
+				"concept": "",
+				"linked-with-code-systems": "",
+				"map-sets": {
+					"concept-code": "",
+					"concept-display": "",
+					"direction": "",
+					"equivalence": "",
+					"header": "",
+					"map-set": ""
+				},
+				"opened-tasks": "",
+				"related-artifacts": "",
+				"thesaurus": {
+					"header": "",
+					"name": "",
+					"slug": ""
+				},
+				"value-sets": {
+					"definition": "",
+					"header": "",
+					"value-set": ""
+				},
+				"version": {
+					"code-system-version": "",
+					"header": "",
+					"new": "",
+					"new-version": ""
+				},
+				"wiki": {
+					"header": "",
+					"name": "",
+					"slug": ""
+				}
+			},
+			"group": {
+				"association": "",
+				"property": "",
+				"type": ""
+			},
+			"list": {
+				"add-concept-child": "",
+				"external": "",
+				"propagate-properties": "",
+				"unlink-concept": ""
+			},
+			"property-list": {
+				"concepts": "",
+				"properties": ""
+			}
+		},
+		"code-system-concept-version": {
+			"add-version": "",
+			"association": {
+				"add-association": "",
+				"delete-association": "",
+				"edit-association": ""
+			},
+			"designation": {
+				"add-designation": "",
+				"add-supplement": "",
+				"delete-designation": "",
+				"edit-designation": "",
+				"multi-language-input": {
+					"add-translation": "",
+					"placeholder": ""
+				}
+			},
+			"property-value": {
+				"add-property-value": "",
+				"add-supplement": "",
+				"coding-value-system": "",
+				"delete-property-value": "",
+				"edit-property-value": ""
+			}
+		},
+		"code-system-validator": {
+			"circular-dependencies-detector": {
+				"detect": "",
+				"title": ""
+			},
+			"code-system": "",
+			"result": {
+				"title": ""
+			},
+			"uniqueness-validator": {
+				"designations": "",
+				"empty-properties": "",
+				"ignore-empty-properties": "",
+				"properties": "",
+				"title": "",
+				"validate": ""
+			}
+		},
+		"code-system-version": {
+			"entity": {
+				"description": "Kirjeldus",
+				"expiration-date": "Aegumis kuupäev",
+				"id": "Identifikaator",
+				"preferredLanguage": "Eelistatud keel",
+				"release-date": "Väljastus kuupäev",
+				"source": "Allikas",
+				"status": "Staatus",
+				"supported-languages": "Toetatud keeled",
+				"version": "Versioon"
+			},
+			"form": {
+				"add-header": "Lisa versioon",
+				"duplicate": {
+					"duplicate-header": "Loo koodisüsteemi versiooni duplikaat",
+					"source-code-system": "Allikas koodisüsteem:",
+					"source-version": "Allikas versioon:",
+					"target-version": "Siht versioon:"
+				},
+				"edit-header": "Muuda versiooni",
+				"entities": {
+					"add-entity": "",
+					"entity-version": "",
+					"modal": {
+						"add-header": "",
+						"entity-version": ""
+					}
+				},
+				"view-header": "Vaata versiooni"
+			},
+			"list": {
+				"add-new-version": "Lisa uus versioon",
+				"add-version": "Lisa versioon",
+				"duplicate-version": "Loo versiooni duplikaat",
+				"export-fhir-json": "Ekspordi FHIR json"
+			},
+			"summary": {
+				"all-tasks": "",
+				"code-system-version": "",
+				"edit-version": "",
+				"info": {
+					"activate": "",
+					"create-approve": "",
+					"create-review": "",
+					"definition": "",
+					"last-approved": "",
+					"last-modified": "",
+					"last-reviewed": "",
+					"load-from-github": "",
+					"make-draft": "",
+					"none": "",
+					"push-to-github": "",
+					"retire": "",
+					"show-changes": ""
+				},
+				"opened-tasks": "",
+				"task-modal": {
+					"assignee": "",
+					"header": "",
+					"success-msg": ""
+				}
+			}
+		},
+		"concept": {
+			"entity": {
+				"code": "Kood",
+				"description": "Kirjeldus"
+			},
+			"form": {
+				"add-header": "Lisa kontsept",
+				"edit-header": "Muuda kontsepti"
+			},
+			"list": {
+				"concept": "Kontsept",
+				"concepts": "Kontseptid",
+				"operations": "Toimingud"
+			},
+			"version": {
+				"form": {
+					"add-header": "Lisa versioon",
+					"edit-header": "Muuda versiooni"
+				},
+				"list": {
+					"concept-status": "Kontsepti staatus",
+					"created": "Loodud",
+					"description": "Kirjeldus",
+					"designations": "Tähendused",
+					"number": "Number",
+					"operations": "Toimingud",
+					"property-values": "Omaduste väärtused",
+					"status": "Staatus",
+					"versions": "Versioonid"
+				}
+			}
+		},
+		"contacts": {
+			"list": {
+				"add-contact": "",
+				"header": ""
+			},
+			"modal": {
+				"add-header": "",
+				"edit-header": "",
+				"name": ""
+			}
+		},
+		"designation": {
+			"list": {
+				"designation": "Tähendus",
+				"language": "Keel",
+				"name": "Nimi",
+				"status": "Staatus",
+				"type": "Tüüp"
+			},
+			"modal": {
+				"add-designation": "Lisa tähendus",
+				"case-significance": "Tõstutundlikkus",
+				"delete-designation": "Kustuta tähendus",
+				"description": "Kirjeldus",
+				"designation-kind": "Tähenduse liik",
+				"edit-designation": "Muuda tähendust",
+				"status": "Staatus"
+			}
+		},
+		"dev-code-system-relation": {
+			"map-set": {
+				"code": "",
+				"header": "",
+				"name": ""
+			},
+			"value-set": {
+				"code": "",
+				"generate": "",
+				"header": "",
+				"name": "",
+				"publisher": "",
+				"uri": "",
+				"value-set": "",
+				"value-set-code": ""
+			}
+		},
+		"entity-property": {
+			"entity": {
+				"description": "Kirjeldus",
+				"name": "Nimi",
+				"status": "Staatus",
+				"type": "Tüüp"
+			},
+			"form": {
+				"add-header": "Lisa omadus",
+				"edit-header": "Muuda omadust"
+			}
+		},
+		"global-search": {
+			"dashboard": {
+				"code-systems": "",
+				"concepts": "",
+				"header": "",
+				"map-sets": "",
+				"measurement-unit": "",
+				"snomed": "",
+				"value-sets": ""
+			}
+		},
+		"integration": {
+			"fhir": {
+				"code-system": {
+					"find-matches": {
+						"exact": "",
+						"properties": "",
+						"property-name": "",
+						"property-value": "",
+						"system": "",
+						"version": ""
+					},
+					"lookup": {
+						"code": "",
+						"date": "",
+						"properties": "",
+						"system": "",
+						"version": ""
+					},
+					"subsumes": {
+						"code-a": "",
+						"code-b": "",
+						"system": "",
+						"version": ""
+					},
+					"validate-code": {
+						"code": "",
+						"display": "",
+						"url": "",
+						"version": ""
+					}
+				},
+				"concept-map": {
+					"closure": {
+						"code": "",
+						"concepts": "",
+						"name": "",
+						"system": "",
+						"version": ""
+					},
+					"translate": {
+						"code": "",
+						"concept-map-version": "",
+						"system": "",
+						"target-system": "",
+						"uri": "",
+						"version": ""
+					}
+				},
+				"sync": {
+					"send-request": "Saada päring"
+				},
+				"value-set": {
+					"expand": {
+						"url": "",
+						"value-set-version": ""
+					},
+					"validate-code": {
+						"code": "",
+						"display": "",
+						"system": "",
+						"system-version": "",
+						"url": "",
+						"value-set-version": ""
+					}
+				}
+			},
+			"file-import": {
+				"association": {
+					"code-system": "",
+					"code-system-version": "",
+					"column-value-separator": "",
+					"file": "",
+					"file-column": "",
+					"import": "",
+					"mapped-column": "",
+					"order": "",
+					"source": "",
+					"target": ""
+				},
+				"code-system": {
+					"general": {
+						"clear-version-data": "",
+						"delete-concepts": "",
+						"generate-valueset": "",
+						"hold": "",
+						"merge": "",
+						"overlap-of-concepts": "",
+						"replace": "",
+						"resource-id": ""
+					},
+					"import": "",
+					"properties": {
+						"delimiter": "",
+						"download-diff": "",
+						"download-log": "",
+						"format": "",
+						"header": "",
+						"import": "",
+						"import-data": "",
+						"kts-property": "",
+						"lang": "",
+						"preferred": "",
+						"type": "",
+						"type-column": "",
+						"validate-data": ""
+					},
+					"source": {
+						"analyze": "",
+						"file": "",
+						"header": "",
+						"link": "",
+						"types": {
+							"csv": "",
+							"tsv": ""
+						}
+					}
+				},
+				"concept-map": {
+					"import": "",
+					"map-id": "",
+					"map-name": "",
+					"map-version": "",
+					"source-value-set": "",
+					"target-value-set": ""
+				},
+				"create-new": "",
+				"not-found": "",
+				"process": "",
+				"success-message": "",
+				"title": ""
+			},
+			"import": {
+				"atc": "",
+				"base-code-system": "",
+				"code-system": "",
+				"code-system-description": "",
+				"code-system-name": "",
+				"code-system-version-description": "",
+				"icd-10": "",
+				"ichi": "",
+				"loinc": "",
+				"orphanet": "",
+				"publisher": "",
+				"source-url": "",
+				"uri": "",
+				"valid-from": "",
+				"valid-to": "",
+				"version": ""
+			},
+			"loinc-import": {
+				"answer-list": "",
+				"answer-list-link": "",
+				"import": "",
+				"language": "",
+				"loinc": "",
+				"loinc-import": "",
+				"loinc-terminology": "",
+				"order-observation": "",
+				"panels": "",
+				"parts": "",
+				"supplementary-properties": "",
+				"translations": ""
+			},
+			"response": "",
+			"send-request": "",
+			"set-default-data": "",
+			"systems": {
+				"atc": "",
+				"fhir": "",
+				"icd-10": "",
+				"ichi": "",
+				"loinc": "",
+				"orphanet": ""
+			}
+		},
+		"landing": {
+			"resources": {
+				"title": "",
+				"types": {
+					"code-system": "",
+					"map-set": "",
+					"value-set": ""
+				}
+			},
+			"summary": {
+				"open-tasks": "",
+				"pages": "",
+				"spaces": "",
+				"title": ""
+			},
+			"tasks": {
+				"actions": {
+					"create": ""
+				},
+				"assigned-to-me": "",
+				"created-by-me": "",
+				"title": ""
+			}
+		},
+		"loinc": {
+			"answer-list": {
+				"answers": "",
+				"code": "",
+				"name": "",
+				"oid": "",
+				"used-by": ""
+			},
+			"loinc": {
+				"class": "",
+				"code": "",
+				"component": "",
+				"filter": {
+					"both": "",
+					"class": "",
+					"clinical": "",
+					"contains": "",
+					"eq": "",
+					"lab": "",
+					"method": "",
+					"observation": "",
+					"ord-obs": "",
+					"order": "",
+					"property": "",
+					"scale": "",
+					"survey": "",
+					"system": "",
+					"timing": "",
+					"type": ""
+				},
+				"method": "",
+				"name": "",
+				"ord-obs": "",
+				"property": "",
+				"scale": "",
+				"system": "",
+				"timing": "",
+				"type": "",
+				"values": ""
+			},
+			"part": {
+				"code": "",
+				"name": "",
+				"used-by": ""
+			}
+		},
+		"map-set": {
+			"entity": {
+				"description": "Kirjeldus",
+				"domain": "Domeen",
+				"id": "Identifikaator",
+				"name": "Nimi",
+				"uri": "Ühtne ressursiidentifikaator (URI)"
+			},
+			"form": {
+				"add-header": "Lisa kaardistus kogum",
+				"edit-header": "Muuda kaardistus kogumit",
+				"header": "",
+				"view-header": ""
+			},
+			"list": {
+				"add-version": "Lisa versioon",
+				"operations": "Toimingud",
+				"versions": "Versioonid",
+				"versions-expiration-date": "kuni {{expirationDate}}",
+				"versions-release-date": "Alates: {{releaseDate}}",
+				"versions-version": "Versiooni nimi: {{version}}"
+			}
+		},
+		"map-set-association": {
+			"entity": {
+				"concept": "Kontsept",
+				"source": "Allikas",
+				"status": "Status",
+				"target": "Siht",
+				"type": "Seos"
+			},
+			"form": {
+				"add-header": "",
+				"edit-header": "",
+				"source-concept": "",
+				"source-system": "",
+				"status": "",
+				"target-concept": "",
+				"target-system": "",
+				"type": "",
+				"view-header": ""
+			},
+			"list": {
+				"add-association": "",
+				"associations": "Seosed",
+				"code-system": "Koodisüsteem",
+				"operations": "Toimingud"
+			}
+		},
+		"map-set-entity-version": {
+			"modal": {
+				"add-header": "",
+				"edit-header": "",
+				"entity-version": "",
+				"link-header": ""
+			},
+			"table": {
+				"activate": "",
+				"add-version": "",
+				"header": "",
+				"link-version": "",
+				"retire": ""
+			}
+		},
+		"map-set-version": {
+			"entity": {
+				"description": "Kirjeldus",
+				"expiration-date": "Aegumis kuupäev",
+				"id": "Identifikaator",
+				"release-date": "Väljastus kuupäev",
+				"source": "Allikas",
+				"status": "Staatus",
+				"supported-languages": "Toetatud keeled",
+				"version": "Versioon"
+			},
+			"form": {
+				"add-header": "Lisa versioon",
+				"edit-header": "Muuda versiooni",
+				"view-header": "Vaata versiooni"
+			}
+		},
+		"measurement-unit": {
+			"form": {
+				"add-header": "",
+				"add-kind": "",
+				"edit-header": "",
+				"from": "",
+				"select-kind": "",
+				"to": "",
+				"view-header": ""
+			},
+			"mapping": {
+				"list": {
+					"add-mapping": ""
+				},
+				"modal": {
+					"add-header": "",
+					"edit-header": ""
+				}
+			}
+		},
+		"naming-system": {
+			"form": {
+				"add-header": "",
+				"edit-header": "",
+				"view-header": ""
+			},
+			"list": {
+				"add-naming-system": "",
+				"naming-system": "",
+				"type": ""
+			}
+		},
+		"observation-definition": {
+			"behaviour": {
+				"computable": "",
+				"editable": "",
+				"read-only": ""
+			},
+			"cardinality": {
+				"max": "",
+				"min": ""
+			},
+			"divider": {
+				"components": "",
+				"data": "",
+				"description": "",
+				"identification": "",
+				"interpretation": "",
+				"mappings": "",
+				"members": "",
+				"protocol": "",
+				"state": "",
+				"value": ""
+			},
+			"filter": {
+				"category": "",
+				"structure": "",
+				"value-type": ""
+			},
+			"header-add": "",
+			"header-edit": "",
+			"import": "",
+			"import-from-loinc": "",
+			"import-success-message": "",
+			"info": {
+				"data": "",
+				"mappings": "",
+				"protocol": "",
+				"state": ""
+			},
+			"interpretation-category": {
+				"absolute": "",
+				"critical": "",
+				"reference": ""
+			},
+			"protocol-usage": {
+				"not-in-use": "",
+				"value-set": "",
+				"values": ""
+			},
+			"select-snomed": "",
+			"structure": {
+				"component": "",
+				"panel": "",
+				"value": ""
+			},
+			"time-precision": {
+				"period": "",
+				"timestamp": ""
+			}
+		},
+		"package": {
+			"add-header": "",
+			"edit-header": ""
+		},
+		"privileges": {
+			"add-header": "",
+			"edit-header": "",
+			"privileges": "",
+			"resources": {
+				"modal": {
+					"actions": {
+						"edit": "",
+						"publish": "",
+						"view": ""
+					},
+					"add-header": "",
+					"edit-header": "",
+					"resource-id": "",
+					"resource-type": "",
+					"type": {
+						"admin": "",
+						"any": "",
+						"association-type": "",
+						"code-system": "",
+						"map-set": "",
+						"naming-system": "",
+						"observation-definition": "",
+						"privilege": "",
+						"space": "",
+						"task": "",
+						"thesaurus": "",
+						"value-set": "",
+						"wiki": ""
+					}
+				},
+				"table": {
+					"add-resource": "",
+					"delete-resource": "",
+					"head": ""
+				}
+			},
+			"table": {
+				"add-privilege": "",
+				"delete-privilege": ""
+			}
+		},
+		"property-value": {
+			"list": {
+				"property": "Omadus",
+				"value": "Väärtus"
+			},
+			"modal": {
+				"add-property": "Lisa omadus",
+				"edit-property": "Muuda omadust"
+			}
+		},
+		"publication-status": {
+			"operations": {
+				"activate": "Aktiveeri",
+				"retire": "Kõrvalda",
+				"save-as-draft": ""
+			}
+		},
+		"resource-context": {
+			"all-versions": "",
+			"concepts": "",
+			"properties": "",
+			"provenance": "",
+			"summary": ""
+		},
+		"resource-form": {
+			"id-change-modal": {
+				"header": "",
+				"id": ""
+			},
+			"open-uri": ""
+		},
+		"resource-import-modal": {
+			"file": "",
+			"header": "",
+			"id": "",
+			"source": "",
+			"type": "",
+			"url": ""
+		},
+		"resources": {
+			"tabset": {
+				"association-types": "",
+				"code-systems": "Koodisüsteemid",
+				"map-sets": "Kaardistus kogumid",
+				"naming-systems": "",
+				"value-sets": "Väärtuste kogumid"
+			}
+		},
+		"sequence": {
+			"form": {
+				"add-header": "",
+				"edit-header": ""
+			},
+			"list": {
+				"add-sequence": ""
+			}
+		},
+		"snomed": {
+			"branch": {
+				"form": {
+					"add-header": "",
+					"based-on": "",
+					"edit-header": "",
+					"name": "",
+					"parent-branch": "",
+					"release-date": ""
+				},
+				"list": {
+					"add-branch": "",
+					"header": ""
+				},
+				"management": {
+					"export-modal": {
+						"header": "",
+						"type": ""
+					},
+					"export-to-rf2": "",
+					"header": "",
+					"import-failed": "",
+					"import-from-rf2": "",
+					"import-modal": {
+						"create-version": "",
+						"file": "",
+						"header": "",
+						"type": ""
+					},
+					"import-succeeded": "",
+					"integrity-check": "",
+					"lock": "",
+					"lock-modal": {
+						"header": "",
+						"message": ""
+					},
+					"total-descriptions": "",
+					"unlinked-translations": "",
+					"unlock": ""
+				}
+			},
+			"rf2-export": "",
+			"search": {
+				"ecl": "",
+				"ecl-placeholder": "",
+				"import-refset-concepts": "",
+				"refsets": "",
+				"taxonomy": ""
+			}
+		},
+		"space": {
+			"add-btn": "",
+			"add-header": "",
+			"all-packages": "",
+			"edit-header": "",
+			"import-btn": "",
+			"import-error-message": "",
+			"import-success-message": "",
+			"new-version": "",
+			"resource-import-error-message": "",
+			"resource-import-success-message": "",
+			"select-context": ""
+		},
+		"structure-definition": {
+			"form": {
+				"add-element": "",
+				"add-header": "",
+				"cardinality": "",
+				"code": "",
+				"definition": "",
+				"definition-header": "",
+				"display": "",
+				"edit-header": "",
+				"element-header": "",
+				"error-modal": {
+					"delete-content": "",
+					"fhir-to-fsh": "",
+					"fsh-to-fhir": "",
+					"no-save-proceed": ""
+				},
+				"fixed-coding": "",
+				"fixed-uri": "",
+				"fsh-header": "",
+				"json-header": "",
+				"modal": {
+					"content": "",
+					"no-save-proceed": "",
+					"save-proceed": ""
+				},
+				"name": "",
+				"path": "",
+				"primary-source": "",
+				"short-description": "",
+				"system": ""
+			},
+			"list": {
+				"add-structure-definition": ""
+			},
+			"view": {
+				"binding": "",
+				"fixed": ""
+			}
+		},
+		"structure-definition-constraint": {
+			"list": {
+				"add-constraint": "",
+				"header": ""
+			},
+			"modal": {
+				"add-header": "",
+				"edit-header": "",
+				"error": "",
+				"expression": "",
+				"human": "",
+				"key": "",
+				"requirements": "",
+				"severity": "",
+				"source": "",
+				"warning": ""
+			}
+		},
+		"structure-definition-type": {
+			"list": {
+				"add-type": "",
+				"header": ""
+			},
+			"modal": {
+				"add-header": "",
+				"code": "",
+				"edit-header": "",
+				"target-profile": ""
+			}
+		},
+		"supplement": {
+			"form": {
+				"description": "",
+				"designation": {
+					"add-header": "",
+					"edit-header": ""
+				},
+				"property": {
+					"add-header": "",
+					"edit-header": ""
+				},
+				"property-value": {
+					"add-header": "",
+					"edit-header": ""
+				}
+			},
+			"supplement": ""
+		},
+		"task": {
+			"activity": "",
+			"add-btn": "",
+			"add-comment": "",
+			"context": "",
+			"filter": {
+				"assignee": "",
+				"author": "",
+				"created": "",
+				"finished": "",
+				"presets": {
+					"header": "",
+					"mine": "",
+					"to-me": ""
+				},
+				"priority": "",
+				"project": "",
+				"requested-performer": "",
+				"status": "",
+				"type": ""
+			},
+			"select-project": ""
+		},
+		"template": {
+			"form": {
+				"add-header": "",
+				"edit-header": ""
+			},
+			"list": {
+				"add-template": ""
+			}
+		},
+		"terminology-server": {
+			"add-btn": "",
+			"add-header": "",
+			"edit-header": "",
+			"kind": {
+				"fhir": "",
+				"snomed": "",
+				"terminology": ""
+			}
+		},
+		"thesaurus-page": {
+			"actions": {
+				"contents": "",
+				"none": "",
+				"relations": "",
+				"tags": "",
+				"usages": ""
+			},
+			"form": {
+				"add-header": "",
+				"add-structure-definition": "",
+				"content-header": "",
+				"content-type-tooltip": "",
+				"copy-to-clipboard": "",
+				"edit-header": "",
+				"proceed-without-saving": "",
+				"relation-header": "",
+				"save-and-proceed": "",
+				"usages": ""
+			},
+			"header": {
+				"add-subpage": "",
+				"modified": ""
+			},
+			"link-modal": {
+				"code-system": "",
+				"concept": "",
+				"concept-code-system": "",
+				"header": "",
+				"link-name": "",
+				"map-set": "",
+				"page": "",
+				"resource": "",
+				"resource-type": "",
+				"url": "",
+				"value-set": ""
+			},
+			"structure-definition-modal": {
+				"base-definition-url": "",
+				"header": "",
+				"simplifier": "",
+				"structure-definition": "",
+				"url": ""
+			},
+			"template-modal": {
+				"header": "",
+				"template": ""
+			}
+		},
+		"tools": {
+			"terminology-service-api": {
+				"button": "",
+				"content": "",
+				"header": ""
+			}
+		},
+		"transformation-definition": {
+			"execution": {
+				"input": "",
+				"output": "",
+				"transform": ""
+			},
+			"list": {
+				"add-btn": ""
+			},
+			"resource-form": {
+				"compile": "",
+				"content": "",
+				"definition": "",
+				"download-json": "",
+				"download-xml": "",
+				"fhir-resource": "",
+				"fhir-server": "",
+				"generate": "",
+				"map-set": "",
+				"preview-hide": "",
+				"preview-show": "",
+				"save-as": "",
+				"url": ""
+			},
+			"resources": {
+				"new": "",
+				"type.conceptmap": "",
+				"type.definition": "",
+				"type.mapping": ""
+			}
+		},
+		"value-set": {
+			"concepts": {
+				"no-version": "",
+				"select-version": ""
+			},
+			"entity": {
+				"description": "Kirjeldus",
+				"id": "Identifikaator",
+				"name": "Nimi",
+				"names": "Nimed",
+				"uri": "Ühtne ressursiidentifikaator (URI)"
+			},
+			"form": {
+				"add-header": "Lisa uus väärtuste kogum",
+				"edit-header": "Muuda väärtuste kogumit",
+				"versions": {
+					"add-version": "",
+					"export-fhir-expansion": "",
+					"export-fhir-json": "",
+					"export-fhir-xml": "",
+					"open-fhir": ""
+				},
+				"view-header": ""
+			},
+			"list": {
+				"add-value-set": "",
+				"add-version": "Lisa versioon",
+				"domain": "Domeen",
+				"expansion": "",
+				"header": "Väärtuste kogumite nimekiri",
+				"import-fhir": "",
+				"last-version": "",
+				"manual": "",
+				"open-fhir": "",
+				"operations": "Toimingud",
+				"properties": "Omadused",
+				"status": "",
+				"title": "",
+				"versions": "Versioonid",
+				"versions-expiration-date": "kuni {{expirationDate}}",
+				"versions-release-date": "Alates: {{releaseDate}}",
+				"versions-version": "Versiooni nimi: {{version}}"
+			},
+			"summary": {
+				"add-version": "",
+				"all-tasks": "",
+				"duplicate-version-modal": {
+					"header": "",
+					"version": ""
+				},
+				"expansions": "",
+				"opened-tasks": "",
+				"related-artifacts": "",
+				"total-concepts": "",
+				"value-set": "",
+				"versions": ""
+			}
+		},
+		"value-set-rule-filter": {
+			"entity": {
+				"operator": "Operaator",
+				"property": "Omadus",
+				"value": "Väärtus"
+			}
+		},
+		"value-set-rule-set": {
+			"entity": {
+				"inactive": "Mitteaktiivsed kontseptid",
+				"locked-date": "Lukustatud kuupäev",
+				"rule": {
+					"code-system": "Koodisüsteem",
+					"code-system-version": "Koodisüsteemi versioon",
+					"concepts": "Kontseptid",
+					"filters": "Filtrid",
+					"value-set": "Väärtuste kogum",
+					"value-set-version": "Väärtuste kogumi versioon"
+				},
+				"rules": "Reeglid"
+			},
+			"form": {
+				"active": "Aktiivsed",
+				"add-rule-set": "Lisa reegel",
+				"all": "Kõik",
+				"code-system-rule": "Koodisüsteemi reegel",
+				"edit-header": "Reegel",
+				"exclude": "Välistatud",
+				"inactive": "Mitteaktiivsed",
+				"include": "Kaasatud",
+				"rule": "Reegel",
+				"value-set-rule": "Väärtuste kogumi reegel"
+			}
+		},
+		"value-set-version": {
+			"entity": {
+				"concepts": "Kontseptid",
+				"description": "Kirjeldus",
+				"expiration-date": "Aegumis kuupäev",
+				"id": "Identifikaator",
+				"release-date": "Väljastus kuupäev",
+				"source": "Allikas",
+				"status": "Staatus",
+				"supported-languages": "Toetatud keeled",
+				"version": "Versioon"
+			},
+			"form": {
+				"add-concept": "",
+				"add-header": "Lisa versioon",
+				"concepts": {
+					"warning": ""
+				},
+				"concepts-csv": "",
+				"def-json": "",
+				"def-xml": "",
+				"download": "",
+				"edit-header": "Muuda versiooni",
+				"expansion-json": "",
+				"expansion-xml": "",
+				"provenance": "",
+				"rule-set": {
+					"rule": {
+						"add-designation": "",
+						"all": "",
+						"code-system": "",
+						"exact": "",
+						"exclude": "",
+						"filter": "",
+						"include": "",
+						"value-set": ""
+					}
+				},
+				"tasks": "",
+				"view-header": "Vaata versiooni"
+			},
+			"list": {
+				"operations": "Toimingud"
+			},
+			"summary": {
+				"edit-version": "",
+				"expansion": "",
+				"expansion-limit-info": "",
+				"expansion-see-all": "",
+				"info": {
+					"activate": "",
+					"create-approve": "",
+					"create-review": "",
+					"definition": "",
+					"expansion": "",
+					"last-approved": "",
+					"last-modified": "",
+					"last-reviewed": "",
+					"load-from-github": "",
+					"make-draft": "",
+					"none": "",
+					"push-to-github": "",
+					"retire": "",
+					"show-changes": ""
+				},
+				"rule": "",
+				"rule-set": "",
+				"task-modal": {
+					"assignee": "",
+					"header": "",
+					"success-msg": ""
+				},
+				"value-set-version": ""
+			}
+		},
+		"value-set-version-concept": {
+			"entity": {
+				"additional-designations": "Lisa tähendused",
+				"concept": "Kontsept",
+				"display": "Kuva"
+			},
+			"form": {
+				"add-header": "",
+				"designation-language": "",
+				"designation-name": "",
+				"edit-header": ""
+			},
+			"modal": {
+				"header": "Tulemuse eelvaade"
+			}
+		},
+		"value-set-version-rule": {
+			"form": {
+				"add-header": "",
+				"concept": {
+					"add-concept": "",
+					"modal-header": ""
+				},
+				"edit-header": "",
+				"filter": {
+					"add-filter": "",
+					"modal-header": ""
+				}
+			}
+		},
+		"wiki-page": {
+			"details": {
+				"concept": "",
+				"contents": "",
+				"cs": "",
+				"ms": "",
+				"none": "",
+				"page": "",
+				"relations": "",
+				"tags": "",
+				"usages": "",
+				"vs": ""
+			},
+			"edit": {
+				"image-modal": {
+					"choose-file": "",
+					"header": ""
+				},
+				"menu": {
+					"diagrams": "",
+					"files": "",
+					"preview": {
+						"hide": "",
+						"show": ""
+					},
+					"structure-definition": {
+						"add": "",
+						"copy": "",
+						"title": ""
+					}
+				},
+				"structure-definition-modal": {
+					"description": "",
+					"header": "",
+					"proceed-without-saving": "",
+					"save-and-proceed": ""
+				}
+			},
+			"header": {
+				"add-subpage": "",
+				"copy-raw": "",
+				"modified": ""
+			},
+			"no-space": {
+				"desc": "",
+				"title": ""
+			},
+			"sidebar": {
+				"pages": ""
+			},
+			"space": {
+				"pages": "",
+				"recently-modified": {
+					"created": "",
+					"header": "",
+					"updated": ""
+				}
+			},
+			"spaces": "",
+			"texteditor": {
+				"quick-actions": {
+					"link-modal": {
+						"code-system": "",
+						"concept": "",
+						"concept-code-system": "",
+						"header": "",
+						"link-name": "",
+						"map-set": "",
+						"page": "",
+						"resource": "",
+						"resource-type": "",
+						"search-externally": "",
+						"space": "",
+						"url": "",
+						"value-set": ""
+					},
+					"structure-definition-modal": {
+						"base-definition-url": "",
+						"header": "",
+						"simplifier": "",
+						"structure-definition": "",
+						"url": ""
+					},
+					"template-modal": {
+						"header": "",
+						"template": ""
+					}
+				}
+			},
+			"view": {
+				"add-header": "",
+				"add-structure-definition": "",
+				"content-header": "",
+				"content-type-tooltip": "",
+				"copy-to-clipboard": "",
+				"edit-header": "",
+				"relation-header": "",
+				"usages": ""
+			}
+		}
+	}
 }
