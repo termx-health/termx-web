@@ -1397,16 +1397,6 @@
 				"delete-privilege": "Šalinti privilegiją"
 			}
 		},
-		"property-value": {
-			"list": {
-				"property": "",
-				"value": ""
-			},
-			"modal": {
-				"add-property": "",
-				"edit-property": ""
-			}
-		},
 		"publication-status": {
 			"operations": {
 				"activate": "Aktyvinti",
@@ -1431,7 +1421,7 @@
 		"resource-import-modal": {
 			"file": "Failas",
 			"header": "Importuoti iš išorinės FHIR apibrėžties",
-			"id": "",
+			"id": "ID",
 			"source": "Pirminė",
 			"type": "Tipas",
 			"url": "URL"

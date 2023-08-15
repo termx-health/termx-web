@@ -1397,182 +1397,172 @@
 				"delete-privilege": "Kustuta privileeg"
 			}
 		},
-		"property-value": {
-			"list": {
-				"property": "Omadus",
-				"value": "Väärtus"
-			},
-			"modal": {
-				"add-property": "Lisa omadus",
-				"edit-property": "Muuda omadust"
-			}
-		},
 		"publication-status": {
 			"operations": {
 				"activate": "Aktiveeri",
 				"retire": "Kõrvalda",
-				"save-as-draft": ""
+				"save-as-draft": "Muuda \"mustandiks\""
 			}
 		},
 		"resource-context": {
-			"all-versions": "",
-			"concepts": "",
-			"properties": "",
-			"provenance": "",
-			"summary": ""
+			"all-versions": "Kõik versioonid",
+			"concepts": "Mõisted",
+			"properties": "Tunnused",
+			"provenance": "Ajalugu",
+			"summary": "Kokkuvõte"
 		},
 		"resource-form": {
 			"id-change-modal": {
-				"header": "",
-				"id": ""
+				"header": "Muuda ID",
+				"id": "Uus ID"
 			},
-			"open-uri": ""
+			"open-uri": "Ava URI"
 		},
 		"resource-import-modal": {
-			"file": "",
-			"header": "",
-			"id": "",
-			"source": "",
-			"type": "",
-			"url": ""
+			"file": "fail",
+			"header": "Import välisest FHIR-i definitsioonist",
+			"id": "ID",
+			"source": "Allikas",
+			"type": "Tüüp",
+			"url": "URL"
 		},
 		"resources": {
 			"tabset": {
-				"association-types": "",
+				"association-types": "Assotsiooni tüübid",
 				"code-systems": "Koodisüsteemid",
-				"map-sets": "Kaardistus kogumid",
-				"naming-systems": "",
-				"value-sets": "Väärtuste kogumid"
+				"map-sets": "Vastavustabelid",
+				"naming-systems": "Nimesüsteemid",
+				"value-sets": "Loendid"
 			}
 		},
 		"sequence": {
 			"form": {
-				"add-header": "",
-				"edit-header": ""
+				"add-header": "Lisa numeratsioon",
+				"edit-header": "Muuda numeratsiooni"
 			},
 			"list": {
-				"add-sequence": ""
+				"add-sequence": "Lisa numeratsioon"
 			}
 		},
 		"snomed": {
 			"branch": {
 				"form": {
-					"add-header": "",
-					"based-on": "",
-					"edit-header": "",
-					"name": "",
-					"parent-branch": "",
-					"release-date": ""
+					"add-header": "Lisa haru",
+					"based-on": "Põhineb ",
+					"edit-header": "Haru {{path}}",
+					"name": "Nimi",
+					"parent-branch": "Vanem haru",
+					"release-date": "Väljalaske kuupäev"
 				},
 				"list": {
-					"add-branch": "",
-					"header": ""
+					"add-branch": "Lisa haru",
+					"header": "Harud"
 				},
 				"management": {
 					"export-modal": {
-						"header": "",
-						"type": ""
+						"header": "Eksport RF2 zip faili",
+						"type": "Tüüp"
 					},
-					"export-to-rf2": "",
-					"header": "",
-					"import-failed": "",
-					"import-from-rf2": "",
+					"export-to-rf2": "Eksport RF2-te",
+					"header": "Haru {{path}}",
+					"import-failed": "Import RF2 zip failist ebaõnnestus",
+					"import-from-rf2": "Import RF2 failist",
 					"import-modal": {
-						"create-version": "",
-						"file": "",
-						"header": "",
-						"type": ""
+						"create-version": "Loo koodisüsteemi versioon",
+						"file": "Fail",
+						"header": "Import RF2 zip failist",
+						"type": "Tüüp"
 					},
-					"import-succeeded": "",
-					"integrity-check": "",
-					"lock": "",
+					"import-succeeded": "Import RF2 zip failist õnnestus!",
+					"integrity-check": "Tervislikuse kontroll",
+					"lock": "Lukusta",
 					"lock-modal": {
-						"header": "",
-						"message": ""
+						"header": "Lukusta haru",
+						"message": "Sõnum"
 					},
-					"total-descriptions": "",
-					"unlinked-translations": "",
-					"unlock": ""
+					"total-descriptions": "{{total}} description elemente harus",
+					"unlinked-translations": "{{count}} sidumata tõlkeid",
+					"unlock": "Lahti lukusta"
 				}
 			},
-			"rf2-export": "",
+			"rf2-export": "RF2 eksport",
 			"search": {
-				"ecl": "",
-				"ecl-placeholder": "",
-				"import-refset-concepts": "",
-				"refsets": "",
-				"taxonomy": ""
+				"ecl": "ECL",
+				"ecl-placeholder": "ECL valem",
+				"import-refset-concepts": "Import refset mõisted",
+				"refsets": "Refset-id",
+				"taxonomy": "Taksonoomia"
 			}
 		},
 		"space": {
-			"add-btn": "",
-			"add-header": "",
-			"all-packages": "",
-			"edit-header": "",
-			"import-btn": "",
-			"import-error-message": "",
-			"import-success-message": "",
-			"new-version": "",
-			"resource-import-error-message": "",
-			"resource-import-success-message": "",
-			"select-context": ""
+			"add-btn": "Lisa ruum",
+			"add-header": "Lisa ruum",
+			"all-packages": "Kõik paketid",
+			"edit-header": "Muuda ruum",
+			"import-btn": "Impordi ruum",
+			"import-error-message": "Ruumi import ebaõnnestunud",
+			"import-success-message": "Ruumi import on edukas",
+			"new-version": "Uus versioon",
+			"resource-import-error-message": "Ressurssi import ebaõnnestus",
+			"resource-import-success-message": "Ressurssi import õnnestus",
+			"select-context": "Vali kontekst"
 		},
 		"structure-definition": {
 			"form": {
-				"add-element": "",
-				"add-header": "",
-				"cardinality": "",
-				"code": "",
-				"definition": "",
-				"definition-header": "",
-				"display": "",
-				"edit-header": "",
-				"element-header": "",
+				"add-element": "Lisa element",
+				"add-header": "Lisa struktuuri definitsioon",
+				"cardinality": "Kordsus",
+				"code": "Kood",
+				"definition": "Definitsioon",
+				"definition-header": "Definitsioon",
+				"display": "Display",
+				"edit-header": "Muuda struktuuri definitsiooni",
+				"element-header": "Elemendid",
 				"error-modal": {
-					"delete-content": "",
-					"fhir-to-fsh": "",
-					"fsh-to-fhir": "",
-					"no-save-proceed": ""
+					"delete-content": "Kustuta sisu ja jätka",
+					"fhir-to-fsh": "Teisendus FHIR-ist FSH-i ebaõnnestunud",
+					"fsh-to-fhir": "Teisendus FSH-ist FHIR-i ebaõnnestunud",
+					"no-save-proceed": "Kinni"
 				},
-				"fixed-coding": "",
-				"fixed-uri": "",
-				"fsh-header": "",
-				"json-header": "",
+				"fixed-coding": "fikseeritud kodeering",
+				"fixed-uri": "Fikseeritud URI",
+				"fsh-header": "FSH",
+				"json-header": "JSON",
 				"modal": {
-					"content": "",
-					"no-save-proceed": "",
-					"save-proceed": ""
+					"content": "Teil on salvestamata muudatused!",
+					"no-save-proceed": "Jätka",
+					"save-proceed": "Salvesta ja jätka"
 				},
-				"name": "",
-				"path": "",
-				"primary-source": "",
-				"short-description": "",
-				"system": ""
+				"name": "Nimi",
+				"path": "Tee",
+				"primary-source": "Peamine allikas",
+				"short-description": "Lühikirjeldus",
+				"system": "Süsteem"
 			},
 			"list": {
-				"add-structure-definition": ""
+				"add-structure-definition": "Lisa struktuuri definitsioon"
 			},
 			"view": {
-				"binding": "",
-				"fixed": ""
+				"binding": "Seotud loendiga",
+				"fixed": "Fikseeritud"
 			}
 		},
 		"structure-definition-constraint": {
 			"list": {
-				"add-constraint": "",
-				"header": ""
+				"add-constraint": "Lisa piirang",
+				"header": "Piirang(ud)"
 			},
 			"modal": {
-				"add-header": "",
-				"edit-header": "",
-				"error": "",
-				"expression": "",
-				"human": "",
-				"key": "",
-				"requirements": "",
-				"severity": "",
-				"source": "",
-				"warning": ""
+				"add-header": "Lisa piirang",
+				"edit-header": "Muuda piirang",
+				"error": "Viga",
+				"expression": "Valem",
+				"human": "Inimene",
+				"key": "Võti",
+				"requirements": "Nõuded",
+				"severity": "Raskusaste",
+				"source": "Allikas",
+				"warning": "Hoiatus"
 			}
 		},
 		"structure-definition-type": {

@@ -1397,16 +1397,6 @@
 				"delete-privilege": "Delete privilege"
 			}
 		},
-		"property-value": {
-			"list": {
-				"property": "",
-				"value": ""
-			},
-			"modal": {
-				"add-property": "",
-				"edit-property": ""
-			}
-		},
 		"publication-status": {
 			"operations": {
 				"activate": "Activate",
@@ -1476,11 +1466,11 @@
 					"export-to-rf2": "Export to RF2",
 					"header": "Branch {{path}}",
 					"import-failed": "Import from RF2 zip failed",
-					"import-from-rf2": "Import form RF2",
+					"import-from-rf2": "Import from RF2",
 					"import-modal": {
 						"create-version": "Create CodeSystem version",
 						"file": "File",
-						"header": "Import form RF2 zip",
+						"header": "Import from RF2 zip",
 						"type": "Type"
 					},
 					"import-succeeded": "Import from RF2 zip succeeded",
