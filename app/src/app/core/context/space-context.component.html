@@ -32,7 +32,6 @@
             <div class="m-items-middle">
               <div class="m-bold">{{pack.code}}</div>
             </div>
-            <div class="m-subtitle">{{pack.git}}</div>
           </div>
 
           <!-- Package version-->
@@ -41,6 +40,15 @@
             <div class="m-subtitle">{{'entities.package.version.singular' | translate}}</div>
             <!-- Code -->
             <div class="m-bold">{{version.version}}</div>
+          </div>
+
+          <div>
+            <m-dropdown>
+              <a *mDropdownItemIf="!!space?.integration?.github?.repo" [routerLink]="['/spaces', space?.id, 'github']">
+                <m-icon mCode="github" style="margin-right: 0.5rem"></m-icon>
+                {{'web.space.github-sync' | translate}}
+              </a>
+            </m-dropdown>
           </div>
         </div>
 

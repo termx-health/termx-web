@@ -1,0 +1,52 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-card [mShowSkeleton]="loading">
+      <div *m-card-header>
+        <span>{{space?.code}}</span>
+        <span style="margin: 0 10px">
+          <m-icon mCode="arrow-right"></m-icon>
+        </span>
+        <span>
+          <m-icon mCode="github" style="margin-right: 2px"></m-icon>
+          {{space?.integration?.github?.repo}}</span>
+      </div>
+      <ng-container *ngIf="status">
+        <div style="color: #ff1700">
+          <div class="status-row" *ngFor="let f of status.changed">
+            <div class="status">{{f.s}}</div>
+            <div>{{f.f}}</div>
+          </div>
+        </div>
+
+        <m-alert *ngIf="status.changed.length === 0" mType="success">
+          <m-icon mCode="check-circle"></m-icon>
+          {{'web.space.github-clean' | translate}}
+        </m-alert>
+
+        <div style="margin-top: 14px; color: #999">
+          <div class="status-row" *ngFor="let f of status.unchanged">
+            <div class="status">
+              <m-icon mCode="check"></m-icon>
+            </div>
+            <div>{{f}}</div>
+          </div>
+        </div>
+
+        <ng-container *ngIf="status.changed.length > 0">
+          <ng-container *m-card-footer>
+            <m-form-item name="message" required mLabel="web.space.github-commit-message" style="padding-top: 5px">
+              <m-input name="message" required [(ngModel)]="commit.message" [disabled]="saving"></m-input>
+            </m-form-item>
+            <m-button mDisplay="primary" (click)="push()" [mLoading]="saving" [disabled]="saving">
+              <span>{{'web.space.github-push' | translate}}</span>
+              <span style="margin-left: 10px; background: #fff; color: black; border-radius: 4px; padding: 2px 8px;">
+                <m-icon mCode="github" style="margin-right: 2px"></m-icon>
+                {{space?.integration?.github?.repo}}
+              </span>
+            </m-button>
+          </ng-container>
+        </ng-container>
+      </ng-container>
+    </m-card>
+  </div>
+</m-form-row>

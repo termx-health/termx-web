@@ -337,7 +337,6 @@
 		},
 		"package": {
 			"code": "Code",
-			"git": "Git",
 			"plural": "Packages",
 			"singular": "Package",
 			"version": {
@@ -520,7 +519,8 @@
 			"shared": "Shared",
 			"singular": "Space",
 			"terminology-servers": "Terminology servers",
-			"viewers": "Viewers"
+			"viewers": "Viewers",
+			"github": "Github"
 		},
 		"structure-definition": {
 			"code": "Code",
@@ -1507,7 +1507,11 @@
 			"new-version": "New version",
 			"resource-import-error-message": "Resource import failed",
 			"resource-import-success-message": "Resource import succeeded",
-			"select-context": "Select context"
+			"select-context": "Select context",
+			"github-sync": "Sync with github",
+			"github-push": "Push changes to",
+			"github-clean": "Everything is up to date!",
+			"github-commit-message": "Commit message"
 		},
 		"structure-definition": {
 			"form": {

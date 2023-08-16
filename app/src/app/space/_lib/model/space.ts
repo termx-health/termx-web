@@ -10,4 +10,7 @@ export class Space {
   public acl?: {owners?: string, editors?: string, viewers?: string};
   public terminologyServers?: string[];
   public packages?: Package[];
+  public integration?: {
+    github?: {repo?: string}
+  };
 }

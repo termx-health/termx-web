@@ -16,6 +16,7 @@ import {PackageResourceService} from './services/package-resource.service';
 import {SpaceDiffMatrixComponent} from './containers/space/space-diff-matrix.component';
 import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from '../resources/_lib';
 import {SpaceLibModule} from 'term-web/space/_lib';
+import {SpaceGithubComponent} from 'term-web/space/containers/space/space-github.component';
 
 export const SPACE_CTX_ROUTES: Routes = [
   {path: '', component: SpaceDashboardComponent},
@@ -27,6 +28,7 @@ export const SPACE_ROUTES: Routes = [
   {path: '', component: SpaceListComponent},
   {path: 'add', data: {privilege: ['*.Space.edit']}, component: SpaceEditComponent},
   {path: ':id/edit', data: {privilege: ['*.Space.edit']}, component: SpaceEditComponent},
+  {path: ':id/github', data: {privilege: ['*.Space.edit']}, component: SpaceGithubComponent},
   {path: ':spaceId/packages/add', data: {privilege: ['*.Space.edit']}, component: PackageEditComponent},
   {path: ':spaceId/packages/:id/edit', data: {privilege: ['*.Space.edit']}, component: PackageEditComponent}
 ];
@@ -54,6 +56,7 @@ export const TERMINOLOGY_SERVER_ROUTES: Routes = [
     SpaceEditComponent,
     SpaceDiffComponent,
     SpaceDiffMatrixComponent,
+    SpaceGithubComponent,
 
     PackageEditComponent,
 

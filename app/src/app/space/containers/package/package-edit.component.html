@@ -59,9 +59,6 @@
           <m-form-item mName="code" mLabel="entities.package.code" required>
             <m-input name="code" [(ngModel)]="package.code" required></m-input>
           </m-form-item>
-          <m-form-item mName="git" mLabel="entities.package.git">
-            <m-input name="git" [(ngModel)]="package.git"></m-input>
-          </m-form-item>
           <ng-container *ngIf="version">
             <m-divider mText="entities.package.version.singular"></m-divider>
             <m-form-item mName="version" mLabel="entities.package.version.version" required>

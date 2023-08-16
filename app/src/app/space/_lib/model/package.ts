@@ -2,7 +2,6 @@ export class Package {
   public id?: number;
   public code?: string;
   public status?: string;
-  public git?: string;
 
   public spaceId?: number;
 }

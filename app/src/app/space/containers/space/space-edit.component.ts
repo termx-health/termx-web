@@ -62,6 +62,8 @@ export class SpaceEditComponent implements OnInit {
 
   private writeSpace(s: Space): Space {
     s.acl ??= {};
+    s.integration ??= {};
+    s.integration.github ??= {};
     return s;
   }
 

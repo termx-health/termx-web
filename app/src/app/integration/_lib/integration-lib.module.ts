@@ -17,8 +17,6 @@ import {IntegrationIchiLibService} from './ichi/service/integration-ichi-lib.ser
 import {RouterModule} from '@angular/router';
 import {SnomedDrawerSearchComponent} from 'term-web/integration/_lib/snomed/containers/snomed-drawer-search.component';
 import {SnomedTranslationLibService} from 'term-web/integration/_lib/snomed/services/snomed-translation-lib.service';
-import {GithubService} from 'term-web/integration/_lib/github/github.service';
-import {GithubExportComponent} from 'term-web/integration/_lib/github/github-export.component';
 
 @NgModule({
   imports: [
@@ -37,14 +35,11 @@ import {GithubExportComponent} from 'term-web/integration/_lib/github/github-exp
     SnomedLibService,
     SnomedTranslationLibService,
     ChefService,
-    GithubService,
   ],
   declarations: [
     SnomedConceptNamePipe,
     SnomedSearchComponent,
     SnomedDrawerSearchComponent,
-
-    GithubExportComponent,
 
     FhirToFshPipe,
     FshToFhirPipe
@@ -53,8 +48,6 @@ import {GithubExportComponent} from 'term-web/integration/_lib/github/github-exp
     SnomedConceptNamePipe,
     SnomedSearchComponent,
     SnomedDrawerSearchComponent,
-
-    GithubExportComponent,
 
     FhirToFshPipe,
     FshToFhirPipe

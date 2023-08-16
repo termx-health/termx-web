@@ -7,6 +7,7 @@ import {Space} from '../model/space';
 import {Package} from '../model/package';
 import {SpaceSearchParams} from '../model/space-search-params';
 import {SpaceDiff} from '../model/space-diff';
+import {GithubStatus} from 'term-web/integration/_lib/github/github';
 
 @Injectable()
 export class SpaceLibService {
@@ -33,4 +34,21 @@ export class SpaceLibService {
   public diff(request: {spaceCode: string, packageCode: string, version: string}): Observable<SpaceDiff> {
     return this.http.post<SpaceDiff>(`${this.baseUrl}/diff`, request);
   }
+
+  public githubConfig(id: number): Observable<{enabled: boolean}> {
+    return this.http.get<any>(`${this.baseUrl}/${id}/github`);
+  }
+
+  public githubAuthenticate(id: number, returnUrl: string): Observable<{isAuthenticated: boolean, redirectUrl: string}> {
+    return this.http.post<any>(`${this.baseUrl}/${id}/github/authenticate`, {returnUrl});
+  }
+
+  public githubStatus(id: number): Observable<GithubStatus> {
+    return this.http.get<GithubStatus>(`${this.baseUrl}/${id}/github/status`);
+  }
+
+  public githubPush(id: number, message: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${id}/github/push`, {message});
+  }
+
 }

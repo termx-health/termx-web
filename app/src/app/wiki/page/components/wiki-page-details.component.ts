@@ -1,5 +1,4 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {GithubExportable} from '../../../integration/_lib/github/github.service';
 import {collect, group, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../services/page.service';
@@ -115,17 +114,6 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   protected copy(): void {
     this.clipboard.copy(this.pageContent.content);
   }
-
-  protected prepareExport = (): GithubExportable[] => {
-    const extensions = {
-      markdown: 'md',
-      html: 'html'
-    };
-    return [{
-      content: this.pageContent?.content,
-      filename: `${this.pageContent?.slug}.${extensions[this.pageContent?.contentType]}`
-    }];
-  };
 
   protected filterLanguages = (supportedLangs: string[], currentLang: string, contents: PageContent[]): string[] => {
     return supportedLangs.filter(l => l !== currentLang && !contents.find(c => c.lang === l));

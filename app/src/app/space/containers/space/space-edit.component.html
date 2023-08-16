@@ -22,6 +22,9 @@
               <m-option *ngFor="let ts of terminologyServers" [mLabel]="ts.names | localName" [mValue]="ts.code"></m-option>
             </m-select>
           </m-form-item>
+          <m-form-item mName="github" mLabel="entities.space.github">
+            <m-input name="github" [(ngModel)]="space.integration.github.repo"></m-input>
+          </m-form-item>
 
           <m-divider mText="entities.space.acl"></m-divider>
           <m-form-item mName="shared" mLabel="entities.space.shared">
