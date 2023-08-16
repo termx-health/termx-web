@@ -39,7 +39,7 @@ export class DefinedEntityPropertyEditComponent implements OnInit {
   }
 
   public save(): void {
-    if (validateForm(this.form)) {
+    if (!validateForm(this.form)) {
       return;
     }
     this.loader.wrap('save', this.definedEntityPropertyService.save(this.entityProperty)).subscribe(() => this.location.back());

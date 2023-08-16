@@ -10,7 +10,7 @@ export class DefinedEntityProperty {
   public rule?: EntityPropertyRule;
   public description?: LocalizedName;
 
-  protected used?: boolean;
+  public used?: boolean;
 }
 
 export class EntityPropertyRule {
