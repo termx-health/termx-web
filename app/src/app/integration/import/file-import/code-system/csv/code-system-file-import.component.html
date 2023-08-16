@@ -65,7 +65,7 @@
           </td>
 
           <td *ngIf="hasDuplicateIdentifiers">
-            <m-checkbox *ngIf="item.propertyName === 'concept-code'" [(ngModel)]="item.preferred" (ngModelChange)="onPropertyPreferredChange(item)"/>
+            <m-checkbox *ngIf="['concept-code', 'hierarchical-concept'] | includes:item.propertyName" [(ngModel)]="item.preferred" (ngModelChange)="onPropertyPreferredChange(item)"/>
           </td>
 
           <td>
@@ -88,11 +88,11 @@
           </td>
 
           <td>
-            <m-input [(ngModel)]="item.propertyDelimiter" *ngIf="['string', 'Coding'] | includes:item.propertyType"></m-input>
+            <m-input [(ngModel)]="item.propertyDelimiter" *ngIf="(['string', 'Coding'] | includes:item.propertyType) && !(['concept-code', 'hierarchical-concept'] | includes:item.propertyName)"></m-input>
           </td>
 
           <td>
-            <tw-value-set-concept-select *ngIf="item.propertyType === 'designation' && item.propertyName !== 'concept-code'"
+            <tw-value-set-concept-select *ngIf="item.propertyType === 'designation' && !(['concept-code', 'hierarchical-concept'] | includes:item.propertyName)"
                 [(ngModel)]="item.lang"
                 valueSet="languages"/>
           </td>

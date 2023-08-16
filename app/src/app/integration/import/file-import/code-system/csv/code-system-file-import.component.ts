@@ -17,6 +17,7 @@ import {
 
 const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
   {name: 'concept-code', type: 'string', orderNumber: -100},
+  {name: 'hierarchical-concept', type: 'string', orderNumber: -100},
   {name: 'display', type: 'designation', orderNumber: -50},
   {name: 'definition', type: 'designation', orderNumber: -25},
   {name: 'description', type: 'designation', orderNumber: 9900},
@@ -263,7 +264,7 @@ export class CodeSystemFileImportComponent implements OnInit {
   }
 
   protected get hasDuplicateIdentifiers(): boolean {
-    return this.analyzeResponse.parsedProperties.filter(p => p.propertyName === 'concept-code').length > 1;
+    return this.analyzeResponse.parsedProperties.filter(p => ['concept-code', 'hierarchical-concept'].includes(p.propertyName)).length > 1;
   }
 
 
