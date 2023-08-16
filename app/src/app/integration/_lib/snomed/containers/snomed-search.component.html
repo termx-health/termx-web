@@ -60,11 +60,11 @@
         {{'web.snomed.search.ecl' | translate}}
       </a>
       <ng-template nz-tab>
-        <m-input name="ecl"
-            [(ngModel)]="eclParams.ecl"
-            (keydown.enter)="loadEclConcepts()"
-            [placeholder]="'web.snomed.search.ecl-placeholder'"
-            style="display: block; margin-bottom: 1em"></m-input>
+        <div class="m-items-middle" style="margin-bottom: 1rem">
+          <m-input name="ecl" [(ngModel)]="eclParams.ecl" (keydown.enter)="loadEclConcepts()" [placeholder]="'web.snomed.search.ecl-placeholder'" style="flex: 1"></m-input>
+          <a *ngIf="eclConcepts?.data.length > 0 && !loading['csv-export']" (mClick)="exportConceptCsv()">CSV <m-icon mCode="download"></m-icon></a>
+          <m-icon *ngIf="loading['csv-export']" mCode="loading"></m-icon>
+        </div>
         <m-backend-table [mResult]="eclConcepts" [(mQuery)]="eclParams" (mQueryChange)="loadEclConcepts()" [mLoading]="loading['ecl-concepts']">
           <tr *mTableHead>
             <th>{{'entities.snomed-concept.term' | translate}}</th>

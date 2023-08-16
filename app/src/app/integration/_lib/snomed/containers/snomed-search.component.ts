@@ -1,14 +1,17 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
 import {debounceTime, distinctUntilChanged, EMPTY, finalize, forkJoin, Observable, Subject, switchMap, tap} from 'rxjs';
-import {isDefined, SearchResult} from '@kodality-web/core-util';
+import {DestroyService, isDefined, SearchResult} from '@kodality-web/core-util';
 import {SnomedConcept} from '../model/concept/snomed-concept';
 import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-params';
 import {SnomedConceptSearchParams} from '../model/concept/snomed-concept-search-params';
 import {SnomedLibService} from '../services/snomed-lib.service';
+import {LorqueLibService} from 'term-web/sys/_lib';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Component({
   selector: 'tw-snomed-search',
   templateUrl: './snomed-search.component.html',
+  providers: [DestroyService]
 })
 export class SnomedSearchComponent implements OnInit, OnChanges {
   private static snomed_root = '138875005';
@@ -35,7 +38,10 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
   @Output() public conceptSelected: EventEmitter<string> = new EventEmitter<string>();
 
   public constructor(
-    private snomedService: SnomedLibService
+    private snomedService: SnomedLibService,
+    private lorqueService: LorqueLibService,
+    private notificationService: MuiNotificationService,
+    private destroy$: DestroyService,
   ) {}
 
   public ngOnInit(): void {
@@ -156,5 +162,18 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
         this.loading['taxonomy'] = false;
       });
     }
+  }
+
+  protected exportConceptCsv(): void {
+    this.loading['csv-export'] = true;
+    this.snomedService.startConceptCsvExport(this.eclParams).subscribe(process => {
+     this.lorqueService.pollFinishedProcess(process.id, this.destroy$).subscribe(status => {
+        if (status === 'failed') {
+          this.lorqueService.load(process.id).subscribe(p => this.notificationService.error(p.resultText));
+          return;
+        }
+        this.snomedService.getConceptCsv(process.id);
+      }).add(() => this.loading['csv-export'] = false);
+    }, () => this.loading['csv-export'] = false);
   }
 }

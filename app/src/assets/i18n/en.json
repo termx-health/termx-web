@@ -1723,7 +1723,9 @@
 					"rule": {
 						"add-designation": "Add designation",
 						"all": "All concepts",
+						"bulk-copy": "Bulk copy",
 						"code-system": "Code system",
+						"content": "Content",
 						"exact": "Exact concepts",
 						"exclude": "Exclude",
 						"filter": "Property based expression",

@@ -13,6 +13,8 @@ import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-par
 import {SnomedRefsetSearchResult} from '../model/refset/snomed-refset-search-result';
 import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-member-search-result';
 import {SnomedBranch, SnomedDescription, SnomedDescriptionSearchParams} from 'term-web/integration/_lib';
+import {LorqueProcess} from 'term-web/sys/_lib';
+import {saveAs} from 'file-saver';
 
 @Injectable()
 export class SnomedLibService {
@@ -59,6 +61,17 @@ export class SnomedLibService {
 
   public findConcepts(params: SnomedConceptSearchParams): Observable<SnomedSearchResult<SnomedConcept>> {
     return this.http.get(`${this.baseUrl}/concepts`, {params: SearchHttpParams.build(params)}).pipe(map(r => r as SnomedSearchResult<SnomedConcept>));
+  }
+
+  public startConceptCsvExport(params: SnomedConceptSearchParams): Observable<LorqueProcess> {
+    return this.http.post(`${this.baseUrl}/concepts/export-csv`, params).pipe(map(res => res as LorqueProcess));
+  }
+
+  public getConceptCsv(processId: number): void {
+    this.http.get(`${this.baseUrl}/concepts/export-csv/result/${processId}`, {
+      responseType: 'blob',
+      headers: new HttpHeaders({Accept: 'application/csv'})
+    }).subscribe(res => saveAs(res, `snomed-concepts.csv`));
   }
 
   public findConceptChildren(conceptId: string): Observable<Array<SnomedConcept>> {
