@@ -78,7 +78,8 @@
       },
       {
         "label": {
-          "en": "Nimesüsteemid",
+          "en": "Naming systems",
+          "et": "Nimesüsteemid",
 		      "lt": "Pavadinimų sistemos"
         },
         "link": "resources/naming-systems",
@@ -254,7 +255,8 @@
       {
         "label": {
           "en": "FML transformations",
-          "et": "FML transformatsioonid"
+          "et": "FML transformatsioonid",
+          "lt": "FML transformations"
         },
         "link": "modeler/transformation-definitions",
         "privileges": [
