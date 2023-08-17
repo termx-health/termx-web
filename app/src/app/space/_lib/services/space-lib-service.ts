@@ -51,4 +51,8 @@ export class SpaceLibService {
     return this.http.post(`${this.baseUrl}/${id}/github/push`, {message});
   }
 
+  public githubPull(id: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${id}/github/pull`, {});
+  }
+
 }

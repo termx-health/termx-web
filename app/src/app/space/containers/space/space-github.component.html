@@ -4,11 +4,12 @@
       <div *m-card-header>
         <span>{{space?.code}}</span>
         <span style="margin: 0 10px">
-          <m-icon mCode="arrow-right"></m-icon>
+          <m-icon mCode="swap"></m-icon>
         </span>
         <span>
           <m-icon mCode="github" style="margin-right: 2px"></m-icon>
-          {{space?.integration?.github?.repo}}</span>
+          {{space?.integration?.github?.repo}}
+        </span>
       </div>
       <ng-container *ngIf="status">
         <div style="color: #ff1700">
@@ -34,19 +35,46 @@
 
         <ng-container *ngIf="status.changed.length > 0">
           <ng-container *m-card-footer>
-            <m-form-item name="message" required mLabel="web.space.github-commit-message" style="padding-top: 5px">
-              <m-input name="message" required [(ngModel)]="commit.message" [disabled]="saving"></m-input>
-            </m-form-item>
-            <m-button mDisplay="primary" (click)="push()" [mLoading]="saving" [disabled]="saving">
-              <span>{{'web.space.github-push' | translate}}</span>
-              <span style="margin-left: 10px; background: #fff; color: black; border-radius: 4px; padding: 2px 8px;">
-                <m-icon mCode="github" style="margin-right: 2px"></m-icon>
-                {{space?.integration?.github?.repo}}
-              </span>
-            </m-button>
+            <div style="display: flex; gap: 8px">
+              <m-button mDisplay="primary"
+                  m-popconfirm
+                  mPopconfirmTitle="web.space.github-pull-confirm"
+                  (mOnConfirm)="pull()"
+                  [mLoading]="saving"
+                  [disabled]="saving"
+                  style="width: 100%">
+                <m-icon mCode="arrow-down"></m-icon>&nbsp; <span>{{'web.space.github-pull' | translate}}</span>
+                <ng-container *ngTemplateOutlet="github"></ng-container>
+              </m-button>
+              <m-button mDisplay="primary" (click)="pushModalVisible = true" [mLoading]="saving" [disabled]="saving" style="width: 100%">
+                <m-icon mCode="arrow-up"></m-icon>&nbsp;
+                <span>{{'web.space.github-push' | translate}}</span>
+                <ng-container *ngTemplateOutlet="github"></ng-container>
+              </m-button>
+            </div>
           </ng-container>
         </ng-container>
       </ng-container>
     </m-card>
   </div>
 </m-form-row>
+
+<ng-template #github>
+  <span style="margin-left: 10px; background: #fff; color: black; border-radius: 4px; padding: 1px 7px;">
+    <m-icon mCode="github" style="margin-right: 2px"></m-icon>
+    {{space?.integration?.github?.repo}}
+  </span>
+</ng-template>
+
+<m-modal #pushModal [(mVisible)]="pushModalVisible" (mClose)="pushModalVisible = false">
+  <ng-container *m-modal-content>
+    <m-form-item name="message" required mLabel="web.space.github-commit-message" style="padding-top: 5px">
+      <m-input name="message" required [(ngModel)]="commit.message" [disabled]="saving"></m-input>
+    </m-form-item>
+
+    <m-button mDisplay="primary" (click)="push(); pushModalVisible = false" [mLoading]="saving" [disabled]="saving" style="width: 100%">
+      <m-icon mCode="arrow-up"></m-icon>&nbsp; <span>{{'web.space.github-push' | translate}}</span>
+      <ng-container *ngTemplateOutlet="github"></ng-container>
+    </m-button>
+  </ng-container>
+</m-modal>

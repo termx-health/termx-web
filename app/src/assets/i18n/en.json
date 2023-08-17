@@ -1510,6 +1510,8 @@
 			"select-context": "Select context",
 			"github-sync": "Sync with github",
 			"github-push": "Push changes to",
+			"github-pull": "Pull diff from",
+			"github-pull-confirm": "Are you sure you want to replace current data with data from repository?",
 			"github-clean": "Everything is up to date!",
 			"github-commit-message": "Commit message"
 		},

@@ -21,6 +21,7 @@ export class SpaceGithubComponent implements OnInit {
   protected space?: Space;
   protected loading = false;
   protected saving = false;
+  protected pushModalVisible = false;
   protected status: {
     changed: {f: string, s: string}[],
     unchanged: string[];
@@ -54,6 +55,13 @@ export class SpaceGithubComponent implements OnInit {
       changed: Object.keys(r.files).filter(f => ['A', 'D', 'M'].includes(r.files[f])).map(f => ({f: f, s: r.files[f]})),
       unchanged: Object.keys(r.files).filter(f => 'U' === r.files[f])
     }));
+  }
+
+  public pull(): void {
+    this.saving = true;
+    this.spaceService.githubPull(this.space.id).pipe(
+      mergeMap(() => this.loadGitStatus(this.space.id))
+    ).subscribe().add(() => this.saving = false);
   }
 
   public push(): void {
