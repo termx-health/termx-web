@@ -2,8 +2,6 @@ import {Component, Input, OnChanges, QueryList, SimpleChanges, ViewChild, ViewCh
 import {EntityProperty, EntityPropertyValue} from 'app/src/app/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
-import {CodeSystemService} from '../../../../services/code-system.service';
-import {finalize, Observable} from 'rxjs';
 import {EntityPropertyValueInputComponent} from 'app/src/app/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
 
 @Component({

@@ -1,7 +1,6 @@
 import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {copyDeep, DestroyService, group, LoadingManager, sort} from '@kodality-web/core-util';
-import {NgForm} from '@angular/forms';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {of} from 'rxjs';
 import {Router} from '@angular/router';
@@ -13,6 +12,7 @@ import {
   FileImportPropertyRow,
   FileProcessingRequest
 } from 'term-web/resources/_lib/codesystem/services/code-system-file-import.service';
+import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
 
 
 const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
@@ -31,8 +31,6 @@ const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
 })
 export class CodeSystemFileImportComponent implements OnInit {
   public breadcrumbs = ['web.integration.file-import.title', 'web.integration.file-import.code-system.import'];
-
-  public sourceCodeSystem: CodeSystem;
 
   public data: {
     // general
@@ -85,6 +83,7 @@ export class CodeSystemFileImportComponent implements OnInit {
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('jsonFileInput') public jsonFileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('successNotificationContent') public successNotificationContent?: TemplateRef<any>;
+  @ViewChild(CodeSystemFileImportFormComponent) public formComponent?: CodeSystemFileImportFormComponent;
 
   public constructor(
     private http: HttpClient,
@@ -213,7 +212,7 @@ export class CodeSystemFileImportComponent implements OnInit {
 
   /* Parsed properties table */
   protected applyTemplate(): void {
-    const existingPropertyNames = this.combineWithDefaults(this.sourceCodeSystem?.properties).map(p => p.name);
+    const existingPropertyNames = this.combineWithDefaults(this.formComponent?.sourceCodeSystem?.properties).map(p => p.name);
     const req$ = this.data.template ? this.http.get<FileImportPropertyRow[]>(`./assets/file-import-templates/${this.data.template}.json`) : of([]);
 
     req$.subscribe(resp => {
@@ -241,7 +240,7 @@ export class CodeSystemFileImportComponent implements OnInit {
   }
 
   protected onPropertyNameChange(item: FileImportPropertyRow): void {
-    const entityProperties = this.combineWithDefaults(this.sourceCodeSystem?.properties);
+    const entityProperties = this.combineWithDefaults(this.formComponent?.sourceCodeSystem?.properties);
     const grouped = group(entityProperties, p => p.name);
 
     item.propertyType = grouped[item.propertyName]?.kind === 'designation' ? 'designation' : grouped[item.propertyName]?.type;

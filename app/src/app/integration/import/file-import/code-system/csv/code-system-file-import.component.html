@@ -55,7 +55,7 @@
           <td>
             <!-- Mapped KTS property -->
             <m-select *ngIf="!item['_newProp']" [(ngModel)]="item.propertyName" (ngModelChange)="onPropertyNameChange(item)" style="flex: 1">
-              <m-option *ngFor="let prop of sourceCodeSystem?.properties | apply: combineWithDefaults"
+              <m-option *ngFor="let prop of form?.sourceCodeSystem?.properties | apply: combineWithDefaults"
                   [mValue]="prop.name"
                   [mLabel]="prop.name  + (prop.description ? ' (' + (prop.description | localName) + ')' : '')"/>
               <m-select-button mLabel="ADD NEW" (mClick)="item['_newProp'] = true"/>
