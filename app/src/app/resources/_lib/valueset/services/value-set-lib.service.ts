@@ -37,11 +37,8 @@ export class ValueSetLibService {
   }
 
   public expand(request: ValueSetExpandRequest): Observable<ValueSetVersionConcept[]> {
-    if (!request.ruleSet) {
-      const key = `${request.valueSet}#${request.valueSetVersion || '-'}`;
-      return this.cacheService.put(key, this.http.post<ValueSetVersionConcept[]>(`${this.baseUrl}/expand`, request));
-    }
-    return this.http.post<ValueSetVersionConcept[]>(`${this.baseUrl}/expand`, request);
+    const key = `${request.valueSet}#${request.valueSetVersion || '-'}`;
+    return this.cacheService.put(key, this.http.post<ValueSetVersionConcept[]>(`${this.baseUrl}/expand`, request));
   }
 
   public expandAsync(request: ValueSetExpandRequest): Observable<JobLogResponse> {

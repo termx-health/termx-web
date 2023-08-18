@@ -629,6 +629,7 @@
 			"rule-set": "Rule set",
 			"source": "Publisher",
 			"status": "Status",
+			"preferred-language": "Preferred language",
 			"supported-languages": "Supported languages",
 			"version": "Version"
 		},

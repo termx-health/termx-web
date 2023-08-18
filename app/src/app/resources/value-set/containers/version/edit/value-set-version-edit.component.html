@@ -25,20 +25,25 @@
       </m-form-row>
 
       <m-form-row>
+        <m-form-item *mFormCol mLabel="entities.value-set-version.preferred-language" mName="preferredLanguage">
+          <tw-value-set-concept-select name="preferredLanguage" [(ngModel)]="version.preferredLanguage" valueSet="languages"></tw-value-set-concept-select>
+        </m-form-item>
         <m-form-item *mFormCol mName="supportedLanguages" mLabel="entities.value-set-version.supported-languages">
           <tw-value-set-concept-select name="supportedLanguages"
               [(ngModel)]="version.supportedLanguages"
               valueSet="languages"
               multiple></tw-value-set-concept-select>
         </m-form-item>
+      </m-form-row>
+
+      <m-form-row>
+        <m-form-item *mFormCol mName="description" mLabel="entities.value-set-version.description">
+          <m-multi-language-input [(ngModel)]="version.description" name="description"></m-multi-language-input>
+        </m-form-item>
         <m-form-item *mFormCol mLabel="entities.value-set-version.algorithm" mName="algorithm">
           <tw-value-set-concept-select name="algorithm" [(ngModel)]="version.algorithm" valueSet="version-algorithm"></tw-value-set-concept-select>
         </m-form-item>
       </m-form-row>
-
-      <m-form-item mName="description" mLabel="entities.value-set-version.description">
-        <m-multi-language-input [(ngModel)]="version.description" name="description"></m-multi-language-input>
-      </m-form-item>
 
       <m-divider mText="entities.value-set-rule-set.rules"></m-divider>
       <m-form-row>

@@ -9,6 +9,7 @@ export class ValueSetVersionReference {
 
 export class ValueSetVersion extends ValueSetVersionReference {
   public valueSet?: string;
+  public preferredLanguage?: string;
   public supportedLanguages?: string[];
   public description?: LocalizedName;
   public status?: string;
