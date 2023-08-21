@@ -77,6 +77,7 @@ export class WikiPageModalComponent implements OnInit, OnChanges {
     this.loader.wrap('init', this.pageService.loadPage(id)).subscribe(p => {
       this.page = p;
       this.page ??= {};
+      this.page.settings ??= {};
       this.pageTags = p.tags?.map(t => t.tag.text!) ?? [];
       this.pageContent = contentId ? p.contents?.find(c => c.id === contentId) : undefined;
     });
