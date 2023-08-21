@@ -10,6 +10,11 @@ import {PackageService} from '../../services/package.service';
 
 @Component({
   templateUrl: './space-edit.component.html',
+  styles: [`
+    ::ng-deep #github input {
+      padding-left: 123px;
+    }
+  `]
 })
 export class SpaceEditComponent implements OnInit {
   public space?: Space;
