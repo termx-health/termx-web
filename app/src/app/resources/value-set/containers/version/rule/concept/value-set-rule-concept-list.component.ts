@@ -51,7 +51,10 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
   protected addConcepts(): void {
     const rows = this.modalData.content.split('\n').slice(1, this.modalData.content.split('\n').length);
     const langs = this.modalData.content.split('\n')[0].split(',').splice(2, this.modalData.content.split('\n')[0].split(',').length).map(l => l.split("#")[1]);
-    this.rule.concepts = [...rows.map(r => {
+    this.rule.concepts = [...rows.filter(r => {
+      const cols = r.split(',');
+      return isDefined(cols?.[0]) && cols?.[0] !== '';
+    }).map(r => {
       const concept = new ValueSetVersionConcept();
       const cols = r.split(',');
       concept.concept = {code: cols?.[0]};
