@@ -79,10 +79,7 @@ const saveStructureMap = (editorState: EditorState, editorFacade: EditorFacade):
   const {newStructureMap, structureMap} = editorState;
 
   try {
-    // if (newStructureMap) {
-    // } else {
     editorFacade.updateStructureMap(structureMap);
-    // }
     setTimeout(() => _dispose(editorState), 10);
   } catch (e) {
     console.error(e);
@@ -102,7 +99,14 @@ const handleEditorMessage = (editorState: EditorState, editorFacade: EditorFacad
       prepareEditor(editorState, editorFacade);
       break;
     case 'save': {
-      _updateState(editorState, {structureMap: msg.data});
+      _postMessage(editorState, {
+        action: 'export',
+        format: 'json'
+      });
+      break;
+    }
+    case 'export': {
+      _updateState(editorState, {structureMap: JSON.parse(msg.data)});
       saveStructureMap(editorState, editorFacade);
       break;
     }
@@ -164,16 +168,8 @@ const FML_EDITOR_URL = environment.fmlEditor.startsWith('/')
   ? location.origin + environment.fmlEditor
   : environment.fmlEditor;
 
-const FML_EDITOR_PARAMS = {
-  saveAndExit: 1,
-};
-
 export function launchFMLEditor({editorFacade, editorUrl = FML_EDITOR_URL}: {editorFacade: EditorFacade, editorUrl?: string}): void {
   const url = new URL(editorUrl);
-  for (const [key, value] of Object.entries(FML_EDITOR_PARAMS)) {
-    url.searchParams.set(key, value as any);
-  }
-
   const state = createEditorState({editorUrl: url.href});
 
   // The execution order of these two functions matter

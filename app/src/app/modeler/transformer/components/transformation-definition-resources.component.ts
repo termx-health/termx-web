@@ -10,7 +10,7 @@ import {remove} from '@kodality-web/core-util';
 
     ::ng-deep .fml-editor {
       z-index: 1000;
-      position: absolute;
+      position: fixed;
       inset: 0;
       border: 0;
       height: 100%;
