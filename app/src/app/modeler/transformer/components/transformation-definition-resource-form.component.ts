@@ -10,7 +10,7 @@ import {launchFMLEditor} from 'term-web/modeler/transformer/components/fml.edito
 import {Bundle} from 'fhir/model/bundle';
 import {forkJoin, map, of} from 'rxjs';
 import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
-import {isNil} from '@kodality-web/core-util';
+import {isNil, LoadingManager} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-transformation-definition-resource-form',
@@ -20,15 +20,19 @@ export class TransformationDefinitionResourceFormComponent {
   @Input() public resource: TransformationDefinitionResource;
   @Input() public definition: TransformationDefinition;
 
-  public constructor(private transformationDefinitionService: TransformationDefinitionService, private notificationService: MuiNotificationService) {
-  }
+  protected loader = new LoadingManager();
 
-  public onDefinitionSelect(def: StructureDefinition): void {
+  public constructor(
+    private transformationDefinitionService: TransformationDefinitionService,
+    private notificationService: MuiNotificationService
+  ) { }
+
+  protected onDefinitionSelect(def: StructureDefinition): void {
     this.resource.reference.localId = String(def.id);
     this.resource.name = def.code;
   }
 
-  public onMapSetSelect(ms: MapSet): void {
+  protected onMapSetSelect(ms: MapSet): void {
     this.resource.reference.localId = ms.id;
     this.resource.name = ms.id;
   }
@@ -62,14 +66,14 @@ export class TransformationDefinitionResourceFormComponent {
     });
   }
 
-  protected visualEditor(): void {
-    forkJoin([
+  protected launchVisualEditor(): void {
+    this.loader.wrap('visual-editor', forkJoin([
       this.transformationDefinitionService.baseResources(),
       this.transformationDefinitionService.transformResources(this.definition.resources),
       this.isFml(this.resource.reference.content)
         ? this.transformationDefinitionService.parseFml(this.resource.reference.content).pipe(map(r => r.json))
         : of(this.resource.reference.content)
-    ]).subscribe(([bundle, definitions, json]: [Bundle, FhirStructureDefinition[], string]) => {
+    ])).subscribe(([bundle, definitions, json]: [Bundle, FhirStructureDefinition[], string]) => {
       bundle.entry.push(...definitions.map(def => ({resource: def})));
       if (isNil(json)) {
         return;
@@ -79,17 +83,34 @@ export class TransformationDefinitionResourceFormComponent {
         editorFacade: {
           getBundle: () => bundle,
           getStructureMap: () => JSON.parse(json),
-          updateStructureMap: sm => this.resource.reference.content = JSON.stringify(sm, null, 2)
+          updateStructureMap: sm => {
+            this.transformationDefinitionService.generateFml(sm).subscribe(fml => {
+              sm['text'] = {
+                status: 'generated',
+                div: `<div>\n${fml.replace(/,\s\s/gm, ',\n    ').replace(/\s->\s/gm, ' ->\n    ')}</div>`
+              };
+              console.log(sm['text'].div);
+              this.resource.reference.content = JSON.stringify(sm, null, 2);
+            });
+          }
         }
       });
     });
   }
 
-  public isFml(txt: string): boolean {
+  protected isFml(txt: string): boolean {
     return txt.startsWith('///');
   }
 
-  public onContentChange(): void {
+  protected isEditor(txt: string): boolean {
+    return txt.startsWith('{') && txt.includes('fml-export');
+  }
+
+  protected editorFml(txt: string): boolean {
+    return JSON.parse(txt)['text']['div'].replace(/^<div>/, '').replace(/<\/div>$/, '');
+  }
+
+  protected onContentChange(): void {
     this.resource.name = this.resource.name || this.findUrl(this.resource.reference.content);
   }
 

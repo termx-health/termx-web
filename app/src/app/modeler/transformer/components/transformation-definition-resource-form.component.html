@@ -1,5 +1,4 @@
-<form #form="ngForm" *ngIf="resource">
-
+<form *ngIf="resource">
   <m-form-item mName="source" mLabel="entities.transformation-definition.source" required>
     <m-radio-group name="source" [(ngModel)]="resource.source">
       <label m-radio-button mValue="local" *ngIf="resource.type !== 'mapping'">
@@ -9,6 +8,7 @@
       <label m-radio-button mValue="static">{{('entities.transformation-definition.source-static' | translate)}}</label>
     </m-radio-group>
   </m-form-item>
+
   <ng-container *ngIf="resource.source === 'local' && resource.type === 'definition'">
     <m-form-item mName="def" mLabel="web.transformation-definition.resource-form.definition" required>
       <tw-structure-definition-select name="def"
@@ -17,11 +17,13 @@
           (ngModelChange)="onDefinitionSelect($event)"
       ></tw-structure-definition-select>
     </m-form-item>
+
     <ng-container *ngIf="resource.type === 'definition' && resource.reference.localId">
-      <m-divider></m-divider>
+      <m-divider/>
       <tw-structure-definition-tree [defId]="resource.reference.localId | toNumber" mode="view"></tw-structure-definition-tree>
     </ng-container>
   </ng-container>
+
   <ng-container *ngIf="resource.source === 'local' && resource.type === 'conceptmap'">
     <m-form-item mName="conceptmap" mLabel="web.transformation-definition.resource-form.map-set" required>
       <tw-map-set-search name="conceptmap"
@@ -31,23 +33,28 @@
       ></tw-map-set-search>
     </m-form-item>
   </ng-container>
+
   <ng-container *ngIf="resource.source === 'fhir'">
     <m-form-item mName="fhirServer" mLabel="web.transformation-definition.resource-form.fhir-server" required>
-      <m-input [(ngModel)]="resource.reference.fhirServer" name="fhirServer" required></m-input>
+      <m-input name="fhirServer" [(ngModel)]="resource.reference.fhirServer" required></m-input>
     </m-form-item>
+
     <m-form-item mName="fhirResource" mLabel="web.transformation-definition.resource-form.fhir-resource" required>
-      <m-input [(ngModel)]="resource.reference.fhirResource" name="fhirResource" required (ngModelChange)="resource.name = $event"></m-input>
+      <m-input name="fhirResource" [(ngModel)]="resource.reference.fhirResource" (ngModelChange)="resource.name = $event" required></m-input>
     </m-form-item>
   </ng-container>
+
   <ng-container *ngIf="resource.source === 'static'">
     <m-form-item *ngIf="resource !== definition.mapping" mName="name" mLabel="entities.transformation-definition.name" required>
       <m-input [(ngModel)]="resource.name" name="name" required></m-input>
     </m-form-item>
+
     <m-form-item *ngIf="resource !== definition.mapping && resource.source === 'static' && !!resource.reference.content"
         mLabel="web.transformation-definition.resource-form.url"
     >
       {{resource.reference.content | apply:findUrl}}
     </m-form-item>
+
     <m-form-item mName="content" [mLabel]="lbl" required *ngIf="{showPreview: false} as d">
       <ng-template #lbl>
         <span>{{'web.transformation-definition.resource-form.content' | translate}}</span>
@@ -56,38 +63,51 @@
         </ng-container>
       </ng-template>
 
-      <div style="position: absolute; right: 0; top: -2rem">
-        <m-button mSize="small" mDisplay="dashed" *ngIf="resource.type === 'definition'" (mClick)="d.showPreview = !d.showPreview">
+      <div style="position: absolute; right: 0; top: -2rem" class="m-items-middle">
+        <m-button *ngIf="resource.type === 'definition'" mSize="small" mDisplay="dashed" (mClick)="d.showPreview = !d.showPreview">
           <m-icon [mCode]="!d.showPreview ? 'read' : 'menu-unfold'"/>
           &nbsp;{{('web.transformation-definition.resource-form.' + (d.showPreview ? 'preview-hide' : 'preview-show')) | translate}}
         </m-button>
-        <m-dropdown *ngIf="resource.type === 'mapping' && (resource.reference.content | apply:isFml)">
-          <m-button *m-dropdown-container mSize="small" mDisplay="dashed">
-            <m-icon mCode="download"/> &nbsp;{{'web.transformation-definition.resource-form.save-as' | translate}}&nbsp;
-            <m-icon mCode="caret-down"/>
+
+        <ng-container *ngIf="resource.type === 'mapping'">
+          <m-button *ngIf="resource.source === 'static'" mSize="small" mDisplay="dashed" (mClick)="launchVisualEditor()">
+            <m-icon [mCode]="loader.state['visual-editor'] ? 'loading' : 'experiment'"/>&nbsp;{{'Visual editor' | translate}}
           </m-button>
-          <a *m-dropdown-item (mClick)="downloadMap('json')">
-            {{'web.transformation-definition.resource-form.download-json' | translate}}
-          </a>
-          <a *m-dropdown-item (mClick)="downloadMap('xml')">
-            {{'web.transformation-definition.resource-form.download-xml' | translate}}
-          </a>
-        </m-dropdown>
+
+          <m-dropdown *ngIf="resource.reference.content | apply:isFml">
+            <m-button *m-dropdown-container mSize="small" mDisplay="dashed">
+              <m-icon mCode="download"/> &nbsp;{{'web.transformation-definition.resource-form.save-as' | translate}}&nbsp;
+              <m-icon mCode="caret-down"/>
+            </m-button>
+            <a *m-dropdown-item (mClick)="downloadMap('json')">
+              {{'web.transformation-definition.resource-form.download-json' | translate}}
+            </a>
+            <a *m-dropdown-item (mClick)="downloadMap('xml')">
+              {{'web.transformation-definition.resource-form.download-xml' | translate}}
+            </a>
+          </m-dropdown>
+        </ng-container>
       </div>
 
       <div class="m-items-top">
-        <m-textarea
-            style="flex: 1"
-            [(ngModel)]="resource.reference.content"
-            (ngModelChange)="onContentChange()"
-            name="content"
-            [autosize]="{minRows: 5, maxRows: 30}"
-            required
-        ></m-textarea>
+        <div *ngIf="(resource.reference.content | apply: isEditor); else def" class="m-whitespace-pre">
+          <span>{{resource.reference.content | apply: editorFml}}</span>
+        </div>
+
+        <ng-template #def>
+          <m-textarea
+              style="flex: 1"
+              name="content"
+              [(ngModel)]="resource.reference.content"
+              (ngModelChange)="onContentChange()"
+              [autosize]="{minRows: 5, maxRows: 30}"
+              required
+          ></m-textarea>
+        </ng-template>
 
         <tw-structure-definition-tree
-            *ngIf="d.showPreview && resource.type === 'definition'"
             style="flex: 1"
+            *ngIf="d.showPreview && resource.type === 'definition'"
             [content]="resource.reference.content"
         ></tw-structure-definition-tree>
       </div>
@@ -95,9 +115,6 @@
       <div class="m-items-middle">
         <m-button style="padding-top: 5px" *ngIf="resource.type === 'mapping' && (resource.reference.content | apply:isFml)" (mClick)="compile()">
           {{'web.transformation-definition.resource-form.compile' | translate}}
-        </m-button>
-        <m-button style="padding-top: 5px" *ngIf="resource.type === 'mapping' && resource.source === 'static'" (mClick)="visualEditor()">
-          <m-icon mCode="experiment"/>&nbsp;{{'Visual editor' | translate}}
         </m-button>
       </div>
     </m-form-item>

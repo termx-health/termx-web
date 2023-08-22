@@ -38,6 +38,10 @@ export class TransformationDefinitionService {
     return this.http.post(`${this.baseUrl}/compose-fml`, def).pipe(map(r => r['fml']));
   }
 
+  public generateFml(sm: object): Observable<string> {
+    return this.http.post(`${this.baseUrl}/generate-fml`, {structureMap: JSON.stringify(sm)}).pipe(map(r => r['fml']));
+  }
+
   public parseFml(fml: string): Observable<{json: string, error: string}> {
     return this.http.post(`${this.baseUrl}/parse-fml`, {fml}).pipe(map(r => r as {json: string, error: string}));
   }
