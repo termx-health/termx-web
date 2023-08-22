@@ -90,8 +90,8 @@
       </div>
 
       <div class="m-items-top">
-        <div *ngIf="(resource.reference.content | apply: isEditor); else def" class="m-whitespace-pre">
-          <span>{{resource.reference.content | apply: editorFml}}</span>
+        <div *ngIf="(resource.reference.content | apply: isEditor); else def">
+          <span class="m-whitespace-pre">{{resource.reference.content | apply: editorFml}}</span>
         </div>
 
         <ng-template #def>

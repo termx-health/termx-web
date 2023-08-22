@@ -87,7 +87,7 @@ export class TransformationDefinitionResourceFormComponent {
             this.transformationDefinitionService.generateFml(sm).subscribe(fml => {
               sm['text'] = {
                 status: 'generated',
-                div: `<div>\n${fml.replace(/,\s\s/gm, ',\n    ').replace(/\s->\s/gm, ' ->\n    ')}</div>`
+                div: `<div>\n${fml.replace(/,\s\s/gm, ',\n    ').replace(/\s->\s/gm, ' ->\n   ')}</div>`
               };
               console.log(sm['text'].div);
               this.resource.reference.content = JSON.stringify(sm, null, 2);
@@ -107,7 +107,11 @@ export class TransformationDefinitionResourceFormComponent {
   }
 
   protected editorFml(txt: string): boolean {
-    return JSON.parse(txt)['text']['div'].replace(/^<div>/, '').replace(/<\/div>$/, '');
+    return JSON.parse(txt)['text']['div']
+      .replace(/^<div>/, '')
+      .replace(/<\/div>$/, '')
+      .replace(/^\n/, '')
+      .replace(/\n$/, '');
   }
 
   protected onContentChange(): void {
