@@ -613,6 +613,7 @@
 				"compose": "Compose",
 				"concepts": "Concepts",
 				"filters": "Filters",
+				"properties": "Properties",
 				"value-set": "Value set",
 				"value-set-version": "Value set version"
 			},

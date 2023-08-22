@@ -6,6 +6,7 @@ export class ValueSetVersionRule {
   public type?: string;
   public codeSystem?: string;
   public codeSystemVersion?: CodeSystemVersionReference;
+  public properties?: string[];
   public concepts?: ValueSetVersionConcept[];
   public filters?: ValueSetRuleFilter[];
 

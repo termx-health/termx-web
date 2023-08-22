@@ -1,9 +1,10 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {BooleanInput, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
-import {ValueSetVersionRule} from 'app/src/app/resources/_lib';
+import {CodeSystemLibService, EntityProperty, ValueSetVersionRule} from 'app/src/app/resources/_lib';
 import {ValueSetRuleFilterListComponent} from 'term-web/resources/value-set/containers/version/rule/filter/value-set-rule-filter-list.component';
 import {ValueSetRuleConceptListComponent} from 'term-web/resources/value-set/containers/version/rule/concept/value-set-rule-concept-list.component';
+import {map, Observable} from 'rxjs';
 
 @Component({
   selector: 'tw-value-set-rule-form',
@@ -24,7 +25,7 @@ export class ValueSetRuleFormComponent implements OnChanges{
   protected ruleBase: 'code-system' | 'value-set';
   protected conceptsBase: 'all' | 'exact' | 'filter';
 
-  public constructor() {}
+  public constructor(private codeSystemService: CodeSystemLibService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['rule'] && this.rule) {
@@ -59,4 +60,8 @@ export class ValueSetRuleFormComponent implements OnChanges{
       this.rule.valueSetVersion = {};
     }
   }
+
+  protected loadProperties = (cs: string): Observable<EntityProperty[]> => {
+    return this.codeSystemService.load(cs).pipe(map(cs => cs.properties));
+  };
 }

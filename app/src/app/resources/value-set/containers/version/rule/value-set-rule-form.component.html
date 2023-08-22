@@ -29,6 +29,15 @@
           </m-form-item>
         </m-form-row>
 
+        <m-form-row>
+          <m-form-item *mFormCol mName="codeSystemProperties" mLabel="entities.value-set-rule-set.rule.properties">
+            <m-select name="codeSystemProperties" [(ngModel)]="rule.properties" multiple>
+              <m-option *ngFor="let prop of (rule.codeSystem | apply:loadProperties | async)" [mLabel]="prop.name" [mValue]="prop.name"></m-option>
+            </m-select>
+          </m-form-item>
+          <div *mFormCol></div>
+        </m-form-row>
+
         <m-form-item mName="concept-based-on" mLabel="entities.value-set-rule-set.rule.based-on" required>
           <m-radio-group name="concept-based-on" [(ngModel)]="conceptsBase" (ngModelChange)="conceptsBaseChanged()" required>
             <label m-radio-button [mValue]="'all'">{{'web.value-set-version.form.rule-set.rule.all' | translate}}</label>
