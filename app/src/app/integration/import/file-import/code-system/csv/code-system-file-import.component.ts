@@ -1,28 +1,28 @@
 import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {copyDeep, DestroyService, group, LoadingManager, sort} from '@kodality-web/core-util';
+import {compareNumbers, copyDeep, DestroyService, group, LoadingManager, sort} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {of} from 'rxjs';
 import {Router} from '@angular/router';
-import {CodeSystem, CodeSystemLibService, EntityProperty, ValueSetLibService} from '../../../../../resources/_lib';
+import {CodeSystem, EntityProperty, ValueSetLibService} from '../../../../../resources/_lib';
 import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../../file-analysis.service';
-import {JobLibService, JobLog} from 'term-web/sys/_lib';
+import {JobLog} from 'term-web/sys/_lib';
 import {
   CodeSystemFileImportService,
   FileImportPropertyRow,
   FileProcessingRequest
 } from 'term-web/resources/_lib/codesystem/services/code-system-file-import.service';
 import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
+import {DefinedEntityPropertyLibService} from 'term-web/resources/_lib/definedentityproperty/services/defined-entity-property-lib.service';
 
 
-const DEFAULT_KTS_PROPERTIES: EntityProperty[] = [
-  {name: 'concept-code', type: 'string', orderNumber: -100},
-  {name: 'hierarchical-concept', type: 'string', orderNumber: -100},
-  {name: 'display', type: 'designation', orderNumber: -50},
-  {name: 'definition', type: 'designation', orderNumber: -25},
-  {name: 'description', type: 'designation', orderNumber: 9900},
-  {name: 'is-a', type: 'string', description: {'en': 'association'}, orderNumber: 9999},
-];
+const DEF_PROP_WEIGHT = {
+  'concept-code': -100,
+  'hierarchical-concept': -90,
+  'display': -80,
+  'definition': -70,
+  'is-a': -60
+};
 
 
 @Component({
@@ -73,6 +73,7 @@ export class CodeSystemFileImportComponent implements OnInit {
     parsedProperties: []
   };
 
+  public definedProperties: EntityProperty[];
 
   public loader = new LoadingManager();
   public validations: string[];
@@ -88,11 +89,10 @@ export class CodeSystemFileImportComponent implements OnInit {
   public constructor(
     private http: HttpClient,
     private notificationService: MuiNotificationService,
-    private codeSystemLibService: CodeSystemLibService,
     private valueSetLibService: ValueSetLibService,
     private importService: CodeSystemFileImportService,
     private fileAnalysisService: FileAnalysisService,
-    private jobService: JobLibService,
+    private definedPropertyService: DefinedEntityPropertyLibService,
     private destroy$: DestroyService,
     private router: Router
   ) {}
@@ -101,6 +101,12 @@ export class CodeSystemFileImportComponent implements OnInit {
   public ngOnInit(): void {
     this.valueSetLibService.expand({valueSet: 'concept-property-type'})
       .subscribe(concepts => this.dataTypes = [...concepts.map(c => c.concept.code), 'designation']);
+    this.definedPropertyService.search({limit: -1}).subscribe(p => this.definedProperties = p.data.map(dp => {
+      const prop: EntityProperty = copyDeep(dp);
+      prop.id = undefined;
+      prop.definedEntityPropertyId = dp.id;
+      return prop;
+    }));
   }
 
   protected analyze(): void {
@@ -255,12 +261,17 @@ export class CodeSystemFileImportComponent implements OnInit {
     this.analyzeResponse.parsedProperties.filter(p => p !== item).forEach(p => p.preferred = false);
   }
 
-  protected combineWithDefaults(entityProperties: EntityProperty[]): EntityProperty[] {
+  protected combineWithDefaults = (entityProperties: EntityProperty[]): EntityProperty[] => {
+    const def = [
+      {name: 'concept-code', type: 'string'},
+      {name: 'hierarchical-concept', type: 'string'},
+      {name: 'is-a', type: 'string', description: {'en': 'association'}}];
     return sort(Object.values({
-      ...group<string, EntityProperty>(DEFAULT_KTS_PROPERTIES, e => e.name!),
-      ...group<string, EntityProperty>(entityProperties || [], e => e.name!),
-    }), 'orderNumber');
-  }
+      ...group<string, EntityProperty>(def, e => e.name!),
+      ...group<string, EntityProperty>(this.definedProperties || [], e => e.name!),
+      ...group<string, EntityProperty>(entityProperties || [], e => e.name!)
+    }), 'name').sort((p1, p2) => compareNumbers(DEF_PROP_WEIGHT[p1.name] || 0, DEF_PROP_WEIGHT[p2.name] || 0));
+  };
 
   protected get hasDuplicateIdentifiers(): boolean {
     return this.analyzeResponse.parsedProperties.filter(p => ['concept-code', 'hierarchical-concept'].includes(p.propertyName)).length > 1;
