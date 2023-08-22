@@ -74,7 +74,7 @@ const loadResources = (state: EditorState, editorFacade: EditorFacade): void => 
 };
 
 
-/* 'export' event handler */
+/* 'save' event handler */
 const saveStructureMap = (editorState: EditorState, editorFacade: EditorFacade): void => {
   const {newStructureMap, structureMap} = editorState;
 
@@ -91,14 +91,12 @@ const saveStructureMap = (editorState: EditorState, editorFacade: EditorFacade):
 
 
 /* main event handler */
-
 const handleEditorMessage = (editorState: EditorState, editorFacade: EditorFacade, evt): void => {
   if (isNil(evt) || evt.source !== editorState.iframe.contentWindow) {
     return;
   }
 
   const msg = JSON.parse(evt.data);
-
   switch (msg.event) {
     case 'init':
       prepareEditor(editorState, editorFacade);
@@ -162,7 +160,10 @@ const createEditorState = ({editorUrl}): EditorState => ({
 });
 
 
-const FML_EDITOR_URL = environment.fmlEditor;
+const FML_EDITOR_URL = environment.fmlEditor.startsWith('/')
+  ? location.origin + environment.fmlEditor
+  : environment.fmlEditor;
+
 const FML_EDITOR_PARAMS = {
   saveAndExit: 1,
 };
