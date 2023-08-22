@@ -10,5 +10,6 @@ export const environment = {
 
   swaggerUrl: 'https://termx.kodality.dev/swagger/',
   chefUrl: 'https://termx.kodality.dev/chef',
-  plantUmlUrl: 'https://termx.kodality.dev/plantuml'
+  plantUmlUrl: 'https://termx.kodality.dev/plantuml',
+  fmlEditor: 'https://termx.kodality.dev/fml-editor',
 };

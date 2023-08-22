@@ -8,5 +8,6 @@ export const environment = {
   oauthClientId: dynamicEnv.oauthClientId,
   swaggerUrl: '/swagger/',
   chefUrl: '/chef',
-  plantUmlUrl: '/plantuml'
+  plantUmlUrl: '/plantuml',
+  fmlEditor: '/fml-editor',
 };

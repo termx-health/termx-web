@@ -8,7 +8,16 @@ import {remove} from '@kodality-web/core-util';
   styles: [`
     @import "../../../../styles/variables";
 
-    
+    ::ng-deep .fml-editor {
+      z-index: 1000;
+      position: absolute;
+      inset: 0;
+      border: 0;
+      height: 100%;
+      width: 100%;
+      visibility: hidden;
+    }
+
     .resource {
       padding: 0 0.5rem 0 1rem;
       border-left: 1px dashed @mui-border-color;
@@ -18,7 +27,7 @@ import {remove} from '@kodality-web/core-util';
       &:hover {
         background: @mui-border-color-light;
       }
-      
+
       &--selected {
         color: @mui-primary-color-6;
         background: @mui-border-color-light;
@@ -28,11 +37,11 @@ import {remove} from '@kodality-web/core-util';
         color: @mui-error;
       }
     }
-    
+
     .resource-dir {
       font-weight: 800
     }
-    
+
     .resource-add {
       padding: 0 0.5rem 0 1rem;
     }

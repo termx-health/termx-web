@@ -6,6 +6,11 @@ import {MapSet} from 'term-web/resources/_lib';
 import {saveAs} from 'file-saver';
 import {Fhir} from 'fhir/fhir';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {launchFMLEditor} from 'term-web/modeler/transformer/components/fml.editor';
+import {Bundle} from 'fhir/model/bundle';
+import {forkJoin, map, of} from 'rxjs';
+import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
+import {isNil} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-transformation-definition-resource-form',
@@ -29,7 +34,7 @@ export class TransformationDefinitionResourceFormComponent {
   }
 
   protected generateMapping(): void {
-    this.transformationDefinitionService.generateFml(this.definition).subscribe(r => this.resource.reference.content = r);
+    this.transformationDefinitionService.composeFml(this.definition).subscribe(r => this.resource.reference.content = r);
   }
 
   protected downloadMap(format: 'json' | 'xml'): void {
@@ -54,6 +59,29 @@ export class TransformationDefinitionResourceFormComponent {
       } else {
         this.notificationService.success('ok');
       }
+    });
+  }
+
+  protected visualEditor(): void {
+    forkJoin([
+      this.transformationDefinitionService.baseResources(),
+      this.transformationDefinitionService.transformResources(this.definition.resources),
+      this.isFml(this.resource.reference.content)
+        ? this.transformationDefinitionService.parseFml(this.resource.reference.content).pipe(map(r => r.json))
+        : of(this.resource.reference.content)
+    ]).subscribe(([bundle, definitions, json]: [Bundle, FhirStructureDefinition[], string]) => {
+      bundle.entry.push(...definitions.map(def => ({resource: def})));
+      if (isNil(json)) {
+        return;
+      }
+
+      launchFMLEditor({
+        editorFacade: {
+          getBundle: () => bundle,
+          getStructureMap: () => JSON.parse(json),
+          updateStructureMap: sm => this.resource.reference.content = JSON.stringify(sm, null, 2)
+        }
+      });
     });
   }
 
