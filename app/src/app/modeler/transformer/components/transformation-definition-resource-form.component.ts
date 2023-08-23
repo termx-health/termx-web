@@ -37,36 +37,12 @@ export class TransformationDefinitionResourceFormComponent {
     this.resource.name = ms.id;
   }
 
+
   protected generateMapping(): void {
     this.transformationDefinitionService.composeFml(this.definition).subscribe(r => this.resource.reference.content = r);
   }
 
-  protected downloadMap(format: 'json' | 'xml'): void {
-    this.transformationDefinitionService.parseFml(this.resource.reference.content).subscribe(r => {
-      if (r.error) {
-        this.notificationService.error(r.error);
-      }
-      if (format === 'json') {
-        saveAs(new Blob([r.json], {type: 'application/json'}), `${this.definition.name}.json`);
-      }
-      if (format === 'xml') {
-        const xml = new Fhir().jsonToXml(r.json);
-        saveAs(new Blob([xml], {type: 'application/xml'}), `${this.definition.name}.xml`);
-      }
-    });
-  }
-
-  protected compile(): void {
-    this.transformationDefinitionService.parseFml(this.resource.reference.content).subscribe(r => {
-      if (r.error) {
-        this.notificationService.error('', r.error, {duration: 10000});
-      } else {
-        this.notificationService.success('ok');
-      }
-    });
-  }
-
-  protected launchVisualEditor(): void {
+  protected launchEditor(): void {
     this.loader.wrap('visual-editor', forkJoin([
       this.transformationDefinitionService.baseResources(),
       this.transformationDefinitionService.transformResources(this.definition.resources),
@@ -98,6 +74,36 @@ export class TransformationDefinitionResourceFormComponent {
     });
   }
 
+  protected downloadMap(format: 'json' | 'xml'): void {
+    this.transformationDefinitionService.parseFml(this.resource.reference.content).subscribe(r => {
+      if (r.error) {
+        this.notificationService.error(r.error);
+      }
+      if (format === 'json') {
+        saveAs(new Blob([r.json], {type: 'application/json'}), `${this.definition.name}.json`);
+      }
+      if (format === 'xml') {
+        const xml = new Fhir().jsonToXml(r.json);
+        saveAs(new Blob([xml], {type: 'application/xml'}), `${this.definition.name}.xml`);
+      }
+    });
+  }
+
+  protected compile(): void {
+    this.transformationDefinitionService.parseFml(this.resource.reference.content).subscribe(r => {
+      if (r.error) {
+        this.notificationService.error('', r.error, {duration: 10000});
+      } else {
+        this.notificationService.success('ok');
+      }
+    });
+  }
+
+
+  protected onContentChange(): void {
+    this.resource.name = this.resource.name || this.findUrl(this.resource.reference.content);
+  }
+
   protected isFml(txt: string): boolean {
     return txt.startsWith('///');
   }
@@ -106,7 +112,7 @@ export class TransformationDefinitionResourceFormComponent {
     return txt.startsWith('{') && txt.includes('fml-export');
   }
 
-  protected editorFml(txt: string): boolean {
+  protected fmlContent(txt: string): boolean {
     return JSON.parse(txt)['text']['div']
       .replace(/^<div>/, '')
       .replace(/<\/div>$/, '')
@@ -114,9 +120,10 @@ export class TransformationDefinitionResourceFormComponent {
       .replace(/\n$/, '');
   }
 
-  protected onContentChange(): void {
-    this.resource.name = this.resource.name || this.findUrl(this.resource.reference.content);
+  protected svgContent(txt: string): boolean {
+    return JSON.parse(txt)['extension'].find(ext => ext['url'] === 'fml-svg')?.valueString;
   }
+
 
   protected findUrl = (content: string): string => {
     if (content.startsWith('<')) {
