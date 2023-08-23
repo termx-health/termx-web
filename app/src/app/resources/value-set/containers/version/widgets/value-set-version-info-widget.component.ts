@@ -81,8 +81,8 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
 
   public openJson(expand: boolean = false): void {
     if (expand) {
-      window.open(environment.termxApi + '/fhir/ValueSet/' + this.version.valueSet + '@' + this.version.version + '/$expand' +
-        (this.version.preferredLanguage ?  '?displayLanguage=' + this.version.preferredLanguage : '') , '_blank');
+      window.open(environment.termxApi + '/fhir/ValueSet/' + this.version.valueSet + '@' + this.version.version + '/$expand?includeDesignations=true' +
+        (this.version.preferredLanguage ? '&displayLanguage=' + this.version.preferredLanguage : '') , '_blank');
     } else {
       window.open(environment.termxApi + '/fhir/ValueSet/' + this.version.valueSet + '@' + this.version.version , '_blank');
     }
