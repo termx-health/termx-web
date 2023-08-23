@@ -70,7 +70,7 @@
         </m-button>
 
         <ng-container *ngIf="resource.type === 'mapping'">
-          <m-button *ngIf="resource.source === 'static'" mSize="small" mDisplay="dashed" (mClick)="launchVisualEditor()">
+          <m-button *ngIf="resource.source === 'static'" mSize="small" mDisplay="dashed" (mClick)="launchEditor()">
             <m-icon [mCode]="loader.state['visual-editor'] ? 'loading' : 'experiment'"/>&nbsp;{{'Visual editor' | translate}}
           </m-button>
 
@@ -91,7 +91,13 @@
 
       <div class="m-items-top">
         <div *ngIf="(resource.reference.content | apply: isEditor); else def">
-          <span class="m-whitespace-pre">{{resource.reference.content | apply: editorFml}}</span>
+          <ng-container *ngIf="resource.reference.content | apply: svgContent as svg; else fml">
+            <img *ngIf="svg" [src]="svg" alt="">
+          </ng-container>
+
+          <ng-template #fml>
+            <span class="m-whitespace-pre">{{resource.reference.content | apply: fmlContent}}</span>
+          </ng-template>
         </div>
 
         <ng-template #def>

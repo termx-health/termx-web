@@ -101,7 +101,7 @@ const handleEditorMessage = (editorState: EditorState, editorFacade: EditorFacad
     case 'save': {
       _postMessage(editorState, {
         action: 'export',
-        format: 'json'
+        format: 'json+svg'
       });
       break;
     }
