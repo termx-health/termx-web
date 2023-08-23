@@ -42,6 +42,7 @@ export class CodeSystemLibService {
   }
 
   public loadConcept(codeSystemId: string, conceptCode: string, version?: string): Observable<CodeSystemConcept> {
+    conceptCode = encodeURIComponent(conceptCode);
     return this.http.get<CodeSystemConcept>(`${this.baseUrl}/${codeSystemId}` + (version ? `/versions/${version}` : ``) + `/concepts/${conceptCode}`);
   }
 

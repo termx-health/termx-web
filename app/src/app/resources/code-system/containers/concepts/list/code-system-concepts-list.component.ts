@@ -186,7 +186,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
 
     const mode = this.viewMode ? '/view' : '/edit';
     const path = `/resources/code-systems/${this.codeSystem.id}${this.version?.version ? `/versions/${this.version?.version}/concepts/` :
-      '/concepts/'}${code}${mode}`;
+      '/concepts/'}${encodeURIComponent(code)}${mode}`;
     return {path: [path], query: {parent: parentCode}};
   };
 

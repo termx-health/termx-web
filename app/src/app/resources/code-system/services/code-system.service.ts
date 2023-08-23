@@ -57,6 +57,7 @@ export class CodeSystemService extends CodeSystemLibService {
   }
 
   public propagateProperties(codeSystemId: string, conceptCode: string, targetConceptIds: number[]): Observable<void> {
+    conceptCode = encodeURIComponent(conceptCode);
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/concepts/${conceptCode}/propagate-properties`, {targetConceptIds: targetConceptIds});
   }
 
