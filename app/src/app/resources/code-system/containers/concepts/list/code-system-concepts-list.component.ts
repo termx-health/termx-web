@@ -115,6 +115,11 @@ export class CodeSystemConceptsListComponent implements OnInit {
     this.search().subscribe(resp => this.searchResult = resp);
   }
 
+  protected onFilterSearch(): void {
+    this.query.offset = 0;
+    this.loadData();
+  }
+
   private search(): Observable<SearchResult<CodeSystemConcept>> {
     const q = copyDeep(this.query);
     q.textContains = this.filter.inputType === 'contains' ? this.filter.searchInput : undefined;
