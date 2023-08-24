@@ -1750,6 +1750,7 @@
 				"expansion": "Expansion",
 				"expansion-limit-info": "Loaded 20 concepts.  {{count}} concepts still on server.",
 				"expansion-see-all": "See full list of the concepts.",
+				"expansion-warning": "The value set should be in the 'draft' status to recalculate expansion.",
 				"info": {
 					"activate": "Activate",
 					"create-approve": "Create approval task",

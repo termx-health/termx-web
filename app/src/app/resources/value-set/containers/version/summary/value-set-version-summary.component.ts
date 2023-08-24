@@ -6,6 +6,7 @@ import {ValueSetService} from 'app/src/app/resources/value-set/services/value-se
 import {forkJoin} from 'rxjs';
 import {ValueSetRuleFormComponent} from 'app/src/app/resources/value-set/containers/version/rule/value-set-rule-form.component';
 import {JobLibService} from 'app/src/app/sys/_lib';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Component({
   templateUrl: 'value-set-version-summary.component.html',
@@ -22,6 +23,7 @@ export class ValueSetVersionSummaryComponent implements OnInit {
   public constructor(
     private route: ActivatedRoute,
     private valueSetService: ValueSetService,
+    private notificationService: MuiNotificationService,
     private jobService: JobLibService,
     private destroy$: DestroyService
   ) {}
@@ -62,6 +64,10 @@ export class ValueSetVersionSummaryComponent implements OnInit {
   }
 
   protected reloadExpansion(): void {
+    if (this.valueSetVersion.status != 'draft') {
+      this.notificationService.warning('web.value-set-version.summary.expansion-warning');
+      return;
+    }
     this.loader.wrap('expand', this.valueSetService.expandAsync({valueSet: this.valueSet.id, valueSetVersion: this.valueSetVersion.version})).subscribe(job => {
       this.pollJobStatus(job.jobId);
     });
