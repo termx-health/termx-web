@@ -15,7 +15,6 @@ interface EditorState {
   disposeEventListener: any,
   initialized: boolean,
 
-  newStructureMap: boolean,
   structureMap: object,
 }
 
@@ -55,16 +54,9 @@ const prepareEditor = (state: EditorState, editorFacade: EditorFacade): void => 
 const loadResources = (state: EditorState, editorFacade: EditorFacade): void => {
   const bundle = editorFacade.getBundle();
   const structureMap = editorFacade.getStructureMap();
-  if (structureMap) {
-    _updateState(state, {
-      newStructureMap: false,
-      structureMap,
-    });
-  } else {
-    _updateState(state, {
-      newStructureMap: true,
-    });
-  }
+  _updateState(state, {
+    structureMap,
+  });
 
   _postMessage(state, {
     action: 'load',
@@ -76,7 +68,7 @@ const loadResources = (state: EditorState, editorFacade: EditorFacade): void => 
 
 /* 'save' event handler */
 const saveStructureMap = (editorState: EditorState, editorFacade: EditorFacade): void => {
-  const {newStructureMap, structureMap} = editorState;
+  const {structureMap} = editorState;
 
   try {
     editorFacade.updateStructureMap(structureMap);
@@ -158,8 +150,6 @@ const createEditorState = ({editorUrl}): EditorState => ({
   iframe: null,
   disposeEventListener: null,
   initialized: false,
-
-  newStructureMap: true,
   structureMap: null,
 });
 

@@ -1649,6 +1649,7 @@
 				"compile": "Compile",
 				"content": "Content",
 				"definition": "Structure definition",
+				"download-fml": "FML",
 				"download-json": "JSON",
 				"download-xml": "XML",
 				"fhir-resource": "Resource",

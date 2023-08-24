@@ -1643,6 +1643,7 @@
 				"definition": "Struktuuri defintsioon",
 				"download-json": "JSON",
 				"download-xml": "XML",
+				"download-fml": "FML",
 				"fhir-resource": "Ressurss",
 				"fhir-server": "FHIR server",
 				"generate": "Genereeri",

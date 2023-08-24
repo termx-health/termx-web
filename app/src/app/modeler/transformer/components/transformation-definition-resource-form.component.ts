@@ -79,14 +79,22 @@ export class TransformationDefinitionResourceFormComponent {
       if (r.error) {
         this.notificationService.error(r.error);
       }
-      if (format === 'json') {
-        saveAs(new Blob([r.json], {type: 'application/json'}), `${this.definition.name}.json`);
-      }
-      if (format === 'xml') {
-        const xml = new Fhir().jsonToXml(r.json);
-        saveAs(new Blob([xml], {type: 'application/xml'}), `${this.definition.name}.xml`);
-      }
+      this.downloadContent(r.json, format);
     });
+  }
+
+  protected downloadContent(content: string, format: "plain" |"json" | "xml"): void {
+    if (format === 'plain') {
+      saveAs(new Blob([content], {type: 'plain/text'}), `${this.definition.name}.txt`);
+    }
+
+    if (format === 'json') {
+      saveAs(new Blob([content], {type: 'application/json'}), `${this.definition.name}.json`);
+    }
+    if (format === 'xml') {
+      const xml = new Fhir().jsonToXml(content);
+      saveAs(new Blob([xml], {type: 'application/xml'}), `${this.definition.name}.xml`);
+    }
   }
 
   protected compile(): void {
@@ -112,7 +120,7 @@ export class TransformationDefinitionResourceFormComponent {
     return txt.startsWith('{') && txt.includes('fml-export');
   }
 
-  protected fmlContent(txt: string): boolean {
+  protected fmlContent(txt: string): string {
     return JSON.parse(txt)['text']['div']
       .replace(/^<div>/, '')
       .replace(/<\/div>$/, '')
@@ -120,7 +128,7 @@ export class TransformationDefinitionResourceFormComponent {
       .replace(/\n$/, '');
   }
 
-  protected svgContent(txt: string): boolean {
+  protected svgContent(txt: string): string {
     return JSON.parse(txt)['extension'].find(ext => ext['url'] === 'fml-svg')?.valueString;
   }
 

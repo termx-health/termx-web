@@ -70,9 +70,24 @@
         </m-button>
 
         <ng-container *ngIf="resource.type === 'mapping'">
-          <m-button *ngIf="resource.source === 'static'" mSize="small" mDisplay="dashed" (mClick)="launchEditor()">
-            <m-icon [mCode]="loader.state['visual-editor'] ? 'loading' : 'experiment'"/>&nbsp;{{'Visual editor' | translate}}
-          </m-button>
+          <ng-container *ngIf="resource.source === 'static'">
+            <m-button mSize="small" mDisplay="dashed" (mClick)="launchEditor()">
+              <m-icon [mCode]="loader.state['visual-editor'] ? 'loading' : 'experiment'"/>&nbsp;{{'Visual editor' | translate}}
+            </m-button>
+
+            <m-dropdown *ngIf="resource.reference.content | apply: fmlContent as fml">
+              <m-button *m-dropdown-container mSize="small" mDisplay="dashed">
+                <m-icon mCode="download"/> &nbsp;{{'web.transformation-definition.resource-form.save-as' | translate}}&nbsp;
+                <m-icon mCode="caret-down"/>
+              </m-button>
+              <a *m-dropdown-item (mClick)="downloadContent(fml, 'plain')">
+                {{'web.transformation-definition.resource-form.download-fml' | translate}}
+              </a>
+              <a *m-dropdown-item (mClick)="downloadContent(resource.reference.content, 'json')">
+                {{'web.transformation-definition.resource-form.download-json' | translate}}
+              </a>
+            </m-dropdown>
+          </ng-container>
 
           <m-dropdown *ngIf="resource.reference.content | apply:isFml">
             <m-button *m-dropdown-container mSize="small" mDisplay="dashed">
