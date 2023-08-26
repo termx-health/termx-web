@@ -517,7 +517,7 @@
 			"github": "Github",
 			"name": "Nimi",
 			"owners": "Omanikud",
-			"plural": "Spaces",
+			"plural": "\"Ruumid\"",
 			"shared": "Jagatud",
 			"singular": "Space",
 			"terminology-servers": "Terminoloogia server",
@@ -568,7 +568,7 @@
 			"name": "Nimi",
 			"plural": "FML transformatsioonid",
 			"singular": "FML transformatsioon",
-			"source": "Allikad",
+			"source": "Allikas",
 			"source-fhir": "FHIR",
 			"source-local": "TermX",
 			"source-static": "Staatiline"
@@ -647,7 +647,7 @@
 	},
 	"web": {
 		"app": {
-			"header": "Terminoloogia"
+			"header": "TermX"
 		},
 		"association-type": {
 			"form": {
@@ -908,7 +908,7 @@
 					"last-approved": "Viimane kinnitus",
 					"last-modified": "Viimati muudetud",
 					"last-reviewed": "Viimane ülevaatus",
-					"load-from-github": "Laadi Github-is",
+					"load-from-github": "Laadi Github-ist",
 					"make-draft": "Muuda \"mustandiks\"",
 					"none": "Mitte ühtegi",
 					"push-to-github": "Salvesta Githubi",
@@ -1166,7 +1166,7 @@
 			"summary": {
 				"open-tasks": "Avatud ülesanded",
 				"pages": "Leheküljed",
-				"spaces": "Spaces",
+				"spaces": "\"Ruumid\"",
 				"title": "Kokkuvõtte"
 			},
 			"tasks": {
@@ -1521,7 +1521,7 @@
 			"edit-header": "Muuda ruum",
 			"github-clean": "Kõik on ajakohane!",
 			"github-commit-message": "Commit teade",
-			"github-pull": "Tõmba erinevused",
+			"github-pull": "Tõmba uuendused repositooriumist",
 			"github-pull-confirm": "Kas olete kindel, et soovite asendada praegused andmed repositooriumist pärit andmetega?",
 			"github-push": "Salvesta andmed repositooriumi",
 			"github-sync": "Sünkroniseeri Github-iga",
@@ -1679,7 +1679,7 @@
 			},
 			"resources": {
 				"new": "-- uus --",
-				"type.conceptmap": "Concept Map-id",
+				"type.conceptmap": "Täiendavad ConceptMap-id",
 				"type.definition": "Definitsioonid",
 				"type.mapping": "Mapping"
 			}
