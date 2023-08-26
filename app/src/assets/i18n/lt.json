@@ -139,12 +139,11 @@
 		},
 		"entity-property": {
 			"description": "Aprašas",
+			"kind": "Rūšis",
 			"name": "Pavadinimas",
 			"order-number": "Rikiuotė",
 			"preferred": "Pageidautinas (-a)",
 			"required": "Privalomas (-a)",
-			"uri": "URI",
-			"kind": "Rūšis",
 			"rule": {
 				"code-systems": "Kodų sistemos",
 				"compose": "Sukurti",
@@ -158,6 +157,7 @@
 			},
 			"status": "Statusas",
 			"type": "Tipas",
+			"uri": "URI",
 			"value": "Reikšmė"
 		},
 		"map-set": {
@@ -514,6 +514,7 @@
 			"active": "Aktyvus",
 			"code": "Kodas",
 			"editors": "Redaktoriai",
+			"github": "Github",
 			"name": "Vardas",
 			"owners": "Savininkai",
 			"plural": "Tarpai",
@@ -613,6 +614,7 @@
 				"compose": "Sukurti",
 				"concepts": "Sąvokos",
 				"filters": "Filtrai",
+				"properties": "",
 				"value-set": "Reikšmių aibė",
 				"value-set-version": "Reikšmių aibės versija"
 			},
@@ -625,6 +627,7 @@
 			"description": "Aprašas",
 			"expiration-date": "Numatomas naudojimas iki",
 			"id": "Identifikatorius",
+			"preferred-language": "",
 			"release-date": "Numatomas naudojimas nuo",
 			"rule-set": "Taisyklių aibė",
 			"source": "Leidėjas",
@@ -929,6 +932,21 @@
 				"add-header": "Pridėti kontaktą",
 				"edit-header": "Redaguoti kontaktą",
 				"name": "Pavadinimas"
+			}
+		},
+		"defined-entity-property": {
+			"form": {
+				"add-header": "",
+				"edit-header": "",
+				"kind": {
+					"designation": "",
+					"property": ""
+				}
+			},
+			"list": {
+				"add-new": "",
+				"property-used": "",
+				"title": ""
 			}
 		},
 		"dev-code-system-relation": {
@@ -1501,6 +1519,12 @@
 			"add-header": "Pridėti tarpą",
 			"all-packages": "Visi paketai",
 			"edit-header": "Redaguoti tarpą",
+			"github-clean": "",
+			"github-commit-message": "",
+			"github-pull": "",
+			"github-pull-confirm": "",
+			"github-push": "",
+			"github-sync": "",
 			"import-btn": "Importuoti tarpą",
 			"import-error-message": "Tarpo importas nepavyko",
 			"import-success-message": "Tarpo importas pavyko",
@@ -1724,7 +1748,9 @@
 					"rule": {
 						"add-designation": "Pridėti pavadinimą",
 						"all": "Visos sąvokos",
+						"bulk-copy": "",
 						"code-system": "Kodų sistema",
+						"content": "",
 						"exact": "Tikslios sąvokos",
 						"exclude": "Pašalinti",
 						"filter": "Savybe paremta išraiška",
@@ -1740,6 +1766,7 @@
 				"expansion": "Plėtotė",
 				"expansion-limit-info": "Įkelta 20 savybių.  {{count}} sąvokų (-a, -os) vis dar yra serveryje.",
 				"expansion-see-all": "Žiūrėti visą sąvokų sąrašą.",
+				"expansion-warning": "",
 				"info": {
 					"activate": "Aktyvinti",
 					"create-approve": "Kurti patvirtinimo užduotį",

@@ -139,12 +139,11 @@
 		},
 		"entity-property": {
 			"description": "Description",
+			"kind": "Kind",
 			"name": "Name",
 			"order-number": "Order",
 			"preferred": "Preferred",
 			"required": "Required",
-			"uri": "URI",
-			"kind": "Kind",
 			"rule": {
 				"code-systems": "Code systems",
 				"compose": "Compose",
@@ -158,6 +157,7 @@
 			},
 			"status": "Status",
 			"type": "Type",
+			"uri": "URI",
 			"value": "Value"
 		},
 		"map-set": {
@@ -337,6 +337,7 @@
 		},
 		"package": {
 			"code": "Code",
+			"git": "",
 			"plural": "Packages",
 			"singular": "Package",
 			"version": {
@@ -513,14 +514,14 @@
 			"active": "Active",
 			"code": "Code",
 			"editors": "Editors",
+			"github": "Github",
 			"name": "Name",
 			"owners": "Owners",
 			"plural": "Spaces",
 			"shared": "Shared",
 			"singular": "Space",
 			"terminology-servers": "Terminology servers",
-			"viewers": "Viewers",
-			"github": "Github"
+			"viewers": "Viewers"
 		},
 		"structure-definition": {
 			"code": "Code",
@@ -626,11 +627,11 @@
 			"description": "Description",
 			"expiration-date": "Expected use until",
 			"id": "Identifier",
+			"preferred-language": "Preferred language",
 			"release-date": "Expected use since",
 			"rule-set": "Rule set",
 			"source": "Publisher",
 			"status": "Status",
-			"preferred-language": "Preferred language",
 			"supported-languages": "Supported languages",
 			"version": "Version"
 		},
@@ -931,6 +932,21 @@
 				"add-header": "Add contact",
 				"edit-header": "Edit contact",
 				"name": "Name"
+			}
+		},
+		"defined-entity-property": {
+			"form": {
+				"add-header": "Add defined entity property",
+				"edit-header": "Edit defined entity property",
+				"kind": {
+					"designation": "Designation",
+					"property": "Property"
+				}
+			},
+			"list": {
+				"add-new": "Add new entity property",
+				"property-used": "Property is used and can not be modified.",
+				"title": "Defined entity properties"
 			}
 		},
 		"dev-code-system-relation": {
@@ -1503,19 +1519,19 @@
 			"add-header": "Add space",
 			"all-packages": "All packages",
 			"edit-header": "Edit space",
+			"github-clean": "Everything is up to date!",
+			"github-commit-message": "Commit message",
+			"github-pull": "Pull diff from",
+			"github-pull-confirm": "Are you sure you want to replace current data with data from repository?",
+			"github-push": "Push changes to",
+			"github-sync": "Sync with github",
 			"import-btn": "Import space",
 			"import-error-message": "Space import failed",
 			"import-success-message": "Space import succeeded",
 			"new-version": "New version",
 			"resource-import-error-message": "Resource import failed",
 			"resource-import-success-message": "Resource import succeeded",
-			"select-context": "Select context",
-			"github-sync": "Sync with github",
-			"github-push": "Push changes to",
-			"github-pull": "Pull diff from",
-			"github-pull-confirm": "Are you sure you want to replace current data with data from repository?",
-			"github-clean": "Everything is up to date!",
-			"github-commit-message": "Commit message"
+			"select-context": "Select context"
 		},
 		"structure-definition": {
 			"form": {
@@ -1750,7 +1766,7 @@
 				"expansion": "Expansion",
 				"expansion-limit-info": "Loaded 20 concepts.  {{count}} concepts still on server.",
 				"expansion-see-all": "See full list of the concepts.",
-				"expansion-warning": "The value set should be in the 'draft' status to recalculate expansion.",
+				"expansion-warning": "The value set version should be in the 'draft' status to recalculate expansion.",
 				"info": {
 					"activate": "Activate",
 					"create-approve": "Create approval task",
@@ -1897,21 +1913,6 @@
 				"edit-header": "Edit page",
 				"relation-header": "Page relations",
 				"usages": "Usages"
-			}
-		},
-		"defined-entity-property": {
-			"list": {
-				"title": "Defined entity properties",
-				"add-new": "Add new entity property",
-				"property-used": "Property is used and can not be modified."
-			},
-			"form": {
-				"edit-header": "Edit defined entity property",
-				"add-header": "Add defined entity property",
-				"kind": {
-					"property": "Property",
-					"designation": "Designation"
-				}
 			}
 		}
 	}

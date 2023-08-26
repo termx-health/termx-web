@@ -139,12 +139,11 @@
 		},
 		"entity-property": {
 			"description": "Kirjeldus",
+			"kind": "Liik",
 			"name": "Nimi",
 			"order-number": "Jnr",
 			"preferred": "Eelistatav",
 			"required": "Kohustuslik",
-			"uri": "URI",
-			"kind": "Liik",
 			"rule": {
 				"code-systems": "Koodisüsteemid",
 				"compose": "Koosta",
@@ -158,6 +157,7 @@
 			},
 			"status": "Staatus",
 			"type": "Tüüp",
+			"uri": "URI",
 			"value": "Väärtus"
 		},
 		"map-set": {
@@ -277,7 +277,7 @@
 			"mappings": {
 				"code-system": "Koodisüsteem",
 				"concept": "Mõiste",
-				"condition": "tingimus",
+				"condition": "Tingimus",
 				"map-set": "Vastavustabel",
 				"multiple": "Vastavused",
 				"order-number": "Jnr",
@@ -514,6 +514,7 @@
 			"active": "Aktiivne",
 			"code": "Kood",
 			"editors": "Toimetajad",
+			"github": "Github",
 			"name": "Nimi",
 			"owners": "Omanikud",
 			"plural": "Spaces",
@@ -613,6 +614,7 @@
 				"compose": "Koosta",
 				"concepts": "Mõisted",
 				"filters": "Filtrid",
+				"properties": "Tunnused",
 				"value-set": "Loend",
 				"value-set-version": "Loendi versioon"
 			},
@@ -625,6 +627,7 @@
 			"description": "Kirjeldus",
 			"expiration-date": "Eeldatav kasutus kuni",
 			"id": "Identifikaator",
+			"preferred-language": "Eelistatav keel",
 			"release-date": "Eeldatav kasutus alates",
 			"rule-set": "Reegel",
 			"source": "Kirjastaja",
@@ -898,7 +901,7 @@
 				"code-system-version": "Koodisüsteemi versioon",
 				"edit-version": "Muuda versiooni",
 				"info": {
-					"activate": "aktiveeri",
+					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitusülesanne",
 					"create-review": "Loo ülevaatuse ülesanne",
 					"definition": "Kirjeldus",
@@ -909,7 +912,7 @@
 					"make-draft": "Muuda \"mustandiks\"",
 					"none": "Mitte ühtegi",
 					"push-to-github": "Salvesta Githubi",
-					"retire": "Augunud",
+					"retire": "Tühista",
 					"show-changes": "Näita erinevused"
 				},
 				"opened-tasks": "Avatud ülesanded",
@@ -929,6 +932,21 @@
 				"add-header": "Lisa kontakt",
 				"edit-header": "Muuda kontakt",
 				"name": "Nimi"
+			}
+		},
+		"defined-entity-property": {
+			"form": {
+				"add-header": "Lisa globaalne tunnus",
+				"edit-header": "Globaalne tunnus",
+				"kind": {
+					"designation": "Kirjeldus",
+					"property": "Tunnus"
+				}
+			},
+			"list": {
+				"add-new": "Lisa uus mõiste tunnus",
+				"property-used": "Tunnus on kasutusel ja ei saa olla muudetud.",
+				"title": "Globaalsed tunnused"
 			}
 		},
 		"dev-code-system-relation": {
@@ -1501,6 +1519,12 @@
 			"add-header": "Lisa ruum",
 			"all-packages": "Kõik paketid",
 			"edit-header": "Muuda ruum",
+			"github-clean": "Kõik on ajakohane!",
+			"github-commit-message": "Commit teade",
+			"github-pull": "Tõmba erinevused",
+			"github-pull-confirm": "Kas olete kindel, et soovite asendada praegused andmed repositooriumist pärit andmetega?",
+			"github-push": "Salvesta andmed repositooriumi",
+			"github-sync": "Sünkroniseeri Github-iga",
 			"import-btn": "Impordi ruum",
 			"import-error-message": "Ruumi import ebaõnnestunud",
 			"import-success-message": "Ruumi import on edukas",
@@ -1641,9 +1665,9 @@
 				"compile": "Kompileeri",
 				"content": "Sisu",
 				"definition": "Struktuuri defintsioon",
+				"download-fml": "FML",
 				"download-json": "JSON",
 				"download-xml": "XML",
-				"download-fml": "FML",
 				"fhir-resource": "Ressurss",
 				"fhir-server": "FHIR server",
 				"generate": "Genereeri",
@@ -1724,7 +1748,9 @@
 					"rule": {
 						"add-designation": "Lisa tekst",
 						"all": "Lisa mõisted",
+						"bulk-copy": "Massmuutmine",
 						"code-system": "Koodisüsteem",
+						"content": "Sisu",
 						"exact": "Täpsed mõisted",
 						"exclude": "Välja arvatud",
 						"filter": "Tunnustel põhinev valem",
@@ -1740,6 +1766,7 @@
 				"expansion": "Mõistete hetketõmmis",
 				"expansion-limit-info": "Laetud 20 mõistet.  {{count}} mõisteid on endiselt serveris.",
 				"expansion-see-all": "Vaata kõik mõisted.",
+				"expansion-warning": "Väljavõte ümberarvutamiseks versioon olema olekus „mustand/draft”.",
 				"info": {
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitus ülesanne",
