@@ -100,7 +100,9 @@
       },
       {
         "label": {
-          "en": "Defined entity properties"
+          "en": "Defined entity properties",
+          "et": "Globaalsed tunnused",
+          "lt": "Defined entity properties"
         },
         "link": "resources/defined-entity-properties",
         "privileges": [
@@ -322,7 +324,7 @@
       {
         "label": {
           "en": "Terminology service API",
-          "et": "Terminoloogi teenuse API",
+          "et": "Terminoloogia teenuse API",
 		      "lt": "Terminologijos paslaugų API"
         },
         "icon": "cloud",
