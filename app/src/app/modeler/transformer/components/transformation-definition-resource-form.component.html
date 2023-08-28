@@ -111,7 +111,7 @@
           </ng-container>
 
           <ng-template #fml>
-            <span class="m-whitespace-pre">{{resource.reference.content | apply: fmlContent}}</span>
+            <span class="m-whitespace-pre">{{(resource.reference.content | apply: fmlContent) ?? resource.reference.content}}</span>
           </ng-template>
         </div>
 

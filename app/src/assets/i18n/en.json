@@ -1675,7 +1675,8 @@
 				"preview-hide": "Hide",
 				"preview-show": "Preview",
 				"save-as": "Save as",
-				"url": "URL"
+				"url": "URL",
+				"fml-generation-failed": "Failed to generate FML"
 			},
 			"resources": {
 				"new": "-- new --",

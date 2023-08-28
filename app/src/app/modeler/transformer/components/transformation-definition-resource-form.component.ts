@@ -60,14 +60,17 @@ export class TransformationDefinitionResourceFormComponent {
           getBundle: () => bundle,
           getStructureMap: () => JSON.parse(json),
           updateStructureMap: sm => {
-            this.transformationDefinitionService.generateFml(sm).subscribe(fml => {
-              sm['text'] = {
-                status: 'generated',
-                div: `<div>\n${fml.replace(/,\s\s/gm, ',\n    ').replace(/\s->\s/gm, ' ->\n   ')}</div>`
-              };
-              console.log(sm['text'].div);
-              this.resource.reference.content = JSON.stringify(sm, null, 2);
-            });
+            this.transformationDefinitionService.generateFml(sm)
+              .subscribe({
+                next: fml => {
+                  sm['text'] = {
+                    status: 'generated',
+                    div: `<div>\n${fml.replace(/,\s\s/gm, ',\n    ').replace(/\s->\s/gm, ' ->\n   ')}</div>`
+                  };
+                },
+                error: err => this.notificationService.error("web.transformation-definition.resource-form.fml-generation-failed", err)
+              })
+              .add(() => this.resource.reference.content = JSON.stringify(sm, null, 2));
           }
         }
       });
@@ -83,7 +86,7 @@ export class TransformationDefinitionResourceFormComponent {
     });
   }
 
-  protected downloadContent(content: string, format: "plain" |"json" | "xml"): void {
+  protected downloadContent(content: string, format: "plain" | "json" | "xml"): void {
     if (format === 'plain') {
       saveAs(new Blob([content], {type: 'plain/text'}), `${this.definition.name}.txt`);
     }
@@ -121,11 +124,13 @@ export class TransformationDefinitionResourceFormComponent {
   }
 
   protected fmlContent(txt: string): string {
-    return JSON.parse(txt)['text']['div']
-      .replace(/^<div>/, '')
-      .replace(/<\/div>$/, '')
-      .replace(/^\n/, '')
-      .replace(/\n$/, '');
+    return txt?.startsWith('{')
+      ? JSON.parse(txt)['text']?.['div']
+        .replace(/^<div>/, '')
+        .replace(/<\/div>$/, '')
+        .replace(/^\n/, '')
+        .replace(/\n$/, '')
+      : undefined;
   }
 
   protected svgContent(txt: string): string {
