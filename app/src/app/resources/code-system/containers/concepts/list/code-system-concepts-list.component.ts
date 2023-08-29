@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {
   CodeSystem,
   CodeSystemConcept,
@@ -9,8 +9,8 @@ import {
   EntityProperty,
   EntityPropertyValue
 } from 'app/src/app/resources/_lib';
-import {Observable} from 'rxjs';
-import {BooleanInput, ComponentStateStore, copyDeep, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import {forkJoin, map, Observable} from 'rxjs';
+import {BooleanInput, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 
@@ -51,7 +51,7 @@ interface ConceptNode {
     }
   `]
 })
-export class CodeSystemConceptsListComponent implements OnInit {
+export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   protected readonly STORE_KEY = 'code-system-concept-list';
 
   @Input() public codeSystem?: CodeSystem;
@@ -100,11 +100,14 @@ export class CodeSystemConceptsListComponent implements OnInit {
     this.loadData();
   }
 
+  public ngOnDestroy(): void {
+    this.saveState();
+  }
+
   protected toggleView(): void {
     this.groupOpened = !this.groupOpened;
     this.filter.open = false;
     this.selectedConcept = undefined;
-    this.saveState();
   }
 
   private expandTree(): void {
@@ -112,22 +115,23 @@ export class CodeSystemConceptsListComponent implements OnInit {
   }
 
   protected groupConcepts(groupParam: string): void {
+    this.loadRootConcepts(groupParam).subscribe(resp => {
+      this.rootConcepts = resp.map(c => this.mapToNode(c));
+    });
+  }
+
+  private loadRootConcepts(groupParam: string): Observable<CodeSystemConcept[]> {
     const params = new ConceptSearchParams();
     params.associationRoot = groupParam;
     params.codeSystemVersion = this.version?.version;
     params.sort = 'code';
     params.limit = 1000;
 
-    this.loader.wrap('group', this.codeSystemService.searchConcepts(this.codeSystem.id, params)).subscribe(concepts => {
-      this.rootConcepts = concepts.data.map(c => this.mapToNode(c));
-    });
+    return this.loader.wrap('group', this.codeSystemService.searchConcepts(this.codeSystem.id, params)).pipe(map(resp => resp.data));
   }
 
   protected loadData(): void {
-    this.search().subscribe(resp => {
-      this.searchResult = resp;
-      this.saveState();
-    });
+    this.search().subscribe(resp => this.searchResult = resp);
   }
 
   protected onFilterSearch(): void {
@@ -146,7 +150,6 @@ export class CodeSystemConceptsListComponent implements OnInit {
 
   protected reset(): void {
     this.filter = {open: false, inputType: 'contains'};
-    this.saveState();
   }
 
   protected selectConcept(concept: CodeSystemConcept): void {
@@ -155,7 +158,6 @@ export class CodeSystemConceptsListComponent implements OnInit {
     } else {
       this.selectedConcept = {code: concept.code, version: concept.versions[concept.versions.length - 1]};
     }
-    this.saveState();
   }
 
   protected expandNode(node: ConceptNode): void {
@@ -171,7 +173,6 @@ export class CodeSystemConceptsListComponent implements OnInit {
       this.loadChildren(node.code).subscribe(concepts => {
         node.children = concepts.data.map(c => this.mapToNode(c));
         node.expanded = true;
-        this.saveState();
       }).add(() => node.loading = false);
     }
   }
@@ -246,7 +247,17 @@ export class CodeSystemConceptsListComponent implements OnInit {
     });
   }
 
-  protected saveState(): void {
+  private saveState(): void {
+    const collectExpandedCodes = (nodes: ConceptNode[], res: string[]) => {
+      nodes?.filter(n => n.expanded).forEach(n => {
+        res.push(n.code);
+        collectExpandedCodes(n.children, res);
+      });
+    };
+
+    const expanded = [];
+    collectExpandedCodes(this.rootConcepts, expanded);
+
     this.stateStore.put(this.STORE_KEY, {
       codeSystemId: this.codeSystem.id,
 
@@ -255,10 +266,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
       filter: this.filter,
 
       query: this.query,
-      searchResult: this.searchResult,
-      rootConcepts: this.rootConcepts,
-
-      selectedConcept: this.selectedConcept
+      expandedNodes: expanded,
     });
   }
 
@@ -269,9 +277,27 @@ export class CodeSystemConceptsListComponent implements OnInit {
     this.filter = state.filter;
     this.query = state.query;
 
-    this.searchResult = state.searchResult;
-    this.rootConcepts = state.rootConcepts;
+    this.loadData();
+    if (this.groupOpened) {
+      this.loadRootConcepts(this.codeSystem?.hierarchyMeaning).subscribe(concepts => {
+        const rootNodes = concepts.map(c => this.mapToNode(c));
+        const expandedNodeChildren: Observable<{code: string, data: CodeSystemConcept[]}>[] = state.expandedNodes.map(code => {
+          return this.loadChildren(code).pipe(map(r => ({code, data: r.data})));
+        });
 
-    this.selectedConcept = state.selectedConcept;
+        this.rootConcepts = rootNodes;
+        this.loader.wrap('group', forkJoin(expandedNodeChildren)).subscribe(resp => {
+          const childMap = group(resp, v => v.code, v => v.data);
+          const expand = (child: ConceptNode): void => {
+            if (childMap[child.code]) {
+              child.expanded = true;
+              child.children = childMap[child.code].map(n => this.mapToNode(n));
+              child.children.forEach(c => expand(c));
+            }
+          };
+          rootNodes.forEach(c => expand(c));
+        });
+      });
+    }
   }
 }

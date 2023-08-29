@@ -8,11 +8,11 @@
         <m-icon mCode="folder-open"></m-icon>
       </m-button>
 
-      <m-select [(ngModel)]="tableView.langs" (ngModelChange)="saveState()" multiple placeholder="Designation languages" style="flex: 1">
+      <m-select [(ngModel)]="tableView.langs" multiple placeholder="Designation languages" style="flex: 1">
         <m-option *ngFor="let lang of version | apply: getSupportedLangs: versions" [mValue]="lang" [mLabel]="lang"/>
       </m-select>
 
-      <m-select [(ngModel)]="tableView.properties" (ngModelChange)="saveState()" multiple placeholder="Properties" style="flex: 1">
+      <m-select [(ngModel)]="tableView.properties" multiple placeholder="Properties" style="flex: 1">
         <m-option *ngFor="let prop of codeSystem?.properties" [mValue]="prop.name" [mLabel]="prop.name"/>
       </m-select>
     </div>
@@ -86,7 +86,7 @@
       </m-backend-table>
 
 
-      <m-table *ngIf="groupOpened && rootConcepts" [mData]="rootConcepts" mSize="small">
+      <m-table *ngIf="groupOpened && rootConcepts" [mData]="rootConcepts" mSize="small" [mLoading]="loader.state['group']">
         <tr *mTableHead>
           <th>{{'entities.code-system-concept.code' | translate}}</th>
           <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
