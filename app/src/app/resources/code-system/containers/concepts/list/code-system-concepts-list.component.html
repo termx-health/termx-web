@@ -2,17 +2,17 @@
   <div class="m-justify-between" style="margin-bottom: 1rem">
     <div class="m-items-middle" style="flex: 1">
       <m-button *ngIf="codeSystem.hierarchyMeaning"
-          (click)="groupOpened = !groupOpened; selectedConcept = undefined; filter.open = false"
+          (mClick)="toggleView()"
           [mDisplay]="groupOpened ? 'primary' : 'default'"
       >
         <m-icon mCode="folder-open"></m-icon>
       </m-button>
 
-      <m-select [(ngModel)]="tableView.langs" multiple placeholder="Designation languages" style="flex: 1">
+      <m-select [(ngModel)]="tableView.langs" (ngModelChange)="saveState()" multiple placeholder="Designation languages" style="flex: 1">
         <m-option *ngFor="let lang of version | apply: getSupportedLangs: versions" [mValue]="lang" [mLabel]="lang"/>
       </m-select>
 
-      <m-select [(ngModel)]="tableView.properties" multiple placeholder="Properties" style="flex: 1">
+      <m-select [(ngModel)]="tableView.properties" (ngModelChange)="saveState()" multiple placeholder="Properties" style="flex: 1">
         <m-option *ngFor="let prop of codeSystem?.properties" [mValue]="prop.name" [mLabel]="prop.name"/>
       </m-select>
     </div>
@@ -135,7 +135,7 @@
             [style.padding-left.rem]="level"
             [style.opacity]="node.expandable ? '1' : '0'"
             [mIcon]="node.loading ? 'loading' : node.expandable ? node.expanded ? 'folder-open' : 'folder' : 'file'"
-            (mClick)="$event.preventDefault(); $event.stopImmediatePropagation(); loadChildConcepts(node)"></m-icon-button>
+            (mClick)="$event.preventDefault(); $event.stopImmediatePropagation(); expandNode(node);"></m-icon-button>
 
         <a *ngIf="node.code | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">
           {{node.code}}

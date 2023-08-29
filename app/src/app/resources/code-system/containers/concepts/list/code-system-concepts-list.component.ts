@@ -10,9 +10,8 @@ import {
   EntityPropertyValue
 } from 'app/src/app/resources/_lib';
 import {Observable} from 'rxjs';
-import {BooleanInput, copyDeep, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import {BooleanInput, ComponentStateStore, copyDeep, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
-import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 
 interface ConceptNode {
@@ -53,12 +52,12 @@ interface ConceptNode {
   `]
 })
 export class CodeSystemConceptsListComponent implements OnInit {
+  protected readonly STORE_KEY = 'code-system-concept-list';
+
   @Input() public codeSystem?: CodeSystem;
   @Input() public version?: CodeSystemVersion;
   @Input() public versions?: CodeSystemVersion[];
-
   @Input() @BooleanInput() public viewMode: boolean | string;
-
 
   protected groupOpened: boolean = false;
   protected tableView: {langs?: string[], properties?: string[]} = {};
@@ -80,19 +79,32 @@ export class CodeSystemConceptsListComponent implements OnInit {
 
 
   public constructor(
-    private router: Router,
     private codeSystemService: CodeSystemService,
-    protected translateService: TranslateService
+    protected translateService: TranslateService,
+    private stateStore: ComponentStateStore,
   ) {
     this.query.sort = 'code';
   }
 
   public ngOnInit(): void {
+    const state = this.stateStore.get(this.STORE_KEY);
+    if (state && state.codeSystemId === this.codeSystem?.id) {
+      this.restoreState(state);
+      return;
+    }
+
     if (this.codeSystem.hierarchyMeaning) {
       this.groupOpened = true;
       this.expandTree();
     }
     this.loadData();
+  }
+
+  protected toggleView(): void {
+    this.groupOpened = !this.groupOpened;
+    this.filter.open = false;
+    this.selectedConcept = undefined;
+    this.saveState();
   }
 
   private expandTree(): void {
@@ -112,7 +124,10 @@ export class CodeSystemConceptsListComponent implements OnInit {
   }
 
   protected loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
+    this.search().subscribe(resp => {
+      this.searchResult = resp;
+      this.saveState();
+    });
   }
 
   protected onFilterSearch(): void {
@@ -131,6 +146,7 @@ export class CodeSystemConceptsListComponent implements OnInit {
 
   protected reset(): void {
     this.filter = {open: false, inputType: 'contains'};
+    this.saveState();
   }
 
   protected selectConcept(concept: CodeSystemConcept): void {
@@ -139,10 +155,10 @@ export class CodeSystemConceptsListComponent implements OnInit {
     } else {
       this.selectedConcept = {code: concept.code, version: concept.versions[concept.versions.length - 1]};
     }
+    this.saveState();
   }
 
-
-  public loadChildConcepts(node: ConceptNode): void {
+  protected expandNode(node: ConceptNode): void {
     if (node.expanded) {
       node.expanded = false;
       node.children = [];
@@ -155,17 +171,17 @@ export class CodeSystemConceptsListComponent implements OnInit {
       this.loadChildren(node.code).subscribe(concepts => {
         node.children = concepts.data.map(c => this.mapToNode(c));
         node.expanded = true;
+        this.saveState();
       }).add(() => node.loading = false);
     }
   }
 
-  public loadChildren(code: string): Observable<SearchResult<CodeSystemConcept>> {
+  private loadChildren(code: string): Observable<SearchResult<CodeSystemConcept>> {
     const params = new ConceptSearchParams();
     params.associationSource = `${this.codeSystem.hierarchyMeaning}|${code}`;
     params.codeSystemVersion = this.version?.version;
     params.sort = 'code';
     params.limit = 1000;
-
     return this.codeSystemService.searchConcepts(this.codeSystem.id, params);
   }
 
@@ -208,6 +224,10 @@ export class CodeSystemConceptsListComponent implements OnInit {
     return [];
   };
 
+  protected getProperty = (id: number, properties: EntityProperty[]): EntityProperty => {
+    return properties?.find(p => p.id === id);
+  };
+
   protected unlink(concept: CodeSystemConcept): void {
     const entityVersionIds = concept.versions.map(v => v.id);
     this.codeSystemService.unlinkEntityVersions(this.codeSystem.id, this.version.version, entityVersionIds).subscribe(() => {
@@ -218,15 +238,40 @@ export class CodeSystemConceptsListComponent implements OnInit {
     });
   }
 
-  public getProperty = (id: number, properties: EntityProperty[]): EntityProperty => {
-    return properties?.find(p => p.id === id);
-  };
-
-  public propagateProperties(concept: CodeSystemConcept): void {
+  protected propagateProperties(concept: CodeSystemConcept): void {
     this.loadChildren(concept.code).subscribe(children => {
       this.codeSystemService.propagateProperties(this.codeSystem.id, concept.code, children.data.map(c => c.id)).subscribe(() => {
         this.expandTree();
       });
     });
+  }
+
+  protected saveState(): void {
+    this.stateStore.put(this.STORE_KEY, {
+      codeSystemId: this.codeSystem.id,
+
+      groupOpened: this.groupOpened,
+      tableView: this.tableView,
+      filter: this.filter,
+
+      query: this.query,
+      searchResult: this.searchResult,
+      rootConcepts: this.rootConcepts,
+
+      selectedConcept: this.selectedConcept
+    });
+  }
+
+  private restoreState(state): void {
+    this.groupOpened = state.groupOpened;
+
+    this.tableView = state.tableView;
+    this.filter = state.filter;
+    this.query = state.query;
+
+    this.searchResult = state.searchResult;
+    this.rootConcepts = state.rootConcepts;
+
+    this.selectedConcept = state.selectedConcept;
   }
 }
