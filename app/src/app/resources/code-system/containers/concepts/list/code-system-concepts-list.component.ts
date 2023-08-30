@@ -9,7 +9,7 @@ import {
   EntityProperty,
   EntityPropertyValue
 } from 'app/src/app/resources/_lib';
-import {forkJoin, map, Observable} from 'rxjs';
+import {forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {BooleanInput, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
@@ -72,7 +72,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
 
   protected query = new ConceptSearchParams();
   protected searchResult = SearchResult.empty<CodeSystemConcept>();
-  protected rootConcepts?: ConceptNode[];
+  protected rootConcepts?: ConceptNode[] = [];
 
   protected selectedConcept: {code: string, version: CodeSystemEntityVersion};
   protected loader = new LoadingManager();
@@ -87,7 +87,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   }
 
   public ngOnInit(): void {
-    const state = this.stateStore.get(this.STORE_KEY);
+    const state = this.stateStore.pop(this.STORE_KEY);
     if (state && state.codeSystemId === this.codeSystem?.id) {
       this.restoreState(state);
       return;
@@ -97,6 +97,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
       this.groupOpened = true;
       this.expandTree();
     }
+
     this.loadData();
   }
 
@@ -196,14 +197,12 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
 
   protected getConceptEditRoute = (code?: string, parentCode?: string): {path: any[], query: any} => {
     if (!code) {
-      const path = `/resources/code-systems/${this.codeSystem.id}${this.version?.version ? `/versions/${this.version?.version}/concepts/add` :
-        '/concepts/add'}`;
+      const path = `/resources/code-systems/${this.codeSystem.id}${this.version?.version ? `/versions/${this.version?.version}/concepts/add` : '/concepts/add'}`;
       return {path: [path], query: {parent: parentCode}};
     }
 
     const mode = this.viewMode ? '/view' : '/edit';
-    const path = `/resources/code-systems/${this.codeSystem.id}${this.version?.version ? `/versions/${this.version?.version}/concepts/` :
-      '/concepts/'}${encodeURIComponent(code)}${mode}`;
+    const path = `/resources/code-systems/${this.codeSystem.id}${this.version?.version ? `/versions/${this.version?.version}/concepts/` : '/concepts/'}${encodeURIComponent(code)}${mode}`;
     return {path: [path], query: {parent: parentCode}};
   };
 
@@ -267,6 +266,8 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
 
       query: this.query,
       expandedNodes: expanded,
+
+      scrollY: window.scrollY
     });
   }
 
@@ -277,27 +278,41 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
     this.filter = state.filter;
     this.query = state.query;
 
-    this.loadData();
-    if (this.groupOpened) {
-      this.loadRootConcepts(this.codeSystem?.hierarchyMeaning).subscribe(concepts => {
-        const rootNodes = concepts.map(c => this.mapToNode(c));
-        const expandedNodeChildren: Observable<{code: string, data: CodeSystemConcept[]}>[] = state.expandedNodes.map(code => {
+    const searchResult$ = this.search().pipe(
+      tap(resp => this.searchResult = resp)
+    );
+
+    const rootConcepts$ = (this.codeSystem?.hierarchyMeaning ? this.loadRootConcepts(this.codeSystem.hierarchyMeaning) : of([])).pipe(
+      mergeMap(concepts => {
+        const roots = concepts.map(c => this.mapToNode(c));
+        const children: Observable<{code: string, data: CodeSystemConcept[]}>[] = state.expandedNodes.map(code => {
           return this.loadChildren(code).pipe(map(r => ({code, data: r.data})));
         });
+        return forkJoin([of(roots), ...children]);
+      }),
+      tap(([rootConcepts, ...resp]) => {
+        this.rootConcepts = rootConcepts;
 
-        this.rootConcepts = rootNodes;
-        this.loader.wrap('group', forkJoin(expandedNodeChildren)).subscribe(resp => {
-          const childMap = group(resp, v => v.code, v => v.data);
-          const expand = (child: ConceptNode): void => {
-            if (childMap[child.code]) {
-              child.expanded = true;
-              child.children = childMap[child.code].map(n => this.mapToNode(n));
-              child.children.forEach(c => expand(c));
-            }
-          };
-          rootNodes.forEach(c => expand(c));
+        const childMap = group(resp, v => v.code, v => v.data);
+        const expand = (child: ConceptNode): void => {
+          if (childMap[child.code]) {
+            child.expanded = true;
+            child.children = childMap[child.code].map(n => this.mapToNode(n));
+            child.children.forEach(c => expand(c));
+          }
+        };
+        this.rootConcepts.forEach(c => expand(c));
+      })
+    );
+
+    this.loader.wrap('group', forkJoin([searchResult$, rootConcepts$])).subscribe(() => {
+      setTimeout(() => {
+        window.scrollTo({
+          top: state.scrollY,
+          left: 0,
+          behavior: 'smooth',
         });
       });
-    }
+    });
   }
 }

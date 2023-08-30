@@ -86,7 +86,7 @@
       </m-backend-table>
 
 
-      <m-table *ngIf="groupOpened && rootConcepts" [mData]="rootConcepts" mSize="small" [mLoading]="loader.state['group']">
+      <m-table *ngIf="groupOpened" [mData]="rootConcepts" [mLoading]="loader.state['group']" mSize="small">
         <tr *mTableHead>
           <th>{{'entities.code-system-concept.code' | translate}}</th>
           <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
