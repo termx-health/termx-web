@@ -163,16 +163,18 @@
 			"value": "Value"
 		},
 		"map-set": {
+			"associations": "",
 			"description": "Description",
+			"domain": "",
 			"id": "ID",
-			"title": "Title",
-			"publisher": "Publisher",
 			"name": "Name",
 			"plural": "Map Sets",
+			"publisher": "Publisher",
 			"source-code-systems": "Source code systems",
 			"source-value-set": "Source value set",
 			"target-code-systems": "Target code systems",
 			"target-value-set": "Target value set",
+			"title": "Title",
 			"uri": "URI",
 			"versions": "Versions",
 			"properties": "Properties"
@@ -199,10 +201,11 @@
 			"description": "Description",
 			"expiration-date": "Expected use until",
 			"id": "Identifier",
+			"preferred-language": "Preferred language",
 			"release-date": "Expected use since",
 			"source": "Publisher",
 			"status": "Status",
-			"preferred-language": "Preferred language",
+			"supported-languages": "",
 			"version": "Version"
 		},
 		"measurement-unit": {
@@ -1252,36 +1255,77 @@
 					"delete-property-usages": "Delete property usages"
 				},
 				"scope": {
-					"title": "Scope",
-					"source": "Source",
 					"code-system": "Code system",
 					"code-system-version": "Code system version",
-					"value-set": "Value set",
-					"value-set-version": "Value set version",
+					"source": "Source",
 					"target": "Target",
-					"uri": "URI",
+					"title": "Scope",
 					"type": {
 						"code-system": "Code System",
-						"value-set": "Value Set",
-						"external-canonical-uri": "External canonical URI"
-					}
-				}
+						"external-canonical-uri": "External canonical URI",
+						"value-set": "Value Set"
+					},
+					"uri": "URI",
+					"value-set": "Value set",
+					"value-set-version": "Value set version"
+				},
+				"view-header": ""
 			},
 			"list": {
 				"add-map-set": "Add map set",
-				"manual": "Manual",
+				"add-version": "",
 				"import-fhir": "Import external FHIR definition",
 				"last-version": "Last version",
+				"manual": "Manual",
+				"open-fhir": "Open FHIR URL",
+				"operations": "",
 				"status": "Status",
-				"open-fhir": "Open FHIR URL"
+				"versions": "",
+				"versions-expiration-date": "",
+				"versions-release-date": "",
+				"versions-version": ""
 			},
 			"summary": {
-				"map-set": "Map set",
-				"versions": "Versions",
 				"add-version": "Add version",
-				"opened-tasks": "Opened tasks",
 				"all-tasks": "All tasks",
-				"related-artifacts": "Related artifacts"
+				"map-set": "Map set",
+				"opened-tasks": "Opened tasks",
+				"related-artifacts": "Related artifacts",
+				"versions": "Versions"
+			}
+		},
+		"map-set-association": {
+			"form": {
+				"add-header": "",
+				"edit-header": "",
+				"source-concept": "",
+				"source-system": "",
+				"status": "",
+				"target-concept": "",
+				"target-system": "",
+				"type": "",
+				"view-header": ""
+			},
+			"list": {
+				"add-association": "",
+				"associations": "",
+				"code-system": "",
+				"operations": ""
+			}
+		},
+		"map-set-entity-version": {
+			"modal": {
+				"add-header": "",
+				"edit-header": "",
+				"entity-version": "",
+				"link-header": ""
+			},
+			"table": {
+				"activate": "",
+				"add-version": "",
+				"header": "",
+				"link-version": "",
+				"retire": ""
 			}
 		},
 		"map-set-version": {
@@ -1291,7 +1335,31 @@
 				"view-header": "View version"
 			},
 			"summary": {
-				"map-set-version": "Map set version",
+				"associations": {
+					"add-target": "Add target mapping",
+					"bulk-copy": "Bulk copy",
+					"code": "Code",
+					"content": "Content",
+					"display": "Display",
+					"external-mapping": "External mapping",
+					"mappings": "Mappings",
+					"mark-as-verified": "Mark as verified",
+					"relationship": "Relationship",
+					"set-as-no-map": "Set as NoMap",
+					"source-code": "Source code",
+					"source-concepts": "Source concepts",
+					"source-cs": "Source code system",
+					"source-display": "Source display",
+					"target-code": "Target code",
+					"target-concepts": "Target concepts",
+					"target-cs": "Target code system",
+					"target-display": "Target display",
+					"target-mapping": "Target mapping",
+					"unmap": "Unmap",
+					"unmapped-concepts": "Unmapped concepts",
+					"unverified": "Unverified",
+					"verify": "Verify"
+				},
 				"edit-version": "Edit version",
 				"info": {
 					"activate": "Activate",
@@ -1306,6 +1374,21 @@
 					"none": "None",
 					"push-to-github": "Push to Github",
 					"retire": "Retire"
+				},
+				"map-set-version": "Map set version",
+				"statistics": {
+					"automap-code": "Automap by code",
+					"automap-code-designation": "Automap by code and designation",
+					"automap-designation": "Automap by designation",
+					"broader": "Broader",
+					"equivalent": "Equivalent",
+					"inactive-sources": "Inactive sources",
+					"inactive-targets": "Inactive targets",
+					"narrower": "Narrower",
+					"no-map": "No map",
+					"source-concepts": "Source concepts",
+					"title": "Statistics",
+					"unmapped": "Unmapped"
 				},
 				"task-modal": {
 					"assignee": "Assignee",
@@ -1755,6 +1838,7 @@
 				"download-xml": "XML",
 				"resource-url": "Resource URL",
 				"fhir-server": "FHIR server",
+				"fml-generation-failed": "Failed to generate FML",
 				"generate": "Generate",
 				"map-set": "ConceptMap",
 				"preview-hide": "Hide",
@@ -1768,8 +1852,7 @@
 
 				},
 				"save-as": "Save as",
-				"url": "URL",
-				"fml-generation-failed": "Failed to generate FML"
+				"url": "URL"
 			},
 			"resources": {
 				"new": "-- new --",

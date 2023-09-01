@@ -167,10 +167,12 @@
 			"id": "Identifikaator",
 			"name": "Nimi",
 			"plural": "Vastandustabelid",
+			"publisher": "Kirjastaja",
 			"source-code-systems": "Lähtekoodisüsteemid",
 			"source-value-set": "Lähteloend",
 			"target-code-systems": "Sihtkoodisüsteemid",
 			"target-value-set": "Sihtloend",
+			"title": "Pealkiri",
 			"uri": "Ühtne ressursiidentifikaator (URI)",
 			"versions": "Versioonid"
 		},
@@ -192,9 +194,11 @@
 			"status": "Staatus"
 		},
 		"map-set-version": {
+			"algorithm": "Algoritm",
 			"description": "Kirjeldus",
 			"expiration-date": "Eeldatav kasutus kuni",
 			"id": "Identifikaator",
+			"preferred-language": "Eelistatav keel",
 			"release-date": "Eeldatav kasutus alates",
 			"source": "Kirjastaja",
 			"status": "Staatus",
@@ -1228,15 +1232,44 @@
 				"add-header": "Lisa kaardistus kogum",
 				"edit-header": "Muuda kaardistus kogumit",
 				"header": "Vastandustabel",
+				"scope": {
+					"code-system": "Koodisüsteem",
+					"code-system-version": "Koodisüsteemi versioon",
+					"source": "Allikas",
+					"target": "Siht",
+					"title": "Ulatus",
+					"type": {
+						"code-system": "Koodisüsteem",
+						"external-canonical-uri": "Väline kanooniline URI",
+						"value-set": "Loend"
+					},
+					"uri": "URI",
+					"value-set": "Loend",
+					"value-set-version": "Loendi versioon"
+				},
 				"view-header": "Vaata vastandustabeli"
 			},
 			"list": {
+				"add-map-set": "Lisa vastandustabel",
 				"add-version": "Lisa versioon",
+				"import-fhir": "Impordi väline FHIR definitsioon",
+				"last-version": "Viimane versioon",
+				"manual": "Käsitsi",
+				"open-fhir": "Ava FHIr URL",
 				"operations": "Toimingud",
+				"status": "Staatus",
 				"versions": "Versioonid",
 				"versions-expiration-date": "kuni {{expirationDate}}",
 				"versions-release-date": "Alates: {{releaseDate}}",
 				"versions-version": "Versiooni nimi: {{version}}"
+			},
+			"summary": {
+				"add-version": "Lisa versioon",
+				"all-tasks": "Kõik ülesanded",
+				"map-set": "Vastandustabel",
+				"opened-tasks": "Avatud ülesanded",
+				"related-artifacts": "Seotud artefaktid",
+				"versions": "Versioonid"
 			}
 		},
 		"map-set-association": {
@@ -1278,6 +1311,69 @@
 				"add-header": "Lisa versioon",
 				"edit-header": "Muuda versiooni",
 				"view-header": "Vaata versiooni"
+			},
+			"summary": {
+				"associations": {
+					"add-target": "Lisa sihtmäping",
+					"bulk-copy": "Mass-kopeerimine",
+					"code": "Kood",
+					"content": "Sisu",
+					"display": "Display",
+					"external-mapping": "Väline mäping",
+					"mappings": "Mäpingud",
+					"mark-as-verified": "Märgi kontrollituks",
+					"relationship": "Seos",
+					"set-as-no-map": "Seost ei eksisteeri",
+					"source-code": "Lähtekood",
+					"source-concepts": "Lähtemõisted",
+					"source-cs": "Lähte koodisüsteem",
+					"source-display": "Lähtetekst",
+					"target-code": "Sihtkood",
+					"target-concepts": "Sihtmõisted",
+					"target-cs": "Sihtkoodisüsteem",
+					"target-display": "Sihttekst",
+					"target-mapping": "Sihtmäping",
+					"unmap": "Seo lahti",
+					"unmapped-concepts": "Sidumata mõisted",
+					"unverified": "Kontrollimata",
+					"verify": "Kontrolli"
+				},
+				"edit-version": "Muusa versiooni",
+				"info": {
+					"activate": "Aktiveeri",
+					"create-approve": "Loo kinnitusülesanne",
+					"create-review": "Loo ülevaatamisülesanne",
+					"definition": "Kirjeldus",
+					"last-approved": "Viimati kinnitatud",
+					"last-modified": "Viimati muudetud",
+					"last-reviewed": "Viimati ülevaadatud",
+					"load-from-github": "Lae Github-ist",
+					"make-draft": "Muuda \"mustandiks\"",
+					"none": "Puudub",
+					"push-to-github": "Salvesta Github-i",
+					"retire": "Aegunud"
+				},
+				"map-set-version": "Vastandustabeli versioon",
+				"statistics": {
+					"automap-code": "Automaatne sidumine koodi põhjal",
+					"automap-code-designation": "Automaatne sidumine koodi ja teksti põhjal",
+					"automap-designation": "Automaatne sidumine teksti põhjal",
+					"broader": "Laiemad",
+					"equivalent": "Võrdsed",
+					"inactive-sources": "Mitteaktiivsed lähtemõisted",
+					"inactive-targets": "Mitteaktiivsed sihtmõisted",
+					"narrower": "Litsamad",
+					"no-map": "Ei ole seostavad",
+					"source-concepts": "Lähtemõisted",
+					"title": "Statistika",
+					"unmapped": "Sidumata"
+				},
+				"statistics-warning": "Vastandustabel peab olema staatuses 'draft' statistika ümberarvutamiseks.",
+				"task-modal": {
+					"assignee": "Teostaja",
+					"header": "Loo {{type}} ülesanne",
+					"success-msg": "Ülesanne loodud"
+				}
 			}
 		},
 		"measurement-unit": {
@@ -1669,6 +1765,7 @@
 				"download-xml": "XML",
 				"fhir-resource": "Ressurss",
 				"fhir-server": "FHIR server",
+				"fml-generation-failed": "FML väljundi loomine ebaõnnestus",
 				"generate": "Genereeri",
 				"map-set": "ConceptMap",
 				"preview-hide": "Peida",

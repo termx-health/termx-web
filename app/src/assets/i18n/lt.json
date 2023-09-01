@@ -167,10 +167,12 @@
 			"id": "Identifikatorius",
 			"name": "Pavadinimas",
 			"plural": "Atvaizdžių aibės",
+			"publisher": "",
 			"source-code-systems": "Pirminės kodų sistemos",
 			"source-value-set": "Pirminė reikšmių aibė",
 			"target-code-systems": "Paskirties kodų sistemos",
 			"target-value-set": "Paskirties reikšmių aibė",
+			"title": "",
 			"uri": "Universalusis ištekliaus identifikatorius (URI)",
 			"versions": "Versijos"
 		},
@@ -192,9 +194,11 @@
 			"status": "Statusas"
 		},
 		"map-set-version": {
+			"algorithm": "",
 			"description": "Aprašas",
 			"expiration-date": "Numatomas naudojimas iki",
 			"id": "Identifikatorius",
+			"preferred-language": "",
 			"release-date": "Numatomas naudojimas nuo",
 			"source": "Leidėjas",
 			"status": "Statusas",
@@ -1228,15 +1232,44 @@
 				"add-header": "Kurti naują atvaizdžių aibę",
 				"edit-header": "Redaguoti atvaizdžių aibę",
 				"header": "Atvaizdžių sistema",
+				"scope": {
+					"code-system": "",
+					"code-system-version": "",
+					"source": "",
+					"target": "",
+					"title": "",
+					"type": {
+						"code-system": "",
+						"external-canonical-uri": "",
+						"value-set": ""
+					},
+					"uri": "",
+					"value-set": "",
+					"value-set-version": ""
+				},
 				"view-header": "Peržiūrėti atvaizdžių aibę"
 			},
 			"list": {
+				"add-map-set": "",
 				"add-version": "Pridėti versiją",
+				"import-fhir": "",
+				"last-version": "",
+				"manual": "",
+				"open-fhir": "",
 				"operations": "Operacijos",
+				"status": "",
 				"versions": "Versijos",
 				"versions-expiration-date": "į {{expirationDate}}",
 				"versions-release-date": "Iš: {{releaseDate}}",
 				"versions-version": "Versijos pavadinimas: {{version}}"
+			},
+			"summary": {
+				"add-version": "",
+				"all-tasks": "",
+				"map-set": "",
+				"opened-tasks": "",
+				"related-artifacts": "",
+				"versions": ""
 			}
 		},
 		"map-set-association": {
@@ -1278,6 +1311,69 @@
 				"add-header": "Pridėti versiją",
 				"edit-header": "Redaguoti versiją",
 				"view-header": "Peržiūrėti versiją"
+			},
+			"summary": {
+				"associations": {
+					"add-target": "",
+					"bulk-copy": "",
+					"code": "",
+					"content": "",
+					"display": "",
+					"external-mapping": "",
+					"mappings": "",
+					"mark-as-verified": "",
+					"relationship": "",
+					"set-as-no-map": "",
+					"source-code": "",
+					"source-concepts": "",
+					"source-cs": "",
+					"source-display": "",
+					"target-code": "",
+					"target-concepts": "",
+					"target-cs": "",
+					"target-display": "",
+					"target-mapping": "",
+					"unmap": "",
+					"unmapped-concepts": "",
+					"unverified": "",
+					"verify": ""
+				},
+				"edit-version": "",
+				"info": {
+					"activate": "",
+					"create-approve": "",
+					"create-review": "",
+					"definition": "",
+					"last-approved": "",
+					"last-modified": "",
+					"last-reviewed": "",
+					"load-from-github": "",
+					"make-draft": "",
+					"none": "",
+					"push-to-github": "",
+					"retire": ""
+				},
+				"map-set-version": "",
+				"statistics": {
+					"automap-code": "",
+					"automap-code-designation": "",
+					"automap-designation": "",
+					"broader": "",
+					"equivalent": "",
+					"inactive-sources": "",
+					"inactive-targets": "",
+					"narrower": "",
+					"no-map": "",
+					"source-concepts": "",
+					"title": "",
+					"unmapped": ""
+				},
+				"statistics-warning": "",
+				"task-modal": {
+					"assignee": "",
+					"header": "",
+					"success-msg": ""
+				}
 			}
 		},
 		"measurement-unit": {
@@ -1669,6 +1765,7 @@
 				"download-xml": "",
 				"fhir-resource": "",
 				"fhir-server": "FHIR server",
+				"fml-generation-failed": "",
 				"generate": "",
 				"map-set": "",
 				"preview-hide": "",
