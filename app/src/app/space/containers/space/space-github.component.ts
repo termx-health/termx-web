@@ -4,6 +4,7 @@ import {SpaceService} from '../../services/space.service';
 import {Space} from '../../_lib';
 import {delay, forkJoin, mergeMap, Observable, tap} from 'rxjs';
 import {PageService} from 'term-web/wiki/page/services/page.service';
+import {GithubDiff} from 'term-web/integration/_lib/github/github';
 
 @Component({
   templateUrl: './space-github.component.html',
@@ -11,9 +12,21 @@ import {PageService} from 'term-web/wiki/page/services/page.service';
     .status-row {
       display: flex;
     }
-    
+
     .status {
       width: 18px;
+    }
+    
+    .diff {
+      display: flex;
+      
+      &>div {
+        width: 50%;
+        margin: 2px;
+      }
+    }
+    ::ng-deep .modal--wide {
+      width: 80vw;
     }
   `]
 })
@@ -27,6 +40,7 @@ export class SpaceGithubComponent implements OnInit {
     unchanged: string[];
   };
   protected commit: {message?: string} = {message: 'update space from termx'};
+  protected diff: GithubDiff;
 
   public constructor(
     private spaceService: SpaceService,
@@ -55,6 +69,11 @@ export class SpaceGithubComponent implements OnInit {
       changed: Object.keys(r.files).filter(f => ['A', 'D', 'M'].includes(r.files[f])).map(f => ({f: f, s: r.files[f]})),
       unchanged: Object.keys(r.files).filter(f => 'U' === r.files[f])
     }));
+  }
+
+  public showDiff(file: string): void {
+    this.diff = {};
+    this.spaceService.githubDiff(this.space.id, file).subscribe(r => this.diff = r);
   }
 
   public pull(): void {

@@ -16,6 +16,9 @@
           <div class="status-row" *ngFor="let f of status.changed">
             <div class="status">{{f.s}}</div>
             <div>{{f.f}}</div>
+            <div *ngIf="f.s === 'M'" style="margin-left: 5px"><a (click)="showDiff(f.f)">
+              <m-icon mCode="diff"></m-icon>
+            </a></div>
           </div>
         </div>
 
@@ -47,8 +50,7 @@
                 <ng-container *ngTemplateOutlet="github"></ng-container>
               </m-button>
               <m-button mDisplay="primary" (click)="pushModalVisible = true" [mLoading]="saving" [disabled]="saving" style="width: 100%">
-                <m-icon mCode="arrow-up"></m-icon>&nbsp;
-                <span>{{'web.space.github-push' | translate}}</span>
+                <m-icon mCode="arrow-up"></m-icon>&nbsp; <span>{{'web.space.github-push' | translate}}</span>
                 <ng-container *ngTemplateOutlet="github"></ng-container>
               </m-button>
             </div>
@@ -76,5 +78,20 @@
       <m-icon mCode="arrow-up"></m-icon>&nbsp; <span>{{'web.space.github-push' | translate}}</span>
       <ng-container *ngTemplateOutlet="github"></ng-container>
     </m-button>
+  </ng-container>
+</m-modal>
+
+<m-modal #diffModal [mVisible]="!!diff" (mClose)="diff = null" mClass="modal--wide">
+  <ng-container *m-modal-content>
+    <m-spinner [mLoading]="!diff.left && !diff.right">
+      <div class="diff">
+        <div>
+          <pre>{{diff.left}}</pre>
+        </div>
+        <div>
+          <pre>{{diff.right}}</pre>
+        </div>
+      </div>
+    </m-spinner>
   </ng-container>
 </m-modal>
