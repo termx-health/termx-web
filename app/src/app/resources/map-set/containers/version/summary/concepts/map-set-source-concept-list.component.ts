@@ -78,7 +78,7 @@ export class MapSetSourceConceptListComponent implements OnChanges {
     if (!ids || ids.length === 0) {
       return;
     }
-    this.mapSetService.unmapAssociations(this.mapSet, ids).subscribe(() => this.loadData());
+    this.mapSetService.unmapAssociations(this.mapSet, this.mapSetVersion, ids).subscribe(() => this.loadData());
   };
 
   protected verify = (c: MapSetConcept): void => {
@@ -86,7 +86,7 @@ export class MapSetSourceConceptListComponent implements OnChanges {
     if (!ids || ids.length === 0) {
       return;
     }
-    this.mapSetService.verifyAssociations(this.mapSet, ids).subscribe(() => this.loadData());
+    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, ids).subscribe(() => this.loadData());
   };
 
   protected verifyChecked = (): void => {
@@ -95,7 +95,7 @@ export class MapSetSourceConceptListComponent implements OnChanges {
     if (!ids || ids.length === 0) {
       return;
     }
-    this.mapSetService.verifyAssociations(this.mapSet, ids).subscribe(() => this.loadData());
+    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, ids).subscribe(() => this.loadData());
   };
 
   protected createNoMap = (c: MapSetConcept): void => {

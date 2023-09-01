@@ -64,7 +64,7 @@ export class MapSetExternalSourceConceptListComponent implements OnChanges {
     if (!isDefined(a.id)) {
       return;
     }
-    this.mapSetService.verifyAssociations(this.mapSet, [a.id]).subscribe(() => this.loadData());
+    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, [a.id]).subscribe(() => this.loadData());
   };
 
   protected verifyChecked = (): void => {
@@ -72,7 +72,7 @@ export class MapSetExternalSourceConceptListComponent implements OnChanges {
     if (!ids || ids.length === 0) {
       return;
     }
-    this.mapSetService.verifyAssociations(this.mapSet, ids).subscribe(() => this.loadData());
+    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, ids).subscribe(() => this.loadData());
   };
 
   protected saveAssociations(): void {

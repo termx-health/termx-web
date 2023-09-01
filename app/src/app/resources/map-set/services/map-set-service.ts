@@ -51,12 +51,12 @@ export class MapSetService extends MapSetLibService {
     return this.http.post(`${this.baseUrl}/${mapSetId}/versions/${version}/associations-batch`, {batch: associations});
   }
 
-  public verifyAssociations(mapSetId: string, ids: number[]): Observable<MapSetAssociation> {
-    return this.http.post(`${this.baseUrl}/${mapSetId}/associations/verify`, {ids: ids});
+  public verifyAssociations(mapSetId: string, version: string, ids: number[]): Observable<MapSetAssociation> {
+    return this.http.post(`${this.baseUrl}/${mapSetId}/versions/${version}/associations/verify`, {ids: ids});
   }
 
-  public unmapAssociations(mapSetId: string, ids: number[]): Observable<MapSetAssociation> {
-    return this.http.post(`${this.baseUrl}/${mapSetId}/associations/unmap`, {ids: ids});
+  public unmapAssociations(mapSetId: string, version: string, ids: number[]): Observable<MapSetAssociation> {
+    return this.http.post(`${this.baseUrl}/${mapSetId}/versions/${version}/associations/unmap`, {ids: ids});
   }
 
   public automapAssociations(mapSetId: string, version: string, request: MapSetAutomapRequest): Observable<JobLogResponse> {

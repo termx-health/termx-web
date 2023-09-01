@@ -60,14 +60,14 @@ export class MapSetAssociationListComponent implements OnChanges {
     if (!isDefined(id)) {
       return;
     }
-    this.mapSetService.unmapAssociations(this.mapSet, [id]).subscribe(() => this.loadData());
+    this.mapSetService.unmapAssociations(this.mapSet, this.mapSetVersion, [id]).subscribe(() => this.loadData());
   };
 
   protected verify = (id: number): void => {
     if (!isDefined(id)) {
       return;
     }
-    this.mapSetService.verifyAssociations(this.mapSet, [id]).subscribe(() => this.loadData());
+    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, [id]).subscribe(() => this.loadData());
   };
 
   protected createNoMap(a: MapSetAssociation): void {
