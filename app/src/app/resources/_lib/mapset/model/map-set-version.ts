@@ -1,18 +1,47 @@
-import {MapSetEntityVersion} from './map-set-entity-version';
-import {MapSetAssociation} from './map-set-association';
+import {LocalizedName} from '@kodality-web/marina-util';
 
 export class MapSetVersion {
   public id?: number;
-  public mapSet?: string;
   public version?: string;
-  public source?: string;
-  public supportedLanguages?: string[];
-  public description?: string;
   public status?: string;
+  public mapSet?: string;
+  public preferredLanguage?: string;
+  public description?: LocalizedName;
   public releaseDate?: Date;
   public expirationDate?: Date;
   public created?: Date;
+  public algorithm?: string;
 
-  public entities?: MapSetEntityVersion[];
-  public associations?: MapSetAssociation[];
+  public scope?: MapSetScope;
+  public statistics?: MapSetStatistics;
+}
+
+export class MapSetScope {
+  public sourceType?: 'code-system' | 'value-set' | 'external-canonical-uri';
+  public sourceValueSet?: MapSetResourceReference;
+  public sourceCodeSystems?: MapSetResourceReference[];
+
+  public targetType?: 'code-system' | 'value-set' | 'external-canonical-uri';
+  public targetValueSet?: MapSetResourceReference;
+  public targetCodeSystems?: MapSetResourceReference[];
+}
+
+export class MapSetResourceReference {
+  public id?: string;
+  public version?: string;
+  public uri?: string;
+}
+
+export class MapSetStatistics {
+  public createdAt?: Date;
+  public createdBy?: string;
+
+  public sourceConcepts?: number;
+  public equivalent?: number;
+  public noMap?: number;
+  public narrower?: number;
+  public broader?: number;
+  public unmapped?: number;
+  public inactiveSources?: number;
+  public inactiveTargets?: number;
 }

@@ -1,0 +1,43 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <m-title>{{relationships | apply: getTitle:associationTypes | translate}}</m-title>
+    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+    <tr *mTableHead>
+      <th>{{'web.map-set-version.summary.associations.source-code' | translate}}</th>
+      <th>{{'web.map-set-version.summary.associations.source-display' | translate}}</th>
+      <th>{{'web.map-set-version.summary.associations.target-code' | translate}}</th>
+      <th>{{'web.map-set-version.summary.associations.target-display' | translate}}</th>
+      <th class="tw-table-min-width"></th>
+    </tr>
+
+    <tr *mTableRow="let a">
+      <td>{{a.source.code}}</td>
+      <td>{{a.source.display}}</td>
+      <td>{{a.target.code}}</td>
+      <td>{{a.target.display}}</td>
+      <td>
+        <m-dropdown>
+          <ng-container *ngIf="noMap">
+            <a *m-dropdown-item>{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
+          </ng-container>
+          <ng-container *ngIf="!noMap">
+            <a *m-dropdown-item (mClick)="createNoMap(a)">{{'web.map-set-version.summary.associations.set-as-no-map' | translate}}</a>
+          </ng-container>
+          <a *m-dropdown-item (mClick)="unmap(a.id)">{{'web.map-set-version.summary.associations.unmap' | translate}}</a>
+          <ng-container *ngIf="!a.verified">
+            <a *m-dropdown-item (mClick)="verify(a.id)">{{'web.map-set-version.summary.associations.mark-as-verified' | translate}}</a>
+          </ng-container>
+        </m-dropdown>
+      </td>
+    </tr>
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>
+

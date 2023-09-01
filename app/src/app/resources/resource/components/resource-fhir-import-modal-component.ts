@@ -7,6 +7,7 @@ import {JobLibService, JobLog} from 'term-web/sys/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {CodeSystemFileImportService} from 'term-web/resources/_lib/codesystem/services/code-system-file-import.service';
 import {ValueSetFileImportService} from 'term-web/resources/_lib/valueset/services/value-set-file-import.service';
+import {MapSetFileImportService} from 'term-web/resources/_lib';
 
 
 @Component({
@@ -35,6 +36,7 @@ export class ResourceFhirImportModalComponent {
     private fhirConceptMapService: FhirConceptMapLibService,
     private codeSystemFileImportService: CodeSystemFileImportService,
     private valueSetFileImportService: ValueSetFileImportService,
+    private mapSetFileImportService: MapSetFileImportService,
     private destroy$: DestroyService
   ) { }
 
@@ -84,7 +86,7 @@ export class ResourceFhirImportModalComponent {
     const importRequestMap: {[k: string]: Observable<JobLog>} = {
       'CodeSystem': this.codeSystemFileImportService.processRequest({type: this.params.type, codeSystem: {id: this.params.id}}, file, this.destroy$),
       'ValueSet': this.valueSetFileImportService.processRequest({type: this.params.type, valueSetId: this.params.id}, file, this.destroy$),
-      'ConceptMap': of(new JobLog())
+      'ConceptMap': this.mapSetFileImportService.processRequest({type: this.params.type, map: {id: this.params.id}}, file, this.destroy$)
     };
     this.loader.wrap('import',importRequestMap[this.resourceType])
       .subscribe(resp => this.processJobResult(resp));

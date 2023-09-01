@@ -13,7 +13,6 @@ export class CodeSystem {
   public publisher?: string;
   public description?: LocalizedName;
   public purpose?: LocalizedName;
-  public useContext?: any[];
   public experimental?: boolean;
   public content?: string;
   public caseSensitive?: string;

@@ -10,7 +10,7 @@ import {Router} from '@angular/router';
 export class ResourceTasksWidgetComponent implements OnChanges {
   @Input() public resourceId: string;
   @Input() public taskFilters: {statuses?: string[]};
-  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'CodeSystemVersion' | 'ValueSetVersion' | 'CodeSystemEntityVersion';
+  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'CodeSystemVersion' | 'ValueSetVersion' | 'MapSetVersion' | 'CodeSystemEntityVersion';
 
   protected tasks: Task[];
 
@@ -20,6 +20,7 @@ export class ResourceTasksWidgetComponent implements OnChanges {
     'MapSet': 'map-set',
     'CodeSystemVersion': 'code-system-version',
     'ValueSetVersion': 'value-set-version',
+    'MapSetVersion': 'map-set-version',
     'CodeSystemEntityVersion': 'code-system-entity-version'
   };
 

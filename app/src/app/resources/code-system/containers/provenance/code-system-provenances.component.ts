@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {LoadingManager} from '@kodality-web/core-util';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {forkJoin} from 'rxjs';
 import {CodeSystem, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
@@ -15,7 +15,6 @@ export class CodeSystemProvenancesComponent implements OnInit {
 
   public constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private codeSystemService: CodeSystemService
   ) {}
 

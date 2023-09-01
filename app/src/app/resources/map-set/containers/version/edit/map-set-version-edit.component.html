@@ -1,0 +1,50 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loader.isLoading">
+      <m-card [mShowSkeleton]="loader.isLoading">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{(mode === 'edit' ? 'web.map-set-version.form.edit-header' : 'web.map-set-version.form.add-header') | translate}}</div>
+          <tw-status-tag *ngIf="version?.status" [status]="version.status"></tw-status-tag>
+        </div>
+
+        <form #form="ngForm" *ngIf="version">
+          <m-form-row>
+            <m-form-item *mFormCol mName="version" mLabel="entities.map-set-version.version" required>
+              <tw-semantic-version-select name="version" [(ngModel)]="version.version" [versions]="mapSetId | apply: versions | async" required></tw-semantic-version-select>
+            </m-form-item>
+            <m-form-item *mFormCol mName="algorithm" mLabel="entities.map-set-version.algorithm">
+              <tw-value-set-concept-select name="algorithm" [(ngModel)]="version.algorithm" valueSet="version-algorithm"></tw-value-set-concept-select>
+            </m-form-item>
+          </m-form-row>
+
+          <m-form-row>
+            <m-form-item *mFormCol mName="releaseDate" mLabel="entities.map-set-version.release-date" required>
+              <m-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" [mMax]="version.expirationDate"  required></m-date-picker>
+            </m-form-item>
+
+            <m-form-item *mFormCol mName="expirationDate" mLabel="entities.map-set-version.expiration-date">
+              <m-date-picker name="expirationDate" [(ngModel)]="version.expirationDate" [mMin]="version.releaseDate"></m-date-picker>
+            </m-form-item>
+          </m-form-row>
+
+          <m-form-row>
+            <m-form-item *mFormCol mName="description" mLabel="entities.map-set-version.description">
+              <m-multi-language-input name="description" [(ngModel)]="version.description"></m-multi-language-input>
+            </m-form-item>
+            <m-form-item *mFormCol mName="preferredLanguage" mLabel="entities.map-set-version.preferred-language">
+              <tw-value-set-concept-select name="preferredLanguage" [(ngModel)]="version.preferredLanguage" valueSet="languages"></tw-value-set-concept-select>
+            </m-form-item>
+          </m-form-row>
+        </form>
+
+        <tw-ms-scope-form *ngIf="version?.scope" [scope]="version.scope"></tw-ms-scope-form>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

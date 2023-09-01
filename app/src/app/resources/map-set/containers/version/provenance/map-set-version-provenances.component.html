@@ -1,0 +1,4 @@
+<tw-resource-context resourceType="MapSet" [resource]="mapSet" [version]="mapSetVersion" mode="provenance"></tw-resource-context>
+<m-page [mLoading]="loader.isLoading">
+  <tw-provenance-list targetType="MapSetVersion" [targetId]="mapSetVersion?.id | toString"></tw-provenance-list>
+</m-page>

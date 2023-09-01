@@ -1,0 +1,59 @@
+<tw-resource-context resourceType="MapSet" [resource]="mapSet" [versions]="versions" mode="summary"></tw-resource-context>
+<m-page [mLoading]="loader.isLoading">
+
+  <m-form-row class="with-row-gap" mGap="1rem">
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- CodeSystem info -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.map-set.summary.map-set"></m-title>
+        <tw-map-set-info-widget [mapSet]="mapSet"></tw-map-set-info-widget>
+      </m-card>
+
+      <!-- Versions -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.map-set.summary.versions">
+          <div mControls class="m-items-middle">
+            <m-button mDisplay="text" mShape="circle" [routerLink]="['/resources/map-sets', mapSet?.id, 'versions', 'add']">
+              {{'web.map-set.summary.add-version' | translate}}&nbsp;
+              <m-icon mCode="plus"></m-icon>
+            </m-button>
+          </div>
+        </m-title>
+        <tw-map-set-versions-widget [mapSet]="mapSet?.id" [versions]="versions" (versionsChanged)="loadData(mapSet.id)"></tw-map-set-versions-widget>
+      </m-card>
+
+    </div>
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+      <!-- Tasks -->
+      <m-card>
+        <div *m-card-header class="m-items-middle">
+          <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+            <m-title mTitle="web.map-set.summary.opened-tasks"></m-title>
+          </a>
+          <m-title *ngIf="showOnlyOpenedTasks" mTitle="web.map-set.summary.opened-tasks"></m-title>
+          <span>|</span>
+          <a *ngIf="showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+            <m-title mTitle="web.map-set.summary.all-tasks"></m-title>
+          </a>
+          <m-title *ngIf="!showOnlyOpenedTasks" mTitle="web.map-set.summary.all-tasks"></m-title>
+        </div>
+        <tw-resource-tasks-widget [resourceId]="mapSet?.id"
+            [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined"
+            resourceType="MapSet"></tw-resource-tasks-widget>
+      </m-card>
+
+      <!-- Related artifacts-->
+      <m-card>
+        <m-title *m-card-header mTitle="web.map-set.summary.related-artifacts"></m-title>
+        <tw-resource-related-artifact-widget [resourceId]="mapSet?.id" resourceType="MapSet"></tw-resource-related-artifact-widget>
+      </m-card>
+
+    </div>
+  </m-form-row>
+  <m-form-row>
+
+
+  </m-form-row>
+
+</m-page>

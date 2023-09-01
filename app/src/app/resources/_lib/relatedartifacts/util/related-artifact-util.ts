@@ -13,7 +13,7 @@ export class RelatedArtifactUtil {
       return '/resources/value-sets/' + id + '/summary';
     }
     if (type === 'MapSet') {
-      return '/resources/map-sets/' + id + '/view';
+      return '/resources/map-sets/' + id + '/summary';
     }
     if (type === 'Page') {
       const s = id.split('|');

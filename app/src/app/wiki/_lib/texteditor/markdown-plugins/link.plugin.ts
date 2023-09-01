@@ -15,7 +15,9 @@ const transformHref = (href: string, ctx: {spaceId?: number}): string => {
       const [valueSet, vsVersion] = value.split('|');
       return `/resources/value-sets/${valueSet}/versions/${vsVersion}/summary`;
     case 'ms':
-      return `/resources/map-sets/${value}/view`;
+      return `/resources/map-sets/${value}/summary`;
+    case 'msv': const [mapSet, msVersion] = value.split('|');
+      return `/resources/map-sets/${mapSet}/versions/${msVersion}/summary`;
     case 'concept':
       const [cs, concept] = value.split('|');
       return cs === 'snomed-ct'
@@ -33,7 +35,7 @@ const transformHref = (href: string, ctx: {spaceId?: number}): string => {
 };
 
 const processHref = (href: string, ctx: {spaceId?: number}): string => {
-  if (["cs", "csv", "vs", "vsv", "ms", "concept", "page"].includes(href.split(":")[0])) {
+  if (["cs", "csv", "vs", "vsv", "ms", "msv", "concept", "page"].includes(href.split(":")[0])) {
     // decorates link with missing parts
     return transformHref(decodeURIComponent(href), ctx);
   }

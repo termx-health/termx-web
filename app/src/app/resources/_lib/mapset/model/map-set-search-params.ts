@@ -1,6 +1,5 @@
 import {QueryParams} from '@kodality-web/core-util';
 
-
 export class MapSetSearchParams extends QueryParams {
   public id?: string;
   public ids?: string;

@@ -1,56 +1,77 @@
 import {NgModule} from '@angular/core';
-import {MapSetListComponent} from './containers/map-set-list.component';
+import {MapSetListComponent} from './containers/list/map-set-list.component';
 import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {Routes} from '@angular/router';
 import {MapSetService} from './services/map-set-service';
 import {MapSetEditComponent} from './containers/edit/map-set-edit.component';
-import {MapSetVersionsListComponent} from './containers/edit/map-set-versions-list.component';
-import {MapSetVersionEditComponent} from './containers/version/map-set-version-edit.component';
-import {MapSetVersionViewComponent} from './containers/version/map-set-version-view.component';
-import {MapSetAssociationListComponent} from './containers/edit/map-set-association-list.component';
-import {MapSetAssociationEditComponent} from './containers/association/map-set-association-edit.component';
-import {MapSetVersionEntityVersionTableComponent} from './containers/version/map-set-version-entity-version-table.component';
-import {MapSetViewComponent} from './containers/edit/map-set-view.component';
-import {MapSetAssociationViewComponent} from './containers/association/map-set-association-view.component';
+import {MapSetVersionEditComponent} from './containers/version/edit/map-set-version-edit.component';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
-import {DevMapSetListComponent} from 'term-web/resources/dev/mapset/dev-map-set-list.component';
-import {DevMapSetEditComponent} from 'term-web/resources/dev/mapset/dev-map-set-edit.component';
-import {DevMapSetConceptListComponent} from 'term-web/resources/dev/mapset/dev-map-set-concept-list.component';
-
+import {CodeSystemModule} from 'term-web/resources/code-system/code-system.module';
+import {ResourceModule} from 'term-web/resources/resource/resource.module';
+import {SequenceLibModule} from 'term-web/sequence/_lib/sequence-lib.module';
+import {MapSetScopeFormComponent} from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
+import {MapSetSummaryComponent} from 'term-web/resources/map-set/containers/summary/map-set-summary.component';
+import {MapSetVersionsWidgetComponent} from 'term-web/resources/map-set/containers/summary/widgets/map-set-versions-widget.component';
+import {MapSetInfoWidgetComponent} from 'term-web/resources/map-set/containers/summary/widgets/map-set-info-widget.component';
+import {MapSetProvenancesComponent} from 'term-web/resources/map-set/containers/provenance/map-set-provenances.component';
+import {SysLibModule} from 'term-web/sys/_lib';
+import {MapSetVersionProvenancesComponent} from 'term-web/resources/map-set/containers/version/provenance/map-set-version-provenances.component';
+import {MapSetVersionSummaryComponent} from 'term-web/resources/map-set/containers/version/summary/map-set-version-summary.component';
+import {MapSetVersionInfoWidgetComponent} from 'term-web/resources/map-set/containers/version/summary/widgets/map-set-version-info-widget.component';
+import {UserLibModule} from 'term-web/user/_lib';
+import {ObservationDefinitionLibModule} from 'term-web/observation-definition/_lib';
+import {MapSetSourceConceptListComponent} from 'term-web/resources/map-set/containers/version/summary/concepts/map-set-source-concept-list.component';
+import {MapSetAssociationListComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-list.component';
+import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
+import {MapSetUnmappedConceptListComponent} from 'term-web/resources/map-set/containers/version/summary/concepts/map-set-unmapped-concept-list.component';
+import {
+  MapSetExternalSourceConceptListComponent
+} from 'term-web/resources/map-set/containers/version/summary/concepts/map-set-external-source-concept-list.component';
 
 export const MAP_SET_ROUTES: Routes = [
-  {path: '', component: DevMapSetListComponent},
-  {path: 'add', component: DevMapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/edit', component: DevMapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/concepts', component: DevMapSetConceptListComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/view', component: MapSetViewComponent}
-  // {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  // {path: ':id/versions/:versionId/edit', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  // {path: ':id/versions/:versionId/view', component: MapSetVersionViewComponent},
-  // {path: ':id/associations/add', component: MapSetAssociationEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  // {path: ':id/associations/:associationId/edit', component: MapSetAssociationEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  // {path: ':id/associations/:associationId/view', component: MapSetAssociationViewComponent}
+  {path: '', component: MapSetListComponent},
+  {path: 'add', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  {path: ':id/summary', component: MapSetSummaryComponent},
+  {path: ':id/provenances', component: MapSetProvenancesComponent},
+
+  {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  {path: ':id/versions/:versionCode/summary', component: MapSetVersionSummaryComponent},
+  {path: ':id/versions/:versionCode/provenances', component: MapSetVersionProvenancesComponent},
+  {path: ':id/versions/:versionCode/edit', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
+
 ];
 
 @NgModule({
   imports: [
     CoreUiModule,
-    ResourcesLibModule
-  ],
-  exports: [
-    MapSetListComponent
+    ResourcesLibModule,
+    CodeSystemModule,
+    ResourceModule,
+    SequenceLibModule,
+    SysLibModule,
+    UserLibModule,
+    ObservationDefinitionLibModule
   ],
   declarations: [
     MapSetListComponent,
+
     MapSetEditComponent,
-    MapSetVersionsListComponent,
+    MapSetScopeFormComponent,
+    MapSetSummaryComponent,
+    MapSetInfoWidgetComponent,
+    MapSetVersionsWidgetComponent,
+    MapSetProvenancesComponent,
+
     MapSetVersionEditComponent,
-    MapSetVersionViewComponent,
+    MapSetVersionSummaryComponent,
+    MapSetVersionProvenancesComponent,
+    MapSetVersionInfoWidgetComponent,
+    MapSetSourceConceptListComponent,
+    MapSetExternalSourceConceptListComponent,
+    MapSetUnmappedConceptListComponent,
     MapSetAssociationListComponent,
-    MapSetAssociationEditComponent,
-    MapSetVersionEntityVersionTableComponent,
-    MapSetViewComponent,
-    MapSetAssociationViewComponent
+    MapSetAssociationDrawerComponent
   ],
   providers: [
     MapSetService

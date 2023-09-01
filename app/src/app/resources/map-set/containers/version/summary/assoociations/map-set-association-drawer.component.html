@@ -1,0 +1,70 @@
+<m-drawer [mVisible]="drawerOpened" (mClose)="closeDrawer()">
+  <m-card mDisplay="flat" *ngIf="!targetConcept">
+    <div *m-card-header class="m-justify-between">
+      <m-title>{{'web.map-set-version.summary.associations.target-concepts' | translate}}</m-title>
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    </div>
+    <m-spinner *m-card-content [mLoading]="!!loading">
+      <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+        <tr *mTableHead>
+          <th>{{'web.map-set-version.summary.associations.code' | translate}}</th>
+          <th>{{'web.map-set-version.summary.associations.display' | translate}}</th>
+        </tr>
+        <tr *mTableRow="let c">
+          <td><a (mClick)="targetConcept = c">{{c.code}}</a></td>
+          <td>{{c.display.name}}</td>
+        </tr>
+        <tr *mTableNoData>
+          <td colspan="100%">
+            <m-no-data></m-no-data>
+          </td>
+        </tr>
+      </m-backend-table>
+    </m-spinner>
+  </m-card>
+
+  <m-card mDisplay="flat" *ngIf="sourceConcept && targetConcept">
+    <m-title *m-card-header>{{'web.map-set-version.summary.associations.target-mapping' | translate}}</m-title>
+    <m-spinner *m-card-content [mLoading]="!!loading">
+      <form #form="ngForm">
+        <m-form-row>
+          <m-form-item *mFormCol mLabel="web.map-set-version.summary.associations.source-cs">{{sourceConcept.codeSystem || '-'}}</m-form-item>
+          <m-form-item *mFormCol mLabel="web.map-set-version.summary.associations.source-code">{{sourceConcept.code}}</m-form-item>
+          <m-form-item *mFormCol mLabel="web.map-set-version.summary.associations.source-display">{{sourceConcept.display?.name}}</m-form-item>
+        </m-form-row>
+        <m-form-row>
+          <m-icon *mFormCol mCode="arrow-down"></m-icon>
+          <m-icon *mFormCol mCode="arrow-down"></m-icon>
+          <m-icon *mFormCol mCode="arrow-down"></m-icon>
+        </m-form-row>
+        <m-form-row *ngIf="!targetExternal">
+          <m-form-item *mFormCol mLabel="web.map-set-version.summary.associations.target-cs">{{targetConcept.codeSystem || '-'}}</m-form-item>
+          <m-form-item *mFormCol mLabel="web.map-set-version.summary.associations.target-code">{{targetConcept.code}}</m-form-item>
+          <m-form-item *mFormCol mLabel="web.map-set-version.summary.associations.target-display">{{targetConcept.display?.name}}</m-form-item>
+        </m-form-row>
+        <m-form-row *ngIf="targetExternal">
+          <m-form-item *mFormCol mLabel="web.map-set-version.summary.associations.target-cs">{{targetConcept.codeSystem || '-'}}</m-form-item>
+          <m-form-item *mFormCol mLabel="web.map-set-version.summary.associations.target-code" mName="targetCode" required>
+            <m-input [(ngModel)]="targetConcept.code" name="targetCode" required></m-input>
+          </m-form-item>
+          <m-form-item *mFormCol mLabel="web.map-set-version.summary.associations.target-display" mName="targetDisplay">
+            <m-input [(ngModel)]="targetConcept.display.name" name="targetDisplay"></m-input>
+          </m-form-item>
+        </m-form-row>
+        <m-form-row>
+          <m-form-item mLabel="web.map-set-version.summary.associations.relationship" required>
+            <m-radio-group name="sourceImportMode" [(ngModel)]="relationship" required>
+              <div style="display: flex; flex-direction: column; gap: 0.5rem">
+                <div *ngFor="let t of associationTypes" m-radio [mValue]="t.code">{{t.forwardName}}</div>
+              </div>
+            </m-radio-group>
+          </m-form-item>
+        </m-form-row>
+      </form>
+    </m-spinner>
+    <ng-container *m-card-footer>
+      <m-button mLabel="core.btn.save" (mClick)="save()"></m-button>
+    </ng-container>
+  </m-card>
+</m-drawer>
+

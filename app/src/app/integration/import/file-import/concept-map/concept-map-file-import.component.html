@@ -22,7 +22,7 @@
 
     <!-- Name -->
     <m-form-item mName="name" mLabel="web.integration.file-import.concept-map.map-name" *ngIf="data.map.id">
-      <ng-container *ngIf="!isNewMapSet">{{data.loadedMapSet?.names | localName: '-'}}</ng-container>
+      <ng-container *ngIf="!isNewMapSet">{{data.loadedMapSet?.title | localName: '-'}}</ng-container>
       <m-multi-language-input *ngIf="isNewMapSet" name="names" [(ngModel)]="data.map.names"></m-multi-language-input>
     </m-form-item>
 

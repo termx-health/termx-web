@@ -4,13 +4,13 @@ import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {MapSetVersion} from '../model/map-set-version';
-import {MapSetEntityVersionSearchParams} from '../model/map-set-entity-version-search-params';
-import {MapSetEntityVersion} from '../model/map-set-entity-version';
 import {MapSetAssociation} from '../model/map-set-association';
 import {MapSetAssociationSearchParams} from '../model/map-set-association-search-params';
 import {MapSet} from '../model/map-set';
 import {MapSetSearchParams} from '../model/map-set-search-params';
 import {MapSetVersionSearchParams} from '../model/map-set-version-search-params';
+import {JobLogResponse} from 'term-web/sys/_lib';
+import {MapSetConcept, MapSetConceptSearchParams} from 'term-web/resources/_lib';
 
 
 @Injectable()
@@ -27,16 +27,20 @@ export class MapSetLibService {
     return this.http.get<SearchResult<MapSet>>(this.baseUrl, {params: SearchHttpParams.build(params)});
   }
 
-  public loadVersion(mapSetId: string, versionId: string): Observable<MapSetVersion> {
-    return this.http.get<MapSetVersion>(`${this.baseUrl}/${mapSetId}/versions/${versionId}`);
+  public loadVersion(mapSetId: string, version: string): Observable<MapSetVersion> {
+    return this.http.get<MapSetVersion>(`${this.baseUrl}/${mapSetId}/versions/${version}`);
   }
 
   public searchVersions(mapSetId: string, params: MapSetVersionSearchParams = {}): Observable<SearchResult<MapSetVersion>> {
     return this.http.get<SearchResult<MapSetVersion>>(`${this.baseUrl}/${mapSetId}/versions`, {params: SearchHttpParams.build(params)});
   }
 
-  public searchEntityVersions(mapSetId: string, params: MapSetEntityVersionSearchParams): Observable<SearchResult<MapSetEntityVersion>> {
-    return this.http.get<SearchResult<MapSetEntityVersion>>(`${this.baseUrl}/${mapSetId}/entity-versions`, {params: SearchHttpParams.build(params)});
+  public reloadStatistics(mapSetId: string, version: string): Observable<JobLogResponse> {
+    return this.http.post<JobLogResponse>(`${this.baseUrl}/${mapSetId}/versions/${version}/reload-statistics-async`, {});
+  }
+
+  public searchConcepts(mapSetId: string, version: string, params: MapSetConceptSearchParams = {}): Observable<SearchResult<MapSetConcept>> {
+    return this.http.get<SearchResult<MapSetConcept>>(`${this.baseUrl}/${mapSetId}/versions/${version}/concepts`, {params: SearchHttpParams.build(params)});
   }
 
   public loadAssociation(mapSetId: string, associationId: number): Observable<MapSetAssociation> {

@@ -21,7 +21,7 @@
               </a>
             </div>
 
-            <div (click)="navigate('concepts')">
+            <div (click)="navigate('concepts')" *ngIf="['CodeSystem' , 'ValueSet'] | includes: resourceType">
               <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'concept-list', title: 'web.resource-context.concepts', icon: 'database'}"/>
             </div>
 

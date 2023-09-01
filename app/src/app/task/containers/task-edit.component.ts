@@ -9,7 +9,7 @@ import {SnomedTranslationService} from 'term-web/integration/snomed/services/sno
 import {CodeName} from '@kodality-web/marina-util';
 import {User, UserLibService} from 'term-web/user/_lib';
 import {CodeSystemVersionLibService} from 'term-web/resources/_lib/codesystem/services/code-system-version-lib.service';
-import {CodeSystemEntityVersionLibService, ValueSetVersionLibService} from 'term-web/resources/_lib';
+import {CodeSystemEntityVersionLibService, MapSetVersionLibService, ValueSetVersionLibService} from 'term-web/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
 
 @Component({
@@ -57,6 +57,7 @@ export class TaskEditComponent implements OnInit {
     private codeSystemVersionService: CodeSystemVersionLibService,
     private codeSystemEntityVersionService: CodeSystemEntityVersionLibService,
     private valueSetVersionService: ValueSetVersionLibService,
+    private mapSetVersionService: MapSetVersionLibService,
   ) { }
 
   public ngOnInit(): void {
@@ -190,6 +191,14 @@ export class TaskEditComponent implements OnInit {
     if (ctx.type === 'value-set-version') {
       this.valueSetVersionService.load(ctx.id).subscribe(version => {
         this.router.navigate(['/resources/value-sets', version.valueSet, 'versions', version.version, 'summary']);
+      });
+    }
+    if (ctx.type === 'map-set') {
+      this.router.navigate(['/resources/map-sets', ctx.id, 'summary']);
+    }
+    if (ctx.type === 'map-set-version') {
+      this.mapSetVersionService.load(ctx.id).subscribe(version => {
+        this.router.navigate(['/resources/map-sets', version.mapSet, 'versions', version.version, 'summary']);
       });
     }
   }

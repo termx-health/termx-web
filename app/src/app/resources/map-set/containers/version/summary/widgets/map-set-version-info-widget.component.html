@@ -1,0 +1,105 @@
+<m-no-data *ngIf="!version"></m-no-data>
+
+<div *ngIf="version">
+  <div class="m-justify-between">
+    <div class="m-items-middle">
+      <span class="m-bold">{{version.version}}</span>
+      <m-divider mVertical></m-divider>
+      <span>{{(version.releaseDate | localDate) || '...'}} - {{(version.expirationDate | localDate) || '...'}}</span>
+    </div>
+
+    <tw-status-tag [status]="version.status"></tw-status-tag>
+  </div>
+  <div class="m-items-top">
+    <m-icon mCode="arrow-right"></m-icon>
+    <div *ngIf="version.scope.sourceCodeSystems?.length > 0">
+      <div *ngFor="let cs of version.scope.sourceCodeSystems" class="m-items-middle">
+        <label>{{cs.uri}}</label>
+        <m-divider *ngIf="cs.version" mVertical></m-divider>
+        <label *ngIf="cs.version">{{cs.version}}</label>
+      </div>
+    </div>
+    <ng-container *ngIf="version.scope.sourceValueSet as vs">
+      <label>{{vs.uri}}</label>
+      <m-divider *ngIf="vs.version" mVertical></m-divider>
+      <label *ngIf="vs.version">{{vs.version}}</label>
+    </ng-container>
+  </div>
+  <div class="m-items-top">
+    <m-icon mCode="arrow-left"></m-icon>
+    <div *ngIf="version.scope.targetCodeSystems?.length > 0">
+      <div *ngFor="let cs of version.scope.targetCodeSystems" class="m-items-middle">
+        <label>{{cs.uri}}</label>
+        <m-divider *ngIf="cs.version" mVertical></m-divider>
+        <label *ngIf="cs.version">{{cs.version}}</label>
+      </div>
+    </div>
+    <ng-container *ngIf="version.scope.targetValueSet as vs">
+      <label>{{vs.uri}}</label>
+      <m-divider *ngIf="vs.version" mVertical></m-divider>
+      <label *ngIf="vs.version">{{vs.version}}</label>
+    </ng-container>
+  </div>
+  <div>{{version.description | localName}}</div>
+  <div class="m-items-middle">
+    <m-icon mCode="download"></m-icon>
+    <span>{{'web.map-set-version.summary.info.definition' | translate}} (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
+    <a (mClick)="openJson()"><m-icon mCode="link"></m-icon></a>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="calendar"></m-icon>
+    <span>{{'web.map-set-version.summary.info.last-modified' | translate}}:
+      {{((provenances | apply:getLastProvenance: 'modified')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
+  </div>
+  <div class="m-items-middle" *ngIf="mapSet?.settings?.reviewRequired">
+    <m-icon mCode="calendar"></m-icon>
+    <span>{{'web.map-set-version.summary.info.last-reviewed' | translate}}:
+      {{((provenances | apply:getLastProvenance: 'reviewed')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
+    <a (mClick)="taskModalData.type = 'review';taskModalData.visible = true">{{'web.map-set-version.summary.info.create-review' | translate}}</a>
+  </div>
+  <div class="m-items-middle" *ngIf="mapSet?.settings?.approvalRequired">
+    <m-icon mCode="calendar"></m-icon>
+    <span>{{'web.map-set-version.summary.info.last-approved' | translate}}:
+      {{((provenances | apply:getLastProvenance: 'approved')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
+    <a (mClick)="taskModalData.type = 'approval';taskModalData.visible = true">{{'web.map-set-version.summary.info.create-approve' | translate}}</a>
+  </div>
+  <div class="m-items-middle" *twPrivileged="version.mapSet + '.MapSet.publish'">
+    <m-icon mCode="tool"></m-icon>
+    <a *ngIf="version.status !== 'draft'" (mClick)="changeVersionStatus('draft')">{{'web.map-set-version.summary.info.make-draft' | translate}}</a>
+    <a *ngIf="version.status !== 'active' && version.status !== 'retired'" (mClick)="changeVersionStatus('active')">{{'web.map-set-version.summary.info.activate' | translate}}</a>
+    <ng-container *ngIf="version.status !== 'retired'">
+      <m-divider mVertical></m-divider>
+      <a (mClick)="changeVersionStatus('retired')">{{'web.map-set-version.summary.info.retire' | translate}}</a>
+    </ng-container>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="github"></m-icon>
+    <a>{{'web.map-set-version.summary.info.load-from-github' | translate}}</a>
+    <m-divider mVertical></m-divider>
+    <a>{{'web.map-set-version.summary.info.push-to-github' | translate}}</a>
+  </div>
+</div>
+
+
+<m-modal [(mVisible)]="taskModalData.visible" (mClose)="taskModalData = {visible: false}">
+  <m-title *mModalHeader>
+    {{'web.map-set-version.summary.task-modal.header' | translate :{type: taskModalData.type} }}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #taskModalForm="ngForm">
+      <m-form-item mName="assignee" mLabel="web.map-set-version.summary.task-modal.assignee" required>
+        <tw-user-select name="assignee" [(ngModel)]="taskModalData.assignee" required></tw-user-select>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="taskModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="createTask()" [mLoading]="loader.isLoading" [disabled]="loader.state['create-task']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>

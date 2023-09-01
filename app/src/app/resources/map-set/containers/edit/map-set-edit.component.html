@@ -1,58 +1,24 @@
-<m-form-row>
-  <div *mFormCol>
-    <m-spinner [mLoading]="isLoading">
-      <m-card [mTitle]="mode === 'edit' ? 'web.map-set.form.edit-header' : 'web.map-set.form.add-header'" [mShowSkeleton]="loading['init']">
-        <form #form="ngForm" *ngIf="mapSet">
-          <m-form-item mName="id" mLabel="entities.map-set.id" required>
-            <m-input name="id" [(ngModel)]="mapSet.id" [disabled]="mode === 'edit'" required></m-input>
-          </m-form-item>
+<m-spinner [mLoading]="loader.state['save']">
+  <form #form="ngForm" *ngIf="mapSet">
+    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 1rem">
+      <m-card [mTitle]="'web.map-set.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+        <div *mCardContent="!loader.isLoading">
+          <tw-resource-form resourceType="CodeSystem" [resource]="mapSet" [mode]="mode"></tw-resource-form>
 
-          <m-form-item mLabel="entities.map-set.name">
-            <m-multi-language-input name="name" [(ngModel)]="mapSet.names"></m-multi-language-input>
-          </m-form-item>
+          <tw-resource-identifiers [identifiers]="mapSet.identifiers"></tw-resource-identifiers>
+          <tw-resource-contacts [(contacts)]="mapSet.contacts"></tw-resource-contacts>
+          <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
+          <tw-ms-scope-form *ngIf="mode === 'add'" [scope]="scope"></tw-ms-scope-form>
+        </div>
 
-          <m-form-item mName="uri" mLabel="entities.map-set.uri" required>
-            <div class="m-items-middle">
-              <m-input style="width: 100%" name="uri" [(ngModel)]="mapSet.uri" required></m-input>
-              <a *ngIf="mapSet.uri | validateUrl" [href]="mapSet.uri" target="_blank">
-                <m-button>
-                  <m-icon mCode="eye"></m-icon>
-                </m-button>
-              </a>
-            </div>
-          </m-form-item>
-
-          <m-form-item mName="sourceValueSet" mLabel="entities.map-set.source-value-set">
-            <tw-value-set-search name="sourceValueSet" [(ngModel)]="mapSet.sourceValueSet" valuePrimitive></tw-value-set-search>
-          </m-form-item>
-
-          <m-form-item mName="sourceCodeSystems" mLabel="entities.map-set.source-code-systems">
-            <tw-code-system-search name="sourceCodeSystems" [(ngModel)]="mapSet.sourceCodeSystems" valuePrimitive multiple></tw-code-system-search>
-          </m-form-item>
-
-          <m-form-item mName="targetValueSet" mLabel="entities.map-set.target-value-set">
-            <tw-value-set-search name="targetValueSet" [(ngModel)]="mapSet.targetValueSet" valuePrimitive></tw-value-set-search>
-          </m-form-item>
-
-
-          <m-form-item mName="targetCodeSystems" mLabel="entities.map-set.target-code-systems">
-            <tw-code-system-search name="targetCodeSystems" [(ngModel)]="mapSet.targetCodeSystems" valuePrimitive multiple></tw-code-system-search>
-          </m-form-item>
-
-          <m-form-item mName="description" mLabel="entities.map-set.description">
-            <m-textarea name="description" [(ngModel)]="mapSet.description"></m-textarea>
-          </m-form-item>
-        </form>
-
-        <tw-map-set-versions-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></tw-map-set-versions-list>
-        <tw-map-set-association-list *ngIf="mode === 'edit'" [mapSetId]="mapSetId"></tw-map-set-association-list>
-
-        <ng-container *m-card-footer>
-          <m-button mDisplay="primary" (click)="save()" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading">
-            {{'core.btn.save' | translate}}
-          </m-button>
-        </ng-container>
+        <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+          {{'core.btn.save' | translate}}
+        </m-button>
       </m-card>
-    </m-spinner>
-  </div>
-</m-form-row>
+
+      <m-card [mShowSkeleton]="loader.isLoading">
+        <tw-resource-side-info [copyright]="mapSet.copyright" [settings]="mapSet.settings"></tw-resource-side-info>
+      </m-card>
+    </div>
+  </form>
+</m-spinner>

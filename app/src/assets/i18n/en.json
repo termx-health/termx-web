@@ -161,17 +161,17 @@
 			"value": "Value"
 		},
 		"map-set": {
-			"associations": "Associations",
 			"description": "Description",
-			"domain": "Publisher",
-			"id": "Identifier",
+			"id": "ID",
+			"title": "Title",
+			"publisher": "Publisher",
 			"name": "Name",
 			"plural": "Map Sets",
 			"source-code-systems": "Source code systems",
 			"source-value-set": "Source value set",
 			"target-code-systems": "Target code systems",
 			"target-value-set": "Target value set",
-			"uri": "Uniform resource identifier (URI)",
+			"uri": "URI",
 			"versions": "Versions"
 		},
 		"map-set-association": {
@@ -192,13 +192,14 @@
 			"status": "Status"
 		},
 		"map-set-version": {
+			"algorithm": "Algorithm",
 			"description": "Description",
 			"expiration-date": "Expected use until",
 			"id": "Identifier",
 			"release-date": "Expected use since",
 			"source": "Publisher",
 			"status": "Status",
-			"supported-languages": "Supported languages",
+			"preferred-language": "Preferred language",
 			"version": "Version"
 		},
 		"measurement-unit": {
@@ -1229,49 +1230,37 @@
 				"add-header": "Create a new map set",
 				"edit-header": "Edit map set",
 				"header": "Map set",
-				"view-header": "View map set"
+				"scope": {
+					"title": "Scope",
+					"source": "Source",
+					"code-system": "Code system",
+					"code-system-version": "Code system version",
+					"value-set": "Value set",
+					"value-set-version": "Value set version",
+					"target": "Target",
+					"uri": "URI",
+					"type": {
+						"code-system": "Code System",
+						"value-set": "Value Set",
+						"external-canonical-uri": "External canonical URI"
+					}
+				}
 			},
 			"list": {
-				"add-version": "Add version",
-				"operations": "Operations",
-				"versions": "Versions",
-				"versions-expiration-date": "to {{expirationDate}}",
-				"versions-release-date": "From: {{releaseDate}}",
-				"versions-version": "Version name: {{version}}"
-			}
-		},
-		"map-set-association": {
-			"form": {
-				"add-header": "Add association",
-				"edit-header": "Edit association",
-				"source-concept": "Source concept",
-				"source-system": "Source code system",
+				"add-map-set": "Add map set",
+				"manual": "Manual",
+				"import-fhir": "Import external FHIR definition",
+				"last-version": "Last version",
 				"status": "Status",
-				"target-concept": "Target concept",
-				"target-system": "Target code system",
-				"type": "Association type",
-				"view-header": "View association"
+				"open-fhir": "Open FHIR URL"
 			},
-			"list": {
-				"add-association": "Add association",
-				"associations": "Associations",
-				"code-system": "Code System",
-				"operations": "Operations"
-			}
-		},
-		"map-set-entity-version": {
-			"modal": {
-				"add-header": "Add entity version",
-				"edit-header": "Edit entity version",
-				"entity-version": "Entity version",
-				"link-header": "Link entity version"
-			},
-			"table": {
-				"activate": "Activate version",
+			"summary": {
+				"map-set": "Map set",
+				"versions": "Versions",
 				"add-version": "Add version",
-				"header": "Entity versions",
-				"link-version": "Link version",
-				"retire": "Retire version"
+				"opened-tasks": "Opened tasks",
+				"all-tasks": "All tasks",
+				"related-artifacts": "Related artifacts"
 			}
 		},
 		"map-set-version": {
@@ -1279,6 +1268,69 @@
 				"add-header": "Add version",
 				"edit-header": "Edit version",
 				"view-header": "View version"
+			},
+			"summary": {
+				"map-set-version": "Map set version",
+				"edit-version": "Edit version",
+				"info": {
+					"activate": "Activate",
+					"create-approve": "Create approval task",
+					"create-review": "Create review task",
+					"definition": "Definition",
+					"last-approved": "Last approval date",
+					"last-modified": "Last modified",
+					"last-reviewed": "Last review date",
+					"load-from-github": "Load from Github",
+					"make-draft": "Make draft",
+					"none": "None",
+					"push-to-github": "Push to Github",
+					"retire": "Retire"
+				},
+				"task-modal": {
+					"assignee": "Assignee",
+					"header": "Create {{type}} task",
+					"success-msg": "Task created"
+				},
+				"statistics": {
+					"title": "Statistics",
+					"source-concepts": "Source concepts",
+					"equivalent": "Equivalent",
+					"no-map": "No map",
+					"narrower": "Narrower",
+					"broader": "Broader",
+					"unmapped": "Unmapped",
+					"inactive-sources": "Inactive sources",
+					"inactive-targets": "Inactive targets",
+					"automap-code": "Automap by code",
+					"automap-designation": "Automap by designation",
+					"automap-code-designation": "Automap by code and designation"
+				},
+				"associations": {
+					"source-code": "Source code",
+					"source-cs": "Source code system",
+					"source-display": "Source display",
+					"target-code": "Target code",
+					"target-cs": "Target code system",
+					"target-display": "Target display",
+					"relationship": "Relationship",
+					"add-target": "Add target mapping",
+					"set-as-no-map": "Set as NoMap",
+					"unmap": "Unmap",
+					"mark-as-verified": "Mark as verified",
+					"verify": "Verify",
+					"unverified": "Unverified",
+					"source-concepts": "Source concepts",
+					"target-concepts": "Target concepts",
+					"unmapped-concepts": "Unmapped concepts",
+					"target-mapping": "Target mapping",
+					"external-mapping": "External mapping",
+					"code": "Code",
+					"display": "Display",
+					"mappings": "Mappings",
+					"bulk-copy": "Bulk copy",
+					"content": "Content"
+				},
+				"statistics-warning": "The map set should be in the 'draft' status to recalculate statistics."
 			}
 		},
 		"measurement-unit": {

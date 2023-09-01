@@ -1,9 +1,16 @@
-import {MapSetEntity} from './map-set-entity';
-import {CodeSystemEntityVersion} from '../../codesystem';
+export class MapSetAssociation {
+  public id?: number;
+  public mapSet?: string;
+  public mapSetVersion?: {id?: number, version?: string};
+  public source?: MapSetAssociationEntity;
+  public target?: MapSetAssociationEntity;
+  public relationship?: string;
+  public verified?: boolean;
+  public noMap?: boolean;
+}
 
-export class MapSetAssociation extends MapSetEntity {
-  public source?: CodeSystemEntityVersion;
-  public target?: CodeSystemEntityVersion;
-  public associationType?: string;
-  public status?: string;
+export class MapSetAssociationEntity {
+  public code?: string;
+  public codeSystem?: string;
+  public display?: string;
 }

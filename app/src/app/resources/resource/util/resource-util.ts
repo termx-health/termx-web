@@ -1,10 +1,8 @@
-import {CodeSystem, ValueSet, ValueSetVersion} from '../../_lib';
+import {CodeSystem, MapSet, ValueSet} from '../../_lib';
 import {Resource} from '../model/resource';
-import {isDefined} from '@kodality-web/core-util';
-import {ResourceVersion} from 'term-web/resources/resource/model/resource-version';
 
 export class ResourceUtil {
-  public static merge(res: ValueSet | CodeSystem, r: Resource): void {
+  public static merge(res: ValueSet | CodeSystem | MapSet, r: Resource): void {
     res.id = r.id;
     res.uri = r.uri;
     res.title = r.title;

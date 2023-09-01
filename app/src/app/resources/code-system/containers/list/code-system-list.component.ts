@@ -7,12 +7,10 @@ import {finalize, Observable, tap} from 'rxjs';
 import {environment} from 'environments/environment';
 
 @Component({
-  selector: 'tw-code-system-list',
   templateUrl: 'code-system-list.component.html',
   providers: [DestroyService]
 })
 export class CodeSystemListComponent implements OnInit {
-  @Input() public dev: boolean = false;
   protected readonly STORE_KEY = 'code-system-list';
 
   public query = new CodeSystemSearchParams();

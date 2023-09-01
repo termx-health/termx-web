@@ -1,31 +1,13 @@
 import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {environment} from 'app/src/environments/environment';
 import {NgForm} from '@angular/forms';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {LocalizedName} from '@kodality-web/marina-util';
-import {map, mergeMap, Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
-import {MapSet, MapSetLibService} from '../../../../resources/_lib';
-import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
-
-
-interface FileProcessingRequest {
-  map: {
-    id?: string;
-    names?: LocalizedName;
-    uri?: string;
-  };
-  version: {
-    version?: string;
-    releaseDate?: Date;
-  };
-
-  sourceValueSet?: string;
-  targetValueSet?: string;
-}
-
+import {MapSet, MapSetFileImportService, MapSetLibService} from '../../../../resources/_lib';
+import {JobLibService, JobLog} from 'term-web/sys/_lib';
+import {FileProcessingRequest} from 'term-web/resources/_lib/mapset/services/map-set-file-import.service';
 
 @Component({
   templateUrl: 'concept-map-file-import.component.html',
@@ -49,6 +31,7 @@ export class ConceptMapFileImportComponent {
     private http: HttpClient,
     private notificationService: MuiNotificationService,
     private mapSetService: MapSetLibService,
+    private mapSetFileImportService: MapSetFileImportService,
     private destroy$: DestroyService,
     private jobService: JobLibService,
     private router: Router
@@ -69,6 +52,7 @@ export class ConceptMapFileImportComponent {
   public process(): void {
     const file = this.fileInput?.nativeElement?.files?.[0];
     const req: FileProcessingRequest = {
+      type: 'csv',
       map: this.data.map,
       version: this.data.version,
       sourceValueSet: this.data.sourceValueSet,
@@ -76,23 +60,13 @@ export class ConceptMapFileImportComponent {
     };
 
     this.jobResponse = null;
-    this.loader.wrap('processing', this.processRequest(req, file)).subscribe(resp => {
+    this.loader.wrap('processing', this.mapSetFileImportService.processRequest(req, file)).subscribe(resp => {
       this.jobResponse = resp;
       if (!resp.errors && !resp.warnings) {
         this.notificationService.success("web.integration.file-import.success-message", this.successNotificationContent, {duration: 0, closable: true});
       }
     });
   }
-
-  private processRequest(req: FileProcessingRequest, file: Blob): Observable<JobLog> {
-    const fd = new FormData();
-    fd.append('request', JSON.stringify(req));
-    fd.append('file', file, 'files');
-
-    return this.http.post<JobLogResponse>(`${environment.termxApi}/file-importer/map-set/process`, fd).pipe(
-      mergeMap(resp => this.jobService.pollFinishedJobLog(resp.jobId, this.destroy$))
-    );
-  };
 
 
   protected openMapSet(id: string, mode: 'edit' | 'view'): void {
