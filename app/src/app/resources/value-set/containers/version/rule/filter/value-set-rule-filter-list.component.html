@@ -43,7 +43,7 @@
                 <m-option [mLabel]="'='" [mValue]="'='"></m-option>
                 <m-option [mLabel]="'regex'" [mValue]="'regex'"></m-option>
               </m-select>
-              <tw-association-type-search *ngIf="f.property?.name === 'concept'" [name]="ngModelName" [(ngModel)]="f.operator" valuePrimitive></tw-association-type-search>
+              <tw-association-type-search *ngIf="f.property?.name === 'concept'" [name]="ngModelName" [(ngModel)]="f.operator" associationKind="codesystem-hierarchy-meaning" valuePrimitive></tw-association-type-search>
             </ng-container>
             <ng-container *ngSwitchCase="'snomed-ct'">
               <m-select [name]="ngModelName" [(ngModel)]="f.operator">
