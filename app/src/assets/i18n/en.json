@@ -431,7 +431,8 @@
 				"from": "Expected to be used since",
 				"single": "Version",
 				"to": "Expected to be used until",
-				"version": "Version"
+				"version": "Version",
+				"preferred-language": "Preferred language"
 			}
 		},
 		"sequence": {

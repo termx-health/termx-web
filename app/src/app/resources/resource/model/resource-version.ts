@@ -7,5 +7,5 @@ export class ResourceVersion {
   public from?: Date;
   public to?: Date;
   public description?: LocalizedName;
-  public supportedLanguages?: string[];
+  public preferredLanguage?: string;
 }
