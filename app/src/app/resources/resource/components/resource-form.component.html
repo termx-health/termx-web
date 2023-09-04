@@ -10,8 +10,8 @@
 
   <m-form-item mLabel="entities.resource.id" mName="id" [required]="mode === 'add'">
     <m-input *ngIf="mode === 'add'" name="id" [(ngModel)]="resource.id" required></m-input>
-    <div class="m-items-middle">
-      <span *ngIf="mode !== 'add'">{{resource.id}}</span>
+    <div class="m-items-middle" *ngIf="mode !== 'add'">
+      <span>{{resource.id}}</span>
       <m-button m-tooltip mTitle="core.btn.edit" (mClick)="idChangeModalData.visible = true"><m-icon mCode="edit"></m-icon></m-button>
     </div>
   </m-form-item>
