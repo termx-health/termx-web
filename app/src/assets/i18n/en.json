@@ -595,6 +595,7 @@
 				"equal": "=",
 				"in": "In",
 				"is-a": "Is a",
+				"descendant-of": "Descendant of",
 				"label": "Operator"
 			},
 			"property": {
