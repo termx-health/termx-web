@@ -62,6 +62,9 @@ export class ValueSetRuleFormComponent implements OnChanges{
   }
 
   protected loadProperties = (cs: string): Observable<EntityProperty[]> => {
+    if (!cs) {
+      return ;
+    }
     return this.codeSystemService.load(cs).pipe(map(cs => cs.properties));
   };
 }
