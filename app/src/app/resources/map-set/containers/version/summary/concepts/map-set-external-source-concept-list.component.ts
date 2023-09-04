@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {isDefined, validateForm} from '@kodality-web/core-util';
 import {finalize, map, Observable, of} from 'rxjs';
 import {
@@ -19,6 +19,8 @@ export class MapSetExternalSourceConceptListComponent implements OnChanges {
   @Input() public mapSetVersion: string;
   @Input() public targetExternal: boolean;
   @Input() public associationTypes: AssociationType[];
+  @Input() public editMode: boolean;
+  @Output() public associationsChanged: EventEmitter<void> = new EventEmitter<void>();
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("modalForm") public modalForm?: NgForm;
@@ -60,19 +62,10 @@ export class MapSetExternalSourceConceptListComponent implements OnChanges {
     return relationships?.find(r => r.code === relationship)?.forwardName || relationship;
   };
 
-  protected verify = (a: MapSetAssociation): void => {
-    if (!isDefined(a.id)) {
-      return;
-    }
-    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, [a.id]).subscribe(() => this.loadData());
-  };
-
   protected verifyChecked = (): void => {
-    const  ids = this.associations?.filter(a => a['_checked'] && isDefined(a.id)).map(c => c.id);
-    if (!ids || ids.length === 0) {
-      return;
-    }
-    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, ids).subscribe(() => this.loadData());
+    const verifiedIds = this.associations?.filter(a => a.verified && isDefined(a.id)).map(c => c.id);
+    const unVerifiedIds = this.associations?.filter(a => !a.verified && isDefined(a.id)).map(c => c.id);
+    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, verifiedIds, unVerifiedIds).subscribe(() => this.loadData());
   };
 
   protected saveAssociations(): void {
@@ -80,7 +73,10 @@ export class MapSetExternalSourceConceptListComponent implements OnChanges {
       return;
     }
     this.loading = true;
-    this.mapSetService.saveAssociations(this.mapSet, this.mapSetVersion, this.associations).subscribe(() => this.loadData());
+    this.mapSetService.saveAssociations(this.mapSet, this.mapSetVersion, this.associations).subscribe(() => {
+      this.loadData();
+      this.associationsChanged.emit();
+    });
   }
 
   protected addAssociations(): void {

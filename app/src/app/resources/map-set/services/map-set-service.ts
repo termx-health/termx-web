@@ -11,6 +11,10 @@ export class MapSetService extends MapSetLibService {
     return this.http.post<void>(`${this.baseUrl}/transaction`, request);
   }
 
+  public changeMapSetId(currentId: string, newId: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${currentId}/change-id`, {id: newId});
+  }
+
   public delete(mapSetId: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${mapSetId}`);
   }
@@ -51,8 +55,8 @@ export class MapSetService extends MapSetLibService {
     return this.http.post(`${this.baseUrl}/${mapSetId}/versions/${version}/associations-batch`, {batch: associations});
   }
 
-  public verifyAssociations(mapSetId: string, version: string, ids: number[]): Observable<MapSetAssociation> {
-    return this.http.post(`${this.baseUrl}/${mapSetId}/versions/${version}/associations/verify`, {ids: ids});
+  public verifyAssociations(mapSetId: string, version: string, verifiedIds: number[], unVerifiedIds: number[]): Observable<MapSetAssociation> {
+    return this.http.post(`${this.baseUrl}/${mapSetId}/versions/${version}/associations/verify`, {verifiedIds: verifiedIds, unVerifiedIds: unVerifiedIds});
   }
 
   public unmapAssociations(mapSetId: string, version: string, ids: number[]): Observable<MapSetAssociation> {

@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {collect, copyDeep, isDefined, SearchResult} from '@kodality-web/core-util';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {
@@ -20,6 +20,8 @@ export class MapSetSourceConceptListComponent implements OnChanges {
   @Input() public mapSetVersion: string;
   @Input() public targetExternal: boolean;
   @Input() public associationTypes: AssociationType[];
+  @Input() public editMode: boolean;
+  @Output() public associationsChanged: EventEmitter<void> = new EventEmitter<void>();
 
   @ViewChild(MapSetAssociationDrawerComponent) public drawerComponent?: MapSetAssociationDrawerComponent;
 
@@ -78,7 +80,10 @@ export class MapSetSourceConceptListComponent implements OnChanges {
     if (!ids || ids.length === 0) {
       return;
     }
-    this.mapSetService.unmapAssociations(this.mapSet, this.mapSetVersion, ids).subscribe(() => this.loadData());
+    this.mapSetService.unmapAssociations(this.mapSet, this.mapSetVersion, ids).subscribe(() => {
+      this.loadData();
+      this.associationsChanged.emit();
+    });
   };
 
   protected verify = (c: MapSetConcept): void => {
@@ -86,20 +91,14 @@ export class MapSetSourceConceptListComponent implements OnChanges {
     if (!ids || ids.length === 0) {
       return;
     }
-    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, ids).subscribe(() => this.loadData());
-  };
-
-  protected verifyChecked = (): void => {
-    const  ids = this.searchResult?.data?.filter(c => c['_checked'] && !!c.associations)
-      .flatMap(c => c.associations.map(a => a.id)).filter(id => isDefined(id));
-    if (!ids || ids.length === 0) {
-      return;
-    }
-    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, ids).subscribe(() => this.loadData());
+    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, ids, undefined).subscribe(() => this.loadData());
   };
 
   protected createNoMap = (c: MapSetConcept): void => {
     const noMap: MapSetAssociation = {source: {code: c.code, codeSystem: c.codeSystem, display: c.display?.name}};
-    this.mapSetService.saveAssociation(this.mapSet, this.mapSetVersion, noMap).subscribe(() => this.loadData());
+    this.mapSetService.saveAssociation(this.mapSet, this.mapSetVersion, noMap).subscribe(() => {
+      this.loadData();
+      this.associationsChanged.emit();
+    });
   };
 }

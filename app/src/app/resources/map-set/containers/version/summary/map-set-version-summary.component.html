@@ -40,30 +40,31 @@
         </div>
         <m-no-data *ngIf="!mapSetVersion?.statistics"></m-no-data>
 
-        <div *ngIf="mapSetVersion?.statistics">
-          <div class="m-items-middle">
+        <div style="display: flex; flex-direction: column; gap: 0.5rem" *ngIf="mapSetVersion?.statistics">
+          <div style="display: flex; gap: 0.5rem">
             <m-card class="m-clickable" [ngClass]="selectedStatistics === 'source-concepts' && 'm-bordered'" (click)="selectedStatistics = 'source-concepts'">
               <div class="m-subtitle">{{'web.map-set-version.summary.statistics.source-concepts' | translate}}</div>
               <div class="m-title--bold">{{mapSetVersion.scope.sourceType === 'external-canonical-uri' ? 'N/A' : mapSetVersion.statistics.sourceConcepts}}</div>
             </m-card>
             <m-card class="m-clickable" [ngClass]="selectedStatistics === 'equivalent' && 'm-bordered'" (click)="selectedStatistics = 'equivalent'">
               <div class="m-justify-between">
-                <div class="m-subtitle">{{'web.map-set-version.summary.statistics.equivalent' | translate}}</div>
-                <m-dropdown>
-                  <a *m-dropdown-item
-                      (mClick)="automap('code-designation')">{{'web.map-set-version.summary.statistics.automap-code-designation' | translate}}</a>
+                <div>
+                  <div class="m-subtitle">{{'web.map-set-version.summary.statistics.equivalent' | translate}}</div>
+                  <div class="m-title--bold">{{mapSetVersion.statistics.equivalent}}</div>
+                </div>
+                <m-dropdown *ngIf="mapSetVersion.status === 'draft'">
+                  <a *m-dropdown-item (mClick)="automap('code-designation')">{{'web.map-set-version.summary.statistics.automap-code-designation' | translate}}</a>
                   <a *m-dropdown-item (mClick)="automap('code')">{{'web.map-set-version.summary.statistics.automap-code' | translate}}</a>
                   <a *m-dropdown-item (mClick)="automap('designation')">{{'web.map-set-version.summary.statistics.automap-designation' | translate}}</a>
                 </m-dropdown>
               </div>
-              <div class="m-title--bold">{{mapSetVersion.statistics.equivalent}}</div>
             </m-card>
             <m-card class="m-clickable" [ngClass]="selectedStatistics === 'no-map' && 'm-bordered'" (click)="selectedStatistics = 'no-map'">
               <div class="m-subtitle">{{'web.map-set-version.summary.statistics.no-map' | translate}}</div>
               <div class="m-title--bold">{{mapSetVersion.statistics.noMap}}</div>
             </m-card>
           </div>
-          <div class="m-items-middle" style="margin: 0.5rem 0 0.5rem 0">
+          <div style=" display: flex; gap: 0.5rem">
             <m-card class="m-clickable" [ngClass]="selectedStatistics === 'narrower' && 'm-bordered'" (click)="selectedStatistics = 'narrower'">
               <div class="m-subtitle">{{'web.map-set-version.summary.statistics.narrower' | translate}}</div>
               <div class="m-title--bold">{{mapSetVersion.statistics.narrower}}</div>
@@ -77,15 +78,16 @@
               <div class="m-title--bold">{{mapSetVersion.scope.sourceType === 'external-canonical-uri' ? 'N/A' : mapSetVersion.statistics.unmapped}}</div>
             </m-card>
           </div>
-          <div class="m-items-middle" style="margin: 0.5rem 0 0.5rem 0">
-            <m-card class="m-clickable" [ngClass]="selectedStatistics === 'inactive-sources' && 'm-bordered'" (click)="selectedStatistics = 'inactive-sources'">
+          <div style=" display: flex; gap: 0.5rem">
+            <m-card style="flex: 1;" class="m-clickable" [ngClass]="selectedStatistics === 'inactive-sources' && 'm-bordered'" (click)="selectedStatistics = 'inactive-sources'">
               <div class="m-subtitle">{{'web.map-set-version.summary.statistics.inactive-sources' | translate}}</div>
               <div class="m-title--bold">{{mapSetVersion.scope.sourceType === 'external-canonical-uri' ? 'N/A' : mapSetVersion.statistics.inactiveSources}}</div>
             </m-card>
-            <m-card class="m-clickable" [ngClass]="selectedStatistics === 'inactive-targets' && 'm-bordered'" (click)="selectedStatistics = 'inactive-targets'">
+            <m-card style="flex: 1;" class="m-clickable" [ngClass]="selectedStatistics === 'inactive-targets' && 'm-bordered'" (click)="selectedStatistics = 'inactive-targets'">
               <div class="m-subtitle">{{'web.map-set-version.summary.statistics.inactive-targets' | translate}}</div>
               <div class="m-title--bold">{{mapSetVersion.scope.targetType === 'external-canonical-uri' ? 'N/A' : mapSetVersion.statistics.inactiveTargets}}</div>
             </m-card>
+            <div style="flex: 1;"></div>
           </div>
         </div>
       </m-card>
@@ -95,40 +97,55 @@
   <m-form-row class="with-row-gap" mGap="1rem" *ngIf="!loader.isLoading">
     <div style="margin-top: 1rem">
       <tw-map-set-source-concept-list *ngIf="selectedStatistics === 'source-concepts' && mapSetVersion.scope.sourceType !== 'external-canonical-uri'"
+          [editMode]="mapSetVersion?.status === 'draft'"
           [mapSet]="mapSet?.id"
           [mapSetVersion]="mapSetVersion?.version"
           [associationTypes]="associationTypes"
-          [targetExternal]="mapSetVersion?.scope.targetType === 'external-canonical-uri'"></tw-map-set-source-concept-list>
+          [targetExternal]="mapSetVersion?.scope.targetType === 'external-canonical-uri'"
+          (associationsChanged)="loadData(mapSet?.id, mapSetVersion?.version)"></tw-map-set-source-concept-list>
       <tw-map-set-external-source-concept-list *ngIf="selectedStatistics === 'source-concepts' && mapSetVersion.scope.sourceType === 'external-canonical-uri'"
+          [editMode]="mapSetVersion?.status === 'draft'"
           [mapSet]="mapSet?.id"
           [mapSetVersion]="mapSetVersion?.version"
           [associationTypes]="associationTypes"
-          [targetExternal]="mapSetVersion?.scope.targetType === 'external-canonical-uri'"></tw-map-set-external-source-concept-list>
+          [targetExternal]="mapSetVersion?.scope.targetType === 'external-canonical-uri'"
+          (associationsChanged)="loadData(mapSet?.id, mapSetVersion?.version)"></tw-map-set-external-source-concept-list>
       <tw-map-set-association-list *ngIf="selectedStatistics === 'equivalent'"
+          [editMode]="mapSetVersion?.status === 'draft'"
           [mapSet]="mapSet?.id"
           [mapSetVersion]="mapSetVersion?.version"
           [relationships]="'equivalent'"
-          [associationTypes]="associationTypes"></tw-map-set-association-list>
+          [associationTypes]="associationTypes"
+          (associationsChanged)="loadData(mapSet?.id, mapSetVersion?.version)"></tw-map-set-association-list>
       <tw-map-set-association-list *ngIf="selectedStatistics === 'no-map'"
+          [editMode]="mapSetVersion?.status === 'draft'"
           [mapSet]="mapSet?.id"
           [mapSetVersion]="mapSetVersion?.version"
           [noMap]="true"
-          [associationTypes]="associationTypes"></tw-map-set-association-list>
+          [associationTypes]="associationTypes"
+          [targetExternal]="mapSetVersion?.scope.targetType === 'external-canonical-uri'"
+          (associationsChanged)="loadData(mapSet?.id, mapSetVersion?.version)"></tw-map-set-association-list>
       <tw-map-set-association-list *ngIf="selectedStatistics === 'narrower'"
+          [editMode]="mapSetVersion?.status === 'draft'"
           [mapSet]="mapSet?.id"
           [mapSetVersion]="mapSetVersion?.version"
           [relationships]="'source-is-narrower-than-target'"
-          [associationTypes]="associationTypes"></tw-map-set-association-list>
+          [associationTypes]="associationTypes"
+          (associationsChanged)="loadData(mapSet?.id, mapSetVersion?.version)"></tw-map-set-association-list>
       <tw-map-set-association-list *ngIf="selectedStatistics === 'broader'"
+          [editMode]="mapSetVersion?.status === 'draft'"
           [mapSet]="mapSet?.id"
           [mapSetVersion]="mapSetVersion?.version"
           [relationships]="'source-is-broader-than-target'"
-          [associationTypes]="associationTypes"></tw-map-set-association-list>
+          [associationTypes]="associationTypes"
+          (associationsChanged)="loadData(mapSet?.id, mapSetVersion?.version)"></tw-map-set-association-list>
       <tw-map-set-unmapped-concept-list *ngIf="selectedStatistics === 'unmapped'"
+          [editMode]="mapSetVersion?.status === 'draft'"
           [mapSet]="mapSet?.id"
           [mapSetVersion]="mapSetVersion?.version"
           [associationTypes]="associationTypes"
-          [targetExternal]="mapSetVersion?.scope.targetType === 'external-canonical-uri'"></tw-map-set-unmapped-concept-list>
+          [targetExternal]="mapSetVersion?.scope.targetType === 'external-canonical-uri'"
+          (associationsChanged)="loadData(mapSet?.id, mapSetVersion?.version)"></tw-map-set-unmapped-concept-list>
     </div>
   </m-form-row>
 </m-page>

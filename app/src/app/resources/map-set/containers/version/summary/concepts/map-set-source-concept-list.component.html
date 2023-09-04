@@ -1,9 +1,6 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <div class="m-items-middle">
-      <m-title>{{'web.map-set-version.summary.associations.source-concepts' | translate}}</m-title>
-      <m-button (mClick)="verifyChecked()">{{'web.map-set-version.summary.associations.verify' | translate}}</m-button>
-    </div>
+    <m-title>{{'web.map-set-version.summary.associations.source-concepts' | translate}}</m-title>
     <div class="m-items-middle">
       <m-checkbox [(ngModel)]="unverified" (ngModelChange)="loadData()">{{'web.map-set-version.summary.associations.unverified' | translate}}</m-checkbox>
       <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
@@ -12,17 +9,13 @@
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
-      <th class="tw-table-min-width"></th>
       <th>{{'web.map-set-version.summary.associations.code' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.display' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.mappings' | translate}}</th>
-      <th class="tw-table-min-width"></th>
+      <th class="tw-table-min-width" *ngIf="editMode"></th>
     </tr>
 
     <tr *mTableRow="let c">
-      <td>
-        <m-checkbox [(ngModel)]="c['_checked']"></m-checkbox>
-      </td>
       <td><a>{{c.code}}</a></td>
       <td>{{c.display?.name}}</td>
       <td>
@@ -33,10 +26,10 @@
             <label>{{groups[relationship] | map: 'target.code' | join: ','}}</label>
           </div>
         </ng-container>
-        <label *ngIf="c.associations | apply: hasNoMap">{{'web.map-set-version.summary.statistics.no-map'}}</label>
-        <a *ngIf="!(c.associations?.length > 0)" (mClick)="drawerComponent.openDrawer(c)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
+        <label *ngIf="c.associations | apply: hasNoMap">{{'web.map-set-version.summary.statistics.no-map' | translate}}</label>
+        <a *ngIf="!(c.associations?.length > 0) && editMode" (mClick)="drawerComponent.openDrawer(c)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
       </td>
-      <td>
+      <td *ngIf="editMode">
         <m-dropdown>
           <a *m-dropdown-item (mClick)="drawerComponent.openDrawer(c)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
           <a *m-dropdown-item (mClick)="createNoMap(c)">{{'web.map-set-version.summary.associations.set-as-no-map' | translate}}</a>
@@ -57,4 +50,4 @@
     [mapSetVersion]="mapSetVersion"
     [associationTypes]="associationTypes"
     [targetExternal]="targetExternal"
-    (twSaved)="loadData()"></tw-map-set-association-drawer>
+    (twSaved)="loadData();associationsChanged.emit()"></tw-map-set-association-drawer>

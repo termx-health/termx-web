@@ -2,17 +2,27 @@
   <div *m-card-header class="m-justify-between">
     <div class="m-items-middle">
       <m-title>{{'web.map-set-version.summary.associations.external-mapping' | translate}}</m-title>
-      <m-divider mVertical></m-divider>
-      <a (mClick)="openModal()">{{'web.map-set-version.summary.associations.bulk-copy' | translate}}</a>
-      <m-divider mVertical></m-divider>
-      <m-button (mClick)="verifyChecked()">{{'web.map-set-version.summary.associations.verify' | translate}}</m-button>
+      <ng-container *ngIf="editMode">
+        <m-divider mVertical></m-divider>
+        <a (mClick)="openModal()">{{'web.map-set-version.summary.associations.bulk-copy' | translate}}</a>
+        <m-divider mVertical></m-divider>
+        <m-button (mClick)="verifyChecked()">{{'web.map-set-version.summary.associations.verify' | translate}}</m-button>
+      </ng-container>
     </div>
     <div>
-      <m-button mDisplay="primary" [mLoading]="loading" (mClick)="saveAssociations()">{{'core.btn.save' | translate}}</m-button>
+      <m-button *ngIf="editMode" mDisplay="primary" [mLoading]="loading" (mClick)="saveAssociations()">{{'core.btn.save' | translate}}</m-button>
     </div>
   </div>
   <form #form="ngForm" *ngIf="associations">
-    <m-editable-table #rowsTable [mData]="associations" [mLoading]="loading" [mRowInstance]="rowInstance">
+    <m-editable-table #rowsTable [mData]="associations" [mLoading]="loading" [mRowInstance]="rowInstance" [mEditAllowed]="editMode" [mDeleteAllowed]="editMode">
+      <m-editable-column mName="verified">
+        <ng-template #viewTemplate let-a let-ngModelName="ngModelName">
+          <m-checkbox [(ngModel)]="a.verified" [name]="ngModelName" [readOnly]="!editMode"></m-checkbox>
+        </ng-template>
+        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+          <m-checkbox [(ngModel)]="a.verified" [name]="ngModelName" [readOnly]="!editMode"></m-checkbox>
+        </ng-template>
+      </m-editable-column>
       <m-editable-column [mTitle]="'web.map-set-version.summary.associations.source-code'" mName="sCode">
         <ng-template #viewTemplate let-a>{{a.source.code}}</ng-template>
         <ng-template #editTemplate let-a let-ngModelName="ngModelName">
@@ -80,4 +90,4 @@
     [mapSetVersion]="mapSetVersion"
     [associationTypes]="associationTypes"
     [targetExternal]="targetExternal"
-    (twSaved)="loadData()"></tw-map-set-association-drawer>
+    (twSaved)="loadData();associationsChanged.emit()"></tw-map-set-association-drawer>

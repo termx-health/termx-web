@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {copyDeep, isDefined, SearchResult} from '@kodality-web/core-util';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {
@@ -7,6 +7,7 @@ import {
   MapSetAssociationSearchParams
 } from 'app/src/app/resources/_lib';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
 
 
 @Component({
@@ -19,11 +20,17 @@ export class MapSetAssociationListComponent implements OnChanges {
   @Input() public noMap: Boolean;
   @Input() public mapSet: string;
   @Input() public mapSetVersion: string;
+  @Input() public targetExternal: boolean;
+  @Input() public editMode: boolean;
+  @Output() public associationsChanged: EventEmitter<void> = new EventEmitter<void>();
 
   public query = new MapSetAssociationSearchParams();
   public searchResult: SearchResult<MapSetAssociation> = SearchResult.empty();
   public searchInput: string;
+  public unverified: boolean;
   public loading: boolean;
+
+  @ViewChild(MapSetAssociationDrawerComponent) public drawerComponent?: MapSetAssociationDrawerComponent;
 
   public constructor(private mapSetService: MapSetService) {}
 
@@ -47,6 +54,7 @@ export class MapSetAssociationListComponent implements OnChanges {
     q.mapSetVersion = this.mapSetVersion;
     q.relationships = this.relationships;
     q.noMap = this.noMap;
+    q.verified = this.unverified ? false : undefined;
     this.loading = true;
     return this.mapSetService.searchAssociations(this.mapSet, q).pipe(finalize(() => this.loading = false));
   }
@@ -60,21 +68,34 @@ export class MapSetAssociationListComponent implements OnChanges {
     if (!isDefined(id)) {
       return;
     }
-    this.mapSetService.unmapAssociations(this.mapSet, this.mapSetVersion, [id]).subscribe(() => this.loadData());
+    this.mapSetService.unmapAssociations(this.mapSet, this.mapSetVersion, [id]).subscribe(() => {
+      this.loadData();
+      this.associationsChanged.emit();
+    });
   };
 
   protected verify = (id: number): void => {
     if (!isDefined(id)) {
       return;
     }
-    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, [id]).subscribe(() => this.loadData());
+    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, [id], undefined).subscribe(() => this.loadData());
+  };
+
+  protected verifyChecked = (): void => {
+    const verifiedIds = this.searchResult.data.filter(a => a.verified).map(a => a.id);
+    const unVerifiedIds = this.searchResult.data.filter(a => !a.verified).map(a => a.id);
+    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, verifiedIds, unVerifiedIds).subscribe(() => this.loadData());
   };
 
   protected createNoMap(a: MapSetAssociation): void {
     const association = copyDeep(a);
     association.target = undefined;
     association.relationship = undefined;
-    this.mapSetService.saveAssociation(this.mapSet, this.mapSetVersion, a).subscribe(() => this.loadData());
+    association.verified = false;
+    this.mapSetService.saveAssociation(this.mapSet, this.mapSetVersion, association).subscribe(() => {
+      this.loadData();
+      this.associationsChanged.emit();
+    });
   }
 
   protected getTitle = (relationships: string, associationTypes: AssociationType[]): string => {
@@ -83,4 +104,8 @@ export class MapSetAssociationListComponent implements OnChanges {
     }
     return relationships?.split(',')?.map(r => associationTypes?.find(t => t.code === r)?.forwardName || r)?.join(", ");
   };
+
+  public checkAll(checked: boolean): void {
+    this.searchResult?.data?.forEach(a => a.verified = checked);
+  }
 }

@@ -37,7 +37,7 @@ export class MapSetVersionSummaryComponent implements OnInit {
       .subscribe(r => this.associationTypes = r.data);
   }
 
-  private loadData(mapSet: string, versionCode: string): void {
+  protected loadData(mapSet: string, versionCode: string): void {
     this.loader.wrap('load',
       forkJoin([this.mapSetService.load(mapSet), this.mapSetService.loadVersion(mapSet, versionCode)])
     ).subscribe(([ms, msv]) => {

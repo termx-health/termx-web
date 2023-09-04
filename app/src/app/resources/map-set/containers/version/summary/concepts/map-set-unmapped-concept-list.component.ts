@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {
@@ -20,6 +20,8 @@ export class MapSetUnmappedConceptListComponent implements OnChanges {
   @Input() public mapSetVersion: string;
   @Input() public targetExternal: boolean;
   @Input() public associationTypes: AssociationType[];
+  @Input() public editMode: boolean;
+  @Output() public associationsChanged: EventEmitter<void> = new EventEmitter<void>();
 
   @ViewChild(MapSetAssociationDrawerComponent) public drawerComponent?: MapSetAssociationDrawerComponent;
 
@@ -64,6 +66,9 @@ export class MapSetUnmappedConceptListComponent implements OnChanges {
 
   protected createNoMap = (c: MapSetConcept): void => {
     const noMap: MapSetAssociation = {source: {code: c.code, codeSystem: c.codeSystem, display: c.display?.name}};
-    this.mapSetService.saveAssociation(this.mapSet, this.mapSetVersion, noMap).subscribe(() => this.loadData());
+    this.mapSetService.saveAssociation(this.mapSet, this.mapSetVersion, noMap).subscribe(() => {
+      this.loadData();
+      this.associationsChanged.emit();
+    });
   };
 }

@@ -9,6 +9,7 @@ import {ConceptUtil, ValueSetVersionConcept, VsConceptUtil} from 'app/src/app/re
 import {Resource} from 'term-web/resources/resource/model/resource';
 import {Router} from '@angular/router';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
+import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 
 
 @Component({
@@ -16,7 +17,7 @@ import {ValueSetService} from 'term-web/resources/value-set/services/value-set.s
   templateUrl: 'resource-form.component.html'
 })
 export class ResourceFormComponent implements OnChanges {
-  @Input() public resourceType?: 'CodeSystem' | 'ValueSet';
+  @Input() public resourceType?: 'CodeSystem' | 'ValueSet' | 'MapSet';
   @Input() public resource?: Resource;
   @Input() public mode?: 'add' | 'edit';
 
@@ -33,7 +34,8 @@ export class ResourceFormComponent implements OnChanges {
     private router: Router,
     private translateService: TranslateService,
     private codeSystemService: CodeSystemService,
-    private valueSetService: ValueSetService
+    private valueSetService: ValueSetService,
+    private mapSetService: MapSetService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -98,6 +100,11 @@ export class ResourceFormComponent implements OnChanges {
     if (this.resourceType === 'ValueSet') {
       this.valueSetService.changeValueSetId(this.resource.id, this.idChangeModalData.id).subscribe(() => {
         this.router.navigate(['/resources/value-sets', this.idChangeModalData.id, 'edit'], {replaceUrl: true});
+      });
+    }
+    if (this.resourceType === 'MapSet') {
+      this.mapSetService.changeMapSetId(this.resource.id, this.idChangeModalData.id).subscribe(() => {
+        this.router.navigate(['/resources/map-sets', this.idChangeModalData.id, 'edit'], {replaceUrl: true});
       });
     }
   }
