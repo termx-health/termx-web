@@ -11,20 +11,25 @@ import {GithubDiff} from 'term-web/integration/_lib/github/github';
   styles: [`
     .status-row {
       display: flex;
+
+      & .checkbox {
+        margin-right: 4px;
+      }
     }
 
     .status {
       width: 18px;
     }
-    
+
     .diff {
       display: flex;
-      
-      &>div {
+
+      & > div {
         width: 50%;
         margin: 2px;
       }
     }
+
     ::ng-deep .modal--wide {
       width: 80vw;
     }
@@ -41,6 +46,7 @@ export class SpaceGithubComponent implements OnInit {
   };
   protected commit: {message?: string} = {message: 'update space from termx'};
   protected diff: GithubDiff;
+  protected selection: {[key: string]: boolean} = {};
 
   public constructor(
     private spaceService: SpaceService,
@@ -65,9 +71,14 @@ export class SpaceGithubComponent implements OnInit {
   }
 
   private loadGitStatus(id: number): Observable<any> {
-    return this.spaceService.githubStatus(id).pipe(tap(r => this.status = {
-      changed: Object.keys(r.files).filter(f => ['A', 'D', 'M'].includes(r.files[f])).map(f => ({f: f, s: r.files[f]})),
-      unchanged: Object.keys(r.files).filter(f => 'U' === r.files[f])
+    return this.spaceService.githubStatus(id).pipe(tap(r => {
+      this.status = {
+        changed: Object.keys(r.files).filter(f => ['A', 'D', 'M'].includes(r.files[f])).map(f => ({f: f, s: r.files[f]})),
+        unchanged: Object.keys(r.files).filter(f => 'U' === r.files[f])
+      };
+      this.status.changed.forEach(c => this.selection[c.f] = false);
+      let prefix = this.route.snapshot.paramMap.get('prefix');
+      this.selectAll(true, prefix);
     }));
   }
 
@@ -78,17 +89,39 @@ export class SpaceGithubComponent implements OnInit {
 
   public pull(): void {
     this.saving = true;
-    this.spaceService.githubPull(this.space.id).pipe(
+    const files = this.allSelected(this.selection) ? null : this.status.changed.filter(c => this.selected(c)).map(c => c.f);
+    this.spaceService.githubPull(this.space.id, files).pipe(
       mergeMap(() => this.loadGitStatus(this.space.id))
     ).subscribe().add(() => this.saving = false);
   }
 
   public push(): void {
     this.saving = true;
-    this.spaceService.githubPush(this.space.id, this.commit.message).pipe(
+    const files = this.allSelected(this.selection) ? null : this.status.changed.filter(c => this.selected(c)).map(c => c.f);
+    this.spaceService.githubPush(this.space.id, this.commit.message, files).pipe(
       delay(1000), // seems like github need a bit of time to actually update
       mergeMap(() => this.loadGitStatus(this.space.id))
     ).subscribe().add(() => this.saving = false);
   }
 
+  public selectAll(selected: boolean, prefix?: string): void {
+    this.status.changed.filter(c => !prefix || c.f.startsWith(prefix)).forEach(c => this.selection[c.f] = selected);
+    this.selection = {...this.selection};
+  }
+
+  public allSelected(selection: {[k: string]: boolean}): boolean {
+    return Object.values(selection).every(x => x);
+  }
+
+  public noneSelected(selection: {[k: string]: boolean}): boolean {
+    return !Object.values(selection).some(x => x);
+  }
+
+  public selected = (changed: {f: string, s: string}): boolean => {
+    return this.selection[changed.f];
+  };
+
+  public onSelectionChange(): void {
+    this.selection = {...this.selection};
+  }
 }

@@ -12,6 +12,7 @@ import {compareDates, LoadingManager, validateForm} from '@kodality-web/core-uti
 import {TaskService} from 'term-web/task/services/task-service';
 import {Task} from 'term-web/task/_lib';
 import {Provenance, ProvenanceLibService} from 'term-web/sys/_lib';
+import {Space, SpaceLibService} from 'term-web/space/_lib';
 
 @Component({
   selector: 'tw-code-system-version-info-widget',
@@ -24,6 +25,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
 
   protected taskModalData: {visible?: boolean, assignee?: string, type?: 'review' | 'approval'} = {};
   protected provenances: Provenance[];
+  protected githubSpaces: Space[];
   @ViewChild("taskModalForm") public taskModalForm?: NgForm;
 
   protected loader = new LoadingManager();
@@ -34,12 +36,17 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     private provenanceService: ProvenanceLibService,
     private taskService: TaskService,
     private chefService: ChefService,
-    private notificationService: MuiNotificationService) {}
+    private notificationService: MuiNotificationService,
+    private spaceService: SpaceLibService
+  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['version'] && this.version) {
       this.loader.wrap('provenance', this.provenanceService.query('CodeSystemVersion|' + this.version.id))
         .subscribe(resp => this.provenances = resp);
+      this.spaceService.search({resource: 'code-system|' + this.version.codeSystem}).subscribe(r => {
+        this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo);
+      });
     }
   }
 

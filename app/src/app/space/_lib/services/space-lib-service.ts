@@ -51,12 +51,12 @@ export class SpaceLibService {
     return this.http.get<GithubDiff>(`${this.baseUrl}/${id}/github/diff?file=${path}`);
   }
 
-  public githubPush(id: number, message: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${id}/github/push`, {message});
+  public githubPush(id: number, message: string, files: string[]): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${id}/github/push`, {message, files});
   }
 
-  public githubPull(id: number): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${id}/github/pull`, {});
+  public githubPull(id: number, files: string[]): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${id}/github/pull`, {files});
   }
 
 }

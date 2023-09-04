@@ -908,10 +908,9 @@
 					"last-approved": "Paskutinio patvirtinimo data",
 					"last-modified": "Paskutinių keitimų data",
 					"last-reviewed": "Paskutinės peržiūros data",
-					"load-from-github": "Įkelti iš „Github“",
+					"sync-with-github": "Github",
 					"make-draft": "Kurti juodraštį",
 					"none": "",
-					"push-to-github": "Stumti į „Github“",
 					"retire": "Išeiti",
 					"show-changes": "Rodyti pakeitimus"
 				},
@@ -1776,10 +1775,9 @@
 					"last-approved": "Paskutinio patvirtinimo data",
 					"last-modified": "Paskutinių keitimų data",
 					"last-reviewed": "Paskutinės peržiūros data",
-					"load-from-github": "Įkelti iš „Github“",
+					"sync-with-github": "Github",
 					"make-draft": "Kurti juodraštį",
 					"none": "",
-					"push-to-github": "Stumti į „Github“",
 					"retire": "Išeiti",
 					"show-changes": "Rodyti pakeitimus"
 				},
