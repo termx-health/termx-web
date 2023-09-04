@@ -909,10 +909,9 @@
 					"last-approved": "Last approval date",
 					"last-modified": "Last modified",
 					"last-reviewed": "Last review date",
-					"load-from-github": "Load from Github",
+					"sync-with-github": "Sync with Github",
 					"make-draft": "Make draft",
 					"none": "None",
-					"push-to-github": "Push to Github",
 					"retire": "Retire",
 					"show-changes": "Show changes"
 				},
@@ -1829,10 +1828,9 @@
 					"last-approved": "Last approval date",
 					"last-modified": "Last modified",
 					"last-reviewed": "Last review date",
-					"load-from-github": "Load from Github",
+					"sync-with-github": "Sync with Github",
 					"make-draft": "Make draft",
 					"none": "None",
-					"push-to-github": "Push to Github",
 					"retire": "Retire",
 					"show-changes": "Show changes"
 				},

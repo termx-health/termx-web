@@ -12,13 +12,24 @@
         </span>
       </div>
       <ng-container *ngIf="status">
+        <div class="status-row" style="margin-bottom: 4px" *ngIf="status.changed.length">
+          <div class="checkbox">
+            <m-checkbox [mChecked]="selection | apply:allSelected" (mCheckedChange)="selectAll($event)"></m-checkbox>
+          </div>
+          <div style="font-style: italic">Select all</div>
+        </div>
         <div style="color: #ff1700">
           <div class="status-row" *ngFor="let f of status.changed">
+            <div class="checkbox">
+              <m-checkbox [(mChecked)]="selection[f.f]" (mCheckedChange)="onSelectionChange()"></m-checkbox>
+            </div>
             <div class="status">{{f.s}}</div>
             <div>{{f.f}}</div>
-            <div *ngIf="f.s === 'M'" style="margin-left: 5px"><a (click)="showDiff(f.f)">
-              <m-icon mCode="diff"></m-icon>
-            </a></div>
+            <div *ngIf="f.s === 'M'" style="margin-left: 5px">
+              <a (click)="showDiff(f.f)">
+                <m-icon mCode="diff"></m-icon>
+              </a>
+            </div>
           </div>
         </div>
 
@@ -44,12 +55,16 @@
                   mPopconfirmTitle="web.space.github-pull-confirm"
                   (mOnConfirm)="pull()"
                   [mLoading]="saving"
-                  [disabled]="saving"
+                  [disabled]="saving || (selection | apply:noneSelected)"
                   style="width: 100%">
                 <m-icon mCode="arrow-down"></m-icon>&nbsp; <span>{{'web.space.github-pull' | translate}}</span>
                 <ng-container *ngTemplateOutlet="github"></ng-container>
               </m-button>
-              <m-button mDisplay="primary" (click)="pushModalVisible = true" [mLoading]="saving" [disabled]="saving" style="width: 100%">
+              <m-button mDisplay="primary"
+                  (click)="pushModalVisible = true"
+                  [mLoading]="saving"
+                  [disabled]="saving || (selection | apply:noneSelected)"
+                  style="width: 100%">
                 <m-icon mCode="arrow-up"></m-icon>&nbsp; <span>{{'web.space.github-push' | translate}}</span>
                 <ng-container *ngTemplateOutlet="github"></ng-container>
               </m-button>
@@ -70,6 +85,12 @@
 
 <m-modal #pushModal [(mVisible)]="pushModalVisible" (mClose)="pushModalVisible = false">
   <ng-container *m-modal-content>
+
+    <div class="status-row" *ngFor="let f of status.changed | filter:selected">
+      <div class="status">{{f.s}}</div>
+      <div>{{f.f}}</div>
+    </div>
+
     <m-form-item name="message" required mLabel="web.space.github-commit-message" style="padding-top: 5px">
       <m-input name="message" required [(ngModel)]="commit.message" [disabled]="saving"></m-input>
     </m-form-item>

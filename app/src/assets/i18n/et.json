@@ -908,10 +908,9 @@
 					"last-approved": "Viimane kinnitus",
 					"last-modified": "Viimati muudetud",
 					"last-reviewed": "Viimane ülevaatus",
-					"load-from-github": "Laadi Github-ist",
+					"sync-with-github": "Sünkroniseeri Github-iga",
 					"make-draft": "Muuda \"mustandiks\"",
 					"none": "Mitte ühtegi",
-					"push-to-github": "Salvesta Githubi",
 					"retire": "Tühista",
 					"show-changes": "Näita erinevused"
 				},
@@ -1776,10 +1775,9 @@
 					"last-approved": "Viimane kinnitus",
 					"last-modified": "Viimati muudetud",
 					"last-reviewed": "Viimati ülevaadatud",
-					"load-from-github": "Lae Github-ist",
+					"sync-with-github": "Sünkroniseeri Github-iga",
 					"make-draft": "Muuda \"mustandiks\"",
 					"none": "Puudub",
-					"push-to-github": "Lae Github-i",
 					"retire": "Aegunud",
 					"show-changes": "Näita erinevused"
 				},
