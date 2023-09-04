@@ -67,7 +67,7 @@
 
     <ng-container *ngIf="viewMode">
       <label *ngIf="['string', 'decimal', 'integer', undefined] | includes:property?.type">{{value}}</label>
-      <m-checkbox *ngIf="'boolean' === property?.type" [ngModel]="value" readOnly></m-checkbox>
+      <m-checkbox *ngIf="'boolean' === property?.type" [ngModel]="value" name="value" readOnly></m-checkbox>
       <label *ngIf="'dateTime' === property?.type">{{value | localDate}}</label>
       <label *ngIf="'code' === property?.type">{{value | localizedConceptName: {codeSystem: codeSystem} | async}}</label>
       <ng-container *ngIf="'Coding' === property?.type" [ngSwitch]="property | apply:codingType">
