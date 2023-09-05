@@ -14,16 +14,35 @@
           <label m-radio-button mValue="file">{{'web.resource-import-modal.file' | translate}}</label>
         </m-radio-group>
       </m-form-item>
+
       <ng-container *ngIf="params.source === 'file'">
-        <m-form-item mName="type" mLabel="web.resource-import-modal.type" required>
-          <m-radio-group name="type" [(ngModel)]="params.type" required>
-            <label m-radio-button mValue="json">JSON</label>
-            <label m-radio-button mValue="fsh">FSH</label>
-          </m-radio-group>
-        </m-form-item>
-        <m-form-item mName="file" mLabel="web.resource-import-modal.file" required>
-          <input #fileInput type="file" name="file" [(ngModel)]="params.file" required>
-        </m-form-item>
+        <m-form-row>
+          <m-form-item *mFormCol mName="type" mLabel="web.resource-import-modal.type" required>
+            <m-radio-group name="type" [(ngModel)]="params.type" required>
+              <label m-radio-button mValue="json">JSON</label>
+              <label m-radio-button mValue="fsh">FSH</label>
+            </m-radio-group>
+          </m-form-item>
+          <m-form-item *mFormCol mName="file" mLabel="web.resource-import-modal.file" required>
+            <input #fileInput type="file" name="file" [(ngModel)]="params.file" required>
+          </m-form-item>
+        </m-form-row>
+        <ng-container *ngIf="resourceType === 'ConceptMap'">
+          <m-form-row>
+            <m-form-item *mFormCol mName="versionCleanRun" mLabel="web.integration.file-import.concept-map.delete-associations">
+              <m-radio-group name="versionCleanRun" [(ngModel)]="params.settings['cleanRun']" required>
+                <label m-radio-button [mValue]="true">{{'core.btn.delete' | translate}}</label>
+                <label m-radio-button [mValue]="false">{{'web.integration.file-import.concept-map.hold' | translate}}</label>
+              </m-radio-group>
+            </m-form-item>
+            <m-form-item *mFormCol mName="conceptCleanRun" mLabel="web.integration.file-import.concept-map.overlap-of-associations">
+              <m-radio-group name="conceptCleanRun" [(ngModel)]="params.settings['cleanAssociationRun']" required>
+                <label m-radio-button [mValue]="true">{{'web.integration.file-import.concept-map.ignore' | translate}}</label>
+                <label m-radio-button [mValue]="false">{{'web.integration.file-import.concept-map.keep-both' | translate}}</label>
+              </m-radio-group>
+            </m-form-item>
+          </m-form-row>
+        </ng-container>
       </ng-container>
 
       <ng-container *ngIf="params.source === 'url'" >

@@ -23,7 +23,7 @@ export class ResourceFhirImportModalComponent {
   protected jobResponse?: JobLog;
 
   protected modalVisible = false;
-  public params: {id?: string, source: 'url' | 'file', type?: 'json' | 'fsh', url?: string, file?: any} = {source: 'url'};
+  public params: {id?: string, source: 'url' | 'file', type?: 'json' | 'fsh', url?: string, file?: any, settings?: any} = {source: 'url', settings: {}};
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("fileInput") public fileInput?: ElementRef<HTMLInputElement>;
@@ -41,8 +41,13 @@ export class ResourceFhirImportModalComponent {
   ) { }
 
   public toggleModal(visible: boolean = false): void {
+
+    const settings: {[k: string]: any} = {
+      'ConceptMap': {'cleanRun': false, 'cleanAssociationRun': false}
+    };
+
     this.modalVisible = visible;
-    this.params = this.modalVisible ? {source: 'url'} : undefined;
+    this.params = this.modalVisible ? {source: 'url', settings: settings[this.resourceType]} : undefined;
   }
 
   public import(): void {
@@ -86,7 +91,12 @@ export class ResourceFhirImportModalComponent {
     const importRequestMap: {[k: string]: Observable<JobLog>} = {
       'CodeSystem': this.codeSystemFileImportService.processRequest({type: this.params.type, codeSystem: {id: this.params.id}}, file, this.destroy$),
       'ValueSet': this.valueSetFileImportService.processRequest({type: this.params.type, valueSetId: this.params.id}, file, this.destroy$),
-      'ConceptMap': this.mapSetFileImportService.processRequest({type: this.params.type, mapSet: {id: this.params.id}}, file, this.destroy$)
+      'ConceptMap': this.mapSetFileImportService.processRequest({
+        type: this.params.type,
+        mapSet: {id: this.params.id},
+        cleanRun: this.params.settings['cleanRun'],
+        cleanAssociationRun: this.params.settings['cleanAssociationRun']
+      }, file, this.destroy$)
     };
     this.loader.wrap('import',importRequestMap[this.resourceType])
       .subscribe(resp => this.processJobResult(resp));

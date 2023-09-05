@@ -8,6 +8,7 @@ import {MapSetScope} from 'term-web/resources/_lib';
 
 export interface FileProcessingRequest {
   type?: string;
+  url?: string;
   mapSet: {
     id?: string;
     title?: LocalizedName;
