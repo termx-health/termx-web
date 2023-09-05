@@ -1,6 +1,6 @@
 <m-skeleton [mLoading]="loading">
   <m-list mSeparated [mEmpty]="searchResult.data.length === 0">
-    <m-list-item *ngFor="let ms of searchResult.data" mClickable [routerLink]="['/resources','map-sets',ms.id,'edit']">
+    <m-list-item *ngFor="let ms of searchResult.data" mClickable [routerLink]="['/resources','map-sets',ms.id,'summary']">
       <div class="m-justify-between m-items-top">
         <div>
           <div class="m-items-middle">
