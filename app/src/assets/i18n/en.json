@@ -1101,10 +1101,12 @@
 				"concept-map": {
 					"import": "Concept Map file import",
 					"map-id": "Map ID",
-					"map-name": "Map name",
-					"map-version": "Map version",
-					"source-value-set": "Source value set",
-					"target-value-set": "Target value set"
+					"file": "File",
+					"delete-associations": "Delete all associations before import?",
+					"hold": "Hold",
+					"overlap-of-associations": "Behavior on overlap of associations",
+					"keep-both": "Keep both",
+					"ignore": "Ignore duplicates"
 				},
 				"create-new": "Create new",
 				"not-found": "Not found?",

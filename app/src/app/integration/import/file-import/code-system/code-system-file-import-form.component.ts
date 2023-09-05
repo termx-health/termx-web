@@ -1,8 +1,6 @@
 import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
 import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {of} from 'rxjs';
 import {CodeSystem, CodeSystemLibService, CodeSystemVersion} from '../../../../resources/_lib';
 import {
@@ -52,7 +50,7 @@ export class CodeSystemFileImportFormComponent {
     }
   };
 
-  @Input() breadcrumbs: string[];
+  @Input() public breadcrumbs: string[];
 
   public loader = new LoadingManager();
 
@@ -61,8 +59,6 @@ export class CodeSystemFileImportFormComponent {
   @ViewChild('form') public form?: NgForm;
 
   public constructor(
-    private http: HttpClient,
-    private notificationService: MuiNotificationService,
     private codeSystemLibService: CodeSystemLibService
   ) {}
 

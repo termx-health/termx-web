@@ -4,21 +4,25 @@ import {HttpClient} from '@angular/common/http';
 import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 import {mergeMap, Observable, timer} from 'rxjs';
 import {LocalizedName} from '@kodality-web/marina-util';
+import {MapSetScope} from 'term-web/resources/_lib';
 
 export interface FileProcessingRequest {
   type?: string;
-  map: {
+  mapSet: {
     id?: string;
-    names?: LocalizedName;
+    title?: LocalizedName;
     uri?: string;
+    description?: LocalizedName;
   };
-  version?: {
+  mapSetVersion?: {
+    status?: string;
     version?: string;
     releaseDate?: Date;
+    scope?: MapSetScope;
   };
 
-  sourceValueSet?: string;
-  targetValueSet?: string;
+  cleanRun?: boolean;
+  cleanAssociationRun?: boolean;
 }
 
 @Injectable()

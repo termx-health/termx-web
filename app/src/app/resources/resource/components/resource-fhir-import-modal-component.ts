@@ -86,7 +86,7 @@ export class ResourceFhirImportModalComponent {
     const importRequestMap: {[k: string]: Observable<JobLog>} = {
       'CodeSystem': this.codeSystemFileImportService.processRequest({type: this.params.type, codeSystem: {id: this.params.id}}, file, this.destroy$),
       'ValueSet': this.valueSetFileImportService.processRequest({type: this.params.type, valueSetId: this.params.id}, file, this.destroy$),
-      'ConceptMap': this.mapSetFileImportService.processRequest({type: this.params.type, map: {id: this.params.id}}, file, this.destroy$)
+      'ConceptMap': this.mapSetFileImportService.processRequest({type: this.params.type, mapSet: {id: this.params.id}}, file, this.destroy$)
     };
     this.loader.wrap('import',importRequestMap[this.resourceType])
       .subscribe(resp => this.processJobResult(resp));

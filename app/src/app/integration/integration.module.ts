@@ -38,6 +38,7 @@ import {SnomedBranchManagementComponent} from 'term-web/integration/snomed/conta
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
 import {CodeSystemFileImportComponent} from 'term-web/integration/import/file-import/code-system/csv/code-system-file-import.component';
 import {OrphanetImportComponent} from 'term-web/integration/import/file-import/code-system/orphanet/orphanet-import.component';
+import {MapSetModule} from 'term-web/resources/map-set/map-set.module';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -75,7 +76,8 @@ export const INTEGRATION_ROUTES: Routes = [
     CoreUiModule,
     ResourcesLibModule,
     FhirLibModule,
-    IntegrationLibModule
+    IntegrationLibModule,
+    MapSetModule
   ],
   exports: [
     LoincListComponent,

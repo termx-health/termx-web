@@ -9,7 +9,6 @@ import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {CodeSystemModule} from 'term-web/resources/code-system/code-system.module';
 import {ResourceModule} from 'term-web/resources/resource/resource.module';
 import {SequenceLibModule} from 'term-web/sequence/_lib/sequence-lib.module';
-import {MapSetScopeFormComponent} from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
 import {MapSetSummaryComponent} from 'term-web/resources/map-set/containers/summary/map-set-summary.component';
 import {MapSetVersionsWidgetComponent} from 'term-web/resources/map-set/containers/summary/widgets/map-set-versions-widget.component';
 import {MapSetInfoWidgetComponent} from 'term-web/resources/map-set/containers/summary/widgets/map-set-info-widget.component';
@@ -27,6 +26,7 @@ import {MapSetUnmappedConceptListComponent} from 'term-web/resources/map-set/con
 import {
   MapSetExternalSourceConceptListComponent
 } from 'term-web/resources/map-set/containers/version/summary/concepts/map-set-external-source-concept-list.component';
+import {MapSetScopeFormComponent} from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
 
 export const MAP_SET_ROUTES: Routes = [
   {path: '', component: MapSetListComponent},
@@ -73,6 +73,7 @@ export const MAP_SET_ROUTES: Routes = [
     MapSetAssociationListComponent,
     MapSetAssociationDrawerComponent
   ],
+  exports: [MapSetScopeFormComponent],
   providers: [
     MapSetService
   ]

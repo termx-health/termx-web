@@ -1,77 +1,125 @@
-<m-card>
-  <div *m-card-header class="m-justify-between">
-    <nz-breadcrumb>
-      <nz-breadcrumb-item>{{'web.integration.file-import.title' | translate}}</nz-breadcrumb-item>
-      <nz-breadcrumb-item>{{'web.integration.file-import.concept-map.import' | translate}}</nz-breadcrumb-item>
-    </nz-breadcrumb>
-  </div>
+<form #form="ngForm">
 
-  <form #form="ngForm">
-    <!--Id -->
-    <m-form-item mName="id" mLabel="web.integration.file-import.concept-map.map-id" required>
-      <ng-container *ngIf="!isNewMapSet">
-        <tw-map-set-search name="id" [(ngModel)]="data.map.id" (ngModelChange)="loadMapSet($event)" valuePrimitive required></tw-map-set-search>
-        <div style="margin-top: 0.5rem" (click)="iniMapSet()">
-          {{'web.integration.file-import.not-found' | translate}}
-          <a>{{'web.integration.file-import.create-new' | translate}}</a>
-        </div>
+  <m-card>
+    <div *m-card-header class="m-justify-between">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>{{'web.integration.file-import.title' | translate}}</nz-breadcrumb-item>
+        <nz-breadcrumb-item>{{'web.integration.file-import.concept-map.import' | translate}}</nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </div>
+
+    <div>
+      <ng-container *ngIf="!isNewResource; else resourceForm">
+        <m-form-item mName="id" mLabel="web.integration.file-import.concept-map.map-id" required>
+          <tw-map-set-search name="id"
+              [(ngModel)]="data.mapSet.id"
+              (ngModelChange)="onMapSetSelect($event)"
+              valuePrimitive
+              autofocus
+              required></tw-map-set-search>
+          <div style="margin-top: 0.35rem; font-size: 0.85rem">
+            {{'web.integration.file-import.not-found' | translate}}
+            <a (mClick)="createMapSet()">{{'web.integration.file-import.create-new' | translate}}</a>
+          </div>
+        </m-form-item>
+
+        <m-form-item *ngIf="data.mapSet.id">
+          <m-alert class="tw-alert--vertical" mType="info">
+            <m-form-item mLabel="entities.map-set.uri">
+              {{data.loadedMapSet?.uri || '-'}}
+            </m-form-item>
+            <m-form-item mLabel="entities.map-set.title">
+              {{data.loadedMapSet?.title | localName:'-'}}
+            </m-form-item>
+            <m-form-item mLabel="entities.map-set.description">
+              {{data.loadedMapSet?.description | localName:'-'}}
+            </m-form-item>
+          </m-alert>
+        </m-form-item>
       </ng-container>
 
-      <m-input *ngIf="isNewMapSet" name="id" [(ngModel)]="data.map.id" required></m-input>
-    </m-form-item>
+      <ng-template #resourceForm>
+        <m-form-item mName="id" mLabel="entities.map-set.id" required>
+          <m-input name="id" [(ngModel)]="data.mapSet.id" autofocus [focusTimeout]="50" required/>
+        </m-form-item>
 
-    <!-- Name -->
-    <m-form-item mName="name" mLabel="web.integration.file-import.concept-map.map-name" *ngIf="data.map.id">
-      <ng-container *ngIf="!isNewMapSet">{{data.loadedMapSet?.title | localName: '-'}}</ng-container>
-      <m-multi-language-input *ngIf="isNewMapSet" name="names" [(ngModel)]="data.map.names"></m-multi-language-input>
-    </m-form-item>
+        <m-form-item mName="title" mLabel="entities.map-set.title" required>
+          <m-multi-language-input name="title" [(ngModel)]="data.mapSet.title" required/>
+        </m-form-item>
 
-    <!-- Version -->
-    <m-form-item mName="version" mLabel="web.integration.file-import.concept-map.map-version">
-      <tw-semantic-version-select
-          name="version"
-          [(ngModel)]="data.version.version"
-          [versions]="(isNewMapSet ? undefined : data.map.id) | apply: loadMapSetVersions | async"
-      ></tw-semantic-version-select>
-    </m-form-item>
+        <m-form-item mName="uri" mLabel="entities.map-set.uri" required>
+          <m-input name="uri" [(ngModel)]="data.mapSet.uri" required/>
+        </m-form-item>
 
-    <!-- Release date -->
-    <m-form-item mName="releaseDate" mLabel="entities.map-set-version.release-date" required>
-      <m-date-picker name="releaseDate" [(ngModel)]="data.version.releaseDate" required></m-date-picker>
-    </m-form-item>
+        <m-form-item mName="description" mLabel="entities.map-set.description">
+          <m-multi-language-input name="description" [(ngModel)]="data.mapSet.description"/>
+        </m-form-item>
+      </ng-template>
+    </div>
 
-    <!-- Source valueset  -->
-    <m-form-item mName="sourceValueSet" mLabel="web.integration.file-import.concept-map.source-value-set" required>
-      <tw-value-set-search name="sourceValueSet" [(ngModel)]="data.sourceValueSet" valuePrimitive required></tw-value-set-search>
-    </m-form-item>
+    <div *ngIf="data.mapSet?.id || isNewResource">
+      <ng-container *ngIf="!isNewVersion; else mapSetVersionForm">
+        <m-form-item mName="versionVersion" mLabel="entities.map-set-version.version" required mLabelHint="Draft versions only">
+          <m-select name="versionVersion"
+              [(ngModel)]="data.mapSetVersion.version"
+              (ngModelChange)="data.cleanRun = false; data.cleanAssociationRun = false"
+              autoSelect
+              required>
+            <m-option *ngFor="let v of data.loadedMapSet?.versions | filter: filterVersion: 'draft'" [mLabel]="v.version" [mValue]="v.version"/>
+          </m-select>
+          <div style="margin-top: 0.35rem; font-size: 0.85rem">
+            {{'web.integration.file-import.not-found' | translate}}
+            <a (mClick)="createMapSetVersion()">{{'web.integration.file-import.create-new' | translate}}</a>
+          </div>
+        </m-form-item>
+        <m-form-item mName="versionCleanRun" mLabel="web.integration.file-import.concept-map.delete-associations">
+          <m-radio-group name="versionCleanRun" [(ngModel)]="data.cleanRun" required>
+            <label m-radio-button [mValue]="true">{{'core.btn.delete' | translate}}</label>
+            <label m-radio-button [mValue]="false">{{'web.integration.file-import.concept-map.hold' | translate}}</label>
+          </m-radio-group>
+        </m-form-item>
+        <m-form-item mName="conceptCleanRun" mLabel="web.integration.file-import.concept-map.overlap-of-associations">
+          <m-radio-group name="conceptCleanRun" [(ngModel)]="data.cleanAssociationRun" required>
+            <label m-radio-button [mValue]="true">{{'web.integration.file-import.concept-map.ignore' | translate}}</label>
+            <label m-radio-button [mValue]="false">{{'web.integration.file-import.concept-map.keep-both' | translate}}</label>
+          </m-radio-group>
+        </m-form-item>
+      </ng-container>
 
-    <!-- Destination valueset  -->
-    <m-form-item mName="targetValueSet" mLabel="web.integration.file-import.concept-map.target-value-set" required>
-      <tw-value-set-search name="targetValueSet" [(ngModel)]="data.targetValueSet" valuePrimitive required></tw-value-set-search>
-    </m-form-item>
+      <ng-template #mapSetVersionForm>
+        <m-form-item mName="versionVersion" mLabel="entities.map-set-version.version" required>
+          <tw-semantic-version-select name="versionVersion"
+              [(ngModel)]="data.mapSetVersion.version"
+              [versions]="isNewResource ? [] : (data.loadedMapSet?.versions | apply: getVersions)"
+              required/>
+        </m-form-item>
 
-    <!-- File-->
-    <m-form-item mName="targetValueSet" mLabel="web.integration.file-import.concept-map.target-value-set" required>
-      <input #fileInput id="fileInput" name="sourceImportFile" type="file" [(ngModel)]="data.file" required>
+        <m-form-item mName="versionStatus" mLabel="entities.map-set-version.status" required>
+          <tw-value-set-concept-select name="versionStatus" [(ngModel)]="data.mapSetVersion.status" valueSet="publication-status" required/>
+        </m-form-item>
+
+        <m-form-item mName="versionReleaseDate" mLabel="entities.map-set-version.release-date" required>
+          <m-date-picker name="versionReleaseDate" [(ngModel)]="data.mapSetVersion.releaseDate" required/>
+        </m-form-item>
+
+        <tw-ms-scope-form [scope]="data.mapSetVersion.scope" ></tw-ms-scope-form>
+      </ng-template>
+    </div>
+
+    <m-form-item mName="file" mLabel="web.integration.file-import.concept-map.file" required>
+        <input #fileInput id="fileInput" name="file" type="file" [(ngModel)]="data.file" required>
     </m-form-item>
 
     <tw-import-job-log *ngIf="jobResponse" [jobLog]="jobResponse"/>
 
-    <m-button
-        *m-card-footer
-        [mLoading]="loader.state['processing']"
-        [disabled]="form.invalid"
-        (click)="process()"
-    >
+    <m-button *m-card-footer [mLoading]="loader.state['processing']" [disabled]="form.invalid" (click)="process()">
       {{'web.integration.file-import.process' | translate}}
     </m-button>
-  </form>
-</m-card>
+  </m-card>
+</form>
+
 
 <ng-template #successNotificationContent>
-  <a *ngIf="'*.MapSet.edit' | twHasAnyPrivilege; else view" (click)="openMapSet(data.map.id, 'edit')">{{data.map.id}}</a>
-  <ng-template #view>
-    <a (click)="openMapSet(data.map.id, 'view')">{{data.map.id}}</a>
-  </ng-template>
+  <a (click)="openMapSet(data.mapSet.id)">{{data.mapSet.id}}</a>
 </ng-template>
 
