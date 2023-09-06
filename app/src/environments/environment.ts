@@ -9,8 +9,7 @@ export const environment = {
   oauthClientId: 'term-client',
 
   swaggerUrl: 'https://termx.kodality.dev/swagger/',
-//  chefUrl: 'https://termx.kodality.dev/chef',
-  chefUrl: 'http://localhost:3000',
+  chefUrl: 'https://termx.kodality.dev/chef',
   plantUmlUrl: 'https://termx.kodality.dev/plantuml',
   fmlEditor: 'https://termx.kodality.dev/fml-editor',
 };
