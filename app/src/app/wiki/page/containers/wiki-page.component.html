@@ -25,7 +25,7 @@
     <div class="page__sidebar">
       <tw-collapse-panel resizable>
         <m-skeleton [mLoading]="loader.state['spaces']">
-          <tw-wiki-sidebar *ngIf="space" [space]="space" [path]="path" (viewRoot)="viewRoot()" (viewPage)="viewPage($event)"/>
+          <tw-wiki-page-tree-sidebar *ngIf="space" [space]="space" [path]="path" (viewRoot)="viewRoot()" (viewPage)="viewPage($event)"/>
         </m-skeleton>
       </tw-collapse-panel>
     </div>
@@ -34,11 +34,11 @@
     <!-- Main container -->
     <ng-container *ngIf="loader.state['spaces'] || space; else noSpace">
       <!-- Space view -->
-      <tw-wiki-space-details
+      <tw-wiki-space-overview
           *ngIf="isOverviewSelected" class="page__wrapper"
           [space]="space"
           (viewPage)="viewPage($event)"
-      ></tw-wiki-space-details>
+      ></tw-wiki-space-overview>
 
       <!-- Page view -->
       <tw-wiki-page-details

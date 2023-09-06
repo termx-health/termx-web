@@ -24,6 +24,8 @@ import {WikiTextareaComponent} from './texteditor/wiki-textarea.component';
 import {ModelerLibModule} from 'term-web/modeler/_lib';
 import {SpaceLibModule} from 'term-web/space/_lib';
 import {PageContentSelectComponent} from 'term-web/wiki/_lib/page/components/page-content-select.component';
+import {WikiCommentPopoverComponent} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment-popover.component';
+import {PageCommentLibService} from 'term-web/wiki/_lib/page/services/page-comment-lib.service';
 
 @NgModule({
   imports: [
@@ -44,6 +46,7 @@ import {PageContentSelectComponent} from 'term-web/wiki/_lib/page/components/pag
   providers: [
     TagLibService,
     PageLibService,
+    PageCommentLibService,
     TemplateLibService,
   ],
   declarations: [
@@ -54,6 +57,8 @@ import {PageContentSelectComponent} from 'term-web/wiki/_lib/page/components/pag
     // text editor
     WikiSmartTextEditorComponent,
     WikiSmartTextEditorViewComponent,
+
+    WikiCommentPopoverComponent,
 
     WikiTextareaComponent,
     WikiQuickActionsDropdownComponent,

@@ -8,10 +8,10 @@ import {MuiConfigService} from '@kodality-web/marina-ui';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 
 @Component({
-  selector: 'tw-wiki-page-modal',
-  templateUrl: 'wiki-page-modal.component.html',
+  selector: 'tw-wiki-page-setup',
+  templateUrl: 'wiki-page-setup-modal.component.html',
 })
-export class WikiPageModalComponent implements OnInit, OnChanges {
+export class WikiPageSetupModalComponent implements OnInit, OnChanges {
   @Input() public pageId: number | undefined;
   @Input() public contentId: number | undefined;
 

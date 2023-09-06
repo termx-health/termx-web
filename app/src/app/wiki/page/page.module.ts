@@ -6,14 +6,16 @@ import {DragDropModule} from '@angular/cdk/drag-drop';
 import {Routes} from '@angular/router';
 import {WikiPageComponent} from './containers/wiki-page.component';
 import {WikiPageEditComponent} from './containers/wiki-page-edit.component';
-import {WikiPageModalComponent} from './components/wiki-page-modal.component';
+import {WikiPageSetupModalComponent} from './components/wiki-page-setup-modal.component';
 import {WikiPageHeaderComponent} from './components/wiki-page-header.component';
-import {WikiSidebarComponent} from './components/wiki-sidebar.component';
+import {WikiPageTreeComponent} from './components/wiki-page-tree.component';
 import {PageService} from './services/page.service';
 import {PageLinkService} from './services/page-link.service';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
-import {WikiPageDetailsComponent} from './components/wiki-page-details.component';
-import {WikiSpaceDetailsComponent} from './components/wiki-space-details.component';
+import {WikiPageDetailsComponent} from './containers/wiki-page-details.component';
+import {WikiSpaceOverviewComponent} from './components/wiki-space-overview.component';
+import {PageCommentService} from './services/page-comment.service';
+import {WikiPageCommentsComponent} from './components/wiki-page-comments.component';
 
 
 export const WIKI_PAGE_ROUTES: Routes = [
@@ -35,18 +37,20 @@ export const WIKI_PAGE_ROUTES: Routes = [
   declarations: [
     // containers
     WikiPageComponent,
+    WikiPageDetailsComponent,
     WikiPageEditComponent,
 
     // components
-    WikiSidebarComponent,
-    WikiPageModalComponent,
+    WikiPageTreeComponent,
+    WikiPageSetupModalComponent,
     WikiPageHeaderComponent,
-    WikiPageDetailsComponent,
-    WikiSpaceDetailsComponent
+    WikiPageCommentsComponent,
+    WikiSpaceOverviewComponent
   ],
   providers: [
     PageService,
     PageLinkService,
+    PageCommentService
   ]
 })
 export class PageModule {

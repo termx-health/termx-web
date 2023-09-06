@@ -49,6 +49,12 @@ m-markdown {
   }
 }
 
+.m-icon-button-wrapper {
+  button {
+    color: currentColor;
+  }
+}
+
 a {
   font-size: 1em;
 }
@@ -146,3 +152,20 @@ a {
   outline: none;
 }
 
+m-markdown.disable {
+  position: relative;
+
+  *[data-source-line] {
+    position: relative;
+
+    &::before {
+      content: attr(data-source-line);
+      position: absolute;
+      right: 100%;
+      margin-right: 3px;
+      font-family: monospace;
+      font-size: 0.7rem;
+      font-weight: initial;
+    }
+  }
+}
