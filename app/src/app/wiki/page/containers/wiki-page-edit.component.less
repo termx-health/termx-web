@@ -47,6 +47,22 @@
   }
 }
 
+::ng-deep .editor__comments-wrapper {
+  box-shadow: -7px 0 9px -7px rgba(0, 0, 0, 0.15);
+  border-left: 1px solid var(--color-borders);
+
+  .content__wrapper {
+    padding: 0 !important;
+  }
+}
+
+.editor__comments {
+  background: var(--color-background-component);
+  height: calc(100dvh - var(--page-header-height) - var(--editor-header-height));
+  overflow: auto;
+
+  padding: 1rem;
+}
 
 .upload-input {
   width: 0.1px;

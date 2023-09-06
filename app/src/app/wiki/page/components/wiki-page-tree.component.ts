@@ -2,13 +2,11 @@ import {Component, EventEmitter, Injectable, Input, OnChanges, Output, SimpleCha
 import {TranslateService} from '@ngx-translate/core';
 import {PageService} from '../services/page.service';
 import {EMPTY, forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
-import {Router} from '@angular/router';
 import {compareValues, copyDeep, isNil, LoadingManager, remove, SearchResult, unique} from '@kodality-web/core-util';
 import {Page, PageContent, PageLink} from 'term-web/wiki/_lib';
 import {DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
 import {PageLinkService} from '../services/page-link.service';
-import {WikiPageModalComponent} from './wiki-page-modal.component';
-import {SpaceService} from 'term-web/space/services/space.service';
+import {WikiPageSetupModalComponent} from './wiki-page-setup-modal.component';
 import {Space} from 'term-web/space/_lib';
 
 function findInTree<Node, Key>(nodesToSearch: Node[], key: Key, getKey: (n: Node) => Key, getChildren: (n: Node) => Node[]): Node {
@@ -126,8 +124,8 @@ class WikiSidebarService {
 const NODE_OBJECT_KEY = 'obj';
 
 @Component({
-  selector: 'tw-wiki-sidebar',
-  templateUrl: 'wiki-sidebar.component.html',
+  selector: 'tw-wiki-page-tree-sidebar',
+  templateUrl: 'wiki-page-tree.component.html',
   styles: [`
     @import "../../../../styles/variables";
 
@@ -146,7 +144,7 @@ const NODE_OBJECT_KEY = 'obj';
   `],
   providers: [WikiSidebarService]
 })
-export class WikiSidebarComponent implements OnChanges {
+export class WikiPageTreeComponent implements OnChanges {
   @Input() public path?: number[];
   @Input() public space?: Space;
 
@@ -162,11 +160,9 @@ export class WikiSidebarComponent implements OnChanges {
   protected loader = new LoadingManager();
 
   public constructor(
-    private router: Router,
     private translateService: TranslateService,
     private pageLinkService: PageLinkService,
     private sidebarService: WikiSidebarService,
-    private spaceService: SpaceService,
   ) { }
 
 
@@ -279,7 +275,7 @@ export class WikiSidebarComponent implements OnChanges {
   }
 
 
-  public onChildAdd(event: MouseEvent, modal: WikiPageModalComponent, node?: DropListNode): void {
+  public onChildAdd(event: MouseEvent, modal: WikiPageSetupModalComponent, node?: DropListNode): void {
     event.preventDefault();
     event.stopImmediatePropagation();
     modal.open({
@@ -389,7 +385,7 @@ export class WikiSidebarComponent implements OnChanges {
     this.viewPage.emit(this.localizedContent(obj)?.slug);
   }
 
-  protected openPageAfterSave(obj: Page, modal: WikiPageModalComponent): void {
+  protected openPageAfterSave(obj: Page, modal: WikiPageSetupModalComponent): void {
     this.openPage(obj);
 
     obj.links.forEach(l => {

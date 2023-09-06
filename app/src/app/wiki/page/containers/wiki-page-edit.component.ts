@@ -1,13 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {isNil, LoadingManager, remove, sort} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Page, PageAttachment, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
+import {Page, PageAttachment, PageComment, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
 import {PageService} from '../services/page.service';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {mergeMap} from 'rxjs';
 import {SpaceService} from 'term-web/space/services/space.service';
 import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 import {MuiModalContainerComponent} from '@kodality-web/marina-ui';
+import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
 
 @Component({
   templateUrl: 'wiki-page-edit.component.html',
@@ -17,14 +18,18 @@ export class WikiPageEditComponent implements OnInit {
   public page?: Page;
   public pageContent?: PageContent;
   public pageAttachments?: PageAttachment[];
-  public showPreview?: boolean = false;
+  public pageComments?: PageComment[];
+
   protected loader = new LoadingManager();
+  public showPreview = false;
+  public showComments = false;
 
   @ViewChild(WikiSmartTextEditorComponent) public editor?: WikiSmartTextEditorComponent;
 
   public constructor(
     private spaceService: SpaceService,
     private pageService: PageService,
+    private pageCommentService: PageCommentService,
     private structureDefinitionService: StructureDefinitionLibService,
     private clipboard: Clipboard,
     private router: Router,
@@ -53,14 +58,24 @@ export class WikiPageEditComponent implements OnInit {
 
     this.loader.wrap('init', req$).subscribe(pages => {
       const page = pages.data[0];
-      this.loader.wrap('init', this.pageService.loadAttachments(page.id)).subscribe(resp => this.pageAttachments = sort(resp, 'fileName'));
 
-      if (page?.contents?.some(c => c.slug === slug)) {
-        this.page = page;
-        this.pageContent = page.contents.find(c => c.slug === slug);
-      } else {
+      this.page = page;
+      this.pageContent = page.contents.find(c => c.slug === slug);
+      if (isNil(this.pageContent)) {
         this.router.navigate(['/wiki', this.route.snapshot.paramMap.get("space")]);
+        return;
       }
+
+      this.loader.wrap('init', this.pageService.loadAttachments(page.id)).subscribe(resp => {
+        this.pageAttachments = sort(resp, 'fileName');
+      });
+
+      this.loader.wrap('init', this.pageCommentService.search({
+        pageContentIds: this.pageContent.id,
+        statuses: 'active'
+      })).subscribe(comments => {
+        this.pageComments = comments.data;
+      });
     });
   }
 
@@ -177,6 +192,16 @@ export class WikiPageEditComponent implements OnInit {
 
   protected isImage(contentType: string): boolean {
     return contentType?.startsWith('image/');
+  }
+
+
+  /* Comments */
+
+  protected toggleComments(): void {
+    this.showComments = !this.showPreview;
+    if (this.showComments) {
+      this.showPreview = true;
+    }
   }
 
 

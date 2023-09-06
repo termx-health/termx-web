@@ -1,12 +1,13 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {collect, group, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../services/page.service';
 import {MuiConfigService} from '@kodality-web/marina-ui';
 import {NgForm} from '@angular/forms';
 import {Clipboard} from '@angular/cdk/clipboard';
-import {Page, PageContent, PageRelation, parsePageRelationLink} from 'term-web/wiki/_lib';
+import {Page, PageComment, PageContent, PageRelation, parsePageRelationLink} from 'term-web/wiki/_lib';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
+import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
+import {WikiComment} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment';
 
 @Component({
   selector: 'tw-wiki-page-details',
@@ -23,9 +24,12 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   protected pageContent?: PageContent;
   protected pageRelations?: {[type: string]: PageRelation[]};
   protected pageUsages?: PageRelation[];
+  protected pageComments?: PageComment[];
 
   @ViewChild("contentForm") public contentFrom: NgForm;
-  protected spaces: {[id: number]: Space} = {};
+  protected spaces: {
+    [id: number]: Space
+  } = {};
 
   protected loader = new LoadingManager();
   protected contentModalData: {
@@ -34,9 +38,8 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   } = {};
 
   public constructor(
-    private router: Router,
-    private route: ActivatedRoute,
     private pageService: PageService,
+    private pageCommentService: PageCommentService,
     private clipboard: Clipboard,
     private spaceService: SpaceLibService,
     protected muiConfig: MuiConfigService
@@ -61,6 +64,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     this.pageContent = undefined;
     this.pageRelations = {};
     this.pageUsages = [];
+    this.pageComments = [];
 
     if (page) {
       page.contents ??= [];
@@ -69,7 +73,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
       page.tags ??= [];
 
       this.pageContent = page.contents.find(c => c.slug === slug);
-      // include relations that are ONLY used in the current page
+      // include relations that are used ONLY in the current page
       this.pageRelations = collect(page.relations.filter(r => r.content.code === slug), r => r.type);
       // $slug and $space/$slug params are used in order to find references from other spaces
       this.pageService.searchPageRelations({
@@ -82,6 +86,13 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
           .filter(r => r.spaceId === this.space.id || r.target.startsWith(`${this.space?.code}/`))
           // include usages where current page is referenced from
           .filter(u => u.target.endsWith(slug));
+      });
+
+      this.pageCommentService.search({
+        statuses: 'active',
+        pageContentIds: page.contents.map(c => c.id).join(',')
+      }).subscribe(resp => {
+        this.pageComments = resp.data;
       });
     }
   }
@@ -106,6 +117,20 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   protected openRelation(type: string, target: string): void {
     const {space, page} = parsePageRelationLink(target);
     this.viewResource.emit({type: type, id: page, options: {space}});
+  }
+
+  /* WikiComments */
+
+  protected onPageCommentCreated(comment: WikiComment): void {
+    this.pageCommentService.save({
+      pageContentId: this.pageContent.id,
+      text: comment.quote?.trim().length ? comment.quote : undefined,
+      comment: comment.comment,
+      options: {lineNumber: comment.line},
+      status: 'active',
+    }).subscribe(resp => {
+      this.pageComments = [...this.pageComments, resp];
+    });
   }
 
 

@@ -1,4 +1,4 @@
-<tw-smart-text-editor-view *ngIf="viewMode; else edit" [value]="value" [valueType]="valueType" [lang]="lang"/>
+<tw-smart-text-editor-view *ngIf="viewMode; else edit" [value]="value" [valueType]="valueType"/>
 
 
 <ng-template #edit>
@@ -38,7 +38,7 @@
 
 
     <div *ngIf="showPreview" class="editor__preview">
-      <tw-smart-text-editor-view [value]="valueView$ | async" [valueType]="valueType" [lang]="lang" [prerender]="true"/>
+      <tw-smart-text-editor-view [value]="valueView$ | async" [valueType]="valueType" [prerender]="true"/>
     </div>
   </div>
 </ng-template>

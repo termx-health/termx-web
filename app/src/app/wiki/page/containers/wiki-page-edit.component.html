@@ -16,9 +16,8 @@
       </m-button>
 
       <m-divider mVertical></m-divider>
-      <m-button (click)="pageModal.open()" mDisplay="text">
-        <m-icon mCode="setting"/>
-      </m-button>
+      <m-icon-button mIcon="comment" (mClick)="toggleComments()" [disabled]="!pageComments?.length"/>
+      <m-icon-button mIcon="setting" (mClick)="pageModal.open()"/>
     </div>
   </div>
 
@@ -57,6 +56,7 @@
       </ul>
     </div>
 
+
     <div
         class="editor__main"
         [class.editor__main--markdown]="pageContent?.contentType === 'markdown'"
@@ -70,6 +70,15 @@
           name="content"
       ></tw-smart-text-editor>
     </div>
+
+    <tw-collapse-panel class="editor__comments-wrapper" key="page-editor-comment" collapsePosition="right" resizable *ngIf="showComments">
+      <div class="editor__comments">
+        <tw-wiki-page-comments
+            [pageContent]="pageContent"
+            [(pageComments)]="pageComments"
+        ></tw-wiki-page-comments>
+      </div>
+    </tw-collapse-panel>
   </div>
 </m-page>
 
@@ -100,7 +109,6 @@
   </div>
 </m-modal>
 
-
 <m-modal #fileModal mStyle="width: 36rem; margin-top: calc(var(--page-header-height) + 1rem)" mPlacement="top">
   <div *m-modal-header class="m-modal__title">
     {{'web.wiki-page.edit.image-modal.header' | translate}}
@@ -120,7 +128,11 @@
             <div>{{a.fileName}}</div>
           </div>
 
-          <m-icon-button *twPrivileged="'*.Wiki.edit'" [mIcon]="a['_deleting'] ? 'loading' : 'delete'" (mClick)="$event.preventDefault(); $event.stopPropagation(); deleteAttachment(a)"/>
+          <m-icon-button
+              *twPrivileged="'*.Wiki.edit'"
+              [mIcon]="a['_deleting'] ? 'loading' : 'delete'"
+              (mClick)="$event.preventDefault(); $event.stopPropagation(); deleteAttachment(a)"
+          ></m-icon-button>
         </div>
       </m-list-item>
     </m-list>
@@ -143,11 +155,11 @@
   </div>
 </m-modal>
 
-<tw-wiki-page-modal #pageModal
+<tw-wiki-page-setup #pageModal
     [pageId]="pageContent?.pageId"
     [contentId]="pageContent?.id"
     (closed)="pageModal.close()"
     (saved)="afterPageSave($event.pageContent); pageModal.close()"
-></tw-wiki-page-modal>
+></tw-wiki-page-setup>
 
 

@@ -10,6 +10,10 @@ import {BehaviorSubject, concat, debounceTime, take} from 'rxjs';
   selector: 'tw-smart-text-editor',
   templateUrl: 'wiki-smart-text-editor.component.html',
   styles: [`
+    :host {
+      position: relative;
+    }
+
     ::ng-deep .drawio-editor {
       z-index: 1000;
       position: absolute;
