@@ -17,6 +17,7 @@
 			"proceed": "Proceed",
 			"query": "Query",
 			"save": "Save",
+			"send": "Send",
 			"search": "Search",
 			"select": "Select"
 		},
@@ -1900,6 +1901,9 @@
 						"add": "Add structure definition",
 						"copy": "Copy reference",
 						"title": "Structure definition"
+					},
+					"comments": {
+						"title": "Comments"
 					}
 				},
 				"structure-definition-modal": {
@@ -1913,6 +1917,11 @@
 				"add-subpage": "Add subpage",
 				"copy-raw": "Copy raw file",
 				"modified": "<b>{{user}}</b> edited this page on {{date}}"
+			},
+			"comments": {
+				"reply": "Reply",
+				"read-more": "Read more",
+				"resolve": "Resolve"
 			},
 			"no-space": {
 				"desc": "Please select space to proceed",

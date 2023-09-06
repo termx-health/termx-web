@@ -5,8 +5,8 @@ import {Page, PageContent} from 'term-web/wiki/_lib';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-wiki-space-details',
-  templateUrl: 'wiki-space-details.component.html',
+  selector: 'tw-wiki-space-overview',
+  templateUrl: 'wiki-space-overview.component.html',
   styles: [`
     .equal-columns {
       display: grid;
@@ -15,7 +15,7 @@ import {TranslateService} from '@ngx-translate/core';
     }
   `]
 })
-export class WikiSpaceDetailsComponent implements OnChanges {
+export class WikiSpaceOverviewComponent implements OnChanges {
   @Input() public space: Space;
   @Output() public viewPage = new EventEmitter<string>();
 
