@@ -114,7 +114,9 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
   }
 
   public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
-    return nzValue.toLowerCase().includes(_input.toLowerCase()) || this.data[nzValue]?.display?.name?.toLowerCase().includes(_input.toLowerCase());
+    return nzValue.toLowerCase().includes(_input.toLowerCase()) ||
+      this.data[nzValue]?.display?.name?.toLowerCase().includes(_input.toLowerCase()) ||
+      this.data[nzValue]?.additionalDesignations?.find(d => d?.name?.toLowerCase().includes(_input.toLowerCase()));
   };
 
   protected getDisplay = (concept: ValueSetVersionConcept): string => {

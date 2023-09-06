@@ -194,7 +194,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   }
 
   protected filterProperties = (p: EntityProperty, kind: string): boolean => {
-    return p.kind === kind && p.name !== 'status';
+    return p.kind === kind && !['status', 'is-a', 'parent', 'child', 'partOf', 'groupedBy'].includes(p.name);
   };
 
   public addPropertyValue(prop: EntityProperty): void {
