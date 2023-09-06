@@ -14,7 +14,7 @@
       <th>{{'entities.code-system-concept.code-system' | translate}}</th>
     </tr>
     <tr *mTableRow="let concept">
-      <td><a (click)="openConcept(concept.codeSystem, concept.id)">{{concept.code}}</a></td>
+      <td><a (click)="openConcept(concept.codeSystem, concept.code)">{{concept.code}}</a></td>
       <td>{{concept.codeSystem}}</td>
     </tr>
     <tr *mTableNoData>

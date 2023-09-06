@@ -150,20 +150,20 @@ export class GlobalSearchDashboardComponent {
     );
   }
 
-  public openConcept(codeSystem: string, id: number): void {
-    this.router.navigate(['/resources/code-systems/', codeSystem, 'concepts', id, 'view']);
+  public openConcept(codeSystem: string, code: string): void {
+    this.router.navigate(['/resources/code-systems/', codeSystem, 'concepts', code, 'view']);
   }
 
   public openCodeSystem(id: number): void {
-    this.router.navigate(['/resources/code-systems/', id, 'view']);
+    this.router.navigate(['/resources/code-systems/', id, 'summary']);
   }
 
   public openValueSet(id: number): void {
-    this.router.navigate(['/resources/value-sets/', id, 'view']);
+    this.router.navigate(['/resources/value-sets/', id, 'summary']);
   }
 
   public openMapSet(id: number): void {
-    this.router.navigate(['/resources/map-sets/', id, 'view']);
+    this.router.navigate(['/resources/map-sets/', id, 'summary']);
   }
 
   public openMeasurementUnit(id: number): void {

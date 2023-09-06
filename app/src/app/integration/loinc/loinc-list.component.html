@@ -62,64 +62,49 @@
     </tr>
 
     <tr *mTableRow="let c;let i = index">
-      <td style="white-space: nowrap;"><a (mClick)="openConcept(c.code)">{{c.code}}</a></td>
+      <td><a (mClick)="openConcept(c.code)" style="white-space: nowrap;">{{c.code}}</a></td>
       <td>{{c | apply:getName}}</td>
       <td>
-        <div style="display: grid">
-          <label *ngFor="let name of (c | apply:getPartName:'COMPONENT':parts)">{{name}}</label>
-        </div>
+        <div *ngFor="let name of (c | apply:getPartName:'COMPONENT':parts)">{{name}}</div>
       <td>
-        <div style="display: grid">
-          <label *ngFor="let name of (c | apply:getPartName:'PROPERTY':parts)">{{name}}</label>
+        <div *ngFor="let name of (c | apply:getPartName:'PROPERTY':parts)">{{name}}</div>
+      </td>
+      <td>
+        <div *ngFor="let name of (c | apply:getPartName:'TIME':parts)">{{name}}</div>
+      </td>
+      <td>
+        <div *ngFor="let name of (c | apply:getPartName:'SYSTEM':parts)">{{name}}</div>
+      </td>
+      <td>
+        <div *ngFor="let name of (c | apply:getPartName:'SCALE':parts)">{{name}}</div>
+      </td>
+      <td>
+        <div *ngFor="let name of (c | apply:getPartName:'METHOD':parts)">{{name}}</div>
+      </td>
+      <td>
+        <div *ngFor="let name of (c | apply:getPartName:'CLASS':parts)">{{name}}</div>
+      </td>
+      <td>
+        <div *ngFor="let name of (c | apply:getPartName:'TYPE':parts)">
+          <m-icon [mCode]="name | apply:getIconCode" m-popover [mContent]="name"></m-icon>
         </div>
       </td>
       <td>
-        <div style="display: grid">
-          <label *ngFor="let name of (c | apply:getPartName:'TIME':parts)">{{name}}</label>
-        </div>
+        <m-tag class="m-clickable"
+            mColor="blue"
+            (click)="showAssociations(c, i)"
+            *ngIf="(c | apply: getAssociations)">{{(c | apply: getAssociations)?.length}}</m-tag>
       </td>
       <td>
-        <div style="display: grid">
-          <label *ngFor="let name of (c | apply:getPartName:'SYSTEM':parts)">{{name}}</label>
-        </div>
-      </td>
-      <td>
-        <div style="display: grid">
-          <label *ngFor="let name of (c | apply:getPartName:'SCALE':parts)">{{name}}</label>
-        </div>
-      </td>
-      <td>
-        <div style="display: grid">
-          <label *ngFor="let name of (c | apply:getPartName:'METHOD':parts)">{{name}}</label>
-        </div>
-      </td>
-      <td>
-        <div style="display: grid">
-          <label *ngFor="let name of (c | apply:getPartName:'CLASS':parts)">{{name}}</label>
-        </div>
-      </td>
-      <td>
-        <div style="display: grid">
-          <m-icon *ngFor="let name of (c | apply:getPartName:'TYPE':parts)" [mCode]="name | apply:getIconCode" m-popover [mContent]="name"></m-icon>
-        </div>
-      </td>
-      <td><m-tag class="m-clickable" mColor="blue" (click)="showAssociations(c, i)" *ngIf="(c | apply: getAssociations)">{{(c | apply: getAssociations)?.length}}</m-tag></td>
-      <td>
-        <div style="display: grid">
-          <label *ngFor="let name of (c | apply:getPropName:'ORDER_OBS')">{{name}}</label>
-        </div>
+        <div *ngFor="let name of (c | apply:getPropName:'ORDER_OBS')">{{name}}</div>
       </td>
     </tr>
     <tr *mTableRowExpand="let c" class="m-table-expanded-row">
-      <td colspan="1">
-        <div style="display: grid">
-          <label *ngFor="let a of (c | apply: getAssociations)"><a>{{a.targetCode}}</a></label>
-        </div>
+      <td>
+        <div *ngFor="let a of (c | apply: getAssociations)"><a>{{a.targetCode}}</a></div>
       </td>
-      <td colspan="11">
-        <div style="display: grid">
-          <label *ngFor="let a of (c | apply: getAssociations)">{{a.targetCode | localizedConceptName: {codeSystem: a.codeSystem} | async}}</label>
-        </div>
+      <td>
+        <div *ngFor="let a of (c | apply: getAssociations)">{{a.targetCode | localizedConceptName: {codeSystem: a.codeSystem} | async}}</div>
       </td>
     </tr>
     <tr *mTableNoData>
