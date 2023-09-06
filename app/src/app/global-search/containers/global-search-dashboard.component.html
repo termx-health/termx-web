@@ -7,118 +7,120 @@
   </ng-template>
 </m-card>
 
-<m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.concepts'" *ngIf="concepts?.length > 0">
-  <m-table [mData]="concepts" [mLoading]="loading['c-search']">
-    <tr *mTableHead>
-      <th>{{'entities.code-system-concept.code' | translate}}</th>
-      <th>{{'entities.code-system-concept.code-system' | translate}}</th>
-    </tr>
-    <tr *mTableRow="let concept">
-      <td><a (click)="openConcept(concept.codeSystem, concept.code)">{{concept.code}}</a></td>
-      <td>{{concept.codeSystem}}</td>
-    </tr>
-    <tr *mTableNoData>
-      <td colspan="6">
-        <m-no-data></m-no-data>
-      </td>
-    </tr>
-  </m-table>
-</m-card>
+<m-spinner [mLoading]="loader.isLoading">
+  <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.concepts'" *ngIf="concepts?.length > 0">
+    <m-table [mData]="concepts">
+      <tr *mTableHead>
+        <th>{{'entities.code-system-concept.code' | translate}}</th>
+        <th>{{'entities.code-system-concept.code-system' | translate}}</th>
+      </tr>
+      <tr *mTableRow="let concept">
+        <td><a (click)="openConcept(concept.codeSystem, concept.code)">{{concept.code}}</a></td>
+        <td>{{concept.codeSystem}}</td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="6">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
 
-<m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.code-systems'" *ngIf="codeSystems?.length > 0">
-  <m-table [mData]="codeSystems" [mLoading]="loading['cs-search']">
-    <tr *mTableHead>
-      <th>{{'entities.code-system.id' | translate}}</th>
-      <th>{{'entities.code-system.uri' | translate}}</th>
-      <th>{{'entities.code-system.name' | translate}}</th>
-    </tr>
-    <tr *mTableRow="let codeSystem">
-      <td><a (click)="openCodeSystem(codeSystem.id)">{{codeSystem.id}}</a></td>
-      <td>{{codeSystem.uri}}</td>
-      <td>{{codeSystem.names | localName}}</td>
-    </tr>
-    <tr *mTableNoData>
-      <td colspan="6">
-        <m-no-data></m-no-data>
-      </td>
-    </tr>
-  </m-table>
-</m-card>
+  <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.code-systems'" *ngIf="codeSystems?.length > 0">
+    <m-table [mData]="codeSystems">
+      <tr *mTableHead>
+        <th>{{'entities.code-system.id' | translate}}</th>
+        <th>{{'entities.code-system.uri' | translate}}</th>
+        <th>{{'entities.code-system.name' | translate}}</th>
+      </tr>
+      <tr *mTableRow="let codeSystem">
+        <td><a (click)="openCodeSystem(codeSystem.id)">{{codeSystem.id}}</a></td>
+        <td>{{codeSystem.uri}}</td>
+        <td>{{codeSystem.names | localName}}</td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="6">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
 
-<m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.value-sets'" *ngIf="valueSets?.length > 0">
-  <m-table [mData]="valueSets" [mLoading]="loading['vs-search']">
-    <tr *mTableHead>
-      <th>{{'entities.value-set.id' | translate}}</th>
-      <th>{{'entities.value-set.uri' | translate}}</th>
-      <th>{{'entities.value-set.name' | translate}}</th>
-    </tr>
-    <tr *mTableRow="let valueSet">
-      <td><a (click)="openValueSet(valueSet.id)">{{valueSet.id}}</a></td>
-      <td>{{valueSet.uri}}</td>
-      <td>{{valueSet.names | localName}}</td>
-    </tr>
-    <tr *mTableNoData>
-      <td colspan="6">
-        <m-no-data></m-no-data>
-      </td>
-    </tr>
-  </m-table>
-</m-card>
+  <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.value-sets'" *ngIf="valueSets?.length > 0">
+    <m-table [mData]="valueSets">
+      <tr *mTableHead>
+        <th>{{'entities.value-set.id' | translate}}</th>
+        <th>{{'entities.value-set.uri' | translate}}</th>
+        <th>{{'entities.value-set.name' | translate}}</th>
+      </tr>
+      <tr *mTableRow="let valueSet">
+        <td><a (click)="openValueSet(valueSet.id)">{{valueSet.id}}</a></td>
+        <td>{{valueSet.uri}}</td>
+        <td>{{valueSet.names | localName}}</td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="6">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
 
-<m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.map-sets'" *ngIf="mapSets?.length > 0">
-  <m-table [mData]="mapSets" [mLoading]="loading['ms-search']">
-    <tr *mTableHead>
-      <th>{{'entities.map-set.id' | translate}}</th>
-      <th>{{'entities.map-set.uri' | translate}}</th>
-      <th>{{'entities.map-set.name' | translate}}</th>
-    </tr>
-    <tr *mTableRow="let mapSet">
-      <td><a (click)="openMapSet(mapSet.id)">{{mapSet.id}}</a></td>
-      <td>{{mapSet.uri}}</td>
-      <td>{{mapSet.names | localName}}</td>
-    </tr>
-    <tr *mTableNoData>
-      <td colspan="6">
-        <m-no-data></m-no-data>
-      </td>
-    </tr>
-  </m-table>
-</m-card>
+  <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.map-sets'" *ngIf="mapSets?.length > 0">
+    <m-table [mData]="mapSets">
+      <tr *mTableHead>
+        <th>{{'entities.map-set.id' | translate}}</th>
+        <th>{{'entities.map-set.uri' | translate}}</th>
+        <th>{{'entities.map-set.name' | translate}}</th>
+      </tr>
+      <tr *mTableRow="let mapSet">
+        <td><a (click)="openMapSet(mapSet.id)">{{mapSet.id}}</a></td>
+        <td>{{mapSet.uri}}</td>
+        <td>{{mapSet.names | localName}}</td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="6">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
 
-<m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.measurement-unit'" *ngIf="measurementUnits?.length > 0">
-  <m-table [mData]="measurementUnits" [mLoading]="loading['measurement-unit']">
-    <tr *mTableHead>
-      <th>{{'entities.measurement-unit.code' | translate}}</th>
-      <th>{{'entities.measurement-unit.name' | translate}}</th>
-    </tr>
-    <tr *mTableRow="let unit">
-      <td><a (click)="openMeasurementUnit(unit.id)">{{unit.code}}</a></td>
-      <td>{{unit.names | localName}}</td>
-    </tr>
-    <tr *mTableNoData>
-      <td colspan="6">
-        <m-no-data></m-no-data>
-      </td>
-    </tr>
-  </m-table>
-</m-card>
+  <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.measurement-unit'" *ngIf="measurementUnits?.length > 0">
+    <m-table [mData]="measurementUnits">
+      <tr *mTableHead>
+        <th>{{'entities.measurement-unit.code' | translate}}</th>
+        <th>{{'entities.measurement-unit.name' | translate}}</th>
+      </tr>
+      <tr *mTableRow="let unit">
+        <td><a (click)="openMeasurementUnit(unit.id)">{{unit.code}}</a></td>
+        <td>{{unit.names | localName}}</td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="6">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
 
-<m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.snomed'" *ngIf="snomedConcepts?.length > 0">
-  <m-table [mData]="snomedConcepts" [mLoading]="loading['snomed']">
-    <tr *mTableHead>
-      <th>{{'entities.snomed-concept.concept-id' | translate}}</th>
-      <th>{{'entities.snomed-concept.pt' | translate}}</th>
-      <th>{{'entities.snomed-concept.fsn' | translate}}</th>
-    </tr>
-    <tr *mTableRow="let concept">
-      <td>{{concept.conceptId}}</td>
-      <td>{{concept.pt?.term}}</td>
-      <td>{{concept.fsn?.term}}</td>
-    </tr>
-    <tr *mTableNoData>
-      <td colspan="6">
-        <m-no-data></m-no-data>
-      </td>
-    </tr>
-  </m-table>
-</m-card>
+  <m-card style="margin-bottom: 1rem" [mTitle]="'web.global-search.dashboard.snomed'" *ngIf="snomedConcepts?.length > 0">
+    <m-table [mData]="snomedConcepts">
+      <tr *mTableHead>
+        <th>{{'entities.snomed-concept.concept-id' | translate}}</th>
+        <th>{{'entities.snomed-concept.pt' | translate}}</th>
+        <th>{{'entities.snomed-concept.fsn' | translate}}</th>
+      </tr>
+      <tr *mTableRow="let concept">
+        <td>{{concept.conceptId}}</td>
+        <td>{{concept.pt?.term}}</td>
+        <td>{{concept.fsn?.term}}</td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="6">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
+</m-spinner>

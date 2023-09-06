@@ -1,5 +1,5 @@
-import {Component} from '@angular/core';
-import {catchError, finalize, forkJoin, map, Observable, of} from 'rxjs';
+import {Component, OnInit} from '@angular/core';
+import {catchError, forkJoin, map, Observable, of} from 'rxjs';
 import {Router} from '@angular/router';
 import {
   CodeSystem,
@@ -13,15 +13,16 @@ import {
   MapSetSearchParams,
   ValueSet,
   ValueSetLibService,
-  ValueSetSearchParams
+  ValueSetSearchParams, ValueSetVersionConcept
 } from 'term-web/resources/_lib';
 import {MeasurementUnit, MeasurementUnitLibService, MeasurementUnitSearchParams} from 'term-web/measurement-unit/_lib';
 import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'term-web/integration/_lib';
+import {ComponentStateStore, HttpCacheService, LoadingManager, QueryParams} from '@kodality-web/core-util';
 
 @Component({
   templateUrl: './global-search-dashboard.component.html'
 })
-export class GlobalSearchDashboardComponent {
+export class GlobalSearchDashboardComponent implements OnInit {
   public searchText?: string;
 
   public concepts: CodeSystemConcept[] = [];
@@ -31,7 +32,9 @@ export class GlobalSearchDashboardComponent {
   public measurementUnits: MeasurementUnit[] = [];
   public snomedConcepts: SnomedConcept[] = [];
 
-  public loading: {[key: string]: boolean} = {};
+  protected readonly STORE_KEY = 'global-search';
+
+  protected loader = new LoadingManager();
 
   public constructor(
     private router: Router,
@@ -40,8 +43,18 @@ export class GlobalSearchDashboardComponent {
     private valueSetService: ValueSetLibService,
     private codeSystemService: CodeSystemLibService,
     private measurementUnitService: MeasurementUnitLibService,
-    private codeSystemConceptService: CodeSystemConceptLibService
+    private codeSystemConceptService: CodeSystemConceptLibService,
+    private stateStore: ComponentStateStore,
+    private cacheService: HttpCacheService
   ) {}
+
+  public ngOnInit(): void {
+    const state = this.stateStore.pop(this.STORE_KEY);
+    if (state?.text) {
+      this.searchText = state.text;
+      this.search(this.searchText);
+    }
+  }
 
   public search(text: string): void {
     if (!text || text.length < 1) {
@@ -51,22 +64,26 @@ export class GlobalSearchDashboardComponent {
       this.mapSets = [];
       return;
     }
+    this.stateStore.put(this.STORE_KEY, {text: text});
 
-    forkJoin([
+    const searchRequests = forkJoin([
       this.searchConcepts(text),
       this.searchCodeSystems(text),
       this.searchValueSets(text),
       this.searchMapSets(text),
       this.searchMeasurementUnits(text),
       this.searchSnomed(text)
-    ]).subscribe(([concepts, codeSystems, valueSets, mapSets, measurementUnits, snomedConcepts]) => {
-      this.concepts = concepts;
-      this.codeSystems = codeSystems;
-      this.valueSets = valueSets;
-      this.mapSets = mapSets;
-      this.measurementUnits = measurementUnits;
-      this.snomedConcepts = snomedConcepts;
-    });
+    ]);
+
+    this.loader.wrap('load', this.cacheService.put(text, searchRequests))
+      .subscribe(([concepts, codeSystems, valueSets, mapSets, measurementUnits, snomedConcepts]) => {
+        this.concepts = concepts;
+        this.codeSystems = codeSystems;
+        this.valueSets = valueSets;
+        this.mapSets = mapSets;
+        this.measurementUnits = measurementUnits;
+        this.snomedConcepts = snomedConcepts;
+      });
   }
 
   private searchConcepts(text: string): Observable<CodeSystemConcept[]> {
@@ -74,12 +91,7 @@ export class GlobalSearchDashboardComponent {
     q.textContains = text;
     q.limit = 100;
 
-    this.loading['c-search'] = true;
-    return this.codeSystemConceptService.search(q).pipe(
-      map(c => c.data),
-      catchError(() => of([])),
-      finalize(() => this.loading['c-search'] = false)
-    );
+    return this.codeSystemConceptService.search(q).pipe(map(c => c.data), catchError(() => of([])));
   }
 
   private searchCodeSystems(text: string): Observable<CodeSystem[]> {
@@ -87,12 +99,7 @@ export class GlobalSearchDashboardComponent {
     q.textContains = text;
     q.limit = 100;
 
-    this.loading['cs-search'] = true;
-    return this.codeSystemService.search(q).pipe(
-      map(cs => cs.data),
-      catchError(() => of([])),
-      finalize(() => this.loading['cs-search'] = false)
-    );
+    return this.codeSystemService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
   private searchValueSets(text: string): Observable<ValueSet[]> {
@@ -100,12 +107,7 @@ export class GlobalSearchDashboardComponent {
     q.textContains = text;
     q.limit = 100;
 
-    this.loading['vs-search'] = true;
-    return this.valueSetService.search(q).pipe(
-      map(cs => cs.data),
-      catchError(() => of([])),
-      finalize(() => this.loading['vs-search'] = false)
-    );
+    return this.valueSetService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
   private searchMapSets(text: string): Observable<MapSet[]> {
@@ -113,12 +115,7 @@ export class GlobalSearchDashboardComponent {
     q.textContains = text;
     q.limit = 100;
 
-    this.loading['ms-search'] = true;
-    return this.mapSetService.search(q).pipe(
-      map(cs => cs.data),
-      catchError(() => of([])),
-      finalize(() => this.loading['ms-search'] = false)
-    );
+    return this.mapSetService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
   private searchMeasurementUnits(text: string): Observable<MeasurementUnit[]> {
@@ -126,12 +123,7 @@ export class GlobalSearchDashboardComponent {
     q.textContains = text;
     q.limit = 100;
 
-    this.loading['measurement-unit'] = true;
-    return this.measurementUnitService.search(q).pipe(
-      map(cs => cs.data),
-      catchError(() => of([])),
-      finalize(() => this.loading['measurement-unit'] = false)
-    );
+    return this.measurementUnitService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
   private searchSnomed(text: string): Observable<SnomedConcept[]> {
@@ -142,12 +134,7 @@ export class GlobalSearchDashboardComponent {
     q.term = text;
     q.limit = 100;
 
-    this.loading['snomed'] = true;
-    return this.snomedService.findConcepts(q).pipe(
-      map(cs => cs.items),
-      catchError(() => of([])),
-      finalize(() => this.loading['snomed'] = false)
-    );
+    return this.snomedService.findConcepts(q).pipe(map(cs => cs.items), catchError(() => of([])));
   }
 
   public openConcept(codeSystem: string, code: string): void {
