@@ -41,6 +41,10 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
     return properties?.find(p => p.id === id);
   };
 
+  protected filterPropertyValue = (v: EntityPropertyValue): boolean => {
+    return v?.entityProperty !== 'status';
+  };
+
   private addDefProperties(): void {
     const properties = this.properties.filter(p => p.kind === 'property');
     properties

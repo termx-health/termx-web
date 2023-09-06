@@ -169,7 +169,10 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.loader.wrap('status-change', this.codeSystemService.changeEntityVersionStatus(this.codeSystemId, version.id, status)).subscribe(() => {
       this.conceptVersion.status = status;
       this.loader.wrap('load', this.codeSystemService.loadConcept(this.codeSystemId, this.concept.code))
-        .subscribe(c => this.concept = c);
+        .subscribe(c => {
+          this.concept = c;
+          this.selectVersion(c.versions.find(v => v.id === version.id));
+        });
     });
   }
 
@@ -191,7 +194,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   }
 
   protected filterProperties = (p: EntityProperty, kind: string): boolean => {
-    return p.kind === kind;
+    return p.kind === kind && p.name !== 'status';
   };
 
   public addPropertyValue(prop: EntityProperty): void {

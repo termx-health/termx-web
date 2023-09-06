@@ -40,7 +40,7 @@ export class CodeSystemConceptViewComponent implements OnInit {
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
     this.versionCode = this.route.snapshot.paramMap.get('versionCode');
-    const conceptCode = this.route.snapshot.paramMap.get('conceptCode');
+    const conceptCode = this.route.snapshot.paramMap.get('conceptCode') ? decodeURIComponent(this.route.snapshot.paramMap.get('conceptCode')) : undefined;
     const conceptVersionId = this.route.snapshot.queryParamMap.get('conceptVersionId');
 
     this.loadData();

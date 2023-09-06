@@ -94,8 +94,8 @@ export class ResourceFhirImportModalComponent {
       'ConceptMap': this.mapSetFileImportService.processRequest({
         type: this.params.type,
         mapSet: {id: this.params.id},
-        cleanRun: this.params.settings['cleanRun'],
-        cleanAssociationRun: this.params.settings['cleanAssociationRun']
+        cleanRun: this.params.settings?.['cleanRun'],
+        cleanAssociationRun: this.params.settings?.['cleanAssociationRun']
       }, file, this.destroy$)
     };
     this.loader.wrap('import',importRequestMap[this.resourceType])

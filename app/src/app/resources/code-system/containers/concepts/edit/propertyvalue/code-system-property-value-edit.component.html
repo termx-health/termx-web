@@ -1,6 +1,6 @@
 <m-no-data *ngIf="!propertyValues?.length"/>
 
-<ng-container *ngFor="let pv of propertyValues | sort: 'entityPropertyId'; let i = index">
+<ng-container *ngFor="let pv of propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue; let i = index">
   <ng-container *ngIf="viewMode">
     <div class="m-items-middle">
       <span style="white-space: nowrap" class="m-subtitle">{{pv.entityProperty}}</span>
