@@ -32,7 +32,9 @@ export class MapSetSourceConceptListComponent implements OnChanges {
   public loading: boolean;
 
 
-  public constructor(private mapSetService: MapSetService) {}
+  public constructor(private mapSetService: MapSetService) {
+    this.query.limit = 100;
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['mapSet'] || changes['mapSetVersion']) && this.mapSet && this.mapSetVersion) {
@@ -49,7 +51,6 @@ export class MapSetSourceConceptListComponent implements OnChanges {
       return of();
     }
     const q = copyDeep(this.query);
-    q.limit = 100;
     q.type = 'source';
     q.textContains = this.searchInput || undefined;
     q.verified = this.unverified ? false : undefined;

@@ -32,7 +32,9 @@ export class MapSetAssociationListComponent implements OnChanges {
 
   @ViewChild(MapSetAssociationDrawerComponent) public drawerComponent?: MapSetAssociationDrawerComponent;
 
-  public constructor(private mapSetService: MapSetService) {}
+  public constructor(private mapSetService: MapSetService) {
+    this.query.limit = 100;
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['mapSet'] || changes['mapSetVersion']) && this.mapSet && this.mapSetVersion) {
@@ -49,7 +51,6 @@ export class MapSetAssociationListComponent implements OnChanges {
       return of();
     }
     const q = copyDeep(this.query);
-    q.limit = 100;
     q.sort = this.relationships?.includes('source-is-broader-than-target') ? 'target-code' : 'source-code';
     q.mapSetVersion = this.mapSetVersion;
     q.relationships = this.relationships;
