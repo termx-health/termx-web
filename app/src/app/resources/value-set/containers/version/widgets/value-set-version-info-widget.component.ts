@@ -12,6 +12,7 @@ import {NgForm} from '@angular/forms';
 import {compareDates, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
+import {Space, SpaceLibService} from 'term-web/space/_lib';
 
 @Component({
   selector: 'tw-value-set-version-info-widget',
@@ -24,6 +25,7 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
 
   protected taskModalData: {visible?: boolean, assignee?: string, type?: 'review' | 'approval'} = {};
   protected provenances: Provenance[];
+  protected githubSpaces: Space[];
   @ViewChild("taskModalForm") public taskModalForm?: NgForm;
 
   protected loader = new LoadingManager();
@@ -34,12 +36,17 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
     private provenanceService: ProvenanceLibService,
     private taskService: TaskService,
     private chefService: ChefService,
-    private notificationService: MuiNotificationService) {}
+    private notificationService: MuiNotificationService,
+    private spaceService: SpaceLibService
+  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['version'] && this.version) {
       this.loader.wrap('provenance', this.provenanceService.query('ValueSetVersion|' + this.version.id))
         .subscribe(resp => this.provenances = resp);
+      this.spaceService.search({resource: 'value-set|' + this.version.valueSet}).subscribe(r => {
+        this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo);
+      });
     }
   }
 

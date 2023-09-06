@@ -12,7 +12,7 @@ import {PackageService} from '../../services/package.service';
   templateUrl: './space-edit.component.html',
   styles: [`
     ::ng-deep #github input {
-      padding-left: 123px;
+      padding-left: 133px;
     }
   `]
 })

@@ -52,11 +52,17 @@
             <div style="display: flex; gap: 8px">
               <m-button mDisplay="primary"
                   m-popconfirm
-                  mPopconfirmTitle="web.space.github-pull-confirm"
+                  [mPopconfirmTitle]="pullConfirm"
                   (mOnConfirm)="pull()"
                   [mLoading]="saving"
                   [disabled]="saving || (selection | apply:noneSelected)"
                   style="width: 100%">
+                <ng-template #pullConfirm>
+                  <div>
+                    <div>{{'web.space.github-pull-confirm' | translate}}</div>
+                    <div style="color: red">{{'web.space.github-pull-confirm-achtung' | translate}}</div>
+                  </div>
+                </ng-template>
                 <m-icon mCode="arrow-down"></m-icon>&nbsp; <span>{{'web.space.github-pull' | translate}}</span>
                 <ng-container *ngTemplateOutlet="github"></ng-container>
               </m-button>
