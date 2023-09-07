@@ -42,7 +42,7 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   };
 
   protected filterPropertyValue = (v: EntityPropertyValue): boolean => {
-    return v?.entityProperty !== 'status';
+    return !['status', 'is-a', 'parent', 'child', 'partOf', 'groupedBy'].includes(v?.entityProperty);
   };
 
   private addDefProperties(): void {
