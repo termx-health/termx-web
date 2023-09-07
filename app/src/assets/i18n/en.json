@@ -1576,6 +1576,7 @@
 			"all-packages": "All packages",
 			"edit-header": "Edit space",
 			"github-clean": "Everything is up to date!",
+			"github-empty": "Nothing to commit",
 			"github-commit-message": "Commit message",
 			"github-pull": "Pull diff from",
 			"github-pull-confirm": "Are you sure you want to replace current data with the data from repository?",

@@ -75,9 +75,4 @@ export class SpaceContextComponent implements OnInit {
   public unselectPackage(): void {
     this.setContext({spaceId: this.space.id});
   }
-
-  public githubEnabled(): void {
-    this.spaceService.githubConfig(this.space.id).pipe
-  }
-
 }

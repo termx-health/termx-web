@@ -7,12 +7,29 @@ import {validateForm} from '@kodality-web/core-util';
 import {Package, Space, TerminologyServer, TerminologyServerLibService} from 'term-web/space/_lib';
 import {forkJoin} from 'rxjs';
 import {PackageService} from '../../services/package.service';
+import {SpaceGithubService} from 'term-web/space/services/space-github.service';
 
 @Component({
   templateUrl: './space-edit.component.html',
   styles: [`
-    ::ng-deep #github input {
-      padding-left: 133px;
+    ::ng-deep .input-group {
+      & .m-input {
+        border-top-left-radius: 0;
+        border-bottom-left-radius: 0;
+      }
+      & .m-form-control {
+        display:table;
+      }
+      & .input-group-addon {
+        padding: 4px 11px;
+      }
+    }
+    ::ng-deep .github-dirs {
+      padding-left: 40px;
+      & .input-group-addon {
+        text-align: right;
+        min-width: 160px;
+      }
     }
   `]
 })
@@ -20,6 +37,7 @@ export class SpaceEditComponent implements OnInit {
   public space?: Space;
   public packages?: Package[];
   public terminologyServers?: TerminologyServer[];
+  public githubProviders: {[k: string]: string};
 
   public loading = false;
   public mode: 'add' | 'edit' = 'add';
@@ -28,6 +46,7 @@ export class SpaceEditComponent implements OnInit {
 
   public constructor(
     private spaceService: SpaceService,
+    private spaceGithubService: SpaceGithubService,
     private packageService: PackageService,
     private terminologyServerService: TerminologyServerLibService,
     private route: ActivatedRoute,
@@ -49,7 +68,12 @@ export class SpaceEditComponent implements OnInit {
 
   private loadSpace(id: number): void {
     this.loading = true;
-    forkJoin([this.spaceService.load(id), this.spaceService.loadPackages(id)]).subscribe(([space, packages]) => {
+    forkJoin([
+      this.spaceService.load(id),
+      this.spaceService.loadPackages(id),
+      this.spaceGithubService.getProviders()
+    ]).subscribe(([space, packages, githubProviders]) => {
+      this.githubProviders = githubProviders;
       this.space = this.writeSpace(space);
       this.packages = packages;
     }).add(() => this.loading = false);
@@ -68,7 +92,8 @@ export class SpaceEditComponent implements OnInit {
   private writeSpace(s: Space): Space {
     s.acl ??= {};
     s.integration ??= {};
-    s.integration.github ??= {};
+    s.integration.github ??= {dirs: this.githubProviders};
+    s.integration.github.dirs ??= {};
     return s;
   }
 
@@ -87,5 +112,9 @@ export class SpaceEditComponent implements OnInit {
 
   private loadTerminologyServers(): void {
     this.terminologyServerService.search({limit: -1}).subscribe(r => this.terminologyServers = r.data);
+  }
+
+  protected sort(arr: any[]): any[] {
+    return arr.sort();
   }
 }

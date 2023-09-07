@@ -45,7 +45,9 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
       this.loader.wrap('provenance', this.provenanceService.query('ValueSetVersion|' + this.version.id))
         .subscribe(resp => this.provenances = resp);
       this.spaceService.search({resource: 'value-set|' + this.version.valueSet}).subscribe(r => {
-        this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo);
+        this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo
+          && (Object.keys(s.integration.github.dirs || {}).some(d => ['valueset-fhir-json', 'valueset-fhir-fsh'].includes(d)))
+        );
       });
     }
   }

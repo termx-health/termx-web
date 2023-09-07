@@ -11,6 +11,9 @@ export class Space {
   public terminologyServers?: string[];
   public packages?: Package[];
   public integration?: {
-    github?: {repo?: string}
+    github?: {
+      repo?: string,
+      dirs?: {[key: string]: string}
+    };
   };
 }

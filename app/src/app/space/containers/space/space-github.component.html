@@ -33,9 +33,12 @@
           </div>
         </div>
 
-        <m-alert *ngIf="status.changed.length === 0" mType="success">
+        <m-alert *ngIf="status.changed.length === 0 && status.unchanged.length !== 0" mType="success">
           <m-icon mCode="check-circle"></m-icon>
           {{'web.space.github-clean' | translate}}
+        </m-alert>
+        <m-alert *ngIf="status.changed.length === 0 && status.unchanged.length === 0" mType="info">
+          {{'web.space.github-empty' | translate}}
         </m-alert>
 
         <div style="margin-top: 14px; color: #999">

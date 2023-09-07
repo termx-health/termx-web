@@ -5,6 +5,7 @@ import {Space} from '../../_lib';
 import {delay, forkJoin, mergeMap, Observable, tap} from 'rxjs';
 import {PageService} from 'term-web/wiki/page/services/page.service';
 import {GithubDiff} from 'term-web/integration/_lib/github/github';
+import {SpaceGithubService} from 'term-web/space/services/space-github.service';
 
 @Component({
   templateUrl: './space-github.component.html',
@@ -50,6 +51,7 @@ export class SpaceGithubComponent implements OnInit {
 
   public constructor(
     private spaceService: SpaceService,
+    private spaceGithubService: SpaceGithubService,
     private pageService: PageService,
     private route: ActivatedRoute
   ) { }
@@ -58,7 +60,7 @@ export class SpaceGithubComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.loading = true;
 
-    this.spaceService.githubAuthenticate(id, `${window.location.origin}/${window.location.pathname}`).subscribe(r => {
+    this.spaceGithubService.authenticate(id, `${window.location.origin}/${window.location.pathname}`).subscribe(r => {
       if (!r.isAuthenticated) {
         window.location.href = r.redirectUrl;
         return;
@@ -71,26 +73,26 @@ export class SpaceGithubComponent implements OnInit {
   }
 
   private loadGitStatus(id: number): Observable<any> {
-    return this.spaceService.githubStatus(id).pipe(tap(r => {
+    return this.spaceGithubService.status(id).pipe(tap(r => {
       this.status = {
         changed: Object.keys(r.files).filter(f => ['A', 'D', 'M'].includes(r.files[f])).map(f => ({f: f, s: r.files[f]})),
         unchanged: Object.keys(r.files).filter(f => 'U' === r.files[f])
       };
       this.status.changed.forEach(c => this.selection[c.f] = false);
-      let prefix = this.route.snapshot.paramMap.get('prefix');
-      this.selectAll(true, prefix);
+      let files = this.route.snapshot.paramMap.get('files');
+      this.selectAll(true, files);
     }));
   }
 
   public showDiff(file: string): void {
     this.diff = {};
-    this.spaceService.githubDiff(this.space.id, file).subscribe(r => this.diff = r);
+    this.spaceGithubService.diff(this.space.id, file).subscribe(r => this.diff = r);
   }
 
   public pull(): void {
     this.saving = true;
     const files = this.allSelected(this.selection) ? null : this.status.changed.filter(c => this.selected(c)).map(c => c.f);
-    this.spaceService.githubPull(this.space.id, files).pipe(
+    this.spaceGithubService.pull(this.space.id, files).pipe(
       mergeMap(() => this.loadGitStatus(this.space.id))
     ).subscribe().add(() => this.saving = false);
   }
@@ -98,14 +100,20 @@ export class SpaceGithubComponent implements OnInit {
   public push(): void {
     this.saving = true;
     const files = this.allSelected(this.selection) ? null : this.status.changed.filter(c => this.selected(c)).map(c => c.f);
-    this.spaceService.githubPush(this.space.id, this.commit.message, files).pipe(
+    this.spaceGithubService.push(this.space.id, this.commit.message, files).pipe(
       delay(1000), // seems like github need a bit of time to actually update
       mergeMap(() => this.loadGitStatus(this.space.id))
     ).subscribe().add(() => this.saving = false);
   }
 
-  public selectAll(selected: boolean, prefix?: string): void {
-    this.status.changed.filter(c => !prefix || c.f.startsWith(prefix)).forEach(c => this.selection[c.f] = selected);
+  public selectAll(selected: boolean, files?: string): void {
+    const prefixes = !files ? null : files.split(',').map(f => {
+      const d = f.split('|');
+      return this.space.integration.github.dirs[d[0]] + '/' + d[1];
+    });
+    this.status.changed
+      .filter(c => !prefixes || prefixes.some(p => c.f.startsWith(p)))
+      .forEach(c => this.selection[c.f] = selected);
     this.selection = {...this.selection};
   }
 

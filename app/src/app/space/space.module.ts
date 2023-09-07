@@ -17,6 +17,7 @@ import {SpaceDiffMatrixComponent} from './containers/space/space-diff-matrix.com
 import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from '../resources/_lib';
 import {SpaceLibModule} from 'term-web/space/_lib';
 import {SpaceGithubComponent} from 'term-web/space/containers/space/space-github.component';
+import {SpaceGithubService} from 'term-web/space/services/space-github.service';
 
 export const SPACE_CTX_ROUTES: Routes = [
   {path: '', component: SpaceDashboardComponent},
@@ -65,6 +66,7 @@ export const TERMINOLOGY_SERVER_ROUTES: Routes = [
   ],
   providers: [
     SpaceService,
+    SpaceGithubService,
     PackageService,
     PackageVersionService,
     PackageResourceService,

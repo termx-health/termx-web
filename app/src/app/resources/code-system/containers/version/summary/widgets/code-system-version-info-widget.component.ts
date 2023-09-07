@@ -45,7 +45,9 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
       this.loader.wrap('provenance', this.provenanceService.query('CodeSystemVersion|' + this.version.id))
         .subscribe(resp => this.provenances = resp);
       this.spaceService.search({resource: 'code-system|' + this.version.codeSystem}).subscribe(r => {
-        this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo);
+        this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo
+          && (Object.keys(s.integration.github.dirs || {}).some(d => ['codesystem-fhir-json', 'codesystem-fhir-fsh'].includes(d)))
+        );
       });
     }
   }

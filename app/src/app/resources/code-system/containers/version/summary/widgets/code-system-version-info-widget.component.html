@@ -57,7 +57,10 @@
         {{'web.code-system-version.summary.info.sync-with-github' | translate}}
       </a>
       <ng-container *ngFor="let s of githubSpaces">
-        <a *m-dropdown-item [routerLink]="['/spaces', s.id, 'github', {prefix: 'codesystem/' + version.codeSystem + '@' + version.version}]">
+        <a *m-dropdown-item [routerLink]="['/spaces', s.id, 'github', {files: [
+        'codesystem-fhir-json|' + version.codeSystem + '@' + version.version,
+        'codesystem-fhir-fsh|' + version.codeSystem + '@' + version.version,
+        ]}]">
           {{s.names | localName}}
         </a>
       </ng-container>
