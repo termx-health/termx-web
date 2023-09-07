@@ -95,7 +95,8 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
 
       this.pageCommentService.search({
         statuses: 'active',
-        pageContentIds: page.contents.map(c => c.id).join(',')
+        pageContentIds: this.pageContent.id,
+        limit: this.pageContent ? 101 : 0
       }).subscribe(resp => {
         this.pageComments = resp.data;
       });
@@ -151,7 +152,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   };
 
   protected calcLineOffset(nr: number): number {
-    return document.querySelector<HTMLElement>(`[data-source-line="${nr}"]`).offsetTop;
+    return document.querySelector<HTMLElement>(`[data-source-line="${nr}"]`)?.offsetTop ?? 0;
   }
 
   protected getCommentsContainerOffset(): number {
