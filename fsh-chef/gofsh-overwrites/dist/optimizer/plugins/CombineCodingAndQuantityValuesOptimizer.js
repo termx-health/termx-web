@@ -25,8 +25,7 @@ const CODE_IMPOSTER_PATHS = [
 exports.default = {
     name: 'combine_coding_and_quantity_values',
     description: 'Combine separate caret and assignment rules that together form a Coding or Quantity value',
-    optimize(pkg, fisher) {
-        if(true) return;
+    optimize: function (pkg, fisher) {
         // Coding has: code, system, display
         // Quantity has: code, system, unit, value
         // If "value" is present, the rule should use a FshQuantity.
@@ -40,6 +39,13 @@ exports.default = {
             const rulesToRemove = [];
             const rules = def.rules; // <-- this assignment makes TypeScript happier in the next chunk of code
             const typeCache = new Map();
+            const ruleMap = {};
+            rules.filter(r => r instanceof exportable_1.ExportableCaretValueRule)
+                .forEach((r) => {
+                ruleMap[r.path] = ruleMap[r.path] || {};
+                ruleMap[r.path][r.caretPath] = ruleMap[r.path][r.caretPath] || [];
+                ruleMap[r.path][r.caretPath].push(r);
+            });
             rules.forEach(rule => {
                 if (rule instanceof exportable_1.ExportableCaretValueRule &&
                     rule.caretPath.endsWith('.code') &&
@@ -57,15 +63,13 @@ exports.default = {
                     if (types && !types.some(t => OPTIMIZABLE_TYPES.indexOf(t.code) >= 0)) {
                         return;
                     }
-                    const siblingPaths = [
+                    const siblings = [
                         `${basePath}.system`,
                         `${basePath}.display`,
                         `${basePath}.unit`,
                         `${basePath}.value`
-                    ];
-                    const siblings = rules.filter(otherRule => otherRule instanceof exportable_1.ExportableCaretValueRule &&
-                        rule.path === otherRule.path &&
-                        siblingPaths.includes(otherRule.caretPath));
+                    ].filter(sibling => ruleMap[rule.path] && ruleMap[rule.path][sibling] && ruleMap[rule.path][sibling].length)
+                        .map(sibling => ruleMap[rule.path][sibling][0]);
                     if (siblings.length) {
                         const systemSibling = siblings.find(sibling => sibling.caretPath.endsWith('.system'));
                         const displaySibling = siblings.find(sibling => sibling.caretPath.endsWith('.display'));
