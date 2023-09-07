@@ -1883,6 +1883,7 @@
 				"relations": "Relations",
 				"tags": "Tags",
 				"usages": "References",
+				"def": "Structure definition",
 				"vs": "Value Set"
 			},
 			"edit": {
@@ -1921,7 +1922,9 @@
 			"comments": {
 				"reply": "Reply",
 				"read-more": "Read more",
-				"resolve": "Resolve"
+				"resolve": "Resolve",
+				"created-at": "Created at {{date}}",
+				"modified-at": "Modified at {{date}}"
 			},
 			"no-space": {
 				"desc": "Please select space to proceed",
