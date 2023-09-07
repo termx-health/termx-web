@@ -42,7 +42,7 @@ export class WikiPageCommentsComponent implements OnChanges {
         }));
     }
 
-    if (changes['mode'] || changes['offset'] || changes['lines']) {
+    if (changes['mode'] || changes['pageComments'] || changes['containerOffset'] || changes['lineOffset']) {
       this.recalcPositions();
     }
   }
