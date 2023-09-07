@@ -6,9 +6,6 @@
     <div class="comment-date" m-tooltip [mTitle]="dateInfo" mPosition="left">
       {{com.createdAt | localDateTime}}
     </div>
-    <div class="comment-date">
-      {{com.options?.lineNumber}}
-    </div>
 
     <ng-template #dateInfo>
       <div>{{'web.wiki-page.comments.created-at' | translate: ({date: com.createdAt | localDateTime})}}</div>
