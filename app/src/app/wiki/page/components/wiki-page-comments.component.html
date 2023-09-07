@@ -3,9 +3,14 @@
     <div class="comment-creator">
       {{c.createdBy}}
     </div>
-    <div class="comment-date">
+    <div class="comment-date" m-tooltip [mTitle]="dateInfo" mPosition="left">
       {{c.createdAt | localDateTime}}
     </div>
+
+    <ng-template #dateInfo>
+      <div>{{'web.wiki-page.comments.created-at' | translate: ({date: c.createdAt | localDateTime})}}</div>
+      <div *ngIf="c.modifiedAt">{{'web.wiki-page.comments.modified-at' | translate: ({date: c.modifiedAt | localDateTime})}}</div>
+    </ng-template>
   </div>
 </ng-template>
 
@@ -14,7 +19,7 @@
     <span class="m-whitespace">{{comment.comment | abbreviate: d.max}}</span>
     <ng-container *ngIf="d.max">
       <div class="curtain"></div>
-      <a class="m-subtitle m-primary-color" (mClick)="d.max = undefined">
+      <a class="m-subtitle m-primary-color" (mClick)="$event.stopPropagation(); d.max = undefined">
         {{'web.wiki-page.comments.read-more' | translate}}
       </a>
     </ng-container>
@@ -54,14 +59,14 @@
     <div class="m-justify-between">
       <ng-container *ngTemplateOutlet="commentAuthor, context: {$implicit: comment}"/>
 
-      <div *ngIf="comment | apply: calcPrivileges: editState as privileges" style="display: inline-flex">
+      <div *ngIf="comment | apply: calcPrivileges: editState as privileges" style="display: flex; align-items: center">
         <m-icon-button
             *ngIf="privileges.resolve"
             class="m-primary-color"
             mIcon="check"
             m-tooltip
             mTitle="web.wiki-page.comments.resolve"
-            (mClick)="resolve(comment)"
+            (mClick)="$event.stopPropagation(); resolve(comment)"
         />
 
         <m-icon
