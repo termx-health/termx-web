@@ -73,7 +73,9 @@
 
         <tr *mTableRow="let concept"
             class="m-clickable"
-            [style.background]="selectedConcept?.code === concept.code ? 'var(--color-table-background--expanded)' : 'initial'"
+            [style.background]="selectedConcept?.code === concept.code ? 'var(--color-table-background--expanded)' :
+            concept.versions?.[concept.versions?.length - 1]?.status === 'draft' ? 'var(--color-amber-0)' :
+            concept.versions?.[concept.versions?.length - 1]?.status === 'retired' ? 'var(--color-red-0)' : 'initial'"
             (click)="selectConcept(concept)">
           <ng-container *ngTemplateOutlet="rowContent; context: {node: {code: concept.code, concept}, level: 0}"/>
         </tr>
@@ -118,7 +120,9 @@
 
   <ng-template #treeView let-node="node" let-level="level">
     <tr class="m-clickable"
-        [style.background]="selectedConcept?.code === node.code ? 'var(--color-table-background--expanded)' : 'initial'"
+        [style.background]="selectedConcept?.code === node.code ? 'var(--color-table-background--expanded)' :
+            node.concept.versions?.[node.concept.versions?.length - 1]?.status === 'draft' ? 'var(--color-amber-0)' :
+            node.concept.versions?.[node.concept.versions?.length - 1]?.status === 'retired' ? 'var(--color-red-0)' : 'initial'"
         (click)="selectConcept(node.concept)">
       <ng-container *ngTemplateOutlet="rowContent; context: {node: node, level: level}"/>
     </tr>
