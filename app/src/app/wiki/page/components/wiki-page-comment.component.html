@@ -1,0 +1,123 @@
+<ng-template #commentAuthor let-com>
+  <div class="comment-author">
+    <div class="comment-creator">
+      {{com.createdBy}}
+    </div>
+    <div class="comment-date" m-tooltip [mTitle]="dateInfo" mPosition="left">
+      {{com.createdAt | localDateTime}}
+    </div>
+    <div class="comment-date">
+      {{com.options?.lineNumber}}
+    </div>
+
+    <ng-template #dateInfo>
+      <div>{{'web.wiki-page.comments.created-at' | translate: ({date: com.createdAt | localDateTime})}}</div>
+      <div *ngIf="com.modifiedAt">{{'web.wiki-page.comments.modified-at' | translate: ({date: com.modifiedAt | localDateTime})}}</div>
+    </ng-template>
+  </div>
+</ng-template>
+
+<!-- View -->
+<ng-template #view let-com>
+  <div *ngIf="{max: com.comment.length > 200 + 30 ? 200 : undefined} as d">
+    <span class="m-whitespace">{{com.comment | abbreviate: d.max}}</span>
+    <ng-container *ngIf="d.max">
+      <div class="curtain"></div>
+      <a class="m-subtitle m-primary-color" (mClick)="$event.stopPropagation(); d.max = undefined">
+        {{'web.wiki-page.comments.read-more' | translate}}
+      </a>
+    </ng-container>
+  </div>
+</ng-template>
+
+<!-- Edit -->
+<ng-template #edit let-com>
+  <div class="container">
+    <!-- Editable comment content -->
+    <m-textarea
+        [(ngModel)]="_content"
+        placeholder="web.wiki-page.comments.reply"
+        autofocus
+        [autosize]="{minRows: 2}"
+    ></m-textarea>
+
+    <div class="m-items-middle">
+      <!-- Save button -->
+      <m-button
+          [mDisplay]="_content ? 'primary' : 'default'"
+          (mClick)="_content ? updateContent(com, _content) : undefined"
+          mSize="small"
+      >
+        {{'core.btn.save' | translate}}
+      </m-button>
+
+      <!-- Cancel button -->
+      <m-button mSize="small" (mClick)="cancelEdit(com)">
+        {{'core.btn.cancel' | translate}}
+      </m-button>
+    </div>
+  </div>
+</ng-template>
+
+<ng-template #section let-com let-reply="reply">
+  <div class="container">
+    <div class="m-justify-between">
+      <ng-container *ngTemplateOutlet="commentAuthor, context: {$implicit: com}"/>
+
+      <div *ngIf="com | apply: calcPrivileges: _content as privileges" style="display: flex; align-items: center">
+        <m-icon-button
+            *ngIf="privileges.resolve"
+            class="m-primary-color"
+            mIcon="check"
+            m-tooltip
+            mTitle="web.wiki-page.comments.resolve"
+            (mClick)="$event.stopPropagation(); resolve(com)"
+        />
+
+        <m-icon
+            *ngIf="reply"
+            style="margin-right: var(--gap-default);"
+            class="m-text-secondary"
+            mCode="rollback"
+        />
+
+        <m-dropdown>
+          <a *mDropdownItemIf="privileges.edit" (mClick)="startEdit(com)">
+            {{'core.btn.edit' | translate}}
+          </a>
+          <a *mDropdownItemIf="privileges.delete" (mClick)="delete(com)">
+            {{'core.btn.delete' | translate}}
+          </a>
+        </m-dropdown>
+      </div>
+    </div>
+
+    <div class="container">
+      <ng-container *ngTemplateOutlet="_content ? edit : view, context: {$implicit: com, id: com.id}"/>
+      <blockquote class="quote m-whitespace" *ngIf="com.text">{{com.text}}</blockquote>
+    </div>
+  </div>
+</ng-template>
+
+
+<m-list *ngIf="{active: !!pageComment.children?.length} as inf">
+  <!-- Main comment -->
+  <m-list-item class="comment" [mClickable]="!inf.active" (mClick)="!_content ? inf.active = true : undefined">
+    <ng-container *ngTemplateOutlet="section, context: {$implicit: pageComment}"/>
+  </m-list-item>
+
+  <!-- Replies -->
+  <m-list-item *ngFor="let reply of pageComment.children" class="comment-reply">
+    <ng-container *ngTemplateOutlet="section, context: {$implicit: reply, reply: true}"/>
+  </m-list-item>
+
+  <!-- Send reply -->
+  <m-list-item class="comment-reply-section" *ngIf="inf.active">
+    <div class="m-items-top" *ngIf="{msg: ''} as d">
+      <m-textarea style="flex: 1" [(ngModel)]="d.msg" placeholder="web.wiki-page.comments.reply" [autofocus]="!pageComment.children?.length"/>
+      <m-button [mDisplay]="d.msg ? 'primary' : 'default'" (mClick)="d.msg ? reply(pageComment, d.msg) : undefined; d.msg = undefined">
+        {{'core.btn.send' | translate}}
+      </m-button>
+    </div>
+  </m-list-item>
+</m-list>

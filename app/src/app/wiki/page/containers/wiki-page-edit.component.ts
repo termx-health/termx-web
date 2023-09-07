@@ -198,9 +198,15 @@ export class WikiPageEditComponent implements OnInit {
   /* Comments */
 
   protected toggleComments(): void {
-    this.showComments = !this.showPreview;
+    this.showComments = !this.showComments;
     if (this.showComments) {
       this.showPreview = true;
+    }
+  }
+
+  protected onCommentsChange(): void {
+    if (!this.pageComments?.length) {
+      this.showComments = false;
     }
   }
 

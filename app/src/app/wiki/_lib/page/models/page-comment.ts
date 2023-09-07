@@ -5,7 +5,7 @@ export class PageComment {
   public text?: string;
   public comment?: string;
   public status?: string;
-  public options?: {[k:string]: any};
+  public options?: {lineNumber?: number};
   public readonly replies?: number;
 
   public createdAt?: Date;

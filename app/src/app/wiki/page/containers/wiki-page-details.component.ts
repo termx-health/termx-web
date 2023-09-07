@@ -8,6 +8,7 @@ import {Page, PageComment, PageContent, PageRelation, parsePageRelationLink} fro
 import {Space, SpaceLibService} from 'term-web/space/_lib';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
 import {WikiComment} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
   selector: 'tw-wiki-page-details',
@@ -32,6 +33,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   } = {};
 
   protected loader = new LoadingManager();
+  protected mobileQuery: MediaQueryList;
   protected contentModalData: {
     visible?: boolean,
     content?: PageContent
@@ -42,8 +44,11 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     private pageCommentService: PageCommentService,
     private clipboard: Clipboard,
     private spaceService: SpaceLibService,
-    protected muiConfig: MuiConfigService
-  ) { }
+    protected muiConfig: MuiConfigService,
+    media: MediaMatcher
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 992px)');
+  }
 
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -119,6 +124,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     this.viewResource.emit({type: type, id: page, options: {space}});
   }
 
+
   /* WikiComments */
 
   protected onPageCommentCreated(comment: WikiComment): void {
@@ -143,6 +149,14 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   protected filterLanguages = (supportedLangs: string[], currentLang: string, contents: PageContent[]): string[] => {
     return supportedLangs.filter(l => l !== currentLang && !contents.find(c => c.lang === l));
   };
+
+  protected calcLineOffset(nr: number): number {
+    return document.querySelector<HTMLElement>(`[data-source-line="${nr}"]`).offsetTop;
+  }
+
+  protected getCommentsContainerOffset(): number {
+    return document.getElementById('comments-container').offsetTop;
+  }
 
   protected get isLoading(): boolean {
     return this.loader.isLoadingExcept('init');

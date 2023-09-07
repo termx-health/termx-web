@@ -16,6 +16,7 @@ import {WikiPageDetailsComponent} from './containers/wiki-page-details.component
 import {WikiSpaceOverviewComponent} from './components/wiki-space-overview.component';
 import {PageCommentService} from './services/page-comment.service';
 import {WikiPageCommentsComponent} from './components/wiki-page-comments.component';
+import {WikiPageCommentComponent} from 'term-web/wiki/page/components/wiki-page-comment.component';
 
 
 export const WIKI_PAGE_ROUTES: Routes = [
@@ -44,6 +45,7 @@ export const WIKI_PAGE_ROUTES: Routes = [
     WikiPageTreeComponent,
     WikiPageSetupModalComponent,
     WikiPageHeaderComponent,
+    WikiPageCommentComponent,
     WikiPageCommentsComponent,
     WikiSpaceOverviewComponent
   ],

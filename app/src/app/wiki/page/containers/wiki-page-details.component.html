@@ -113,15 +113,16 @@
           </m-card>
 
           <!-- Comments -->
-          <m-card *ngIf="pageComments?.length">
-            <b>{{'Comments' | translate}}</b>
-
+          <div *ngIf="pageComments?.length">
             <tw-wiki-page-comments
-                style="display: block; margin-top: 0.5rem"
+                id="comments-container"
+                [mode]="mobileQuery.matches ? 'feed' : 'bubbles'"
                 [pageContent]="pageContent"
                 [(pageComments)]="pageComments"
+                [lineOffset]="calcLineOffset"
+                [containerOffset]="'' | apply: getCommentsContainerOffset"
             ></tw-wiki-page-comments>
-          </m-card>
+          </div>
         </div>
       </div>
     </div>

@@ -76,6 +76,7 @@
         <tw-wiki-page-comments
             [pageContent]="pageContent"
             [(pageComments)]="pageComments"
+            (pageCommentsChange)="onCommentsChange()"
         ></tw-wiki-page-comments>
       </div>
     </tw-collapse-panel>

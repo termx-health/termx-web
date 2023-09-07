@@ -1,122 +1,15 @@
-<ng-template #commentAuthor let-c>
-  <div class="comment-author">
-    <div class="comment-creator">
-      {{c.createdBy}}
-    </div>
-    <div class="comment-date" m-tooltip [mTitle]="dateInfo" mPosition="left">
-      {{c.createdAt | localDateTime}}
-    </div>
-
-    <ng-template #dateInfo>
-      <div>{{'web.wiki-page.comments.created-at' | translate: ({date: c.createdAt | localDateTime})}}</div>
-      <div *ngIf="c.modifiedAt">{{'web.wiki-page.comments.modified-at' | translate: ({date: c.modifiedAt | localDateTime})}}</div>
-    </ng-template>
-  </div>
-</ng-template>
-
-<ng-template #view let-comment>
-  <div *ngIf="{max: comment.comment.length > 200 + 30 ? 200 : undefined} as d">
-    <span class="m-whitespace">{{comment.comment | abbreviate: d.max}}</span>
-    <ng-container *ngIf="d.max">
-      <div class="curtain"></div>
-      <a class="m-subtitle m-primary-color" (mClick)="$event.stopPropagation(); d.max = undefined">
-        {{'web.wiki-page.comments.read-more' | translate}}
-      </a>
-    </ng-container>
-  </div>
-</ng-template>
-
-<ng-template #edit let-comment let-id="id">
-  <div *ngIf="editState[id]" class="container">
-    <!-- Editable comment content -->
-    <m-textarea
-        [(ngModel)]="editState[id]"
-        placeholder="web.wiki-page.comments.reply"
-        autofocus
-        [autosize]="{minRows: 2}"
-    ></m-textarea>
-
-    <div class="m-items-middle">
-      <!-- Save button -->
-      <m-button
-          [mDisplay]="editState[id] ? 'primary' : 'default'"
-          (mClick)="editState[id] ? updateContent(comment, editState[id]) : undefined"
-          mSize="small"
-      >
-        {{'core.btn.save' | translate}}
-      </m-button>
-
-      <!-- Cancel button -->
-      <m-button mSize="small" (mClick)="cancelEdit(comment)">
-        {{'core.btn.cancel' | translate}}
-      </m-button>
-    </div>
-  </div>
-</ng-template>
-
-<ng-template #section let-comment let-reply="reply">
-  <div class="container">
-    <div class="m-justify-between">
-      <ng-container *ngTemplateOutlet="commentAuthor, context: {$implicit: comment}"/>
-
-      <div *ngIf="comment | apply: calcPrivileges: editState as privileges" style="display: flex; align-items: center">
-        <m-icon-button
-            *ngIf="privileges.resolve"
-            class="m-primary-color"
-            mIcon="check"
-            m-tooltip
-            mTitle="web.wiki-page.comments.resolve"
-            (mClick)="$event.stopPropagation(); resolve(comment)"
-        />
-
-        <m-icon
-            *ngIf="reply"
-            style="margin-right: var(--gap-default);"
-            class="m-text-secondary"
-            mCode="rollback"
-        />
-
-        <m-dropdown>
-          <a *mDropdownItemIf="privileges.edit" (mClick)="startEdit(comment)">
-            {{'core.btn.edit' | translate}}
-          </a>
-          <a *mDropdownItemIf="privileges.delete" (mClick)="delete(comment)">
-            {{'core.btn.delete' | translate}}
-          </a>
-        </m-dropdown>
-      </div>
-    </div>
-
-    <div class="container">
-      <ng-container *ngTemplateOutlet="editState[comment.id] ? edit : view, context: {$implicit: comment, id: comment.id}"/>
-      <blockquote class="quote m-whitespace" *ngIf="comment.text">{{comment.text}}</blockquote>
-    </div>
-  </div>
-</ng-template>
-
-
 <div *ngIf="pageComments?.length" class="container">
-  <ng-container *ngFor="let comment of pageComments">
-    <m-list *ngIf="{active: !!comment.children?.length} as inf">
-      <!-- Main comment -->
-      <m-list-item class="comment" [mClickable]="!inf.active" (mClick)="!editState[comment.id] ? inf.active = true : undefined">
-        <ng-container *ngTemplateOutlet="section, context: {$implicit: comment}"/>
-      </m-list-item>
+  <ng-container *ngIf="pageComments | apply: sorted: trigger  as comms">
+    <tw-wiki-page-comment
+        *ngFor="let com of comms; let idx = index" [pageContent]="pageContent"
+        [style]="com | apply: getCommentStyle: idx : trigger"
 
-      <!-- Replies -->
-      <m-list-item *ngFor="let reply of comment.children" class="comment-reply">
-        <ng-container *ngTemplateOutlet="section, context: {$implicit: reply, reply: true}"/>
-      </m-list-item>
+        [(pageComment)]="comms[idx]"
+        (pageCommentChange)="fireOnChange(); recalcPositions()"
+        (commentDeleted)="onCommentDelete($event)"
+        (commentResolved)="onCommentResolve($event)"
 
-      <!-- Send reply -->
-      <m-list-item class="comment-reply-section" *ngIf="inf.active">
-        <div class="m-items-top" *ngIf="{msg: ''} as d">
-          <m-textarea style="flex: 1" [(ngModel)]="d.msg" placeholder="web.wiki-page.comments.reply" [autofocus]="!comment.children?.length"/>
-          <m-button [mDisplay]="d.msg ? 'primary' : 'default'" (mClick)="d.msg ? reply(comment, d.msg) : undefined; d.msg = undefined">
-            {{'core.btn.send' | translate}}
-          </m-button>
-        </div>
-      </m-list-item>
-    </m-list>
+        (click)="recalcPositions()"
+    ></tw-wiki-page-comment>
   </ng-container>
 </div>
