@@ -1,9 +1,7 @@
 <tw-resource-context resourceType="ValueSet" [resource]="valueSet" [version]="valueSetVersion" mode="summary"></tw-resource-context>
 <m-page [mLoading]="loader.state['load']">
-
   <m-form-row class="with-row-gap" mGap="1rem">
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
-
       <!-- ValueSetVersion info -->
       <m-card>
         <m-title *m-card-header mTitle="web.value-set-version.summary.value-set-version">
@@ -67,8 +65,12 @@
         </div>
 
       </m-card>
+    </div>
+  </m-form-row>
 
-      <!-- Rule -->
+  <!-- Rule -->
+  <m-form-row>
+    <div style="margin-top: 1rem">
       <m-card *ngIf="rule">
         <m-title *m-card-header mTitle="web.value-set-version.summary.rule">
           <div mControls>
