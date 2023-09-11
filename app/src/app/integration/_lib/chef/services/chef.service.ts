@@ -17,10 +17,20 @@ export class ChefService {
   }
 
   public fshToFhir(req: FshToFhirRequest): Observable<FshToFhirResponse> {
+    req.options ??= {};
+    req.options.fhirVersion ??= '5.0.0';
     return this.http.post(`${environment.chefUrl}/fsh2fhir`, req).pipe(catchError(err => of(err.error)));
   }
 
   public fhirToFsh(req: FhirToFshRequest): Observable<FhirToFshResponse> {
+    const igResource = {
+      resourceType: 'ImplementationGuide',
+      fhirVersion: ['5.0.0'],
+      id: '1',
+      url: `${environment.termxApi}/fhir/ImplementationGuide/1` ,
+      version: '1.0.0'
+    };
+    req.fhir.push(JSON.stringify(igResource, null, 2));
     return this.http.post(`${environment.chefUrl}/fhir2fsh`, req).pipe(catchError(err => of(err.error)));
   }
 }
