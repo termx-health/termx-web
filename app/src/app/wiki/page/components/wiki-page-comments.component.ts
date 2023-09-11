@@ -1,7 +1,8 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {collect, compareDates, isNil, sort} from '@kodality-web/core-util';
 import {PageComment, PageContent} from 'term-web/wiki/_lib';
 import {ExtendedPageComment} from 'term-web/wiki/page/components/wiki-page-comment.component';
+import {NgChanges} from '@kodality-web/marina-ui';
 
 
 @Component({
@@ -31,7 +32,7 @@ export class WikiPageCommentsComponent implements OnChanges {
   protected trigger = {};
 
 
-  public ngOnChanges(changes: SimpleChanges): void {
+  public ngOnChanges(changes: NgChanges<WikiPageCommentsComponent>): void {
     if (changes['pageComments']) {
       const map = collect(this.pageComments, c => c.parentId);
       this.pageComments = this.pageComments
@@ -87,7 +88,7 @@ export class WikiPageCommentsComponent implements OnChanges {
       prevOffsetBottom = prevEl.offsetTop + prevEl.offsetHeight;
     }
 
-    return `position: absolute; left: 0; right: 0; top: ${Math.max(0, lineOffset - this.containerOffset, prevOffsetBottom + 7)}px;`;
+    return `position: absolute; left: 0; right: 0; top: ${Math.max(0, lineOffset - this.containerOffset ?? 0, prevOffsetBottom + 7)}px;`;
   };
 
 

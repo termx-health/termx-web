@@ -1,13 +1,11 @@
-<m-markdown
+<tw-wiki-markdown-view
     *ngIf="valueType === 'markdown'"
-    [mData]="value ?? ''"
-    [mPlugins]="plugins.list"
-    [mPluginOptions]="plugins.options"
-    [mPrerender]="prerender"
+    [value]="value"
+    [prerender]="prerender"
 />
 
 <m-quill
     *ngIf="valueType === 'html'"
-    [(ngModel)]="value"
+    [ngModel]="value"
     mViewMode
 />

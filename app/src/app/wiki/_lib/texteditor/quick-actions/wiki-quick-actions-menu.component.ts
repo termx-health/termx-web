@@ -1,20 +1,24 @@
 import {AfterViewInit, Component, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {isDefined} from '@kodality-web/core-util';
-import {delay, startWith} from 'rxjs';
+import {DestroyService, isDefined} from '@kodality-web/core-util';
+import {delay, filter, fromEvent, map, startWith, takeUntil} from 'rxjs';
 import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
-import {WikiQuickActionsDropdownOptionComponent} from './dropdown/wiki-quick-actions-dropdown-option.component';
-import {WikiQuickActionsDropdownComponent} from './dropdown/wiki-quick-actions-dropdown.component';
-import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './wiki-quick-actions-base.directive';
+import {WikiQuickActionsDropdownOptionComponent} from '../../texteditor/quick-actions/components/wiki-quick-actions-dropdown-option.component';
+import {WikiQuickActionsDropdownComponent} from '../../texteditor/quick-actions/components/wiki-quick-actions-dropdown.component';
+import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './actions/wiki-quick-actions.base';
 
 
 @Component({
   selector: "tw-dropdown-menu",
   template: `
-    <!-- WikiDropdownComponent -->
+    <!-- WikiQuickActionsDropdownComponent -->
     <tw-wiki-quick-actions-dropdown [reference]="containerRef">
       <div class="dropdown-options-container" id="options-container">
         <!-- WikiDropdownOptionComponent -->
-        <tw-wiki-quick-actions-dropdown-option *ngFor="let item of popupOptions" [item]="item" (click)="onOptionSelect(item)"></tw-wiki-quick-actions-dropdown-option>
+        <tw-wiki-quick-actions-dropdown-option
+            *ngFor="let item of popupOptions"
+            [item]="item"
+            (click)="onOptionSelect(item.id)"
+        ></tw-wiki-quick-actions-dropdown-option>
       </div>
     </tw-wiki-quick-actions-dropdown>
 
@@ -32,22 +36,23 @@ import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './wiki-q
       overflow-y: scroll;
       scroll-behavior: smooth;
     }
-  `]
+  `],
+  providers: [
+    DestroyService
+  ]
 })
 export class WikiQuickActionsMenuComponent implements AfterViewInit {
   @Input() public containerRef: HTMLElement;
   @Input() public lang: string;
-  @Output() public resultComposed = new EventEmitter<{result: any, range: Range, cursorOffset: number}>();
+  @Output() public composed = new EventEmitter<{result: any, cursorOffset: number}>();
 
-  // dropdown component ref
-  @ViewChild(WikiQuickActionsDropdownComponent) public dropdown?: WikiQuickActionsDropdownComponent;
-  @ViewChildren(WikiQuickActionsDropdownOptionComponent) public options?: QueryList<WikiQuickActionsDropdownOptionComponent>;
 
-  // both componentOptions & baseOptions
+  // both dynamicOptions & localOptions
   protected popupOptions: WikiQuickActionDefinition[] = [];
 
-  @ViewChildren(WikiQuickActionsBaseComponent) private readonly componentOptions: QueryList<WikiQuickActionsBaseComponent>;
-  private readonly baseOptions: WikiQuickActionDefinition[] = [
+  @ViewChildren(WikiQuickActionsBaseComponent)
+  private readonly dynamicOptions: QueryList<WikiQuickActionsBaseComponent>;
+  private readonly localOptions: WikiQuickActionDefinition[] = [
     {id: '_md_bullet-list', icon: 'unordered-list', name: 'Bullet list', description: 'Create an unordered list', result: '* '},
     {id: '_md_numbered-list', icon: 'ordered-list', name: 'Numbered list', description: 'Create an ordered list', result: '1. '},
     {id: '_md_divider', icon: 'line', name: 'Divider', description: 'Separate content with horizontal line', result: '***\n'},
@@ -56,66 +61,104 @@ export class WikiQuickActionsMenuComponent implements AfterViewInit {
     {id: '_md_heading-2', icon: 'font-size', name: 'Heading 2', description: 'Sections', result: '## '},
   ];
 
-  private keyManager?: ActiveDescendantKeyManager<WikiQuickActionsDropdownOptionComponent>;
-  private range?: Range;
+
+  // dropdown component ref
+  @ViewChild(WikiQuickActionsDropdownComponent) public dropdown?: WikiQuickActionsDropdownComponent;
+  @ViewChildren(WikiQuickActionsDropdownOptionComponent) public options?: QueryList<WikiQuickActionsDropdownOptionComponent>;
+
+
+  private keyManager: ActiveDescendantKeyManager<
+    WikiQuickActionsDropdownOptionComponent
+  >;
+
+  public constructor(
+    private destroy$: DestroyService
+  ) { }
+
 
   public ngAfterViewInit(): void {
-    setTimeout(() => {
-      this.keyManager = new ActiveDescendantKeyManager(this.options!)
-        .withHorizontalOrientation('ltr')
-        .withVerticalOrientation(true)
-        .withWrap();
-    });
+    this.keyManager = new ActiveDescendantKeyManager(this.options!)
+      .withHorizontalOrientation('ltr')
+      .withVerticalOrientation(true)
+      .withWrap();
 
-    this.componentOptions.changes.pipe(startWith(null), delay(0)).subscribe(() => {
+    this.dynamicOptions.changes.pipe(
+      startWith(null),
+      delay(0),
+      map(() => this.dynamicOptions.map(c => c.definition))
+    ).subscribe(dynamicOptions => {
       this.popupOptions = [
-        ...this.componentOptions.map(c => c.definition),
-        ...this.baseOptions,
+        ...dynamicOptions,
+        ...this.localOptions,
       ];
-
-      this.componentOptions.forEach(comp =>
-        // add resolve handler to QA component
-        comp.resolve.subscribe(r => {
-          const offset = comp.definition.cursorOffset?.(r);
-          this.emitResult(r, offset);
-        }));
     });
+
+    fromEvent<KeyboardEvent>(document, 'keydown')
+      .pipe(takeUntil(this.destroy$), filter(() => this.dropdown.showing))
+      .subscribe(e => this.proxyKeyDown(e));
+
+    fromEvent<KeyboardEvent>(document, 'keyup')
+      .pipe(takeUntil(this.destroy$), filter(() => this.dropdown.showing))
+      .subscribe(e => this.proxyKeyUp(e));
   }
 
 
-  protected onOptionSelect(item: WikiQuickActionDefinition): void {
+  protected onOptionSelect(id: string): void {
     this.hide();
+    const item = this.popupOptions.find(i => i.id === id);
 
     if (isDefined(item.result)) {
       this.emitResult(item.result, item.cursorOffset?.(item.result));
-    } else {
-      this.componentOptions.find(c => c.definition.id === item.id)?.handle({lang: this.lang});
+      return;
     }
+
+    const com = this.dynamicOptions.find(c => c.definition.id === item.id);
+    com?.resolve.subscribe(r => this.emitResult(r, com.definition.cursorOffset?.(r)));
+    com?.handle({lang: this.lang});
+    return;
   }
 
   private emitResult(result: string, offset: number = result?.length): void {
-    this.resultComposed.emit({
+    this.composed.emit({
       result: result,
-      range: this.range,
       cursorOffset: offset
     });
   }
 
 
+  /* Dropdown handlers */
+
+  private _prevFocusedEl: HTMLElement;
+
+  private show(): void {
+    this._prevFocusedEl = document.activeElement as HTMLElement;
+    this._prevFocusedEl?.blur();
+
+    this.dropdown?.show();
+    if (this.options?.length) {
+      this.keyManager.setFirstItemActive();
+    }
+  }
+
+  private hide(): void {
+    this.dropdown?.hide();
+    this._prevFocusedEl?.focus();
+  }
+
+
   /* Key handlers */
 
-  public handleKeyUp(event: KeyboardEvent): void {
+  public proxyKeyUp(event: KeyboardEvent): void {
     if (event.key === 'Escape') {
       this.hide();
     }
 
     if (event.key === '/' && !this.dropdown?.showing) {
-      this.range = window.getSelection()?.getRangeAt(0);
       this.show();
     }
   }
 
-  public handleKeyDown(event: KeyboardEvent): void {
+  public proxyKeyDown(event: KeyboardEvent): void {
     const km = this.keyManager;
     const key = event.key;
     const preventDefault = (): void => {
@@ -124,7 +167,7 @@ export class WikiQuickActionsMenuComponent implements AfterViewInit {
     };
 
     // '/' is handled on UP press
-    // No need to handle key presses is dropdown is already showing
+    // No need to handle key presses if dropdown is already showing
     if (key === '/' || !this.dropdown?.showing) {
       return;
     }
@@ -132,14 +175,14 @@ export class WikiQuickActionsMenuComponent implements AfterViewInit {
     // 'Enter' selects active option in the dropdown
     if (key === 'Enter' && km.activeItem) {
       preventDefault();
-      this.onOptionSelect(km.activeItem.item!);
+      this.onOptionSelect(km.activeItem.item.id);
       return;
     }
 
     // Number shortcut to select option (1 - 9)
     if (!isNaN(Number(event.key)) && this.popupOptions[Number(event.key) - 1]) {
       preventDefault();
-      this.onOptionSelect(this.popupOptions[Number(event.key) - 1]);
+      this.onOptionSelect(this.popupOptions[Number(event.key) - 1].id);
       return;
     }
 
@@ -156,19 +199,5 @@ export class WikiQuickActionsMenuComponent implements AfterViewInit {
 
     // Unknown key -> close dropdown
     this.hide();
-  }
-
-
-  /* Dropdown handlers */
-
-  public show(): void {
-    this.dropdown?.show();
-    if (this.options?.length) {
-      this.keyManager.setFirstItemActive();
-    }
-  }
-
-  public hide(): void {
-    this.dropdown?.hide();
   }
 }

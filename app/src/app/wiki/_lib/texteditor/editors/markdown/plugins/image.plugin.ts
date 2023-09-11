@@ -1,5 +1,5 @@
 import {environment} from 'environments/environment';
-import {tokenAttrValue} from 'term-web/wiki/_lib/texteditor/markdown-plugins/plugin.util';
+import {tokenAttrValue} from './plugin.util';
 
 // matches "files/:pageId/:fileName"
 const filesRe = /^files\/(\d*)\/(.+)/;

@@ -1,4 +1,4 @@
-import {parsePageRelationLink} from '../../page/utils/page-relation.utils';
+import {parsePageRelationLink} from '../../../../page/utils/page-relation.utils';
 import {tokenAttrValue} from './plugin.util';
 
 const transformHref = (href: string, ctx: {spaceId?: number}): string => {

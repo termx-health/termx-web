@@ -1,16 +1,9 @@
 import {Component, ElementRef, EnvironmentInjector, EventEmitter, Input, Output} from '@angular/core';
-import {PreferencesService} from 'term-web/core/preferences/preferences.service';
-import {structureDefinitionCodePlugin} from './markdown-plugins/structure-definition-code.plugin';
-import {structureDefinitionFshPlugin} from './markdown-plugins/structure-definition-fsh.plugin';
 import {createCustomElement} from '@angular/elements';
-import {drawioPlugin} from './markdown-plugins/drawio.plugin';
 import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib';
-import {localImage} from './markdown-plugins/image.plugin';
-import {localLink} from 'term-web/wiki/_lib/texteditor/markdown-plugins/link.plugin';
 import {debounceTime, filter, fromEvent, map} from 'rxjs';
-import {WikiCommentPopoverComponent} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment-popover.component';
-import {sourceLinePlugin} from 'term-web/wiki/_lib/texteditor/markdown-plugins/source-line.plugin';
-import {WikiComment} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment';
+import {WikiCommentPopoverComponent} from '../texteditor/comments/wiki-comment-popover.component';
+import {WikiComment} from '../texteditor/comments/wiki-comment';
 
 @Component({
   selector: 'tw-smart-text-editor-view',
@@ -28,23 +21,7 @@ export class WikiSmartTextEditorViewComponent {
 
   @Output() public commentCreated = new EventEmitter<WikiComment>();
 
-  protected plugins = {
-    list: [
-      sourceLinePlugin,
-      localLink,
-      localImage,
-      structureDefinitionCodePlugin,
-      structureDefinitionFshPlugin,
-      drawioPlugin
-    ],
-    options: {
-      spaceId: this.preferences.spaceId
-    }
-  };
-
-
   public constructor(
-    private preferences: PreferencesService,
     injector: EnvironmentInjector,
     el: ElementRef
   ) {
@@ -57,11 +34,13 @@ export class WikiSmartTextEditorViewComponent {
       .filter(k => !customElements.get(k))
       .forEach(k => customElements.define(k, createCustomElement(components[k], {injector})));
 
-    this.initCommentListener(el.nativeElement);
+    setTimeout(() => this.initCommentListener(el.nativeElement));
   }
 
 
   private initCommentListener(el: Element): void {
+    // todo: observe DOM changes withing current element to reposition comments
+
     let wrapper: HTMLElement;
     fromEvent(document, 'mousedown').subscribe(ev => {
       if (!wrapper?.contains(ev.target as HTMLElement)) {
