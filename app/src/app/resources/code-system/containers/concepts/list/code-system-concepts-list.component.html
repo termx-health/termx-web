@@ -62,7 +62,7 @@
 
   <div class="m-justify-between m-items-top">
     <!-- Table views -->
-    <div style="flex: 4; max-width: 100%;">
+    <div style="flex: 4; min-width: 0">
       <m-backend-table *ngIf="!groupOpened" [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
         <tr *mTableHead>
           <th>{{'entities.code-system-concept.code' | translate}}</th>
