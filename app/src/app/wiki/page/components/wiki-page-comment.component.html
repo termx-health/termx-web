@@ -1,10 +1,13 @@
 <ng-template #commentAuthor let-com>
-  <div class="comment-author">
+  <div class="comment-author" style="position: relative">
     <div class="comment-creator">
       {{com.createdBy}}
     </div>
     <div class="comment-date" m-tooltip [mTitle]="dateInfo" mPosition="left">
       {{com.createdAt | localDateTime}}
+    </div>
+    <div class="comment-line-number" style="display: none">
+      {{com.options?.lineNumber}}
     </div>
 
     <ng-template #dateInfo>

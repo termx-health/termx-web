@@ -1,10 +1,10 @@
 import {Component, forwardRef, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from '../wiki-quick-actions-base.directive';
 import {Space} from 'term-web/space/_lib';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
-import {PageContent} from 'term-web/wiki/_lib';
+import {PageContent} from '../../../page/models/page-content';
+import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './wiki-quick-actions.base';
 
 
 @Component({
@@ -119,8 +119,7 @@ export class WikiQuickActionsLinkComponent extends WikiQuickActionsBaseComponent
     id: '_md_link',
     name: 'Link',
     icon: 'link',
-    description: 'Insert a link',
-
+    description: 'Insert a link'
   };
 
   protected data: LinkModalData;
@@ -139,14 +138,15 @@ export class WikiQuickActionsLinkComponent extends WikiQuickActionsBaseComponent
 
 
   protected toggleModal(visible: boolean): void {
-    this.modalVisible = visible;
-
-    if (!this.modalVisible) {
-      this.resolve.next(undefined);
+    if (this.modalVisible === visible) {
+      return;
     }
 
+    this.modalVisible = visible;
     if (this.modalVisible) {
       this.data = {linkType: 'url'};
+    } else {
+      this.resolve.next(undefined);
     }
   }
 
@@ -167,30 +167,26 @@ export class WikiQuickActionsLinkComponent extends WikiQuickActionsBaseComponent
 
 
   private composePageRelationLink(data: LinkModalData): string | undefined {
-    if (data.linkType === 'url') {
-      return data.link;
-    }
-
-    if (data.linkType === 'page') {
-      return `page:${data.space ? data.space.code + '/' : ''}${data.pageContent.slug}`;
-    }
-
-    if (data.linkType === 'resource') {
-      if (data.resourceType && ['cs', 'vs', 'ms'].includes(data.resourceType)) {
-        return `${data.resourceType}:${data.resource}`;
-      }
-      if ('csv' === data.resourceType) {
-        return `${data.resourceType}:${data.versionCodeSystem}|${data.resource}`;
-      }
-      if ('vsv' === data.resourceType) {
-        return `${data.resourceType}:${data.versionValueSet}|${data.resource}`;
-      }
-      if ('msv' === data.resourceType) {
-        return `${data.resourceType}:${data.versionMapSet}|${data.resource}`;
-      }
-      if ('concept' === data.resourceType) {
-        return `${data.resourceType}:${data.conceptCodeSystem}|${data.resource}`;
-      }
+    switch (data.linkType) {
+      case 'url':
+        return data.link;
+      case 'page':
+        return `page:${data.space ? data.space.code + '/' : ''}${data.pageContent.slug}`;
+      case 'resource':
+        switch (data.resourceType) {
+          case 'cs':
+          case 'vs':
+          case 'ms':
+            return `${data.resourceType}:${data.resource}`;
+          case 'csv':
+            return `${data.resourceType}:${data.versionCodeSystem}|${data.resource}`;
+          case 'vsv':
+            return `${data.resourceType}:${data.versionValueSet}|${data.resource}`;
+          case 'msv':
+            return `${data.resourceType}:${data.versionMapSet}|${data.resource}`;
+          case 'concept':
+            return `${data.resourceType}:${data.conceptCodeSystem}|${data.resource}`;
+        }
     }
   }
 }

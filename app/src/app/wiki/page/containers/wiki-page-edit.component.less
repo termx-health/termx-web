@@ -18,12 +18,24 @@
   display: flex;
 }
 
+.editor__main-wrapper-shadow {
+  box-shadow: @shadow;
+  height: 9px;
+
+  position: absolute;
+  left: 0;
+  right: 0;
+  z-index: 1;
+
+  pointer-events: none;
+}
+
 .editor__main {
   flex: 1;
   display: flex;
 
   background: var(--color-background-component);
-  box-shadow: @shadow;
+  //box-shadow: @shadow;
 
   height: calc(100dvh - var(--page-header-height) - var(--editor-header-height));
   overflow: auto;
@@ -39,7 +51,7 @@
 
 .editor__sidebar {
   background: var(--color-background-light);
-  box-shadow: @shadow;
+  //box-shadow: @shadow;
   border-right: 1px solid var(--color-borders);
 
   ::ng-deep .m-menu__inner {

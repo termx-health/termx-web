@@ -152,20 +152,31 @@ a {
   outline: none;
 }
 
-m-markdown.disable {
-  position: relative;
-
-  *[data-source-line] {
+.debug-md {
+  m-markdown {
     position: relative;
 
-    &::before {
-      content: attr(data-source-line);
-      position: absolute;
-      right: 100%;
-      margin-right: 3px;
-      font-family: monospace;
-      font-size: 0.7rem;
-      font-weight: initial;
+    *[data-source-line] {
+      position: relative;
+
+      &::before {
+        content: attr(data-source-line);
+        position: absolute;
+        background: wheat;
+        margin-right: 3px;
+        font-family: monospace;
+        font-size: 0.7rem;
+        font-weight: initial;
+      }
     }
+  }
+
+  .comment-line-number {
+    display: block !important;
+    font-size: 0.7rem;
+    background: wheat;
+    position: absolute;
+    left: -.8rem;
+    top: -.7rem
   }
 }

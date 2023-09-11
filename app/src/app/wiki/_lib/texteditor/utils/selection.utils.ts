@@ -1,5 +1,3 @@
-import {isNil} from "@kodality-web/core-util";
-
 export function contentFromSelection(text: string, pos: number, startToken: string, endToken: string) {
   const startPos = text.lastIndexOf(startToken, pos);
   const endPos = text.indexOf(endToken, pos);
@@ -17,19 +15,4 @@ export function contentFromSelection(text: string, pos: number, startToken: stri
     startPos,
     endPos,
   };
-}
-
-
-export function indexOfDifference(before?: string, after?: string): number | undefined {
-  if (before == after || isNil(before) || isNil(after)) {
-    return;
-  }
-  for (var i = 0; i < before.length && i < after.length; ++i) {
-    if (before.charAt(i) != after.charAt(i)) {
-      break;
-    }
-  }
-  if (i < after.length || i < before.length) {
-    return i;
-  }
 }

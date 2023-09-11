@@ -4,36 +4,33 @@
 <ng-template #edit>
   <tw-dropdown-menu
     #optionMenu
-      [containerRef]="ref"
+      [containerRef]="containerRef"
       [lang]="lang"
-      (resultComposed)="insertAtRange($event.result, $event.range, $event.cursorOffset)"
+      (composed)="insertAtCursor($event.result, $event.cursorOffset)"
   />
 
   <div class="editor-wrapper">
-    <div #ref class="editor__editor">
-      <ng-container *ngIf="valueType === 'markdown'">
-        <tw-wiki-textarea
-            style="font-family: monospace"
-            [(ngModel)]="value"
-            (ngModelChange)="fireOnChange($event)"
-            (click)="optionMenu.hide()"
-            (keydown)="optionMenu.handleKeyDown($event)"
-            (keyup)="optionMenu.handleKeyUp($event)"
-            (blur)="onTouched()"
-            (mouseleave)="updateCursorPosition()"
-        />
-      </ng-container>
+    <div #containerRef class="editor__editor" [ngSwitch]="valueType">
+      <tw-wiki-markdown-editor
+        #editor
+          *ngSwitchCase="'markdown'"
+          [(ngModel)]="value"
+          (ngModelChange)="fireOnChange($event)"
+          (keydown)="optionMenu.proxyKeyDown($event)"
+          (keyup)="optionMenu.proxyKeyUp($event)"
+          (blur)="onTouched()"
+          style="font-family: monospace"
+      />
 
-      <ng-container *ngIf="valueType === 'html'">
-        <m-quill
-            [(ngModel)]="value"
-            (click)="optionMenu.hide()"
-            (keydown)="optionMenu.handleKeyDown($event)"
-            (keyup)="optionMenu.handleKeyUp($event)"
-            (blur)="onTouched()"
-            (ngModelChange)="fireOnChange($event)"
-        />
-      </ng-container>
+      <tw-wiki-quill-editor
+        #editor
+          *ngSwitchCase="'html'"
+          [(ngModel)]="value"
+          (ngModelChange)="fireOnChange($event)"
+          (keydown)="optionMenu.proxyKeyDown($event)"
+          (keyup)="optionMenu.proxyKeyUp($event)"
+          (blur)="onTouched()"
+      />
     </div>
 
 

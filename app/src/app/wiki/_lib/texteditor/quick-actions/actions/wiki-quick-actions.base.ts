@@ -1,5 +1,5 @@
 import {Directive} from '@angular/core';
-import {WikiDropdownOptionItem} from './dropdown/wiki-quick-actions-dropdown-option.component';
+import {WikiDropdownOptionItem} from '../../../texteditor/quick-actions/components/wiki-quick-actions-dropdown-option.component';
 import {Subject} from 'rxjs';
 
 export class WikiQuickActionDefinition extends WikiDropdownOptionItem {

@@ -1,7 +1,7 @@
 import {Component, forwardRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from '../wiki-quick-actions-base.directive';
+import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './wiki-quick-actions.base';
 import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 
 
@@ -58,8 +58,20 @@ export class WikiQuickActionsStructureDefinitionComponent extends WikiQuickActio
     this.structureDefinitionService.search({limit: 999}).subscribe(sd => this.structureDefinitions = sd.data);
   }
 
+
   public override handle(): void {
     this.toggleModal(true);
+  }
+
+  protected cancel(): void {
+    this.toggleModal(false);
+  }
+
+  protected confirm(): void {
+    if (validateForm(this.form)) {
+      this.resolve.next(`{{def:${this.data.defCode}}}`);
+      this.modalVisible = false;
+    }
   }
 
 
@@ -73,17 +85,6 @@ export class WikiQuickActionsStructureDefinitionComponent extends WikiQuickActio
       this.data = {};
     } else {
       this.resolve.next(undefined);
-    }
-  }
-
-  protected cancel(): void {
-    this.toggleModal(false);
-  }
-
-  protected confirm(): void {
-    if (validateForm(this.form)) {
-      this.resolve.next(`{{def:${this.data.defCode}}}`);
-      this.modalVisible = false;
     }
   }
 }

@@ -1,10 +1,11 @@
-import {Component, ElementRef, forwardRef, Input, ViewChild} from '@angular/core';
+import {Component, forwardRef, Input, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput, isDefined, isNil} from '@kodality-web/core-util';
-import {getCursorPosition, setCursorPosition} from './utils/cursor.utils';
-import {launchDrawioEditor} from './editors/drawio.editor';
-import {contentFromSelection, indexOfDifference} from './utils/selection.utils';
+import {launchDrawioEditor} from './editor-external/drawio.editor';
+import {contentFromSelection} from './utils/selection.utils';
 import {BehaviorSubject, concat, debounceTime, take} from 'rxjs';
+import {WikiAbstractEditor} from './editors/abstract-text-editor';
+
 
 @Component({
   selector: 'tw-smart-text-editor',
@@ -38,14 +39,6 @@ import {BehaviorSubject, concat, debounceTime, take} from 'rxjs';
       .editor__editor {
         flex: 50%;
 
-        /* Markdown */
-
-        .tw-textarea {
-          font-size: 0.9rem;
-          border: unset;
-          border-radius: unset;
-        }
-
         /* Quill*/
 
         .ql-toolbar {
@@ -75,8 +68,10 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
   @Input() public valueType?: 'html' | 'markdown';
   @Input() @BooleanInput() public showPreview: boolean | string;
   @Input() @BooleanInput() public viewMode: boolean | string;
+  @Input() @BooleanInput() public lineNumbers: boolean | string;
 
-  @ViewChild('ref') private textArea: ElementRef<HTMLElement>;
+  @ViewChild('editor')
+  private _editor: WikiAbstractEditor;
 
   protected value?: string;
   protected onChange = (x: any): void => x;
@@ -90,40 +85,35 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
   );
 
 
-  /* Cursor*/
+  /* Cursor */
 
-  private _lastCursorPosition;
-
-  protected updateCursorPosition(): void {
-    const pos = getCursorPosition(this.textarea);
-    if (pos) {
-      this._lastCursorPosition = pos;
+  public insertAtLastCursorPosition(val: string): void {
+    const lastCursorPosition = this._editor.cursorPosition;
+    if (isDefined(lastCursorPosition)) {
+      this._editor.insertAtCursorPosition(lastCursorPosition, val);
+      this._editor.setCursorPosition(lastCursorPosition + val.length);
     }
   }
 
-  public insertAtLastCursorPosition(val: string): void {
-    if (isNil(this._lastCursorPosition)) {
-      return;
-    }
+  protected insertAtCursor(text: string, offset = 0): void {
+    const cp = this._editor.cursorPosition - 1; // because of the '/' symbol
+    const nextCp = cp + offset;
 
-    const start = this.value.slice(0, this._lastCursorPosition);
-    const end = this.value.slice(this._lastCursorPosition);
-
-    const text = `${start}${val}${end}`;
-    this.setValue(text, this._lastCursorPosition + val.length);
+    this._editor.replaceRangeWith(cp, cp + 1, text ?? "");
+    this._editor.setCursorPosition(nextCp);
   }
 
 
   /* Editors */
 
   public launchEditor(name: string): void {
-    if (isNil(this._lastCursorPosition)) {
+    if (isNil(this._editor.cursorPosition)) {
       return;
     }
 
     switch (name) {
       case 'drawio':
-        const {selection, startPos} = contentFromSelection(this.value, this._lastCursorPosition, '```drawio', '```');
+        const {selection, startPos, endPos} = contentFromSelection(this.value, this._editor.cursorPosition, '```drawio', '```');
         const base64 = selection?.match(/```drawio\n?(.+)\n?```/)?.[1];
 
         launchDrawioEditor({
@@ -132,12 +122,11 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
               svg: base64 ? atob(base64) : undefined,
               markdown: selection
             }),
-            updateDiagram: ({diagramMarkdown, diagramSvg}) => {
-              const text = this.value.replace(diagramMarkdown, `\`\`\`drawio\n${btoa(diagramSvg)}\n\`\`\``);
-              this.setValue(text, startPos);
+            updateDiagram: ({diagramSvg}) => {
+              this._editor.replaceRangeWith(startPos, endPos + 3, `\`\`\`drawio\n${btoa(diagramSvg)}\n\`\`\``);
             },
             insertDiagram: ({diagramSvg}) => {
-              this.insertAtLastCursorPosition(`\n\`\`\`drawio\n${btoa(diagramSvg)}\n\`\`\`\n`)
+              this.insertAtLastCursorPosition(`\n\`\`\`drawio\n${btoa(diagramSvg)}\n\`\`\`\n`);
             },
           },
         });
@@ -166,51 +155,5 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
   protected fireOnChange(val: string): void {
     this.onChange(val);
     this.value$.next(val);
-  }
-
-  private setValue(text: string, pos?: number): void {
-    // update ngModel value
-    this.value = text;
-    this.fireOnChange(text ?? "");
-
-    // restore/set cursor position
-    if (isDefined(pos)) {
-      setTimeout(() => setCursorPosition(pos, this.textarea));
-    }
-  }
-
-
-  /* Cursor Magic */
-
-  protected insertAtRange(text: string, range: Range, offset = 0): void {
-    if (isNil(text)) {
-      text = "";
-    }
-
-    let cursorPosition = getCursorPosition(this.textarea);
-    if (!range) {
-      return;
-    }
-
-    // insert text into the range
-    const currentText = this.textarea.innerText;
-    range.deleteContents();
-    range.insertNode(document.createTextNode(text));
-
-    // get new content
-    let newText = this.textarea.innerText;
-
-    // remove "/" from the content
-    const diffIdx = indexOfDifference(currentText, newText);
-    if (isDefined(diffIdx) && isDefined(newText) && newText.charAt(diffIdx - 1) === '/') {
-      cursorPosition = diffIdx - 1;
-      newText = newText.slice(0, diffIdx - 1) + newText.slice(diffIdx);
-    }
-
-    this.setValue(newText, cursorPosition + offset);
-  }
-
-  private get textarea(): HTMLElement {
-    return this.textArea.nativeElement;
   }
 }

@@ -2,8 +2,8 @@ import {Component, forwardRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {Template} from '../../../template/models/template';
-import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from '../wiki-quick-actions-base.directive';
 import {TemplateLibService} from '../../../template/services/template-lib.service';
+import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './wiki-quick-actions.base';
 
 
 @Component({
@@ -59,10 +59,23 @@ export class WikiQuickActionsTemplateComponent extends WikiQuickActionsBaseCompo
     this.templateService.searchTemplates({limit: 999}).subscribe(t => this.templates = t.data);
   }
 
+
   public override handle(ctx: {lang?: string}): void {
     this.lang = ctx.lang;
     this.toggleModal(true);
   }
+
+  protected cancel(): void {
+    this.toggleModal(false);
+  }
+
+  protected confirm(): void {
+    if (validateForm(this.form)) {
+      this.resolve.next(this.data.template.contents?.find(c => c.lang === this.lang)?.content);
+      this.modalVisible = false;
+    }
+  }
+
 
   protected toggleModal(visible: boolean): void {
     if (this.modalVisible === visible) {
@@ -74,17 +87,6 @@ export class WikiQuickActionsTemplateComponent extends WikiQuickActionsBaseCompo
       this.data = {};
     } else {
       this.resolve.next(undefined);
-    }
-  }
-
-  protected cancel(): void {
-    this.toggleModal(false);
-  }
-
-  protected confirm(): void {
-    if (validateForm(this.form)) {
-      this.resolve.next(this.data.template.contents?.find(c => c.lang === this.lang)?.content);
-      this.modalVisible = false;
     }
   }
 }
