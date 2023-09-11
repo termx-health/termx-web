@@ -14,7 +14,7 @@ const fsh_sushi_1 = require("fsh-sushi");
 const utils_1 = require("../utils");
 const processor_1 = require("../processor");
 const export_1 = require("../export");
-let cacheDefs = {};
+// let cacheDefs = {};
 function fhirToFsh(input, options = {}) {
     var _a;
     return __awaiter(this, void 0, void 0, function* () {
@@ -70,12 +70,12 @@ function fhirToFsh(input, options = {}) {
         // Process the configuration
         const configuration = processor.processConfig(((_a = options.dependencies) !== null && _a !== void 0 ? _a : []).map(d => d.replace('#', '@')));
         // Load dependencies, including those inferred from an IG file, and those given as input
-        if (!cacheDefs[configuration.config.fhirVersion[0]]) {
+        // if (!cacheDefs[configuration.config.fhirVersion[0]]) {
             yield (0, utils_1.loadExternalDependencies)(defs, configuration);
-            cacheDefs[configuration.config.fhirVersion[0]] = defs;
-        } else {
-            defs = cacheDefs[configuration.config.fhirVersion[0]];
-        }
+        //     cacheDefs[configuration.config.fhirVersion[0]] = defs;
+        // } else {
+        //     defs = cacheDefs[configuration.config.fhirVersion[0]];
+        // }
         // Process the FHIR to rules, and then export to FSH
         const pkg = yield (0, utils_1.getResources)(processor, configuration, processingOptions);
         // Default to exporting as a single string
