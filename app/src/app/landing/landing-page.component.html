@@ -1,31 +1,33 @@
 <m-page mFull>
   <div class="wrapper animated">
     <!-- Resources -->
-    <section class="fade-in-350ms" *ngIf="!loader.state['resource']">
-      <div class="header title">{{'web.landing.resources.title' | translate}}</div>
+    <ng-container *twPrivileged="['*.CodeSystem.view', '*.ValueSets.view', '*.MapSets.view']">
+      <section class="fade-in-350ms" *ngIf="!loader.state['resource']">
+        <div class="header title">{{'web.landing.resources.title' | translate}}</div>
 
-      <div class="grid-auto-fit">
-        <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.CodeSystem.view'" [routerLink]="['/resources/code-systems']">
-          <div class="m-subtitle">{{'web.landing.resources.types.code-system' | translate}}</div>
-          <div class="title">{{data.codeSystemCount}}</div>
-        </button>
+        <div class="grid-auto-fit">
+          <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.CodeSystem.view'" [routerLink]="['/resources/code-systems']">
+            <div class="m-subtitle">{{'web.landing.resources.types.code-system' | translate}}</div>
+            <div class="title">{{data.codeSystemCount}}</div>
+          </button>
 
-        <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.ValueSets.view'" [routerLink]="['/resources/value-sets']">
-          <div class="m-subtitle">{{'web.landing.resources.types.value-set' | translate}}</div>
-          <div class="title">{{data.valueSetCount}}</div>
-        </button>
+          <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.ValueSets.view'" [routerLink]="['/resources/value-sets']">
+            <div class="m-subtitle">{{'web.landing.resources.types.value-set' | translate}}</div>
+            <div class="title">{{data.valueSetCount}}</div>
+          </button>
 
-        <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.MapSets.view'" [routerLink]="['/resources/map-sets']">
-          <div class="m-subtitle">{{'web.landing.resources.types.map-set' | translate}}</div>
-          <div class="title">{{data.mapSetsCount}}</div>
-        </button>
-      </div>
-    </section>
+          <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.MapSets.view'" [routerLink]="['/resources/map-sets']">
+            <div class="m-subtitle">{{'web.landing.resources.types.map-set' | translate}}</div>
+            <div class="title">{{data.mapSetsCount}}</div>
+          </button>
+        </div>
+      </section>
+    </ng-container>
 
 
     <ng-container *ngIf="!loader.isLoading">
       <!-- Summary -->
-      <section class="fade-in-350ms-delay-200ms">
+      <section class="fade-in-350ms-delay-200ms" *twPrivileged="['*.Space.view', '*.Wiki.view', '*.Task.view']">
         <div class="header title">{{'web.landing.summary.title' | translate}}</div>
 
         <div class="grid-auto-fit">
@@ -48,7 +50,7 @@
 
 
       <!-- Tasks -->
-      <section class="fade-in-350ms-delay-400ms">
+      <section class="fade-in-350ms-delay-400ms" *twPrivileged="'*.Task.view'">
         <div class="header m-justify-between m-items-top">
           <div class="title">{{'web.landing.tasks.title' | translate}}</div>
 

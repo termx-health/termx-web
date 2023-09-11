@@ -47,6 +47,10 @@ export class AppComponent {
   }
 
 
+  protected login(): void {
+    this.auth.login();
+  }
+
   protected logout(): void {
     this.auth.logout().subscribe();
   }

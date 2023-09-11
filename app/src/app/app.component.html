@@ -2,8 +2,10 @@
     [class.embedded]="router.url | apply: isEmbedded"
     [mTitle]="titleTpl"
     [mMenu]="menu$ | async" mMenuMode="horizontal"
+    [mAuthenticated]="auth.isAuthenticated | async"
     [mUserInfo]="auth.user ? {initials: auth.user?.username, template: userInfoTpl} : undefined"
     (mLangChange)="onLangChange($event)"
+    (mLogin)="login()"
     (mLogout)="logout()"
 >
   <ng-template #titleTpl>

@@ -83,7 +83,7 @@ export class LandingPageComponent {
   }
 
   private loadTasks(): void {
-    const user = this.authService.user.username;
+    const user = this.authService.user?.username;
 
     const tasks$ = this.withPrivilege(this.taskService.searchTasks({limit: 0}), '*.Task.view');
     const tasksCreatedByUser$ = this.withPrivilege(this.taskService.searchTasks({createdBy: user}), '*.Task.view');

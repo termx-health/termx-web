@@ -158,7 +158,7 @@ export class WikiPageCommentComponent {
   };
 
   protected isCommentAuthor = (c: PageComment): boolean => {
-    return c.createdBy === this.authService.user.username;
+    return c.createdBy === this.authService.user?.username;
   };
 
   private commentsSorted() {

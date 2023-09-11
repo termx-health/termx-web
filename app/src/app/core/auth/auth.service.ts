@@ -41,6 +41,9 @@ export class AuthService {
     }));
   }
 
+  public get isAuthenticated(): Observable<boolean> {
+    return this.oidcSecurityService.isAuthenticated();
+  }
 
   public login(): void {
     this.oidcSecurityService.authorize();
