@@ -151,12 +151,16 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     return supportedLangs.filter(l => l !== currentLang && !contents.find(c => c.lang === l));
   };
 
+  protected getCommentsContainerOffset(): number {
+    return document.getElementById('comments-container').offsetTop;
+  }
+
   protected calcLineOffset(nr: number): number {
     return document.querySelector<HTMLElement>(`[data-source-line="${nr}"]`)?.offsetTop ?? 0;
   }
 
-  protected getCommentsContainerOffset(): number {
-    return document.getElementById('comments-container').offsetTop;
+  protected toWikiComments(comments: PageComment[]): WikiComment[] {
+    return comments?.map(c => ({comment: c.comment, quote: c.text, line: c.options?.lineNumber}));
   }
 
   protected get isLoading(): boolean {

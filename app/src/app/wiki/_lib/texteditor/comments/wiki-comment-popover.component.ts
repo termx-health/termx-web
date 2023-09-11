@@ -22,9 +22,7 @@ import {AuthService} from 'term-web/core/auth';
     </m-card>
   `,
   host: {
-    '[style.left]': `commentData.edit ? "1rem" : "-0.5rem"`,
     '[style.width]': `commentData.edit ? "35%" : 'initial'`,
-    '[style.transform]': `commentData.edit ? 'translateY(0%)' : 'translateY(50%)'`,
   },
   styles: [`
     ::ng-deep .btn button {

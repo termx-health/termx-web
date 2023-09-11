@@ -33,8 +33,9 @@
               *ngIf="pageContent"
               [value]="pageContent.content"
               [valueType]="pageContent.contentType"
+              [comments]="pageComments | apply: toWikiComments"
               (commentCreated)="onPageCommentCreated($event)"
-          />
+          ></tw-smart-text-editor-view>
         </m-card>
       </div>
 

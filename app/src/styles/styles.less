@@ -152,22 +152,38 @@ a {
   outline: none;
 }
 
-.debug-md {
-  m-markdown {
+m-markdown {
+  position: relative;
+
+  .comment--marked {
     position: relative;
 
-    *[data-source-line] {
-      position: relative;
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      bottom: 0;
+      right: calc(100% + var(--padding-card-horizontal) - 2px);
+      width: 2px;
+      background: var(--color-primary);
+    }
+  }
+}
 
-      &::before {
-        content: attr(data-source-line);
-        position: absolute;
-        background: wheat;
-        margin-right: 3px;
-        font-family: monospace;
-        font-size: 0.7rem;
-        font-weight: initial;
-      }
+.debug-md {
+  /* todo: remove me */
+
+  m-markdown *[data-source-line] {
+    position: relative;
+
+    &::before {
+      content: attr(data-source-line);
+      position: absolute;
+      background: wheat;
+      margin-right: 3px;
+      font-family: monospace;
+      font-size: 0.7rem;
+      font-weight: initial;
     }
   }
 
