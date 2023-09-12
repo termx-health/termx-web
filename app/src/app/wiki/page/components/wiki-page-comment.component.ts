@@ -81,7 +81,7 @@ export class WikiPageCommentComponent {
   @Output() public commentDeleted = new EventEmitter<PageComment>();
   @Output() public commentResolved = new EventEmitter<PageComment>();
 
-  protected _content: string;
+  protected _editState:{[id: number]: string} = {};
 
   public constructor(
     private pageCommentService: PageCommentService,
@@ -92,11 +92,11 @@ export class WikiPageCommentComponent {
   /* Edit */
 
   protected startEdit(c: PageComment): void {
-    this._content = c.comment;
+    this._editState[c.id] = c.comment;
   }
 
   protected cancelEdit(c: PageComment): void {
-    this._content = undefined;
+    this._editState[c.id] = undefined;
   }
 
 
