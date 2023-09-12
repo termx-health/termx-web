@@ -1,9 +1,9 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, Injectable, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {copyDeep, isDefined, isNil, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {Task, TaskActivity, TaskContextItem, Workflow} from 'term-web/task/_lib';
-import {forkJoin} from 'rxjs';
+import {forkJoin, map, mergeMap} from 'rxjs';
 import {TaskService} from 'term-web/task/services/task-service';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {CodeName} from '@kodality-web/marina-util';
@@ -11,6 +11,82 @@ import {User, UserLibService} from 'term-web/user/_lib';
 import {CodeSystemVersionLibService} from 'term-web/resources/_lib/codesystem/services/code-system-version-lib.service';
 import {CodeSystemEntityVersionLibService, MapSetVersionLibService, ValueSetVersionLibService} from 'term-web/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
+import {PageCommentLibService, PageLibService} from 'term-web/wiki/_lib';
+
+@Injectable({providedIn: 'root'})
+class TaskContextLinkService {
+  private handlers = {
+    'snomed-translation': (ctx: TaskContextItem): void => {
+      this.snomedTranslationService.load(ctx.id).subscribe(t => {
+        this.router.navigate(['/integration/snomed/dashboard', t.conceptId]);
+      });
+    },
+
+    // Code System
+    'code-system': (ctx: TaskContextItem): void => {
+      this.router.navigate(['/resources/code-systems', ctx.id, 'summary']);
+    },
+    'code-system-version': (ctx: TaskContextItem): void => {
+      this.codeSystemVersionService.load(ctx.id).subscribe(({codeSystem, version}) => {
+        this.router.navigate(['/resources/code-systems', codeSystem, 'versions', version, 'summary']);
+      });
+    },
+    'code-system-entity-version': (ctx: TaskContextItem): void => {
+      this.codeSystemEntityVersionService.load(ctx.id).subscribe(({id, codeSystem, code}) => {
+        this.router.navigate(['/resources/code-systems', codeSystem, 'concepts', code, 'view'], {queryParams: {conceptVersionId: id}});
+      });
+    },
+
+    // Value Set
+    'value-set': (ctx: TaskContextItem): void => {
+      this.router.navigate(['/resources/value-sets', ctx.id, 'summary']);
+    },
+    'value-set-version': (ctx: TaskContextItem): void => {
+      this.valueSetVersionService.load(ctx.id).subscribe(({valueSet, version}) => {
+        this.router.navigate(['/resources/value-sets', valueSet, 'versions', version, 'summary']);
+      });
+    },
+
+    // Map Set
+    'map-set': (ctx: TaskContextItem): void => {
+      this.router.navigate(['/resources/map-sets', ctx.id, 'summary']);
+    },
+    'map-set-version': (ctx: TaskContextItem): void => {
+      this.mapSetVersionService.load(ctx.id).subscribe(({mapSet, version}) => {
+        this.router.navigate(['/resources/map-sets', mapSet, 'versions', version, 'summary']);
+      });
+    },
+
+    // Wiki Page Comment
+    'page-comment': (ctx: TaskContextItem): void => {
+      this.pageCommentService.search({ids: ctx.id, limit: 1}).pipe(
+        mergeMap(resp => this.pageService.searchPageContents({ids: resp.data[0].pageContentId})),
+        map(resp => resp.data[0])
+      ).subscribe(({slug, spaceId}) => {
+        this.router.navigate([`/wiki/${spaceId}/${slug}`], {queryParams: {commentId: ctx.id}});
+      });
+    }
+  };
+
+  public constructor(
+    private router: Router,
+    private codeSystemEntityVersionService: CodeSystemEntityVersionLibService,
+    private codeSystemVersionService: CodeSystemVersionLibService,
+    private mapSetVersionService: MapSetVersionLibService,
+    private pageCommentService: PageCommentLibService,
+    private pageService: PageLibService,
+    private snomedTranslationService: SnomedTranslationService,
+    private valueSetVersionService: ValueSetVersionLibService,
+  ) { }
+
+  public open(ctx: TaskContextItem): void {
+    this.handlers[ctx.type]?.(ctx);
+  }
+
+  public canOpen = (key: string): boolean => {
+    return key in this.handlers;
+  };
+}
 
 @Component({
   templateUrl: './task-edit.component.html',
@@ -51,13 +127,9 @@ export class TaskEditComponent implements OnInit {
     private taskService: TaskService,
     private userService: UserLibService,
     protected authService: AuthService,
+    protected contextLinkService: TaskContextLinkService,
     private route: ActivatedRoute,
     private router: Router,
-    private snomedTranslationService: SnomedTranslationService,
-    private codeSystemVersionService: CodeSystemVersionLibService,
-    private codeSystemEntityVersionService: CodeSystemEntityVersionLibService,
-    private valueSetVersionService: ValueSetVersionLibService,
-    private mapSetVersionService: MapSetVersionLibService,
   ) { }
 
   public ngOnInit(): void {
@@ -72,13 +144,34 @@ export class TaskEditComponent implements OnInit {
     this.loadData();
   }
 
-  private loadTask(number: string): void {
-    this.loader.wrap('load', this.taskService.loadTask(number))
-      .subscribe(task => {
-        this.task = this.writeTask(task);
-        this.loadWorkflows(task.project.code);
-      });
+  private loadData(): void {
+    this.loader.wrap('load', forkJoin([
+      this.userService.loadAll(),
+      this.taskService.loadProjects()
+    ])).subscribe(([users, projects]) => {
+      this.users = users;
+      this.projects = projects;
+    });
   }
+
+  private loadTask(number: string): void {
+    this.loader.wrap('load', this.taskService.loadTask(number)).subscribe(task => {
+      this.task = this.writeTask(task);
+      this.loadWorkflows(task.project.code);
+    });
+  }
+
+  private writeTask(task: Task): Task {
+    task['content-edit'] = !task.content;
+    task.content ??= '';
+
+    task.type ??= 'task';
+    task.status ??= 'requested';
+    task.priority ??= 'routine';
+    task.project ??= {};
+    return task;
+  }
+
 
   protected save(): void {
     if (!validateForm(this.form)) {
@@ -102,6 +195,7 @@ export class TaskEditComponent implements OnInit {
     const fields = Object.keys(task).map(name => ({fieldName: name, value: task[name]}));
     this.loader.wrap('save', this.taskService.patch(this.task.number, {fields: fields})).subscribe(t => this.loadTask(t.number));
   }
+
 
   protected createActivity(): void {
     const number = this.task.number;
@@ -128,23 +222,24 @@ export class TaskEditComponent implements OnInit {
 
   protected deleteActivity(id: string): void {
     const number = this.task.number;
-    this.loader.wrap('delete-activity', this.taskService.deleteActivity(number, id))
-      .subscribe(() => this.loadTask(this.task.number));
+    this.loader.wrap('delete-activity', this.taskService.deleteActivity(number, id)).subscribe(() => {
+      this.loadTask(this.task.number);
+    });
   }
 
+
   protected loadWorkflows(projectCode: string): void {
-    if (!projectCode) {
-      return;
+    if (projectCode) {
+      this.taskService.loadProjectWorkflows(projectCode).subscribe(workflows => this.workflows = workflows);
     }
-    this.taskService.loadProjectWorkflows(projectCode).subscribe(workflows => this.workflows = workflows);
   }
 
   protected getTargetStatuses = (wfCode: string, status: string, workflows: Workflow[]): string[] => {
     const wf = workflows?.find(w => w.code === wfCode);
-    if (!isDefined(wf)) {
+    if (isNil(wf)) {
       return [];
     }
-    const statuses = wf.transitions?.filter(t => t.from === status)?.map(t => t.to);
+    const statuses = wf.transitions?.filter(t => t.from === status).map(t => t.to);
     if (statuses?.includes('draft')) {
       this.newStatus = 'draft';
     }
@@ -168,61 +263,6 @@ export class TaskEditComponent implements OnInit {
       .map(t => ({key: t, transition: transition[t]}));
   };
 
-  protected openContext(ctx: TaskContextItem): void {
-    if (ctx.type === 'snomed-translation') {
-      this.snomedTranslationService.load(ctx.id).subscribe(t => this.router.navigate(['/integration/snomed/dashboard', t.conceptId]));
-    }
-    if (ctx.type === 'code-system') {
-      this.router.navigate(['/resources/code-systems', ctx.id, 'summary']);
-    }
-    if (ctx.type === 'code-system-version') {
-      this.codeSystemVersionService.load(ctx.id).subscribe(version => {
-        this.router.navigate(['/resources/code-systems', version.codeSystem, 'versions', version.version, 'summary']);
-      });
-    }
-    if (ctx.type === 'code-system-entity-version') {
-      this.codeSystemEntityVersionService.load(ctx.id).subscribe(version => {
-        this.router.navigate(['/resources/code-systems', version.codeSystem, 'concepts', version.code, 'view'], {queryParams: {conceptVersionId: version.id}});
-      });
-    }
-    if (ctx.type === 'value-set') {
-      this.router.navigate(['/resources/value-sets', ctx.id, 'summary']);
-    }
-    if (ctx.type === 'value-set-version') {
-      this.valueSetVersionService.load(ctx.id).subscribe(version => {
-        this.router.navigate(['/resources/value-sets', version.valueSet, 'versions', version.version, 'summary']);
-      });
-    }
-    if (ctx.type === 'map-set') {
-      this.router.navigate(['/resources/map-sets', ctx.id, 'summary']);
-    }
-    if (ctx.type === 'map-set-version') {
-      this.mapSetVersionService.load(ctx.id).subscribe(version => {
-        this.router.navigate(['/resources/map-sets', version.mapSet, 'versions', version.version, 'summary']);
-      });
-    }
-  }
-
-  private loadData(): void {
-    this.loader.wrap('load', forkJoin([
-      this.userService.loadAll(),
-      this.taskService.loadProjects()
-    ])).subscribe(([users, projects]) => {
-      this.users = users;
-      this.projects = projects;
-    });
-  }
-
-  private writeTask(task: Task): Task {
-    task['content-edit'] = !task.content;
-    task.content ??= '';
-
-    task.type ??= 'task';
-    task.status ??= 'requested';
-    task.priority ??= 'routine';
-    task.project ??= {};
-    return task;
-  }
 
   public onEditorClick(ev: MouseEvent, wrapper: HTMLElement, editorType: 'content' | 'activity', a?: TaskActivity): void {
     const path = [];
