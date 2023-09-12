@@ -266,12 +266,17 @@ export class CodeSystemFileImportComponent implements OnInit {
       {name: 'concept-code', type: 'string'},
       {name: 'hierarchical-concept', type: 'string'},
       {name: 'is-a', type: 'string', description: {'en': 'association'}}];
+
     return sort(Object.values({
       ...group<string, EntityProperty>(def, e => e.name!),
       ...group<string, EntityProperty>(this.definedProperties || [], e => e.name!),
       ...group<string, EntityProperty>(entityProperties || [], e => e.name!)
-    }), 'name').sort((p1, p2) => compareNumbers(DEF_PROP_WEIGHT[p1.name] || 0, DEF_PROP_WEIGHT[p2.name] || 0));
+    }), 'name').sort((p1, p2) => compareNumbers(this.getWeight(p1), this.getWeight(p2)));
   };
+
+  private getWeight(p: EntityProperty): number {
+    return p.orderNumber || DEF_PROP_WEIGHT[p.name] || (p.id ? 10000 : 10001);
+  }
 
   protected get hasDuplicateIdentifiers(): boolean {
     return this.analyzeResponse.parsedProperties.filter(p => ['concept-code', 'hierarchical-concept'].includes(p.propertyName)).length > 1;
