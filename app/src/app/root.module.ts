@@ -4,7 +4,7 @@ import {BrowserModule} from '@angular/platform-browser';
 import {RootRoutingModule} from './root-routing.module';
 import {AppComponent} from './app.component';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {HttpBackend, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpBackend, HttpClientModule} from '@angular/common/http';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {registerLocaleData} from '@angular/common';
 import et from '@angular/common/locales/et';
@@ -35,6 +35,7 @@ import {ModelerModule} from 'term-web/modeler/modeler.module';
 import {UserModule} from 'term-web/user/user.module';
 import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
 import {environment} from 'environments/environment';
+import {LangInterceptor} from './core/http';
 
 registerLocaleData(et);
 registerLocaleData(lt);
@@ -96,7 +97,8 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},
-    {provide: APP_INITIALIZER, useFactory: preloadAuth, deps: [AuthService], multi: true}
+    {provide: APP_INITIALIZER, useFactory: preloadAuth, deps: [AuthService], multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: LangInterceptor, multi: true}
   ],
   bootstrap: [
     RootComponent
