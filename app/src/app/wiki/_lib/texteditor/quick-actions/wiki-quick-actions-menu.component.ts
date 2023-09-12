@@ -113,7 +113,9 @@ export class WikiQuickActionsMenuComponent implements AfterViewInit {
     }
 
     const com = this.dynamicOptions.find(c => c.definition.id === item.id);
-    com?.resolve.subscribe(r => this.emitResult(r, com.definition.cursorOffset?.(r)));
+    if (!com?.resolve.observed) {
+      com?.resolve.subscribe(r => this.emitResult(r, com.definition.cursorOffset?.(r)));
+    }
     com?.handle({lang: this.lang});
     return;
   }
