@@ -35,7 +35,7 @@
   <div class="container">
     <!-- Editable comment content -->
     <m-textarea
-        [(ngModel)]="_content"
+        [(ngModel)]="_editState[com.id]"
         placeholder="web.wiki-page.comments.reply"
         autofocus
         [autosize]="{minRows: 2}"
@@ -44,8 +44,8 @@
     <div class="m-items-middle">
       <!-- Save button -->
       <m-button
-          [mDisplay]="_content ? 'primary' : 'default'"
-          (mClick)="_content ? updateContent(com, _content) : undefined"
+          [mDisplay]="_editState[com.id] ? 'primary' : 'default'"
+          (mClick)="_editState[com.id] ? updateContent(com, _editState[com.id]) : undefined"
           mSize="small"
       >
         {{'core.btn.save' | translate}}
@@ -64,7 +64,7 @@
     <div class="m-justify-between">
       <ng-container *ngTemplateOutlet="commentAuthor, context: {$implicit: com}"/>
 
-      <div *ngIf="com | apply: calcPrivileges: _content as privileges" style="display: flex; align-items: center">
+      <div *ngIf="com | apply: calcPrivileges: _editState[com.id] as privileges" style="display: flex; align-items: center">
         <m-icon-button
             *ngIf="privileges.resolve"
             class="m-primary-color"
@@ -93,7 +93,7 @@
     </div>
 
     <div class="container">
-      <ng-container *ngTemplateOutlet="_content ? edit : view, context: {$implicit: com, id: com.id}"/>
+      <ng-container *ngTemplateOutlet="_editState[com.id] ? edit : view, context: {$implicit: com, id: com.id}"/>
       <blockquote class="quote m-whitespace" *ngIf="com.text">{{com.text}}</blockquote>
     </div>
   </div>
@@ -102,7 +102,7 @@
 
 <m-list *ngIf="{active: !!pageComment.children?.length} as inf">
   <!-- Main comment -->
-  <m-list-item class="comment" [mClickable]="!inf.active" (mClick)="!_content ? inf.active = true : undefined">
+  <m-list-item class="comment" [mClickable]="!inf.active" (mClick)="!_editState[pageComment.id] ? inf.active = true : undefined">
     <ng-container *ngTemplateOutlet="section, context: {$implicit: pageComment}"/>
   </m-list-item>
 
