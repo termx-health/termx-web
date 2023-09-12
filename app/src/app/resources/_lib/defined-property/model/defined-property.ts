@@ -1,25 +1,25 @@
 import {LocalizedName} from '@kodality-web/marina-util';
 import {EntityProperty} from '../../codesystem';
 
-export class DefinedEntityProperty {
+export class DefinedProperty {
   public id?: number;
   public name?: string;
   public kind?: string;
   public type?: string;
   public uri?: string;
-  public rule?: EntityPropertyRule;
+  public rule?: PropertyRule;
   public description?: LocalizedName;
 
   public used?: boolean;
 }
 
-export class EntityPropertyRule {
+export class PropertyRule {
   public codeSystems?: string[];
   public valueSet?: string;
-  public filters?: EntityPropertyRuleFilter[];
+  public filters?: PropertyRuleFilter[];
 }
 
-export class EntityPropertyRuleFilter {
+export class PropertyRuleFilter {
   public type?: string;
   public association?: string;
   public property?: EntityProperty;

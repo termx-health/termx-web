@@ -173,7 +173,8 @@
 			"target-code-systems": "Target code systems",
 			"target-value-set": "Target value set",
 			"uri": "URI",
-			"versions": "Versions"
+			"versions": "Versions",
+			"properties": "Properties"
 		},
 		"map-set-association": {
 			"concept": "Concept",
@@ -939,17 +940,17 @@
 		},
 		"defined-entity-property": {
 			"form": {
-				"add-header": "Add defined entity property",
-				"edit-header": "Edit defined entity property",
+				"add-header": "Add defined property",
+				"edit-header": "Edit defined property",
 				"kind": {
 					"designation": "Designation",
 					"property": "Property"
 				}
 			},
 			"list": {
-				"add-new": "Add new entity property",
+				"add-new": "Add new property",
 				"property-used": "Property is used and can not be modified.",
-				"title": "Defined entity properties"
+				"title": "Defined properties"
 			}
 		},
 		"dev-code-system-relation": {
@@ -1234,6 +1235,10 @@
 				"add-header": "Create a new map set",
 				"edit-header": "Edit map set",
 				"header": "Map set",
+				"properties": {
+					"often-used": "Often used properties",
+					"delete-property-usages": "Delete property usages"
+				},
 				"scope": {
 					"title": "Scope",
 					"source": "Source",
@@ -1332,7 +1337,9 @@
 					"display": "Display",
 					"mappings": "Mappings",
 					"bulk-copy": "Bulk copy",
-					"content": "Content"
+					"content": "Content",
+					"properties": "Properties",
+					"add-property-value": "Add property value"
 				},
 				"statistics-warning": "The map set should be in the 'draft' status to recalculate statistics."
 			}

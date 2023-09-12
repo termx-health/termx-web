@@ -7,7 +7,7 @@ import {ContactLibModule} from './contact';
 import {NamingSystemLibModule} from './namingsystem';
 import {AssociationLibModule} from './association';
 import {RelatedArtifactLibModule} from 'term-web/resources/_lib/relatedartifacts/related-artifact-lib.module';
-import {DefinedEntityPropertyLibModule} from 'term-web/resources/_lib/definedentityproperty';
+import {DefinedPropertyLibModule} from 'app/src/app/resources/_lib/defined-property';
 
 @NgModule({
   declarations: [],
@@ -20,7 +20,7 @@ import {DefinedEntityPropertyLibModule} from 'term-web/resources/_lib/definedent
     NamingSystemLibModule,
     AssociationLibModule,
     RelatedArtifactLibModule,
-    DefinedEntityPropertyLibModule
+    DefinedPropertyLibModule
   ],
   exports: [
     CodeSystemLibModule,
@@ -31,7 +31,7 @@ import {DefinedEntityPropertyLibModule} from 'term-web/resources/_lib/definedent
     NamingSystemLibModule,
     AssociationLibModule,
     RelatedArtifactLibModule,
-    DefinedEntityPropertyLibModule
+    DefinedPropertyLibModule
   ]
 })
 export class ResourcesLibModule {

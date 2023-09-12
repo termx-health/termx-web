@@ -66,4 +66,8 @@ export class MapSetService extends MapSetLibService {
   public automapAssociations(mapSetId: string, version: string, request: MapSetAutomapRequest): Observable<JobLogResponse> {
     return this.http.post<JobLogResponse>(`${this.baseUrl}/${mapSetId}/versions/${version}/associations/automap`, request);
   }
+
+  public deletePropertyUsages(mapSetId: string, propertyId: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${mapSetId}/properties/${propertyId}/delete-usages`, {});
+  }
 }

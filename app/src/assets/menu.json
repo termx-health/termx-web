@@ -100,11 +100,11 @@
       },
       {
         "label": {
-          "en": "Defined entity properties",
+          "en": "Defined properties",
           "et": "Globaalsed tunnused",
-          "lt": "Defined entity properties"
+          "lt": "Defined properties"
         },
-        "link": "resources/defined-entity-properties",
+        "link": "resources/defined-properties",
         "privileges": [
           "*.CodeSystem.view"
         ]

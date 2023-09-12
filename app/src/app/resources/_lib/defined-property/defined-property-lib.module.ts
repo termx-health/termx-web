@@ -3,7 +3,7 @@ import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {CoreUtilModule} from '@kodality-web/core-util';
-import {DefinedEntityPropertyLibService} from './services/defined-entity-property-lib.service';
+import {DefinedPropertyLibService} from './services/defined-property-lib.service';
 
 @NgModule({
   imports: [
@@ -12,7 +12,7 @@ import {DefinedEntityPropertyLibService} from './services/defined-entity-propert
     CommonModule,
     CoreUtilModule
   ],
-  providers: [DefinedEntityPropertyLibService]
+  providers: [DefinedPropertyLibService]
 })
-export class DefinedEntityPropertyLibModule {
+export class DefinedPropertyLibModule {
 }

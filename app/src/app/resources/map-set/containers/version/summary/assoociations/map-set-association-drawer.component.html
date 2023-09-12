@@ -60,6 +60,20 @@
             </m-radio-group>
           </m-form-item>
         </m-form-row>
+        <m-form-row>
+          <div class="m-justify-between">
+            <label class="m-bold">{{'web.map-set-version.summary.associations.properties' | translate}}</label>
+            <m-dropdown>
+              <tw-add-button *m-dropdown-container>
+                {{'web.map-set-version.summary.associations.add-property-value' | translate}}
+              </tw-add-button>
+              <ng-container *ngFor="let prop of mapSet?.properties">
+                <a *m-dropdown-item (mClick)="addPropertyValue(prop)">{{prop.name}}</a>
+              </ng-container>
+            </m-dropdown>
+          </div>
+          <tw-map-set-property-values [propertyValues]="propertyValues" [properties]="mapSet?.properties"></tw-map-set-property-values>
+        </m-form-row>
       </form>
     </m-spinner>
     <ng-container *m-card-footer>

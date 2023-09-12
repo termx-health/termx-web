@@ -2,9 +2,9 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewCh
 import {copyDeep, isDefined, SearchResult} from '@kodality-web/core-util';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {
-  AssociationType,
+  AssociationType, MapSet,
   MapSetAssociation,
-  MapSetAssociationSearchParams
+  MapSetAssociationSearchParams, MapSetProperty
 } from 'app/src/app/resources/_lib';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
@@ -18,7 +18,7 @@ export class MapSetAssociationListComponent implements OnChanges {
   @Input() public relationships: string;
   @Input() public associationTypes: AssociationType[];
   @Input() public noMap: Boolean;
-  @Input() public mapSet: string;
+  @Input() public mapSet: MapSet;
   @Input() public mapSetVersion: string;
   @Input() public targetExternal: boolean;
   @Input() public editMode: boolean;
@@ -47,7 +47,7 @@ export class MapSetAssociationListComponent implements OnChanges {
   }
 
   protected search(): Observable<SearchResult<MapSetAssociation>> {
-    if (!this.mapSet || !this.mapSetVersion) {
+    if (!this.mapSet?.id || !this.mapSetVersion) {
       return of();
     }
     const q = copyDeep(this.query);
@@ -57,7 +57,7 @@ export class MapSetAssociationListComponent implements OnChanges {
     q.noMap = this.noMap;
     q.verified = this.unverified ? false : undefined;
     this.loading = true;
-    return this.mapSetService.searchAssociations(this.mapSet, q).pipe(finalize(() => this.loading = false));
+    return this.mapSetService.searchAssociations(this.mapSet.id, q).pipe(finalize(() => this.loading = false));
   }
 
   protected onSearch = (): Observable<SearchResult<MapSetAssociation>> => {
@@ -66,34 +66,40 @@ export class MapSetAssociationListComponent implements OnChanges {
   };
 
   protected unmap = (id: number): void => {
-    if (!isDefined(id)) {
+    if (!this.mapSet?.id || !this.mapSetVersion || !isDefined(id)) {
       return;
     }
-    this.mapSetService.unmapAssociations(this.mapSet, this.mapSetVersion, [id]).subscribe(() => {
+    this.mapSetService.unmapAssociations(this.mapSet.id, this.mapSetVersion, [id]).subscribe(() => {
       this.loadData();
       this.associationsChanged.emit();
     });
   };
 
   protected verify = (id: number): void => {
-    if (!isDefined(id)) {
+    if (!this.mapSet?.id || !this.mapSetVersion || !isDefined(id)) {
       return;
     }
-    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, [id], undefined).subscribe(() => this.loadData());
+    this.mapSetService.verifyAssociations(this.mapSet.id, this.mapSetVersion, [id], undefined).subscribe(() => this.loadData());
   };
 
   protected verifyChecked = (): void => {
+    if (!this.mapSet?.id || !this.mapSetVersion) {
+      return;
+    }
     const verifiedIds = this.searchResult.data.filter(a => a.verified).map(a => a.id);
     const unVerifiedIds = this.searchResult.data.filter(a => !a.verified).map(a => a.id);
-    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, verifiedIds, unVerifiedIds).subscribe(() => this.loadData());
+    this.mapSetService.verifyAssociations(this.mapSet.id, this.mapSetVersion, verifiedIds, unVerifiedIds).subscribe(() => this.loadData());
   };
 
   protected createNoMap(a: MapSetAssociation): void {
+    if (!this.mapSet?.id || !this.mapSetVersion) {
+      return;
+    }
     const association = copyDeep(a);
     association.target = undefined;
     association.relationship = undefined;
     association.verified = false;
-    this.mapSetService.saveAssociation(this.mapSet, this.mapSetVersion, association).subscribe(() => {
+    this.mapSetService.saveAssociation(this.mapSet.id, this.mapSetVersion, association).subscribe(() => {
       this.loadData();
       this.associationsChanged.emit();
     });
@@ -109,4 +115,8 @@ export class MapSetAssociationListComponent implements OnChanges {
   public checkAll(checked: boolean): void {
     this.searchResult?.data?.forEach(a => a.verified = checked);
   }
+
+  protected findProperty = (id: number, properties: MapSetProperty[]): MapSetProperty => {
+    return properties?.find(p => p.id === id);
+  };
 }

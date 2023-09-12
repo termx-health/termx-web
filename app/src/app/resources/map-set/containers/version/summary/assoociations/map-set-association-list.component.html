@@ -19,6 +19,7 @@
       <th>{{'web.map-set-version.summary.associations.source-display' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.target-code' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.target-display' | translate}}</th>
+      <th *ngIf="!noMap">{{'web.map-set-version.summary.associations.properties' | translate}}</th>
       <th class="tw-table-min-width" *ngIf="editMode"></th>
     </tr>
 
@@ -30,6 +31,12 @@
       <td>{{a.source.display}}</td>
       <td>{{a.target.code}}</td>
       <td>{{a.target.display}}</td>
+      <td *ngIf="!noMap">
+        <div *ngFor="let p of a.propertyValues" class="m-items-middle">
+          <label class="m-subtitle">{{p.mapSetPropertyName}}</label>
+          <tw-map-set-property-value-input [(ngModel)]="p.value" [property]="p.mapSetPropertyId | apply:findProperty:mapSet?.properties" viewMode/>
+        </div>
+      </td>
       <td *ngIf="editMode">
         <m-dropdown>
           <ng-container *ngIf="noMap">

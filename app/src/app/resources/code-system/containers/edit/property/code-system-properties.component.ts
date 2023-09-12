@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {DefinedEntityProperty, EntityProperty, EntityPropertyRule, EntityPropertyRuleFilter} from 'app/src/app/resources/_lib';
+import {DefinedProperty, EntityProperty, PropertyRule, PropertyRuleFilter} from 'app/src/app/resources/_lib';
 import {BooleanInput, copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
-import {DefinedEntityPropertyLibService} from 'term-web/resources/_lib/definedentityproperty/services/defined-entity-property-lib.service';
+import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 
 @Component({
   selector: 'tw-cs-properties',
@@ -19,16 +19,16 @@ export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
 
   protected designationRowInstance: EntityProperty = {kind: 'designation', type: 'string', rule: {filters: []}, status: 'active'};
   protected propertyRowInstance: EntityProperty = {kind: 'property', rule: {filters: []}, status: 'active'};
-  protected filterRowInstance: EntityPropertyRuleFilter = {type: 'entity-property'};
+  protected filterRowInstance: PropertyRuleFilter = {type: 'entity-property'};
   protected loader = new LoadingManager();
 
   @ViewChild("designationForm") public designationForm?: NgForm;
   @ViewChild("propertyForm") public propertyForm?: NgForm;
 
-  protected definedEntityProperties: DefinedEntityProperty[];
+  protected definedEntityProperties: DefinedProperty[];
 
 
-  public constructor(private codeSystemService: CodeSystemService, private definedEntityPropertyService: DefinedEntityPropertyLibService) {}
+  public constructor(private codeSystemService: CodeSystemService, private definedEntityPropertyService: DefinedPropertyLibService) {}
 
   public ngOnInit(): void {
     this.definedEntityPropertyService.search({limit: -1}).subscribe(r => this.definedEntityProperties = r.data);
@@ -37,7 +37,7 @@ export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['properties'] && this.properties) {
       this.properties.forEach(p => {
-        p.rule ??= new EntityPropertyRule();
+        p.rule ??= new PropertyRule();
         p.rule.filters ??= [];
       });
       this.designationProperties = this.properties.filter(p => p.kind === 'designation');
@@ -57,7 +57,7 @@ export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
     return properties?.filter(p => isDefined(p.id));
   };
 
-  protected filterTypeChanged(type: string, f: EntityPropertyRuleFilter): void {
+  protected filterTypeChanged(type: string, f: PropertyRuleFilter): void {
     if (type === 'association') {
       f.property = undefined;
       f.value = undefined;
@@ -72,11 +72,11 @@ export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
     this.loader.wrap('load', this.codeSystemService.deleteEntityPropertyUsages(this.codeSystemId, propertyId)).subscribe();
   }
 
-  protected filterDefinedProperties = (p: DefinedEntityProperty, kind: 'designation' | 'property'): boolean => {
+  protected filterDefinedProperties = (p: DefinedProperty, kind: 'designation' | 'property'): boolean => {
     return p.kind === kind;
   };
 
-  public addDefinedProperty(dp: DefinedEntityProperty): void {
+  public addDefinedProperty(dp: DefinedProperty): void {
     const p: EntityProperty = copyDeep(dp);
     p.definedEntityPropertyId = p.id;
     p.id = undefined;

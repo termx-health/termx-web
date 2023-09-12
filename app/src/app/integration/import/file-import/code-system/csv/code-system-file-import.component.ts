@@ -13,7 +13,7 @@ import {
   FileProcessingRequest
 } from 'term-web/resources/_lib/codesystem/services/code-system-file-import.service';
 import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
-import {DefinedEntityPropertyLibService} from 'term-web/resources/_lib/definedentityproperty/services/defined-entity-property-lib.service';
+import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 
 
 const DEF_PROP_WEIGHT = {
@@ -92,7 +92,7 @@ export class CodeSystemFileImportComponent implements OnInit {
     private valueSetLibService: ValueSetLibService,
     private importService: CodeSystemFileImportService,
     private fileAnalysisService: FileAnalysisService,
-    private definedPropertyService: DefinedEntityPropertyLibService,
+    private definedPropertyService: DefinedPropertyLibService,
     private destroy$: DestroyService,
     private router: Router
   ) {}

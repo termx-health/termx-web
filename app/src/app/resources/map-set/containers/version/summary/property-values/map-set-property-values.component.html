@@ -1,0 +1,25 @@
+<m-no-data *ngIf="!propertyValues?.length"/>
+
+<ng-container *ngFor="let pv of propertyValues | sort: 'mapSetPropertyId'; let i = index">
+  <ng-container *ngIf="viewMode">
+    <div class="m-items-middle">
+      <span style="white-space: nowrap" class="m-subtitle">{{pv.mapSetPropertyName}}</span>
+      <tw-map-set-property-value-input [ngModel]="pv.value" [property]="pv.mapSetPropertyId | apply: getProperty: properties" viewMode/>
+    </div>
+  </ng-container>
+
+  <ng-container *ngIf="!viewMode">
+    <form #form="ngForm">
+      <div class="m-items-middle">
+        <span style="white-space: nowrap" class="m-subtitle">{{pv.mapSetPropertyName}}</span>
+        <m-form-item style="width: 100%" *ngIf="pv.mapSetPropertyId" mName="{{i}}-propertyValue">
+          <tw-map-set-property-value-input [(ngModel)]="pv.value"
+              name="{{i}}-propertyValue"
+              [property]="pv.mapSetPropertyId | apply:getProperty:properties"
+              [required]="(i | apply:isRequired:properties)"/>
+        </m-form-item>
+      </div>
+    </form>
+  </ng-container>
+</ng-container>
+

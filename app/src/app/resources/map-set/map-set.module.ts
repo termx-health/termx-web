@@ -27,6 +27,9 @@ import {
   MapSetExternalSourceConceptListComponent
 } from 'term-web/resources/map-set/containers/version/summary/concepts/map-set-external-source-concept-list.component';
 import {MapSetScopeFormComponent} from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
+import {MapSetPropertiesComponent} from 'term-web/resources/map-set/containers/edit/property/map-set-properties.component';
+import {MapSetPropertyValuesComponent} from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-values.component';
+import {MapSetPropertyValueInputComponent} from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-value-input.component';
 
 export const MAP_SET_ROUTES: Routes = [
   {path: '', component: MapSetListComponent},
@@ -57,6 +60,7 @@ export const MAP_SET_ROUTES: Routes = [
     MapSetListComponent,
 
     MapSetEditComponent,
+    MapSetPropertiesComponent,
     MapSetScopeFormComponent,
     MapSetSummaryComponent,
     MapSetInfoWidgetComponent,
@@ -71,7 +75,9 @@ export const MAP_SET_ROUTES: Routes = [
     MapSetExternalSourceConceptListComponent,
     MapSetUnmappedConceptListComponent,
     MapSetAssociationListComponent,
-    MapSetAssociationDrawerComponent
+    MapSetAssociationDrawerComponent,
+    MapSetPropertyValuesComponent,
+    MapSetPropertyValueInputComponent
   ],
   exports: [MapSetScopeFormComponent],
   providers: [

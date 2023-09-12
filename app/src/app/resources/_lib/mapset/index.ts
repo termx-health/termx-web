@@ -7,6 +7,8 @@ export * from './model/map-set-association-search-params';
 export * from './model/map-set-automap-request';
 export * from './model/map-set-concept';
 export * from './model/map-set-concept-search-params';
+export * from './model/map-set-property';
+export * from './model/map-set-property-value';
 export * from './model/map-set-search-params';
 export * from './model/map-set-transaction-request';
 export * from './model/map-set-version';

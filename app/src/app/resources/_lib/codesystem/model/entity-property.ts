@@ -1,6 +1,6 @@
-import {DefinedEntityProperty} from 'term-web/resources/_lib/definedentityproperty/model/defined-entity-property';
+import {DefinedProperty} from 'term-web/resources/_lib/defined-property/model/defined-property';
 
-export class EntityProperty extends DefinedEntityProperty{
+export class EntityProperty extends DefinedProperty {
   public status?: string;
   public created?: Date;
   public orderNumber?: number;

@@ -1,5 +1,5 @@
 import {QueryParams} from '@kodality-web/core-util';
 
-export class DefinedEntityPropertySearchParams extends QueryParams {
+export class DefinedPropertySearchParams extends QueryParams {
   public textContains?: string;
 }

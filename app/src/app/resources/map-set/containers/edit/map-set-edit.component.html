@@ -5,6 +5,7 @@
         <div *mCardContent="!loader.isLoading">
           <tw-resource-form resourceType="MapSet" [resource]="mapSet" [mode]="mode"></tw-resource-form>
 
+          <tw-ms-properties [properties]="mapSet.properties"></tw-ms-properties>
           <tw-resource-identifiers [identifiers]="mapSet.identifiers"></tw-resource-identifiers>
           <tw-resource-contacts [(contacts)]="mapSet.contacts"></tw-resource-contacts>
           <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>

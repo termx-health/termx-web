@@ -2,10 +2,10 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewCh
 import {collect, copyDeep, isDefined, SearchResult} from '@kodality-web/core-util';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {
-  AssociationType,
+  AssociationType, MapSet,
   MapSetAssociation,
   MapSetConcept,
-  MapSetConceptSearchParams
+  MapSetConceptSearchParams, MapSetProperty
 } from 'app/src/app/resources/_lib';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
@@ -16,7 +16,7 @@ import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/conta
   templateUrl: 'map-set-source-concept-list.component.html'
 })
 export class MapSetSourceConceptListComponent implements OnChanges {
-  @Input() public mapSet: string;
+  @Input() public mapSet: MapSet;
   @Input() public mapSetVersion: string;
   @Input() public targetExternal: boolean;
   @Input() public associationTypes: AssociationType[];
@@ -47,7 +47,7 @@ export class MapSetSourceConceptListComponent implements OnChanges {
   }
 
   protected search(): Observable<SearchResult<MapSetConcept>> {
-    if (!this.mapSet || !this.mapSetVersion) {
+    if (!this.mapSet?.id || !this.mapSetVersion) {
       return of();
     }
     const q = copyDeep(this.query);
@@ -56,7 +56,7 @@ export class MapSetSourceConceptListComponent implements OnChanges {
     q.verified = this.unverified ? false : undefined;
 
     this.loading = true;
-    return this.mapSetService.searchConcepts(this.mapSet, this.mapSetVersion, q).pipe(finalize(() => this.loading = false));
+    return this.mapSetService.searchConcepts(this.mapSet.id, this.mapSetVersion, q).pipe(finalize(() => this.loading = false));
   }
 
   protected onSearch = (): Observable<SearchResult<MapSetConcept>> => {
@@ -78,10 +78,10 @@ export class MapSetSourceConceptListComponent implements OnChanges {
 
   protected unmap = (c: MapSetConcept): void => {
     const ids = c.associations?.map(a => a.id).filter(id => isDefined(id));
-    if (!ids || ids.length === 0) {
+    if (!this.mapSet?.id || !this.mapSetVersion || !ids || ids.length === 0) {
       return;
     }
-    this.mapSetService.unmapAssociations(this.mapSet, this.mapSetVersion, ids).subscribe(() => {
+    this.mapSetService.unmapAssociations(this.mapSet.id, this.mapSetVersion, ids).subscribe(() => {
       this.loadData();
       this.associationsChanged.emit();
     });
@@ -89,17 +89,24 @@ export class MapSetSourceConceptListComponent implements OnChanges {
 
   protected verify = (c: MapSetConcept): void => {
     const ids = c.associations?.map(a => a.id).filter(id => isDefined(id));
-    if (!ids || ids.length === 0) {
+    if (!this.mapSet?.id || !this.mapSetVersion || !ids || ids.length === 0) {
       return;
     }
-    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, ids, undefined).subscribe(() => this.loadData());
+    this.mapSetService.verifyAssociations(this.mapSet.id, this.mapSetVersion, ids, undefined).subscribe(() => this.loadData());
   };
 
   protected createNoMap = (c: MapSetConcept): void => {
+    if (!this.mapSet?.id || !this.mapSetVersion) {
+      return;
+    }
     const noMap: MapSetAssociation = {source: {code: c.code, codeSystem: c.codeSystem, display: c.display?.name}};
-    this.mapSetService.saveAssociation(this.mapSet, this.mapSetVersion, noMap).subscribe(() => {
+    this.mapSetService.saveAssociation(this.mapSet.id, this.mapSetVersion, noMap).subscribe(() => {
       this.loadData();
       this.associationsChanged.emit();
     });
+  };
+
+  protected findProperty = (id: number, properties: MapSetProperty[]): MapSetProperty => {
+   return properties?.find(p => p.id === id);
   };
 }

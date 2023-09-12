@@ -1,7 +1,7 @@
 import {LocalizedName} from '@kodality-web/marina-util';
 import {MapSetVersion} from './map-set-version';
 import {Identifier} from '@kodality-web/core-util';
-import {ContactDetail} from 'term-web/resources/_lib';
+import {ContactDetail, MapSetProperty} from 'term-web/resources/_lib';
 
 export class MapSet {
   public id?: string;
@@ -20,4 +20,5 @@ export class MapSet {
   public settings?: {reviewRequired?: boolean, approvalRequired?: boolean};
 
   public versions?: MapSetVersion[];
+  public properties?: MapSetProperty[];
 }

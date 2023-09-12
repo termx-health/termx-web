@@ -11,6 +11,7 @@
     <tr *mTableHead>
       <th>{{'web.map-set-version.summary.associations.code' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.display' | translate}}</th>
+      <th>{{'web.map-set-version.summary.associations.properties' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.mappings' | translate}}</th>
       <th class="tw-table-min-width" *ngIf="editMode"></th>
     </tr>
@@ -18,6 +19,14 @@
     <tr *mTableRow="let c">
       <td><a>{{c.code}}</a></td>
       <td>{{c.display?.name}}</td>
+      <td>
+        <ng-container *ngFor="let a of c.associations">
+          <div *ngFor="let p of a.propertyValues" class="m-items-middle">
+            <label class="m-subtitle">{{p.mapSetPropertyName}}</label>
+            <tw-map-set-property-value-input [(ngModel)]="p.value" [property]="p.mapSetPropertyId | apply:findProperty:mapSet?.properties" viewMode/>
+          </div>
+        </ng-container>
+      </td>
       <td>
         <ng-container *ngIf="c.associations | apply: collectAssociations as groups">
           <div *ngFor="let relationship of groups | keys" class="m-items-middle">

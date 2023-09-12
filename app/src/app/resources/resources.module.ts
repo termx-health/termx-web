@@ -6,7 +6,7 @@ import {CoreUiModule} from '../core/ui/core-ui.module';
 import {MAP_SET_ROUTES, MapSetModule} from './map-set/map-set.module';
 import {NAMING_SYSTEM_ROUTES, NamingSystemModule} from './naming-system/naming-system.module';
 import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './association-type/association-type.module';
-import {DEFINED_ENTITY_PROPERTY_ROUTES, DefinedEntityPropertyModule} from 'term-web/resources/defined-entity-property/defined-entity-property.module';
+import {DEFINED_PROPERTY_ROUTES, DefinedPropertyModule} from 'term-web/resources/defined-property/defined-property.module';
 
 
 export const RESOURCES_ROUTES: Routes = [
@@ -15,7 +15,7 @@ export const RESOURCES_ROUTES: Routes = [
   {path: 'map-sets', children: MAP_SET_ROUTES, data: {privilege: ['*.MapSet.view']}},
   {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES, data: {privilege: ['*.NamingSystem.view']}},
   {path: 'association-types', children: ASSOCIATION_TYPE_ROUTES, data: {privilege: ['*.AssociationType.view']}},
-  {path: 'defined-entity-properties', children: DEFINED_ENTITY_PROPERTY_ROUTES, data: {privilege: ['*.CodeSystem.view']}},
+  {path: 'defined-properties', children: DEFINED_PROPERTY_ROUTES, data: {privilege: ['*.CodeSystem.view']}},
 
   {
     path: 'finder', children: [
@@ -34,7 +34,7 @@ export const RESOURCES_ROUTES: Routes = [
     CoreUiModule,
     NamingSystemModule,
     AssociationTypeModule,
-    DefinedEntityPropertyModule
+    DefinedPropertyModule
   ],
   declarations: [],
   exports: [

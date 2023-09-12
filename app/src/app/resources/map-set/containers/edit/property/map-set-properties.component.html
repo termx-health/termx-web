@@ -1,0 +1,103 @@
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-justify-between">
+    <div class="m-card__title">{{'entities.map-set.properties' | translate}}</div>
+    <m-dropdown *ngIf="!viewMode && definedEntityProperties">
+      <tw-add-button *m-dropdown-container icon="down" placement="right">
+        {{'web.map-set.form.properties.often-used' | translate}}
+      </tw-add-button>
+      <ng-container *ngFor="let p of definedEntityProperties | filter:filterDefinedProperties:'property'">
+        <div *m-dropdown-item (click)="addDefinedProperty(p)">{{p.name}}</div>
+      </ng-container>
+    </m-dropdown>
+  </div>
+  <form #form="ngForm">
+    <m-editable-table #rowsTable [mData]="properties" [mLoading]="loader.isLoading" [mRowInstance]="propertyRowInstance">
+      <m-editable-column [mTitle]="'entities.entity-property.name'">
+        <ng-template #viewTemplate let-p>{{p.name}}</ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.uri'">
+        <ng-template #viewTemplate let-p>{{p.uri}}</ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.type'">
+        <ng-template #viewTemplate let-p>{{p.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.required'" mName="required">
+        <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
+          <m-checkbox [(ngModel)]="p.required" readOnly [name]="ngModelName"></m-checkbox>
+        </ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.description'">
+        <ng-template #viewTemplate let-p>{{p.description | localName}}</ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.order-number'">
+        <ng-template #viewTemplate let-p>{{p.orderNumber}}</ng-template>
+      </m-editable-column>
+      <m-editable-column>
+        <ng-template #viewTemplate let-p>
+          <div class="m-justify-right">
+            <m-dropdown *ngIf="p.id">
+              <a *m-dropdown-item (mClick)="deletePropertyUsages(p.id)">{{'web.map-set.form.properties.delete-property-usages' | translate}}</a>
+            </m-dropdown>
+          </div>
+        </ng-template>
+      </m-editable-column>
+
+      <ng-template #expandEditTemplate let-p let-prefix="ngModelNamePrefix">
+        <tr>
+          <td colspan="9">
+            <m-form-row>
+              <m-form-item *mFormCol mLabel="entities.entity-property.name" mName="name-{{prefix}}" required>
+                <m-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.name" name="name-{{prefix}}" required></m-input>
+                <label *ngIf="p.definedEntityPropertyId">{{p.name}}</label>
+              </m-form-item>
+              <m-form-item *mFormCol mLabel="entities.entity-property.uri" mName="uri-{{prefix}}" required>
+                <m-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.uri" name="uri-{{prefix}}" required></m-input>
+                <label *ngIf="p.definedEntityPropertyId">{{p.uri}}</label>
+              </m-form-item>
+            </m-form-row>
+            <m-form-item mLabel="entities.entity-property.description" mName="description-{{prefix}}">
+              <m-multi-language-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.description" name="description-{{prefix}}"></m-multi-language-input>
+              <label *ngIf="p.definedEntityPropertyId">{{p.description | localName}}</label>
+            </m-form-item>
+            <m-form-row>
+              <m-form-item *mFormCol mLabel="entities.entity-property.type" mName="type-{{prefix}}" required>
+                <tw-value-set-concept-select *ngIf="!p.definedEntityPropertyId"
+                    valueSet="concept-property-type"
+                    [(ngModel)]="p.type"
+                    name="type-{{prefix}}"
+                    required></tw-value-set-concept-select>
+                <label *ngIf="p.definedEntityPropertyId">{{p.type | localName}}</label>
+              </m-form-item>
+              <div *mFormCol class="m-items-middle">
+                <m-form-item mLabel="entities.entity-property.order-number" mName="order-number-{{prefix}}">
+                  <m-number-input [(ngModel)]="p.orderNumber" name="order-number-{{prefix}}"></m-number-input>
+                </m-form-item>
+                <m-form-item mLabel="entities.entity-property.required" mName="required-{{prefix}}">
+                  <m-checkbox [(ngModel)]="p.required" name="required-{{prefix}}"></m-checkbox>
+                </m-form-item>
+              </div>
+            </m-form-row>
+
+            <ng-container *ngIf="'Coding' === p.type">
+              <m-divider>{{'entities.entity-property.rule.singular' | translate}}</m-divider>
+              <m-form-item mLabel="entities.entity-property.rule.code-systems" mName="cs-{{prefix}}">
+                <tw-code-system-search [(ngModel)]="p.rule.codeSystems"
+                    name="cs-{{prefix}}"
+                    valuePrimitive
+                    multiple
+                    [disabled]="p.rule.valueSet"></tw-code-system-search>
+              </m-form-item>
+              <m-form-item mLabel="entities.entity-property.rule.value-set" mName="vs-{{prefix}}">
+                <tw-value-set-search [(ngModel)]="p.rule.valueSet"
+                    name="vs-{{prefix}}"
+                    valuePrimitive
+                    [disabled]="p.rule.codeSystems?.length > 0"></tw-value-set-search>
+              </m-form-item>
+            </ng-container>
+          </td>
+        </tr>
+      </ng-template>
+    </m-editable-table>
+  </form>
+
+</m-card>

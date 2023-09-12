@@ -2,8 +2,8 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewCh
 import {isDefined, validateForm} from '@kodality-web/core-util';
 import {finalize, map, Observable, of} from 'rxjs';
 import {
-  AssociationType,
-  MapSetAssociation, MapSetAssociationSearchParams, ValueSetVersionConcept
+  AssociationType, MapSet,
+  MapSetAssociation, MapSetAssociationSearchParams
 } from 'app/src/app/resources/_lib';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {NgForm} from '@angular/forms';
@@ -15,7 +15,7 @@ import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/conta
   templateUrl: 'map-set-external-source-concept-list.component.html'
 })
 export class MapSetExternalSourceConceptListComponent implements OnChanges {
-  @Input() public mapSet: string;
+  @Input() public mapSet: MapSet;
   @Input() public mapSetVersion: string;
   @Input() public targetExternal: boolean;
   @Input() public associationTypes: AssociationType[];
@@ -46,16 +46,16 @@ export class MapSetExternalSourceConceptListComponent implements OnChanges {
   }
 
   protected search(): Observable<MapSetAssociation[]> {
-    if (!this.mapSet || !this.mapSetVersion) {
+    if (!this.mapSet?.id || !this.mapSetVersion) {
       return of();
     }
     const q = new MapSetAssociationSearchParams();
     q.limit = -1;
-    q.mapSet = this.mapSet;
+    q.mapSet = this.mapSet.id;
     q.mapSetVersion = this.mapSetVersion;
 
     this.loading = true;
-    return this.mapSetService.searchAssociations(this.mapSet, q).pipe(map(r => r.data), finalize(() => this.loading = false));
+    return this.mapSetService.searchAssociations(this.mapSet.id, q).pipe(map(r => r.data), finalize(() => this.loading = false));
   }
 
   protected getRelationName = (relationship: string, relationships: AssociationType[]): string => {
@@ -63,17 +63,20 @@ export class MapSetExternalSourceConceptListComponent implements OnChanges {
   };
 
   protected verifyChecked = (): void => {
+    if (!this.mapSet?.id || !this.mapSetVersion) {
+      return;
+    }
     const verifiedIds = this.associations?.filter(a => a.verified && isDefined(a.id)).map(c => c.id);
     const unVerifiedIds = this.associations?.filter(a => !a.verified && isDefined(a.id)).map(c => c.id);
-    this.mapSetService.verifyAssociations(this.mapSet, this.mapSetVersion, verifiedIds, unVerifiedIds).subscribe(() => this.loadData());
+    this.mapSetService.verifyAssociations(this.mapSet.id, this.mapSetVersion, verifiedIds, unVerifiedIds).subscribe(() => this.loadData());
   };
 
   protected saveAssociations(): void {
-    if (!validateForm(this.form)) {
+    if (!this.mapSet?.id || !this.mapSetVersion || !validateForm(this.form)) {
       return;
     }
     this.loading = true;
-    this.mapSetService.saveAssociations(this.mapSet, this.mapSetVersion, this.associations).subscribe(() => {
+    this.mapSetService.saveAssociations(this.mapSet.id, this.mapSetVersion, this.associations).subscribe(() => {
       this.loadData();
       this.associationsChanged.emit();
     });

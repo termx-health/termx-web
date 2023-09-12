@@ -1,3 +1,5 @@
+import {MapSetPropertyValue} from 'term-web/resources/_lib';
+
 export class MapSetAssociation {
   public id?: number;
   public mapSet?: string;
@@ -7,6 +9,7 @@ export class MapSetAssociation {
   public relationship?: string;
   public verified?: boolean;
   public noMap?: boolean;
+  public propertyValues?: MapSetPropertyValue[];
 }
 
 export class MapSetAssociationEntity {

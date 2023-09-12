@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewCh
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {
-  AssociationType,
+  AssociationType, MapSet,
   MapSetAssociation,
   MapSetConcept,
   MapSetConceptSearchParams
@@ -16,7 +16,7 @@ import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/conta
   templateUrl: 'map-set-unmapped-concept-list.component.html'
 })
 export class MapSetUnmappedConceptListComponent implements OnChanges {
-  @Input() public mapSet: string;
+  @Input() public mapSet: MapSet;
   @Input() public mapSetVersion: string;
   @Input() public targetExternal: boolean;
   @Input() public associationTypes: AssociationType[];
@@ -47,7 +47,7 @@ export class MapSetUnmappedConceptListComponent implements OnChanges {
   }
 
   protected search(): Observable<SearchResult<MapSetConcept>> {
-    if (!this.mapSet || !this.mapSetVersion) {
+    if (!this.mapSet?.id || !this.mapSetVersion) {
       return of();
     }
     const q = copyDeep(this.query);
@@ -57,7 +57,7 @@ export class MapSetUnmappedConceptListComponent implements OnChanges {
     q.unmapped = true;
 
     this.loading = true;
-    return this.mapSetService.searchConcepts(this.mapSet, this.mapSetVersion, q).pipe(finalize(() => this.loading = false));
+    return this.mapSetService.searchConcepts(this.mapSet.id, this.mapSetVersion, q).pipe(finalize(() => this.loading = false));
   }
 
   protected onSearch = (): Observable<SearchResult<MapSetConcept>> => {
@@ -66,8 +66,11 @@ export class MapSetUnmappedConceptListComponent implements OnChanges {
   };
 
   protected createNoMap = (c: MapSetConcept): void => {
+    if (!this.mapSet?.id || !this.mapSetVersion) {
+      return;
+    }
     const noMap: MapSetAssociation = {source: {code: c.code, codeSystem: c.codeSystem, display: c.display?.name}};
-    this.mapSetService.saveAssociation(this.mapSet, this.mapSetVersion, noMap).subscribe(() => {
+    this.mapSetService.saveAssociation(this.mapSet.id, this.mapSetVersion, noMap).subscribe(() => {
       this.loadData();
       this.associationsChanged.emit();
     });
