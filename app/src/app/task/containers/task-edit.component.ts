@@ -100,7 +100,8 @@ class TaskContextLinkService {
     }
 
     .text-editor {
-      padding: 1rem;
+      cursor: pointer;
+      padding: 0.5rem 0.75rem;
       border-radius: @mui-border-radius-component;
 
       &:hover {
@@ -112,16 +113,16 @@ class TaskContextLinkService {
 export class TaskEditComponent implements OnInit {
   protected task?: Task;
   protected newStatus?: string;
-  protected newContent?: string = '';
-  protected newActivity?: {visible?: boolean, note?: string} = {note: ''};
+  protected newActivity?: {visible?: boolean, note?: string} = {};
+
+  protected mode: 'edit' | 'add';
   protected loader = new LoadingManager();
-  protected mode: string;
 
   protected users: User[];
   protected projects: CodeName[];
   protected workflows: Workflow[];
 
-  @ViewChild("form") public form?: NgForm;
+  @ViewChild(NgForm) public form: NgForm;
 
   public constructor(
     private taskService: TaskService,
@@ -144,6 +145,27 @@ export class TaskEditComponent implements OnInit {
     this.loadData();
   }
 
+  private loadTask(number: string): void {
+    this.loader.wrap('load', this.taskService.loadTask(number)).subscribe(task => {
+      this.task = this.writeTask(task);
+      this.loadWorkflows(task.project.code);
+    });
+  }
+
+  private writeTask(task: Task): Task {
+    task['edit-mode'] = !task.content;
+    task.content ??= '';
+
+    task.type ??= 'task';
+    task.status ??= 'requested';
+    task.priority ??= 'routine';
+    task.project ??= {};
+    return task;
+  }
+
+
+  /**/
+
   private loadData(): void {
     this.loader.wrap('load', forkJoin([
       this.userService.loadAll(),
@@ -154,24 +176,16 @@ export class TaskEditComponent implements OnInit {
     });
   }
 
-  private loadTask(number: string): void {
-    this.loader.wrap('load', this.taskService.loadTask(number)).subscribe(task => {
-      this.task = this.writeTask(task);
-      this.loadWorkflows(task.project.code);
-    });
+  protected loadWorkflows(projectCode: string): void {
+    if (projectCode) {
+      this.taskService.loadProjectWorkflows(projectCode).subscribe(workflows => this.workflows = workflows);
+    } else {
+      this.workflows = [];
+    }
   }
 
-  private writeTask(task: Task): Task {
-    task['content-edit'] = !task.content;
-    task.content ??= '';
 
-    task.type ??= 'task';
-    task.status ??= 'requested';
-    task.priority ??= 'routine';
-    task.project ??= {};
-    return task;
-  }
-
+  /**/
 
   protected save(): void {
     if (!validateForm(this.form)) {
@@ -200,7 +214,7 @@ export class TaskEditComponent implements OnInit {
   protected createActivity(): void {
     const number = this.task.number;
     const note = this.newActivity.note;
-    if (!isDefined(number) || !isDefined(note)) {
+    if (isNil(number) || isNil(note)) {
       return;
     }
     this.loader.wrap('save', this.taskService.createActivity(number, note)).subscribe(() => {
@@ -211,7 +225,7 @@ export class TaskEditComponent implements OnInit {
 
   protected updateActivity(id: string, note: string): void {
     const number = this.task.number;
-    if (!isDefined(number) || !isDefined(id) || !isDefined(note)) {
+    if (isNil(number) || isNil(id) || isNil(note)) {
       return;
     }
     this.loader.wrap('save', this.taskService.updateActivity(number, id, note)).subscribe(() => {
@@ -228,11 +242,7 @@ export class TaskEditComponent implements OnInit {
   }
 
 
-  protected loadWorkflows(projectCode: string): void {
-    if (projectCode) {
-      this.taskService.loadProjectWorkflows(projectCode).subscribe(workflows => this.workflows = workflows);
-    }
-  }
+  /**/
 
   protected getTargetStatuses = (wfCode: string, status: string, workflows: Workflow[]): string[] => {
     const wf = workflows?.find(w => w.code === wfCode);
@@ -247,10 +257,7 @@ export class TaskEditComponent implements OnInit {
   };
 
   protected hasTransitions = (activities: TaskActivity[]): TaskActivity[] => {
-    if (!isDefined(activities)) {
-      return [];
-    }
-    return activities.filter(a => a.note || (this.changeTransitions(a.transition)?.length > 0));
+    return activities?.filter(a => a.note || (this.changeTransitions(a.transition)?.length > 0));
   };
 
   protected changeTransitions = (transition: {[key: string]: {from?: string, to?: string}}): {key: string, transition: {from?: string, to?: string}}[] => {
@@ -264,7 +271,11 @@ export class TaskEditComponent implements OnInit {
   };
 
 
-  public onEditorClick(ev: MouseEvent, wrapper: HTMLElement, editorType: 'content' | 'activity', a?: TaskActivity): void {
+  protected isEditable = (el: Task | TaskActivity): boolean => {
+    return this.authService.user?.username === el.updatedBy && !(el.context?.map(c => c.type) || []).includes("page-comment");
+  };
+
+  protected onEditorClick(wrapper: HTMLElement, ev: MouseEvent, data: {task?: Task; activity?: TaskActivity}): void {
     const path = [];
     let el = ev.target as HTMLElement;
     while (el) {
@@ -279,14 +290,16 @@ export class TaskEditComponent implements OnInit {
       return;
     }
 
-    if (editorType === 'content') {
-      this.newContent = this.task.content;
-      this.task['content-edit'] = true;
+    if (!this.isEditable(data.task ?? data.activity)) {
+      return;
     }
 
-    if (editorType === 'activity') {
-      a['new-note'] = a.note;
-      a['edit-mode'] = true;
+    if (data.task) {
+      data.task['new-content'] = data.task.content;
+      data.task['edit-mode'] = true;
+    } else if (data.activity) {
+      data.activity['new-note'] = data.activity.note;
+      data.activity['edit-mode'] = true;
     }
   }
 }

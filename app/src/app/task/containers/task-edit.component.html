@@ -1,11 +1,12 @@
 <m-spinner [mLoading]="loader.isLoading">
   <m-card [mShowSkeleton]="loader.isLoading">
-    <form #form="ngForm" *ngIf="task">
+    <form *ngIf="task">
       <div *m-card-header>
         <div class="m-items-middle">
           <tw-task-type name="type" [(ngModel)]="task.type" (ngModelChange)="patch({type: $event})" required/>
-          <m-form-control style="flex: 1" mName="title">
-            <m-input name="title"
+          <m-form-control mName="title" style="flex: 1">
+            <m-input
+                name="title"
                 [(ngModel)]="task.title"
                 (keyup.enter)="patch({title: task.title})"
                 (focusout)="patch({title: task.title})"
@@ -17,8 +18,8 @@
         </div>
       </div>
 
-      <div *m-card-content style="display: flex; gap: 1rem">
-        <div style="flex: 2">
+      <div *m-card-content style="display: grid; grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); gap: 1rem">
+        <div>
           <div class="m-justify-right" style="margin-bottom: 0.5rem">
             <tw-task-status *ngIf="!task['status-edit']"
                 class="m-clickable"
@@ -33,51 +34,60 @@
                 (ngModelChange)="patch({status: task.status}); task['status-edit'] = false"
             >
               <m-option [mValue]="task.status" [mLabel]="task.status | localizedConceptName: {valueSet: 'task-status'} | async"></m-option>
-              <m-option *ngFor="let s of (task.workflow |apply:getTargetStatuses:task.status:workflows)"
+              <m-option *ngFor="let s of (task.workflow | apply: getTargetStatuses: task.status:workflows)"
                   [mValue]="s"
                   [mLabel]="s | localizedConceptName: {valueSet: 'task-status'} | async"
               ></m-option>
             </m-select>
           </div>
-          <ng-container *ngIf="task['content-edit'] || !task.content">
-            <div class="text-editor-wrapper">
-              <tw-smart-text-editor [(ngModel)]="newContent" valueType="markdown" name="content"/>
+
+          <!-- Task content view -->
+          <ng-container *ngIf="!task['edit-mode'] && task.content">
+            <div #c [class.text-editor]="task | apply: isEditable" (click)="onEditorClick(c,$event,{task})">
+              <tw-smart-text-editor-view [value]="task.content" valueType="markdown"/>
             </div>
+          </ng-container>
+
+          <!-- Task content edit-->
+          <ng-container *ngIf="task['edit-mode'] || !task.content">
+            <div class="text-editor-wrapper">
+              <tw-smart-text-editor [(ngModel)]="task['new-content']" valueType="markdown" name="content"/>
+            </div>
+
             <div class="m-justify-right">
-              <m-button mDisplay="text" (mClick)="task.content = newContent; task['content-edit'] = false; patch({content: newContent})">
+              <m-button mDisplay="text" (mClick)="patch({content: task['new-content']}); task.content = task['new-content']; task['edit-mode'] = false;">
                 <m-icon mCode="check"/>
               </m-button>
-              <m-button mDisplay="text" (click)="task['content-edit'] = false">
+              <m-button mDisplay="text" (click)="task['edit-mode'] = false">
                 <m-icon mCode="close"/>
               </m-button>
             </div>
           </ng-container>
-          <ng-container *ngIf="!task['content-edit'] && task.content">
-            <div #c class="m-clickable text-editor" (click)="onEditorClick($event, c, 'content')">
-              <tw-smart-text-editor [(ngModel)]="task.content" valueType="markdown" name="content" viewMode/>
-            </div>
-          </ng-container>
 
-          <m-divider>{{'web.task.activity' | translate}}</m-divider>
+
+          <m-divider mText="web.task.activity"/>
           <m-list>
-            <m-list-item *ngFor="let activity of task.activities| apply: hasTransitions; let i = index">
+            <m-list-item *ngFor="let activity of task.activities | apply: hasTransitions; let i = index">
+              <!-- Activity header-->
               <div class="m-justify-between">
                 <div class="m-items-middle">
                   <m-icon mCode="user"/>
-                  <label>{{activity.updatedBy}}</label>
+                  <span>{{activity.updatedBy}}</span>
                 </div>
 
                 <div class="m-items-middle">
-                  <label class="m-subtitle">{{activity.updatedAt | localDateTime}}</label>
-                  <ng-container *ngIf="authService.user?.username === activity.updatedBy">
+                  <span class="m-subtitle">{{activity.updatedAt | localDateTime}}</span>
+                  <ng-container *ngIf="activity | apply: isEditable">
                     <m-divider mVertical/>
                     <m-icon class="m-clickable" mCode="delete" (click)="deleteActivity(activity.id)"/>
                   </ng-container>
                 </div>
               </div>
 
+              <!-- Activity content -->
               <div>
-                <div *ngFor="let at of (activity.transition | apply:changeTransitions)">
+                <!-- Transitions -->
+                <div *ngFor="let at of (activity.transition | apply: changeTransitions)">
                   <span class="m-bold">{{at.key}}: </span>
                   <span style="display: inline-grid; grid-template-columns: repeat(3, auto); gap: 0.5rem;">
                     <span class="m-subtitle m-whitespace">{{at.transition.from}}</span>
@@ -85,100 +95,128 @@
                     <span class="m-subtitle m-whitespace">{{at.transition.to}}</span>
                   </span>
                 </div>
-                <ng-container *ngIf="!activity['edit-mode']">
-                  <div #a
-                      class="m-clickable"
-                      *ngIf="authService.user?.username === activity.updatedBy"
-                      (click)="onEditorClick($event, a, 'activity', activity)"
-                  >
-                    <tw-smart-text-editor [(ngModel)]="activity.note" valueType="markdown" name="{{i}}-activity" viewMode/>
-                  </div>
-                  <div *ngIf="authService.user?.username !== activity.updatedBy">
-                    <tw-smart-text-editor [(ngModel)]="activity.note" valueType="markdown" name="{{i}}-activity" viewMode/>
-                  </div>
+
+                <!-- Note -->
+                <ng-container *ngIf="activity.note">
+                  <ng-container *ngTemplateOutlet="activity['edit-mode'] ? noteEdit : noteView"/>
+
+                  <!-- View -->
+                  <ng-template #noteView>
+                    <div #a [class.m-clickable]="activity | apply: isEditable" (click)="onEditorClick(a, $event,{activity})">
+                      <tw-smart-text-editor-view [value]="activity.note" valueType="markdown"/>
+                    </div>
+                  </ng-template>
+
+                  <!-- Edit -->
+                  <ng-template #noteEdit>
+                    <div class="text-editor-wrapper">
+                      <tw-smart-text-editor [(ngModel)]="activity['new-note']" valueType="markdown" name="{{i}}activity"/>
+                    </div>
+
+                    <div class="m-justify-right">
+                      <m-button mDisplay="text" (mClick)="updateActivity(activity.id, activity['new-note']); activity['edit-mode'] = false">
+                        <m-icon mCode="check"/>
+                      </m-button>
+                      <m-button mDisplay="text" (mClick)="activity['edit-mode'] = false">
+                        <m-icon mCode="close"/>
+                      </m-button>
+                    </div>
+                  </ng-template>
                 </ng-container>
               </div>
-              <ng-container *ngIf="activity['edit-mode']">
+            </m-list-item>
+
+
+            <!-- New activity -->
+            <ng-container>
+              <m-list-item *ngIf="newActivity.visible">
                 <div class="text-editor-wrapper">
-                  <tw-smart-text-editor [(ngModel)]="activity['new-note']" valueType="markdown" name="{{i}}activity"/>
+                  <tw-smart-text-editor [(ngModel)]="newActivity.note" valueType="markdown" name="new-activity"/>
                 </div>
                 <div class="m-justify-right">
-                  <m-button mDisplay="text" (mClick)="updateActivity(activity.id, activity['new-note']); activity['edit-mode'] = false">
+                  <m-button mDisplay="text" (mClick)="createActivity()">
                     <m-icon mCode="check"/>
                   </m-button>
-                  <m-button mDisplay="text" (mClick)="activity['edit-mode'] = false">
+                  <m-button mDisplay="text" (mClick)="newActivity = {note: ''}">
                     <m-icon mCode="close"/>
                   </m-button>
                 </div>
-              </ng-container>
-            </m-list-item>
+              </m-list-item>
 
-            <m-list-item *ngIf="newActivity.visible">
-              <div class="text-editor-wrapper">
-                <tw-smart-text-editor [(ngModel)]="newActivity.note" valueType="markdown" name="new-activity"/>
-              </div>
-              <div class="m-justify-right">
-                <m-button mDisplay="text" (mClick)="createActivity()">
-                  <m-icon mCode="check">/</m-icon>
-                </m-button>
-                <m-button mDisplay="text" (mClick)="newActivity = {note: ''}">
-                  <m-icon mCode="close"/>
-                </m-button>
-              </div>
-            </m-list-item>
-            <m-list-item *ngIf="!newActivity.visible && task.number" mClickable (mClick)="newActivity.visible = true">
-              <m-icon mCode="plus"/>&nbsp; <label>{{'web.task.add-comment' | translate}}</label>
-            </m-list-item>
+              <m-list-item *ngIf="!newActivity.visible && task.number" mClickable (mClick)="newActivity.visible = true">
+                <m-icon mCode="plus"/>&nbsp; <label>{{'web.task.add-comment' | translate}}</label>
+              </m-list-item>
+            </ng-container>
           </m-list>
         </div>
 
 
-        <div style="flex: 1; border-left: 1px solid var(--color-borders-light); padding-left: 1rem">
-          <m-form-item mLabel="entities.task.project" mName="project" required>
-            <m-select *ngIf="!task.number"
+        <div style="border-left: 1px solid var(--color-borders-light); padding-left: 1rem">
+          <m-form-item mName="project" mLabel="entities.task.project" required>
+            <m-select
+                *ngIf="!task.number"
                 name="project"
                 [(ngModel)]="task.project.code"
                 (ngModelChange)="loadWorkflows($event)"
+                [allowClear]="false"
                 autoSelect
                 required
-                [allowClear]="false"
             >
-              <m-option *ngFor="let p of projects" [mLabel]="p.names | localName" [mValue]="p.code"></m-option>
+              <m-option *ngFor="let p of projects" [mValue]="p.code" [mLabel]="p.names | localName"/>
             </m-select>
-            <label *ngIf="task.number">{{task.project.names | localName}}</label>
+
+            <span *ngIf="task.number">
+              {{task.project.names | localName}}
+            </span>
           </m-form-item>
-          <m-form-item *ngIf="task.project.code" mLabel="entities.task.workflow" mName="workflow" required>
-            <m-select name="workflow" [(ngModel)]="task.workflow" (ngModelChange)="patch({workflow: $event})" autoSelect required [allowClear]="false">
-              <m-option *ngFor="let wf of workflows" [mLabel]="wf.code" [mValue]="wf.code"></m-option>
+
+          <m-form-item *ngIf="task.project.code" mName="workflow" mLabel="entities.task.workflow" required>
+            <m-select
+                name="workflow"
+                [(ngModel)]="task.workflow"
+                (ngModelChange)="patch({workflow: $event})"
+                [allowClear]="false"
+                autoSelect
+                required
+            >
+              <m-option *ngFor="let wf of workflows" [mLabel]="wf.code" [mValue]="wf.code"/>
             </m-select>
           </m-form-item>
-          <m-form-item mLabel="entities.task.assignee" mName="assignee">
+
+          <m-form-item mName="assignee" mLabel="entities.task.assignee">
             <m-select name="assignee" [(ngModel)]="task.assignee" (ngModelChange)="patch({assignee: $event})">
-              <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"></m-option>
+              <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"/>
             </m-select>
           </m-form-item>
+
           <m-form-item mName="priority" mLabel="entities.task.priority" required>
-            <tw-value-set-concept-select name="priority"
+            <tw-value-set-concept-select
+                name="priority"
                 [(ngModel)]="task.priority"
                 (ngModelChange)="patch({priority: $event})"
                 valueSet="request-priority"
                 valuePrimitive
-                required
                 [allowClear]="false"
+                required
             ></tw-value-set-concept-select>
           </m-form-item>
+
           <m-form-item mLabel="entities.task.created">
             <label>{{(task.createdAt | localDate) || '-'}}</label>
           </m-form-item>
+
           <m-form-item mLabel="entities.task.author">
-            <label>{{(task.createdBy) || '-'}}</label>
+            <label>{{task.createdBy || '-'}}</label>
           </m-form-item>
+
           <m-form-item mLabel="entities.task.modified">
             <label>{{(task.updatedAt | localDate) || '-'}}</label>
           </m-form-item>
+
           <m-form-item mLabel="entities.task.modified-by">
-            <label>{{(task.updatedBy) || '-'}}</label>
+            <label>{{task.updatedBy || '-'}}</label>
           </m-form-item>
+
 
           <ng-container *ngIf="task.context?.length > 0">
             <m-divider>{{'web.task.context' | translate}}</m-divider>

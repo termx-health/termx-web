@@ -1,4 +1,5 @@
 import {CodeName} from '@kodality-web/marina-util';
+import {TaskActivity} from './task-activity';
 
 export class Task {
   public id?: number;
@@ -24,14 +25,4 @@ export class Task {
 export class TaskContextItem {
   public type?: string;
   public id?: any;
-
-}
-
-export class TaskActivity {
-  public id?: string;
-  public taskId?: number;
-  public note?: string;
-  public transition?: {[key: string]: {from?: string, to?: string}};
-  public updatedBy?: string;
-  public updatedAt?: Date;
 }
