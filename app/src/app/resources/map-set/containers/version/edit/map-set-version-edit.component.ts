@@ -3,7 +3,7 @@ import {MapSetScope, MapSetVersion} from 'app/src/app/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {MapSetService} from '../../../services/map-set-service';
 import {map, Observable} from 'rxjs';
 
@@ -33,8 +33,13 @@ export class MapSetVersionEditComponent implements OnInit {
       this.mode = 'edit';
       this.loader.wrap('load', this.mapSetService.loadVersion(this.mapSetId, versionCode)).subscribe(v => this.version = this.writeVersion(v));
     } else {
-      this.version = this.writeVersion(new MapSetVersion());
-      this.version.status = 'draft';
+      this.mapSetService.searchVersions(this.mapSetId).subscribe(r => {
+        const lastVersion = this.getLastVersion(r.data);
+        const newVersion= new MapSetVersion();
+        newVersion.preferredLanguage = lastVersion?.preferredLanguage;
+        newVersion.status = 'draft';
+        this.version = this.writeVersion(newVersion);
+      });
     }
   }
 
@@ -55,5 +60,9 @@ export class MapSetVersionEditComponent implements OnInit {
     version.algorithm ??= 'semver';
     version.scope ??= new MapSetScope();
     return version;
+  }
+
+  private getLastVersion(versions: MapSetVersion[]): MapSetVersion {
+    return versions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.created, b.created))?.[0];
   }
 }

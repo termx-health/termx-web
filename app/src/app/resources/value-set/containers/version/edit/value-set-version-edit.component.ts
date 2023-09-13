@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {LoadingManager, validateForm} from '@kodality-web/core-util';
+import {compareValues, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ValueSetVersion, ValueSetVersionRuleSet} from 'app/src/app/resources/_lib';
 import {map, Observable} from 'rxjs';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
@@ -39,7 +39,13 @@ export class ValueSetVersionEditComponent implements OnInit {
     if (this.mode === 'edit') {
       this.loadVersion(this.valueSetId!, this.valueSetVersion!);
     } else {
-      this.version = this.writeVersion(new ValueSetVersion());
+      this.valueSetService.searchVersions(this.valueSetId).subscribe(r => {
+        const lastVersion = this.getLastVersion(r.data);
+        const newVersion= new ValueSetVersion();
+        newVersion.supportedLanguages = lastVersion?.supportedLanguages;
+        newVersion.preferredLanguage = lastVersion?.preferredLanguage;
+        this.version = this.writeVersion(newVersion);
+      });
     }
   }
 
@@ -99,5 +105,9 @@ export class ValueSetVersionEditComponent implements OnInit {
     version.releaseDate ??= new Date();
     version.ruleSet ??= new ValueSetVersionRuleSet();
     return version;
+  }
+
+  private getLastVersion(versions: ValueSetVersion[]): ValueSetVersion {
+    return versions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.created, b.created))?.[0];
   }
 }

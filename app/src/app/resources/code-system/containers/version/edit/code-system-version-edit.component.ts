@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {ActivatedRoute} from '@angular/router';
 import {CodeSystemService} from '../../../services/code-system.service';
@@ -33,7 +33,13 @@ export class CodeSystemVersionEditComponent implements OnInit {
       this.mode = 'edit';
       this.loader.wrap('load', this.codeSystemService.loadVersion(this.codeSystemId, versionCode)).subscribe(v => this.version = this.writeVersion(v));
     } else {
-      this.version = this.writeVersion(new CodeSystemVersion());
+      this.codeSystemService.searchVersions(this.codeSystemId).subscribe(r => {
+        const lastVersion = this.getLastVersion(r.data);
+        const newVersion= new CodeSystemVersion();
+        newVersion.supportedLanguages = lastVersion?.supportedLanguages;
+        newVersion.preferredLanguage = lastVersion?.preferredLanguage;
+        this.version = this.writeVersion(newVersion);
+      });
     }
   }
 
@@ -53,5 +59,9 @@ export class CodeSystemVersionEditComponent implements OnInit {
     version.releaseDate ??= new Date();
     version.algorithm ??= 'semver';
     return version;
+  }
+
+  private getLastVersion(versions: CodeSystemVersion[]): CodeSystemVersion {
+    return versions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.created, b.created))?.[0];
   }
 }
