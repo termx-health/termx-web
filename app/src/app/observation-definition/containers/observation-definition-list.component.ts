@@ -7,6 +7,7 @@ import {NgForm} from '@angular/forms';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
 import {MuiNotificationService, MuiTableComponent} from '@kodality-web/marina-ui';
 import {CodeSystemConcept} from 'term-web/resources/_lib';
+import {LocalizedName} from '@kodality-web/marina-util';
 
 @Component({
   templateUrl: 'observation-definition-list.component.html',
@@ -97,12 +98,12 @@ export class ObservationDefinitionListComponent implements OnInit {
     this.filter = {};
   }
 
-  public getDetails = (obs: ObservationDefinition): {label: string, tooltip: any}[] => {
+  public getDetails = (obs: ObservationDefinition): {code: string, names?: LocalizedName, cs?: string}[] => {
     let details = [];
-    details = [...details, ...(obs.value?.valueSet ? [{label: obs.value.valueSet}] : [])];
-    details = [...details, ...(obs.value?.values ? obs.value.values.map(v => ({label: v.code})) : [])];
-    obs.members?.forEach(m => details.push({label: m.item.code, tooltip: m.item.names}));
-    obs.components?.forEach(c => details.push({label: c.code, tooltip: c.names}));
+    details = [...details, ...(obs.value?.valueSet ? [{code: obs.value.valueSet}] : [])];
+    details = [...details, ...(obs.value?.values ? obs.value.values.map(v => ({code: v.code, cs: v.codeSystem})) : [])];
+    obs.members?.forEach(m => details.push({code: m.item.code, names: m.item.names}));
+    obs.components?.forEach(c => details.push({code: c.code, names: c.names}));
     return details;
   };
 

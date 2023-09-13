@@ -93,14 +93,19 @@
 
       <tr *mTableRowExpand="let obs" class="m-table-expanded-row">
         <td colspan="8">
-          <div style="display: grid">
-            <ng-container *ngIf="obs['_expandType'] === 'details'">
-              <label *ngFor="let d of (obs | apply: getDetails)">{{d.label}}</label>
-            </ng-container>
-            <ng-container *ngIf="obs['_expandType'] === 'mappings'">
-              <label *ngFor="let m of obs.mappings">{{m.concept}}</label>
-            </ng-container>
-          </div>
+          <ng-container *ngIf="obs['_expandType'] === 'details'">
+            <div *ngFor="let d of (obs | apply: getDetails)" class="m-items-middle">
+              <label class="m-subtitle">{{d.code}}</label>
+              <label *ngIf="d.names">{{d.names | localName}}</label>
+              <label *ngIf="d.cs">{{d.code | localizedConceptName: {codeSystem: d.cs} | async}}</label>
+            </div>
+          </ng-container>
+          <ng-container *ngIf="obs['_expandType'] === 'mappings'">
+            <div *ngFor="let m of obs.mappings" class="m-items-middle">
+              <label class="m-subtitle">{{m.concept}}</label>
+              <label>{{m.concept | localizedConceptName: {codeSystem: m.codeSystem} | async }}</label>
+            </div>
+          </ng-container>
         </td>
       </tr>
       <tr *mTableNoData>
