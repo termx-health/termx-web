@@ -8,14 +8,18 @@ import {Designation, EntityProperty} from 'app/src/app/resources/_lib';
   styles: [`
     .italic {
       font-style: italic;
+      white-space: nowrap;
     }
     .col {
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
+      align-self: stretch;
     }
-    .offset {
-      margin-left: 1rem
+    .row {
+      flex: 1;
+      display: flex;
+      align-items: center;
     }
     .m-subtitle {
       margin-block: 0.5rem;
@@ -29,7 +33,7 @@ export class CodeSystemDesignationEditComponent implements OnChanges {
   @Input() public supportedLangs?: string[];
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['properties'] || changes['designations'] || changes['supportedLangs'])
+    if ((changes['properties'] || changes['supportedLangs'])
       && this.properties && this.designations && this.supportedLangs
       && !this.viewMode) {
       this.addDefDesignations();
@@ -54,5 +58,9 @@ export class CodeSystemDesignationEditComponent implements OnChanges {
           this.designations = [...this.designations];
         });
     });
+  }
+
+  protected deleteDesignation(designation: Designation): void {
+    this.designations = [...this.designations.filter(d => d !== designation)];
   }
 }

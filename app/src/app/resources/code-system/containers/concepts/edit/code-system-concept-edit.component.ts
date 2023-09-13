@@ -197,6 +197,10 @@ export class CodeSystemConceptEditComponent implements OnInit {
     return p.kind === kind && !['status', 'is-a', 'parent', 'child', 'partOf', 'groupedBy', 'classifiedWith'].includes(p.name);
   };
 
+  public addDesignation(prop: EntityProperty): void {
+    this.conceptVersion.designations = [...this.designationEdit.designations || [], {designationTypeId: prop.id, designationType: prop.name, status: 'draft', caseSignificance: 'ci'}];
+  }
+
   public addPropertyValue(prop: EntityProperty): void {
     this.conceptVersion.propertyValues = [...this.conceptVersion.propertyValues || [], {entityPropertyId: prop.id, entityProperty: prop.name, value: prop.type === 'Coding' ? {} : undefined}];
   }

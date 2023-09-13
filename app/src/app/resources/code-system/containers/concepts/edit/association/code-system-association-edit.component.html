@@ -1,38 +1,73 @@
 <m-no-data *ngIf="!associations?.length"/>
 
-<div class="m-items-middle" *ngFor="let association of associations; let i = index">
-  <ng-container *ngIf="viewMode">
-    <span class="m-subtitle">{{association.associationType}}</span>
-    <span>{{association.targetId | localizedConceptName: {codeSystem: codeSystemId} | async }}</span>
-    <tw-status-tag [status]="association.status"></tw-status-tag>
-    <span>{{association.orderNumber}}</span>
-  </ng-container>
-  <ng-container *ngIf="!viewMode">
-    <m-form-item mName="order-{{i}}">
-      <m-number-input name="order-{{i}}"
-          [(ngModel)]="association.orderNumber"
-          placeholder="entities.code-system-entity-version.association-order"></m-number-input>
-    </m-form-item>
-    <m-form-item mName="type-{{i}}">
-      <tw-association-type-search [(ngModel)]="association.associationType"
+
+<!--        Edit mode        -->
+<div *ngIf="!viewMode" class="m-items-middle">
+  <div class="col">
+    <div class="row" *ngFor="let a of associations; let i = index">
+      <tw-association-type-search [(ngModel)]="a.associationType"
           name="type-{{i}}"
           placeholder="entities.code-system-entity-version.association-type"
-          valuePrimitive></tw-association-type-search>
-    </m-form-item>
-    <m-form-item mName="targetConcept-{{i}}">
-      <tw-code-system-entity-version-search [codeSystem]="codeSystemId"
+          valuePrimitive/>
+    </div>
+  </div>
+  <div class="col" style="width: 100%">
+    <div class="row" *ngFor="let a of associations; let i = index">
+      <tw-code-system-entity-version-search style="width: 100%"
+          [codeSystem]="codeSystemId"
           [codesNe]="code"
-          [(ngModel)]="association.targetId"
+          [(ngModel)]="a.targetId"
           name="targetConcept-{{i}}"
           placeholder="entities.code-system-entity-version.association-target"
-          valuePrimitive></tw-code-system-entity-version-search>
-    </m-form-item>
-    <m-form-item mName="status-{{i}}">
-      <tw-value-set-concept-select [(ngModel)]="association.status"
+          valuePrimitive/>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row" *ngFor="let a of associations; let i = index">
+      <tw-value-set-concept-select [(ngModel)]="a.status"
           name="status-{{i}}"
           placeholder="entities.code-system-entity-version.association-status"
-          valueSet="publication-status"></tw-value-set-concept-select>
-    </m-form-item>
-  </ng-container>
+          valueSet="publication-status"/>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row" *ngFor="let a of associations; let i = index">
+      <m-number-input name="order-{{i}}" [(ngModel)]="a.orderNumber" placeholder="entities.code-system-entity-version.association-order"/>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row" *ngFor="let a of associations; let i = index">
+      <m-icon [mCode]="'close'" class="m-clickable" (click)="deleteAssociation(a)"></m-icon>
+    </div>
+  </div>
 </div>
 
+
+<!--        View mode        -->
+<div *ngIf="viewMode" class="m-items-middle">
+  <div class="col">
+    <div class="row" *ngFor="let a of associations; let i = index">
+      <span class="m-subtitle">{{a.associationType}}</span>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row" *ngFor="let a of associations; let i = index">
+      <span>{{a.targetId | localizedConceptName: {codeSystem: codeSystemId} | async }}</span>
+    </div>
+  </div>
+  <div class="col" style="width: 100%">
+    <div class="row" *ngFor="let a of associations; let i = index">
+      <span>{{a.targetId}}</span>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row" *ngFor="let a of associations; let i = index">
+      <span class="tw-circled" [style.color]="a.status === 'draft' ? 'var(&#45;&#45;color-amber-7)' : 'initial'">{{a.status?.[0] | uppercase}}</span>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row" *ngFor="let a of associations; let i = index">
+      <span>{{a.orderNumber}}</span>
+    </div>
+  </div>
+</div>

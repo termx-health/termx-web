@@ -7,6 +7,19 @@ import {EntityPropertyValueInputComponent} from 'app/src/app/core/ui/components/
 @Component({
   selector: 'tw-code-system-property-value-edit',
   templateUrl: 'code-system-property-value-edit.component.html',
+  styles: [`
+    .col {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      align-self: stretch;
+    }
+    .row {
+      flex: 1;
+      display: flex;
+      align-items: center;
+    }
+  `]
 })
 export class CodeSystemPropertyValueEditComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
@@ -56,9 +69,13 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   }
 
   protected isRequired = (i: number, properties: EntityProperty[]): boolean => {
-    const val = this.propertyValues[i];
+    const val = this.propertyValues.filter(pv => this.filterPropertyValue(pv))[i];
     const requiredProperty = properties?.find(p => p.id === val.entityPropertyId)?.required;
     const samePropertyValue = this.propertyValues.find(p => p.entityPropertyId === val.entityPropertyId && this.propertyValues.indexOf(p) < i);
     return requiredProperty && !samePropertyValue;
   };
+
+  protected deleteProperty(propertyValue: EntityPropertyValue): void {
+    this.propertyValues = [...this.propertyValues.filter(pv => pv !== propertyValue)];
+  }
 }

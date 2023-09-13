@@ -137,7 +137,17 @@
         <!-- Designations -->
         <m-divider></m-divider>
         <m-card class="m-card-inside">
-          <m-title *m-card-header mTitle="entities.code-system-entity-version.designations"></m-title>
+          <div *m-card-header class="m-justify-between">
+            <m-title mTitle="entities.code-system-entity-version.designations"></m-title>
+            <m-dropdown *ngIf="conceptVersion?.status === 'draft'">
+              <tw-add-button *m-dropdown-container>
+                {{'web.code-system-concept-version.designation.add-designation' | translate}}
+              </tw-add-button>
+              <ng-container *ngFor="let prop of codeSystem?.properties | filter: filterProperties: 'designation' ">
+                <a *m-dropdown-item (mClick)="addDesignation(prop)">{{prop.name}}</a>
+              </ng-container>
+            </m-dropdown>
+          </div>
           <tw-code-system-designation-edit #designationEdit
               class="padded"
               [properties]="codeSystem?.properties"
