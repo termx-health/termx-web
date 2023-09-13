@@ -119,6 +119,22 @@ a {
   }
 }
 
+.tw-input-group {
+  & .m-form-control {
+    display: table;
+  }
+
+  & .tw-input-group-addon {
+    padding: 4px 11px;
+  }
+
+  & .tw-input-group-addon + * .m-input {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+  }
+
+}
+
 .tw-card__meta-footer {
   border-top: 1px solid var(--color-borders);
   font-size: .9rem;

@@ -22,13 +22,13 @@
               <m-option *ngFor="let ts of terminologyServers" [mLabel]="ts.names | localName" [mValue]="ts.code"></m-option>
             </m-select>
           </m-form-item>
-          <m-form-item mName="github" mLabel="entities.space.github" *ngIf="githubProviders" class="input-group">
-            <span class="input-group-addon ant-input-group-addon">https://github.com/</span>
+          <m-form-item mName="github" mLabel="entities.space.github" *ngIf="githubProviders" class="tw-input-group">
+            <span class="tw-input-group-addon ant-input-group-addon">https://github.com/</span>
             <m-input name="github" [(ngModel)]="space.integration.github.repo"></m-input>
           </m-form-item>
           <div class="github-dirs" *ngIf="githubProviders && space.integration.github.repo">
-            <m-form-item *ngFor="let p of githubProviders | keys | apply:sort" mName="github-{{p}}" class="input-group">
-              <span class="input-group-addon ant-input-group-addon">{{p}}</span>
+            <m-form-item *ngFor="let p of githubProviders | keys | apply:sort" mName="github-{{p}}" class="tw-input-group">
+              <span class="tw-input-group-addon ant-input-group-addon">{{p}}</span>
               <m-input name="github-{{p}}" [(ngModel)]="space.integration.github.dirs[p]"></m-input>
             </m-form-item>
           </div>

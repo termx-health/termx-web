@@ -1,4 +1,4 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {TransformationDefinition, TransformationDefinitionResource} from '../services/transformation-definition';
 import {StructureDefinition} from 'term-web/modeler/_lib';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
@@ -8,25 +8,54 @@ import {Fhir} from 'fhir/fhir';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {launchFMLEditor} from 'term-web/modeler/transformer/components/fml.editor';
 import {Bundle} from 'fhir/model/bundle';
-import {forkJoin, map, of} from 'rxjs';
+import {forkJoin, map, of, shareReplay} from 'rxjs';
 import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
 import {HttpCacheService, isNil, LoadingManager} from '@kodality-web/core-util';
+import {TerminologyServerLibService} from 'term-web/space/_lib';
+
 
 @Component({
   selector: 'tw-transformation-definition-resource-form',
   templateUrl: './transformation-definition-resource-form.component.html',
 })
-export class TransformationDefinitionResourceFormComponent {
+export class TransformationDefinitionResourceFormComponent implements OnChanges {
   @Input() public resource: TransformationDefinitionResource;
   @Input() public definition: TransformationDefinition;
 
   protected loader = new LoadingManager();
   private httpCache = new HttpCacheService();
 
+  protected servers$ = this.serviceService.search({kinds: 'fhir', limit: -1}).pipe(map(resp => resp.data), shareReplay(1));
+  protected urlSuffix: Record<TransformationDefinitionResource['type'], string> = {
+    definition: '/StructureDefinition/',
+    conceptmap: '/ConceptMap/',
+    mapping: '/'
+  };
+
   public constructor(
     private transformationDefinitionService: TransformationDefinitionService,
+    private serviceService: TerminologyServerLibService,
     private notificationService: MuiNotificationService
   ) { }
+
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['resource']) {
+      this.servers$.subscribe(resp => {
+        const {type, source, reference} = this.resource;
+
+        if (source === 'url') {
+          const matchedServerUrl = resp.map(s => s.rootUrl).find(url => reference.resourceUrl?.startsWith(this.normalizeUrl(url) + this.urlSuffix[type]));
+          if (matchedServerUrl) {
+            this.resource.reference['_fhir'] = matchedServerUrl;
+            this.resource.reference['_url'] = reference.resourceUrl.slice((this.normalizeUrl(matchedServerUrl) + this.urlSuffix[type]).length);
+          } else {
+            this.resource.reference['_url'] = reference.resourceUrl;
+          }
+        }
+      });
+    }
+  }
 
   protected onDefinitionSelect(def: StructureDefinition): void {
     this.resource.reference.localId = String(def.id);
@@ -38,9 +67,37 @@ export class TransformationDefinitionResourceFormComponent {
     this.resource.name = ms.id;
   }
 
+  protected onResourceUrlChange(res: TransformationDefinitionResource): void {
+    if (res.reference['_fhir']) {
+      res.reference.resourceUrl = `${this.normalizeUrl(res.reference['_fhir'])}${this.urlSuffix[res.type]}${res.reference['_url']}`;
+    } else {
+      res.reference.resourceUrl = res.reference['_url'];
+    }
+  }
 
-  protected generateMapping(): void {
-    this.transformationDefinitionService.composeFml(this.definition).subscribe(r => this.resource.reference.content = r);
+  protected generateMap(): void {
+    this.transformationDefinitionService.composeFml(this.definition).subscribe(r => {
+      this.resource.reference.content = r;
+    });
+  }
+
+  protected downloadMap(format: 'json' | 'xml'): void {
+    this.transformationDefinitionService.parseFml(this.resource.reference.content).subscribe(r => {
+      if (r.error) {
+        this.notificationService.error(r.error);
+      }
+      this.downloadContent(r.json, format);
+    });
+  }
+
+  protected compileMap(): void {
+    this.transformationDefinitionService.parseFml(this.resource.reference.content).subscribe(r => {
+      if (r.error) {
+        this.notificationService.error('', r.error, {duration: 10000});
+      } else {
+        this.notificationService.success('ok');
+      }
+    });
   }
 
   protected launchEditor(): void {
@@ -61,29 +118,18 @@ export class TransformationDefinitionResourceFormComponent {
           getBundle: () => bundle,
           getStructureMap: () => JSON.parse(json),
           updateStructureMap: sm => {
-            this.transformationDefinitionService.generateFml(sm)
-              .subscribe({
-                next: fml => {
-                  sm['text'] = {
-                    status: 'generated',
-                    div: `<div>\n${fml.replace(/,\s\s/gm, ',\n    ').replace(/\s->\s/gm, ' ->\n   ')}</div>`
-                  };
-                },
-                error: err => this.notificationService.error("web.transformation-definition.resource-form.fml-generation-failed", err)
-              })
-              .add(() => this.resource.reference.content = JSON.stringify(sm, null, 2));
+            this.transformationDefinitionService.generateFml(sm).subscribe({
+              next: fml => {
+                sm['text'] = {
+                  status: 'generated',
+                  div: `<div>\n${fml.replace(/,\s\s/gm, ',\n    ').replace(/\s->\s/gm, ' ->\n   ')}</div>`
+                };
+              },
+              error: err => this.notificationService.error("web.transformation-definition.resource-form.fml-generation-failed", err)
+            }).add(() => this.resource.reference.content = JSON.stringify(sm, null, 2));
           }
         }
       });
-    });
-  }
-
-  protected downloadMap(format: 'json' | 'xml'): void {
-    this.transformationDefinitionService.parseFml(this.resource.reference.content).subscribe(r => {
-      if (r.error) {
-        this.notificationService.error(r.error);
-      }
-      this.downloadContent(r.json, format);
     });
   }
 
@@ -91,7 +137,6 @@ export class TransformationDefinitionResourceFormComponent {
     if (format === 'plain') {
       saveAs(new Blob([content], {type: 'plain/text'}), `${this.definition.name}.txt`);
     }
-
     if (format === 'json') {
       saveAs(new Blob([content], {type: 'application/json'}), `${this.definition.name}.json`);
     }
@@ -101,27 +146,21 @@ export class TransformationDefinitionResourceFormComponent {
     }
   }
 
-  protected compile(): void {
-    this.transformationDefinitionService.parseFml(this.resource.reference.content).subscribe(r => {
-      if (r.error) {
-        this.notificationService.error('', r.error, {duration: 10000});
-      } else {
-        this.notificationService.success('ok');
-      }
-    });
-  }
-
 
   protected onContentChange(): void {
     this.resource.name = this.resource.name || this.findUrl(this.resource.reference.content);
   }
 
-  protected isFml(txt: string): boolean {
-    return txt.startsWith('///');
+  protected normalizeUrl(url: string): string {
+    return url?.endsWith("/") ? url.slice(0, url.length - 1) : url;
   }
 
-  protected isEditor(txt: string): boolean {
-    return txt.startsWith('{') && txt.includes('fml-export');
+  protected isFml(txt: string): boolean {
+    return txt?.startsWith('///');
+  }
+
+  protected hasFml(txt: string): boolean {
+    return txt?.startsWith('{') && txt?.includes('fml-export');
   }
 
   protected fmlContent(txt: string): string {
@@ -137,7 +176,6 @@ export class TransformationDefinitionResourceFormComponent {
   protected svgContent(txt: string): string {
     return JSON.parse(txt)['extension'].find(ext => ext['url'] === 'fml-svg')?.valueString;
   }
-
 
   protected findUrl = (content: string): string => {
     if (content.startsWith('<')) {

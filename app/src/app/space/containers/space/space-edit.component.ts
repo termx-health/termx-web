@@ -12,18 +12,6 @@ import {SpaceGithubService} from 'term-web/space/services/space-github.service';
 @Component({
   templateUrl: './space-edit.component.html',
   styles: [`
-    ::ng-deep .input-group {
-      & .m-input {
-        border-top-left-radius: 0;
-        border-bottom-left-radius: 0;
-      }
-      & .m-form-control {
-        display:table;
-      }
-      & .input-group-addon {
-        padding: 4px 11px;
-      }
-    }
     ::ng-deep .github-dirs {
       padding-left: 40px;
       & .input-group-addon {

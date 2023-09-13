@@ -5,6 +5,7 @@ import {TransformationDefinitionService} from 'term-web/modeler/transformer/serv
 import {Location} from '@angular/common';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {Observable, of} from 'rxjs';
+import {copyDeep} from '@kodality-web/core-util';
 
 @Component({
   templateUrl: './transformation-definition-edit.component.html'
@@ -50,10 +51,11 @@ export class TransformationDefinitionEditComponent implements OnInit {
       this.notificationService.error('core.form-invalid');
       return;
     }
-    this.cleanResource(this.definition.mapping);
-    this.definition.resources.forEach(r => this.cleanResource(r));
+    const def = copyDeep(this.definition)
+    this.cleanResource(def.mapping);
+    def.resources.forEach(r => this.cleanResource(r));
     this.loading = true;
-    this.transformationDefinitionService.save(this.definition)
+    this.transformationDefinitionService.save(def)
       .subscribe(r => this.router.navigate(['/modeler/transformation-definitions', r.id, 'edit'], {replaceUrl: true}))
       .add(() => this.loading = false);
   }
@@ -67,7 +69,7 @@ export class TransformationDefinitionEditComponent implements OnInit {
 
   private cleanResource(r: TransformationDefinitionResource): void {
     r.reference = r.source === 'local' ? {localId: r.reference.localId}
-      : r.source === 'fhir' ? {fhirServer: r.reference.fhirServer, fhirResource: r.reference.fhirResource}
+      : r.source === 'url' ? {resourceUrl: r.reference.resourceUrl}
         : r.source === 'static' ? {content: r.reference.content}
           : {};
   }

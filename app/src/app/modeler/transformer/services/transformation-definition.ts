@@ -14,13 +14,10 @@ export class TransformationDefinition {
 export class TransformationDefinitionResource {
   public name?: string;
   public type?: 'mapping' | 'definition' | 'conceptmap';
-  public source?: 'local' | 'fhir' | 'static';
+  public source?: 'local' | 'url' | 'static';
   public reference?: {
     localId?: string;
-
-    fhirServer?: string;
-    fhirResource?: string;
-
+    resourceUrl?: string;
     content?: string;
   };
 
@@ -28,7 +25,7 @@ export class TransformationDefinitionResource {
     return !!d.name && !!d.source &&
       (
         (d.source === 'local' && !!d.reference.localId)
-        || (d.source === 'fhir' && !!d.reference.fhirServer && !!d.reference.fhirResource)
+        || (d.source === 'url' && !!d.reference.resourceUrl)
         || (d.source === 'static' && !!d.name && !!d.reference.content)
       );
   }

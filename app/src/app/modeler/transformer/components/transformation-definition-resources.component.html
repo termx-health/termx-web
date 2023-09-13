@@ -14,8 +14,8 @@
             [class.resource--invalid]="res | apply:isResourceInvalid:selectedResource"
             (click)="selectResource(res)"
         >
-          <m-icon [mCode]="res.source === 'local' ? 'file-done' : res.source === 'fhir' ? 'fire' : 'file'"/>
-          <div>{{res.name || ('web.transformation-definition.resources.new' | translate)}}</div>
+          <m-icon [mCode]="res.source === 'local' ? 'file-done' : res.source === 'url' ? 'fire' : 'file'"/>
+          <div>{{(res.name | apply: compactName: res.source) || ('web.transformation-definition.resources.new' | translate)}}</div>
         </div>
 
         <div class="resource-add">
@@ -38,7 +38,7 @@
           [class.resource--invalid]="definition.mapping | apply:isResourceInvalid:selectedResource"
           (click)="selectResource(definition.mapping)"
       >
-        <m-icon [mCode]="definition.mapping.source === 'fhir' ? 'fire' : 'file'"/>
+        <m-icon [mCode]="definition.mapping.source === 'url' ? 'fire' : 'file'"/>
         <div>{{definition.mapping.name || ('web.transformation-definition.resources.new' | translate)}}</div>
       </div>
 

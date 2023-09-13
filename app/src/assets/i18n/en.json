@@ -573,6 +573,7 @@
 			"plural": "FML transformations",
 			"singular": "FML transformation",
 			"source": "Source",
+			"source-url": "URL",
 			"source-fhir": "FHIR",
 			"source-local": "TermX",
 			"source-static": "Static"
@@ -1733,7 +1734,7 @@
 				"download-fml": "FML",
 				"download-json": "JSON",
 				"download-xml": "XML",
-				"fhir-resource": "Resource",
+				"resource-url": "Resource URL",
 				"fhir-server": "FHIR server",
 				"generate": "Generate",
 				"map-set": "ConceptMap",

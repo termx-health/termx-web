@@ -4,65 +4,89 @@
       <label m-radio-button mValue="local" *ngIf="resource.type !== 'mapping'">
         {{('entities.transformation-definition.source-local' | translate)}}
       </label>
-      <label m-radio-button mValue="fhir">{{('entities.transformation-definition.source-fhir' | translate)}}</label>
+      <label m-radio-button mValue="url">{{('entities.transformation-definition.source-url' | translate)}}</label>
       <label m-radio-button mValue="static">{{('entities.transformation-definition.source-static' | translate)}}</label>
     </m-radio-group>
   </m-form-item>
 
-  <ng-container *ngIf="resource.source === 'local' && resource.type === 'definition'">
-    <m-form-item mName="def" mLabel="web.transformation-definition.resource-form.definition" required>
-      <tw-structure-definition-select name="def"
-          [valuePrimitive]="false"
-          [ngModel]="resource.reference.localId | toNumber"
-          (ngModelChange)="onDefinitionSelect($event)"
-      ></tw-structure-definition-select>
-    </m-form-item>
 
-    <ng-container *ngIf="resource.type === 'definition' && resource.reference.localId">
-      <m-divider/>
-      <tw-structure-definition-tree [defId]="resource.reference.localId | toNumber" mode="view"></tw-structure-definition-tree>
+  <!-- local -->
+  <ng-container *ngIf="resource.source === 'local'">
+    <ng-container *ngIf="resource.type === 'definition'">
+      <m-form-item mName="structureDefinition" mLabel="web.transformation-definition.resource-form.definition" required>
+        <tw-structure-definition-select
+            name="structureDefinition"
+            [ngModel]="resource.reference.localId | toNumber"
+            (ngModelChange)="onDefinitionSelect($event)"
+            [valuePrimitive]="false"
+        ></tw-structure-definition-select>
+      </m-form-item>
+
+      <ng-container *ngIf="resource.reference.localId">
+        <m-divider/>
+        <tw-structure-definition-tree [defId]="resource.reference.localId | toNumber" mode="view"/>
+      </ng-container>
+    </ng-container>
+
+    <ng-container *ngIf="resource.type === 'conceptmap'">
+      <m-form-item mName="conceptmap" mLabel="web.transformation-definition.resource-form.map-set" required>
+        <tw-map-set-search
+            name="conceptmap"
+            [ngModel]="resource.reference.localId"
+            (ngModelChange)="onMapSetSelect($event)"
+            [valuePrimitive]="false"
+        ></tw-map-set-search>
+      </m-form-item>
     </ng-container>
   </ng-container>
 
-  <ng-container *ngIf="resource.source === 'local' && resource.type === 'conceptmap'">
-    <m-form-item mName="conceptmap" mLabel="web.transformation-definition.resource-form.map-set" required>
-      <tw-map-set-search name="conceptmap"
-          [valuePrimitive]="false"
-          [ngModel]="resource.reference.localId"
-          (ngModelChange)="onMapSetSelect($event)"
-      ></tw-map-set-search>
+
+  <!-- url -->
+  <ng-container *ngIf="resource.source === 'url'">
+    <m-form-item mName="fhirServer" mLabel="web.transformation-definition.resource-form.fhir-server">
+      <m-select name="fhirServer" [(ngModel)]="resource.reference['_fhir']" (ngModelChange)="onResourceUrlChange(resource)">
+        <m-option *ngFor="let server of servers$ | async" [mValue]="server.rootUrl" [mLabel]="server.names | localName"></m-option>
+      </m-select>
+    </m-form-item>
+
+    <m-form-item mName="resourceUrl" mLabel="web.transformation-definition.resource-form.resource-url" class="tw-input-group" required>
+      <span class="tw-input-group-addon ant-input-group-addon" *ngIf="resource.reference['_fhir']">
+        {{resource.reference['_fhir'] | apply: normalizeUrl}}{{urlSuffix[resource.type]}}
+      </span>
+
+      <m-input
+          name="resourceUrl"
+          [(ngModel)]="resource.reference['_url']"
+          (ngModelChange)="onResourceUrlChange(resource); resource.name = $event"
+          required
+      ></m-input>
     </m-form-item>
   </ng-container>
 
-  <ng-container *ngIf="resource.source === 'fhir'">
-    <m-form-item mName="fhirServer" mLabel="web.transformation-definition.resource-form.fhir-server" required>
-      <m-input name="fhirServer" [(ngModel)]="resource.reference.fhirServer" required></m-input>
-    </m-form-item>
 
-    <m-form-item mName="fhirResource" mLabel="web.transformation-definition.resource-form.fhir-resource" required>
-      <m-input name="fhirResource" [(ngModel)]="resource.reference.fhirResource" (ngModelChange)="resource.name = $event" required></m-input>
-    </m-form-item>
-  </ng-container>
-
+  <!-- static -->
   <ng-container *ngIf="resource.source === 'static'">
-    <m-form-item *ngIf="resource !== definition.mapping" mName="name" mLabel="entities.transformation-definition.name" required>
-      <m-input [(ngModel)]="resource.name" name="name" required></m-input>
-    </m-form-item>
+    <ng-container *ngIf="resource !== definition.mapping">
+      <m-form-item mName="name" mLabel="entities.transformation-definition.name" required>
+        <m-input [(ngModel)]="resource.name" name="name" required/>
+      </m-form-item>
 
-    <m-form-item *ngIf="resource !== definition.mapping && resource.source === 'static' && !!resource.reference.content"
-        mLabel="web.transformation-definition.resource-form.url"
-    >
-      {{resource.reference.content | apply:findUrl}}
-    </m-form-item>
+      <m-form-item mLabel="web.transformation-definition.resource-form.url" *ngIf="resource.reference.content | apply: findUrl as url">
+        {{url}}
+      </m-form-item>
+    </ng-container>
 
-    <m-form-item mName="content" [mLabel]="lbl" required *ngIf="{showPreview: false} as d">
+
+    <m-form-item *ngIf="{showPreview: false} as d" mName="content" [mLabel]="lbl" required>
       <ng-template #lbl>
         <span>{{'web.transformation-definition.resource-form.content' | translate}}</span>
         <ng-container *ngIf="resource.type === 'mapping' && !resource.reference.content">
-          &nbsp;|&nbsp; <a (click)="generateMapping()">{{'web.transformation-definition.resource-form.generate' | translate}}</a>
+          &nbsp;|&nbsp; <a (click)="generateMap()">{{'web.transformation-definition.resource-form.generate' | translate}}</a>
         </ng-container>
       </ng-template>
 
+
+      <!-- actions -->
       <div style="position: absolute; right: 0; top: -2rem" class="m-items-middle">
         <m-button *ngIf="resource.type === 'definition'" mSize="small" mDisplay="dashed" (mClick)="d.showPreview = !d.showPreview">
           <m-icon [mCode]="!d.showPreview ? 'read' : 'menu-unfold'"/>
@@ -70,26 +94,24 @@
         </m-button>
 
         <ng-container *ngIf="resource.type === 'mapping'">
-          <ng-container *ngIf="resource.source === 'static'">
-            <m-button mSize="small" mDisplay="dashed" (mClick)="launchEditor()">
-              <m-icon [mCode]="loader.state['visual-editor'] ? 'loading' : 'experiment'"/>&nbsp;{{'Visual editor' | translate}}
+          <m-button mSize="small" mDisplay="dashed" (mClick)="launchEditor()">
+            <m-icon [mCode]="loader.state['visual-editor'] ? 'loading' : 'experiment'"/>&nbsp;{{'Visual editor' | translate}}
+          </m-button>
+
+          <m-dropdown *ngIf="resource.reference.content | apply: fmlContent as fml">
+            <m-button *m-dropdown-container mSize="small" mDisplay="dashed">
+              <m-icon mCode="download"/> &nbsp;{{'web.transformation-definition.resource-form.save-as' | translate}}&nbsp;
+              <m-icon mCode="caret-down"/>
             </m-button>
+            <a *m-dropdown-item (mClick)="downloadContent(fml, 'plain')">
+              {{'web.transformation-definition.resource-form.download-fml' | translate}}
+            </a>
+            <a *m-dropdown-item (mClick)="downloadContent(resource.reference.content, 'json')">
+              {{'web.transformation-definition.resource-form.download-json' | translate}}
+            </a>
+          </m-dropdown>
 
-            <m-dropdown *ngIf="resource.reference.content | apply: fmlContent as fml">
-              <m-button *m-dropdown-container mSize="small" mDisplay="dashed">
-                <m-icon mCode="download"/> &nbsp;{{'web.transformation-definition.resource-form.save-as' | translate}}&nbsp;
-                <m-icon mCode="caret-down"/>
-              </m-button>
-              <a *m-dropdown-item (mClick)="downloadContent(fml, 'plain')">
-                {{'web.transformation-definition.resource-form.download-fml' | translate}}
-              </a>
-              <a *m-dropdown-item (mClick)="downloadContent(resource.reference.content, 'json')">
-                {{'web.transformation-definition.resource-form.download-json' | translate}}
-              </a>
-            </m-dropdown>
-          </ng-container>
-
-          <m-dropdown *ngIf="resource.reference.content | apply:isFml">
+          <m-dropdown *ngIf="resource.reference.content | apply: isFml">
             <m-button *m-dropdown-container mSize="small" mDisplay="dashed">
               <m-icon mCode="download"/> &nbsp;{{'web.transformation-definition.resource-form.save-as' | translate}}&nbsp;
               <m-icon mCode="caret-down"/>
@@ -104,10 +126,12 @@
         </ng-container>
       </div>
 
+
+      <!-- content -->
       <div class="m-items-top">
-        <div *ngIf="(resource.reference.content | apply: isEditor); else def">
+        <div *ngIf="resource.reference.content | apply: hasFml; else def">
           <ng-container *ngIf="resource.reference.content | apply: svgContent as svg; else fml">
-            <img *ngIf="svg" [src]="svg" alt="">
+            <img *ngIf="svg" [src]="svg">
           </ng-container>
 
           <ng-template #fml>
@@ -133,8 +157,9 @@
         ></tw-structure-definition-tree>
       </div>
 
+
       <div class="m-items-middle">
-        <m-button style="padding-top: 5px" *ngIf="resource.type === 'mapping' && (resource.reference.content | apply:isFml)" (mClick)="compile()">
+        <m-button style="padding-top: 5px" *ngIf="resource.type === 'mapping' && (resource.reference.content | apply:isFml)" (mClick)="compileMap()">
           {{'web.transformation-definition.resource-form.compile' | translate}}
         </m-button>
       </div>

@@ -81,4 +81,10 @@ export class TransformationDefinitionResourcesComponent implements OnInit {
     return !TransformationDefinitionResource.isValid(r);
   };
 
+  protected compactName(name: string, source: TransformationDefinitionResource['source']): string {
+    if (source === 'url') {
+      return name?.includes("/") ? name.substring(name.lastIndexOf('/') + 1) : name;
+    }
+    return name;
+  }
 }
