@@ -12,7 +12,7 @@ import {SnomedDescriptionItemSearchResult} from '../model/description/snomed-des
 import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-params';
 import {SnomedRefsetSearchResult} from '../model/refset/snomed-refset-search-result';
 import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-member-search-result';
-import {SnomedBranch, SnomedDescription, SnomedDescriptionSearchParams} from 'term-web/integration/_lib';
+import {SnomedBranch, SnomedCodeSystem, SnomedDescription, SnomedDescriptionSearchParams} from 'term-web/integration/_lib';
 import {LorqueProcess} from 'term-web/sys/_lib';
 import {saveAs} from 'file-saver';
 
@@ -21,6 +21,10 @@ export class SnomedLibService {
   protected baseUrl = `${environment.termxApi}/snomed`;
 
   public constructor(protected http: HttpClient) { }
+
+  public loadCodeSystems(): Observable<SnomedCodeSystem[]> {
+    return this.http.get(`${this.baseUrl}/codesystems`).pipe(map(c => c as SnomedCodeSystem[]));
+  }
 
   public loadBranches(): Observable<SnomedBranch[]> {
     return this.http.get(`${this.baseUrl}/branches`).pipe(map(c => c as SnomedBranch[]));

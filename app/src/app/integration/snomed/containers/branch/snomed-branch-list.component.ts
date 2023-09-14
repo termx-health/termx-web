@@ -1,21 +1,57 @@
-import {Component, OnInit} from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
-import {SnomedBranch, SnomedLibService} from 'app/src/app/integration/_lib';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {LoadingManager, validateForm} from '@kodality-web/core-util';
+import {SnomedBranch, SnomedCodeSystem} from 'app/src/app/integration/_lib';
+import {NgForm} from '@angular/forms';
+import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
+import {forkJoin} from 'rxjs';
 
 @Component({
   templateUrl: './snomed-branch-list.component.html',
 })
 export class SnomedBranchListComponent implements OnInit {
   protected branches: SnomedBranch[] = [];
+  protected codeSystems: SnomedCodeSystem[] = [];
   protected loader = new LoadingManager();
 
-  public constructor(private snomedService: SnomedLibService) {}
+  @ViewChild("form") public form?: NgForm;
+
+  public editionModalData: {
+    visible?: boolean,
+    countryCode?: string
+  } = {};
+
+  public constructor(private snomedService: SnomedService) {}
 
   public ngOnInit(): void {
-    this.loader.wrap('load', this.snomedService.loadBranches()).subscribe(b => this.branches = b);
+    this.loadData();
   }
 
   protected encodeUriComponent = (c: string): string => {
     return c.split('/').join('--');
   };
+
+  protected createCodeSystem(): void {
+    if (!validateForm(this.form)) {
+      return;
+    }
+    const cs: SnomedCodeSystem = {shortName: 'SNOMEDCT-' + this.editionModalData.countryCode, branchPath: 'MAIN/SNOMEDCT-' + this.editionModalData.countryCode};
+    this.loader.wrap('load', this.snomedService.createdCodeSystem(cs)).subscribe(() => {
+      this.editionModalData = {};
+      this.loadData();
+    });
+  }
+
+  private loadData(): void {
+    this.loader.wrap('load', forkJoin([
+        this.snomedService.loadBranches(),
+        this.snomedService.loadCodeSystems()
+    ])).subscribe(([b, cs]) =>{
+      this.branches = b;
+      this.codeSystems = cs;
+    });
+  }
+
+  protected deleteCodeSystem(shortName: string): void {
+    this.loader.wrap('load', this.snomedService.deleteCodeSystem(shortName)).subscribe(() => this.loadData());
+  }
 }

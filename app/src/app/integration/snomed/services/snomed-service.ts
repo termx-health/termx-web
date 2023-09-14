@@ -1,11 +1,19 @@
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {SnomedBranch, SnomedLibService} from 'term-web/integration/_lib';
+import {SnomedBranch, SnomedCodeSystem, SnomedLibService} from 'term-web/integration/_lib';
 import {SearchHttpParams} from '@kodality-web/core-util';
 
 
 @Injectable()
 export class SnomedService extends SnomedLibService {
+
+  public createdCodeSystem(cs: SnomedCodeSystem): Observable<SnomedCodeSystem> {
+    return this.http.post(`${this.baseUrl}/codesystems`, cs);
+  }
+
+  public deleteCodeSystem(shortName: string): Observable<any> {
+    return this.http.delete(`${this.baseUrl}/codesystems/${shortName}`);
+  }
 
   public createdBranch(request: any): Observable<SnomedBranch> {
     return this.http.post(`${this.baseUrl}/branches`, request);

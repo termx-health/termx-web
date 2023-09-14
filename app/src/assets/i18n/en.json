@@ -460,6 +460,12 @@
 			"path": "Path",
 			"state": "State"
 		},
+		"snomed-codesystem": {
+			"short-name": "Short name",
+			"branch-path": "Branch path",
+			"languages": "Languages",
+			"latest-version": "Latest version"
+		},
 		"snomed-concept": {
 			"concept-id": "Concept ID",
 			"descriptions": "Descriptions",
@@ -1542,7 +1548,15 @@
 				},
 				"list": {
 					"add-branch": "Add branch",
-					"header": "Branches"
+					"header": "Branches",
+					"codesystem": {
+						"header": "Code Systems",
+						"add-edition": "Add edition"
+					},
+					"edition-modal": {
+						"header": "Add edition",
+						"country-code": "Country code"
+					}
 				},
 				"management": {
 					"export-modal": {
