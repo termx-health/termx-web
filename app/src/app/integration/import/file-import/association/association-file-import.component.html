@@ -7,27 +7,35 @@
   </div>
 
   <form #form="ngForm">
-    <m-form-item mName="codeSystem" mLabel="web.integration.file-import.association.code-system" required>
-      <tw-code-system-search
-          name="codeSystem"
-          [(ngModel)]="data.codeSystem"
-          (ngModelChange)="data.codeSystemVersion = undefined"
-          valuePrimitive
-          autofocus
-          required
-      />
-    </m-form-item>
+    <m-form-row>
+      <m-form-item *mFormCol mName="codeSystem" mLabel="web.integration.file-import.association.code-system" required>
+        <tw-code-system-search name="codeSystem"
+            [(ngModel)]="data.codeSystem"
+            (ngModelChange)="data.codeSystemVersion = undefined"
+            valuePrimitive
+            autofocus
+            required/>
+      </m-form-item>
+      <m-form-item *mFormCol mName="codeSystemVersion" mLabel="web.integration.file-import.association.code-system-version" required>
+        <tw-code-system-version-select name="codeSystemVersion"
+            [(ngModel)]="data.codeSystemVersion"
+            [codeSystemId]="data.codeSystem"
+            valuePrimitive
+            [disabled]="!data.codeSystem"
+            required/>
+      </m-form-item>
+    </m-form-row>
 
-    <m-form-item mName="codeSystemVersion" mLabel="web.integration.file-import.association.code-system-version" required>
-      <tw-code-system-version-select
-          name="codeSystemVersion"
-          [(ngModel)]="data.codeSystemVersion"
-          [codeSystemId]="data.codeSystem"
-          valuePrimitive
-          [disabled]="!data.codeSystem"
-          required
-      />
-    </m-form-item>
+    <m-form-row>
+      <m-form-item *mFormCol mName="associationType" mLabel="web.integration.file-import.association.association-type" required>
+        <tw-association-type-search name="associationType"
+            [(ngModel)]="data.associationType"
+            associationKind="codesystem-hierarchy-meaning"
+            valuePrimitive
+            required/>
+      </m-form-item>
+      <div *mFormCol></div>
+    </m-form-row>
 
     <m-form-item mName="file" mLabel="web.integration.file-import.association.file" required>
       <div class="tw-flex-container">
@@ -46,8 +54,7 @@
               <m-select [name]="i + item.columnName" [(ngModel)]="item.mappedColumn" (ngModelChange)="item.columnSeparator = ','">
                 <m-option *ngFor="let v of filterUnused(['target', 'source', 'order'], item.mappedColumn)"
                     [mLabel]="'web.integration.file-import.association.' + v"
-                    [mValue]="v"
-                ></m-option>
+                    [mValue]="v"></m-option>
               </m-select>
             </td>
             <td *ngIf="isSourceSelected">
@@ -67,12 +74,7 @@
     <tw-import-job-log *ngIf="jobLog" [jobLog]="jobLog"/>
   </form>
 
-  <m-button
-      *m-card-footer
-      [mLoading]="loader.state['process']"
-      [disabled]="form.invalid || !analyzeResponse?.columns?.length"
-      (click)="process()"
-  >
+  <m-button *m-card-footer [mLoading]="loader.state['process']" [disabled]="form.invalid || !analyzeResponse?.columns?.length" (click)="process()">
     {{'web.integration.file-import.process' | translate}}
   </m-button>
 </m-card>

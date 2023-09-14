@@ -46,27 +46,27 @@
 <!--        View mode        -->
 <div *ngIf="viewMode" class="m-items-middle">
   <div class="col">
-    <div class="row" *ngFor="let a of associations; let i = index">
+    <div class="row" *ngFor="let a of associations">
       <span class="m-subtitle">{{a.associationType}}</span>
     </div>
   </div>
   <div class="col">
-    <div class="row" *ngFor="let a of associations; let i = index">
+    <div class="row" *ngFor="let a of associations">
       <span>{{a.targetId | localizedConceptName: {codeSystem: codeSystemId} | async }}</span>
     </div>
   </div>
   <div class="col" style="width: 100%">
-    <div class="row" *ngFor="let a of associations; let i = index">
-      <span>{{a.targetId}}</span>
+    <div class="row" *ngFor="let a of associations">
+      <span>{{a.targetCode}}</span>
     </div>
   </div>
   <div class="col">
-    <div class="row" *ngFor="let a of associations; let i = index">
+    <div class="row" *ngFor="let a of associations">
       <span class="tw-circled" [style.color]="a.status === 'draft' ? 'var(&#45;&#45;color-amber-7)' : 'initial'">{{a.status?.[0] | uppercase}}</span>
     </div>
   </div>
   <div class="col">
-    <div class="row" *ngFor="let a of associations; let i = index">
+    <div class="row" *ngFor="let a of associations">
       <span>{{a.orderNumber}}</span>
     </div>
   </div>

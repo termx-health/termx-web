@@ -45,6 +45,7 @@ import {CodeSystemValidatorComponent} from 'term-web/resources/code-system/conta
 import {
   CodeSystemConceptsPropertyViewComponent
 } from 'term-web/resources/code-system/containers/concepts/code-system-concepts-property-view.component';
+import {CodeSystemConceptReferenceComponent} from 'term-web/resources/code-system/containers/concepts/edit/reference/code-system-concept-reference.component';
 
 
 export const CODE_SYSTEM_ROUTES: Routes = [
@@ -112,6 +113,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemDesignationEditComponent,
     CodeSystemPropertyValueEditComponent,
     CodeSystemAssociationEditComponent,
+    CodeSystemConceptReferenceComponent,
     CodeSystemCompareComponent,
     CodeSystemValidatorComponent,
     CodeSystemPropertiesComponent,

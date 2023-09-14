@@ -1,0 +1,24 @@
+<m-no-data *ngIf="!(references?.length > 0)"></m-no-data>
+
+<div class="m-items-middle">
+  <div class="col">
+    <div class="row" *ngFor="let ref of references">
+      <span class="m-subtitle">{{ref.associationType}}</span>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row" *ngFor="let ref of references">
+      <span style="white-space: nowrap;">{{ref.sourceId | localizedConceptName: {codeSystem: codeSystem} | async }}</span>
+    </div>
+  </div>
+  <div class="col" style="width: 100%">
+    <div class="row" *ngFor="let ref of references">
+      <span>{{ref.sourceCode}}</span>
+    </div>
+  </div>
+  <div class="col">
+    <div class="row" *ngFor="let ref of references">
+      <span class="tw-circled" [style.color]="ref.status === 'draft' ? 'var(&#45;&#45;color-amber-7)' : 'initial'">{{ref.status?.[0] | uppercase}}</span>
+    </div>
+  </div>
+</div>

@@ -59,8 +59,9 @@ export class AssociationFileImportComponent {
   protected data: {
     codeSystem?: string,
     codeSystemVersion?: number,
+    associationType?: string,
     file?: string,
-  } = {};
+  } = {associationType: 'is-a'};
 
   protected analyzeResponse: {
     columns?: AssociationFileImportColumn[],
@@ -111,7 +112,7 @@ export class AssociationFileImportComponent {
     const req: AssociationFileImportRequest = {
       codeSystemId: this.data.codeSystem,
       codeSystemVersionId: this.data.codeSystemVersion,
-      associationType: 'is-a',
+      associationType: this.data.associationType,
 
       sourceColumn: this.column('source')?.columnName,
       sourceColumnSeparator: this.column('source')?.columnSeparator,

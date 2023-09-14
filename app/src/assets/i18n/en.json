@@ -100,7 +100,8 @@
 			"designations": "Designations",
 			"id": "ID",
 			"property-values": "Property values",
-			"status": "Status"
+			"status": "Status",
+			"references": "References"
 		},
 		"code-system-version": {
 			"description": "Description",
@@ -1053,6 +1054,7 @@
 			},
 			"file-import": {
 				"association": {
+					"association-type": "Association type",
 					"code-system": "Code system",
 					"code-system-version": "Code system version",
 					"column-value-separator": "Column value separator",

@@ -194,6 +194,13 @@
               [associations]="conceptVersion?.associations"
               [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-association-edit>
         </m-card>
+
+        <!-- References -->
+        <m-divider></m-divider>
+        <m-card class="m-card-inside">
+          <m-title *m-card-header mTitle="entities.code-system-entity-version.references"></m-title>
+          <tw-cs-concept-reference-list class="padded" [codeSystem]="codeSystemId" [entityVersionId]="conceptVersion?.id"/>
+        </m-card>
       </m-card>
     </div>
   </div>
