@@ -138,6 +138,15 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
     });
   }
 
+  protected switchToTextEditor(): void {
+    if (this.hasFml(this.resource.reference.content)) {
+      const fml = this.fmlContent(this.resource.reference.content);
+      const fmlLines = fml.split('\n');
+      const [_, url, name] = fmlLines[0].match(/map "(.+)" = "(.+)"/);
+      this.resource.reference.content = `/// url = "${url}/${name}"\n` + fmlLines.slice(1).join("\n");
+    }
+  }
+
   protected downloadContent(content: string, format: "plain" | "json" | "xml"): void {
     if (format === 'plain') {
       saveAs(new Blob([content], {type: 'plain/text'}), `${this.definition.name}.txt`);

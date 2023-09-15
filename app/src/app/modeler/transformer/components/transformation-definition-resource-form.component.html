@@ -106,11 +106,9 @@
                 mPopconfirmTitle="web.transformation-definition.resource-form.switch-to-text-editor.warning"
                 mConfirmText="web.transformation-definition.resource-form.switch-to-text-editor.confirm"
                 mCancelText="web.transformation-definition.resource-form.switch-to-text-editor.cancel"
-                (mOnConfirm)="generateMap()"
+                (mOnConfirm)="switchToTextEditor()"
             >
-              <m-icon *ngIf="loader.state['generate']"
-                  mCode="loading"
-              />&nbsp;{{'web.transformation-definition.resource-form.switch-to-text-editor.title' | translate}}
+              <m-icon *ngIf="loader.state['generate']" mCode="loading"/>&nbsp;{{'web.transformation-definition.resource-form.switch-to-text-editor.title' | translate}}
             </m-button>
 
             <m-dropdown >
