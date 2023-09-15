@@ -464,7 +464,8 @@
 			"short-name": "Short name",
 			"branch-path": "Branch path",
 			"languages": "Languages",
-			"latest-version": "Latest version"
+			"latest-version": "Latest version",
+			"versions": "Versions"
 		},
 		"snomed-concept": {
 			"concept-id": "Concept ID",
@@ -845,7 +846,8 @@
 				"add-concept-child": "Add subconcept",
 				"external": "External",
 				"propagate-properties": "Propagate properties to children",
-				"unlink-concept": "Unlink concept from version"
+				"unlink-concept": "Unlink concept from version",
+				"open-fhir": "Open FHIR URL"
 			},
 			"property-list": {
 				"concepts": "Concepts",

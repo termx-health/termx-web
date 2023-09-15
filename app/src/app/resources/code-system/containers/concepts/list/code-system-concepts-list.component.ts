@@ -13,6 +13,7 @@ import {forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {BooleanInput, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
+import {environment} from 'environments/environment';
 
 interface ConceptNode {
   code: string;
@@ -314,5 +315,10 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
         });
       });
     });
+  }
+
+  protected openFhir(code: string): void {
+    window.open(environment.termxApi + '/fhir/CodeSystem/$lookup' +
+      '?system=' + this.codeSystem?.uri + '&code=' + code, '_blank');
   }
 }

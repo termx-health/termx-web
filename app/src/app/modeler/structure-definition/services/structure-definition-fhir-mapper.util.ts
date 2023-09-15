@@ -3,7 +3,7 @@ import {isDefined} from '@kodality-web/core-util';
 
 export class StructureDefinitionFhirMapperUtil {
   public static mapToKeyValue(fhirObj: any): {[key: string]: any} {
-    if (fhirObj.resourceType === 'StructureDefinition' && isDefined(fhirObj)) {
+    if (isDefined(fhirObj) && fhirObj.resourceType === 'StructureDefinition') {
       return StructureDefinitionFhirMapperUtil.mapFromStructureDefinition(fhirObj);
     }
     return {};
