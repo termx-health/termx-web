@@ -10,7 +10,7 @@ import {launchFMLEditor} from 'term-web/modeler/transformer/components/fml.edito
 import {Bundle} from 'fhir/model/bundle';
 import {forkJoin, map, of, shareReplay} from 'rxjs';
 import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
-import {HttpCacheService, isNil, LoadingManager} from '@kodality-web/core-util';
+import {group, HttpCacheService, isNil, LoadingManager} from '@kodality-web/core-util';
 import {TerminologyServerLibService} from 'term-web/space/_lib';
 
 
@@ -76,7 +76,7 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
   }
 
   protected generateMap(): void {
-    this.transformationDefinitionService.composeFml(this.definition).subscribe(r => {
+    this.loader.wrap('generate', this.transformationDefinitionService.composeFml(this.definition)).subscribe(r => {
       this.resource.reference.content = r;
     });
   }
@@ -108,10 +108,15 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
         ? this.transformationDefinitionService.parseFml(this.resource.reference.content).pipe(map(r => r.json))
         : of(this.resource.reference.content)
     ])).subscribe(([bundle, definitions, json]: [Bundle, FhirStructureDefinition[], string]) => {
-      bundle.entry.push(...definitions.map(def => ({resource: def})));
       if (isNil(json)) {
         return;
       }
+
+      const entries = {
+        ...group(bundle.entry, e => e.resource.url),
+        ...group(definitions, e => e.url, e => ({resource: e}))
+      };
+      bundle.entry = Object.values(entries);
 
       launchFMLEditor({
         editorFacade: {

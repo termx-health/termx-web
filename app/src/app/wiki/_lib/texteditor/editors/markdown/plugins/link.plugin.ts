@@ -16,7 +16,8 @@ const transformHref = (href: string, ctx: {spaceId?: number}): string => {
       return `/resources/value-sets/${valueSet}/versions/${vsVersion}/summary`;
     case 'ms':
       return `/resources/map-sets/${value}/summary`;
-    case 'msv': const [mapSet, msVersion] = value.split('|');
+    case 'msv':
+      const [mapSet, msVersion] = value.split('|');
       return `/resources/map-sets/${mapSet}/versions/${msVersion}/summary`;
     case 'concept':
       const [cs, concept] = value.split('|');

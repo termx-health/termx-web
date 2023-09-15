@@ -1758,6 +1758,14 @@
 				"map-set": "ConceptMap",
 				"preview-hide": "Hide",
 				"preview-show": "Preview",
+				"visual-editor": "Visual editor",
+				"switch-to-text-editor":{
+					"title": "Switch to text editor",
+					"warning": "CAUTION! This action is not reversible!",
+					"confirm": "Proceed",
+					"cancel": "Cancel"
+
+				},
 				"save-as": "Save as",
 				"url": "URL",
 				"fml-generation-failed": "Failed to generate FML"
