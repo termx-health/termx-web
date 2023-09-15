@@ -4,6 +4,7 @@ import {SnomedBranch, SnomedCodeSystem} from 'app/src/app/integration/_lib';
 import {NgForm} from '@angular/forms';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
 import {forkJoin} from 'rxjs';
+import {MuiTableComponent} from '@kodality-web/marina-ui';
 
 @Component({
   templateUrl: './snomed-branch-list.component.html',
@@ -14,6 +15,8 @@ export class SnomedBranchListComponent implements OnInit {
   protected loader = new LoadingManager();
 
   @ViewChild("form") public form?: NgForm;
+  @ViewChild("csTable") public table?: MuiTableComponent<SnomedCodeSystem>;
+
 
   public editionModalData: {
     visible?: boolean,
@@ -53,5 +56,14 @@ export class SnomedBranchListComponent implements OnInit {
 
   protected deleteCodeSystem(shortName: string): void {
     this.loader.wrap('load', this.snomedService.deleteCodeSystem(shortName)).subscribe(() => this.loadData());
+  }
+
+  protected showVersions(c: SnomedCodeSystem, i: number): void {
+    if (c['_expanded']) {
+      this.table.collapse(i);
+    } else {
+      this.table.expand(i);
+    }
+    c['_expanded'] = !c['_expanded'];
   }
 }
