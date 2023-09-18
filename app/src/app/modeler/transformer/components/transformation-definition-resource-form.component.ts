@@ -132,7 +132,8 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
               },
               error: err => this.notificationService.error("web.transformation-definition.resource-form.fml-generation-failed", err)
             }).add(() => this.resource.reference.content = JSON.stringify(sm, null, 2));
-          }
+          },
+          renderFml: sm => this.transformationDefinitionService.generateFml(sm)
         }
       });
     });

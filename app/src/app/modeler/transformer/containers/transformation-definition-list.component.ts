@@ -18,7 +18,9 @@ export class TransformationDefinitionListComponent implements OnInit {
   public constructor(
     private transformationDefinitionService: TransformationDefinitionService,
     private stateStore: ComponentStateStore,
-  ) { }
+  ) {
+    this.query.sort = 'id';
+  }
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);

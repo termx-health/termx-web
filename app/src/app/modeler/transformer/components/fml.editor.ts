@@ -1,11 +1,13 @@
 import {isNil} from '@kodality-web/core-util';
 import {Bundle} from 'fhir/model/bundle';
 import {environment} from 'environments/environment';
+import {Observable} from 'rxjs';
 
 interface EditorFacade {
   getBundle: () => Bundle,
   getStructureMap: () => object,
   updateStructureMap: (sm: object) => void,
+  renderFml: (sm: any) => Observable<string>
 }
 
 interface EditorState {
@@ -90,21 +92,26 @@ const handleEditorMessage = (editorState: EditorState, editorFacade: EditorFacad
     case 'init':
       prepareEditor(editorState, editorFacade);
       break;
-    case 'save': {
+    case 'save':
       _postMessage(editorState, {
         action: 'export',
         format: 'json+svg'
       });
       break;
-    }
-    case 'export': {
+    case 'export':
       _updateState(editorState, {structureMap: JSON.parse(msg.data)});
       saveStructureMap(editorState, editorFacade);
       break;
-    }
     case 'exit':
       _dispose(editorState);
       break;
+    case 'render-fml':
+      editorFacade.renderFml(msg.structureMap).subscribe(fml => {
+        _postMessage(editorState, {
+          action: 'render-fml',
+          fml
+        });
+      });
   }
 };
 
@@ -140,7 +147,7 @@ const createIFrame = (editorState: EditorState): void => {
   }, IFRAME_TIMEOUT);
 
   _updateState(editorState, {
-    iframe,
+    iframe
   });
 };
 
