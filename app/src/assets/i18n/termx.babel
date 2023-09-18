@@ -1,4 +1,4 @@
-<babeledit_project version="1.2" be_version="2.6.1">
+<babeledit_project be_version="2.6.1" version="1.2">
     <!--
 
     BabelEdit project file
@@ -380,6 +380,27 @@
                             </concept_node>
                             <concept_node>
                                 <name>select</name>
+                                <definition_loaded>false</definition_loaded>
+                                <description></description>
+                                <comment></comment>
+                                <default_text></default_text>
+                                <translations>
+                                    <translation>
+                                        <language>en-US</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>et-EE</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>lt-LT</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                </translations>
+                            </concept_node>
+                            <concept_node>
+                                <name>send</name>
                                 <definition_loaded>false</definition_loaded>
                                 <description></description>
                                 <comment></comment>
@@ -1710,6 +1731,27 @@
                                 </translations>
                             </concept_node>
                             <concept_node>
+                                <name>references</name>
+                                <definition_loaded>false</definition_loaded>
+                                <description></description>
+                                <comment></comment>
+                                <default_text></default_text>
+                                <translations>
+                                    <translation>
+                                        <language>en-US</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>et-EE</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>lt-LT</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                </translations>
+                            </concept_node>
+                            <concept_node>
                                 <name>status</name>
                                 <definition_loaded>false</definition_loaded>
                                 <description></description>
@@ -2822,6 +2864,27 @@
                             </concept_node>
                             <concept_node>
                                 <name>plural</name>
+                                <definition_loaded>false</definition_loaded>
+                                <description></description>
+                                <comment></comment>
+                                <default_text></default_text>
+                                <translations>
+                                    <translation>
+                                        <language>en-US</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>et-EE</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>lt-LT</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                </translations>
+                            </concept_node>
+                            <concept_node>
+                                <name>properties</name>
                                 <definition_loaded>false</definition_loaded>
                                 <description></description>
                                 <comment></comment>
@@ -5756,27 +5819,6 @@
                                 </translations>
                             </concept_node>
                             <concept_node>
-                                <name>git</name>
-                                <definition_loaded>false</definition_loaded>
-                                <description></description>
-                                <comment></comment>
-                                <default_text></default_text>
-                                <translations>
-                                    <translation>
-                                        <language>en-US</language>
-                                        <approved>false</approved>
-                                    </translation>
-                                    <translation>
-                                        <language>et-EE</language>
-                                        <approved>false</approved>
-                                    </translation>
-                                    <translation>
-                                        <language>lt-LT</language>
-                                        <approved>false</approved>
-                                    </translation>
-                                </translations>
-                            </concept_node>
-                            <concept_node>
                                 <name>plural</name>
                                 <definition_loaded>false</definition_loaded>
                                 <description></description>
@@ -7168,6 +7210,27 @@
                                         </translations>
                                     </concept_node>
                                     <concept_node>
+                                        <name>preferred-language</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <comment></comment>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>et-EE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>lt-LT</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
+                                    <concept_node>
                                         <name>single</name>
                                         <definition_loaded>false</definition_loaded>
                                         <description></description>
@@ -7564,6 +7627,116 @@
                             </concept_node>
                             <concept_node>
                                 <name>state</name>
+                                <definition_loaded>false</definition_loaded>
+                                <description></description>
+                                <comment></comment>
+                                <default_text></default_text>
+                                <translations>
+                                    <translation>
+                                        <language>en-US</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>et-EE</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>lt-LT</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                </translations>
+                            </concept_node>
+                        </children>
+                    </folder_node>
+                    <folder_node>
+                        <name>snomed-codesystem</name>
+                        <children>
+                            <concept_node>
+                                <name>branch-path</name>
+                                <definition_loaded>false</definition_loaded>
+                                <description></description>
+                                <comment></comment>
+                                <default_text></default_text>
+                                <translations>
+                                    <translation>
+                                        <language>en-US</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>et-EE</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>lt-LT</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                </translations>
+                            </concept_node>
+                            <concept_node>
+                                <name>languages</name>
+                                <definition_loaded>false</definition_loaded>
+                                <description></description>
+                                <comment></comment>
+                                <default_text></default_text>
+                                <translations>
+                                    <translation>
+                                        <language>en-US</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>et-EE</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>lt-LT</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                </translations>
+                            </concept_node>
+                            <concept_node>
+                                <name>latest-version</name>
+                                <definition_loaded>false</definition_loaded>
+                                <description></description>
+                                <comment></comment>
+                                <default_text></default_text>
+                                <translations>
+                                    <translation>
+                                        <language>en-US</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>et-EE</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>lt-LT</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                </translations>
+                            </concept_node>
+                            <concept_node>
+                                <name>short-name</name>
+                                <definition_loaded>false</definition_loaded>
+                                <description></description>
+                                <comment></comment>
+                                <default_text></default_text>
+                                <translations>
+                                    <translation>
+                                        <language>en-US</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>et-EE</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>lt-LT</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                </translations>
+                            </concept_node>
+                            <concept_node>
+                                <name>versions</name>
                                 <definition_loaded>false</definition_loaded>
                                 <description></description>
                                 <comment></comment>
@@ -9543,6 +9716,27 @@
                                     </translation>
                                 </translations>
                             </concept_node>
+                            <concept_node>
+                                <name>source-url</name>
+                                <definition_loaded>false</definition_loaded>
+                                <description></description>
+                                <comment></comment>
+                                <default_text></default_text>
+                                <translations>
+                                    <translation>
+                                        <language>en-US</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>et-EE</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>lt-LT</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                </translations>
+                            </concept_node>
                         </children>
                     </folder_node>
                     <folder_node>
@@ -9829,6 +10023,27 @@
                             <folder_node>
                                 <name>operator</name>
                                 <children>
+                                    <concept_node>
+                                        <name>descendant-of</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <comment></comment>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>et-EE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>lt-LT</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
                                     <concept_node>
                                         <name>equal</name>
                                         <definition_loaded>false</definition_loaded>
@@ -13448,6 +13663,27 @@
                                         </translations>
                                     </concept_node>
                                     <concept_node>
+                                        <name>open-fhir</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <comment></comment>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>et-EE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>lt-LT</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
+                                    <concept_node>
                                         <name>propagate-properties</name>
                                         <definition_loaded>false</definition_loaded>
                                         <description></description>
@@ -14492,27 +14728,6 @@
                                                 </translations>
                                             </concept_node>
                                             <concept_node>
-                                                <name>load-from-github</name>
-                                                <definition_loaded>false</definition_loaded>
-                                                <description></description>
-                                                <comment></comment>
-                                                <default_text></default_text>
-                                                <translations>
-                                                    <translation>
-                                                        <language>en-US</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                    <translation>
-                                                        <language>et-EE</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                    <translation>
-                                                        <language>lt-LT</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                </translations>
-                                            </concept_node>
-                                            <concept_node>
                                                 <name>make-draft</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
@@ -14555,27 +14770,6 @@
                                                 </translations>
                                             </concept_node>
                                             <concept_node>
-                                                <name>push-to-github</name>
-                                                <definition_loaded>false</definition_loaded>
-                                                <description></description>
-                                                <comment></comment>
-                                                <default_text></default_text>
-                                                <translations>
-                                                    <translation>
-                                                        <language>en-US</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                    <translation>
-                                                        <language>et-EE</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                    <translation>
-                                                        <language>lt-LT</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                </translations>
-                                            </concept_node>
-                                            <concept_node>
                                                 <name>retire</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
@@ -14598,6 +14792,27 @@
                                             </concept_node>
                                             <concept_node>
                                                 <name>show-changes</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>sync-with-github</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
                                                 <comment></comment>
@@ -16322,6 +16537,27 @@
                                         <name>association</name>
                                         <children>
                                             <concept_node>
+                                                <name>association-type</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
                                                 <name>code-system</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
@@ -16365,6 +16601,27 @@
                                             </concept_node>
                                             <concept_node>
                                                 <name>column-value-separator</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>download-template</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
                                                 <comment></comment>
@@ -17129,7 +17386,112 @@
                                         <name>concept-map</name>
                                         <children>
                                             <concept_node>
+                                                <name>delete-associations</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>file</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>hold</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>ignore</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
                                                 <name>import</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>keep-both</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
                                                 <comment></comment>
@@ -17193,6 +17555,27 @@
                                             </concept_node>
                                             <concept_node>
                                                 <name>map-version</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>overlap-of-associations</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
                                                 <comment></comment>
@@ -19290,6 +19673,53 @@
                                         </translations>
                                     </concept_node>
                                     <folder_node>
+                                        <name>properties</name>
+                                        <children>
+                                            <concept_node>
+                                                <name>delete-property-usages</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>often-used</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                        </children>
+                                    </folder_node>
+                                    <folder_node>
                                         <name>scope</name>
                                         <children>
                                             <concept_node>
@@ -20513,6 +20943,27 @@
                                         <name>associations</name>
                                         <children>
                                             <concept_node>
+                                                <name>add-property-value</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
                                                 <name>add-target</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
@@ -20661,6 +21112,27 @@
                                             </concept_node>
                                             <concept_node>
                                                 <name>mark-as-verified</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>properties</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
                                                 <comment></comment>
@@ -24281,6 +24753,100 @@
                                                     </translation>
                                                 </translations>
                                             </concept_node>
+                                            <folder_node>
+                                                <name>codesystem</name>
+                                                <children>
+                                                    <concept_node>
+                                                        <name>add-edition</name>
+                                                        <definition_loaded>false</definition_loaded>
+                                                        <description></description>
+                                                        <comment></comment>
+                                                        <default_text></default_text>
+                                                        <translations>
+                                                            <translation>
+                                                                <language>en-US</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                            <translation>
+                                                                <language>et-EE</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                            <translation>
+                                                                <language>lt-LT</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                        </translations>
+                                                    </concept_node>
+                                                    <concept_node>
+                                                        <name>header</name>
+                                                        <definition_loaded>false</definition_loaded>
+                                                        <description></description>
+                                                        <comment></comment>
+                                                        <default_text></default_text>
+                                                        <translations>
+                                                            <translation>
+                                                                <language>en-US</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                            <translation>
+                                                                <language>et-EE</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                            <translation>
+                                                                <language>lt-LT</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                        </translations>
+                                                    </concept_node>
+                                                </children>
+                                            </folder_node>
+                                            <folder_node>
+                                                <name>edition-modal</name>
+                                                <children>
+                                                    <concept_node>
+                                                        <name>country-code</name>
+                                                        <definition_loaded>false</definition_loaded>
+                                                        <description></description>
+                                                        <comment></comment>
+                                                        <default_text></default_text>
+                                                        <translations>
+                                                            <translation>
+                                                                <language>en-US</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                            <translation>
+                                                                <language>et-EE</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                            <translation>
+                                                                <language>lt-LT</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                        </translations>
+                                                    </concept_node>
+                                                    <concept_node>
+                                                        <name>header</name>
+                                                        <definition_loaded>false</definition_loaded>
+                                                        <description></description>
+                                                        <comment></comment>
+                                                        <default_text></default_text>
+                                                        <translations>
+                                                            <translation>
+                                                                <language>en-US</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                            <translation>
+                                                                <language>et-EE</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                            <translation>
+                                                                <language>lt-LT</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                        </translations>
+                                                    </concept_node>
+                                                </children>
+                                            </folder_node>
                                             <concept_node>
                                                 <name>header</name>
                                                 <definition_loaded>false</definition_loaded>
@@ -24967,6 +25533,27 @@
                                 </translations>
                             </concept_node>
                             <concept_node>
+                                <name>github-empty</name>
+                                <definition_loaded>false</definition_loaded>
+                                <description></description>
+                                <comment></comment>
+                                <default_text></default_text>
+                                <translations>
+                                    <translation>
+                                        <language>en-US</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>et-EE</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>lt-LT</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                </translations>
+                            </concept_node>
+                            <concept_node>
                                 <name>github-pull</name>
                                 <definition_loaded>false</definition_loaded>
                                 <description></description>
@@ -24989,6 +25576,27 @@
                             </concept_node>
                             <concept_node>
                                 <name>github-pull-confirm</name>
+                                <definition_loaded>false</definition_loaded>
+                                <description></description>
+                                <comment></comment>
+                                <default_text></default_text>
+                                <translations>
+                                    <translation>
+                                        <language>en-US</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>et-EE</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                    <translation>
+                                        <language>lt-LT</language>
+                                        <approved>false</approved>
+                                    </translation>
+                                </translations>
+                            </concept_node>
+                            <concept_node>
+                                <name>github-pull-confirm-achtung</name>
                                 <definition_loaded>false</definition_loaded>
                                 <description></description>
                                 <comment></comment>
@@ -27258,7 +27866,7 @@
                                         </translations>
                                     </concept_node>
                                     <concept_node>
-                                        <name>save-as</name>
+                                        <name>resource-url</name>
                                         <definition_loaded>false</definition_loaded>
                                         <description></description>
                                         <comment></comment>
@@ -27279,7 +27887,138 @@
                                         </translations>
                                     </concept_node>
                                     <concept_node>
+                                        <name>save-as</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <comment></comment>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>et-EE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>lt-LT</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
+                                    <folder_node>
+                                        <name>switch-to-text-editor</name>
+                                        <children>
+                                            <concept_node>
+                                                <name>cancel</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>confirm</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>title</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>warning</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                        </children>
+                                    </folder_node>
+                                    <concept_node>
                                         <name>url</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <comment></comment>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>et-EE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>lt-LT</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
+                                    <concept_node>
+                                        <name>visual-editor</name>
                                         <definition_loaded>false</definition_loaded>
                                         <description></description>
                                         <comment></comment>
@@ -28864,27 +29603,6 @@
                                                 </translations>
                                             </concept_node>
                                             <concept_node>
-                                                <name>load-from-github</name>
-                                                <definition_loaded>false</definition_loaded>
-                                                <description></description>
-                                                <comment></comment>
-                                                <default_text></default_text>
-                                                <translations>
-                                                    <translation>
-                                                        <language>en-US</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                    <translation>
-                                                        <language>et-EE</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                    <translation>
-                                                        <language>lt-LT</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                </translations>
-                                            </concept_node>
-                                            <concept_node>
                                                 <name>make-draft</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
@@ -28927,27 +29645,6 @@
                                                 </translations>
                                             </concept_node>
                                             <concept_node>
-                                                <name>push-to-github</name>
-                                                <definition_loaded>false</definition_loaded>
-                                                <description></description>
-                                                <comment></comment>
-                                                <default_text></default_text>
-                                                <translations>
-                                                    <translation>
-                                                        <language>en-US</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                    <translation>
-                                                        <language>et-EE</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                    <translation>
-                                                        <language>lt-LT</language>
-                                                        <approved>false</approved>
-                                                    </translation>
-                                                </translations>
-                                            </concept_node>
-                                            <concept_node>
                                                 <name>retire</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
@@ -28970,6 +29667,27 @@
                                             </concept_node>
                                             <concept_node>
                                                 <name>show-changes</name>
+                                                <definition_loaded>false</definition_loaded>
+                                                <description></description>
+                                                <comment></comment>
+                                                <default_text></default_text>
+                                                <translations>
+                                                    <translation>
+                                                        <language>en-US</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>et-EE</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                    <translation>
+                                                        <language>lt-LT</language>
+                                                        <approved>false</approved>
+                                                    </translation>
+                                                </translations>
+                                            </concept_node>
+                                            <concept_node>
+                                                <name>sync-with-github</name>
                                                 <definition_loaded>false</definition_loaded>
                                                 <description></description>
                                                 <comment></comment>
@@ -29370,6 +30088,116 @@
                         <name>wiki-page</name>
                         <children>
                             <folder_node>
+                                <name>comments</name>
+                                <children>
+                                    <concept_node>
+                                        <name>created-at</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <comment></comment>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>et-EE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>lt-LT</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
+                                    <concept_node>
+                                        <name>modified-at</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <comment></comment>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>et-EE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>lt-LT</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
+                                    <concept_node>
+                                        <name>read-more</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <comment></comment>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>et-EE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>lt-LT</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
+                                    <concept_node>
+                                        <name>reply</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <comment></comment>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>et-EE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>lt-LT</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
+                                    <concept_node>
+                                        <name>resolve</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <comment></comment>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>et-EE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>lt-LT</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
+                                </children>
+                            </folder_node>
+                            <folder_node>
                                 <name>details</name>
                                 <children>
                                     <concept_node>
@@ -29416,6 +30244,27 @@
                                     </concept_node>
                                     <concept_node>
                                         <name>cs</name>
+                                        <definition_loaded>false</definition_loaded>
+                                        <description></description>
+                                        <comment></comment>
+                                        <default_text></default_text>
+                                        <translations>
+                                            <translation>
+                                                <language>en-US</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>et-EE</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                            <translation>
+                                                <language>lt-LT</language>
+                                                <approved>false</approved>
+                                            </translation>
+                                        </translations>
+                                    </concept_node>
+                                    <concept_node>
+                                        <name>def</name>
                                         <definition_loaded>false</definition_loaded>
                                         <description></description>
                                         <comment></comment>
@@ -29637,6 +30486,32 @@
                                     <folder_node>
                                         <name>menu</name>
                                         <children>
+                                            <folder_node>
+                                                <name>comments</name>
+                                                <children>
+                                                    <concept_node>
+                                                        <name>title</name>
+                                                        <definition_loaded>false</definition_loaded>
+                                                        <description></description>
+                                                        <comment></comment>
+                                                        <default_text></default_text>
+                                                        <translations>
+                                                            <translation>
+                                                                <language>en-US</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                            <translation>
+                                                                <language>et-EE</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                            <translation>
+                                                                <language>lt-LT</language>
+                                                                <approved>false</approved>
+                                                            </translation>
+                                                        </translations>
+                                                    </concept_node>
+                                                </children>
+                                            </folder_node>
                                             <concept_node>
                                                 <name>diagrams</name>
                                                 <definition_loaded>false</definition_loaded>

@@ -18,7 +18,8 @@
 			"query": "Užklausa",
 			"save": "Išsaugoti",
 			"search": "Ieškoti",
-			"select": "Pažymėti"
+			"select": "Pažymėti",
+			"send": ""
 		},
 		"confirm": "",
 		"data-lost-warning": "Jūsų pakeitimai nebus išsaugoti!",
@@ -99,6 +100,7 @@
 			"designations": "Pavadinimai",
 			"id": "ID",
 			"property-values": "Savybės reikšmės",
+			"references": "",
 			"status": "Statusas"
 		},
 		"code-system-version": {
@@ -167,6 +169,7 @@
 			"id": "Identifikatorius",
 			"name": "Pavadinimas",
 			"plural": "Atvaizdžių aibės",
+			"properties": "",
 			"publisher": "",
 			"source-code-systems": "Pirminės kodų sistemos",
 			"source-value-set": "Pirminė reikšmių aibė",
@@ -341,7 +344,6 @@
 		},
 		"package": {
 			"code": "Kodas",
-			"git": "Git",
 			"plural": "Pakuotės",
 			"singular": "Pakuotė",
 			"version": {
@@ -432,6 +434,7 @@
 				"algorithm": "Algoritmas",
 				"description": "Aprašas",
 				"from": "Numatoma naudoti nuo",
+				"preferred-language": "",
 				"single": "Versija",
 				"to": "Numatoma naudoti iki",
 				"version": "Versija"
@@ -458,6 +461,13 @@
 			"metadata": "",
 			"path": "",
 			"state": ""
+		},
+		"snomed-codesystem": {
+			"branch-path": "",
+			"languages": "",
+			"latest-version": "",
+			"short-name": "",
+			"versions": ""
 		},
 		"snomed-concept": {
 			"concept-id": "Sąvokos ID",
@@ -575,7 +585,8 @@
 			"source": "",
 			"source-fhir": "FHIR",
 			"source-local": "TermX",
-			"source-static": ""
+			"source-static": "",
+			"source-url": ""
 		},
 		"value-set": {
 			"concepts": "Sąvokos",
@@ -594,6 +605,7 @@
 		},
 		"value-set-rule-filter": {
 			"operator": {
+				"descendant-of": "",
 				"equal": "=",
 				"in": "Čia",
 				"is-a": "Yra",
@@ -835,6 +847,7 @@
 			"list": {
 				"add-concept-child": "Pridėti subsavybę",
 				"external": "Išorinis",
+				"open-fhir": "",
 				"propagate-properties": "",
 				"unlink-concept": "Atsieti savybę nuo versijos"
 			},
@@ -912,11 +925,11 @@
 					"last-approved": "Paskutinio patvirtinimo data",
 					"last-modified": "Paskutinių keitimų data",
 					"last-reviewed": "Paskutinės peržiūros data",
-					"sync-with-github": "Github",
 					"make-draft": "Kurti juodraštį",
 					"none": "",
 					"retire": "Išeiti",
-					"show-changes": "Rodyti pakeitimus"
+					"show-changes": "Rodyti pakeitimus",
+					"sync-with-github": "Github"
 				},
 				"opened-tasks": "Atidarytos užduotys",
 				"task-modal": {
@@ -1051,9 +1064,11 @@
 			},
 			"file-import": {
 				"association": {
+					"association-type": "",
 					"code-system": "Kodų sistema",
 					"code-system-version": "Kodų sistemos versija",
 					"column-value-separator": "Stulpelio verčių skirtukas",
+					"download-template": "",
 					"file": "Susiejimų CSV failas",
 					"file-column": "Failų stulpelis",
 					"import": "Susiejimo failo importas",
@@ -1100,10 +1115,16 @@
 					}
 				},
 				"concept-map": {
+					"delete-associations": "",
+					"file": "",
+					"hold": "",
+					"ignore": "",
 					"import": "Sąvokos atvaizdžio failo importas",
+					"keep-both": "",
 					"map-id": "Atvaizdžio ID",
 					"map-name": "Atvaizdžio pavadinimas",
 					"map-version": "Atvaizdžio versija",
+					"overlap-of-associations": "",
 					"source-value-set": "Pirminių reikšmių aibė",
 					"target-value-set": "Paskirties reikšmių aibė"
 				},
@@ -1232,6 +1253,10 @@
 				"add-header": "Kurti naują atvaizdžių aibę",
 				"edit-header": "Redaguoti atvaizdžių aibę",
 				"header": "Atvaizdžių sistema",
+				"properties": {
+					"delete-property-usages": "",
+					"often-used": ""
+				},
 				"scope": {
 					"code-system": "",
 					"code-system-version": "",
@@ -1314,6 +1339,7 @@
 			},
 			"summary": {
 				"associations": {
+					"add-property-value": "",
 					"add-target": "",
 					"bulk-copy": "",
 					"code": "",
@@ -1322,6 +1348,7 @@
 					"external-mapping": "",
 					"mappings": "",
 					"mark-as-verified": "",
+					"properties": "",
 					"relationship": "",
 					"set-as-no-map": "",
 					"source-code": "",
@@ -1571,6 +1598,14 @@
 				},
 				"list": {
 					"add-branch": "",
+					"codesystem": {
+						"add-edition": "",
+						"header": ""
+					},
+					"edition-modal": {
+						"country-code": "",
+						"header": ""
+					},
 					"header": ""
 				},
 				"management": {
@@ -1616,8 +1651,10 @@
 			"edit-header": "Redaguoti tarpą",
 			"github-clean": "",
 			"github-commit-message": "",
+			"github-empty": "",
 			"github-pull": "",
 			"github-pull-confirm": "",
+			"github-pull-confirm-achtung": "CAUTION: THIS ACTION IS IRREVERSIBLE! YOU MAY LOSE DATA",
 			"github-push": "",
 			"github-sync": "",
 			"import-btn": "Importuoti tarpą",
@@ -1770,8 +1807,16 @@
 				"map-set": "",
 				"preview-hide": "",
 				"preview-show": "",
+				"resource-url": "",
 				"save-as": "",
-				"url": ""
+				"switch-to-text-editor": {
+					"cancel": "",
+					"confirm": "",
+					"title": "",
+					"warning": ""
+				},
+				"url": "",
+				"visual-editor": ""
 			},
 			"resources": {
 				"new": "",
@@ -1872,11 +1917,11 @@
 					"last-approved": "Paskutinio patvirtinimo data",
 					"last-modified": "Paskutinių keitimų data",
 					"last-reviewed": "Paskutinės peržiūros data",
-					"sync-with-github": "Github",
 					"make-draft": "Kurti juodraštį",
 					"none": "",
 					"retire": "Išeiti",
-					"show-changes": "Rodyti pakeitimus"
+					"show-changes": "Rodyti pakeitimus",
+					"sync-with-github": "Github"
 				},
 				"rule": "Taisyklė",
 				"rule-set": "Taisyklių aibė",
@@ -1911,10 +1956,18 @@
 			}
 		},
 		"wiki-page": {
+			"comments": {
+				"created-at": "",
+				"modified-at": "",
+				"read-more": "",
+				"reply": "",
+				"resolve": ""
+			},
 			"details": {
 				"concept": "",
 				"contents": "",
 				"cs": "",
+				"def": "",
 				"ms": "",
 				"none": "",
 				"page": "",
@@ -1929,6 +1982,9 @@
 					"header": ""
 				},
 				"menu": {
+					"comments": {
+						"title": ""
+					},
 					"diagrams": "",
 					"files": "",
 					"preview": {
@@ -1968,7 +2024,7 @@
 					"updated": ""
 				}
 			},
-			"spaces": "",
+			"spaces": "Tarpai",
 			"texteditor": {
 				"quick-actions": {
 					"link-modal": {

@@ -18,7 +18,8 @@
 			"query": "Päri",
 			"save": "Salvesta",
 			"search": "Otsi",
-			"select": "Vali"
+			"select": "Vali",
+			"send": ""
 		},
 		"confirm": "Kas oled kindel?",
 		"data-lost-warning": "Sinu muudatusi ei salvestata!",
@@ -99,6 +100,7 @@
 			"designations": "Tekstid",
 			"id": "ID",
 			"property-values": "Tunnused",
+			"references": "",
 			"status": "Staatus"
 		},
 		"code-system-version": {
@@ -167,6 +169,7 @@
 			"id": "Identifikaator",
 			"name": "Nimi",
 			"plural": "Vastandustabelid",
+			"properties": "",
 			"publisher": "Kirjastaja",
 			"source-code-systems": "Lähtekoodisüsteemid",
 			"source-value-set": "Lähteloend",
@@ -341,7 +344,6 @@
 		},
 		"package": {
 			"code": "Kood",
-			"git": "Git",
 			"plural": "Paketid",
 			"singular": "Pakett",
 			"version": {
@@ -432,6 +434,7 @@
 				"algorithm": "Algoritm",
 				"description": "Kirjeldus",
 				"from": "Eeldatavasti kasutuses alates",
+				"preferred-language": "",
 				"single": "Versioon",
 				"to": "Eeldatavasti kasutuses kuni",
 				"version": "Versioon"
@@ -458,6 +461,13 @@
 			"metadata": "Metaandmed",
 			"path": "Teekond",
 			"state": "Tunnus"
+		},
+		"snomed-codesystem": {
+			"branch-path": "",
+			"languages": "",
+			"latest-version": "",
+			"short-name": "",
+			"versions": ""
 		},
 		"snomed-concept": {
 			"concept-id": "Mõiste ID",
@@ -575,7 +585,8 @@
 			"source": "Allikas",
 			"source-fhir": "FHIR",
 			"source-local": "TermX",
-			"source-static": "Staatiline"
+			"source-static": "Staatiline",
+			"source-url": ""
 		},
 		"value-set": {
 			"concepts": "Mõisted",
@@ -594,6 +605,7 @@
 		},
 		"value-set-rule-filter": {
 			"operator": {
+				"descendant-of": "",
 				"equal": "=",
 				"in": "Sees",
 				"is-a": "Vanem",
@@ -835,6 +847,7 @@
 			"list": {
 				"add-concept-child": "Lisa alammõiste",
 				"external": "Väline",
+				"open-fhir": "",
 				"propagate-properties": "Kopeeri tunnused alammõistetele",
 				"unlink-concept": "Seo lahti mõiste versioonist"
 			},
@@ -912,11 +925,11 @@
 					"last-approved": "Viimane kinnitus",
 					"last-modified": "Viimati muudetud",
 					"last-reviewed": "Viimane ülevaatus",
-					"sync-with-github": "Sünkroniseeri Github-iga",
 					"make-draft": "Muuda \"mustandiks\"",
 					"none": "Mitte ühtegi",
 					"retire": "Tühista",
-					"show-changes": "Näita erinevused"
+					"show-changes": "Näita erinevused",
+					"sync-with-github": "Sünkroniseeri Github-iga"
 				},
 				"opened-tasks": "Avatud ülesanded",
 				"task-modal": {
@@ -1051,9 +1064,11 @@
 			},
 			"file-import": {
 				"association": {
+					"association-type": "",
 					"code-system": "Koodisüsteem",
 					"code-system-version": "Koodisüsteemi versioon",
 					"column-value-separator": "Väärtuste eraldaja veerus",
+					"download-template": "",
 					"file": "Assotsioonide CSV fail",
 					"file-column": "Veerg failis",
 					"import": "Assotsiooni faili import",
@@ -1100,10 +1115,16 @@
 					}
 				},
 				"concept-map": {
+					"delete-associations": "",
+					"file": "",
+					"hold": "",
+					"ignore": "",
 					"import": "ConceptMapi import failist",
+					"keep-both": "",
 					"map-id": "Map ID",
 					"map-name": "Vastandustabeli nimi",
 					"map-version": "Vastandustabeli version",
+					"overlap-of-associations": "",
 					"source-value-set": "Allikas loend",
 					"target-value-set": "Sihtloend"
 				},
@@ -1232,6 +1253,10 @@
 				"add-header": "Lisa kaardistus kogum",
 				"edit-header": "Muuda kaardistus kogumit",
 				"header": "Vastandustabel",
+				"properties": {
+					"delete-property-usages": "",
+					"often-used": ""
+				},
 				"scope": {
 					"code-system": "Koodisüsteem",
 					"code-system-version": "Koodisüsteemi versioon",
@@ -1314,6 +1339,7 @@
 			},
 			"summary": {
 				"associations": {
+					"add-property-value": "",
 					"add-target": "Lisa sihtmäping",
 					"bulk-copy": "Mass-kopeerimine",
 					"code": "Kood",
@@ -1322,6 +1348,7 @@
 					"external-mapping": "Väline mäping",
 					"mappings": "Mäpingud",
 					"mark-as-verified": "Märgi kontrollituks",
+					"properties": "",
 					"relationship": "Seos",
 					"set-as-no-map": "Seost ei eksisteeri",
 					"source-code": "Lähtekood",
@@ -1571,6 +1598,14 @@
 				},
 				"list": {
 					"add-branch": "Lisa haru",
+					"codesystem": {
+						"add-edition": "",
+						"header": ""
+					},
+					"edition-modal": {
+						"country-code": "",
+						"header": ""
+					},
 					"header": "Harud"
 				},
 				"management": {
@@ -1616,8 +1651,10 @@
 			"edit-header": "Muuda ruum",
 			"github-clean": "Kõik on ajakohane!",
 			"github-commit-message": "Commit teade",
+			"github-empty": "Muudatused puuduvad",
 			"github-pull": "Tõmba uuendused repositooriumist",
 			"github-pull-confirm": "Kas olete kindel, et soovite asendada praegused andmed repositooriumist pärit andmetega?",
+			"github-pull-confirm-achtung": "ETTEVAATUST: SEE TOIMING ON PÖÖRDAMATU! Te võite kaotada muudatused TermX-is",
 			"github-push": "Salvesta andmed repositooriumi",
 			"github-sync": "Sünkroniseeri Github-iga",
 			"import-btn": "Impordi ruum",
@@ -1770,8 +1807,16 @@
 				"map-set": "ConceptMap",
 				"preview-hide": "Peida",
 				"preview-show": "Eelvaade",
+				"resource-url": "",
 				"save-as": "Salvesta kui",
-				"url": "ConceptMap"
+				"switch-to-text-editor": {
+					"cancel": "",
+					"confirm": "",
+					"title": "",
+					"warning": ""
+				},
+				"url": "ConceptMap",
+				"visual-editor": ""
 			},
 			"resources": {
 				"new": "-- uus --",
@@ -1872,11 +1917,11 @@
 					"last-approved": "Viimane kinnitus",
 					"last-modified": "Viimati muudetud",
 					"last-reviewed": "Viimati ülevaadatud",
-					"sync-with-github": "Sünkroniseeri Github-iga",
 					"make-draft": "Muuda \"mustandiks\"",
 					"none": "Puudub",
 					"retire": "Aegunud",
-					"show-changes": "Näita erinevused"
+					"show-changes": "Näita erinevused",
+					"sync-with-github": "Sünkroniseeri Github-iga"
 				},
 				"rule": "Reegel",
 				"rule-set": "Reegel",
@@ -1911,10 +1956,18 @@
 			}
 		},
 		"wiki-page": {
+			"comments": {
+				"created-at": "",
+				"modified-at": "",
+				"read-more": "",
+				"reply": "",
+				"resolve": ""
+			},
 			"details": {
 				"concept": "Mõiste",
 				"contents": "Sisu",
 				"cs": "Koodisüsteem",
+				"def": "",
 				"ms": "Vastandustabel",
 				"none": "Puudub",
 				"page": "Lehekülg",
@@ -1929,6 +1982,9 @@
 					"header": "Failid"
 				},
 				"menu": {
+					"comments": {
+						"title": ""
+					},
 					"diagrams": "Diagrammid",
 					"files": "Failid",
 					"preview": {

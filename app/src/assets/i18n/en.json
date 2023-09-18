@@ -17,9 +17,9 @@
 			"proceed": "Proceed",
 			"query": "Query",
 			"save": "Save",
-			"send": "Send",
 			"search": "Search",
-			"select": "Select"
+			"select": "Select",
+			"send": "Send"
 		},
 		"confirm": "Are you sure?",
 		"data-lost-warning": "Your changes wouldn't be saved!",
@@ -100,8 +100,8 @@
 			"designations": "Designations",
 			"id": "ID",
 			"property-values": "Property values",
-			"status": "Status",
-			"references": "References"
+			"references": "References",
+			"status": "Status"
 		},
 		"code-system-version": {
 			"description": "Description",
@@ -169,6 +169,7 @@
 			"id": "ID",
 			"name": "Name",
 			"plural": "Map Sets",
+			"properties": "Properties",
 			"publisher": "Publisher",
 			"source-code-systems": "Source code systems",
 			"source-value-set": "Source value set",
@@ -176,8 +177,7 @@
 			"target-value-set": "Target value set",
 			"title": "Title",
 			"uri": "URI",
-			"versions": "Versions",
-			"properties": "Properties"
+			"versions": "Versions"
 		},
 		"map-set-association": {
 			"concept": "Concept",
@@ -344,7 +344,6 @@
 		},
 		"package": {
 			"code": "Code",
-			"git": "",
 			"plural": "Packages",
 			"singular": "Package",
 			"version": {
@@ -435,10 +434,10 @@
 				"algorithm": "Algorithm",
 				"description": "Description",
 				"from": "Expected to be used since",
+				"preferred-language": "Preferred language",
 				"single": "Version",
 				"to": "Expected to be used until",
-				"version": "Version",
-				"preferred-language": "Preferred language"
+				"version": "Version"
 			}
 		},
 		"sequence": {
@@ -464,10 +463,10 @@
 			"state": "State"
 		},
 		"snomed-codesystem": {
-			"short-name": "Short name",
 			"branch-path": "Branch path",
 			"languages": "Languages",
 			"latest-version": "Latest version",
+			"short-name": "Short name",
 			"versions": "Versions"
 		},
 		"snomed-concept": {
@@ -584,10 +583,10 @@
 			"plural": "FML transformations",
 			"singular": "FML transformation",
 			"source": "Source",
-			"source-url": "URL",
 			"source-fhir": "FHIR",
 			"source-local": "TermX",
-			"source-static": "Static"
+			"source-static": "Static",
+			"source-url": "URL"
 		},
 		"value-set": {
 			"concepts": "Concepts",
@@ -606,10 +605,10 @@
 		},
 		"value-set-rule-filter": {
 			"operator": {
+				"descendant-of": "Descendant of",
 				"equal": "=",
 				"in": "In",
 				"is-a": "Is a",
-				"descendant-of": "Descendant of",
 				"label": "Operator"
 			},
 			"property": {
@@ -848,9 +847,9 @@
 			"list": {
 				"add-concept-child": "Add subconcept",
 				"external": "External",
+				"open-fhir": "Open FHIR URL",
 				"propagate-properties": "Propagate properties to children",
-				"unlink-concept": "Unlink concept from version",
-				"open-fhir": "Open FHIR URL"
+				"unlink-concept": "Unlink concept from version"
 			},
 			"property-list": {
 				"concepts": "Concepts",
@@ -926,11 +925,11 @@
 					"last-approved": "Last approval date",
 					"last-modified": "Last modified",
 					"last-reviewed": "Last review date",
-					"sync-with-github": "Sync with Github",
 					"make-draft": "Make draft",
 					"none": "None",
 					"retire": "Retire",
-					"show-changes": "Show changes"
+					"show-changes": "Show changes",
+					"sync-with-github": "Sync with Github"
 				},
 				"opened-tasks": "Opened tasks",
 				"task-modal": {
@@ -1069,14 +1068,14 @@
 					"code-system": "Code system",
 					"code-system-version": "Code system version",
 					"column-value-separator": "Column value separator",
+					"download-template": "Download template",
 					"file": "Associations CSV file",
 					"file-column": "File column",
 					"import": "Association file import",
 					"mapped-column": "Mapped column",
 					"order": "Order",
 					"source": "Source",
-					"target": "Target",
-					"download-template": "Download template"
+					"target": "Target"
 				},
 				"code-system": {
 					"general": {
@@ -1116,14 +1115,18 @@
 					}
 				},
 				"concept-map": {
-					"import": "Concept Map file import",
-					"map-id": "Map ID",
-					"file": "File",
 					"delete-associations": "Delete all associations before import?",
+					"file": "File",
 					"hold": "Hold",
-					"overlap-of-associations": "Behavior on overlap of associations",
+					"ignore": "Ignore duplicates",
+					"import": "Concept Map file import",
 					"keep-both": "Keep both",
-					"ignore": "Ignore duplicates"
+					"map-id": "Map ID",
+					"map-name": "",
+					"map-version": "",
+					"overlap-of-associations": "Behavior on overlap of associations",
+					"source-value-set": "",
+					"target-value-set": ""
 				},
 				"create-new": "Create new",
 				"not-found": "Not found?",
@@ -1251,8 +1254,8 @@
 				"edit-header": "Edit map set",
 				"header": "Map set",
 				"properties": {
-					"often-used": "Often used properties",
-					"delete-property-usages": "Delete property usages"
+					"delete-property-usages": "Delete property usages",
+					"often-used": "Often used properties"
 				},
 				"scope": {
 					"code-system": "Code system",
@@ -1336,6 +1339,7 @@
 			},
 			"summary": {
 				"associations": {
+					"add-property-value": "Add property value",
 					"add-target": "Add target mapping",
 					"bulk-copy": "Bulk copy",
 					"code": "Code",
@@ -1344,6 +1348,7 @@
 					"external-mapping": "External mapping",
 					"mappings": "Mappings",
 					"mark-as-verified": "Mark as verified",
+					"properties": "Properties",
 					"relationship": "Relationship",
 					"set-as-no-map": "Set as NoMap",
 					"source-code": "Source code",
@@ -1390,53 +1395,12 @@
 					"title": "Statistics",
 					"unmapped": "Unmapped"
 				},
+				"statistics-warning": "The map set should be in the 'draft' status to recalculate statistics.",
 				"task-modal": {
 					"assignee": "Assignee",
 					"header": "Create {{type}} task",
 					"success-msg": "Task created"
-				},
-				"statistics": {
-					"title": "Statistics",
-					"source-concepts": "Source concepts",
-					"equivalent": "Equivalent",
-					"no-map": "No map",
-					"narrower": "Narrower",
-					"broader": "Broader",
-					"unmapped": "Unmapped",
-					"inactive-sources": "Inactive sources",
-					"inactive-targets": "Inactive targets",
-					"automap-code": "Automap by code",
-					"automap-designation": "Automap by designation",
-					"automap-code-designation": "Automap by code and designation"
-				},
-				"associations": {
-					"source-code": "Source code",
-					"source-cs": "Source code system",
-					"source-display": "Source display",
-					"target-code": "Target code",
-					"target-cs": "Target code system",
-					"target-display": "Target display",
-					"relationship": "Relationship",
-					"add-target": "Add target mapping",
-					"set-as-no-map": "Set as NoMap",
-					"unmap": "Unmap",
-					"mark-as-verified": "Mark as verified",
-					"verify": "Verify",
-					"unverified": "Unverified",
-					"source-concepts": "Source concepts",
-					"target-concepts": "Target concepts",
-					"unmapped-concepts": "Unmapped concepts",
-					"target-mapping": "Target mapping",
-					"external-mapping": "External mapping",
-					"code": "Code",
-					"display": "Display",
-					"mappings": "Mappings",
-					"bulk-copy": "Bulk copy",
-					"content": "Content",
-					"properties": "Properties",
-					"add-property-value": "Add property value"
-				},
-				"statistics-warning": "The map set should be in the 'draft' status to recalculate statistics."
+				}
 			}
 		},
 		"measurement-unit": {
@@ -1634,15 +1598,15 @@
 				},
 				"list": {
 					"add-branch": "Add branch",
-					"header": "Branches",
 					"codesystem": {
-						"header": "Code Systems",
-						"add-edition": "Add edition"
+						"add-edition": "Add edition",
+						"header": "Code Systems"
 					},
 					"edition-modal": {
-						"header": "Add edition",
-						"country-code": "Country code"
-					}
+						"country-code": "Country code",
+						"header": "Add edition"
+					},
+					"header": "Branches"
 				},
 				"management": {
 					"export-modal": {
@@ -1686,8 +1650,8 @@
 			"all-packages": "All packages",
 			"edit-header": "Edit space",
 			"github-clean": "Everything is up to date!",
-			"github-empty": "Nothing to commit",
 			"github-commit-message": "Commit message",
+			"github-empty": "Nothing to commit",
 			"github-pull": "Pull diff from",
 			"github-pull-confirm": "Are you sure you want to replace current data with the data from repository?",
 			"github-pull-confirm-achtung": "CAUTION: THIS ACTION IS IRREVERSIBLE! YOU MAY LOSE DATA",
@@ -1836,23 +1800,23 @@
 				"download-fml": "FML",
 				"download-json": "JSON",
 				"download-xml": "XML",
-				"resource-url": "Resource URL",
+				"fhir-resource": "",
 				"fhir-server": "FHIR server",
 				"fml-generation-failed": "Failed to generate FML",
 				"generate": "Generate",
 				"map-set": "ConceptMap",
 				"preview-hide": "Hide",
 				"preview-show": "Preview",
-				"visual-editor": "Visual editor",
-				"switch-to-text-editor":{
-					"title": "Switch to text editor",
-					"warning": "CAUTION! This action is not reversible!",
-					"confirm": "Proceed",
-					"cancel": "Cancel"
-
-				},
+				"resource-url": "Resource URL",
 				"save-as": "Save as",
-				"url": "URL"
+				"switch-to-text-editor": {
+					"cancel": "Cancel",
+					"confirm": "Proceed",
+					"title": "Switch to text editor",
+					"warning": "CAUTION! This action is not reversible!"
+				},
+				"url": "URL",
+				"visual-editor": "Visual editor"
 			},
 			"resources": {
 				"new": "-- new --",
@@ -1953,11 +1917,11 @@
 					"last-approved": "Last approval date",
 					"last-modified": "Last modified",
 					"last-reviewed": "Last review date",
-					"sync-with-github": "Sync with Github",
 					"make-draft": "Make draft",
 					"none": "None",
 					"retire": "Retire",
-					"show-changes": "Show changes"
+					"show-changes": "Show changes",
+					"sync-with-github": "Sync with Github"
 				},
 				"rule": "Rule",
 				"rule-set": "Rule set",
@@ -1992,17 +1956,24 @@
 			}
 		},
 		"wiki-page": {
+			"comments": {
+				"created-at": "Created at {{date}}",
+				"modified-at": "Modified at {{date}}",
+				"read-more": "Read more",
+				"reply": "Reply",
+				"resolve": "Resolve"
+			},
 			"details": {
 				"concept": "Concept",
 				"contents": "Contents",
 				"cs": "Code System",
+				"def": "Structure definition",
 				"ms": "Map Set",
 				"none": "None",
 				"page": "Page",
 				"relations": "Relations",
 				"tags": "Tags",
 				"usages": "References",
-				"def": "Structure definition",
 				"vs": "Value Set"
 			},
 			"edit": {
@@ -2011,6 +1982,9 @@
 					"header": "Files"
 				},
 				"menu": {
+					"comments": {
+						"title": "Comments"
+					},
 					"diagrams": "Diagrams",
 					"files": "Files",
 					"preview": {
@@ -2021,9 +1995,6 @@
 						"add": "Add structure definition",
 						"copy": "Copy reference",
 						"title": "Structure definition"
-					},
-					"comments": {
-						"title": "Comments"
 					}
 				},
 				"structure-definition-modal": {
@@ -2037,13 +2008,6 @@
 				"add-subpage": "Add subpage",
 				"copy-raw": "Copy raw file",
 				"modified": "<b>{{user}}</b> edited this page on {{date}}"
-			},
-			"comments": {
-				"reply": "Reply",
-				"read-more": "Read more",
-				"resolve": "Resolve",
-				"created-at": "Created at {{date}}",
-				"modified-at": "Modified at {{date}}"
 			},
 			"no-space": {
 				"desc": "Please select space to proceed",
