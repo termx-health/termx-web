@@ -535,7 +535,8 @@
 			"shared": "Jagatud",
 			"singular": "Space",
 			"terminology-servers": "Terminoloogia server",
-			"viewers": "Vaatajad"
+			"viewers": "Vaatajad",
+			"packages": "Paketid"
 		},
 		"structure-definition": {
 			"code": "Kood",

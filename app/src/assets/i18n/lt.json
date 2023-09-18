@@ -535,7 +535,8 @@
 			"shared": "Bendrasis",
 			"singular": "Tarpas",
 			"terminology-servers": "Terminologijos serveriai",
-			"viewers": "Žiūryklės"
+			"viewers": "Žiūryklės",
+			"packages": "Pakuotės"
 		},
 		"structure-definition": {
 			"code": "Kodas",

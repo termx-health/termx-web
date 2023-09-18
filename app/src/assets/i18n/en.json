@@ -535,7 +535,8 @@
 			"shared": "Shared",
 			"singular": "Space",
 			"terminology-servers": "Terminology servers",
-			"viewers": "Viewers"
+			"viewers": "Viewers",
+			"packages": "Packages"
 		},
 		"structure-definition": {
 			"code": "Code",
