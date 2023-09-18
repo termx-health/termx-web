@@ -1811,14 +1811,15 @@
 				"resource-url": "Resource URL",
 				"save-as": "Save as",
 				"switch-to-text-editor": {
-					"cancel": "Cancel",
-					"confirm": "Proceed",
-					"title": "Switch to text editor",
-					"warning": "CAUTION! This action is not reversible!"
-				},
-				"url": "URL",
-				"visual-editor": "Visual editor"
-			},
+                  "cancel": "Cancel",
+                  "confirm": "Proceed",
+                  "title": "Switch to text editor",
+                  "warning": "CAUTION! This action is not reversible!"
+                },
+                "url": "URL",
+                "visual-editor": "Visual editor",
+                "visual-editor-disabled": "Please fill the 'Name' field"
+            },
 			"resources": {
 				"new": "-- new --",
 				"type.conceptmap": "Concept Maps",

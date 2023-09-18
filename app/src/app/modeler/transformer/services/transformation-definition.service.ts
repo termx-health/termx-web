@@ -53,6 +53,10 @@ export class TransformationDefinitionService {
     return this.http.post<TransformationDefinition>(`${this.baseUrl}`, def);
   }
 
+  public duplicate(id: number): Observable<TransformationDefinition> {
+    return this.http.post<TransformationDefinition>(`${this.baseUrl}/${id}/duplicate`, null);
+  }
+
   public delete(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }

@@ -1,23 +1,25 @@
 import {Component, OnInit} from '@angular/core';
-import {finalize, Observable, tap} from 'rxjs';
-import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
+import {Observable, tap} from 'rxjs';
+import {ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {TransformationDefinitionQueryParams} from '../services/transformation-definition-query.params';
 import {TransformationDefinition} from '../services/transformation-definition';
 import {TransformationDefinitionService} from '../services/transformation-definition.service';
+import {Router} from '@angular/router';
 
 @Component({
   templateUrl: './transformation-definition-list.component.html',
 })
 export class TransformationDefinitionListComponent implements OnInit {
-  public query = new TransformationDefinitionQueryParams();
-  public searchResult: SearchResult<TransformationDefinition> = SearchResult.empty();
-  public loading: boolean;
-
   protected readonly STORE_KEY = 'transformation-definition-list';
+
+  protected query = new TransformationDefinitionQueryParams();
+  protected searchResult = SearchResult.empty<TransformationDefinition>();
+  protected loader = new LoadingManager();
 
   public constructor(
     private transformationDefinitionService: TransformationDefinitionService,
     private stateStore: ComponentStateStore,
+    private router: Router,
   ) {
     this.query.sort = 'id';
   }
@@ -31,7 +33,7 @@ export class TransformationDefinitionListComponent implements OnInit {
     this.loadData();
   }
 
-  public loadData(): void {
+  protected loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
   }
 
@@ -39,12 +41,17 @@ export class TransformationDefinitionListComponent implements OnInit {
     const q = copyDeep(this.query);
     this.stateStore.put(this.STORE_KEY, {query: q});
 
-    this.loading = true;
-    return this.transformationDefinitionService.search(q).pipe(finalize(() => this.loading = false));
+    return this.loader.wrap('search', this.transformationDefinitionService.search(q));
   }
 
-  public onSearch = (): Observable<SearchResult<TransformationDefinition>> => {
+  protected onSearch = (): Observable<SearchResult<TransformationDefinition>> => {
     this.query.offset = 0;
     return this.search().pipe(tap(resp => this.searchResult = resp));
   };
+
+  protected duplicateDefinition(id: number): void {
+    this.loader.wrap('duplicate', this.transformationDefinitionService.duplicate(id)).subscribe(td => {
+      this.router.navigate(['/modeler/transformation-definitions', td.id, 'edit']);
+    });
+  }
 }

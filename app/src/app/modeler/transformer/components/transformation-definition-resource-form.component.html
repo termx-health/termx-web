@@ -80,7 +80,7 @@
     <m-form-item *ngIf="{showPreview: false} as d" mName="content" [mLabel]="lbl" required>
       <ng-template #lbl>
         <span>{{'web.transformation-definition.resource-form.content' | translate}}</span>
-        <ng-container *ngIf="resource.type === 'mapping' && !resource.reference.content">
+        <ng-container *ngIf="resource.type === 'mapping' && !resource.reference.content && definition.name">
           &nbsp;|&nbsp; <a (click)="generateMap()">{{'web.transformation-definition.resource-form.generate' | translate}}</a>
         </ng-container>
       </ng-template>
@@ -94,7 +94,14 @@
         </m-button>
 
         <ng-container *ngIf="resource.type === 'mapping'">
-          <m-button mSize="small" mDisplay="dashed" (mClick)="launchEditor()">
+          <m-button mSize="small"
+              mDisplay="dashed"
+              [disabled]="!definition.name"
+              [mTooltip]="!definition.name"
+              mTitle="web.transformation-definition.resource-form.visual-editor-disabled"
+              mPosition="left"
+              (mClick)="launchEditor()"
+          >
             <m-icon [mCode]="loader.state['visual-editor'] ? 'loading' : 'experiment'"/>&nbsp;{{'web.transformation-definition.resource-form.visual-editor' | translate}}
           </m-button>
 
@@ -108,10 +115,10 @@
                 mCancelText="web.transformation-definition.resource-form.switch-to-text-editor.cancel"
                 (mOnConfirm)="switchToTextEditor()"
             >
-              <m-icon *ngIf="loader.state['generate']" mCode="loading"/>&nbsp;{{'web.transformation-definition.resource-form.switch-to-text-editor.title' | translate}}
+              {{'web.transformation-definition.resource-form.switch-to-text-editor.title' | translate}}
             </m-button>
 
-            <m-dropdown >
+            <m-dropdown>
               <m-button *m-dropdown-container mSize="small" mDisplay="dashed">
                 <m-icon mCode="download"/> &nbsp;{{'web.transformation-definition.resource-form.save-as' | translate}}&nbsp;
                 <m-icon mCode="caret-down"/>

@@ -9,9 +9,10 @@
     </tw-add-button>
   </div>
 
-  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading">
     <tr *mTableHead>
       <th mColumnKey="name">{{'entities.transformation-definition.name' | translate}}</th>
+      <th class="tw-table-min-width"></th>
     </tr>
 
     <tr *mTableRow="let td">
@@ -23,7 +24,16 @@
           {{td.name}}
         </ng-template>
       </td>
+
+      <td>
+        <m-dropdown>
+          <a *m-dropdown-item (mClick)="duplicateDefinition(td.id)">
+            <m-icon [mCode]="'copy'"></m-icon>&nbsp; {{'core.btn.duplicate' | translate}}
+          </a>
+        </m-dropdown>
+      </td>
     </tr>
+
     <tr *mTableNoData>
       <td colspan="5">
         <m-no-data></m-no-data>
