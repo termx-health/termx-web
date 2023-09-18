@@ -37,7 +37,13 @@
       <div *mFormCol></div>
     </m-form-row>
 
-    <m-form-item mName="file" mLabel="web.integration.file-import.association.file" required>
+    <m-form-item mName="file" [mLabel]="fileLabel" required>
+      <ng-template #fileLabel>
+        <div class="m-items-middle">
+          <label>{{'web.integration.file-import.association.file' | translate}}</label>
+          <a (mClick)="downloadTemplate()" m-tooltip [mTitle]="'web.integration.file-import.association.download-template'"><m-icon mCode="download"/></a>
+        </div>
+      </ng-template>
       <div class="tw-flex-container">
         <input #fileInput type="file" name="file" [(ngModel)]="data.file" (ngModelChange)="analyze()" required>
 

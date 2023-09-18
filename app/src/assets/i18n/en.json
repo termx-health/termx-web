@@ -1072,7 +1072,8 @@
 					"mapped-column": "Mapped column",
 					"order": "Order",
 					"source": "Source",
-					"target": "Target"
+					"target": "Target",
+					"download-template": "Download template"
 				},
 				"code-system": {
 					"general": {

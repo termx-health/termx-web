@@ -1,5 +1,5 @@
 import {Component, ElementRef, Injectable, ViewChild} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {environment} from 'app/src/environments/environment';
 import {copyDeep, DestroyService, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
@@ -7,7 +7,7 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {mergeMap, Observable} from 'rxjs';
 import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../file-analysis.service';
 import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
-import {CodeSystemLibService} from 'term-web/resources/_lib';
+import {saveAs} from 'file-saver';
 
 interface AssociationFileImportRequest {
   codeSystemId?: string;
@@ -49,6 +49,13 @@ class AssociationFileImportService {
       mergeMap(resp => this.jobService.pollFinishedJobLog(resp.jobId, this.destroy$)),
     );
   };
+
+  public getTemplate(): void {
+    this.http.get(`${this.baseUrl}/csv-template`, {
+      responseType: 'blob',
+      headers: new HttpHeaders({Accept: 'application/csv'})
+    }).subscribe(res => saveAs(res, `association-import-template.csv`));
+  };
 }
 
 @Component({
@@ -75,12 +82,14 @@ export class AssociationFileImportComponent {
   @ViewChild('fileInput') protected fileInput: ElementRef<HTMLInputElement>;
 
   public constructor(
-    private http: HttpClient,
     private notificationService: MuiNotificationService,
-    private codeSystemLibService: CodeSystemLibService,
     private importService: AssociationFileImportService,
     private fileAnalysisService: FileAnalysisService
   ) {}
+
+  protected downloadTemplate(): void {
+    this.importService.getTemplate();
+  }
 
 
   protected analyze(): void {
@@ -96,7 +105,7 @@ export class AssociationFileImportComponent {
       this.loader.wrap('analyze', this.fileAnalysisService.analyze(req, file)).subscribe(({columns}) => {
         this.analyzeResponse = {
           origin: copyDeep(req),
-          columns: columns.map(c => ({...c})) ?? []
+          columns: columns.map(c => ({...c, mappedColumn: ['target', 'source', 'order'].includes(c.columnName) ? c.columnName : undefined})) ?? []
         };
       });
     }
