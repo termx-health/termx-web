@@ -2,13 +2,13 @@
   <div style="display: flex; gap: 1rem">
     <div class="tw-flex-container" style="flex: 1">
       <m-list mSeparated>
-        <m-list-item mClickable (click)="selectedResourceType = 'code-system'">
+        <m-list-item mClickable (mClick)="selectResourceType('code-system')">
           <span class="m-bold">{{'entities.code-system.plural' | translate}}</span>
         </m-list-item>
-        <m-list-item mClickable (click)="selectedResourceType = 'value-set'">
+        <m-list-item mClickable (mClick)="selectResourceType('value-set')">
           <span class="m-bold">{{'entities.value-set.plural' | translate}}</span>
         </m-list-item>
-        <m-list-item mClickable (click)="selectedResourceType = 'map-set'">
+        <m-list-item mClickable (mClick)="selectResourceType('map-set')">
           <span class="m-bold">{{'entities.map-set.plural' | translate}}</span>
         </m-list-item>
 <!--        <m-list-item mClickable (click)="selectedResourceType = 'page'">-->
