@@ -1806,6 +1806,7 @@
 				"fml-generation-failed": "Failed to generate FML",
 				"generate": "Generate",
 				"map-set": "ConceptMap",
+				"mapping": "Structure map",
 				"preview-hide": "Hide",
 				"preview-show": "Preview",
 				"resource-url": "Resource URL",
@@ -1824,7 +1825,8 @@
 				"new": "-- new --",
 				"type.conceptmap": "Concept Maps",
 				"type.definition": "Definitions",
-				"type.mapping": "Mapping"
+				"type.mapping": "Imports",
+				"type.mapping-main": "Mapping"
 			}
 		},
 		"value-set": {

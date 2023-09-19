@@ -1,11 +1,14 @@
 <form *ngIf="resource">
   <m-form-item mName="source" mLabel="entities.transformation-definition.source" required>
     <m-radio-group name="source" [(ngModel)]="resource.source">
-      <label m-radio-button mValue="local" *ngIf="resource.type !== 'mapping'">
+      <label m-radio-button mValue="local" *ngIf="resource !== definition.mapping">
         {{('entities.transformation-definition.source-local' | translate)}}
       </label>
       <label m-radio-button mValue="url">{{('entities.transformation-definition.source-url' | translate)}}</label>
-      <label m-radio-button mValue="static">{{('entities.transformation-definition.source-static' | translate)}}</label>
+      <label m-radio-button
+          mValue="static"
+          *ngIf="resource.type !== 'mapping' || resource === definition.mapping"
+      >{{('entities.transformation-definition.source-static' | translate)}}</label>
     </m-radio-group>
   </m-form-item>
 
@@ -23,7 +26,6 @@
       </m-form-item>
 
       <ng-container *ngIf="resource.reference.localId">
-        <m-divider/>
         <tw-structure-definition-tree [defId]="resource.reference.localId | toNumber" mode="view"/>
       </ng-container>
     </ng-container>
@@ -36,6 +38,17 @@
             (ngModelChange)="onMapSetSelect($event)"
             [valuePrimitive]="false"
         ></tw-map-set-search>
+      </m-form-item>
+    </ng-container>
+
+    <ng-container *ngIf="resource.type === 'mapping'">
+      <m-form-item mName="mapping" mLabel="web.transformation-definition.resource-form.mapping" required>
+        <tw-transformation-definition-select
+            name="mapping"
+            [ngModel]="resource.reference.localId | toNumber"
+            (ngModelChange)="onStructureMapSelect($event)"
+            [valuePrimitive]="false"
+        ></tw-transformation-definition-select>
       </m-form-item>
     </ng-container>
   </ng-container>
@@ -80,7 +93,7 @@
     <m-form-item *ngIf="{showPreview: false} as d" mName="content" [mLabel]="lbl" required>
       <ng-template #lbl>
         <span>{{'web.transformation-definition.resource-form.content' | translate}}</span>
-        <ng-container *ngIf="resource.type === 'mapping' && !resource.reference.content && definition.name">
+        <ng-container *ngIf="resource === definition.mapping && !resource.reference.content && definition.name">
           &nbsp;|&nbsp; <a (click)="generateMap()">{{'web.transformation-definition.resource-form.generate' | translate}}</a>
         </ng-container>
       </ng-template>
@@ -94,7 +107,9 @@
         </m-button>
 
         <ng-container *ngIf="resource.type === 'mapping'">
-          <m-button mSize="small"
+          <m-button
+              *ngIf="resource === definition.mapping"
+              mSize="small"
               mDisplay="dashed"
               [disabled]="!definition.name"
               [mTooltip]="!definition.name"

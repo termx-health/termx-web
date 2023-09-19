@@ -42,7 +42,7 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['resource']) {
       this.servers$.subscribe(resp => {
-        const {type, source, reference} = this.resource;
+        const {type, source, reference} = this.resource ?? {};
 
         if (source === 'url') {
           const matchedServerUrl = resp.map(s => s.rootUrl).find(url => reference.resourceUrl?.startsWith(this.normalizeUrl(url) + this.urlSuffix[type]));
@@ -58,14 +58,20 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
   }
 
   protected onDefinitionSelect(def: StructureDefinition): void {
-    this.resource.reference.localId = String(def.id);
-    this.resource.name = def.code;
+    this.resource.reference.localId = def ? String(def.id) : undefined;
+    this.resource.name = def ? def.code : undefined;
   }
 
   protected onMapSetSelect(ms: MapSet): void {
-    this.resource.reference.localId = ms.id;
-    this.resource.name = ms.id;
+    this.resource.reference.localId = ms?.id;
+    this.resource.name = ms?.id;
   }
+
+  protected onStructureMapSelect(def: TransformationDefinition): void {
+    this.resource.reference.localId = def ? String(def.id) : undefined;
+    this.resource.name = def ? def.name : undefined;
+  }
+
 
   protected onResourceUrlChange(res: TransformationDefinitionResource): void {
     if (res.reference['_fhir']) {
@@ -193,11 +199,11 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
   }
 
   protected findUrl = (content: string): string => {
-    if (content.startsWith('<')) {
+    if (content?.startsWith('<')) {
       const xml = new DOMParser().parseFromString(content, 'text/xml');
       return xml.getElementsByTagName('url')[0].getAttribute('value');
     }
-    if (content.startsWith('{')) {
+    if (content?.startsWith('{')) {
       return JSON.parse(content)['url'];
     }
   };

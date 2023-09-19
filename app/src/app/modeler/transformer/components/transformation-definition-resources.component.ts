@@ -49,7 +49,7 @@ import {remove} from '@kodality-web/core-util';
 })
 export class TransformationDefinitionResourcesComponent implements OnInit {
   @Input() public definition: TransformationDefinition;
-  public types = ['definition', 'conceptmap'];
+  public types: TransformationDefinitionResource['type'][] = ['definition', 'conceptmap', 'mapping'];
   public selectedResource: TransformationDefinitionResource;
 
   public ngOnInit(): void {

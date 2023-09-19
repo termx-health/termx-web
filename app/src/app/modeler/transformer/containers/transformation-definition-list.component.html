@@ -9,7 +9,7 @@
     </tw-add-button>
   </div>
 
-  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading">
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
     <tr *mTableHead>
       <th mColumnKey="name">{{'entities.transformation-definition.name' | translate}}</th>
       <th class="tw-table-min-width"></th>

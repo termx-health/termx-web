@@ -21,6 +21,7 @@ export class TransformationDefinitionListComponent implements OnInit {
     private stateStore: ComponentStateStore,
     private router: Router,
   ) {
+    this.query.summary = true;
     this.query.sort = 'id';
   }
 
