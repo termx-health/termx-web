@@ -1,7 +1,7 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {collect, DestroyService, LoadingManager, SearchResult, validateForm} from '@kodality-web/core-util';
+import {collect, DestroyService, isDefined, LoadingManager, SearchResult, validateForm} from '@kodality-web/core-util';
 import {
   SnomedBranch,
   SnomedDescription, SnomedDescriptionSearchParams,
@@ -55,14 +55,16 @@ export class SnomedBranchManagementComponent implements OnInit {
 
   private loadBranch(path: string): void {
     this.loader.wrap('load', forkJoin([
+
       this.snomedService.loadBranch(path),
       this.snomedService.findBranchDescriptions(path, this.descriptionParams),
-      this.snomedTranslationService.loadTranslations({active: true, unlinked: true})
-    ])).subscribe(([b, descriptions, translations]) => {
+    ])).subscribe(([b, descriptions]) => {
       this.snomedBranch = this.writeBranch(b);
       this.descriptions = {data: descriptions.items || [], meta: {total: descriptions.total, offset: descriptions.offset}};
-      this.translations = translations;
     });
+
+    this.snomedTranslationService.loadTranslations({active: true, unlinked: true})
+      .subscribe(translations => this.translations = translations);
   }
 
   private loadData(): void {
@@ -128,6 +130,9 @@ export class SnomedBranchManagementComponent implements OnInit {
   }
 
   protected encodeUriComponent = (c: string): string => {
+    if (!isDefined(c)) {
+      return '';
+    }
     return c.split('/').join('--');
   };
 
