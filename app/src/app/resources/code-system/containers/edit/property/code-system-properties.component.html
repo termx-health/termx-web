@@ -42,6 +42,14 @@
           <m-checkbox [(ngModel)]="p.preferred" [name]="ngModelName"></m-checkbox>
         </ng-template>
       </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.show-in-list'" mName="showInList">
+        <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
+          <m-checkbox [(ngModel)]="p.showInList" readOnly [name]="ngModelName"></m-checkbox>
+        </ng-template>
+        <ng-template #editTemplate let-p let-ngModelName="ngModelName">
+          <m-checkbox [(ngModel)]="p.showInList" [name]="ngModelName"></m-checkbox>
+        </ng-template>
+      </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.description'" mName="description">
         <ng-template #viewTemplate let-p>{{p.description | localName}}</ng-template>
         <ng-template #editTemplate let-p let-ngModelName="ngModelName">
@@ -97,6 +105,11 @@
           <m-checkbox [(ngModel)]="p.required" readOnly [name]="ngModelName"></m-checkbox>
         </ng-template>
       </m-editable-column>
+      <m-editable-column [mTitle]="'entities.entity-property.show-in-list'" mName="showInList">
+        <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
+          <m-checkbox [(ngModel)]="p.showInList" readOnly [name]="ngModelName"></m-checkbox>
+        </ng-template>
+      </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.description'">
         <ng-template #viewTemplate let-p>{{p.description | localName}}</ng-template>
       </m-editable-column>
@@ -148,6 +161,9 @@
                 </m-form-item>
                 <m-form-item mLabel="entities.entity-property.preferred" mName="preferred-{{prefix}}">
                   <m-checkbox [(ngModel)]="p.preferred" name="preferred-{{prefix}}"></m-checkbox>
+                </m-form-item>
+                <m-form-item mLabel="entities.entity-property.show-in-list" mName="showInList-{{prefix}}">
+                  <m-checkbox [(ngModel)]="p.showInList" name="showInList-{{prefix}}"></m-checkbox>
                 </m-form-item>
               </div>
             </m-form-row>

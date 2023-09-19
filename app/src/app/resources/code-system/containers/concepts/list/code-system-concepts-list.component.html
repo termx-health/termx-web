@@ -1,10 +1,7 @@
 <tw-table [(filterOpen)]="filter.open">
   <div class="m-justify-between" style="margin-bottom: 1rem">
     <div class="m-items-middle" style="flex: 1">
-      <m-button *ngIf="codeSystem.hierarchyMeaning"
-          (mClick)="toggleView()"
-          [mDisplay]="groupOpened ? 'primary' : 'default'"
-      >
+      <m-button *ngIf="codeSystem.hierarchyMeaning" (mClick)="toggleView()" [mDisplay]="groupOpened ? 'primary' : 'default'">
         <m-icon mCode="folder-open"></m-icon>
       </m-button>
 
@@ -26,7 +23,9 @@
           [mDisplay]="filter.languages || filter.propertyName || filter.propertyValue || filter.version ? 'primary' : 'default'">
         <m-icon mCode="filter"></m-icon>
       </m-button>
-      <m-button [routerLink]="['/resources/code-systems/validator', {'code-system': codeSystem?.id, 'version': version?.id || ''}]" m-tooltip mTitle="web.code-system.form.concepts.validate">
+      <m-button [routerLink]="['/resources/code-systems/validator', {'code-system': codeSystem?.id, 'version': version?.id || ''}]"
+          m-tooltip
+          mTitle="web.code-system.form.concepts.validate">
         <m-icon mCode="check-circle"></m-icon>
       </m-button>
     </div>
@@ -71,12 +70,9 @@
           <th class="tw-table-min-width"></th>
         </tr>
 
-        <tr *mTableRow="let concept"
-            class="m-clickable"
-            [style.background]="selectedConcept?.code === concept.code ? 'var(--color-table-background--expanded)' :
+        <tr *mTableRow="let concept" class="m-clickable" [style.background]="selectedConcept?.code === concept.code ? 'var(--color-table-background--expanded)' :
             concept.versions?.[concept.versions?.length - 1]?.status === 'draft' ? 'var(--color-amber-0)' :
-            concept.versions?.[concept.versions?.length - 1]?.status === 'retired' ? 'var(--color-red-0)' : 'initial'"
-            (click)="selectConcept(concept)">
+            concept.versions?.[concept.versions?.length - 1]?.status === 'retired' ? 'var(--color-red-0)' : 'initial'" (click)="selectConcept(concept)">
           <ng-container *ngTemplateOutlet="rowContent; context: {node: {code: concept.code, concept}, level: 0}"/>
         </tr>
 
@@ -108,13 +104,11 @@
       </m-table>
     </div>
 
-    <tw-code-system-concepts-list-concept-preview
-        style="flex: 2"
+    <tw-code-system-concepts-list-concept-preview style="flex: 2"
         *ngIf="selectedConcept?.version"
         [codeSystemId]="codeSystem.id"
         [version]="selectedConcept.version"
-        [editRoute]="(selectedConcept.code | apply: getConceptEditRoute)?.path"
-    ></tw-code-system-concepts-list-concept-preview>
+        [editRoute]="(selectedConcept.code | apply: getConceptEditRoute)?.path"></tw-code-system-concepts-list-concept-preview>
   </div>
 
 
@@ -159,15 +153,13 @@
     </td>
     <td>
       <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
-        <ng-container *ngFor="let property of (node.concept | apply:getPropertyValues)">
-          <ng-container *ngIf="!tableView.properties?.length || (tableView.properties | includes: property.entityProperty)">
-            <div class="m-bold">{{property.entityProperty}}</div>
-            <tw-property-value-input style="text-align: right"
-                viewMode
-                [ngModel]="property.value"
-                [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
-                [codeSystem]="codeSystem.id"></tw-property-value-input>
-          </ng-container>
+        <ng-container *ngFor="let property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableView.properties:codeSystem.properties)">
+          <div class="m-bold">{{property.entityProperty}}</div>
+          <tw-property-value-input style="text-align: right"
+              viewMode
+              [ngModel]="property.value"
+              [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
+              [codeSystem]="codeSystem.id"></tw-property-value-input>
         </ng-container>
       </div>
     </td>
@@ -189,7 +181,7 @@
           </a>
         </ng-container>
         <ng-container *ngIf="node.expandable">
-          <a *m-dropdown-item  m-popconfirm mPopconfirmTitle="core.confirm" (mOnConfirm)="propagateProperties(node.concept)">
+          <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.confirm" (mOnConfirm)="propagateProperties(node.concept)">
             {{'web.code-system-concept.list.propagate-properties' | translate}}
           </a>
         </ng-container>

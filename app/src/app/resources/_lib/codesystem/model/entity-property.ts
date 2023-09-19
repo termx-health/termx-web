@@ -6,6 +6,7 @@ export class EntityProperty extends DefinedProperty {
   public orderNumber?: number;
   public preferred?: boolean;
   public required?: boolean;
+  public showInList?: boolean;
 
   public definedEntityPropertyId?: number;
 }

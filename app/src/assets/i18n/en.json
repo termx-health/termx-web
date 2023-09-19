@@ -146,6 +146,7 @@
 			"order-number": "Order",
 			"preferred": "Preferred",
 			"required": "Required",
+			"show-in-list": "Show in list",
 			"rule": {
 				"code-systems": "Code systems",
 				"compose": "Compose",

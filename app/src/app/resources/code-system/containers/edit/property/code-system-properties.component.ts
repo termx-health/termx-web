@@ -17,8 +17,8 @@ export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
   protected designationProperties: EntityProperty[] = [];
   protected basicProperties: EntityProperty[];
 
-  protected designationRowInstance: EntityProperty = {kind: 'designation', type: 'string', rule: {filters: []}, status: 'active'};
-  protected propertyRowInstance: EntityProperty = {kind: 'property', rule: {filters: []}, status: 'active'};
+  protected designationRowInstance: EntityProperty = {kind: 'designation', type: 'string', showInList: true, rule: {filters: []}, status: 'active'};
+  protected propertyRowInstance: EntityProperty = {kind: 'property', showInList: true, rule: {filters: []}, status: 'active'};
   protected filterRowInstance: PropertyRuleFilter = {type: 'entity-property'};
   protected loader = new LoadingManager();
 

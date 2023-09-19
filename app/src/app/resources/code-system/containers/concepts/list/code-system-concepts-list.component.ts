@@ -214,6 +214,12 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   protected getPropertyValues = (concept: CodeSystemConcept): EntityPropertyValue[] => {
     return concept.versions.flatMap(v => v.propertyValues).filter(pv => isDefined(pv));
   };
+  protected filterPropertyValues = (pv: EntityPropertyValue, selectedProperties: string[], csProperties: EntityProperty[]): boolean => {
+    if (selectedProperties?.length > 0) {
+      return selectedProperties.includes(pv.entityProperty);
+    }
+    return !!csProperties?.find(p => p.id === pv.entityPropertyId && p.showInList);
+  };
 
   protected getSupportedLangs = (version: CodeSystemVersion, versions: CodeSystemVersion[]) => {
     if (version) {
