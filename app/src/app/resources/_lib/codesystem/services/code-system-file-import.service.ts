@@ -14,7 +14,7 @@ export interface FileProcessingRequestProperty {
   propertyTypeFormat?: string;
   propertyDelimiter?: string;
   preferred?: boolean;
-  lang?: string;
+  language?: string;
 }
 
 export interface FileProcessingRequest {
@@ -28,7 +28,7 @@ export interface FileProcessingRequest {
     description?: LocalizedName;
   };
   version?: {
-    version?: string;
+    number?: string;
     status?: string;
     releaseDate?: Date;
   };
@@ -36,8 +36,8 @@ export interface FileProcessingRequest {
   properties?: FileProcessingRequestProperty[];
   generateValueSet?: boolean;
   dryRun?: boolean;
-  cleanRun?: boolean
-  cleanConceptRun?: boolean
+  cleanVersion?: boolean
+  replaceConcept?: boolean
 }
 
 

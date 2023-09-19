@@ -154,8 +154,8 @@ export class CodeSystemFileImportComponent implements OnInit {
       properties: this.analyzeResponse.parsedProperties?.filter(p => p.import),
       generateValueSet: this.data.generateValueSet,
       dryRun: this.data.dryRun,
-      cleanRun: this.data.cleanRun,
-      cleanConceptRun: this.data.cleanConceptRun,
+      cleanVersion: this.data.cleanRun,
+      replaceConcept: this.data.cleanConceptRun,
 
       // meta
       codeSystem: {
@@ -167,7 +167,7 @@ export class CodeSystemFileImportComponent implements OnInit {
         })
       },
       version: {
-        version: this.data.codeSystemVersion.version,
+        number: this.data.codeSystemVersion.version,
         status: this.data.codeSystemVersion.status,
         releaseDate: this.data.codeSystemVersion.releaseDate,
       },
@@ -237,7 +237,7 @@ export class CodeSystemFileImportComponent implements OnInit {
         pp.propertyType = prop.propertyType;
         pp.propertyTypeFormat = prop.propertyTypeFormat;
         pp.preferred = prop.preferred;
-        pp.lang = prop.lang;
+        pp.language = prop.language;
         pp.import = prop.import;
         this.onPropertyPreferredChange(pp);
       });

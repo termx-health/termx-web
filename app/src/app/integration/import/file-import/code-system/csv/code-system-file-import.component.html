@@ -99,7 +99,7 @@
 
           <td>
             <tw-value-set-concept-select *ngIf="item.propertyType === 'designation' && !(['concept-code', 'hierarchical-concept'] | includes:item.propertyName)"
-                [(ngModel)]="item.lang"
+                [(ngModel)]="item.language"
                 valueSet="languages"/>
           </td>
 
