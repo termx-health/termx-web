@@ -7,6 +7,7 @@ interface EditorFacade {
   getBundle: () => Bundle,
   getStructureMap: () => object,
   updateStructureMap: (sm: object) => void,
+  getImportStructureMaps: () => object[],
   renderFml: (sm: any) => Observable<string>
 }
 
@@ -56,6 +57,7 @@ const prepareEditor = (state: EditorState, editorFacade: EditorFacade): void => 
 const loadResources = (state: EditorState, editorFacade: EditorFacade): void => {
   const bundle = editorFacade.getBundle();
   const structureMap = editorFacade.getStructureMap();
+  const externalStructureMaps = editorFacade.getImportStructureMaps();
   _updateState(state, {
     structureMap,
   });
@@ -63,7 +65,8 @@ const loadResources = (state: EditorState, editorFacade: EditorFacade): void => 
   _postMessage(state, {
     action: 'load',
     bundle,
-    structureMap
+    structureMap,
+    externalStructureMaps
   });
 };
 

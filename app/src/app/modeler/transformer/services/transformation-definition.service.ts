@@ -30,6 +30,10 @@ export class TransformationDefinitionService {
     return this.http.post<FhirStructureDefinition[]>(`${this.baseUrl}/transform-resources`, resources);
   }
 
+  public transformResourceContent(resource: TransformationDefinitionResource): Observable<any> {
+    return this.http.post(`${this.baseUrl}/transform-resource-content`, resource);
+  }
+
   public baseResources(): Observable<Bundle> {
     return this.http.get<Bundle>(`${this.baseUrl}/base-resources`);
   }

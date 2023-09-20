@@ -8,7 +8,7 @@ import {Fhir} from 'fhir/fhir';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {launchFMLEditor} from 'term-web/modeler/transformer/components/fml.editor';
 import {Bundle} from 'fhir/model/bundle';
-import {forkJoin, map, of, shareReplay} from 'rxjs';
+import {defaultIfEmpty, forkJoin, map, of, shareReplay} from 'rxjs';
 import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
 import {group, HttpCacheService, isNil, LoadingManager} from '@kodality-web/core-util';
 import {TerminologyServerLibService} from 'term-web/space/_lib';
@@ -108,12 +108,19 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
 
   protected launchEditor(): void {
     this.loader.wrap('visual-editor', forkJoin([
-      this.httpCache.put('base-resources', this.transformationDefinitionService.baseResources()),
-      this.transformationDefinitionService.transformResources(this.definition.resources),
       this.isFml(this.resource.reference.content)
         ? this.transformationDefinitionService.parseFml(this.resource.reference.content).pipe(map(r => r.json))
-        : of(this.resource.reference.content)
-    ])).subscribe(([bundle, definitions, json]: [Bundle, FhirStructureDefinition[], string]) => {
+        : of(this.resource.reference.content),
+      // bundle
+      this.httpCache.put('base-resources', this.transformationDefinitionService.baseResources()),
+      // definitions
+      this.transformationDefinitionService.transformResources(this.definition.resources),
+      // import mappings
+      forkJoin(this.definition.resources
+        .filter(r => r.type === 'mapping')
+        .map(r => this.transformationDefinitionService.transformResourceContent(r))
+      ).pipe(defaultIfEmpty([]))
+    ])).subscribe(([json, bundle, definitions, resources]: [string, Bundle, FhirStructureDefinition[], object[]]) => {
       if (isNil(json)) {
         return;
       }
@@ -139,6 +146,7 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
               error: err => this.notificationService.error("web.transformation-definition.resource-form.fml-generation-failed", err)
             }).add(() => this.resource.reference.content = JSON.stringify(sm, null, 2));
           },
+          getImportStructureMaps: () => resources,
           renderFml: sm => this.transformationDefinitionService.generateFml(sm)
         }
       });
