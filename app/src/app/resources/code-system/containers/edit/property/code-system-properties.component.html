@@ -134,8 +134,8 @@
                 <m-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.name" name="name-{{prefix}}" required></m-input>
                 <label *ngIf="p.definedEntityPropertyId">{{p.name}}</label>
               </m-form-item>
-              <m-form-item *mFormCol mLabel="entities.entity-property.uri" mName="uri-{{prefix}}" required>
-                <m-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.uri" name="uri-{{prefix}}" required></m-input>
+              <m-form-item *mFormCol mLabel="entities.entity-property.uri" mName="uri-{{prefix}}">
+                <m-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.uri" name="uri-{{prefix}}"></m-input>
                 <label *ngIf="p.definedEntityPropertyId">{{p.uri}}</label>
               </m-form-item>
             </m-form-row>
