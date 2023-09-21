@@ -25,6 +25,6 @@ export class ResourceRelatedArtifactWidgetComponent implements OnChanges {
   }
 
   public openArtifact(artifact: RelatedArtifact): void {
-    this.router.navigate([RelatedArtifactUtil.getUrl(artifact)]);
+    this.router.navigate(RelatedArtifactUtil.getCommands(artifact));
   }
 }
