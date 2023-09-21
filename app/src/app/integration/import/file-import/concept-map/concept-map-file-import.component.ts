@@ -6,7 +6,7 @@ import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
 import {MapSet, MapSetFileImportService, MapSetLibService, MapSetVersion} from '../../../../resources/_lib';
 import {JobLog} from 'term-web/sys/_lib';
-import {FileProcessingRequest} from 'term-web/resources/_lib/mapset/services/map-set-file-import.service';
+import {FileProcessingRequest} from 'term-web/resources/_lib/map-set/services/map-set-file-import.service';
 
 @Component({
   templateUrl: 'concept-map-file-import.component.html',

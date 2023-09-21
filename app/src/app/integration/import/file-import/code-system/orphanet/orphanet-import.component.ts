@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 import {CodeSystem, CodeSystemLibService, ValueSetLibService} from '../../../../../resources/_lib';
 import {FileAnalysisService} from '../../file-analysis.service';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
-import {CodeSystemFileImportService} from 'term-web/resources/_lib/codesystem/services/code-system-file-import.service';
+import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
 import {IntegrationImportConfiguration, IntegrationOrphanetLibService} from 'term-web/integration/_lib';
 
 

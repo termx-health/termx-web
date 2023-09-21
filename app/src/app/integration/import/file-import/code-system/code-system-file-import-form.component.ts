@@ -5,7 +5,7 @@ import {of} from 'rxjs';
 import {CodeSystem, CodeSystemLibService, CodeSystemVersion} from '../../../../resources/_lib';
 import {
   CodeSystemFileImportService
-} from 'term-web/resources/_lib/codesystem/services/code-system-file-import.service';
+} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
 
 
 @Component({

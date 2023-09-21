@@ -1130,6 +1130,12 @@
 					"source-value-set": "",
 					"target-value-set": ""
 				},
+				"value-set": {
+					"import": "Value Set file import",
+					"file": "File",
+					"import-data": "Import data",
+					"validate-data": "Validate data only"
+				},
 				"create-new": "Create new",
 				"not-found": "Not found?",
 				"process": "Process",

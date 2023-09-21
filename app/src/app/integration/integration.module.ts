@@ -39,6 +39,7 @@ import {SnomedService} from 'term-web/integration/snomed/services/snomed-service
 import {CodeSystemFileImportComponent} from 'term-web/integration/import/file-import/code-system/csv/code-system-file-import.component';
 import {OrphanetImportComponent} from 'term-web/integration/import/file-import/code-system/orphanet/orphanet-import.component';
 import {MapSetModule} from 'term-web/resources/map-set/map-set.module';
+import {ValueSetFileImportComponent} from 'term-web/integration/import/file-import/value-set/value-set-file-import.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -58,6 +59,7 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'orphanet/import', component: OrphanetImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'loinc/import', component: LoincImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
+      {path: 'file-import/value-set', component: ValueSetFileImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.edit']}},
       {path: 'file-import/association', component: AssociationFileImportComponent, data: {privilege: ['*.MapSet.edit']}}
     ]
@@ -121,6 +123,7 @@ export const INTEGRATION_ROUTES: Routes = [
     CodeSystemFileImportComponent,
     OrphanetImportComponent,
     ConceptMapFileImportComponent,
+    ValueSetFileImportComponent,
     AssociationFileImportComponent
   ],
   providers: [

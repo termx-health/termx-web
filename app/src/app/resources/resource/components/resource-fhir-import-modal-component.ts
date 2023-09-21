@@ -5,8 +5,8 @@ import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, Fhir
 import {Observable, of} from 'rxjs';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {CodeSystemFileImportService} from 'term-web/resources/_lib/codesystem/services/code-system-file-import.service';
-import {ValueSetFileImportService} from 'term-web/resources/_lib/valueset/services/value-set-file-import.service';
+import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
+import {ValueSetFileImportService} from 'term-web/resources/_lib/value-set/services/value-set-file-import.service';
 import {MapSetFileImportService} from 'term-web/resources/_lib';
 
 
@@ -90,7 +90,7 @@ export class ResourceFhirImportModalComponent {
     const file = this.fileInput?.nativeElement?.files?.[0];
     const importRequestMap: {[k: string]: Observable<JobLog>} = {
       'CodeSystem': this.codeSystemFileImportService.processRequest({type: this.params.type, codeSystem: {id: this.params.id}}, file, this.destroy$),
-      'ValueSet': this.valueSetFileImportService.processRequest({type: this.params.type, valueSetId: this.params.id}, file, this.destroy$),
+      'ValueSet': this.valueSetFileImportService.processRequest({type: this.params.type, valueSet: {id: this.params.id}}, file, this.destroy$),
       'ConceptMap': this.mapSetFileImportService.processRequest({
         type: this.params.type,
         mapSet: {id: this.params.id},

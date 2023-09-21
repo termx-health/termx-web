@@ -8,7 +8,7 @@ import {TaskService} from 'term-web/task/services/task-service';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {CodeName} from '@kodality-web/marina-util';
 import {User, UserLibService} from 'term-web/user/_lib';
-import {CodeSystemVersionLibService} from 'term-web/resources/_lib/codesystem/services/code-system-version-lib.service';
+import {CodeSystemVersionLibService} from 'term-web/resources/_lib/code-system/services/code-system-version-lib.service';
 import {CodeSystemEntityVersionLibService, MapSetVersionLibService, ValueSetVersionLibService} from 'term-web/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
 import {PageCommentLibService, PageLibService} from 'term-web/wiki/_lib';

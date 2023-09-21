@@ -11,7 +11,7 @@ import {
   CodeSystemFileImportService,
   FileImportPropertyRow,
   FileProcessingRequest
-} from 'term-web/resources/_lib/codesystem/services/code-system-file-import.service';
+} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
 import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 

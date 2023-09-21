@@ -1,5 +1,5 @@
 import {LocalizedName} from '@kodality-web/marina-util';
-import {EntityProperty} from '../../codesystem';
+import {EntityProperty} from '../../code-system';
 
 export class DefinedProperty {
   public id?: number;

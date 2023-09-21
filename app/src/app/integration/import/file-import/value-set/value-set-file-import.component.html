@@ -1,0 +1,161 @@
+<form #form="ngForm">
+
+  <m-card>
+    <div *m-card-header class="m-justify-between">
+      <nz-breadcrumb>
+        <nz-breadcrumb-item>{{'web.integration.file-import.title' | translate}}</nz-breadcrumb-item>
+        <nz-breadcrumb-item>{{'web.integration.file-import.value-set.import' | translate}}</nz-breadcrumb-item>
+      </nz-breadcrumb>
+    </div>
+
+    <div>
+      <ng-container *ngIf="!isNewResource; else resourceForm">
+        <m-form-item mName="id" mLabel="entities.value-set.id" required>
+          <tw-value-set-search name="id" [(ngModel)]="data.valueSet.id" (ngModelChange)="onValueSetSelect($event)" valuePrimitive autofocus required/>
+          <div style="margin-top: 0.35rem; font-size: 0.85rem">
+            {{'web.integration.file-import.not-found' | translate}}
+            <a (mClick)="createValueSet()">{{'web.integration.file-import.create-new' | translate}}</a>
+          </div>
+        </m-form-item>
+
+        <m-form-item *ngIf="data.valueSet.id">
+          <m-alert class="tw-alert--vertical" mType="info">
+            <m-form-item mLabel="entities.value-set.uri">
+              {{data.loadedValueSet?.uri || '-'}}
+            </m-form-item>
+            <m-form-item mLabel="entities.value-set.title">
+              {{data.loadedValueSet?.title | localName:'-'}}
+            </m-form-item>
+            <m-form-item mLabel="entities.value-set.description">
+              {{data.loadedValueSet?.description | localName:'-'}}
+            </m-form-item>
+          </m-alert>
+        </m-form-item>
+      </ng-container>
+
+      <ng-template #resourceForm>
+        <m-form-item mName="id" mLabel="entities.value-set.id" required>
+          <m-input name="id" [(ngModel)]="data.valueSet.id" autofocus [focusTimeout]="50" required/>
+        </m-form-item>
+
+        <m-form-item mName="title" mLabel="entities.value-set.title" required>
+          <m-multi-language-input name="title" [(ngModel)]="data.valueSet.title" required/>
+        </m-form-item>
+
+        <m-form-item mName="uri" mLabel="entities.value-set.uri" required>
+          <m-input name="uri" [(ngModel)]="data.valueSet.uri" required/>
+        </m-form-item>
+
+        <m-form-item mName="description" mLabel="entities.value-set.description">
+          <m-multi-language-input name="description" [(ngModel)]="data.valueSet.description"/>
+        </m-form-item>
+      </ng-template>
+    </div>
+
+    <div *ngIf="data.valueSet?.id || isNewResource">
+      <ng-container *ngIf="!isNewVersion; else mapSetVersionForm">
+        <m-form-item mName="versionVersion" mLabel="entities.value-set-version.version" required mLabelHint="Draft versions only">
+          <m-select name="versionVersion" [(ngModel)]="data.version.number" autoSelect required>
+            <m-option *ngFor="let v of data.loadedValueSet?.versions | filter: filterVersion: 'draft'" [mLabel]="v.version" [mValue]="v.version"/>
+          </m-select>
+          <div style="margin-top: 0.35rem; font-size: 0.85rem">
+            {{'web.integration.file-import.not-found' | translate}}
+            <a (mClick)="createValueSetVersion()">{{'web.integration.file-import.create-new' | translate}}</a>
+          </div>
+        </m-form-item>
+      </ng-container>
+
+      <ng-template #mapSetVersionForm>
+        <m-form-item mName="versionVersion" mLabel="entities.value-set-version.version" required>
+          <tw-semantic-version-select name="versionVersion"
+              [(ngModel)]="data.version.number"
+              [versions]="isNewResource ? [] : (data.loadedValueSet?.versions | apply: getVersions)"
+              required/>
+        </m-form-item>
+
+        <m-form-item mName="versionStatus" mLabel="entities.value-set-version.status" required>
+          <tw-value-set-concept-select name="versionStatus" [(ngModel)]="data.version.status" valueSet="publication-status" required/>
+        </m-form-item>
+
+        <m-form-item mName="versionReleaseDate" mLabel="entities.value-set-version.release-date" required>
+          <m-date-picker name="versionReleaseDate" [(ngModel)]="data.version.releaseDate" required/>
+        </m-form-item>
+      </ng-template>
+    </div>
+
+    <div *ngIf="data.version?.number || isNewVersion">
+      <m-divider mText="entities.value-set-version.rule-set"></m-divider>
+      <ng-container *ngIf="!isNewRule; else mapSetRuleForm">
+        <m-form-item mName="rule" mLabel="Rule" required>
+          <m-select name="rule" [(ngModel)]="data.version.rule.id" autoSelect required>
+            <m-option *ngFor="let r of (data.loadedValueSet?.versions | apply:getSelectedVersion:data.version.number)?.ruleSet?.rules"
+                [mLabel]="[r.codeSystem, r.codeSystemVersion?.version] | join: ' | '"
+                [mValue]="r.id"/>
+          </m-select>
+          <div style="margin-top: 0.35rem; font-size: 0.85rem">
+            {{'web.integration.file-import.not-found' | translate}}
+            <a (mClick)="createValueSetVersionRule()">{{'web.integration.file-import.create-new' | translate}}</a>
+          </div>
+        </m-form-item>
+      </ng-container>
+
+      <ng-template #mapSetRuleForm>
+        <m-form-row>
+          <m-form-item *mFormCol mName="ruleCS" mLabel="entities.value-set-rule-set.rule.code-system" required>
+            <tw-code-system-search name="ruleCS" [(ngModel)]="data.version.rule.codeSystem" required valuePrimitive></tw-code-system-search>
+          </m-form-item>
+          <m-form-item *mFormCol mName="ruleCSV" mLabel="entities.value-set-rule-set.rule.code-system-version" required>
+            <tw-code-system-version-select name="codeSystemVersion"
+                [(ngModel)]="data.version.rule.codeSystemVersionId"
+                [codeSystemId]="data.version.rule.codeSystem"
+                valuePrimitive
+                required/>
+          </m-form-item>
+        </m-form-row>
+      </ng-template>
+
+      <m-form-item mName="concepts" mLabel="entities.value-set-rule-set.rule.concepts" required>
+        <m-radio-group name="concepts" [(ngModel)]="data.concepts" required>
+          <label m-radio-button [mValue]="'all'">{{'web.value-set-version.form.rule-set.rule.all' | translate}}</label>
+          <label m-radio-button [mValue]="'exact'">{{'web.value-set-version.form.rule-set.rule.exact' | translate}}</label>
+        </m-radio-group>
+      </m-form-item>
+
+      <input *ngIf="data.concepts === 'exact'" #fileInput type="file" name="file" [(ngModel)]="data.file" (ngModelChange)="analyze()" required>
+
+      <ng-container *ngIf="analyzeResponse?.columns">
+        <m-form-row>
+          <m-form-item *mFormCol mName="concept" mLabel="entities.value-set-version-concept.concept" required>
+            <m-select name="concept" [(ngModel)]="data.mapping.codeColumnName" required>
+              <m-option *ngFor="let col of analyzeResponse?.columns" [mLabel]="col.columnName" [mValue]="col.columnName"></m-option>
+            </m-select>
+          </m-form-item>
+          <m-form-item *mFormCol mName="display" mLabel="entities.value-set-version-concept.display">
+            <m-select name="display" [(ngModel)]="data.mapping.displayColumnName">
+              <m-option *ngFor="let col of analyzeResponse?.columns" [mLabel]="col.columnName" [mValue]="col.columnName"></m-option>
+            </m-select>
+          </m-form-item>
+        </m-form-row>
+      </ng-container>
+    </div>
+
+    <tw-import-job-log *ngIf="jobResponse" [jobLog]="jobResponse"/>
+
+    <div *m-card-footer class="m-items-middle">
+      <m-radio-group name="dryRun" [(ngModel)]="data.dryRun" required>
+        <label m-radio-button [mValue]="false">{{'web.integration.file-import.value-set.import-data' | translate}}</label>
+        <label m-radio-button [mValue]="true">{{'web.integration.file-import.value-set.validate-data' | translate}}</label>
+      </m-radio-group>
+
+      <m-button style="flex: 1" [mLoading]="loader.state['processing']" [disabled]="form.invalid" (click)="process()">
+        {{'web.integration.file-import.process' | translate}}
+      </m-button>
+    </div>
+  </m-card>
+</form>
+
+
+<ng-template #successNotificationContent>
+  <a (click)="openValueSet(data.valueSet.id)">{{data.valueSet.id}}</a>
+</ng-template>
+
