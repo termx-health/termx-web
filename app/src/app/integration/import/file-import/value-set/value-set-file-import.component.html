@@ -98,7 +98,6 @@
           </div>
         </m-form-item>
       </ng-container>
-
       <ng-template #mapSetRuleForm>
         <m-form-row>
           <m-form-item *mFormCol mName="ruleCS" mLabel="entities.value-set-rule-set.rule.code-system" required>
@@ -113,7 +112,6 @@
           </m-form-item>
         </m-form-row>
       </ng-template>
-
       <m-form-item mName="concepts" mLabel="entities.value-set-rule-set.rule.concepts" required>
         <m-radio-group name="concepts" [(ngModel)]="data.concepts" required>
           <label m-radio-button [mValue]="'all'">{{'web.value-set-version.form.rule-set.rule.all' | translate}}</label>
@@ -121,7 +119,32 @@
         </m-radio-group>
       </m-form-item>
 
-      <input *ngIf="data.concepts === 'exact'" #fileInput type="file" name="file" [(ngModel)]="data.file" (ngModelChange)="analyze()" required>
+      <ng-container *ngIf="data.concepts === 'exact'">
+        <m-divider mText="web.integration.file-import.value-set.source"></m-divider>
+        <m-form-item mName="sourceImportType">
+          <div class="m-items-middle">
+            <m-radio-group name="sourceImportType" [(ngModel)]="data.sourceType" (ngModelChange)="data.file = undefined; data.link = undefined;" required>
+              <label m-radio-button [mValue]="'link'">{{'web.integration.file-import.code-system.source.link' | translate}}</label>
+              <label m-radio-button [mValue]="'file'">{{'web.integration.file-import.code-system.source.file' | translate}}</label>
+            </m-radio-group>
+
+            <ng-container [ngSwitch]="data.sourceType">
+              <m-input *ngSwitchCase="'link'" name="sourceImportLink" [(ngModel)]="data.link" style="flex: 1" required/>
+              <input *ngSwitchCase="'file'" #fileInput name="sourceImportFile" type="file" [(ngModel)]="data.file" required>
+            </ng-container>
+
+            <m-button (mClick)="analyze()">{{'web.integration.file-import.value-set.analyze'| translate}}</m-button>
+          </div>
+        </m-form-item>
+
+        <m-form-item mName="sourceImportMode" [mLabel]="'File format'" required>
+          <m-radio-group name="sourceImportMode" [(ngModel)]="data.type" required>
+            <label m-radio mValue="csv">{{'web.integration.file-import.code-system.source.types.csv' | translate}}</label>
+            <label m-radio mValue="tsv">{{'web.integration.file-import.code-system.source.types.tsv' | translate}}</label>
+          </m-radio-group>
+        </m-form-item>
+      </ng-container>
+
 
       <ng-container *ngIf="analyzeResponse?.columns">
         <m-form-row>

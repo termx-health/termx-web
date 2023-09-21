@@ -18,8 +18,9 @@ import {
   providers: [DestroyService]
 })
 export class ValueSetFileImportComponent {
-  public data: FileProcessingRequest & {file?: string, loadedValueSet?: ValueSet, concepts?: string} = {
+  public data: FileProcessingRequest & {file?: string, loadedValueSet?: ValueSet, concepts?: string, sourceType?: 'link' | 'file'} = {
     type: 'csv',
+    sourceType: 'file',
     valueSet: {},
     version: {rule: {}},
     mapping: {},
@@ -123,8 +124,8 @@ export class ValueSetFileImportComponent {
 
     const file: Blob = this.fileInput?.nativeElement?.files?.[0];
     const req: FileAnalysisRequest = {
-      type: 'csv',
-      link: this.data.file
+      type: this.data.type,
+      link: this.data.link
     };
 
     if (file) {
