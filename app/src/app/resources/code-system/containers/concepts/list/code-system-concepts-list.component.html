@@ -165,11 +165,9 @@
     </td>
     <td>
       <m-dropdown>
-        <ng-container>
-          <a *m-dropdown-item (mClick)="openFhir(node.code)">
-            {{'web.code-system-concept.list.open-fhir' | translate}}
-          </a>
-        </ng-container>
+        <a *m-dropdown-item (mClick)="openFhir(node.code)">
+          {{'web.code-system-concept.list.open-fhir' | translate}}
+        </a>
         <ng-container *ngIf="null | apply: getConceptEditRoute: node.code as route">
           <a *m-dropdown-item [routerLink]="route?.path" [queryParams]="route?.query">
             {{'web.code-system-concept.list.add-concept-child' | translate}}

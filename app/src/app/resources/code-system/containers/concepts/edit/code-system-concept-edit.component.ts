@@ -18,6 +18,7 @@ import {CodeSystemPropertyValueEditComponent} from './propertyvalue/code-system-
 import {CodeSystemAssociationEditComponent} from './association/code-system-association-edit.component';
 import {forkJoin, of} from 'rxjs';
 import {ResourceContextComponent} from 'term-web/resources/resource/components/resource-context.component';
+import {environment} from 'environments/environment';
 
 @Component({
   templateUrl: './code-system-concept-edit.component.html',
@@ -229,4 +230,8 @@ export class CodeSystemConceptEditComponent implements OnInit {
     return v.status === 'draft' && !versions?.find(ver => ver.version === v.version);
   };
 
+  protected openFhir(code: string): void {
+    window.open(environment.termxApi + '/fhir/CodeSystem/$lookup' +
+      '?system=' + this.codeSystem?.uri + '&code=' + code, '_blank');
+  }
 }

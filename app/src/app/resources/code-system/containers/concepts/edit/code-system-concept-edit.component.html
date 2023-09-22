@@ -111,6 +111,11 @@
                 (click)="save()">
               {{'core.btn.save' | translate}}
             </m-button>
+            <m-dropdown>
+              <a *m-dropdown-item (mClick)="openFhir(concept.code)">
+                {{'web.code-system-concept.list.open-fhir' | translate}}
+              </a>
+            </m-dropdown>
           </div>
         </div>
         <m-form-item *ngIf="conceptVersion.status === 'draft'" mName="versionDescription" mLabel="entities.code-system-entity-version.description">
