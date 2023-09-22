@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpContext} from '@angular/common/http';
 import {map, Observable} from 'rxjs';
 import {environment} from 'environments/environment';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
@@ -7,6 +7,7 @@ import {TransformationDefinition, TransformationDefinitionResource} from 'term-w
 import {TransformationDefinitionQueryParams} from 'term-web/modeler/transformer/services/transformation-definition-query.params';
 import {Bundle} from 'fhir/model/bundle';
 import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
+import {MuiSkipErrorHandler} from '@kodality-web/marina-ui';
 
 @Injectable()
 export class TransformationDefinitionService {
@@ -30,8 +31,8 @@ export class TransformationDefinitionService {
     return this.http.post<FhirStructureDefinition[]>(`${this.baseUrl}/transform-resources`, resources);
   }
 
-  public transformResourceContent(resource: TransformationDefinitionResource): Observable<any> {
-    return this.http.post(`${this.baseUrl}/transform-resource-content`, resource);
+  public transformResourceContent(resource: TransformationDefinitionResource, skipError = false): Observable<any> {
+    return this.http.post(`${this.baseUrl}/transform-resource-content`, resource, {context: new HttpContext().set(MuiSkipErrorHandler, skipError)});
   }
 
   public baseResources(): Observable<Bundle> {
@@ -64,7 +65,6 @@ export class TransformationDefinitionService {
   public delete(id: number): Observable<any> {
     return this.http.delete(`${this.baseUrl}/${id}`);
   }
-
 }
 
 export class TransformationResult {

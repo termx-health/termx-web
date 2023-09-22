@@ -70,10 +70,26 @@
       <m-input
           name="resourceUrl"
           [(ngModel)]="resource.reference['_url']"
-          (ngModelChange)="onResourceUrlChange(resource); resource.name = $event"
+          (ngModelChange)="onResourceUrlChange(resource); resource.name = $event; resource['_preview'] = undefined"
           required
       ></m-input>
     </m-form-item>
+
+    <ng-container>
+      <m-button
+          mSize="small"
+          mDisplay="dashed"
+          [mLoading]="loader.state['preview-' + resource.name]"
+          (mClick)="resource['_preview'] ? resource['_preview'] = undefined : previewResourceUrl(resource)"
+      >
+        {{('web.transformation-definition.resource-form.' + (resource['_preview'] ? 'preview-hide' : 'preview-show')) | translate}}
+      </m-button>
+
+      <ng-container *ngIf="resource['_preview'] as data">
+        <tw-structure-definition-tree *ngIf="data.value" [content]="data.value"/>
+        <m-alert *ngIf="data.error" [mTitle]="data.error" mType="error" mShowIcon style="margin-block: .5rem 0"/>
+      </ng-container>
+    </ng-container>
   </ng-container>
 
 

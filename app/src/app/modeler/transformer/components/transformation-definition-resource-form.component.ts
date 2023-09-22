@@ -8,10 +8,11 @@ import {Fhir} from 'fhir/fhir';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {launchFMLEditor} from 'term-web/modeler/transformer/components/fml.editor';
 import {Bundle} from 'fhir/model/bundle';
-import {defaultIfEmpty, forkJoin, map, of, shareReplay} from 'rxjs';
+import {catchError, defaultIfEmpty, forkJoin, map, of, shareReplay} from 'rxjs';
 import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
 import {group, HttpCacheService, isNil, LoadingManager} from '@kodality-web/core-util';
 import {TerminologyServerLibService} from 'term-web/space/_lib';
+import {HttpErrorResponse} from '@angular/common/http';
 
 
 @Component({
@@ -79,6 +80,15 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
     } else {
       res.reference.resourceUrl = res.reference['_url'];
     }
+  }
+
+  protected previewResourceUrl(resource: TransformationDefinitionResource): void {
+    this.loader.wrap(`preview-${resource.name}`, this.transformationDefinitionService.transformResourceContent(resource, true)).pipe(
+      map(resp => ({value: encodeURIComponent(JSON.stringify(resp))})),
+      catchError((err: HttpErrorResponse) => of({error: err.error[0].message}))
+    ).subscribe((resp: {value: any, error: string}) => {
+      resource['_preview'] = resp;
+    });
   }
 
   protected generateMap(): void {
@@ -215,4 +225,5 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
       return JSON.parse(content)['url'];
     }
   };
+
 }

@@ -1818,7 +1818,7 @@
 				"mapping": "Structure map",
 				"preview-hide": "Hide",
 				"preview-show": "Preview",
-				"resource-url": "Resource URL",
+				"resource-url": "Resource download URL",
 				"save-as": "Save as",
 				"switch-to-text-editor": {
                   "cancel": "Cancel",
