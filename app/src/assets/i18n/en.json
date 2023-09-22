@@ -1819,6 +1819,7 @@
 				"preview-hide": "Hide",
 				"preview-show": "Preview",
 				"resource-url": "Resource download URL",
+				"invalid-resource-url": "Can't load valid StructureDefinition",
 				"save-as": "Save as",
 				"switch-to-text-editor": {
                   "cancel": "Cancel",

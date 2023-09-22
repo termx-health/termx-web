@@ -87,7 +87,14 @@
 
       <ng-container *ngIf="resource['_preview'] as data">
         <tw-structure-definition-tree *ngIf="data.value" [content]="data.value"/>
-        <m-alert *ngIf="data.error" [mTitle]="data.error" mType="error" mShowIcon style="margin-block: .5rem 0"/>
+        <m-alert
+            *ngIf="data.error"
+            mTitle="web.transformation-definition.resource-form.invalid-resource-url"
+            [mDescription]="data.error"
+            mType="error"
+            mShowIcon
+            style="margin-block: .5rem 0"
+        />
       </ng-container>
     </ng-container>
   </ng-container>
