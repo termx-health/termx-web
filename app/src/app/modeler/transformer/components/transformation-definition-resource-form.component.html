@@ -75,7 +75,7 @@
       ></m-input>
     </m-form-item>
 
-    <ng-container>
+    <ng-container *ngIf="resource.type === 'definition'">
       <m-button
           mSize="small"
           mDisplay="dashed"
