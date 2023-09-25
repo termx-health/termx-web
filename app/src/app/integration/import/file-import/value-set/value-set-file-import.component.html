@@ -149,12 +149,12 @@
       <ng-container *ngIf="analyzeResponse?.columns">
         <m-form-row>
           <m-form-item *mFormCol mName="concept" mLabel="entities.value-set-version-concept.concept" required>
-            <m-select name="concept" [(ngModel)]="data.mapping.codeColumnName" required>
+            <m-select name="concept" [(ngModel)]="data.mapping.code" required>
               <m-option *ngFor="let col of analyzeResponse?.columns" [mLabel]="col.columnName" [mValue]="col.columnName"></m-option>
             </m-select>
           </m-form-item>
           <m-form-item *mFormCol mName="display" mLabel="entities.value-set-version-concept.display">
-            <m-select name="display" [(ngModel)]="data.mapping.displayColumnName">
+            <m-select name="display" [(ngModel)]="data.mapping.display">
               <m-option *ngFor="let col of analyzeResponse?.columns" [mLabel]="col.columnName" [mValue]="col.columnName"></m-option>
             </m-select>
           </m-form-item>

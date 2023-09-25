@@ -11,7 +11,7 @@ export interface FileProcessingRequest {
 
   valueSet?: {id?: string, uri?: string, name?: string, oid?: string, title?: LocalizedName, description?: LocalizedName};
   version?: {number?: string, status?: string, releaseDate?: Date, rule?: {id?: number, codeSystem?: string, codeSystemVersionId?: number}};
-  mapping?: {codeColumnName?: string, displayColumnName?: string};
+  mapping?: {code?: string, display?: string};
 
   dryRun?: boolean;
   importClass?: string;
