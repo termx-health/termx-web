@@ -38,4 +38,12 @@ export class SpaceGithubService {
     return this.http.post(`${this.baseUrl}/${id}/github/pull`, {files});
   }
 
+  public initIg(id: number, base: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${id}/github/ig-initialize`, {base});
+  }
+
+  public getIgStatus(id: number): Observable<{isInitialized: boolean}> {
+    return this.http.get<any>(`${this.baseUrl}/${id}/github/ig-status`);
+  }
+
 }

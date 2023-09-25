@@ -1,5 +1,20 @@
 <m-form-row>
   <div *mFormCol>
+    <m-card *ngIf="!igInitialized" style="margin-bottom: 25px">
+      <m-alert mType="error">
+        {{'web.space.ig-not-initialized' | translate}}
+      </m-alert>
+      <m-form-item mName="ig-base" mLabel="web.space.ig-base" class="tw-input-group">
+        <span class="tw-input-group-addon ant-input-group-addon">https://github.com/</span>
+        <m-input name="ig-base" [(ngModel)]="igBase"></m-input>
+      </m-form-item>
+      <ng-container *m-card-footer>
+        <m-button mDisplay="primary" (click)="initializeIg()" [mLoading]="saving" [disabled]="saving || !igBase" style="width: 100%">
+          {{'web.space.ig-initialize' | translate}}
+        </m-button>
+      </ng-container>
+    </m-card>
+
     <m-card [mShowSkeleton]="loading">
       <div *m-card-header>
         <span>{{space?.code}}</span>

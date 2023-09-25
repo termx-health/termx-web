@@ -8,13 +8,14 @@ import {Package, Space, TerminologyServer, TerminologyServerLibService} from 'te
 import {forkJoin} from 'rxjs';
 import {PackageService} from '../../services/package.service';
 import {SpaceGithubService} from 'term-web/space/services/space-github.service';
+import {SpaceEditIgComponent} from 'term-web/space/containers/space/space-edit-ig.component';
 
 @Component({
   templateUrl: './space-edit.component.html',
   styles: [`
     ::ng-deep .github-dirs {
       padding-left: 40px;
-      & .input-group-addon {
+      & .ant-input-group-addon {
         text-align: right;
         min-width: 160px;
       }
@@ -26,11 +27,13 @@ export class SpaceEditComponent implements OnInit {
   public packages?: Package[];
   public terminologyServers?: TerminologyServer[];
   public githubProviders: {[k: string]: string};
+  public githubEnabled: boolean;
 
   public loading = false;
   public mode: 'add' | 'edit' = 'add';
 
   @ViewChild("form") public form?: NgForm;
+  @ViewChild("igForm") public igForm?: SpaceEditIgComponent;
 
   public constructor(
     private spaceService: SpaceService,
@@ -68,20 +71,24 @@ export class SpaceEditComponent implements OnInit {
   }
 
   public save(): void {
-    if (!validateForm(this.form)) {
+    if (!validateForm(this.form) || !this.igForm.validate()) {
       return;
     }
     this.loading = true;
+    this.space.integration.github.ig =  this.igForm.readForm();
+    this.space.integration.github = this.githubEnabled ? this.space.integration.github : null;
     this.spaceService.save(this.space!)
       .subscribe(() => this.location.back())
       .add(() => this.loading = false);
   }
 
   private writeSpace(s: Space): Space {
+    this.githubEnabled = !!s.integration?.github;
     s.acl ??= {};
     s.integration ??= {};
     s.integration.github ??= {dirs: this.githubProviders};
     s.integration.github.dirs ??= {};
+    s.integration.github.ig ??= {};
     return s;
   }
 

@@ -1,0 +1,61 @@
+<m-divider>
+  <span>{{'web.space.ig-integration' | translate}}</span>
+  <m-checkbox style="padding-left: 10px" [(mChecked)]="igEnabled"></m-checkbox>
+</m-divider>
+<m-spinner *ngIf="igEnabled && loader.state['load']"></m-spinner>
+<ng-container *ngIf="igEnabled && !loader.state['load']">
+  <form #form="ngForm">
+    <m-form-item mName="ig-header" mLabel="web.space.ig-header">
+      <m-textarea name="ig-header" [(ngModel)]="ig.header" [autosize]="{minRows: 5}"></m-textarea>
+    </m-form-item>
+    <m-form-item mName="ig-pages" mLabel="web.space.ig-pages">
+      <m-select name="ig-pages" multiple [(ngModel)]="ig.pageContents">
+        <m-option *ngFor="let o of pages" [mValue]="o.id" [mLabel]="o.name" [mLabelTemplate]="lbl">
+          <ng-template #lbl>
+            <label style="padding-left: 0{{o.level * 10}}px">{{o.name}}</label>
+          </ng-template>
+        </m-option>
+      </m-select>
+    </m-form-item>
+    <m-form-item mLabel="web.space.ig-menu">
+      <div *ngFor="let m of ig.menu; let i = index">
+        <div class="ig-menu-item">
+          <m-form-control mName="mname{{i}}">
+            <m-input name="mname{{i}}" [disabled]="m.name === 'Home'" [(ngModel)]="m.name" required></m-input>
+          </m-form-control>
+          <m-form-control mName="mpage{{i}}" *ngIf="!m.children" style="width: 200px">
+            <m-select name="mpage{{i}}" [(ngModel)]="m.page" required>
+              <m-option *ngFor="let pid of ig.pageContents" [mLabel]="pagesMap[pid].name" [mValue]="pid"></m-option>
+            </m-select>
+          </m-form-control>
+          <m-button *ngIf="m.name !== 'Home'" mDisplay="dashed" (click)="removeMenu(m)">
+            <m-icon mCode="delete"></m-icon>
+          </m-button>
+        </div>
+        <div class="ig-submenu-item" *ngFor="let c of m.children; let j = index">
+          <m-form-control mName="mname{{i}}-{{j}}">
+            <m-input name="mname{{i}}-{{j}}" [(ngModel)]="c.name" required></m-input>
+          </m-form-control>
+          <m-form-control style="width: 200px" mName="mpage{{i}}-{{j}}">
+            <m-select name="mpage{{i}}-{{j}}" [(ngModel)]="c.page" required>
+              <m-option *ngFor="let pid of ig.pageContents" [mLabel]="pagesMap[pid].name" [mValue]="pid"></m-option>
+            </m-select>
+          </m-form-control>
+          <m-button mDisplay="dashed" (click)="removeSubmenu(m, c)">
+            <m-icon mCode="delete"></m-icon>
+          </m-button>
+        </div>
+        <div class="ig-submenu-item">
+          <m-button *ngIf="!m.page && m.name !== 'Home'" mDisplay="dashed" style="width:205px" (click)="addSubmenu(m)">
+            {{'web.space.ig-menu-submenu-add' | translate}}
+          </m-button>
+        </div>
+      </div>
+      <m-button mDisplay="dashed" style="width:205px" (click)="addMenuItem()">
+        {{'web.space.ig-menu-add' | translate}}
+      </m-button>
+    </m-form-item>
+  </form>
+</ng-container>
+
+

@@ -1673,7 +1673,17 @@
 			"new-version": "New version",
 			"resource-import-error-message": "Resource import failed",
 			"resource-import-success-message": "Resource import succeeded",
-			"select-context": "Select context"
+			"select-context": "Select context",
+			"github-integration": "Github integration",
+			"ig-integration": "Implementation Guide integration",
+			"ig-header": "Implementation Guide header",
+			"ig-not-initialized": "Implementation Guide is not initialized",
+			"ig-base": "Base Implementation Guide",
+			"ig-initialize": "Initialize Implementation Guide",
+			"ig-pages": "Pages",
+			"ig-menu": "Menu",
+			"ig-menu-add": "Add",
+			"ig-menu-submenu-add": "Add submenu"
 		},
 		"structure-definition": {
 			"form": {

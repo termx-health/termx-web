@@ -48,6 +48,8 @@ export class SpaceGithubComponent implements OnInit {
   protected commit: {message?: string} = {message: 'update space from termx'};
   protected diff: GithubDiff;
   protected selection: {[key: string]: boolean} = {};
+  protected igBase: string = 'hl7-be/empty-ig';
+  protected igInitialized: boolean = true;
 
   public constructor(
     private spaceService: SpaceService,
@@ -66,7 +68,12 @@ export class SpaceGithubComponent implements OnInit {
         return;
       }
       forkJoin([
-        this.spaceService.load(id).pipe(tap(r => this.space = r)),
+        this.spaceService.load(id).pipe(tap(r => {
+          this.space = r;
+          if (this.space?.integration?.github?.ig) {
+            this.loadIgStatus(id).subscribe();
+          }
+        })),
         this.loadGitStatus(id)
       ]).subscribe().add(() => this.loading = false);
     });
@@ -103,6 +110,18 @@ export class SpaceGithubComponent implements OnInit {
     this.spaceGithubService.push(this.space.id, this.commit.message, files).pipe(
       delay(1000), // seems like github need a bit of time to actually update
       mergeMap(() => this.loadGitStatus(this.space.id))
+    ).subscribe().add(() => this.saving = false);
+  }
+
+  private loadIgStatus(id: number): Observable<any> {
+    return this.spaceGithubService.getIgStatus(id).pipe(tap(r => this.igInitialized = r.isInitialized));
+  }
+
+  public initializeIg(): void {
+    this.saving = true;
+    this.spaceGithubService.initIg(this.space.id, this.igBase).pipe(
+      delay(1000),
+      mergeMap(() => this.loadIgStatus(this.space.id))
     ).subscribe().add(() => this.saving = false);
   }
 

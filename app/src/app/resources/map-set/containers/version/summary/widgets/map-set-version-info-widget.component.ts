@@ -74,7 +74,7 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
   }
 
   public openJson(): void {
-    window.open(environment.termxApi + '/fhir/ConceptMap/' + this.version.mapSet + '@' + this.version.version, '_blank');
+    window.open(environment.termxApi + '/fhir/ConceptMap/' + this.version.mapSet + '.' + this.version.version, '_blank');
   }
 
   public createTask(): void {

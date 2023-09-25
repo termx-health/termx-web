@@ -83,7 +83,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
   }
 
   public openJson(): void {
-    window.open(environment.termxApi + '/fhir/CodeSystem/' + this.version.codeSystem + '@' + this.version.version, '_blank');
+    window.open(environment.termxApi + '/fhir/CodeSystem/' + this.version.codeSystem + '.' + this.version.version, '_blank');
   }
 
   public createTask(): void {

@@ -22,16 +22,28 @@
               <m-option *ngFor="let ts of terminologyServers" [mLabel]="ts.names | localName" [mValue]="ts.code"></m-option>
             </m-select>
           </m-form-item>
-          <m-form-item mName="github" mLabel="entities.space.github" *ngIf="githubProviders" class="tw-input-group">
-            <span class="tw-input-group-addon ant-input-group-addon">https://github.com/</span>
-            <m-input name="github" [(ngModel)]="space.integration.github.repo"></m-input>
-          </m-form-item>
-          <div class="github-dirs" *ngIf="githubProviders && space.integration.github.repo">
-            <m-form-item *ngFor="let p of githubProviders | keys | apply:sort" mName="github-{{p}}" class="tw-input-group">
-              <span class="tw-input-group-addon ant-input-group-addon">{{p}}</span>
-              <m-input name="github-{{p}}" [(ngModel)]="space.integration.github.dirs[p]"></m-input>
+
+          <m-divider>
+            <span>{{'web.space.github-integration' | translate}}</span>
+            <m-checkbox style="padding-left: 10px" [(mChecked)]="githubEnabled"></m-checkbox>
+          </m-divider>
+          <ng-container *ngIf="githubEnabled">
+            <m-form-item mName="github" mLabel="entities.space.github" *ngIf="githubProviders" class="tw-input-group">
+              <span class="tw-input-group-addon ant-input-group-addon">https://github.com/</span>
+              <m-input name="github" [(ngModel)]="space.integration.github.repo"></m-input>
             </m-form-item>
-          </div>
+            <ng-container *ngIf="space.integration.github.repo">
+              <div class="github-dirs" *ngIf="githubProviders">
+                <m-form-item *ngFor="let p of githubProviders | keys | apply:sort" mName="github-{{p}}" class="tw-input-group">
+                  <span class="tw-input-group-addon ant-input-group-addon">{{p}}</span>
+                  <m-input name="github-{{p}}" [(ngModel)]="space.integration.github.dirs[p]"></m-input>
+                </m-form-item>
+              </div>
+
+              <tw-space-edit-ig #igForm [spaceId]="space.id" [ig]="space.integration.github.ig"></tw-space-edit-ig>
+
+            </ng-container>
+          </ng-container>
 
           <m-divider mText="entities.space.acl"></m-divider>
           <m-form-item mName="shared" mLabel="entities.space.shared">

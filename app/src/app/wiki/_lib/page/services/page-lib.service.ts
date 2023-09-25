@@ -9,6 +9,7 @@ import {PageContentSearchParams} from '../models/page-content-search-params';
 import {PageContent} from '../models/page-content';
 import {PageRelationSearchParams} from '../models/page-relation-search-params';
 import {PageRelation} from '../models/page-relation';
+import {PageTreeItem} from 'term-web/wiki/_lib/page/models/page-tree.item';
 
 @Injectable()
 export class PageLibService {
@@ -24,9 +25,14 @@ export class PageLibService {
     return this.http.get<SearchResult<Page>>(`${this.baseUrl}/pages`, {params: SearchHttpParams.build(params)});
   }
 
+  public loadTree(spaceId: number): Observable<PageTreeItem[]> {
+    return this.http.get<PageTreeItem[]>(`${this.baseUrl}/pages/tree?spaceId=${spaceId}`);
+  }
+
   public searchPageContents(params: PageContentSearchParams = {}): Observable<SearchResult<PageContent>> {
     return this.http.get<SearchResult<PageContent>>(`${this.baseUrl}/page-contents`, {params: SearchHttpParams.build(params)});
   }
+
 
   public searchPageRelations(params: PageRelationSearchParams = {}): Observable<SearchResult<PageRelation>> {
     return this.http.get<SearchResult<PageRelation>>(`${this.baseUrl}/page-relations`, {params: SearchHttpParams.build(params)});

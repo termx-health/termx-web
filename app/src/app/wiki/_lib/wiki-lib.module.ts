@@ -28,6 +28,7 @@ import {WikiCommentPopoverComponent} from 'term-web/wiki/_lib/texteditor/comment
 import {PageCommentLibService} from 'term-web/wiki/_lib/page/services/page-comment-lib.service';
 import {WikiQuillEditorComponent} from 'term-web/wiki/_lib/texteditor/editors/quill/wiki-quill-editor.component';
 import {WikiMarkdownViewComponent} from 'term-web/wiki/_lib/texteditor/editors/markdown/wiki-markdown-view.component';
+import {PageContentTreeSelectComponent} from 'term-web/wiki/_lib/page/components/page-content-tree-select.component';
 
 @NgModule({
   imports: [
@@ -55,6 +56,7 @@ import {WikiMarkdownViewComponent} from 'term-web/wiki/_lib/texteditor/editors/m
     // page
     PageSelectComponent,
     PageContentSelectComponent,
+    PageContentTreeSelectComponent,
 
     // text editor
     WikiSmartTextEditorComponent,
@@ -77,6 +79,7 @@ import {WikiMarkdownViewComponent} from 'term-web/wiki/_lib/texteditor/editors/m
   exports: [
     PageSelectComponent,
     PageContentSelectComponent,
+    PageContentTreeSelectComponent,
 
     WikiSmartTextEditorComponent,
     WikiSmartTextEditorViewComponent,
