@@ -9,5 +9,5 @@
     [disabled]="!!disabled"
 >
   <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.id"
-      [mLabel]="data[key]?.version + (data[key]?.description ? (' (' + (data[key]?.description | localName)+ ')') : '' )"/>
+      [mLabel]="data[key]?.version + ((data[key]?.description | localName) ? (' (' + (data[key]?.description | localName)+ ')') : '' )"/>
 </m-select>
