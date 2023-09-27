@@ -1816,8 +1816,8 @@
 				"created-by": "Created by {{user}}"
 			},
 			"edit": {
-				"created": "Created {{date}} by {{user}}",
-				"updated": "Update {{date}} by {{user}}"
+				"created": "Created {{date}}",
+				"updated": "Updated {{date}}"
 			},
 			"resource-form": {
 				"compile": "Compile",
