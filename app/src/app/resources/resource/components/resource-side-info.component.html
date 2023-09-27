@@ -20,6 +20,9 @@
     <m-form-item mName="viewer" mLabel="entities.resource.permissions.viewer">
       <m-input name="viewer" [(ngModel)]="permissions.viewer"></m-input>
     </m-form-item>
+    <m-form-item mName="viewer" mLabel="entities.resource.permissions.endorser">
+      <m-input name="viewer" [(ngModel)]="permissions.endorser"></m-input>
+    </m-form-item>
   </nz-collapse-panel>
   <nz-collapse-panel nzActive [nzHeader]="'entities.resource.settings.multiple' | translate" *ngIf="settings">
     <m-form-item mName="reviewRequired" mLabel="entities.resource.settings.review-required">

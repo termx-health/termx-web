@@ -418,7 +418,8 @@
 				"admin": "Admin",
 				"editor": "Editor",
 				"multiple": "Permissions",
-				"viewer": "Viewer"
+				"viewer": "Viewer",
+				"endorser": "Endorser"
 			},
 			"publisher": "Publisher",
 			"purpose": "Purpose",
