@@ -12,6 +12,7 @@
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
     <tr *mTableHead>
       <th mColumnKey="name">{{'entities.transformation-definition.name' | translate}}</th>
+      <th mColumnKey="modified" class="tw-table-min-width">{{'web.transformation-definition.list.last-modified' | translate}}</th>
       <th class="tw-table-min-width"></th>
     </tr>
 
@@ -25,6 +26,19 @@
         </ng-template>
       </td>
 
+      <td>
+        <div style="font-size: 0.9rem" [mPopover]="td.modifiedBy && td.modifiedAt !== td.createdAt" [mTitle]="pop" mPosition="left">
+          <div>{{td.modifiedBy ?? td.createdBy }}</div>
+          <div class="m-text-secondary">{{(td.modifiedBy ? td.modifiedAt : td.createdAt) | localDateTime}}</div>
+
+          <ng-template #pop>
+            <div style="font-size: 0.9rem">
+              {{'web.transformation-definition.list.created-by' | translate: ({user: td.createdBy})}}
+              <div class="m-text-secondary">{{td.createdAt | localDateTime}}</div>
+            </div>
+          </ng-template>
+        </div>
+      </td>
       <td>
         <m-dropdown>
           <a *m-dropdown-item (mClick)="duplicateDefinition(td.id)">

@@ -1811,7 +1811,13 @@
 				"transform": "Transform"
 			},
 			"list": {
-				"add-btn": "Add transformation"
+				"add-btn": "Add transformation",
+				"last-modified": "Last modified",
+				"created-by": "Created by {{user}}"
+			},
+			"edit": {
+				"created": "Created {{date}} by {{user}}",
+				"updated": "Update {{date}} by {{user}}"
 			},
 			"resource-form": {
 				"compile": "Compile",

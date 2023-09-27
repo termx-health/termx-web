@@ -5,6 +5,11 @@ export class TransformationDefinition {
   public resources?: TransformationDefinitionResource[];
   public testSource?: string;
 
+  public createdAt?: Date;
+  public createdBy?: string;
+  public modifiedAt?: Date;
+  public modifiedBy?: string;
+
   public static isValid(d: TransformationDefinition): boolean {
     return !!d.name && !!d.mapping && TransformationDefinitionResource.isValid(d.mapping)
       && (!d.resources || d.resources.every(r => TransformationDefinitionResource.isValid(r)));
