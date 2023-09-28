@@ -2,31 +2,35 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgForm} from '@angular/forms';
-import {compareValues, isDefined, validateForm} from '@kodality-web/core-util';
-import {StructureDefinition} from 'term-web/modeler/_lib';
+import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {StructureDefinition, StructureDefinitionEditableTreeComponent} from 'term-web/modeler/_lib';
 import {StructureDefinitionType} from '../components/structure-definition-type-list.component';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {map, Observable, of, switchMap} from 'rxjs';
+import {map, Observable, of} from 'rxjs';
 import {ChefService} from 'term-web/integration/_lib';
 import {StructureDefinitionService} from '../services/structure-definition.service';
-import {Element, StructureDefinitionTreeComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-tree.component';
+import {Element} from 'term-web/modeler/_lib/structure-definition/structure-definition-tree.component';
+import {Fhir} from 'fhir/fhir';
 
 @Component({
   templateUrl: 'structure-definition-edit.component.html'
 })
 export class StructureDefinitionEditComponent implements OnInit {
   public id?: number | null;
-  public structureDefinition?: StructureDefinition;
+  public structureDefinition: StructureDefinition;
+  public contentFsh: string;
+  public contentFhir: string;
 
-  public selectedTabIndex: number = 1;
+  public selectedTabIndex: number = 0;
+  public prevTabIndex: number = 0;
   public pendingTabIndex?: number;
   public tabIndexMap = {fsh: 1, json: 2, element: 3};
 
-  public element?: FormElement;
-  public pendingElement?: FormElement;
+  public element?: Element;
+  public formElement?: FormElement;
 
-  public loading: {[k: string]: boolean} = {};
-  public modalData: {visible?: boolean, action?: 'addElement' | 'openElement' | 'openJson' | 'openFsh'} = {};
+  protected loader = new LoadingManager();
+  public modalData: {visible?: boolean, action?: 'openJson' | 'openFsh'} = {};
   public errorModalData: {visible?: boolean, title?: string, messages?: string[], pendingIndex?: number} = {};
   public mode: 'edit' | 'add' = 'add';
 
@@ -34,7 +38,7 @@ export class StructureDefinitionEditComponent implements OnInit {
   @ViewChild("fshForm") public fshForm?: NgForm;
   @ViewChild("jsonForm") public jsonForm?: NgForm;
   @ViewChild("elementForm") public elementForm?: NgForm;
-  @ViewChild("sdTree") public sdTree?: StructureDefinitionTreeComponent;
+  @ViewChild("sdTree") public sdTree?: StructureDefinitionEditableTreeComponent;
 
   public constructor(
     private structureDefinitionService: StructureDefinitionService,
@@ -56,14 +60,50 @@ export class StructureDefinitionEditComponent implements OnInit {
       this.structureDefinition = new StructureDefinition();
       this.structureDefinition.contentType = 'logical';
       this.structureDefinition.contentFormat = 'json';
+      this.contentFsh = '';
+      this.contentFhir = '';
     }
 
     if (this.mode === 'edit') {
-      this.loading ['init'] = true;
-      this.structureDefinitionService.load(this.id!).subscribe(sd => {
+      this.loader.wrap('init', this.structureDefinitionService.load(this.id!)).subscribe(sd => {
         this.structureDefinition = sd;
+        this.loader.wrap('init', this.unmapContent(sd.content, sd.contentFormat)).subscribe();
         this.selectedTabIndex = this.selectedTabIndex === this.tabIndexMap['element'] ? this.selectedTabIndex : this.tabIndexMap[sd.contentFormat!];
-      }).add(() => this.loading ['init'] = false);
+      });
+    }
+  }
+
+  private unmapContent(content: string, format: 'fsh' | 'json'): Observable<void> {
+    if (format == 'json') {
+      if (content.startsWith('<')) {
+        content = String(new Fhir().xmlToObj(content));
+      }
+      if (content.startsWith('{')) {
+        return this.chefService.fhirToFsh({fhir: [content]}).pipe(map(r => {
+          this.showErrors(r);
+          this.contentFhir = content;
+          this.contentFsh = typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
+        }));
+      }
+    }
+    if (format == 'fsh') {
+      return this.chefService.fshToFhir({fsh: content}).pipe(map(r => {
+        this.showErrors(r);
+        this.contentFsh = content;
+        this.contentFhir = JSON.stringify(r.fhir[0], null, 2);
+      }));
+    }
+  }
+
+  private mapContent(fhir: any, format: 'fsh' | 'json'): Observable<string> {
+    if (format == 'json') {
+      return of(JSON.stringify(fhir, null, 2));
+    }
+    if (format == 'fsh') {
+      return this.chefService.fhirToFsh({fhir: [fhir]}).pipe(map(r => {
+        this.showErrors(r);
+        return typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
+      }));
     }
   }
 
@@ -73,44 +113,43 @@ export class StructureDefinitionEditComponent implements OnInit {
       isDefined(this.jsonForm) && !validateForm(this.jsonForm)) {
       return;
     }
-    this.loading['save'] = true;
-    this.prepareContent(this.structureDefinition!).subscribe(content => {
-      this.loading['save'] = true;
-      this.structureDefinition!.content = content;
-      this.structureDefinitionService.save(this.structureDefinition!)
-        .subscribe(() => this.location.back())
-        .add(() => this.loading['save'] = false);
-    }).add(() => this.loading['save'] = false);
+    this.loader.wrap('save', this.mapContent(this.getFhirSD(), this.structureDefinition.contentFormat)).subscribe(content => {
+      this.structureDefinition.content = content;
+      this.loader.wrap('save', this.structureDefinitionService.save(this.structureDefinition))
+        .subscribe(() => this.location.back());
+    });
   }
 
-  public saveElement(nextAction?: 'addElement' | 'openElement' | 'openJson' | 'openFsh'): void {
-    if (!isDefined(this.elementForm) || !validateForm(this.elementForm)) {
-      return;
+  public saveTreeData(nextAction?: 'openJson' | 'openFsh'): void {
+    if (this.formElement) {
+      this.sdTree.embedElement(this.fromFormElement(this.formElement, this.element));
     }
-    this.loading['save'] = true;
-    this.prepareContent(this.structureDefinition!, this.element).subscribe(content => {
-      this.loading['save'] = true;
-      this.structureDefinition!.content = content;
-      this.structureDefinitionService.save(this.structureDefinition!).subscribe(sd => {
-        this.element = undefined;
+    this.loader.wrap('save', this.mapContent(this.getFhirSD(), this.structureDefinition.contentFormat)).subscribe(content => {
+      this.structureDefinition.content = content;
+      this.loader.wrap('save', this.structureDefinitionService.save(this.structureDefinition!)).subscribe(sd => {
+        this.formElement = undefined;
         this.structureDefinition = sd;
-        this.sdTree?.reloadTree();
         this.handleAction(nextAction);
-      }).add(() => this.loading['save'] = false);
-    }).add(() => this.loading['save'] = false);
+      });
+    });
   }
 
   public handleTabChange(index?: number): void {
-    this.pendingTabIndex = isDefined(index) && index !== this.tabIndexMap['element'] ? index : this.pendingTabIndex;
-    this.isChanged(this.element).subscribe(changed => {
-      if (changed) {
-        setTimeout(() => {
-          this.selectedTabIndex = this.tabIndexMap['element'];
-          this.modalData = {visible: true, action: this.pendingTabIndex === this.tabIndexMap['fsh'] ? 'openFsh' : 'openJson'};
-        });
+    this.pendingTabIndex = index = (index || this.pendingTabIndex || 0);
+
+    if (!isDefined(this.selectedTabIndex) || this.tabIndexMap['element'] !== this.prevTabIndex) {
+      this.selectedTabIndex = index;
+      this.prevTabIndex = index;
+      return;
+    }
+
+    this.isChanged().subscribe(changed => {
+      if (!changed) {
+        this.selectedTabIndex = index;
+        this.prevTabIndex = index;
         return;
       }
-      this.selectedTabIndex = isDefined(this.pendingTabIndex) ? this.pendingTabIndex : isDefined(index) ? index : 0;
+      this.modalData = {visible: true, action: this.pendingTabIndex === this.tabIndexMap['fsh'] ? 'openFsh' : 'openJson'};
     });
   }
 
@@ -120,21 +159,36 @@ export class StructureDefinitionEditComponent implements OnInit {
     this.errorModalData.visible = false;
   }
 
-  public addElement(): void {
-    this.isChanged(this.element).subscribe(changed => {
-      if (changed) {
-        this.modalData = {visible: true, action: 'addElement'};
-        return;
-      }
-      if (this.sdTree) {
-        this.sdTree.unselect();
-      }
-      this.element = {fixedCoding: {}};
-    });
+  private getFhirSD(): any {
+    const structureDefinition = this.sdTree?.getFhirSD() || this.contentFhir ? JSON.parse(this.sdTree?.getFhirSD() || this.contentFhir) : {};
+    structureDefinition.id = structureDefinition.id || this.structureDefinition?.code;
+    structureDefinition.name = structureDefinition.name || this.structureDefinition?.code;
+    structureDefinition.resourceType = structureDefinition.resourceType || 'StructureDefinition';
+    structureDefinition.kind = structureDefinition.kind || this.structureDefinition?.contentType;
+    structureDefinition.type = structureDefinition.type || this.structureDefinition?.parent;
+    structureDefinition.version = structureDefinition.version || this.structureDefinition?.version;
+    structureDefinition.abstract = false;
+    structureDefinition.baseDefinition = structureDefinition.baseDefinition || 'http://hl7.org/fhir/StructureDefinition/Element';
+    structureDefinition.derivation = 'specialization';
+    structureDefinition.differential = structureDefinition.differential || {};
+    structureDefinition.differential.element = this.prepareElements(structureDefinition.differential.element, structureDefinition.id);
+    return structureDefinition;
   }
 
-  public openElementForm(element?: Element): void {
-    this.pendingElement = element ? {
+  public openElementForm(element: Element): void {
+    if (isDefined(this.elementForm) && !validateForm(this.elementForm)) {
+      return;
+    }
+    if (this.formElement) {
+      this.sdTree.embedElement(this.fromFormElement(this.formElement, this.element));
+    }
+
+    this.element = element;
+    this.formElement = this.toFormElement(element);
+  }
+
+  private toFormElement(element:  Element): FormElement {
+    return {
       id: element.id!,
       path: element.path!,
       cardinality: isDefined(element.min) || isDefined(element.max) ?
@@ -149,41 +203,13 @@ export class StructureDefinitionEditComponent implements OnInit {
       fixedUri: element.fixedUri,
       fixedCoding: element.fixedCoding || {},
       constraint: element.constraint || []
-    } : this.pendingElement;
-
-    this.isChanged(this.element).subscribe(changed => {
-      if (changed) {
-        this.modalData = {visible: true, action: 'openElement'};
-        return;
-      }
-      this.element = this.pendingElement;
-    });
+    };
   }
 
-  private prepareContent(sd: StructureDefinition, elementToAdd?: FormElement): Observable<any> {
-    return this.parseContent(sd).pipe(switchMap(structureDefinition => {
-      structureDefinition.id = structureDefinition.id || this.structureDefinition?.code;
-      structureDefinition.name = structureDefinition.name || this.structureDefinition?.code;
-      structureDefinition.resourceType = structureDefinition.resourceType || 'StructureDefinition';
-      structureDefinition.kind = structureDefinition.kind || this.structureDefinition?.contentType;
-      structureDefinition.type = structureDefinition.type || this.structureDefinition?.parent;
-      structureDefinition.version = structureDefinition.version || this.structureDefinition?.version;
-      structureDefinition.abstract = false;
-      structureDefinition.baseDefinition =  structureDefinition.baseDefinition || 'http://hl7.org/fhir/StructureDefinition/Element';
-      structureDefinition.derivation = 'specialization';
-      structureDefinition.differential = structureDefinition.differential || {};
-      structureDefinition.differential.element = this.prepareElements(structureDefinition.differential.element, structureDefinition.id, elementToAdd);
-      return sd.contentFormat === 'json' ?
-        of(JSON.stringify(structureDefinition, null, 2)) :
-        this.chefService.fhirToFsh({fhir: [structureDefinition]}).pipe(map(r => r.fsh));
-    }));
-  }
-
-  private composeElement(formElement: FormElement, sdName: string, currentElement?: Element): Element {
+  private fromFormElement(formElement: FormElement, currentElement?: Element): Element {
     const element = Object.assign(new Element(), currentElement);
-    const path = formElement.path?.startsWith(sdName + '.') ? formElement.path : sdName + '.' + formElement.path;
-    element.id = path;
-    element.path = path;
+    element.id = formElement.path;
+    element.path = formElement.path;
     const min = Number(formElement.cardinality?.split('..')[0]);
     const max = formElement.cardinality?.split('..')[1];
     element.min = isDefined(min) ? min : undefined;
@@ -201,38 +227,27 @@ export class StructureDefinitionEditComponent implements OnInit {
     return element;
   }
 
-  public proceed(saveElement?: boolean): void {
-    if (saveElement) {
-      this.saveElement(this.modalData.action);
+  public proceed(saveSd?: boolean): void {
+    if (saveSd) {
+      this.saveTreeData(this.modalData.action);
     } else {
       this.handleAction(this.modalData.action);
     }
     this.modalData.visible = false;
   }
 
-  private handleAction(action: "addElement" | "openElement" | "openJson" | "openFsh" | undefined): void {
-    this.element = undefined;
-    if (action === 'addElement') {
-      this.addElement();
-    }
-    if (action === 'openElement') {
-      this.openElementForm();
-    }
+  private handleAction(action: 'openJson' | 'openFsh' | undefined): void {
+    this.formElement = undefined;
     if (action && ['openFsh', 'openJson'].includes(action)) {
       this.handleTabChange();
     }
   }
 
-  private isChanged(element: FormElement | undefined): Observable<boolean> {
-    if (!isDefined(element)) {
+  private isChanged(): Observable<boolean> {
+    if (!isDefined(this.structureDefinition)) {
       return of(false);
     }
-    return this.parseContent(this.structureDefinition).pipe(map(content => {
-      const elements: Element[] = content.differential.element || [];
-      const currentElement = elements.find(el => el.id === element.id);
-      const defEl = elements.find(el => el.id && !el.id.includes('.'));
-      return !currentElement || JSON.stringify(this.cleanObject(currentElement)) !== JSON.stringify(this.cleanObject(this.composeElement(element, defEl?.id || content.id, currentElement)));
-    }));
+    return this.mapContent(this.getFhirSD(), 'json').pipe(map(content => content !== this.contentFhir));
   }
 
   private cleanObject(obj: any): any {
@@ -242,49 +257,27 @@ export class StructureDefinitionEditComponent implements OnInit {
     );
   }
 
-  private parseContent(structureDefinition?: StructureDefinition): Observable<any> {
-    if (structureDefinition?.contentFormat === 'json' && structureDefinition.content) {
-      return of(JSON.parse(structureDefinition.content));
-    }
-    if (structureDefinition?.contentFormat === 'fsh' && structureDefinition.content) {
-      return this.chefService.fshToFhir({fsh: structureDefinition.content}).pipe(map(r => r.fhir ? r.fhir[0] : {}));
-    }
-    return of({});
-  }
-
   public contentFormatChanged(format: 'json' | 'fsh' | undefined): void {
     if (format === 'json') {
-      this.chefService.fshToFhir({fsh: this.structureDefinition!.content}).subscribe(r => {
-        r.warnings?.forEach(w => this.notificationService.warning('Conversion warning', w.message!, {duration: 0, closable: true}));
-        r.errors?.forEach(e => this.notificationService.error('Conversion failed!', e.message!, {duration: 0, closable: true}));
-        this.structureDefinition!.content = r.fhir ? JSON.stringify(r.fhir[0], null, 2) : '';
-      });
+      this.structureDefinition.content = this.contentFhir;
     }
-
     if (format === 'fsh') {
-      this.chefService.fhirToFsh({fhir: [this.structureDefinition!.content]}).subscribe(r => {
-        r.warnings?.forEach(w => this.notificationService.warning('Conversion warning', w.message!, {duration: 0, closable: true}));
-        r.errors?.forEach(e => this.notificationService.error('Conversion failed!', e.message!, {duration: 0, closable: true}));
-        this.structureDefinition!.content = typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
-      });
+      this.structureDefinition.content = this.contentFsh;
     }
   }
 
-  private prepareElements(elements: Element[], sdId: string, elementToAdd?: FormElement): any {
+  private prepareElements(elements: Element[], sdId: string): any {
     elements = elements || [];
-    if (isDefined(elementToAdd)) {
-      const currentElement = elements.find(el => el.id === elementToAdd.id);
-      elements = elements.filter(el => el.id !== elementToAdd.id);
-      const defEl = elements.find(el => el.id && !el.id.includes('.'));
-      const element = this.composeElement(elementToAdd, defEl?.id || sdId, currentElement);
-      elements.push(element);
-    }
-
     const defEl = elements.find(el => el.id && !el.id.includes('.'));
     if (!defEl) {
       elements.push({id: sdId, path: sdId});
     }
     return elements.map(el => this.cleanObject(el));
+  }
+
+  private showErrors(r: any): void {
+    r.warnings?.forEach(w => this.notificationService.warning('Conversion warning', w.message!, {duration: 0, closable: true}));
+    r.errors?.forEach(e => this.notificationService.error('Conversion failed!', e.message!, {duration: 0, closable: true}));
   }
 }
 

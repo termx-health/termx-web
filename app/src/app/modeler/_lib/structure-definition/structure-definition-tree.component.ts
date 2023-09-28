@@ -220,7 +220,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   };
 }
 
-interface StructureDefinitionData {
+export interface StructureDefinitionData {
   fixedUri?: string;
   fixedCode?: string;
   fixedCoding?: any;

@@ -9,6 +9,7 @@ import {PortalModule} from '@angular/cdk/portal';
 import {StructureDefinitionLibService} from './structure-definition/structure-definition-lib.service';
 import {StructureDefinitionTreeComponent} from './structure-definition/structure-definition-tree.component';
 import {StructureDefinitionSelectComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-select.component';
+import {StructureDefinitionEditableTreeComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-editable-tree.component';
 
 @NgModule({
   imports: [
@@ -25,10 +26,12 @@ import {StructureDefinitionSelectComponent} from 'term-web/modeler/_lib/structur
   ],
   declarations: [
     StructureDefinitionTreeComponent,
+    StructureDefinitionEditableTreeComponent,
     StructureDefinitionSelectComponent,
   ],
   exports: [
     StructureDefinitionTreeComponent,
+    StructureDefinitionEditableTreeComponent,
     StructureDefinitionSelectComponent,
   ]
 })

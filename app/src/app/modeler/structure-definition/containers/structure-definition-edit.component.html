@@ -25,24 +25,22 @@
           <div nz-row nzGutter="12" class="m-row">
             <div nz-col [nzMd]="8" [nzXs]="24">
               <m-card *ngIf="structureDefinition?.code">
-                <div *m-card-header class="m-justify-between">
-                  <label></label>
-                  <tw-add-button (click)="addElement()">{{'web.structure-definition.form.add-element' | translate}}</tw-add-button>
-                </div>
-                <tw-structure-definition-tree #sdTree
-                    mode="edit"
-                    [defCode]="structureDefinition.code"
-                    (elementSelected)="openElementForm($event)"></tw-structure-definition-tree>
+                <tw-structure-definition-editable-tree #sdTree [content]="contentFhir" (elementSelected)="openElementForm($event)"/>
+                <ng-container *m-card-footer>
+                  <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading " (click)="saveTreeData()">
+                    {{'core.btn.save' | translate}}
+                  </m-button>
+                </ng-container>
               </m-card>
             </div>
             <div nz-col [nzMd]="16" [nzXs]="24">
-              <m-card *ngIf="element">
+              <m-card *ngIf="formElement">
                 <form #elementForm="ngForm">
                   <m-form-item mName="path" mLabel="web.structure-definition.form.path" required>
-                    <m-input name="path" [(ngModel)]="element.path" required></m-input>
+                    <m-input name="path" [(ngModel)]="formElement.path" required></m-input>
                   </m-form-item>
                   <m-form-item mName="cardinality" mLabel="web.structure-definition.form.cardinality">
-                    <m-radio-group name="cardinality" [(ngModel)]="element.cardinality">
+                    <m-radio-group name="cardinality" [(ngModel)]="formElement.cardinality">
                       <label m-radio-button mValue="0..0">{{'0..0' | translate}}</label>
                       <label m-radio-button mValue="0..1">{{'0..1' | translate}}</label>
                       <label m-radio-button mValue="0..*">{{'0..*' | translate}}</label>
@@ -50,39 +48,34 @@
                       <label m-radio-button mValue="1..*">{{'1..*' | translate}}</label>
                     </m-radio-group>
                   </m-form-item>
-                  <tw-sd-type-list [types]="element.types" (typesChange)="element.types = $event"></tw-sd-type-list>
+                  <tw-sd-type-list [types]="formElement.types" (typesChange)="formElement.types = $event"></tw-sd-type-list>
                   <m-form-item mName="fixed" mLabel="web.structure-definition.form.fixed-uri">
-                    <m-input name="fixed" [(ngModel)]="element.fixedUri"></m-input>
+                    <m-input name="fixed" [(ngModel)]="formElement.fixedUri"></m-input>
                   </m-form-item>
                   <m-form-item mName="fixedCoding" mLabel="web.structure-definition.form.fixed-coding">
                     <div class="m-items-middle">
                       <m-input style="width: 100%"
                           name="fixedCodingCode"
                           placeholder="web.structure-definition.form.code"
-                          [(ngModel)]="element.fixedCoding.code"></m-input>
+                          [(ngModel)]="formElement.fixedCoding.code"></m-input>
                       <m-input style="width: 100%"
                           name="fixedCodingSystem"
                           placeholder="web.structure-definition.form.system"
-                          [(ngModel)]="element.fixedCoding.system"></m-input>
+                          [(ngModel)]="formElement.fixedCoding.system"></m-input>
                       <m-input style="width: 100%"
                           name="fixedCodingDisplay"
                           placeholder="web.structure-definition.form.display"
-                          [(ngModel)]="element.fixedCoding.display"></m-input>
+                          [(ngModel)]="formElement.fixedCoding.display"></m-input>
                     </div>
                   </m-form-item>
                   <m-form-item mName="short" mLabel="web.structure-definition.form.short-description">
-                    <m-input name="short" [(ngModel)]="element.short"></m-input>
+                    <m-input name="short" [(ngModel)]="formElement.short"></m-input>
                   </m-form-item>
                   <m-form-item mName="definition" mLabel="web.structure-definition.form.definition">
-                    <m-textarea name="definition" [(ngModel)]="element.definition"></m-textarea>
+                    <m-textarea name="definition" [(ngModel)]="formElement.definition"></m-textarea>
                   </m-form-item>
-                  <tw-sd-constraint-list [constraints]="element.constraint" (constraintsChange)="element.constraint = $event"></tw-sd-constraint-list>
+                  <tw-sd-constraint-list [constraints]="formElement.constraint" (constraintsChange)="formElement.constraint = $event"></tw-sd-constraint-list>
                 </form>
-                <ng-container *m-card-footer>
-                  <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="saveElement()">
-                    {{'core.btn.save' | translate}}
-                  </m-button>
-                </ng-container>
               </m-card>
             </div>
           </div>
@@ -94,9 +87,9 @@
 
 
 <ng-template #formTemplate>
-  <m-spinner [mLoading]="loading['save']">
+  <m-spinner [mLoading]="loader.state['save']">
     <m-card [mTitle]="mode === 'edit' ? 'web.structure-definition.form.edit-header' : 'web.structure-definition.form.add-header'"
-        [mShowSkeleton]="loading['init'] || loading['content']">
+        [mShowSkeleton]="loader.isLoading">
       <form #form="ngForm" *ngIf="structureDefinition">
         <m-form-item mName="code" mLabel="entities.structure-definition.code" required>
           <m-input name="code" [(ngModel)]="structureDefinition.code" required></m-input>
@@ -130,7 +123,7 @@
         </m-form-item>
       </form>
       <ng-container *m-card-footer>
-        <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">
+        <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
           {{'core.btn.save' | translate}}
         </m-button>
       </ng-container>
@@ -140,17 +133,23 @@
 
 
 <ng-template #fshTemplate>
-  <m-spinner [mLoading]="loading['save']">
-    <m-card [mShowSkeleton]="loading['init'] || loading['content']">
+  <m-spinner [mLoading]="loader.isLoading">
+    <m-card>
       <form #fshForm="ngForm" *ngIf="structureDefinition">
         <m-form-item mName="content">
-          <m-textarea *ngIf="structureDefinition.contentFormat === 'fsh'" name="content" [(ngModel)]="structureDefinition.content" [rows]="10" autosize required></m-textarea>
+          <m-textarea *ngIf="structureDefinition.contentFormat === 'fsh'"
+              name="content"
+              [(ngModel)]="structureDefinition.content"
+              (ngModelChange)="contentFsh = $event"
+              [rows]="10"
+              autosize
+              required></m-textarea>
         </m-form-item>
-        <pre *ngIf="structureDefinition.contentFormat !== 'fsh'">{{structureDefinition.content | fhirToFsh | async}}</pre>
+        <pre *ngIf="structureDefinition.contentFormat !== 'fsh'">{{contentFsh}}</pre>
       </form>
       <ng-container *ngIf="structureDefinition?.contentFormat === 'fsh'">
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>
@@ -160,17 +159,23 @@
 </ng-template>
 
 <ng-template #jsonTemplate>
-  <m-spinner [mLoading]="loading['save']">
-    <m-card [mShowSkeleton]="loading['init'] || loading['content']">
+  <m-spinner [mLoading]="loader.isLoading">
+    <m-card>
       <form #jsonForm="ngForm" *ngIf="structureDefinition">
         <m-form-item mName="content">
-          <m-textarea *ngIf="structureDefinition.contentFormat === 'json'" name="content" [(ngModel)]="structureDefinition.content" [rows]="10" autosize required></m-textarea>
+          <m-textarea *ngIf="structureDefinition.contentFormat === 'json'"
+              name="content"
+              [(ngModel)]="structureDefinition.content"
+              (ngModelChange)="contentFhir = $event"
+              [rows]="10"
+              autosize
+              required></m-textarea>
         </m-form-item>
-        <pre *ngIf="structureDefinition.contentFormat !== 'json'">{{structureDefinition.content | fshToFhir | async}}</pre>
+        <pre *ngIf="structureDefinition.contentFormat !== 'json'">{{contentFhir}}</pre>
       </form>
       <ng-container *ngIf="structureDefinition?.contentFormat === 'json'">
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>
