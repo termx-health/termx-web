@@ -1697,6 +1697,9 @@
 				"display": "Display",
 				"edit-header": "Edit structure definition",
 				"element-header": "Elements",
+				"binding": "Binding",
+				"value-set": "Value set",
+				"strength": "Strength",
 				"error-modal": {
 					"delete-content": "Delete content and proceed",
 					"fhir-to-fsh": "FHIR to FSH conversion failed",

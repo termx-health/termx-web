@@ -202,6 +202,7 @@ export class StructureDefinitionEditComponent implements OnInit {
       })) || [],
       fixedUri: element.fixedUri,
       fixedCoding: element.fixedCoding || {},
+      binding: element.binding || {},
       constraint: element.constraint || []
     };
   }
@@ -223,6 +224,7 @@ export class StructureDefinitionEditComponent implements OnInit {
     }));
     element.fixedUri = formElement.fixedUri;
     element.fixedCoding = isDefined(formElement.fixedCoding) ? formElement.fixedCoding : undefined;
+    element.binding = isDefined(formElement.binding) ? formElement.binding : element.binding;
     element.constraint = formElement.constraint;
     return element;
   }
@@ -290,5 +292,6 @@ export class FormElement {
   public types?: StructureDefinitionType[];
   public fixedUri?: string;
   public fixedCoding?: {code?: string, system?: string, display?: string};
+  public binding?: {valueSet?: string, strength?: string};
   public constraint?: any[];
 }
