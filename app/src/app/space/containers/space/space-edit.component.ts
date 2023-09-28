@@ -71,11 +71,11 @@ export class SpaceEditComponent implements OnInit {
   }
 
   public save(): void {
-    if (!validateForm(this.form) || !this.igForm.validate()) {
+    if (!validateForm(this.form) || (this.igForm && !this.igForm.validate())) {
       return;
     }
     this.loading = true;
-    this.space.integration.github.ig =  this.igForm.readForm();
+    this.space.integration.github.ig =  this.igForm?.readForm();
     this.space.integration.github = this.githubEnabled ? this.space.integration.github : null;
     this.spaceService.save(this.space!)
       .subscribe(() => this.location.back())
