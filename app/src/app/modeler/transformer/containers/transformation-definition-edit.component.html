@@ -1,5 +1,5 @@
 <m-spinner [mLoading]="!definition"></m-spinner>
-<ng-container *ngIf="!!definition">
+<div *ngIf="!!definition" class="tw-flex-container" style="gap: 12px">
   <div class="m-justify-between m-items-middle">
     <div>
       <h2 class="m-bold" style="margin: 0">
@@ -15,9 +15,9 @@
     </div>
 
     <div class="m-items-middle">
-      <m-button (click)="save()" [mLoading]="loading" mDisplay="primary">
+      <m-button (click)="save()" mDisplay="primary">
         <div class="m-items-middle">
-          <m-icon mCode="save"/>
+          <m-icon [mCode]="loading ? 'loading' : 'save'"/>
           {{'core.btn.save' | translate}}
         </div>
       </m-button>
@@ -33,23 +33,16 @@
     </div>
   </div>
 
-  <div nz-row nzGutter="12" class="m-row" style="margin-top: 12px">
-    <div nz-col [nzMd]="24">
-      <m-card>
-        <m-form-item mName="name" mLabel="entities.transformation-definition.name" required>
-          <m-input [(ngModel)]="definition.name" name="name" required></m-input>
-        </m-form-item>
-      </m-card>
-    </div>
-  </div>
 
-  <tw-transformation-definition-resources [definition]="definition"></tw-transformation-definition-resources>
+  <m-card>
+    <m-form-item mName="name" mLabel="entities.transformation-definition.name" required>
+      <m-input [(ngModel)]="definition.name" name="name" required></m-input>
+    </m-form-item>
+  </m-card>
 
-  <div nz-row nzGutter="12" class="m-row" style="margin-top: 12px">
-    <div nz-col [nzMd]="24">
-      <m-card>
-        <tw-transformation-definition-execution [definition]="definition"></tw-transformation-definition-execution>
-      </m-card>
-    </div>
-  </div>
-</ng-container>
+  <tw-transformation-definition-resources [definition]="definition"/>
+
+  <m-card>
+    <tw-transformation-definition-execution [definition]="definition"/>
+  </m-card>
+</div>

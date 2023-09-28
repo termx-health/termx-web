@@ -8,6 +8,25 @@ import {remove} from '@kodality-web/core-util';
   styles: [`
     @import "../../../../styles/variables";
 
+    .tw-transformation-definition-collapse-panel {
+      z-index: 1;
+
+      ::ng-deep .m-collapse-panel_container--collapsed {
+        width: 0px !important;
+      }
+
+      ::ng-deep .m-collapse-panel_content__wrapper {
+        padding: 0 1rem 0 0;
+      }
+    }
+
+    .tw-transformation-definition-container {
+      flex: 1;
+      padding-left: 1rem;
+      border-left: 1px solid var(--color-borders);
+      position: relative
+    }
+
     ::ng-deep .fml-editor {
       z-index: 1000;
       position: fixed;
@@ -23,6 +42,7 @@ import {remove} from '@kodality-web/core-util';
       border-left: 1px dashed @mui-border-color;
       cursor: pointer;
       margin-left: 0.5rem;
+      word-break: break-all;
 
       &:hover {
         background: @mui-border-color-light;

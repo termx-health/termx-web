@@ -30,7 +30,7 @@
       <td *twPrivileged="'*.StructureDefinition.edit'" class="tw-table-actions">
         <m-dropdown>
           <ng-container *twPrivileged="'*.StructureDefinition.edit'">
-            <a *m-dropdown-item (click)="deleteStructureDefinition(def.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
+            <a *m-dropdown-item m-popconfirm mPopconfirmTitle="web.structure-definition.list.delete-confirm" (mOnConfirm)="deleteStructureDefinition(def.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>
       </td>

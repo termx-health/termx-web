@@ -1719,7 +1719,8 @@
 				"system": "System"
 			},
 			"list": {
-				"add-structure-definition": "Add structure definition"
+				"add-structure-definition": "Add structure definition",
+				"delete-confirm": "Are you sure you want to delete? Please review other resources that may depend on this definition."
 			},
 			"view": {
 				"binding": "Binding",

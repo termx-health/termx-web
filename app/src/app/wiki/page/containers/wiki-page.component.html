@@ -23,11 +23,11 @@
   <div class="page__container">
     <!-- Sidebar -->
     <div class="page__sidebar">
-      <tw-collapse-panel resizable>
+      <m-collapse-panel mResizable>
         <m-skeleton [mLoading]="loader.state['spaces']">
           <tw-wiki-page-tree-sidebar *ngIf="space" [space]="space" [path]="path" (viewRoot)="viewRoot()" (viewPage)="viewPage($event)"/>
         </m-skeleton>
-      </tw-collapse-panel>
+      </m-collapse-panel>
     </div>
 
 

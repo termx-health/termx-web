@@ -1,60 +1,60 @@
-<div nz-row nzGutter="12" class="m-row" style="margin-top: 12px">
-  <div nz-col [nzMd]="8" [nzXs]="24">
-    <m-card>
-      <div *ngFor="let type of types">
+<m-card>
+  <div style="display: flex">
+    <m-collapse-panel class="tw-transformation-definition-collapse-panel" mResizable mKey="transform-definition" [mResizableMinWidth]="250">
+      <div>
+        <div *ngFor="let type of types">
+          <div class="m-items-middle resource-dir">
+            <m-icon mCode="folder"/>
+            {{('web.transformation-definition.resources.type.' + type) | translate}}
+          </div>
+
+          <div
+              *ngFor="let res of definition.resources | filter:filterType:type"
+              class="m-items-middle resource"
+              [class.resource--selected]="selectedResource === res"
+              [class.resource--invalid]="res | apply:isResourceInvalid:selectedResource"
+              (click)="selectResource(res)"
+          >
+            <m-icon [mCode]="res.source === 'local' ? 'file-done' : res.source === 'url' ? 'fire' : 'file'"/>
+            <div>{{(res.name | apply: compactName: res.source) || ('web.transformation-definition.resources.new' | translate)}}</div>
+          </div>
+
+          <div class="resource-add">
+            <m-button mSize="small" mDisplay="dashed" (mClick)="onAdd(type)" style="padding: 3px">
+              <div class="m-items-middle">
+                <m-icon mCode="plus"/>
+                {{'core.btn.add' | translate}}
+              </div>
+            </m-button>
+          </div>
+        </div>
+
         <div class="m-items-middle resource-dir">
           <m-icon mCode="folder"/>
-          {{('web.transformation-definition.resources.type.' + type) | translate}}
+          {{('web.transformation-definition.resources.type.mapping-main') | translate}}
         </div>
 
-        <div
-            *ngFor="let res of definition.resources | filter:filterType:type"
-            class="m-items-middle resource"
-            [class.resource--selected]="selectedResource === res"
-            [class.resource--invalid]="res | apply:isResourceInvalid:selectedResource"
-            (click)="selectResource(res)"
+        <div class="m-items-middle resource"
+            [class.resource--selected]="selectedResource === definition.mapping"
+            [class.resource--invalid]="definition.mapping | apply:isResourceInvalid:selectedResource"
+            (click)="selectResource(definition.mapping)"
         >
-          <m-icon [mCode]="res.source === 'local' ? 'file-done' : res.source === 'url' ? 'fire' : 'file'"/>
-          <div>{{(res.name | apply: compactName: res.source) || ('web.transformation-definition.resources.new' | translate)}}</div>
-        </div>
-
-        <div class="resource-add">
-          <m-button mSize="small" mDisplay="dashed" (mClick)="onAdd(type)" style="padding: 3px">
-            <div class="m-items-middle">
-              <m-icon mCode="plus"/>
-              {{'core.btn.add' | translate}}
-            </div>
-          </m-button>
+          <m-icon [mCode]="definition.mapping.source === 'url' ? 'fire' : 'file'"/>
+          <div>{{definition.mapping.name || ('web.transformation-definition.resources.new' | translate)}}</div>
         </div>
       </div>
+    </m-collapse-panel>
 
-      <div class="m-items-middle resource-dir">
-        <m-icon mCode="folder"/>
-        {{('web.transformation-definition.resources.type.mapping-main') | translate}}
-      </div>
 
-      <div class="m-items-middle resource"
-          [class.resource--selected]="selectedResource === definition.mapping"
-          [class.resource--invalid]="definition.mapping | apply:isResourceInvalid:selectedResource"
-          (click)="selectResource(definition.mapping)"
-      >
-        <m-icon [mCode]="definition.mapping.source === 'url' ? 'fire' : 'file'"/>
-        <div>{{definition.mapping.name || ('web.transformation-definition.resources.new' | translate)}}</div>
-      </div>
-
-    </m-card>
-  </div>
-
-  <div nz-col [nzMd]="16" [nzXs]="24">
-    <m-card>
+    <div class="tw-transformation-definition-container">
       <m-button
           *ngIf="selectedResource !== definition.mapping"
+          style="position: absolute; right: 0; z-index: 100"
           mSize="small"
           mDisplay="dashed"
           m-popconfirm
           mPopconfirmTitle="core.delete-confirm"
           (mOnConfirm)="deleteResource(selectedResource)"
-          style="position: absolute; right: 19px; z-index: 100"
       >
         <m-icon mCode="delete"/>
       </m-button>
@@ -63,7 +63,6 @@
           [definition]="definition"
           [resource]="selectedResource"
       ></tw-transformation-definition-resource-form>
-    </m-card>
+    </div>
   </div>
-
-</div>
+</m-card>

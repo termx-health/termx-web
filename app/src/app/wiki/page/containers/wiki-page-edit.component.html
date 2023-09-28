@@ -75,7 +75,7 @@
       ></tw-smart-text-editor>
     </div>
 
-    <tw-collapse-panel class="editor__comments-wrapper" key="page-editor-comment" collapsePosition="right" resizable *ngIf="showComments">
+    <m-collapse-panel class="editor__comments-wrapper" mKey="page-editor-comment" mCollapsePosition="right" mResizable [mResizableMinWidth]="250" *ngIf="showComments">
       <div class="editor__comments">
         <tw-wiki-page-comments
             [pageContent]="pageContent"
@@ -83,7 +83,7 @@
             (pageCommentsChange)="onCommentsChange()"
         ></tw-wiki-page-comments>
       </div>
-    </tw-collapse-panel>
+    </m-collapse-panel>
   </div>
 </m-page>
 
