@@ -76,8 +76,8 @@ export class CodeSystemEditComponent implements OnInit {
   }
 
   private writeCS(cs: CodeSystem): CodeSystem {
-    cs.content = 'complete';
-    cs.caseSensitive = 'ci';
+    cs.content ??= 'complete';
+    cs.caseSensitive ??= 'ci';
     cs.copyright ??= {};
     cs.permissions ??= {};
     cs.settings ??= {};
