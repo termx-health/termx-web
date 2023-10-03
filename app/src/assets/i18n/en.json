@@ -1684,7 +1684,8 @@
 			"ig-pages": "Pages",
 			"ig-menu": "Menu",
 			"ig-menu-add": "Add",
-			"ig-menu-submenu-add": "Add submenu"
+			"ig-menu-submenu-add": "Add submenu",
+			"open-in-new-tab": "Open in new tab"
 		},
 		"structure-definition": {
 			"form": {

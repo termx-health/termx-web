@@ -2,16 +2,15 @@
   <m-list mSeparated [mEmpty]="searchResult.data.length === 0">
     <m-list-item *ngFor="let ms of searchResult.data" mClickable [routerLink]="['/resources','map-sets',ms.id,'summary']">
       <div class="m-justify-between m-items-top">
-        <div>
-          <div class="m-items-middle">
-            <span class="m-bold">{{ms.title | localName}}</span>
-            <m-divider mVertical></m-divider>
-            <span>{{ms.uri}}</span>
-          </div>
+        <div class="m-items-middle">
+          <span class="m-bold">{{ms.title | localName: (ms.title | apply: firstName)}}</span>
+          <m-divider mVertical></m-divider>
+          <span>{{ms.uri}}</span>
         </div>
-        <m-button mDisplay="text" mShape="circle" [routerLink]="['diff']" [queryParams]="{resourceId: ms.id, resourceType: 'map-set'}">
-          <span class="m-items-middle"><m-icon mCode="diff"></m-icon></span>
-        </m-button>
+
+        <div *ngIf="actionsTpl" class="m-items-middle">
+          <ng-container *ngTemplateOutlet="actionsTpl; context {$implicit: ms}"></ng-container>
+        </div>
       </div>
     </m-list-item>
   </m-list>

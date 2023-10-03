@@ -1,65 +1,105 @@
 <m-page [mLoading]="spaceContext.loading">
   <div style="display: flex; gap: 1rem">
     <div class="tw-flex-container" style="flex: 1">
-      <m-list mSeparated>
-        <m-list-item mClickable (mClick)="selectResourceType('code-system')">
+      <m-list  [ngModel]="selectedResourceType" (ngModelChange)="selectResourceType($event ?? selectedResourceType)" mSelectable mSeparated>
+        <m-list-item mValue="code-system" mClickable>
           <span class="m-bold">{{'entities.code-system.plural' | translate}}</span>
         </m-list-item>
-        <m-list-item mClickable (mClick)="selectResourceType('value-set')">
+        <m-list-item mValue="value-set" mClickable>
           <span class="m-bold">{{'entities.value-set.plural' | translate}}</span>
         </m-list-item>
-        <m-list-item mClickable (mClick)="selectResourceType('map-set')">
+        <m-list-item mValue="map-set" mClickable>
           <span class="m-bold">{{'entities.map-set.plural' | translate}}</span>
         </m-list-item>
-<!--        <m-list-item mClickable (click)="selectedResourceType = 'page'">-->
-<!--          <span class="m-bold">{{'entities.page.plural' | translate}}</span>-->
-<!--        </m-list-item>-->
-<!--        <m-list-item mClickable (click)="selectedResourceType = 'structure-definition'">-->
-<!--          <span class="m-bold">{{'entities.structure-definition.plural' | translate}}</span>-->
-<!--        </m-list-item>-->
+        <!--        <m-list-item mClickable (click)="selectedResourceType = 'page'">-->
+        <!--          <span class="m-bold">{{'entities.page.plural' | translate}}</span>-->
+        <!--        </m-list-item>-->
+        <!--        <m-list-item mClickable (click)="selectedResourceType = 'structure-definition'">-->
+        <!--          <span class="m-bold">{{'entities.structure-definition.plural' | translate}}</span>-->
+        <!--        </m-list-item>-->
       </m-list>
     </div>
 
 
     <div class="uw-flex-container" style="flex: 3">
-
       <ng-container [ngSwitch]="selectedResourceType">
-
         <!-- Code Systems -->
         <m-card *ngSwitchCase="'code-system'">
           <label *m-card-header>{{'entities.code-system.plural' | translate}}</label>
-          <tw-code-system-widget [spaceId]="spaceContext?.space?.id"
+          <tw-code-system-widget
+              [spaceId]="spaceContext?.space?.id"
               [packageId]="spaceContext?.pack?.id"
-              [packageVersionId]="spaceContext?.version?.id"></tw-code-system-widget>
+              [packageVersionId]="spaceContext?.version?.id"
+              [actionsTpl]="csActions"
+              (loaded)="restoreScrollPosition()"
+          >
+            <ng-template #csActions let-cs>
+              <m-icon-button
+                  mIcon="select"
+                  (mClick)="$event.stopPropagation(); openInTab(['/resources', 'code-systems', cs.id, 'summary'])"
+                  m-tooltip
+                  mTitle="web.space.open-in-new-tab"
+              />
+              <m-icon-button mIcon="diff" [routerLink]="['diff']" [queryParams]="{resourceId: cs.id, resourceType: 'code-system'}"/>
+            </ng-template>
+          </tw-code-system-widget>
         </m-card>
 
         <!-- Value Sets -->
         <m-card *ngSwitchCase="'value-set'">
           <label *m-card-header>{{'entities.value-set.plural' | translate}}</label>
-          <tw-value-set-widget [spaceId]="spaceContext?.space?.id"
+          <tw-value-set-widget
+              [spaceId]="spaceContext?.space?.id"
               [packageId]="spaceContext?.pack?.id"
-              [packageVersionId]="spaceContext?.version?.id"></tw-value-set-widget>
+              [packageVersionId]="spaceContext?.version?.id"
+              [actionsTpl]="vsActions"
+              (loaded)="restoreScrollPosition()"
+          >
+            <ng-template #vsActions let-vs>
+              <m-icon-button
+                  mIcon="select"
+                  (mClick)="$event.stopPropagation(); openInTab(['/resources', 'value-sets', vs.id, 'summary'])"
+                  m-tooltip
+                  mTitle="web.space.open-in-new-tab"
+              />
+              <m-icon-button mIcon="diff" [routerLink]="['diff']" [queryParams]="{resourceId: vs.id, resourceType: 'value-set'}"/>
+            </ng-template>
+          </tw-value-set-widget>
         </m-card>
 
         <!-- Map Sets -->
         <m-card *ngSwitchCase="'map-set'">
           <label *m-card-header>{{'entities.map-set.plural' | translate}}</label>
-          <tw-map-set-widget [spaceId]="spaceContext?.space?.id"
+          <tw-map-set-widget
+              [spaceId]="spaceContext?.space?.id"
               [packageId]="spaceContext?.pack?.id"
-              [packageVersionId]="spaceContext?.version?.id"></tw-map-set-widget>
+              [packageVersionId]="spaceContext?.version?.id"
+              [actionsTpl]="msActions"
+              (loaded)="restoreScrollPosition()"
+          >
+            <ng-template #msActions let-ms>
+              <m-icon-button
+                  mIcon="select"
+                  (mClick)="$event.stopPropagation(); openInTab(['/resources', 'map-sets', ms.id, 'summary'])"
+                  m-tooltip
+                  mTitle="web.space.open-in-new-tab"
+              />
+              <m-icon-button mIcon="diff" [routerLink]="['diff']" [queryParams]="{resourceId: ms.id, resourceType: 'map-set'}"/>
+            </ng-template>
+          </tw-map-set-widget>
         </m-card>
 
         <!-- Pages -->
-<!--        <m-card *ngSwitchCase="'page'">-->
-<!--          <label *m-card-header>{{'entities.page.plural' | translate}}</label>-->
+        <!--        <m-card *ngSwitchCase="'page'">-->
+        <!--          <label *m-card-header>{{'entities.page.plural' | translate}}</label>-->
 
-<!--        </m-card>-->
+        <!--        </m-card>-->
 
         <!-- Structure Definitions -->
-<!--        <m-card *ngSwitchCase="'structure-definition'">-->
-<!--          <label *m-card-header>{{'entities.structure-definition.plural' | translate}}</label>-->
+        <!--        <m-card *ngSwitchCase="'structure-definition'">-->
+        <!--          <label *m-card-header>{{'entities.structure-definition.plural' | translate}}</label>-->
 
-<!--        </m-card>-->
+        <!--        </m-card>-->
       </ng-container>
 
     </div>

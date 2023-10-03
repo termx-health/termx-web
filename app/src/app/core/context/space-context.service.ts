@@ -131,6 +131,6 @@ export class SpaceContextService {
       p: ctx?.packageId,
       s: ctx?.spaceId
     });
-    return url.replace(/context[^\/]*/, `context${Object.keys(params).map(k => `;${k}=${params[k]}`)}`);
+    return url.replace(/context[^\/]*(?=[.?\n\/])/, `context${Object.keys(params).map(k => `;${k}=${params[k]}`)}`);
   }
 }

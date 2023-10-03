@@ -1,9 +1,10 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
 import {SearchResult} from '@kodality-web/core-util';
 import {Subscription} from 'rxjs';
 import {MapSet} from '../model/map-set';
 import {MapSetSearchParams} from '../model/map-set-search-params';
 import {MapSetLibService} from '../services/map-set-lib.service';
+import {LocalizedName} from '@kodality-web/marina-util';
 
 @Component({
   selector: 'tw-map-set-widget',
@@ -13,11 +14,13 @@ export class MapSetWidgetComponent implements OnChanges {
   @Input() public spaceId: number;
   @Input() public packageId: number;
   @Input() public packageVersionId: number;
+  @Input() public actionsTpl: TemplateRef<any>;
+  @Output() public loaded = new EventEmitter<void>();
 
   private searchSub: Subscription;
-  public searchResult = SearchResult.empty<MapSet>();
-  public query = new MapSetSearchParams();
-  public loading = false;
+  protected searchResult = SearchResult.empty<MapSet>();
+  protected query = new MapSetSearchParams();
+  protected loading = false;
 
   public constructor(private mapSetService: MapSetLibService) {
     this.query.limit = 50;
@@ -38,15 +41,19 @@ export class MapSetWidgetComponent implements OnChanges {
     }
 
     this.loading = true;
-    this.searchSub = this.mapSetService.search(
-      {
-        ...this.query,
-        spaceId: this.spaceId,
-        packageId: this.packageId,
-        packageVersionId: this.packageVersionId
-      }).subscribe(resp => {
-        this.searchResult = resp;
-        this.loading = false;
+    this.searchSub = this.mapSetService.search({
+      ...this.query,
+      spaceId: this.spaceId,
+      packageId: this.packageId,
+      packageVersionId: this.packageVersionId
+    }).subscribe(resp => {
+      this.searchResult = resp;
+      this.loading = false;
+      this.loaded.emit();
     });
+  }
+
+  protected firstName(ln: LocalizedName): string {
+    return Object.values(ln).find(v => v.length);
   }
 }
