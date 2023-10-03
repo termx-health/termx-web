@@ -12,6 +12,8 @@ export class CodeSystemWidgetComponent implements OnChanges {
   @Input() public spaceId: number;
   @Input() public packageId: number;
   @Input() public packageVersionId: number;
+  @Input() public text: string;
+
   @Input() public actionsTpl: TemplateRef<any>;
   @Output() public loaded = new EventEmitter<void>();
 
@@ -25,7 +27,7 @@ export class CodeSystemWidgetComponent implements OnChanges {
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['spaceId'] || changes['packageId'] || changes['packageVersionId']) {
+    if (changes['spaceId'] || changes['packageId'] || changes['packageVersionId'] || changes['text']) {
       this.search();
     }
   }
@@ -43,7 +45,8 @@ export class CodeSystemWidgetComponent implements OnChanges {
       ...this.query,
       spaceId: this.spaceId,
       packageId: this.packageId,
-      packageVersionId: this.packageVersionId
+      packageVersionId: this.packageVersionId,
+      textContains: this.text
     }).subscribe(resp => {
       this.searchResult = resp;
       this.loading = false;

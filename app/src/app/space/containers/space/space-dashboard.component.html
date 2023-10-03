@@ -1,24 +1,33 @@
 <m-page [mLoading]="spaceContext.loading">
   <div style="display: flex; gap: 1rem">
-    <div class="tw-flex-container" style="flex: 1">
-      <m-list  [ngModel]="selectedResourceType" (ngModelChange)="selectResourceType($event ?? selectedResourceType)" mSelectable mSeparated>
-        <m-list-item mValue="code-system" mClickable>
-          <span class="m-bold">{{'entities.code-system.plural' | translate}}</span>
-        </m-list-item>
-        <m-list-item mValue="value-set" mClickable>
-          <span class="m-bold">{{'entities.value-set.plural' | translate}}</span>
-        </m-list-item>
-        <m-list-item mValue="map-set" mClickable>
-          <span class="m-bold">{{'entities.map-set.plural' | translate}}</span>
-        </m-list-item>
-        <!--        <m-list-item mClickable (click)="selectedResourceType = 'page'">-->
-        <!--          <span class="m-bold">{{'entities.page.plural' | translate}}</span>-->
-        <!--        </m-list-item>-->
-        <!--        <m-list-item mClickable (click)="selectedResourceType = 'structure-definition'">-->
-        <!--          <span class="m-bold">{{'entities.structure-definition.plural' | translate}}</span>-->
-        <!--        </m-list-item>-->
-      </m-list>
-    </div>
+    <m-card style="flex: 1; height: min-content; position: sticky; top: calc(var(--page-header-height) + var(--page-content-padding) + 3.5rem);">
+      <m-form-item mLabel="core.filter">
+        <div class="m-items-middle">
+          <m-input style="flex: 1" placeholder="marina.ui.inputs.search.placeholder" [ngModel]="searchText" twDebounce [debounced]="textSearch"/>
+          <m-icon-button *ngIf="searchText?.length" mIcon="close" (mClick)="searchText = undefined"/>
+        </div>
+      </m-form-item>
+
+      <m-form-item mLabel="web.space.resources">
+        <m-list [(ngModel)]="selectedResourceType" (ngModelChange)="selectResourceType($event)" mSelectable mSeparated [mAllowClear]="false">
+          <m-list-item mValue="code-system" mClickable>
+            {{'entities.code-system.plural' | translate}}
+          </m-list-item>
+          <m-list-item mValue="value-set" mClickable>
+            {{'entities.value-set.plural' | translate}}
+          </m-list-item>
+          <m-list-item mValue="map-set" mClickable>
+            {{'entities.map-set.plural' | translate}}
+          </m-list-item>
+          <!--        <m-list-item mClickable (click)="selectedResourceType = 'page'">-->
+          <!--          <span class="m-bold">{{'entities.page.plural' | translate}}</span>-->
+          <!--        </m-list-item>-->
+          <!--        <m-list-item mClickable (click)="selectedResourceType = 'structure-definition'">-->
+          <!--          <span class="m-bold">{{'entities.structure-definition.plural' | translate}}</span>-->
+          <!--        </m-list-item>-->
+        </m-list>
+      </m-form-item>
+    </m-card>
 
 
     <div class="uw-flex-container" style="flex: 3">
@@ -30,6 +39,7 @@
               [spaceId]="spaceContext?.space?.id"
               [packageId]="spaceContext?.pack?.id"
               [packageVersionId]="spaceContext?.version?.id"
+              [text]="searchText"
               [actionsTpl]="csActions"
               (loaded)="restoreScrollPosition()"
           >
@@ -52,6 +62,7 @@
               [spaceId]="spaceContext?.space?.id"
               [packageId]="spaceContext?.pack?.id"
               [packageVersionId]="spaceContext?.version?.id"
+              [text]="searchText"
               [actionsTpl]="vsActions"
               (loaded)="restoreScrollPosition()"
           >
@@ -74,6 +85,7 @@
               [spaceId]="spaceContext?.space?.id"
               [packageId]="spaceContext?.pack?.id"
               [packageVersionId]="spaceContext?.version?.id"
+              [text]="searchText"
               [actionsTpl]="msActions"
               (loaded)="restoreScrollPosition()"
           >

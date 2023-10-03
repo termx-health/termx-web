@@ -1686,7 +1686,8 @@
 			"ig-menu": "Menu",
 			"ig-menu-add": "Add",
 			"ig-menu-submenu-add": "Add submenu",
-			"open-in-new-tab": "Open in new tab"
+			"open-in-new-tab": "Open in new tab",
+			"resources": "Resources"
 		},
 		"structure-definition": {
 			"form": {

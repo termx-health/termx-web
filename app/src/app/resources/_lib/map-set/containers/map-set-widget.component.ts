@@ -14,6 +14,8 @@ export class MapSetWidgetComponent implements OnChanges {
   @Input() public spaceId: number;
   @Input() public packageId: number;
   @Input() public packageVersionId: number;
+  @Input() public text: string;
+
   @Input() public actionsTpl: TemplateRef<any>;
   @Output() public loaded = new EventEmitter<void>();
 
@@ -45,7 +47,8 @@ export class MapSetWidgetComponent implements OnChanges {
       ...this.query,
       spaceId: this.spaceId,
       packageId: this.packageId,
-      packageVersionId: this.packageVersionId
+      packageVersionId: this.packageVersionId,
+      textContains: this.text
     }).subscribe(resp => {
       this.searchResult = resp;
       this.loading = false;

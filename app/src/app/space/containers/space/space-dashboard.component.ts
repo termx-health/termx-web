@@ -2,6 +2,7 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ComponentStateStore} from '@kodality-web/core-util';
+import {EMPTY, Observable} from 'rxjs';
 
 @Component({
   templateUrl: './space-dashboard.component.html',
@@ -10,6 +11,7 @@ export class SpaceDashboardComponent implements OnInit, OnDestroy {
   protected readonly STORE_KEY = 'space-dashboard';
 
   protected selectedResourceType: 'code-system' | 'value-set' | 'map-set';
+  protected searchText: string;
 
   public constructor(
     protected spaceContext: SpaceContextComponent,
@@ -20,6 +22,7 @@ export class SpaceDashboardComponent implements OnInit, OnDestroy {
 
   public ngOnInit(): void {
     this.route.queryParamMap.subscribe(p => {
+      this.searchText = p.get('text');
       this.selectResourceType(p.get('resource') as any ?? 'code-system');
     });
   }
@@ -31,14 +34,19 @@ export class SpaceDashboardComponent implements OnInit, OnDestroy {
     });
   }
 
+
   protected selectResourceType(type: 'code-system' | 'value-set' | 'map-set'): void {
     this.selectedResourceType = type;
-    this.router.navigate([], {
-      relativeTo: this.route,
-      queryParams: {resource: type},
-      queryParamsHandling: 'merge',
-    });
+    this.mergeQueryParams({resource: type});
   }
+
+  protected textSearch = (text: string): Observable<any> => {
+    text ||= undefined;
+    this.searchText = text;
+    this.mergeQueryParams({text});
+    return EMPTY;
+  };
+
 
   protected openInTab(commands: any[]): void {
     const url = this.router.serializeUrl(this.router.createUrlTree(commands));
@@ -56,6 +64,15 @@ export class SpaceDashboardComponent implements OnInit, OnDestroy {
         left: 0,
         behavior: 'smooth',
       });
+    });
+  }
+
+
+  private mergeQueryParams(queryParams: object): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams,
+      queryParamsHandling: 'merge',
     });
   }
 }
