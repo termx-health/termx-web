@@ -52,6 +52,12 @@ export class ValueSetWidgetComponent implements OnChanges {
       this.loaded.emit();
     });
   }
+
+  protected loadMore(): void {
+    this.query.limit += 50;
+    this.search();
+  }
+
   protected firstName(ln: LocalizedName): string {
     return Object.values(ln).find(v => v.length);
   }

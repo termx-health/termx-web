@@ -37,7 +37,8 @@
 		},
 		"version-select": {
 			"custom": "Custom"
-		}
+		},
+		"load-more": "Load more"
 	},
 	"entities": {
 		"association-type": {

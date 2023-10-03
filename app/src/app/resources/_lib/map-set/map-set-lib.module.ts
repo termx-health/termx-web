@@ -10,6 +10,7 @@ import {MapSetWidgetComponent} from './containers/map-set-widget.component';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {RouterModule} from '@angular/router';
 import {MapSetFileImportService} from 'term-web/resources/_lib/map-set/services/map-set-file-import.service';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -19,7 +20,8 @@ import {MapSetFileImportService} from 'term-web/resources/_lib/map-set/services/
     CommonModule,
     CoreUtilModule,
     MarinaUtilModule,
-    RouterModule
+    RouterModule,
+    TranslateModule
   ],
   providers: [
     MapSetLibService,

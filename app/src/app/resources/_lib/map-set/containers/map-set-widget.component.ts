@@ -53,6 +53,11 @@ export class MapSetWidgetComponent implements OnChanges {
     });
   }
 
+  protected loadMore(): void {
+    this.query.limit += 50;
+    this.search();
+  }
+
   protected firstName(ln: LocalizedName): string {
     return Object.values(ln).find(v => v.length);
   }

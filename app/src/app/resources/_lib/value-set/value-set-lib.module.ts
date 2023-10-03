@@ -14,6 +14,7 @@ import {ValueSetWidgetComponent} from './containers/value-set-widget.component';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {RouterModule} from '@angular/router';
 import {ValueSetFileImportService} from 'term-web/resources/_lib/value-set/services/value-set-file-import.service';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import {ValueSetFileImportService} from 'term-web/resources/_lib/value-set/servi
     CoreUtilModule,
     CodeSystemLibModule,
     MarinaUtilModule,
-    RouterModule
+    RouterModule,
+    TranslateModule
   ],
   providers: [
     ValueSetLibService,
