@@ -11,8 +11,6 @@ export interface UserInfo {
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
-
-  private ADMIN = 'admin';
   public user?: UserInfo;
 
   protected baseUrl = `${environment.termxApi}/auth`;
@@ -25,7 +23,7 @@ export class AuthService {
 
   public refresh(): Observable<UserInfo> {
     if (environment.yupiEnabled) {
-      return of({username: 'yupi', privileges: [this.ADMIN]}).pipe(tap(u => this.user = u));
+      return of({username: 'yupi', privileges: ['*.*.*']}).pipe(tap(u => this.user = u));
     }
     return this.refreshUserInfo().pipe(tap(u => this.user = u));
   }
@@ -62,16 +60,9 @@ export class AuthService {
       return false;
     }
 
-    if (authPrivilege === this.ADMIN) {
-      return userPrivileges.includes(this.ADMIN);
-    }
-
     return userPrivileges.some(userPrivilege => {
-      if (authPrivilege === this.ADMIN) {
-        return userPrivilege === this.ADMIN;
-      }
-      let upParts = userPrivilege.split('.');
-      let apParts = authPrivilege.split('.');
+      let upParts = /(.*)\.([^\.]+)\.([^.]+)$/.exec(userPrivilege).splice(1,3);  //userPrivilege.split('.');
+      let apParts = /(.*)\.([^\.]+)\.([^.]+)$/.exec(authPrivilege).splice(1,3);  //authPrivilege.split('.');
       if (apParts.length === 2 && apParts[0] === '*') { // handle special case like '*.view'
         apParts = ['*'].concat(apParts);
       }
@@ -93,20 +84,20 @@ export class AuthService {
     if (!this.user) {
       return false;
     }
-    return this.includesPrivilege(this.user.privileges, this.ADMIN) || this.includesPrivilege(this.user!.privileges, privilege);
+    return this.includesPrivilege(this.user!.privileges, privilege);
   }
 
   public hasAllPrivileges(privileges: string[]): boolean {
     if (!this.user) {
       return false;
     }
-    return this.includesPrivilege(this.user.privileges, this.ADMIN) || privileges.every(p => this.includesPrivilege(this.user!.privileges, p));
+    return privileges.every(p => this.includesPrivilege(this.user!.privileges, p));
   }
 
   public hasAnyPrivilege(privileges: string[]): boolean {
     if (!this.user) {
       return false;
     }
-    return this.includesPrivilege(this.user.privileges, this.ADMIN) || privileges.some(p => this.includesPrivilege(this.user!.privileges, p));
+    return privileges.some(p => this.includesPrivilege(this.user!.privileges, p));
   }
 }
