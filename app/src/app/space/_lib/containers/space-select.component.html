@@ -5,6 +5,7 @@
     (mChange)="fireOnChange()"
     [loading]="loader.isLoading"
     [autoUnselect]="false"
+    [filterOption]="filterOption"
 >
   <m-option *ngFor="let id of data | keys" [mValue]="data[id].id" mLabel="{{data[id].names | localName}}"/>
 </m-select>

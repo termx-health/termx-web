@@ -15,7 +15,7 @@
               <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'summary', title: 'web.resource-context.summary', icon: 'appstore'}"/>
             </div>
 
-            <div *twPrivileged="'*.' + resourceType + '.edit'" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']">
+            <div *twPrivileged="resource.id + '.' + resourceType + '.edit'" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']">
               <a class="m-items-middle">{{'core.btn.edit' | translate}}
                 <m-icon mCode="form"/>
               </a>

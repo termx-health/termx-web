@@ -102,7 +102,7 @@ export class SpaceEditComponent implements OnInit {
 
   public deletePackage(id: number): void {
     this.loading = true;
-    this.packageService.delete(id).subscribe(() => this.loadSpace(this.space.id)).add(() => this.loading = false);
+    this.packageService.delete(this.space.id, id).subscribe(() => this.loadSpace(this.space.id)).add(() => this.loading = false);
   }
 
   private loadTerminologyServers(): void {

@@ -11,8 +11,7 @@ export class PackageResourceLibService {
 
   public constructor(protected http: HttpClient) { }
 
-  public loadAll(spaceCode: string, packageCode: string, version: string): Observable<PackageResource[]> {
-    const params = {spaceCode: spaceCode, packageCode: packageCode, version: version};
-    return this.http.get<PackageResource[]>(`${this.baseUrl}`, {params: SearchHttpParams.build(params)});
+  public loadAll(spaceId: number, packageCode: string, version: string): Observable<PackageResource[]> {
+    return this.http.get<PackageResource[]>(`${this.baseUrl}`, {params: SearchHttpParams.build({spaceId, packageCode, version})});
   }
 }

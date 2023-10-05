@@ -10,7 +10,7 @@ import {NgForm} from '@angular/forms';
 import {compareDates, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {TaskService} from 'term-web/task/services/task-service';
 import {Task} from 'term-web/task/_lib';
-import {Provenance, ProvenanceLibService} from 'term-web/sys/_lib';
+import {Provenance} from 'term-web/sys/_lib';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 
 @Component({
@@ -31,14 +31,13 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
   public constructor(
     private mapSetService: MapSetService,
     private fhirConceptMapService: FhirConceptMapLibService,
-    private provenanceService: ProvenanceLibService,
     private taskService: TaskService,
     private chefService: ChefService,
     private notificationService: MuiNotificationService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['version'] && this.version) {
-      this.loader.wrap('provenance', this.provenanceService.query('MapSetVersion|' + this.version.id))
+      this.loader.wrap('provenance', this.mapSetService.loadProvenances(this.version.mapSet, this.version.version))
         .subscribe(resp => this.provenances = resp);
     }
   }

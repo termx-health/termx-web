@@ -19,7 +19,12 @@
               <tw-space-select name="space" [(ngModel)]="val.space" (ngModelChange)="loadPackages($event?.id)"></tw-space-select>
             </m-form-item>
             <m-form-item mName="package" mLabel="entities.package.singular">
-              <m-select name="package" [(ngModel)]="val.package" [disabled]="!packages" (ngModelChange)="loadVersions($event?.id)" compareWith="id" autoSelect>
+              <m-select name="package"
+                  [(ngModel)]="val.package"
+                  [disabled]="!packages"
+                  (ngModelChange)="loadVersions(val.space?.id, $event?.id)"
+                  compareWith="id"
+                  autoSelect>
                 <m-option *ngFor="let pack of packages" [mLabel]="pack.code" [mValue]="pack"></m-option>
               </m-select>
             </m-form-item>

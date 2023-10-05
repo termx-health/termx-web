@@ -1,5 +1,5 @@
 <tw-resource-context resourceType="ValueSet" [resource]="valueSet" [versions]="versions" mode="summary"></tw-resource-context>
-<m-page [mLoading]="loader.isLoading">
+<m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[valueSet?.id, 'ValueSet']">
 
     <m-form-row class="with-row-gap" mGap="1rem">
       <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
@@ -13,7 +13,7 @@
         <!-- Versions -->
         <m-card>
           <m-title *m-card-header mTitle="web.value-set.summary.versions">
-            <m-button mControls mDisplay="text" mShape="circle" [routerLink]="['/resources/value-sets', valueSet?.id, 'versions', 'add']">
+            <m-button mControls mDisplay="text" [routerLink]="['/resources/value-sets', valueSet?.id, 'versions', 'add']" *twPrivileged>
               {{'web.value-set.summary.add-version' | translate}}&nbsp;
               <m-icon mCode="plus"></m-icon>
             </m-button>
@@ -25,7 +25,7 @@
       <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
 
         <!-- Tasks -->
-        <m-card>
+        <m-card *twPrivileged="'*.Task.view'">
           <div *m-card-header class="m-items-middle">
             <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks"><m-title mTitle="web.value-set.summary.opened-tasks"></m-title></a>
             <m-title *ngIf="showOnlyOpenedTasks" mTitle="web.value-set.summary.opened-tasks"></m-title>

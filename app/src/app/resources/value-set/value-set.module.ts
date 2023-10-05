@@ -28,26 +28,26 @@ import {ValueSetVersionEditComponent} from 'term-web/resources/value-set/contain
 import {UserLibModule} from 'term-web/user/_lib';
 import {ValueSetProvenancesComponent} from 'term-web/resources/value-set/containers/provenance/value-set-provenances.component';
 import {SysLibModule} from 'term-web/sys/_lib';
-import {ValueSetVersionProvenancesComponent} from 'term-web/resources/value-set/containers/version/provenance/value-set-version-provenances.component';
 
-
+const EDIT = {privilege: ['{id}.ValueSet.edit']};
+const VIEW = {privilege: ['{id}.ValueSet.view']};
 export const VALUE_SET_ROUTES: Routes = [
   {path: '', component: ValueSetListComponent},
   {path: 'add', component: ValueSetEditComponent, data: {privilege: ['*.ValueSet.edit']}},
-  {path: ':id/edit', component: ValueSetEditComponent, data: {privilege: ['*.ValueSet.edit']}},
-  {path: ':id/summary', component: ValueSetSummaryComponent},
-  {path: ':id/concepts', component: ValueSetConceptsComponent},
-  {path: ':id/provenances', component: ValueSetProvenancesComponent},
-  {path: ':id/versions/add', component: ValueSetVersionEditComponent, data: {privilege: ['*.ValueSet.edit']}},
-  {path: ':id/versions/:versionCode/summary', component: ValueSetVersionSummaryComponent},
-  {path: ':id/versions/:versionCode/concepts', component: ValueSetVersionConceptsComponent},
-  {path: ':id/versions/:versionCode/provenances', component: ValueSetVersionProvenancesComponent},
-  {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent, data: {privilege: ['*.ValueSet.edit']}}
+  {path: ':id/edit', component: ValueSetEditComponent, data: EDIT},
+  {path: ':id/summary', component: ValueSetSummaryComponent, data: VIEW},
+  {path: ':id/concepts', component: ValueSetConceptsComponent, data: VIEW},
+  {path: ':id/provenances', component: ValueSetProvenancesComponent, data: VIEW},
+  {path: ':id/versions/add', component: ValueSetVersionEditComponent, data: EDIT},
+  {path: ':id/versions/:versionCode/summary', component: ValueSetVersionSummaryComponent, data: VIEW},
+  {path: ':id/versions/:versionCode/concepts', component: ValueSetVersionConceptsComponent, data: VIEW},
+  {path: ':id/versions/:versionCode/provenances', component: ValueSetProvenancesComponent, data: VIEW},
+  {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent, data: EDIT}
 ];
 
 export const VALUE_SET_FINDER_ROUTES: Routes = [{
   path: '', component: FinderValueSetListComponent, children: [{
-    path: ':id', component: FinderValueSetViewComponent, children: [{
+    path: ':id', component: FinderValueSetViewComponent, data: VIEW, children: [{
       path: 'versions/:versionCode', component: FinderValueSetVersionViewComponent
     }]
   }]
@@ -87,7 +87,6 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
     ValueSetVersionInfoWidgetComponent,
     ValueSetVersionRuleSetWidgetComponent,
     ValueSetVersionConceptsComponent,
-    ValueSetVersionProvenancesComponent
   ],
   exports: [
     ValueSetListComponent

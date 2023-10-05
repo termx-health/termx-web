@@ -52,7 +52,7 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'fhir/ValueSet/$expand', component: FhirValueSetExpandComponent, data: {privilege: ['*.ValueSet.view']}},
       {path: 'fhir/ValueSet/$validate-code', component: FhirValueSetValidateCodeComponent, data: {privilege: ['*.ValueSet.view']}},
       {path: 'fhir/ConceptMap/$translate', component: FhirConceptMapTranslateComponent, data: {privilege: ['*.MapSet.view']}},
-      {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent, data: {privilege: ['*.MapSet.edit']}},
+      {path: 'fhir/ConceptMap/$closure', component: FhirConceptMapClosureComponent, data: {privilege: ['*.MapSet.view']}},
       {path: 'atc/import', component: IntegrationAtcImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'icd-10/import', component: IntegrationIcdImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'ichi/import', component: IntegrationIchiImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
@@ -66,9 +66,9 @@ export const INTEGRATION_ROUTES: Routes = [
   },
   {path: 'loinc', component: LoincDashboardComponent, data: {privilege: ['loinc.CodeSystem.view']}},
   {path: 'snomed/branches', component: SnomedBranchListComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
-  {path: 'snomed/branches/add', component: SnomedBranchEditComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
-  {path: 'snomed/branches/:path/edit', component: SnomedBranchEditComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
-  {path: 'snomed/branches/:path/management', component: SnomedBranchManagementComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
+  {path: 'snomed/branches/add', component: SnomedBranchEditComponent, data: {privilege: ['snomed-ct.CodeSystem.edit']}},
+  {path: 'snomed/branches/:path/edit', component: SnomedBranchEditComponent, data: {privilege: ['snomed-ct.CodeSystem.edit']}},
+  {path: 'snomed/branches/:path/management', component: SnomedBranchManagementComponent, data: {privilege: ['snomed-ct.CodeSystem.edit']}},
   {path: 'snomed/dashboard', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
   {path: 'snomed/dashboard/:conceptId', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}}
 ];

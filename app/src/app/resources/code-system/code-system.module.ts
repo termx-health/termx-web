@@ -30,7 +30,9 @@ import {CodeSystemInfoWidgetComponent} from 'term-web/resources/code-system/cont
 import {CodeSystemVersionsWidgetComponent} from 'term-web/resources/code-system/containers/summary/widgets/code-system-versions-widget.component';
 import {CodeSystemValueSetAddComponent} from 'term-web/resources/code-system/containers/edit/valueset/code-system-value-set-add.component';
 import {CodeSystemVersionSummaryComponent} from 'term-web/resources/code-system/containers/version/summary/code-system-version-summary.component';
-import {CodeSystemVersionInfoWidgetComponent} from 'term-web/resources/code-system/containers/version/summary/widgets/code-system-version-info-widget.component';
+import {
+  CodeSystemVersionInfoWidgetComponent
+} from 'term-web/resources/code-system/containers/version/summary/widgets/code-system-version-info-widget.component';
 import {CodeSystemConceptsComponent} from 'term-web/resources/code-system/containers/concepts/code-system-concepts.component';
 import {CodeSystemVersionConceptsComponent} from 'term-web/resources/code-system/containers/version/concepts/code-system-version-concepts.component';
 import {CodeSystemUnlinkedConceptsComponent} from 'term-web/resources/code-system/containers/summary/widgets/code-system-unlinked-concepts.component';
@@ -39,44 +41,40 @@ import {
 } from 'term-web/resources/code-system/containers/concepts/list/code-system-concepts-list-concept-preview.component';
 import {UserLibModule} from 'term-web/user/_lib';
 import {CodeSystemProvenancesComponent} from 'term-web/resources/code-system/containers/provenance/code-system-provenances.component';
-import {CodeSystemVersionProvenancesComponent} from 'term-web/resources/code-system/containers/version/provenance/code-system-version-provenances.component';
 import {SysLibModule} from 'term-web/sys/_lib';
 import {CodeSystemValidatorComponent} from 'term-web/resources/code-system/containers/version/validator/code-system-validator.component';
-import {
-  CodeSystemConceptsPropertyViewComponent
-} from 'term-web/resources/code-system/containers/concepts/code-system-concepts-property-view.component';
+import {CodeSystemConceptsPropertyViewComponent} from 'term-web/resources/code-system/containers/concepts/code-system-concepts-property-view.component';
 import {CodeSystemConceptReferenceComponent} from 'term-web/resources/code-system/containers/concepts/edit/reference/code-system-concept-reference.component';
 
-
+const EDIT = {privilege: ['{id}.CodeSystem.edit']};
+const VIEW = {privilege: ['{id}.CodeSystem.view']};
 export const CODE_SYSTEM_ROUTES: Routes = [
   {path: '', component: CodeSystemListComponent},
   {path: 'add', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/edit', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/summary', component: CodeSystemSummaryComponent},
-  {path: ':id/concepts', component: CodeSystemConceptsComponent},
-  {path: ':id/properties', component: CodeSystemConceptsPropertyViewComponent},
-  {path: ':id/provenances', component: CodeSystemProvenancesComponent},
-
-  {path: ':id/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent},
-
-  {path: ':id/versions/add', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/versions/:versionCode/summary', component: CodeSystemVersionSummaryComponent},
-  {path: ':id/versions/:versionCode/concepts', component: CodeSystemVersionConceptsComponent},
-  {path: ':id/versions/:versionCode/properties', component: CodeSystemConceptsPropertyViewComponent},
-  {path: ':id/versions/:versionCode/provenances', component: CodeSystemVersionProvenancesComponent},
-  {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/versions/:versionCode/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent, data: {privilege: ['*.CodeSystem.edit']}},
+  {path: ':id/edit', component: CodeSystemEditComponent, data: EDIT},
+  {path: ':id/summary', component: CodeSystemSummaryComponent, data: VIEW},
+  {path: ':id/concepts', component: CodeSystemConceptsComponent, data: VIEW},
+  {path: ':id/properties', component: CodeSystemConceptsPropertyViewComponent, data: VIEW},
+  {path: ':id/provenances', component: CodeSystemProvenancesComponent, data: VIEW},
+  {path: ':id/concepts/add', component: CodeSystemConceptEditComponent, data: EDIT},
+  {path: ':id/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: EDIT},
+  {path: ':id/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent, data: VIEW},
+  {path: ':id/versions/add', component: CodeSystemVersionEditComponent, data: EDIT},
+  {path: ':id/versions/:versionCode/summary', component: CodeSystemVersionSummaryComponent, data: VIEW},
+  {path: ':id/versions/:versionCode/concepts', component: CodeSystemVersionConceptsComponent, data: VIEW},
+  {path: ':id/versions/:versionCode/properties', component: CodeSystemConceptsPropertyViewComponent, data: VIEW},
+  {path: ':id/versions/:versionCode/provenances', component: CodeSystemProvenancesComponent, data: VIEW},
+  {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: EDIT},
+  {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: EDIT},
+  {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: EDIT},
+  {path: ':id/versions/:versionCode/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent, data: EDIT},
   {path: 'compare', component: CodeSystemCompareComponent, data: {privilege: ['*.CodeSystem.view']}},
-  {path: 'validator', component: CodeSystemValidatorComponent, data: {privilege: ['*.CodeSystem.view']}}
+  {path: 'validator', component: CodeSystemValidatorComponent, data: {privilege: ['*.CodeSystem.view']}},
 ];
 
 export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
   path: '', component: FinderCodeSystemListComponent, children: [{
-    path: ':id', component: FinderCodeSystemViewComponent, children: [{
+    path: ':id', component: FinderCodeSystemViewComponent, data: VIEW, children: [{
       path: 'versions/:versionCode', component: FinderCodeSystemVersionViewComponent
     }, {
       path: 'concepts/:conceptCode', component: FinderCodeSystemConceptViewComponent, children: [{
@@ -134,8 +132,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
 
     CodeSystemVersionSummaryComponent,
     CodeSystemVersionInfoWidgetComponent,
-    CodeSystemVersionConceptsComponent,
-    CodeSystemVersionProvenancesComponent
+    CodeSystemVersionConceptsComponent
   ],
   exports: [
     CodeSystemListComponent,

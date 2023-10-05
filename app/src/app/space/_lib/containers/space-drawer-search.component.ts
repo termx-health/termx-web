@@ -50,7 +50,7 @@ export class SpaceDrawerSearchComponent implements ControlValueAccessor, OnChang
     if (changes['package']) {
       this.val = this.val || new SpaceItem();
       this.val.package = this.package;
-      this.loadVersions(this.package?.id);
+      this.loadVersions(this.space?.id, this.package?.id);
     }
     if (changes['version']) {
       this.val = this.val || new SpaceItem();
@@ -117,10 +117,10 @@ export class SpaceDrawerSearchComponent implements ControlValueAccessor, OnChang
     this.spaceLibService.loadPackages(spaceId).subscribe(packages => this.packages = packages);
   }
 
-  public loadVersions(packageId: number): void {
-    if (!packageId) {
+  public loadVersions(spaceId: number, packageId: number): void {
+    if (!packageId || !spaceId) {
       return;
     }
-    this.packageService.loadVersions(packageId).subscribe(versions => this.packageVersions = versions);
+    this.packageService.loadVersions(spaceId, packageId).subscribe(versions => this.packageVersions = versions);
   }
 }

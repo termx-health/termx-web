@@ -1,4 +1,4 @@
-<tw-resource-context resourceType="ValueSet" [resource]="valueSet" [versions]="versions" mode="provenance"></tw-resource-context>
+<tw-resource-context resourceType="ValueSet" [resource]="valueSet" [version]="version" [versions]="versions" mode="provenance"></tw-resource-context>
 <m-page [mLoading]="loader.isLoading">
-  <tw-provenance-list targetType="ValueSet" [targetId]="valueSet?.id"></tw-provenance-list>
+  <tw-provenance-list [provenances]="provenances"></tw-provenance-list>
 </m-page>

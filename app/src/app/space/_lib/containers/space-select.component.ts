@@ -5,6 +5,7 @@ import {NG_VALUE_ACCESSOR} from '@angular/forms';
 import {Space} from '../model/space';
 import {SpaceSearchParams} from '../model/space-search-params';
 import {SpaceLibService} from '../services/space-lib-service';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 @Component({
   selector: 'tw-space-select',
@@ -13,6 +14,7 @@ import {SpaceLibService} from '../services/space-lib-service';
 })
 export class SpaceSelectComponent implements OnInit {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() public filter?: (resource: Space) => boolean;
 
   protected data: {[id: number]: Space} = {};
   protected value?: number;
@@ -74,4 +76,8 @@ export class SpaceSelectComponent implements OnInit {
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
   }
+
+  public filterOption = (_input: string, {nzValue}: NzSelectItemInterface): boolean => {
+    return !this.filter || this.filter(this.data[nzValue]);
+  };
 }

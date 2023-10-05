@@ -2,7 +2,6 @@ import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {SpaceLibService} from './services/space-lib-service';
 import {PackageLibService} from './services/package-lib-service';
-import {PackageVersionLibService} from './services/package-version-lib-service';
 import {SpaceDrawerSearchComponent} from './containers/space-drawer-search.component';
 import {SpaceSelectComponent} from './containers/space-select.component';
 import {TerminologyServerLibService} from './services/terminology-server-lib-service';
@@ -34,7 +33,6 @@ import {TranslateModule} from '@ngx-translate/core';
     SpaceLibService,
     PackageLibService,
     PackageResourceLibService,
-    PackageVersionLibService,
     TerminologyServerLibService
   ]
 })

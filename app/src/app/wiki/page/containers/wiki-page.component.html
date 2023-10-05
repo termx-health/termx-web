@@ -1,4 +1,5 @@
-<m-page mFull [mTitle]="spaceSelector" class="wiki">
+<m-page mFull [mTitle]="spaceSelector" class="wiki" [twPrivilegeContext]="[space?.id, 'Wiki']">
+
   <!-- Space selector -->
   <ng-template #spaceSelector>
     <m-dropdown [mHideIfEmpty]="false">

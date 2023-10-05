@@ -1,5 +1,5 @@
 <tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [versions]="versions" mode="summary"></tw-resource-context>
-<m-page [mLoading]="loader.isLoading">
+<m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[codeSystem?.id, 'CodeSystem']">
 
   <m-form-row class="with-row-gap" mGap="1rem">
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
@@ -14,15 +14,17 @@
       <m-card>
         <m-title *m-card-header mTitle="web.code-system.summary.versions">
           <div mControls class="m-items-middle">
-            <m-button mDisplay="text" mShape="circle" [routerLink]="['/resources/code-systems/compare', {'code-system': codeSystem?.id}]">
+            <m-button mDisplay="text" [routerLink]="['/resources/code-systems/compare', {'code-system': codeSystem?.id}]">
               {{'web.code-system.summary.compare' | translate}}&nbsp;
               <m-icon mCode="diff"></m-icon>
             </m-button>
-            <m-divider mVertical></m-divider>
-            <m-button mDisplay="text" mShape="circle" [routerLink]="['/resources/code-systems', codeSystem?.id, 'versions', 'add']">
-              {{'web.code-system.summary.add-version' | translate}}&nbsp;
-              <m-icon mCode="plus"></m-icon>
-            </m-button>
+            <ng-container *twPrivileged>
+              <m-divider mVertical></m-divider>
+              <m-button mDisplay="text" [routerLink]="['/resources/code-systems', codeSystem?.id, 'versions', 'add']">
+                {{'web.code-system.summary.add-version' | translate}}&nbsp;
+                <m-icon mCode="plus"></m-icon>
+              </m-button>
+            </ng-container>
           </div>
         </m-title>
         <tw-code-system-versions-widget [codeSystem]="codeSystem?.id" [versions]="versions" (versionsChanged)="loadData(codeSystem.id)"></tw-code-system-versions-widget>
@@ -34,7 +36,7 @@
       <!-- Unlinked concepts -->
       <m-card *ngIf="codeSystem">
         <m-title *m-card-header mTitle="web.code-system.summary.unlinked-concepts.title">
-          <div mControls class="m-items-middle">
+          <div mControls class="m-items-middle" *twPrivileged>
             <m-dropdown>
               <m-button *m-dropdown-container mDisplay="text">
                 {{'web.code-system.summary.unlinked-concepts.link-to' | translate:{version: '...'} }}
@@ -47,7 +49,7 @@
               </ng-container>
             </m-dropdown>
             <m-divider mVertical/>
-            <m-button mControls mDisplay="text" mShape="circle" [routerLink]="['/resources/code-systems', codeSystem?.id, 'concepts', 'add']">
+            <m-button mControls mDisplay="text" [routerLink]="['/resources/code-systems', codeSystem?.id, 'concepts', 'add']">
               {{'web.code-system.summary.add-concept' | translate}}&nbsp;
               <m-icon mCode="plus"></m-icon>
             </m-button>
@@ -61,7 +63,7 @@
       </m-card>
 
       <!-- Tasks -->
-      <m-card>
+      <m-card *twPrivileged="'*.Task.view'">
         <div *m-card-header class="m-items-middle">
           <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
             <m-title mTitle="web.code-system.summary.opened-tasks"></m-title>

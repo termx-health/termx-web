@@ -8,7 +8,6 @@ export * from './model/terminology-server';
 export * from './model/terminology-server-search-params';
 export * from './services/package-lib-service';
 export * from './services/package-resource-lib-service';
-export * from './services/package-version-lib-service';
 export * from './services/space-lib-service';
 export * from './services/terminology-server-lib-service';
 export * from './space-lib.module';

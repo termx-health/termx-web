@@ -33,11 +33,11 @@ export class AuthService {
 
   private refreshUserInfo(): Observable<UserInfo> {
     return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
-      if (!lr.isAuthenticated) {
-        return of(null as any);
-      } else {
+      // if (!lr.isAuthenticated) {
+      //   return of(null as any);
+      // } else {
         return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`);
-      }
+      // }
     }));
   }
 

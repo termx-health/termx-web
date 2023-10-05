@@ -1,14 +1,13 @@
 <tw-resource-context resourceType="ValueSet" [resource]="valueSet" [version]="valueSetVersion" mode="summary"></tw-resource-context>
-<m-page [mLoading]="loader.state['load']">
+<m-page [mLoading]="loader.state['load']" [twPrivilegeContext]="[valueSet?.id, 'ValueSet']">
   <m-form-row class="with-row-gap" mGap="1rem">
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
       <!-- ValueSetVersion info -->
       <m-card>
         <m-title *m-card-header mTitle="web.value-set-version.summary.value-set-version">
-          <m-button *ngIf="valueSetVersion?.status === 'draft'"
+          <m-button *ngIf="valueSetVersion?.status === 'draft' && 'edit' | twPrivileged"
               mControls
               mDisplay="text"
-              mShape="circle"
               [routerLink]="['/resources/value-sets', valueSet?.id, 'versions', valueSetVersion?.version, 'edit']">
             {{'web.value-set-version.summary.edit-version' | translate}}&nbsp;
             <m-icon mCode="form"></m-icon>
@@ -20,7 +19,7 @@
       <!-- RuleSet -->
       <m-card>
         <m-title *m-card-header mTitle="web.value-set-version.summary.rule-set">
-          <m-button *ngIf="valueSetVersion?.status === 'draft'" mControls mDisplay="text" mShape="circle" (mClick)="addRule()">
+          <m-button *ngIf="valueSetVersion?.status === 'draft' && 'edit' | twPrivileged" mControls mDisplay="text" mShape="circle" (mClick)="addRule()">
             <m-icon mCode="plus"></m-icon>
           </m-button>
         </m-title>
@@ -91,7 +90,7 @@
         <tw-value-set-rule-form [rule]="rule.rule"
             [valueSet]="valueSet?.id"
             [valueSetVersion]="valueSetVersion?.version"
-            [viewMode]="valueSetVersion?.status !== 'draft' || !(valueSet.id + '.ValueSet.edit' | twHasAnyPrivilege)"></tw-value-set-rule-form>
+            [viewMode]="valueSetVersion?.status !== 'draft' || !('edit' | twPrivileged)"></tw-value-set-rule-form>
       </m-card>
     </div>
   </m-form-row>

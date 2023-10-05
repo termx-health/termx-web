@@ -1,6 +1,6 @@
 <m-spinner class="page page__wrapper" [mLoading]="isLoading">
   <tw-wiki-page-header *ngIf="page?.id" [page]="page" [slug]="slug">
-    <m-button (mClick)="editPage.emit(pageContent.slug)">
+    <m-button (mClick)="editPage.emit(pageContent.slug)" *twPrivileged>
       <div class="m-items-middle">
         <m-icon mCode="edit"></m-icon>
         {{'core.btn.edit' | translate}}
@@ -16,7 +16,7 @@
         <m-icon mCode="copy"/>
         {{'web.wiki-page.header.copy-raw' | translate}}
       </a>
-      <a *m-dropdown-item class="m-items-middle" (click)="pageModal.open({links:[{sourceId: page?.id, orderNumber: 1}]})">
+      <a *mDropdownItemIf="'edit' | twPrivileged" class="m-items-middle" (click)="pageModal.open({links:[{sourceId: page?.id, orderNumber: 1}]})">
         <m-icon mCode="file-add"/>
         {{'web.wiki-page.header.add-subpage' | translate}}
       </a>

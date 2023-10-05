@@ -1,5 +1,5 @@
 <tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [version]="codeSystemVersion" mode="summary"></tw-resource-context>
-<m-page [mLoading]="loader.isLoading">
+<m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[codeSystem?.id, 'CodeSystem']">
 
   <m-form-row class="with-row-gap" mGap="1rem">
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
@@ -7,30 +7,37 @@
       <!-- ValueSetVersion info -->
       <m-card>
         <m-title *m-card-header mTitle="web.code-system-version.summary.code-system-version">
-          <m-button *ngIf="codeSystemVersion?.status === 'draft'"
-              mControls
-              mDisplay="text"
-              mShape="circle"
-              [routerLink]="['/resources/code-systems', codeSystem?.id, 'versions', codeSystemVersion?.version, 'edit']">
-            {{'web.code-system-version.summary.edit-version' | translate}}&nbsp;
-            <m-icon mCode="form"></m-icon>
-          </m-button>
+            <m-button *ngIf="codeSystemVersion?.status === 'draft' && 'edit' | twPrivileged"
+                mControls
+                mDisplay="text"
+                [routerLink]="['/resources/code-systems', codeSystem?.id, 'versions', codeSystemVersion?.version, 'edit']">
+              {{'web.code-system-version.summary.edit-version' | translate}}&nbsp;
+              <m-icon mCode="form"></m-icon>
+            </m-button>
         </m-title>
-        <tw-code-system-version-info-widget [codeSystem]="codeSystem" [version]="codeSystemVersion" (taskCreated)="tasksWidgetComponent.loadTasks()"></tw-code-system-version-info-widget>
+        <tw-code-system-version-info-widget [codeSystem]="codeSystem"
+            [version]="codeSystemVersion"
+            (taskCreated)="tasksWidgetComponent.loadTasks()"></tw-code-system-version-info-widget>
       </m-card>
 
 
     </div>
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
-      <m-card>
+      <m-card *twPrivileged="'*.Task.view'">
         <div *m-card-header class="m-items-middle">
-          <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks"><m-title mTitle="web.code-system-version.summary.opened-tasks"></m-title></a>
+          <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+            <m-title mTitle="web.code-system-version.summary.opened-tasks"></m-title>
+          </a>
           <m-title *ngIf="showOnlyOpenedTasks" mTitle="web.code-system-version.summary.opened-tasks"></m-title>
           <span>|</span>
-          <a *ngIf="showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks"><m-title mTitle="web.code-system-version.summary.all-tasks"></m-title></a>
+          <a *ngIf="showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+            <m-title mTitle="web.code-system-version.summary.all-tasks"></m-title>
+          </a>
           <m-title *ngIf="!showOnlyOpenedTasks" mTitle="web.code-system-version.summary.all-tasks"></m-title>
         </div>
-        <tw-resource-tasks-widget [resourceId]="codeSystemVersion?.id | toString" [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined " resourceType="CodeSystemVersion"></tw-resource-tasks-widget>
+        <tw-resource-tasks-widget [resourceId]="codeSystemVersion?.id | toString"
+            [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined "
+            resourceType="CodeSystemVersion"></tw-resource-tasks-widget>
       </m-card>
     </div>
   </m-form-row>

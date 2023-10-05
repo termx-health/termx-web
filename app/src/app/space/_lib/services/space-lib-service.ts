@@ -26,12 +26,12 @@ export class SpaceLibService {
     return this.http.get<SearchResult<Space>>(`${this.baseUrl}`, {params: SearchHttpParams.build(params)});
   }
 
-  public overview(request: {spaceCode: string, packageCode: string, version: string}): Observable<{content: string}> {
-    return this.http.post<{content: string}>(`${this.baseUrl}/overview`, request);
+  public overview(spaceId: number, packageCode: string, version: string): Observable<{content: string}> {
+    return this.http.get<{content: string}>(`${this.baseUrl}/${spaceId}/overview`, {params: SearchHttpParams.build({packageCode, version})});
   }
 
-  public diff(request: {spaceCode: string, packageCode: string, version: string}): Observable<SpaceDiff> {
-    return this.http.post<SpaceDiff>(`${this.baseUrl}/diff`, request);
+  public diff(spaceId: number, packageCode: string, version: string): Observable<SpaceDiff> {
+    return this.http.get<SpaceDiff>(`${this.baseUrl}/${spaceId}/diff`, {params: SearchHttpParams.build({packageCode, version})});
   }
 
 }

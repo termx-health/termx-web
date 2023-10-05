@@ -17,7 +17,7 @@
           {{'web.wiki-page.sidebar.pages' | translate}}
         </div>
 
-        <m-button mSize="small" (mClick)="onChildAdd($event,modal)">
+        <m-button mSize="small" (mClick)="onChildAdd($event,modal)" *twPrivileged>
           <m-icon mCode="plus"/>
         </m-button>
       </div>
@@ -41,7 +41,7 @@
         </ng-template>
 
         <ng-template #nodeActions let-node>
-          <m-button mSize="small" (mClick)="onChildAdd($event,modal,node)">
+          <m-button mSize="small" (mClick)="onChildAdd($event,modal,node)" *twPrivileged>
             <m-icon mCode="plus"/>
           </m-button>
         </ng-template>

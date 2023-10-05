@@ -5,8 +5,8 @@
     <m-editable-table #rowsTable
         [mData]="filters"
         [mRowInstance]="rowInstance"
-        [mEditAllowed]="!viewMode && ('*.ValueSet.edit' | twHasAnyPrivilege)"
-        [mDeleteAllowed]="!viewMode && ('*.ValueSet.edit' | twHasAnyPrivilege)"
+        [mEditAllowed]="!viewMode"
+        [mDeleteAllowed]="!viewMode"
         [mLoading]="loading">
       <m-editable-column mTitle="entities.value-set-rule-filter.property.label" mName="property">
         <ng-template #viewTemplate let-f>{{f.property?.name}}</ng-template>

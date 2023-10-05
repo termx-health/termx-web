@@ -66,8 +66,8 @@ export class SpaceContextComponent implements OnInit {
 
   public downloadYaml(): void {
     const request = {spaceCode: this.space?.code, packageCode: this.pack?.code, version: this.version?.version};
-    const name = [request.spaceCode, request.packageCode, request.version].filter(i => isDefined(i)).join('-');
-    this.spaceService.overview(request).subscribe(resp => {
+    const name = [this.space?.code, this.pack?.code, this.version?.version].filter(i => isDefined(i)).join('-');
+    this.spaceService.overview(this.space?.id, this.pack?.code, this.version?.version).subscribe(resp => {
        saveAs(new Blob([resp.content], {type: 'application/yaml'}), `${name}.yaml`);
     });
   }

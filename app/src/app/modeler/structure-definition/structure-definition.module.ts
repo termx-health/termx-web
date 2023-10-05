@@ -13,8 +13,8 @@ import {IntegrationLibModule} from 'term-web/integration/_lib';
 
 export const STRUCTURE_DEFINITION_ROUTES: Routes = [
   {path: 'structure-definitions', component: StructureDefinitionListComponent},
-  {path: 'structure-definitions/add', component: StructureDefinitionEditComponent, data: {privilege: ['*.Modeler.edit']}},
-  {path: 'structure-definitions/:id/edit', component: StructureDefinitionEditComponent, data: {privilege: ['*.Modeler.edit']}},
+  {path: 'structure-definitions/add', component: StructureDefinitionEditComponent, data: {privilege: ['*.StructureDefinition.edit']}},
+  {path: 'structure-definitions/:id/edit', component: StructureDefinitionEditComponent, data: {privilege: ['{id}.StructureDefinition.edit']}},
 ];
 
 @NgModule({

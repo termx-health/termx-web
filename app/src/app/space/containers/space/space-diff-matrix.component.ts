@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {SpaceDiffItem, PackageLibService, SpaceLibService} from 'term-web/space/_lib';
+import {SpaceDiffItem, SpaceLibService} from 'term-web/space/_lib';
 import {combineLatest, takeUntil} from 'rxjs';
 import {DestroyService, isDefined} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
@@ -27,7 +27,7 @@ export class SpaceDiffMatrixComponent implements OnInit {
       this.ctx.version$.pipe(takeUntil(this.destroy$))
     ]).subscribe(([s, p, v]) => {
       this.loading = true;
-      this.spaceService.diff({spaceCode: s?.code, packageCode: p?.code, version: v?.version}).subscribe(diff => {
+      this.spaceService.diff(s.id, p?.code, v?.version).subscribe(diff => {
         this.diffItems = diff.items;
       }).add(() => this.loading = false);
     });

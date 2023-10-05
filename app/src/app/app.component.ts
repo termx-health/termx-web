@@ -22,7 +22,12 @@ export class AppComponent {
   protected activeRoutePrivileges$ = this.router.events.pipe(
     filter(e => e instanceof NavigationEnd),
     startWith(null),
-    map(() => getRouteLastChild(this.route.snapshot)?.data?.['privilege'] ?? [])
+    map(() => {
+      const route = getRouteLastChild(this.route.snapshot);
+      return route?.data?.['privilege']?.map(p => {
+        return p.replace(/{(\w+)}/g, (x, match) => route.params[match] || x);
+      }) ?? [];
+    })
   );
   protected isEmbedded = (url: string): boolean => url?.startsWith('/embedded');
 

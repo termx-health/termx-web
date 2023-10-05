@@ -6,6 +6,7 @@ import {CoreUiModule} from '../core/ui/core-ui.module';
 import {PrivilegeService} from './services/privilege.service';
 import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from '../resources/_lib';
 import {PrivilegeModule} from 'term-web/privileges/_lib';
+import {SpaceLibModule} from 'term-web/space/_lib';
 
 
 export const PRIVILEGES_ROUTES: Routes = [
@@ -22,6 +23,7 @@ export const PRIVILEGES_ROUTES: Routes = [
     MapSetLibModule,
     NamingSystemLibModule,
     AssociationLibModule,
+    SpaceLibModule,
     PrivilegeModule
   ],
   declarations: [
