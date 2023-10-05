@@ -1539,7 +1539,8 @@
 						"space": "Space",
 						"task": "Task",
 						"value-set": "ValueSet",
-						"wiki": "Wiki"
+						"wiki": "Wiki",
+						"terminology-server": "TerminologyServer"
 					}
 				},
 				"table": {
