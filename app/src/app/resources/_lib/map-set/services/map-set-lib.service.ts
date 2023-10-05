@@ -9,7 +9,7 @@ import {MapSetAssociationSearchParams} from '../model/map-set-association-search
 import {MapSet} from '../model/map-set';
 import {MapSetSearchParams} from '../model/map-set-search-params';
 import {MapSetVersionSearchParams} from '../model/map-set-version-search-params';
-import {JobLogResponse} from 'term-web/sys/_lib';
+import {JobLogResponse, Provenance} from 'term-web/sys/_lib';
 import {MapSetConcept, MapSetConceptSearchParams} from 'term-web/resources/_lib';
 
 
@@ -49,5 +49,9 @@ export class MapSetLibService {
 
   public searchAssociations(mapSetId: string, params: MapSetAssociationSearchParams = {}): Observable<SearchResult<MapSetAssociation>> {
     return this.http.get<SearchResult<MapSetAssociation>>(`${this.baseUrl}/${mapSetId}/associations`, {params: SearchHttpParams.build(params)});
+  }
+
+  public loadProvenances(mapSet: string, version: string): Observable<Provenance[]> {
+    return this.http.get<Provenance[]>(`${this.baseUrl}/${mapSet}/provenances`, {params: SearchHttpParams.build({version})});
   }
 }

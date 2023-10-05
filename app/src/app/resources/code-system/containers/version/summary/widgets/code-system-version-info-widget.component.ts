@@ -11,7 +11,7 @@ import {NgForm} from '@angular/forms';
 import {compareDates, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {TaskService} from 'term-web/task/services/task-service';
 import {Task} from 'term-web/task/_lib';
-import {Provenance, ProvenanceLibService} from 'term-web/sys/_lib';
+import {Provenance} from 'term-web/sys/_lib';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
 
 @Component({
@@ -33,7 +33,6 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
   public constructor(
     private codeSystemService: CodeSystemService,
     private fhirCodeSystemService: FhirCodeSystemLibService,
-    private provenanceService: ProvenanceLibService,
     private taskService: TaskService,
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
@@ -42,7 +41,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['version'] && this.version) {
-      this.loader.wrap('provenance', this.provenanceService.query('CodeSystemVersion|' + this.version.id))
+      this.loader.wrap('provenance', this.codeSystemService.loadProvenances(this.version.codeSystem, this.version.version))
         .subscribe(resp => this.provenances = resp);
       this.spaceService.search({resource: 'code-system|' + this.version.codeSystem}).subscribe(r => {
         this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo

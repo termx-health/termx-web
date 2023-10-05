@@ -7,7 +7,7 @@ import {ChefService} from 'app/src/app/integration/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
 import {environment} from 'app/src/environments/environment';
-import {Provenance, ProvenanceLibService} from 'term-web/sys/_lib';
+import {Provenance} from 'term-web/sys/_lib';
 import {NgForm} from '@angular/forms';
 import {compareDates, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {Task} from 'term-web/task/_lib';
@@ -33,7 +33,6 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
   public constructor(
     private valueSetService: ValueSetService,
     private fhirValueSetService: FhirValueSetLibService,
-    private provenanceService: ProvenanceLibService,
     private taskService: TaskService,
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
@@ -42,7 +41,7 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['version'] && this.version) {
-      this.loader.wrap('provenance', this.provenanceService.query('ValueSetVersion|' + this.version.id))
+      this.loader.wrap('provenance', this.valueSetService.loadProvenances(this.version.valueSet, this.version.version))
         .subscribe(resp => this.provenances = resp);
       this.spaceService.search({resource: 'value-set|' + this.version.valueSet}).subscribe(r => {
         this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo

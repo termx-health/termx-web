@@ -13,8 +13,8 @@ import {TransformationDefinitionSelectComponent} from 'term-web/modeler/transfor
 
 export const TRANSFORMATION_DEFINITION_ROUTES: Routes = [
   {path: 'transformation-definitions', component: TransformationDefinitionListComponent},
-  {path: 'transformation-definitions/add', data: {privilege: ['*.Modeler.edit']}, component: TransformationDefinitionEditComponent},
-  {path: 'transformation-definitions/:id/edit', data: {privilege: ['*.Modeler.edit']}, component: TransformationDefinitionEditComponent},
+  {path: 'transformation-definitions/add', data: {privilege: ['*.TransformationDefinition.edit']}, component: TransformationDefinitionEditComponent},
+  {path: 'transformation-definitions/:id/edit', data: {privilege: ['{id}.TransformationDefinition.view']}, component: TransformationDefinitionEditComponent},
 ];
 
 @NgModule({

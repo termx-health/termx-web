@@ -1,9 +1,11 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {PrivilegeDirective} from './privileges/privilege.directive';
 import {OauthConfigModule, OauthHttpInterceptor} from './oidc';
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {YupiHttpInterceptor} from './yupi/yupi.http-interceptor';
 import {HasAnyPrivilegePipe} from './privileges/has-any-privilege.pipe';
+import {PrivilegeContextDirective} from 'term-web/core/auth/privileges/privilege-context.directive';
+import {PrivilegedDirective} from 'term-web/core/auth/privileges/privileged.directive';
+import {PrivilegedPipe} from 'term-web/core/auth/privileges/privileged.pipe';
 
 
 @NgModule({
@@ -11,13 +13,17 @@ import {HasAnyPrivilegePipe} from './privileges/has-any-privilege.pipe';
     OauthConfigModule,
   ],
   declarations: [
-    PrivilegeDirective,
-    HasAnyPrivilegePipe
+    PrivilegedDirective,
+    PrivilegeContextDirective,
+    HasAnyPrivilegePipe,
+    PrivilegedPipe,
   ],
   exports: [
     OauthConfigModule,
-    PrivilegeDirective,
+    PrivilegedDirective,
+    PrivilegeContextDirective,
     HasAnyPrivilegePipe,
+    PrivilegedPipe
   ]
 })
 export class AuthModule {

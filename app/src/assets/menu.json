@@ -236,7 +236,8 @@
       "lt": "Modeliuotojas"
     },
     "privileges": [
-      "*.Modeler.view",
+      "*.StructureDefinition.view",
+      "*.TransformationDefinition.view",
       "*.CodeSystem.view",
       "*.ValueSet.view",
       "*.MapSet.view"
@@ -251,7 +252,7 @@
         },
         "link": "modeler/structure-definitions",
         "privileges": [
-          "*.Modeler.view"
+          "*.StructureDefinition.view"
         ]
       },
       {
@@ -262,7 +263,7 @@
         },
         "link": "modeler/transformation-definitions",
         "privileges": [
-          "*.Modeler.view"
+          "*.TransformationDefinition.view"
         ]
       }]
     },
@@ -306,7 +307,7 @@
         "icon": "cloud-server",
         "link": "terminology-servers",
         "privileges": [
-          "*.Space.view"
+          "*.TerminologyServer.view"
         ]
       },
       {
@@ -334,10 +335,13 @@
         "label": {
           "en": "Sequences",
           "et": "Numeratsioonid",
-		      "lt": "Sekos"
+		  "lt": "Sekos"
         },
         "icon": "field-binary",
-        "link": "sequences"
+        "link": "sequences",
+        "privileges": [
+          "*.Sequence.view"
+        ]
       }
     ]
   }

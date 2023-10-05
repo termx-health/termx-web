@@ -3,11 +3,11 @@ import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {collect, copyDeep, group, isDefined, validateForm} from '@kodality-web/core-util';
-import {Package, PackageLibService, PackageResource, PackageVersion, TerminologyServerLibService} from 'term-web/space/_lib';
+import {Package, PackageResource, PackageVersion, TerminologyServerLibService} from 'term-web/space/_lib';
 import {SpaceService} from '../../services/space.service';
 import {forkJoin} from 'rxjs';
 import {saveAs} from 'file-saver';
-import {PackageVersionService} from '../../services/package-version.service';
+import {PackageService} from 'term-web/space/services/package.service';
 
 @Component({
   templateUrl: './package-edit.component.html',
@@ -25,8 +25,7 @@ export class PackageEditComponent implements OnInit {
 
   public constructor(
     private spaceService: SpaceService,
-    private packageService: PackageLibService,
-    private packageVersionService: PackageVersionService,
+    private packageService: PackageService,
     private terminologyServerService: TerminologyServerLibService,
     private route: ActivatedRoute,
     private location: Location
@@ -47,7 +46,10 @@ export class PackageEditComponent implements OnInit {
 
   private loadPackage(id: number): void {
     this.loading = true;
-    forkJoin([this.packageService.load(id), this.packageService.loadVersions(id)]).subscribe(([p, versions]) => {
+    forkJoin([
+      this.packageService.load(this.spaceId, id),
+      this.packageService.loadVersions(this.spaceId, id)
+    ]).subscribe(([p, versions]) => {
       this.package = p;
       this.versions = versions;
       if (this.versions.length > 0) {
@@ -79,7 +81,8 @@ export class PackageEditComponent implements OnInit {
 
   public deleteVersion(id: number): void {
     this.loading = true;
-    this.packageVersionService.delete(id).subscribe(() => this.loadPackage(this.package.id)).add(() => this.loading = false);
+    this.packageService.deleteVersion(this.spaceId, this.package.id, id)
+      .subscribe(() => this.loadPackage(this.package.id)).add(() => this.loading = false);
   }
 
   public removeVersion(index: number): void {
@@ -121,9 +124,8 @@ export class PackageEditComponent implements OnInit {
       return;
     }
     this.spaceService.load(this.spaceId).subscribe(space => {
-      const request = {spaceCode: space.code, packageCode: this.package.code, version: version.version};
-      const name = [request.spaceCode, request.packageCode, request.version].filter(i => isDefined(i)).join('-');
-      this.spaceService.overview(request).subscribe(resp => {
+      const name = [space.code, this.package.code, version.version].filter(i => isDefined(i)).join('-');
+      this.spaceService.overview(space.id, this.package.code, version.version).subscribe(resp => {
         saveAs(new Blob([resp.content], {type: 'application/yaml'}), `${name}.yaml`);
       });
     });

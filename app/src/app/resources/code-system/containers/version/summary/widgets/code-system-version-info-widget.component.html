@@ -33,15 +33,15 @@
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.code-system-version.summary.info.last-reviewed' | translate}}:
       {{((provenances | apply:getLastProvenance: 'reviewed')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
-    <a (mClick)="taskModalData.type = 'review';taskModalData.visible = true">{{'web.code-system-version.summary.info.create-review' | translate}}</a>
+    <a *twPrivileged="'edit'" (mClick)="taskModalData.type = 'review';taskModalData.visible = true">{{'web.code-system-version.summary.info.create-review' | translate}}</a>
   </div>
   <div class="m-items-middle" *ngIf="codeSystem?.settings?.approvalRequired">
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.code-system-version.summary.info.last-approved' | translate}}:
       {{((provenances | apply:getLastProvenance: 'approved')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
-    <a (mClick)="taskModalData.type = 'approval';taskModalData.visible = true">{{'web.code-system-version.summary.info.create-approve' | translate}}</a>
+    <a *twPrivileged="'edit'" (mClick)="taskModalData.type = 'approval';taskModalData.visible = true">{{'web.code-system-version.summary.info.create-approve' | translate}}</a>
   </div>
-  <div class="m-items-middle" *twPrivileged="version.codeSystem + '.CodeSystem.publish'">
+  <div class="m-items-middle" *twPrivileged="'publish'">
     <m-icon mCode="tool"></m-icon>
     <a *ngIf="version.status !== 'draft'" (mClick)="changeVersionStatus('draft')">{{'web.code-system-version.summary.info.make-draft' | translate}}</a>
     <a *ngIf="version.status !== 'active' && version.status !== 'retired'" (mClick)="changeVersionStatus('active')">{{'web.code-system-version.summary.info.activate' | translate}}</a>
@@ -50,9 +50,9 @@
       <a (mClick)="changeVersionStatus('retired')">{{'web.code-system-version.summary.info.retire' | translate}}</a>
     </ng-container>
   </div>
-  <div class="m-items-middle" *ngIf="githubSpaces?.length">
+  <div class="m-items-middle" *ngIf="githubSpaces?.length && 'edit' | twPrivileged">
     <m-icon mCode="github"></m-icon>
-    <m-dropdown>
+    <m-dropdown [mHideIfEmpty]="false">
       <a *m-dropdown-container>
         {{'web.code-system-version.summary.info.sync-with-github' | translate}}
       </a>

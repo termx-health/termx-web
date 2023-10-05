@@ -1,5 +1,5 @@
 <tw-resource-context resourceType="MapSet" [resource]="mapSet" [versions]="versions" mode="summary"></tw-resource-context>
-<m-page [mLoading]="loader.isLoading">
+<m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[mapSet?.id, 'MapSet']">
 
   <m-form-row class="with-row-gap" mGap="1rem">
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
@@ -14,7 +14,7 @@
       <m-card>
         <m-title *m-card-header mTitle="web.map-set.summary.versions">
           <div mControls class="m-items-middle">
-            <m-button mDisplay="text" mShape="circle" [routerLink]="['/resources/map-sets', mapSet?.id, 'versions', 'add']">
+            <m-button mDisplay="text" [routerLink]="['/resources/map-sets', mapSet?.id, 'versions', 'add']" *twPrivileged>
               {{'web.map-set.summary.add-version' | translate}}&nbsp;
               <m-icon mCode="plus"></m-icon>
             </m-button>
@@ -26,7 +26,7 @@
     </div>
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
       <!-- Tasks -->
-      <m-card>
+      <m-card *twPrivileged="'*.Task.view'">
         <div *m-card-header class="m-items-middle">
           <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
             <m-title mTitle="web.map-set.summary.opened-tasks"></m-title>

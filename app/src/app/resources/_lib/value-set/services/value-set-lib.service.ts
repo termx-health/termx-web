@@ -9,7 +9,7 @@ import {ValueSetVersionConcept} from '../model/value-set-version-concept';
 import {ValueSetExpandRequest} from '../model/value-set-expand-request';
 import {ValueSet} from '../model/value-set';
 import {ValueSetSearchParams} from '../model/value-set-search-params';
-import {JobLogResponse} from 'term-web/sys/_lib';
+import {JobLogResponse, Provenance} from 'term-web/sys/_lib';
 
 @Injectable()
 export class ValueSetLibService {
@@ -43,5 +43,9 @@ export class ValueSetLibService {
 
   public expandAsync(request: ValueSetExpandRequest): Observable<JobLogResponse> {
     return this.http.post<JobLogResponse>(`${this.baseUrl}/expand-async`, request);
+  }
+
+  public loadProvenances(valueSet: string, version: string): Observable<Provenance[]> {
+    return this.http.get<Provenance[]>(`${this.baseUrl}/${valueSet}/provenances`, {params: SearchHttpParams.build({version})});
   }
 }

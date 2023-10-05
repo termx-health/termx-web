@@ -14,7 +14,6 @@ import {MapSetVersionsWidgetComponent} from 'term-web/resources/map-set/containe
 import {MapSetInfoWidgetComponent} from 'term-web/resources/map-set/containers/summary/widgets/map-set-info-widget.component';
 import {MapSetProvenancesComponent} from 'term-web/resources/map-set/containers/provenance/map-set-provenances.component';
 import {SysLibModule} from 'term-web/sys/_lib';
-import {MapSetVersionProvenancesComponent} from 'term-web/resources/map-set/containers/version/provenance/map-set-version-provenances.component';
 import {MapSetVersionSummaryComponent} from 'term-web/resources/map-set/containers/version/summary/map-set-version-summary.component';
 import {MapSetVersionInfoWidgetComponent} from 'term-web/resources/map-set/containers/version/summary/widgets/map-set-version-info-widget.component';
 import {UserLibModule} from 'term-web/user/_lib';
@@ -34,14 +33,14 @@ import {MapSetPropertyValueInputComponent} from 'term-web/resources/map-set/cont
 export const MAP_SET_ROUTES: Routes = [
   {path: '', component: MapSetListComponent},
   {path: 'add', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/summary', component: MapSetSummaryComponent},
-  {path: ':id/provenances', component: MapSetProvenancesComponent},
+  {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['{id}.MapSet.edit']}},
+  {path: ':id/summary', component: MapSetSummaryComponent, data: {privilege: ['{id}.MapSet.view']}},
+  {path: ':id/provenances', component: MapSetProvenancesComponent, data: {privilege: ['{id}.MapSet.view']}},
 
-  {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/versions/:versionCode/summary', component: MapSetVersionSummaryComponent},
-  {path: ':id/versions/:versionCode/provenances', component: MapSetVersionProvenancesComponent},
-  {path: ':id/versions/:versionCode/edit', component: MapSetVersionEditComponent, data: {privilege: ['*.MapSet.edit']}},
+  {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['{id}.MapSet.edit']}},
+  {path: ':id/versions/:versionCode/summary', component: MapSetVersionSummaryComponent, data: {privilege: ['{id}.MapSet.view']}},
+  {path: ':id/versions/:versionCode/provenances', component: MapSetProvenancesComponent, data: {privilege: ['{id}.MapSet.view']}},
+  {path: ':id/versions/:versionCode/edit', component: MapSetVersionEditComponent, data: {privilege: ['{id}.MapSet.edit']}},
 
 ];
 
@@ -69,7 +68,6 @@ export const MAP_SET_ROUTES: Routes = [
 
     MapSetVersionEditComponent,
     MapSetVersionSummaryComponent,
-    MapSetVersionProvenancesComponent,
     MapSetVersionInfoWidgetComponent,
     MapSetSourceConceptListComponent,
     MapSetExternalSourceConceptListComponent,

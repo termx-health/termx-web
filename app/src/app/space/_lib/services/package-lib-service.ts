@@ -6,15 +6,19 @@ import {Package, PackageVersion} from '../model/package';
 
 @Injectable()
 export class PackageLibService {
-  protected baseUrl = `${environment.termxApi}/packages`;
+  protected baseUrl = `${environment.termxApi}/spaces`;
 
   public constructor(protected http: HttpClient) { }
 
-  public load(id: number): Observable<Package> {
-    return this.http.get<Package>(`${this.baseUrl}/${id}`);
+  public load(spaceId: number, id: number): Observable<Package> {
+    return this.http.get<Package>(`${this.baseUrl}/${spaceId}/packages/${id}`);
   }
 
-  public loadVersions(id: number): Observable<PackageVersion[]> {
-    return this.http.get<PackageVersion[]>(`${this.baseUrl}/${id}/versions`);
+  public loadVersions(spaceId: number, id: number): Observable<PackageVersion[]> {
+    return this.http.get<PackageVersion[]>(`${this.baseUrl}/${spaceId}/packages/${id}/versions`);
+  }
+
+  public loadVersion(spaceId: number, packageId: number, versionId: number): Observable<PackageVersion> {
+    return this.http.get<PackageVersion>(`${this.baseUrl}/${spaceId}/packages/${packageId}/versions/${versionId}`);
   }
 }

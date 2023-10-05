@@ -6,8 +6,7 @@
           <div class="m-card__title">
             {{(mode === 'edit' ? 'web.privileges.edit-header' : 'web.privileges.add-header') | translate}}
           </div>
-          <m-button
-              *ngIf="mode === 'edit'"
+          <m-button *ngIf="mode === 'edit' && privilege?.code !== 'guest'"
               mDisplay="text"
               mShape="circle"
               m-popconfirm
@@ -109,11 +108,14 @@
           <m-option mLabel="web.privileges.resources.modal.type.space" mValue="Space"></m-option>
           <m-option mLabel="web.privileges.resources.modal.type.wiki" mValue="Wiki"></m-option>
           <m-option mLabel="web.privileges.resources.modal.type.observation-definition" mValue="ObservationDefinition"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.structure-definition" mValue="StructureDefinition"></m-option>
+          <m-option mLabel="web.privileges.resources.modal.type.transformation-definition" mValue="TransformationDefinition"></m-option>
           <m-option mLabel="web.privileges.resources.modal.type.task" mValue="Task"></m-option>
           <m-option mLabel="web.privileges.resources.modal.type.privilege" mValue="Privilege"></m-option>
         </m-select>
       </m-form-item>
-      <m-form-item *ngIf="modalData.resource.resourceType && ['CodeSystem', 'ValueSet', 'MapSet', 'NamingSystem', 'AssociationType'].includes(modalData.resource.resourceType)"
+      <m-form-item *ngIf="modalData.resource.resourceType
+                          && ['CodeSystem', 'ValueSet', 'MapSet', 'NamingSystem', 'AssociationType', 'Wiki', 'Space'].includes(modalData.resource.resourceType)"
           mName="resourceId"
           mLabel="web.privileges.resources.modal.resource-id">
         <tw-code-system-search name="resourceId"
@@ -140,24 +142,32 @@
             *ngIf="modalData.resource.resourceType === 'AssociationType'"
             [(ngModel)]="modalData.resource.resourceId"
             [filter]="filterCode"
-            valuePrimitive>
-        </tw-association-type-search>
+            valuePrimitive></tw-association-type-search>
+        <tw-space-select name="resourceId"
+            *ngIf="modalData.resource.resourceType === 'Wiki' || modalData.resource.resourceType === 'Space'"
+            [ngModel]="modalData.resource.resourceId | apply:asNumber"
+            (ngModelChange)="modalData.resource.resourceId = $event.toString()"
+            [filter]="filterId"
+            valuePrimitive></tw-space-select>
       </m-form-item>
       <ng-container *ngIf="modalData.resource.resourceType !== 'Admin'">
         <m-form-item [mLabel]="view"></m-form-item>
         <ng-template #view>
-          <m-checkbox name="action-view"
-              [(ngModel)]="modalData.resource.actions.view">{{'web.privileges.resources.modal.actions.view' | translate}}</m-checkbox>
+          <m-checkbox name="action-view" [(ngModel)]="modalData.resource.actions.view">
+            {{'web.privileges.resources.modal.actions.view' | translate}}
+          </m-checkbox>
         </ng-template>
         <m-form-item [mLabel]="edit"></m-form-item>
         <ng-template #edit>
-          <m-checkbox name="action-edit"
-              [(ngModel)]="modalData.resource.actions.edit">{{'web.privileges.resources.modal.actions.edit' | translate}}</m-checkbox>
+          <m-checkbox name="action-edit" [(ngModel)]="modalData.resource.actions.edit">
+            {{'web.privileges.resources.modal.actions.edit' | translate}}
+          </m-checkbox>
         </ng-template>
         <m-form-item [mLabel]="publish"></m-form-item>
         <ng-template #publish>
-          <m-checkbox name="action-publish"
-              [(ngModel)]="modalData.resource.actions.publish">{{'web.privileges.resources.modal.actions.publish' | translate}}</m-checkbox>
+          <m-checkbox name="action-publish" [(ngModel)]="modalData.resource.actions.publish">
+            {{'web.privileges.resources.modal.actions.publish' | translate}}
+          </m-checkbox>
         </ng-template>
       </ng-container>
     </form>

@@ -12,7 +12,6 @@ import {TERMINOLOGY_SERVICE_API_ROUTES} from 'term-web/terminology-service-api/t
 import {OBSERVATION_DEFINITION_ROUTES} from 'term-web/observation-definition/observation-definition.module';
 import {SEQUENCE_ROUTES} from 'term-web/sequence/sequence.module';
 import {TASK_ROUTES} from 'term-web/task/task.module';
-import {autoLoginGuard} from 'term-web/core/auth';
 import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
 import {SpaceContextModule} from 'term-web/core/context/space-context.module';
 import {AppComponent} from 'term-web/app.component';
@@ -30,7 +29,7 @@ const APP_ROUTES: Routes = [
   {path: 'sequences', children: SEQUENCE_ROUTES},
   {path: 'wiki', children: WIKI_ROUTES, data: {privilege: ['*.Wiki.view']}},
   {path: 'wiki-management', children: WIKI_MANAGEMENT_ROUTES, data: {privilege: ['*.Wiki.view']}},
-  {path: 'modeler', children: MODELER_ROUTES, data: {privilege: ['*.Modeler.view']}},
+  {path: 'modeler', children: MODELER_ROUTES, data: {privilege: ['*.StructureDefinition.view', '*.TransformationDefinition.view']}},
   {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
   {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.Space.view']}},
   {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.view']}},
@@ -55,7 +54,7 @@ const routes: Routes = [
       {path: 'embedded', children: APP_ROUTES},
     ],
     component: AppComponent,
-    canActivate: [autoLoginGuard]
+    // canActivate: [autoLoginGuard]
   },
   {
     path: 'fhir',

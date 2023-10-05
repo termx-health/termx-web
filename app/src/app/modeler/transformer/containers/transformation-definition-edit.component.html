@@ -1,5 +1,5 @@
 <m-spinner [mLoading]="!definition"></m-spinner>
-<div *ngIf="!!definition" class="tw-flex-container" style="gap: 12px">
+<div *ngIf="!!definition" class="tw-flex-container" style="gap: 12px" [twPrivilegeContext]="[definition?.id, 'TransformationDefinition']">
   <div class="m-justify-between m-items-middle">
     <div>
       <h2 class="m-bold" style="margin: 0">
@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="m-items-middle">
+    <div class="m-items-middle" *twPrivileged>
       <m-button (click)="save()" mDisplay="primary">
         <div class="m-items-middle">
           <m-icon [mCode]="loading ? 'loading' : 'save'"/>

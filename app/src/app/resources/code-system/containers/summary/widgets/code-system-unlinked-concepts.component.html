@@ -1,4 +1,7 @@
-<m-input [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+<m-input *ngIf="!searchResult || searchResult.meta.total > 0"
+    [(ngModel)]="searchInput"
+    (mChange)="searchUpdate.next($event)"
+    placeholder="marina.ui.inputs.search.placeholder"></m-input>
 
 <m-backend-table [mResult]="searchResult"
     [(mQuery)]="query"

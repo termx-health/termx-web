@@ -121,7 +121,7 @@ export class SpaceDiffComponent implements OnInit {
     ]).subscribe(([s, p, v, params]) => {
       forkJoin([
         this.terminologyServerService.search({spaceId: s?.id, limit: -1}),
-        this.packageResourceService.loadAll(s?.code, p?.code, v?.version)
+        this.packageResourceService.loadAll(s?.id, p?.code, v?.version)
       ]).subscribe(([servers, resources]) => {
         this.terminologyServers = group(servers.data, s => s.code);
         this.resources = collect(resources, r => r.resourceType);

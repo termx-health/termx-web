@@ -15,6 +15,7 @@ import {EntityPropertySearchParams} from '../model/entity-property-search-params
 import {CodeSystemEntityVersionSearchParams} from '../model/code-system-entity-version-search-params';
 import {CodeSystemEntityVersion} from '../model/code-system-entity';
 import {CodeSystemAssociation} from 'term-web/resources/_lib';
+import {Provenance} from 'term-web/sys/_lib';
 
 @Injectable()
 export class CodeSystemLibService {
@@ -57,5 +58,9 @@ export class CodeSystemLibService {
 
   public searchProperties(codeSystemId: string, params: EntityPropertySearchParams): Observable<SearchResult<EntityProperty>> {
     return this.http.get<SearchResult<EntityProperty>>(`${this.baseUrl}/${codeSystemId}/entity-properties`, {params: SearchHttpParams.build(params)});
+  }
+
+  public loadProvenances(codeSystem: string, version: string): Observable<Provenance[]> {
+    return this.http.get<Provenance[]>(`${this.baseUrl}/${codeSystem}/provenances`, {params: SearchHttpParams.build({version})});
   }
 }

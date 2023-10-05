@@ -11,7 +11,6 @@ import {TerminologyServerListComponent} from './containers/terminology-server/te
 import {TerminologyServerEditComponent} from './containers/terminology-server/terminology-server-edit.component';
 import {TerminologyServerService} from './services/terminology-server.service';
 import {PackageService} from './services/package.service';
-import {PackageVersionService} from './services/package-version.service';
 import {PackageResourceService} from './services/package-resource.service';
 import {SpaceDiffMatrixComponent} from './containers/space/space-diff-matrix.component';
 import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from '../resources/_lib';
@@ -30,16 +29,16 @@ export const SPACE_CTX_ROUTES: Routes = [
 export const SPACE_ROUTES: Routes = [
   {path: '', component: SpaceListComponent},
   {path: 'add', data: {privilege: ['*.Space.edit']}, component: SpaceEditComponent},
-  {path: ':id/edit', data: {privilege: ['*.Space.edit']}, component: SpaceEditComponent},
-  {path: ':id/github', data: {privilege: ['*.Space.edit']}, component: SpaceGithubComponent},
-  {path: ':spaceId/packages/add', data: {privilege: ['*.Space.edit']}, component: PackageEditComponent},
-  {path: ':spaceId/packages/:id/edit', data: {privilege: ['*.Space.edit']}, component: PackageEditComponent}
+  {path: ':id/edit', data: {privilege: ['{id}.Space.edit']}, component: SpaceEditComponent},
+  {path: ':id/github', data: {privilege: ['{id}.Space.edit']}, component: SpaceGithubComponent},
+  {path: ':spaceId/packages/add', data: {privilege: ['{id}.Space.edit']}, component: PackageEditComponent},
+  {path: ':spaceId/packages/:id/edit', data: {privilege: ['{id}.Space.edit']}, component: PackageEditComponent}
 ];
 
 export const TERMINOLOGY_SERVER_ROUTES: Routes = [
   {path: '', component: TerminologyServerListComponent},
   {path: 'add', data: {privilege: ['*.Space.edit']}, component: TerminologyServerEditComponent},
-  {path: ':id/edit', data: {privilege: ['*.Space.edit']}, component: TerminologyServerEditComponent},
+  {path: ':id/edit', data: {privilege: ['{id}.Space.edit']}, component: TerminologyServerEditComponent},
 ];
 
 @NgModule({
@@ -72,7 +71,6 @@ export const TERMINOLOGY_SERVER_ROUTES: Routes = [
     SpaceService,
     SpaceGithubService,
     PackageService,
-    PackageVersionService,
     PackageResourceService,
     TerminologyServerService
   ]

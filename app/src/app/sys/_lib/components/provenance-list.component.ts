@@ -23,8 +23,8 @@ import {Provenance, ProvenanceLibService} from '../../_lib';
 export class ProvenanceListComponent implements OnChanges {
   @Input() public targetType?: string;
   @Input() public targetId?: string;
+  @Input() public provenances?: Provenance[];
 
-  protected provenances?: Provenance[];
   protected loader = new LoadingManager();
 
   public constructor(private provenanceService: ProvenanceLibService) {}

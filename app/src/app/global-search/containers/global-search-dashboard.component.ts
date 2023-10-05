@@ -13,11 +13,12 @@ import {
   MapSetSearchParams,
   ValueSet,
   ValueSetLibService,
-  ValueSetSearchParams, ValueSetVersionConcept
+  ValueSetSearchParams
 } from 'term-web/resources/_lib';
 import {MeasurementUnit, MeasurementUnitLibService, MeasurementUnitSearchParams} from 'term-web/measurement-unit/_lib';
 import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'term-web/integration/_lib';
-import {ComponentStateStore, HttpCacheService, LoadingManager, QueryParams} from '@kodality-web/core-util';
+import {ComponentStateStore, HttpCacheService, LoadingManager} from '@kodality-web/core-util';
+import {AuthService} from 'term-web/core/auth';
 
 @Component({
   templateUrl: './global-search-dashboard.component.html'
@@ -45,7 +46,8 @@ export class GlobalSearchDashboardComponent implements OnInit {
     private measurementUnitService: MeasurementUnitLibService,
     private codeSystemConceptService: CodeSystemConceptLibService,
     private stateStore: ComponentStateStore,
-    private cacheService: HttpCacheService
+    private cacheService: HttpCacheService,
+    private authService: AuthService
   ) {}
 
   public ngOnInit(): void {
@@ -91,7 +93,8 @@ export class GlobalSearchDashboardComponent implements OnInit {
     q.textContains = text;
     q.limit = 100;
 
-    return this.codeSystemConceptService.search(q).pipe(map(c => c.data), catchError(() => of([])));
+    return !this.authService.hasAnyPrivilege(['*.CodeSystem.view']) ? of([])
+      : this.codeSystemConceptService.search(q).pipe(map(c => c.data), catchError(() => of([])));
   }
 
   private searchCodeSystems(text: string): Observable<CodeSystem[]> {
@@ -99,7 +102,8 @@ export class GlobalSearchDashboardComponent implements OnInit {
     q.textContains = text;
     q.limit = 100;
 
-    return this.codeSystemService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
+    return !this.authService.hasAnyPrivilege(['*.CodeSystem.view']) ? of([])
+      : this.codeSystemService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
   private searchValueSets(text: string): Observable<ValueSet[]> {
@@ -107,7 +111,8 @@ export class GlobalSearchDashboardComponent implements OnInit {
     q.textContains = text;
     q.limit = 100;
 
-    return this.valueSetService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
+    return !this.authService.hasAnyPrivilege(['*.ValueSet.view']) ? of([])
+      : this.valueSetService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
   private searchMapSets(text: string): Observable<MapSet[]> {
@@ -115,7 +120,8 @@ export class GlobalSearchDashboardComponent implements OnInit {
     q.textContains = text;
     q.limit = 100;
 
-    return this.mapSetService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
+    return !this.authService.hasAnyPrivilege(['*.MapSet.view']) ? of([])
+      : this.mapSetService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
   private searchMeasurementUnits(text: string): Observable<MeasurementUnit[]> {
@@ -123,7 +129,8 @@ export class GlobalSearchDashboardComponent implements OnInit {
     q.textContains = text;
     q.limit = 100;
 
-    return this.measurementUnitService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
+    return !this.authService.hasAnyPrivilege(['ucum.CodeSystem.view']) ? of([])
+      : this.measurementUnitService.search(q).pipe(map(cs => cs.data), catchError(() => of([])));
   }
 
   private searchSnomed(text: string): Observable<SnomedConcept[]> {
@@ -134,7 +141,8 @@ export class GlobalSearchDashboardComponent implements OnInit {
     q.term = text;
     q.limit = 100;
 
-    return this.snomedService.findConcepts(q).pipe(map(cs => cs.items), catchError(() => of([])));
+    return !this.authService.hasAnyPrivilege(['snomed-ct.CodeSystem.view']) ? of([])
+      : this.snomedService.findConcepts(q).pipe(map(cs => cs.items), catchError(() => of([])));
   }
 
   public openConcept(codeSystem: string, code: string): void {

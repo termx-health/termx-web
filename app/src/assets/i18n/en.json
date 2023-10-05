@@ -1533,6 +1533,8 @@
 						"map-set": "MapSet",
 						"naming-system": "NamingSystem",
 						"observation-definition": "Observation definition",
+						"transformation-definition": "Transformation definition",
+						"structure-definition": "Structure definition",
 						"privilege": "Privilege",
 						"space": "Space",
 						"task": "Task",
