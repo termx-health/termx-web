@@ -17,6 +17,7 @@ import {WikiSpaceOverviewComponent} from './components/wiki-space-overview.compo
 import {PageCommentService} from './services/page-comment.service';
 import {WikiPageCommentsComponent} from './components/wiki-page-comments.component';
 import {WikiPageCommentComponent} from 'term-web/wiki/page/components/wiki-page-comment.component';
+import {WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 
 
 export const WIKI_PAGE_ROUTES: Routes = [
@@ -50,6 +51,7 @@ export const WIKI_PAGE_ROUTES: Routes = [
     WikiSpaceOverviewComponent
   ],
   providers: [
+    WikiSpaceService,
     PageService,
     PageLinkService,
     PageCommentService
