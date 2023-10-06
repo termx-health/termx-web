@@ -7,8 +7,8 @@
         <!-- Left -->
         <div class="space-context__item space-context__info">
           <tw-space-drawer-search #spaceDrawer [space]="space" [package]="pack" [version]="version"
-              (twChange)="setContext({spaceId: $event?.space?.id, packageId: $event?.package?.id, versionId: $event.version?.id})">
-          </tw-space-drawer-search>
+              (twChange)="setContext({spaceId: $event?.space?.id, packageId: $event?.package?.id, versionId: $event.version?.id})"
+          ></tw-space-drawer-search>
           <div>
             <m-button *ngIf="space" mDisplay="text" mShape="circle" [routerLink]="['/spaces', space?.id, 'edit']">
               <span class="m-items-middle"><m-icon mCode="form"></m-icon></span>
@@ -27,12 +27,19 @@
           <a *ngIf="!pack && !version" (click)="spaceDrawer.openDrawer()">{{'web.space.all-packages' | translate}}</a>
 
           <!-- Package-->
-          <div *ngIf="pack">
-            <div class="m-subtitle">{{'entities.package.singular' | translate}}</div>
-            <div class="m-items-middle">
-              <div class="m-bold">{{pack.code}}</div>
+          <ng-container *ngIf="pack">
+            <m-icon-button mIcon="edit" [routerLink]="['/spaces', pack?.spaceId, 'packages', pack?.id, 'edit']"/>
+
+            <div>
+              <div class="m-subtitle m-items-middle">
+                {{'entities.package.singular' | translate}}
+              </div>
+
+              <div class="m-items-middle">
+                <div class="m-bold">{{pack.code}}</div>
+              </div>
             </div>
-          </div>
+          </ng-container>
 
           <!-- Package version-->
           <div *ngIf="version">
@@ -41,7 +48,6 @@
             <!-- Code -->
             <div class="m-bold">{{version.version}}</div>
           </div>
-
           <div>
             <m-dropdown>
               <a *mDropdownItemIf="!!space?.integration?.github?.repo" [routerLink]="['/spaces', space?.id, 'github']">

@@ -5,12 +5,14 @@ import {Location} from '@angular/common';
 import {copyDeep, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {TerminologyServer, TerminologyServerHeader} from 'term-web/space/_lib';
 import {TerminologyServerService} from '../../services/terminology-server.service';
+import {forkJoin} from 'rxjs';
 
 @Component({
   templateUrl: 'terminology-server-edit.component.html',
 })
 export class TerminologyServerEditComponent implements OnInit {
   protected server: TerminologyServer;
+  protected serverKinds: string[];
 
   protected mode: 'add' | 'edit' = 'add';
   protected loader = new LoadingManager();
@@ -36,8 +38,12 @@ export class TerminologyServerEditComponent implements OnInit {
   }
 
   private loadServicer(id: number): void {
-    this.loader.wrap('load', this.terminologyServerService.load(id)).subscribe(ts => {
+    this.loader.wrap('load', forkJoin([
+      this.terminologyServerService.load(id),
+      this.terminologyServerService.loadKinds()
+    ])).subscribe(([ts, kinds]) => {
       this.initServer(ts);
+      this.serverKinds = kinds;
     });
   }
 

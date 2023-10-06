@@ -12,6 +12,10 @@ export class TerminologyServerLibService {
 
   public constructor(protected http: HttpClient) { }
 
+  public loadKinds(): Observable<string[]> {
+    return this.http.get<string[]>(`${this.baseUrl}/kinds`);
+  }
+
   public load(id: number): Observable<TerminologyServer> {
     return this.http.get<TerminologyServer>(`${this.baseUrl}/${id}`);
   }

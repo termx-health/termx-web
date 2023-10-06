@@ -12,9 +12,7 @@
 
         <m-form-item mName="kind" mLabel="entities.terminology-server.kind" required>
           <m-select name="kind" [(ngModel)]="server.kind" required multiple>
-            <m-option mLabel="web.terminology-server.kind.terminology" [mValue]="'terminology'"/>
-            <m-option mLabel="web.terminology-server.kind.fhir" [mValue]="'fhir'"/>
-            <m-option mLabel="web.terminology-server.kind.snomed" [mValue]="'snomed'"/>
+            <m-option *ngFor="let kind of serverKinds" [mLabel]="'web.terminology-server.kind.' + kind" [mValue]="kind"/>
           </m-select>
         </m-form-item>
 
