@@ -1,7 +1,8 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {
   CodeSystem,
-  CodeSystemConcept, CodeSystemLibService,
+  CodeSystemConcept,
+  CodeSystemLibService,
   CodeSystemVersion,
   ConceptSearchParams,
   Designation,
@@ -9,11 +10,12 @@ import {
   EntityPropertyValue
 } from 'app/src/app/resources/_lib';
 import {forkJoin, Observable, of} from 'rxjs';
-import {BooleanInput, copyDeep, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import {copyDeep, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {environment} from 'environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {AuthService} from 'term-web/core/auth';
 
 class CodeSystemEntityPropertySummary {
   public items: CodeSystemEntityPropertySummaryItem[];
@@ -45,7 +47,7 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
   protected versions?: CodeSystemVersion[];
   protected version?: CodeSystemVersion;
 
-  @Input() @BooleanInput() public viewMode: boolean | string;
+  public viewMode: boolean | string;
 
   protected tableView: {langs?: string[], properties?: string[]} = {};
 
@@ -65,7 +67,8 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
     private route: ActivatedRoute,
     private codeSystemService: CodeSystemLibService,
     protected translateService: TranslateService,
-    public http: HttpClient
+    public http: HttpClient,
+    private auth: AuthService
   ) {
     this.query.sort = 'code';
   }
@@ -86,6 +89,7 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
       this.loadData();
       this.loadSummary(cs.id, version?.version);
     });
+    this.viewMode = !(this.auth.hasPrivilege(id + '.CodeSystem.edit'));
   }
 
   protected loadData(): void {

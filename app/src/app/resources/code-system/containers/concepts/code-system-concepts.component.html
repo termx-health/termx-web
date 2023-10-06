@@ -1,4 +1,7 @@
 <tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [versions]="versions" mode="concept-list"></tw-resource-context>
 <m-page [mLoading]="loader.isLoading">
-  <tw-code-system-concepts-list *ngIf="codeSystem" [codeSystem]="codeSystem" [versions]="versions"></tw-code-system-concepts-list>
+  <tw-code-system-concepts-list *ngIf="codeSystem"
+      [codeSystem]="codeSystem"
+      [versions]="versions"
+      [viewMode]="!(codeSystem.id + '.Codesystem.edit' | twPrivileged)"></tw-code-system-concepts-list>
 </m-page>

@@ -67,7 +67,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: EDIT},
   {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: EDIT},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: EDIT},
-  {path: ':id/versions/:versionCode/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent, data: EDIT},
+  {path: ':id/versions/:versionCode/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent, data: VIEW},
   {path: 'compare', component: CodeSystemCompareComponent, data: {privilege: ['*.CodeSystem.view']}},
   {path: 'validator', component: CodeSystemValidatorComponent, data: {privilege: ['*.CodeSystem.view']}},
 ];
