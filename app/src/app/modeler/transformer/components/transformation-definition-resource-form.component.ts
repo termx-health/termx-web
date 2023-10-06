@@ -44,8 +44,8 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
     if (changes['resource']) {
       const {type, source, reference} = this.resource ?? {};
       if (source === 'url') {
-        if (reference.resourceServerId) {
-          this.resource.reference['_url'] = reference.resourceUrl.slice((this.urlSuffix[type]).length);
+        if (reference.resourceServerId && reference.resourceUrl.startsWith(this.urlSuffix[type])) {
+          this.resource.reference['_url'] = reference.resourceUrl.slice(this.urlSuffix[type].length);
         } else {
           this.resource.reference['_url'] = reference.resourceUrl;
         }

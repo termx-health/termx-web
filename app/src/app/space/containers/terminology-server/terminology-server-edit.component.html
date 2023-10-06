@@ -25,7 +25,7 @@
         <m-form-item [mLabel]="headers">
           <ng-template #headers>
             <div class="m-items-middle">
-              <span>HTTP headers</span>
+              <span>{{'entities.terminology-server.headers' | translate}}</span>
               <m-checkbox
                   *ngIf="server.headers"
                   mChecked (mCheckedChange)="server.headers = undefined"
@@ -39,7 +39,7 @@
           ></m-checkbox>
 
           <m-editable-table *ngIf="server.headers" [mData]="server.headers">
-            <m-editable-column mName="key" mTitle="Key" mWidth="30%">
+            <m-editable-column mName="key" mTitle="web.terminology-server.headers.key" mWidth="30%">
               <ng-template #editTemplate let-h let-ngModelName="ngModelName">
                 <m-input [name]="ngModelName" [(ngModel)]="h.key"/>
               </ng-template>
@@ -48,12 +48,12 @@
               </ng-template>
             </m-editable-column>
 
-            <m-editable-column mName="value" mTitle="Value" [mCellEditable]="keyDefined" mWidth="70%">
+            <m-editable-column mName="value" mTitle="web.terminology-server.headers.value" [mCellEditable]="keyDefined" mWidth="70%">
               <ng-template #editTemplate let-h let-ngModelName="ngModelName">
                 <m-input *ngIf="keyDefined(h)" [name]="ngModelName" [(ngModel)]="h.value"/>
               </ng-template>
               <ng-template #viewTemplate let-h>
-                {{h.value}}
+                <div style="word-break: break-word">{{h.value}}</div>
               </ng-template>
             </m-editable-column>
           </m-editable-table>
@@ -62,7 +62,7 @@
         <m-form-item [mLabel]="oauth">
           <ng-template #oauth>
             <div class="m-items-middle">
-              <span>OAuth 2.0</span>
+              <span>{{'entities.terminology-server.auth-config' | translate}}</span>
               <m-checkbox
                   *ngIf="server.authConfig"
                   mChecked (mCheckedChange)="server.authConfig = undefined"
@@ -76,15 +76,15 @@
           ></m-checkbox>
 
           <div *ngIf="server.authConfig" style="border-left: 1px solid var(--color-borders); padding: 0.5rem 0 0.5rem 1rem">
-            <m-form-item mName="oauth-url" mLabel="Access Token URL" required>
+            <m-form-item mName="oauth-url" mLabel="web.terminology-server.auth-config.access-token-url" required>
               <m-input name="oauth-url" [(ngModel)]="server.authConfig.accessTokenUrl" required/>
             </m-form-item>
 
-            <m-form-item mName="oauth-client-id" mLabel="Client ID" required>
+            <m-form-item mName="oauth-client-id" mLabel="web.terminology-server.auth-config.client-id" required>
               <m-input name="oauth-client-id" [(ngModel)]="server.authConfig.clientId" required/>
             </m-form-item>
 
-            <m-form-item mName="oauth-client-secret" mLabel="Client Secret" class="tw-input-group" required *ngIf="{visible: false} as d">
+            <m-form-item mName="oauth-client-secret" mLabel="web.terminology-server.auth-config.client-secret" class="tw-input-group" required *ngIf="{visible: false} as d">
               <div style="display: inherit; width: 100%">
                 <div class="tw-input-group-addon ant-input-group-addon">
                   <m-icon class="m-clickable" [mCode]="d.visible ? 'eye-invisible' : 'eye'" (click)="d.visible = !d.visible"/>

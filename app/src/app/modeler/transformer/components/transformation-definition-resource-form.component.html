@@ -63,16 +63,18 @@
     </m-form-item>
 
     <m-form-item mName="resourceUrl" mLabel="web.transformation-definition.resource-form.resource-url" class="tw-input-group" required>
-      <span class="tw-input-group-addon ant-input-group-addon" *ngIf="resource.reference.resourceServerId">
-        {{resource.reference.resourceServerId | apply: getServerUrl | async}}{{urlSuffix[resource.type]}}
-      </span>
+      <div style="display: inherit; width: 100%">
+        <span class="tw-input-group-addon ant-input-group-addon" *ngIf="resource.reference.resourceServerId">
+          {{resource.reference.resourceServerId | apply: getServerUrl | async}}{{urlSuffix[resource.type]}}
+        </span>
 
-      <m-input
-          name="resourceUrl"
-          [(ngModel)]="resource.reference['_url']"
-          (ngModelChange)="onResourceUrlChange(resource); resource.name = $event; resource['_preview'] = undefined"
-          required
-      ></m-input>
+        <m-input
+            name="resourceUrl"
+            [(ngModel)]="resource.reference['_url']"
+            (ngModelChange)="onResourceUrlChange(resource); resource.name = $event; resource['_preview'] = undefined"
+            required
+        ></m-input>
+      </div>
     </m-form-item>
 
     <ng-container *ngIf="resource.type === 'definition'">

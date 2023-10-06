@@ -23,41 +23,7 @@
             </m-select>
           </m-form-item>
 
-          <m-divider>
-            <span>{{'web.space.github-integration' | translate}}</span>
-            <m-checkbox style="padding-left: 10px" [(mChecked)]="githubEnabled"></m-checkbox>
-          </m-divider>
-          <ng-container *ngIf="githubEnabled">
-            <m-form-item mName="github" mLabel="entities.space.github" *ngIf="githubProviders" class="tw-input-group">
-              <span class="tw-input-group-addon ant-input-group-addon">https://github.com/</span>
-              <m-input name="github" [(ngModel)]="space.integration.github.repo"></m-input>
-            </m-form-item>
-            <ng-container *ngIf="space.integration.github.repo">
-              <div class="github-dirs" *ngIf="githubProviders">
-                <m-form-item *ngFor="let p of githubProviders | keys | apply:sort" mName="github-{{p}}" class="tw-input-group">
-                  <span class="tw-input-group-addon ant-input-group-addon">{{p}}</span>
-                  <m-input name="github-{{p}}" [(ngModel)]="space.integration.github.dirs[p]"></m-input>
-                </m-form-item>
-              </div>
 
-              <tw-space-edit-ig #igForm [spaceId]="space.id" [ig]="space.integration.github.ig"></tw-space-edit-ig>
-
-            </ng-container>
-          </ng-container>
-
-          <m-divider mText="entities.space.acl"></m-divider>
-          <m-form-item mName="shared" mLabel="entities.space.shared">
-            <m-checkbox name="shared" [(ngModel)]="space.shared"></m-checkbox>
-          </m-form-item>
-          <m-form-item mName="owners" mLabel="entities.space.owners">
-            <m-input name="owners" [(ngModel)]="space.acl.owners"></m-input>
-          </m-form-item>
-          <m-form-item mName="editors" mLabel="entities.space.editors">
-            <m-input name="editors" [(ngModel)]="space.acl.editors"></m-input>
-          </m-form-item>
-          <m-form-item mName="viewers" mLabel="entities.space.viewers">
-            <m-input name="viewers" [(ngModel)]="space.acl.viewers"></m-input>
-          </m-form-item>
 
           <m-divider mText="entities.space.packages"></m-divider>
           <m-list>
@@ -78,7 +44,45 @@
               </div>
             </m-list-item>
           </m-list>
+
+
+
+          <m-divider>
+            <span>{{'web.space.github-integration' | translate}}</span>
+            <m-checkbox style="padding-left: 10px" [(mChecked)]="githubEnabled"></m-checkbox>
+          </m-divider>
+          <ng-container *ngIf="githubEnabled">
+            <m-form-item mName="github" mLabel="entities.space.github" *ngIf="githubProviders" class="tw-input-group">
+              <span class="tw-input-group-addon ant-input-group-addon">https://github.com/</span>
+              <m-input name="github" [(ngModel)]="space.integration.github.repo"></m-input>
+            </m-form-item>
+            <ng-container *ngIf="space.integration.github.repo">
+              <div class="github-dirs" *ngIf="githubProviders">
+                <m-form-item *ngFor="let p of githubProviders | keys | apply:sort" mName="github-{{p}}" class="tw-input-group">
+                  <span class="tw-input-group-addon ant-input-group-addon">{{p}}</span>
+                  <m-input name="github-{{p}}" [(ngModel)]="space.integration.github.dirs[p]"></m-input>
+                </m-form-item>
+              </div>
+
+              <tw-space-edit-ig #igForm [spaceId]="space.id" [ig]="space.integration.github.ig"></tw-space-edit-ig>
+            </ng-container>
+          </ng-container>
+
+          <m-divider mText="entities.space.acl"></m-divider>
+          <m-form-item mName="shared" mLabel="entities.space.shared">
+            <m-checkbox name="shared" [(ngModel)]="space.shared"></m-checkbox>
+          </m-form-item>
+          <m-form-item mName="owners" mLabel="entities.space.owners">
+            <m-input name="owners" [(ngModel)]="space.acl.owners"></m-input>
+          </m-form-item>
+          <m-form-item mName="editors" mLabel="entities.space.editors">
+            <m-input name="editors" [(ngModel)]="space.acl.editors"></m-input>
+          </m-form-item>
+          <m-form-item mName="viewers" mLabel="entities.space.viewers">
+            <m-input name="viewers" [(ngModel)]="space.acl.viewers"></m-input>
+          </m-form-item>
         </form>
+
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
             {{'core.btn.save' | translate}}

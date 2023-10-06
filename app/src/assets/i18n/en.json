@@ -537,7 +537,7 @@
 			"plural": "Spaces",
 			"shared": "Shared",
 			"singular": "Space",
-			"terminology-servers": "Terminology servers",
+			"terminology-servers": "Servers",
 			"viewers": "Viewers",
 			"packages": "Packages"
 		},
@@ -580,6 +580,8 @@
 			"name": "Name",
 			"plural": "Servers",
 			"root-url": "Root URL",
+			"headers": "HTTP headers",
+            "auth-config": "OAuth 2.0",
 			"singular": "Server"
 		},
 		"transformation-definition": {
@@ -1806,7 +1808,16 @@
 				"fhir": "FHIR server",
 				"snomed": "SNOMED server",
 				"terminology": "Terminology server"
-			}
+			},
+            "headers": {
+                "key": "Key",
+                "value": "Value"
+            },
+            "auth-config": {
+                "access-token-url": "Access Token URL",
+                "client-id": "Client ID",
+                "client-secret": "Client Secret"
+            }
 		},
 		"tools": {
 			"terminology-service-api": {
