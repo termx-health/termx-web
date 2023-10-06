@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewCh
 import {ValueSet, ValueSetVersion} from 'app/src/app/resources/_lib';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
-import {FhirValueSetLibService} from 'app/src/app/fhir/_lib';
+import {FhirValueSetLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
 import {ChefService} from 'app/src/app/integration/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
@@ -19,6 +19,7 @@ import {Space, SpaceLibService} from 'term-web/space/_lib';
   templateUrl: 'value-set-version-info-widget.component.html'
 })
 export class ValueSetVersionInfoWidgetComponent implements OnChanges {
+  protected SEPARATOR = SEPARATOR;
   @Input() public valueSet: ValueSet;
   @Input() public version: ValueSetVersion;
   @Output() public taskCreated: EventEmitter<void> = new EventEmitter();
@@ -89,10 +90,10 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
 
   public openJson(expand: boolean = false): void {
     if (expand) {
-      window.open(environment.termxApi + '/fhir/ValueSet/' + this.version.valueSet + '.' + this.version.version + '/$expand?includeDesignations=true' +
+      window.open(environment.termxApi + '/fhir/ValueSet/' + this.version.valueSet + SEPARATOR + this.version.version + '/$expand?includeDesignations=true' +
         (this.version.preferredLanguage ? '&displayLanguage=' + this.version.preferredLanguage : '') , '_blank');
     } else {
-      window.open(environment.termxApi + '/fhir/ValueSet/' + this.version.valueSet + '.' + this.version.version , '_blank');
+      window.open(environment.termxApi + '/fhir/ValueSet/' + this.version.valueSet + SEPARATOR + this.version.version , '_blank');
     }
   }
 

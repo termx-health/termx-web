@@ -1,3 +1,5 @@
+export const SEPARATOR = '--';
+
 export class FhirParameters {
   public resourceType?: string;
   public parameter?: FhirParameter[];

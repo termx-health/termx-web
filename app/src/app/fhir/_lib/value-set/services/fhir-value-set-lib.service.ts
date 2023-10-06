@@ -5,7 +5,7 @@ import {SearchHttpParams} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {FhirValueSetExpandParams} from '../model/fhir-value-set-expand.params';
 import {FhirValueSetValidateCodeParams} from '../model/fhir-value-set-validate-code.params';
-import {FhirParameters} from '../../model/fhir-parameters';
+import {FhirParameters, SEPARATOR} from '../../model/fhir-parameters';
 
 @Injectable()
 export class FhirValueSetLibService {
@@ -14,7 +14,7 @@ export class FhirValueSetLibService {
   public constructor(protected http: HttpClient) {  }
 
   public loadValueSet(id: string, version?: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${id}${version ? '.' + version : ''}`);
+    return this.http.get<any>(`${this.baseUrl}/${id}${version ? SEPARATOR + version : ''}`);
   }
 
   public search(params: any): Observable<any> {

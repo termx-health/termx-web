@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewCh
 import {CodeSystem, CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
-import {FhirCodeSystemLibService} from 'app/src/app/fhir/_lib';
+import {FhirCodeSystemLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
 import {ChefService} from 'app/src/app/integration/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {environment} from 'app/src/environments/environment';
@@ -19,6 +19,7 @@ import {Space, SpaceLibService} from 'term-web/space/_lib';
   templateUrl: 'code-system-version-info-widget.component.html'
 })
 export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
+  protected SEPARATOR = SEPARATOR;
   @Input() public codeSystem: CodeSystem;
   @Input() public version: CodeSystemVersion;
   @Output() public taskCreated: EventEmitter<void> = new EventEmitter();
@@ -82,7 +83,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
   }
 
   public openJson(): void {
-    window.open(environment.termxApi + '/fhir/CodeSystem/' + this.version.codeSystem + '.' + this.version.version, '_blank');
+    window.open(environment.termxApi + '/fhir/CodeSystem/' + this.version.codeSystem + SEPARATOR + this.version.version, '_blank');
   }
 
   public createTask(): void {

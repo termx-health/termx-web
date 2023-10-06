@@ -2,7 +2,7 @@ import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewCh
 import {MapSet, MapSetVersion} from 'app/src/app/resources/_lib';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
-import {FhirConceptMapLibService} from 'app/src/app/fhir/_lib';
+import {FhirConceptMapLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
 import {ChefService} from 'app/src/app/integration/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {environment} from 'app/src/environments/environment';
@@ -73,7 +73,7 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
   }
 
   public openJson(): void {
-    window.open(environment.termxApi + '/fhir/ConceptMap/' + this.version.mapSet + '.' + this.version.version, '_blank');
+    window.open(environment.termxApi + '/fhir/ConceptMap/' + this.version.mapSet + SEPARATOR + this.version.version, '_blank');
   }
 
   public createTask(): void {

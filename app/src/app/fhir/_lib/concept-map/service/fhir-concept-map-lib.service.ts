@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchHttpParams} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {FhirParameters} from '../../model/fhir-parameters';
+import {FhirParameters, SEPARATOR} from '../../model/fhir-parameters';
 import {FhirConceptMapTranslateParams} from '../model/fhir-concept-map-translate.params';
 
 @Injectable()
@@ -13,7 +13,7 @@ export class FhirConceptMapLibService {
   public constructor(protected http: HttpClient) { }
 
   public loadConceptMap(id: string, version?: string): Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}/${id}${version ? '.' + version : ''}`);
+    return this.http.get<any>(`${this.baseUrl}/${id}${version ? SEPARATOR + version : ''}`);
   }
 
   public import(urls: FhirParameters): Observable<FhirParameters> {

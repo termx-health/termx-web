@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {mergeMap, Observable, of, tap} from 'rxjs';
+import {map, mergeMap, Observable, of, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
@@ -12,6 +12,7 @@ export interface UserInfo {
 @Injectable({providedIn: 'root'})
 export class AuthService {
   public user?: UserInfo;
+  public isAuthenticated = this.oidcSecurityService.isAuthenticated$.pipe(map(r => r.isAuthenticated));
 
   protected baseUrl = `${environment.termxApi}/auth`;
 
@@ -31,16 +32,8 @@ export class AuthService {
 
   private refreshUserInfo(): Observable<UserInfo> {
     return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
-      // if (!lr.isAuthenticated) {
-      //   return of(null as any);
-      // } else {
-        return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`);
-      // }
+      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`);
     }));
-  }
-
-  public get isAuthenticated(): Observable<boolean> {
-    return this.oidcSecurityService.isAuthenticated();
   }
 
   public login(): void {

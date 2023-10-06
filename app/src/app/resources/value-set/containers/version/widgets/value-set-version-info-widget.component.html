@@ -60,8 +60,8 @@
       </a>
       <ng-container *ngFor="let s of githubSpaces">
         <a *m-dropdown-item [routerLink]="['/spaces', s.id, 'github', {files: [
-        'valueset-fhir-json|' + version.valueSet + '.' + version.version,
-        'valueset-fhir-fsh|' + version.valueSet + '.' + version.version,
+        'valueset-fhir-json|' + version.valueSet + SEPARATOR + version.version,
+        'valueset-fhir-fsh|' + version.valueSet + SEPARATOR + version.version,
         ]}]">
           {{s.names | localName}}
         </a>
