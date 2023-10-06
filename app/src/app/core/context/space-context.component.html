@@ -10,7 +10,7 @@
               (twChange)="setContext({spaceId: $event?.space?.id, packageId: $event?.package?.id, versionId: $event.version?.id})"
           ></tw-space-drawer-search>
           <div>
-            <m-button *ngIf="space" mDisplay="text" mShape="circle" [routerLink]="['/spaces', space?.id, 'edit']">
+            <m-button *ngIf="space && (space.id + '.Space.edit') | twPrivileged" mDisplay="text" mShape="circle" [routerLink]="['/spaces', space?.id, 'edit']">
               <span class="m-items-middle"><m-icon mCode="form"></m-icon></span>
             </m-button>
             <m-button *ngIf="version" mDisplay="text" mShape="circle" (mClick)="downloadYaml()">
@@ -50,8 +50,9 @@
           </div>
           <div>
             <m-dropdown>
-              <a *mDropdownItemIf="!!space?.integration?.github?.repo" [routerLink]="['/spaces', space?.id, 'github']">
-                <m-icon mCode="github" style="margin-right: 0.5rem"></m-icon>
+              <a *mDropdownItemIf="!!space?.integration?.github?.repo && (space.id + '.Space.edit') | twPrivileged"
+                  [routerLink]="['/spaces', space?.id, 'github']">
+              <m-icon mCode="github" style="margin-right: 0.5rem"></m-icon>
                 {{'web.space.github-sync' | translate}}
               </a>
             </m-dropdown>

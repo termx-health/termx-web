@@ -50,7 +50,10 @@
                   m-tooltip
                   mTitle="web.space.open-in-new-tab"
               />
-              <m-icon-button mIcon="diff" [routerLink]="['diff']" [queryParams]="{resourceId: cs.id, resourceType: 'code-system'}"/>
+              <m-icon-button *twPrivileged="spaceContext?.space?.id + '.Space.edit'"
+                  mIcon="diff"
+                  [routerLink]="['diff']"
+                  [queryParams]="{resourceId: cs.id, resourceType: 'code-system'}"/>
             </ng-template>
           </tw-code-system-widget>
         </m-card>
