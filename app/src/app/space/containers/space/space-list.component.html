@@ -24,12 +24,9 @@
 
     <tr *mTableRow="let space">
       <td>
-        <a *ngIf="'*.Space.edit' | twHasAnyPrivilege; else view" [routerLink]="['context', {s: space.id}]">
+        <a [routerLink]="['context', {s: space.id}]">
           {{space.code}}
         </a>
-        <ng-template #view>
-          {{space.code}}
-        </ng-template>
       </td>
       <td>{{space.names | localName}}</td>
       <td><m-checkbox [(ngModel)]="space.active" readOnly></m-checkbox></td>
