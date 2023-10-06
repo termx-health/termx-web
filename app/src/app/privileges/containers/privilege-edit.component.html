@@ -56,7 +56,7 @@
                   </a>
                 </td>
                 <td>
-                  <m-abbreviate [mValue]="resource.resourceId" [mLength]="35"></m-abbreviate>
+                  <m-abbreviate [mValue]="resource.resourceName || resource.resourceId" [mLength]="35"></m-abbreviate>
                 </td>
                 <td>
                   <m-checkbox disabled [ngModel]="resource.actions?.view"></m-checkbox>

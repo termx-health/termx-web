@@ -49,7 +49,7 @@
         {{resource.resourceType}}
       </td>
       <td style="flex: 1; word-wrap: anywhere">
-        <m-abbreviate [mValue]="resource.resourceId" [mLength]="50"></m-abbreviate>
+        <m-abbreviate [mValue]="resource.resourceName || resource.resourceId" [mLength]="50"></m-abbreviate>
       </td>
       <td style="flex: 1">
         {{resource.actions | apply:toPlainString}}
