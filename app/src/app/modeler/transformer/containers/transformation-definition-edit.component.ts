@@ -73,7 +73,7 @@ export class TransformationDefinitionEditComponent implements OnInit {
 
   private cleanResource(r: TransformationDefinitionResource): void {
     r.reference = r.source === 'local' ? {localId: r.reference.localId}
-      : r.source === 'url' ? {resourceUrl: r.reference.resourceUrl}
+      : r.source === 'url' ? {resourceUrl: r.reference.resourceUrl, resourceServerId: r.reference.resourceServerId}
         : r.source === 'static' ? {content: r.reference.content}
           : {};
   }

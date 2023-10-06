@@ -8,7 +8,7 @@ import {Fhir} from 'fhir/fhir';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {launchFMLEditor} from 'term-web/modeler/transformer/components/fml.editor';
 import {Bundle} from 'fhir/model/bundle';
-import {catchError, defaultIfEmpty, forkJoin, map, of, shareReplay} from 'rxjs';
+import {catchError, defaultIfEmpty, forkJoin, map, Observable, of, shareReplay} from 'rxjs';
 import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
 import {group, HttpCacheService, isNil, LoadingManager} from '@kodality-web/core-util';
 import {TerminologyServerLibService} from 'term-web/space/_lib';
@@ -42,19 +42,14 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['resource']) {
-      this.servers$.subscribe(resp => {
-        const {type, source, reference} = this.resource ?? {};
-
-        if (source === 'url') {
-          const matchedServerUrl = resp.map(s => s.rootUrl).find(url => reference.resourceUrl?.startsWith(this.normalizeUrl(url) + this.urlSuffix[type]));
-          if (matchedServerUrl) {
-            this.resource.reference['_fhir'] = matchedServerUrl;
-            this.resource.reference['_url'] = reference.resourceUrl.slice((this.normalizeUrl(matchedServerUrl) + this.urlSuffix[type]).length);
-          } else {
-            this.resource.reference['_url'] = reference.resourceUrl;
-          }
+      const {type, source, reference} = this.resource ?? {};
+      if (source === 'url') {
+        if (reference.resourceServerId) {
+          this.resource.reference['_url'] = reference.resourceUrl.slice((this.urlSuffix[type]).length);
+        } else {
+          this.resource.reference['_url'] = reference.resourceUrl;
         }
-      });
+      }
     }
   }
 
@@ -73,10 +68,9 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
     this.resource.name = def ? def.name : undefined;
   }
 
-
   protected onResourceUrlChange(res: TransformationDefinitionResource): void {
-    if (res.reference['_fhir']) {
-      res.reference.resourceUrl = `${this.normalizeUrl(res.reference['_fhir'])}${this.urlSuffix[res.type]}${res.reference['_url']}`;
+    if (res.reference.resourceServerId) {
+      res.reference.resourceUrl = `${this.urlSuffix[res.type]}${res.reference['_url']}`;
     } else {
       res.reference.resourceUrl = res.reference['_url'];
     }
@@ -190,8 +184,12 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
     this.resource.name = this.resource.name || this.findUrl(this.resource.reference.content);
   }
 
-  protected normalizeUrl(url: string): string {
-    return url?.endsWith("/") ? url.slice(0, url.length - 1) : url;
+  protected getServerUrl = (serverId: number): Observable<string> => {
+    const normalize = (url: string): string => url?.endsWith("/") ? url.slice(0, url.length - 1) : url;
+    return this.servers$.pipe(
+      map(servers => servers.find(s => s.id === serverId)),
+      map(s => normalize(s?.rootUrl))
+    );
   }
 
   protected isFml(txt: string): boolean {

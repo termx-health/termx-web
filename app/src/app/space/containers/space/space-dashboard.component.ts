@@ -73,6 +73,7 @@ export class SpaceDashboardComponent implements OnInit, OnDestroy {
       relativeTo: this.route,
       queryParams,
       queryParamsHandling: 'merge',
+      replaceUrl: true
     });
   }
 }

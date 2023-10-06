@@ -2,18 +2,18 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Location} from '@angular/common';
-import {validateForm} from '@kodality-web/core-util';
-import {TerminologyServer} from 'term-web/space/_lib';
+import {copyDeep, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {TerminologyServer, TerminologyServerHeader} from 'term-web/space/_lib';
 import {TerminologyServerService} from '../../services/terminology-server.service';
 
 @Component({
-  templateUrl: './terminology-server-edit.component.html',
+  templateUrl: 'terminology-server-edit.component.html',
 })
 export class TerminologyServerEditComponent implements OnInit {
-  public terminologyServer?: TerminologyServer;
+  protected server: TerminologyServer;
 
-  public loading = false;
-  public mode: 'add' | 'edit' = 'add';
+  protected mode: 'add' | 'edit' = 'add';
+  protected loader = new LoadingManager();
 
   @ViewChild("form") public form?: NgForm;
 
@@ -29,26 +29,34 @@ export class TerminologyServerEditComponent implements OnInit {
     this.mode = id ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadTerminologyServer(Number(id));
+      this.loadServicer(Number(id));
     } else {
-      this.terminologyServer = new TerminologyServer();
+      this.initServer(new TerminologyServer());
     }
   }
 
-  private loadTerminologyServer(id: number): void {
-    this.loading = true;
-    this.terminologyServerService.load(id)
-      .subscribe(ts => this.terminologyServer = ts)
-      .add(() => this.loading = false);
+  private loadServicer(id: number): void {
+    this.loader.wrap('load', this.terminologyServerService.load(id)).subscribe(ts => {
+      this.initServer(ts);
+    });
   }
 
-  public save(): void {
+  private initServer(server: TerminologyServer): void {
+    this.server = server;
+  }
+
+  protected save(): void {
     if (!validateForm(this.form)) {
       return;
     }
-    this.loading = true;
-    this.terminologyServerService.save(this.terminologyServer!)
-      .subscribe(() => this.location.back())
-      .add(() => this.loading = false);
+
+    const ts = copyDeep(this.server);
+    this.loader.wrap('save', this.terminologyServerService.save(ts)).subscribe(() => {
+      this.location.back();
+    });
   }
+
+  protected keyDefined = (h: TerminologyServerHeader): boolean => {
+    return !!h.key?.trim().length;
+  };
 }

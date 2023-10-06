@@ -57,14 +57,14 @@
   <!-- url -->
   <ng-container *ngIf="resource.source === 'url'">
     <m-form-item mName="fhirServer" mLabel="web.transformation-definition.resource-form.fhir-server">
-      <m-select name="fhirServer" [(ngModel)]="resource.reference['_fhir']" (ngModelChange)="onResourceUrlChange(resource)">
-        <m-option *ngFor="let server of servers$ | async" [mValue]="server.rootUrl" [mLabel]="server.names | localName"></m-option>
+      <m-select name="fhirServer" [(ngModel)]="resource.reference.resourceServerId">
+        <m-option *ngFor="let server of servers$ | async" [mValue]="server.id" [mLabel]="server.names | localName"></m-option>
       </m-select>
     </m-form-item>
 
     <m-form-item mName="resourceUrl" mLabel="web.transformation-definition.resource-form.resource-url" class="tw-input-group" required>
-      <span class="tw-input-group-addon ant-input-group-addon" *ngIf="resource.reference['_fhir']">
-        {{resource.reference['_fhir'] | apply: normalizeUrl}}{{urlSuffix[resource.type]}}
+      <span class="tw-input-group-addon ant-input-group-addon" *ngIf="resource.reference.resourceServerId">
+        {{resource.reference.resourceServerId | apply: getServerUrl | async}}{{urlSuffix[resource.type]}}
       </span>
 
       <m-input

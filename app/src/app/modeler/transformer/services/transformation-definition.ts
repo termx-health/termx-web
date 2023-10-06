@@ -22,6 +22,7 @@ export class TransformationDefinitionResource {
   public source?: 'local' | 'url' | 'static';
   public reference?: {
     localId?: string;
+    resourceServerId?: string;
     resourceUrl?: string;
     content?: string;
   };
