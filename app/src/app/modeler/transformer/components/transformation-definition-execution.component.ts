@@ -17,6 +17,11 @@ export class TransformationDefinitionExecutionComponent {
     private notificationService: MuiNotificationService
   ) {}
 
+  public generate(): void {
+    this.transformationDefinitionService.generateInput(this.definition.resources[0]).subscribe(r => {
+      this.definition.testSource = r;
+    });
+  }
   public evaluate(): void {
     if (!TransformationDefinition.isValid(this.definition)) {
       this.notificationService.error('core.form-invalid');

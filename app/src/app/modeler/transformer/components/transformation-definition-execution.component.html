@@ -1,5 +1,9 @@
 <m-button (mClick)="evaluate()" [mLoading]="loading">{{'web.transformation-definition.execution.transform' | translate}}</m-button>
-<m-form-item mName="input" mLabel="web.transformation-definition.execution.input">
+<m-form-item mName="input" [mLabel]="lbl">
+  <ng-template #lbl>
+    <span>{{'web.transformation-definition.execution.input' | translate}}</span> &nbsp;|&nbsp;
+    <a (click)="generate()">{{'web.transformation-definition.execution.generate' | translate}}</a>
+  </ng-template>
   <m-textarea [(ngModel)]="definition.testSource" name="input" [autosize]="{minRows: 5, maxRows: 30}"></m-textarea>
 </m-form-item>
 <m-button (mClick)="evaluate()" [mLoading]="loading">{{'web.transformation-definition.execution.transform' | translate}}</m-button>

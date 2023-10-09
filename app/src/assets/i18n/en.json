@@ -1830,7 +1830,8 @@
 			"execution": {
 				"input": "Input",
 				"output": "Output",
-				"transform": "Transform"
+				"transform": "Transform",
+				"generate": "Generate"
 			},
 			"list": {
 				"add-btn": "Add transformation",
