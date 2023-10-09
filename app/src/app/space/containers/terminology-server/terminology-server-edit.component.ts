@@ -1,11 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {copyDeep, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {TerminologyServer, TerminologyServerHeader} from 'term-web/space/_lib';
 import {TerminologyServerService} from '../../services/terminology-server.service';
-import {forkJoin} from 'rxjs';
 
 @Component({
   templateUrl: 'terminology-server-edit.component.html',
@@ -22,7 +21,6 @@ export class TerminologyServerEditComponent implements OnInit {
   public constructor(
     private terminologyServerService: TerminologyServerService,
     private route: ActivatedRoute,
-    private router: Router,
     private location: Location
   ) { }
 
@@ -35,15 +33,15 @@ export class TerminologyServerEditComponent implements OnInit {
     } else {
       this.initServer(new TerminologyServer());
     }
+
+    this.loader.wrap('load', this.terminologyServerService.loadKinds()).subscribe(kinds => {
+      this.serverKinds = kinds;
+    });
   }
 
   private loadServicer(id: number): void {
-    this.loader.wrap('load', forkJoin([
-      this.terminologyServerService.load(id),
-      this.terminologyServerService.loadKinds()
-    ])).subscribe(([ts, kinds]) => {
+    this.loader.wrap('load', this.terminologyServerService.load(id)).subscribe(ts => {
       this.initServer(ts);
-      this.serverKinds = kinds;
     });
   }
 
