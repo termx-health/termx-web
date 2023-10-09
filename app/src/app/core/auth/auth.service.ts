@@ -18,7 +18,7 @@ export class AuthService {
 
   public constructor(
     protected http: HttpClient,
-    private oidcSecurityService: OidcSecurityService,
+    private oidcSecurityService: OidcSecurityService
   ) { }
 
 
@@ -32,7 +32,10 @@ export class AuthService {
 
   private refreshUserInfo(): Observable<UserInfo> {
     return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
-      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`).pipe(catchError(() => of(null as UserInfo)));
+      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`).pipe(catchError(() => {
+        this.oidcSecurityService.authorize();
+        return of(null as UserInfo);
+      }));
     }));
   }
 

@@ -17,7 +17,6 @@ import {SpaceContextModule} from 'term-web/core/context/space-context.module';
 import {AppComponent} from 'term-web/app.component';
 import {LandingPageComponent} from 'term-web/landing/landing-page.component';
 import {MODELER_ROUTES} from 'term-web/modeler/modeler.module';
-import {autoLoginGuard} from 'term-web/core/auth';
 
 
 const APP_ROUTES: Routes = [
@@ -55,7 +54,7 @@ const routes: Routes = [
       {path: 'embedded', children: APP_ROUTES},
     ],
     component: AppComponent,
-    canActivate: [autoLoginGuard]
+    // canActivate: [autoLoginGuard]
   },
   {
     path: 'fhir',
