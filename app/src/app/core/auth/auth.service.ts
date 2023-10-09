@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {map, mergeMap, Observable, of, tap} from 'rxjs';
+import {catchError, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
@@ -32,7 +32,7 @@ export class AuthService {
 
   private refreshUserInfo(): Observable<UserInfo> {
     return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
-      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`);
+      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`).pipe(catchError(() => of(null as UserInfo)));
     }));
   }
 
