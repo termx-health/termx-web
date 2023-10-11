@@ -161,6 +161,7 @@ export class WikiPageTreeComponent implements OnChanges {
 
   public constructor(
     private translateService: TranslateService,
+    private pageService: PageService,
     private pageLinkService: PageLinkService,
     private sidebarService: WikiSidebarService,
   ) { }
@@ -274,8 +275,7 @@ export class WikiPageTreeComponent implements OnChanges {
     });
   }
 
-
-  public onChildAdd(event: MouseEvent, modal: WikiPageSetupModalComponent, node?: DropListNode): void {
+  protected onChildAdd(event: MouseEvent, modal: WikiPageSetupModalComponent, node?: DropListNode): void {
     event.preventDefault();
     event.stopImmediatePropagation();
     modal.open({
@@ -283,6 +283,34 @@ export class WikiPageTreeComponent implements OnChanges {
         sourceId: node[NODE_OBJECT_KEY].page.id,
         orderNumber: node.children.length + 1
       }] : []
+    });
+  }
+
+  protected onPageDelete(node?: DropListNode): void {
+    const obj: DragNode = node[NODE_OBJECT_KEY];
+
+    this.pageService.deletePage(obj.page.id).subscribe(() => {
+      if (obj.link.sourceId == obj.link.targetId) {
+        // to-be deleted node is root
+        const objIdx = this.data.indexOf(obj);
+        if (objIdx !== -1) {
+          this.data.splice(objIdx, 1);
+        }
+
+        this.viewRoot.emit();
+      } else {
+        // child node
+        const parent = findInTree(this.data, obj.link.sourceId, n => n.page.id, n => n.children);
+        const objIdx = parent.children.indexOf(obj);
+        if (objIdx !== -1) {
+          parent.children.splice(objIdx, 1);
+          parent.leaf = !parent.children.length;
+        }
+
+        this.openPage(parent.page);
+      }
+
+      this.toDropListNodes();
     });
   }
 

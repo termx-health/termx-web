@@ -28,7 +28,7 @@
           [nodeRenderer]="nodeDisplay"
           [nodeActions]="nodeActions"
           [selectedKey]="selectedKey | apply: findLinkId: nodes | toString"
-          [disableDrag]="!!searchText?.length"
+          [disableDrag]="!!searchText?.length || !('edit' | twPrivileged)"
           (twExpand)="onExpand($event)"
           (twSelect)="onSelect($event)"
           (twMove)="onMove($event)"
@@ -41,9 +41,20 @@
         </ng-template>
 
         <ng-template #nodeActions let-node>
-          <m-button mSize="small" (mClick)="onChildAdd($event,modal,node)" *twPrivileged>
-            <m-icon mCode="plus"/>
-          </m-button>
+          <div class="m-items-middle" style="gap: 0.25rem">
+            <m-button
+                mSize="small"
+                m-popconfirm
+                [mPopconfirmTitle]="node.obj.leaf ? 'core.delete-confirm' : 'web.wiki-page.sidebar.delete-confirm'"
+                (mOnConfirm)="onPageDelete(node)"
+                *twPrivileged
+            >
+              <m-icon mCode="delete"/>
+            </m-button>
+            <m-button mSize="small" (mClick)="onChildAdd($event,modal,node)" *twPrivileged>
+              <m-icon mCode="plus"/>
+            </m-button>
+          </div>
         </ng-template>
       </tw-drop-list>
     </m-skeleton>

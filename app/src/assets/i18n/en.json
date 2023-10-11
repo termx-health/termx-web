@@ -2067,7 +2067,8 @@
 				"title": "Space not selected"
 			},
 			"sidebar": {
-				"pages": "Pages"
+				"pages": "Pages",
+				"delete-confirm": "Are you sure? Pages under this folder will be deleted too!"
 			},
 			"space": {
 				"pages": "Pages",

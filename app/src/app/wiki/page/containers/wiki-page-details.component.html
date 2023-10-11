@@ -20,6 +20,12 @@
         <m-icon mCode="file-add"/>
         {{'web.wiki-page.header.add-subpage' | translate}}
       </a>
+      <ng-container *twPrivileged>
+        <a *m-dropdown-item class="m-items-middle" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()" mPosition="topRight">
+          <m-icon mCode="delete"/>
+          {{'core.btn.delete' | translate}}
+        </a>
+      </ng-container>
     </m-dropdown>
   </tw-wiki-page-header>
 
@@ -53,11 +59,13 @@
                       {{content.lang | uppercase}} | {{content.name}}
                     </a>
                   </div>
-                  <div *ngFor="let lang of muiConfig.config.supportedLangs | keys | apply: filterLanguages: pageContent?.lang: page?.contents">
-                    <a (click)="createPageContent(lang)" class="m-text-secondary">
-                      {{lang | uppercase}}
-                    </a>
-                  </div>
+                  <ng-container *ngFor="let lang of muiConfig.config.supportedLangs | keys | apply: filterLanguages: pageContent?.lang: page?.contents">
+                    <div *twPrivileged>
+                      <a (click)="createPageContent(lang)" class="m-text-secondary">
+                        {{lang | uppercase}}
+                      </a>
+                    </div>
+                  </ng-container>
                 </div>
               </div>
 

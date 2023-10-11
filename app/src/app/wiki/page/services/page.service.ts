@@ -20,6 +20,10 @@ export class PageService extends PageLibService {
     return this.http.post(`${this.baseUrl}/pages/${pageId}/contents`, content);
   }
 
+  public deletePage(pageId: number): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/pages/${pageId}`);
+  }
+
 
   public uploadAttachment(pageId: number, content: Blob): Observable<PageAttachment> {
     const fd = new FormData();

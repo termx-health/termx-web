@@ -36,7 +36,7 @@
         <ng-container *ngTemplateOutlet="renderer, context: {$implicit: node, node: node}"/>
       </div>
 
-      <div class="node-item__actions m-items-middle" *ngIf="nodeActions && node['_hovered']">
+      <div class="node-item__actions m-items-middle" [style.display]="nodeActions && node['_hovered'] ? '' : 'none' ">
         <ng-container *ngTemplateOutlet="nodeActions, context: {$implicit: node, node: node}"/>
       </div>
     </div>

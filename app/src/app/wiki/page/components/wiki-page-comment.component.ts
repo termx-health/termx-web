@@ -149,11 +149,12 @@ export class WikiPageCommentComponent {
     const isCommentAuthor = this.isCommentAuthor(c);
     const isParentCommentAuthor = isDefined(c.parentId) && this.isCommentAuthor(this.pageComment);
     const isRoot = isNil(c.parentId);
+    const hasPrivileges = this.authService.hasPrivilege(`*.Wiki.edit`);
 
     return {
-      resolve: isRoot && status('active'),
-      edit: isCommentAuthor && isNil(content),
-      delete: isCommentAuthor || isParentCommentAuthor,
+      resolve: isRoot && status('active') && hasPrivileges,
+      edit: isCommentAuthor && isNil(content) && hasPrivileges,
+      delete: (isCommentAuthor || isParentCommentAuthor) && hasPrivileges,
     };
   };
 

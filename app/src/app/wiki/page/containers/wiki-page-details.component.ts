@@ -21,6 +21,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   @Output() public editPage = new EventEmitter<string>();
   @Output() public viewPage = new EventEmitter<string>();
   @Output() public viewResource = new EventEmitter<{type: string, id: string, options: {space?: string}}>();
+  @Output() public pageDeleted = new EventEmitter<Page>();
 
   protected pageContent?: PageContent;
   protected pageRelations?: {[type: string]: PageRelation[]};
@@ -112,6 +113,13 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
       });
     }
   }
+
+  protected delete(): void {
+    this.pageService.deletePage(this.page.id).subscribe(() => {
+      this.pageDeleted.emit(this.page);
+    });
+  }
+
 
   protected createPageContent(lang: string): void {
     this.contentModalData = {

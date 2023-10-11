@@ -50,6 +50,7 @@
           (viewPage)="viewPage($event)"
           (editPage)="editPage($event)"
           (viewResource)="viewResource({type: $event.type, id: $event.id, opts: $event.options})"
+          (pageDeleted)="viewRoot()"
       ></tw-wiki-page-details>
     </ng-container>
 
