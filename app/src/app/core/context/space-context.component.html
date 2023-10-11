@@ -50,7 +50,7 @@
           </div>
           <div>
             <m-dropdown>
-              <a *mDropdownItemIf="!!space?.integration?.github?.repo && (space.id + '.Space.edit') | twPrivileged"
+              <a *mDropdownItemIf="!!space?.integration?.github?.repo && ((space.id + '.Space.edit') | twPrivileged)"
                   [routerLink]="['/spaces', space?.id, 'github']">
               <m-icon mCode="github" style="margin-right: 0.5rem"></m-icon>
                 {{'web.space.github-sync' | translate}}
