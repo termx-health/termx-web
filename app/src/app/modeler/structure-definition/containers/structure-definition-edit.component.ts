@@ -1,6 +1,5 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
+import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {StructureDefinition, StructureDefinitionEditableTreeComponent} from 'term-web/modeler/_lib';
@@ -44,7 +43,7 @@ export class StructureDefinitionEditComponent implements OnInit {
     private structureDefinitionService: StructureDefinitionService,
     private notificationService: MuiNotificationService,
     private route: ActivatedRoute,
-    private location: Location,
+    private router: Router,
     private chefService: ChefService
   ) {}
 
@@ -107,24 +106,34 @@ export class StructureDefinitionEditComponent implements OnInit {
     }
   }
 
-  public save(): void {
+  public save(type: 'fsh' | 'json'): void {
     if (isDefined(this.form) && !validateForm(this.form) ||
       isDefined(this.fshForm) && !validateForm(this.fshForm) ||
       isDefined(this.jsonForm) && !validateForm(this.jsonForm)) {
       return;
     }
-    this.loader.wrap('save', this.mapContent(this.getFhirSD(), this.structureDefinition.contentFormat)).subscribe(content => {
-      this.structureDefinition.content = content;
-      this.loader.wrap('save', this.structureDefinitionService.save(this.structureDefinition))
-        .subscribe(() => this.location.back());
+    if (type === 'fsh') {
+      this.loader.wrap('save', this.chefService.fshToFhir({fsh: this.contentFsh})).subscribe(r => this.saveSD(JSON.stringify(r.fhir[0])));
+    }
+    if (type === 'json') {
+      this.saveSD(this.contentFhir);
+    }
+  }
+
+  public saveSD(jsonSD: string): void {
+    this.loader.wrap('save', this.mapContent(this.getFhirSD(jsonSD), this.structureDefinition.contentFormat)).subscribe(c => {
+      this.structureDefinition.content = c;
+      this.loader.wrap('save', this.structureDefinitionService.save(this.structureDefinition)).subscribe(sd => {
+        this.router.navigate(['/modeler/structure-definitions', sd.id, 'edit']);
+      });
     });
   }
 
   public saveTreeData(nextAction?: 'openJson' | 'openFsh'): void {
     if (this.formElement) {
-      this.sdTree.embedElement(this.fromFormElement(this.formElement, this.element));
+      this.embedElement(this.formElement, this.element);
     }
-    this.loader.wrap('save', this.mapContent(this.getFhirSD(), this.structureDefinition.contentFormat)).subscribe(content => {
+    this.loader.wrap('save', this.mapContent(this.getFhirSD(this.sdTree.getFhirSD()), this.structureDefinition.contentFormat)).subscribe(content => {
       this.structureDefinition.content = content;
       this.loader.wrap('save', this.structureDefinitionService.save(this.structureDefinition!)).subscribe(sd => {
         this.formElement = undefined;
@@ -159,8 +168,8 @@ export class StructureDefinitionEditComponent implements OnInit {
     this.errorModalData.visible = false;
   }
 
-  private getFhirSD(): any {
-    const structureDefinition = this.sdTree?.getFhirSD() || this.contentFhir ? JSON.parse(this.sdTree?.getFhirSD() || this.contentFhir) : {};
+  private getFhirSD(sd: string): any {
+    const structureDefinition = sd ? JSON.parse(sd) : {};
     structureDefinition.id = structureDefinition.id || this.structureDefinition?.code;
     structureDefinition.name = structureDefinition.name || this.structureDefinition?.code;
     structureDefinition.resourceType = structureDefinition.resourceType || 'StructureDefinition';
@@ -180,14 +189,14 @@ export class StructureDefinitionEditComponent implements OnInit {
       return;
     }
     if (this.formElement) {
-      this.sdTree.embedElement(this.fromFormElement(this.formElement, this.element));
+      this.embedElement(this.formElement, this.element);
     }
 
     this.element = element;
     this.formElement = this.toFormElement(element);
   }
 
-  private toFormElement(element:  Element): FormElement {
+  private toFormElement(element: Element): FormElement {
     return {
       id: element.id!,
       path: element.path!,
@@ -209,7 +218,6 @@ export class StructureDefinitionEditComponent implements OnInit {
 
   private fromFormElement(formElement: FormElement, currentElement?: Element): Element {
     const element = Object.assign(new Element(), currentElement);
-    element.id = formElement.path;
     element.path = formElement.path;
     const min = Number(formElement.cardinality?.split('..')[0]);
     const max = formElement.cardinality?.split('..')[1];
@@ -246,10 +254,10 @@ export class StructureDefinitionEditComponent implements OnInit {
   }
 
   private isChanged(): Observable<boolean> {
-    if (!isDefined(this.structureDefinition)) {
+    if (!this.sdTree?.getFhirSD()) {
       return of(false);
     }
-    return this.mapContent(this.getFhirSD(), 'json').pipe(map(content => content !== this.contentFhir));
+    return this.mapContent(this.getFhirSD(this.sdTree.getFhirSD()), 'json').pipe(map(content => content !== this.contentFhir));
   }
 
   private cleanObject(obj: any): any {
@@ -280,6 +288,13 @@ export class StructureDefinitionEditComponent implements OnInit {
   private showErrors(r: any): void {
     r.warnings?.forEach(w => this.notificationService.warning('Conversion warning', w.message!, {duration: 0, closable: true}));
     r.errors?.forEach(e => this.notificationService.error('Conversion failed!', e.message!, {duration: 0, closable: true}));
+  }
+
+  private embedElement(formElement: FormElement, currentElement: Element): void {
+    const el = this.fromFormElement(formElement, currentElement);
+    this.sdTree.embedElement(el);
+
+    this.sdTree.changeElementId(el.id, el.path);
   }
 }
 

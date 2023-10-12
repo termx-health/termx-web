@@ -117,6 +117,20 @@ export class StructureDefinitionEditableTreeComponent implements OnChanges {
     this.initData(this.structureDefinition);
   }
 
+  public changeElementId(prevId: string, newId: string): void {
+    this.changeId(prevId, newId, this.structureDefinition.differential?.element);
+    this.changeId(prevId, newId, this.structureDefinition.snapshot?.element);
+    this.initData(this.structureDefinition);
+  }
+
+  private changeId(prevId: string, newId: string, elements: Element[]): void {
+    const sdEl = elements?.find(el => el.id === prevId);
+    if (isDefined(sdEl)) {
+      sdEl.id = newId;
+      elements[elements.indexOf(sdEl)] = sdEl;
+    }
+  }
+
   public deleteElement(element: Element): void {
     if (this.structureDefinition.differential) {
       this.structureDefinition.differential.element = this.structureDefinition.differential?.element?.filter(el => el !== element);

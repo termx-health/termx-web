@@ -8,19 +8,19 @@
         </ng-template>
       </nz-tab>
 
-      <nz-tab [nzTitle]="'web.structure-definition.form.fsh-header' | translate">
+      <nz-tab [nzTitle]="'web.structure-definition.form.fsh-header' | translate" [nzDisabled]="!structureDefinition?.id">
         <ng-template nz-tab>
           <ng-container [ngTemplateOutlet]="fshTemplate"></ng-container>
         </ng-template>
       </nz-tab>
 
-      <nz-tab [nzTitle]="'web.structure-definition.form.json-header' | translate">
+      <nz-tab [nzTitle]="'web.structure-definition.form.json-header' | translate" [nzDisabled]="!structureDefinition?.id">
         <ng-template nz-tab>
           <ng-container [ngTemplateOutlet]="jsonTemplate"></ng-container>
         </ng-template>
       </nz-tab>
 
-      <nz-tab [nzTitle]="'web.structure-definition.form.element-header' | translate">
+      <nz-tab [nzTitle]="'web.structure-definition.form.element-header' | translate" [nzDisabled]="!structureDefinition?.id">
         <ng-template nz-tab>
           <div nz-row nzGutter="12" class="m-row">
             <div nz-col [nzMd]="8" [nzXs]="24">
@@ -86,6 +86,7 @@
                           [(ngModel)]="formElement.binding.strength">
                         <m-option *ngFor="let s of ['required', 'extensible', 'preferred', 'example']" [mLabel]="s" [mValue]="s"></m-option>
                       </m-select>
+                      <m-button (mClick)="formElement.binding = {}"><m-icon mCode="delete"></m-icon></m-button>
                     </div>
                   </m-form-item>
                   <tw-sd-constraint-list [constraints]="formElement.constraint" (constraintsChange)="formElement.constraint = $event"></tw-sd-constraint-list>
@@ -137,7 +138,7 @@
         </m-form-item>
       </form>
       <ng-container *m-card-footer>
-        <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
+        <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save(structureDefinition.contentFormat)">
           {{'core.btn.save' | translate}}
         </m-button>
       </ng-container>
@@ -163,7 +164,7 @@
       </form>
       <ng-container *ngIf="structureDefinition?.contentFormat === 'fsh'">
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save('fsh')">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>
@@ -189,7 +190,7 @@
       </form>
       <ng-container *ngIf="structureDefinition?.contentFormat === 'json'">
         <ng-container *m-card-footer>
-          <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
+          <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save('json')">
             {{'core.btn.save' | translate}}
           </m-button>
         </ng-container>
