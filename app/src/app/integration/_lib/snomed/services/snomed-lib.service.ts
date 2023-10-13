@@ -26,6 +26,10 @@ export class SnomedLibService {
     return this.http.get(`${this.baseUrl}/codesystems`).pipe(map(c => c as SnomedCodeSystem[]));
   }
 
+  public loadCodeSystem(shortName: string): Observable<SnomedCodeSystem> {
+    return this.http.get(`${this.baseUrl}/codesystems/${shortName}`).pipe(map(c => c as SnomedCodeSystem));
+  }
+
   public loadBranches(): Observable<SnomedBranch[]> {
     return this.http.get(`${this.baseUrl}/branches`).pipe(map(c => c as SnomedBranch[]));
   }

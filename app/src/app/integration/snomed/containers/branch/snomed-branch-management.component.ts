@@ -31,7 +31,7 @@ export class SnomedBranchManagementComponent implements OnInit {
 
   protected lockModalData: {visible?: boolean, message?: string} = {};
   protected exportModalData: {visible?: boolean, type?: string} = {};
-  protected importModalData: {visible?: boolean, type?: string, createCodeSystemVersion?: boolean, file?: any} = {};
+  protected importModalData: {visible?: boolean, type?: string, createCodeSystemVersion?: boolean, file?: any} = {createCodeSystemVersion: true};
 
   @ViewChild("lockModalForm") public lockModalForm?: NgForm;
   @ViewChild("exportModalForm") public exportModalForm?: NgForm;
@@ -145,7 +145,7 @@ export class SnomedBranchManagementComponent implements OnInit {
 
   private pollJobStatus(jobId: string): void {
     this.loader.wrap('import', this.snomedService.pollJob(jobId, this.destroy$)).subscribe(jobResp => {
-      this.importModalData = {};
+      this.importModalData = {createCodeSystemVersion: true};
       if (jobResp.status === 'FAILED') {
         this.notificationService.error(jobResp.errorMessage || 'web.snomed.branch.management.import-failed');
       }

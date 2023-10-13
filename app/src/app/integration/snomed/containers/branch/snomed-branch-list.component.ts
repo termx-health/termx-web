@@ -48,9 +48,9 @@ export class SnomedBranchListComponent implements OnInit {
     this.loader.wrap('load', forkJoin([
         this.snomedService.loadBranches(),
         this.snomedService.loadCodeSystems()
-    ])).subscribe(([b, cs]) =>{
-      this.branches = b;
-      this.codeSystems = cs;
+    ])).subscribe(([branches, codeSystems]) =>{
+      this.codeSystems = codeSystems;
+      this.branches = branches.filter(b => !codeSystems.find(cs => cs.branchPath == b.path || !!cs.versions.find(v => v.branchPath === b.path)));
     });
   }
 

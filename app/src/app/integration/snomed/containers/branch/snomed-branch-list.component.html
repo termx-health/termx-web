@@ -1,6 +1,60 @@
 <div class="m-items-middle" style="flex-direction: column">
   <m-card>
     <div *m-card-header class="m-justify-between">
+      <m-title>{{'web.snomed.branch.list.codesystem.header' | translate}}</m-title>
+      <div class="m-items-middle">
+        <tw-add-button *twPrivileged="'snomed-ct.CodeSystem.edit'" (click)="editionModalData.visible = true">
+          {{'web.snomed.branch.list.codesystem.add-edition' | translate}}
+        </tw-add-button>
+      </div>
+    </div>
+    <m-table #csTable [mData]="codeSystems" [mLoading]="loader.isLoading">
+      <tr *mTableHead>
+        <th>{{'entities.snomed-codesystem.name' | translate}}</th>
+        <th>{{'entities.snomed-codesystem.branch-path' | translate}}</th>
+        <th>{{'entities.snomed-codesystem.languages' | translate}}</th>
+        <th>{{'entities.snomed-codesystem.latest-version' | translate}}</th>
+      </tr>
+      <ng-container *ngFor="let cs of codeSystems">
+        <tr>
+          <td>
+            <div class="m-items-middle">
+              <m-icon-button *ngIf="cs.versions" [mIcon]="cs['expanded'] ? 'folder-open' : 'folder'" (mClick)="cs['expanded'] = !cs['expanded']"></m-icon-button>
+              <div>
+                <div><a>{{cs.shortName}}</a> {{cs.name ? '(' + cs.name + ')' : ''}}</div>
+                <ng-container *ngFor="let module of cs.modules">
+                  <div *ngIf="module.conceptId === module.moduleId">{{module?.pt?.term}}</div>
+                </ng-container>
+              </div>
+            </div>
+          </td>
+          <td>{{cs.branchPath}}</td>
+          <td><div *ngFor="let lang of cs.languages | values">{{lang}}</div></td>
+          <td>
+            <div>{{'web.snomed.branch.list.codesystem.imported' | translate}}: {{cs.latestVersion?.importDate | localDateTime}}</div>
+            <div>{{cs.latestVersion?.branchPath}}</div>
+          </td>
+        </tr>
+        <ng-container *ngIf="cs['expanded']">
+          <tr *ngFor="let version of cs.versions">
+            <td style="padding-left: 5rem">{{version.version}}</td>
+            <td>{{version.branchPath}}</td>
+            <td></td>
+            <td>{{version.importDate | localDateTime}}</td>
+            <td></td>
+          </tr>
+        </ng-container>
+      </ng-container>
+      <tr *mTableNoData>
+        <td colspan="100%">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-table>
+  </m-card>
+
+  <m-card>
+    <div *m-card-header class="m-justify-between">
       <m-title>{{'web.snomed.branch.list.header' | translate}}</m-title>
       <div class="m-items-middle">
         <tw-add-button [routerLink]="['add']">
@@ -21,60 +75,6 @@
         <td>{{branch.base | localDate}}</td>
         <td>
           <m-checkbox [ngModel]="branch.deleted" readOnly></m-checkbox>
-        </td>
-      </tr>
-      <tr *mTableNoData>
-        <td colspan="100%">
-          <m-no-data></m-no-data>
-        </td>
-      </tr>
-    </m-table>
-  </m-card>
-
-
-  <m-card>
-    <div *m-card-header class="m-justify-between">
-      <m-title>{{'web.snomed.branch.list.codesystem.header' | translate}}</m-title>
-      <div class="m-items-middle">
-        <tw-add-button *twPrivileged="'snomed-ct.CodeSystem.edit'" (click)="editionModalData.visible = true">
-          {{'web.snomed.branch.list.codesystem.add-edition' | translate}}
-        </tw-add-button>
-      </div>
-    </div>
-    <m-table #csTable [mData]="codeSystems" [mLoading]="loader.isLoading" mEnablePagination>
-      <tr *mTableHead>
-        <th>{{'entities.snomed-codesystem.short-name' | translate}}</th>
-        <th>{{'entities.snomed-codesystem.branch-path' | translate}}</th>
-        <th>{{'entities.snomed-codesystem.languages' | translate}}</th>
-        <th>{{'entities.snomed-codesystem.latest-version' | translate}}</th>
-        <th>{{'entities.snomed-codesystem.versions' | translate}}</th>
-        <th class="tw-table-min-width" *twPrivileged="'snomed-ct.CodeSystem.edit'"></th>
-      </tr>
-      <tr *mTableRow="let cs; let i = index;">
-        <td>{{cs.shortName}}</td>
-        <td>{{cs.branchPath}}</td>
-        <td>
-          <div *ngFor="let lang of cs.languages | values">{{lang}}</div>
-        </td>
-        <td>
-          <div>{{cs.latestVersion?.version}}</div>
-          <div>{{cs.latestVersion?.description}}</div>
-        </td>
-        <td>
-          <m-tag (click)="showVersions(cs, i)" class="m-clickable" mColor="blue" *ngIf="cs.versions?.length > 0">{{cs.versions.length}}</m-tag>
-        </td>
-        <td *twPrivileged="'snomed-ct.CodeSystem.edit'">
-          <m-dropdown>
-            <a *m-dropdown-item (mClick)="deleteCodeSystem(cs.shortName)">{{'core.btn.delete' | translate}}</a>
-          </m-dropdown>
-        </td>
-      </tr>
-      <tr *mTableRowExpand="let cs" class="m-table-expanded-row">
-        <td>
-          <div *ngFor="let v of cs.versions">{{v.version}}</div>
-        </td>
-        <td colspan="5">
-          <div *ngFor="let v of cs.versions">{{v.description}}</div>
         </td>
       </tr>
       <tr *mTableNoData>

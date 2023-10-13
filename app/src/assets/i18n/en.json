@@ -469,7 +469,7 @@
 			"branch-path": "Branch path",
 			"languages": "Languages",
 			"latest-version": "Latest version",
-			"short-name": "Short name",
+			"name": "Name",
 			"versions": "Versions"
 		},
 		"snomed-concept": {
@@ -1617,7 +1617,8 @@
 					"add-branch": "Add branch",
 					"codesystem": {
 						"add-edition": "Add edition",
-						"header": "Code Systems"
+						"header": "Editions",
+						"imported": "Imported"
 					},
 					"edition-modal": {
 						"country-code": "Country code",

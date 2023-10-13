@@ -182,7 +182,7 @@
   </div>
 </m-modal>
 
-<m-modal [(mVisible)]="importModalData.visible" (mClose)="importModalData = {visible: false}">
+<m-modal [(mVisible)]="importModalData.visible" (mClose)="importModalData = {createCodeSystemVersion: true}">
   <m-title *mModalHeader>
     {{'web.snomed.branch.management.import-modal.header' | translate}}
   </m-title>
