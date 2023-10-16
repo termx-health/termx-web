@@ -25,7 +25,10 @@
           <div nz-row nzGutter="12" class="m-row">
             <div nz-col [nzMd]="8" [nzXs]="24">
               <m-card *ngIf="structureDefinition?.code">
-                <tw-structure-definition-editable-tree #sdTree [content]="contentFhir" (elementSelected)="openElementForm($event)"/>
+                <tw-structure-definition-editable-tree #sdTree
+                    [content]="contentFhir"
+                    (elementSelected)="openElementForm($event)"
+                    (elementDeleted)="closeElementForm($event)"/>
                 <ng-container *m-card-footer>
                   <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading " (click)="saveTreeData()">
                     {{'core.btn.save' | translate}}

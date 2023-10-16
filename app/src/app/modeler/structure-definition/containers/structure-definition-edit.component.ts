@@ -196,8 +196,15 @@ export class StructureDefinitionEditComponent implements OnInit {
     this.formElement = this.toFormElement(element);
   }
 
+  public closeElementForm(id: string): void {
+    if (this.formElement && this.formElement._id === id) {
+      this.formElement = undefined;
+    }
+  }
+
   private toFormElement(element: Element): FormElement {
     return {
+      _id: element.id,
       id: element.path.split('.')[element.path.split('.').length - 1],
       path: element.path.split('.').slice(0, element.path.split('.').length - 1).join('.'),
       cardinality: isDefined(element.min) || isDefined(element.max) ?
@@ -299,6 +306,7 @@ export class StructureDefinitionEditComponent implements OnInit {
 }
 
 export class FormElement {
+  public _id?: string;
   public id?: string;
   public path?: string;
   public cardinality?: string;

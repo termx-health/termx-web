@@ -23,6 +23,7 @@ function findInTree<Node, Key>(nodesToSearch: Node[], key: Key, getKey: (n: Node
 export class StructureDefinitionEditableTreeComponent implements OnChanges {
   @Input() public content?: string; //fhir json structure definition
   @Output() public elementSelected = new EventEmitter<any>();
+  @Output() public elementDeleted = new EventEmitter<string>();
 
   @ViewChild(DropListComponent) private tree: DropListComponent;
 
@@ -127,6 +128,7 @@ export class StructureDefinitionEditableTreeComponent implements OnChanges {
     const sdElements = elements?.filter(el => el.id.includes(prevId));
     sdElements?.forEach(sdEl => {
       sdEl.id = sdEl.id.replace(prevId, newId);
+      sdEl.path = sdEl.path.replace(prevId, newId);
       elements[elements.indexOf(sdEl)] = sdEl;
     });
   }
@@ -139,6 +141,7 @@ export class StructureDefinitionEditableTreeComponent implements OnChanges {
       this.structureDefinition.snapshot.element = this.structureDefinition.snapshot?.element?.filter(el => el !== element);
     }
     this.initData(this.structureDefinition);
+    this.elementDeleted.emit(element.id);
   }
 
   public getFhirSD(): string {
