@@ -115,7 +115,7 @@ export class PackageEditComponent implements OnInit {
     const current: {[key: string]: PackageResource} = group((this.version.resources || []).filter(r => r.resourceType === type), r => r.resourceId);
     this.version.resources = [
       ...(this.version.resources || []).filter(r => r.resourceType !== type),
-      ...(resources || []).map(r => ({id: current[r]?.id, resourceId: r, resourceType: type}))
+      ...(resources || []).map(r => ({id: current[r]?.id, resourceId: r, resourceType: type, terminologyServer: current[r]?.terminologyServer}))
     ];
   };
 
