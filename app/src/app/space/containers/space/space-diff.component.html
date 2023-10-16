@@ -32,19 +32,26 @@
           <m-button [routerLink]="['/spaces/context', ctx.params, 'diff-matrix']">
             <div class="m-items-middle"><label>{{'Diff matrix'}}</label><m-icon mCode="table"></m-icon></div>
           </m-button>
-          <m-button mDisplay="primary" (mClick)="sync()">
-            <div class="m-items-middle"><label>{{'Sync'}}</label><m-icon mCode="sync"></m-icon></div>
-          </m-button>
         </div>
       </div>
     </m-card>
     <div style="display: flex; gap: 1rem">
       <m-card style="max-width: 33%">
-        <label *m-card-header>{{'entities.terminology-server.current-installation' | translate}}</label>
+        <div *m-card-header class="m-justify-between">
+          <label>{{'entities.terminology-server.current-installation' | translate}}</label>
+          <m-button mDisplay="primary" (mClick)="sync('local')">
+            <div class="m-items-middle"><label>{{'Sync'}}</label><m-icon mCode="sync"></m-icon></div>
+          </m-button>
+        </div>
         <pre>{{current}}</pre>
       </m-card>
       <m-card style="max-width: 33%">
-        <label *m-card-header>{{terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName}}</label>
+        <div *m-card-header class="m-justify-between">
+          <label>{{terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName}}</label>
+          <m-button mDisplay="primary" (mClick)="sync('external')">
+            <div class="m-items-middle"><label>{{'Sync'}}</label><m-icon mCode="sync"></m-icon></div>
+          </m-button>
+        </div>
         <pre>{{comparable}}</pre>
       </m-card>
       <m-card style="max-width: 33%">

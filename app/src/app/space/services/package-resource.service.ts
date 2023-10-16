@@ -9,7 +9,7 @@ export class PackageResourceService extends PackageResourceLibService {
     return this.http.put<PackageResource>(`${this.baseUrl}/${id}`, {versionId: versionId, resource: resource});
   }
 
-  public sync(id: number): Observable<JobLogResponse> {
-    return this.http.post<JobLogResponse>(`${this.baseUrl}/${id}/sync`, null);
+  public sync(id: number, type: 'local' | 'external'): Observable<JobLogResponse> {
+    return this.http.post<JobLogResponse>(`${this.baseUrl}/${id}/sync`, {type: type});
   }
 }

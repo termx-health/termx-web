@@ -141,11 +141,11 @@ export class SpaceDiffComponent implements OnInit {
     });
   }
 
-  public sync(): void {
+  public sync(type: 'local' | 'external'): void {
     const resourceId =this.diffItem?.resource?.id;
     if (resourceId) {
       this.loading = true;
-      this.packageResourceService.sync(resourceId).subscribe({
+      this.packageResourceService.sync(resourceId, type).subscribe({
         next: (resp) => this.pollJobStatus(resp.jobId as number),
         error: () => this.loading = false
       });
