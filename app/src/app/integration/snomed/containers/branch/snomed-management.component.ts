@@ -7,9 +7,9 @@ import {forkJoin} from 'rxjs';
 import {MuiTableComponent} from '@kodality-web/marina-ui';
 
 @Component({
-  templateUrl: './snomed-branch-list.component.html',
+  templateUrl: './snomed-management.component.html',
 })
-export class SnomedBranchListComponent implements OnInit {
+export class SnomedManagementComponent implements OnInit {
   protected branches: SnomedBranch[] = [];
   protected codeSystems: SnomedCodeSystem[] = [];
   protected loader = new LoadingManager();
@@ -21,6 +21,7 @@ export class SnomedBranchListComponent implements OnInit {
   public editionModalData: {
     visible?: boolean,
     countryCode?: string
+    name?: string
   } = {};
 
   public constructor(private snomedService: SnomedService) {}
@@ -37,7 +38,11 @@ export class SnomedBranchListComponent implements OnInit {
     if (!validateForm(this.form)) {
       return;
     }
-    const cs: SnomedCodeSystem = {shortName: 'SNOMEDCT-' + this.editionModalData.countryCode, branchPath: 'MAIN/SNOMEDCT-' + this.editionModalData.countryCode};
+    const cs: SnomedCodeSystem = {
+      shortName: 'SNOMEDCT-' + this.editionModalData.countryCode,
+      branchPath: 'MAIN/SNOMEDCT-' + this.editionModalData.countryCode,
+      name: this.editionModalData.name
+    };
     this.loader.wrap('load', this.snomedService.createdCodeSystem(cs)).subscribe(() => {
       this.editionModalData = {};
       this.loadData();
@@ -52,18 +57,5 @@ export class SnomedBranchListComponent implements OnInit {
       this.codeSystems = codeSystems;
       this.branches = branches.filter(b => !codeSystems.find(cs => cs.branchPath == b.path || !!cs.versions.find(v => v.branchPath === b.path)));
     });
-  }
-
-  protected deleteCodeSystem(shortName: string): void {
-    this.loader.wrap('load', this.snomedService.deleteCodeSystem(shortName)).subscribe(() => this.loadData());
-  }
-
-  protected showVersions(c: SnomedCodeSystem, i: number): void {
-    if (c['_expanded']) {
-      this.table.collapse(i);
-    } else {
-      this.table.expand(i);
-    }
-    c['_expanded'] = !c['_expanded'];
   }
 }

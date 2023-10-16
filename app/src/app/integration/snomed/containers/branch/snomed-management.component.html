@@ -21,7 +21,7 @@
             <div class="m-items-middle">
               <m-icon-button *ngIf="cs.versions" [mIcon]="cs['expanded'] ? 'folder-open' : 'folder'" (mClick)="cs['expanded'] = !cs['expanded']"></m-icon-button>
               <div>
-                <div><a>{{cs.shortName}}</a> {{cs.name ? '(' + cs.name + ')' : ''}}</div>
+                <div><a [routerLink]="['/integration', 'snomed', 'codesystems', cs.shortName, 'edit']">{{cs.shortName}}</a> {{cs.name ? '(' + cs.name + ')' : ''}}</div>
                 <ng-container *ngFor="let module of cs.modules">
                   <div *ngIf="module.conceptId === module.moduleId">{{module?.pt?.term}}</div>
                 </ng-container>
@@ -70,7 +70,7 @@
         <th>{{'entities.snomed-branch.deleted' | translate}}</th>
       </tr>
       <tr *mTableRow="let branch">
-        <td><a [routerLink]="[branch.path | apply:encodeUriComponent, 'management']">{{branch.path}}</a></td>
+        <td><a [routerLink]="['/integration', 'snomed', 'branches', branch.path | apply:encodeUriComponent, 'management']">{{branch.path}}</a></td>
         <td>{{branch.creation | localDate}}</td>
         <td>{{branch.base | localDate}}</td>
         <td>
@@ -96,6 +96,9 @@
     <form #form="ngForm">
       <m-form-item mName="countryCode" mLabel="web.snomed.branch.list.edition-modal.country-code" required>
         <m-input name="countryCode" [(ngModel)]="editionModalData.countryCode" required/>
+      </m-form-item>
+      <m-form-item mName="name" mLabel="web.snomed.branch.list.edition-modal.name">
+        <m-input name="name" [(ngModel)]="editionModalData.name"/>
       </m-form-item>
     </form>
   </ng-container>

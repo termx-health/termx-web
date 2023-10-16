@@ -470,7 +470,9 @@
 			"languages": "Languages",
 			"latest-version": "Latest version",
 			"name": "Name",
-			"versions": "Versions"
+			"versions": "Versions",
+			"imported": "Imported",
+			"dependant-version-effective-time": "Dependant version effective time"
 		},
 		"snomed-concept": {
 			"concept-id": "Concept ID",
@@ -1621,7 +1623,8 @@
 						"imported": "Imported"
 					},
 					"edition-modal": {
-						"country-code": "Country code",
+						"country-code": "2-alpha country code",
+						"name": "Name",
 						"header": "Add edition"
 					},
 					"header": "Branches"
@@ -1651,6 +1654,18 @@
 					"total-descriptions": "{{total}} description(s) in the branch",
 					"unlinked-translations": "{{count}} unlinked translation(s)",
 					"unlock": "Unlock"
+				}
+			},
+			"codesystem": {
+				"form": {
+					"header": "Code system {{name}}",
+					"import-from-rf2": "Import from RF2",
+					"export-to-rf2": "Export to RF2",
+					"upgrade": "Upgrade",
+					"upgrade-modal": {
+						"header": "Upgrade code system to a different dependant version",
+						"dependant-version": "New dependant version"
+					}
 				}
 			},
 			"rf2-export": "RF2 export",

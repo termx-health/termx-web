@@ -14,6 +14,9 @@ export class SnomedService extends SnomedLibService {
   public updateCodeSystem(shortName: string, cs: SnomedCodeSystem): Observable<SnomedCodeSystem> {
     return this.http.put(`${this.baseUrl}/codesystems/${shortName}`, cs);
   }
+  public upgradeCodeSystem(shortName: string, newDependantVersion: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/codesystems/${shortName}/upgrade`, {newDependantVersion: newDependantVersion});
+  }
 
   public deleteCodeSystem(shortName: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/codesystems/${shortName}`);

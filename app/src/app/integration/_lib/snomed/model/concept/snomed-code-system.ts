@@ -12,8 +12,10 @@ export class SnomedCodeSystem {
 export class SnomedCodeSystemVersion {
   public shortName?: string;
   public importDate?: Date;
+  public dependantVersionEffectiveTime: string;
   public parentBranchPath?: string;
   public version?: string;
+  public effectiveDate?: string;
   public description?: string;
   public branchPath?: string;
 }

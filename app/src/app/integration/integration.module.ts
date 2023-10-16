@@ -32,7 +32,7 @@ import {SnomedTranslationService} from 'term-web/integration/snomed/services/sno
 import {ImportJobLogComponent} from 'term-web/integration/import-job-log.component';
 import {FileAnalysisService} from 'term-web/integration/import/file-import/file-analysis.service';
 import {AssociationFileImportComponent} from 'term-web/integration/import/file-import/association/association-file-import.component';
-import {SnomedBranchListComponent} from 'term-web/integration/snomed/containers/branch/snomed-branch-list.component';
+import {SnomedManagementComponent} from 'term-web/integration/snomed/containers/branch/snomed-management.component';
 import {SnomedBranchEditComponent} from 'term-web/integration/snomed/containers/branch/snomed-branch-edit.component';
 import {SnomedBranchManagementComponent} from 'term-web/integration/snomed/containers/branch/snomed-branch-management.component';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
@@ -40,6 +40,7 @@ import {CodeSystemFileImportComponent} from 'term-web/integration/import/file-im
 import {OrphanetImportComponent} from 'term-web/integration/import/file-import/code-system/orphanet/orphanet-import.component';
 import {MapSetModule} from 'term-web/resources/map-set/map-set.module';
 import {ValueSetFileImportComponent} from 'term-web/integration/import/file-import/value-set/value-set-file-import.component';
+import {SnomedCodesystemEditComponent} from 'term-web/integration/snomed/containers/branch/snomed-codesystem-edit.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -65,10 +66,11 @@ export const INTEGRATION_ROUTES: Routes = [
     ]
   },
   {path: 'loinc', component: LoincDashboardComponent, data: {privilege: ['loinc.CodeSystem.view']}},
-  {path: 'snomed/branches', component: SnomedBranchListComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
+  {path: 'snomed/management', component: SnomedManagementComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
   {path: 'snomed/branches/add', component: SnomedBranchEditComponent, data: {privilege: ['snomed-ct.CodeSystem.edit']}},
   {path: 'snomed/branches/:path/edit', component: SnomedBranchEditComponent, data: {privilege: ['snomed-ct.CodeSystem.edit']}},
   {path: 'snomed/branches/:path/management', component: SnomedBranchManagementComponent, data: {privilege: ['snomed-ct.CodeSystem.edit']}},
+  {path: 'snomed/codesystems/:shortName/edit', component: SnomedCodesystemEditComponent, data: {privilege: ['snomed-ct.CodeSystem.edit']}},
   {path: 'snomed/dashboard', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}},
   {path: 'snomed/dashboard/:conceptId', component: SnomedDashboardComponent, data: {privilege: ['snomed-ct.CodeSystem.view']}}
 ];
@@ -108,9 +110,10 @@ export const INTEGRATION_ROUTES: Routes = [
     SnomedDashboardComponent,
     SnomedConceptInfoComponent,
     SnomedTranslationListComponent,
-    SnomedBranchListComponent,
+    SnomedManagementComponent,
     SnomedBranchEditComponent,
     SnomedBranchManagementComponent,
+    SnomedCodesystemEditComponent,
 
     LoincDashboardComponent,
     LoincListComponent,

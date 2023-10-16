@@ -154,7 +154,7 @@
           "et": "SNOMED CT haldus",
           "lt": "SNOMED CT valdymas"
         },
-        "link": "integration/snomed/branches",
+        "link": "integration/snomed/management",
         "privileges": [
           "snomed-ct.CodeSystem.view"
         ]
