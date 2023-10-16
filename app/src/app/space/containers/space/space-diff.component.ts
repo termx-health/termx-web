@@ -76,13 +76,12 @@ export class SpaceDiffComponent implements OnInit {
     const serverCode = resource.terminologyServer;
 
     this.loading = true;
-    forkJoin([
-      this.loadResource(id),
-      this.loadServerResource(id, serverCode)
-    ]).subscribe(([current, comparable]) => {
+    this.loadResource(id).subscribe(current => {
       this.current = current;
-      this.comparable = comparable;
-      this.compare();
+      this.loadServerResource(JSON.parse(current).id, serverCode).subscribe(comparable => {
+        this.comparable = comparable;
+        this.compare();
+      });
     }).add(() => this.loading = false);
   }
 
