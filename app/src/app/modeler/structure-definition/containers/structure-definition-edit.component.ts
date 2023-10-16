@@ -198,8 +198,8 @@ export class StructureDefinitionEditComponent implements OnInit {
 
   private toFormElement(element: Element): FormElement {
     return {
-      id: element.id!,
-      path: element.path!,
+      id: element.path.split('.')[element.path.split('.').length - 1],
+      path: element.path.split('.').slice(0, element.path.split('.').length - 1).join('.'),
       cardinality: isDefined(element.min) || isDefined(element.max) ?
         (isDefined(element.min) ? element.min : '*') + '..' + (isDefined(element.max) ? element.max : '*') : undefined,
       short: element.short,
@@ -218,7 +218,7 @@ export class StructureDefinitionEditComponent implements OnInit {
 
   private fromFormElement(formElement: FormElement, currentElement?: Element): Element {
     const element = Object.assign(new Element(), currentElement);
-    element.path = formElement.path;
+    element.path = formElement.path + '.' + formElement.id;
     const min = Number(formElement.cardinality?.split('..')[0]);
     const max = formElement.cardinality?.split('..')[1];
     element.min = isDefined(min) ? min : undefined;

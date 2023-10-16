@@ -37,7 +37,9 @@
               <m-card *ngIf="formElement">
                 <form #elementForm="ngForm">
                   <m-form-item mName="path" mLabel="web.structure-definition.form.path" required>
-                    <m-input name="path" [(ngModel)]="formElement.path" required></m-input>
+                    <nz-input-group [nzAddOnBefore]="formElement.path + '.'">
+                      <input nz-input name="path" [(ngModel)]="formElement.id" required/>
+                    </nz-input-group>
                   </m-form-item>
                   <m-form-item mName="cardinality" mLabel="web.structure-definition.form.cardinality">
                     <m-radio-group name="cardinality" [(ngModel)]="formElement.cardinality">
