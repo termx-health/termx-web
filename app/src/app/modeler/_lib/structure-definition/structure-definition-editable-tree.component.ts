@@ -125,11 +125,24 @@ export class StructureDefinitionEditableTreeComponent implements OnChanges {
   }
 
   private changeId(prevId: string, newId: string, elements: Element[]): void {
-    const sdElements = elements?.filter(el => el.id.includes(prevId));
-    sdElements?.forEach(sdEl => {
-      sdEl.id = sdEl.id.replace(prevId, newId);
-      sdEl.path = sdEl.path.replace(prevId, newId);
-      elements[elements.indexOf(sdEl)] = sdEl;
+    const el = elements?.find(e => e.id === prevId);
+    if (isDefined(el)) {
+      el.id = newId;
+      elements[elements.indexOf(el)] = el;
+    }
+
+    const subElements = elements?.filter(e => {
+      if (!e.path.startsWith(prevId)) {
+        return false;
+      }
+      const subElId = e.path.replace(prevId, '');
+      return subElId.startsWith('.');
+    });
+
+    subElements?.forEach(subEl => {
+      subEl.id = subEl.id.replace(prevId, newId);
+      subEl.path = subEl.path.replace(prevId, newId);
+      elements[elements.indexOf(subEl)] = subEl;
     });
   }
 
