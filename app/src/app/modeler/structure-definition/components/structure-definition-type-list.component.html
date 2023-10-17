@@ -44,7 +44,13 @@
     <ng-container *m-modal-content>
       <form #form="ngForm" *ngIf="modalData.type">
         <m-form-item mName="code" mLabel="web.structure-definition-type.modal.code" required>
-          <m-input name="code" [(ngModel)]="modalData.type.code" autofocus required></m-input>
+          <div class="m-items-middle" *ngIf="!modalData.customType">
+            <m-select style="width: 100%" name="code" [(ngModel)]="modalData.type.code">
+              <m-option *ngFor="let type of elementDefinitionTypes" [mLabel]="type.concept?.code" [mValue]="type.concept?.code"></m-option>
+            </m-select>
+            <m-button (mClick)="modalData.customType = true">{{'Custom type'}}</m-button>
+          </div>
+          <m-input *ngIf="modalData.customType" name="code" [(ngModel)]="modalData.type.code" autofocus required></m-input>
         </m-form-item>
 
         <m-table [mData]="modalData.type.targetProfile" mSize="small">

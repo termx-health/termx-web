@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
+import {ValueSetLibService, ValueSetVersionConcept} from 'term-web/resources/_lib';
 
 
 @Component({
@@ -23,18 +24,27 @@ import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/cor
     }
   `]
 })
-export class StructureDefinitionTypeListComponent {
+export class StructureDefinitionTypeListComponent implements OnInit{
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public types!: StructureDefinitionType[];
   @Output() public typesChange: EventEmitter<StructureDefinitionType[]> = new EventEmitter<StructureDefinitionType[]>();
 
   public modalData: {
     visible?: boolean,
+    customType?: boolean,
     index?: number,
     type?: StructureDefinitionType
   } = {};
 
+  public elementDefinitionTypes: ValueSetVersionConcept[];
+
   @ViewChild("form") public form?: NgForm;
+
+  public constructor(private valueSetService: ValueSetLibService) {}
+
+  public ngOnInit(): void {
+    this.valueSetService.expand({valueSet: 'elementdefinition-types'}).subscribe(r => this.elementDefinitionTypes = r);
+  }
 
   public addType(): void {
     this.types = [...this.types || []];
@@ -51,6 +61,7 @@ export class StructureDefinitionTypeListComponent {
   public toggleModal(type?: StructureDefinitionType, index?: number): void {
     this.modalData = {
       visible: !!type,
+      customType: !!type?.code && !this.elementDefinitionTypes?.find(t => t.concept?.code === type.code),
       type: copyDeep(type),
       index: index
     };

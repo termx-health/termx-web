@@ -208,7 +208,7 @@ export class StructureDefinitionEditComponent implements OnInit {
       id: element.path.split('.')[element.path.split('.').length - 1],
       path: element.path.split('.').slice(0, element.path.split('.').length - 1).join('.'),
       cardinality: isDefined(element.min) || isDefined(element.max) ?
-        (isDefined(element.min) ? element.min : '*') + '..' + (isDefined(element.max) ? element.max : '*') : undefined,
+        (isDefined(element.min) ? element.min : '*') + '..' + (isDefined(element.max) ? element.max : '*') : '0..1',
       short: element.short,
       definition: element.definition,
       types: element.type?.map(t => ({
@@ -299,6 +299,9 @@ export class StructureDefinitionEditComponent implements OnInit {
 
   private embedElement(formElement: FormElement, currentElement: Element): void {
     const el = this.fromFormElement(formElement, currentElement);
+    if (!el.type || el.type.length === 0) {
+      this.notificationService.warning('Form validation', 'Element "' + el.path + '" has no defined types. Define element type to prevent errors.');
+    }
     this.sdTree.embedElement(el);
 
     this.sdTree.changeElementId(el.id, el.path);

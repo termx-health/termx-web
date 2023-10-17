@@ -44,8 +44,8 @@
                       <input nz-input name="path" [(ngModel)]="formElement.id" required/>
                     </nz-input-group>
                   </m-form-item>
-                  <m-form-item mName="cardinality" mLabel="web.structure-definition.form.cardinality">
-                    <m-radio-group name="cardinality" [(ngModel)]="formElement.cardinality">
+                  <m-form-item mName="cardinality" mLabel="web.structure-definition.form.cardinality" required>
+                    <m-radio-group name="cardinality" [(ngModel)]="formElement.cardinality" required>
                       <label m-radio-button mValue="0..0">{{'0..0' | translate}}</label>
                       <label m-radio-button mValue="0..1">{{'0..1' | translate}}</label>
                       <label m-radio-button mValue="0..*">{{'0..*' | translate}}</label>
