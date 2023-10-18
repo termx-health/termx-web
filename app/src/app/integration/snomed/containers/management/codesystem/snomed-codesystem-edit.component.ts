@@ -19,8 +19,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
   protected upgradeModalData: {visible?: boolean, dependantVersion?: string} = {};
   protected exportModalData: {visible?: boolean, type?: string} = {type: 'SNAPSHOT'};
-  protected importModalData: {visible?: boolean, type?: string, createCodeSystemVersion?: boolean, file?: any} =
-    {createCodeSystemVersion: true, type: 'SNAPSHOT'};
+  protected importModalData: {visible?: boolean, type?: string, file?: any} = {type: 'SNAPSHOT'};
 
 
   @ViewChild("form") public form?: NgForm;
@@ -99,7 +98,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
     this.loader.wrap('import', this.snomedService.createImportJob({
       branchPath: this.snomedCodeSystem.branchPath,
       type: this.importModalData.type,
-      createCodeSystemVersion: this.importModalData.createCodeSystemVersion
+      createCodeSystemVersion: true
     }, file)).subscribe(resp => {
       this.pollJobStatus(resp.jobId);
     });
@@ -114,7 +113,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
   private pollJobStatus(jobId: string): void {
     this.loader.wrap('import', this.snomedService.pollJob(jobId, this.destroy$)).subscribe(jobResp => {
-      this.importModalData = {createCodeSystemVersion: true};
+      this.importModalData = {type: 'SNAPSHOT'};
       if (jobResp.status === 'FAILED') {
         this.notificationService.error(jobResp.errorMessage || 'web.snomed.branch.management.import-failed');
       }

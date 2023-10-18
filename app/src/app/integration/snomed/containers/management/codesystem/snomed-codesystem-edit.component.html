@@ -78,7 +78,7 @@
   </div>
 </m-modal>
 
-<m-modal [(mVisible)]="importModalData.visible" (mClose)="importModalData = {createCodeSystemVersion: true}">
+<m-modal [(mVisible)]="importModalData.visible" (mClose)="importModalData = {type: 'SNAPSHOT'}">
   <m-title *mModalHeader>{{'web.snomed.branch.management.import-modal.header' | translate}}</m-title>
 
   <ng-container *mModalContent>
@@ -90,13 +90,11 @@
           <m-option [mValue]="'FULL'" [mLabel]="'FULL'"/>
         </m-select>
       </m-form-item>
-      <m-form-item mName="createVersion" mLabel="web.snomed.branch.management.import-modal.create-version">
-        <m-checkbox name="createVersion" [(ngModel)]="importModalData.createCodeSystemVersion"></m-checkbox>
-      </m-form-item>
       <m-form-item mName="file" mLabel="web.snomed.branch.management.import-modal.file" required>
         <input #fileInput type="file" name="file" [(ngModel)]="importModalData.file" required>
       </m-form-item>
     </form>
+    <m-alert mType="warning">{{'web.snomed.codesystem.form.import-warning' | translate}}</m-alert>
   </ng-container>
 
   <div *m-modal-footer class="m-items-middle">
