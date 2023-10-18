@@ -7,10 +7,18 @@
       (mAfterSubmit)="translationsChanged.emit()"
       (mAfterDelete)="translationsChanged.emit()"
       [mRowEditAllowed]="editAllowed">
+    <m-editable-column [mTitle]="'entities.snomed-translation.branch'" mName="branch">
+      <ng-template #viewTemplate let-t>{{t.branch}}</ng-template>
+      <ng-template #editTemplate let-t let-ngModelName="ngModelName">
+        <m-select [name]="ngModelName" [(ngModel)]="t.branch" autoSelect required>
+          <m-option *ngFor="let b of branches" [mValue]="b.path" [mLabel]="b.path"/>
+        </m-select>
+      </ng-template>
+    </m-editable-column>
     <m-editable-column [mTitle]="'entities.snomed-translation.module'" mName="module">
       <ng-template #viewTemplate let-t>{{t.module}}</ng-template>
       <ng-template #editTemplate let-t let-ngModelName="ngModelName">
-        <m-select [name]="ngModelName" [(ngModel)]="t.module" autoSelect>
+        <m-select [name]="ngModelName" [(ngModel)]="t.module" autoSelect required>
           <m-option *ngFor="let m of modules" [mLabel]="m.code" [mValue]="m.code"></m-option>
         </m-select>
       </ng-template>

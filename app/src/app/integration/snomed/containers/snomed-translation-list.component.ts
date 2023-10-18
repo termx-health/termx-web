@@ -1,5 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {
+  SnomedBranch,
+  SnomedLibService,
   SnomedTranslation,
   SnomedTranslationLibService
 } from 'app/src/app/integration/_lib';
@@ -7,6 +9,7 @@ import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/c
 import {NgForm} from '@angular/forms';
 import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
 import {Task, TaskLibService} from 'term-web/task/_lib';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'tw-snomed-translations',
@@ -16,6 +19,7 @@ export class SnomedTranslationListComponent implements OnInit, OnChanges {
   public translations: SnomedTranslation[];
   protected tasks: Task[];
   protected modules: CodeSystemConcept[];
+  protected branches: SnomedBranch[];
   protected loader = new LoadingManager();
   protected rowInstance: SnomedTranslation = {type: 'synonym'};
 
@@ -26,13 +30,20 @@ export class SnomedTranslationListComponent implements OnInit, OnChanges {
 
   public constructor(
     private codeSystemService: CodeSystemLibService,
+    private snomedService: SnomedLibService,
     private snomedTranslationService: SnomedTranslationLibService,
     private taskService: TaskLibService
   ) {}
 
   public ngOnInit(): void {
-    this.codeSystemService.searchConcepts('snomed-module', {limit: -1}).subscribe(resp => {
-      this.modules = resp.data;
+
+    this.loader.wrap('load', forkJoin([
+      this.codeSystemService.searchConcepts('snomed-module', {limit: -1}),
+      this.snomedService.loadBranches(),
+      this.snomedService.loadCodeSystems()
+    ])).subscribe(([modules, branches, codeSystems]) =>{
+      this.modules = modules.data;
+      this.branches = branches.filter(b => !codeSystems.find(cs => cs.branchPath == b.path || !!cs.versions.find(v => v.branchPath === b.path)));
     });
   }
 

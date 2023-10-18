@@ -32,15 +32,15 @@ import {SnomedTranslationService} from 'term-web/integration/snomed/services/sno
 import {ImportJobLogComponent} from 'term-web/integration/import-job-log.component';
 import {FileAnalysisService} from 'term-web/integration/import/file-import/file-analysis.service';
 import {AssociationFileImportComponent} from 'term-web/integration/import/file-import/association/association-file-import.component';
-import {SnomedManagementComponent} from 'term-web/integration/snomed/containers/branch/snomed-management.component';
-import {SnomedBranchEditComponent} from 'term-web/integration/snomed/containers/branch/snomed-branch-edit.component';
-import {SnomedBranchManagementComponent} from 'term-web/integration/snomed/containers/branch/snomed-branch-management.component';
+import {SnomedManagementComponent} from 'term-web/integration/snomed/containers/management/snomed-management.component';
+import {SnomedBranchEditComponent} from 'term-web/integration/snomed/containers/management/branch/snomed-branch-edit.component';
+import {SnomedBranchManagementComponent} from 'term-web/integration/snomed/containers/management/branch/snomed-branch-management.component';
 import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
 import {CodeSystemFileImportComponent} from 'term-web/integration/import/file-import/code-system/csv/code-system-file-import.component';
 import {OrphanetImportComponent} from 'term-web/integration/import/file-import/code-system/orphanet/orphanet-import.component';
 import {MapSetModule} from 'term-web/resources/map-set/map-set.module';
 import {ValueSetFileImportComponent} from 'term-web/integration/import/file-import/value-set/value-set-file-import.component';
-import {SnomedCodesystemEditComponent} from 'term-web/integration/snomed/containers/branch/snomed-codesystem-edit.component';
+import {SnomedCodesystemEditComponent} from 'term-web/integration/snomed/containers/management/codesystem/snomed-codesystem-edit.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {

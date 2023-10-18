@@ -515,6 +515,7 @@
 				"acceptable": "Acceptable",
 				"preferred": "Preferred"
 			},
+			"branch": "Branch",
 			"concept-id": "Concept ID",
 			"description-id": "Description ID",
 			"language": "Language",
@@ -1630,6 +1631,13 @@
 					"header": "Branches"
 				},
 				"management": {
+					"authoring-stats": "Authoring stats",
+					"add-to-branch": "Add to branch",
+					"changed-fsn": "Changed FSN",
+					"new-descriptions": "New descriptions",
+					"new-synonyms": "New synonyms",
+					"inactivated-synonyms": "Inactivated synonyms",
+					"reactivated-synonyms": "Reactivated synonyms",
 					"export-modal": {
 						"header": "Export to RF2 zip",
 						"type": "Type"

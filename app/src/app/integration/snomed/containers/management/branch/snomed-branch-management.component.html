@@ -62,71 +62,77 @@
         </m-form-item>
       </m-form-row>
 
-      <div style="display: grid; grid-template-columns: 1fr auto 1fr; gap: 1rem">
-        <div>
-          <m-divider [mText]="'web.snomed.branch.management.total-descriptions' | translate : {total:descriptions.meta.total}"></m-divider>
-          <div style="margin-bottom: 1rem">
-            <tw-snomed-drawer-search [value]="descriptionParams.conceptId" (twChange)="conceptSelected($event)"></tw-snomed-drawer-search>
-          </div>
-          <m-backend-table [mResult]="descriptions" [(mQuery)]="descriptionParams" (mQueryChange)="loadDescriptions()" [mLoading]="loader.isLoading">
+      <m-divider mText="web.snomed.branch.management.authoring-stats"></m-divider>
+      <nz-tabset *ngIf="!loader.isLoading">
+        <nz-tab *ngFor="let t of ['new-descriptions', 'changed-fsn', 'new-synonyms', 'inactivated-synonyms', 'reactivated-synonyms']">
+          <ng-container *nzTabLink>
+            <label>{{'web.snomed.branch.management.' + t | translate}}</label>&nbsp;
+            <m-tag mColor="blue">{{(t | apply: getAuthoringStatsData)?.length || 0}}</m-tag>
+          </ng-container>
+          <m-table #authoringStatsTable *ngIf="!loader.isLoading" [mData]="t | apply: getAuthoringStatsData">
             <tr *mTableHead>
-              <th></th>
-              <th>{{'entities.snomed-description.concept-id' | translate}}</th>
-              <th>{{'entities.snomed-description.description-id' | translate}}</th>
-              <th>{{'entities.snomed-description.lang' | translate}}</th>
-              <th>{{'entities.snomed-description.term' | translate}}</th>
+              <th>{{'id'}}</th>
+              <th>{{'term'}}</th>
+              <ng-container *ngIf="t === 'new-descriptions'">
+                <th>{{'concept id'}}</th>
+                <th></th>
+              </ng-container>
             </tr>
-            <tr *mTableRow="let description; let i = index">
-              <td>
-                <m-checkbox *ngIf="description.local" name="checked-{{i}}" [(ngModel)]="description['checked']"></m-checkbox>
-              </td>
-              <td><a [routerLink]="['/integration/snomed/dashboard', description.conceptId]">{{description.conceptId}}</a></td>
-              <td>{{description.descriptionId}}</td>
-              <td>{{description.lang}}</td>
-              <td>{{description.term}}</td>
-            </tr>
-            <tr *mTableNoData>
-              <td colspan="100%">
-                <m-no-data></m-no-data>
-              </td>
-            </tr>
-          </m-backend-table>
-        </div>
-        <div style="align-self: center; display: flex; flex-direction: column; gap: 1rem" *ngIf="!snomedBranch?.locked">
-          <m-button (mClick)="addDescriptions()">
-            <m-icon mCode="left"></m-icon>
-          </m-button>
-          <m-button (mClick)="removeDescriptions()">
-            <m-icon mCode="right"></m-icon>
-          </m-button>
-        </div>
-        <div *ngIf="!snomedBranch?.locked">
-          <m-divider [mText]="'web.snomed.branch.management.unlinked-translations' | translate : {count: translations.length || 0}"></m-divider>
-          <m-table [mData]="translations" [mLoading]="loader.isLoading">
-            <tr *mTableHead>
-              <th></th>
-              <th>{{'entities.snomed-translation.concept-id' | translate}}</th>
-              <th>{{'entities.snomed-translation.description-id' | translate}}</th>
-              <th>{{'entities.snomed-translation.language' | translate}}</th>
-              <th>{{'entities.snomed-translation.term' | translate}}</th>
-            </tr>
-            <tr *mTableRow="let translation;let i = index">
-              <td>
-                <m-checkbox name="checked-{{i}}" [(ngModel)]="translation['checked']"></m-checkbox>
-              </td>
-              <td><a [routerLink]="['/integration/snomed/dashboard', translation.conceptId]">{{translation.conceptId}}</a></td>
-              <td>{{translation.descriptionId}}</td>
-              <td>{{translation.language}}</td>
-              <td>{{translation.term}}</td>
-            </tr>
+            <ng-container *ngFor="let item of authoringStatsTable.mData">
+              <tr>
+                <td>{{item.id}}</td>
+                <td>{{item.term}}</td>
+                <ng-container *ngIf="t === 'new-descriptions'">
+                  <td><a [routerLink]="['/integration/snomed/dashboard', item.conceptId]">{{item.conceptId}}</a></td>
+                  <td>
+                    <m-dropdown>
+                      <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+                        <a *m-dropdown-item (mClick)="deleteDescription(item.id)">
+                          {{'core.btn.delete' | translate}}
+                        </a>
+                      </ng-container>
+                    </m-dropdown>
+                  </td>
+                </ng-container>
+              </tr>
+            </ng-container>
             <tr *mTableNoData>
               <td colspan="100%">
                 <m-no-data></m-no-data>
               </td>
             </tr>
           </m-table>
-        </div>
-      </div>
+        </nz-tab>
+      </nz-tabset>
+
+      <m-divider [mText]="'web.snomed.branch.management.unlinked-translations' | translate: {count: unlinkedTranslations?.length}"></m-divider>
+      <m-table #unlinkedTranslationsTable *ngIf="!loader.isLoading" [mData]="unlinkedTranslations">
+        <tr *mTableHead>
+          <th>{{'id'}}</th>
+          <th>{{'term'}}</th>
+          <th>{{'concept id'}}</th>
+          <th *twPrivileged="'snomed-ct.CodeSystem.edit'"></th>
+        </tr>
+        <ng-container *ngFor="let translation of unlinkedTranslationsTable.mData">
+          <tr>
+            <td>{{translation.descriptionId}}</td>
+            <td>{{translation.term}}</td>
+            <td><a [routerLink]="['/integration/snomed/dashboard', translation.conceptId]">{{translation.conceptId}}</a></td>
+            <td *twPrivileged="'snomed-ct.CodeSystem.edit'">
+              <m-dropdown>
+                <a *m-dropdown-item (mClick)="addTranslationToBranch(translation.id)">
+                  {{'web.snomed.branch.management.add-to-branch' | translate}}
+                </a>
+              </m-dropdown>
+            </td>
+          </tr>
+        </ng-container>
+        <tr *mTableNoData>
+          <td colspan="100%">
+            <m-no-data></m-no-data>
+          </td>
+        </tr>
+      </m-table>
     </div>
   </m-card>
 </m-spinner>

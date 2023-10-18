@@ -14,7 +14,7 @@ export class SnomedTranslationLibService {
 
   public constructor(protected http: HttpClient) { }
 
-  public loadTranslations(params: {active?: boolean, unlinked?: boolean}): Observable<SnomedTranslation[]> {
+  public loadTranslations(params: {active?: boolean, unlinked?: boolean, branch?: string}): Observable<SnomedTranslation[]> {
     return this.http.get(`${this.baseUrl}/translations`, {params: SearchHttpParams.build(params)}).pipe(map(resp => resp as SnomedTranslation[]));
   }
 

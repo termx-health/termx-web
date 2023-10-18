@@ -1,9 +1,9 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {format, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {SnomedBranch} from 'term-web/integration/_lib';
-import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
+import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {SnomedBranch} from 'app/src/app/integration/_lib';
+import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
 
 
 @Component({
@@ -14,9 +14,8 @@ export class SnomedBranchEditComponent implements OnInit {
   protected branches?: SnomedBranch[];
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
-  protected customName: boolean;
 
-  protected formData: {parentBranch?: string, releaseDate?: Date, name?: string, metadata?: string} = {metadata: '{}'};
+  protected formData: {parentBranch?: string, name?: string, metadata?: string} = {metadata: '{}'};
 
   @ViewChild("form") public form?: NgForm;
 
@@ -44,8 +43,6 @@ export class SnomedBranchEditComponent implements OnInit {
 
       let pathParts = path.split('/');
       this.formData.parentBranch = pathParts.slice(0, (pathParts.length - 1) > 0 ? (pathParts.length - 1) : 0).join('/');
-      let releaseDate = pathParts[pathParts.length - 1];
-      this.formData.releaseDate = new Date(releaseDate);
       this.formData.metadata = JSON.stringify(b.metadata);
     });
   }
@@ -61,7 +58,7 @@ export class SnomedBranchEditComponent implements OnInit {
 
     const request: {parent?: string, name?: string, metadata?: any} = {};
     if (this.mode === 'add') {
-      request.name = this.customName ? this.formData.name : format(this.formData.releaseDate, 'yyyy-mm-dd');
+      request.name = this.formData.name;
       request.parent = this.formData.parentBranch;
     }
     request.metadata = JSON.parse(this.formData.metadata);

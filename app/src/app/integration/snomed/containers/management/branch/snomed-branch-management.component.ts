@@ -1,17 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {collect, DestroyService, isDefined, LoadingManager, SearchResult, validateForm} from '@kodality-web/core-util';
-import {
-  SnomedBranch,
-  SnomedDescription, SnomedDescriptionSearchParams,
-  SnomedTranslation,
-  SnomedTranslationLibService
-} from 'term-web/integration/_lib';
+import {DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {SnomedAuthoringStatsItem, SnomedBranch, SnomedTranslation, SnomedTranslationLibService} from 'app/src/app/integration/_lib';
 import {forkJoin} from 'rxjs';
-import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
+import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {saveAs} from 'file-saver';
+import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 
 
 @Component({
@@ -21,13 +17,15 @@ import {saveAs} from 'file-saver';
 export class SnomedBranchManagementComponent implements OnInit {
   protected snomedBranch?: SnomedBranch;
 
-  protected branches?: SnomedBranch[];
-
-  public descriptionParams: SnomedDescriptionSearchParams = new SnomedDescriptionSearchParams();
-  public descriptions: SearchResult<SnomedDescription> = SearchResult.empty();
-  public translations: SnomedTranslation[] = [];
-
   protected loader = new LoadingManager();
+
+  protected changedFsn: SnomedAuthoringStatsItem[];
+  protected newDescriptions: SnomedAuthoringStatsItem[];
+  protected newSynonyms: SnomedAuthoringStatsItem[];
+  protected inactivatedSynonyms: SnomedAuthoringStatsItem[];
+  protected reactivatedSynonyms: SnomedAuthoringStatsItem[];
+
+  protected unlinkedTranslations: SnomedTranslation[];
 
   protected lockModalData: {visible?: boolean, message?: string} = {};
   protected exportModalData: {visible?: boolean, type?: string} = {};
@@ -40,7 +38,7 @@ export class SnomedBranchManagementComponent implements OnInit {
 
   public constructor(
     private snomedService: SnomedService,
-    private snomedTranslationService: SnomedTranslationLibService,
+    private snomedTranslationService: SnomedTranslationService,
     private notificationService: MuiNotificationService,
     private route: ActivatedRoute,
     private destroy$: DestroyService,
@@ -50,25 +48,31 @@ export class SnomedBranchManagementComponent implements OnInit {
   public ngOnInit(): void {
     const path = this.route.snapshot.paramMap.get('path');
     this.loadBranch(path);
-    this.loadData();
+    this.loadAuthoringStats(path);
   }
 
   private loadBranch(path: string): void {
-    this.loader.wrap('load', forkJoin([
-
-      this.snomedService.loadBranch(path),
-      this.snomedService.findBranchDescriptions(path, this.descriptionParams),
-    ])).subscribe(([b, descriptions]) => {
-      this.snomedBranch = this.writeBranch(b);
-      this.descriptions = {data: descriptions.items || [], meta: {total: descriptions.total, offset: descriptions.offset}};
-    });
-
-    this.snomedTranslationService.loadTranslations({active: true, unlinked: true})
-      .subscribe(translations => this.translations = translations);
+    this.loader.wrap('load', this.snomedService.loadBranch(path)).subscribe(b => this.snomedBranch = this.writeBranch(b));
   }
 
-  private loadData(): void {
-    this.loader.wrap('init', this.snomedService.loadBranches()).subscribe(b => this.branches = b);
+  private loadAuthoringStats(path: string): void {
+    this.loader.wrap('load', forkJoin([
+      this.snomedService.loadBranchChangedFsn(path),
+      this.snomedService.loadBranchNewDescriptions(path),
+      this.snomedService.loadBranchNewSynonyms(path),
+      this.snomedService.loadBranchInactivatedSynonyms(path),
+      this.snomedService.loadBranchReactivatedSynonyms(path),
+      this.snomedTranslationService.loadTranslations({active: true, unlinked: true, branch: path.split('--').join('/')})
+    ])).subscribe(([changedFsn, newDescriptions, newSynonyms, inactivatedSynonyms, reactivatedSynonyms,
+      translations]
+    ) => {
+      this.changedFsn = changedFsn;
+      this.newDescriptions = newDescriptions;
+      this.newSynonyms = newSynonyms;
+      this.inactivatedSynonyms = inactivatedSynonyms;
+      this.reactivatedSynonyms = reactivatedSynonyms;
+      this.unlinkedTranslations = translations;
+    });
   }
 
   protected executeIntegrityCheck(): void {
@@ -113,16 +117,8 @@ export class SnomedBranchManagementComponent implements OnInit {
       type: this.importModalData.type,
       createCodeSystemVersion: this.importModalData.createCodeSystemVersion
     }, file)).subscribe(resp => {
-        this.pollJobStatus(resp.jobId);
-      });
-  }
-
-  protected loadDescriptions(): void {
-    if (!this.snomedBranch?.path) {
-      return;
-    }
-    this.loader.wrap('load-concepts', this.snomedService.findBranchDescriptions(this.snomedBranch.path, this.descriptionParams))
-      .subscribe(c => this.descriptions = {data: c.items || [], meta: {total: c.total, offset: c.offset}});
+      this.pollJobStatus(resp.jobId);
+    });
   }
 
   private writeBranch(b: SnomedBranch): SnomedBranch {
@@ -134,6 +130,23 @@ export class SnomedBranchManagementComponent implements OnInit {
       return '';
     }
     return c.split('/').join('--');
+  };
+
+  protected getAuthoringStatsData = (type: string): SnomedAuthoringStatsItem[] => {
+    switch (type) {
+      case 'changed-fsn':
+        return this.changedFsn;
+      case 'new-descriptions':
+        return this.newDescriptions;
+      case 'new-synonyms':
+        return this.newSynonyms;
+      case 'inactivated-synonyms':
+        return this.inactivatedSynonyms;
+      case 'reactivated-synonyms':
+        return this.reactivatedSynonyms;
+      default:
+        return [];
+    }
   };
 
   private getRF2File(jobId: string): void {
@@ -155,25 +168,13 @@ export class SnomedBranchManagementComponent implements OnInit {
     });
   }
 
-  protected addDescriptions(): void {
-    let translations = collect(this.translations.filter(t => !!t['checked']), t => t.conceptId);
-    let concepts: {[key: string]: {translationIds: number[]}} = {};
-    Object.keys(translations).forEach(conceptId => concepts[conceptId] = {translationIds: translations[conceptId].map(t => t.id)});
-    this.loader.wrap('descriptions', this.snomedService.conceptTransaction(this.snomedBranch.path, {concepts: concepts}))
-      .subscribe(() => this.loadBranch(this.snomedBranch.path));
+  protected deleteDescription(id: string): void {
+    this.loader.wrap('delete-description', this.snomedService.deleteDescription(this.snomedBranch.path, id))
+      .subscribe(() => this.loadAuthoringStats(this.snomedBranch.path));
   }
 
-  protected removeDescriptions(): void {
-    let descriptionIds = this.descriptions.data.filter(d => !!d['checked']).map(d => d.descriptionId);
-    descriptionIds.forEach(id => {
-      this.loader.wrap('descriptions', this.snomedService.deleteDescription(this.snomedBranch.path, id))
-        .subscribe(() => this.loadBranch(this.snomedBranch.path));
-    });
-  }
-
-  public conceptSelected(conceptId: string): void {
-    this.descriptionParams.conceptId = conceptId;
-    this.descriptionParams.offset = 0;
-    this.loadDescriptions();
+  protected addTranslationToBranch(id: number): void {
+    this.loader.wrap('add-translation', this.snomedTranslationService.addToBranch(id))
+      .subscribe(() => this.loadAuthoringStats(this.snomedBranch.path));
   }
 }

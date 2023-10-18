@@ -2,8 +2,8 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {compareStrings, DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {SnomedCodeSystem, SnomedCodeSystemVersion} from 'term-web/integration/_lib';
-import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
+import {SnomedCodeSystem, SnomedCodeSystemVersion} from 'app/src/app/integration/_lib';
+import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
 import {saveAs} from 'file-saver';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 

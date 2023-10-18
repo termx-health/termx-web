@@ -12,7 +12,7 @@ import {SnomedDescriptionItemSearchResult} from '../model/description/snomed-des
 import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-params';
 import {SnomedRefsetSearchResult} from '../model/refset/snomed-refset-search-result';
 import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-member-search-result';
-import {SnomedBranch, SnomedCodeSystem, SnomedDescription, SnomedDescriptionSearchParams} from 'term-web/integration/_lib';
+import {SnomedAuthoringStatsItem, SnomedBranch, SnomedCodeSystem, SnomedDescription, SnomedDescriptionSearchParams} from 'term-web/integration/_lib';
 import {LorqueProcess} from 'term-web/sys/_lib';
 import {saveAs} from 'file-saver';
 
@@ -37,6 +37,31 @@ export class SnomedLibService {
   public loadBranch(path: string): Observable<SnomedBranch> {
     path = path.split('/').join('--');
     return this.http.get(`${this.baseUrl}/branches/${path}`).pipe(map(c => c as SnomedBranch));
+  }
+
+  public loadBranchChangedFsn(path: string): Observable<SnomedAuthoringStatsItem[]> {
+    path = path.split('/').join('--');
+    return this.http.get(`${this.baseUrl}/${path}/authoring-stats/changed-fully-specified-names`).pipe(map(c => c as SnomedAuthoringStatsItem[]));
+  }
+
+  public loadBranchNewDescriptions(path: string): Observable<SnomedAuthoringStatsItem[]> {
+    path = path.split('/').join('--');
+    return this.http.get(`${this.baseUrl}/${path}/authoring-stats/new-descriptions`).pipe(map(c => c as SnomedAuthoringStatsItem[]));
+  }
+
+  public loadBranchNewSynonyms(path: string): Observable<SnomedAuthoringStatsItem[]> {
+    path = path.split('/').join('--');
+    return this.http.get(`${this.baseUrl}/${path}/authoring-stats/new-synonyms-on-existing-concepts`).pipe(map(c => c as SnomedAuthoringStatsItem[]));
+  }
+
+  public loadBranchInactivatedSynonyms(path: string): Observable<SnomedAuthoringStatsItem[]> {
+    path = path.split('/').join('--');
+    return this.http.get(`${this.baseUrl}/${path}/authoring-stats/inactivated-synonyms`).pipe(map(c => c as SnomedAuthoringStatsItem[]));
+  }
+
+  public loadBranchReactivatedSynonyms(path: string): Observable<SnomedAuthoringStatsItem[]> {
+    path = path.split('/').join('--');
+    return this.http.get(`${this.baseUrl}/${path}/authoring-stats/reactivated-synonyms`).pipe(map(c => c as SnomedAuthoringStatsItem[]));
   }
 
   public getRF2File(jobId: string): Observable<any> {
@@ -84,11 +109,6 @@ export class SnomedLibService {
 
   public findConceptChildren(conceptId: string): Observable<Array<SnomedConcept>> {
     return this.http.get(`${this.baseUrl}/concepts/${conceptId}/children`).pipe(map(r => r as Array<SnomedConcept>));
-  }
-
-  public findBranchDescriptions(path: string, params: SnomedDescriptionSearchParams): Observable<SnomedSearchResult<SnomedDescription>> {
-    path = path.split('/').join('--');
-    return this.http.get(`${this.baseUrl}/branches/${path}/descriptions`, {params: SearchHttpParams.build(params)}).pipe(map(r => r as SnomedSearchResult<SnomedDescription>));
   }
 
   public findDescriptions(params: SnomedDescriptionItemSearchParams): Observable<SnomedDescriptionItemSearchResult> {

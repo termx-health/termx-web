@@ -64,11 +64,6 @@ export class SnomedService extends SnomedLibService {
     return this.http.post(`${this.baseUrl}/imports`, fd);
   }
 
-  public conceptTransaction(path: string, request: {concepts: {[key: string]: {translationIds: number[]}}}): Observable<any> {
-    path = path.split('/').join('--');
-    return this.http.post(`${this.baseUrl}/branches/${path}/concepts/transaction`, request);
-  }
-
   public deleteDescription(path: string, descriptionId: string): Observable<any> {
     path = path.split('/').join('--');
     return this.http.delete(`${this.baseUrl}/branches/${path}/descriptions/${descriptionId}`);
