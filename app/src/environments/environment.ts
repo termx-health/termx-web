@@ -12,4 +12,6 @@ export const environment = {
   chefUrl: 'https://termx.kodality.dev/chef',
   plantUmlUrl: 'https://termx.kodality.dev/plantuml',
   fmlEditor: 'https://termx.kodality.dev/fml-editor',
+
+  snowstormUrl: 'https://snowstorm.kodality.dev/'
 };

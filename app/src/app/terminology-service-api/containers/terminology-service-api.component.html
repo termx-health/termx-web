@@ -3,9 +3,10 @@
     <div>
       <label>{{'web.tools.terminology-service-api.content' | translate}}</label>
     </div>
-    <m-button mDisplay="primary" mClass="m-justify-between" style="margin-top: 1rem" (click)="openTerminologyApi()">
-      {{'web.tools.terminology-service-api.button' | translate}}
-      <m-icon [mCode]="'cloud'"></m-icon>
-    </m-button>
+    <div class="m-items-middle" style="margin-top: 1rem">
+      <m-button mDisplay="primary" mClass="m-justify-between" (click)="openTermXApi()">TermX</m-button>
+      <m-button mDisplay="primary" mClass="m-justify-between" (click)="openTermXFhirApi()">TermX FHIR</m-button>
+      <m-button mDisplay="primary" mClass="m-justify-between" (click)="openSnowstormApi()">Snowstorm</m-button>
+    </div>
   </m-card>
 </m-form-row>
