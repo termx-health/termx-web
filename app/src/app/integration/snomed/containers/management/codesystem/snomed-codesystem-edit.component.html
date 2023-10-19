@@ -46,10 +46,12 @@
           </m-form-item>
         </m-form-row>
         <m-form-row>
+          <m-form-item *mFormCol mName="countryCode" mLabel="entities.snomed-codesystem.country-code">
+            <m-input name="countryCode" [(ngModel)]="snomedCodeSystem.countryCode"></m-input>
+          </m-form-item>
           <m-form-item *mFormCol mName="dailyBuildAvailable" mLabel="entities.snomed-codesystem.daily-build-available">
             <m-checkbox name="dailyBuildAvailable" [(ngModel)]="snomedCodeSystem.dailyBuildAvailable"></m-checkbox>
           </m-form-item>
-          <div *mFormCol></div>
         </m-form-row>
       </div>
 
