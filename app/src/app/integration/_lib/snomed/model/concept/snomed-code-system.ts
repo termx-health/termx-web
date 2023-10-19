@@ -2,6 +2,7 @@ export class SnomedCodeSystem {
   public name?: string;
   public shortName?: string;
   public branchPath?: string;
+  public dailyBuildAvailable?: boolean;
   public languages?: {[key:string]: string};
   public latestVersion?: SnomedCodeSystemVersion;
   public modules?: SnomedCodeSystemModule[];

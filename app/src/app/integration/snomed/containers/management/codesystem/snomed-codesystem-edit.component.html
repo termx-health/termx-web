@@ -45,6 +45,12 @@
             {{snomedCodeSystem.latestVersion?.dependantVersionEffectiveTime || '-'}}
           </m-form-item>
         </m-form-row>
+        <m-form-row>
+          <m-form-item *mFormCol mName="dailyBuildAvailable" mLabel="entities.snomed-codesystem.daily-build-available">
+            <m-checkbox name="dailyBuildAvailable" [(ngModel)]="snomedCodeSystem.dailyBuildAvailable"></m-checkbox>
+          </m-form-item>
+          <div *mFormCol></div>
+        </m-form-row>
       </div>
 
       <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">

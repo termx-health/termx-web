@@ -472,7 +472,8 @@
 			"name": "Name",
 			"versions": "Versions",
 			"imported": "Imported",
-			"dependant-version-effective-time": "Dependant version effective time"
+			"dependant-version-effective-time": "Dependant version effective time",
+			"daily-build-available": "Daily build available"
 		},
 		"snomed-concept": {
 			"concept-id": "Concept ID",

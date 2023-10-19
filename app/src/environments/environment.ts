@@ -13,5 +13,6 @@ export const environment = {
   plantUmlUrl: 'https://termx.kodality.dev/plantuml',
   fmlEditor: 'https://termx.kodality.dev/fml-editor',
 
-  snowstormUrl: 'https://snowstorm.kodality.dev/'
+  snowstormUrl: 'https://snowstorm-public.kodality.dev/',
+  snowstormDailyBuildUrl: 'https://snowstorm-public-dailybuild.kodality.dev/'
 };
