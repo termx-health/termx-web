@@ -15,12 +15,6 @@ export class Page {
   public links?: PageLink[];
   public tags?: PageTag[];
   public relations?: PageRelation[];
-
-
-  public createdAt?: Date;
-  public createdBy?: string;
-  public modifiedAt?: Date;
-  public modifiedBy?: string;
 }
 
 

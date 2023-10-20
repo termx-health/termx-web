@@ -18,7 +18,7 @@ import {group, isDefined} from '@kodality-web/core-util';
 })
 export class WikiSmartTextEditorViewComponent implements OnChanges {
   @Input() public value?: string;
-  @Input() public valueType?: 'html' | 'markdown';
+  @Input() public valueType?: 'html' | 'markdown' | string;
   @Input() public prerender?: boolean; // markdown option
 
   @Input() public comments: WikiComment[];

@@ -1,0 +1,104 @@
+<m-page mFull class="wiki" [twPrivilegeContext]="[space?.id, 'Wiki']">
+  <div class="page__container">
+    <div class="page__sidebar" style="padding: 1.5rem 1.5rem 1rem 2rem; overflow-y: auto; min-width: 400px">
+      <div class="tw-flex-container" style="width: 100%">
+        <h2 class="m-justify-between">
+          <span class="m-bold">History</span>
+          <div>
+            <m-icon-button mIcon="caret-down" (mClick)="move(1)"/>
+            <m-icon-button mIcon="caret-up" (mClick)="move(-1)"/>
+          </div>
+        </h2>
+
+        <nz-timeline [nzPending]="loader.state['history']">
+          <nz-timeline-item
+              *ngFor="let h of history; let idx = index"
+              [nzColor]="h.modifiedAt === pageContent.modifiedAt ? 'green' : auth.user?.username !== h.modifiedBy ? 'gray' : 'blue'"
+          >
+            <div class="m-justify-between m-items-top">
+              <!-- Info -->
+              <div>
+                <!-- Slug-->
+                <div>{{h.slug}}</div>
+
+                <!-- Meta -->
+                <div style="margin-top: 0.5rem; font-size: 0.9rem;" class="m-text-secondary">
+                  <div class="m-items-middle">
+                    <m-icon mCode="clock-circle"/>
+                    {{(h.modifiedAt ?? h.createdAt) | localDateTime}}
+                  </div>
+                  <div class="m-items-middle">
+                    <m-icon mCode="user"/>
+                    {{h.modifiedBy ?? h.createdBy}}
+                  </div>
+                </div>
+              </div>
+
+              <!-- Comparison -->
+              <div style="display: flex; gap: 0.2rem;">
+                <m-button
+                    mSize="small"
+                    [mDisplay]="sourceItem === h ? 'default' : 'text'"
+                    (mClick)="setSource(h)"
+                    [disabled]="idx <= history.indexOf(targetItem)"
+                >
+                  A
+                </m-button>
+                <m-button
+                    mSize="small"
+                    [mDisplay]="targetItem === h ? 'primary' : 'text'"
+                    (mClick)="setTarget(h)"
+                >
+                  B
+                </m-button>
+              </div>
+            </div>
+          </nz-timeline-item>
+
+          <nz-timeline-item *ngIf="history.length < historyTotal">
+            <m-button mDisplay="dashed" (mClick)="queryNext()" [disabled]="loader.state['history']">Load more</m-button>
+          </nz-timeline-item>
+        </nz-timeline>
+      </div>
+    </div>
+
+
+    <div class="page__wrapper">
+      <div class="page page__content">
+        <tw-wiki-page-header [pageContent]="$any(targetItem)">
+          <ng-container *twPrivileged>
+            <m-icon-button mIcon="export"
+                [routerLink]="['../edit']"
+                [queryParams]="{version: targetItem?.id}"
+                m-tooltip
+                mTitle="Use as template for editing"
+            />
+            <m-divider mVertical/>
+          </ng-container>
+
+          <m-icon-button [mIcon]="viewSource ? 'eye-invisible' : 'eye'" (mClick)="viewSource = !viewSource" m-tooltip mTitle="Preview version's content"/>
+          <m-icon-button mIcon="copy" (mClick)="copy()"/>
+
+          <m-divider mVertical/>
+          <m-icon-button mIcon="read"
+              (mClick)="viewMode = viewMode === 'line-by-line' ? 'side-by-side' : 'line-by-line'"
+              [disabled]="viewSource"
+              m-tooltip
+              mTitle="Change the view mode"
+              mPosition="topRight"
+          />
+        </tw-wiki-page-header>
+
+        <div
+            *ngIf="!viewSource && (sourceItem?.content | apply: compare: targetItem?.content: viewMode) as html"
+            [innerHTML]="html"
+            style="background-color: var(--d2h-bg-color)"
+        ></div>
+
+        <m-card *ngIf="viewSource">
+          <tw-smart-text-editor-view [valueType]="targetItem.contentType" [value]="targetItem.content"/>
+        </m-card>
+      </div>
+    </div>
+  </div>
+</m-page>

@@ -1,6 +1,6 @@
-import {Injectable} from '@angular/core';
+import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {map, Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Page, PageAttachment} from '../models/page';
@@ -10,12 +10,14 @@ import {PageContent} from '../models/page-content';
 import {PageRelationSearchParams} from '../models/page-relation-search-params';
 import {PageRelation} from '../models/page-relation';
 import {PageTreeItem} from 'term-web/wiki/_lib/page/models/page-tree.item';
+import {PageContentHistoryItem} from 'term-web/wiki/_lib/page/models/page-content-history-item';
 
 @Injectable()
 export class PageLibService {
+  protected http = inject(HttpClient);
   protected baseUrl = environment.termxApi;
 
-  public constructor(protected http: HttpClient) { }
+  // page
 
   public loadPage(id: number): Observable<Page> {
     return this.http.get<Page>(`${this.baseUrl}/pages/${id}`);
@@ -29,18 +31,45 @@ export class PageLibService {
     return this.http.get<PageTreeItem[]>(`${this.baseUrl}/pages/tree?spaceId=${spaceId}`);
   }
 
+  public getPath(pageId: number): Observable<number[]> {
+    return this.http.get<number[]>(`${this.baseUrl}/pages/${pageId}/path`);
+  }
+
+
+  // contents
+
   public searchPageContents(params: PageContentSearchParams = {}): Observable<SearchResult<PageContent>> {
     return this.http.get<SearchResult<PageContent>>(`${this.baseUrl}/page-contents`, {params: SearchHttpParams.build(params)});
   }
 
 
+  public loadPageContentHistoryItem(pageId: number, contentId: number, id: number): Observable<PageContentHistoryItem> {
+    return this.http.get<SearchResult<PageContentHistoryItem>>(`${this.baseUrl}/pages/${pageId}/contents/${contentId}/history`, {
+      params: SearchHttpParams.build({
+        ids: id,
+        limit: 1
+      })
+    }).pipe(map(r => r.data[0]));
+  }
+
+  public loadPageContentHistory(pageId: number, contentId: number, opts: {offset: number, limit: number}): Observable<SearchResult<PageContentHistoryItem>> {
+    return this.http.get<SearchResult<PageContentHistoryItem>>(`${this.baseUrl}/pages/${pageId}/contents/${contentId}/history`, {
+      params: SearchHttpParams.build({
+        offset: opts?.offset,
+        limit: opts?.limit,
+        sort: '-modified'
+      })
+    });
+  }
+
+  // relations
+
   public searchPageRelations(params: PageRelationSearchParams = {}): Observable<SearchResult<PageRelation>> {
     return this.http.get<SearchResult<PageRelation>>(`${this.baseUrl}/page-relations`, {params: SearchHttpParams.build(params)});
   }
 
-  public getPath(pageId: number): Observable<number[]> {
-    return this.http.get<number[]>(`${this.baseUrl}/pages/${pageId}/path`);
-  }
+
+  // attachments
 
   public loadAttachments(pageId: number): Observable<PageAttachment[]> {
     return this.http.get<PageAttachment[]>(`${this.baseUrl}/pages/${pageId}/files`);

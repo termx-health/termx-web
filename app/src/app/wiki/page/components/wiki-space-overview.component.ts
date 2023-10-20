@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {PageService} from '../services/page.service';
 import {Space} from 'term-web/space/_lib';
-import {Page, PageContent} from 'term-web/wiki/_lib';
+import {PageContent} from 'term-web/wiki/_lib';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -17,10 +17,11 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class WikiSpaceOverviewComponent implements OnChanges {
   @Input() public space: Space;
+  @Input() public lang: string;
   @Output() public viewPage = new EventEmitter<string>();
 
   protected totalPages: number;
-  protected recentlyModified: Page[] = [];
+  protected recentlyModified: PageContent[] = [];
 
   public constructor(
     private pageService: PageService,
@@ -28,19 +29,25 @@ export class WikiSpaceOverviewComponent implements OnChanges {
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['space']) {
+    if (changes['space'] || changes['lang']) {
       this.recentlyModified = [];
 
       if (this.space) {
-        this.pageService.searchPages({spaceIds: String(this.space?.id), limit: 5, sort: '-modified'}).subscribe(resp => {
+        this.pageService.searchPages({
+          spaceIds: String(this.space?.id),
+          limit: 0
+        }).subscribe(resp => {
           this.totalPages = resp.meta.total;
+        });
+
+        this.pageService.searchPageContents({
+          spaceIds: String(this.space?.id),
+          limit: 10,
+          sort: '-modified'
+        }).subscribe(resp => {
           this.recentlyModified = resp.data;
         });
       }
     }
   }
-
-  protected localizedContent = (page: Page): PageContent => {
-    return page?.contents?.find(c => c.lang === this.translateService.currentLang) || page?.contents?.[0];
-  };
 }

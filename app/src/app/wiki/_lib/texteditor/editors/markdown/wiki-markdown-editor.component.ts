@@ -71,7 +71,7 @@ export class WikiMarkdownEditorComponent implements AfterViewInit, ControlValueA
 
   private updateDocument(doc: string): void {
     this.view?.dispatch({
-      changes: {from: 0, insert: doc}
+      changes: {from: 0, to: this.view?.state.doc.length, insert: doc}
     });
   }
 

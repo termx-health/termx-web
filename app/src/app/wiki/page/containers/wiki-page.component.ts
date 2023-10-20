@@ -8,6 +8,7 @@ import {Space} from 'term-web/space/_lib';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 import {CodeName} from '@kodality-web/marina-util';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   templateUrl: './wiki-page.component.html',
@@ -24,11 +25,12 @@ export class WikiPageComponent implements OnInit {
   protected loader = new LoadingManager();
 
   public constructor(
+    protected translateService: TranslateService,
+    protected preferences: PreferencesService,
+    private spaceService: WikiSpaceService,
+    private pageService: PageService,
     private router: Router,
     private route: ActivatedRoute,
-    private pageService: PageService,
-    private spaceService: WikiSpaceService,
-    protected preferences: PreferencesService,
     private destroy$: DestroyService,
   ) { }
 
@@ -124,6 +126,10 @@ export class WikiPageComponent implements OnInit {
     };
 
     handlers[type]?.();
+  }
+
+  public viewHistory(): void {
+    this.router.navigate(['/wiki', this.activeSpace, this.slug, 'history']);
   }
 
 
