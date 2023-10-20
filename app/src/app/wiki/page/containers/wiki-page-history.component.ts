@@ -1,5 +1,3 @@
-import {createPatch} from 'diff';
-import {html} from 'diff2html';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {PageService} from '../services/page.service';
@@ -124,62 +122,6 @@ export class WikiPageHistoryComponent implements OnInit {
     this.clipboard.copy(this.targetItem.content);
   }
 
-
-  /* Diff */
-
-  protected compare = (source: string, target: string, viewMode: OutputFormatType): string => {
-    source ||= '';
-    target ||= '';
-
-    const patch = createPatch('test', source, target, '', '', {
-      // context: Math.max(source.match(/\n/g)?.length, target.match(/\n/g)?.length)
-    });
-
-    return html(patch, {
-      diffStyle: 'char',
-      outputFormat: viewMode,
-      drawFileList: false,
-      rawTemplates: {
-        'side-by-side-file-diff': `
-          <div id="{{fileHtmlId}}" class="d2h-file-wrapper" data-lang="{{file.language}}">
-            <div class="d2h-files-diff">
-                <div class="d2h-file-side-diff">
-                    <div class="d2h-code-wrapper">
-                        <table class="d2h-diff-table">
-                            <tbody class="d2h-diff-tbody">
-                            {{{diffs.left}}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-                <div class="d2h-file-side-diff">
-                    <div class="d2h-code-wrapper">
-                        <table class="d2h-diff-table">
-                            <tbody class="d2h-diff-tbody">
-                            {{{diffs.right}}}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-          </div>
-        `,
-        'line-by-line-file-diff': `
-          <div id="{{fileHtmlId}}" class="d2h-file-wrapper" data-lang="{{file.language}}">
-            <div class="d2h-file-diff">
-              <div class="d2h-code-wrapper">
-                <table class="d2h-diff-table">
-                  <tbody class="d2h-diff-tbody">
-                    {{{diffs}}}
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-        `,
-      }
-    });
-  };
 
 
   /* Utils */

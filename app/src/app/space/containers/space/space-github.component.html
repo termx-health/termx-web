@@ -74,7 +74,8 @@
                   (mOnConfirm)="pull()"
                   [mLoading]="saving"
                   [disabled]="saving || (selection | apply:noneSelected)"
-                  style="width: 100%">
+                  style="width: 100%"
+              >
                 <ng-template #pullConfirm>
                   <div>
                     <div>{{'web.space.github-pull-confirm' | translate}}</div>
@@ -88,7 +89,8 @@
                   (click)="pushModalVisible = true"
                   [mLoading]="saving"
                   [disabled]="saving || (selection | apply:noneSelected)"
-                  style="width: 100%">
+                  style="width: 100%"
+              >
                 <m-icon mCode="arrow-up"></m-icon>&nbsp; <span>{{'web.space.github-push' | translate}}</span>
                 <ng-container *ngTemplateOutlet="github"></ng-container>
               </m-button>
@@ -128,15 +130,10 @@
 
 <m-modal #diffModal [mVisible]="!!diff" (mClose)="diff = null" mClass="modal--wide">
   <ng-container *m-modal-content>
-    <m-spinner [mLoading]="!diff.left && !diff.right">
-      <div class="diff">
-        <div>
-          <pre>{{diff.left}}</pre>
-        </div>
-        <div>
-          <pre>{{diff.right}}</pre>
-        </div>
-      </div>
-    </m-spinner>
+    <m-skeleton *ngIf="!diff.left && !diff.right; else difft" mLoading/>
+
+    <ng-template #difft>
+      <tw-diff-view [src]="diff.left" [tgt]="diff.right" display="side-by-side"/>
+    </ng-template>
   </ng-container>
 </m-modal>

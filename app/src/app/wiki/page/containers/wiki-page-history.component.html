@@ -110,11 +110,7 @@
         </tw-wiki-page-header>
 
         <ng-container>
-          <div
-              *ngIf="!viewSource"
-              [innerHTML]="sourceItem?.content | apply: compare: targetItem?.content: viewMode"
-              style="background-color: var(--d2h-bg-color)"
-          ></div>
+          <tw-diff-view *ngIf="!viewSource" [src]="sourceItem?.content" [tgt]="targetItem?.content" [display]="viewMode"/>
 
           <m-card *ngIf="viewSource">
             <tw-smart-text-editor-view [valueType]="targetItem.contentType" [value]="targetItem.content"/>

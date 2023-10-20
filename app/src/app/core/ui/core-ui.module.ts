@@ -22,6 +22,7 @@ import {TableFilterComponent} from 'term-web/core/ui/components/table-container/
 import {DropListComponent} from 'term-web/core/ui/components/drop-list/drop-list.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import {CopyContainerComponent} from 'term-web/core/ui/components/copy-container/copy-container.component';
+import {DiffViewComponent} from 'term-web/core/ui/components/diff/diff-view.component';
 
 
 const commonModules = [
@@ -47,6 +48,7 @@ const components = [
   TableComponent,
   TableFilterComponent,
   TerminologyConceptSearchComponent,
+  DiffViewComponent
 ];
 
 const directives = [
