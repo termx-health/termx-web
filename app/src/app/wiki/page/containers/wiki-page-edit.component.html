@@ -4,7 +4,12 @@
 
 
     <div class="m-items-middle">
-      <m-button (click)="saveContent()" mDisplay="primary">
+      <ng-container *ngIf="versionInfo">
+        <span class="m-text-secondary" style="font-size: 0.9rem">Version {{versionInfo | localDateTime}}</span>
+        <m-divider mVertical></m-divider>
+      </ng-container>
+
+      <m-button (click)="saveContent()" mDisplay="primary" [disabled]="loader.state['init']">
         <div class="m-items-middle">
           <m-icon mCode="save"/>
           {{'core.btn.save' | translate}}
@@ -17,7 +22,7 @@
 
       <m-divider mVertical></m-divider>
       <m-icon-button mIcon="comment" (mClick)="toggleComments()" [disabled]="!pageComments?.length"/>
-      <m-icon-button mIcon="setting" (mClick)="pageModal.open()"/>
+      <m-icon-button mIcon="setting" (mClick)="pageModal.open()" [disabled]="loader.state['init']"/>
     </div>
   </div>
 
@@ -65,7 +70,7 @@
         [class.editor__main--markdown]="pageContent?.contentType === 'markdown'"
     >
       <tw-smart-text-editor
-          *ngIf="pageContent"
+          *ngIf="pageContent && !loader.state['init']"
           name="content"
           [(ngModel)]="pageContent.content"
           [valueType]="pageContent.contentType"
@@ -75,7 +80,14 @@
       ></tw-smart-text-editor>
     </div>
 
-    <m-collapse-panel class="editor__comments-wrapper" mKey="page-editor-comment" mCollapsePosition="right" mResizable [mResizableMinWidth]="250" *ngIf="showComments">
+    <m-collapse-panel
+        class="editor__comments-wrapper"
+        mKey="page-editor-comment"
+        mCollapsePosition="right"
+        mResizable
+        [mResizableMinWidth]="250"
+        *ngIf="showComments"
+    >
       <div class="editor__comments">
         <tw-wiki-page-comments
             [pageContent]="pageContent"

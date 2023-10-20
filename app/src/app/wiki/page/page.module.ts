@@ -16,13 +16,15 @@ import {WikiPageDetailsComponent} from './containers/wiki-page-details.component
 import {WikiSpaceOverviewComponent} from './components/wiki-space-overview.component';
 import {PageCommentService} from './services/page-comment.service';
 import {WikiPageCommentsComponent} from './components/wiki-page-comments.component';
-import {WikiPageCommentComponent} from 'term-web/wiki/page/components/wiki-page-comment.component';
-import {WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
+import {WikiPageCommentComponent} from './components/wiki-page-comment.component';
+import {WikiSpaceService} from './services/wiki-space.service';
+import {WikiPageHistoryComponent} from './containers/wiki-page-history.component';
 
 
 export const WIKI_PAGE_ROUTES: Routes = [
   {path: ':slug', component: WikiPageComponent},
   {path: ':slug/edit', component: WikiPageEditComponent, data: {privilege: ['*.Wiki.edit']}},
+  {path: ':slug/history', component: WikiPageHistoryComponent},
   {path: '', component: WikiPageComponent},
 ];
 
@@ -41,6 +43,7 @@ export const WIKI_PAGE_ROUTES: Routes = [
     WikiPageComponent,
     WikiPageDetailsComponent,
     WikiPageEditComponent,
+    WikiPageHistoryComponent,
 
     // components
     WikiPageTreeComponent,
