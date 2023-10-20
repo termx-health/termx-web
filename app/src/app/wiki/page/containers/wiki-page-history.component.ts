@@ -13,6 +13,7 @@ import {Location} from '@angular/common';
 import {OutputFormatType} from 'diff2html/lib/types';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {AuthService} from 'term-web/core/auth';
+import {NzTimelineItemColor} from 'ng-zorro-antd/timeline/typings';
 
 @Component({
   templateUrl: 'wiki-page-history.component.html',
@@ -178,5 +179,18 @@ export class WikiPageHistoryComponent implements OnInit {
         `,
       }
     });
+  };
+
+
+  /* Utils */
+
+  protected getDotColor = (item: PageContentHistoryItem, pageContent: PageContent): NzTimelineItemColor => {
+    if (item.modifiedAt === pageContent.modifiedAt) {
+      return 'green';
+    }
+    if (item.modifiedBy === this.auth.user?.username) {
+      return 'blue';
+    }
+    return 'gray';
   };
 }

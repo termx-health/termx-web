@@ -7,7 +7,7 @@
     <div class="m-items-middle m-text-secondary" *ngIf="pageContent | apply: author as author">
       <div [innerHTML]="'web.wiki-page.header.modified' | translate: ({user: author.by, date: author.at | localDateTime})"></div>
 
-<!--      <m-icon-button *ngIf="viewHistory.observed" mIcon="history" (mClick)="viewHistory.emit()"/>-->
+      <m-icon-button *ngIf="viewHistory.observed" mIcon="history" (mClick)="viewHistory.emit()"/>
     </div>
   </div>
 

@@ -2058,6 +2058,9 @@
 				"vs": "Value Set"
 			},
 			"edit": {
+				"header": {
+					"version": "Version {{version}}"
+				},
 				"image-modal": {
 					"choose-file": "Choose a file to upload",
 					"header": "Files"
@@ -2143,9 +2146,27 @@
 				"content-header": "Add content",
 				"content-type-tooltip": "Changing the content type can change the content value",
 				"copy-to-clipboard": "Copy {{val}}",
-				"edit-header": "Edit page",
+				"edit-header": "Configure",
 				"relation-header": "Page relations",
 				"usages": "Usages"
+			},
+			"history": {
+				"timeline": {
+					"header": "History",
+					"source-item": "A",
+					"target-item": "B",
+					"load-more": "Load more"
+				},
+				"header": {
+					"tooltips": {
+						"edit": "Use as template for editing",
+						"copy-raw": "Copy raw file",
+						"preview": "Preview",
+						"view-diff": "Diff",
+						"side-by-side": "Side-by-side view",
+						"line-by-line": "Line-by-line view"
+					}
+				}
 			}
 		}
 	}

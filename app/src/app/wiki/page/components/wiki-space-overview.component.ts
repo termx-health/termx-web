@@ -42,7 +42,7 @@ export class WikiSpaceOverviewComponent implements OnChanges {
 
         this.pageService.searchPageContents({
           spaceIds: String(this.space?.id),
-          limit: 10,
+          limit: 6,
           sort: '-modified'
         }).subscribe(resp => {
           this.recentlyModified = resp.data;
