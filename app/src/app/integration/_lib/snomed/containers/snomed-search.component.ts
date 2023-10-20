@@ -164,10 +164,17 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
     }
   }
 
-  protected exportConceptCsv(): void {
+  protected exportConceptCsv(type: 'refset' | 'ecl'): void {
+    let params:SnomedConceptSearchParams = {};
+    if (type === 'refset') {
+      params.ecl = '^' + this.refsetParams?.referenceSet;
+    }
+    if (type === 'ecl') {
+      params.ecl = this.eclParams?.ecl;
+    }
     this.loading['csv-export'] = true;
-    this.snomedService.startConceptCsvExport(this.eclParams).subscribe(process => {
-     this.lorqueService.pollFinishedProcess(process.id, this.destroy$).subscribe(status => {
+    this.snomedService.startConceptCsvExport(params).subscribe(process => {
+      this.lorqueService.pollFinishedProcess(process.id, this.destroy$).subscribe(status => {
         if (status === 'failed') {
           this.lorqueService.load(process.id).subscribe(p => this.notificationService.error(p.resultText));
           return;
