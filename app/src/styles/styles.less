@@ -1,28 +1,24 @@
 @import '../../../node_modules/ng-zorro-antd/ng-zorro-antd.less';
 @import '../../../node_modules/@kodality-web/marina-ui/mui.styles.less';
 @import '../../../node_modules/@kodality-web/marina-ui/src/style/themes/default';
-
-:root {
-  --color-action-bar-background: @mui-bg-color-light;
-}
-
+@import '../../../node_modules/diff2html/bundles/css/diff2html.min.css';
 
 @primary-color: #1464C0;
-
-:root {
-  --color-table-header-background: #fafafa;
-  --color-table-header-background--sorter: #f9f9f9;
-}
 
 html {
   font-size: 14px;
 }
 
+:root {
+  --color-action-bar-background: @mui-bg-color-light;
+  --color-table-header-background: #fafafa;
+  --color-table-header-background--sorter: #f9f9f9;
+}
+
+
 // MUI overrides
 
-.m-card__title,
-.ant-form-item-label > label,
-.m-table td > a {
+.m-card__title, .ant-form-item-label > label, .m-table td > a {
   font-weight: bold;
 }
 
@@ -44,8 +40,56 @@ html {
 }
 
 m-markdown {
+  position: relative;
+
   h1, h2, h3, h4, h5, h6 {
     letter-spacing: -0.06rem;
+  }
+
+
+  .comment--marked {
+    position: relative;
+
+    &::after {
+      position: absolute;
+      content: '';
+      top: 0;
+      bottom: 0;
+      right: calc(100% + var(--padding-card-horizontal) - 2px);
+      width: 2px;
+      background: var(--color-yellow-6);
+    }
+  }
+
+  .footnote-item p {
+    display: contents;
+  }
+}
+
+.debug-md {
+  /* todo: remove me */
+
+  m-markdown *[data-source-line] {
+    position: relative;
+
+    &::before {
+      content: attr(data-source-line);
+      position: absolute;
+      background: wheat;
+      margin-right: 3px;
+      font-family: monospace;
+      font-size: 0.7rem;
+      font-weight: initial;
+    }
+  }
+
+  .comment-line-number {
+    display: block !important;
+    font-size: 0.7rem;
+    background: wheat;
+    position: absolute;
+    left: -.8rem;
+    top: -.7rem
   }
 }
 
@@ -53,10 +97,6 @@ m-markdown {
   button {
     color: currentColor;
   }
-}
-
-a {
-  font-size: 1em;
 }
 
 .m-text-secondary {
@@ -145,7 +185,6 @@ a {
   border-radius: 0 0 var(--border-radius) var(--border-radius);
 }
 
-
 .tw-circled {
   border: 1px solid;
   border-radius: 50%;
@@ -160,6 +199,7 @@ a {
   justify-content: center;
 }
 
+
 // NG-zorro overrides
 
 .ant-tabs-tabpane {
@@ -168,47 +208,21 @@ a {
   outline: none;
 }
 
-m-markdown {
-  position: relative;
 
-  .comment--marked {
-    position: relative;
+// diff2html
 
-    &::after {
-      position: absolute;
-      content: '';
-      top: 0;
-      bottom: 0;
-      right: calc(100% + var(--padding-card-horizontal) - 2px);
-      width: 2px;
-      background: var(--color-yellow-6);
-    }
-  }
+:root {
+  --d2h-ins-bg-color: #dcfce7;
+  --d2h-ins-border-color: #bbf7d0;
+  --d2h-ins-highlight-bg-color: #86efac;
+  --d2h-ins-label-color: #22c55e;
+
+  --d2h-del-bg-color: #fee2e2;
+  --d2h-del-border-color: #fecaca;
+  --d2h-del-highlight-bg-color: #fca5a5;
+  --d2h-del-label-color: #ef4444;
 }
 
-.debug-md {
-  /* todo: remove me */
-
-  m-markdown *[data-source-line] {
-    position: relative;
-
-    &::before {
-      content: attr(data-source-line);
-      position: absolute;
-      background: wheat;
-      margin-right: 3px;
-      font-family: monospace;
-      font-size: 0.7rem;
-      font-weight: initial;
-    }
-  }
-
-  .comment-line-number {
-    display: block !important;
-    font-size: 0.7rem;
-    background: wheat;
-    position: absolute;
-    left: -.8rem;
-    top: -.7rem
-  }
+.d2h-file-wrapper {
+  margin-bottom: 0;
 }

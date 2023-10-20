@@ -43,19 +43,32 @@
             <div class="m-items-middle"><label>{{'Sync'}}</label><m-icon mCode="sync"></m-icon></div>
           </m-button>
         </div>
-        <pre>{{current}}</pre>
+
+        <m-no-data *ngIf="!current"/>
+        <tw-diff-view *ngIf="current" [value]="current | apply: normalize"/>
       </m-card>
+
       <m-card style="max-width: 33%">
         <div *m-card-header class="m-justify-between">
-          <label>{{terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName}}</label>
+          <label>{{terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName: '...'}}</label>
           <m-button mDisplay="primary" (mClick)="sync('external')">
             <div class="m-items-middle"><label>{{'Sync'}}</label><m-icon mCode="sync"></m-icon></div>
           </m-button>
         </div>
-        <pre>{{comparable}}</pre>
+
+        <m-no-data *ngIf="!comparable"/>
+        <tw-diff-view *ngIf="comparable" [value]="comparable | apply: normalize"/>
       </m-card>
-      <m-card style="max-width: 33%">
-        <pre id="display"></pre>
+
+      <m-card style="max-width: 33%" *ngIf="{mode: 'line-by-line'} as d">
+        <div *m-card-header class="m-justify-between">
+          <label>{{'Diff'}}</label>
+          <m-button (mClick)="d.mode = d.mode === 'line-by-line' ? 'side-by-side' : 'line-by-line'">
+            <m-icon [mCode]="d.mode === 'line-by-line' ? 'read' : 'pic-center' "/>
+          </m-button>
+        </div>
+
+        <tw-diff-view *ngIf="current && comparable" [src]="current | apply: normalize" [tgt]="comparable | apply: normalize" full [display]="d.mode"/>
       </m-card>
     </div>
   </div>

@@ -21,6 +21,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   @Output() public editPage = new EventEmitter<string>();
   @Output() public viewPage = new EventEmitter<string>();
   @Output() public viewResource = new EventEmitter<{type: string, id: string, options: {space?: string}}>();
+  @Output() public viewHistory = new EventEmitter();
   @Output() public pageDeleted = new EventEmitter<Page>();
 
   protected pageContent?: PageContent;
@@ -133,6 +134,9 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     this.viewResource.emit({type: type, id: page, options: {space}});
   }
 
+  protected openHistory(): void {
+    this.viewHistory.emit();
+  }
 
   /* WikiComments */
 

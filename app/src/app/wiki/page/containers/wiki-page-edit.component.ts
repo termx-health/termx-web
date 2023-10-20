@@ -4,7 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {Page, PageAttachment, PageComment, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
 import {PageService} from '../services/page.service';
 import {Clipboard} from '@angular/cdk/clipboard';
-import {mergeMap} from 'rxjs';
+import {combineLatest, mergeMap} from 'rxjs';
 import {SpaceService} from 'term-web/space/services/space.service';
 import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 import {MuiModalContainerComponent} from '@kodality-web/marina-ui';
@@ -21,8 +21,9 @@ export class WikiPageEditComponent implements OnInit {
   public pageComments?: PageComment[];
 
   protected loader = new LoadingManager();
-  public showPreview = false;
-  public showComments = false;
+  protected showPreview = false;
+  protected showComments = false;
+  protected versionInfo: Date;
 
   @ViewChild(WikiSmartTextEditorComponent) public editor?: WikiSmartTextEditorComponent;
 
@@ -37,17 +38,18 @@ export class WikiPageEditComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.route.paramMap.subscribe(routeParam => {
+    combineLatest([this.route.paramMap, this.route.queryParamMap]).subscribe(([routeParam, qParams]) => {
       const space = routeParam.get('space');
       const slug = routeParam.get('slug');
+      const version = qParams.get('version');
       if (space && slug) {
-        this.loadContent(space, slug);
+        this.loadContent(space, slug, {version: Number(version)});
       }
     });
   }
 
 
-  private loadContent(space: string, slug: string): void {
+  private loadContent(space: string, slug: string, opts: {version: number}): void {
     const req$ = this.spaceService.search({codes: space, limit: 1}).pipe(mergeMap(resp => {
       return this.pageService.searchPages({
         slugs: slug,
@@ -76,6 +78,13 @@ export class WikiPageEditComponent implements OnInit {
       })).subscribe(comments => {
         this.pageComments = comments.data;
       });
+
+      if (opts?.version) {
+        this.loader.wrap('init', this.pageService.loadPageContentHistoryItem(this.pageContent.pageId, this.pageContent.id, opts.version)).subscribe(ver => {
+          this.pageContent.content = ver.content;
+          this.versionInfo = ver.modifiedAt;
+        });
+      }
     });
   }
 

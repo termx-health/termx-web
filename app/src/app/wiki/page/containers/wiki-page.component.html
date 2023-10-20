@@ -3,12 +3,12 @@
   <!-- Space selector -->
   <ng-template #spaceSelector>
     <m-dropdown [mHideIfEmpty]="false">
-      <m-button *m-dropdown-container mDisplay="text">
-        <div class="m-items-middle">
+      <div *m-dropdown-container>
+        <div class="m-items-middle" style="color: var(--color-text)">
           {{loader.state['spaces'] ? '...' : (space?.names | localName) ?? 'web.wiki-page.spaces' | translate}}
           <m-icon mCode="down"></m-icon>
         </div>
-      </m-button>
+      </div>
 
       <ng-container *ngFor="let s of spaces">
         <ng-container *ngIf="s.id !== space?.id">
@@ -38,6 +38,7 @@
       <tw-wiki-space-overview
           *ngIf="isOverviewSelected" class="page__wrapper"
           [space]="space"
+          [lang]="translateService.currentLang"
           (viewPage)="viewPage($event)"
       ></tw-wiki-space-overview>
 
@@ -50,6 +51,7 @@
           (viewPage)="viewPage($event)"
           (editPage)="editPage($event)"
           (viewResource)="viewResource({type: $event.type, id: $event.id, opts: $event.options})"
+          (viewHistory)="viewHistory()"
           (pageDeleted)="viewRoot()"
       ></tw-wiki-page-details>
     </ng-container>

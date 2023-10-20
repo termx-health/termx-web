@@ -4,7 +4,6 @@ import {combineLatest, forkJoin, map, Observable, of, takeUntil} from 'rxjs';
 import {collect, DestroyService, group} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirValueSetLibService} from '../../../fhir/_lib';
-import {diffWords} from 'diff';
 import {PackageResourceService} from '../../services/package-resource.service';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
@@ -80,36 +79,10 @@ export class SpaceDiffComponent implements OnInit {
       this.current = current;
       this.loadServerResource(JSON.parse(current).id, serverCode).subscribe(comparable => {
         this.comparable = comparable;
-        this.compare();
       });
     }).add(() => this.loading = false);
   }
 
-  public compare(): void {
-    if (!this.current || !this.comparable) {
-      return;
-    }
-    let span = null;
-
-    const diff = diffWords(this.current, this.comparable),
-      display = document.getElementById('display'),
-      fragment = document.createDocumentFragment();
-    display.innerHTML = '';
-
-    let different = false;
-    diff.forEach((part) => {
-      const color = part.added ? 'green' : part.removed ? 'red' : 'grey';
-      different = different || ((part.added || part.removed) && part.value.trim() !== '');
-      span = document.createElement('span');
-      span.style.color = color;
-      span.appendChild(document.createTextNode(part.value));
-      fragment.appendChild(span);
-    });
-
-    if (different) {
-      display.appendChild(fragment);
-    }
-  }
 
   private loadData(): void {
     combineLatest([
@@ -141,7 +114,7 @@ export class SpaceDiffComponent implements OnInit {
   }
 
   public sync(type: 'local' | 'external'): void {
-    const resourceId =this.diffItem?.resource?.id;
+    const resourceId = this.diffItem?.resource?.id;
     if (resourceId) {
       this.loading = true;
       this.packageResourceService.sync(resourceId, type).subscribe({
@@ -160,5 +133,13 @@ export class SpaceDiffComponent implements OnInit {
         this.notificationService.error("web.space.resource-import-error-message", jobResp.errors.join(","), {duration: 0, closable: true});
       }
     }).add(() => this.loading = false);
+  }
+
+  protected normalize(json: string): string {
+    try {
+      return JSON.stringify(JSON.parse(json), null, 2);
+    } catch (e) {
+      return json;
+    }
   }
 }

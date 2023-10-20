@@ -1,5 +1,5 @@
 <m-spinner class="page page__wrapper" [mLoading]="isLoading">
-  <tw-wiki-page-header *ngIf="page?.id" [page]="page" [slug]="slug">
+  <tw-wiki-page-header *ngIf="page?.id" [pageContent]="pageContent" [slug]="slug" (viewHistory)="openHistory()">
     <m-button (mClick)="editPage.emit(pageContent.slug)" *twPrivileged>
       <div class="m-items-middle">
         <m-icon mCode="edit"></m-icon>

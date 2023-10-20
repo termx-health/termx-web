@@ -13,17 +13,21 @@
 <h3 style="margin-top: 2rem; margin-bottom: 1rem">
   {{'web.wiki-page.space.recently-modified.header' | translate}}
 </h3>
-<div class="equal-columns">
-  <ng-container *ngFor="let page of recentlyModified">
-    <ng-container *ngIf="page | apply: localizedContent as c">
-      <m-card [mTitle]="c.name" class="m-clickable" (click)="viewPage.emit(c.slug)">
-        <div class="m-whitespace" style="overflow: hidden">{{c.content | abbreviate: 200}}</div>
 
-        <div *m-card-footer class="m-text-secondary" style="font-size: 0.9rem">
-          <m-icon mCode="clock-circle"></m-icon>
-          {{(page.modifiedAt ? 'web.wiki-page.space.recently-modified.updated' : 'web.wiki-page.space.recently-modified.created') | translate: ({date: (page.modifiedAt ?? page.createdAt) | localDateTime})}}
-        </div>
-      </m-card>
-    </ng-container>
+<div class="equal-columns">
+  <ng-container *ngFor="let c of recentlyModified">
+    <m-card class="m-clickable" (click)="viewPage.emit(c.slug)">
+      <div *m-card-header class="m-justify-between">
+        <div class="m-bold">{{c.name}}</div>
+        <div class="m-text-secondary" style="font-size: 0.9rem; text-transform: uppercase">{{c.lang}}</div>
+      </div>
+
+      <div class="m-whitespace" style="overflow: hidden">{{c.content | abbreviate: 200}}</div>
+
+      <div *m-card-footer class="m-text-secondary" style="font-size: 0.9rem">
+        <m-icon mCode="clock-circle"/>
+        {{(c.modifiedAt ? 'web.wiki-page.space.recently-modified.updated' : 'web.wiki-page.space.recently-modified.created') | translate: ({date: (c.modifiedAt ?? c.createdAt) | localDateTime})}}
+      </div>
+    </m-card>
   </ng-container>
 </div>

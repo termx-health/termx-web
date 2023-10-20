@@ -1,14 +1,13 @@
-<div *ngIf="page" class="page__header m-justify-between m-items-middle">
+<div *ngIf="pageContent" class="page__header m-justify-between m-items-middle">
   <div>
     <h2 class="m-items-middle">
-      <span class="m-bold">{{(page | apply: getContent: slug)?.name}}</span>
+      <span class="m-bold">{{pageContent?.name}}</span>
     </h2>
 
-    <div class="m-items-middle m-text-secondary">
-      <div
-          *ngIf="page | apply: author as author"
-          [innerHTML]="'web.wiki-page.header.modified' | translate: ({user: author.by, date: author.at | localDateTime})"
-      ></div>
+    <div class="m-items-middle m-text-secondary" *ngIf="pageContent | apply: author as author">
+      <div [innerHTML]="'web.wiki-page.header.modified' | translate: ({user: author.by, date: author.at | localDateTime})"></div>
+
+      <m-icon-button *ngIf="viewHistory.observed" mIcon="history" (mClick)="viewHistory.emit()"/>
     </div>
   </div>
 
