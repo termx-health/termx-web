@@ -55,7 +55,7 @@ export class MapSetListComponent implements OnInit {
   };
 
   protected openFhir(id: string): void {
-    window.open(environment.termxApi + '/fhir/ConceptMap/' + id, '_blank');
+    window.open(window.location.origin + '/fhir/ConceptMap/' + id, '_blank');
   }
 
   protected deleteMapSet(mapSetId: string): void {

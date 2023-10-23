@@ -34,6 +34,7 @@ const APP_ROUTES: Routes = [
   {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.Space.view']}},
   {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.view']}},
   {path: 'tasks', children: TASK_ROUTES, data: {privilege: ['*.Task.view']}},
+  {path: 'fhir', children: FHIR_ROUTES},
   {
     path: 'spaces',
     children: [
@@ -55,10 +56,6 @@ const routes: Routes = [
     ],
     component: AppComponent,
     // canActivate: [autoLoginGuard]
-  },
-  {
-    path: 'fhir',
-    children: FHIR_ROUTES
   },
   {
     path: "**",

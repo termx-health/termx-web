@@ -90,10 +90,10 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
 
   public openJson(expand: boolean = false): void {
     if (expand) {
-      window.open(environment.termxApi + '/fhir/ValueSet/' + this.version.valueSet + SEPARATOR + this.version.version + '/$expand?includeDesignations=true' +
+      window.open(window.location.origin + '/fhir/ValueSet/' + this.version.valueSet + SEPARATOR + this.version.version + '/expand?includeDesignations=true' +
         (this.version.preferredLanguage ? '&displayLanguage=' + this.version.preferredLanguage : '') , '_blank');
     } else {
-      window.open(environment.termxApi + '/fhir/ValueSet/' + this.version.valueSet + SEPARATOR + this.version.version , '_blank');
+      window.open(window.location.origin + '/fhir/ValueSet/' + this.version.valueSet + SEPARATOR + this.version.version , '_blank');
     }
   }
 

@@ -1,54 +1,28 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {environment} from 'environments/environment';
-import {Fhir} from 'fhir/fhir';
-import {saveAs} from 'file-saver';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import {Router} from '@angular/router';
 import {FhirValueSetLibService} from 'term-web/fhir/_lib';
 
 @Component({
-  templateUrl: './fhir-value-set.component.html',
-  styles:  [`
-    table, td, tr {
-      border: 1px solid #d2d2d2;
-    }
-  `]
+  selector: 'tw-fhir-value-set',
+  templateUrl: './fhir-value-set.component.html'
 })
-export class FhirValueSetComponent implements OnInit {
-  public valueSet?: any;
+export class FhirValueSetComponent implements OnChanges {
+  @Input() public valueSet?: any;
 
-  public constructor(
-    private valueSetService: FhirValueSetLibService,
-    private route: ActivatedRoute,
-    private router: Router,
-  ) {}
+  public constructor(private router: Router, private valueSetService: FhirValueSetLibService) {}
 
-  public ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.loadValueSet(id!);
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['valueSet'] && this.valueSet && this.valueSet.id) {
+      this.loadExpansion(this.valueSet.id);
+    }
   }
 
-  private loadValueSet(id: string): void {
-    this.valueSetService.expandValueSet(id).subscribe(v => this.valueSet = v);
+  private loadExpansion(id: string): void {
+    this.valueSetService.expandValueSet(id).subscribe(vs => this.valueSet.expansion = vs.expansion);
   }
 
-  public openJson(): void {
-    window.open(environment.termxApi + '/fhir/ValueSet/' + this.valueSet.id + '?_format=json', '_blank');
-  }
-
-  public exportXml(): void {
-    const xml = new Fhir().jsonToXml(this.valueSet);
-    saveAs(new Blob([xml], {type: 'application/xml'}), `${this.valueSet.id}.xml`);
-  }
-
-  public getDisplays(designations: any[]): any[] {
-    return designations.filter(d => d.use.code === 'display');
-  }
-
-  public getDefinitions(designations: any[]): any[] {
-    return designations.filter(d => d.use.code === 'definition');
-  }
-
-  public openCodeSystem(id: string): void {
+  public openCodeSystem(sys: string): void {
+    const id = sys.split('/')[sys.split('/').length - 1];
     this.router.navigate(['/fhir/CodeSystem/', id]);
   }
 }

@@ -1,37 +1,52 @@
-<div nz-row nzJustify="center">
-  <div nz-col [nzLg]="18" [nzXs]="24">
-    <ng-container *ngIf="valueSet">
+<div style="display: flex; flex-direction: column; gap: 1rem">
 
-      <h1>Value Set {{valueSet.url}}</h1>
-      <p><b>Summary</b></p>
-      <table class="grid">
-        <tbody><tr><td>Defining URL:</td><td>{{valueSet.url}}</td></tr>
-        <tr><td>Version:</td><td>{{valueSet.version}}</td></tr>
-        <tr><td>Name:</td><td>{{valueSet.name}}</td></tr>
-        <tr><td>Title:</td><td>{{valueSet.title}}</td></tr>
-        <tr><td>Definition:</td><td><p>{{valueSet.definition}}</p></td></tr>
-        <tr><td>Source Resource</td><td><a (click)="exportXml()">XML</a> / <a (click)="openJson()">JSON</a></td></tr></tbody>
-      </table>
-      <br/>
+  <div>
+    <m-table mSize="small">
+      <tr style="background-color: #e6ffe6">
+        <td>Official URL:
+          <m-tag>{{valueSet.url}}</m-tag>
+        </td>
+        <td>Version: {{valueSet.version}}</td>
+      </tr>
+      <tr style="background-color: #e6ffe6">
+        <td>active as of {{valueSet.date | localDate}}</td>
+        <td>Computable Name: {{valueSet.name}}</td>
+      </tr>
+      <tr style="background-color: #e6ffe6">
+        <td>Flags: {{valueSet.immutable ? 'Immutable' : 'Mutable'}}</td>
+        <td>
+          <div *ngFor="let i of valueSet.identifier">{{i.system}} {{i.value}}</div>
+        </td>
+      </tr>
+    </m-table>
+  </div>
 
-      <h2>Content Logical Definition</h2>
-      <p>This value set includes codes from the following code systems:</p>
-      <ul>
-        <li *ngFor="let i of valueSet.compose.include">Include all codes defined in <a (click)="openCodeSystem(i.system)">{{i.system}}</a></li>
-      </ul>
+  <div *ngIf="valueSet.description">
+    <h2>Definition</h2>
+    <p>{{valueSet.description}}</p>
+  </div>
 
-      <h2>Expansion</h2>
-      <p>This value set contains {{valueSet.expansion.total}} {{(valueSet.expansion.total % 10) === 1 ? 'concept' : 'concepts'}}</p>
-      <table class="grid">
-        <thead><tr><td><b>Code</b></td><td colspan="2"><b>Display</b></td><td colspan="2"><b>Definition</b></td></tr></thead>
-        <tbody><tr *ngFor="let i of valueSet.expansion.contains">
-          <td style="width: 10%">{{i.code}}</td>
-          <td style="width: 5%; white-space: nowrap"><div *ngFor="let d of (i.designation | apply: getDisplays)"><b>{{d.language}}</b></div></td>
-          <td style="width: 35%"><div *ngFor="let d of (i.designation | apply: getDisplays)">{{d.value}}</div></td>
-          <td style="width: 5%; white-space: nowrap"><div *ngFor="let d of (i.designation | apply: getDefinitions)"><b>{{d.language}}</b></div></td>
-          <td style="width: 45%"><div *ngFor="let d of (i.designation | apply: getDefinitions)">{{d.value}}</div></td>
-        </tr></tbody>
-      </table>
-    </ng-container>
+  <div>
+    <h2>Content Logical Definition</h2>
+    <ul>
+      <li *ngFor="let i of valueSet.compose.include">Include all codes defined in <a (click)="openCodeSystem(i.system)">{{i.system}}</a></li>
+    </ul>
+  </div>
+
+  <div *ngIf="valueSet.expansion">
+    <h2>Expansion</h2>
+    <p>This value set contains {{valueSet.expansion.total}} {{(valueSet.expansion.total % 10) === 1 ? 'concept' : 'concepts'}}</p>
+    <m-table [mData]="valueSet.expansion.contains" class="grid">
+      <tr *mTableHead>
+        <th>Code</th>
+        <th>Display</th>
+        <th>Definition</th>
+      </tr>
+      <tr *mTableRow="let c">
+        <td>{{c.code}}</td>
+        <td>{{c.display}}</td>
+        <td>{{c.definition}}</td>
+      </tr>
+    </m-table>
   </div>
 </div>

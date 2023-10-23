@@ -4,10 +4,11 @@ import {CoreUiModule} from '../core/ui/core-ui.module';
 import {FhirValueSetComponent} from './value-set/fhir-value-set.component';
 import {FhirCodeSystemComponent} from './code-system/fhir-code-system.component';
 import {FhirLibModule} from 'term-web/fhir/_lib';
+import {FhirResourceComponent} from 'term-web/fhir/fhir-resource.component';
 
 export const FHIR_ROUTES: Routes = [
-  {path: 'CodeSystem/:id', component: FhirCodeSystemComponent},
-  {path: 'ValueSet/:id', component: FhirValueSetComponent}
+  {path: ':type/:id', component: FhirResourceComponent},
+  {path: ':type/:id/:operation', component: FhirResourceComponent}
 ];
 
 @NgModule({
@@ -16,6 +17,7 @@ export const FHIR_ROUTES: Routes = [
     FhirLibModule
   ],
   declarations: [
+    FhirResourceComponent,
     FhirCodeSystemComponent,
     FhirValueSetComponent
   ],

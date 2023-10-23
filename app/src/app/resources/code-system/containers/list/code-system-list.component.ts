@@ -60,7 +60,7 @@ export class CodeSystemListComponent implements OnInit {
   }
 
   public openFhir(id: string): void {
-    window.open(environment.termxApi + '/fhir/CodeSystem/' + id, '_blank');
+    window.open(window.location.origin + '/fhir/CodeSystem/' + id, '_blank');
   }
 
   protected findLastVersion = (versions: CodeSystemVersion[]): CodeSystemVersion => {

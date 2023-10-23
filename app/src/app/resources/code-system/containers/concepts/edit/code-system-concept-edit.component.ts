@@ -231,7 +231,6 @@ export class CodeSystemConceptEditComponent implements OnInit {
   };
 
   protected openFhir(code: string): void {
-    window.open(environment.termxApi + '/fhir/CodeSystem/$lookup' +
-      '?system=' + this.codeSystem?.uri + '&code=' + code, '_blank');
+    window.open(window.location.origin + '/fhir/CodeSystem/' + this.codeSystem.id +'/lookup' + '?_code=' + code, '_blank');
   }
 }

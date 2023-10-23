@@ -1,42 +1,50 @@
-<div nz-row nzJustify="center">
-  <div nz-col [nzLg]="18" [nzXs]="24">
-    <ng-container *ngIf="codeSystem">
+<div style="display: flex; flex-direction: column; gap: 1rem">
 
-      <h1>Code System {{codeSystem.url}}</h1>
-      <p><b>Summary</b></p>
-      <table class="grid">
-        <tbody><tr><td>Defining URL:</td><td>{{codeSystem.url}}</td></tr>
-        <tr><td>Version:</td><td>{{codeSystem.version}}</td></tr>
-        <tr><td>Name:</td><td>{{codeSystem.name}}</td></tr>
-        <tr><td>Title:</td><td>{{codeSystem.title}}</td></tr>
-        <tr><td>Definition:</td><td><p>{{codeSystem.definition}}</p></td></tr>
-        <tr><td>Source Resource</td><td><a (click)="exportXml()">XML</a> / <a (click)="openJson()">JSON</a></td></tr></tbody>
-      </table>
-      <br/>
-      <p *ngIf="valueSetUsages">This Code system is used in the following value sets:</p>
-      <ul>
-        <li *ngFor="let u of valueSetUsages">ValueSet: <a (click)="openValueSet(u.resource.id)">{{u.resource.id}}</a></li>
-      </ul>
+  <div>
+    <m-table mSize="small">
+      <tr style="background-color: #e6ffe6">
+        <td>Official URL: <m-tag>{{codeSystem.url}}</m-tag></td>
+        <td>Version: {{codeSystem.version}}</td>
+      </tr>
+      <tr style="background-color: #e6ffe6">
+        <td>active as of {{codeSystem.date | localDate}}</td>
+        <td>Computable Name: {{codeSystem.name}}</td>
+      </tr>
+      <tr style="background-color: #e6ffe6">
+        <td>Flags: {{codeSystem.caseSensitive ? 'CaseSensitive' : 'CaseInsensitive'}}, {{codeSystem.content}}</td>
+        <td>
+          <div *ngFor="let i of codeSystem.identifier">{{i.system}} {{i.value}}</div>
+        </td>
+      </tr>
+    </m-table>
+  </div>
 
-      <h2>{{codeSystem.name}}</h2>
-      <p>This code system {{codeSystem.url}} defines the following codes:</p>
-      <table class="grid">
-        <thead><tr>
-          <td><b>Code</b></td>
-          <td colspan="2"><b>Display</b></td>
-          <td colspan="2"><b>Definition</b></td>
-          <td *ngFor="let p of codeSystem.property"><b>{{p.code}}</b></td>
-        </tr></thead>
-        <tbody><tr *ngFor="let i of codeSystem.concept">
-          <td style="width: 10%">{{i.code}}</td>
-          <td style="width: 5%"><div *ngFor="let d of (i.designation | apply: getDisplays)"><b>{{d.language}}</b></div></td>
-          <td style="width: 25%"><div *ngFor="let d of (i.designation | apply: getDisplays)">{{d.value}}</div></td>
-          <td style="width: 5%"><div *ngFor="let d of (i.designation | apply: getDefinitions)"><b>{{d.language}}</b></div></td>
-          <td style="width: 25%"><div *ngFor="let d of (i.designation | apply: getDefinitions)">{{d.value}}</div></td>
-          <td *ngFor="let p of codeSystem.property">{{(i.property | apply: getProperties: p.code) | apply: getPropertyValue}}</td>
-        </tr></tbody>
-      </table>
+  <div>
+    <p>This Code system is used in the following value sets:</p>
+    <ul>
+      <li *ngFor="let u of valueSets">ValueSet: <a (click)="openValueSet(u.resource.id)">{{u.resource.id}}</a></li>
+    </ul>
+  </div>
 
-    </ng-container>
+  <div *ngIf="codeSystem.description">
+    <h2>Definition</h2>
+    <p>{{codeSystem.description}}</p>
+  </div>
+
+  <div>
+    <h2>Content</h2>
+    <p>This code system <m-tag>{{codeSystem.url}}</m-tag> defines the following codes:</p>
+    <m-table [mData]="codeSystem.concept">
+      <tr *mTableHead>
+        <th>Code</th>
+        <th>Display</th>
+        <th>Definition</th>
+      </tr>
+      <tr *mTableRow="let c">
+        <td>{{c.code}}</td>
+        <td>{{c.display}}</td>
+        <td>{{c.definition}}</td>
+      </tr>
+    </m-table>
   </div>
 </div>
