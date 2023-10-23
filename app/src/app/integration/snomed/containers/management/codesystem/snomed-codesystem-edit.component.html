@@ -12,10 +12,14 @@
           <a *m-dropdown-item (mClick)="exportModalData.visible = true">
             {{'web.snomed.codesystem.form.export-to-rf2' | translate}}
           </a>
-
           <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
             <a *m-dropdown-item (mClick)="upgradeModalData.visible = true">
               {{'web.snomed.codesystem.form.upgrade' | translate}}
+            </a>
+          </ng-container>
+          <ng-container *ngIf="snomedCodeSystem.dailyBuildAvailable && ('snomed-ct.CodeSystem.edit' | twPrivileged)">
+            <a *m-dropdown-item (mClick)="startNewAuthoringCycle()">
+              {{'web.snomed.codesystem.form.new-authoring-cycle' | translate}}
             </a>
           </ng-container>
         </m-dropdown>

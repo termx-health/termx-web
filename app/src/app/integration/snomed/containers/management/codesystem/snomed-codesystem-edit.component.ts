@@ -37,6 +37,10 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
   public ngOnInit(): void {
     const shortName = this.route.snapshot.paramMap.get('shortName');
+    this.initData(shortName);
+  }
+
+  private initData(shortName: string): void {
     this.loadCodesystem(shortName);
     this.loadDependantVersions();
   }
@@ -128,4 +132,8 @@ export class SnomedCodesystemEditComponent implements OnInit {
       compareStrings(version.effectiveDate, this.snomedCodeSystem.latestVersion.dependantVersionEffectiveTime) === 1;
   };
 
+  public startNewAuthoringCycle(): void {
+    this.loader.wrap('load', this.snomedService.startNewAuthoringCycle(this.snomedCodeSystem.shortName))
+      .subscribe(() => this.initData(this.snomedCodeSystem.shortName));
+  }
 }

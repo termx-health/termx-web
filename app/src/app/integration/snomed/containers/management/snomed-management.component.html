@@ -19,9 +19,13 @@
         <tr>
           <td>
             <div class="m-items-middle">
-              <m-icon-button *ngIf="cs.versions" [mIcon]="cs['expanded'] ? 'folder-open' : 'folder'" (mClick)="cs['expanded'] = !cs['expanded']"></m-icon-button>
+              <m-icon-button *ngIf="cs.versions"
+                  [mIcon]="cs['expanded'] ? 'folder-open' : 'folder'"
+                  (mClick)="cs['expanded'] = !cs['expanded']"></m-icon-button>
               <div>
-                <div><a [routerLink]="['/integration', 'snomed', 'codesystems', cs.shortName, 'edit']">{{cs.shortName}}</a> {{cs.name ? '(' + cs.name + ')' : ''}}</div>
+                <div>
+                  <a [routerLink]="['/integration', 'snomed', 'codesystems', cs.shortName, 'edit']">{{cs.shortName}}</a> {{cs.name ? '(' + cs.name + ')' : ''}}
+                </div>
                 <ng-container *ngFor="let module of cs.modules">
                   <div *ngIf="module.conceptId === module.moduleId">{{module?.pt?.term}}</div>
                 </ng-container>
@@ -29,7 +33,9 @@
             </div>
           </td>
           <td>{{cs.branchPath}}</td>
-          <td><div *ngFor="let lang of cs.languages | values">{{lang}}</div></td>
+          <td>
+            <div *ngFor="let lang of cs.languages | values">{{lang}}</div>
+          </td>
           <td>
             <div>{{'web.snomed.branch.list.codesystem.imported' | translate}}: {{cs.latestVersion?.importDate | localDateTime}}</div>
             <div>{{cs.latestVersion?.branchPath}}</div>
@@ -53,37 +59,44 @@
     </m-table>
   </m-card>
 
-  <m-card>
-    <div *m-card-header class="m-justify-between">
-      <m-title>{{'web.snomed.branch.list.header' | translate}}</m-title>
-      <div class="m-items-middle">
-        <tw-add-button [routerLink]="['/integration', 'snomed', 'branches', 'add']">
-          {{'web.snomed.branch.list.add-branch' | translate}}
-        </tw-add-button>
+  <ng-container *ngTemplateOutlet="branchList, context: {branches: dailyBuildBranches, type: 'daily-build'}"/>
+  <ng-container *ngTemplateOutlet="branchList, context: {branches: workingBranches, type: 'working'}"/>
+
+  <ng-template #branchList let-branches="branches" let-type="type">
+    <m-card>
+      <div *m-card-header class="m-justify-between">
+        <m-title>{{'web.snomed.branch.list.' + type | translate}}</m-title>
+        <div class="m-items-middle" *ngIf="type === 'working'">
+          <tw-add-button [routerLink]="['/integration', 'snomed', 'branches', 'add']">
+            {{'web.snomed.branch.list.add-branch' | translate}}
+          </tw-add-button>
+        </div>
       </div>
-    </div>
-    <m-table [mData]="branches" [mLoading]="loader.isLoading" mEnablePagination>
-      <tr *mTableHead>
-        <th>{{'entities.snomed-branch.path' | translate}}</th>
-        <th>{{'entities.snomed-branch.creation' | translate}}</th>
-        <th>{{'entities.snomed-branch.base' | translate}}</th>
-        <th>{{'entities.snomed-branch.deleted' | translate}}</th>
-      </tr>
-      <tr *mTableRow="let branch">
-        <td><a [routerLink]="['/integration', 'snomed', 'branches', branch.path | apply:encodeUriComponent, 'management']">{{branch.path}}</a></td>
-        <td>{{branch.creation | localDate}}</td>
-        <td>{{branch.base | localDate}}</td>
-        <td>
-          <m-checkbox [ngModel]="branch.deleted" readOnly></m-checkbox>
-        </td>
-      </tr>
-      <tr *mTableNoData>
-        <td colspan="100%">
-          <m-no-data></m-no-data>
-        </td>
-      </tr>
-    </m-table>
-  </m-card>
+      <m-table [mData]="branches" [mLoading]="loader.isLoading" mEnablePagination>
+        <tr *mTableHead>
+          <th>{{'entities.snomed-branch.path' | translate}}</th>
+          <th>{{'entities.snomed-branch.creation' | translate}}</th>
+          <th>{{'entities.snomed-branch.base' | translate}}</th>
+          <th>{{'entities.snomed-branch.deleted' | translate}}</th>
+        </tr>
+        <tr *mTableRow="let branch">
+          <td><a [routerLink]="['/integration', 'snomed', 'branches', branch.path | apply:encodeUriComponent, 'management']" [queryParams]="{type:type}">
+            {{branch.path}}
+          </a></td>
+          <td>{{branch.creation | localDate}}</td>
+          <td>{{branch.base | localDate}}</td>
+          <td>
+            <m-checkbox [ngModel]="branch.deleted" readOnly></m-checkbox>
+          </td>
+        </tr>
+        <tr *mTableNoData>
+          <td colspan="100%">
+            <m-no-data></m-no-data>
+          </td>
+        </tr>
+      </m-table>
+    </m-card>
+  </ng-template>
 </div>
 
 

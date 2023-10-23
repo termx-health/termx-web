@@ -18,6 +18,10 @@ export class SnomedService extends SnomedLibService {
     return this.http.post(`${this.baseUrl}/codesystems/${shortName}/upgrade`, {newDependantVersion: newDependantVersion});
   }
 
+  public startNewAuthoringCycle(shortName: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/codesystems/${shortName}/new-authoring-cycle`, {});
+  }
+
   public deleteCodeSystem(shortName: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/codesystems/${shortName}`);
   }

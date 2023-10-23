@@ -1630,7 +1630,8 @@
 						"name": "Name",
 						"header": "Add edition"
 					},
-					"header": "Working branches"
+					"daily-build": "Daily build branches",
+					"working": "Working branches"
 				},
 				"management": {
 					"authoring-stats": "Authoring stats",
@@ -1673,6 +1674,7 @@
 					"import-from-rf2": "Import from RF2",
 					"export-to-rf2": "Export to RF2",
 					"upgrade": "Upgrade",
+					"new-authoring-cycle": "Start new authoring cycle",
 					"import-warning": "This import will create branch + code system version and should be used for published version importing or final version creation from a working branch. The upload may take more than 30-60 minutes depending on the size of SNOMED package.",
 					"upgrade-modal": {
 						"header": "Upgrade code system to a different dependant version",

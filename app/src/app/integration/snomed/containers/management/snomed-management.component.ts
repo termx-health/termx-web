@@ -10,7 +10,8 @@ import {MuiTableComponent} from '@kodality-web/marina-ui';
   templateUrl: './snomed-management.component.html',
 })
 export class SnomedManagementComponent implements OnInit {
-  protected branches: SnomedBranch[] = [];
+  protected workingBranches: SnomedBranch[] = [];
+  protected dailyBuildBranches: SnomedBranch[] = [];
   protected codeSystems: SnomedCodeSystem[] = [];
   protected loader = new LoadingManager();
 
@@ -55,7 +56,8 @@ export class SnomedManagementComponent implements OnInit {
         this.snomedService.loadCodeSystems()
     ])).subscribe(([branches, codeSystems]) =>{
       this.codeSystems = codeSystems;
-      this.branches = branches.filter(b => !codeSystems.find(cs => cs.branchPath == b.path || !!cs.versions.find(v => v.branchPath === b.path)));
+      this.workingBranches = branches.filter(b => !codeSystems.find(cs => cs.branchPath == b.path || !!cs.versions.find(v => v.branchPath === b.path)));
+      this.dailyBuildBranches = branches.filter(b => !!codeSystems.find(cs => cs.branchPath == b.path && cs.dailyBuildAvailable));
     });
   }
 }

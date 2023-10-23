@@ -43,7 +43,8 @@ export class SnomedTranslationListComponent implements OnInit, OnChanges {
       this.snomedService.loadCodeSystems()
     ])).subscribe(([modules, branches, codeSystems]) =>{
       this.modules = modules.data;
-      this.branches = branches.filter(b => !codeSystems.find(cs => cs.branchPath == b.path || !!cs.versions.find(v => v.branchPath === b.path)));
+      this.branches = branches.filter(b => !!codeSystems.find(cs => cs.branchPath == b.path && cs.dailyBuildAvailable) ||
+        !codeSystems.find(cs => !!cs.versions.find(v => v.branchPath === b.path)));
     });
   }
 

@@ -16,6 +16,7 @@ import {SnomedTranslationService} from 'term-web/integration/snomed/services/sno
 })
 export class SnomedBranchManagementComponent implements OnInit {
   protected snomedBranch?: SnomedBranch;
+  protected type: 'daily-build' | 'working' | any = 'working';
 
   protected loader = new LoadingManager();
 
@@ -47,6 +48,7 @@ export class SnomedBranchManagementComponent implements OnInit {
 
   public ngOnInit(): void {
     const path = this.route.snapshot.paramMap.get('path');
+    this.type = this.route.snapshot.queryParamMap.get('type') || 'working';
     this.loadBranch(path);
     this.loadAuthoringStats(path);
   }
