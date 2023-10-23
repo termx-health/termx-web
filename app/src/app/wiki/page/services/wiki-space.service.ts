@@ -2,7 +2,9 @@ import {Injectable} from '@angular/core';
 import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {CodeName} from '@kodality-web/marina-util';
+import {Space} from 'term-web/space/_lib';
+
+export type WikiSpace = Pick<Space, 'id' | 'code' | 'names' | 'active'>;
 
 @Injectable()
 export class WikiSpaceService {
@@ -10,7 +12,7 @@ export class WikiSpaceService {
 
   public constructor(private http: HttpClient) { }
 
-  public loadSpaces(): Observable<CodeName[]> {
-    return this.http.get<CodeName[]>(this.baseUrl);
+  public loadSpaces(): Observable<WikiSpace[]> {
+    return this.http.get<WikiSpace[]>(this.baseUrl);
   }
 }

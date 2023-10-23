@@ -1,13 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../services/page.service';
-import {DestroyService, LoadingManager} from '@kodality-web/core-util';
+import {compareStrings, DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {Page} from 'term-web/wiki/_lib';
 import {map, takeUntil} from 'rxjs';
 import {Space} from 'term-web/space/_lib';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
-import {WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
-import {CodeName} from '@kodality-web/marina-util';
+import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 import {TranslateService} from '@ngx-translate/core';
 
 @Component({
@@ -21,7 +20,7 @@ export class WikiPageComponent implements OnInit {
   public page?: Page;
   public path?: number[];
 
-  protected spaces: CodeName[] = [];
+  protected spaces: WikiSpace[] = [];
   protected loader = new LoadingManager();
 
   public constructor(
@@ -36,13 +35,13 @@ export class WikiPageComponent implements OnInit {
 
 
   public ngOnInit(): void {
-    this.loader.wrap('spaces', this.spaceService.loadSpaces()).subscribe(resp => {
-      this.spaces = resp;
+    this.loader.wrap('spaces', this.spaceService.loadSpaces()).subscribe(spaces => {
+      this.spaces = spaces.sort((a, b) => (a.active ? -1 : 0) - (b.active ? -1 : 0) || compareStrings(a.code, b.code));
 
       this.route.paramMap.subscribe(params => {
         const space = params.get("space"); // could be either code or id
 
-        const matchedSpace = resp.find(s => s.code === space) || resp.find(s => s.id === Number(space));
+        const matchedSpace = spaces.find(s => s.code === space) || spaces.find(s => s.id === Number(space));
         if (!matchedSpace) {
           // param does not match any of loaded spaces
           if (this.preferences.spaceId) {

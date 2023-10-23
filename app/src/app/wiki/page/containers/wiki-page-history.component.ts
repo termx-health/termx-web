@@ -44,10 +44,10 @@ export class WikiPageHistoryComponent implements OnInit {
 
 
   public ngOnInit(): void {
-    this.loader.wrap('spaces', this.spaceService.loadSpaces()).subscribe(resp => {
+    this.loader.wrap('spaces', this.spaceService.loadSpaces()).subscribe(spaces => {
       this.route.paramMap.subscribe(params => {
         const spaceCode = params.get("space"); // could be either code or id
-        const space = this.space = resp.find(s => s.code === spaceCode);
+        const space = this.space = spaces.find(s => s.code === spaceCode);
         const slug = this.slug = params.get("slug");
 
         this.loader.wrap('init', this.pageService.searchPages({spaceIds: space.id, slugs: slug, limit: 1}))
@@ -121,7 +121,6 @@ export class WikiPageHistoryComponent implements OnInit {
   protected copy(): void {
     this.clipboard.copy(this.targetItem.content);
   }
-
 
 
   /* Utils */
