@@ -5,6 +5,7 @@ import {FhirValueSetComponent} from './value-set/fhir-value-set.component';
 import {FhirCodeSystemComponent} from './code-system/fhir-code-system.component';
 import {FhirLibModule} from 'term-web/fhir/_lib';
 import {FhirResourceComponent} from 'term-web/fhir/fhir-resource.component';
+import {FhirConceptMapComponent} from 'term-web/fhir/concept-map/fhir-concept-map.component';
 
 export const FHIR_ROUTES: Routes = [
   {path: ':type/:id', component: FhirResourceComponent},
@@ -19,7 +20,8 @@ export const FHIR_ROUTES: Routes = [
   declarations: [
     FhirResourceComponent,
     FhirCodeSystemComponent,
-    FhirValueSetComponent
+    FhirValueSetComponent,
+    FhirConceptMapComponent
   ],
 })
 export class FhirModule {

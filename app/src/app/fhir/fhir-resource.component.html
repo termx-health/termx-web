@@ -11,6 +11,7 @@
               <ng-container *ngSwitchDefault></ng-container>
               <tw-fhir-code-system *ngSwitchCase="'CodeSystem'" [codeSystem]="resource"></tw-fhir-code-system>
               <tw-fhir-value-set *ngSwitchCase="'ValueSet'" [valueSet]="resource"></tw-fhir-value-set>
+              <tw-fhir-concept-map *ngSwitchCase="'ConceptMap'" [conceptMap]="resource"></tw-fhir-concept-map>
             </ng-container>
           </ng-template>
         </nz-tab>

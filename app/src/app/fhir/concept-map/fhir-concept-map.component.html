@@ -1,0 +1,19 @@
+<div style="display: flex; flex-direction: column; gap: 1rem">
+
+  <div *ngFor="let group of conceptMap.group; let i = index">
+    <p><b>Group {{i + 1}}</b> Mapping from <m-tag>{{group.source}}</m-tag> to <m-tag>{{group.target}}</m-tag></p>
+    <m-table [mData]="group.element">
+      <tr *mTableHead>
+        <th>Source code</th>
+        <th>Relationship</th>
+        <th>Target code</th>
+      </tr>
+      <tr *mTableRow="let el">
+        <td>{{el.code}}</td>
+        <td><div *ngFor="let t of el.target">{{t.relationship}}</div></td>
+        <td><div *ngFor="let t of el.target">{{t.code}}</div></td>
+      </tr>
+    </m-table>
+  </div>
+
+</div>
