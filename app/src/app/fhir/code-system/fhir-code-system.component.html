@@ -19,7 +19,7 @@
     </m-table>
   </div>
 
-  <div>
+  <div *ngIf="valueSets?.length > 0">
     <p>This Code system is used in the following value sets:</p>
     <ul>
       <li *ngFor="let u of valueSets">ValueSet: <a (click)="openValueSet(u.resource.id)">{{u.resource.id}}</a></li>
