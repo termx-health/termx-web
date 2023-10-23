@@ -130,7 +130,7 @@ export class WikiPageHistoryComponent implements OnInit {
     if (item.modifiedAt === pageContent.modifiedAt) {
       return 'green';
     }
-    if (item.modifiedBy === this.auth.user?.username) {
+    if ((item.modifiedBy ?? item.createdBy) === this.auth.user?.username) {
       return 'blue';
     }
     return 'gray';

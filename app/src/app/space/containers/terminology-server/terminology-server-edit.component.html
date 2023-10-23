@@ -48,10 +48,10 @@
 
             <m-editable-column mName="value" mTitle="web.terminology-server.headers.value" [mCellEditable]="keyDefined" mWidth="70%">
               <ng-template #editTemplate let-h let-ngModelName="ngModelName">
-                <m-input *ngIf="keyDefined(h)" [name]="ngModelName" [(ngModel)]="h.value"/>
+                <m-input *ngIf="keyDefined(h)" [name]="ngModelName" [(ngModel)]="h.value" (ngModelChange)="h['_masked'] = false"/>
               </ng-template>
               <ng-template #viewTemplate let-h>
-                <div style="word-break: break-word">{{h.value}}</div>
+                <div style="word-break: break-word">{{h['_masked'] ? '●●●●●●●●' : h.value}}</div>
               </ng-template>
             </m-editable-column>
           </m-editable-table>
@@ -73,28 +73,29 @@
               (mCheckedChange)="server.authConfig = {}"
           ></m-checkbox>
 
-          <div *ngIf="server.authConfig" style="border-left: 1px solid var(--color-borders); padding: 0.5rem 0 0.5rem 1rem">
+          <div *ngIf="server.authConfig as conf" style="border-left: 1px solid var(--color-borders); padding: 0.5rem 0 0.5rem 1rem">
             <m-form-item mName="oauth-url" mLabel="web.terminology-server.auth-config.access-token-url" required>
-              <m-input name="oauth-url" [(ngModel)]="server.authConfig.accessTokenUrl" required/>
+              <m-input name="oauth-url" [(ngModel)]="conf.accessTokenUrl" required/>
             </m-form-item>
 
             <m-form-item mName="oauth-client-id" mLabel="web.terminology-server.auth-config.client-id" required>
-              <m-input name="oauth-client-id" [(ngModel)]="server.authConfig.clientId" required/>
+              <m-input name="oauth-client-id" [(ngModel)]="conf.clientId" required/>
             </m-form-item>
 
-            <m-form-item mName="oauth-client-secret" mLabel="web.terminology-server.auth-config.client-secret" class="tw-input-group" required *ngIf="{visible: false} as d">
-              <div style="display: inherit; width: 100%">
-                <div class="tw-input-group-addon ant-input-group-addon">
-                  <m-icon class="m-clickable" [mCode]="d.visible ? 'eye-invisible' : 'eye'" (click)="d.visible = !d.visible"/>
-                </div>
-                <m-input
-                    name="oauth-client-secret"
-                    [(ngModel)]="server.authConfig.clientSecret"
-                    [type]="d.visible ? 'text' : 'password'"
-                    autocomplete="off"
-                    required
-                ></m-input>
-              </div>
+            <m-form-item
+                mName="oauth-client-secret"
+                mLabel="web.terminology-server.auth-config.client-secret"
+                class="tw-input-group"
+                [required]="!conf['_masked']"
+            >
+              <span *ngIf="conf['_masked']">●●●●●●●● <m-icon class="m-clickable" mCode="edit" (click)="conf['_masked'] = false"></m-icon></span>
+
+              <m-input
+                  *ngIf="!conf['_masked']"
+                  name="oauth-client-secret"
+                  [(ngModel)]="conf.clientSecret"
+                  required
+              ></m-input>
             </m-form-item>
           </div>
         </m-form-item>

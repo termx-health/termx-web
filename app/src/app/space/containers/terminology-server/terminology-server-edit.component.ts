@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {copyDeep, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {copyDeep, isDefined, isNil, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {TerminologyServer, TerminologyServerHeader} from 'term-web/space/_lib';
 import {TerminologyServerService} from '../../services/terminology-server.service';
 
@@ -47,6 +47,14 @@ export class TerminologyServerEditComponent implements OnInit {
 
   private initServer(server: TerminologyServer): void {
     this.server = server;
+    if (server.id) {
+      if (server.authConfig) {
+        server.authConfig['_masked'] = isDefined(server.authConfig.clientId) && isNil(server.authConfig.clientSecret);
+      }
+      if (server.headers) {
+        server.headers.filter(h => "Authorization" === h.key && isNil(h.value)).forEach(h => h['_masked'] = true);
+      }
+    }
   }
 
   protected save(): void {
