@@ -35,16 +35,22 @@ export class FhirResourceComponent implements OnInit {
 
       if (isDefined(operation)) {
         this.executeOperation(id, type, operation);
-        return;
+      } else if (isDefined(id)) {
+        this.loadResource(id, type);
+      } else {
+        this.loadResources(type);
       }
-
-      this.loadResource(id, type);
     });
   }
 
   private loadResource(id: string, type: string): void {
     const request = this.http.get<any>(`${environment.termxApi}/fhir/${type}/${id}`);
     request.subscribe(r => this.resource = r);
+  }
+
+  private loadResources(type: string): void {
+    const request = this.http.get<any>(`${environment.termxApi}/fhir/${type}`);
+    request.subscribe(r => this.operationResult = r);
   }
 
   public toXML = (resource: any): string => {
