@@ -1,6 +1,7 @@
 <m-table [mData]="diffItems" [mLoading]="loading">
   <tr *mTableHead>
-    <th></th>
+    <th mSort="resourceType">Resource type</th>
+    <th mSort="resourceId">Resource id</th>
     <th>{{'entities.terminology-server.current-installation' | translate}}</th>
     <th *ngFor="let server of (diffItems | apply:extractServers)">
       <label>{{server}}</label>
@@ -8,6 +9,7 @@
   </tr>
 
   <tr *mTableRow="let item">
+    <td>{{item.resourceType}}</td>
     <td>{{item.resourceId}}</td>
     <td>
       <ng-container *ngIf="!item.resourceServer">

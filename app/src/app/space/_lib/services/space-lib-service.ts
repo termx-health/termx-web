@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
-import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
+import {HttpCacheService, SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Space} from '../model/space';
 import {Package} from '../model/package';
@@ -10,9 +10,12 @@ import {SpaceDiff} from '../model/space-diff';
 
 @Injectable()
 export class SpaceLibService {
+  private cacheService: HttpCacheService;
   protected baseUrl = `${environment.termxApi}/spaces`;
 
-  public constructor(protected http: HttpClient) { }
+  public constructor(protected http: HttpClient) {
+    this.cacheService = new HttpCacheService();
+  }
 
   public load(id: number): Observable<Space> {
     return this.http.get<Space>(`${this.baseUrl}/${id}`);
@@ -31,7 +34,8 @@ export class SpaceLibService {
   }
 
   public diff(spaceId: number, packageCode: string, version: string): Observable<SpaceDiff> {
-    return this.http.get<SpaceDiff>(`${this.baseUrl}/${spaceId}/diff`, {params: SearchHttpParams.build({packageCode, version})});
+    const key = `${spaceId}#${packageCode}#${version}`;
+    return this.cacheService.put(key, this.http.get<SpaceDiff>(`${this.baseUrl}/${spaceId}/diff`, {params: SearchHttpParams.build({packageCode, version})}));
   }
 
 }
