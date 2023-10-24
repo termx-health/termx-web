@@ -6,7 +6,7 @@ const filesRe = /^files\/(\d*)\/(.+)/;
 
 const filesLink = (url: string) => {
   const [_, id, name] = url.match(filesRe);
-  return `${environment.termxApi}/pages/static/${id}/files/${name}`;
+  return `${environment.termxApi}/pages/${id}/files/${name}`;
 };
 
 
