@@ -616,7 +616,7 @@
 		},
 		"value-set-rule-filter": {
 			"operator": {
-				"descendant-of": "Descendant of",
+				"descendent-of": "Descendent of",
 				"equal": "=",
 				"in": "In",
 				"is-a": "Is a",

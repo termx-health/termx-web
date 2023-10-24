@@ -49,7 +49,7 @@
               <m-select [name]="ngModelName" [(ngModel)]="f.operator">
                 <m-option *ngIf="f.property?.name === 'concept'" [mLabel]="'entities.value-set-rule-filter.operator.is-a' | translate" mValue="is-a"></m-option>
                 <m-option *ngIf="f.property?.name === 'concept'" [mLabel]="'entities.value-set-rule-filter.operator.in' | translate" mValue="in"></m-option>
-                <m-option *ngIf="f.property?.name === 'concept'" [mLabel]="'entities.value-set-rule-filter.operator.descendant-of' | translate" mValue="descendant-of"></m-option>
+                <m-option *ngIf="f.property?.name === 'concept'" [mLabel]="'entities.value-set-rule-filter.operator.descendent-of' | translate" mValue="descendent-of"></m-option>
                 <m-option *ngIf="f.property?.name === 'constraint'" [mLabel]="'entities.value-set-rule-filter.operator.equal' | translate" mValue="="></m-option>
               </m-select>
             </ng-container>
