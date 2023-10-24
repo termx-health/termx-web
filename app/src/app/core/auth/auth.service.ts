@@ -3,6 +3,7 @@ import {catchError, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
+import Cookies from 'js-cookie';
 
 export interface UserInfo {
   username: string;
@@ -19,7 +20,16 @@ export class AuthService {
   public constructor(
     protected http: HttpClient,
     private oidcSecurityService: OidcSecurityService
-  ) { }
+  ) {
+    oidcSecurityService.isAuthenticated$
+      .pipe(mergeMap(() => oidcSecurityService.getAuthenticationResult()))
+      .subscribe(ar => {
+        Cookies.set('oauth-token', ar['access_token'], {
+          expires: new Date(new Date().getTime() + ar['expires_in'] * 1000),
+          secure: environment.production
+        });
+      });
+  }
 
 
   public refresh(): Observable<UserInfo> {
@@ -57,8 +67,8 @@ export class AuthService {
     }
 
     return userPrivileges.some(userPrivilege => {
-      let upParts = /(.*)\.([^\.]+)\.([^.]+)$/.exec(userPrivilege).splice(1,3);  //userPrivilege.split('.');
-      let apParts = /(.*)\.([^\.]+)\.([^.]+)$/.exec(authPrivilege).splice(1,3);  //authPrivilege.split('.');
+      let upParts = /(.*)\.([^\.]+)\.([^.]+)$/.exec(userPrivilege).splice(1, 3);  //userPrivilege.split('.');
+      let apParts = /(.*)\.([^\.]+)\.([^.]+)$/.exec(authPrivilege).splice(1, 3);  //authPrivilege.split('.');
       if (apParts.length === 2 && apParts[0] === '*') { // handle special case like '*.view'
         apParts = ['*'].concat(apParts);
       }

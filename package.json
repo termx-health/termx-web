@@ -33,6 +33,7 @@
     "diff2html": "^3.4.45",
     "fhir": "^4.11.1",
     "file-saver": "^2.0.5",
+    "js-cookie": "^3.0.5",
     "ngx-translate-multi-http-loader": "^9.3.2",
     "print-js-safari": "^0.0.1",
     "prismjs": "^1.29.0",
