@@ -68,7 +68,7 @@ export class WikiSmartTextEditorComponent implements ControlValueAccessor {
   @Input() public valueType?: 'html' | 'markdown';
   @Input() @BooleanInput() public showPreview: boolean | string;
   @Input() @BooleanInput() public viewMode: boolean | string;
-  @Input() @BooleanInput() public lineNumbers: boolean | string;
+  @Input() @BooleanInput() public lineWrapping: boolean | string;
 
   @ViewChild('editor')
   private _editor: WikiAbstractEditor;

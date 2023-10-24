@@ -61,6 +61,9 @@
         <li m-menu-item mIcon="file-image" (click)="fileModal.open()">
           {{'web.wiki-page.edit.menu.files' | translate}}
         </li>
+        <li m-menu-item [mIcon]="lineWrapping ? 'line' : 'rollback'" (click)="lineWrapping = !lineWrapping" class="line-wrap">
+          {{('web.wiki-page.edit.menu.line-wrap.' + (lineWrapping ? 'off' : 'on')) | translate}}
+        </li>
       </ul>
     </div>
 
@@ -76,7 +79,7 @@
           [valueType]="pageContent.contentType"
           [lang]="pageContent.lang"
           [showPreview]="showPreview"
-          lineNumbers
+          [lineWrapping]="lineWrapping"
       ></tw-smart-text-editor>
     </div>
 

@@ -2081,6 +2081,10 @@
 						"add": "Add structure definition",
 						"copy": "Copy reference",
 						"title": "Structure definition"
+					},
+					"line-wrap": {
+						"on": "Soft-wrap",
+						"off": "Inline"
 					}
 				},
 				"structure-definition-modal": {

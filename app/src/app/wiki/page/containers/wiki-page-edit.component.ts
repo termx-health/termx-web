@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
 import {isNil, LoadingManager, remove, sort} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {Page, PageAttachment, PageComment, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
@@ -9,23 +9,40 @@ import {SpaceService} from 'term-web/space/services/space.service';
 import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 import {MuiModalContainerComponent} from '@kodality-web/marina-ui';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
+import {UnsavedChangesGuardComponent} from 'term-web/core/ui/guard/unsaved-changes.guard';
 
 @Component({
   templateUrl: 'wiki-page-edit.component.html',
   styleUrls: ['../styles/wiki-page.styles.less', 'wiki-page-edit.component.less'],
 })
-export class WikiPageEditComponent implements OnInit {
+export class WikiPageEditComponent implements OnInit, UnsavedChangesGuardComponent {
   public page?: Page;
   public pageContent?: PageContent;
+  public _pageContent?: PageContent; // for change detection
   public pageAttachments?: PageAttachment[];
   public pageComments?: PageComment[];
 
   protected loader = new LoadingManager();
   protected showPreview = false;
   protected showComments = false;
+  protected lineWrapping = false;
   protected versionInfo: Date;
 
   @ViewChild(WikiSmartTextEditorComponent) public editor?: WikiSmartTextEditorComponent;
+
+  @HostListener('window:beforeunload', ['$event'])
+  public beforeunload(): boolean {
+    return this.canDeactivate(true);
+  }
+
+  public canDeactivate(beforeunload?: boolean): boolean {
+    const isSaved = isNil(this._pageContent) || this._pageContent.content === this.pageContent.content;
+    if (beforeunload) {
+      return isSaved;
+    }
+    return isSaved || confirm("Changes you made may not be saved.");
+  }
+
 
   public constructor(
     private spaceService: SpaceService,
@@ -37,6 +54,7 @@ export class WikiPageEditComponent implements OnInit {
     private route: ActivatedRoute,
   ) {}
 
+
   public ngOnInit(): void {
     combineLatest([this.route.paramMap, this.route.queryParamMap]).subscribe(([routeParam, qParams]) => {
       const space = routeParam.get('space');
@@ -47,7 +65,6 @@ export class WikiPageEditComponent implements OnInit {
       }
     });
   }
-
 
   private loadContent(space: string, slug: string, opts: {version: number}): void {
     const req$ = this.spaceService.search({codes: space, limit: 1}).pipe(mergeMap(resp => {
@@ -63,6 +80,8 @@ export class WikiPageEditComponent implements OnInit {
 
       this.page = page;
       this.pageContent = page.contents.find(c => c.slug === slug);
+      this._pageContent = structuredClone(this.pageContent);
+
       if (isNil(this.pageContent)) {
         this.router.navigate(['/wiki', this.route.snapshot.paramMap.get("space")]);
         return;
@@ -98,7 +117,10 @@ export class WikiPageEditComponent implements OnInit {
   }
 
   protected back(): void {
-    this.router.navigate(['/wiki', this.route.snapshot.paramMap.get("space"), this.route.snapshot.paramMap.get('slug')]);
+    this._pageContent = undefined;
+    const spaceCode = this.route.snapshot.paramMap.get("space");
+    const slug = this.route.snapshot.paramMap.get('slug');
+    this.router.navigate(['/wiki', spaceCode, slug]);
   }
 
   protected afterPageSave(content: PageContent): void {
@@ -107,6 +129,7 @@ export class WikiPageEditComponent implements OnInit {
     this.loader.start('update');
     setTimeout(() => {
       this.pageContent = content;
+      this._pageContent = structuredClone(content);
       this.loader.stop('update');
     }, 200);
 
@@ -121,7 +144,6 @@ export class WikiPageEditComponent implements OnInit {
       this.openStructureDefinition();
     });
   }
-
 
   protected openStructureDefinition(): void {
     const structureDefinitionCode = this.pageContent!.slug + '-model';

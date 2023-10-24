@@ -1,13 +1,14 @@
-import {AfterViewInit, Component, ElementRef, forwardRef, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {basicSetup, EditorView} from 'codemirror';
 import {markdown} from '@codemirror/lang-markdown';
-import {EditorState} from '@codemirror/state';
+import {Compartment, EditorState} from '@codemirror/state';
 import {keymap} from '@codemirror/view';
 
 
 import {indentWithTab} from "@codemirror/commands";
 import {WikiAbstractEditor} from '../abstract-text-editor';
+import {BooleanInput} from '@kodality-web/core-util';
 
 
 @Component({
@@ -24,7 +25,9 @@ import {WikiAbstractEditor} from '../abstract-text-editor';
   `],
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WikiMarkdownEditorComponent), multi: true}]
 })
-export class WikiMarkdownEditorComponent implements AfterViewInit, ControlValueAccessor, WikiAbstractEditor {
+export class WikiMarkdownEditorComponent implements OnChanges, AfterViewInit, ControlValueAccessor, WikiAbstractEditor {
+  @Input() @BooleanInput() public lineWrapping: boolean | string;
+
   protected value?: string;
   protected onChange = (x: any): void => x;
   protected onTouched = (x: any): void => x;
@@ -33,27 +36,34 @@ export class WikiMarkdownEditorComponent implements AfterViewInit, ControlValueA
   private view: EditorView;
   protected _styled: boolean;
 
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['lineWrapping']) {
+      this.reconfigureExtensions()
+    }
+  }
+
   /* CodeMirror */
 
+  private _extensions = new Compartment();
+  private _baseExtensions = [
+    basicSetup,
+    keymap.of([indentWithTab]),
+
+    markdown(),
+
+    EditorView.updateListener.of(update => {
+      if (update.docChanged) {
+        this.onDocumentChange(update.state.doc.toString());
+      }
+    }),
+  ];
+
+
   public ngAfterViewInit(): void {
-    const extensions = [
-      basicSetup,
-      keymap.of([
-        indentWithTab
-      ]),
-
-      markdown(),
-
-      EditorView.updateListener.of(update => {
-        if (update.docChanged) {
-          this.onDocumentChange(update.state.doc.toString());
-        }
-      })
-    ];
-
     const state = EditorState.create({
       doc: this.value,
-      extensions: extensions
+      extensions: this._extensions.of(this._baseExtensions)
     });
 
     this.view = new EditorView({
@@ -61,9 +71,12 @@ export class WikiMarkdownEditorComponent implements AfterViewInit, ControlValueA
       state: state
     });
 
+    this.reconfigureExtensions();
+
     // for some reason, when height is set before CM is initialized, it scrolls down to the bottom
     setTimeout(() => this._styled = true);
   }
+
 
   private onDocumentChange(doc: string): void {
     this.onChange(doc);
@@ -75,6 +88,16 @@ export class WikiMarkdownEditorComponent implements AfterViewInit, ControlValueA
     });
   }
 
+  private reconfigureExtensions(): void {
+    const state = [...this._baseExtensions];
+    if (this.lineWrapping) {
+      state.push(EditorView.lineWrapping);
+    }
+
+    this.view?.dispatch({
+      effects: this._extensions.reconfigure(state)
+    });
+  }
 
   /* CVA */
 
