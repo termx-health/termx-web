@@ -4,6 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import Cookies from 'js-cookie';
+import {isDefined} from '@kodality-web/core-util';
 
 export interface UserInfo {
   username: string;
@@ -24,10 +25,14 @@ export class AuthService {
     oidcSecurityService.isAuthenticated$
       .pipe(mergeMap(() => oidcSecurityService.getAuthenticationResult()))
       .subscribe(ar => {
-        Cookies.set('oauth-token', ar['access_token'], {
-          expires: new Date(new Date().getTime() + ar['expires_in'] * 1000),
-          secure: environment.production
-        });
+        if (isDefined(ar)) {
+          Cookies.set('oauth-token', ar['access_token'], {
+            expires: new Date(new Date().getTime() + ar['expires_in'] * 1000),
+            secure: environment.production
+          });
+        } else {
+          Cookies.remove('oauth-token');
+        }
       });
   }
 
