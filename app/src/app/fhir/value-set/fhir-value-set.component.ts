@@ -25,4 +25,9 @@ export class FhirValueSetComponent implements OnChanges {
     const id = sys.split('/')[sys.split('/').length - 1];
     this.router.navigate(['/fhir/CodeSystem/', id]);
   }
+
+  public openValueSetExpand(): void {
+    window.open(window.location.origin + '/fhir/ValueSet/' + this.valueSet.id + '/expand?includeDesignations=true' +
+      (this.valueSet.language ? '&displayLanguage=' + this.valueSet.language : '') , '_blank');
+  }
 }

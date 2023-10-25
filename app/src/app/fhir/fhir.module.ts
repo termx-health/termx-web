@@ -6,6 +6,7 @@ import {FhirCodeSystemComponent} from './code-system/fhir-code-system.component'
 import {FhirLibModule} from 'term-web/fhir/_lib';
 import {FhirResourceComponent} from 'term-web/fhir/fhir-resource.component';
 import {FhirConceptMapComponent} from 'term-web/fhir/concept-map/fhir-concept-map.component';
+import {WikiLibModule} from 'term-web/wiki/_lib';
 
 export const FHIR_ROUTES: Routes = [
   {path: ':type', component: FhirResourceComponent},
@@ -16,7 +17,8 @@ export const FHIR_ROUTES: Routes = [
 @NgModule({
   imports: [
     CoreUiModule,
-    FhirLibModule
+    FhirLibModule,
+    WikiLibModule
   ],
   declarations: [
     FhirResourceComponent,

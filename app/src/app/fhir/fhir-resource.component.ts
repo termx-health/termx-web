@@ -1,10 +1,13 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {HttpClient} from '@angular/common/http';
 import formatXml from 'xml-formatter';
 import {isDefined} from '@kodality-web/core-util';
+import {Clipboard} from '@angular/cdk/clipboard';
+import {saveAs} from 'file-saver';
+import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 @Component({
   templateUrl: './fhir-resource.component.html',
@@ -15,13 +18,20 @@ import {isDefined} from '@kodality-web/core-util';
   `]
 })
 export class FhirResourceComponent implements OnInit {
+  public meta?: {type?: string, id?: string, operation?: string} = {};
   public resource?: any;
   public operationResult?: any;
+
+  protected curl =
+    '```\n' +
+    'curl\n' +
+    '```\n';
 
   public constructor(
     protected http: HttpClient,
     private route: ActivatedRoute,
-    private router: Router,
+    private clipboardService: Clipboard,
+    private oidcSecurityService: OidcSecurityService
   ) {}
 
   public ngOnInit(): void {
@@ -29,41 +39,64 @@ export class FhirResourceComponent implements OnInit {
       this.resource = undefined;
       this.operationResult = undefined;
 
-      const id = paramMap.get('id');
-      const type = paramMap.get('type');
-      const operation = paramMap.get('operation');
+      this.meta = {id: paramMap.get('id'), type: paramMap.get('type'), operation: paramMap.get('operation')};
 
-      if (isDefined(operation)) {
-        this.executeOperation(id, type, operation);
-      } else if (isDefined(id)) {
-        this.loadResource(id, type);
+      if (isDefined(this.meta.operation)) {
+        this.executeOperation(this.meta.id, this.meta.type, this.meta.operation);
+      } else if (isDefined(this.meta.id)) {
+        this.loadResource(this.meta.id, this.meta.type);
       } else {
-        this.loadResources(type);
+        this.loadResources(this.meta.type);
       }
     });
   }
 
   private loadResource(id: string, type: string): void {
-    const request = this.http.get<any>(`${environment.termxApi}/fhir/${type}/${id}`);
+    const url = `${environment.termxApi}/fhir/${type}/${id}`;
+    this.composeCurl(url);
+    const request = this.http.get<any>(url);
     request.subscribe(r => this.resource = r);
   }
 
   private loadResources(type: string): void {
-    const request = this.http.get<any>(`${environment.termxApi}/fhir/${type}`);
+    const url = `${environment.termxApi}/fhir/${type}`;
+    this.composeCurl(url);
+    const request = this.http.get<any>(url);
     request.subscribe(r => this.operationResult = r);
+  }
+
+  private executeOperation(id: string, type: string, operation: string): void {
+    const search = window.location.search.replace('_code', 'code');
+    const url = `${environment.termxApi}/fhir/${type}/${id}/$${operation}` + search;
+    this.composeCurl(url);
+    const request = this.http.get<any>(url);
+    request.subscribe(r => this.operationResult = r, err => this.operationResult = err);
   }
 
   public toXML = (resource: any): string => {
     return formatXml(new Fhir().jsonToXml(JSON.stringify(resource)));
   };
 
-  public openCodeSystem(id: string): void {
-    this.router.navigate(['/fhir/CodeSystem/', id]);
+  protected downloadResult(resource: string, format?: 'xml' | 'json'): void {
+    if (format === 'json') {
+      saveAs(new Blob([JSON.stringify(resource, null, 2)], {type: 'application/json'}), `${this.resource.id}.json`);
+    }
+    if (format === 'xml') {
+      saveAs(new Blob([this.toXML(resource)], {type: 'application/xml'}), `${this.resource.id}.xml`);
+    }
   }
 
-  private executeOperation(id: string, type: string, operation: string): void {
-    const search = window.location.search.replace('_code', 'code');
-    const request = this.http.get<any>(`${environment.termxApi}/fhir/${type}/${id}/$${operation}` + search);
-    request.subscribe(r => this.operationResult = r, err => this.operationResult = err);
+  protected copyResult(resource: string, format?: 'xml' | 'json'): void {
+    if (format === 'xml') {
+      resource = this.toXML(resource);
+    }
+    this.clipboardService.copy(JSON.stringify(resource, null, 2));
+  }
+
+  private composeCurl(l: string): void {
+    this.oidcSecurityService.getAccessToken().subscribe(token => {
+      this.curl =  '```\n' +'curl --location \'' + l + '\' \\\n' +
+        '--header \'Authorization: Bearer ' + token + '\'\n' + '```\n' ;
+    });
   }
 }

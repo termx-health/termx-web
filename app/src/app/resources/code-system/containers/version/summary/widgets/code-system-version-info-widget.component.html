@@ -20,8 +20,9 @@
   </div>
   <div class="m-items-middle">
     <m-icon mCode="download"></m-icon>
-    <span>{{'web.code-system-version.summary.info.definition' | translate}} (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
-    <a (mClick)="openJson()"><m-icon mCode="link"></m-icon></a>
+    <span>{{'web.code-system-version.summary.info.download' | translate}} (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
+    <m-divider mVertical></m-divider>
+    <span>{{'web.code-system-version.summary.info.definition' | translate}} <a (mClick)="openJson()"><m-icon mCode="link"></m-icon></a></span>
   </div>
   <div class="m-items-middle">
     <m-icon mCode="calendar"></m-icon>

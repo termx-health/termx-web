@@ -1,8 +1,11 @@
 <div nz-row nzJustify="center">
   <div nz-col [nzLg]="18" [nzXs]="24">
+    <h1>{{meta.type}} {{meta.id}} {{meta.operation}}</h1>
+    <m-divider style="margin-top: 0"></m-divider>
+    <tw-smart-text-editor-view [value]="curl" valueType="markdown"></tw-smart-text-editor-view>
+    <m-divider></m-divider>
+
     <ng-container *ngIf="resource">
-      <h1>{{resource.resourceType}} {{resource.url}}</h1>
-      <m-divider style="margin-top: 0"></m-divider>
       <nz-tabset nzLinkRouter>
         <nz-tab>
           <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true">Narrative</a>
@@ -18,26 +21,49 @@
         <nz-tab>
           <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'xml' }" [replaceUrl]="true">XML</a>
           <ng-template nz-tab>
-            <m-card>
-              <pre>{{resource | apply:toXML}}</pre>
-            </m-card>
+            <ng-container *ngTemplateOutlet="resultCard, context: {result: resource, format: 'xml'}"/>
           </ng-template>
         </nz-tab>
         <nz-tab>
           <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'json' }" [replaceUrl]="true">JSON</a>
           <ng-template nz-tab>
-            <m-card>
-              <pre>{{resource | json}}</pre>
-            </m-card>
+            <ng-container *ngTemplateOutlet="resultCard, context: {result: resource, format: 'json'}"/>
           </ng-template>
         </nz-tab>
       </nz-tabset>
     </ng-container>
 
     <ng-container *ngIf="operationResult">
-      <m-card>
-        <pre>{{operationResult | json}}</pre>
-      </m-card>
+      <nz-tabset>
+        <nz-tab nzTitle="JSON">
+          <ng-template nz-tab>
+            <ng-container *ngTemplateOutlet="resultCard, context: {result: operationResult, format: 'json'}"/>
+          </ng-template>
+        </nz-tab>
+        <nz-tab nzTitle="XML">
+          <ng-template nz-tab>
+            <ng-container *ngTemplateOutlet="resultCard, context: {result: operationResult, format: 'xml'}"/>
+          </ng-template>
+        </nz-tab>
+      </nz-tabset>
     </ng-container>
   </div>
 </div>
+
+<ng-template #resultCard let-result="result" let-format="format">
+  <m-card>
+    <div *m-card-header class="m-justify-between">
+      <div></div>
+      <div class="m-items-middle">
+        <m-button (click)="downloadResult(result, format)">
+          <m-icon mCode="download"/>
+        </m-button>
+        <m-button (click)="copyResult(result, format)">
+          <m-icon mCode="copy"/>
+        </m-button>
+      </div>
+    </div>
+    <pre *ngIf="format === 'json'">{{result | json}}</pre>
+    <pre *ngIf="format === 'xml'">{{result | apply:toXML}}</pre>
+  </m-card>
+</ng-template>

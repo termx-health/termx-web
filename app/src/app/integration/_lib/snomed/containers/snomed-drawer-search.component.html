@@ -9,7 +9,8 @@
   </a>
 </div>
 
-<m-drawer [mVisible]="drawerOpened" (mClose)="closeDrawer()">
-  <tw-snomed-search (conceptSelected)="onSelect($event)"></tw-snomed-search>
+
+<m-drawer *ngIf="drawerOpened" [mVisible]="drawerOpened" (mClose)="closeDrawer()">
+  <tw-snomed-search (conceptSelected)="onSelect($event)" [conceptId]="value"></tw-snomed-search>
 </m-drawer>
 

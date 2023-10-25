@@ -34,7 +34,11 @@
   </div>
 
   <div *ngIf="valueSet.expansion">
-    <h2>Expansion</h2>
+    <div class="m-items-middle">
+      <h2>Expansion</h2>
+      <m-divider mVertical></m-divider>
+      <a (mClick)="openValueSetExpand()">FHIR definition</a>
+    </div>
     <p>This value set contains {{valueSet.expansion.total}} {{(valueSet.expansion.total % 10) === 1 ? 'concept' : 'concepts'}}</p>
     <m-table [mData]="valueSet.expansion.contains" class="grid">
       <tr *mTableHead>
