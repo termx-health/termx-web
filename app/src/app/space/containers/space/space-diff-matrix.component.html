@@ -6,6 +6,7 @@
     <th *ngFor="let server of (diffItems | apply:extractServers)">
       <label>{{server}}</label>
     </th>
+    <th><m-button (mClick)="loadDiff(true)"><m-icon mCode="redo"></m-icon></m-button></th>
   </tr>
 
   <tr *mTableRow="let item">
@@ -22,6 +23,7 @@
         <label *ngIf="!item.upToDate" class="m-clickable" (click)="openDiff(item)"><m-icon style="color: red" mCode="exclamation-circle"></m-icon></label>
       </ng-container>
     </td>
+    <td></td>
   </tr>
 
   <tr *mTableNoData>

@@ -21,16 +21,7 @@ export class SpaceDiffMatrixComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    combineLatest([
-      this.ctx.space$.pipe(takeUntil(this.destroy$)),
-      this.ctx.pack$.pipe(takeUntil(this.destroy$)),
-      this.ctx.version$.pipe(takeUntil(this.destroy$))
-    ]).subscribe(([s, p, v]) => {
-      this.loading = true;
-      this.spaceService.diff(s.id, p?.code, v?.version).subscribe(diff => {
-        this.diffItems = diff.items;
-      }).add(() => this.loading = false);
-    });
+    this.loadDiff();
   }
 
   public extractServers = (items: SpaceDiffItem[]): string[] => {
@@ -40,5 +31,18 @@ export class SpaceDiffMatrixComponent implements OnInit {
 
   public openDiff(item: SpaceDiffItem): void {
     this.router.navigate(['/spaces/context', this.ctx.params, 'diff'], {queryParams: {resourceId: item.resourceId, resourceType: item.resourceType}});
+  }
+
+  protected loadDiff(clearCache?: boolean): void {
+    combineLatest([
+      this.ctx.space$.pipe(takeUntil(this.destroy$)),
+      this.ctx.pack$.pipe(takeUntil(this.destroy$)),
+      this.ctx.version$.pipe(takeUntil(this.destroy$))
+    ]).subscribe(([s, p, v]) => {
+      this.loading = true;
+      this.spaceService.diff(s.id, p?.code, v?.version, clearCache).subscribe(diff => {
+        this.diffItems = diff.items;
+      }).add(() => this.loading = false);
+    });
   }
 }

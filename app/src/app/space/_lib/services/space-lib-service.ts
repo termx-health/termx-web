@@ -33,8 +33,11 @@ export class SpaceLibService {
     return this.http.get<{content: string}>(`${this.baseUrl}/${spaceId}/overview`, {params: SearchHttpParams.build({packageCode, version})});
   }
 
-  public diff(spaceId: number, packageCode: string, version: string): Observable<SpaceDiff> {
+  public diff(spaceId: number, packageCode: string, version: string, clearCache?: boolean): Observable<SpaceDiff> {
     const key = `${spaceId}#${packageCode}#${version}`;
+    if (clearCache) {
+      this.cacheService.remove(key);
+    }
     return this.cacheService.put(key, this.http.get<SpaceDiff>(`${this.baseUrl}/${spaceId}/diff`, {params: SearchHttpParams.build({packageCode, version})}));
   }
 
