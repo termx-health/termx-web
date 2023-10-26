@@ -1647,6 +1647,7 @@
 					"new-descriptions": "New descriptions",
 					"new-synonyms": "New synonyms",
 					"inactivated-synonyms": "Inactivated synonyms",
+					"inactivate-synonym": "Inactivate synonym",
 					"reactivated-synonyms": "Reactivated synonyms",
 					"export-modal": {
 						"header": "Export to RF2 zip",
@@ -1672,6 +1673,10 @@
 					},
 					"cs-version-modal": {
 						"header": "Create new code system version"
+					},
+					"synonym-deactivation-modal": {
+						"header": "Deactivate synonym",
+						"description": "Description id"
 					},
 					"total-descriptions": "{{total}} description(s) in the branch",
 					"unlinked-translations": "{{count}} unlinked translation(s)",

@@ -68,6 +68,11 @@ export class SnomedService extends SnomedLibService {
     return this.http.post(`${this.baseUrl}/imports`, fd);
   }
 
+  public deactivateDescription(path: string, descriptionId: string): Observable<any> {
+    path = path.split('/').join('--');
+    return this.http.post(`${this.baseUrl}/branches/${path}/descriptions/${descriptionId}/deactivate`, {});
+  }
+
   public deleteDescription(path: string, descriptionId: string): Observable<any> {
     path = path.split('/').join('--');
     return this.http.delete(`${this.baseUrl}/branches/${path}/descriptions/${descriptionId}`);

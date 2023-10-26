@@ -32,11 +32,13 @@ export class SnomedBranchManagementComponent implements OnInit {
   protected exportModalData: {visible?: boolean, type?: string} = {};
   protected importModalData: {visible?: boolean, type?: string, file?: any} = {type: 'SNAPSHOT'};
   protected csVersionModalData: {visible?: boolean, shortName?: string, effectiveDate?: number} = {};
+  protected synonymDeactivationModalData: {visible?: boolean, descriptionId?: string} = {};
 
   @ViewChild("lockModalForm") public lockModalForm?: NgForm;
   @ViewChild("exportModalForm") public exportModalForm?: NgForm;
   @ViewChild("importModalForm") public importModalForm?: NgForm;
   @ViewChild("csVersionModalForm") public csVersionModalForm?: NgForm;
+  @ViewChild("synonymDeactivationModalForm") public synonymDeactivationModalForm?: NgForm;
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
 
   public constructor(
@@ -194,5 +196,16 @@ export class SnomedBranchManagementComponent implements OnInit {
     }
     this.loader.wrap('add-cs-version', this.snomedService.createCodeSystemVersion(this.csVersionModalData.shortName, this.csVersionModalData.effectiveDate))
       .subscribe(() => this.csVersionModalData = {});
+  }
+
+  protected deactivateSynonym(): void {
+    if (!validateForm(this.synonymDeactivationModalForm)) {
+      return;
+    }
+    this.loader.wrap('deactivate-description', this.snomedService.deactivateDescription(this.snomedBranch.path, this.synonymDeactivationModalData.descriptionId))
+      .subscribe(() => {
+        this.loadAuthoringStats(this.snomedBranch.path);
+        this.synonymDeactivationModalData = {};
+      });
   }
 }

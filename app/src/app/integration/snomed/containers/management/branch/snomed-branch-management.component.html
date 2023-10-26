@@ -11,9 +11,9 @@
             {{'core.btn.delete' | translate}}
           </a>
         </ng-container>
-<!--        <a *m-dropdown-item (mClick)="executeIntegrityCheck()">-->
-<!--          {{'web.snomed.branch.management.integrity-check' | translate}}-->
-<!--        </a>-->
+        <!--        <a *m-dropdown-item (mClick)="executeIntegrityCheck()">-->
+        <!--          {{'web.snomed.branch.management.integrity-check' | translate}}-->
+        <!--        </a>-->
         <ng-container *ngIf="snomedBranch && !snomedBranch.locked && ('snomed-ct.CodeSystem.edit' | twHasAnyPrivilege)">
           <a *m-dropdown-item (mClick)="lockModalData.visible = true">
             {{'web.snomed.branch.management.lock' | translate}}
@@ -63,7 +63,7 @@
       <m-divider>
         <div class="m-items-middle">
           <label>{{'web.snomed.branch.management.authoring-stats' | translate}}</label>
-          <ng-container *ngIf="('snomed-ct.CodeSystem.edit' | twPrivileged) || type === 'daily-build'">
+          <ng-container *ngIf="('snomed-ct.CodeSystem.edit' | twPrivileged) && type === 'daily-build'">
             <m-divider mVertical></m-divider>
             <m-icon mCode="upload"></m-icon>
             <a (mClick)="openCsVersionModal()">{{'web.snomed.branch.management.create-cs-version' | translate}}</a>
@@ -74,7 +74,10 @@
         <nz-tab *ngFor="let t of ['new-descriptions', 'changed-fsn', 'new-synonyms', 'inactivated-synonyms', 'reactivated-synonyms']">
           <ng-container *nzTabLink>
             <label>{{'web.snomed.branch.management.' + t | translate}}</label>&nbsp;
-            <m-tag mColor="blue">{{(t | apply: getAuthoringStatsData)?.length || 0}}</m-tag>
+            <m-tag mColor="blue">{{(t | apply: getAuthoringStatsData)?.length || 0}}</m-tag>&nbsp;
+            <m-dropdown *ngIf="t === 'inactivated-synonyms' && ('snomed-ct.CodeSystem.edit' | twPrivileged)">
+              <a *m-dropdown-item (mClick)="synonymDeactivationModalData.visible = true">{{'web.snomed.branch.management.inactivate-synonym' | translate}}</a>
+            </m-dropdown>
           </ng-container>
           <m-table #authoringStatsTable *ngIf="!loader.isLoading" [mData]="t | apply: getAuthoringStatsData">
             <tr *mTableHead>
@@ -242,7 +245,31 @@
     <m-button mDisplay="text" (click)="csVersionModalData.visible = false">
       {{'core.btn.cancel' | translate}}
     </m-button>
-    <m-button mDisplay="primary" (click)="createCodeSystemVersion()" [mLoading]="loader.isLoading" [disabled]="loader.state['import']">
+    <m-button mDisplay="primary" (click)="createCodeSystemVersion()" [mLoading]="loader.isLoading" [disabled]="loader.state['add-cs-version']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>
+
+
+<m-modal [(mVisible)]="synonymDeactivationModalData.visible" (mClose)="synonymDeactivationModalData = {}">
+  <m-title *mModalHeader>
+    {{'web.snomed.branch.management.synonym-deactivation-modal.header' | translate}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #synonymDeactivationModalForm="ngForm">
+      <m-form-item mName="description" mLabel="web.snomed.branch.management.synonym-deactivation-modal.description" required>
+        <m-input name="description" [(ngModel)]="synonymDeactivationModalData.descriptionId" required></m-input>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="synonymDeactivationModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="deactivateSynonym()" [mLoading]="loader.isLoading" [disabled]="loader.state['deactivate-description']">
       {{'core.btn.confirm' | translate}}
     </m-button>
   </div>
