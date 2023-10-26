@@ -1675,7 +1675,7 @@
 						"header": "Create new code system version"
 					},
 					"synonym-deactivation-modal": {
-						"header": "Deactivate synonym",
+						"header": "Inactivate synonym",
 						"description": "Description id"
 					},
 					"total-descriptions": "{{total}} description(s) in the branch",
