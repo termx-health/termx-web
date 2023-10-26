@@ -63,7 +63,7 @@
       <m-divider>
         <div class="m-items-middle">
           <label>{{'web.snomed.branch.management.authoring-stats' | translate}}</label>
-          <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+          <ng-container *ngIf="('snomed-ct.CodeSystem.edit' | twPrivileged) || type === 'daily-build'">
             <m-divider mVertical></m-divider>
             <m-icon mCode="upload"></m-icon>
             <a (mClick)="openCsVersionModal()">{{'web.snomed.branch.management.create-cs-version' | translate}}</a>
