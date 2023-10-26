@@ -1649,6 +1649,7 @@
 					"inactivated-synonyms": "Inactivated synonyms",
 					"inactivate-synonym": "Inactivate synonym",
 					"reactivated-synonyms": "Reactivated synonyms",
+					"reactivate-synonym": "Reactivate synonym",
 					"export-modal": {
 						"header": "Export to RF2 zip",
 						"type": "Type"
@@ -1676,6 +1677,10 @@
 					},
 					"synonym-deactivation-modal": {
 						"header": "Inactivate synonym",
+						"description": "Description id"
+					},
+					"synonym-reactivation-modal": {
+						"header": "Reactivate synonym",
 						"description": "Description id"
 					},
 					"total-descriptions": "{{total}} description(s) in the branch",

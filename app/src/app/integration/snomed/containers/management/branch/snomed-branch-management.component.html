@@ -75,9 +75,14 @@
           <ng-container *nzTabLink>
             <label>{{'web.snomed.branch.management.' + t | translate}}</label>&nbsp;
             <m-tag mColor="blue">{{(t | apply: getAuthoringStatsData)?.length || 0}}</m-tag>&nbsp;
-            <m-dropdown *ngIf="t === 'inactivated-synonyms' && ('snomed-ct.CodeSystem.edit' | twPrivileged)">
-              <a *m-dropdown-item (mClick)="synonymDeactivationModalData.visible = true">{{'web.snomed.branch.management.inactivate-synonym' | translate}}</a>
-            </m-dropdown>
+            <ng-container *ngIf="('snomed-ct.CodeSystem.edit' | twPrivileged)">
+              <m-dropdown *ngIf="t === 'inactivated-synonyms'">
+                <a *m-dropdown-item (mClick)="synonymDeactivationModalData.visible = true">{{'web.snomed.branch.management.inactivate-synonym' | translate}}</a>
+              </m-dropdown>
+              <m-dropdown *ngIf="t === 'reactivated-synonyms'">
+                <a *m-dropdown-item (mClick)="synonymReactivationModalData.visible = true">{{'web.snomed.branch.management.reactivate-synonym' | translate}}</a>
+              </m-dropdown>
+            </ng-container>
           </ng-container>
           <m-table #authoringStatsTable *ngIf="!loader.isLoading" [mData]="t | apply: getAuthoringStatsData">
             <tr *mTableHead>
@@ -270,6 +275,29 @@
       {{'core.btn.cancel' | translate}}
     </m-button>
     <m-button mDisplay="primary" (click)="deactivateSynonym()" [mLoading]="loader.isLoading" [disabled]="loader.state['deactivate-description']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>
+
+<m-modal [(mVisible)]="synonymReactivationModalData.visible" (mClose)="synonymReactivationModalData = {}">
+  <m-title *mModalHeader>
+    {{'web.snomed.branch.management.synonym-reactivation-modal.header' | translate}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #synonymReactivationModalForm="ngForm">
+      <m-form-item mName="description" mLabel="web.snomed.branch.management.synonym-reactivation-modal.description" required>
+        <m-input name="description" [(ngModel)]="synonymReactivationModalData.descriptionId" required></m-input>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="synonymReactivationModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="reactivateSynonym()" [mLoading]="loader.isLoading" [disabled]="loader.state['reactivate-description']">
       {{'core.btn.confirm' | translate}}
     </m-button>
   </div>

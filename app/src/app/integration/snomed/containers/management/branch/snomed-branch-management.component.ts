@@ -33,12 +33,14 @@ export class SnomedBranchManagementComponent implements OnInit {
   protected importModalData: {visible?: boolean, type?: string, file?: any} = {type: 'SNAPSHOT'};
   protected csVersionModalData: {visible?: boolean, shortName?: string, effectiveDate?: number} = {};
   protected synonymDeactivationModalData: {visible?: boolean, descriptionId?: string} = {};
+  protected synonymReactivationModalData: {visible?: boolean, descriptionId?: string} = {};
 
   @ViewChild("lockModalForm") public lockModalForm?: NgForm;
   @ViewChild("exportModalForm") public exportModalForm?: NgForm;
   @ViewChild("importModalForm") public importModalForm?: NgForm;
   @ViewChild("csVersionModalForm") public csVersionModalForm?: NgForm;
   @ViewChild("synonymDeactivationModalForm") public synonymDeactivationModalForm?: NgForm;
+  @ViewChild("synonymReactivationModalForm") public synonymReactivationModalForm?: NgForm;
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
 
   public constructor(
@@ -206,6 +208,17 @@ export class SnomedBranchManagementComponent implements OnInit {
       .subscribe(() => {
         this.loadAuthoringStats(this.snomedBranch.path);
         this.synonymDeactivationModalData = {};
+      });
+  }
+
+  protected reactivateSynonym(): void {
+    if (!validateForm(this.synonymReactivationModalForm)) {
+      return;
+    }
+    this.loader.wrap('reactivate-description', this.snomedService.reactivateDescription(this.snomedBranch.path, this.synonymReactivationModalData.descriptionId))
+      .subscribe(() => {
+        this.loadAuthoringStats(this.snomedBranch.path);
+        this.synonymReactivationModalData = {};
       });
   }
 }
