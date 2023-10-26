@@ -131,9 +131,4 @@ export class SnomedCodesystemEditComponent implements OnInit {
     return !this.snomedCodeSystem.latestVersion?.dependantVersionEffectiveTime ||
       compareStrings(version.effectiveDate, this.snomedCodeSystem.latestVersion.dependantVersionEffectiveTime) === 1;
   };
-
-  public startNewAuthoringCycle(): void {
-    this.loader.wrap('load', this.snomedService.startNewAuthoringCycle(this.snomedCodeSystem.shortName))
-      .subscribe(() => this.initData(this.snomedCodeSystem.shortName));
-  }
 }

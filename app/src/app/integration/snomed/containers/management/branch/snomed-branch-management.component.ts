@@ -2,13 +2,13 @@ import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {SnomedAuthoringStatsItem, SnomedBranch, SnomedTranslation, SnomedTranslationLibService} from 'app/src/app/integration/_lib';
+import {SnomedAuthoringStatsItem, SnomedBranch, SnomedTranslation} from 'app/src/app/integration/_lib';
 import {forkJoin} from 'rxjs';
 import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {saveAs} from 'file-saver';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
-
+import moment from 'moment';
 
 @Component({
   templateUrl: 'snomed-branch-management.component.html',
@@ -31,10 +31,12 @@ export class SnomedBranchManagementComponent implements OnInit {
   protected lockModalData: {visible?: boolean, message?: string} = {};
   protected exportModalData: {visible?: boolean, type?: string} = {};
   protected importModalData: {visible?: boolean, type?: string, file?: any} = {type: 'SNAPSHOT'};
+  protected csVersionModalData: {visible?: boolean, shortName?: string, effectiveDate?: number} = {};
 
   @ViewChild("lockModalForm") public lockModalForm?: NgForm;
   @ViewChild("exportModalForm") public exportModalForm?: NgForm;
   @ViewChild("importModalForm") public importModalForm?: NgForm;
+  @ViewChild("csVersionModalForm") public csVersionModalForm?: NgForm;
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
 
   public constructor(
@@ -178,5 +180,19 @@ export class SnomedBranchManagementComponent implements OnInit {
   protected addTranslationToBranch(id: number): void {
     this.loader.wrap('add-translation', this.snomedTranslationService.addToBranch(id))
       .subscribe(() => this.loadAuthoringStats(this.snomedBranch.path));
+  }
+
+  protected openCsVersionModal(): void {
+    const shortName = this.snomedBranch.path.split('/')[this.snomedBranch.path.split('/').length - 1];
+    const date = Number(moment().format('YYYYMMDD').toString());
+    this.csVersionModalData = {visible: true, shortName: shortName, effectiveDate: date};
+  }
+
+  protected createCodeSystemVersion(): void {
+    if (!validateForm(this.csVersionModalForm)) {
+      return;
+    }
+    this.loader.wrap('add-cs-version', this.snomedService.createCodeSystemVersion(this.csVersionModalData.shortName, this.csVersionModalData.effectiveDate))
+      .subscribe(() => this.csVersionModalData = {});
   }
 }

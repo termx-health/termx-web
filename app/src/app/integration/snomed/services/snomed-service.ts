@@ -7,7 +7,7 @@ import {SearchHttpParams} from '@kodality-web/core-util';
 @Injectable()
 export class SnomedService extends SnomedLibService {
 
-  public createdCodeSystem(cs: SnomedCodeSystem): Observable<SnomedCodeSystem> {
+  public createCodeSystem(cs: SnomedCodeSystem): Observable<SnomedCodeSystem> {
     return this.http.post(`${this.baseUrl}/codesystems`, cs);
   }
 
@@ -18,12 +18,12 @@ export class SnomedService extends SnomedLibService {
     return this.http.post(`${this.baseUrl}/codesystems/${shortName}/upgrade`, {newDependantVersion: newDependantVersion});
   }
 
-  public startNewAuthoringCycle(shortName: string): Observable<any> {
-    return this.http.post(`${this.baseUrl}/codesystems/${shortName}/new-authoring-cycle`, {});
-  }
-
   public deleteCodeSystem(shortName: string): Observable<any> {
     return this.http.delete(`${this.baseUrl}/codesystems/${shortName}`);
+  }
+
+  public createCodeSystemVersion(shortName: string, effectiveDate: number): Observable<any> {
+    return this.http.post(`${this.baseUrl}/codesystems/${shortName}/versions`, {effectiveDate: effectiveDate});
   }
 
   public createdBranch(request: any): Observable<SnomedBranch> {

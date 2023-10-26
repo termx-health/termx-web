@@ -470,11 +470,15 @@
 			"languages": "Languages",
 			"latest-version": "Latest version",
 			"name": "Name",
+			"short-name": "Short name",
 			"versions": "Versions",
 			"imported": "Imported",
 			"dependant-version-effective-time": "Dependant version effective time",
 			"daily-build-available": "Daily build available",
 			"country-code": "Country code"
+		},
+		"snomed-codesystem-version": {
+			"effective-date": "Effective date"
 		},
 		"snomed-concept": {
 			"concept-id": "Concept ID",
@@ -1637,6 +1641,7 @@
 				},
 				"management": {
 					"authoring-stats": "Authoring stats",
+					"create-cs-version": "Version changes",
 					"add-to-branch": "Add to branch",
 					"changed-fsn": "Changed FSN",
 					"new-descriptions": "New descriptions",
@@ -1665,6 +1670,9 @@
 						"header": "Lock branch",
 						"message": "Message"
 					},
+					"cs-version-modal": {
+						"header": "Create new code system version"
+					},
 					"total-descriptions": "{{total}} description(s) in the branch",
 					"unlinked-translations": "{{count}} unlinked translation(s)",
 					"unlock": "Unlock"
@@ -1676,7 +1684,6 @@
 					"import-from-rf2": "Import from RF2",
 					"export-to-rf2": "Export to RF2",
 					"upgrade": "Upgrade",
-					"new-authoring-cycle": "Start new authoring cycle",
 					"import-warning": "This import will create branch + code system version and should be used for published version importing or final version creation from a working branch. The upload may take more than 30-60 minutes depending on the size of SNOMED package.",
 					"upgrade-modal": {
 						"header": "Upgrade code system to a different dependant version",

@@ -11,9 +11,9 @@
             {{'core.btn.delete' | translate}}
           </a>
         </ng-container>
-        <a *m-dropdown-item (mClick)="executeIntegrityCheck()">
-          {{'web.snomed.branch.management.integrity-check' | translate}}
-        </a>
+<!--        <a *m-dropdown-item (mClick)="executeIntegrityCheck()">-->
+<!--          {{'web.snomed.branch.management.integrity-check' | translate}}-->
+<!--        </a>-->
         <ng-container *ngIf="snomedBranch && !snomedBranch.locked && ('snomed-ct.CodeSystem.edit' | twHasAnyPrivilege)">
           <a *m-dropdown-item (mClick)="lockModalData.visible = true">
             {{'web.snomed.branch.management.lock' | translate}}
@@ -60,7 +60,16 @@
         </m-form-item>
       </m-form-row>
 
-      <m-divider mText="web.snomed.branch.management.authoring-stats"></m-divider>
+      <m-divider>
+        <div class="m-items-middle">
+          <label>{{'web.snomed.branch.management.authoring-stats' | translate}}</label>
+          <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+            <m-divider mVertical></m-divider>
+            <m-icon mCode="upload"></m-icon>
+            <a (mClick)="openCsVersionModal()">{{'web.snomed.branch.management.create-cs-version' | translate}}</a>
+          </ng-container>
+        </div>
+      </m-divider>
       <nz-tabset *ngIf="!loader.isLoading">
         <nz-tab *ngFor="let t of ['new-descriptions', 'changed-fsn', 'new-synonyms', 'inactivated-synonyms', 'reactivated-synonyms']">
           <ng-container *nzTabLink>
@@ -208,6 +217,32 @@
       {{'core.btn.cancel' | translate}}
     </m-button>
     <m-button mDisplay="primary" (click)="importFromRF2()" [mLoading]="loader.isLoading" [disabled]="loader.state['import']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>
+
+<m-modal [(mVisible)]="csVersionModalData.visible" (mClose)="csVersionModalData = {}">
+  <m-title *mModalHeader>
+    {{'web.snomed.branch.management.cs-version-modal.header' | translate}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #csVersionModalForm="ngForm">
+      <m-form-item mName="name" mLabel="entities.snomed-codesystem.short-name" required>
+        <m-input name="name" [(ngModel)]="csVersionModalData.shortName"></m-input>
+      </m-form-item>
+      <m-form-item mName="effectiveDate" mLabel="entities.snomed-codesystem-version.effective-date" required>
+        <m-number-input name="effectiveDate" [(ngModel)]="csVersionModalData.effectiveDate"></m-number-input>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="csVersionModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="createCodeSystemVersion()" [mLoading]="loader.isLoading" [disabled]="loader.state['import']">
       {{'core.btn.confirm' | translate}}
     </m-button>
   </div>

@@ -44,7 +44,7 @@ export class SnomedManagementComponent implements OnInit {
       branchPath: 'MAIN/SNOMEDCT-' + this.editionModalData.countryCode,
       name: this.editionModalData.name
     };
-    this.loader.wrap('load', this.snomedService.createdCodeSystem(cs)).subscribe(() => {
+    this.loader.wrap('load', this.snomedService.createCodeSystem(cs)).subscribe(() => {
       this.editionModalData = {};
       this.loadData();
     });
