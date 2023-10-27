@@ -1,5 +1,5 @@
-import {matchSection} from '@kodality-web/marina-markdown';
 import {tokenAttrValue} from './plugin.util';
+import {matchSection} from '@kodality-web/marina-markdown-parser';
 
 export function structureDefinitionCodePlugin(md): void {
   md.renderer.rules.structure_definition_code = (tokens, idx, /*options, env, self */) => {
