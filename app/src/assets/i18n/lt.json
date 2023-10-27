@@ -29,7 +29,7 @@
 		"no-data": "Duomenų nėra",
 		"no-privilege": {
 			"access": "Prieiga: {{path}}",
-			"error": "401 – neįgaliota",
+			"error": "403 – draudžiama",
 			"privileges": {
 				"plural": "Jūs neturite pirmenybių: {{privileges}}",
 				"singular": "Jūs neturite pirmenybės: {{privilege}}"

@@ -29,7 +29,7 @@
 		"no-data": "No data",
 		"no-privilege": {
 			"access": "To access: {{path}}",
-			"error": "401 Unauthorized",
+			"error": "403 Forbidden",
 			"privileges": {
 				"plural": "You lack the privileges: {{privileges}}",
 				"singular": "You lack the privilege: {{privilege}}"

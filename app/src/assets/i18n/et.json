@@ -29,7 +29,7 @@
 		"no-data": "Andmed puuduvad",
 		"no-privilege": {
 			"access": "Juurdepääs: {{path}}",
-			"error": "401 Autoriseerimata",
+			"error": "403 Keelatud",
 			"privileges": {
 				"plural": "Sul puuduvad privileegid: {{privileges}}",
 				"singular": "Sul puudub privileeg: {{privilege}}"
