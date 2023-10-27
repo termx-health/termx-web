@@ -95,13 +95,13 @@ export class FhirResourceComponent implements OnInit {
       l = window.location.origin + l;
     }
     this.oidcSecurityService.getAccessToken().subscribe(token => {
-      this.curl =  '```\n' +'curl --location \'' + l + '\' \\\n' +
-        (isDefined(token) ? '--header \'Authorization: Bearer ' + token : '');
+      this.curl =  '```\n' +'curl --location \'' + l + '\'' +
+        (isDefined(token) ? ' \\\n' + '--header \'Authorization: Bearer ' + token + '\'' : '');
     });
   }
 
   protected addAcceptHeader = (curl: string, format: string): string => {
-    return curl + '\' \\\n' +
+    return curl + ' \\\n' +
       '--header \'Accept: application/fhir+' + format + '\'\n' + '```\n';
   };
 }
