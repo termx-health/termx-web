@@ -1,14 +1,13 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {DestroyService, format, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {SnomedAuthoringStatsItem, SnomedBranch, SnomedTranslation} from 'app/src/app/integration/_lib';
 import {forkJoin} from 'rxjs';
 import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {saveAs} from 'file-saver';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
-import moment from 'moment';
 
 @Component({
   templateUrl: 'snomed-branch-management.component.html',
@@ -188,7 +187,7 @@ export class SnomedBranchManagementComponent implements OnInit {
 
   protected openCsVersionModal(): void {
     const shortName = this.snomedBranch.path.split('/')[this.snomedBranch.path.split('/').length - 1];
-    const date = Number(moment().format('YYYYMMDD').toString());
+    const date = Number(format(new Date(), 'yyyyMMdd'));
     this.csVersionModalData = {visible: true, shortName: shortName, effectiveDate: date};
   }
 
