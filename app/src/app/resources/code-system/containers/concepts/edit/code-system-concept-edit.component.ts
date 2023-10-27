@@ -18,7 +18,6 @@ import {CodeSystemPropertyValueEditComponent} from './propertyvalue/code-system-
 import {CodeSystemAssociationEditComponent} from './association/code-system-association-edit.component';
 import {forkJoin, of} from 'rxjs';
 import {ResourceContextComponent} from 'term-web/resources/resource/components/resource-context.component';
-import {environment} from 'environments/environment';
 
 @Component({
   templateUrl: './code-system-concept-edit.component.html',

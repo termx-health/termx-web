@@ -30,7 +30,7 @@ export class ResourceContextComponent {
         'properties': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'properties'],
         'provenance': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'provenances']
       };
-      this.router.navigate(commands[this.mode]);
+      this.router.navigate(commands[this.mode], {replaceUrl: true});
     } else {
       this.router.navigate(['/resources', this.typeMap[this.resourceType]]);
     }
@@ -45,7 +45,7 @@ export class ResourceContextComponent {
       'properties': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'properties'],
       'provenance': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'provenances'],
     };
-    this.router.navigate(commands[this.mode]);
+    this.router.navigate(commands[this.mode], {replaceUrl: true});
   }
 
   public navigate(mode: string): void {
