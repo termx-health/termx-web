@@ -10,6 +10,7 @@ import {NgForm} from '@angular/forms';
 import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
 import {Task, TaskLibService} from 'term-web/task/_lib';
 import {forkJoin} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
 
 @Component({
   selector: 'tw-snomed-translations',
@@ -30,6 +31,7 @@ export class SnomedTranslationListComponent implements OnInit, OnChanges {
 
   public constructor(
     private codeSystemService: CodeSystemLibService,
+    private authService: AuthService,
     private snomedService: SnomedLibService,
     private snomedTranslationService: SnomedTranslationLibService,
     private taskService: TaskLibService
@@ -62,7 +64,7 @@ export class SnomedTranslationListComponent implements OnInit, OnChanges {
     this.loader.wrap('load', this.snomedTranslationService.loadConceptTranslations(conceptId)).subscribe(resp => {
       this.translations = resp;
       const translationIds = resp.map(r => r.id);
-      if (translationIds.length > 0) {
+      if (translationIds.length > 0 && this.authService.hasPrivilege('*.Task.view')) {
         this.taskService.searchTasks({context: translationIds.map(id => 'snomed-translation|' + id).join(','), limit: -1}).subscribe(tasks => {
           this.tasks = tasks.data;
         });
