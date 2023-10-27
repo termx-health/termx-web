@@ -23,7 +23,7 @@
     <span>{{'web.value-set-version.summary.info.download' | translate}} (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
     <m-divider mVertical></m-divider>
     <span>{{'web.value-set-version.summary.info.definition' | translate}}</span>
-    <a (mClick)="openJson()"><m-icon mCode="link"></m-icon></a>
+    <a (mClick)="openJson()">FHIR</a>
   </div>
   <div class="m-items-middle">
     <m-icon mCode="calendar"></m-icon>

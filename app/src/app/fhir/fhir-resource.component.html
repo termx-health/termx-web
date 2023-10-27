@@ -2,8 +2,6 @@
   <div nz-col [nzLg]="18" [nzXs]="24">
     <h1>{{meta.type}} {{meta.id}} {{meta.operation}}</h1>
     <m-divider style="margin-top: 0"></m-divider>
-    <tw-smart-text-editor-view [value]="curl" valueType="markdown"></tw-smart-text-editor-view>
-    <m-divider></m-divider>
 
     <ng-container *ngIf="resource">
       <nz-tabset nzLinkRouter>
@@ -51,6 +49,8 @@
 </div>
 
 <ng-template #resultCard let-result="result" let-format="format">
+  <tw-smart-text-editor-view [value]="curl | apply:addAcceptHeader:format" valueType="markdown"></tw-smart-text-editor-view>
+  <m-divider></m-divider>
   <m-card>
     <div *m-card-header class="m-justify-between">
       <div></div>

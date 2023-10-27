@@ -22,10 +22,7 @@ export class FhirResourceComponent implements OnInit {
   public resource?: any;
   public operationResult?: any;
 
-  protected curl =
-    '```\n' +
-    'curl\n' +
-    '```\n';
+  protected curl?: string;
 
   public constructor(
     protected http: HttpClient,
@@ -94,9 +91,17 @@ export class FhirResourceComponent implements OnInit {
   }
 
   private composeCurl(l: string): void {
+    if (l.startsWith('/')) {
+      l = window.location.origin + l;
+    }
     this.oidcSecurityService.getAccessToken().subscribe(token => {
       this.curl =  '```\n' +'curl --location \'' + l + '\' \\\n' +
-        '--header \'Authorization: Bearer ' + token + '\'\n' + '```\n' ;
+        (isDefined(token) ? '--header \'Authorization: Bearer ' + token : '');
     });
   }
+
+  protected addAcceptHeader = (curl: string, format: string): string => {
+    return curl + '\' \\\n' +
+      '--header \'Accept: application/fhir+' + format + '\'\n' + '```\n';
+  };
 }
