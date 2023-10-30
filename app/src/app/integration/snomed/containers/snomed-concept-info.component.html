@@ -26,11 +26,11 @@
       </tr>
       <tr *mTableRow="let dk">
         <td>{{dk | snomedConceptName | async}}</td>
-        <td><div *ngFor="let description of descriptions[dk]">{{description.descriptionId}}</div></td>
-        <td><div *ngFor="let description of descriptions[dk]">{{description.lang}}</div></td>
-        <td><div *ngFor="let description of descriptions[dk]">{{description.term}}</div></td>
-        <td><div *ngFor="let description of descriptions[dk]">{{description.typeId | snomedConceptName | async}}</div></td>
-        <td><div *ngFor="let description of descriptions[dk]">{{description.acceptabilityMap[dk]}}</div></td>
+        <td><div *ngFor="let description of descriptions[dk]" [style]="!description.active ? 'text-decoration:line-through' : ''">{{description.descriptionId}}</div></td>
+        <td><div *ngFor="let description of descriptions[dk]" [style]="!description.active ? 'text-decoration:line-through' : ''">{{description.lang}}</div></td>
+        <td><div *ngFor="let description of descriptions[dk]" [style]="!description.active ? 'text-decoration:line-through' : ''">{{description.term}}</div></td>
+        <td><div *ngFor="let description of descriptions[dk]" [style]="!description.active ? 'text-decoration:line-through' : ''">{{description.typeId | snomedConceptName | async}}</div></td>
+        <td><div *ngFor="let description of descriptions[dk]" [style]="!description.active ? 'text-decoration:line-through' : ''">{{description.acceptabilityMap[dk]}}</div></td>
       </tr>
       <tr *mTableNoData>
         <td colspan="100%">
