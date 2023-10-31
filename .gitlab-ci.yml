@@ -46,8 +46,7 @@ build_chef:
     - main
 
 
-
-publish:
+release latest:
   stage: release
   image: docker:stable
   before_script:
@@ -58,7 +57,7 @@ publish:
   only:
     - main
 
-release:
+release tag:
   stage: release
   image: docker:stable
   before_script:
