@@ -22,6 +22,7 @@ build:
   stage: build
   extends: .dependencies_cache
   script:
+    - echo $CI_COMMIT_REF_NAME | grep -P '^\d*\.\d*\.\d*$' && npm version $CI_COMMIT_REF_NAME
     - npm install --cache .npm --prefer-offline
     - npm run build
   artifacts:
@@ -31,8 +32,6 @@ build:
   only:
     - branches
     - tags
-  except:
-    - /^\d*\.\d*\.\d*$/
 
 build_chef:
   stage: build
@@ -66,9 +65,6 @@ release tag:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
   script:
     - export APP_VERSION="$CI_COMMIT_REF_NAME"
-    - npm version $APP_VERSION
-    - npm install --cache .npm --prefer-offline
-    - npm run build
     - docker build -t docker.kodality.com/termx-web:$APP_VERSION .
     - docker push docker.kodality.com/termx-web:$APP_VERSION
   only:
