@@ -117,7 +117,8 @@
 			"version": "Versioon"
 		},
 		"common": {
-			"privileges": "Privileegid"
+			"privileges": "Privileegid",
+			"versions": "Versioonid"
 		},
 		"contact-detail": {
 			"name": "Nimi",

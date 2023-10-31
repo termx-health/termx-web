@@ -9,6 +9,9 @@ image: registry.gitlab.com/kodality/gitlab-builders/ng
       - .npm/
       - node_modules
 
+before_script:
+  - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
+  - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
 
 stages:
   - build
@@ -18,9 +21,6 @@ stages:
 build:
   stage: build
   extends: .dependencies_cache
-  before_script:
-    - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
-    - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
   script:
     - npm install --cache .npm --prefer-offline
     - npm run build
@@ -31,6 +31,8 @@ build:
   only:
     - branches
     - tags
+  except:
+    - /^\d*\.\d*\.\d*$/
 
 build_chef:
   stage: build
@@ -64,7 +66,10 @@ release tag:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
   script:
     - export APP_VERSION="$CI_COMMIT_REF_NAME"
-    - docker build -t docker.kodality.com/termx-web:$APP_VERSION --build-arg APP_VERSION=$APP_VERSION .
+    - npm version $APP_VERSION
+    - npm install --cache .npm --prefer-offline
+    - npm run build
+    - docker build -t docker.kodality.com/termx-web:$APP_VERSION .
     - docker push docker.kodality.com/termx-web:$APP_VERSION
   only:
     - /^\d*\.\d*\.\d*$/

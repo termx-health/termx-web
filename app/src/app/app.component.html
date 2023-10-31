@@ -23,6 +23,15 @@
           <div *ngFor="let role of roles">{{role}}</div>
         </m-form-item>
       </div>
+
+      <div class="tw-user-info__info">
+        <m-form-item mLabel="entities.common.versions">
+          <div *ngFor="let v of versions | keyvalue">
+            <span>{{v.key}}: </span>
+            <span style="text-align: right">{{v.value}}</span>
+          </div>
+        </m-form-item>
+      </div>
     </div>
   </ng-template>
 
