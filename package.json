@@ -1,6 +1,6 @@
 {
   "name": "termx",
-  "version": "1.0-snapshot",
+  "version": "2.3-snapshot",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
