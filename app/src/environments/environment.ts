@@ -1,5 +1,5 @@
 export const environment = {
-  appVersion: 'dev',
+  appVersion: require('../../../package.json').version,
   production: false,
   yupiEnabled: false,
 

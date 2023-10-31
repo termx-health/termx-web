@@ -1,7 +1,7 @@
 import {dynamicEnv} from './dynamic-env';
 
 export const environment = {
-  appVersion: require('../../package.json').version,
+  appVersion: require('../../../package.json').version,
   production: true,
   yupiEnabled: false,
   termxApi: '/api',
