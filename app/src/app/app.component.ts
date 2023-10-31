@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {MuiPageMenuItem} from '@kodality-web/marina-ui';
 import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
@@ -6,6 +6,7 @@ import {HttpClient} from '@angular/common/http';
 import {filter, map, pairwise, startWith, switchMap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {group} from '@kodality-web/core-util';
+import {environment} from 'environments/environment';
 
 const getRouteLastChild = (snap: ActivatedRouteSnapshot): ActivatedRouteSnapshot => snap.firstChild ? getRouteLastChild(snap.firstChild) : snap;
 
@@ -13,7 +14,7 @@ const getRouteLastChild = (snap: ActivatedRouteSnapshot): ActivatedRouteSnapshot
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.less']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   protected menu$ = this.translateService.onLangChange.pipe(
     startWith({lang: this.translateService.currentLang}),
     switchMap(() => this.http.get<any[]>("./assets/menu.json")),
@@ -30,6 +31,10 @@ export class AppComponent {
     })
   );
   protected isEmbedded = (url: string): boolean => url?.startsWith('/embedded');
+  protected versions = {
+    web: environment.appVersion,
+    service: ''
+  };
 
   public constructor(
     protected auth: AuthService,
@@ -51,6 +56,9 @@ export class AppComponent {
     });
   }
 
+  public ngOnInit(): void {
+    this.http.get(`${environment.termxApi}/info`).subscribe(r => this.versions.service = r['version']);
+  }
 
   protected login(): void {
     this.auth.login();

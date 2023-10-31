@@ -118,7 +118,8 @@
 			"version": "Version"
 		},
 		"common": {
-			"privileges": "Privileges"
+			"privileges": "Privileges",
+			"versions": "Versions"
 		},
 		"contact-detail": {
 			"name": "Name",

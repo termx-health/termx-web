@@ -1,4 +1,5 @@
 export const environment = {
+  appVersion: 'dev',
   production: false,
   yupiEnabled: false,
 

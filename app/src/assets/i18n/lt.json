@@ -117,7 +117,8 @@
 			"version": "Versija"
 		},
 		"common": {
-			"privileges": "Privilegijos"
+			"privileges": "Privilegijos",
+			"versions": "Versijos"
 		},
 		"contact-detail": {
 			"name": "Pavadinimas",
