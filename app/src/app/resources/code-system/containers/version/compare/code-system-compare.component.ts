@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {HttpClient} from '@angular/common/http';
 import {environment} from 'app/src/environments/environment';
+import {CodeSystemVersion} from 'term-web/resources/_lib';
 
 class CodeSystemCompareResult {
   public added: string[];
@@ -28,9 +29,9 @@ class CodeSystemCompareResult {
 })
 export class CodeSystemCompareComponent implements OnInit {
   public sourceCodeSystem: string;
-  public sourceVersion: number;
+  public sourceVersion: CodeSystemVersion;
   public targetCodeSystem: string;
-  public targetVersion: number;
+  public targetVersion: CodeSystemVersion;
   public result: CodeSystemCompareResult;
   public loading: boolean;
 
@@ -43,7 +44,7 @@ export class CodeSystemCompareComponent implements OnInit {
     this.sourceCodeSystem = this.route.snapshot.paramMap.get('code-system');
     this.targetCodeSystem = this.route.snapshot.paramMap.get('code-system');
     const versionId = this.route.snapshot.paramMap.get('version');
-    this.sourceVersion = versionId ? Number(versionId) : undefined;
+    this.sourceVersion = versionId ? {id: Number(versionId)} : undefined;
   }
 
   public onSourceChange(cs: string): void {
@@ -56,9 +57,17 @@ export class CodeSystemCompareComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.http.get<CodeSystemCompareResult>(`${environment.termxApi}/ts/code-systems/compare?source=${this.sourceVersion}&target=${this.targetVersion}`)
+    this.http.get<CodeSystemCompareResult>(`${environment.termxApi}/ts/code-systems/compare?source=${this.sourceVersion.id}&target=${this.targetVersion.id}`)
       .subscribe(r => this.result = r)
       .add(() => this.loading = false);
+  }
+
+  protected openFhirCompare(): void {
+    if (!this.sourceVersion || !this.targetVersion) {
+      return;
+    }
+    window.open(window.location.origin + '/fhir/CodeSystem/' + this.sourceCodeSystem + '/compare'
+      + '?versionA=' + this.sourceVersion.version + '&versionB=' + this.targetVersion.version, '_blank');
   }
 
   public changeToHtml = (html: string): string => {

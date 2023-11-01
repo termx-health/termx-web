@@ -1,10 +1,9 @@
 <div nz-row nzJustify="center" class="m-row">
   <div nz-col [nzLg]="18" [nzMd]="18" [nzXs]="18">
-
     <div nz-row class="m-row" [nzGutter]="12">
-      <div nz-col nzSpan="12">
-        <h1>{{'web.code-system-compare.source' | translate}}</h1>
 
+      <div nz-col nzSpan="10">
+        <h1>{{'web.code-system-compare.source' | translate}}</h1>
         <div nz-row class="m-row" [nzGutter]="6">
           <div nz-col nzSpan="12">
             <m-form-item mName="sourceCodeSystem" required>
@@ -13,21 +12,18 @@
                   (ngModelChange)="onSourceChange($event)"
                   valuePrimitive
                   autofocus
-                  [placeholder]="'web.code-system-compare.source-code-system' | translate"></tw-code-system-search>
+                  [placeholder]="'web.code-system-compare.source-code-system' | translate"/>
             </m-form-item>
           </div>
           <div nz-col nzSpan="12">
             <m-form-item mName="sourceVersion" required>
-              <tw-code-system-version-select name="sourceVersion"
-                  [(ngModel)]="sourceVersion"
-                  [codeSystemId]="sourceCodeSystem"
-                  valuePrimitive></tw-code-system-version-select>
+              <tw-code-system-version-select name="sourceVersion" [(ngModel)]="sourceVersion" [codeSystemId]="sourceCodeSystem"/>
             </m-form-item>
           </div>
         </div>
       </div>
 
-      <div nz-col nzSpan="12">
+      <div nz-col nzSpan="10">
         <h1>{{'web.code-system-compare.target' | translate}}</h1>
         <div nz-row class="m-row" [nzGutter]="6">
           <div nz-col nzSpan="12">
@@ -35,28 +31,31 @@
               <tw-code-system-search name="sourceCodeSystem"
                   [(ngModel)]="targetCodeSystem"
                   valuePrimitive
-                  [placeholder]="'web.code-system-compare.target-code-system' | translate"></tw-code-system-search>
+                  [placeholder]="'web.code-system-compare.target-code-system' | translate"/>
             </m-form-item>
           </div>
           <div nz-col nzSpan="12">
-            <m-form-item mName="sourceVersion" required>
-              <tw-code-system-version-select name="sourceVersion"
-                  [(ngModel)]="targetVersion"
-                  [codeSystemId]="targetCodeSystem"
-                  required
-                  valuePrimitive></tw-code-system-version-select>
+            <m-form-item mName="targetVersion" required>
+              <tw-code-system-version-select name="targetVersion" [(ngModel)]="targetVersion" [codeSystemId]="targetCodeSystem"/>
             </m-form-item>
           </div>
         </div>
       </div>
 
-    </div>
+      <div nz-col nzSpan="4">
+        <h1 style="color: transparent">.</h1>
+        <div class="m-items-middle">
+          <m-button mDisplay="primary"
+              (click)="compare()"
+              [disabled]="!sourceVersion || ! targetVersion"
+              [mLoading]="loading">{{'web.code-system-compare.compare' | translate}}</m-button>
+          <m-button mDisplay="primary"
+              (click)="openFhirCompare()"
+              [disabled]="!sourceVersion || ! targetVersion"
+              [mLoading]="loading">FHIR</m-button>
+        </div>
+      </div>
 
-    <div>
-      <m-button mDisplay="primary"
-          (click)="compare()"
-          [disabled]="!sourceVersion || ! targetVersion"
-          [mLoading]="loading">{{'web.code-system-compare.compare' | translate}}</m-button>
     </div>
 
     <ng-container *ngIf="!!result">
@@ -66,6 +65,7 @@
             <div *ngFor="let i of result.deleted">
               {{i}}
             </div>
+            <m-no-data *ngIf="!(result.deleted?.length > 0)"></m-no-data>
           </m-card>
         </div>
         <div nz-col nzSpan="12">
@@ -73,11 +73,12 @@
             <div *ngFor="let i of result.added">
               {{i}}
             </div>
+            <m-no-data *ngIf="!(result.added?.length > 0)"></m-no-data>
           </m-card>
         </div>
       </div>
-      <m-card style="margin-top: 10px" mTitle="web.code-system-compare.changed" *ngIf="!!result.changed">
-        <m-table [mData]="result.changed">
+      <m-card style="margin-top: 10px" mTitle="web.code-system-compare.changed">
+        <m-table [mData]="result.changed" *ngIf="(result.changed?.length > 0)">
           <tr *mTableRow="let i">
             <td>
               <span style="font-weight: 800">{{i.code}}</span>
@@ -120,7 +121,8 @@
             </td>
           </tr>
         </m-table>
+        <m-no-data *ngIf="!(result.changed?.length > 0)"></m-no-data>
       </m-card>
     </ng-container>
-
   </div>
+</div>
