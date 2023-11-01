@@ -101,7 +101,7 @@ export class SnomedBranchManagementComponent implements OnInit {
   }
 
   protected delete(): void {
-    this.loader.wrap('delete', this.snomedService.deleteBranch(this.snomedBranch.path)).subscribe(() => this.router.navigate(['/integration/snomed/branches']));
+    this.loader.wrap('delete', this.snomedService.deleteBranch(this.snomedBranch.path)).subscribe(() => this.router.navigate(['/integration/snomed/management']));
   };
 
   protected exportToRF2(): void {
