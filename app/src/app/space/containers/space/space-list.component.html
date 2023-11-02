@@ -20,6 +20,8 @@
       <th mColumnKey="code">{{'entities.space.code' | translate}}</th>
       <th>{{'entities.space.name' | translate}}</th>
       <th>{{'entities.space.active' | translate}}</th>
+      <th>{{'entities.space.github' | translate}}</th>
+      <th>{{'entities.space.terminology-servers' | translate}}</th>
     </tr>
 
     <tr *mTableRow="let space">
@@ -29,7 +31,13 @@
         </a>
       </td>
       <td>{{space.names | localName}}</td>
-      <td><m-checkbox [(ngModel)]="space.active" readOnly></m-checkbox></td>
+      <td><m-checkbox [mChecked]="space.active" readOnly/></td>
+      <td><m-checkbox [mChecked]="!!space.integration?.github" readOnly/></td>
+      <td>
+        <div class="m-items-middle">
+          <m-tag *ngFor="let s of space.terminologyServers">{{s}}</m-tag>
+        </div>
+      </td>
     </tr>
     <tr *mTableNoData>
       <td colspan="5">

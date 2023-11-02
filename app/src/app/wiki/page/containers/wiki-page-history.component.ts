@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {PageService} from '../services/page.service';
 import {isDefined, isNil, LoadingManager} from '@kodality-web/core-util';
 import {Page, PageContent} from 'term-web/wiki/_lib';
@@ -37,6 +37,7 @@ export class WikiPageHistoryComponent implements OnInit {
     public auth: AuthService,
     private location: Location,
     private route: ActivatedRoute,
+    private router: Router,
     private clipboard: Clipboard,
     private pageService: PageService,
     private spaceService: WikiSpaceService,
@@ -60,6 +61,11 @@ export class WikiPageHistoryComponent implements OnInit {
             }
           });
       });
+
+      this.route.queryParamMap.subscribe(params => {
+        params.get('source');
+        params.get('target');
+      });
     });
   }
 
@@ -77,9 +83,27 @@ export class WikiPageHistoryComponent implements OnInit {
   }
 
   protected queryNext(): void {
-    this._queryNext().subscribe(resp => {
+    if (this.history.length >= this.historyTotal) {
+      return;
+    }
+
+    this._queryNext().subscribe(() => {
       this.targetItem ??= this.history[0];
       this.sourceItem ??= this.history[1];
+
+      const params = this.route.snapshot.queryParamMap;
+      let queryNext = false;
+      if (params.has('target')) {
+        this.targetItem = this.history.find(hi => hi.id === Number(params.get('target')));
+        queryNext ||= isNil(this.targetItem);
+      }
+      if (params.has('source')) {
+        this.sourceItem = this.history.find(hi => hi.id === Number(params.get('source')));
+        queryNext ||= isNil(this.sourceItem);
+      }
+      if (queryNext) {
+        this.queryNext();
+      }
 
       if (this.historyTotal === 1) {
         this.viewSource = true;
@@ -93,6 +117,7 @@ export class WikiPageHistoryComponent implements OnInit {
   protected setSource(hi: PageContentHistoryItem): void {
     this.sourceItem = hi;
     this.viewSource = false;
+    this.mergeQueryParams({source: hi.id});
   }
 
   protected setTarget(hi: PageContentHistoryItem): void {
@@ -101,6 +126,7 @@ export class WikiPageHistoryComponent implements OnInit {
     if (idx >= this.history.indexOf(this.sourceItem)) {
       this.sourceItem = this.history[idx + 1] ?? hi;
     }
+    this.mergeQueryParams({target: hi.id});
     this.viewSource = false;
   }
 
@@ -124,6 +150,15 @@ export class WikiPageHistoryComponent implements OnInit {
 
 
   /* Utils */
+
+  private mergeQueryParams(queryParams: object): void {
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams,
+      queryParamsHandling: 'merge',
+      replaceUrl: true
+    });
+  }
 
   protected getDotColor = (item: PageContentHistoryItem, pageContent: PageContent): NzTimelineItemColor => {
     if (item.modifiedAt === pageContent.modifiedAt) {
