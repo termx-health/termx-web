@@ -5,10 +5,11 @@ import {MuiConfigService} from '@kodality-web/marina-ui';
 import {NgForm} from '@angular/forms';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {Page, PageComment, PageContent, PageRelation, parsePageRelationLink} from 'term-web/wiki/_lib';
-import {Space, SpaceLibService} from 'term-web/space/_lib';
+import {Space} from 'term-web/space/_lib';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
 import {WikiComment} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment';
 import {MediaMatcher} from '@angular/cdk/layout';
+import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 
 @Component({
   selector: 'tw-wiki-page-details',
@@ -31,7 +32,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
 
   @ViewChild("contentForm") public contentFrom: NgForm;
   protected spaces: {
-    [id: number]: Space
+    [id: number]: WikiSpace
   } = {};
 
   protected loader = new LoadingManager();
@@ -45,7 +46,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     private pageService: PageService,
     private pageCommentService: PageCommentService,
     private clipboard: Clipboard,
-    private spaceService: SpaceLibService,
+    private spaceService: WikiSpaceService,
     protected muiConfig: MuiConfigService,
     media: MediaMatcher
   ) {
@@ -60,9 +61,9 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   }
 
   public ngOnInit(): void {
-    this.loader.wrap('spaces', this.spaceService.search({})).subscribe(resp => {
+    this.loader.wrap('spaces', this.spaceService.loadSpaces()).subscribe(resp => {
       // used for relation decorating
-      this.spaces = group(resp.data, s => s.id);
+      this.spaces = group(resp, s => s.id);
     });
   }
 

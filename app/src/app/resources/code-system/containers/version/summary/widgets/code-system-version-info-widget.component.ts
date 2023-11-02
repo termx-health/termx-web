@@ -13,6 +13,7 @@ import {TaskService} from 'term-web/task/services/task-service';
 import {Task} from 'term-web/task/_lib';
 import {Provenance} from 'term-web/sys/_lib';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
+import {AuthService} from 'term-web/core/auth';
 
 @Component({
   selector: 'tw-code-system-version-info-widget',
@@ -37,18 +38,21 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     private taskService: TaskService,
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
-    private spaceService: SpaceLibService
+    private spaceService: SpaceLibService,
+    private authService: AuthService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['version'] && this.version) {
       this.loader.wrap('provenance', this.codeSystemService.loadProvenances(this.version.codeSystem, this.version.version))
         .subscribe(resp => this.provenances = resp);
-      this.spaceService.search({resource: 'code-system|' + this.version.codeSystem}).subscribe(r => {
-        this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo
-          && (Object.keys(s.integration.github.dirs || {}).some(d => ['codesystem-fhir-json', 'codesystem-fhir-fsh'].includes(d)))
-        );
-      });
+      if (this.authService.hasPrivilege('*.Space.view')) {
+        this.spaceService.search({resource: 'code-system|' + this.version.codeSystem}).subscribe(r => {
+          this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo
+            && (Object.keys(s.integration.github.dirs || {}).some(d => ['codesystem-fhir-json', 'codesystem-fhir-fsh'].includes(d)))
+          );
+        });
+      }
     }
   }
 
