@@ -13,6 +13,7 @@ import {compareDates, LoadingManager, validateForm} from '@kodality-web/core-uti
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
+import {AuthService} from 'term-web/core/auth';
 
 @Component({
   selector: 'tw-value-set-version-info-widget',
@@ -37,18 +38,21 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
     private taskService: TaskService,
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
-    private spaceService: SpaceLibService
+    private spaceService: SpaceLibService,
+    private authService: AuthService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['version'] && this.version) {
       this.loader.wrap('provenance', this.valueSetService.loadProvenances(this.version.valueSet, this.version.version))
         .subscribe(resp => this.provenances = resp);
-      this.spaceService.search({resource: 'value-set|' + this.version.valueSet}).subscribe(r => {
-        this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo
-          && (Object.keys(s.integration.github.dirs || {}).some(d => ['valueset-fhir-json', 'valueset-fhir-fsh'].includes(d)))
-        );
-      });
+      if (this.authService.hasPrivilege('*.Space.view')) {
+        this.spaceService.search({resource: 'value-set|' + this.version.valueSet}).subscribe(r => {
+          this.githubSpaces = r.data.filter(s => !!s.integration?.github?.repo
+            && (Object.keys(s.integration.github.dirs || {}).some(d => ['valueset-fhir-json', 'valueset-fhir-fsh'].includes(d)))
+          );
+        });
+      }
     }
   }
 
