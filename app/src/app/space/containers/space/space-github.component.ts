@@ -6,6 +6,7 @@ import {delay, forkJoin, mergeMap, Observable, tap} from 'rxjs';
 import {PageService} from 'term-web/wiki/page/services/page.service';
 import {GithubDiff} from 'term-web/integration/_lib/github/github';
 import {SpaceGithubService} from 'term-web/space/services/space-github.service';
+import {LoadingManager} from '@kodality-web/core-util';
 
 @Component({
   templateUrl: './space-github.component.html',
@@ -39,7 +40,6 @@ import {SpaceGithubService} from 'term-web/space/services/space-github.service';
 export class SpaceGithubComponent implements OnInit {
   protected space?: Space;
   protected loading = false;
-  protected saving = false;
   protected pushModalVisible = false;
   protected status: {
     changed: {f: string, s: string}[],
@@ -50,6 +50,8 @@ export class SpaceGithubComponent implements OnInit {
   protected selection: {[key: string]: boolean} = {};
   protected igBase: string = 'hl7-be/empty-ig';
   protected igInitialized: boolean = true;
+
+  protected loader = new LoadingManager();
 
   public constructor(
     private spaceService: SpaceService,
@@ -97,20 +99,18 @@ export class SpaceGithubComponent implements OnInit {
   }
 
   public pull(): void {
-    this.saving = true;
     const files = this.allSelected(this.selection) ? null : this.status.changed.filter(c => this.selected(c)).map(c => c.f);
-    this.spaceGithubService.pull(this.space.id, files).pipe(
-      mergeMap(() => this.loadGitStatus(this.space.id))
-    ).subscribe().add(() => this.saving = false);
+    const req$ = this.spaceGithubService.pull(this.space.id, files).pipe(mergeMap(() => this.loadGitStatus(this.space.id)));
+    this.loader.wrap('pull', req$).subscribe();
   }
 
   public push(): void {
-    this.saving = true;
     const files = this.allSelected(this.selection) ? null : this.status.changed.filter(c => this.selected(c)).map(c => c.f);
-    this.spaceGithubService.push(this.space.id, this.commit.message, files).pipe(
+    const req$ = this.spaceGithubService.push(this.space.id, this.commit.message, files).pipe(
       delay(1000), // seems like github need a bit of time to actually update
       mergeMap(() => this.loadGitStatus(this.space.id))
-    ).subscribe().add(() => this.saving = false);
+    );
+    this.loader.wrap('push', req$).subscribe();
   }
 
   private loadIgStatus(id: number): Observable<any> {
@@ -118,11 +118,11 @@ export class SpaceGithubComponent implements OnInit {
   }
 
   public initializeIg(): void {
-    this.saving = true;
-    this.spaceGithubService.initIg(this.space.id, this.igBase).pipe(
+    const req$ = this.spaceGithubService.initIg(this.space.id, this.igBase).pipe(
       delay(1000),
       mergeMap(() => this.loadIgStatus(this.space.id))
-    ).subscribe().add(() => this.saving = false);
+    );
+    this.loader.wrap('ig', req$).subscribe()
   }
 
   public selectAll(selected: boolean, files?: string): void {

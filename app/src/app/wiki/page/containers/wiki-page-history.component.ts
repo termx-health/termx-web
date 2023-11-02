@@ -61,11 +61,6 @@ export class WikiPageHistoryComponent implements OnInit {
             }
           });
       });
-
-      this.route.queryParamMap.subscribe(params => {
-        params.get('source');
-        params.get('target');
-      });
     });
   }
 
