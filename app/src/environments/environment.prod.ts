@@ -4,7 +4,7 @@ export const environment = {
   appVersion: require('../../../package.json').version,
   production: true,
   yupiEnabled: false,
-  termxApi: '/api',
+  termxApi: dynamicEnv.termxApi ?? '/api',
   oauthIssuer: dynamicEnv.oauthIssuer,
   oauthClientId: dynamicEnv.oauthClientId,
   swaggerUrl: '/swagger/',
