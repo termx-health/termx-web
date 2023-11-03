@@ -94,7 +94,7 @@ export class DiffViewComponent implements OnChanges {
 
 
   private generate(): void {
-    if (isNil(this.el)) {
+    if (isNil(this._el)) {
       return;
     }
     if (this.value) {
