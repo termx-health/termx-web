@@ -16,10 +16,10 @@ export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
     },
     multiLanguageInput: {
       languages: [
-        {code: 'en', names: {'en': 'English', 'et': 'Inglise', 'ru': 'Английский', 'lt': 'Anglų'}},
-        {code: 'et', names: {'en': 'Estonian', 'et': 'Eesti', 'ru': 'Эстонский', 'lt': 'Estų'}},
-        {code: 'ru', names: {'en': 'Russian', 'et': 'Vene', 'ru': 'Русский', 'lt': 'Rusų'}},
-        {code: 'lt', names: {'en': 'Lithuanian', 'et': 'Leedu', 'ru': 'Литовский', 'lt': 'Lietuvių'}},
+        {code: 'en', names: {'en': 'English', 'et': 'Inglise', 'ru': 'Английский', 'lt': 'Anglų', 'de': 'Englisch', 'fr': 'Anglais', 'nl': 'Engels'}},
+        {code: 'et', names: {'en': 'Estonian', 'et': 'Eesti', 'ru': 'Эстонский', 'lt': 'Estų', 'de': 'Estnisch', 'fr': 'Estonien', 'nl': 'Ests'}},
+        {code: 'ru', names: {'en': 'Russian', 'et': 'Vene', 'ru': 'Русский', 'lt': 'Rusų', 'de': 'Russisch', 'fr': 'Russe', 'nl': 'Russisch'}},
+        {code: 'lt', names: {'en': 'Lithuanian', 'et': 'Leedu', 'ru': 'Литовский', 'lt': 'Lietuvių', 'de': 'Litauisch', 'fr': 'Lituanien', 'nl': 'Litouws'}},
         {code: 'de', names: {'en': 'German', 'et': 'Saksa', 'ru': 'Немецкий', 'de': 'Deutsch', 'fr': 'Allemand', 'nl': 'Duits'}},
         {code: 'fr', names: {'en': 'French', 'et': 'Prantsuse', 'ru': 'Французский', 'de': 'Französisch', 'fr': 'Français', 'nl': 'Frans'}},
         {code: 'nl', names: {'en': 'Dutch', 'et': 'Hollandi', 'ru': 'Голландский', 'de': 'Niederländisch', 'fr': 'Néerlandais', 'nl': 'Nederlands'}},
