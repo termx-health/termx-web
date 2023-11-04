@@ -20,6 +20,9 @@ export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
         {code: 'et', names: {'en': 'Estonian', 'et': 'Eesti', 'ru': 'Эстонский', 'lt': 'Estų'}},
         {code: 'ru', names: {'en': 'Russian', 'et': 'Vene', 'ru': 'Русский', 'lt': 'Rusų'}},
         {code: 'lt', names: {'en': 'Lithuanian', 'et': 'Leedu', 'ru': 'Литовский', 'lt': 'Lietuvių'}},
+        {code: 'de', names: {'en': 'German', 'et': 'Saksa', 'ru': 'Немецкий', 'de': 'Deutsch', 'fr': 'Allemand', 'nl': 'Duits'}},
+        {code: 'fr', names: {'en': 'French', 'et': 'Prantsuse', 'ru': 'Французский', 'de': 'Französisch', 'fr': 'Français', 'nl': 'Frans'}},
+        {code: 'nl', names: {'en': 'Dutch', 'et': 'Hollandi', 'ru': 'Голландский', 'de': 'Niederländisch', 'fr': 'Néerlandais', 'nl': 'Nederlands'}},
       ],
       requiredLanguages: ['en']
     },
@@ -29,7 +32,10 @@ export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
     supportedLangs: {
       en: {label: 'EN English'},
       et: {label: 'ET Eesti'},
-      lt: {label: 'LT Lietuvių'}
+      lt: {label: 'LT Lietuvių'},
+      de: {label: 'DE Deutsch'},
+      fr: {label: 'FR Français'},
+      nl: {label: 'NL Nederlands'},      
     },
     ...external
   };
