@@ -3,6 +3,8 @@ import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiConfigService, MuiHttpErrorHan
 import {HTTP_INTERCEPTORS} from '@angular/common/http';
 import {CoreI18nService, CoreI18nTranslationHandler, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
+import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
+import {environment} from 'environments/environment';
 
 export function TranslationHandlerFactory(translateService: TranslateService): CoreI18nTranslationHandler {
   return (key, params) => translateService.instant(key, params);
@@ -10,7 +12,7 @@ export function TranslationHandlerFactory(translateService: TranslateService): C
 
 export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
   return {
-    table:{
+    table: {
       showPageSizeChanger: true,
       pageSizeOptions: [10, 20, 50, 100]
     },
@@ -35,7 +37,7 @@ export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
       lt: {label: 'LT Lietuvių'},
       de: {label: 'DE Deutsch'},
       fr: {label: 'FR Français'},
-      nl: {label: 'NL Nederlands'},      
+      nl: {label: 'NL Nederlands'},
     },
     ...external
   };
@@ -43,7 +45,10 @@ export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
 
 @NgModule({
   imports: [
-    MarinaUiModule
+    MarinaUiModule,
+    MarinaMarkdownModule.configure({
+      plantUml: {server: environment.plantUmlUrl}
+    }),
   ],
   exports: [
     MarinaUiModule
