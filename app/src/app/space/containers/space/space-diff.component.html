@@ -44,8 +44,8 @@
           </m-button>
         </div>
 
-        <m-no-data *ngIf="!current"/>
-        <tw-diff-view *ngIf="current" [value]="current | apply: normalize"/>
+        <pre *ngIf="current?.length > 200000">{{current | apply: normalize}}</pre>
+        <tw-diff-view *ngIf="current?.length <= 200000" [value]="current | apply: normalize"/>
       </m-card>
 
       <m-card style="max-width: 33%">
@@ -56,8 +56,8 @@
           </m-button>
         </div>
 
-        <m-no-data *ngIf="!comparable"/>
-        <tw-diff-view *ngIf="comparable" [value]="comparable | apply: normalize"/>
+        <pre *ngIf="comparable?.length > 200000">{{comparable | apply: normalize}}</pre>
+        <tw-diff-view *ngIf="comparable?.length <= 200000" [value]="comparable | apply: normalize"/>
       </m-card>
 
       <m-card style="max-width: 33%" *ngIf="{mode: 'line-by-line'} as d">
@@ -68,7 +68,13 @@
           </m-button>
         </div>
 
-        <tw-diff-view *ngIf="current && comparable" [src]="current | apply: normalize" [tgt]="comparable | apply: normalize" full [display]="d.mode"/>
+        <tw-diff-view
+            *ngIf="current && comparable"
+            [src]="current | apply: normalize"
+            [tgt]="comparable | apply: normalize"
+            [full]="current.length < 200000 && comparable.length < 200000"
+            [display]="d.mode"
+        />
       </m-card>
     </div>
   </div>

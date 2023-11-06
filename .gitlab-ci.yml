@@ -36,24 +36,24 @@ build:
 
 release latest:
   stage: release
-  image: docker:stable
+  image: docker:latest
   before_script:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
+    - docker buildx create --name mybuilder --bootstrap --use
   script:
-    - docker build -t docker.kodality.com/termx-web:latest .
-    - docker push docker.kodality.com/termx-web:latest
+    - docker buildx build --platform linux/amd64,linux/arm64 -t docker.kodality.com/termx-web:latest --push .
   only:
     - main
 
 release tag:
   stage: release
-  image: docker:stable
+  image: docker:latest
   before_script:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
+    - docker buildx create --name mybuilder --bootstrap --use
   script:
     - export APP_VERSION="$CI_COMMIT_REF_NAME"
-    - docker build -t docker.kodality.com/termx-web:$APP_VERSION .
-    - docker push docker.kodality.com/termx-web:$APP_VERSION
+    - docker buildx build --platform linux/amd64,linux/arm64 -t docker.kodality.com/termx-web:$APP_VERSION --push .
   only:
     - /^\d*\.\d*\.\d*$/
   except:

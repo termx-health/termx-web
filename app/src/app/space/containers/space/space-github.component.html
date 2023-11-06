@@ -9,7 +9,7 @@
         <m-input name="ig-base" [(ngModel)]="igBase"></m-input>
       </m-form-item>
       <ng-container *m-card-footer>
-        <m-button mDisplay="primary" (click)="initializeIg()" [mLoading]="saving" [disabled]="saving || !igBase" style="width: 100%">
+        <m-button mDisplay="primary" (click)="initializeIg()" [mLoading]="loader.state['ig']" [disabled]="loader.state['ig'] || !igBase" style="width: 100%">
           {{'web.space.ig-initialize' | translate}}
         </m-button>
       </ng-container>
@@ -33,7 +33,7 @@
           </div>
           <div style="font-style: italic">Select all</div>
         </div>
-        <div style="color: #ff1700">
+        <div style="color: var(--color-error)">
           <div class="status-row" *ngFor="let f of status.changed">
             <div class="checkbox">
               <m-checkbox [(mChecked)]="selection[f.f]" (mCheckedChange)="onSelectionChange()"></m-checkbox>
@@ -56,7 +56,7 @@
           {{'web.space.github-empty' | translate}}
         </m-alert>
 
-        <div style="margin-top: 14px; color: #999">
+        <div style="margin-top: 14px; color: var(--color-text-secondary)">
           <div class="status-row" *ngFor="let f of status.unchanged">
             <div class="status">
               <m-icon mCode="check"></m-icon>
@@ -72,26 +72,26 @@
                   m-popconfirm
                   [mPopconfirmTitle]="pullConfirm"
                   (mOnConfirm)="pull()"
-                  [mLoading]="saving"
-                  [disabled]="saving || (selection | apply:noneSelected)"
+                  [mLoading]="loader.state['pull']"
+                  [disabled]="loader.isLoading || (selection | apply:noneSelected)"
                   style="width: 100%"
               >
                 <ng-template #pullConfirm>
                   <div>
                     <div>{{'web.space.github-pull-confirm' | translate}}</div>
-                    <div style="color: red">{{'web.space.github-pull-confirm-achtung' | translate}}</div>
+                    <div style="color: var(--color-error)">{{'web.space.github-pull-confirm-achtung' | translate}}</div>
                   </div>
                 </ng-template>
-                <m-icon mCode="arrow-down"></m-icon>&nbsp; <span>{{'web.space.github-pull' | translate}}</span>
+                <m-icon *ngIf="!loader.state['pull']" mCode="arrow-down"></m-icon>&nbsp; <span>{{'web.space.github-pull' | translate}}</span>
                 <ng-container *ngTemplateOutlet="github"></ng-container>
               </m-button>
               <m-button mDisplay="primary"
                   (click)="pushModalVisible = true"
-                  [mLoading]="saving"
-                  [disabled]="saving || (selection | apply:noneSelected)"
+                  [mLoading]="loader.state['push']"
+                  [disabled]="loader.isLoading || (selection | apply:noneSelected)"
                   style="width: 100%"
               >
-                <m-icon mCode="arrow-up"></m-icon>&nbsp; <span>{{'web.space.github-push' | translate}}</span>
+                <m-icon *ngIf="!loader.state['push']" mCode="arrow-up"></m-icon>&nbsp; <span>{{'web.space.github-push' | translate}}</span>
                 <ng-container *ngTemplateOutlet="github"></ng-container>
               </m-button>
             </div>
@@ -118,10 +118,10 @@
     </div>
 
     <m-form-item name="message" required mLabel="web.space.github-commit-message" style="padding-top: 5px">
-      <m-input name="message" required [(ngModel)]="commit.message" [disabled]="saving"></m-input>
+      <m-input name="message" required [(ngModel)]="commit.message" [disabled]="loader.isLoading"></m-input>
     </m-form-item>
 
-    <m-button mDisplay="primary" (click)="push(); pushModalVisible = false" [mLoading]="saving" [disabled]="saving" style="width: 100%">
+    <m-button mDisplay="primary" (click)="push(); pushModalVisible = false" [mLoading]="loader.isLoading" [disabled]="loader.isLoading" style="width: 100%">
       <m-icon mCode="arrow-up"></m-icon>&nbsp; <span>{{'web.space.github-push' | translate}}</span>
       <ng-container *ngTemplateOutlet="github"></ng-container>
     </m-button>

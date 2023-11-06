@@ -26,6 +26,7 @@
 		"delete-confirm": "Tikrai norite pašalinti?",
 		"filter": "Filtruoti",
 		"form-invalid": "",
+		"load-more": "",
 		"no-data": "Duomenų nėra",
 		"no-privilege": {
 			"access": "Prieiga: {{path}}",
@@ -158,6 +159,7 @@
 				"value": "Reikšmė",
 				"value-set": "Reikšmių aibė"
 			},
+			"show-in-list": "",
 			"status": "Statusas",
 			"type": "Tipas",
 			"uri": "URI",
@@ -417,6 +419,7 @@
 			"permissions": {
 				"admin": "Administratorius",
 				"editor": "Redaktorius",
+				"endorser": "",
 				"multiple": "Leidimai",
 				"viewer": "Žiūryklė"
 			},
@@ -465,10 +468,18 @@
 		},
 		"snomed-codesystem": {
 			"branch-path": "",
+			"country-code": "",
+			"daily-build-available": "",
+			"dependant-version-effective-time": "",
+			"imported": "",
 			"languages": "",
 			"latest-version": "",
 			"name": "",
+			"short-name": "",
 			"versions": ""
+		},
+		"snomed-codesystem-version": {
+			"effective-date": ""
 		},
 		"snomed-concept": {
 			"concept-id": "Sąvokos ID",
@@ -511,6 +522,7 @@
 				"acceptable": "Priimtinas (-a)",
 				"preferred": "Pageidautinas (-a)"
 			},
+			"branch": "",
 			"concept-id": "",
 			"description-id": "",
 			"language": "Kalba",
@@ -532,12 +544,12 @@
 			"github": "Github",
 			"name": "Vardas",
 			"owners": "Savininkai",
+			"packages": "Pakuotės",
 			"plural": "Tarpai",
 			"shared": "Bendrasis",
 			"singular": "Tarpas",
 			"terminology-servers": "Terminologijos serveriai",
-			"viewers": "Žiūryklės",
-			"packages": "Pakuotės"
+			"viewers": "Žiūryklės"
 		},
 		"structure-definition": {
 			"code": "Kodas",
@@ -572,8 +584,10 @@
 		},
 		"terminology-server": {
 			"active": "Aktyvus",
+			"auth-config": "OAuth 2.0",
 			"code": "Kodas",
 			"current-installation": "Esamas įdiegimas",
+			"headers": "",
 			"kind": "",
 			"name": "Vardas",
 			"plural": "Terminologijos serveriai",
@@ -588,7 +602,7 @@
 			"source-fhir": "FHIR",
 			"source-local": "TermX",
 			"source-static": "",
-			"source-url": ""
+			"source-url": "URL"
 		},
 		"value-set": {
 			"concepts": "Sąvokos",
@@ -923,8 +937,8 @@
 					"activate": "Aktyvinti",
 					"create-approve": "Kurti patvirtinimo užduotį",
 					"create-review": "Kurti peržiūros užduotį",
-					"download": "Atsisiųsti",
 					"definition": "Apibrėžtis",
+					"download": "Atsisiųsti",
 					"last-approved": "Paskutinio patvirtinimo data",
 					"last-modified": "Paskutinių keitimų data",
 					"last-reviewed": "Paskutinės peržiūros data",
@@ -1135,7 +1149,15 @@
 				"not-found": "Nerasta?",
 				"process": "Apdorojimas",
 				"success-message": "Failo apdorojimas baigtas",
-				"title": "Failo importas"
+				"title": "Failo importas",
+				"value-set": {
+					"analyze": "",
+					"file": "",
+					"import": "",
+					"import-data": "",
+					"source": "",
+					"validate-data": ""
+				}
 			},
 			"import": {
 				"atc": "ATC {{edition}} importas",
@@ -1373,8 +1395,8 @@
 					"activate": "",
 					"create-approve": "",
 					"create-review": "",
-					"download": "",
 					"definition": "",
+					"download": "",
 					"last-approved": "",
 					"last-modified": "",
 					"last-reviewed": "",
@@ -1527,7 +1549,10 @@
 						"observation-definition": "Stebėjimo apibrėžtis",
 						"privilege": "Privilegija",
 						"space": "Tarpas",
+						"structure-definition": "",
 						"task": "Taskflow",
+						"terminology-server": "",
+						"transformation-definition": "",
 						"value-set": "ValueSet",
 						"wiki": "Wiki"
 					}
@@ -1604,15 +1629,26 @@
 					"add-branch": "",
 					"codesystem": {
 						"add-edition": "",
-						"header": ""
+						"header": "",
+						"imported": ""
 					},
+					"daily-build": "",
 					"edition-modal": {
 						"country-code": "",
-						"header": ""
+						"header": "",
+						"name": ""
 					},
-					"header": ""
+					"header": "",
+					"working": ""
 				},
 				"management": {
+					"add-to-branch": "",
+					"authoring-stats": "",
+					"changed-fsn": "",
+					"create-cs-version": "",
+					"cs-version-modal": {
+						"header": ""
+					},
 					"export-modal": {
 						"header": "",
 						"type": ""
@@ -1628,15 +1664,43 @@
 						"type": ""
 					},
 					"import-succeeded": "",
+					"import-warning": "",
+					"inactivate-synonym": "",
+					"inactivated-synonyms": "",
 					"integrity-check": "",
 					"lock": "",
 					"lock-modal": {
 						"header": "",
 						"message": ""
 					},
+					"new-descriptions": "",
+					"new-synonyms": "",
+					"reactivate-synonym": "",
+					"reactivated-synonyms": "",
+					"synonym-deactivation-modal": {
+						"description": "",
+						"header": ""
+					},
+					"synonym-reactivation-modal": {
+						"description": "",
+						"header": ""
+					},
 					"total-descriptions": "",
 					"unlinked-translations": "",
 					"unlock": ""
+				}
+			},
+			"codesystem": {
+				"form": {
+					"export-to-rf2": "",
+					"header": "",
+					"import-from-rf2": "",
+					"import-warning": "",
+					"upgrade": "",
+					"upgrade-modal": {
+						"dependant-version": "",
+						"header": ""
+					}
 				}
 			},
 			"rf2-export": "RF2 eksportas",
@@ -1656,23 +1720,36 @@
 			"github-clean": "",
 			"github-commit-message": "",
 			"github-empty": "",
+			"github-integration": "",
 			"github-pull": "",
 			"github-pull-confirm": "",
 			"github-pull-confirm-achtung": "CAUTION: THIS ACTION IS IRREVERSIBLE! YOU MAY LOSE DATA",
 			"github-push": "",
 			"github-sync": "",
+			"ig-base": "",
+			"ig-header": "",
+			"ig-initialize": "",
+			"ig-integration": "",
+			"ig-menu": "",
+			"ig-menu-add": "",
+			"ig-menu-submenu-add": "",
+			"ig-not-initialized": "",
+			"ig-pages": "",
 			"import-btn": "Importuoti tarpą",
 			"import-error-message": "Tarpo importas nepavyko",
 			"import-success-message": "Tarpo importas pavyko",
 			"new-version": "Nauja versija",
+			"open-in-new-tab": "",
 			"resource-import-error-message": "Ištekliaus importas nepavyko",
 			"resource-import-success-message": "Ištekliaus importas pavyko",
+			"resources": "",
 			"select-context": "Pasirinkti kontekstą"
 		},
 		"structure-definition": {
 			"form": {
 				"add-element": "Pridėti elementą",
 				"add-header": "Pridėti struktūros apibrėžtį",
+				"binding": "",
 				"cardinality": "Kardinalumas",
 				"code": "Kodas",
 				"definition": "Apibrėžtis",
@@ -1699,10 +1776,13 @@
 				"path": "Kelias",
 				"primary-source": "Pirminis šaltinis",
 				"short-description": "Trumpas aprašas",
-				"system": "Sistema"
+				"strength": "",
+				"system": "Sistema",
+				"value-set": ""
 			},
 			"list": {
-				"add-structure-definition": "Pridėti struktūros apibrėžtį"
+				"add-structure-definition": "Pridėti struktūros apibrėžtį",
+				"delete-confirm": ""
 			},
 			"view": {
 				"binding": "Saistymas",
@@ -1774,7 +1854,16 @@
 		"terminology-server": {
 			"add-btn": "Pridėti serverį",
 			"add-header": "Pridėti serverį",
+			"auth-config": {
+				"access-token-url": "Access Token URL",
+				"client-id": "Client ID",
+				"client-secret": "Client Secret"
+			},
 			"edit-header": "Redaguoti serverį",
+			"headers": {
+				"key": "",
+				"value": ""
+			},
 			"kind": {
 				"fhir": "FHIR serverį",
 				"snomed": "SNOMED serverį",
@@ -1789,13 +1878,20 @@
 			}
 		},
 		"transformation-definition": {
+			"edit": {
+				"created": "",
+				"updated": ""
+			},
 			"execution": {
+				"generate": "",
 				"input": "",
 				"output": "",
 				"transform": ""
 			},
 			"list": {
-				"add-btn": ""
+				"add-btn": "",
+				"created-by": "",
+				"last-modified": ""
 			},
 			"resource-form": {
 				"compile": "",
@@ -1808,7 +1904,9 @@
 				"fhir-server": "FHIR server",
 				"fml-generation-failed": "",
 				"generate": "",
+				"invalid-resource-url": "",
 				"map-set": "",
+				"mapping": "",
 				"preview-hide": "",
 				"preview-show": "",
 				"resource-url": "",
@@ -1820,13 +1918,15 @@
 					"warning": ""
 				},
 				"url": "",
-				"visual-editor": ""
+				"visual-editor": "",
+				"visual-editor-disabled": ""
 			},
 			"resources": {
 				"new": "",
 				"type.conceptmap": "",
 				"type.definition": "",
-				"type.mapping": ""
+				"type.mapping": "",
+				"type.mapping-main": ""
 			}
 		},
 		"value-set": {
@@ -1908,8 +2008,8 @@
 					"activate": "Aktyvinti",
 					"create-approve": "Kurti patvirtinimo užduotį",
 					"create-review": "Kurti peržiūros užduotį",
-					"download": "Atsisiųsti",
 					"definition": "Apibrėžtis",
+					"download": "Atsisiųsti",
 					"expansion": "Plėtotė",
 					"last-approved": "Paskutinio patvirtinimo data",
 					"last-modified": "Paskutinių keitimų data",
@@ -1974,6 +2074,9 @@
 				"vs": ""
 			},
 			"edit": {
+				"header": {
+					"version": ""
+				},
 				"image-modal": {
 					"choose-file": "",
 					"header": ""
@@ -1984,6 +2087,10 @@
 					},
 					"diagrams": "",
 					"files": "",
+					"line-wrap": {
+						"off": "",
+						"on": ""
+					},
 					"preview": {
 						"hide": "",
 						"show": ""
@@ -2006,14 +2113,33 @@
 				"copy-raw": "",
 				"modified": ""
 			},
+			"history": {
+				"header": {
+					"tooltips": {
+						"copy-raw": "",
+						"edit": "",
+						"line-by-line": "",
+						"preview": "",
+						"side-by-side": "",
+						"view-diff": ""
+					}
+				},
+				"timeline": {
+					"header": "",
+					"load-more": "",
+					"source-item": "",
+					"target-item": ""
+				}
+			},
 			"no-space": {
 				"desc": "",
 				"title": ""
 			},
 			"sidebar": {
+				"delete-confirm": "",
 				"pages": ""
 			},
-			"space": {
+			"overview": {
 				"pages": "",
 				"recently-modified": {
 					"created": "",
@@ -2052,7 +2178,7 @@
 					}
 				}
 			},
-			"view": {
+			"setup": {
 				"add-header": "",
 				"add-structure-definition": "",
 				"content-header": "",

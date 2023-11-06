@@ -1,7 +1,7 @@
 <m-page mFull class="wiki" [twPrivilegeContext]="[space?.id, 'Wiki']">
   <div class="page__container">
     <div class="page__sidebar">
-      <m-collapse-panel mResizable mKey="wiki-history">
+      <m-collapse-panel [mResizableMinWidth]="300" mResizable mKey="wiki-history">
         <div class="tw-flex-container" style="padding: 0.5rem 0.5rem 0 1rem">
           <div class="m-justify-between">
             <h2 class="m-bold">
@@ -42,7 +42,7 @@
                 <!-- Comparison -->
                 <div style="display: flex; gap: 0.2rem;">
                   <m-button mSize="small"
-                      [mDisplay]="sourceItem === h ? 'default' : 'text'"
+                      [mDisplay]="sourceItem === h ? 'primary' : 'text'"
                       (mClick)="setSource(h)"
                       [disabled]="idx <= history.indexOf(targetItem)"
                   >

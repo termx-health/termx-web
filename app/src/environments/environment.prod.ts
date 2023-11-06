@@ -4,13 +4,13 @@ export const environment = {
   appVersion: require('../../../package.json').version,
   production: true,
   yupiEnabled: false,
-  termxApi: '/api',
+  termxApi: dynamicEnv.termxApi || '/api',
   oauthIssuer: dynamicEnv.oauthIssuer,
   oauthClientId: dynamicEnv.oauthClientId,
-  swaggerUrl: '/swagger/',
-  chefUrl: '/chef',
-  plantUmlUrl: '/plantuml',
-  fmlEditor: '/fml-editor',
-  snowstormUrl: 'https://snowstorm-public.kodality.dev/',
-  snowstormDailyBuildUrl: 'https://snowstorm-public-dailybuild.kodality.dev/'
+  swaggerUrl: dynamicEnv.swaggerUrl || '/swagger/',
+  chefUrl: dynamicEnv.chefUrl || '/chef',
+  plantUmlUrl: dynamicEnv.plantUmlUrl || '/plantuml',
+  fmlEditor: dynamicEnv.fmlEditor || '/fml-editor',
+  snowstormUrl: dynamicEnv.snowstormUrl || 'https://snowstorm-public.kodality.dev/',
+  snowstormDailyBuildUrl: dynamicEnv.snowstormDailyBuildUrl || 'https://snowstorm-public-dailybuild.kodality.dev/'
 };

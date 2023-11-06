@@ -1,348 +1,439 @@
 [
-  {
-    "label": {
-      "en": "Dashboards",
-      "et": "Töölauad",
-      "lt": "Ataskaitų sritis"
+    {
+        "label": {
+            "en": "Dashboards",
+            "et": "Töölauad",
+            "lt": "Ataskaitų sritis",
+            "de": "Armaturenbretter",
+            "fr": "Tableaux de bord",
+            "nl": "Dashboards"
+        },
+        "items": [
+            {
+                "label": {
+                    "en": "Landing page",
+                    "et": "Sihtleht",
+                    "lt": "Įėjimo tinklalapis",
+                    "de": "Startseite",
+                    "fr": "Page d'accueil",
+                    "nl": "Landingspagina"
+                },
+                "link": "landing"
+            },
+            {
+                "label": {
+                    "en": "Global search",
+                    "et": "Globaalne otsing",
+                    "lt": "Visuotinė paieška",
+                    "de": "Globale Suche",
+                    "fr": "Recherche globale",
+                    "nl": "Globaal zoeken"
+                },
+                "link": "global-search",
+                "privileges": [
+                    "*.CodeSystem.view",
+                    "*.ValueSet.view",
+                    "*.MapSet.view"
+                ]
+            }
+        ]
     },
-    "items": [
-      {
+    {
         "label": {
-          "en": "Landing page",
-          "et": "Sihtleht",
-		      "lt": "Įėjimo tinklalapis"
+            "en": "Terminology",
+            "et": "Terminoloogia",
+            "lt": "Terminologija",
+            "de": "Terminologie",
+            "fr": "Terminologie",
+            "nl": "Terminologie"
         },
-        "link": "landing"
-      },
-      {
-        "label": {
-          "en": "Global search",
-          "et": "Globaalne otsing",
-          "lt": "Visuotinė paieška"
-        },
-        "link": "global-search",
         "privileges": [
-          "*.CodeSystem.view",
-          "*.ValueSet.view",
-          "*.MapSet.view"
+            "*.CodeSystem.view",
+            "*.ValueSet.view",
+            "*.MapSet.view",
+            "*.NamingSystem.view",
+            "*.AssociationType.view"
+        ],
+        "items": [
+            {
+                "label": {
+                    "en": "Code systems",
+                    "et": "Koodisüsteemid",
+                    "lt": "Kodų sistemos",
+                    "de": "Code-Systeme",
+                    "fr": "Systèmes de codage",
+                    "nl": "Codesystemen"
+                },
+                "link": "resources/code-systems",
+                "privileges": [
+                    "*.CodeSystem.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Value sets",
+                    "et": "Loendid",
+                    "lt": "Reikšmių aibės",
+                    "de": "Wertelisten",
+                    "fr": "Ensembles de valeurs",
+                    "nl": "Waardensets"
+                },
+                "link": "resources/value-sets",
+                "privileges": [
+                    "*.ValueSet.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Map sets",
+                    "et": "Vastavustabelid",
+                    "lt": "Atvaizdžių aibės",
+                    "de": "Abbildungssätze",
+                    "fr": "Sets de mapping",
+                    "nl": "Mapsets"
+                },
+                "link": "resources/map-sets",
+                "privileges": [
+                    "*.MapSet.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Naming systems",
+                    "et": "Nimesüsteemid",
+                    "lt": "Pavadinimų sistemos",
+                    "de": "Namenssysteme",
+                    "fr": "Systèmes de nommage",
+                    "nl": "Naamsystemen"
+                },
+                "link": "resources/naming-systems",
+                "privileges": [
+                    "*.NamingSystem.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Association types",
+                    "et": "Assotsioonide tüübid",
+                    "lt": "Susiejimo tipai",
+                    "de": "Assoziationstypen",
+                    "fr": "Types d'association",
+                    "nl": "Associatietypen"
+                },
+                "link": "resources/association-types",
+                "privileges": [
+                    "*.AssociationType.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Defined properties",
+                    "et": "Globaalsed tunnused",
+                    "lt": "Defined properties",
+                    "de": "Definierte Eigenschaften",
+                    "fr": "Propriétés définies",
+                    "nl": "Gedefinieerde eigenschappen"
+                },
+                "link": "resources/defined-properties",
+                "privileges": [
+                    "*.CodeSystem.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Import",
+                    "et": "Import",
+                    "lt": "Importuoti",
+                    "de": "Importieren",
+                    "fr": "Importer",
+                    "nl": "Importeren"
+                },
+                "icon": "interaction",
+                "link": "integration/dashboard",
+                "privileges": [
+                    "*.CodeSystem.view",
+                    "*.ValueSet.view",
+                    "*.MapSet.view"
+                ]
+            }
         ]
-      }
-    ]
-  },
-  {
-    "label": {
-      "en": "Terminology",
-      "et": "Terminoloogia",
-	    "lt": "Terminologija"
     },
-    "privileges": [
-      "*.CodeSystem.view",
-      "*.ValueSet.view",
-      "*.MapSet.view",
-      "*.NamingSystem.view",
-      "*.AssociationType.view"
-    ],
-    "items": [
-      {
+    {
         "label": {
-          "en": "Code systems",
-          "et": "Koodisüsteemid",
-		      "lt": "Kodų sistemos"
+            "en": "External resources",
+            "et": "Välised ressursid",
+            "lt": "Išoriniai ištekliai",
+            "de": "Externe Ressourcen",
+            "fr": "Ressources externes",
+            "nl": "Externe bronnen"
         },
-        "link": "resources/code-systems",
         "privileges": [
-          "*.CodeSystem.view"
+            "snomed-ct.CodeSystem.view",
+            "loinc.CodeSystem.view",
+            "ucum.CodeSystem.view"
+        ],
+        "items": [
+            {
+                "label": {
+                    "en": "SNOMED CT browser",
+                    "et": "SNOMED CT brauser",
+                    "lt": "SNOMED CT naršyklė",
+                    "de": "SNOMED CT-Browser",
+                    "fr": "Navigateur SNOMED CT",
+                    "nl": "SNOMED CT-browser"
+                },
+                "link": "integration/snomed/dashboard",
+                "privileges": [
+                    "snomed-ct.CodeSystem.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "SNOMED CT management",
+                    "et": "SNOMED CT haldus",
+                    "lt": "SNOMED CT valdymas",
+                    "de": "SNOMED CT-Verwaltung",
+                    "fr": "Gestion SNOMED CT",
+                    "nl": "SNOMED CT-beheer"
+                },
+                "link": "integration/snomed/management",
+                "privileges": [
+                    "snomed-ct.CodeSystem.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "LOINC",
+                    "et": "LOINC",
+                    "lt": "LOINC",
+                    "de": "LOINC",
+                    "fr": "LOINC",
+                    "nl": "LOINC"
+                },
+                "link": "integration/loinc",
+                "privileges": [
+                    "loinc.CodeSystem.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Measurement units",
+                    "et": "Mõõtühikud",
+                    "lt": "Matavimo vienetai",
+                    "de": "Maßeinheiten",
+                    "fr": "Unités de mesure",
+                    "nl": "Meeteenheden"
+                },
+                "link": "measurement-units",
+                "privileges": [
+                    "ucum.CodeSystem.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Observation definition",
+                    "et": "Näitajate definitsioonid",
+                    "lt": "Stebėjimo apibrėžtis",
+                    "de": "Beobachtungsdefinition",
+                    "fr": "Définition d'observation",
+                    "nl": "Observatiedefinitie"
+                },
+                "link": "observation-definitions",
+                "privileges": [
+                    "*.ObservationDefinition.view"
+                ]
+            }
         ]
-      },
-      {
-        "label": {
-          "en": "Value sets",
-          "et": "Loendid",
-		      "lt": "Reikšmių aibės"
-        },
-        "link": "resources/value-sets",
-        "privileges": [
-          "*.ValueSet.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Map sets",
-          "et": "Vastavustabelid",
-		      "lt": "Atvaizdžių aibės"
-        },
-        "link": "resources/map-sets",
-        "privileges": [
-          "*.MapSet.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Naming systems",
-          "et": "Nimesüsteemid",
-		      "lt": "Pavadinimų sistemos"
-        },
-        "link": "resources/naming-systems",
-        "privileges": [
-          "*.NamingSystem.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Association types",
-          "et": "Assotsioonide tüübid",
-		      "lt": "Susiejimo tipai"
-        },
-        "link": "resources/association-types",
-        "privileges": [
-          "*.AssociationType.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Defined properties",
-          "et": "Globaalsed tunnused",
-          "lt": "Defined properties"
-        },
-        "link": "resources/defined-properties",
-        "privileges": [
-          "*.CodeSystem.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Import",
-          "et": "Import",
-		      "lt": "Importuoti"
-        },
-        "icon": "interaction",
-        "link": "integration/dashboard",
-        "privileges": [
-          "*.CodeSystem.view",
-          "*.ValueSet.view",
-          "*.MapSet.view"
-        ]
-      }
-    ]
-  },
-  {
-    "label": {
-      "en": "External resources",
-      "et": "Välised ressursid",
-	    "lt": "Išoriniai ištekliai"
     },
-    "privileges": [
-      "snomed-ct.CodeSystem.view",
-      "loinc.CodeSystem.view",
-      "ucum.CodeSystem.view"
-    ],
-    "items": [
-      {
+    {
         "label": {
-          "en": "SNOMED CT browser",
-          "et": "SNOMED CT brauser",
-          "lt": "SNOMED CT naršyklė"
+            "en": "Wiki",
+            "et": "Wiki",
+            "lt": "Wiki",
+            "de": "Wiki",
+            "fr": "Wiki",
+            "nl": "Wiki"
         },
-        "link": "integration/snomed/dashboard",
         "privileges": [
-          "snomed-ct.CodeSystem.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "SNOMED CT management",
-          "et": "SNOMED CT haldus",
-          "lt": "SNOMED CT valdymas"
-        },
-        "link": "integration/snomed/management",
-        "privileges": [
-          "snomed-ct.CodeSystem.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "LOINC",
-          "et": "LOINC",
-		      "lt": "LOINC"
-        },
-        "link": "integration/loinc",
-        "privileges": [
-          "loinc.CodeSystem.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Measurement units",
-          "et": "Mõõtühikud",
-		      "lt": "Matavimo vienetai"
-        },
-        "link": "measurement-units",
-        "privileges": [
-          "ucum.CodeSystem.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Observation definition",
-          "et": "Näitajate definitsioonid",
-		      "lt": "Stebėjimo apibrėžtis"
-        },
-        "link": "observation-definitions",
-        "privileges": [
-          "*.ObservationDefinition.view"
-        ]
-      }
-    ]
-  },
-  {
-    "label": {
-      "en": "Wiki",
-      "et": "Wiki",
-      "lt": "Wiki"
-    },
-    "privileges": [
-      "*.Wiki.view"
-    ],
-    "link": "wiki/pages",
-    "items": [
-      {
-        "label": {
-          "en": "Wiki",
-          "et": "Wiki",
-          "lt": "Wiki"
-        },
+            "*.Wiki.view"
+        ],
         "link": "wiki/pages",
-        "privileges": [
-          "*.Wiki.view"
+        "items": [
+            {
+                "label": {
+                    "en": "Wiki",
+                    "et": "Wiki",
+                    "lt": "Wiki",
+                    "de": "Wiki",
+                    "fr": "Wiki",
+                    "nl": "Wiki"
+                },
+                "link": "wiki/pages",
+                "privileges": [
+                    "*.Wiki.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Templates",
+                    "et": "Mallid",
+                    "lt": "Šablonai",
+                    "de": "Vorlagen",
+                    "fr": "Modèles",
+                    "nl": "Sjablonen"
+                },
+                "link": "wiki-management/templates",
+                "privileges": [
+                    "*.Wiki.view"
+                ]
+            }
         ]
-      },
-      {
-        "label": {
-          "en": "Templates",
-          "et": "Mallid",
-          "lt": "Šablonai"
-        },
-        "link": "wiki-management/templates",
-        "privileges": [
-          "*.Wiki.view"
-        ]
-      }
-    ]
-  },
-  {
-    "label": {
-      "en": "Modeler",
-      "et": "Modelleerija",
-      "lt": "Modeliuotojas"
     },
-    "privileges": [
-      "*.StructureDefinition.view",
-      "*.TransformationDefinition.view",
-      "*.CodeSystem.view",
-      "*.ValueSet.view",
-      "*.MapSet.view"
-    ],
-    "link": "wiki/pages",
-    "items": [
-      {
+    {
         "label": {
-          "en": "Structure definitions",
-          "et": "Struktuuri definitsioonid",
-          "lt": "Struktūros apibrėžtys"
+            "en": "Modeler",
+            "et": "Modelleerija",
+            "lt": "Modeliuotojas",
+            "de": "Modellierer",
+            "fr": "Modélisateur",
+            "nl": "Modelleur"
         },
-        "link": "modeler/structure-definitions",
         "privileges": [
-          "*.StructureDefinition.view"
+            "*.StructureDefinition.view",
+            "*.TransformationDefinition.view",
+            "*.CodeSystem.view",
+            "*.ValueSet.view",
+            "*.MapSet.view"
+        ],
+        "link": "wiki/pages",
+        "items": [
+            {
+                "label": {
+                    "en": "Structure definitions",
+                    "et": "Struktuuri definitsioonid",
+                    "lt": "Struktūros apibrėžtys",
+                    "de": "Strukturdefinitionen",
+                    "fr": "Définitions de structure",
+                    "nl": "Structuurdefinities"
+                },
+                "link": "modeler/structure-definitions",
+                "privileges": [
+                    "*.StructureDefinition.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "FML transformations",
+                    "et": "FML transformatsioonid",
+                    "lt": "FML transformations",
+                    "de": "FML-Transformationen",
+                    "fr": "Transformations FML",
+                    "nl": "FML-transformaties"
+                },
+                "link": "modeler/transformation-definitions",
+                "privileges": [
+                    "*.TransformationDefinition.view"
+                ]
+            }
         ]
-      },
-      {
-        "label": {
-          "en": "FML transformations",
-          "et": "FML transformatsioonid",
-          "lt": "FML transformations"
-        },
-        "link": "modeler/transformation-definitions",
-        "privileges": [
-          "*.TransformationDefinition.view"
-        ]
-      }]
     },
-  {
-    "label": {
-      "en": "Management",
-      "et": "Haldus",
-	    "lt": "Tvarkymas"
-    },
-    "items": [
-      {
+    {
         "label": {
-          "en": "Tasks",
-          "et": "Ülesanded",
-		      "lt": "Užduotys"
+            "en": "Management",
+            "et": "Haldus",
+            "lt": "Tvarkymas",
+            "de": "Verwaltung",
+            "fr": "Gestion",
+            "nl": "Beheer"
         },
-        "icon": "inbox",
-        "link": "tasks",
-        "privileges": [
-          "*.Task.view"
+        "items": [
+            {
+                "label": {
+                    "en": "Tasks",
+                    "et": "Ülesanded",
+                    "lt": "Užduotys",
+                    "de": "Aufgaben",
+                    "fr": "Tâches",
+                    "nl": "Taken"
+                },
+                "icon": "inbox",
+                "link": "tasks",
+                "privileges": [
+                    "*.Task.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Spaces",
+                    "et": "Ruumid",
+                    "lt": "Tarpai",
+                    "de": "Räume",
+                    "fr": "Espaces",
+                    "nl": "Ruimtes"
+                },
+                "icon": "appstore",
+                "link": "spaces",
+                "privileges": [
+                    "*.Space.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Servers",
+                    "et": "Serverid",
+                    "lt": "Serveriai",
+                    "de": "Server",
+                    "fr": "Serveurs",
+                    "nl": "Servers"
+                },
+                "icon": "cloud-server",
+                "link": "terminology-servers",
+                "privileges": [
+                    "*.TerminologyServer.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Privileges",
+                    "et": "Privileegid",
+                    "lt": "Privilegijos",
+                    "de": "Privilegien",
+                    "fr": "Privilèges",
+                    "nl": "Privileges"
+                },
+                "icon": "key",
+                "link": "privileges",
+                "privileges": [
+                    "*.Privilege.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Terminology service API",
+                    "et": "Terminoloogia teenuse API",
+                    "lt": "Terminologijos paslaugų API",
+                    "de": "Terminologie-Service-API",
+                    "fr": "API du service de terminologie",
+                    "nl": "Terminologieservice-API"
+                },
+                "icon": "cloud",
+                "link": "terminology-service-api"
+            },
+            {
+                "label": {
+                    "en": "Sequences",
+                    "et": "Numeratsioonid",
+                    "lt": "Sekos",
+                    "de": "Sequenzen",
+                    "fr": "Séquences",
+                    "nl": "Sequenties"
+                },
+                "icon": "field-binary",
+                "link": "sequences",
+                "privileges": [
+                    "*.Sequence.view"
+                ]
+            }
         ]
-      },
-      {
-        "label": {
-          "en": "Spaces",
-          "et": "Ruumid",
-		      "lt": "Tarpai"
-        },
-        "icon": "appstore",
-        "link": "spaces",
-        "privileges": [
-          "*.Space.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Servers",
-          "et": "Serverid",
-		      "lt": "Serveriai"
-        },
-        "icon": "cloud-server",
-        "link": "terminology-servers",
-        "privileges": [
-          "*.TerminologyServer.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Privileges",
-          "et": "Privileegid",
-		      "lt": "Privilegijos"
-        },
-        "icon": "key",
-        "link": "privileges",
-        "privileges": [
-          "*.Privilege.view"
-        ]
-      },
-      {
-        "label": {
-          "en": "Terminology service API",
-          "et": "Terminoloogia teenuse API",
-		      "lt": "Terminologijos paslaugų API"
-        },
-        "icon": "cloud",
-        "link": "terminology-service-api"
-      },
-      {
-        "label": {
-          "en": "Sequences",
-          "et": "Numeratsioonid",
-		  "lt": "Sekos"
-        },
-        "icon": "field-binary",
-        "link": "sequences",
-        "privileges": [
-          "*.Sequence.view"
-        ]
-      }
-    ]
-  }
+    }
 ]

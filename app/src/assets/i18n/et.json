@@ -19,13 +19,14 @@
 			"save": "Salvesta",
 			"search": "Otsi",
 			"select": "Vali",
-			"send": ""
+			"send": "Saada"
 		},
 		"confirm": "Kas oled kindel?",
 		"data-lost-warning": "Sinu muudatusi ei salvestata!",
 		"delete-confirm": "Kas oled kindel, et soovid kustutada?",
 		"filter": "Filter",
 		"form-invalid": "Vorm on vigane. Palun vaata andmed üle",
+		"load-more": "Laadi veel",
 		"no-data": "Andmed puuduvad",
 		"no-privilege": {
 			"access": "Juurdepääs: {{path}}",
@@ -100,7 +101,7 @@
 			"designations": "Tekstid",
 			"id": "ID",
 			"property-values": "Tunnused",
-			"references": "",
+			"references": "Viited",
 			"status": "Staatus"
 		},
 		"code-system-version": {
@@ -158,6 +159,7 @@
 				"value": "Väärtus",
 				"value-set": "Loend"
 			},
+			"show-in-list": "Näita nimekirjas",
 			"status": "Staatus",
 			"type": "Tüüp",
 			"uri": "URI",
@@ -170,7 +172,7 @@
 			"id": "Identifikaator",
 			"name": "Nimi",
 			"plural": "Vastandustabelid",
-			"properties": "",
+			"properties": "Tunnused",
 			"publisher": "Kirjastaja",
 			"source-code-systems": "Lähtekoodisüsteemid",
 			"source-value-set": "Lähteloend",
@@ -417,6 +419,7 @@
 			"permissions": {
 				"admin": "Administraatorid",
 				"editor": "Toimetajad",
+				"endorser": "Toetaja",
 				"multiple": "Õigused",
 				"viewer": "Vaatajad"
 			},
@@ -435,7 +438,7 @@
 				"algorithm": "Algoritm",
 				"description": "Kirjeldus",
 				"from": "Eeldatavasti kasutuses alates",
-				"preferred-language": "",
+				"preferred-language": "Eelistatav keel",
 				"single": "Versioon",
 				"to": "Eeldatavasti kasutuses kuni",
 				"version": "Versioon"
@@ -464,11 +467,19 @@
 			"state": "Tunnus"
 		},
 		"snomed-codesystem": {
-			"branch-path": "",
-			"languages": "",
-			"latest-version": "",
-			"name": "",
-			"versions": ""
+			"branch-path": "Haru",
+			"country-code": "Riigi kood",
+			"daily-build-available": "Daily build on saadaval",
+			"dependant-version-effective-time": "Sõltuva versiooni jõustumiseaeg",
+			"imported": "Imporditud",
+			"languages": "Keeled",
+			"latest-version": "Viimane versioon",
+			"name": "Nimi",
+			"short-name": "Lühend",
+			"versions": "Versioonid"
+		},
+		"snomed-codesystem-version": {
+			"effective-date": "Jõustumiskuupäev"
 		},
 		"snomed-concept": {
 			"concept-id": "Mõiste ID",
@@ -511,6 +522,7 @@
 				"acceptable": "Vastuvõetav",
 				"preferred": "Eelistatav"
 			},
+			"branch": "Haru",
 			"concept-id": "Mõiste ID",
 			"description-id": "Kirjelduse ID",
 			"language": "Keel",
@@ -532,12 +544,12 @@
 			"github": "Github",
 			"name": "Nimi",
 			"owners": "Omanikud",
+			"packages": "Paketid",
 			"plural": "\"Ruumid\"",
 			"shared": "Jagatud",
 			"singular": "Space",
 			"terminology-servers": "Terminoloogia server",
-			"viewers": "Vaatajad",
-			"packages": "Paketid"
+			"viewers": "Vaatajad"
 		},
 		"structure-definition": {
 			"code": "Kood",
@@ -572,8 +584,10 @@
 		},
 		"terminology-server": {
 			"active": "Aktiivne",
+			"auth-config": "OAuth 2.0",
 			"code": "Kood",
 			"current-installation": "antud installatsioon",
+			"headers": "HTTP päised",
 			"kind": "Tüüp",
 			"name": "Nimi",
 			"plural": "Serverid",
@@ -588,7 +602,7 @@
 			"source-fhir": "FHIR",
 			"source-local": "TermX",
 			"source-static": "Staatiline",
-			"source-url": ""
+			"source-url": "URL"
 		},
 		"value-set": {
 			"concepts": "Mõisted",
@@ -607,7 +621,7 @@
 		},
 		"value-set-rule-filter": {
 			"operator": {
-				"descendent-of": "",
+				"descendent-of": "Järglane",
 				"equal": "=",
 				"in": "Sees",
 				"is-a": "Vanem",
@@ -849,7 +863,7 @@
 			"list": {
 				"add-concept-child": "Lisa alammõiste",
 				"external": "Väline",
-				"open-fhir": "",
+				"open-fhir": "Ava FHIR URL",
 				"propagate-properties": "Kopeeri tunnused alammõistetele",
 				"unlink-concept": "Seo lahti mõiste versioonist"
 			},
@@ -923,8 +937,8 @@
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitusülesanne",
 					"create-review": "Loo ülevaatuse ülesanne",
-					"download": "Lae alla",
 					"definition": "Definitsioon",
+					"download": "Lae alla",
 					"last-approved": "Viimane kinnitus",
 					"last-modified": "Viimati muudetud",
 					"last-reviewed": "Viimane ülevaatus",
@@ -1067,11 +1081,11 @@
 			},
 			"file-import": {
 				"association": {
-					"association-type": "",
+					"association-type": "Assotsiooni tüüp",
 					"code-system": "Koodisüsteem",
 					"code-system-version": "Koodisüsteemi versioon",
 					"column-value-separator": "Väärtuste eraldaja veerus",
-					"download-template": "",
+					"download-template": "Laadi alla näidismall",
 					"file": "Assotsioonide CSV fail",
 					"file-column": "Veerg failis",
 					"import": "Assotsiooni faili import",
@@ -1118,16 +1132,16 @@
 					}
 				},
 				"concept-map": {
-					"delete-associations": "",
-					"file": "",
-					"hold": "",
-					"ignore": "",
+					"delete-associations": "Kas kustutada kõik seosed enne importimist?",
+					"file": "Fail",
+					"hold": "Hoia",
+					"ignore": "Ignoreeri duplikaadid",
 					"import": "ConceptMapi import failist",
-					"keep-both": "",
+					"keep-both": "Hoia mõlemad",
 					"map-id": "Map ID",
 					"map-name": "Vastandustabeli nimi",
 					"map-version": "Vastandustabeli version",
-					"overlap-of-associations": "",
+					"overlap-of-associations": "Käitumine assotsiatsioonide kattumisel",
 					"source-value-set": "Allikas loend",
 					"target-value-set": "Sihtloend"
 				},
@@ -1135,7 +1149,15 @@
 				"not-found": "Pole leitud?",
 				"process": "Töötle",
 				"success-message": "Faili töötlus lõpetatud",
-				"title": "Faili import"
+				"title": "Faili import",
+				"value-set": {
+					"analyze": "Analüüsi",
+					"file": "Fail",
+					"import": "Value Set-i import failist ",
+					"import-data": "impordi andmed",
+					"source": "Allikas",
+					"validate-data": "Ainult andmete kontrollimine"
+				}
 			},
 			"import": {
 				"atc": "ATC {{edition}} import",
@@ -1257,8 +1279,8 @@
 				"edit-header": "Muuda kaardistus kogumit",
 				"header": "Vastandustabel",
 				"properties": {
-					"delete-property-usages": "",
-					"often-used": ""
+					"delete-property-usages": "Eemalda seosed antud tunnusega",
+					"often-used": "Sageli kasutatavad tunnused"
 				},
 				"scope": {
 					"code-system": "Koodisüsteem",
@@ -1342,7 +1364,7 @@
 			},
 			"summary": {
 				"associations": {
-					"add-property-value": "",
+					"add-property-value": "Lisa tunnuse väärtus",
 					"add-target": "Lisa sihtmäping",
 					"bulk-copy": "Mass-kopeerimine",
 					"code": "Kood",
@@ -1351,7 +1373,7 @@
 					"external-mapping": "Väline mäping",
 					"mappings": "Mäpingud",
 					"mark-as-verified": "Märgi kontrollituks",
-					"properties": "",
+					"properties": "Tunnused",
 					"relationship": "Seos",
 					"set-as-no-map": "Seost ei eksisteeri",
 					"source-code": "Lähtekood",
@@ -1373,8 +1395,8 @@
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitusülesanne",
 					"create-review": "Loo ülevaatamisülesanne",
-					"download": "Lae alla",
 					"definition": "Definitsioon",
+					"download": "Lae alla",
 					"last-approved": "Viimati kinnitatud",
 					"last-modified": "Viimati muudetud",
 					"last-reviewed": "Viimati ülevaadatud",
@@ -1527,7 +1549,10 @@
 						"observation-definition": "Näitajate definitsioon",
 						"privilege": "Privileeg",
 						"space": "Space",
+						"structure-definition": "Struktuuri kirjeldus",
 						"task": "Ülesanne",
+						"terminology-server": "Terminoloogia server",
+						"transformation-definition": "Transformatsiooni kirjeldus",
 						"value-set": "ValueSet",
 						"wiki": "Wiki"
 					}
@@ -1603,16 +1628,27 @@
 				"list": {
 					"add-branch": "Lisa haru",
 					"codesystem": {
-						"add-edition": "",
-						"header": ""
+						"add-edition": "Lisa väljaanne",
+						"header": "Väljaanned",
+						"imported": "Imporditud"
 					},
+					"daily-build": "Harud daily buildi jaoks",
 					"edition-modal": {
-						"country-code": "",
-						"header": ""
+						"country-code": "Kahetäheline riigikood",
+						"header": "Lisa väljaanne",
+						"name": "Nimi"
 					},
-					"header": "Harud"
+					"header": "Harud",
+					"working": "Tööharud"
 				},
 				"management": {
+					"add-to-branch": "Lisa harule",
+					"authoring-stats": "Autoristatistika",
+					"changed-fsn": "Muudetud FSN",
+					"create-cs-version": "Versiooni muudatused",
+					"cs-version-modal": {
+						"header": "Lisa uus koodisüsteemi versioon"
+					},
 					"export-modal": {
 						"header": "Eksport RF2 zip faili",
 						"type": "Tüüp"
@@ -1628,15 +1664,43 @@
 						"type": "Tüüp"
 					},
 					"import-succeeded": "Import RF2 zip failist õnnestus!",
+					"import-warning": "Antud import loob uut haru (branch).  Koodisüsteemi versiooni ei looda.  Üleslaadimine võib sõltuvalt SNOMED paketi suurusest ja kesta kauem kui 30-60 minutit.",
+					"inactivate-synonym": "Mitteaktiivne sünonüüm",
+					"inactivated-synonyms": "Mitteaktiivsed sünonüümid",
 					"integrity-check": "Tervislikuse kontroll",
 					"lock": "Lukusta",
 					"lock-modal": {
 						"header": "Lukusta haru",
 						"message": "Sõnum"
 					},
+					"new-descriptions": "Uued kirjeldused",
+					"new-synonyms": "Uued sünonüümid",
+					"reactivate-synonym": "Taasaktiveeritud sünonüüm",
+					"reactivated-synonyms": "Taasaktiveeritud sünonüümid",
+					"synonym-deactivation-modal": {
+						"description": "Kirjelduse id",
+						"header": "Deaktiveeri sünonüüm"
+					},
+					"synonym-reactivation-modal": {
+						"description": "Kirjelduse id",
+						"header": "Aktiveeri sünonüüm"
+					},
 					"total-descriptions": "{{total}} description elemente harus",
 					"unlinked-translations": "{{count}} sidumata tõlkeid",
 					"unlock": "Lahti lukusta"
+				}
+			},
+			"codesystem": {
+				"form": {
+					"export-to-rf2": "Eksport RF2 vormingusse",
+					"header": "Koodisüsteem {{name}}",
+					"import-from-rf2": "Impordi RF2 failidest",
+					"import-warning": "Antud import loob haru + koodisüsteemi versiooni ja seda tuleb kasutada ainult avaldatud versiooni importimiseks või lõpliku versiooni loomiseks töötavas harust.  Üleslaadimine võib kesta kauem kui 30-60 minutit sõltuvalt SNOMED paketi suurusest.",
+					"upgrade": "Uuenda",
+					"upgrade-modal": {
+						"dependant-version": "Uus sõltuv versioon",
+						"header": "Täienda koodisüsteem teisest sõltuvast versioonist"
+					}
 				}
 			},
 			"rf2-export": "RF2 eksport",
@@ -1656,23 +1720,36 @@
 			"github-clean": "Kõik on ajakohane!",
 			"github-commit-message": "Commit teade",
 			"github-empty": "Muudatused puuduvad",
+			"github-integration": "Github integratsioon",
 			"github-pull": "Tõmba uuendused repositooriumist",
 			"github-pull-confirm": "Kas olete kindel, et soovite asendada praegused andmed repositooriumist pärit andmetega?",
 			"github-pull-confirm-achtung": "ETTEVAATUST: SEE TOIMING ON PÖÖRDAMATU! Te võite kaotada muudatused TermX-is",
 			"github-push": "Salvesta andmed repositooriumi",
 			"github-sync": "Sünkroniseeri Github-iga",
+			"ig-base": "",
+			"ig-header": "",
+			"ig-initialize": "",
+			"ig-integration": "",
+			"ig-menu": "",
+			"ig-menu-add": "",
+			"ig-menu-submenu-add": "",
+			"ig-not-initialized": "",
+			"ig-pages": "",
 			"import-btn": "Impordi ruum",
 			"import-error-message": "Ruumi import ebaõnnestunud",
 			"import-success-message": "Ruumi import on edukas",
 			"new-version": "Uus versioon",
+			"open-in-new-tab": "Ava uues tab-is",
 			"resource-import-error-message": "Ressurssi import ebaõnnestus",
 			"resource-import-success-message": "Ressurssi import õnnestus",
+			"resources": "Ressurssid",
 			"select-context": "Vali kontekst"
 		},
 		"structure-definition": {
 			"form": {
 				"add-element": "Lisa element",
 				"add-header": "Lisa struktuuri definitsioon",
+				"binding": "Seis terminoloogiaga",
 				"cardinality": "Kordsus",
 				"code": "Kood",
 				"definition": "Definitsioon",
@@ -1699,10 +1776,13 @@
 				"path": "Tee",
 				"primary-source": "Peamine allikas",
 				"short-description": "Lühikirjeldus",
-				"system": "Süsteem"
+				"strength": "Tugevus",
+				"system": "Süsteem",
+				"value-set": "Loend"
 			},
 			"list": {
-				"add-structure-definition": "Lisa struktuuri definitsioon"
+				"add-structure-definition": "Lisa struktuuri definitsioon",
+				"delete-confirm": "Kas soovite kustutada ressurssi? Vaadake üle muud ressursid,  mis võivad sellest ressurssist sõltuda."
 			},
 			"view": {
 				"binding": "Seotud loendiga",
@@ -1774,7 +1854,16 @@
 		"terminology-server": {
 			"add-btn": "Lisa server",
 			"add-header": "Lisa server",
+			"auth-config": {
+				"access-token-url": "Access Token URL",
+				"client-id": "Client ID",
+				"client-secret": "Client Secret"
+			},
 			"edit-header": "Muuda server",
+			"headers": {
+				"key": "Võti",
+				"value": "Väärtus"
+			},
 			"kind": {
 				"fhir": "FHIR server",
 				"snomed": "SNOMED server",
@@ -1789,13 +1878,20 @@
 			}
 		},
 		"transformation-definition": {
+			"edit": {
+				"created": "Loodud {{date}}",
+				"updated": "Uuendatud {{date}}"
+			},
 			"execution": {
+				"generate": "Genereeri",
 				"input": "Sisend",
 				"output": "Väljund",
 				"transform": "Transformeeri"
 			},
 			"list": {
-				"add-btn": "Lisa transformatsioon"
+				"add-btn": "Lisa transformatsioon",
+				"created-by": "Loodud {{user}} poolt",
+				"last-modified": "Viimati muudetud"
 			},
 			"resource-form": {
 				"compile": "Kompileeri",
@@ -1808,25 +1904,29 @@
 				"fhir-server": "FHIR server",
 				"fml-generation-failed": "FML väljundi loomine ebaõnnestus",
 				"generate": "Genereeri",
+				"invalid-resource-url": "Ei saa laadida valiidset StructureDefinitioni",
 				"map-set": "ConceptMap",
+				"mapping": "Structure map",
 				"preview-hide": "Peida",
 				"preview-show": "Eelvaade",
-				"resource-url": "",
+				"resource-url": "URL kust saab laadida ressurssi",
 				"save-as": "Salvesta kui",
 				"switch-to-text-editor": {
-					"cancel": "",
-					"confirm": "",
-					"title": "",
-					"warning": ""
+					"cancel": "Tühista",
+					"confirm": "Jätka",
+					"title": "Lülitu tekstiredaktorile",
+					"warning": "HOIATUS! Antud tegevus ei ole tagasivõetav!"
 				},
 				"url": "ConceptMap",
-				"visual-editor": ""
+				"visual-editor": "Visuaalne redaktor",
+				"visual-editor-disabled": "Palun täida väli 'Name'"
 			},
 			"resources": {
 				"new": "-- uus --",
 				"type.conceptmap": "Täiendavad ConceptMap-id",
 				"type.definition": "Definitsioonid",
-				"type.mapping": "Mapping"
+				"type.mapping": "Mapping",
+				"type.mapping-main": "Mapping"
 			}
 		},
 		"value-set": {
@@ -1909,8 +2009,8 @@
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitus ülesanne",
 					"create-review": "Loo ülevaatus ülesanne",
-					"download": "Lae alla",
 					"definition": "Definitsioon",
+					"download": "Lae alla",
 					"expansion": "Mõistete hetketõmmis",
 					"last-approved": "Viimane kinnitus",
 					"last-modified": "Viimati muudetud",
@@ -1955,17 +2055,17 @@
 		},
 		"wiki-page": {
 			"comments": {
-				"created-at": "",
-				"modified-at": "",
-				"read-more": "",
-				"reply": "",
-				"resolve": ""
+				"created-at": "Loodud {{date}}",
+				"modified-at": "Muudetud {{date}}",
+				"read-more": "Loe veel",
+				"reply": "Vasta",
+				"resolve": "Lahenda"
 			},
 			"details": {
 				"concept": "Mõiste",
 				"contents": "Sisu",
 				"cs": "Koodisüsteem",
-				"def": "",
+				"def": "Structure definition",
 				"ms": "Vastandustabel",
 				"none": "Puudub",
 				"page": "Lehekülg",
@@ -1975,16 +2075,23 @@
 				"vs": "Loend"
 			},
 			"edit": {
+				"header": {
+					"version": "Versioon {{version}}"
+				},
 				"image-modal": {
 					"choose-file": "Vali fail ülesladimiseks",
 					"header": "Failid"
 				},
 				"menu": {
 					"comments": {
-						"title": ""
+						"title": "Kommentaarid"
 					},
 					"diagrams": "Diagrammid",
 					"files": "Failid",
+					"line-wrap": {
+						"off": "Teksti sees",
+						"on": "Soft-wrap"
+					},
 					"preview": {
 						"hide": "Peida eelvaade",
 						"show": "Näita eelvaade"
@@ -2007,14 +2114,33 @@
 				"copy-raw": "Kopeeri binaarne fail",
 				"modified": "<b>{{user}}</b> muutis seda lehte {{date}}"
 			},
+			"history": {
+				"header": {
+					"tooltips": {
+						"copy-raw": "Kopeeri sisu",
+						"edit": "Kasuta mall sisestamiseks",
+						"line-by-line": "Vaade ridade kaupa",
+						"preview": "Eelvaade",
+						"side-by-side": "Kõrvuti vaade",
+						"view-diff": "Erinevus"
+					}
+				},
+				"timeline": {
+					"header": "Ajalugu",
+					"load-more": "Laadi veel",
+					"source-item": "A",
+					"target-item": "B"
+				}
+			},
 			"no-space": {
 				"desc": "Palun valige \"ruum\" jätkamiseks",
 				"title": "\"Ruum\" ei ole valitud"
 			},
 			"sidebar": {
+				"delete-confirm": "Kas sa oled kindel? NB! Ka selle kausta all olevad lehed kustutatakse!",
 				"pages": "Leheküljed"
 			},
-			"space": {
+			"overview": {
 				"pages": "Leheküljed",
 				"recently-modified": {
 					"created": "Loodud {{date}}",
@@ -2053,7 +2179,7 @@
 					}
 				}
 			},
-			"view": {
+			"setup": {
 				"add-header": "Lisa lehekülg",
 				"add-structure-definition": "Ava vorm struktuuri definitsiooniga",
 				"content-header": "Lisa sisu",
