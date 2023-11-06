@@ -76,10 +76,10 @@ export class FhirResourceComponent implements OnInit {
 
   protected downloadResult(resource: string, format?: 'xml' | 'json'): void {
     if (format === 'json') {
-      saveAs(new Blob([JSON.stringify(resource, null, 2)], {type: 'application/json'}), `${this.resource.id}.json`);
+      saveAs(new Blob([JSON.stringify(resource, null, 2)], {type: 'application/json'}), `${this.meta.id}.json`);
     }
     if (format === 'xml') {
-      saveAs(new Blob([this.toXML(resource)], {type: 'application/xml'}), `${this.resource.id}.xml`);
+      saveAs(new Blob([this.toXML(resource)], {type: 'application/xml'}), `${this.meta.id}.xml`);
     }
   }
 

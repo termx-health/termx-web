@@ -1981,14 +1981,8 @@
 				"concepts": {
 					"warning": "Mõistel puudub aktiivne versioon"
 				},
-				"concepts-csv": "Mõisted CSV-sse",
-				"def-json": "Definitsioon JSON kujul",
-				"def-xml": "Definitsioon XML kujul",
 				"download": "Lae alla",
 				"edit-header": "Muuda versiooni",
-				"expansion-json": "Arvutatud hetketõmmis JSON-ina",
-				"expansion-xml": "Arvutatud hetketõmmis XML-ina",
-				"provenance": "Ajalugu",
 				"rule-set": {
 					"rule": {
 						"add-designation": "Lisa tekst",
@@ -2003,7 +1997,6 @@
 						"value-set": "Loend"
 					}
 				},
-				"tasks": "Ülesanded",
 				"view-header": "Vaata versiooni"
 			},
 			"summary": {
