@@ -3,7 +3,7 @@
         "label": {
             "en": "Dashboards",
             "et": "Töölauad",
-            "lt": "Ataskaitų sritis",
+            "lt": "Bendra informacija",
             "de": "Armaturenbretter",
             "fr": "Tableaux de bord",
             "nl": "Dashboards"
@@ -13,7 +13,7 @@
                 "label": {
                     "en": "Landing page",
                     "et": "Sihtleht",
-                    "lt": "Įėjimo tinklalapis",
+                    "lt": "Apžvalga",
                     "de": "Startseite",
                     "fr": "Page d'accueil",
                     "nl": "Landingspagina"
@@ -73,7 +73,7 @@
                 "label": {
                     "en": "Value sets",
                     "et": "Loendid",
-                    "lt": "Reikšmių aibės",
+                    "lt": "Reikšmių rinkiniai",
                     "de": "Wertelisten",
                     "fr": "Ensembles de valeurs",
                     "nl": "Waardensets"
@@ -87,7 +87,7 @@
                 "label": {
                     "en": "Map sets",
                     "et": "Vastavustabelid",
-                    "lt": "Atvaizdžių aibės",
+                    "lt": "Terminologijų ryšių rinkiniai",
                     "de": "Abbildungssätze",
                     "fr": "Sets de mapping",
                     "nl": "Mapsets"
@@ -115,7 +115,7 @@
                 "label": {
                     "en": "Association types",
                     "et": "Assotsioonide tüübid",
-                    "lt": "Susiejimo tipai",
+                    "lt": "Sąsajų tipai",
                     "de": "Assoziationstypen",
                     "fr": "Types d'association",
                     "nl": "Associatietypen"
@@ -129,7 +129,7 @@
                 "label": {
                     "en": "Defined properties",
                     "et": "Globaalsed tunnused",
-                    "lt": "Defined properties",
+                    "lt": "Apibrėžtos savybės",
                     "de": "Definierte Eigenschaften",
                     "fr": "Propriétés définies",
                     "nl": "Gedefinieerde eigenschappen"
@@ -143,7 +143,7 @@
                 "label": {
                     "en": "Import",
                     "et": "Import",
-                    "lt": "Importuoti",
+                    "lt": "Importavimas",
                     "de": "Importieren",
                     "fr": "Importer",
                     "nl": "Importeren"
@@ -233,7 +233,7 @@
                 "label": {
                     "en": "Observation definition",
                     "et": "Näitajate definitsioonid",
-                    "lt": "Stebėjimo apibrėžtis",
+                    "lt": "Stebėjimų apibrėžimai",
                     "de": "Beobachtungsdefinition",
                     "fr": "Définition d'observation",
                     "nl": "Observatiedefinitie"
@@ -293,7 +293,7 @@
         "label": {
             "en": "Modeler",
             "et": "Modelleerija",
-            "lt": "Modeliuotojas",
+            "lt": "Modeliavimas",
             "de": "Modellierer",
             "fr": "Modélisateur",
             "nl": "Modelleur"
@@ -311,7 +311,7 @@
                 "label": {
                     "en": "Structure definitions",
                     "et": "Struktuuri definitsioonid",
-                    "lt": "Struktūros apibrėžtys",
+                    "lt": "Struktūros apibrėžimai",
                     "de": "Strukturdefinitionen",
                     "fr": "Définitions de structure",
                     "nl": "Structuurdefinities"
@@ -325,7 +325,7 @@
                 "label": {
                     "en": "FML transformations",
                     "et": "FML transformatsioonid",
-                    "lt": "FML transformations",
+                    "lt": "FML transformacijos",
                     "de": "FML-Transformationen",
                     "fr": "Transformations FML",
                     "nl": "FML-transformaties"
@@ -341,7 +341,7 @@
         "label": {
             "en": "Management",
             "et": "Haldus",
-            "lt": "Tvarkymas",
+            "lt": "Valdymas",
             "de": "Verwaltung",
             "fr": "Gestion",
             "nl": "Beheer"
@@ -366,7 +366,7 @@
                 "label": {
                     "en": "Spaces",
                     "et": "Ruumid",
-                    "lt": "Tarpai",
+                    "lt": "Darbalaukiai",
                     "de": "Räume",
                     "fr": "Espaces",
                     "nl": "Ruimtes"
@@ -411,7 +411,7 @@
                 "label": {
                     "en": "Terminology service API",
                     "et": "Terminoloogia teenuse API",
-                    "lt": "Terminologijos paslaugų API",
+                    "lt": "Terminologijų paslaugų API",
                     "de": "Terminologie-Service-API",
                     "fr": "API du service de terminologie",
                     "nl": "Terminologieservice-API"
