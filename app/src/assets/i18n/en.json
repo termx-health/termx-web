@@ -166,9 +166,7 @@
 			"value": "Value"
 		},
 		"map-set": {
-			"associations": "",
 			"description": "Description",
-			"domain": "",
 			"id": "ID",
 			"name": "Name",
 			"plural": "Map Sets",
@@ -746,7 +744,6 @@
 			"list": {
 				"add-code-system": "Add code system",
 				"count": "Count",
-				"domain": "Publisher",
 				"duplicate": {
 					"header": "Create duplicate code system",
 					"source-code-system": "Source code system:",
@@ -759,10 +756,7 @@
 				"open-fhir": "Open FHIR URL",
 				"status": "Status",
 				"title": "Code systems",
-				"uri": "URI",
-				"versions-expiration-date": "to {{expirationDate}}",
-				"versions-release-date": "From: {{releaseDate}}",
-				"versions-version": "Version name: {{version}}"
+				"uri": "URI"
 			},
 			"summary": {
 				"add-concept": "Add concept",
@@ -797,11 +791,6 @@
 				"versions": "Versions"
 			}
 		},
-		"code-system-association": {
-			"form": {
-				"target": "Target"
-			}
-		},
 		"code-system-compare": {
 			"added": "Added",
 			"changed": "Changed",
@@ -814,55 +803,24 @@
 		},
 		"code-system-concept": {
 			"filter": {
-				"language-filter": "Language filter",
 				"property-filter": "Property filter",
 				"property-name-filter": "Property name filter",
 				"search-property-value-placeholder": "Search property name",
-				"select-language-placeholder": "Select language",
-				"select-property-placeholder": "Select property",
-				"select-version-placeholder": "Select code system version",
-				"version-filter": "Version filter"
+				"select-property-placeholder": "Select property"
 			},
 			"form": {
 				"add-header": "Add concept",
 				"all-tasks": "All tasks",
-				"concept": "Concept",
 				"linked-with-code-systems": "Linked with code system versions",
-				"map-sets": {
-					"concept-code": "Concept code",
-					"concept-display": "Concept display",
-					"direction": "Direction",
-					"equivalence": "Equivalence",
-					"header": "Related map sets",
-					"map-set": "Map set"
-				},
 				"opened-tasks": "Opened tasks",
 				"related-artifacts": "Related artifacts",
-				"value-sets": {
-					"definition": "Definition",
-					"header": "Related value sets",
-					"value-set": "Value set"
-				},
 				"version": {
-					"code-system-version": "Code System version",
 					"header": "Version {{created}}",
-					"new": "New version",
-					"new-version": "New version"
-				},
-				"wiki": {
-					"header": "Wiki",
-					"name": "Name",
-					"slug": "Slug"
+					"new": "New version"
 				}
-			},
-			"group": {
-				"association": "Association",
-				"property": "Property",
-				"type": "Type"
 			},
 			"list": {
 				"add-concept-child": "Add subconcept",
-				"external": "External",
 				"open-fhir": "Open FHIR URL",
 				"propagate-properties": "Propagate properties to children",
 				"unlink-concept": "Unlink concept from version"
@@ -875,26 +833,13 @@
 		"code-system-concept-version": {
 			"add-version": "Add version",
 			"association": {
-				"add-association": "Add association",
-				"delete-association": "Delete association",
-				"edit-association": "Edit association"
+				"add-association": "Add association"
 			},
 			"designation": {
-				"add-designation": "Add designation",
-				"add-supplement": "Add supplement",
-				"delete-designation": "Delete designation",
-				"edit-designation": "Edit designation",
-				"multi-language-input": {
-					"add-translation": "Add translation",
-					"placeholder": "Translation"
-				}
+				"add-designation": "Add designation"
 			},
 			"property-value": {
-				"add-property-value": "Add property value",
-				"add-supplement": "Add supplement",
-				"coding-value-system": "Coding value system",
-				"delete-property-value": "Delete property value",
-				"edit-property-value": "Edit property value"
+				"add-property-value": "Add property value"
 			}
 		},
 		"code-system-validator": {
@@ -918,16 +863,7 @@
 		"code-system-version": {
 			"form": {
 				"add-header": "Add version",
-				"edit-header": "Edit version",
-				"entities": {
-					"add-entity": "Add entity",
-					"entity-version": "Entity version",
-					"modal": {
-						"add-header": "Add entity",
-						"entity-version": "Entity version"
-					}
-				},
-				"view-header": "View version"
+				"edit-header": "Edit version"
 			},
 			"summary": {
 				"all-tasks": "All tasks",
@@ -963,8 +899,7 @@
 			},
 			"modal": {
 				"add-header": "Add contact",
-				"edit-header": "Edit contact",
-				"name": "Name"
+				"edit-header": "Edit contact"
 			}
 		},
 		"defined-entity-property": {
@@ -983,26 +918,12 @@
 			}
 		},
 		"dev-code-system-relation": {
-			"map-set": {
-				"code": "Code",
-				"header": "Related map sets",
-				"name": "Name"
-			},
 			"value-set": {
 				"code": "Code",
 				"generate": "Generate snapshot",
-				"header": "Related value sets",
-				"name": "Name",
 				"publisher": "Publisher",
 				"uri": "URI",
-				"value-set": "Value set",
-				"value-set-code": "Value set code"
-			}
-		},
-		"entity-property": {
-			"form": {
-				"add-header": "Add property",
-				"edit-header": "Edit property"
+				"value-set": "Value set"
 			}
 		},
 		"global-search": {
@@ -1139,11 +1060,7 @@
 					"import": "Concept Map file import",
 					"keep-both": "Keep both",
 					"map-id": "Map ID",
-					"map-name": "",
-					"map-version": "",
-					"overlap-of-associations": "Behavior on overlap of associations",
-					"source-value-set": "",
-					"target-value-set": ""
+					"overlap-of-associations": "Behavior on overlap of associations"
 				},
 				"create-new": "Create new",
 				"not-found": "Not found?",
@@ -1152,7 +1069,6 @@
 				"title": "File import",
 				"value-set": {
 					"analyze": "Analyze",
-					"file": "File",
 					"import": "Value Set file import",
 					"import-data": "Import data",
 					"source": "Source",
@@ -1301,17 +1217,11 @@
 			},
 			"list": {
 				"add-map-set": "Add map set",
-				"add-version": "",
 				"import-fhir": "Import external FHIR definition",
 				"last-version": "Last version",
 				"manual": "Manual",
 				"open-fhir": "Open FHIR URL",
-				"operations": "",
-				"status": "Status",
-				"versions": "",
-				"versions-expiration-date": "",
-				"versions-release-date": "",
-				"versions-version": ""
+				"status": "Status"
 			},
 			"summary": {
 				"add-version": "Add version",
@@ -1322,45 +1232,10 @@
 				"versions": "Versions"
 			}
 		},
-		"map-set-association": {
-			"form": {
-				"add-header": "",
-				"edit-header": "",
-				"source-concept": "",
-				"source-system": "",
-				"status": "",
-				"target-concept": "",
-				"target-system": "",
-				"type": "",
-				"view-header": ""
-			},
-			"list": {
-				"add-association": "",
-				"associations": "",
-				"code-system": "",
-				"operations": ""
-			}
-		},
-		"map-set-entity-version": {
-			"modal": {
-				"add-header": "",
-				"edit-header": "",
-				"entity-version": "",
-				"link-header": ""
-			},
-			"table": {
-				"activate": "",
-				"add-version": "",
-				"header": "",
-				"link-version": "",
-				"retire": ""
-			}
-		},
 		"map-set-version": {
 			"form": {
 				"add-header": "Add version",
-				"edit-header": "Edit version",
-				"view-header": "View version"
+				"edit-header": "Edit version"
 			},
 			"summary": {
 				"associations": {
@@ -1509,7 +1384,6 @@
 				"value-set": "In use (value set)",
 				"values": "In use (values)"
 			},
-			"select-snomed": "SNOMED search",
 			"structure": {
 				"component": "Component",
 				"panel": "Panel",
@@ -1564,8 +1438,7 @@
 				}
 			},
 			"table": {
-				"add-privilege": "Add privilege",
-				"delete-privilege": "Delete privilege"
+				"add-privilege": "Add privilege"
 			}
 		},
 		"publication-status": {
@@ -1596,15 +1469,6 @@
 			"source": "Source",
 			"type": "Type",
 			"url": "URL"
-		},
-		"resources": {
-			"tabset": {
-				"association-types": "Association types",
-				"code-systems": "Code systems",
-				"map-sets": "Map sets",
-				"naming-systems": "Naming systems",
-				"value-sets": "Value sets"
-			}
 		},
 		"sequence": {
 			"form": {
@@ -1707,7 +1571,6 @@
 			"search": {
 				"ecl": "ECL",
 				"ecl-placeholder": "ECL expression",
-				"import-refset-concepts": "Import refset concepts",
 				"refsets": "Refsets",
 				"taxonomy": "Taxonomy"
 			}
@@ -1747,7 +1610,6 @@
 		},
 		"structure-definition": {
 			"form": {
-				"add-element": "Add element",
 				"add-header": "Add structure definition",
 				"binding": "Binding",
 				"cardinality": "Cardinality",
@@ -1758,10 +1620,7 @@
 				"edit-header": "Edit structure definition",
 				"element-header": "Elements",
 				"error-modal": {
-					"delete-content": "Delete content and proceed",
-					"fhir-to-fsh": "FHIR to FSH conversion failed",
-					"fsh-to-fhir": "FSH to FHIR conversion failed",
-					"no-save-proceed": "Close"
+					"delete-content": "Delete content and proceed"
 				},
 				"fixed-coding": "Fixed coding",
 				"fixed-uri": "Fixed URI",
@@ -1772,7 +1631,6 @@
 					"no-save-proceed": "Proceed",
 					"save-proceed": "Save and proceed"
 				},
-				"name": "Name",
 				"path": "Path",
 				"primary-source": "Primary source",
 				"short-description": "Short description",
@@ -1836,11 +1694,9 @@
 				},
 				"priority": "Priority",
 				"project": "Project",
-				"requested-performer": "Requested performer",
 				"status": "Status",
 				"type": "Type"
-			},
-			"select-project": "Select project"
+			}
 		},
 		"template": {
 			"form": {
@@ -1872,7 +1728,6 @@
 		},
 		"tools": {
 			"terminology-service-api": {
-				"button": "Terminology Service API",
 				"content": "Terminology Service APIs enable automated exchange of clinical terminology content and resources.",
 				"header": "Terminology Service API"
 			}
@@ -1976,7 +1831,6 @@
 		},
 		"value-set-version": {
 			"form": {
-				"add-concept": "Add concept",
 				"add-header": "Add version",
 				"concepts": {
 					"warning": "Concept has no active version"
@@ -2003,8 +1857,7 @@
 						"value-set": "Value set"
 					}
 				},
-				"tasks": "Tasks",
-				"view-header": "View version"
+				"tasks": "Tasks"
 			},
 			"summary": {
 				"edit-version": "Edit version",
@@ -2018,81 +1871,52 @@
 					"create-review": "Create review task",
 					"definition": "Definition",
 					"download": "Download",
-					"expansion": "Expansion",
 					"last-approved": "Last approval date",
 					"last-modified": "Last modified",
 					"last-reviewed": "Last review date",
 					"make-draft": "Make draft",
 					"none": "None",
-					"retire": "Retire",
-					"show-changes": "Show changes",
-					"sync-with-github": "Sync with Github"
+					"retire": "Retire"
 				},
 				"rule": "Rule",
 				"rule-set": "Rule set",
 				"task-modal": {
-					"assignee": "Assignee",
 					"header": "Create {{type}} task",
 					"success-msg": "Task created"
 				},
 				"value-set-version": "Value set version"
 			}
 		},
-		"value-set-version-concept": {
-			"form": {
-				"add-header": "Add concept",
-				"designation-language": "Language",
-				"designation-name": "Name",
-				"edit-header": "Edit concept"
-			}
-		},
-		"value-set-version-rule": {
-			"form": {
-				"add-header": "Add rule",
-				"concept": {
-					"add-concept": "Add concept",
-					"modal-header": "Concept"
-				},
-				"edit-header": "Edit rule",
-				"filter": {
-					"add-filter": "Add filter",
-					"modal-header": "Filter"
-				}
-			}
-		},
 		"wiki-page": {
-			"comments": {
-				"created-at": "Created at {{date}}",
-				"modified-at": "Modified at {{date}}",
-				"read-more": "Read more",
-				"reply": "Reply",
-				"resolve": "Resolve"
+			"spaces": "Spaces",
+			"no-space": {
+				"desc": "Please select space to proceed",
+				"title": "Space not selected"
 			},
-			"details": {
-				"concept": "Concept",
-				"contents": "Contents",
-				"cs": "Code System",
-				"def": "Structure definition",
-				"ms": "Map Set",
-				"none": "None",
-				"page": "Page",
-				"relations": "Relations",
-				"tags": "Tags",
-				"usages": "References",
-				"vs": "Value Set"
+
+			"sidebar": {
+				"delete-confirm": "Are you sure? Pages under this folder will be deleted too!",
+				"pages": "Pages"
+			},
+			"overview": {
+				"pages": "Pages",
+				"recently-modified": {
+					"created": "Created {{date}}",
+					"header": "Recently modified",
+					"updated": "Updated {{date}}"
+				}
+			},
+
+			"setup": {
+				"add-header": "Add page",
+				"content-type-tooltip": "Changing the content type can change the content value",
+				"edit-header": "Configure"
 			},
 			"edit": {
 				"header": {
 					"version": "Version {{version}}"
 				},
-				"image-modal": {
-					"choose-file": "Choose a file to upload",
-					"header": "Files"
-				},
 				"menu": {
-					"comments": {
-						"title": "Comments"
-					},
 					"diagrams": "Diagrams",
 					"files": "Files",
 					"line-wrap": {
@@ -2109,6 +1933,10 @@
 						"title": "Structure definition"
 					}
 				},
+				"image-modal": {
+					"choose-file": "Choose a file to upload",
+					"header": "Files"
+				},
 				"structure-definition-modal": {
 					"description": "Do you want to save the current page content before navigating to the Structure Definition?",
 					"header": "Your unsaved changes will be lost!",
@@ -2116,46 +1944,6 @@
 					"save-and-proceed": "Save and proceed"
 				}
 			},
-			"header": {
-				"add-subpage": "Add subpage",
-				"copy-raw": "Copy raw file",
-				"modified": "<b>{{user}}</b> edited this page on {{date}}"
-			},
-			"history": {
-				"header": {
-					"tooltips": {
-						"copy-raw": "Copy raw file",
-						"edit": "Use as template for editing",
-						"line-by-line": "Line-by-line view",
-						"preview": "Preview",
-						"side-by-side": "Side-by-side view",
-						"view-diff": "Diff"
-					}
-				},
-				"timeline": {
-					"header": "History",
-					"load-more": "Load more",
-					"source-item": "A",
-					"target-item": "B"
-				}
-			},
-			"no-space": {
-				"desc": "Please select space to proceed",
-				"title": "Space not selected"
-			},
-			"sidebar": {
-				"delete-confirm": "Are you sure? Pages under this folder will be deleted too!",
-				"pages": "Pages"
-			},
-			"space": {
-				"pages": "Pages",
-				"recently-modified": {
-					"created": "Created {{date}}",
-					"header": "Recently modified",
-					"updated": "Updated {{date}}"
-				}
-			},
-			"spaces": "Spaces",
 			"texteditor": {
 				"quick-actions": {
 					"link-modal": {
@@ -2174,11 +1962,8 @@
 						"value-set": "ValueSet"
 					},
 					"structure-definition-modal": {
-						"base-definition-url": "Base definition URL",
 						"header": "Choose structure definition",
-						"simplifier": "Simplifier",
-						"structure-definition": "Structure definition",
-						"url": "Simplifier definition URL"
+						"structure-definition": "Structure definition"
 					},
 					"template-modal": {
 						"header": "Choose template",
@@ -2186,15 +1971,51 @@
 					}
 				}
 			},
-			"view": {
-				"add-header": "Add page",
-				"add-structure-definition": "Open structure definition form",
-				"content-header": "Add content",
-				"content-type-tooltip": "Changing the content type can change the content value",
-				"copy-to-clipboard": "Copy {{val}}",
-				"edit-header": "Configure",
-				"relation-header": "Page relations",
-				"usages": "Usages"
+
+			"header": {
+				"add-subpage": "Add subpage",
+				"copy-raw": "Copy raw file",
+				"modified": "<b>{{user}}</b> edited this page on {{date}}"
+			},
+			"details": {
+				"concept": "Concept",
+				"contents": "Contents",
+				"cs": "Code System",
+				"def": "Structure definition",
+				"ms": "Map Set",
+				"none": "None",
+				"page": "Page",
+				"relations": "Relations",
+				"tags": "Tags",
+				"usages": "References",
+				"vs": "Value Set",
+				"add-content": "Add content"
+			},
+			"comments": {
+				"created-at": "Created at {{date}}",
+				"modified-at": "Modified at {{date}}",
+				"read-more": "Read more",
+				"reply": "Reply",
+				"resolve": "Resolve"
+			},
+
+			"history": {
+				"header": {
+					"tooltips": {
+						"copy-raw": "Copy raw file",
+						"edit": "Use as template for editing",
+						"line-by-line": "Line-by-line view",
+						"preview": "Preview",
+						"side-by-side": "Side-by-side view",
+						"view-diff": "Diff"
+					}
+				},
+				"timeline": {
+					"header": "History",
+					"load-more": "Load more",
+					"source-item": "A",
+					"target-item": "B"
+				}
 			}
 		}
 	}

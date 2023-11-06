@@ -1,6 +1,6 @@
 <m-modal [(mVisible)]="modalVisible" (mClose)="closed.emit()" [mMaskClosable]="false">
   <ng-container *m-modal-header>
-    {{(pageId ? 'web.wiki-page.view.edit-header' : 'web.wiki-page.view.add-header') | translate}}
+    {{(pageId ? 'web.wiki-page.setup.edit-header' : 'web.wiki-page.setup.add-header') | translate}}
   </ng-container>
 
   <ng-container *m-modal-content>
@@ -24,7 +24,7 @@
       <m-form-item mName="type" [mLabel]="contentTypeLabel" required>
         <ng-template #contentTypeLabel>
           <label>{{'entities.page-content.content-type' | translate}}</label>
-          <m-icon mCode="exclamation-circle" style="margin-left: 0.5rem" m-tooltip mTitle="web.wiki-page.view.content-type-tooltip"></m-icon>
+          <m-icon mCode="exclamation-circle" style="margin-left: 0.5rem" m-tooltip mTitle="web.wiki-page.setup.content-type-tooltip"></m-icon>
         </ng-template>
 
         <m-select name="type" [(ngModel)]="pageContent.contentType" required>

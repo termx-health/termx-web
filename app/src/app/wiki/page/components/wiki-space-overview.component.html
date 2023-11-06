@@ -4,14 +4,14 @@
 
 <div class="m-items-top">
   <h1 class="m-bold" style="margin-top: 1rem">
-    {{'web.wiki-page.space.pages' | translate}}
+    {{'web.wiki-page.overview.pages' | translate}}
   </h1>
   <span style="margin-top: 1rem">{{totalPages}}</span>
 </div>
 
 
 <h3 style="margin-top: 2rem; margin-bottom: 1rem">
-  {{'web.wiki-page.space.recently-modified.header' | translate}}
+  {{'web.wiki-page.overview.recently-modified.header' | translate}}
 </h3>
 
 <div class="equal-columns">
@@ -26,7 +26,7 @@
 
       <div *m-card-footer class="m-text-secondary" style="font-size: 0.9rem">
         <m-icon mCode="clock-circle"/>
-        {{(c.modifiedAt ? 'web.wiki-page.space.recently-modified.updated' : 'web.wiki-page.space.recently-modified.created') | translate: ({date: (c.modifiedAt ?? c.createdAt) | localDateTime})}}
+        {{(c.modifiedAt ? 'web.wiki-page.overview.recently-modified.updated' : 'web.wiki-page.overview.recently-modified.created') | translate: ({date: (c.modifiedAt ?? c.createdAt) | localDateTime})}}
       </div>
     </m-card>
   </ng-container>

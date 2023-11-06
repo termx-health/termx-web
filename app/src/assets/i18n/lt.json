@@ -2147,7 +2147,7 @@
 				"delete-confirm": "",
 				"pages": ""
 			},
-			"space": {
+			"overview": {
 				"pages": "",
 				"recently-modified": {
 					"created": "",
@@ -2186,7 +2186,7 @@
 					}
 				}
 			},
-			"view": {
+			"setup": {
 				"add-header": "",
 				"add-structure-definition": "",
 				"content-header": "",

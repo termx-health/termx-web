@@ -2147,7 +2147,7 @@
 				"delete-confirm": "Kas sa oled kindel? NB! Ka selle kausta all olevad lehed kustutatakse!",
 				"pages": "Leheküljed"
 			},
-			"space": {
+			"overview": {
 				"pages": "Leheküljed",
 				"recently-modified": {
 					"created": "Loodud {{date}}",
@@ -2186,7 +2186,7 @@
 					}
 				}
 			},
-			"view": {
+			"setup": {
 				"add-header": "Lisa lehekülg",
 				"add-structure-definition": "Ava vorm struktuuri definitsiooniga",
 				"content-header": "Lisa sisu",
