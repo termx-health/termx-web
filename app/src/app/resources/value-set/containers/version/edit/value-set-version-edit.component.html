@@ -56,21 +56,6 @@
       </m-form-row>
       <tw-value-set-version-rule-set-widget [ruleSet]="version.ruleSet"></tw-value-set-version-rule-set-widget>
 
-      <m-divider mText="web.value-set-version.form.download"></m-divider>
-      <div class="m-items-middle">
-        <m-button (mClick)="downloadDefinition('json')">{{'web.value-set-version.form.def-json' | translate}}</m-button>
-        <m-button (mClick)="downloadDefinition('xml')">{{'web.value-set-version.form.def-xml' | translate}}</m-button>
-        <m-button (mClick)="downloadExpansion('json')">{{'web.value-set-version.form.expansion-json' | translate}}</m-button>
-        <m-button (mClick)="downloadExpansion('xml')">{{'web.value-set-version.form.expansion-xml' | translate}}</m-button>
-        <m-button disabled>{{'web.value-set-version.form.concepts-csv' | translate}}</m-button>
-      </div>
-
-      <m-divider mText="web.value-set-version.form.tasks"></m-divider>
-      <tw-resource-tasks-widget [resourceId]="version?.id | toString" resourceType="ValueSetVersion"></tw-resource-tasks-widget>
-
-      <m-divider mText="web.value-set-version.form.provenance"></m-divider>
-      <m-alert mType="warning">TODO</m-alert>
-
     </form>
   </m-card>
 

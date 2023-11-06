@@ -1980,14 +1980,7 @@
 				"concepts": {
 					"warning": "Concept has no active version"
 				},
-				"concepts-csv": "Concepts CSV",
-				"def-json": "Definition JSON",
-				"def-xml": "Definition XML",
-				"download": "Download",
 				"edit-header": "Edit version",
-				"expansion-json": "Expansion JSON",
-				"expansion-xml": "Expansion XML",
-				"provenance": "Provenance",
 				"rule-set": {
 					"rule": {
 						"add-designation": "Add designation",
@@ -2002,7 +1995,6 @@
 						"value-set": "Value set"
 					}
 				},
-				"tasks": "Tasks",
 				"view-header": "View version"
 			},
 			"summary": {
