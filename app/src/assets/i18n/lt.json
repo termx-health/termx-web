@@ -1881,14 +1881,7 @@
 				"concepts": {
 					"warning": "Sąvoka neturi aktyvių versijų"
 				},
-				"concepts-csv": "CSV sąvokos",
-				"def-json": "JSON apibrėžtis",
-				"def-xml": "XML apibrėžtis",
-				"download": "Atsisiųsti",
 				"edit-header": "Redaguoti versiją",
-				"expansion-json": "JSON plėtotė",
-				"expansion-xml": "XML plėtotė",
-				"provenance": "Kilmė",
 				"rule-set": {
 					"rule": {
 						"add-designation": "Pridėti pavadinimą",
@@ -1903,7 +1896,6 @@
 						"value-set": "Verčių aibė"
 					}
 				},
-				"tasks": "Užduotys",
 				"view-header": "Peržiūrėti versiją"
 			},
 			"summary": {
