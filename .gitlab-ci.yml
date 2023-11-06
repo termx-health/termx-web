@@ -36,7 +36,7 @@ build:
 
 release latest:
   stage: release
-  image: docker:stable
+  image: docker:latest
   before_script:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
     - docker buildx create --name mybuilder --bootstrap --use
@@ -47,7 +47,7 @@ release latest:
 
 release tag:
   stage: release
-  image: docker:stable
+  image: docker:latest
   before_script:
     - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
     - docker buildx create --name mybuilder --bootstrap --use
