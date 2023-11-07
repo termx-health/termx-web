@@ -171,7 +171,7 @@ export class StructureDefinitionEditComponent implements OnInit {
   private getFhirSD(sd: string): any {
     const structureDefinition = sd ? JSON.parse(sd) : {};
     structureDefinition.id = this.structureDefinition?.code;
-    structureDefinition.name ||= this.structureDefinition?.code;
+    structureDefinition.name = this.structureDefinition?.code;
     structureDefinition.resourceType ||= 'StructureDefinition';
     structureDefinition.kind = this.structureDefinition?.contentType;
     structureDefinition.type = this.structureDefinition?.url;
