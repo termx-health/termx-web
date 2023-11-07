@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {compareValues, isDefined, isNil, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {StructureDefinition, StructureDefinitionEditableTreeComponent} from 'term-web/modeler/_lib';
 import {StructureDefinitionType} from '../components/structure-definition-type-list.component';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
@@ -170,13 +170,13 @@ export class StructureDefinitionEditComponent implements OnInit {
 
   private getFhirSD(sd: string): any {
     const structureDefinition = sd ? JSON.parse(sd) : {};
-    structureDefinition.id ||= this.structureDefinition?.code;
+    structureDefinition.id = this.structureDefinition?.code;
     structureDefinition.name ||= this.structureDefinition?.code;
     structureDefinition.resourceType ||= 'StructureDefinition';
-    structureDefinition.kind ||= this.structureDefinition?.contentType;
-    structureDefinition.type ||= this.structureDefinition?.parent || this.structureDefinition?.url;
-    structureDefinition.url ||= this.structureDefinition?.url;
-    structureDefinition.version ||= this.structureDefinition?.version;
+    structureDefinition.kind = this.structureDefinition?.contentType;
+    structureDefinition.type = this.structureDefinition?.url;
+    structureDefinition.url = this.structureDefinition?.url;
+    structureDefinition.fhirVersion = '5.0.0';
     structureDefinition.abstract = false;
     structureDefinition.baseDefinition ||= 'http://hl7.org/fhir/StructureDefinition/Element';
     structureDefinition.derivation = 'specialization';
