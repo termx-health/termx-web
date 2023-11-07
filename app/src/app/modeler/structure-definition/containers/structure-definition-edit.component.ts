@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
-import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {compareValues, isDefined, isNil, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {StructureDefinition, StructureDefinitionEditableTreeComponent} from 'term-web/modeler/_lib';
 import {StructureDefinitionType} from '../components/structure-definition-type-list.component';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
@@ -170,16 +170,17 @@ export class StructureDefinitionEditComponent implements OnInit {
 
   private getFhirSD(sd: string): any {
     const structureDefinition = sd ? JSON.parse(sd) : {};
-    structureDefinition.id = structureDefinition.id || this.structureDefinition?.code;
-    structureDefinition.name = structureDefinition.name || this.structureDefinition?.code;
-    structureDefinition.resourceType = structureDefinition.resourceType || 'StructureDefinition';
-    structureDefinition.kind = structureDefinition.kind || this.structureDefinition?.contentType;
-    structureDefinition.type = structureDefinition.type || this.structureDefinition?.parent;
-    structureDefinition.version = structureDefinition.version || this.structureDefinition?.version;
+    structureDefinition.id ||= this.structureDefinition?.code;
+    structureDefinition.name ||= this.structureDefinition?.code;
+    structureDefinition.resourceType ||= 'StructureDefinition';
+    structureDefinition.kind ||= this.structureDefinition?.contentType;
+    structureDefinition.type ||= this.structureDefinition?.parent || this.structureDefinition?.url;
+    structureDefinition.url ||= this.structureDefinition?.url;
+    structureDefinition.version ||= this.structureDefinition?.version;
     structureDefinition.abstract = false;
-    structureDefinition.baseDefinition = structureDefinition.baseDefinition || 'http://hl7.org/fhir/StructureDefinition/Element';
+    structureDefinition.baseDefinition ||= 'http://hl7.org/fhir/StructureDefinition/Element';
     structureDefinition.derivation = 'specialization';
-    structureDefinition.differential = structureDefinition.differential || {};
+    structureDefinition.differential ||= {};
     structureDefinition.differential.element = this.prepareElements(structureDefinition.differential.element, structureDefinition.id);
     return structureDefinition;
   }
