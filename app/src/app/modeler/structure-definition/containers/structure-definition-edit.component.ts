@@ -121,7 +121,7 @@ export class StructureDefinitionEditComponent implements OnInit {
   }
 
   public saveSD(jsonSD: string): void {
-    const sd = JSON.parse(jsonSD);
+    const sd = jsonSD ? JSON.parse(jsonSD) : {};
     if (isDefined(this.structureDefinition?.code) && isDefined(sd?.id) && this.structureDefinition.code !== sd?.id) {
       StructureDefinitionUtil.changeId(sd.id, this.structureDefinition.code, sd.differential?.element);
       StructureDefinitionUtil.changeId(sd.id, this.structureDefinition.code, sd.snapshot?.element);
