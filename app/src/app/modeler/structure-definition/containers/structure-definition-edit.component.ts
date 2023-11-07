@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {StructureDefinition, StructureDefinitionEditableTreeComponent} from 'term-web/modeler/_lib';
+import {StructureDefinition, StructureDefinitionEditableTreeComponent, StructureDefinitionUtil} from 'term-web/modeler/_lib';
 import {StructureDefinitionType} from '../components/structure-definition-type-list.component';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {map, Observable, of} from 'rxjs';
@@ -121,7 +121,13 @@ export class StructureDefinitionEditComponent implements OnInit {
   }
 
   public saveSD(jsonSD: string): void {
-    this.loader.wrap('save', this.mapContent(this.getFhirSD(jsonSD), this.structureDefinition.contentFormat)).subscribe(c => {
+    const sd = JSON.parse(jsonSD);
+    if (isDefined(this.structureDefinition?.code) && isDefined(sd?.id) && this.structureDefinition.code !== sd?.id) {
+      StructureDefinitionUtil.changeId(sd.id, this.structureDefinition.code, sd.differential?.element);
+      StructureDefinitionUtil.changeId(sd.id, this.structureDefinition.code, sd.snapshot?.element);
+    }
+
+    this.loader.wrap('save', this.mapContent(this.getFhirSD(JSON.stringify(sd)), this.structureDefinition.contentFormat)).subscribe(c => {
       this.structureDefinition.content = c;
       this.loader.wrap('save', this.structureDefinitionService.save(this.structureDefinition)).subscribe(sd => {
         this.router.navigate(['/modeler/structure-definitions', sd.id, 'edit']);
@@ -133,6 +139,12 @@ export class StructureDefinitionEditComponent implements OnInit {
     if (this.formElement) {
       this.embedElement(this.formElement, this.element);
     }
+
+    const prevId = JSON.parse(this.sdTree.getFhirSD())?.id;
+    if (this.structureDefinition?.code !== prevId) {
+      this.sdTree.changeElementId(prevId, this.structureDefinition.code);
+    }
+
     this.loader.wrap('save', this.mapContent(this.getFhirSD(this.sdTree.getFhirSD()), this.structureDefinition.contentFormat)).subscribe(content => {
       this.structureDefinition.content = content;
       this.loader.wrap('save', this.structureDefinitionService.save(this.structureDefinition!)).subscribe(sd => {

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {StructureDefinitionFhirMapperUtil} from 'term-web/modeler/structure-definition/services/structure-definition-fhir-mapper.util';
-import {Element} from 'term-web/modeler/_lib';
+import {Element, StructureDefinitionUtil} from 'term-web/modeler/_lib';
 import {DropListComponent, DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
 
 function findInTree<Node, Key>(nodesToSearch: Node[], key: Key, getKey: (n: Node) => Key, getChildren: (n: Node) => Node[]): Node {
@@ -119,8 +119,8 @@ export class StructureDefinitionEditableTreeComponent implements OnChanges {
   }
 
   public changeElementId(prevId: string, newId: string): void {
-    this.changeId(prevId, newId, this.structureDefinition.differential?.element);
-    this.changeId(prevId, newId, this.structureDefinition.snapshot?.element);
+    StructureDefinitionUtil.changeId(prevId, newId, this.structureDefinition.differential?.element);
+    StructureDefinitionUtil.changeId(prevId, newId, this.structureDefinition.snapshot?.element);
     this.initData(this.structureDefinition);
   }
 
