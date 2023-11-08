@@ -37,6 +37,7 @@ import {PreferencesService} from 'term-web/core/preferences/preferences.service'
 import {ModelerModule} from 'term-web/modeler/modeler.module';
 import {UserModule} from 'term-web/user/user.module';
 import {LangInterceptor} from 'term-web/core/http';
+import {ImplementationGuideModule} from 'term-web/implementation-guide/implementation-guide.module';
 
 registerLocaleData(de);
 registerLocaleData(et);
@@ -94,7 +95,8 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     SpaceModule,
     SysModule,
     UserModule,
-    SequenceModule
+    SequenceModule,
+    ImplementationGuideModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: 'en'},

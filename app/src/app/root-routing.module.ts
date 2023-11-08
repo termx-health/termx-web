@@ -17,6 +17,7 @@ import {SpaceContextModule} from 'term-web/core/context/space-context.module';
 import {AppComponent} from 'term-web/app.component';
 import {LandingPageComponent} from 'term-web/landing/landing-page.component';
 import {MODELER_ROUTES} from 'term-web/modeler/modeler.module';
+import {IG_ROUTES} from 'term-web/implementation-guide/implementation-guide.module';
 
 
 const APP_ROUTES: Routes = [
@@ -34,6 +35,7 @@ const APP_ROUTES: Routes = [
   {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.Space.view']}},
   {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.view']}},
   {path: 'tasks', children: TASK_ROUTES, data: {privilege: ['*.Task.view']}},
+  {path: 'implementation-guides', children: IG_ROUTES, data: {privilege: ['*.ImplementationGuide.view']}},
   {path: 'fhir', children: FHIR_ROUTES},
   {
     path: 'spaces',
