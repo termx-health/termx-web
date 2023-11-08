@@ -20,15 +20,15 @@ export class FhirCodeSystemLookupComponent {
   };
 
   protected toDesignationRows = (designations: any[]): any[] => {
-    return designations.map(d => ({
+    return designations && designations.length > 0 ? designations.map(d => ({
       use: this.findParameter(d.part, 'use')?.valueCoding?.code,
       lang: this.findParameter(d.part, 'language')?.valueString,
       value: this.findParameter(d.part, 'value')?.valueString
-    }));
+    })) : undefined;
   };
 
   protected toPropertyRows = (properties: any[]): any[] => {
-    return properties.map(p => ({
+    return properties && properties.length > 0 ? properties.map(p => ({
       code: this.findParameter(p.part, 'code')?.valueString,
       description: this.findParameter(p.part, 'description')?.valueString,
       value: this.findParameter(p.part, 'value')?.valueCode ||
@@ -38,6 +38,6 @@ export class FhirCodeSystemLookupComponent {
         this.findParameter(p.part, 'value')?.valueBoolean ||
         this.findParameter(p.part, 'value')?.valueDateTime ||
         this.findParameter(p.part, 'value')?.valueDecimal
-    }));
+    })) : undefined;
   };
 }

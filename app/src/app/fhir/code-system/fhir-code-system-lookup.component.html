@@ -13,9 +13,9 @@
       <h3>{{(result.parameter | apply:findParameter:'name')?.valueString}}</h3>
     </div>
   </div>
-  <div>
+  <div *ngIf="(result.parameter | apply:findParameters:'designation') | apply:toDesignationRows as rows">
     <h2>Designations</h2>
-    <m-table [mData]="(result.parameter | apply:findParameters:'designation') | apply:toDesignationRows">
+    <m-table [mData]="rows">
       <tr *mTableHead>
         <th mSort="use">Use</th>
         <th mSort="lang">Language</th>
@@ -28,9 +28,9 @@
       </tr>
     </m-table>
   </div>
-  <div>
+  <div *ngIf="(result.parameter | apply:findParameters:'property') | apply:toPropertyRows as rows">
     <h2>Properties</h2>
-    <m-table [mData]="(result.parameter | apply:findParameters:'property') | apply:toPropertyRows">
+    <m-table [mData]="rows">
       <tr *mTableHead>
         <th mSort="code">Code</th>
         <th mSort="description">Description</th>
