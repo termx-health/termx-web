@@ -9,13 +9,13 @@ twConfig = {
   "snowstormUrl": "${SNOWSTORM_URL}",
   "snowstormDailyBuildUrl": "${SNOWSTORM_DAILY_BUILD_URL}",
   "defaultLanguage": "${DEFAULT_LANGUAGE}",
-  "languages": "json:${LANGUAGES}",
+  "languages": 'json:${LANGUAGES}',
 };
 
-for (const k of Object.keys(twConfig)) {
-  if (twConfig[k].startsWith("json:")) {
+for (const [k, value] of Object.entries(twConfig)) {
+  if (value.startsWith("json:")) {
     try {
-      twConfig[k] = JSON.parse(twConfig[k].substring("json:".length));
+      twConfig[k] = JSON.parse(value.substring("json:".length));
     } catch (e) {
     }
   }
