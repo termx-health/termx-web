@@ -41,7 +41,7 @@
         <th>Definition</th>
       </tr>
       <tr *mTableRow="let c">
-        <td>{{c.code}}</td>
+        <td><a [routerLink]="['/fhir/CodeSystem', this.codeSystem.id, 'lookup']" [queryParams]="{ _code: c.code }">{{c.code}}</a></td>
         <td>{{c.display}}</td>
         <td>{{c.definition}}</td>
       </tr>

@@ -1,0 +1,46 @@
+<div style="display: flex; flex-direction: column; gap: 1rem">
+  <div style="display: flex; gap: 3rem">
+    <div>
+      <label class="m-subtitle">code</label>
+      <h3>{{params.get('_code')}}</h3>
+    </div>
+    <div>
+      <label class="m-subtitle">display</label>
+      <h3>{{(result.parameter | apply:findParameter:'display')?.valueString}}</h3>
+    </div>
+    <div>
+      <label class="m-subtitle">code system</label>
+      <h3>{{(result.parameter | apply:findParameter:'name')?.valueString}}</h3>
+    </div>
+  </div>
+  <div>
+    <h2>Designations</h2>
+    <m-table [mData]="(result.parameter | apply:findParameters:'designation') | apply:toDesignationRows">
+      <tr *mTableHead>
+        <th mSort="use">Use</th>
+        <th mSort="lang">Language</th>
+        <th mSort="value">Value</th>
+      </tr>
+      <tr *mTableRow="let d">
+        <td>{{d?.use}}</td>
+        <td>{{d?.lang}}</td>
+        <td>{{d?.value}}</td>
+      </tr>
+    </m-table>
+  </div>
+  <div>
+    <h2>Properties</h2>
+    <m-table [mData]="(result.parameter | apply:findParameters:'property') | apply:toPropertyRows">
+      <tr *mTableHead>
+        <th mSort="code">Code</th>
+        <th mSort="description">Description</th>
+        <th>Value</th>
+      </tr>
+      <tr *mTableRow="let p">
+        <td>{{p?.code}}</td>
+        <td>{{p?.description}}</td>
+        <td><pre>{{p?.value | json}}</pre></td>
+      </tr>
+    </m-table>
+  </div>
+</div>

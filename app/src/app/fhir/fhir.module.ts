@@ -7,6 +7,7 @@ import {FhirLibModule} from 'term-web/fhir/_lib';
 import {FhirResourceComponent} from 'term-web/fhir/fhir-resource.component';
 import {FhirConceptMapComponent} from 'term-web/fhir/concept-map/fhir-concept-map.component';
 import {WikiLibModule} from 'term-web/wiki/_lib';
+import {FhirCodeSystemLookupComponent} from 'term-web/fhir/code-system/fhir-code-system-lookup.component';
 
 export const FHIR_ROUTES: Routes = [
   {path: ':type', component: FhirResourceComponent},
@@ -23,6 +24,7 @@ export const FHIR_ROUTES: Routes = [
   declarations: [
     FhirResourceComponent,
     FhirCodeSystemComponent,
+    FhirCodeSystemLookupComponent,
     FhirValueSetComponent,
     FhirConceptMapComponent
   ],

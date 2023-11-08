@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, ParamMap} from '@angular/router';
 import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {HttpClient} from '@angular/common/http';
@@ -18,9 +18,9 @@ import {OidcSecurityService} from 'angular-auth-oidc-client';
   `]
 })
 export class FhirResourceComponent implements OnInit {
-  public meta?: {type?: string, id?: string, operation?: string} = {};
-  public resource?: any;
-  public operationResult?: any;
+  public meta?: {type?: string, id?: string, operation?: string, params?: ParamMap} = {};
+  public error?: boolean;
+  public result?: any;
 
   protected curl?: string;
 
@@ -33,10 +33,10 @@ export class FhirResourceComponent implements OnInit {
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {
-      this.resource = undefined;
-      this.operationResult = undefined;
+      this.result = undefined;
+      this.error = false;
 
-      this.meta = {id: paramMap.get('id'), type: paramMap.get('type'), operation: paramMap.get('operation')};
+      this.meta = {id: paramMap.get('id'), type: paramMap.get('type'), operation: paramMap.get('operation'), params: this.route.snapshot.queryParamMap};
 
       if (isDefined(this.meta.operation)) {
         this.executeOperation(this.meta.id, this.meta.type, this.meta.operation);
@@ -52,14 +52,20 @@ export class FhirResourceComponent implements OnInit {
     const url = `${environment.termxApi}/fhir/${type}/${id}`;
     this.composeCurl(url);
     const request = this.http.get<any>(url);
-    request.subscribe(r => this.resource = r);
+    request.subscribe(r => this.result = r, err => {
+      this.result = err;
+      this.error = true;
+    });
   }
 
   private loadResources(type: string): void {
     const url = `${environment.termxApi}/fhir/${type}`;
     this.composeCurl(url);
     const request = this.http.get<any>(url);
-    request.subscribe(r => this.operationResult = r);
+    request.subscribe(r => this.result = r, err => {
+      this.result = err;
+      this.error = true;
+    });
   }
 
   private executeOperation(id: string, type: string, operation: string): void {
@@ -67,7 +73,10 @@ export class FhirResourceComponent implements OnInit {
     const url = `${environment.termxApi}/fhir/${type}/${id}/$${operation}` + search;
     this.composeCurl(url);
     const request = this.http.get<any>(url);
-    request.subscribe(r => this.operationResult = r, err => this.operationResult = err);
+    request.subscribe(r => this.result = r, err => {
+      this.result = err;
+      this.error = true;
+    });
   }
 
   public toXML = (resource: any): string => {
@@ -103,5 +112,15 @@ export class FhirResourceComponent implements OnInit {
   protected addAcceptHeader = (curl: string, format: string): string => {
     return curl + ' \\\n' +
       '--header \'Accept: application/fhir+' + format + '\'\n' + '```\n';
+  };
+
+  protected narrativeType = (meta: {id: string, type: string, operation: string}): string => {
+    if (meta && meta.type && !meta.operation) {
+      return meta.type;
+    }
+    if (meta && meta.type === 'CodeSystem' && meta.operation === 'lookup') {
+      return meta.type + '|' + meta.operation;
+    }
+    return undefined;
   };
 }
