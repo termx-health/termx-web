@@ -9,7 +9,7 @@ twConfig = {
   "snowstormUrl": "${SNOWSTORM_URL}",
   "snowstormDailyBuildUrl": "${SNOWSTORM_DAILY_BUILD_URL}",
   "defaultLanguage": "${DEFAULT_LANGUAGE}",
-  "uiLanguages": "json:${UI_LANGUAGES}",
+  "uiLanguages": 'json:${UI_LANGUAGES}',
   "contentLanguages": 'json:${CONTENT_LANGUAGES}',
   "extraLanguages": 'json:${EXTRA_LANGUAGES}',
 };
