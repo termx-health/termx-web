@@ -14,5 +14,7 @@ export const environment = {
   snowstormUrl: dynamicEnv.snowstormUrl || 'https://snowstorm-public.kodality.dev/',
   snowstormDailyBuildUrl: dynamicEnv.snowstormDailyBuildUrl || 'https://snowstorm-public-dailybuild.kodality.dev/',
   defaultLanguage: dynamicEnv.defaultLanguage || 'en',
-  languages: dynamicEnv.languages || [{code: 'en', names: {'en': 'English', 'et': 'Inglise', 'lt': 'Anglų', 'de': 'Englisch', 'fr': 'Anglais', 'nl': 'Engels'}}]
+  languages: (dynamicEnv.languages || [
+    {code: 'en', names: {'en': 'English', 'et': 'Inglise', 'lt': 'Anglų', 'de': 'Englisch', 'fr': 'Anglais', 'nl': 'Engels'}}
+  ]) as {code:string, names: {[lang:string]:string}}[]
 };
