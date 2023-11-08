@@ -8,4 +8,15 @@ twConfig = {
   "fmlEditor": "${FML_EDITOR}",
   "snowstormUrl": "${SNOWSTORM_URL}",
   "snowstormDailyBuildUrl": "${SNOWSTORM_DAILY_BUILD_URL}",
+  "defaultLanguage": "${DEFAULT_LANGUAGE}",
+  "languages": "json:${LANGUAGES}",
 };
+
+for (const k of Object.keys(twConfig)) {
+  if (twConfig[k].startsWith("json:")) {
+    try {
+      twConfig[k] = JSON.parse(twConfig[k].substring("json:".length));
+    } catch (e) {
+    }
+  }
+}

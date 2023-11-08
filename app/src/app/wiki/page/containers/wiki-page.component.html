@@ -14,7 +14,6 @@
         <ng-container>
           <a *m-dropdown-item
               [class.m-bold]="s.id === space?.id"
-              [class.m-text-secondary]="!s.active"
               [style.border-top]="!s.active && spaces[idx - 1]?.active ? '1px solid var(--color-borders)' : ''"
               (mClick)="preferences.setSpace(s.id)"
           >

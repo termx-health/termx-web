@@ -7,12 +7,6 @@ import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate
 import {HTTP_INTERCEPTORS, HttpBackend, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {CoreUtilModule} from '@kodality-web/core-util';
-import {registerLocaleData} from '@angular/common';
-import de from '@angular/common/locales/de';
-import et from '@angular/common/locales/et';
-import fr from '@angular/common/locales/fr';
-import lt from '@angular/common/locales/lt';
-import nl from '@angular/common/locales/nl';
 import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
 import {Observable} from 'rxjs';
 import {ResourcesModule} from 'term-web/resources/resources.module';
@@ -37,12 +31,7 @@ import {PreferencesService} from 'term-web/core/preferences/preferences.service'
 import {ModelerModule} from 'term-web/modeler/modeler.module';
 import {UserModule} from 'term-web/user/user.module';
 import {LangInterceptor} from 'term-web/core/http';
-
-registerLocaleData(de);
-registerLocaleData(et);
-registerLocaleData(fr);
-registerLocaleData(lt);
-registerLocaleData(nl);
+import {environment} from 'environments/environment';
 
 
 export function HttpLoaderFactory(http: HttpBackend): TranslateLoader {
@@ -97,7 +86,7 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     SequenceModule
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'en'},
+    {provide: LOCALE_ID, useValue: environment.defaultLanguage},
     {provide: APP_INITIALIZER, useFactory: preloadAuth, deps: [AuthService], multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: LangInterceptor, multi: true}
   ],

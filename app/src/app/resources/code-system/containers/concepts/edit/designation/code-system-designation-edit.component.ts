@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {BooleanInput, collect, isDefined} from '@kodality-web/core-util';
 import {Designation, EntityProperty} from 'app/src/app/resources/_lib';
+import {environment} from 'environments/environment';
 
 @Component({
   selector: 'tw-code-system-designation-edit',
@@ -10,17 +11,20 @@ import {Designation, EntityProperty} from 'app/src/app/resources/_lib';
       font-style: italic;
       white-space: nowrap;
     }
+
     .col {
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
       align-self: stretch;
     }
+
     .row {
       flex: 1;
       display: flex;
       align-items: center;
     }
+
     .m-subtitle {
       margin-block: 0.5rem;
     }
@@ -50,9 +54,10 @@ export class CodeSystemDesignationEditComponent implements OnChanges {
 
   private addDefDesignations(): void {
     const properties = this.properties.filter(p => p.kind === 'designation');
-    const langs = this.supportedLangs?.length > 0 ? this.supportedLangs : ['en'];
+    const langs = this.supportedLangs?.length > 0 ? this.supportedLangs : [environment.defaultLanguage];
     properties.forEach(p => {
-      langs.filter(l => !this.designations.find(d => d.designationTypeId === p.id && d.language === l))
+      langs
+        .filter(l => !this.designations.find(d => d.designationTypeId === p.id && d.language === l))
         .forEach(l => {
           this.designations.push({designationTypeId: p.id, designationType: p.name, language: l, status: 'draft', caseSignificance: 'ci'});
           this.designations = [...this.designations];

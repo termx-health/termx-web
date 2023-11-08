@@ -1701,7 +1701,8 @@
 		"template": {
 			"form": {
 				"add-header": "Add template",
-				"edit-header": "Edit template"
+				"edit-header": "Edit template",
+				"add-content": "Add content"
 			},
 			"list": {
 				"add-template": "Add template"
