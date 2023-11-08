@@ -1,19 +1,15 @@
-const DEV_DEFAULT_LANGUAGE = 'en';
-const DEV_LANGUAGES = [
-  {code: 'en', names: {'en': 'English', 'et': 'Inglise', 'ru': 'Английский', 'lt': 'Anglų', 'de': 'Englisch', 'fr': 'Anglais', 'nl': 'Engels'}},
-  {code: 'et', names: {'en': 'Estonian', 'et': 'Eesti', 'ru': 'Эстонский', 'lt': 'Estų', 'de': 'Estnisch', 'fr': 'Estonien', 'nl': 'Ests'}},
-  {code: 'lt', names: {'en': 'Lithuanian', 'et': 'Leedu', 'ru': 'Литовский', 'lt': 'Lietuvių', 'de': 'Litauisch', 'fr': 'Lituanien', 'nl': 'Litouws'}},
-  {code: 'de', names: {'en': 'German', 'et': 'Saksa', 'ru': 'Немецкий', 'de': 'Deutsch', 'fr': 'Allemand', 'nl': 'Duits'}},
-  {code: 'fr', names: {'en': 'French', 'et': 'Prantsuse', 'ru': 'Французский', 'de': 'Französisch', 'fr': 'Français', 'nl': 'Frans'}},
-  {code: 'nl', names: {'en': 'Dutch', 'et': 'Hollandi', 'ru': 'Голландский', 'de': 'Niederländisch', 'fr': 'Néerlandais', 'nl': 'Nederlands'}}
-];
+import {Environment, UI_LANGS} from './environment.base';
 
-export const environment = {
+
+export const environment: Environment = {
   appVersion: require('../../../package.json').version,
   production: false,
   yupiEnabled: false,
-  languages: DEV_LANGUAGES,
-  defaultLanguage: DEV_DEFAULT_LANGUAGE,
+
+  defaultLanguage: 'en',
+  uiLanguages: [...UI_LANGS],
+  contentLanguages: [...UI_LANGS],
+  extraLanguages: {},
 
   termxApi: 'https://termx.kodality.dev/api',
   // termxApi: 'http://localhost:8200',

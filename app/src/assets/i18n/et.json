@@ -1,4 +1,12 @@
 {
+	"language": {
+		"et": "Inglise",
+		"en": "Eesti",
+		"lt": "Leedu",
+		"de": "Saksa",
+		"fr": "Prantsuse",
+		"nl": "Hollandi"
+	},
 	"core": {
 		"back": "Tagasi",
 		"btn": {
@@ -673,9 +681,6 @@
 			"display": "Põhitekst",
 			"order-number": "Jnr"
 		}
-	},
-	"marina.ui.form.validationError": {
-		"sequenceInvalidCharacters": "Sisaldab lubamatu märke: \"{{sequenceInvalidCharacters}}\""
 	},
 	"web": {
 		"app": {
@@ -2184,5 +2189,8 @@
 				"usages": "Viited"
 			}
 		}
+	},
+	"marina.ui.form.validationError": {
+		"sequenceInvalidCharacters": "Sisaldab lubamatu märke: \"{{sequenceInvalidCharacters}}\""
 	}
 }

@@ -1,5 +1,13 @@
 {
-	"core": {
+    "language": {
+        "en": "English",
+        "et": "Estonian",
+        "lt": "Lithuanian",
+        "de": "German",
+        "fr": "French",
+        "nl": "Dutch"
+    },
+    "core": {
 		"back": "Back",
 		"btn": {
 			"add": "Add",
@@ -671,9 +679,6 @@
 			"display": "Display",
 			"order-number": "Order"
 		}
-	},
-	"marina.ui.form.validationError": {
-		"sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
 	},
 	"web": {
 		"app": {
@@ -2011,5 +2016,8 @@
 				}
 			}
 		}
-	}
+	},
+    "marina.ui.form.validationError": {
+    "sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
+  }
 }

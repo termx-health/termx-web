@@ -1,7 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {collect, group, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {PageService} from '../services/page.service';
-import {MuiConfigService} from '@kodality-web/marina-ui';
 import {NgForm} from '@angular/forms';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {Page, PageComment, PageContent, PageRelation, parsePageRelationLink} from 'term-web/wiki/_lib';
@@ -10,6 +9,7 @@ import {PageCommentService} from 'term-web/wiki/page/services/page-comment.servi
 import {WikiComment} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
+import {environment} from 'environments/environment';
 
 @Component({
   selector: 'tw-wiki-page-details',
@@ -35,6 +35,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     [id: number]: WikiSpace
   } = {};
 
+  protected environment = environment;
   protected loader = new LoadingManager();
   protected mobileQuery: MediaQueryList;
   protected contentModalData: {
@@ -47,7 +48,6 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     private pageCommentService: PageCommentService,
     private clipboard: Clipboard,
     private spaceService: WikiSpaceService,
-    protected muiConfig: MuiConfigService,
     media: MediaMatcher
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 992px)');
@@ -160,8 +160,8 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     this.clipboard.copy(this.pageContent.content);
   }
 
-  protected filterLanguages = (supportedLangs: string[], currentLang: string, contents: PageContent[]): string[] => {
-    return supportedLangs.filter(l => l !== currentLang && !contents.find(c => c.lang === l));
+  protected filterLanguages = (contentLangs: string[], currentLang: string, contents: PageContent[]): string[] => {
+    return contentLangs.filter(l => l !== currentLang && !contents.find(c => c.lang === l));
   };
 
   protected getCommentsContainerOffset(): number {

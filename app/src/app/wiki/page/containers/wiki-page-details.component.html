@@ -59,7 +59,7 @@
                       {{content.lang | uppercase}} | {{content.name}}
                     </a>
                   </div>
-                  <ng-container *ngFor="let lang of muiConfig.config.systemLanguages | keys | apply: filterLanguages: pageContent?.lang: page?.contents">
+                  <ng-container *ngFor="let lang of environment.contentLanguages | apply: filterLanguages: pageContent?.lang: page?.contents">
                     <div *twPrivileged>
                       <a (click)="createPageContent(lang)" class="m-text-secondary">
                         {{lang | uppercase}}

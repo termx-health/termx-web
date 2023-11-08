@@ -1,24 +1,15 @@
 import {dynamicEnv} from './dynamic-env';
-
-const PROD_DEFAULT_LANGUAGE = {
-  code: 'en',
-  names: {
-    'en': 'English',
-    'et': 'Inglise',
-    'lt': 'Anglų',
-    'de': 'Englisch',
-    'fr': 'Anglais',
-    'nl': 'Engels'
-  }
-};
+import {Environment, UI_LANGS} from './environment.base';
 
 
-export const environment = {
+export const environment: Environment = {
   appVersion: require('../../../package.json').version,
   production: true,
   yupiEnabled: false,
-  languages: (dynamicEnv.languages || [PROD_DEFAULT_LANGUAGE]) as typeof PROD_DEFAULT_LANGUAGE[],
-  defaultLanguage: dynamicEnv.defaultLanguage || PROD_DEFAULT_LANGUAGE.code,
+  defaultLanguage: dynamicEnv.defaultLanguage || 'en',
+  uiLanguages: dynamicEnv.uiLanguages || UI_LANGS,
+  contentLanguages: dynamicEnv.contentLanguages || dynamicEnv.uiLanguages || UI_LANGS,
+  extraLanguages: dynamicEnv.extraLanguages || {},
   termxApi: dynamicEnv.termxApi || '/api',
   oauthIssuer: dynamicEnv.oauthIssuer,
   oauthClientId: dynamicEnv.oauthClientId,

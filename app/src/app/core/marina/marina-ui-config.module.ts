@@ -1,10 +1,10 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiHttpErrorHandler} from '@kodality-web/marina-ui';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
-import {CoreI18nService, CoreI18nTranslationHandler, group, TRANSLATION_HANDLER} from '@kodality-web/core-util';
+import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiConfigService, MuiHttpErrorHandler} from '@kodality-web/marina-ui';
+import {HTTP_INTERCEPTORS, HttpBackend, HttpClient} from '@angular/common/http';
+import {CoreI18nService, CoreI18nTranslationHandler, group, isDefined, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
-import {environment} from 'environments/environment';
+import {environment as env} from 'environments/environment.prod';
 import {registerLocaleData} from '@angular/common';
 
 export function TranslationHandlerFactory(translateService: TranslateService): CoreI18nTranslationHandler {
@@ -21,19 +21,20 @@ export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
       pageSizeOptions: [10, 20, 50, 100]
     },
     multiLanguageInput: {
-      languages: environment.languages.map(l => ({code: l.code, names: l.names})),
-      requiredLanguages: [environment.defaultLanguage]
+      languages: [],
+      requiredLanguages: [env.defaultLanguage]
     },
-    systemLanguages: group(environment.languages, l => l.code, l => ({label: `${l.code.toUpperCase()} ${l.names[l.code]}`})),
+    systemLanguages: {},
     ...external
   };
 }
+
 
 @NgModule({
   imports: [
     MarinaUiModule,
     MarinaMarkdownModule.configure({
-      plantUml: {server: environment.plantUmlUrl}
+      plantUml: {server: env.plantUmlUrl}
     }),
   ],
   exports: [
@@ -41,12 +42,32 @@ export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
   ]
 })
 export class MarinaUiConfigModule {
-  public constructor(translate: TranslateService, i18nService: CoreI18nService) {
+  public constructor(
+    http: HttpBackend,
+    translate: TranslateService,
+    i18nService: CoreI18nService,
+    muiConfig: MuiConfigService
+  ) {
     translate.onLangChange.subscribe(({lang}) => {
       import(/* webpackInclude: /\/\w\w.mjs$/ */ `../../../../../node_modules/@angular/common/locales/${lang}.mjs`)
         .then(locale => registerLocaleData(locale.default))
-        .then(() => i18nService.use(lang))
-        .catch(() => i18nService.use(lang));
+        .then(() => {
+          i18nService.use(lang);
+
+          // 'lang' translations in other locales
+          const translations = translate.store.translations?.[lang]?.['language'];
+          // update multi language input
+          muiConfig.set('multiLanguageInput', {
+            languages: env.contentLanguages.map(k => ({code: k, names: {[lang]: translations[k] ?? k}})),
+            requiredLanguages: [env.defaultLanguage]
+          });
+        });
+    });
+
+
+    new HttpClient(http).get('/assets/ui-languages.json').subscribe(uiLangs => {
+      muiConfig.set('systemLanguages',
+        group(env.uiLanguages.filter(k => uiLangs[k]), k => k, k => ({label: [k.toUpperCase(), uiLangs[k]].filter(isDefined).join(' - ')})));
     });
   }
 

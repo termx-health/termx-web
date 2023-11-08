@@ -62,6 +62,6 @@ export class TemplateEditComponent implements OnInit {
 
   protected availableLangs = (contents: TemplateContent[]): string[] => {
     const current = contents?.map(c => c.lang) ?? [];
-    return environment.languages.map(l => l.code).filter(k => !current.includes(k));
+    return environment.contentLanguages.filter(k => !current.includes(k));
   };
 }

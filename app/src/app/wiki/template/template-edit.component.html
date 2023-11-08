@@ -18,7 +18,7 @@
           <m-form-item
               *ngFor="let content of template.contents; let index = index"
               mName="content-{{index}}"
-              mLabel="{{'entities.template.content' | translate}} {{content.lang.toUpperCase()}}"
+              [mLabel]="'language.' + content.lang"
           >
             <m-textarea name="content-{{index}}" [(ngModel)]="content.content" [autosize]="{minRows: 3}"/>
           </m-form-item>
@@ -28,7 +28,7 @@
               <m-button *m-dropdown-container>{{'web.template.form.add-content' | translate}}</m-button>
 
               <ng-container *ngFor="let lang of availableLangs">
-                <a *m-dropdown-item (mClick)="addLanguageContent(lang)">{{lang}}</a>
+                <a *m-dropdown-item (mClick)="addLanguageContent(lang)" translate>language.{{lang}}</a>
               </ng-container>
             </m-dropdown>
           </ng-container>

@@ -4,11 +4,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {RootRoutingModule} from 'term-web/root-routing.module';
 import {AppComponent} from 'term-web/app.component';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {HTTP_INTERCEPTORS, HttpBackend, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CoreUtilModule} from '@kodality-web/core-util';
-import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
-import {Observable} from 'rxjs';
+import {CoreUtilModule, group} from '@kodality-web/core-util';
+import {catchError, map, Observable, of} from 'rxjs';
 import {ResourcesModule} from 'term-web/resources/resources.module';
 import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 import {PrivilegesModule} from 'term-web/privileges/privileges.module';
@@ -31,11 +30,25 @@ import {PreferencesService} from 'term-web/core/preferences/preferences.service'
 import {ModelerModule} from 'term-web/modeler/modeler.module';
 import {UserModule} from 'term-web/user/user.module';
 import {LangInterceptor} from 'term-web/core/http';
-import {environment} from 'environments/environment';
+import {environment as env, environment} from 'environments/environment';
 
 
-export function HttpLoaderFactory(http: HttpBackend): TranslateLoader {
-  return new MultiTranslateHttpLoader(http, ['/assets/i18n/']);
+export function HttpLoaderFactory(_http: HttpBackend): TranslateLoader {
+  return {
+    getTranslation(lang: string): Observable<object> {
+      return new HttpClient(_http).get(`/assets/i18n/${lang}.json`).pipe(
+        catchError(() => of({})),
+        map(translations => {
+          const extraLangs = env.extraLanguages ?? {};
+          translations['language'] = {
+            ...translations['language'] ?? {},
+            ...group(Object.entries(extraLangs), ([k]) => k, ([k, v]) => v[lang] ?? k)
+          };
+          return translations;
+        })
+      );
+    }
+  };
 }
 
 export function preloadAuth(authService: AuthService): () => Observable<any> {

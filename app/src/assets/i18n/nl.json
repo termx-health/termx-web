@@ -1,2 +1,10 @@
 {
+  "language": {
+    "en": "Engels",
+    "et": "Ests",
+    "lt": "Litouws",
+    "de": "Duits",
+    "fr": "Frans",
+    "nl": "Nederlands"
+  }
 }
