@@ -4,7 +4,7 @@ import {HTTP_INTERCEPTORS, HttpBackend, HttpClient} from '@angular/common/http';
 import {CoreI18nService, CoreI18nTranslationHandler, group, isDefined, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
-import {environment as env} from 'environments/environment.prod';
+import {environment as env} from 'environments/environment';
 import {registerLocaleData} from '@angular/common';
 
 export function TranslationHandlerFactory(translateService: TranslateService): CoreI18nTranslationHandler {
