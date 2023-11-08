@@ -144,7 +144,7 @@
 		"entity-property": {
 			"description": "Kirjeldus",
 			"kind": "Liik",
-			"name": "Nimi",
+			"name": "Kood",
 			"order-number": "Jnr",
 			"preferred": "Eelistatav",
 			"required": "Kohustuslik",
@@ -997,12 +997,6 @@
 				"uri": "URI",
 				"value-set": "Loend",
 				"value-set-code": "Loendi kood"
-			}
-		},
-		"entity-property": {
-			"form": {
-				"add-header": "Lisa omadus",
-				"edit-header": "Muuda omadust"
 			}
 		},
 		"global-search": {

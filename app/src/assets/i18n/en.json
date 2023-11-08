@@ -144,7 +144,7 @@
 		"entity-property": {
 			"description": "Description",
 			"kind": "Kind",
-			"name": "Name",
+			"name": "Code",
 			"order-number": "Order",
 			"preferred": "Preferred",
 			"required": "Required",
