@@ -150,6 +150,7 @@ export class StructureDefinitionEditComponent implements OnInit {
       this.loader.wrap('save', this.structureDefinitionService.save(this.structureDefinition!)).subscribe(sd => {
         this.formElement = undefined;
         this.structureDefinition = sd;
+        this.loader.wrap('init', this.unmapContent(sd.content, sd.contentFormat)).subscribe();
         this.handleAction(nextAction);
       });
     });
