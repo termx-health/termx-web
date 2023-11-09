@@ -11,6 +11,7 @@ const getBrowserLang = (): string | undefined => {
   if (lang?.includes('-')) {
     return lang.split('-')[0];
   }
+  return lang;
 };
 
 const getLang = (): string => {
