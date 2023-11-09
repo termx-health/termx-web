@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {catchError, map, mergeMap, Observable, of, tap} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpContext} from '@angular/common/http';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import Cookies from 'js-cookie';
 import {isDefined} from '@kodality-web/core-util';
+import {MuiSkipErrorHandler} from '@kodality-web/marina-ui';
 
 export interface UserInfo {
   username: string;
@@ -47,7 +48,7 @@ export class AuthService {
 
   private refreshUserInfo(): Observable<UserInfo> {
     return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
-      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`).pipe(catchError(() => {
+      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`, {context: new HttpContext().set(MuiSkipErrorHandler, true)}).pipe(catchError(() => {
         this.oidcSecurityService.authorize();
         return of(null as UserInfo);
       }));
