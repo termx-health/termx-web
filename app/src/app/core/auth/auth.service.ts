@@ -1,11 +1,12 @@
 import {Injectable} from '@angular/core';
 import {catchError, filter, map, mergeMap, Observable, of, tap} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpContext} from '@angular/common/http';
 import {EventTypes, OidcSecurityService, PublicEventsService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import Cookies from 'js-cookie';
 import {isDefined} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
+import {MuiSkipErrorHandler} from '@kodality-web/marina-ui';
 
 const REDIRECT_ORIGIN_URL = '__redirect_origin_url';
 
@@ -62,7 +63,7 @@ export class AuthService {
 
   private refreshUserInfo(): Observable<UserInfo> {
     return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
-      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`).pipe(catchError(() => {
+      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`, {context: new HttpContext().set(MuiSkipErrorHandler, true)}).pipe(catchError(() => {
         this.login();
         return of(null as UserInfo);
       }));
