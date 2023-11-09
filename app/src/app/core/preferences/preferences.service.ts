@@ -7,11 +7,9 @@ const LOCALE = 'locale';
 const SPACE = 'space';
 
 const getBrowserLang = (): string | undefined => {
-  const lang = navigator.language;
-  if (lang?.includes('-')) {
-    return lang.split('-')[0];
-  }
-  return lang;
+  const lang = navigator.language; // en-US
+  const base = navigator.language?.split('-')?.[0]; // en
+  return [lang, base].find(l => environment.uiLanguages.includes(l));
 };
 
 const getLang = (): string => {

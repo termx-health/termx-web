@@ -14,13 +14,13 @@ twConfig = {
   "extraLanguages": 'json:${EXTRA_LANGUAGES}',
 };
 
-for (const [k, value] of Object.entries(twConfig)) {
-  if (value.startsWith("json:")) {
+for (const [key, val] of Object.entries(twConfig)) {
+  if (val.startsWith("json:") && !val.startsWith('json:$')) {
     try {
-      twConfig[k] = JSON.parse(value.substring("json:".length));
+      twConfig[key] = JSON.parse(val.substring("json:".length));
     } catch (e) {
-      console.error('Failed to parse config property', e);
-      twConfig[k] = undefined;
+      console.error(`Failed to parse config property ${key} with value: ${val}`, e);
+      twConfig[key] = undefined;
     }
   }
 }
