@@ -8,7 +8,13 @@ export class EntityPropertyNamePipe implements PipeTransform {
 
   public transform(prop: DefinedProperty): string {
     const lang = this.translateService.currentLang;
-    return prop?.description?.[lang] || Object.values(prop?.description)?.[0] || prop.name;
+    if (prop?.description?.[lang] && prop.description[lang] !== '') {
+      return prop.description[lang];
+    }
+    if (Object.values(prop?.description)?.[0] && Object.values(prop.description)[0] !== '') {
+      return Object.values(prop.description)[0];
+    }
+    return prop.name;
   }
 }
 

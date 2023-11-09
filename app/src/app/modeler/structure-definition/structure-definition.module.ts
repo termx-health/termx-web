@@ -10,6 +10,7 @@ import {StructureDefinitionService} from './services/structure-definition.servic
 import {PortalModule} from '@angular/cdk/portal';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
+import {MeasurementUnitLibModule} from 'term-web/measurement-unit/_lib';
 
 export const STRUCTURE_DEFINITION_ROUTES: Routes = [
   {path: 'structure-definitions', component: StructureDefinitionListComponent},
@@ -24,7 +25,8 @@ export const STRUCTURE_DEFINITION_ROUTES: Routes = [
 
     PortalModule,
     ResourcesLibModule,
-    IntegrationLibModule
+    IntegrationLibModule,
+    MeasurementUnitLibModule
   ],
   declarations: [
     StructureDefinitionListComponent,

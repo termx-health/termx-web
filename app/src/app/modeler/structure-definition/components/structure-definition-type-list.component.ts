@@ -1,7 +1,9 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
-import {ValueSetLibService, ValueSetVersionConcept} from 'term-web/resources/_lib';
+import {CodeSystemEntityVersion, CodeSystemLibService, ConceptUtil, ValueSetLibService, ValueSetVersionConcept} from 'term-web/resources/_lib';
+import {MuiTreeSelectNodeOptions} from '@kodality-web/marina-ui';
+import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 
 
 @Component({
@@ -30,20 +32,40 @@ export class StructureDefinitionTypeListComponent implements OnInit{
   @Output() public typesChange: EventEmitter<StructureDefinitionType[]> = new EventEmitter<StructureDefinitionType[]>();
 
   public modalData: {
+    kind?: string,
     visible?: boolean,
-    customType?: boolean,
     index?: number,
     type?: StructureDefinitionType
   } = {};
 
-  public elementDefinitionTypes: ValueSetVersionConcept[];
+  protected primitives: MuiTreeSelectNodeOptions[];
+  protected dataTypes: MuiTreeSelectNodeOptions[];
+  protected resources: MuiTreeSelectNodeOptions[];
+  protected termXDefinitions: StructureDefinition[];
 
   @ViewChild("form") public form?: NgForm;
 
-  public constructor(private valueSetService: ValueSetLibService) {}
+  public constructor(private codeSystemService: CodeSystemLibService, private sdService: StructureDefinitionLibService) {}
 
   public ngOnInit(): void {
-    this.valueSetService.expand({valueSet: 'elementdefinition-types'}).subscribe(r => this.elementDefinitionTypes = r);
+    this.codeSystemService.searchConcepts('fhir-types', {limit: -1}).subscribe(r => {
+      const primitive = r.data.map(c => ConceptUtil.getLastVersion(c)).filter(v =>
+        v.propertyValues.find(pv => pv.entityProperty === 'kind' && pv.value === 'primitive'));
+      this.primitives = primitive.filter(p => !p.associations || p.associations.length === 0 || !p.associations.find(a => primitive.find(p1 => p1.code === a.targetCode)))
+        .map(dt => this.toTreeNode(dt, primitive));
+
+      const dataTypes = r.data.map(c => ConceptUtil.getLastVersion(c)).filter(v => v.code !== 'Element' &&
+        v.propertyValues.find(pv => pv.entityProperty === 'kind' && pv.value === 'datatype'));
+      this.dataTypes = dataTypes.filter(dt => !dt.associations || dt.associations.length === 0 || !dt.associations.find(a => dataTypes.find(dt1 => dt1.code === a.targetCode)))
+        .map(dt => this.toTreeNode(dt, dataTypes));
+
+      const resources = r.data.map(c => ConceptUtil.getLastVersion(c)).filter(v => v.code !== 'Resource' &&
+        v.propertyValues.find(pv => pv.entityProperty === 'kind' && pv.value === 'resource'));
+      this.resources =  resources.filter(res => !res.associations || res.associations.length === 0 || !res.associations.find(a => resources.find(res1 => res1.code === a.targetCode)))
+        .map(res => this.toTreeNode(res, resources));
+    });
+
+    this.sdService.search({limit:-1}).subscribe(r => this.termXDefinitions = r.data);
   }
 
   public addType(): void {
@@ -61,7 +83,6 @@ export class StructureDefinitionTypeListComponent implements OnInit{
   public toggleModal(type?: StructureDefinitionType, index?: number): void {
     this.modalData = {
       visible: !!type,
-      customType: !!type?.code && !this.elementDefinitionTypes?.find(t => t.concept?.code === type.code),
       type: copyDeep(type),
       index: index
     };
@@ -89,6 +110,12 @@ export class StructureDefinitionTypeListComponent implements OnInit{
 
     this.typesChange.emit(this.types);
     this.modalData.visible = false;
+  }
+
+  private toTreeNode(ver: CodeSystemEntityVersion, allVersions: CodeSystemEntityVersion[]): MuiTreeSelectNodeOptions {
+    const children = allVersions.filter(v => v.associations?.find(a => a.targetCode === ver.code));
+    return {title: ver.code, key: ver.code, disabled: ver.code !== 'BackboneElement' && !!ver.propertyValues.find(pv => pv.entityProperty === 'abstract-type' && pv.value === true),
+      children: children.map(c => this.toTreeNode(c, allVersions)), isLeaf: !children || children.length === 0};
   }
 }
 
