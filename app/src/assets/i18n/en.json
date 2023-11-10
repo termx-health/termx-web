@@ -1616,6 +1616,7 @@
 		"structure-definition": {
 			"form": {
 				"add-header": "Add structure definition",
+				"view-header": "Structure definition",
 				"binding": "Binding",
 				"cardinality": "Cardinality",
 				"code": "Code",
