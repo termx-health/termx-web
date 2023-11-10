@@ -257,7 +257,6 @@
         "privileges": [
             "*.Wiki.view"
         ],
-        "link": "wiki/pages",
         "items": [
             {
                 "label": {
@@ -268,7 +267,7 @@
                     "fr": "Wiki",
                     "nl": "Wiki"
                 },
-                "link": "wiki/pages",
+                "link": "wiki",
                 "privileges": [
                     "*.Wiki.view"
                 ]
@@ -305,7 +304,6 @@
             "*.ValueSet.view",
             "*.MapSet.view"
         ],
-        "link": "wiki/pages",
         "items": [
             {
                 "label": {

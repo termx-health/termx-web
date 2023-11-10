@@ -177,6 +177,6 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   }
 
   protected get isLoading(): boolean {
-    return this.loader.isLoadingExcept('init');
+    return this.loader.isLoadingExcept('spaces');
   }
 }

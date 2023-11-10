@@ -114,7 +114,7 @@
   <!-- Send reply -->
   <m-list-item class="comment-reply-section" *ngIf="inf.active && ('edit' | twPrivileged)">
     <div class="m-items-top" *ngIf="{msg: ''} as d">
-      <m-textarea style="flex: 1" [(ngModel)]="d.msg" placeholder="web.wiki-page.comments.reply" [autofocus]="!pageComment.children?.length"/>
+      <m-textarea style="flex: 1" [(ngModel)]="d.msg" placeholder="web.wiki-page.comments.reply"/>
       <m-button [mDisplay]="d.msg ? 'primary' : 'default'" (mClick)="d.msg ? reply(pageComment, d.msg) : undefined; d.msg = undefined">
         {{'core.btn.send' | translate}}
       </m-button>

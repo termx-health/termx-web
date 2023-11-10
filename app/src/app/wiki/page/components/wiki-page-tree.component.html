@@ -41,7 +41,7 @@
         </ng-template>
 
         <ng-template #nodeActions let-node>
-          <div class="m-items-middle" style="gap: 0.25rem">
+          <div class="m-items-middle" style="gap: 0.25rem" (click)="$event.preventDefault(); $event.stopPropagation()">
             <m-button
                 mSize="small"
                 m-popconfirm

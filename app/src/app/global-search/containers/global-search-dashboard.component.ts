@@ -145,23 +145,33 @@ export class GlobalSearchDashboardComponent implements OnInit {
       : this.snomedService.findConcepts(q).pipe(map(cs => cs.items), catchError(() => of([])));
   }
 
-  public openConcept(codeSystem: string, code: string): void {
+
+  protected openConcept(codeSystem: string, code: string): void {
     this.router.navigate(['/resources/code-systems/', codeSystem, 'concepts', code, 'view']);
   }
 
-  public openCodeSystem(id: number): void {
+  protected openCodeSystem(id: number): void {
     this.router.navigate(['/resources/code-systems/', id, 'summary']);
   }
 
-  public openValueSet(id: number): void {
+  protected openValueSet(id: number): void {
     this.router.navigate(['/resources/value-sets/', id, 'summary']);
   }
 
-  public openMapSet(id: number): void {
+  protected openMapSet(id: number): void {
     this.router.navigate(['/resources/map-sets/', id, 'summary']);
   }
 
-  public openMeasurementUnit(id: number): void {
+  protected openMeasurementUnit(id: number): void {
     this.router.navigate(['/measurement-units/', id, 'view']);
+  }
+
+  protected get isEmpty(): boolean {
+    return !this.concepts?.length &&
+      !this.codeSystems?.length &&
+      !this.valueSets?.length &&
+      !this.mapSets?.length &&
+      !this.measurementUnits?.length &&
+      !this.snomedConcepts?.length;
   }
 }
