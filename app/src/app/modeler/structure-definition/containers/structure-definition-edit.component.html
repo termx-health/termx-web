@@ -128,17 +128,14 @@
 
         <m-form-item mName="contentType" mLabel="entities.structure-definition.content-type" required>
           <m-select name="contentType" [(ngModel)]="structureDefinition.contentType" required>
-            <m-option [mValue]="'profile'" [mLabel]="'Profile'"></m-option>
+            <m-option [mValue]="'primitive-type'" [mLabel]="'Primitive Data Type'"></m-option>
+            <m-option [mValue]="'complex-type'" [mLabel]="'Complex Data Type'"></m-option>
+            <m-option [mValue]="'resource'" [mLabel]="'Resource'"></m-option>
             <m-option [mValue]="'logical'" [mLabel]="'Logical'"></m-option>
-            <m-option [mValue]="'instance'" [mLabel]="'Instance'"></m-option>
           </m-select>
         </m-form-item>
 
-        <m-form-item *ngIf="structureDefinition.contentType === 'profile'" mName="parent" mLabel="entities.structure-definition.parent">
-          <m-input name="parent" [(ngModel)]="structureDefinition.parent"></m-input>
-        </m-form-item>
-
-        <m-form-item *ngIf="structureDefinition.contentType === 'profile'" mName="version" mLabel="entities.structure-definition.version">
+        <m-form-item mName="version" mLabel="entities.structure-definition.version">
           <m-input name="version" [(ngModel)]="structureDefinition.version"></m-input>
         </m-form-item>
       </form>
