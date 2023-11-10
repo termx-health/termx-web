@@ -43,6 +43,8 @@ export class StructureDefinitionTypeListComponent implements OnInit{
   protected resources: MuiTreeSelectNodeOptions[];
   protected termXDefinitions: StructureDefinition[];
 
+  protected referenceTypes: string[] = ['Reference', 'CodeableReference', 'canonical'];
+
   @ViewChild("form") public form?: NgForm;
 
   public constructor(private codeSystemService: CodeSystemLibService, private sdService: StructureDefinitionLibService) {}
@@ -101,6 +103,9 @@ export class StructureDefinitionTypeListComponent implements OnInit{
     if (!validateForm(this.form)) {
       return;
     }
+    if (!this.referenceTypes.includes(this.modalData.type.code)) {
+      this.modalData.type.targetProfile = [];
+    }
 
     if (isDefined(this.modalData.index)) {
       this.types[this.modalData.index!] = this.modalData.type!;
@@ -114,7 +119,7 @@ export class StructureDefinitionTypeListComponent implements OnInit{
 
   private toTreeNode(ver: CodeSystemEntityVersion, allVersions: CodeSystemEntityVersion[]): MuiTreeSelectNodeOptions {
     const children = allVersions.filter(v => v.associations?.find(a => a.targetCode === ver.code));
-    return {title: ver.code, key: ver.code, disabled: ver.code !== 'BackboneElement' && !!ver.propertyValues.find(pv => pv.entityProperty === 'abstract-type' && pv.value === true),
+    return {title: ver.code, key: ver.code, expanded: true, disabled: ver.code !== 'BackboneElement' && !!ver.propertyValues.find(pv => pv.entityProperty === 'abstract-type' && pv.value === true),
       children: children.map(c => this.toTreeNode(c, allVersions)), isLeaf: !children || children.length === 0};
   }
 }

@@ -55,16 +55,30 @@
         <ng-container *ngIf="modalData.type">
           <m-form-item mName="code" mLabel="web.structure-definition-type.modal.code" required>
             <ng-container [ngSwitch]="modalData.kind">
-              <m-tree-select *ngSwitchCase="'primitives'" name="code" [(ngModel)]="modalData.type.code" [mData]="primitives" [mDropdownStyle]="{'max-height':'300px'}" required/>
-              <m-tree-select *ngSwitchCase="'data-types'" name="code" [(ngModel)]="modalData.type.code" [mData]="dataTypes" [mDropdownStyle]="{'max-height':'300px'}" required/>
-              <m-tree-select *ngSwitchCase="'resources'" name="code" [(ngModel)]="modalData.type.code" [mData]="resources" [mDropdownStyle]="{'max-height':'300px'}" required/>
+              <ng-template #treeSelect let-data="data">
+                <m-tree-select name="code"
+                    [(ngModel)]="modalData.type.code"
+                    [mData]="data"
+                    [mDropdownStyle]="{'max-height':'300px'}"
+                    [hideUnMatched]="true"
+                    required/>
+              </ng-template>
+              <ng-container *ngSwitchCase="'primitives'">
+                <ng-container *ngTemplateOutlet="treeSelect, context: {data: primitives}"/>
+              </ng-container>
+              <ng-container *ngSwitchCase="'data-types'">
+                <ng-container *ngTemplateOutlet="treeSelect, context: {data: dataTypes}"/>
+              </ng-container>
+              <ng-container *ngSwitchCase="'resources'">
+                <ng-container *ngTemplateOutlet="treeSelect, context: {data: resources}"/>
+              </ng-container>
               <m-select *ngSwitchCase="'termx'" name="code" [(ngModel)]="modalData.type.code" required>
                 <m-option *ngFor="let def of termXDefinitions" [mLabel]="def.code" [mValue]="def.code"/>
               </m-select>
               <m-input *ngSwitchDefault name="code" [(ngModel)]="modalData.type.code" autofocus required></m-input>
             </ng-container>
           </m-form-item>
-          <ng-container *ngIf="['Reference', 'CodeableReference', 'canonical'] | includes:modalData.type.code">
+          <ng-container *ngIf="referenceTypes | includes:modalData.type.code">
             <m-divider>{{'web.structure-definition-type.modal.target-profile' | translate}}</m-divider>
             <m-table [mData]="modalData.type.targetProfile" mSize="small">
               <tr *mTableRow="let profile; let index = index">
