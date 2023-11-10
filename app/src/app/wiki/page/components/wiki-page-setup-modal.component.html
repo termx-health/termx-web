@@ -17,7 +17,7 @@
 
       <m-form-item mName="lang" mLabel="entities.page-content.lang" required>
         <m-select name="lang" [(ngModel)]="pageContent.lang" required>
-          <m-option *ngFor="let lang of muiConfig.config.supportedLangs | keys" [mLabel]="lang" [mValue]="lang"></m-option>
+          <m-option *ngFor="let lang of environment.contentLanguages" [mLabel]="'language.' + lang" [mValue]="lang"></m-option>
         </m-select>
       </m-form-item>
 

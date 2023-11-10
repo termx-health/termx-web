@@ -18,6 +18,7 @@ export * from './model/concept-search-params';
 export * from './model/concept-transaction-request';
 export * from './model/entity-property';
 export * from './model/entity-property-search-params';
+export * from './pipe/entity-propertye-name-pipe';
 export * from './pipe/localized-concept-name-pipe';
 export * from './services/code-system-concept-lib.service';
 export * from './services/code-system-entity-version-lib.service';

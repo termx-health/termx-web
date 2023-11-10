@@ -1,5 +1,13 @@
 {
-	"core": {
+    "language": {
+        "en": "English",
+        "et": "Estonian",
+        "lt": "Lithuanian",
+        "de": "German",
+        "fr": "French",
+        "nl": "Dutch"
+    },
+    "core": {
 		"back": "Back",
 		"btn": {
 			"add": "Add",
@@ -144,7 +152,7 @@
 		"entity-property": {
 			"description": "Description",
 			"kind": "Kind",
-			"name": "Name",
+			"name": "Code",
 			"order-number": "Order",
 			"preferred": "Preferred",
 			"required": "Required",
@@ -671,9 +679,6 @@
 			"display": "Display",
 			"order-number": "Order"
 		}
-	},
-	"marina.ui.form.validationError": {
-		"sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
 	},
 	"web": {
 		"app": {
@@ -1611,6 +1616,7 @@
 		"structure-definition": {
 			"form": {
 				"add-header": "Add structure definition",
+				"view-header": "Structure definition",
 				"binding": "Binding",
 				"cardinality": "Cardinality",
 				"code": "Code",
@@ -1701,7 +1707,8 @@
 		"template": {
 			"form": {
 				"add-header": "Add template",
-				"edit-header": "Edit template"
+				"edit-header": "Edit template",
+				"add-content": "Add content"
 			},
 			"list": {
 				"add-template": "Add template"
@@ -2010,5 +2017,8 @@
 				}
 			}
 		}
-	}
+	},
+    "marina.ui.form.validationError": {
+    "sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
+  }
 }

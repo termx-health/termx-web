@@ -1,4 +1,12 @@
 {
+	"language": {
+		"et": "Inglise",
+		"en": "Eesti",
+		"lt": "Leedu",
+		"de": "Saksa",
+		"fr": "Prantsuse",
+		"nl": "Hollandi"
+	},
 	"core": {
 		"back": "Tagasi",
 		"btn": {
@@ -144,7 +152,7 @@
 		"entity-property": {
 			"description": "Kirjeldus",
 			"kind": "Liik",
-			"name": "Nimi",
+			"name": "Kood",
 			"order-number": "Jnr",
 			"preferred": "Eelistatav",
 			"required": "Kohustuslik",
@@ -674,9 +682,6 @@
 			"order-number": "Jnr"
 		}
 	},
-	"marina.ui.form.validationError": {
-		"sequenceInvalidCharacters": "Sisaldab lubamatu märke: \"{{sequenceInvalidCharacters}}\""
-	},
 	"web": {
 		"app": {
 			"header": "TermX"
@@ -997,12 +1002,6 @@
 				"uri": "URI",
 				"value-set": "Loend",
 				"value-set-code": "Loendi kood"
-			}
-		},
-		"entity-property": {
-			"form": {
-				"add-header": "Lisa omadus",
-				"edit-header": "Muuda omadust"
 			}
 		},
 		"global-search": {
@@ -2190,5 +2189,8 @@
 				"usages": "Viited"
 			}
 		}
+	},
+	"marina.ui.form.validationError": {
+		"sequenceInvalidCharacters": "Sisaldab lubamatu märke: \"{{sequenceInvalidCharacters}}\""
 	}
 }

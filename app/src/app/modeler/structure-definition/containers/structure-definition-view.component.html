@@ -1,0 +1,69 @@
+<script src="structure-definition-view.component.ts"></script>
+<div nz-row nzJustify="center">
+  <div nz-col [nzLg]="18" [nzXs]="24">
+    <nz-tabset [(nzSelectedIndex)]="selectedTabIndex">
+      <nz-tab [nzTitle]="'web.structure-definition.form.definition-header' | translate">
+        <ng-template nz-tab>
+          <ng-container [ngTemplateOutlet]="formTemplate"></ng-container>
+        </ng-template>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'web.structure-definition.form.fsh-header' | translate" [nzDisabled]="!structureDefinition?.id">
+        <ng-template nz-tab>
+          <ng-container [ngTemplateOutlet]="fshTemplate"></ng-container>
+        </ng-template>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'web.structure-definition.form.json-header' | translate" [nzDisabled]="!structureDefinition?.id">
+        <ng-template nz-tab>
+          <ng-container [ngTemplateOutlet]="jsonTemplate"></ng-container>
+        </ng-template>
+      </nz-tab>
+
+      <nz-tab [nzTitle]="'web.structure-definition.form.element-header' | translate" [nzDisabled]="!structureDefinition?.id">
+        <ng-template nz-tab>
+          <m-card *ngIf="structureDefinition?.code">
+            <tw-structure-definition-tree [content]="contentFhir"/>
+          </m-card>
+        </ng-template>
+      </nz-tab>
+    </nz-tabset>
+  </div>
+</div>
+
+
+<ng-template #formTemplate>
+  <m-spinner [mLoading]="loader.isLoading">
+    <m-card [mTitle]="'web.structure-definition.form.view-header'" [mShowSkeleton]="loader.isLoading">
+      <form *ngIf="structureDefinition">
+        <m-form-item mName="code" mLabel="entities.structure-definition.code">{{structureDefinition.code}}</m-form-item>
+        <m-form-item mName="url" mLabel="entities.structure-definition.url">{{structureDefinition.url}}</m-form-item>
+        <m-form-item mName="format" mLabel="web.structure-definition.form.primary-source">{{structureDefinition.contentFormat}}</m-form-item>
+        <m-form-item mName="contentType" mLabel="entities.structure-definition.content-type">{{structureDefinition.contentType}}</m-form-item>
+        <m-form-item *ngIf="structureDefinition.contentType === 'profile'"
+            mName="parent"
+            mLabel="entities.structure-definition.parent">{{structureDefinition.parent}}</m-form-item>
+        <m-form-item *ngIf="structureDefinition.contentType === 'profile'"
+            mName="version"
+            mLabel="entities.structure-definition.version">{{structureDefinition.version}}</m-form-item>
+      </form>
+    </m-card>
+  </m-spinner>
+</ng-template>
+
+
+<ng-template #fshTemplate>
+  <m-spinner [mLoading]="loader.isLoading">
+    <m-card>
+      <pre>{{contentFsh}}</pre>
+    </m-card>
+  </m-spinner>
+</ng-template>
+
+<ng-template #jsonTemplate>
+  <m-spinner [mLoading]="loader.isLoading">
+    <m-card>
+      <pre>{{contentFhir}}</pre>
+    </m-card>
+  </m-spinner>
+</ng-template>

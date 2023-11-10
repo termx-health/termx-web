@@ -1,134 +1,136 @@
-<m-spinner [mLoading]="loader.state['save']">
-  <form #form="ngForm" *ngIf="snomedCodeSystem">
-    <m-card [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
-      <div *m-card-header class="m-justify-between">
-        <m-title>{{'web.snomed.codesystem.form.header' | translate: {name: snomedCodeSystem.shortName} }}</m-title>
-        <m-dropdown>
-          <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
-            <a *m-dropdown-item (mClick)="importModalData.visible = true">
-              {{'web.snomed.codesystem.form.import-from-rf2' | translate}}
+<m-form-row>
+  <m-spinner *m-form-col [mLoading]="loader.state['save']">
+    <form #form="ngForm" *ngIf="snomedCodeSystem">
+      <m-card [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+        <div *m-card-header class="m-justify-between">
+          <m-title>{{'web.snomed.codesystem.form.header' | translate: {name: snomedCodeSystem.shortName} }}</m-title>
+          <m-dropdown>
+            <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+              <a *m-dropdown-item (mClick)="importModalData.visible = true">
+                {{'web.snomed.codesystem.form.import-from-rf2' | translate}}
+              </a>
+            </ng-container>
+            <a *m-dropdown-item (mClick)="exportModalData.visible = true">
+              {{'web.snomed.codesystem.form.export-to-rf2' | translate}}
             </a>
-          </ng-container>
-          <a *m-dropdown-item (mClick)="exportModalData.visible = true">
-            {{'web.snomed.codesystem.form.export-to-rf2' | translate}}
-          </a>
-<!--          <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">-->
-<!--            <a *m-dropdown-item (mClick)="upgradeModalData.visible = true">-->
-<!--              {{'web.snomed.codesystem.form.upgrade' | translate}}-->
-<!--            </a>-->
-<!--          </ng-container>-->
-        </m-dropdown>
-      </div>
-      <div *mCardContent="!loader.isLoading">
-        <m-form-row>
-          <m-form-item *mFormCol mName="branchPath" mLabel="entities.snomed-codesystem.branch-path">
-            {{snomedCodeSystem.branchPath}}
-          </m-form-item>
-          <m-form-item *mFormCol mName="version" mLabel="entities.snomed-codesystem.latest-version">
-            {{snomedCodeSystem.latestVersion?.branchPath}}
-          </m-form-item>
-        </m-form-row>
-        <m-form-row>
-          <m-form-item *mFormCol mName="languages" mLabel="entities.snomed-codesystem.languages">
-            {{snomedCodeSystem.languages | values | join : ', '}}
-          </m-form-item>
-          <m-form-item *mFormCol mName="imported" mLabel="entities.snomed-codesystem.imported">
-            {{snomedCodeSystem.latestVersion?.importDate | localDateTime}}
-          </m-form-item>
-        </m-form-row>
-        <m-form-row>
-          <m-form-item *mFormCol mName="name" mLabel="entities.snomed-codesystem.name">
-            <m-input name="name" [(ngModel)]="snomedCodeSystem.name"></m-input>
-          </m-form-item>
-          <m-form-item *mFormCol mName="dependantVersionEffectiveTime" mLabel="entities.snomed-codesystem.dependant-version-effective-time">
-            {{snomedCodeSystem.latestVersion?.dependantVersionEffectiveTime || '-'}}
-          </m-form-item>
-        </m-form-row>
-        <m-form-row>
-          <m-form-item *mFormCol mName="countryCode" mLabel="entities.snomed-codesystem.country-code">
-            <m-input name="countryCode" [(ngModel)]="snomedCodeSystem.countryCode"></m-input>
-          </m-form-item>
-          <m-form-item *mFormCol mName="dailyBuildAvailable" mLabel="entities.snomed-codesystem.daily-build-available">
-            <m-checkbox name="dailyBuildAvailable" [(ngModel)]="snomedCodeSystem.dailyBuildAvailable"></m-checkbox>
-          </m-form-item>
-        </m-form-row>
-      </div>
+  <!--          <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">-->
+  <!--            <a *m-dropdown-item (mClick)="upgradeModalData.visible = true">-->
+  <!--              {{'web.snomed.codesystem.form.upgrade' | translate}}-->
+  <!--            </a>-->
+  <!--          </ng-container>-->
+          </m-dropdown>
+        </div>
+        <div *mCardContent="!loader.isLoading">
+          <m-form-row>
+            <m-form-item *mFormCol mName="branchPath" mLabel="entities.snomed-codesystem.branch-path">
+              {{snomedCodeSystem.branchPath}}
+            </m-form-item>
+            <m-form-item *mFormCol mName="version" mLabel="entities.snomed-codesystem.latest-version">
+              {{snomedCodeSystem.latestVersion?.branchPath}}
+            </m-form-item>
+          </m-form-row>
+          <m-form-row>
+            <m-form-item *mFormCol mName="languages" mLabel="entities.snomed-codesystem.languages">
+              {{snomedCodeSystem.languages | values | join : ', '}}
+            </m-form-item>
+            <m-form-item *mFormCol mName="imported" mLabel="entities.snomed-codesystem.imported">
+              {{snomedCodeSystem.latestVersion?.importDate | localDateTime}}
+            </m-form-item>
+          </m-form-row>
+          <m-form-row>
+            <m-form-item *mFormCol mName="name" mLabel="entities.snomed-codesystem.name">
+              <m-input name="name" [(ngModel)]="snomedCodeSystem.name"></m-input>
+            </m-form-item>
+            <m-form-item *mFormCol mName="dependantVersionEffectiveTime" mLabel="entities.snomed-codesystem.dependant-version-effective-time">
+              {{snomedCodeSystem.latestVersion?.dependantVersionEffectiveTime || '-'}}
+            </m-form-item>
+          </m-form-row>
+          <m-form-row>
+            <m-form-item *mFormCol mName="countryCode" mLabel="entities.snomed-codesystem.country-code">
+              <m-input name="countryCode" [(ngModel)]="snomedCodeSystem.countryCode"></m-input>
+            </m-form-item>
+            <m-form-item *mFormCol mName="dailyBuildAvailable" mLabel="entities.snomed-codesystem.daily-build-available">
+              <m-checkbox name="dailyBuildAvailable" [(ngModel)]="snomedCodeSystem.dailyBuildAvailable"></m-checkbox>
+            </m-form-item>
+          </m-form-row>
+        </div>
 
-      <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
-        {{'core.btn.save' | translate}}
+        <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+          {{'core.btn.save' | translate}}
+        </m-button>
+      </m-card>
+    </form>
+  </m-spinner>
+
+
+  <m-modal [(mVisible)]="exportModalData.visible" (mClose)="exportModalData = {visible: false}">
+    <m-title *mModalHeader>{{'web.snomed.branch.management.export-modal.header' | translate}}</m-title>
+
+    <ng-container *mModalContent>
+      <form #exportModalForm="ngForm">
+        <m-form-item mName="type" mLabel="web.snomed.branch.management.export-modal.type" required>
+          <m-select name="type" [(ngModel)]="exportModalData.type" required>
+            <m-option [mValue]="'DELTA'" [mLabel]="'DELTA'"/>
+            <m-option [mValue]="'SNAPSHOT'" [mLabel]="'SNAPSHOT'"/>
+            <m-option [mValue]="'FULL'" [mLabel]="'FULL'"/>
+          </m-select>
+        </m-form-item>
+      </form>
+    </ng-container>
+
+    <div *m-modal-footer class="m-items-middle">
+      <m-button mDisplay="text" (click)="exportModalData.visible = false">{{'core.btn.cancel' | translate}}</m-button>
+      <m-button mDisplay="primary" (click)="exportToRF2()" [mLoading]="loader.isLoading" [disabled]="loader.state['export']">
+        {{'core.btn.confirm' | translate}}
       </m-button>
-    </m-card>
-  </form>
-</m-spinner>
+    </div>
+  </m-modal>
 
+  <m-modal [(mVisible)]="importModalData.visible" (mClose)="importModalData = {type: 'SNAPSHOT'}">
+    <m-title *mModalHeader>{{'web.snomed.branch.management.import-modal.header' | translate}}</m-title>
 
-<m-modal [(mVisible)]="exportModalData.visible" (mClose)="exportModalData = {visible: false}">
-  <m-title *mModalHeader>{{'web.snomed.branch.management.export-modal.header' | translate}}</m-title>
+    <ng-container *mModalContent>
+      <form #importModalForm="ngForm">
+        <m-form-item mName="type" mLabel="web.snomed.branch.management.import-modal.type" required>
+          <m-select name="type" [(ngModel)]="importModalData.type" required>
+            <m-option [mValue]="'DELTA'" [mLabel]="'DELTA'"/>
+            <m-option [mValue]="'SNAPSHOT'" [mLabel]="'SNAPSHOT'"/>
+            <m-option [mValue]="'FULL'" [mLabel]="'FULL'"/>
+          </m-select>
+        </m-form-item>
+        <m-form-item mName="file" mLabel="web.snomed.branch.management.import-modal.file" required>
+          <input #fileInput type="file" name="file" [(ngModel)]="importModalData.file" required>
+        </m-form-item>
+      </form>
+      <m-alert mType="warning">{{'web.snomed.codesystem.form.import-warning' | translate}}</m-alert>
+    </ng-container>
 
-  <ng-container *mModalContent>
-    <form #exportModalForm="ngForm">
-      <m-form-item mName="type" mLabel="web.snomed.branch.management.export-modal.type" required>
-        <m-select name="type" [(ngModel)]="exportModalData.type" required>
-          <m-option [mValue]="'DELTA'" [mLabel]="'DELTA'"/>
-          <m-option [mValue]="'SNAPSHOT'" [mLabel]="'SNAPSHOT'"/>
-          <m-option [mValue]="'FULL'" [mLabel]="'FULL'"/>
-        </m-select>
-      </m-form-item>
-    </form>
-  </ng-container>
+    <div *m-modal-footer class="m-items-middle">
+      <m-button mDisplay="text" (click)="importModalData.visible = false">{{'core.btn.cancel' | translate}}</m-button>
+      <m-button mDisplay="primary" (click)="importFromRF2()" [mLoading]="loader.isLoading" [disabled]="loader.state['import']">
+        {{'core.btn.confirm' | translate}}
+      </m-button>
+    </div>
+  </m-modal>
 
-  <div *m-modal-footer class="m-items-middle">
-    <m-button mDisplay="text" (click)="exportModalData.visible = false">{{'core.btn.cancel' | translate}}</m-button>
-    <m-button mDisplay="primary" (click)="exportToRF2()" [mLoading]="loader.isLoading" [disabled]="loader.state['export']">
-      {{'core.btn.confirm' | translate}}
-    </m-button>
-  </div>
-</m-modal>
+  <m-modal [(mVisible)]="upgradeModalData.visible" (mClose)="upgradeModalData = {}">
+    <m-title *mModalHeader>{{'web.snomed.codesystem.form.upgrade-modal.header' | translate}}</m-title>
 
-<m-modal [(mVisible)]="importModalData.visible" (mClose)="importModalData = {type: 'SNAPSHOT'}">
-  <m-title *mModalHeader>{{'web.snomed.branch.management.import-modal.header' | translate}}</m-title>
+    <ng-container *mModalContent>
+      <form #upgradeModalForm="ngForm">
+        <m-form-item mName="dependant-version" mLabel="web.snomed.codesystem.form.upgrade-modal.dependant-version" required>
+          <m-select name="dependant-version" [(ngModel)]="upgradeModalData.dependantVersion" required>
+            <m-option *ngFor="let v of dependantVersions | filter:filterDependantVersion" [mValue]="v.effectiveDate" [mLabel]="v.effectiveDate"/>
+          </m-select>
+        </m-form-item>
+      </form>
+    </ng-container>
 
-  <ng-container *mModalContent>
-    <form #importModalForm="ngForm">
-      <m-form-item mName="type" mLabel="web.snomed.branch.management.import-modal.type" required>
-        <m-select name="type" [(ngModel)]="importModalData.type" required>
-          <m-option [mValue]="'DELTA'" [mLabel]="'DELTA'"/>
-          <m-option [mValue]="'SNAPSHOT'" [mLabel]="'SNAPSHOT'"/>
-          <m-option [mValue]="'FULL'" [mLabel]="'FULL'"/>
-        </m-select>
-      </m-form-item>
-      <m-form-item mName="file" mLabel="web.snomed.branch.management.import-modal.file" required>
-        <input #fileInput type="file" name="file" [(ngModel)]="importModalData.file" required>
-      </m-form-item>
-    </form>
-    <m-alert mType="warning">{{'web.snomed.codesystem.form.import-warning' | translate}}</m-alert>
-  </ng-container>
-
-  <div *m-modal-footer class="m-items-middle">
-    <m-button mDisplay="text" (click)="importModalData.visible = false">{{'core.btn.cancel' | translate}}</m-button>
-    <m-button mDisplay="primary" (click)="importFromRF2()" [mLoading]="loader.isLoading" [disabled]="loader.state['import']">
-      {{'core.btn.confirm' | translate}}
-    </m-button>
-  </div>
-</m-modal>
-
-<m-modal [(mVisible)]="upgradeModalData.visible" (mClose)="upgradeModalData = {}">
-  <m-title *mModalHeader>{{'web.snomed.codesystem.form.upgrade-modal.header' | translate}}</m-title>
-
-  <ng-container *mModalContent>
-    <form #upgradeModalForm="ngForm">
-      <m-form-item mName="dependant-version" mLabel="web.snomed.codesystem.form.upgrade-modal.dependant-version" required>
-        <m-select name="dependant-version" [(ngModel)]="upgradeModalData.dependantVersion" required>
-          <m-option *ngFor="let v of dependantVersions | filter:filterDependantVersion" [mValue]="v.effectiveDate" [mLabel]="v.effectiveDate"/>
-        </m-select>
-      </m-form-item>
-    </form>
-  </ng-container>
-
-  <div *m-modal-footer class="m-items-middle">
-    <m-button mDisplay="text" (click)="upgradeModalData.visible = false">{{'core.btn.cancel' | translate}}</m-button>
-    <m-button mDisplay="primary" (click)="upgrade()" [mLoading]="loader.isLoading" [disabled]="loader.state['upgrade']">
-      {{'core.btn.confirm' | translate}}
-    </m-button>
-  </div>
-</m-modal>
+    <div *m-modal-footer class="m-items-middle">
+      <m-button mDisplay="text" (click)="upgradeModalData.visible = false">{{'core.btn.cancel' | translate}}</m-button>
+      <m-button mDisplay="primary" (click)="upgrade()" [mLoading]="loader.isLoading" [disabled]="loader.state['upgrade']">
+        {{'core.btn.confirm' | translate}}
+      </m-button>
+    </div>
+  </m-modal>
+</m-form-row>

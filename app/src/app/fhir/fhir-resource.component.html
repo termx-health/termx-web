@@ -3,44 +3,27 @@
     <h1>{{meta.type}} {{meta.id}} {{meta.operation}}</h1>
     <m-divider style="margin-top: 0"></m-divider>
 
-    <ng-container *ngIf="resource">
-      <nz-tabset nzLinkRouter>
-        <nz-tab>
-          <a *nzTabLink nz-tab-link [routerLink]="['.']" [replaceUrl]="true">Narrative</a>
+    <ng-container *ngIf="result">
+      <nz-tabset>
+        <nz-tab nzTitle="Narrative" *ngIf="(meta | apply:narrativeType) && !error">
           <ng-template nz-tab>
-            <ng-container [ngSwitch]="resource.resourceType">
+            <ng-container [ngSwitch]="meta | apply:narrativeType">
               <ng-container *ngSwitchDefault></ng-container>
-              <tw-fhir-code-system *ngSwitchCase="'CodeSystem'" [codeSystem]="resource"></tw-fhir-code-system>
-              <tw-fhir-value-set *ngSwitchCase="'ValueSet'" [valueSet]="resource"></tw-fhir-value-set>
-              <tw-fhir-concept-map *ngSwitchCase="'ConceptMap'" [conceptMap]="resource"></tw-fhir-concept-map>
+              <tw-fhir-code-system *ngSwitchCase="'CodeSystem'" [codeSystem]="result"></tw-fhir-code-system>
+              <tw-fhir-code-system-lookup *ngSwitchCase="'CodeSystem|lookup'" [result]="result" [params]="meta.params"></tw-fhir-code-system-lookup>
+              <tw-fhir-value-set *ngSwitchCase="'ValueSet'" [valueSet]="result"></tw-fhir-value-set>
+              <tw-fhir-concept-map *ngSwitchCase="'ConceptMap'" [conceptMap]="result"></tw-fhir-concept-map>
             </ng-container>
           </ng-template>
         </nz-tab>
-        <nz-tab>
-          <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'xml' }" [replaceUrl]="true">XML</a>
-          <ng-template nz-tab>
-            <ng-container *ngTemplateOutlet="resultCard, context: {result: resource, format: 'xml'}"/>
-          </ng-template>
-        </nz-tab>
-        <nz-tab>
-          <a *nzTabLink nz-tab-link [routerLink]="['.']" [queryParams]="{ tab: 'json' }" [replaceUrl]="true">JSON</a>
-          <ng-template nz-tab>
-            <ng-container *ngTemplateOutlet="resultCard, context: {result: resource, format: 'json'}"/>
-          </ng-template>
-        </nz-tab>
-      </nz-tabset>
-    </ng-container>
-
-    <ng-container *ngIf="operationResult">
-      <nz-tabset>
         <nz-tab nzTitle="JSON">
           <ng-template nz-tab>
-            <ng-container *ngTemplateOutlet="resultCard, context: {result: operationResult, format: 'json'}"/>
+            <ng-container *ngTemplateOutlet="resultCard, context: {result: result, format: 'json'}"/>
           </ng-template>
         </nz-tab>
         <nz-tab nzTitle="XML">
           <ng-template nz-tab>
-            <ng-container *ngTemplateOutlet="resultCard, context: {result: operationResult, format: 'xml'}"/>
+            <ng-container *ngTemplateOutlet="resultCard, context: {result: result, format: 'xml'}"/>
           </ng-template>
         </nz-tab>
       </nz-tabset>

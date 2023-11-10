@@ -17,6 +17,7 @@ import {CodeSystemWidgetComponent} from './containers/code-system-widget.compone
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {RouterModule} from '@angular/router';
 import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
+import {EntityPropertyNamePipe} from './pipe/entity-propertye-name-pipe';
 
 @NgModule({
   imports: [
@@ -42,7 +43,8 @@ import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/s
     CodeSystemEntityVersionSearchComponent,
     CodeSystemWidgetComponent,
 
-    LocalizedConceptNamePipe
+    LocalizedConceptNamePipe,
+    EntityPropertyNamePipe,
   ],
   exports: [
     CodeSystemSearchComponent,
@@ -51,7 +53,8 @@ import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/s
     CodeSystemEntityVersionSearchComponent,
     CodeSystemWidgetComponent,
 
-    LocalizedConceptNamePipe
+    LocalizedConceptNamePipe,
+    EntityPropertyNamePipe,
   ]
 })
 export class CodeSystemLibModule {

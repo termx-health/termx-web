@@ -41,7 +41,6 @@ export class StructureDefinitionEditableTreeComponent implements OnChanges {
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['content'] && isDefined(this.content)) {
-      this.content = decodeURIComponent(this.content);
       this.processContent(this.content);
     }
   }

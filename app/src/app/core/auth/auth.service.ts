@@ -1,10 +1,14 @@
 import {Injectable} from '@angular/core';
-import {catchError, map, mergeMap, Observable, of, tap} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {OidcSecurityService} from 'angular-auth-oidc-client';
+import {catchError, filter, map, mergeMap, Observable, of, tap} from 'rxjs';
+import {HttpClient, HttpContext} from '@angular/common/http';
+import {EventTypes, OidcSecurityService, PublicEventsService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import Cookies from 'js-cookie';
 import {isDefined} from '@kodality-web/core-util';
+import {Router} from '@angular/router';
+import {MuiSkipErrorHandler} from '@kodality-web/marina-ui';
+
+const REDIRECT_ORIGIN_URL = '__redirect_origin_url';
 
 export interface UserInfo {
   username: string;
@@ -16,11 +20,13 @@ export class AuthService {
   public user?: UserInfo;
   public isAuthenticated = this.oidcSecurityService.isAuthenticated$.pipe(map(r => r.isAuthenticated));
 
-  protected baseUrl = `${environment.termxApi}/auth`;
+  private baseUrl = `${environment.termxApi}/auth`;
 
   public constructor(
     protected http: HttpClient,
-    private oidcSecurityService: OidcSecurityService
+    protected router: Router,
+    private oidcSecurityService: OidcSecurityService,
+    eventService: PublicEventsService,
   ) {
     oidcSecurityService.isAuthenticated$
       .pipe(mergeMap(() => oidcSecurityService.getAuthenticationResult()))
@@ -32,6 +38,16 @@ export class AuthService {
           });
         } else {
           Cookies.remove('oauth-token');
+        }
+      });
+
+    eventService.registerForEvents()
+      .pipe(filter(e => e.type === EventTypes.CheckingAuthFinished))
+      .subscribe(e => {
+        const redirectOriginUrl = sessionStorage.getItem(REDIRECT_ORIGIN_URL);
+        if (redirectOriginUrl) {
+          sessionStorage.removeItem(REDIRECT_ORIGIN_URL);
+          router.navigate([redirectOriginUrl]);
         }
       });
   }
@@ -47,14 +63,15 @@ export class AuthService {
 
   private refreshUserInfo(): Observable<UserInfo> {
     return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
-      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`).pipe(catchError(() => {
-        this.oidcSecurityService.authorize();
+      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`, {context: new HttpContext().set(MuiSkipErrorHandler, true)}).pipe(catchError(() => {
+        this.login();
         return of(null as UserInfo);
       }));
     }));
   }
 
   public login(): void {
+    sessionStorage.setItem(REDIRECT_ORIGIN_URL, this.router.url);
     this.oidcSecurityService.authorize();
   }
 

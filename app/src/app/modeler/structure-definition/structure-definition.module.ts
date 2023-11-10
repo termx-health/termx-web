@@ -10,11 +10,14 @@ import {StructureDefinitionService} from './services/structure-definition.servic
 import {PortalModule} from '@angular/cdk/portal';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
+import {MeasurementUnitLibModule} from 'term-web/measurement-unit/_lib';
+import {StructureDefinitionViewComponent} from 'term-web/modeler/structure-definition/containers/structure-definition-view.component';
 
 export const STRUCTURE_DEFINITION_ROUTES: Routes = [
   {path: 'structure-definitions', component: StructureDefinitionListComponent},
   {path: 'structure-definitions/add', component: StructureDefinitionEditComponent, data: {privilege: ['*.StructureDefinition.edit']}},
   {path: 'structure-definitions/:id/edit', component: StructureDefinitionEditComponent, data: {privilege: ['{id}.StructureDefinition.edit']}},
+  {path: 'structure-definitions/:id/view', component: StructureDefinitionViewComponent, data: {privilege: ['{id}.StructureDefinition.view']}},
 ];
 
 @NgModule({
@@ -24,11 +27,13 @@ export const STRUCTURE_DEFINITION_ROUTES: Routes = [
 
     PortalModule,
     ResourcesLibModule,
-    IntegrationLibModule
+    IntegrationLibModule,
+    MeasurementUnitLibModule
   ],
   declarations: [
     StructureDefinitionListComponent,
     StructureDefinitionEditComponent,
+    StructureDefinitionViewComponent,
     StructureDefinitionTypeListComponent,
     StructureDefinitionConstraintListComponent,
   ],

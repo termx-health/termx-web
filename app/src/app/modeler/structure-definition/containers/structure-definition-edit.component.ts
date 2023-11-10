@@ -150,6 +150,7 @@ export class StructureDefinitionEditComponent implements OnInit {
       this.loader.wrap('save', this.structureDefinitionService.save(this.structureDefinition!)).subscribe(sd => {
         this.formElement = undefined;
         this.structureDefinition = sd;
+        this.loader.wrap('init', this.unmapContent(sd.content, sd.contentFormat)).subscribe();
         this.handleAction(nextAction);
       });
     });
@@ -188,6 +189,8 @@ export class StructureDefinitionEditComponent implements OnInit {
     structureDefinition.kind = this.structureDefinition?.contentType;
     structureDefinition.type = this.structureDefinition?.url;
     structureDefinition.url = this.structureDefinition?.url;
+    structureDefinition.parent = this.structureDefinition?.parent;
+    structureDefinition.version = this.structureDefinition?.version;
     structureDefinition.fhirVersion = '5.0.0';
     structureDefinition.abstract = false;
     structureDefinition.baseDefinition ||= 'http://hl7.org/fhir/StructureDefinition/Element';

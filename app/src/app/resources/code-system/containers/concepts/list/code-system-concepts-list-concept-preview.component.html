@@ -26,7 +26,7 @@
         <ng-container *ngIf="version.designations | apply: collectDesignations as groups">
           <ng-container *ngFor="let dType of groups | keys">
             <div class="m-subtitle">
-              {{dType}}
+              {{dType | apply:getProperty: entityProperties | entityPropertyName}}
             </div>
 
             <div class="col offset">
@@ -53,11 +53,11 @@
         <div class="col two-col">
           <ng-container *ngFor="let pv of version.propertyValues">
             <div style="text-align: right">
-              {{(pv.entityPropertyId | apply: getProperty: entityProperties)?.name ?? pv.entityPropertyId}}
+              {{(pv.entityProperty | apply: getProperty: entityProperties) | entityPropertyName}}
             </div>
 
             <tw-property-value-input [ngModel]="pv.value"
-                [property]="pv.entityPropertyId | apply: getProperty: entityProperties"
+                [property]="pv.entityProperty | apply: getProperty: entityProperties"
                 [codeSystem]="codeSystemId"
                 viewMode/>
           </ng-container>

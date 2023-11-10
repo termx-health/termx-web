@@ -76,7 +76,6 @@ export class WikiPageComponent implements OnInit {
           this.init();
         }
       });
-
     });
 
     this.preferences.spaceId$.pipe(takeUntil(this.destroy$)).subscribe(spaceId => {

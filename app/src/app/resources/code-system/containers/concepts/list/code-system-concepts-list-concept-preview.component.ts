@@ -70,7 +70,7 @@ export class CodeSystemConceptsListConceptPreviewComponent implements OnChanges 
     return collect(designations, d => d.designationType);
   };
 
-  protected getProperty = (propId: number, props: EntityProperty[]): EntityProperty => {
-    return props?.find(p => p.id === propId);
+  protected getProperty = (prop: string, props: EntityProperty[]): EntityProperty => {
+    return props?.find(p => p.name === prop);
   };
 }

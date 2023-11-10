@@ -1,4 +1,9 @@
 {
+  "language": {
+    "en": "Anglų",
+    "et": "Estų",
+    "lt": "Lietuvių"
+  },
   "core": {
     "back": "Grįžti",
     "btn": {

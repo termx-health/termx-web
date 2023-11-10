@@ -4,17 +4,10 @@ import {BrowserModule} from '@angular/platform-browser';
 import {RootRoutingModule} from 'term-web/root-routing.module';
 import {AppComponent} from 'term-web/app.component';
 import {TranslateLoader, TranslateModule, TranslateService} from '@ngx-translate/core';
-import {HTTP_INTERCEPTORS, HttpBackend, HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpBackend, HttpClient, HttpClientModule} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {CoreUtilModule} from '@kodality-web/core-util';
-import {registerLocaleData} from '@angular/common';
-import de from '@angular/common/locales/de';
-import et from '@angular/common/locales/et';
-import fr from '@angular/common/locales/fr';
-import lt from '@angular/common/locales/lt';
-import nl from '@angular/common/locales/nl';
-import {MultiTranslateHttpLoader} from 'ngx-translate-multi-http-loader';
-import {Observable} from 'rxjs';
+import {CoreUtilModule, group} from '@kodality-web/core-util';
+import {catchError, map, Observable, of} from 'rxjs';
 import {ResourcesModule} from 'term-web/resources/resources.module';
 import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 import {PrivilegesModule} from 'term-web/privileges/privileges.module';
@@ -37,17 +30,26 @@ import {PreferencesService} from 'term-web/core/preferences/preferences.service'
 import {ModelerModule} from 'term-web/modeler/modeler.module';
 import {UserModule} from 'term-web/user/user.module';
 import {LangInterceptor} from 'term-web/core/http';
+import {environment as env, environment} from 'environments/environment';
 import {ImplementationGuideModule} from 'term-web/implementation-guide/implementation-guide.module';
 
-registerLocaleData(de);
-registerLocaleData(et);
-registerLocaleData(fr);
-registerLocaleData(lt);
-registerLocaleData(nl);
 
-
-export function HttpLoaderFactory(http: HttpBackend): TranslateLoader {
-  return new MultiTranslateHttpLoader(http, ['/assets/i18n/']);
+export function HttpLoaderFactory(_http: HttpBackend): TranslateLoader {
+  return {
+    getTranslation(lang: string): Observable<object> {
+      return new HttpClient(_http).get(`/assets/i18n/${lang}.json`).pipe(
+        catchError(() => of({})),
+        map(translations => {
+          const extraLangs = env.extraLanguages ?? {};
+          translations['language'] = {
+            ...translations['language'] ?? {},
+            ...group(Object.entries(extraLangs), ([k]) => k, ([k, v]) => v[lang] ?? k)
+          };
+          return translations;
+        })
+      );
+    }
+  };
 }
 
 export function preloadAuth(authService: AuthService): () => Observable<any> {
@@ -99,7 +101,7 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     ImplementationGuideModule
   ],
   providers: [
-    {provide: LOCALE_ID, useValue: 'en'},
+    {provide: LOCALE_ID, useValue: environment.defaultLanguage},
     {provide: APP_INITIALIZER, useFactory: preloadAuth, deps: [AuthService], multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: LangInterceptor, multi: true}
   ],

@@ -1,53 +1,55 @@
-<m-spinner [mLoading]="loader.state['save']">
-  <form #form="ngForm" *ngIf="snomedBranch">
-    <m-card [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
-      <div *m-card-header class="m-justify-between">
-        <m-title>{{'web.snomed.branch.form.' + mode + '-header' | translate: {path: snomedBranch.path} }}</m-title>
-      </div>
-      <div *mCardContent="!loader.isLoading">
+<m-form-row>
+  <m-spinner *m-form-col [mLoading]="loader.state['save']">
+    <form #form="ngForm" *ngIf="snomedBranch">
+      <m-card [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+        <div *m-card-header class="m-justify-between">
+          <m-title>{{'web.snomed.branch.form.' + mode + '-header' | translate: {path: snomedBranch.path} }}</m-title>
+        </div>
+        <div *mCardContent="!loader.isLoading">
 
-        <ng-container *ngIf="mode === 'add'">
-          <m-form-row>
-            <m-form-item *mFormCol mName="parentBranch" mLabel="web.snomed.branch.form.parent-branch" required>
-              <m-select name="parentBranch" [(ngModel)]="formData.parentBranch" required>
-                <m-option *ngFor="let b of branches" [mLabel]="b.path" [mValue]="b.path"></m-option>
-              </m-select>
+          <ng-container *ngIf="mode === 'add'">
+            <m-form-row>
+              <m-form-item *mFormCol mName="parentBranch" mLabel="web.snomed.branch.form.parent-branch" required>
+                <m-select name="parentBranch" [(ngModel)]="formData.parentBranch" required>
+                  <m-option *ngFor="let b of branches" [mLabel]="b.path" [mValue]="b.path"></m-option>
+                </m-select>
+              </m-form-item>
+              <m-form-item *mFormCol mName="name" mLabel="web.snomed.branch.form.name" required>
+                <m-input [(ngModel)]="formData.name" name="name" required></m-input>
+              </m-form-item>
+            </m-form-row>
+            <m-form-item  mName="metadata" mLabel="entities.snomed-branch.metadata">
+              <m-textarea name="metadata" [(ngModel)]="formData.metadata"></m-textarea>
             </m-form-item>
-            <m-form-item *mFormCol mName="name" mLabel="web.snomed.branch.form.name" required>
-              <m-input [(ngModel)]="formData.name" name="name" required></m-input>
-            </m-form-item>
-          </m-form-row>
-          <m-form-item  mName="metadata" mLabel="entities.snomed-branch.metadata">
-            <m-textarea name="metadata" [(ngModel)]="formData.metadata"></m-textarea>
-          </m-form-item>
-        </ng-container>
+          </ng-container>
 
-        <ng-container *ngIf="mode === 'edit'">
-          <m-form-row>
-            <m-form-item *mFormCol mName="parentBranch" mLabel="web.snomed.branch.form.parent-branch">
-              {{formData.parentBranch || '-'}}
+          <ng-container *ngIf="mode === 'edit'">
+            <m-form-row>
+              <m-form-item *mFormCol mName="parentBranch" mLabel="web.snomed.branch.form.parent-branch">
+                {{formData.parentBranch || '-'}}
+              </m-form-item>
+              <m-form-item *mFormCol mName="basedOn" mLabel="web.snomed.branch.form.based-on">
+                {{(branches | apply:findBase) || '-'}}
+              </m-form-item>
+            </m-form-row>
+            <m-form-row>
+              <m-form-item *mFormCol mName="state" mLabel="entities.snomed-branch.state">
+                {{snomedBranch.state}}
+              </m-form-item>
+              <m-form-item *mFormCol mName="locked" mLabel="entities.snomed-branch.locked">
+                <m-checkbox name="locked" [ngModel]="snomedBranch.locked" readOnly></m-checkbox>
+              </m-form-item>
+            </m-form-row>
+            <m-form-item mName="metadata" mLabel="entities.snomed-branch.metadata">
+              <m-textarea name="metadata" [(ngModel)]="formData.metadata"></m-textarea>
             </m-form-item>
-            <m-form-item *mFormCol mName="basedOn" mLabel="web.snomed.branch.form.based-on">
-              {{(branches | apply:findBase) || '-'}}
-            </m-form-item>
-          </m-form-row>
-          <m-form-row>
-            <m-form-item *mFormCol mName="state" mLabel="entities.snomed-branch.state">
-              {{snomedBranch.state}}
-            </m-form-item>
-            <m-form-item *mFormCol mName="locked" mLabel="entities.snomed-branch.locked">
-              <m-checkbox name="locked" [ngModel]="snomedBranch.locked" readOnly></m-checkbox>
-            </m-form-item>
-          </m-form-row>
-          <m-form-item mName="metadata" mLabel="entities.snomed-branch.metadata">
-            <m-textarea name="metadata" [(ngModel)]="formData.metadata"></m-textarea>
-          </m-form-item>
-        </ng-container>
-      </div>
+          </ng-container>
+        </div>
 
-      <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
-        {{'core.btn.save' | translate}}
-      </m-button>
-    </m-card>
-  </form>
-</m-spinner>
+        <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+          {{'core.btn.save' | translate}}
+        </m-button>
+      </m-card>
+    </form>
+  </m-spinner>
+</m-form-row>

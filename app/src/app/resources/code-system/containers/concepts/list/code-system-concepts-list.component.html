@@ -10,7 +10,7 @@
       </m-select>
 
       <m-select [(ngModel)]="tableView.properties" multiple placeholder="Properties" style="flex: 1">
-        <m-option *ngFor="let prop of codeSystem?.properties" [mValue]="prop.name" [mLabel]="prop.name"/>
+        <m-option *ngFor="let prop of codeSystem?.properties" [mValue]="prop.name" [mLabel]="prop | entityPropertyName"/>
       </m-select>
     </div>
 
@@ -154,7 +154,7 @@
     <td>
       <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
         <ng-container *ngFor="let property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableView.properties:codeSystem.properties)">
-          <div class="m-bold">{{property.entityProperty}}</div>
+          <div class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
           <tw-property-value-input style="text-align: right"
               viewMode
               [ngModel]="property.value"

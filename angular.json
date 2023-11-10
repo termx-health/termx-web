@@ -32,7 +32,6 @@
             "tsConfig": "app/tsconfig.app.json",
             "inlineStyleLanguage": "less",
             "allowedCommonJsDependencies": [
-              "angular2-text-mask",
               "slugify",
               "file-saver",
               "fhir",

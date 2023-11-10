@@ -2,20 +2,21 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
 import {NgForm} from '@angular/forms';
-import {isDefined, validateForm} from '@kodality-web/core-util';
-import {Template} from 'term-web/wiki/_lib';
+import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {Template, TemplateContent} from 'term-web/wiki/_lib';
 import {TemplateService} from './template.service';
+import {environment} from 'environments/environment';
 
 
 @Component({
   templateUrl: 'template-edit.component.html'
 })
 export class TemplateEditComponent implements OnInit {
-  public id?: number | null;
-  public template?: Template;
+  protected id?: number;
+  protected template?: Template;
 
-  public loading: {[k: string]: boolean} = {};
-  public mode: 'edit' | 'add' = 'add';
+  protected loader = new LoadingManager();
+  protected mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
 
@@ -32,36 +33,35 @@ export class TemplateEditComponent implements OnInit {
     if (this.mode === 'add') {
       this.template = new Template();
       this.template.contentType = 'markdown';
-      this.template.contents = [{lang: 'en'}, {lang: 'et'}];
+      this.template.contents = [{lang: environment.defaultLanguage}];
     }
 
     if (this.mode === 'edit') {
-      this.loading ['init'] = true;
-      this.templateService.loadTemplate(this.id!).subscribe(t => this.template = t).add(() => this.loading ['init'] = false);
+      this.loader.wrap('init', this.templateService.loadTemplate(this.id)).subscribe(t => this.template = t);
     }
   }
 
-  public save(): void {
+  protected save(): void {
     if (!this.validate()) {
       return;
     }
-    this.loading['save'] = true;
-    this.templateService.saveTemplate(this.template!)
-      .subscribe(() => this.location.back())
-      .add(() => this.loading['save'] = false);
+    const t = copyDeep(this.template);
+    t.contents = t.contents.filter(c => c.content.trim()?.length);
+    this.loader.wrap('save', this.templateService.saveTemplate(t)).subscribe(() => {
+      this.location.back();
+    });
   }
 
-  public validate(): boolean {
+  protected validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
   }
 
-  public flagIcon(lang?: string): string | undefined {
-    const getEmoji = (countryCode: string): string => {
-      const codePoints = countryCode.toUpperCase().split('').map(char => 127397 + char.charCodeAt(0));
-      return String.fromCodePoint(...codePoints);
-    };
-
-    const langCountryMap: {[key: string]: string} = {'en': 'gb', 'et': 'ee'};
-    return lang ? getEmoji(langCountryMap[lang] || lang) : undefined;
+  protected addLanguageContent(lang: string): void {
+    this.template.contents = [...this.template.contents, {lang}];
   }
+
+  protected availableLangs = (contents: TemplateContent[]): string[] => {
+    const current = contents?.map(c => c.lang) ?? [];
+    return environment.contentLanguages.filter(k => !current.includes(k));
+  };
 }

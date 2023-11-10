@@ -4,8 +4,8 @@ import {LoadingManager, validateForm} from '@kodality-web/core-util';
 import {Page, PageContent, PageLink, Tag, TagLibService, Template, TemplateLibService} from 'term-web/wiki/_lib';
 import {PageService} from '../services/page.service';
 import {TranslateService} from '@ngx-translate/core';
-import {MuiConfigService} from '@kodality-web/marina-ui';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
+import {environment} from 'environments/environment';
 
 @Component({
   selector: 'tw-wiki-page-setup',
@@ -27,6 +27,7 @@ export class WikiPageSetupModalComponent implements OnInit, OnChanges {
   protected tags?: Tag[];
   protected templates?: Template[];
 
+  protected environment = environment;
   protected loader = new LoadingManager();
   protected modalVisible: boolean;
   protected mode: 'add' | 'edit' = 'add';
@@ -36,8 +37,7 @@ export class WikiPageSetupModalComponent implements OnInit, OnChanges {
     private tagService: TagLibService,
     private translateService: TranslateService,
     private templateLibService: TemplateLibService,
-    private preferences: PreferencesService,
-    protected muiConfig: MuiConfigService
+    private preferences: PreferencesService
   ) {}
 
 
@@ -110,7 +110,6 @@ export class WikiPageSetupModalComponent implements OnInit, OnChanges {
   }
 
 
-
   /* External API */
 
   public open(initials: {links?: Pick<PageLink, 'sourceId' | 'orderNumber'>[]} = {}): void {
@@ -132,4 +131,5 @@ export class WikiPageSetupModalComponent implements OnInit, OnChanges {
   protected get isLoading(): boolean {
     return this.loader.isLoadingExcept('init');
   }
+
 }
