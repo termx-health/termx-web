@@ -13,7 +13,6 @@ import {forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {BooleanInput, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
-import {environment} from 'environments/environment';
 
 interface ConceptNode {
   code: string;
@@ -30,7 +29,7 @@ interface ConceptNode {
   selector: 'tw-code-system-concepts-list',
   templateUrl: './code-system-concepts-list.component.html',
   styles: [`
-    @import "../../../../../../../../node_modules/@kodality-web/marina-ui/src/components/card/style";
+    @import "../../../../../../../../node_modules/@kodality-web/marina-ui/src/components/card/style/card.style.less";
 
     ::ng-deep .recursive-card-inside-flatten .m-card {
       .m-card-inside;

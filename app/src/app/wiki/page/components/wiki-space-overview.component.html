@@ -1,5 +1,5 @@
 <div class="m-text-secondary">
-  {{space?.names | localName: space?.code}}
+  {{space?.names | localName: space?.code ?? '...'}}
 </div>
 
 <div class="m-items-top">
@@ -10,24 +10,26 @@
 </div>
 
 
-<h3 style="margin-top: 2rem; margin-bottom: 1rem">
-  {{'web.wiki-page.overview.recently-modified.header' | translate}}
-</h3>
+<m-skeleton *ngIf="space" [mLoading]="loader.state['recent']">
+  <h3 style="margin-top: 2rem; margin-bottom: 1rem">
+    {{'web.wiki-page.overview.recently-modified.header' | translate}}
+  </h3>
 
-<div class="equal-columns">
-  <ng-container *ngFor="let c of recentlyModified">
-    <m-card class="m-clickable" (click)="viewPage.emit(c.slug)">
-      <div *m-card-header class="m-justify-between">
-        <div class="m-bold">{{c.name}}</div>
-        <div class="m-text-secondary" style="font-size: 0.9rem; text-transform: uppercase">{{c.lang}}</div>
-      </div>
+  <div class="equal-columns">
+    <ng-container *ngFor="let c of recentlyModified">
+      <m-card class="m-clickable" (click)="viewPage.emit(c.slug)">
+        <div *m-card-header class="m-justify-between">
+          <div class="m-bold">{{c.name}}</div>
+          <div class="m-text-secondary" style="font-size: 0.9rem; text-transform: uppercase">{{c.lang}}</div>
+        </div>
 
-      <div class="m-whitespace" style="overflow: hidden">{{c.content | abbreviate: 200}}</div>
+        <div class="m-whitespace" style="overflow: hidden">{{c.content | abbreviate: 200}}</div>
 
-      <div *m-card-footer class="m-text-secondary" style="font-size: 0.9rem">
-        <m-icon mCode="clock-circle"/>
-        {{(c.modifiedAt ? 'web.wiki-page.overview.recently-modified.updated' : 'web.wiki-page.overview.recently-modified.created') | translate: ({date: (c.modifiedAt ?? c.createdAt) | localDateTime})}}
-      </div>
-    </m-card>
-  </ng-container>
-</div>
+        <div *m-card-footer class="m-text-secondary" style="font-size: 0.9rem">
+          <m-icon mCode="clock-circle"/>
+          {{(c.modifiedAt ? 'web.wiki-page.overview.recently-modified.updated' : 'web.wiki-page.overview.recently-modified.created') | translate: ({date: (c.modifiedAt ?? c.createdAt) | localDateTime})}}
+        </div>
+      </m-card>
+    </ng-container>
+  </div>
+</m-skeleton>

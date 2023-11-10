@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {collect, compareDates, isDefined, isNil} from '@kodality-web/core-util';
+import {compareDates, isDefined, isNil} from '@kodality-web/core-util';
 import {PageComment, PageContent} from 'term-web/wiki/_lib';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
 import {AuthService} from 'term-web/core/auth';
@@ -14,15 +14,6 @@ interface CommentPrivileges {
   delete: boolean,
 }
 
-export function groupComments(comments: PageComment[]): ExtendedPageComment[] {
-  const orderByCreatedAt = (a, b): number => compareDates(new Date(a.createdAt), new Date(b.createdAt));
-
-  const map = collect(comments, c => c.parentId);
-  return comments
-    .filter(c => isNil(c.parentId))
-    .map(c => ({...c, children: (map[c.id] ?? []).sort(orderByCreatedAt)}))
-    .sort(orderByCreatedAt);
-}
 
 @Component({
   selector: 'tw-wiki-page-comment',
@@ -81,7 +72,7 @@ export class WikiPageCommentComponent {
   @Output() public commentDeleted = new EventEmitter<PageComment>();
   @Output() public commentResolved = new EventEmitter<PageComment>();
 
-  protected _editState:{[id: number]: string} = {};
+  protected _editState: {[id: number]: string} = {};
 
   public constructor(
     private pageCommentService: PageCommentService,

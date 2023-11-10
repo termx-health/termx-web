@@ -11,10 +11,10 @@ export class EntityPropertyNamePipe implements PipeTransform {
     if (prop?.description?.[lang] && prop.description[lang] !== '') {
       return prop.description[lang];
     }
-    if (Object.values(prop?.description)?.[0] && Object.values(prop.description)[0] !== '') {
+    if (prop?.description && Object.values(prop?.description)[0] && Object.values(prop.description)[0] !== '') {
       return Object.values(prop.description)[0];
     }
-    return prop.name;
+    return prop?.name;
   }
 }
 

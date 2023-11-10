@@ -6,22 +6,23 @@
       </a>
       <ng-template nz-tab>
         <m-spinner [mLoading]="loading['taxonomy']">
-          <m-input name="searchText" [(ngModel)]="searchText" (ngModelChange)="searchUpdate.next($event)" style="display: block; margin-bottom: 1em"></m-input>
+          <m-input name="searchText" [(ngModel)]="searchText" (ngModelChange)="searchUpdate.next($event)" style="display: block; margin-bottom: 1em"/>
 
-          <nz-breadcrumb style="margin: 1rem 0 1rem 0">
+          <nz-breadcrumb style="margin-block: 1rem">
             <nz-breadcrumb-item *ngFor="let parent of parents; let index = index">
               <a (click)="loadTaxonomyTree(parent.conceptId);selectConcept(parent.conceptId, index)">{{parent | snomedConceptName | async}}</a>
             </nz-breadcrumb-item>
           </nz-breadcrumb>
+
           <div style="display: grid">
-            <label *ngFor="let child of children" class="m-items-middle">
+            <div *ngFor="let child of children" class="m-items-middle">
               <m-icon *ngIf="!child.isLeafInferred" (click)="loadTaxonomyTree(child.conceptId)" mCode="down"></m-icon>
               <a (click)="selectConcept(child.conceptId)" class="m-items-middle" [style]="conceptId === child.conceptId ? 'font-weight:bold': ''">
                 <m-icon *ngIf="child.isLeafInferred" mCode="minus"></m-icon>
                 <label>{{child['term'] || (child | snomedConceptName | async)}}</label>
                 <label *ngIf="child['term']" style="color: grey">{{child | snomedConceptName: 'fsn' | async}}</label>
               </a>
-            </label>
+            </div>
           </div>
         </m-spinner>
       </ng-template>
@@ -33,31 +34,30 @@
         {{'web.snomed.search.refsets' | translate}}
       </a>
       <ng-template nz-tab>
-        <m-spinner [mLoading]="loading['refsets']">
-          <div class="m-items-middle" style="margin-bottom: 1rem">
-            <m-select name="refSet" [(ngModel)]="refsetParams.referenceSet" (ngModelChange)="loadRefsetConcepts()" style="flex: 1">
-              <m-option *ngFor="let refSet of refsets" [mLabel]="refSet | snomedConceptName | async" [mValue]="refSet.id"></m-option>
-            </m-select>
-            <a *ngIf="refsetParams.referenceSet && !loading['csv-export']" (mClick)="exportConceptCsv('refset')">
-              CSV
-              <m-icon mCode="download"></m-icon>
-            </a>
-            <m-icon *ngIf="loading['csv-export']" mCode="loading"></m-icon>
-          </div>
-          <m-backend-table [mResult]="refsetConcepts" [(mQuery)]="refsetParams" (mQueryChange)="loadRefsetConcepts()" [mLoading]="loading['refset-concepts']">
-            <tr *mTableHead>
-              <th>{{'entities.snomed-concept.term' | translate}}</th>
-            </tr>
-            <tr *mTableRow="let concept">
-              <td><a (click)="conceptSelected.emit(concept.conceptId)">{{concept | snomedConceptName | async}}</a></td>
-            </tr>
-            <tr *mTableNoData>
-              <td colspan="100%">
-                <m-no-data></m-no-data>
-              </td>
-            </tr>
-          </m-backend-table>
-        </m-spinner>
+        <div class="m-items-middle" style="margin-bottom: 1rem">
+          <m-select style="flex: 1" name="refSet" [(ngModel)]="refsetParams.referenceSet" (ngModelChange)="loadRefsetConcepts()" [disabled]="loading['refsets']">
+            <m-option *ngFor="let refSet of refsets" [mLabel]="refSet | snomedConceptName | async" [mValue]="refSet.id"/>
+          </m-select>
+          <a *ngIf="refsetParams.referenceSet && !loading['csv-export']" (mClick)="exportConceptCsv('refset')">
+            CSV
+            <m-icon mCode="download"/>
+          </a>
+          <m-icon *ngIf="loading['csv-export']" mCode="loading"/>
+        </div>
+
+        <m-backend-table [mResult]="refsetConcepts" [(mQuery)]="refsetParams" (mQueryChange)="loadRefsetConcepts()" [mLoading]="loading['refsets'] || loading['refset-concepts']">
+          <tr *mTableHead>
+            <th>{{'entities.snomed-concept.term' | translate}}</th>
+          </tr>
+          <tr *mTableRow="let concept">
+            <td><a (click)="conceptSelected.emit(concept.conceptId)">{{concept | snomedConceptName | async}}</a></td>
+          </tr>
+          <tr *mTableNoData>
+            <td colspan="100%">
+              <m-no-data/>
+            </td>
+          </tr>
+        </m-backend-table>
       </ng-template>
     </nz-tab>
 
@@ -74,10 +74,11 @@
               [placeholder]="'web.snomed.search.ecl-placeholder'"
               style="flex: 1"></m-input>
           <a *ngIf="eclConcepts?.data.length > 0 && !loading['csv-export']" (mClick)="exportConceptCsv('ecl')">CSV
-            <m-icon mCode="download"></m-icon>
+            <m-icon mCode="download"/>
           </a>
-          <m-icon *ngIf="loading['csv-export']" mCode="loading"></m-icon>
+          <m-icon *ngIf="loading['csv-export']" mCode="loading"/>
         </div>
+
         <m-backend-table [mResult]="eclConcepts" [(mQuery)]="eclParams" (mQueryChange)="loadEclConcepts()" [mLoading]="loading['ecl-concepts']">
           <tr *mTableHead>
             <th>{{'entities.snomed-concept.term' | translate}}</th>
@@ -87,7 +88,7 @@
           </tr>
           <tr *mTableNoData>
             <td colspan="100%">
-              <m-no-data></m-no-data>
+              <m-no-data/>
             </td>
           </tr>
         </m-backend-table>

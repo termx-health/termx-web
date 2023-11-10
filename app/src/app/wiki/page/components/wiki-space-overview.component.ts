@@ -3,6 +3,7 @@ import {PageService} from '../services/page.service';
 import {Space} from 'term-web/space/_lib';
 import {PageContent} from 'term-web/wiki/_lib';
 import {TranslateService} from '@ngx-translate/core';
+import {LoadingManager} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-wiki-space-overview',
@@ -22,6 +23,7 @@ export class WikiSpaceOverviewComponent implements OnChanges {
 
   protected totalPages: number;
   protected recentlyModified: PageContent[] = [];
+  protected loader = new LoadingManager();
 
   public constructor(
     private pageService: PageService,
@@ -33,18 +35,18 @@ export class WikiSpaceOverviewComponent implements OnChanges {
       this.recentlyModified = [];
 
       if (this.space) {
-        this.pageService.searchPages({
+        this.loader.wrap('pages', this.pageService.searchPages({
           spaceIds: String(this.space?.id),
           limit: 0
-        }).subscribe(resp => {
+        })).subscribe(resp => {
           this.totalPages = resp.meta.total;
         });
 
-        this.pageService.searchPageContents({
+        this.loader.wrap('recent', this.pageService.searchPageContents({
           spaceIds: String(this.space?.id),
           limit: 6,
           sort: '-modified'
-        }).subscribe(resp => {
+        })).subscribe(resp => {
           this.recentlyModified = resp.data;
         });
       }
