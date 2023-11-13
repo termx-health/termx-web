@@ -113,7 +113,13 @@ export class StructureDefinitionEditComponent implements OnInit {
       return;
     }
     if (type === 'fsh') {
-      this.loader.wrap('save', this.chefService.fshToFhir({fsh: this.contentFsh})).subscribe(r => this.saveSD(JSON.stringify(r.fhir[0])));
+      this.loader.wrap('save', this.chefService.fshToFhir({fsh: this.contentFsh})).subscribe(r => {
+        if (r.errors && r.errors.length > 0) {
+          r.errors.forEach(err => this.notificationService.error('FSH to FHIR conversion error', err.message));
+        } else {
+          this.saveSD(JSON.stringify(r.fhir[0]));
+        }
+      });
     }
     if (type === 'json') {
       this.saveSD(this.contentFhir);
@@ -187,7 +193,6 @@ export class StructureDefinitionEditComponent implements OnInit {
     structureDefinition.name = this.structureDefinition?.code;
     structureDefinition.resourceType ||= 'StructureDefinition';
     structureDefinition.kind = this.structureDefinition?.contentType;
-    structureDefinition.type = this.structureDefinition?.url;
     structureDefinition.url = this.structureDefinition?.url;
     structureDefinition.parent = this.structureDefinition?.parent;
     structureDefinition.version = this.structureDefinition?.version;
