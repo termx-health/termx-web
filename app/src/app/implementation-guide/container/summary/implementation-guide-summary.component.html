@@ -1,0 +1,35 @@
+<tw-resource-context resourceType="CodeSystem" [resource]="ig" [versions]="versions" mode="summary"></tw-resource-context>
+<m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[ig?.id, 'ImplementationGuide']">
+
+  <m-form-row class="with-row-gap" mGap="1rem">
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- IG info -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.code-system.summary.code-system"></m-title>
+      </m-card>
+    </div>
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- Versions -->
+      <m-card>
+        <m-title *m-card-header mTitle="web.implementation-guide.summary.versions">
+          <div mControls class="m-items-middle">
+            <ng-container *twPrivileged="ig?.id + '.ImplementationGuide.edit'">
+              <m-divider mVertical></m-divider>
+              <m-button mDisplay="text" [routerLink]="['/implementation-guide', ig?.id, 'versions', 'add']">
+                {{'web.code-system.summary.add-version' | translate}}&nbsp;
+                <m-icon mCode="plus"></m-icon>
+              </m-button>
+            </ng-container>
+          </div>
+        </m-title>
+      </m-card>
+    </div>
+  </m-form-row>
+  <m-form-row>
+
+
+  </m-form-row>
+
+</m-page>

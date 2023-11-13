@@ -332,6 +332,15 @@
                 "privileges": [
                     "*.TransformationDefinition.view"
                 ]
+            },
+            {
+                "label": {
+                    "en": "Implementation guide"
+                },
+                "link": "implementation-guides",
+                "privileges": [
+                    "*.ImplementationGuide.view"
+                ]
             }
         ]
     },

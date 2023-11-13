@@ -3,7 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {ImplementationGuideVersion, ImplementationGuideSearchParams} from 'term-web/implementation-guide/_lib';
+import {ImplementationGuideVersion, ImplementationGuideSearchParams, ImplementationGuideVersionSearchParams} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuide} from '../model/implementation-guide';
 
 @Injectable()
@@ -22,5 +22,9 @@ export class ImplementationGuideLibService {
 
   public loadVersion(ig: string, version: string): Observable<ImplementationGuideVersion> {
     return this.http.get<ImplementationGuideVersion>(`${this.baseUrl}/${ig}/versions/${version}`);
+  }
+
+  public searchVersions(ig: string, params: ImplementationGuideVersionSearchParams = {}): Observable<SearchResult<ImplementationGuideVersion>> {
+    return this.http.get<SearchResult<ImplementationGuideVersion>>(`${this.baseUrl}/${ig}/versions`, {params: SearchHttpParams.build(params)});
   }
 }

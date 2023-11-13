@@ -17,7 +17,7 @@ import {MapSetService} from 'term-web/resources/map-set/services/map-set-service
   templateUrl: 'resource-form.component.html'
 })
 export class ResourceFormComponent implements OnChanges {
-  @Input() public resourceType?: 'CodeSystem' | 'ValueSet' | 'MapSet';
+  @Input() public resourceType?: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'ImplementationGuide';
   @Input() public resource?: Resource;
   @Input() public mode?: 'add' | 'edit';
 
