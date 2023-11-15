@@ -8,6 +8,7 @@ import {Space} from 'term-web/space/_lib';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 import {TranslateService} from '@ngx-translate/core';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
   templateUrl: './wiki-page.component.html',
@@ -22,6 +23,7 @@ export class WikiPageComponent implements OnInit {
 
   protected spaces: WikiSpace[] = [];
   protected loader = new LoadingManager();
+  protected mobileQuery: MediaQueryList;
 
   public constructor(
     protected translateService: TranslateService,
@@ -31,7 +33,10 @@ export class WikiPageComponent implements OnInit {
     protected router: Router,
     private route: ActivatedRoute,
     private destroy$: DestroyService,
-  ) { }
+    media: MediaMatcher
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 992px)');
+  }
 
 
   public ngOnInit(): void {

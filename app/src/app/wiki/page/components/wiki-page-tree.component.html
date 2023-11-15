@@ -35,7 +35,7 @@
       >
         <ng-template #nodeDisplay let-node>
           <div class="m-justify-between" *ngIf="node.obj.page | apply: localizedContent as lc">
-            <a class="initial" style="margin: 3px" [routerLink]="lc.slug | apply: viewPageRoute">{{lc.name}}</a>
+            <a class="initial" [routerLink]="lc.slug | apply: viewPageRoute">{{lc.name}}</a>
             <m-icon *ngIf="node.obj.page.status === 'active'" mCode="check-circle"/>
           </div>
         </ng-template>

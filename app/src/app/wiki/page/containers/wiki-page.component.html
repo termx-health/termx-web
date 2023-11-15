@@ -28,7 +28,7 @@
   <div class="page__container">
     <!-- Sidebar -->
     <div class="page__sidebar">
-      <m-collapse-panel mResizable>
+      <m-collapse-panel mResizable [mCollapsed]="mobileQuery.matches">
         <m-skeleton [mLoading]="loader.state['spaces']">
           <tw-wiki-page-tree-sidebar *ngIf="space" [space]="space" [path]="path" [viewRootRoute]="viewRootRoute" [viewPageRoute]="viewPageRoute"/>
         </m-skeleton>
