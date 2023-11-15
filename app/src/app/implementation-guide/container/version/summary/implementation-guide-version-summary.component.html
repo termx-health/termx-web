@@ -1,0 +1,38 @@
+<tw-resource-context resourceType="ImplementationGuide" [resource]="ig" [version]="igVersion" mode="summary"></tw-resource-context>
+<m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[ig?.id, 'ImplementationGuide']">
+
+  <m-form-row class="with-row-gap" mGap="1rem">
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+      <!-- IG Version info -->
+      <m-card>
+        <m-title *m-card-header mTitle="entities.implementation-guide-version.single">
+          <m-button *ngIf="igVersion?.status === 'draft' && 'edit' | twPrivileged"
+              mControls
+              mDisplay="text"
+              [routerLink]="['/resources/implementation-guides', ig?.id, 'versions', igVersion?.version, 'edit']">
+            {{'web.implementation-guide-version.summary.edit-version' | translate}}&nbsp;
+            <m-icon mCode="form"></m-icon>
+          </m-button>
+        </m-title>
+        <tw-implementation-guide-version-info-widget [ig]="ig" [version]="igVersion"></tw-implementation-guide-version-info-widget>
+      </m-card>
+    </div>
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+      <m-card>
+        <m-title *m-card-header mTitle="entities.implementation-guide-version.group.multiple">
+          <m-button *ngIf="groupsChanged" mControls (mClick)="saveGroups()">{{'core.btn.save' | translate}}</m-button>
+        </m-title>
+        <tw-implementation-guide-group-list [ig]="ig?.id" [groups]="igVersion?.groups" (groupsChanged)="groupsChanged = true"/>
+      </m-card>
+    </div>
+  </m-form-row>
+
+  <m-form-row>
+    <m-card style="margin-top: 1rem">
+      <m-title *m-card-header mTitle="entities.implementation-guide-version.resource.multiple">
+        <m-button *ngIf="resourcesChanged" mControls (mClick)="saveResources()">{{'core.btn.save' | translate}}</m-button>
+      </m-title>
+      <tw-implementation-guide-resource-list [ig]="ig?.id" [igVersion]="igVersion" (resourcesChanged)="resourcesChanged = true"/>
+    </m-card>
+  </m-form-row>
+</m-page>

@@ -337,7 +337,7 @@
                 "label": {
                     "en": "Implementation guide"
                 },
-                "link": "implementation-guides",
+                "link": "resources/implementation-guides",
                 "privileges": [
                     "*.ImplementationGuide.view"
                 ]

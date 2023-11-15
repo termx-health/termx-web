@@ -1,0 +1,58 @@
+<form #form="ngForm" *ngIf="version">
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.algorithm" mName="algorithm">
+      <tw-value-set-concept-select name="algorithm" [(ngModel)]="version.algorithm" valueSet="version-algorithm"></tw-value-set-concept-select>
+    </m-form-item>
+    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.package-id" mName="package-id">
+      <m-input name="package-id" [(ngModel)]="version.packageId"/>
+    </m-form-item>
+  </m-form-row>
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.version" mName="version" required>
+      <tw-semantic-version-select name="version" [(ngModel)]="version.version" [versions]="versions | map: 'version'| join : ',' | split: ','" required/>
+    </m-form-item>
+    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.fhir-version" mName="fhir-version">
+      <tw-value-set-concept-select name="fhir-version" [(ngModel)]="version.fhirVersion" valueSet="FHIR-version"/>
+    </m-form-item>
+  </m-form-row>
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.github-url" mName="github-url">
+      <m-input name="github-url" [(ngModel)]="version.githubUrl"/>
+    </m-form-item>
+    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.empty-github-url" mName="empty-github-url">
+      <m-input name="empty-github-url" [(ngModel)]="version.emptyGithubUrl"/>
+    </m-form-item>
+  </m-form-row>
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.template" mName="template">
+      <m-select name="template" [(ngModel)]="version.template">
+        <m-option *ngFor="let t of ['local-template', 'fhir.base.template', 'hl7.base.template', 'hl7.fhir.template', 'input/myig.xml']"
+            [mLabel]="t"
+            [mValue]="t"/>
+      </m-select>
+    </m-form-item>
+    <div *mFormCol></div>
+  </m-form-row>
+
+  <m-divider mText="entities.implementation-guide-version.depends-on.single"></m-divider>
+  <m-editable-table #rowsTable [mData]="version.dependsOn" [mRowInstance]="{}">
+    <m-editable-column [mTitle]="'entities.implementation-guide-version.depends-on.package-id'" mName="packageId">
+      <ng-template #viewTemplate let-i>{{i.packageId}}</ng-template>
+      <ng-template #editTemplate let-i let-ngModelName="ngModelName">
+        <m-input [name]="ngModelName" [(ngModel)]="i.packageId"></m-input>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.implementation-guide-version.depends-on.version'" mName="version">
+      <ng-template #viewTemplate let-i>{{i.version}}</ng-template>
+      <ng-template #editTemplate let-i let-ngModelName="ngModelName">
+        <m-input [name]="ngModelName" [(ngModel)]="i.version"></m-input>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.implementation-guide-version.depends-on.reason'" mName="reason">
+      <ng-template #viewTemplate let-i>{{i.reason}}</ng-template>
+      <ng-template #editTemplate let-i let-ngModelName="ngModelName">
+        <m-input [name]="ngModelName" [(ngModel)]="i.reason"></m-input>
+      </ng-template>
+    </m-editable-column>
+  </m-editable-table>
+</form>

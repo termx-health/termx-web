@@ -1,0 +1,39 @@
+<m-no-data *ngIf="!version"></m-no-data>
+
+<div *ngIf="version">
+  <div class="m-justify-between">
+    <div class="m-bold">{{version.version}}</div>
+    <tw-status-tag [status]="version.status"></tw-status-tag>
+  </div>
+  <div class="m-items-middle" *ngIf="version.fhirVersion || version.githubUrl || version.packageId">
+    <m-icon mCode="fire"></m-icon>
+    <span>{{version.fhirVersion}}</span>
+    <ng-container *ngIf="version.githubUrl">
+      <m-divider mVertical></m-divider>
+      <span>{{version.githubUrl}}</span>
+    </ng-container>
+    <ng-container *ngIf="version.packageId">
+      <m-divider mVertical></m-divider>
+      <span>{{version.packageId}}</span>
+    </ng-container>
+  </div>
+  <div class="m-items-middle" *ngIf="version.dependsOn?.length > 0">
+    <m-icon mCode="setting"></m-icon>
+    <div>{{version.dependsOn | map:mapDependsOn | join:', '}}</div>
+  </div>
+  <div class="m-items-middle">
+    <m-icon mCode="calendar"></m-icon>
+    <span>{{'web.implementation-guide-version.summary.last-modified' | translate}}:
+      {{((provenances | apply:getLastProvenance: 'modified')?.date | localDate) || ('web.implementation-guide-version.summary.none' | translate)}} </span>
+  </div>
+
+  <div class="m-items-middle" *twPrivileged="'publish'">
+    <m-icon mCode="tool"></m-icon>
+    <a *ngIf="version.status !== 'draft'" (mClick)="changeVersionStatus('draft')">{{'web.implementation-guide-version.summary.make-draft' | translate}}</a>
+    <a *ngIf="version.status !== 'active' && version.status !== 'retired'" (mClick)="changeVersionStatus('active')">{{'web.implementation-guide-version.summary.activate' | translate}}</a>
+    <ng-container *ngIf="version.status !== 'retired'">
+      <m-divider mVertical></m-divider>
+      <a (mClick)="changeVersionStatus('retired')">{{'web.implementation-guide-version.summary.retire' | translate}}</a>
+    </ng-container>
+  </div>
+</div>

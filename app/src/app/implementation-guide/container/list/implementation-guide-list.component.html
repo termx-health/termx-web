@@ -1,17 +1,17 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <span>{{'web.implementation-guide.list.title' | translate}}</span>
+    <span>{{'entities.implementation-guide.multiple' | translate}}</span>
     <div class="m-items-middle">
       <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
       <m-dropdown *twPrivileged="'*.ImplementationGuide.edit'">
         <tw-add-button *m-dropdown-container icon="down" placement="right">
-          {{'web.implementation-guide.list.add-value-set' | translate}}
+          {{'web.implementation-guide.list.add' | translate}}
         </tw-add-button>
         <a *m-dropdown-item [routerLink]="'add'">
-          {{'web.implementation-guide.list.manual' | translate}}
+          {{'web.implementation-guide.list.add-manual' | translate}}
         </a>
         <a *m-dropdown-item>
-          {{'web.implementation-guide.list.import-fhir' | translate}}
+          {{'web.implementation-guide.list.add-fhir' | translate}}
         </a>
       </m-dropdown>
     </div>
@@ -21,9 +21,9 @@
     <tr *mTableHead>
       <th mColumnKey="id">{{'entities.implementation-guide.id' | translate}}</th>
       <th>{{'web.implementation-guide.list.last-version' | translate}}</th>
-      <th>{{'entities.implementation-guide.fhir-version' | translate}}</th>
-      <th>{{'entities.implementation-guide.title' | translate}}/{{'entities.implementation-guide.package-id' | translate}}</th>
-      <th>{{'entities.implementatio-guide.date' | translate}}</th>
+      <th>{{'entities.implementation-guide-version.fhir-version' | translate}}</th>
+      <th>{{'entities.implementation-guide.title' | translate}} / {{'entities.implementation-guide-version.package-id' | translate}}</th>
+      <th>{{'entities.implementation-guide-version.date' | translate}}</th>
       <th *twPrivileged="'*.ImplementationGuide.edit'" class="tw-table-actions"></th>
     </tr>
 
@@ -45,7 +45,7 @@
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="openFhir(ig.id)">
-            <m-icon [mCode]="'link'"></m-icon>&nbsp; {{'web.implementation.list.open-fhir' | translate}}
+            <m-icon [mCode]="'link'"></m-icon>&nbsp; {{'web.implementation-guide.list.open-fhir' | translate}}
           </a>
           <ng-container *twPrivileged="'*.Implementation.publish'">
             <a *m-dropdown-item (click)="delete(ig.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>

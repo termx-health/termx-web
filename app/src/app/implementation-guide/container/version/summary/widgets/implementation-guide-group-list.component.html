@@ -1,0 +1,24 @@
+<form #form="ngForm" *ngIf="groups">
+  <m-editable-table #rowsTable
+      [mData]="groups"
+      [mRowInstance]="{}"
+      (mRowAdd)="addRow()"
+      (mRowEdit)="groupsChanged.emit()"
+      (mAfterSubmit)="groupsChanged.emit()"
+      (mAfterDelete)="groupsChanged.emit()"
+      [mEditAllowed]="(ig + '.ImplementationGuide.edit') | twPrivileged"
+      [mDeleteAllowed]="(ig + '.ImplementationGuide.edit') | twPrivileged">
+    <m-editable-column [mTitle]="'entities.implementation-guide-version.group.name'" mName="name">
+      <ng-template #viewTemplate let-g>{{g.name}}</ng-template>
+      <ng-template #editTemplate let-g let-ngModelName="ngModelName" required>
+        <m-input [name]="ngModelName" [(ngModel)]="g.name" required></m-input>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.implementation-guide-version.group.description'" mName="description">
+      <ng-template #viewTemplate let-g>{{g.description | localName}}</ng-template>
+      <ng-template #editTemplate let-g let-ngModelName="ngModelName">
+        <m-multi-language-input [name]="ngModelName" [(ngModel)]="g.description"></m-multi-language-input>
+      </ng-template>
+    </m-editable-column>
+  </m-editable-table>
+</form>

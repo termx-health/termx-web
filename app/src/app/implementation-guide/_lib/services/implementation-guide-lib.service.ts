@@ -3,8 +3,14 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {ImplementationGuideVersion, ImplementationGuideSearchParams, ImplementationGuideVersionSearchParams} from 'term-web/implementation-guide/_lib';
+import {
+  ImplementationGuideVersion,
+  ImplementationGuideSearchParams,
+  ImplementationGuideVersionSearchParams,
+  ImplementationGuideVersionResource
+} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuide} from '../model/implementation-guide';
+import {Provenance} from 'term-web/sys/_lib';
 
 @Injectable()
 export class ImplementationGuideLibService {
@@ -24,7 +30,15 @@ export class ImplementationGuideLibService {
     return this.http.get<ImplementationGuideVersion>(`${this.baseUrl}/${ig}/versions/${version}`);
   }
 
+  public loadVersionResources(ig: string, version: string): Observable<ImplementationGuideVersionResource[]> {
+    return this.http.get<ImplementationGuideVersionResource[]>(`${this.baseUrl}/${ig}/versions/${version}/resources`);
+  }
+
   public searchVersions(ig: string, params: ImplementationGuideVersionSearchParams = {}): Observable<SearchResult<ImplementationGuideVersion>> {
     return this.http.get<SearchResult<ImplementationGuideVersion>>(`${this.baseUrl}/${ig}/versions`, {params: SearchHttpParams.build(params)});
+  }
+
+  public loadProvenances(ig: string, version: string): Observable<Provenance[]> {
+    return this.http.get<Provenance[]>(`${this.baseUrl}/${ig}/provenances`, {params: SearchHttpParams.build({version})});
   }
 }

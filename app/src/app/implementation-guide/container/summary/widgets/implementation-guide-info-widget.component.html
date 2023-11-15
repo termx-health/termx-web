@@ -1,0 +1,23 @@
+<m-no-data *ngIf="!ig"></m-no-data>
+
+<div *ngIf="ig">
+  <div class="m-items-middle m-bold">
+    <m-icon mCode="key"></m-icon>
+    <tw-copy-container [text]="ig.id">
+      {{ig.id}}
+    </tw-copy-container>
+  </div>
+  <span>{{ig.description | localName}}</span>
+  <div *ngIf="ig.experimental">{{'entities.resource.experimental' | translate}}</div>
+  <div class="m-items-middle" *ngIf="(ig | apply:getTelecoms) as telecoms">
+    <m-icon mCode="contacts"></m-icon>
+    <span *ngFor="let t of telecoms;let i = index" class="m-items-middle">
+      {{t?.system}}: {{t?.value}}
+      <m-divider mVertical *ngIf="i !== (telecoms.length - 1)"></m-divider>
+    </span>
+  </div>
+  <div class="m-items-middle" *ngIf="ig.publisher">
+    <m-icon mCode="environment"></m-icon>
+    <span>{{ig.publisher | localizedConceptName:{codeSystem: 'publisher'} | async}}</span>
+  </div>
+</div>

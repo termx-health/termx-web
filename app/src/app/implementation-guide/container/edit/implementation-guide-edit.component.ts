@@ -7,7 +7,7 @@ import {ImplementationGuideService} from 'term-web/implementation-guide/services
 import {ResourceFormComponent} from 'term-web/resources/resource/components/resource-form.component';
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
 import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
-import {ImplementationGuideVersionFormComponent} from 'term-web/implementation-guide/container/version/implementation-guide-version-form.component';
+import {ImplementationGuideVersionFormComponent} from 'term-web/implementation-guide/container/version/edit/implementation-guide-version-form.component';
 
 @Component({
   templateUrl: 'implementation-guide-edit.component.html'
@@ -55,10 +55,10 @@ export class ImplementationGuideEditComponent implements OnInit {
     ResourceUtil.merge(ig, this.resourceFormComponent.getResource());
     const request: ImplementationGuideTransactionRequest = {
       implementationGuide: ig,
-      version: this.versionFormComponent.getVersion()
+      version: this.versionFormComponent?.getVersion()
     };
     this.loader.wrap('save', this.igService.save(request))
-      .subscribe(() => this.router.navigate(['/resources/implementation-guide', ig.id, 'summary']));
+      .subscribe(() => this.router.navigate(['/resources/implementation-guides', ig.id, 'summary']));
   }
 
   public validate(): boolean {

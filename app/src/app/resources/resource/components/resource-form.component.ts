@@ -10,6 +10,7 @@ import {Resource} from 'term-web/resources/resource/model/resource';
 import {Router} from '@angular/router';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 
 
 @Component({
@@ -35,7 +36,8 @@ export class ResourceFormComponent implements OnChanges {
     private translateService: TranslateService,
     private codeSystemService: CodeSystemService,
     private valueSetService: ValueSetService,
-    private mapSetService: MapSetService
+    private mapSetService: MapSetService,
+    private implementationGuideService: ImplementationGuideService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -105,6 +107,11 @@ export class ResourceFormComponent implements OnChanges {
     if (this.resourceType === 'MapSet') {
       this.mapSetService.changeMapSetId(this.resource.id, this.idChangeModalData.id).subscribe(() => {
         this.router.navigate(['/resources/map-sets', this.idChangeModalData.id, 'edit'], {replaceUrl: true});
+      });
+    }
+    if (this.resourceType === 'ImplementationGuide') {
+      this.implementationGuideService.changeId(this.resource.id, this.idChangeModalData.id).subscribe(() => {
+        this.router.navigate(['/resources/implementation-guides', this.idChangeModalData.id, 'edit'], {replaceUrl: true});
       });
     }
   }
