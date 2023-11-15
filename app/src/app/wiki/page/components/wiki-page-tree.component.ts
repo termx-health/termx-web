@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Injectable, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, Injectable, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {PageService} from '../services/page.service';
 import {EMPTY, forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
@@ -8,9 +8,10 @@ import {DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-
 import {PageLinkService} from '../services/page-link.service';
 import {WikiPageSetupModalComponent} from './wiki-page-setup-modal.component';
 import {Space} from 'term-web/space/_lib';
+import {Router} from '@angular/router';
 
 function findInTree<Node, Key>(nodesToSearch: Node[], key: Key, getKey: (n: Node) => Key, getChildren: (n: Node) => Node[]): Node {
-  for (let node of nodesToSearch) {
+  for (const node of nodesToSearch) {
     if (getKey(node) == key) {
       return node;
     }
@@ -74,7 +75,7 @@ class WikiSidebarService {
       map(([links, pages]): DragNode[] => {
         return links.data.map(l => this.toDragNode(l, pages.data.find(p => p.id === l.targetId))).sort(this.compareOrder);
       }));
-  };
+  }
 
   public loadRoots(spaceId: number): Observable<DragNode[]> {
     if (isNil(spaceId)) {
@@ -93,7 +94,7 @@ class WikiSidebarService {
       map(([links, pages]): DragNode[] => {
         return links.data.map(l => this.toDragNode(l, pages.data.find(p => p.id === l.targetId))).sort(this.compareOrder);
       }));
-  };
+  }
 
   public findChildren(spaceId: number, sourceId: number): Observable<DragNode[]> {
     if (isNil(spaceId)) {
@@ -148,8 +149,8 @@ export class WikiPageTreeComponent implements OnChanges {
   @Input() public path?: number[];
   @Input() public space?: Space;
 
-  @Output() public viewRoot = new EventEmitter();
-  @Output() public viewPage = new EventEmitter<string>();
+  @Input() public viewRootRoute: () => any[];
+  @Input() public viewPageRoute: (_slug: string) => any[];
 
   protected data: DragNode[] = [];
   protected searchText: string;
@@ -164,6 +165,7 @@ export class WikiPageTreeComponent implements OnChanges {
     private pageService: PageService,
     private pageLinkService: PageLinkService,
     private sidebarService: WikiSidebarService,
+    private router: Router,
   ) { }
 
 
@@ -297,7 +299,7 @@ export class WikiPageTreeComponent implements OnChanges {
           this.data.splice(objIdx, 1);
         }
 
-        this.viewRoot.emit();
+        this.router.navigate(this.viewRootRoute());
       } else {
         // child node
         const parent = findInTree(this.data, obj.link.sourceId, n => n.page.id, n => n.children);
@@ -397,6 +399,10 @@ export class WikiPageTreeComponent implements OnChanges {
 
   /* Utils */
 
+  private openPage(obj: Page): void {
+    this.router.navigate(this.viewPageRoute(this.localizedContent(obj)?.slug));
+  }
+
   protected toDropListNodes = (): void => {
     const mapper = (obj: DragNode): DropListNode => ({
       key: String(obj.link.id),
@@ -408,10 +414,6 @@ export class WikiPageTreeComponent implements OnChanges {
 
     this.nodes = this.data.map(obj => mapper(obj));
   };
-
-  protected openPage(obj: Page): void {
-    this.viewPage.emit(this.localizedContent(obj)?.slug);
-  }
 
   protected openPageAfterSave(obj: Page, modal: WikiPageSetupModalComponent): void {
     this.openPage(obj);

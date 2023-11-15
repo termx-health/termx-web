@@ -1,8 +1,7 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {PageService} from '../services/page.service';
 import {Space} from 'term-web/space/_lib';
 import {PageContent} from 'term-web/wiki/_lib';
-import {TranslateService} from '@ngx-translate/core';
 import {LoadingManager} from '@kodality-web/core-util';
 
 @Component({
@@ -19,7 +18,7 @@ import {LoadingManager} from '@kodality-web/core-util';
 export class WikiSpaceOverviewComponent implements OnChanges {
   @Input() public space: Space;
   @Input() public lang: string;
-  @Output() public viewPage = new EventEmitter<string>();
+  @Input() public viewPageRoute: (_slug: string) => any[];
 
   protected totalPages: number;
   protected recentlyModified: PageContent[] = [];
@@ -27,7 +26,6 @@ export class WikiSpaceOverviewComponent implements OnChanges {
 
   public constructor(
     private pageService: PageService,
-    private translateService: TranslateService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {

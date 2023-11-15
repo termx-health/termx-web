@@ -7,11 +7,12 @@ import {CodeSystemLibService, MapSetLibService, ValueSetLibService} from 'term-w
 import {SpaceService} from 'term-web/space/services/space.service';
 import {TaskService} from 'term-web/task/services/task-service';
 import {Task, TaskLibModule} from 'term-web/task/_lib';
-import {PageService} from 'term-web/wiki/page/services/page.service';
+import {PageLibService, WikiLibModule} from 'term-web/wiki/_lib';
+import {SpaceModule} from 'term-web/space/space.module';
 
 @Component({
   standalone: true,
-  imports: [CoreUiModule, TaskLibModule],
+  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SpaceModule],
   templateUrl: 'landing-page.component.html',
   styleUrls: ['landing-page.component.less']
 })
@@ -39,7 +40,7 @@ export class LandingPageComponent {
     private valueSetService: ValueSetLibService,
     private mapSetService: MapSetLibService,
     private spaceService: SpaceService,
-    private pageService: PageService,
+    private pageService: PageLibService,
     private taskService: TaskService,
     stateStore: ComponentStateStore,
   ) {
@@ -73,7 +74,7 @@ export class LandingPageComponent {
   private loadSummary(): void {
     const spaces$ = this.withPrivilege(this.spaceService.search({limit: 0}), '*.Space.view');
     const pages$ = this.withPrivilege(this.pageService.searchPages({limit: 0}), '*.Wiki.view');
-    const tasksOpen$ = this.withPrivilege(this.taskService.searchTasks({limit: 0,statusesNe: 'cancelled,completed,error,rejected'}), '*.Task.view');
+    const tasksOpen$ = this.withPrivilege(this.taskService.searchTasks({limit: 0, statusesNe: 'cancelled,completed,error,rejected'}), '*.Task.view');
 
     this.loader.wrap('space', forkJoin([spaces$, pages$, tasksOpen$])).subscribe(([spaces, pages, tasks]) => {
       this.data.spacesCount = spaces.meta.total;

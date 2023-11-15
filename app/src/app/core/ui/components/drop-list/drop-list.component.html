@@ -16,7 +16,7 @@
   >
     <div
         [attr.data-key]="node.key"
-        class="drop-container m-items-middle"
+        class="drop-container"
         (click)="onSelect(node, $event)"
     >
       <ng-template #filler>
@@ -25,11 +25,9 @@
         </div>
       </ng-template>
 
-      <m-icon
-          *ngIf="node.expandable; else filler"
-          [mCode]="node.expanded ? 'folder-open' : 'folder'"
-          (click)="onExpand(node, $event)"
-      ></m-icon>
+      <a class="initial" *ngIf="node.expandable; else filler" (mClick)="onExpand(node, $event)">
+        <m-icon [mCode]="node.expanded ? 'folder-open' : 'folder'"></m-icon>
+      </a>
 
 
       <div class="node-item__renderer">

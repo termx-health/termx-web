@@ -17,19 +17,19 @@
 
   <div class="equal-columns">
     <ng-container *ngFor="let c of recentlyModified">
-      <m-card class="m-clickable" (click)="viewPage.emit(c.slug)">
-        <div *m-card-header class="m-justify-between">
+      <a class="m-card m-raised m-clickable initial" [routerLink]="c.slug | apply: viewPageRoute">
+        <div class="m-card__header m-justify-between">
           <div class="m-bold">{{c.name}}</div>
           <div class="m-text-secondary" style="font-size: 0.9rem; text-transform: uppercase">{{c.lang}}</div>
         </div>
 
-        <div class="m-whitespace" style="overflow: hidden">{{c.content | abbreviate: 200}}</div>
+        <div class="m-card__content m-whitespace" style="overflow: hidden">{{c.content | abbreviate: 200}}</div>
 
-        <div *m-card-footer class="m-text-secondary" style="font-size: 0.9rem">
+        <div class="m-card__footer m-text-secondary" style="font-size: 0.9rem">
           <m-icon mCode="clock-circle"/>
           {{(c.modifiedAt ? 'web.wiki-page.overview.recently-modified.updated' : 'web.wiki-page.overview.recently-modified.created') | translate: ({date: (c.modifiedAt ?? c.createdAt) | localDateTime})}}
         </div>
-      </m-card>
+      </a>
     </ng-container>
   </div>
 </m-skeleton>
