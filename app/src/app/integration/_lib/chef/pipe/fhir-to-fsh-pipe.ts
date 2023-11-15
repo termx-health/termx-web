@@ -20,8 +20,8 @@ export class FhirToFshPipe implements PipeTransform {
     }
 
     return this.chefService.fhirToFsh({fhir: [content]}).pipe(map(resp => {
-      resp.warnings?.forEach(w => this.notificationService.warning('Conversion warning', w.message!, {duration: 0, closable: true}));
-      resp.errors?.forEach(e => this.notificationService.error('Conversion failed!', e.message!, {duration: 0, closable: true}));
+      resp.warnings?.forEach(w => this.notificationService.warning('FHIR to FSH conversion warning', w.message!, {duration: 0, closable: true}));
+      resp.errors?.forEach(e => this.notificationService.error('FHIR to FSH conversion failed!', e.message!, {duration: 0, closable: true}));
       return typeof resp.fsh === 'string' ? resp.fsh : JSON.stringify(resp.fsh, null, 2);
     }));
   }
