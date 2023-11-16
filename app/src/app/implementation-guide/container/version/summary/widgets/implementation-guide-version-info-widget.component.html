@@ -24,7 +24,7 @@
   <div class="m-items-middle">
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.implementation-guide-version.summary.last-modified' | translate}}:
-      {{((provenances | apply:getLastProvenance: 'modified')?.date | localDate) || ('web.implementation-guide-version.summary.none' | translate)}} </span>
+      {{(version.date | localDate) || ('web.implementation-guide-version.summary.none' | translate)}} </span>
   </div>
 
   <div class="m-items-middle" *twPrivileged="'publish'">

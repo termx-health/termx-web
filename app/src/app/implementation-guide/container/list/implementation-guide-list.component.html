@@ -35,13 +35,15 @@
         </ng-container>
       </td>
       <td>
-        <ng-container *ngIf="(ig.versions | apply:findLastVersion)?.fhirVersion as version">{{version}}</ng-container>
+        <ng-container *ngIf="(ig.versions | apply:findLastVersion) as version">{{version.fhirVersion}}</ng-container>
       </td>
       <td>
         <div>{{ig.title | localName}}</div>
         <div>{{ig.packageId | localName}}</div>
       </td>
-      <td>{{ig.date | localDate}}</td>
+      <td>
+        <ng-container *ngIf="(ig.versions | apply:findLastVersion) as version">{{version.date | localDate}}</ng-container>
+      </td>
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="openFhir(ig.id)">

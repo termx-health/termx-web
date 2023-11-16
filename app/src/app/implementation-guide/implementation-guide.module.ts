@@ -26,6 +26,7 @@ import {ImplementationGuideGroupListComponent} from 'term-web/implementation-gui
 import {
   ImplementationGuideResourceListComponent
 } from 'term-web/implementation-guide/container/version/summary/widgets/implementation-guide-resource-list.component';
+import {ModelerLibModule} from 'term-web/modeler/_lib';
 
 const EDIT = {privilege: ['{id}.ImplementationGuide.edit']};
 const VIEW = {privilege: ['{id}.ImplementationGuide.view']};
@@ -65,7 +66,8 @@ export const IG_ROUTES: Routes = [
     ValueSetLibModule,
     CodeSystemLibModule,
     SysLibModule,
-    MapSetLibModule
+    MapSetLibModule,
+    ModelerLibModule
   ],
   providers: [
     ImplementationGuideService

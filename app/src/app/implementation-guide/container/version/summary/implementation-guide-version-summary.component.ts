@@ -51,7 +51,7 @@ export class ImplementationGuideVersionSummaryComponent implements OnInit {
   }
 
   public saveResources(): void {
-    if (!this.groupListComponent.validate()){
+    if (!this.resourceListComponent.validate()){
       return;
     }
     this.loader.wrap('save', this.igService.saveVersionResource(this.ig.id, this.igVersion.version, this.resourceListComponent.resources))

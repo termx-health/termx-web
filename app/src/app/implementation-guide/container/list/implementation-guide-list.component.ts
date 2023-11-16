@@ -27,7 +27,6 @@ export class ImplementationGuideListComponent implements OnInit {
       this.query = Object.assign(new QueryParams(), state.query);
       this.searchInput = this.query.textContains;
     }
-
     this.loadData();
   }
 
@@ -38,6 +37,7 @@ export class ImplementationGuideListComponent implements OnInit {
   public search(): Observable<SearchResult<ImplementationGuide>> {
     const q = copyDeep(this.query);
     q.textContains = this.searchInput || undefined;
+    q.decorated = true;
     this.stateStore.put(this.STORE_KEY, {query: q});
 
     return this.loader.wrap('query', this.igService.search(q));
@@ -49,7 +49,8 @@ export class ImplementationGuideListComponent implements OnInit {
   };
 
   protected findLastVersion = (versions: ImplementationGuideVersion[]): ImplementationGuideVersion => {
-    return null;
+    return  versions?.filter(v => ['draft', 'active'].includes(v.status!))
+      .sort((a, b) => new Date(a.date!) > new Date(b.date!) ? -1 : new Date(a.date!) > new Date(b.date!) ? 1 : 0)?.[0];
   };
 
   public delete(id: string): void {

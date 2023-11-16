@@ -11,6 +11,7 @@ export class ImplementationGuideVersion {
   public template?: string;
   public packageId?: string;
   public algorithm?: string;
+  public date?: Date;
   public dependsOn?: ImplementationGuideVersionDependsOn[];
   public groups?: ImplementationGuideVersionGroup[];
   public resources?: ImplementationGuideVersionResource[];

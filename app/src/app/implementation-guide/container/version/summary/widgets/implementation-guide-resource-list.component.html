@@ -1,7 +1,7 @@
 <form #form="ngForm" *ngIf="resources">
   <m-editable-table #rowsTable
       [mData]="resources"
-      [mRowInstance]="{group: {}}"
+      [mRowInstance]="{}"
       (mRowAdd)="addRow()"
       (mRowEdit)="resourcesChanged.emit()"
       (mAfterSubmit)="resourcesChanged.emit()"
@@ -12,7 +12,7 @@
       <ng-template #viewTemplate let-r>{{r.type}}</ng-template>
       <ng-template #editTemplate let-r let-ngModelName="ngModelName">
         <m-select [name]="ngModelName" [(ngModel)]="r.type" required>
-          <m-option *ngFor="let t of ['CodeSystem', 'ValueSet', 'MapSet', 'StructureDefinition']" [mLabel]="t" [mValue]="t"></m-option>
+          <m-option *ngFor="let t of ['CodeSystem', 'ValueSet', 'MapSet', 'StructureDefinition', 'StructureMap']" [mLabel]="t" [mValue]="t"></m-option>
         </m-select>
       </ng-template>
     </m-editable-column>
@@ -20,6 +20,7 @@
       <ng-template #viewTemplate let-r>{{r.reference}}</ng-template>
       <ng-template #editTemplate let-r let-ngModelName="ngModelName">
         <ng-container [ngSwitch]="r.type">
+          <tw-structure-definition-select *ngSwitchCase="'StructureDefinition'" [name]="ngModelName" [(ngModel)]="r.reference" required valuePrimitive/>
           <tw-code-system-search *ngSwitchCase="'CodeSystem'" [name]="ngModelName" [(ngModel)]="r.reference" required valuePrimitive/>
           <tw-value-set-search *ngSwitchCase="'ValueSet'" [name]="ngModelName" [(ngModel)]="r.reference" required valuePrimitive/>
           <tw-map-set-search *ngSwitchCase="'MapSet'" [name]="ngModelName" [(ngModel)]="r.reference" required valuePrimitive/>

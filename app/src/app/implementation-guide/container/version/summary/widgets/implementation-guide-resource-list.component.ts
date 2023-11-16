@@ -27,7 +27,7 @@ export class ImplementationGuideResourceListComponent implements OnChanges {
   }
 
   protected addRow(): void {
-    this.resources = [...this.resources, {group: {}}];
+    this.resources = [...this.resources, {}];
     this.resourcesChanged.emit();
   }
 
