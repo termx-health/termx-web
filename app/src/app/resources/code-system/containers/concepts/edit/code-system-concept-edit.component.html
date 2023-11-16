@@ -67,16 +67,21 @@
 
       <!-- Opened tasks -->
       <m-card *ngIf="conceptVersion?.id">
-        <div *m-card-header class="m-items-middle">
-          <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
-            <m-title mTitle="web.code-system-concept.form.opened-tasks"></m-title>
-          </a>
-          <m-title *ngIf="showOnlyOpenedTasks" mTitle="web.code-system-concept.form.opened-tasks"></m-title>
-          <span>|</span>
-          <a *ngIf="showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
-            <m-title mTitle="web.code-system-concept.form.all-tasks"></m-title>
-          </a>
-          <m-title *ngIf="!showOnlyOpenedTasks" mTitle="web.code-system-concept.form.all-tasks"></m-title>
+        <div *m-card-header class="m-justify-between">
+          <div class="m-items-middle">
+            <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+              <m-title mTitle="web.code-system-concept.form.opened-tasks"></m-title>
+            </a>
+            <m-title *ngIf="showOnlyOpenedTasks" mTitle="web.code-system-concept.form.opened-tasks"></m-title>
+            <span>|</span>
+            <a *ngIf="showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+              <m-title mTitle="web.code-system-concept.form.all-tasks"></m-title>
+            </a>
+            <m-title *ngIf="!showOnlyOpenedTasks" mTitle="web.code-system-concept.form.all-tasks"></m-title>
+          </div>
+          <m-button mDisplay="text" (mClick)="taskModalData = {visible: true}" *twPrivileged="'*.Task.edit'">
+            <m-icon mCode="plus"/>&nbsp; {{'web.code-system-concept.form.add-task' | translate}}
+          </m-button>
         </div>
         <tw-resource-tasks-widget resourceType="CodeSystemEntityVersion"
             [resourceId]="conceptVersion.id | toString"
@@ -210,3 +215,30 @@
     </div>
   </div>
 </m-page>
+
+
+<m-modal [(mVisible)]="taskModalData.visible" (mClose)="taskModalData = {visible: false}">
+  <m-title *mModalHeader>
+    {{'web.code-system-concept.form.task-modal.header' | translate}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #taskModalForm="ngForm">
+      <m-form-item mName="assignee" mLabel="entities.task.assignee" required>
+        <tw-user-select name="assignee" [(ngModel)]="taskModalData.assignee" required></tw-user-select>
+      </m-form-item>
+      <m-form-item mName="comment" mLabel="web.code-system-concept.form.task-modal.comment">
+        <m-textarea name="comment" [(ngModel)]="taskModalData.comment"></m-textarea>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="taskModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="createTask()" [mLoading]="loader.isLoading" [disabled]="loader.state['create-task']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>

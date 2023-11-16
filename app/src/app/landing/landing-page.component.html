@@ -6,20 +6,20 @@
         <div class="header title">{{'web.landing.resources.title' | translate}}</div>
 
         <div class="grid-auto-fit">
-          <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.CodeSystem.view'" [routerLink]="['/resources/code-systems']">
+          <a class="initial card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.CodeSystem.view'" [routerLink]="['/resources/code-systems']">
             <div class="m-subtitle">{{'web.landing.resources.types.code-system' | translate}}</div>
             <div class="title">{{data.codeSystemCount}}</div>
-          </button>
+          </a>
 
-          <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.ValueSets.view'" [routerLink]="['/resources/value-sets']">
+          <a class="initial card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.ValueSets.view'" [routerLink]="['/resources/value-sets']">
             <div class="m-subtitle">{{'web.landing.resources.types.value-set' | translate}}</div>
             <div class="title">{{data.valueSetCount}}</div>
-          </button>
+          </a>
 
-          <button class="card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.MapSets.view'" [routerLink]="['/resources/map-sets']">
+          <a class="initial card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.MapSets.view'" [routerLink]="['/resources/map-sets']">
             <div class="m-subtitle">{{'web.landing.resources.types.map-set' | translate}}</div>
             <div class="title">{{data.mapSetsCount}}</div>
-          </button>
+          </a>
         </div>
       </section>
     </ng-container>
@@ -31,20 +31,20 @@
         <div class="header title">{{'web.landing.summary.title' | translate}}</div>
 
         <div class="grid-auto-fit">
-          <button class="card m-rounded m-raised m-clickable v-align" [routerLink]="['/spaces']" *twPrivileged="'*.Space.view'">
+          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/spaces']" *twPrivileged="'*.Space.view'">
             <div class="m-subtitle">{{'web.landing.summary.spaces' | translate}}</div>
             <div class="title">{{data.spacesCount}}</div>
-          </button>
+          </a>
 
-          <button class="card m-rounded m-raised m-clickable v-align" [routerLink]="['/wiki/pages']" *twPrivileged="'*.Wiki.view'">
+          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/wiki/pages']" *twPrivileged="'*.Wiki.view'">
             <div class="m-subtitle">{{'web.landing.summary.pages' | translate}}</div>
             <div class="title">{{data.pagesCount}}</div>
-          </button>
+          </a>
 
-          <button class="card m-rounded m-raised m-clickable v-align" [routerLink]="['/tasks']" *twPrivileged="'*.Task.view'">
+          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/tasks']" *twPrivileged="'*.Task.view'">
             <div class="m-subtitle">{{'web.landing.summary.open-tasks' | translate}}</div>
             <div class="title">{{data.tasksOpenCount}}</div>
-          </button>
+          </a>
         </div>
       </section>
 

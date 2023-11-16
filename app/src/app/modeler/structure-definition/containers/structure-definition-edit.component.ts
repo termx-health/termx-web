@@ -79,7 +79,7 @@ export class StructureDefinitionEditComponent implements OnInit {
       }
       if (content.startsWith('{')) {
         return this.chefService.fhirToFsh({fhir: [content]}).pipe(map(r => {
-          this.showErrors(r);
+          this.showErrors(r, 'FHIR to FSH');
           this.contentFhir = content;
           this.contentFsh = typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
         }));
@@ -87,7 +87,7 @@ export class StructureDefinitionEditComponent implements OnInit {
     }
     if (format == 'fsh') {
       return this.chefService.fshToFhir({fsh: content}).pipe(map(r => {
-        this.showErrors(r);
+        this.showErrors(r, 'FSH to FHIR');
         this.contentFsh = content;
         this.contentFhir = JSON.stringify(r.fhir[0], null, 2);
       }));
@@ -100,13 +100,14 @@ export class StructureDefinitionEditComponent implements OnInit {
     }
     if (format == 'fsh') {
       return this.chefService.fhirToFsh({fhir: [fhir]}).pipe(map(r => {
-        this.showErrors(r);
+        this.showErrors(r, 'FHIR to FSH');
         return typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
       }));
     }
   }
 
   public save(type: 'fsh' | 'json'): void {
+    this.validate(this.structureDefinition);
     if (isDefined(this.form) && !validateForm(this.form) ||
       isDefined(this.fshForm) && !validateForm(this.fshForm) ||
       isDefined(this.jsonForm) && !validateForm(this.jsonForm)) {
@@ -114,15 +115,23 @@ export class StructureDefinitionEditComponent implements OnInit {
     }
     if (type === 'fsh') {
       this.loader.wrap('save', this.chefService.fshToFhir({fsh: this.contentFsh})).subscribe(r => {
-        if (r.errors && r.errors.length > 0) {
-          r.errors.forEach(err => this.notificationService.error('FSH to FHIR conversion error', err.message));
-        } else {
+        this.showErrors(r, 'FSH to FHIR', true);
+        if (!(r.errors?.length > 0)) {
           this.saveSD(JSON.stringify(r.fhir[0]));
         }
       });
     }
     if (type === 'json') {
       this.saveSD(this.contentFhir);
+    }
+  }
+
+  private validate(sd: StructureDefinition): void {
+    if (!sd.code.match(/^[A-Z]([A-Za-z0-9_]){1,254}$/g)) {
+      this.notificationService.warning('Invalid code', 'The sequence of alphanumeric characters up to 64 symbols in Pascal case is expected. You may use this name at your own risk.');
+    }
+    if (!sd.url.match(/^[^|# ]+$/g)) {
+      this.notificationService.warning('Invalid URL', 'URL should not contain | or # - these characters make processing canonical references problematic');
     }
   }
 
@@ -137,6 +146,7 @@ export class StructureDefinitionEditComponent implements OnInit {
       this.structureDefinition.content = c;
       this.loader.wrap('save', this.structureDefinitionService.save(this.structureDefinition)).subscribe(sd => {
         this.router.navigate(['/modeler/structure-definitions', sd.id, 'edit']);
+        this.loader.wrap('init', this.unmapContent(sd.content, sd.contentFormat)).subscribe();
       });
     });
   }
@@ -194,7 +204,7 @@ export class StructureDefinitionEditComponent implements OnInit {
     structureDefinition.resourceType ||= 'StructureDefinition';
     structureDefinition.kind = this.structureDefinition?.contentType;
     structureDefinition.url = this.structureDefinition?.url;
-    structureDefinition.type = this.structureDefinition?.url;
+    structureDefinition.type = this.structureDefinition.contentFormat === 'json' ? this.structureDefinition?.url : undefined;
     structureDefinition.parent = this.structureDefinition?.parent;
     structureDefinition.version = this.structureDefinition?.version;
     structureDefinition.fhirVersion = '5.0.0';
@@ -314,9 +324,11 @@ export class StructureDefinitionEditComponent implements OnInit {
     return elements.map(el => this.cleanObject(el));
   }
 
-  private showErrors(r: any): void {
-    r.warnings?.forEach(w => this.notificationService.warning('Conversion warning', w.message!, {duration: 0, closable: true}));
-    r.errors?.forEach(e => this.notificationService.error('Conversion failed!', e.message!, {duration: 0, closable: true}));
+  private showErrors(r: any, pref: string, errorsOnly?: boolean): void {
+    if (!errorsOnly) {
+      r.warnings?.forEach(w => this.notificationService.warning(pref + ' conversion warning', w.message!, {duration: 0, closable: true}));
+    }
+    r.errors?.forEach(e => this.notificationService.error(pref + ' conversion failed!', e.message!, {duration: 0, closable: true}));
   }
 
   private embedElement(formElement: FormElement, currentElement: Element): void {

@@ -8,6 +8,7 @@ import {Space} from 'term-web/space/_lib';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 import {TranslateService} from '@ngx-translate/core';
+import {MediaMatcher} from '@angular/cdk/layout';
 
 @Component({
   templateUrl: './wiki-page.component.html',
@@ -22,16 +23,20 @@ export class WikiPageComponent implements OnInit {
 
   protected spaces: WikiSpace[] = [];
   protected loader = new LoadingManager();
+  protected mobileQuery: MediaQueryList;
 
   public constructor(
     protected translateService: TranslateService,
     protected preferences: PreferencesService,
     private spaceService: WikiSpaceService,
     private pageService: PageService,
-    private router: Router,
+    protected router: Router,
     private route: ActivatedRoute,
     private destroy$: DestroyService,
-  ) { }
+    media: MediaMatcher
+  ) {
+    this.mobileQuery = media.matchMedia('(max-width: 992px)');
+  }
 
 
   public ngOnInit(): void {
@@ -93,41 +98,41 @@ export class WikiPageComponent implements OnInit {
   }
 
 
-  /* Link open */
+  /* Link Routes */
 
-  public viewRoot(): void {
-    this.router.navigate(['/wiki', this.activeSpace]);
-  }
+  public viewRootRoute = (): any[] => {
+    return ['/wiki', this.activeSpace];
+  };
 
-  public viewPage(slug: string): void {
-    this.router.navigate(['/wiki', this.activeSpace, slug]);
-  }
+  public viewPageRoute = (slug: string): any[] => {
+    return ['/wiki', this.activeSpace, slug];
+  };
 
-  public editPage(slug: string): void {
-    this.router.navigate(['/wiki', this.activeSpace, slug, 'edit']);
-  }
-
-  public viewResource({type, id, opts}: {type: string, id: string, opts: any}): void {
+  public viewResourceRoute = ({type, id, options}: {type: string, id: string, options: {space?: string}}): any[] => {
     const handlers = {
-      'page': () => this.router.navigate(['/wiki', opts['space'] ?? this.activeSpace, id]),
-      'cs': () => this.router.navigate(['/resources/code-systems/', id, 'summary']),
-      'vs': () => this.router.navigate(['/resources/value-sets/', id, 'summary']),
-      'ms': () => this.router.navigate(['/resources/map-sets/', id, 'view']),
+      'page': () => (['/wiki', options['space'] ?? this.activeSpace, id]),
+      'cs': () => (['/resources/code-systems/', id, 'summary']),
+      'vs': () => (['/resources/value-sets/', id, 'summary']),
+      'ms': () => ['/resources/map-sets/', id, 'view'],
       'concept': () => {
         const [cs, concept] = id.split('|');
         if (cs === 'snomed-ct') {
-          this.router.navigate(['/integration/snomed/dashboard/', concept]);
+          return ['/integration/snomed/dashboard/', concept];
         } else {
-          this.router.navigate(['/resources/code-systems/', cs, 'concepts', concept, 'view']);
+          return ['/resources/code-systems/', cs, 'concepts', concept, 'view'];
         }
       },
     };
 
-    handlers[type]?.();
-  }
+    return handlers[type]?.() ?? ['.'];
+  };
 
-  public viewHistory(): void {
-    this.router.navigate(['/wiki', this.activeSpace, this.slug, 'history']);
+  public viewHistoryRoute = (): any[] => {
+    return ['/wiki', this.activeSpace, this.slug, 'history'];
+  };
+
+  public editPageRoute(slug: string): any[] {
+    return ['/wiki', this.activeSpace, slug, 'edit'];
   }
 
 

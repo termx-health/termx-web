@@ -57,7 +57,7 @@
                 <b>{{'web.wiki-page.details.contents' | translate}}</b>
                 <div>
                   <div *ngFor="let content of page?.contents | sort: 'lang'">
-                    <a (click)="viewPage.emit(content.slug)" [class.m-bold]="content.id === pageContent?.id">
+                    <a [routerLink]="content.slug | apply: viewPageRoute" [class.m-bold]="content.id === pageContent?.id">
                       {{content.lang | uppercase}} | {{content.name}}
                     </a>
                   </div>
@@ -81,7 +81,7 @@
                   <dt>{{('web.wiki-page.details.' + key) | translate}}</dt>
                   <dd>
                     <li style="margin-left: 1rem" *ngFor="let relation of pageRelations[key];">
-                      <a (click)="openRelation(relation.type, relation.target)">
+                      <a [routerLink]="relation.type | apply: relationRoute: relation.target">
                         {{relation.target}}
                       </a>
                     </li>
@@ -99,7 +99,7 @@
                   <div *ngFor="let usage of pageUsages">
                     <a
                         *ngIf="usage.spaceId !== space?.id ? spaces[usage.spaceId]?.code + '/' + usage.content.code : usage.content.code as target"
-                        (click)="openRelation(usage.type, target)"
+                        [routerLink]="usage.type | apply: relationRoute: target"
                     >
                       <m-icon mCode="link"/>
                       {{target}}

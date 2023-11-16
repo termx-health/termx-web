@@ -11,7 +11,7 @@
     </div>
 
     <m-skeleton [mLoading]="loader.isLoading">
-      <div class="space-item m-justify-between" [class.space-item--selected]="!selectedKey" (click)="viewRoot.emit()">
+      <a class="initial space-item m-justify-between" [class.space-item--selected]="!selectedKey" [routerLink]="'' | apply: viewRootRoute">
         <div class="m-items-middle">
           <m-icon mCode="database"/>
           {{'web.wiki-page.sidebar.pages' | translate}}
@@ -20,7 +20,7 @@
         <m-button mSize="small" (mClick)="onChildAdd($event,modal)" *twPrivileged>
           <m-icon mCode="plus"/>
         </m-button>
-      </div>
+      </a>
 
       <tw-drop-list
           style="display: block; margin-left: 1.5rem; border-left: 1px dashed var(--color-borders);"
@@ -34,8 +34,8 @@
           (twMove)="onMove($event)"
       >
         <ng-template #nodeDisplay let-node>
-          <div class="m-justify-between">
-            <div>{{(node.obj.page | apply: localizedContent).name}}</div>
+          <div class="m-justify-between" *ngIf="node.obj.page | apply: localizedContent as lc">
+            <a class="initial" [routerLink]="lc.slug | apply: viewPageRoute">{{lc.name}}</a>
             <m-icon *ngIf="node.obj.page.status === 'active'" mCode="check-circle"/>
           </div>
         </ng-template>

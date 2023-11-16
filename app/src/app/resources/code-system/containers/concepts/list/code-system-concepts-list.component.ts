@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {
   CodeSystem,
   CodeSystemConcept,
@@ -10,9 +10,13 @@ import {
   EntityPropertyValue
 } from 'app/src/app/resources/_lib';
 import {forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
-import {BooleanInput, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import {BooleanInput, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, SearchResult, validateForm} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
+import {NgForm} from '@angular/forms';
+import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
+import {Task} from 'term-web/task/_lib';
+import {TaskService} from 'term-web/task/services/task-service';
 
 interface ConceptNode {
   code: string;
@@ -77,10 +81,14 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   protected selectedConcept: {code: string, version: CodeSystemEntityVersion};
   protected loader = new LoadingManager();
 
+  protected taskModalData: {visible?: boolean, assignee?: string, comment?: string, conceptVersion?: CodeSystemEntityVersion} = {};
+  @ViewChild("taskModalForm") public taskModalForm?: NgForm;
+  @ViewChild(ResourceTasksWidgetComponent) public resourceTasksWidgetComponent?: ResourceTasksWidgetComponent;
 
   public constructor(
     private codeSystemService: CodeSystemService,
     protected translateService: TranslateService,
+    protected taskService: TaskService,
     private stateStore: ComponentStateStore,
   ) {
     this.query.sort = 'code';
@@ -324,5 +332,26 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
 
   protected openFhir(code: string): void {
     window.open(window.location.origin + '/fhir/CodeSystem/' + this.codeSystem.id + '/lookup' + '?_code=' + code, '_blank');
+  }
+
+  protected createTask(): void {
+    if (!validateForm(this.taskModalForm)) {
+      return;
+    }
+
+    const task = new Task();
+    task.workflow ??= 'concept-review';
+    task.assignee = this.taskModalData.assignee;
+    task.title = `Review code system "${this.codeSystem?.id}" concept "${this.taskModalData.conceptVersion.code}"`;
+    task.context = [
+      {type: 'code-system', id: this.codeSystem.id},
+      this.taskModalData.conceptVersion?.id ? {type: 'code-system-entity-version', id: this.taskModalData.conceptVersion.id} : undefined,
+      this.version?.id ? {type: 'code-system-version', id: this.version.id} : undefined
+    ].filter(c => isDefined(c));
+    task.content = this.taskModalData.comment;
+    this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
+      this.taskModalData = {};
+      this.resourceTasksWidgetComponent.loadTasks();
+    });
   }
 }

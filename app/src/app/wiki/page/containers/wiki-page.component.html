@@ -28,9 +28,9 @@
   <div class="page__container">
     <!-- Sidebar -->
     <div class="page__sidebar">
-      <m-collapse-panel mResizable>
+      <m-collapse-panel mResizable [mCollapsed]="mobileQuery.matches">
         <m-skeleton [mLoading]="loader.state['spaces']">
-          <tw-wiki-page-tree-sidebar *ngIf="space" [space]="space" [path]="path" (viewRoot)="viewRoot()" (viewPage)="viewPage($event)"/>
+          <tw-wiki-page-tree-sidebar *ngIf="space" [space]="space" [path]="path" [viewRootRoute]="viewRootRoute" [viewPageRoute]="viewPageRoute"/>
         </m-skeleton>
       </m-collapse-panel>
     </div>
@@ -43,7 +43,7 @@
           *ngIf="isOverviewSelected" class="page__wrapper"
           [space]="space"
           [lang]="translateService.currentLang"
-          (viewPage)="viewPage($event)"
+          [viewPageRoute]="viewPageRoute"
       ></tw-wiki-space-overview>
 
       <!-- Page view -->
@@ -52,11 +52,11 @@
           [space]="space"
           [slug]="slug"
           [page]="page"
-          (viewPage)="viewPage($event)"
-          (editPage)="editPage($event)"
-          (viewResource)="viewResource({type: $event.type, id: $event.id, opts: $event.options})"
-          (viewHistory)="viewHistory()"
-          (pageDeleted)="viewRoot()"
+          [viewPageRoute]="viewPageRoute"
+          [viewResourceRoute]="viewResourceRoute"
+          [viewHistoryRoute]="viewHistoryRoute"
+          (editPage)="router.navigate(editPageRoute($event))"
+          (pageDeleted)="router.navigate(viewRootRoute())"
       ></tw-wiki-page-details>
     </ng-container>
 

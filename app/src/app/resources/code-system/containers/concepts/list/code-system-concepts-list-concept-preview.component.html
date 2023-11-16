@@ -50,17 +50,15 @@
           {{'entities.code-system-entity-version.property-values' | translate}}
         </div>
 
-        <div class="col two-col">
-          <ng-container *ngFor="let pv of version.propertyValues">
-            <div style="text-align: right">
-              {{(pv.entityProperty | apply: getProperty: entityProperties) | entityPropertyName}}
-            </div>
-
-            <tw-property-value-input [ngModel]="pv.value"
-                [property]="pv.entityProperty | apply: getProperty: entityProperties"
-                [codeSystem]="codeSystemId"
-                viewMode/>
-          </ng-container>
+        <div *ngFor="let pv of version.propertyValues" style="display: flex; gap: 1rem">
+          <div style="flex: 1; text-align: right">
+            {{(pv.entityProperty | apply: getProperty: entityProperties) | entityPropertyName}}
+          </div>
+          <tw-property-value-input style="flex: 1"
+              [ngModel]="pv.value"
+              [property]="pv.entityProperty | apply: getProperty: entityProperties"
+              [codeSystem]="codeSystemId"
+              viewMode/>
         </div>
       </div>
 

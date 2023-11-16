@@ -21,6 +21,10 @@
   padding: 0 0.5rem 0 1rem;
   border-radius: 2px;
   height: 2.4rem;
+
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
 }
 
 .drop-container__wrapper {
@@ -67,6 +71,10 @@
     text-overflow: ellipsis;
     user-select: none;
     white-space: nowrap;
+
+    ::ng-deep a[href] {
+      margin: 3px;
+    }
   }
 
   &__actions {

@@ -6,6 +6,11 @@ import {Task, TaskActivity, TaskLibService} from 'term-web/task/_lib';
 export class TaskService extends TaskLibService {
 
   public save(task: Task): Observable<Task> {
+    task.project ??= {code: 'termx'};
+    task.type ??= 'task';
+    task.status ??= 'requested';
+    task.priority ??= 'routine';
+
     if (task.number) {
       return this.http.put<Task>(`${this.baseUrl}/tasks/${task.number}`, task);
     }

@@ -10,6 +10,7 @@ import {WikiComment} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 import {environment} from 'environments/environment';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'tw-wiki-page-details',
@@ -19,10 +20,11 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   @Input() public space: Space;
   @Input() public slug: string;
   @Input() public page: Page;
+
+  @Input() public viewPageRoute: (_slug: string) => any[];
+  @Input() public viewHistoryRoute: (_slug: string) => any[];
+  @Input() public viewResourceRoute: (opts: {type: string, id: string, options: {space?: string}}) => any[];
   @Output() public editPage = new EventEmitter<string>();
-  @Output() public viewPage = new EventEmitter<string>();
-  @Output() public viewResource = new EventEmitter<{type: string, id: string, options: {space?: string}}>();
-  @Output() public viewHistory = new EventEmitter();
   @Output() public pageDeleted = new EventEmitter<Page>();
 
   protected pageContent?: PageContent;
@@ -48,6 +50,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     private pageCommentService: PageCommentService,
     private clipboard: Clipboard,
     private spaceService: WikiSpaceService,
+    private router: Router,
     media: MediaMatcher
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 992px)');
@@ -130,13 +133,13 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     };
   }
 
-  protected openRelation(type: string, target: string): void {
+  protected relationRoute = (type: string, target: string): any[] => {
     const {space, page} = parsePageRelationLink(target);
-    this.viewResource.emit({type: type, id: page, options: {space}});
-  }
+    return this.viewResourceRoute({type: type, id: page, options: {space}});
+  };
 
   protected openHistory(): void {
-    this.viewHistory.emit();
+    this.router.navigate(this.viewHistoryRoute(this.slug))
   }
 
   /* WikiComments */
