@@ -691,6 +691,7 @@
 				"view-header": "View association type"
 			},
 			"list": {
+				"title": "Association types",
 				"add-association-type": "Add association type"
 			}
 		},
@@ -1226,6 +1227,7 @@
 				"view-header": ""
 			},
 			"list": {
+				"title": "Map sets",
 				"add-map-set": "Add map set",
 				"import-fhir": "Import external FHIR definition",
 				"last-version": "Last version",
@@ -1324,6 +1326,9 @@
 				"to": "Period to",
 				"view-header": "View measurement unit"
 			},
+			"list": {
+				"title": "Measurement units"
+			},
 			"mapping": {
 				"list": {
 					"add-mapping": "Add mapping"
@@ -1341,7 +1346,8 @@
 				"view-header": "View naming system"
 			},
 			"list": {
-				"add-naming-system": "Add NamingSystem",
+				"title": "Naming systems",
+				"add-naming-system": "Add naming system",
 				"naming-system": "NamingSystem",
 				"type": "Type"
 			}
@@ -1739,9 +1745,9 @@
 			}
 		},
 		"tools": {
-			"terminology-service-api": {
-				"content": "Terminology Service APIs enable automated exchange of clinical terminology content and resources.",
-				"header": "Terminology Service API"
+			"termx-service-api": {
+				"header": "TermX Service API",
+				"content": "TermX Service APIs empower the automated exchange of clinical terminology content and resources."
 			}
 		},
 		"transformation-definition": {

@@ -1,7 +1,10 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <span>{{'web.naming-system.list.title' | translate}}</span>
+
     <div class="m-items-middle">
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+
       <tw-add-button *twPrivileged="'*.NamingSystem.edit'" [routerLink]="['naming-systems/add']">
         {{'web.naming-system.list.add-naming-system' | translate}}
       </tw-add-button>
@@ -49,7 +52,8 @@
     </tr>
 
     <tr *mTableRowExpand="let ns" class="m-table-expanded-row">
-      <td colspan="7">
+      <td></td>
+      <td colspan="100%">
         <m-form-row mFull>
           <div *mFormCol>
             <m-form-item *ngIf="ns.description" mLabel="entities.naming-system.description">

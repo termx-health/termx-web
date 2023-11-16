@@ -7,7 +7,7 @@
       <span>{{'web.value-set.list.title' | translate}}</span>
     </div>
     <div class="m-items-middle">
-      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
       <m-dropdown *twPrivileged="'*.ValueSet.edit'">
         <tw-add-button *m-dropdown-container icon="down" placement="right">
           {{'web.value-set.list.add-value-set' | translate}}
@@ -63,14 +63,15 @@
     </tr>
 
     <tr *mTableRowExpand="let vs" class="m-table-expanded-row">
+      <td></td>
       <td colspan="100%">
         <m-form-row mFull>
           <div *mFormCol>
             <m-form-item mLabel="entities.value-set.uri">
-              {{vs.uri}}
+              {{vs.uri ?? '-'}}
             </m-form-item>
             <m-form-item mLabel="entities.value-set.description">
-              {{vs.description | localName}}
+              {{vs.description | localName:'-'}}
             </m-form-item>
             <m-form-item mLabel="entities.value-set.versions">
               <div *ngFor="let version of vs.versions">{{

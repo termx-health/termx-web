@@ -6,8 +6,9 @@
       </m-button>
       <span>{{'web.code-system.list.title' | translate}}</span>
     </div>
+
     <div class="m-items-middle">
-      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
       <m-dropdown *twPrivileged="'*.CodeSystem.edit'">
         <tw-add-button *m-dropdown-container icon="down" placement="right">
           {{'web.code-system.list.add-code-system' | translate}}
@@ -68,6 +69,7 @@
     </tr>
 
     <tr *mTableRowExpand="let cs" class="m-table-expanded-row">
+      <td></td>
       <td colspan="100%">
         <div style="display: grid">
           <div><label><b>{{'web.code-system.list.uri' | translate}}:</b> {{cs.uri}}</label></div>

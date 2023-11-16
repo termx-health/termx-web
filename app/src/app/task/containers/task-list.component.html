@@ -1,15 +1,17 @@
 <tw-table [(filterOpen)]="filterOpened">
-  <div class="m-card__title" header>{{'entities.task.plural' | translate}}</div>
+  <div header class="m-justify-between">
+    <span>{{'entities.task.plural' | translate}}</span>
 
-  <div class="m-justify-between" style="margin-bottom: 1rem">
-    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-    <div style="display: flex; gap: 0.5rem">
-      <tw-add-button *twPrivileged="'*.Task.edit'" [routerLink]="['./add']">
-        {{'web.task.add-btn' | translate}}
-      </tw-add-button>
-      <m-button *ngIf="!filterOpened" (mClick)="filterOpened = true">
-        <m-icon mCode="filter"></m-icon>
-      </m-button>
+    <div class="m-items-middle">
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+      <div style="display: flex; gap: 0.5rem">
+        <tw-add-button *twPrivileged="'*.Task.edit'" [routerLink]="['./add']">
+          {{'web.task.add-btn' | translate}}
+        </tw-add-button>
+        <m-button *ngIf="!filterOpened" (mClick)="filterOpened = true">
+          <m-icon mCode="filter"></m-icon>
+        </m-button>
+      </div>
     </div>
   </div>
 

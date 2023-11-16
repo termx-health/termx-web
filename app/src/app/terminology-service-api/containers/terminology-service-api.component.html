@@ -1,18 +1,24 @@
 <m-form-row>
-  <m-card *m-form-col [mTitle]=" 'web.tools.terminology-service-api.header'">
-    <div>
-      <label>{{'web.tools.terminology-service-api.content' | translate}}</label>
-    </div>
-    <m-divider mText="Swagger"></m-divider>
-    <div class="m-items-middle">
-      <m-button mDisplay="primary" mClass="m-justify-between" (click)="openTermXApi()">TermX</m-button>
-      <m-button mDisplay="primary" mClass="m-justify-between" (click)="openTermXFhirApi()">TermX FHIR</m-button>
-      <m-button mDisplay="primary" mClass="m-justify-between" (click)="openSnowstormApi()">Snowstorm</m-button>
-    </div>
-    <m-divider mText="SNOMED CT Browser"></m-divider>
-    <div class="m-items-middle">
-      <m-button mDisplay="primary" mClass="m-justify-between" (click)="openSnowstormBrowser()">Public browser</m-button>
-      <m-button mDisplay="primary" mClass="m-justify-between" (click)="openSnowstormDailyBuildBrowser()">Daily build browser</m-button>
+  <m-card *m-form-col mTitle="web.tools.termx-service-api.header">
+    <div class="tw-flex-container">
+      <div style="margin-bottom: 0.5rem">{{'web.tools.termx-service-api.content' | translate}}</div>
+
+      <m-form-row mGap="1rem">
+        <m-card *m-form-col mDisplay="bordered" mTitle="Swagger">
+          <div class="m-items-middle">
+            <m-button mDisplay="default" (mClick)="openTermXApi()">TermX</m-button>
+            <m-button mDisplay="default" (mClick)="openTermXFhirApi()">TermX FHIR</m-button>
+            <m-button mDisplay="dashed" (mClick)="openSnowstormApi()">Snowstorm</m-button>
+          </div>
+        </m-card>
+
+        <m-card *m-form-col mDisplay="bordered" mTitle="SNOMED CT Browser">
+          <div class="m-items-middle">
+            <m-button mDisplay="default" (mClick)="openSnowstormBrowser()">Public browser</m-button>
+            <m-button mDisplay="dashed" (mClick)="openSnowstormDailyBuildBrowser()">Daily build browser</m-button>
+          </div>
+        </m-card>
+      </m-form-row>
     </div>
   </m-card>
 </m-form-row>

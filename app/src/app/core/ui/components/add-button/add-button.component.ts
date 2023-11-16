@@ -3,7 +3,10 @@ import {MuiBreakpointService} from '@kodality-web/marina-ui';
 
 @Component({
   selector: 'tw-add-button',
-  templateUrl: 'add-button.component.html'
+  templateUrl: 'add-button.component.html',
+  host: {
+    '[tabIndex]' : `-1`
+  }
 })
 export class AddButtonComponent {
   @Input() public icon: string = 'plus';
