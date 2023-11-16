@@ -104,11 +104,18 @@
       </m-table>
     </div>
 
-    <tw-code-system-concepts-list-concept-preview style="flex: 2"
-        *ngIf="selectedConcept?.version"
-        [codeSystemId]="codeSystem.id"
-        [version]="selectedConcept.version"
-        [editRoute]="(selectedConcept.code | apply: getConceptEditRoute)?.path"></tw-code-system-concepts-list-concept-preview>
+    <div *ngIf="selectedConcept?.version" style="flex: 2; display: flex; flex-direction: column; gap: 1rem">
+      <tw-code-system-concepts-list-concept-preview [codeSystemId]="codeSystem.id"
+          [version]="selectedConcept.version"
+          [editRoute]="(selectedConcept.code | apply: getConceptEditRoute)?.path"/>
+      <m-card mDisplay="bordered">
+        <div *m-card-header class="m-justify-between">
+          <label>{{'entities.task.plural' | translate}}</label>
+          <m-button mDisplay="text" (mClick)="taskModalData = {visible: true, conceptVersion: selectedConcept.version}"><m-icon mCode="plus"/>&nbsp; {{'web.code-system-concept.form.add-task' | translate}}</m-button>
+        </div>
+        <tw-resource-tasks-widget resourceType="CodeSystemEntityVersion" [resourceId]="selectedConcept.version.id | toString"/>
+      </m-card>
+    </div>
   </div>
 
 
@@ -152,15 +159,16 @@
       </div>
     </td>
     <td>
-      <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
-        <ng-container *ngFor="let property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableView.properties:codeSystem.properties)">
-          <div class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
-          <tw-property-value-input style="text-align: right"
+      <div>
+        <div style="display: flex"
+            *ngFor="let property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableView.properties:codeSystem.properties)">
+          <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
+          <tw-property-value-input style="flex: 1; text-align: right"
               viewMode
               [ngModel]="property.value"
               [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
               [codeSystem]="codeSystem.id"></tw-property-value-input>
-        </ng-container>
+        </div>
       </div>
     </td>
     <td>
@@ -189,4 +197,29 @@
 
 </tw-table>
 
+<m-modal [(mVisible)]="taskModalData.visible" (mClose)="taskModalData = {visible: false}">
+  <m-title *mModalHeader>
+    {{'web.code-system-concept.form.task-modal.header' | translate}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #taskModalForm="ngForm">
+      <m-form-item mName="assignee" mLabel="entities.task.assignee" required>
+        <tw-user-select name="assignee" [(ngModel)]="taskModalData.assignee" required></tw-user-select>
+      </m-form-item>
+      <m-form-item mName="comment" mLabel="web.code-system-concept.form.task-modal.comment">
+        <m-textarea name="comment" [(ngModel)]="taskModalData.comment"></m-textarea>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="taskModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="createTask()" [mLoading]="loader.isLoading" [disabled]="loader.state['create-task']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>
 

@@ -18,6 +18,9 @@ import {CodeSystemPropertyValueEditComponent} from './propertyvalue/code-system-
 import {CodeSystemAssociationEditComponent} from './association/code-system-association-edit.component';
 import {forkJoin, of} from 'rxjs';
 import {ResourceContextComponent} from 'term-web/resources/resource/components/resource-context.component';
+import {Task} from 'term-web/task/_lib';
+import {TaskService} from 'term-web/task/services/task-service';
+import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 
 @Component({
   templateUrl: './code-system-concept-edit.component.html',
@@ -47,15 +50,20 @@ export class CodeSystemConceptEditComponent implements OnInit {
   public mode: 'add' | 'edit' = 'add';
   protected showOnlyOpenedTasks: boolean = true;
 
+  protected taskModalData: {visible?: boolean, assignee?: string, comment?: string} = {};
+  @ViewChild("taskModalForm") public taskModalForm?: NgForm;
+
   @ViewChild("form") public form?: NgForm;
   @ViewChild("designationEdit") public designationEdit?: CodeSystemDesignationEditComponent;
   @ViewChild("propertyValueEdit") public propertyValueEdit?: CodeSystemPropertyValueEditComponent;
   @ViewChild("associationEdit") public associationEdit?: CodeSystemAssociationEditComponent;
   @ViewChild(ResourceContextComponent) public resourceContextComponent?: ResourceContextComponent;
+  @ViewChild(ResourceTasksWidgetComponent) public resourceTasksWidgetComponent?: ResourceTasksWidgetComponent;
 
   public constructor(
     public codeSystemService: CodeSystemService,
     private route: ActivatedRoute,
+    private taskService: TaskService,
     private location: Location
   ) {}
 
@@ -142,7 +150,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
       .subscribe(() => {
         if (isDefined(this.codeSystemVersion)) {
           this.resourceContextComponent.unselectResourceOrVersion();
-        } else  {
+        } else {
           this.loadConcept(this.concept.code);
         }
       });
@@ -198,11 +206,13 @@ export class CodeSystemConceptEditComponent implements OnInit {
   };
 
   public addDesignation(prop: EntityProperty): void {
-    this.conceptVersion.designations = [...this.designationEdit.designations || [], {designationTypeId: prop.id, designationType: prop.name, status: 'draft', caseSignificance: 'ci'}];
+    this.conceptVersion.designations =
+      [...this.designationEdit.designations || [], {designationTypeId: prop.id, designationType: prop.name, status: 'draft', caseSignificance: 'ci'}];
   }
 
   public addPropertyValue(prop: EntityProperty): void {
-    this.conceptVersion.propertyValues = [...this.conceptVersion.propertyValues || [], {entityPropertyId: prop.id, entityProperty: prop.name, value: prop.type === 'Coding' ? {} : undefined}];
+    this.conceptVersion.propertyValues =
+      [...this.conceptVersion.propertyValues || [], {entityPropertyId: prop.id, entityProperty: prop.name, value: prop.type === 'Coding' ? {} : undefined}];
   }
 
   public addAssociation(): void {
@@ -230,6 +240,27 @@ export class CodeSystemConceptEditComponent implements OnInit {
   };
 
   protected openFhir(code: string): void {
-    window.open(window.location.origin + '/fhir/CodeSystem/' + this.codeSystem.id +'/lookup' + '?_code=' + code, '_blank');
+    window.open(window.location.origin + '/fhir/CodeSystem/' + this.codeSystem.id + '/lookup' + '?_code=' + code, '_blank');
+  }
+
+  protected createTask(): void {
+    if (!validateForm(this.taskModalForm)) {
+      return;
+    }
+
+    const task = new Task();
+    task.workflow ??= 'concept-review';
+    task.assignee = this.taskModalData.assignee;
+    task.title = `Review code system "${this.codeSystemId}" concept "${this.concept.code}"`;
+    task.context = [
+      {type: 'code-system', id: this.codeSystemId},
+      this.conceptVersion?.id ? {type: 'code-system-entity-version', id: this.conceptVersion.id} : undefined,
+      this.codeSystemVersion?.id ? {type: 'code-system-version', id: this.codeSystemVersion.id} : undefined
+    ].filter(c => isDefined(c));
+    task.content = this.taskModalData.comment;
+    this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
+      this.taskModalData = {};
+      this.resourceTasksWidgetComponent.loadTasks();
+    });
   }
 }

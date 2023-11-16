@@ -819,9 +819,14 @@
 				"linked-with-code-systems": "Linked with code system versions",
 				"opened-tasks": "Opened tasks",
 				"related-artifacts": "Related artifacts",
+				"add-task": "Add task",
 				"version": {
 					"header": "Version {{created}}",
 					"new": "New version"
+				},
+				"task-modal": {
+					"header": "Create task",
+					"comment": "Comment"
 				}
 			},
 			"list": {

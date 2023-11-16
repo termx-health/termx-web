@@ -71,7 +71,7 @@
       <label *ngIf="'dateTime' === property?.type">{{value | localDate}}</label>
       <label *ngIf="'code' === property?.type">{{value | localizedConceptName: {codeSystem: codeSystem} | async}}</label>
       <ng-container *ngIf="'Coding' === property?.type" [ngSwitch]="property | apply:codingType">
-        {{value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async}}
+        <label m-tooltip [mTitle]="value?.code" >{{value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async}}</label>
       </ng-container>
     </ng-container>
   </m-form-control>

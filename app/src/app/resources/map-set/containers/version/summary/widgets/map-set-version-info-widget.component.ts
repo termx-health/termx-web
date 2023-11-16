@@ -82,11 +82,7 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
     }
 
     const task = new Task();
-    task.project = {code: 'termx'};
     task.workflow = 'version-' + this.taskModalData.type;
-    task.type = 'task';
-    task.status = 'requested';
-    task.priority = 'routine';
     task.assignee = this.taskModalData.assignee;
     task.title = 'Map Set "' + this.version.mapSet + '" version "' + this.version.version + '" ' + this.taskModalData.type;
     task.content = (this.taskModalData.type === 'review' ? 'Review' : 'Approve')  +

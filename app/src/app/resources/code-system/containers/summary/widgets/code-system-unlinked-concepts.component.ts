@@ -94,11 +94,7 @@ export class CodeSystemUnlinkedConceptsComponent implements OnInit {
     }
 
     const task = new Task();
-    task.project = {code: 'termx'};
     task.workflow = 'concept-approval';
-    task.type = 'task';
-    task.status = 'requested';
-    task.priority = 'routine';
     task.assignee = this.taskModalData.assignee;
     task.title = 'Approve code system "' + this.codeSystem + '" concepts';
     task.context = [{type: 'code-system', id: this.codeSystem}, {type: 'code-system-entity-version', id: this.taskModalData.entityVersionId}];

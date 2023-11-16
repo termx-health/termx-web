@@ -67,16 +67,14 @@
             </div>
           </td>
           <td>
-            <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
-              <ng-container *ngFor="let property of (concept | apply:getPropertyValues)">
+            <div style="display: flex"  *ngFor="let property of (concept | apply:getPropertyValues)">
                 <ng-container *ngIf="!tableView.properties?.length || (tableView.properties | includes: property.entityProperty)">
-                  <div class="m-bold">{{property.entityProperty}}</div>
-                  <tw-property-value-input style="text-align: right"
+                  <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
+                  <tw-property-value-input style="flex: 1; text-align: right"
                       viewMode
                       [ngModel]="property.value"
                       [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
                       [codeSystem]="codeSystem.id"></tw-property-value-input>
-                </ng-container>
               </ng-container>
             </div>
           </td>
