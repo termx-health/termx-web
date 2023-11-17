@@ -111,9 +111,14 @@
       <m-card mDisplay="bordered">
         <div *m-card-header class="m-justify-between">
           <label>{{'entities.task.plural' | translate}}</label>
-          <m-button mDisplay="text" (mClick)="taskModalData = {visible: true, conceptVersion: selectedConcept.version}"><m-icon mCode="plus"/>&nbsp; {{'web.code-system-concept.form.add-task' | translate}}</m-button>
+          <m-button *ngIf="[codeSystem.id + '.CodeSystem.edit', '*.Task.edit'] | twHasAllPrivileges" mDisplay="text" (mClick)="taskModalData = {visible: true, conceptVersion: selectedConcept.version}">
+            <m-icon mCode="plus"/>&nbsp; {{'web.code-system-concept.form.add-task' | translate}}</m-button>
         </div>
-        <tw-resource-tasks-widget resourceType="CodeSystemEntityVersion" [resourceId]="selectedConcept.version.id | toString"/>
+        <tw-resource-tasks-widget resourceType="CodeSystemEntityVersion"
+            openInNewTab
+            [displayType]="(codeSystem.id + '.CodeSystem.edit' | twPrivileged) ? 'content' : 'full'"
+            [taskFilters]="{statuses: ['requested']}"
+            [resourceId]="selectedConcept.version.id | toString"/>
       </m-card>
     </div>
   </div>

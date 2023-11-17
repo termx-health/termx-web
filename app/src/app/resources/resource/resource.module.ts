@@ -11,13 +11,15 @@ import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/componen
 import {ResourceRelatedArtifactWidgetComponent} from 'term-web/resources/resource/components/resource-related-artifact-widget.component';
 import {ResourceFhirImportModalComponent} from 'term-web/resources/resource/components/resource-fhir-import-modal-component';
 import {TaskLibModule} from 'term-web/task/_lib';
+import {WikiLibModule} from 'term-web/wiki/_lib';
 
 
 @NgModule({
   imports: [
     CoreUiModule,
     ResourcesLibModule,
-    TaskLibModule
+    TaskLibModule,
+    WikiLibModule
   ],
   exports: [
     ResourceContactsComponent,

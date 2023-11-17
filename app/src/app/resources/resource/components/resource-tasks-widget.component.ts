@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {isDefined} from '@kodality-web/core-util';
+import {BooleanInput, isDefined} from '@kodality-web/core-util';
 import {Task, TaskLibService} from 'term-web/task/_lib';
 import {Router} from '@angular/router';
 
@@ -11,6 +11,8 @@ export class ResourceTasksWidgetComponent implements OnChanges {
   @Input() public resourceId: string;
   @Input() public taskFilters: {statuses?: string[]};
   @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'CodeSystemVersion' | 'ValueSetVersion' | 'MapSetVersion' | 'CodeSystemEntityVersion';
+  @Input() public displayType: 'full' | 'content' = 'full';
+  @Input() @BooleanInput() public openInNewTab: boolean | string = false;
 
   protected tasks: Task[];
 
@@ -33,7 +35,11 @@ export class ResourceTasksWidgetComponent implements OnChanges {
   }
 
   protected openTask(number: string): void {
-    this.router.navigate(['/tasks', number, 'edit']);
+    if (this.openInNewTab) {
+      window.open(window.location.origin + '/tasks/' + number + '/edit', '_blank');
+    } else {
+      this.router.navigate(['/tasks', number, 'edit']);
+    }
   }
 
   protected filterTask = (task: Task, filters: {statuses: string[]}): boolean => {
