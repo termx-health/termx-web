@@ -6,8 +6,8 @@
       (mRowEdit)="resourcesChanged.emit()"
       (mAfterSubmit)="resourcesChanged.emit()"
       (mAfterDelete)="resourcesChanged.emit()"
-      [mEditAllowed]="(ig + '.ImplementationGuide.edit') | twPrivileged"
-      [mDeleteAllowed]="(ig + '.ImplementationGuide.edit') | twPrivileged">
+      [mEditAllowed]="editable"
+      [mDeleteAllowed]="editable">
     <m-editable-column [mTitle]="'entities.implementation-guide-version.resource.type'" mName="type">
       <ng-template #viewTemplate let-r>{{r.type}}</ng-template>
       <ng-template #editTemplate let-r let-ngModelName="ngModelName">
@@ -20,8 +20,8 @@
       <ng-template #viewTemplate let-r>{{r.reference}}</ng-template>
       <ng-template #editTemplate let-r let-ngModelName="ngModelName">
         <ng-container [ngSwitch]="r.type">
-          <tw-transformation-definition-select *ngSwitchCase="'StructureMap'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>
-          <tw-structure-definition-select *ngSwitchCase="'StructureDefinition'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.code" required valuePrimitive/>
+          <tw-transformation-definition-select *ngSwitchCase="'StructureMap'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valueType="name"/>
+          <tw-structure-definition-select *ngSwitchCase="'StructureDefinition'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.code" required valueType="code"/>
           <tw-code-system-search *ngSwitchCase="'CodeSystem'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>
           <tw-value-set-search *ngSwitchCase="'ValueSet'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>
           <tw-map-set-search *ngSwitchCase="'MapSet'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>

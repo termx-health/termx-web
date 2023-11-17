@@ -1,19 +1,22 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {BooleanInput, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
-import {ImplementationGuideLibService, ImplementationGuideVersion, ImplementationGuideVersionResource} from 'term-web/implementation-guide/_lib';
+import {
+  ImplementationGuideLibService,
+  ImplementationGuideVersion,
+  ImplementationGuideVersionPage} from 'term-web/implementation-guide/_lib';
 
 @Component({
-  selector: 'tw-implementation-guide-resource-list',
-  templateUrl: './implementation-guide-resource-list.component.html',
+  selector: 'tw-implementation-guide-page-list',
+  templateUrl: './implementation-guide-page-list.component.html',
 })
-export class ImplementationGuideResourceListComponent implements OnChanges {
+export class ImplementationGuidePageListComponent implements OnChanges {
   @Input() public ig: string;
   @Input() public igVersion: ImplementationGuideVersion;
   @Input() @BooleanInput() public editable: string | boolean;
-  @Output() public resourcesChanged: EventEmitter<void> = new EventEmitter<void>();
+  @Output() public pagesChanged: EventEmitter<void> = new EventEmitter<void>();
 
-  public resources: ImplementationGuideVersionResource[];
+  public pages: ImplementationGuideVersionPage[];
 
   protected loader = new LoadingManager();
 
@@ -28,8 +31,8 @@ export class ImplementationGuideResourceListComponent implements OnChanges {
   }
 
   protected addRow(): void {
-    this.resources = [...this.resources, {}];
-    this.resourcesChanged.emit();
+    this.pages = [...this.pages, {}];
+    this.pagesChanged.emit();
   }
 
   public validate(): boolean {
@@ -37,6 +40,6 @@ export class ImplementationGuideResourceListComponent implements OnChanges {
   }
 
   public loadData(ig: string, version: string): void {
-    this.loader.wrap('load', this.igService.loadVersionResources(ig, version)).subscribe(r => this.resources = r);
+    this.loader.wrap('load', this.igService.loadVersionPages(ig, version)).subscribe(r => this.pages = r);
   }
 }

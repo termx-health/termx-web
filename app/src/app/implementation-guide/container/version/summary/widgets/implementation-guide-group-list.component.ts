@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {isDefined, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {ImplementationGuideVersionGroup} from 'term-web/implementation-guide/_lib';
 
@@ -10,6 +10,7 @@ import {ImplementationGuideVersionGroup} from 'term-web/implementation-guide/_li
 export class ImplementationGuideGroupListComponent implements OnChanges {
   @Input() public ig: string;
   @Input() public groups: ImplementationGuideVersionGroup[];
+  @Input() @BooleanInput() public editable: string | boolean;
   @Output() public groupsChanged: EventEmitter<void> = new EventEmitter<void>();
 
 

@@ -27,6 +27,9 @@ import {
   ImplementationGuideResourceListComponent
 } from 'term-web/implementation-guide/container/version/summary/widgets/implementation-guide-resource-list.component';
 import {ModelerLibModule} from 'term-web/modeler/_lib';
+import {ImplementationGuidePageListComponent} from 'term-web/implementation-guide/container/version/summary/widgets/implementation-guide-page-list.component';
+import {SpaceLibModule} from 'term-web/space/_lib';
+import {WikiLibModule} from 'term-web/wiki/_lib';
 
 const EDIT = {privilege: ['{id}.ImplementationGuide.edit']};
 const VIEW = {privilege: ['{id}.ImplementationGuide.view']};
@@ -57,7 +60,8 @@ export const IG_ROUTES: Routes = [
     ImplementationGuideVersionSummaryComponent,
     ImplementationGuideVersionInfoWidgetComponent,
     ImplementationGuideGroupListComponent,
-    ImplementationGuideResourceListComponent
+    ImplementationGuideResourceListComponent,
+    ImplementationGuidePageListComponent
   ],
   imports: [
     CoreUiModule,
@@ -67,7 +71,9 @@ export const IG_ROUTES: Routes = [
     CodeSystemLibModule,
     SysLibModule,
     MapSetLibModule,
-    ModelerLibModule
+    ModelerLibModule,
+    SpaceLibModule,
+    WikiLibModule
   ],
   providers: [
     ImplementationGuideService

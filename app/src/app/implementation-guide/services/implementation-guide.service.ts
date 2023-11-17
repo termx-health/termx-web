@@ -4,7 +4,7 @@ import {
   ImplementationGuideLibService,
   ImplementationGuideTransactionRequest,
   ImplementationGuideVersion,
-  ImplementationGuideVersionGroup, ImplementationGuideVersionResource
+  ImplementationGuideVersionGroup, ImplementationGuideVersionPage, ImplementationGuideVersionResource
 } from 'term-web/implementation-guide/_lib';
 
 @Injectable()
@@ -51,5 +51,9 @@ export class ImplementationGuideService extends ImplementationGuideLibService {
 
   public saveVersionResource(ig: string, version: string, resources: ImplementationGuideVersionResource[]): Observable<any> {
     return this.http.post(`${this.baseUrl}/${ig}/versions/${version}/resources`, resources);
+  }
+
+  public saveVersionPages(ig: string, version: string, resources: ImplementationGuideVersionPage[]): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${ig}/versions/${version}/pages`, resources);
   }
 }

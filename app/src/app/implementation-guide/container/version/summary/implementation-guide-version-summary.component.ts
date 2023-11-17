@@ -8,6 +8,7 @@ import {ImplementationGuideGroupListComponent} from 'term-web/implementation-gui
 import {
   ImplementationGuideResourceListComponent
 } from 'term-web/implementation-guide/container/version/summary/widgets/implementation-guide-resource-list.component';
+import {ImplementationGuidePageListComponent} from 'term-web/implementation-guide/container/version/summary/widgets/implementation-guide-page-list.component';
 
 @Component({
   templateUrl: 'implementation-guide-version-summary.component.html'
@@ -21,6 +22,8 @@ export class ImplementationGuideVersionSummaryComponent implements OnInit {
   @ViewChild(ImplementationGuideGroupListComponent) public groupListComponent?: ImplementationGuideGroupListComponent;
   protected resourcesChanged: boolean;
   @ViewChild(ImplementationGuideResourceListComponent) public resourceListComponent?: ImplementationGuideResourceListComponent;
+  protected pagesChanged: boolean;
+  @ViewChild(ImplementationGuidePageListComponent) public pageListComponent?: ImplementationGuidePageListComponent;
 
   public constructor(
     private route: ActivatedRoute,
@@ -47,7 +50,10 @@ export class ImplementationGuideVersionSummaryComponent implements OnInit {
       return;
     }
     this.loader.wrap('save', this.igService.saveVersionGroups(this.ig.id, this.igVersion.version, this.groupListComponent.groups))
-      .subscribe(() => this.loadData(this.ig.id, this.igVersion.version));
+      .subscribe(() => {
+        this.loadData(this.ig.id, this.igVersion.version);
+        this.groupsChanged = false;
+      });
   }
 
   public saveResources(): void {
@@ -55,6 +61,20 @@ export class ImplementationGuideVersionSummaryComponent implements OnInit {
       return;
     }
     this.loader.wrap('save', this.igService.saveVersionResource(this.ig.id, this.igVersion.version, this.resourceListComponent.resources))
-      .subscribe(() => this.resourceListComponent.loadData(this.ig.id, this.igVersion.version));
+      .subscribe(() => {
+        this.resourceListComponent.loadData(this.ig.id, this.igVersion.version);
+        this.resourcesChanged = false;
+      });
+  }
+
+  public savePages(): void {
+    if (!this.pageListComponent.validate()){
+      return;
+    }
+    this.loader.wrap('save', this.igService.saveVersionPages(this.ig.id, this.igVersion.version, this.pageListComponent.pages))
+      .subscribe(() => {
+        this.pageListComponent.loadData(this.ig.id, this.igVersion.version);
+        this.pagesChanged = false;
+      });
   }
 }

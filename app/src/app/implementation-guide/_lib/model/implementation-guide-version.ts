@@ -1,4 +1,4 @@
-import {LocalizedName} from '@kodality-web/marina-util';
+import {CodeName, LocalizedName} from '@kodality-web/marina-util';
 
 export class ImplementationGuideVersion {
   public id?: number;
@@ -15,6 +15,7 @@ export class ImplementationGuideVersion {
   public dependsOn?: ImplementationGuideVersionDependsOn[];
   public groups?: ImplementationGuideVersionGroup[];
   public resources?: ImplementationGuideVersionResource[];
+  public pages?: ImplementationGuideVersionPage[];
 }
 
 export class ImplementationGuideVersionDependsOn {
@@ -35,5 +36,14 @@ export class ImplementationGuideVersionResource {
   public reference?: string;
   public version?: string;
   public name?: string;
+  public group?: ImplementationGuideVersionGroup;
+}
+
+export class ImplementationGuideVersionPage {
+  public id?: number;
+  public space?: CodeName;
+  public page?: string;
+  public name?: string;
+  public type?: string;
   public group?: ImplementationGuideVersionGroup;
 }

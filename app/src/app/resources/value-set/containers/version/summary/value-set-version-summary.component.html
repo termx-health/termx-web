@@ -5,7 +5,7 @@
       <!-- ValueSetVersion info -->
       <m-card>
         <m-title *m-card-header mTitle="web.value-set-version.summary.value-set-version">
-          <m-button *ngIf="valueSetVersion?.status === 'draft' && 'edit' | twPrivileged"
+          <m-button *ngIf="valueSetVersion?.status === 'draft' && ('edit' | twPrivileged)"
               mControls
               mDisplay="text"
               [routerLink]="['/resources/value-sets', valueSet?.id, 'versions', valueSetVersion?.version, 'edit']">
@@ -19,7 +19,7 @@
       <!-- RuleSet -->
       <m-card>
         <m-title *m-card-header mTitle="web.value-set-version.summary.rule-set">
-          <m-button *ngIf="valueSetVersion?.status === 'draft' && 'edit' | twPrivileged" mControls mDisplay="text" mShape="circle" (mClick)="addRule()">
+          <m-button *ngIf="valueSetVersion?.status === 'draft' && ('edit' | twPrivileged)" mControls mDisplay="text" mShape="circle" (mClick)="addRule()">
             <m-icon mCode="plus"></m-icon>
           </m-button>
         </m-title>

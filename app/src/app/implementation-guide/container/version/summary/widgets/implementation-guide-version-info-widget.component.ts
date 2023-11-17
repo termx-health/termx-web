@@ -1,6 +1,5 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {compareDates, isDefined, LoadingManager} from '@kodality-web/core-util';
-import {Provenance} from 'term-web/sys/_lib';
+import {Component, Input} from '@angular/core';
+import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {ImplementationGuide, ImplementationGuideVersion, ImplementationGuideVersionDependsOn} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 

@@ -6,8 +6,8 @@
       (mRowEdit)="groupsChanged.emit()"
       (mAfterSubmit)="groupsChanged.emit()"
       (mAfterDelete)="groupsChanged.emit()"
-      [mEditAllowed]="(ig + '.ImplementationGuide.edit') | twPrivileged"
-      [mDeleteAllowed]="(ig + '.ImplementationGuide.edit') | twPrivileged">
+      [mEditAllowed]="editable"
+      [mDeleteAllowed]="editable">
     <m-editable-column [mTitle]="'entities.implementation-guide-version.group.name'" mName="name">
       <ng-template #viewTemplate let-g>{{g.name}}</ng-template>
       <ng-template #editTemplate let-g let-ngModelName="ngModelName" required>

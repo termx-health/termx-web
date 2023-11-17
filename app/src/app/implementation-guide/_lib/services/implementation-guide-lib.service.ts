@@ -7,7 +7,7 @@ import {
   ImplementationGuideVersion,
   ImplementationGuideSearchParams,
   ImplementationGuideVersionSearchParams,
-  ImplementationGuideVersionResource
+  ImplementationGuideVersionResource, ImplementationGuideVersionPage
 } from 'term-web/implementation-guide/_lib';
 import {ImplementationGuide} from '../model/implementation-guide';
 import {Provenance} from 'term-web/sys/_lib';
@@ -32,6 +32,10 @@ export class ImplementationGuideLibService {
 
   public loadVersionResources(ig: string, version: string): Observable<ImplementationGuideVersionResource[]> {
     return this.http.get<ImplementationGuideVersionResource[]>(`${this.baseUrl}/${ig}/versions/${version}/resources`);
+  }
+
+  public loadVersionPages(ig: string, version: string): Observable<ImplementationGuideVersionPage[]> {
+    return this.http.get<ImplementationGuideVersionPage[]>(`${this.baseUrl}/${ig}/versions/${version}/pages`);
   }
 
   public searchVersions(ig: string, params: ImplementationGuideVersionSearchParams = {}): Observable<SearchResult<ImplementationGuideVersion>> {
