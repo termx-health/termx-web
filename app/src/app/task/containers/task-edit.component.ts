@@ -31,9 +31,13 @@ class TaskContextLinkService {
         this.router.navigate(['/resources/code-systems', codeSystem, 'versions', version, 'summary']);
       });
     },
-    'code-system-entity-version': (ctx: TaskContextItem): void => {
+    'concept-version': (ctx: TaskContextItem): void => {
       this.codeSystemEntityVersionService.load(ctx.id).subscribe(({id, codeSystem, code}) => {
-        this.router.navigate(['/resources/code-systems', codeSystem, 'concepts', code, 'view'], {queryParams: {conceptVersionId: id}});
+        if (this.auth.hasAnyPrivilege([codeSystem + '.CodeSystem.edit'])) {
+          this.router.navigate(['/resources/code-systems', codeSystem, 'concepts', code, 'edit'], {queryParams: {conceptVersionId: id}});
+        } else {
+          this.router.navigate(['/resources/code-systems', codeSystem, 'concepts', code, 'view'], {queryParams: {conceptVersionId: id}});
+        }
       });
     },
 
@@ -70,6 +74,7 @@ class TaskContextLinkService {
 
   public constructor(
     private router: Router,
+    private auth: AuthService,
     private codeSystemEntityVersionService: CodeSystemEntityVersionLibService,
     private codeSystemVersionService: CodeSystemVersionLibService,
     private mapSetVersionService: MapSetVersionLibService,

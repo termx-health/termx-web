@@ -80,7 +80,7 @@ export class CodeSystemUnlinkedConceptsComponent implements OnInit {
     if (!ids || ids.length < 1) {
       return;
     }
-    this.loader.wrap('load-tasks', this.taskService.searchTasks({context: ids.map(id => 'code-system-entity-version|' + id).join(','), limit: -1}))
+    this.loader.wrap('load-tasks', this.taskService.searchTasks({context: ids.map(id => 'concept-version|' + id).join(','), limit: -1}))
       .subscribe(tasks => this.tasks = tasks.data);
   }
 
@@ -97,7 +97,7 @@ export class CodeSystemUnlinkedConceptsComponent implements OnInit {
     task.workflow = 'concept-approval';
     task.assignee = this.taskModalData.assignee;
     task.title = 'Approve code system "' + this.codeSystem + '" concepts';
-    task.context = [{type: 'code-system', id: this.codeSystem}, {type: 'code-system-entity-version', id: this.taskModalData.entityVersionId}];
+    task.context = [{type: 'code-system', id: this.codeSystem}, {type: 'concept-version', id: this.taskModalData.entityVersionId}];
     if (this.taskModalData.codeSystemVersionId) {
       task.content = "On task approve linkage with code system version will be created";
       task.context.push({type: 'code-system-version', id: this.taskModalData.codeSystemVersionId});

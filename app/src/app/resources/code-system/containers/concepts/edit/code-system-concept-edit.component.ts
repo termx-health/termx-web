@@ -254,7 +254,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
     task.title = `Review code system "${this.codeSystemId}" concept "${this.concept.code}"`;
     task.context = [
       {type: 'code-system', id: this.codeSystemId},
-      this.conceptVersion?.id ? {type: 'code-system-entity-version', id: this.conceptVersion.id} : undefined,
+      this.conceptVersion?.id ? {type: 'concept-version', id: this.conceptVersion.id} : undefined,
       this.codeSystemVersion?.id ? {type: 'code-system-version', id: this.codeSystemVersion.id} : undefined
     ].filter(c => isDefined(c));
     task.content = this.taskModalData.comment;

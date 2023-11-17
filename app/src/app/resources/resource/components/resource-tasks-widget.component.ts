@@ -23,7 +23,7 @@ export class ResourceTasksWidgetComponent implements OnChanges {
     'CodeSystemVersion': 'code-system-version',
     'ValueSetVersion': 'value-set-version',
     'MapSetVersion': 'map-set-version',
-    'CodeSystemEntityVersion': 'code-system-entity-version'
+    'CodeSystemEntityVersion': 'concept-version'
   };
 
   public constructor(private taskLibService: TaskLibService, private router: Router) {}

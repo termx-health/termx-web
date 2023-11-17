@@ -9,6 +9,7 @@ import {PreferencesService} from 'term-web/core/preferences/preferences.service'
 import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 import {TranslateService} from '@ngx-translate/core';
 import {MediaMatcher} from '@angular/cdk/layout';
+import {AuthService} from 'term-web/core/auth';
 
 @Component({
   templateUrl: './wiki-page.component.html',
@@ -26,6 +27,7 @@ export class WikiPageComponent implements OnInit {
   protected mobileQuery: MediaQueryList;
 
   public constructor(
+    protected auth: AuthService,
     protected translateService: TranslateService,
     protected preferences: PreferencesService,
     private spaceService: WikiSpaceService,
@@ -119,6 +121,9 @@ export class WikiPageComponent implements OnInit {
         if (cs === 'snomed-ct') {
           return ['/integration/snomed/dashboard/', concept];
         } else {
+          if (this.auth.hasAnyPrivilege([cs + '.CodeSystem.edit'])) {
+            return ['/resources/code-systems/', cs, 'concepts', concept, 'edit'];
+          }
           return ['/resources/code-systems/', cs, 'concepts', concept, 'view'];
         }
       },
