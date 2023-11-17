@@ -1,7 +1,10 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <span>{{'web.association-type.list.title' | translate}}</span>
+
     <div class="m-items-middle">
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+
       <tw-add-button *twPrivileged="'*.AssociationType.edit'" [routerLink]="['add']">
         {{'web.association-type.list.add-association-type' | translate}}
       </tw-add-button>
@@ -44,6 +47,7 @@
     </tr>
 
     <tr *mTableRowExpand="let at" class="m-table-expanded-row">
+      <td></td>
       <td colspan="100%">
         <m-form-row mFull>
           <div *mFormCol>

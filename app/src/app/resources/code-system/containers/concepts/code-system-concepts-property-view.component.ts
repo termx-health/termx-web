@@ -99,7 +99,8 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
   private search(): Observable<SearchResult<CodeSystemConcept>> {
     const q = copyDeep(this.query);
     q.codeSystemVersion = this.version?.version;
-    q.propertyValues = this.selectedPropertyValues?.filter(pv => pv.values?.length > 0).map(pv => pv.propertyName + '|' + pv.values.map(v => v.code).join(',')).join(';');
+    q.propertyValues =
+      this.selectedPropertyValues?.filter(pv => pv.values?.length > 0).map(pv => pv.propertyName + '|' + pv.values.map(v => v.code).join(',')).join(';');
     return this.loader.wrap('search', this.codeSystemService.searchConcepts(this.codeSystem.id, q));
   }
 
@@ -153,13 +154,20 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
     this.loadConceptSummary(this.codeSystem.id, this.version?.version, this.selectedProperty?.propertyId);
   }
 
-  protected valueSelected = (code: string, selectedPropertyValues: {propertyName: string, values: {code: string, codeSystem: string}[]}[], propertyName?: string): boolean => {
+  protected valueSelected = (code: string, selectedPropertyValues: {propertyName: string, values: {code: string, codeSystem: string}[]}[],
+    propertyName?: string): boolean => {
     propertyName = propertyName || this.selectedProperty.propertyName;
     return !!selectedPropertyValues?.find(p => p.propertyName === propertyName && p.values.map(v => v.code).includes(code));
   };
 
   protected getConceptCnt = (code: string, conceptSummary: CodeSystemEntityPropertyConceptSummary): number => {
     return conceptSummary?.items?.find(i => i.propertyCode === code)?.conceptCnt || 0;
+  };
+
+
+  protected decorate = (items: CodeSystemEntityPropertySummaryItem[], properties: EntityProperty[]): CodeSystemEntityPropertySummaryItem[] => {
+    items.forEach(i => i['_property'] = this.getProperty(i.propertyId, properties));
+    return items;
   };
 
   public loadSummary(cs: string, version: string): void {
@@ -181,7 +189,7 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
     }
     const epValues = this.selectedPropertyValues?.flatMap(v => v.values?.map(v => v.code))?.join(",");
     const url = `${environment.termxApi}/ts/code-systems/${cs}` +
-      (isDefined(version) ? `/versions/${version}` : '') + `/entity-property-concept-summary?entityPropertyId=${pId}`+
+      (isDefined(version) ? `/versions/${version}` : '') + `/entity-property-concept-summary?entityPropertyId=${pId}` +
       (isDefined(epValues) ? `&entityPropertyValues=${epValues}` : '');
     this.loader.wrap('prop', this.http.get<CodeSystemEntityPropertyConceptSummary>(url)).subscribe(r => this.propertyConceptSummary = r);
   }
