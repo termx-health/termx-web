@@ -11,6 +11,7 @@ import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {RouterModule} from '@angular/router';
 import {MapSetFileImportService} from 'term-web/resources/_lib/map-set/services/map-set-file-import.service';
 import {TranslateModule} from '@ngx-translate/core';
+import {MapSetVersionSelectComponent} from './containers/map-set-version-select.component';
 
 
 @NgModule({
@@ -30,11 +31,13 @@ import {TranslateModule} from '@ngx-translate/core';
   ],
   declarations: [
     MapSetSearchComponent,
-    MapSetWidgetComponent
+    MapSetWidgetComponent,
+    MapSetVersionSelectComponent
   ],
   exports: [
     MapSetSearchComponent,
-    MapSetWidgetComponent
+    MapSetWidgetComponent,
+    MapSetVersionSelectComponent
   ]
 })
 export class MapSetLibModule {

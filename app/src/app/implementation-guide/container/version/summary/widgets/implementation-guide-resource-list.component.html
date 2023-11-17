@@ -20,10 +20,10 @@
       <ng-template #viewTemplate let-r>{{r.reference}}</ng-template>
       <ng-template #editTemplate let-r let-ngModelName="ngModelName">
         <ng-container [ngSwitch]="r.type">
-          <tw-structure-definition-select *ngSwitchCase="'StructureDefinition'" [name]="ngModelName" [(ngModel)]="r.reference" required valuePrimitive/>
-          <tw-code-system-search *ngSwitchCase="'CodeSystem'" [name]="ngModelName" [(ngModel)]="r.reference" required valuePrimitive/>
-          <tw-value-set-search *ngSwitchCase="'ValueSet'" [name]="ngModelName" [(ngModel)]="r.reference" required valuePrimitive/>
-          <tw-map-set-search *ngSwitchCase="'MapSet'" [name]="ngModelName" [(ngModel)]="r.reference" required valuePrimitive/>
+          <tw-structure-definition-select *ngSwitchCase="'StructureDefinition'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.code" required valuePrimitive/>
+          <tw-code-system-search *ngSwitchCase="'CodeSystem'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>
+          <tw-value-set-search *ngSwitchCase="'ValueSet'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>
+          <tw-map-set-search *ngSwitchCase="'MapSet'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>
           <m-input *ngSwitchDefault [name]="ngModelName" [(ngModel)]="r.reference" required/>
         </ng-container>
       </ng-template>
@@ -32,9 +32,9 @@
       <ng-template #viewTemplate let-r>{{r.version}}</ng-template>
       <ng-template #editTemplate let-r let-ngModelName="ngModelName">
         <ng-container [ngSwitch]="r.type">
-          <tw-code-system-version-select *ngSwitchCase="'CodeSystem'" [name]="ngModelName" [(ngModel)]="r.version" [codeSystemId]="r.reference" required valuePrimitive/>
-          <tw-value-set-version-select *ngSwitchCase="'ValueSet'" [name]="ngModelName" [(ngModel)]="r.version" [valueSetId]="r.reference" required valuePrimitive/>
-          <m-input *ngSwitchDefault [name]="ngModelName" [(ngModel)]="r.version" required/>
+          <tw-code-system-version-select *ngSwitchCase="'CodeSystem'" [name]="ngModelName" [(ngModel)]="r.version" [codeSystemId]="r.reference" required valueType="version"/>
+          <tw-value-set-version-select *ngSwitchCase="'ValueSet'" [name]="ngModelName" [(ngModel)]="r.version" [valueSetId]="r.reference" required valueType="version"/>
+          <tw-map-set-version-select *ngSwitchCase="'MapSet'" [name]="ngModelName" [(ngModel)]="r.version" [mapSetId]="r.reference" required valueType="version"/>
         </ng-container>
       </ng-template>
     </m-editable-column>
@@ -47,7 +47,7 @@
     <m-editable-column [mTitle]="'entities.implementation-guide-version.resource.group'" mName="group">
       <ng-template #viewTemplate let-r>{{r.group?.name}}</ng-template>
       <ng-template #editTemplate let-r let-ngModelName="ngModelName">
-        <m-select [name]="ngModelName" [(ngModel)]="r.group" compareWith="id">
+        <m-select [name]="ngModelName" [(ngModel)]="r.group" autoSelect compareWith="id" required>
           <m-option *ngFor="let g of igVersion?.groups" [mLabel]="g.name" [mValue]="g"></m-option>
         </m-select>
       </ng-template>

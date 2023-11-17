@@ -1,10 +1,10 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
+import {DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {takeUntil} from 'rxjs';
 import {ValueSetVersion} from '../model/value-set-version';
 import {ValueSetLibService} from '../services/value-set-lib.service';
-import {ValueSetVersionLibService} from '../services/value-set-version-lib.service';
+import {ValueSetVersionSearchParams} from 'term-web/resources/_lib';
 
 
 @Component({
@@ -14,10 +14,10 @@ import {ValueSetVersionLibService} from '../services/value-set-version-lib.servi
 })
 export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAccessor {
   @Input() public valueSetId!: string;
-  @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() public valueType: 'id' | 'version' | 'full' = 'full';
 
   public data: {[version: string]: ValueSetVersion} = {};
-  public value?: number;
+  public value?: number | string;
   private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any): void => x;
@@ -25,7 +25,6 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
 
   public constructor(
     private valueSetService: ValueSetLibService,
-    private valueSetVersionService: ValueSetVersionLibService,
     private destroy$: DestroyService
   ) {}
 
@@ -44,27 +43,32 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
 
     this.loading['select'] = true;
     this.valueSetService.searchVersions(this.valueSetId, {limit: -1}).pipe(takeUntil(this.destroy$)).subscribe(versions => {
-      this.data = group(versions.data, v => v.version!);
+      this.data = group(versions.data, v => this.valueType === 'id' ? v.id : v.version);
     }).add(() => this.loading['select'] = false);
   }
 
-  private loadVersion(id?: number): void {
-    if (isDefined(id)) {
-      this.loading['load'] = true;
-      this.valueSetVersionService.load(id).pipe(takeUntil(this.destroy$)).subscribe(v => {
-        this.data[v.version!] = v;
-      }).add(() => this.loading['load'] = false);
+  private loadVersion(val?: number | string): void {
+    if (!isDefined(val)) {
+      return;
     }
+    this.loading['load'] = true;
+    const params:ValueSetVersionSearchParams = {limit: 1};
+    params.ids = typeof val === 'number' ? String(val) : undefined;
+    params.version = typeof val === 'string' ? val : undefined;
+    this.valueSetService.searchVersions(this.valueSetId, params).pipe(takeUntil(this.destroy$)).subscribe(r => {
+      const data = group(r.data, v => this.valueType === 'id' ? v.id : v.version);
+      this.data = {...(this.data || {}), ...data};
+    }).add(() => this.loading['load'] = false);
   }
 
 
-  public writeValue(obj: ValueSetVersion | number): void {
-    this.value = (typeof obj === 'object' ? obj?.id : obj);
+  public writeValue(obj: ValueSetVersion | string | number): void {
+    this.value = (typeof obj === 'object' ? obj?.version : obj);
     this.loadVersion(this.value);
   }
 
   public fireOnChange(): void {
-    if (this.valuePrimitive) {
+    if (['id', 'version'].includes(this.valueType)) {
       this.onChange(this.value);
     } else {
       this.onChange(this.data?.[this.value!]);

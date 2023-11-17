@@ -1,9 +1,8 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
 import {StructureDefinitionLibService} from './structure-definition-lib.service';
 import {StructureDefinition} from './structure-definition';
 import {StructureDefinitionSearchParams} from './structure-definition-search-params';
@@ -18,6 +17,8 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
   @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
 
+  @Output() public twSelect = new EventEmitter<any>();
+
   public data: {[id: string]: StructureDefinition} = {};
   public value?: number;
   public searchUpdate = new Subject<string>();
@@ -28,7 +29,6 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
 
   public constructor(
     private structureDefinitionService: StructureDefinitionLibService,
-    private translateService: TranslateService,
     private destroy$: DestroyService
   ) {}
 
@@ -77,6 +77,7 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
   }
 
   public fireOnChange(): void {
+    this.twSelect.emit(this.data?.[String(this.value!)]);
     if (this.valuePrimitive) {
       this.onChange(this.value);
     } else {

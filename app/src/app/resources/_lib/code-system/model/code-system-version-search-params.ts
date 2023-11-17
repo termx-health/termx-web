@@ -2,6 +2,7 @@ import {QueryParams} from '@kodality-web/core-util';
 
 export class CodeSystemVersionSearchParams extends QueryParams {
   public codeSystem?: string;
+  public ids?: string;
   public version?: string;
   public status?: string;
   public releaseDateLe?: Date;

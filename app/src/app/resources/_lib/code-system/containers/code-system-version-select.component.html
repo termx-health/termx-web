@@ -1,13 +1,12 @@
-<m-select
-    icon="select"
+<m-select icon="select"
     placeholder="marina.ui.inputs.select.placeholder"
     [(ngModel)]="value"
     (mChange)="fireOnChange()"
     [loading]="isLoading"
     [autoSelect]="true"
     [autoUnselect]="true"
-    [disabled]="!!disabled"
->
-  <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.id"
+    [disabled]="!!disabled">
+  <m-option *ngFor="let key of data | keys"
+      [mValue]="valueType === 'id' ? data[key]?.id : data[key]?.version"
       [mLabel]="data[key]?.version + ((data[key]?.description | localName) ? (' (' + (data[key]?.description | localName)+ ')') : '' )"/>
 </m-select>

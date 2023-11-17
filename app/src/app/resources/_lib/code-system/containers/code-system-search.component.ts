@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
@@ -18,6 +18,8 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public multiple: string | boolean;
   @Input() public filter?: (resource: CodeSystem) => boolean;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
+
+  @Output() public twSelect = new EventEmitter<any>();
 
   public data: {[id: string]: CodeSystem} = {};
   public value?: string | string[];
@@ -84,6 +86,7 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   }
 
   public fireOnChange(): void {
+    this.twSelect.emit(Array.isArray(this.value) ? this.value.map(id => this.data?.[id]) : this.data?.[this.value]);
     if (this.valuePrimitive) {
       this.onChange(this.value);
     } else {
