@@ -166,7 +166,7 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
 
 
   protected decorate = (items: CodeSystemEntityPropertySummaryItem[], properties: EntityProperty[]): CodeSystemEntityPropertySummaryItem[] => {
-    items.forEach(i => i['_property'] = this.getProperty(i.propertyId, properties));
+    items?.forEach(i => i['_property'] = this.getProperty(i.propertyId, properties));
     return items;
   };
 
