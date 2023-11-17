@@ -14,7 +14,7 @@
     <div>
       <h2>{{'web.code-system-concept.property-list.properties' | translate}}</h2>
       <m-list [mLoading]="loader.state['prop']">
-        <m-list-item style="cursor: pointer" (click)="selectProperty(p)" [mValue]="p" *ngFor="let p of (propertySummary?.items | apply:decorate:codeSystem.properties) | sort: '_property.orderNumber'">
+        <m-list-item style="cursor: pointer" (click)="selectProperty(p)" [mValue]="p" *ngFor="let p of (propertySummary?.items | apply:decorate:codeSystem?.properties) | sort: '_property.orderNumber'">
           <div class="m-justify-between">
             <label style="cursor: pointer">{{p['_property'] | entityPropertyName}}</label>
             <m-tag mColor="blue">{{p.propCnt}}</m-tag>
