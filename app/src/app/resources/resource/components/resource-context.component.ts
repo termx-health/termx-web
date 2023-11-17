@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
   styleUrls: ['resource-context.component.less'],
 })
 export class ResourceContextComponent {
-  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet';
+  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'ImplementationGuide';
   @Input() public resource: Resource;
   @Input() public conceptCode: string;
   @Input() public version: ResourceVersion;
@@ -18,7 +18,7 @@ export class ResourceContextComponent {
 
   public constructor(private router: Router) {}
 
-  protected typeMap = {'CodeSystem': 'code-systems', 'ValueSet': 'value-sets', 'MapSet': 'map-sets'};
+  protected typeMap = {'CodeSystem': 'code-systems', 'ValueSet': 'value-sets', 'MapSet': 'map-sets', 'ImplementationGuide': 'implementation-guides'};
 
   public unselectResourceOrVersion(): void {
     if (this.version) {

@@ -1,9 +1,8 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
 import {StructureDefinitionLibService} from './structure-definition-lib.service';
 import {StructureDefinition} from './structure-definition';
 import {StructureDefinitionSearchParams} from './structure-definition-search-params';
@@ -15,11 +14,15 @@ import {StructureDefinitionSearchParams} from './structure-definition-search-par
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => StructureDefinitionSelectComponent), multi: true}, DestroyService]
 })
 export class StructureDefinitionSelectComponent implements OnInit, ControlValueAccessor {
+  @Input() public valueType: 'id' | 'code' | 'full' = 'full';
+
   @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
 
+  @Output() public twSelect = new EventEmitter<any>();
+
   public data: {[id: string]: StructureDefinition} = {};
-  public value?: number;
+  public value?: number | string;
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
@@ -28,7 +31,6 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
 
   public constructor(
     private structureDefinitionService: StructureDefinitionLibService,
-    private translateService: TranslateService,
     private destroy$: DestroyService
   ) {}
 
@@ -56,28 +58,34 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
     this.loading['search'] = true;
     return this.structureDefinitionService.search(q).pipe(
       takeUntil(this.destroy$),
-      map(ca => group(ca.data, c => c.id!)),
+      map(ca => group(ca.data, sd => this.valueType === 'id' ? sd.id : sd.code)),
       catchError(() => of(this.data)),
       finalize(() => this.loading['search'] = false)
     );
   }
 
-  private loadDefinition(id?: number): void {
-    if (isDefined(id)) {
-      this.loading['load'] = true;
-      this.structureDefinitionService.load(id).pipe(takeUntil(this.destroy$)).subscribe(c => {
-        this.data = {...(this.data || {}), [c.id!]: c};
-      }).add(() => this.loading['load'] = false);
+  private loadDefinition(val?: number | string): void {
+    if (!isDefined(val)) {
+      return;
     }
+    this.loading['load'] = true;
+    const params:StructureDefinitionSearchParams = {limit: 1};
+    params.ids = typeof val === 'number' ? String(val) : undefined;
+    params.code = typeof val === 'string' ? val : undefined;
+    this.structureDefinitionService.search(params).pipe(takeUntil(this.destroy$)).subscribe(r => {
+      const data = group(r.data, sd => this.valueType === 'id' ? sd.id : sd.code);
+      this.data = {...(this.data || {}), ...data};
+    }).add(() => this.loading['load'] = false);
   }
 
-  public writeValue(obj: StructureDefinition | number): void {
-    this.value = typeof obj === 'object' ? obj?.id : obj;
+  public writeValue(obj: StructureDefinition | string | number): void {
+    this.value = typeof obj === 'object' ? obj?.code : obj;
     this.loadDefinition(this.value);
   }
 
   public fireOnChange(): void {
-    if (this.valuePrimitive) {
+    this.twSelect.emit(this.data?.[String(this.value!)]);
+    if (['id', 'code'].includes(this.valueType)) {
       this.onChange(this.value);
     } else {
       this.onChange(this.data?.[String(this.value!)]);

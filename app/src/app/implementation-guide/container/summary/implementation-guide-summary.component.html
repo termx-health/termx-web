@@ -1,0 +1,34 @@
+<tw-resource-context resourceType="ImplementationGuide" [resource]="ig" [versions]="versions" mode="summary"></tw-resource-context>
+<m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[ig?.id, 'ImplementationGuide']">
+
+  <m-form-row class="with-row-gap" mGap="1rem">
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- IG info -->
+      <m-card>
+        <m-title *m-card-header mTitle="entities.implementation-guide.single"></m-title>
+        <tw-implementation-guide-info-widget [ig]="ig"></tw-implementation-guide-info-widget>
+      </m-card>
+    </div>
+    <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
+
+      <!-- Versions -->
+      <m-card>
+        <m-title *m-card-header mTitle="entities.implementation-guide-version.multiple">
+          <div mControls *twPrivileged="ig?.id + '.ImplementationGuide.edit'">
+            <m-button mDisplay="text" [routerLink]="['/resources/implementation-guides', ig?.id, 'versions', 'add']">
+              {{'web.implementation-guide.summary.add-version' | translate}}&nbsp;
+              <m-icon mCode="plus"></m-icon>
+            </m-button>
+          </div>
+        </m-title>
+        <tw-implementation-guide-versions-widget [ig]="ig?.id" [versions]="versions"></tw-implementation-guide-versions-widget>
+      </m-card>
+    </div>
+  </m-form-row>
+  <m-form-row>
+
+
+  </m-form-row>
+
+</m-page>

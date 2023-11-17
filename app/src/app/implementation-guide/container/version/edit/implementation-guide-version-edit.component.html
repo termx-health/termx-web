@@ -1,0 +1,20 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loader.isLoading">
+      <m-card [mShowSkeleton]="loader.isLoading">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{(mode === 'edit' ? 'web.implementation-guide-version.form.edit-header' : 'web.implementation-guide-version.form.add-header') | translate}}</div>
+          <tw-status-tag *ngIf="version?.status" [status]="version.status"></tw-status-tag>
+        </div>
+
+        <tw-implementation-guide-version-form [version]="version" [versions]="versions"></tw-implementation-guide-version-form>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

@@ -31,6 +31,7 @@ import {ModelerModule} from 'term-web/modeler/modeler.module';
 import {UserModule} from 'term-web/user/user.module';
 import {LangInterceptor} from 'term-web/core/http';
 import {environment as env, environment} from 'environments/environment';
+import {ImplementationGuideModule} from 'term-web/implementation-guide/implementation-guide.module';
 
 
 export function HttpLoaderFactory(_http: HttpBackend): TranslateLoader {
@@ -96,7 +97,8 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
     SpaceModule,
     SysModule,
     UserModule,
-    SequenceModule
+    SequenceModule,
+    ImplementationGuideModule
   ],
   providers: [
     {provide: LOCALE_ID, useValue: environment.defaultLanguage},

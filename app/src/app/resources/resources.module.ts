@@ -7,6 +7,7 @@ import {MAP_SET_ROUTES, MapSetModule} from './map-set/map-set.module';
 import {NAMING_SYSTEM_ROUTES, NamingSystemModule} from './naming-system/naming-system.module';
 import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './association-type/association-type.module';
 import {DEFINED_PROPERTY_ROUTES, DefinedPropertyModule} from 'term-web/resources/defined-property/defined-property.module';
+import {IG_ROUTES} from 'term-web/implementation-guide/implementation-guide.module';
 
 
 export const RESOURCES_ROUTES: Routes = [
@@ -16,6 +17,7 @@ export const RESOURCES_ROUTES: Routes = [
   {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES, data: {privilege: ['*.NamingSystem.view']}},
   {path: 'association-types', children: ASSOCIATION_TYPE_ROUTES, data: {privilege: ['*.AssociationType.view']}},
   {path: 'defined-properties', children: DEFINED_PROPERTY_ROUTES, data: {privilege: ['*.CodeSystem.view']}},
+  {path: 'implementation-guides', children: IG_ROUTES, data: {privilege: ['*.ImplementationGuide.view']}},
 
   {
     path: 'finder', children: [

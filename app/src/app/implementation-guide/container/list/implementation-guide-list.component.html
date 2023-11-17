@@ -1,0 +1,65 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <span>{{'entities.implementation-guide.multiple' | translate}}</span>
+    <div class="m-items-middle">
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+      <m-dropdown *twPrivileged="'*.ImplementationGuide.edit'">
+        <tw-add-button *m-dropdown-container icon="down" placement="right">
+          {{'web.implementation-guide.list.add' | translate}}
+        </tw-add-button>
+        <a *m-dropdown-item [routerLink]="'add'">
+          {{'web.implementation-guide.list.add-manual' | translate}}
+        </a>
+        <a *m-dropdown-item>
+          {{'web.implementation-guide.list.add-fhir' | translate}}
+        </a>
+      </m-dropdown>
+    </div>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading">
+    <tr *mTableHead>
+      <th mColumnKey="id">{{'entities.implementation-guide.id' | translate}}</th>
+      <th>{{'web.implementation-guide.list.last-version' | translate}}</th>
+      <th>{{'entities.implementation-guide-version.fhir-version' | translate}}</th>
+      <th>{{'entities.implementation-guide.title' | translate}} / {{'entities.implementation-guide-version.package-id' | translate}}</th>
+      <th>{{'entities.implementation-guide-version.date' | translate}}</th>
+      <th *twPrivileged="'*.ImplementationGuide.edit'" class="tw-table-actions"></th>
+    </tr>
+
+    <tr *mTableRow="let ig">
+      <td><a [routerLink]="[ig.id, 'summary']">{{ig.id}}</a></td>
+      <td>
+        <ng-container *ngIf="(ig.versions | apply:findLastVersion)?.version as version">
+          <a [routerLink]="[ig.id, 'versions', version, 'summary']">{{version}}</a>
+        </ng-container>
+      </td>
+      <td>
+        <ng-container *ngIf="(ig.versions | apply:findLastVersion) as version">{{version.fhirVersion}}</ng-container>
+      </td>
+      <td>
+        <div>{{ig.title | localName}}</div>
+        <div>{{ig.packageId | localName}}</div>
+      </td>
+      <td>
+        <ng-container *ngIf="(ig.versions | apply:findLastVersion) as version">{{version.date | localDate}}</ng-container>
+      </td>
+      <td class="tw-table-actions">
+        <m-dropdown>
+          <a *m-dropdown-item (click)="openFhir(ig.id)">
+            <m-icon [mCode]="'link'"></m-icon>&nbsp; {{'web.implementation-guide.list.open-fhir' | translate}}
+          </a>
+          <ng-container *twPrivileged="'*.Implementation.publish'">
+            <a *m-dropdown-item (click)="delete(ig.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
+          </ng-container>
+        </m-dropdown>
+      </td>
+    </tr>
+
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>

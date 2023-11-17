@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Observable, tap} from 'rxjs';
 import {ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {TransformationDefinitionQueryParams} from '../services/transformation-definition-query.params';
-import {TransformationDefinition} from '../services/transformation-definition';
+import {TransformationDefinitionQueryParams} from '../../_lib/transformer/transformation-definition-query.params';
+import {TransformationDefinition} from '../../_lib/transformer/transformation-definition';
 import {TransformationDefinitionService} from '../services/transformation-definition.service';
 import {Router} from '@angular/router';
 

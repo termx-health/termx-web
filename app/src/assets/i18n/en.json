@@ -49,6 +49,51 @@
 		}
 	},
 	"entities": {
+		"implementation-guide": {
+			"id": "ID",
+			"title": "Title",
+			"single": "Implementation guide",
+			"multiple": "Implementation guides"
+		},
+		"implementation-guide-version": {
+			"algorithm": "Algorithm",
+			"version": "Version",
+			"fhir-version": "FHIR version",
+			"github-url": "Github project full url",
+			"empty-github-url": "Initial empty IG Github project",
+			"package-id": "Package ID",
+			"template": "Template",
+			"date": "Date",
+			"single": "Version",
+			"multiple": "Versions",
+			"group": {
+				"multiple": "Groups",
+				"name": "Name",
+				"description": "Description"
+			},
+			"resource": {
+				"multiple": "Resources",
+				"name": "Name",
+				"type": "Type",
+				"group": "Group",
+				"reference": "Reference",
+				"version": "Version"
+			},
+			"page": {
+				"multiple": "Pages",
+				"name": "Name",
+				"type": "Type",
+				"group": "Group",
+				"page": "Page",
+				"space": "Space"
+			},
+			"depends-on": {
+				"single": "Depends on",
+				"package-id": "Package ID",
+				"version": "Version",
+				"reason": "Reason"
+			}
+		},
 		"association-type": {
 			"code": "Code",
 			"description": "Description",
@@ -681,6 +726,36 @@
 		}
 	},
 	"web": {
+		"implementation-guide": {
+			"list": {
+				"add": "Add implementation guide",
+				"add-manual": "Manual",
+				"add-fhir": "Import external FHIR definition",
+				"open-fhir": "Open FHIR definition",
+				"last-version": "Last version"
+			},
+			"form": {
+				"edit-header": "Edit implementation guide",
+				"add-header": "Add implementation guide"
+			},
+			"summary": {
+				"add-version": "Add version"
+			}
+		},
+		"implementation-guide-version": {
+			"form": {
+				"edit-header": "Edit version",
+				"add-header": "Add version"
+			},
+			"summary": {
+				"edit-version": "Edit version",
+				"last-modified": "Last modified",
+				"none": "None",
+				"activate": "Activate",
+				"retire": "Retire",
+				"make-draft": "Make draft"
+			}
+		},
 		"app": {
 			"header": "TermX"
 		},

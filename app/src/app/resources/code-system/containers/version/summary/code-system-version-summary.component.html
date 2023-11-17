@@ -7,7 +7,7 @@
       <!-- ValueSetVersion info -->
       <m-card>
         <m-title *m-card-header mTitle="web.code-system-version.summary.code-system-version">
-            <m-button *ngIf="codeSystemVersion?.status === 'draft' && 'edit' | twPrivileged"
+            <m-button *ngIf="codeSystemVersion?.status === 'draft' && ('edit' | twPrivileged)"
                 mControls
                 mDisplay="text"
                 [routerLink]="['/resources/code-systems', codeSystem?.id, 'versions', codeSystemVersion?.version, 'edit']">

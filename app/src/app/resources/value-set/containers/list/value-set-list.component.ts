@@ -3,7 +3,6 @@ import {ValueSetService} from '../../services/value-set.service';
 import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {finalize, Observable, tap} from 'rxjs';
-import {environment} from 'app/src/environments/environment';
 import {CodeSystemVersion, ValueSet, ValueSetSearchParams, ValueSetVersion} from 'app/src/app/resources/_lib';
 
 

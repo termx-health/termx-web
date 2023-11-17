@@ -1,0 +1,28 @@
+<m-spinner [mLoading]="loader.state['save']">
+  <form #form="ngForm" *ngIf="ig">
+    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 1rem">
+      <m-card [mTitle]="'web.implementation-guide.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+        <div *mCardContent="!loader.isLoading">
+          <tw-resource-form resourceType="ImplementationGuide" [resource]="ig" [mode]="mode"></tw-resource-form>
+          <tw-resource-identifiers [identifiers]="ig.identifiers"></tw-resource-identifiers>
+          <tw-resource-contacts [(contacts)]="ig.contacts"></tw-resource-contacts>
+
+          <ng-container *ngIf="mode === 'add'">
+            <m-divider>{{'entities.implementation-guide-version.single' | translate}}
+              <tw-status-tag [status]="'draft'"></tw-status-tag>
+            </m-divider>
+            <tw-implementation-guide-version-form></tw-implementation-guide-version-form>
+          </ng-container>
+        </div>
+
+        <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+          {{'core.btn.save' | translate}}
+        </m-button>
+      </m-card>
+
+      <m-card [mShowSkeleton]="loader.isLoading">
+        <tw-resource-side-info [copyright]="ig.copyright"></tw-resource-side-info>
+      </m-card>
+    </div>
+  </form>
+</m-spinner>

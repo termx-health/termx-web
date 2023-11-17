@@ -20,7 +20,7 @@
         <tw-code-system-version-select name="codeSystemVersion"
             [(ngModel)]="data.codeSystemVersion"
             [codeSystemId]="data.codeSystem"
-            valuePrimitive
+            valueType="id"
             [disabled]="!data.codeSystem"
             required/>
       </m-form-item>

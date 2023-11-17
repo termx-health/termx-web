@@ -1,0 +1,57 @@
+<form #form="ngForm" *ngIf="resources">
+  <m-editable-table #rowsTable
+      [mData]="resources"
+      [mRowInstance]="{}"
+      (mRowAdd)="addRow()"
+      (mRowEdit)="resourcesChanged.emit()"
+      (mAfterSubmit)="resourcesChanged.emit()"
+      (mAfterDelete)="resourcesChanged.emit()"
+      [mEditAllowed]="editable"
+      [mDeleteAllowed]="editable">
+    <m-editable-column [mTitle]="'entities.implementation-guide-version.resource.type'" mName="type">
+      <ng-template #viewTemplate let-r>{{r.type}}</ng-template>
+      <ng-template #editTemplate let-r let-ngModelName="ngModelName">
+        <m-select [name]="ngModelName" [(ngModel)]="r.type" required>
+          <m-option *ngFor="let t of ['CodeSystem', 'ValueSet', 'MapSet', 'StructureDefinition', 'StructureMap']" [mLabel]="t" [mValue]="t"></m-option>
+        </m-select>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.implementation-guide-version.resource.reference'" mName="reference">
+      <ng-template #viewTemplate let-r>{{r.reference}}</ng-template>
+      <ng-template #editTemplate let-r let-ngModelName="ngModelName">
+        <ng-container [ngSwitch]="r.type">
+          <tw-transformation-definition-select *ngSwitchCase="'StructureMap'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valueType="name"/>
+          <tw-structure-definition-select *ngSwitchCase="'StructureDefinition'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.code" required valueType="code"/>
+          <tw-code-system-search *ngSwitchCase="'CodeSystem'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>
+          <tw-value-set-search *ngSwitchCase="'ValueSet'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>
+          <tw-map-set-search *ngSwitchCase="'MapSet'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>
+          <m-input *ngSwitchDefault [name]="ngModelName" [(ngModel)]="r.reference" required/>
+        </ng-container>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.implementation-guide-version.resource.version'" mName="version">
+      <ng-template #viewTemplate let-r>{{r.version}}</ng-template>
+      <ng-template #editTemplate let-r let-ngModelName="ngModelName">
+        <ng-container [ngSwitch]="r.type">
+          <tw-code-system-version-select *ngSwitchCase="'CodeSystem'" [name]="ngModelName" [(ngModel)]="r.version" [codeSystemId]="r.reference" required valueType="version"/>
+          <tw-value-set-version-select *ngSwitchCase="'ValueSet'" [name]="ngModelName" [(ngModel)]="r.version" [valueSetId]="r.reference" required valueType="version"/>
+          <tw-map-set-version-select *ngSwitchCase="'MapSet'" [name]="ngModelName" [(ngModel)]="r.version" [mapSetId]="r.reference" required valueType="version"/>
+        </ng-container>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.implementation-guide-version.resource.name'" mName="name">
+      <ng-template #viewTemplate let-r>{{r.name}}</ng-template>
+      <ng-template #editTemplate let-r let-ngModelName="ngModelName">
+        <m-input [name]="ngModelName" [(ngModel)]="r.name"></m-input>
+      </ng-template>
+    </m-editable-column>
+    <m-editable-column [mTitle]="'entities.implementation-guide-version.resource.group'" mName="group">
+      <ng-template #viewTemplate let-r>{{r.group?.name}}</ng-template>
+      <ng-template #editTemplate let-r let-ngModelName="ngModelName">
+        <m-select [name]="ngModelName" [(ngModel)]="r.group" autoSelect compareWith="id" required>
+          <m-option *ngFor="let g of igVersion?.groups" [mLabel]="g.name" [mValue]="g"></m-option>
+        </m-select>
+      </ng-template>
+    </m-editable-column>
+  </m-editable-table>
+</form>
