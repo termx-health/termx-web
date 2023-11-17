@@ -1,32 +1,34 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, map, Observable, of, pipe, Subject, takeUntil} from 'rxjs';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {BooleanInput, DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
-import {TransformationDefinition} from 'term-web/modeler/_lib/transformer/transformation-definition';
-import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
-import {TransformationDefinitionQueryParams} from 'term-web/modeler/_lib/transformer/transformation-definition-query.params';
+import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
+import {TransformationDefinitionLibService} from './transformation-definition-lib.service';
+import {TransformationDefinitionQueryParams} from './transformation-definition-query.params';
+import {TransformationDefinition} from './transformation-definition';
 
 
 @Component({
   selector: 'tw-transformation-definition-select',
-  templateUrl: 'transformation-definition-select.component.html',
+  templateUrl: './transformation-definition-select.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TransformationDefinitionSelectComponent), multi: true}, DestroyService]
 })
 export class TransformationDefinitionSelectComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
 
-  protected data: {[id: string]: TransformationDefinition} = {};
-  protected value?: number;
-  protected searchUpdate = new Subject<string>();
-  protected loader = new LoadingManager();
+  @Output() public twSelect = new EventEmitter<any>();
+
+  public data: {[id: string]: TransformationDefinition} = {};
+  public value?: number;
+  public searchUpdate = new Subject<string>();
+  private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
 
   public constructor(
-    private transformationDefinitionService: TransformationDefinitionService,
+    private transformationDefinitionService: TransformationDefinitionLibService,
     private destroy$: DestroyService
   ) {}
 
@@ -49,28 +51,25 @@ export class TransformationDefinitionSelectComponent implements OnInit, ControlV
 
     const q = new TransformationDefinitionQueryParams();
     q.nameContains = text;
-    q.summary = true;
-    q.sort = 'name';
     q.limit = 100;
 
-    return this.loader.wrap('search', this.transformationDefinitionService.search(q)).pipe(
+    this.loading['search'] = true;
+    return this.transformationDefinitionService.search(q).pipe(
       takeUntil(this.destroy$),
-      map(resp => group(resp.data, c => c.id!)),
-      catchError(() => of(this.data))
+      map(r => group(r.data, td => td.id!)),
+      catchError(() => of(this.data)),
+      finalize(() => this.loading['search'] = false)
     );
   }
 
   private loadDefinition(id?: number): void {
     if (isDefined(id)) {
-      this.loader.wrap('load', this.transformationDefinitionService.search({ids: id, summary: true, limit: 1})).pipe(
-        takeUntil(this.destroy$),
-        pipe(map(r => r.data[0]))
-      ).subscribe(def => {
-        this.data = {...(this.data || {}), [def.id!]: def};
-      });
+      this.loading['load'] = true;
+      this.transformationDefinitionService.load(id).pipe(takeUntil(this.destroy$)).subscribe(td => {
+        this.data = {...(this.data || {}), [td.id!]: td};
+      }).add(() => this.loading['load'] = false);
     }
   }
-
 
   public writeValue(obj: TransformationDefinition | number): void {
     this.value = typeof obj === 'object' ? obj?.id : obj;
@@ -78,6 +77,7 @@ export class TransformationDefinitionSelectComponent implements OnInit, ControlV
   }
 
   public fireOnChange(): void {
+    this.twSelect.emit(this.data?.[String(this.value!)]);
     if (this.valuePrimitive) {
       this.onChange(this.value);
     } else {
@@ -91,5 +91,9 @@ export class TransformationDefinitionSelectComponent implements OnInit, ControlV
 
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
+  }
+
+  public get isLoading(): boolean {
+    return Object.values(this.loading).some(Boolean);
   }
 }

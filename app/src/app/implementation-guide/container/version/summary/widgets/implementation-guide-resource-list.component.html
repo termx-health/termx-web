@@ -20,6 +20,7 @@
       <ng-template #viewTemplate let-r>{{r.reference}}</ng-template>
       <ng-template #editTemplate let-r let-ngModelName="ngModelName">
         <ng-container [ngSwitch]="r.type">
+          <tw-transformation-definition-select *ngSwitchCase="'StructureMap'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>
           <tw-structure-definition-select *ngSwitchCase="'StructureDefinition'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.code" required valuePrimitive/>
           <tw-code-system-search *ngSwitchCase="'CodeSystem'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>
           <tw-value-set-search *ngSwitchCase="'ValueSet'" [name]="ngModelName" [(ngModel)]="r.reference" (twSelect)="r.name = $event.name" required valuePrimitive/>

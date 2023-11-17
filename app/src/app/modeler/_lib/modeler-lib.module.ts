@@ -10,6 +10,8 @@ import {StructureDefinitionLibService} from './structure-definition/structure-de
 import {StructureDefinitionTreeComponent} from './structure-definition/structure-definition-tree.component';
 import {StructureDefinitionSelectComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-select.component';
 import {StructureDefinitionEditableTreeComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-editable-tree.component';
+import {TransformationDefinitionLibService} from 'term-web/modeler/_lib/transformer/transformation-definition-lib.service';
+import {TransformationDefinitionSelectComponent} from 'term-web/modeler/_lib/transformer/transformation-definition-select.component';
 
 @NgModule({
   imports: [
@@ -22,17 +24,20 @@ import {StructureDefinitionEditableTreeComponent} from 'term-web/modeler/_lib/st
     MarinaQuillModule,
   ],
   providers: [
-    StructureDefinitionLibService
+    StructureDefinitionLibService,
+    TransformationDefinitionLibService
   ],
   declarations: [
     StructureDefinitionTreeComponent,
     StructureDefinitionEditableTreeComponent,
     StructureDefinitionSelectComponent,
+    TransformationDefinitionSelectComponent
   ],
   exports: [
     StructureDefinitionTreeComponent,
     StructureDefinitionEditableTreeComponent,
     StructureDefinitionSelectComponent,
+    TransformationDefinitionSelectComponent
   ]
 })
 export class ModelerLibModule {

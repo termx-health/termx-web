@@ -33,6 +33,9 @@ export const TRANSFORMATION_DEFINITION_ROUTES: Routes = [
     TransformationDefinitionEditComponent,
     TransformationDefinitionListComponent
   ],
+  exports: [
+    TransformationDefinitionSelectComponent
+  ],
   providers: [
     TransformationDefinitionService
   ]

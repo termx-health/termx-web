@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {TransformationDefinition} from '../services/transformation-definition';
+import {TransformationDefinition} from '../../_lib/transformer/transformation-definition';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 

@@ -1,5 +1,5 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {TransformationDefinition, TransformationDefinitionResource} from '../services/transformation-definition';
+import {TransformationDefinition, TransformationDefinitionResource} from '../../_lib/transformer/transformation-definition';
 import {StructureDefinition} from 'term-web/modeler/_lib';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 import {MapSet} from 'term-web/resources/_lib';
