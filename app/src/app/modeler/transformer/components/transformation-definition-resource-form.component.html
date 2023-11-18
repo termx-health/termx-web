@@ -20,8 +20,8 @@
         <tw-structure-definition-select
             name="structureDefinition"
             [ngModel]="resource.reference.localId | toNumber"
-            (ngModelChange)="onDefinitionSelect($event)"
-            [valuePrimitive]="false"
+            (twSelect)="onDefinitionSelect($event)"
+            valueType="id"
         ></tw-structure-definition-select>
       </m-form-item>
 
@@ -46,8 +46,8 @@
         <tw-transformation-definition-select
             name="mapping"
             [ngModel]="resource.reference.localId | toNumber"
-            (ngModelChange)="onStructureMapSelect($event)"
-            [valuePrimitive]="false"
+            (twSelect)="onStructureMapSelect($event)"
+            valueType="id"
         ></tw-transformation-definition-select>
       </m-form-item>
     </ng-container>

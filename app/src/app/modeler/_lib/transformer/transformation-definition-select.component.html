@@ -4,7 +4,12 @@
     [(ngModel)]="value"
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
-    [loading]="isLoading"
-    [autoUnselect]="false">
-  <m-option *ngFor="let key of data | keys" [mValue]="valueType === 'id' ? data[key]?.id : data[key]?.name" [mLabel]="data[key].name"></m-option>
+    [loading]="loader.isLoading"
+    [autoUnselect]="false"
+>
+  <m-option
+      *ngFor="let key of data | keys"
+      [mValue]="valueType === 'id' ? data[key]?.id : data[key]?.name"
+      [mLabel]="data[key].name"
+  ></m-option>
 </m-select>

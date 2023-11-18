@@ -1,8 +1,8 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
+import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {DestroyService, group, isDefined} from '@kodality-web/core-util';
+import {DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {TransformationDefinitionLibService} from './transformation-definition-lib.service';
 import {TransformationDefinitionQueryParams} from './transformation-definition-query.params';
 import {TransformationDefinition} from './transformation-definition';
@@ -10,19 +10,19 @@ import {TransformationDefinition} from './transformation-definition';
 
 @Component({
   selector: 'tw-transformation-definition-select',
-  templateUrl: './transformation-definition-select.component.html',
+  templateUrl: 'transformation-definition-select.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TransformationDefinitionSelectComponent), multi: true}, DestroyService]
 })
 export class TransformationDefinitionSelectComponent implements OnInit, ControlValueAccessor {
   @Input() public valueType: 'id' | 'name' | 'full' = 'full';
-  @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
+  @Input() public placeholder = 'marina.ui.inputs.search.placeholder';
 
-  @Output() public twSelect = new EventEmitter<any>();
+  @Output() public twSelect = new EventEmitter<TransformationDefinition>();
 
-  public data: {[id: string]: TransformationDefinition} = {};
-  public value?: number | string;
-  public searchUpdate = new Subject<string>();
-  private loading: {[key: string]: boolean} = {};
+  protected data: {[id: string]: TransformationDefinition} = {};
+  protected value?: number | string;
+  protected searchUpdate = new Subject<string>();
+  protected loader = new LoadingManager();
 
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
@@ -40,7 +40,7 @@ export class TransformationDefinitionSelectComponent implements OnInit, ControlV
     ).subscribe(data => this.data = data);
   }
 
-  public onSearch(text: string): void {
+  protected onSearch(text: string): void {
     this.searchUpdate.next(text);
   }
 
@@ -51,14 +51,14 @@ export class TransformationDefinitionSelectComponent implements OnInit, ControlV
 
     const q = new TransformationDefinitionQueryParams();
     q.nameContains = text;
+    q.summary = true;
+    q.sort = 'name';
     q.limit = 100;
 
-    this.loading['search'] = true;
-    return this.transformationDefinitionService.search(q).pipe(
+    return this.loader.wrap('search', this.transformationDefinitionService.search(q)).pipe(
       takeUntil(this.destroy$),
       map(r => group(r.data, td => this.valueType === 'id' ? td.id : td.name)),
       catchError(() => of(this.data)),
-      finalize(() => this.loading['search'] = false)
     );
   }
 
@@ -66,15 +66,26 @@ export class TransformationDefinitionSelectComponent implements OnInit, ControlV
     if (!isDefined(val)) {
       return;
     }
-    this.loading['load'] = true;
-    const params:TransformationDefinitionQueryParams = {limit: 1};
-    params.ids = typeof val === 'number' ? String(val) : undefined;
-    params.name = typeof val === 'string' ? val : undefined;
-    this.transformationDefinitionService.search(params).pipe(takeUntil(this.destroy$)).subscribe(r => {
-      const data = group(r.data, td => this.valueType === 'id' ? td.id : td.name);
-      this.data = {...(this.data || {}), ...data};
-    }).add(() => this.loading['load'] = false);
+
+    const q = new TransformationDefinitionQueryParams();
+    q.ids = typeof val === 'number' ? val : undefined;
+    q.name = typeof val === 'string' ? val : undefined;
+    q.summary = true;
+    q.limit = 1;
+
+    this.loader.wrap('load', this.transformationDefinitionService.search(q))
+      .pipe(
+        takeUntil(this.destroy$),
+        map(r => r.data[0])
+      )
+      .subscribe(def => {
+        this.data = {
+          ...(this.data || {}),
+          [this.valueType === 'id' ? def.id : def.name]: def
+        };
+      });
   }
+
 
   public writeValue(obj: TransformationDefinition | string | number): void {
     this.value = typeof obj === 'object' ? obj?.name : obj;
@@ -82,11 +93,12 @@ export class TransformationDefinitionSelectComponent implements OnInit, ControlV
   }
 
   public fireOnChange(): void {
-    this.twSelect.emit(this.data?.[String(this.value!)]);
+    this.twSelect.emit(this.data?.[this.value]);
+
     if (['id', 'name'].includes(this.valueType)) {
       this.onChange(this.value);
     } else {
-      this.onChange(this.data?.[String(this.value!)]);
+      this.onChange(this.data?.[this.value]);
     }
   }
 
@@ -96,9 +108,5 @@ export class TransformationDefinitionSelectComponent implements OnInit, ControlV
 
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
-  }
-
-  public get isLoading(): boolean {
-    return Object.values(this.loading).some(Boolean);
   }
 }

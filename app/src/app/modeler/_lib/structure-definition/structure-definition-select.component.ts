@@ -1,8 +1,8 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
+import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
+import {DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {StructureDefinitionLibService} from './structure-definition-lib.service';
 import {StructureDefinition} from './structure-definition';
 import {StructureDefinitionSearchParams} from './structure-definition-search-params';
@@ -10,21 +10,19 @@ import {StructureDefinitionSearchParams} from './structure-definition-search-par
 
 @Component({
   selector: 'tw-structure-definition-select',
-  templateUrl: './structure-definition-select.component.html',
+  templateUrl: 'structure-definition-select.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => StructureDefinitionSelectComponent), multi: true}, DestroyService]
 })
 export class StructureDefinitionSelectComponent implements OnInit, ControlValueAccessor {
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
+  @Input() public placeholder = 'marina.ui.inputs.search.placeholder';
 
-  @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
-  @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
+  @Output() public twSelect = new EventEmitter<StructureDefinition>();
 
-  @Output() public twSelect = new EventEmitter<any>();
-
-  public data: {[id: string]: StructureDefinition} = {};
-  public value?: number | string;
-  public searchUpdate = new Subject<string>();
-  private loading: {[key: string]: boolean} = {};
+  protected data: {[id: string]: StructureDefinition} = {};
+  protected value?: number | string;
+  protected searchUpdate = new Subject<string>();
+  protected loader = new LoadingManager();
 
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
@@ -42,7 +40,7 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
     ).subscribe(data => this.data = data);
   }
 
-  public onSearch(text: string): void {
+  protected onSearch(text: string): void {
     this.searchUpdate.next(text);
   }
 
@@ -55,12 +53,10 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
     q.textContains = text;
     q.limit = 100;
 
-    this.loading['search'] = true;
-    return this.structureDefinitionService.search(q).pipe(
+    return this.loader.wrap('search', this.structureDefinitionService.search(q)).pipe(
       takeUntil(this.destroy$),
       map(ca => group(ca.data, sd => this.valueType === 'id' ? sd.id : sd.code)),
-      catchError(() => of(this.data)),
-      finalize(() => this.loading['search'] = false)
+      catchError(() => of(this.data))
     );
   }
 
@@ -68,15 +64,23 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
     if (!isDefined(val)) {
       return;
     }
-    this.loading['load'] = true;
-    const params:StructureDefinitionSearchParams = {limit: 1};
-    params.ids = typeof val === 'number' ? String(val) : undefined;
-    params.code = typeof val === 'string' ? val : undefined;
-    this.structureDefinitionService.search(params).pipe(takeUntil(this.destroy$)).subscribe(r => {
-      const data = group(r.data, sd => this.valueType === 'id' ? sd.id : sd.code);
-      this.data = {...(this.data || {}), ...data};
-    }).add(() => this.loading['load'] = false);
+
+    const q = new StructureDefinitionSearchParams();
+    q.ids = typeof val === 'number' ? String(val) : undefined;
+    q.code = typeof val === 'string' ? val : undefined;
+    q.limit = 1;
+
+    this.structureDefinitionService.search(q).pipe(
+      takeUntil(this.destroy$),
+      map(r => r.data[0])
+    ).subscribe(sd => {
+      this.data = {
+        ...(this.data || {}),
+        [this.valueType === 'id' ? sd.id : sd.code]: sd
+      };
+    });
   }
+
 
   public writeValue(obj: StructureDefinition | string | number): void {
     this.value = typeof obj === 'object' ? obj?.code : obj;
@@ -84,11 +88,11 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
   }
 
   public fireOnChange(): void {
-    this.twSelect.emit(this.data?.[String(this.value!)]);
+    this.twSelect.emit(this.data?.[this.value]);
     if (['id', 'code'].includes(this.valueType)) {
       this.onChange(this.value);
     } else {
-      this.onChange(this.data?.[String(this.value!)]);
+      this.onChange(this.data?.[this.value]);
     }
   }
 
@@ -98,9 +102,5 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
 
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
-  }
-
-  public get isLoading(): boolean {
-    return Object.values(this.loading).some(Boolean);
   }
 }
