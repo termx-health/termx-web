@@ -70,15 +70,14 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
     q.code = typeof val === 'string' ? val : undefined;
     q.limit = 1;
 
-    this.structureDefinitionService.search(q).pipe(
-      takeUntil(this.destroy$),
-      map(r => r.data[0])
-    ).subscribe(sd => {
-      this.data = {
-        ...(this.data || {}),
-        [this.valueType === 'id' ? sd.id : sd.code]: sd
-      };
-    });
+    this.loader.wrap('load', this.structureDefinitionService.search(q))
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(r => {
+        this.data = {
+          ...(this.data || {}),
+          ...group(r.data, sd => this.valueType === 'id' ? sd.id : sd.code)
+        };
+      });
   }
 
 

@@ -74,14 +74,11 @@ export class TransformationDefinitionSelectComponent implements OnInit, ControlV
     q.limit = 1;
 
     this.loader.wrap('load', this.transformationDefinitionService.search(q))
-      .pipe(
-        takeUntil(this.destroy$),
-        map(r => r.data[0])
-      )
-      .subscribe(def => {
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(r => {
         this.data = {
           ...(this.data || {}),
-          [this.valueType === 'id' ? def.id : def.name]: def
+          ...group(r.data, td => this.valueType === 'id' ? td.id : td.name)
         };
       });
   }
