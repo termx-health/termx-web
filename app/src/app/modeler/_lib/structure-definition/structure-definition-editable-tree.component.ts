@@ -1,8 +1,46 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {StructureDefinitionFhirMapperUtil} from 'term-web/modeler/structure-definition/services/structure-definition-fhir-mapper.util';
-import {Element, StructureDefinitionUtil} from 'term-web/modeler/_lib';
+import {StructureDefinitionUtil} from 'term-web/modeler/_lib';
 import {DropListComponent, DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
+
+export class Element {
+  public id?: string;
+  public path?: string;
+  public fixedUri?: string;
+  public fixedCode?: string;
+  public fixedCoding?: {code?: string, system?: string, display?: string};
+  public fixedCodeableConcept?: {coding: {code?: string, system?: string, display?: string}[]};
+  public patternCodeableConcept?: {coding: {code?: string, system?: string, display?: string}[]};
+  public min?: number;
+  public max?: string;
+  public short?: string;
+  public definition?: string;
+  public binding?: {valueSet?: string, strength?: string};
+  public mapping?: ElementMapping;
+  public type?: ElementType[];
+  public constraint?: ElementConstraint[];
+}
+
+export class ElementMapping {
+  public identity?: string;
+  public map?: string;
+}
+
+export class ElementType {
+  public code?: string;
+  public targetProfile?: string[];
+  public profile?: string[];
+}
+
+export class ElementConstraint {
+  public key?: string;
+  public requirements?: string;
+  public severity?: 'error' | 'warning';
+  public human?: string;
+  public expression?: string;
+  public source?: string;
+}
 
 function findInTree<Node, Key>(nodesToSearch: Node[], key: Key, getKey: (n: Node) => Key, getChildren: (n: Node) => Node[]): Node {
   for (let node of nodesToSearch) {

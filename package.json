@@ -25,6 +25,7 @@
     "@kodality-web/marina-quill": "^16.0.0-snapshot",
     "@kodality-web/marina-ui": "^16.0.0-snapshot",
     "@kodality-web/marina-util": "^16.0.0-snapshot",
+    "@kodality-web/structure-definition-viewer": "5.0.5",
     "@codemirror/lang-markdown": "^6.2.0",
     "@ngx-translate/core": "^15.0.0",
     "angular-auth-oidc-client": "^16.0.1",

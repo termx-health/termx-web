@@ -12,13 +12,13 @@
 
       <ng-container *ngFor="let s of spaces; let idx = index">
         <ng-container>
-          <a *m-dropdown-item
+          <span *m-dropdown-item
               [class.m-bold]="s.id === space?.id"
               [style.border-top]="!s.active && spaces[idx - 1]?.active ? '1px solid var(--color-borders)' : ''"
-              (mClick)="preferences.setSpace(s.id)"
+              (click)="preferences.setSpace(s.id)"
           >
             {{s.names | localName: s.code}}
-          </a>
+          </span>
         </ng-container>
       </ng-container>
     </m-dropdown>

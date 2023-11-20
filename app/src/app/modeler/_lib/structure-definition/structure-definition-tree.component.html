@@ -1,76 +1,9 @@
 <m-skeleton [mLoading]="loader.isLoading"/>
+<tx-sd-view
+    *ngIf="fhirJson"
+    style="--color-primary: var(--color-primary-6);"
+    [attr.data]="encodeURIComponent(fhirJson | json)"
+    [attr.mode]="type"
+    inline="true"
+></tx-sd-view>
 
-
-<div style="display: grid" *ngIf="treeOptions">
-  <m-radio-group name="type" [(ngModel)]="type" mSize="small" style="margin-bottom: 0.5rem; margin-left: auto" (ngModelChange)="onTypeChange($event)">
-    <label m-radio-button [mValue]="'diff'">diff</label>
-    <label m-radio-button [mValue]="'hybrid'">hybrid</label>
-    <label m-radio-button [mValue]="'snap'">snap</label>
-  </m-radio-group>
-</div>
-
-<m-tree
-    *ngIf="treeOptions"
-    class="structure-definition-tree"
-    [mData]="treeOptions"
-    [mOption]="option"
-    [mExpandIcon]="expandIcon"
-    (mSelect)="selectElement($event)"
-    mSelectMode
-    mExpandAll
->
-  <ng-template #expandIcon let-node>
-    <m-icon [mCode]="node.isExpanded ? 'minus-square' : 'plus-square'"></m-icon>
-  </ng-template>
-
-  <ng-template #option let-node let-data="data">
-    <div style="display: flex">
-      <label [style]="(['*..0', '0..0'] | includes: data.cardinality) ? 'text-decoration: line-through' : ''">{{node.title}}</label>
-
-      <div *ngIf="mode === 'view'" style="width: 75%; display: flex; margin-left: auto">
-        <label style="flex: 1" [style]="(['*..0', '0..0'] | includes: data.cardinality) ? 'text-decoration: line-through' : ''">{{ data.cardinality }}</label>
-
-        <label style="flex: 5">
-          <label>{{data.type}}</label>
-          <label *ngIf="data.targetProfile?.length">
-            (<a *ngFor="let profile of data.targetProfile; let index = index" [href]="profile">{{index !== 0 ? ' | ' : ''}}{{profile | apply:lastWordFromUrl}}</a>)
-          </label>
-        </label>
-
-        <label style="flex: 10; display: grid">
-          <label>{{data.short}}</label>
-          <label *ngIf="data.definition" style="color: grey">
-            {{ data.definition }}
-          </label>
-          <label *ngIf="data.binding" style="color: grey">
-            {{'web.structure-definition.view.binding' | translate}}:
-            <a [href]="data.binding.valueSet" target="_blank">{{data.binding.valueSet | apply:lastWordFromUrl}}</a>
-            ({{data.binding.strength}})
-          </label>
-          <label *ngIf="data.fixedCode" style="color: grey">
-            {{'web.structure-definition.view.fixed' | translate}}: {{data.fixedCode}}
-          </label>
-          <label *ngIf="data.fixedUri" style="color: grey">
-            {{'web.structure-definition.view.fixed' | translate}}:
-            <a [href]="data.fixedUri">{{data.fixedUri | apply:lastWordFromUrl}}</a>
-          </label>
-          <label *ngIf="data.fixedCoding?.code" style="color: grey">
-            {{'web.structure-definition.view.fixed' | translate}}: {{data.fixedCoding.code}} | {{data.fixedCoding.system}}
-          </label>
-          <label *ngIf="data.fixedCodeableConcept?.coding" style="color: grey">
-            {{'web.structure-definition.view.fixed' | translate}}:
-            <ng-container *ngFor="let coding of data.fixedCodeableConcept.coding">{{coding.code}} | {{coding.system}}&nbsp;</ng-container>
-          </label>
-          <label *ngIf="data.patternCodeableConcept?.coding" style="color: grey">
-            {{'web.structure-definition.view.fixed' | translate}}:
-            <ng-container *ngFor="let coding of data.patternCodeableConcept.coding">{{coding.code}} | {{coding.system}}&nbsp;</ng-container>
-          </label>
-
-          <label *ngFor="let m of data.mappings" style="color: grey">
-            {{m.identity}}: {{m.map}}
-          </label>
-        </label>
-      </div>
-    </div>
-  </ng-template>
-</m-tree>

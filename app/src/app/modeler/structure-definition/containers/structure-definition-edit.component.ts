@@ -8,7 +8,7 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {map, Observable, of} from 'rxjs';
 import {ChefService} from 'term-web/integration/_lib';
 import {StructureDefinitionService} from '../services/structure-definition.service';
-import {Element} from 'term-web/modeler/_lib/structure-definition/structure-definition-tree.component';
+import {Element} from 'term-web/modeler/_lib/structure-definition/structure-definition-editable-tree.component';
 import {Fhir} from 'fhir/fhir';
 
 @Component({

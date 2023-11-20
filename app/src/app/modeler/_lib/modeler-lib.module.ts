@@ -1,4 +1,4 @@
-import {NgModule} from '@angular/core';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
 import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {FormsModule} from '@angular/forms';
@@ -38,6 +38,9 @@ import {TransformationDefinitionSelectComponent} from 'term-web/modeler/_lib/tra
     StructureDefinitionEditableTreeComponent,
     StructureDefinitionSelectComponent,
     TransformationDefinitionSelectComponent
+  ],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
   ]
 })
 export class ModelerLibModule {
