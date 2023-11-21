@@ -1,10 +1,8 @@
-import {tokenAttrValue} from './plugin.util';
 import {matchSection} from '@kodality-web/marina-markdown-parser';
 
 export function structureDefinitionCodePlugin(md): void {
   md.renderer.rules.structure_definition_code = (tokens, idx, /*options, env, self */) => {
-    const [code] = tokenAttrValue(tokens[idx], 'code');
-    return `<ce-structure-definition def-code="${encodeURIComponent(code)}"></ce-structure-definition>`;
+    return `<ce-structure-definition ${tokens[idx].attrs.map(([k, v]) => `${k}="${encodeURIComponent(v)}"`).join(' ')}></ce-structure-definition>`;
   };
 
   md.block.ruler.after('reference', 'structure_definition_code', (state, startl, endl, silent) => {
@@ -14,8 +12,14 @@ export function structureDefinitionCodePlugin(md): void {
     }
 
     const token = state.push('structure_definition_code', '', 0);
-    token.attrs = [['code', content.match(/{{def:(.*)}}/)[1]]];
-    state.line = end.line + (autoClosed ? 1 : 0);
+    const match = content.match(/{{def:(.*)}}/)[1];
+    if (match.includes(';')) {
+      const [code, ...options] = match.split(";");
+      token.attrs = [['def-code', code], ...options.map(t => t.trim()).map(t => t.split('='))];
+    } else {
+      token.attrs = [['def-code', match]];
+    }
+      state.line = end.line + (autoClosed ? 1 : 0);
     return true;
   });
 }

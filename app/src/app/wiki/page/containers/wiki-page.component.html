@@ -4,7 +4,7 @@
   <ng-template #spaceSelector>
     <m-dropdown [mHideIfEmpty]="false">
       <div *m-dropdown-container>
-        <div class="m-items-middle" style="color: var(--color-text)">
+        <div class="m-items-middle m-clickable">
           {{loader.state['spaces'] ? '...' : (space?.names | localName) ?? 'web.wiki-page.spaces' | translate}}
           <m-icon mCode="down"></m-icon>
         </div>

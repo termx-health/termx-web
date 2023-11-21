@@ -15,8 +15,8 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   @Input() public defId?: number;
   @Input() public defCode?: string;
   @Input() public content?: string;
+  @Input() public type: 'diff' | 'snap' | 'hybrid' = 'hybrid';
 
-  protected type: 'diff' | 'snap' | 'hybrid' = 'hybrid';
   protected fhirJson: string;
   protected loader = new LoadingManager();
 

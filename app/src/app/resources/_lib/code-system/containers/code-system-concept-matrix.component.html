@@ -1,7 +1,7 @@
 <m-table [mData]="concepts" mSize="small">
   <tr *mTableHead>
     <th>
-      {{id}} {{concepts?.length < conceptsTotal ? (concepts.length + '/' + conceptsTotal) : ''}}
+      {{'entities.code-system-concept.code' | translate}} {{concepts?.length < conceptsTotal ? (concepts.length + '/' + conceptsTotal) : ''}}
     </th>
     <th *ngFor="let ep of entityProperties | filter: displayedProperties: _properties">
       {{ep.description | localName: ep.name}}
