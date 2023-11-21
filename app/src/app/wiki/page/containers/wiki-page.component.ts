@@ -114,7 +114,9 @@ export class WikiPageComponent implements OnInit {
     const handlers = {
       'page': () => (['/wiki', options['space'] ?? this.activeSpace, id]),
       'cs': () => (['/resources/code-systems/', id, 'summary']),
+      'csc': () => (['/resources/code-systems/', id, 'concepts']),
       'vs': () => (['/resources/value-sets/', id, 'summary']),
+      'vsc': () => (['/resources/value-sets/', id.split('|')[0], 'versions', id.split('|')[1], 'concepts']),
       'ms': () => ['/resources/map-sets/', id, 'view'],
       'concept': () => {
         const [cs, concept] = id.split('|');
