@@ -2,8 +2,8 @@ import {matchSection} from '@kodality-web/marina-markdown-parser';
 
 
 export function codeSystemConceptMatrixPlugin(md): void {
-  md.renderer.rules.code_system_concept_matrix = (tokens, idx, /*options, env, self */) => {
-    return `<ce-code-system-concept-matrix ${tokens[idx].attrs.map(([k, v]) => `${k}="${encodeURIComponent(v)}"`).join(' ')}></ce-code-system-concept-matrix>`;
+  md.renderer.rules.code_system_concept_matrix = (tokens, idx, /* options, env, self */) => {
+    return `<ce-code-system-concept-matrix ${tokens[idx].attrs.filter(([_, v]) => v).map(([k, v]) => `${k}="${encodeURIComponent(v)}"`).join(' ')}></ce-code-system-concept-matrix>`;
   };
 
   md.block.ruler.before('fence', 'code_system_concept_matrix', (state, startl, endl, silent, ...rest) => {

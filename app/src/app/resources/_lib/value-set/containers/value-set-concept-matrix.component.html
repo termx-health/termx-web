@@ -1,0 +1,29 @@
+<m-table [mData]="concepts" mSize="small">
+  <tr *mTableHead>
+    <th>
+      {{'entities.value-set-version-concept.concept' | translate}}
+    </th>
+    <th>
+      {{'entities.value-set-version-concept.additional-designations' | translate}}
+    </th>
+  </tr>
+
+  <tr *ngFor="let c of concepts | apply: slice: limit">
+    <td style="white-space: nowrap">
+      {{c.code}}
+    </td>
+    <td>
+      <ng-container *ngFor="let prop of c.properties">
+        <div *ngIf="!prop.lang || !_langs?.length  || (_langs | includes: prop.lang)">
+          {{prop.value}}
+        </div>
+      </ng-container>
+    </td>
+  </tr>
+
+  <tr *mTableNoData>
+    <td>
+      <m-no-data></m-no-data>
+    </td>
+  </tr>
+</m-table>

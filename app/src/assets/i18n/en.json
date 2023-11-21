@@ -2066,6 +2066,7 @@
 				"concept": "Concept",
 				"contents": "Contents",
 				"cs": "Code System",
+				"csc": "Code System concepts",
 				"def": "Structure definition",
 				"ms": "Map Set",
 				"none": "None",
@@ -2074,6 +2075,7 @@
 				"tags": "Tags",
 				"usages": "References",
 				"vs": "Value Set",
+				"vsc": "Value Set concepts",
 				"add-content": "Add content"
 			},
 			"comments": {

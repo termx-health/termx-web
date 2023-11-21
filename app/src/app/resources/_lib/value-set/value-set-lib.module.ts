@@ -13,8 +13,9 @@ import {ValueSetVersionCodePipe} from './pipe/value-set-version-code-pipe';
 import {ValueSetWidgetComponent} from './containers/value-set-widget.component';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {RouterModule} from '@angular/router';
-import {ValueSetFileImportService} from 'term-web/resources/_lib/value-set/services/value-set-file-import.service';
+import {ValueSetFileImportService} from './services/value-set-file-import.service';
 import {TranslateModule} from '@ngx-translate/core';
+import {ValueSetConceptMatrixComponent} from './containers/value-set-concept-matrix.component';
 
 
 @NgModule({
@@ -38,6 +39,7 @@ import {TranslateModule} from '@ngx-translate/core';
     ValueSetVersionSelectComponent,
     ValueSetConceptSelectComponent,
     ValueSetWidgetComponent,
+    ValueSetConceptMatrixComponent,
 
     ValueSetVersionCodePipe
   ],
@@ -46,6 +48,7 @@ import {TranslateModule} from '@ngx-translate/core';
     ValueSetVersionSelectComponent,
     ValueSetConceptSelectComponent,
     ValueSetWidgetComponent,
+    ValueSetConceptMatrixComponent,
 
     ValueSetVersionCodePipe
   ]

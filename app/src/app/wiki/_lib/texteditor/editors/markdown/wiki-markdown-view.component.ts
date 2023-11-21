@@ -7,6 +7,7 @@ import {structureDefinitionFshPlugin} from './plugins/structure-definition-fsh.p
 import {drawioPlugin} from './plugins/drawio.plugin';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {codeSystemConceptMatrixPlugin} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/code-system-concept-matrix.plugin';
+import {valueSetConceptMatrixPlugin} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/value-set-concept-matrix.plugin';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class WikiMarkdownViewComponent {
       structureDefinitionCodePlugin,
       structureDefinitionFshPlugin,
       codeSystemConceptMatrixPlugin,
+      valueSetConceptMatrixPlugin,
       drawioPlugin
     ],
     options: {

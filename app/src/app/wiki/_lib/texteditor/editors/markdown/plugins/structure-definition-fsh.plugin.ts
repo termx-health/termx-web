@@ -3,7 +3,7 @@ import {matchSection} from '@kodality-web/marina-markdown-parser';
 
 
 export function structureDefinitionFshPlugin(md): void {
-  md.renderer.rules.structure_definition_fsh = (tokens, idx, /*options, env, self */) => {
+  md.renderer.rules.structure_definition_fsh = (tokens, idx, /* options, env, self */) => {
     const [fsh] = tokenAttrValue(tokens[idx], 'fsh');
     return `<ce-structure-definition content="${encodeURIComponent(fsh)}"></ce-structure-definition>`;
   };

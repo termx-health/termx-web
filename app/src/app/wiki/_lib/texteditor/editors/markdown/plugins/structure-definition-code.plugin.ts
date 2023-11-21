@@ -1,7 +1,7 @@
 import {matchSection} from '@kodality-web/marina-markdown-parser';
 
 export function structureDefinitionCodePlugin(md): void {
-  md.renderer.rules.structure_definition_code = (tokens, idx, /*options, env, self */) => {
+  md.renderer.rules.structure_definition_code = (tokens, idx, /* options, env, self */) => {
     return `<ce-structure-definition ${tokens[idx].attrs.map(([k, v]) => `${k}="${encodeURIComponent(v)}"`).join(' ')}></ce-structure-definition>`;
   };
 
