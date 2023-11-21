@@ -6,6 +6,7 @@ import {WikiCommentPopoverComponent} from '../texteditor/comments/wiki-comment-p
 import {WikiComment} from '../texteditor/comments/wiki-comment';
 import {NgChanges} from '@kodality-web/marina-ui';
 import {group, isDefined} from '@kodality-web/core-util';
+import {CodeSystemConceptMatrixComponent} from 'term-web/resources/_lib/code-system/containers/code-system-concept-matrix.component';
 
 @Component({
   selector: 'tw-smart-text-editor-view',
@@ -30,7 +31,8 @@ export class WikiSmartTextEditorViewComponent implements OnChanges {
   ) {
     const components = {
       'ce-structure-definition': StructureDefinitionTreeComponent,
-      'ce-wiki-comment-popover': WikiCommentPopoverComponent
+      'ce-wiki-comment-popover': WikiCommentPopoverComponent,
+      'ce-code-system-concept-matrix': CodeSystemConceptMatrixComponent,
     };
 
     Object.keys(components)

@@ -18,6 +18,7 @@ import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {RouterModule} from '@angular/router';
 import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
 import {EntityPropertyNamePipe} from './pipe/entity-propertye-name-pipe';
+import {CodeSystemConceptMatrixComponent} from 'term-web/resources/_lib/code-system/containers/code-system-concept-matrix.component';
 
 @NgModule({
   imports: [
@@ -42,6 +43,7 @@ import {EntityPropertyNamePipe} from './pipe/entity-propertye-name-pipe';
     CodeSystemVersionSelectComponent,
     CodeSystemEntityVersionSearchComponent,
     CodeSystemWidgetComponent,
+    CodeSystemConceptMatrixComponent,
 
     LocalizedConceptNamePipe,
     EntityPropertyNamePipe,
@@ -52,6 +54,7 @@ import {EntityPropertyNamePipe} from './pipe/entity-propertye-name-pipe';
     CodeSystemVersionSelectComponent,
     CodeSystemEntityVersionSearchComponent,
     CodeSystemWidgetComponent,
+    CodeSystemConceptMatrixComponent,
 
     LocalizedConceptNamePipe,
     EntityPropertyNamePipe,

@@ -1,0 +1,29 @@
+<m-table [mData]="concepts" mSize="small">
+  <tr *mTableHead>
+    <th>
+      {{id}} {{concepts?.length < conceptsTotal ? (concepts.length + '/' + conceptsTotal) : ''}}
+    </th>
+    <th *ngFor="let ep of entityProperties | filter: displayedProperties: _properties">
+      {{ep.description | localName: ep.name}}
+    </th>
+  </tr>
+
+  <tr *mTableRow="let c">
+    <td style="white-space: nowrap">
+      {{c.code}}
+    </td>
+    <td *ngFor="let ep of entityProperties | filter: displayedProperties: _properties">
+      <ng-container *ngFor="let prop of c.properties[ep.name]">
+        <div *ngIf="!prop.lang || !_langs?.length  || (_langs | includes: prop.lang)">
+          {{prop.value}}
+        </div>
+      </ng-container>
+    </td>
+  </tr>
+
+  <tr *mTableNoData>
+    <td>
+      <m-no-data></m-no-data>
+    </td>
+  </tr>
+</m-table>

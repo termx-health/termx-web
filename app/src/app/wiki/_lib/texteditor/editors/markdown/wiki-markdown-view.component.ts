@@ -6,6 +6,7 @@ import {structureDefinitionCodePlugin} from './plugins/structure-definition-code
 import {structureDefinitionFshPlugin} from './plugins/structure-definition-fsh.plugin';
 import {drawioPlugin} from './plugins/drawio.plugin';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
+import {codeSystemConceptMatrixPlugin} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/code-system-concept-matrix.plugin';
 
 
 @Component({
@@ -14,8 +15,6 @@ import {PreferencesService} from 'term-web/core/preferences/preferences.service'
     <m-markdown
         [mData]="value ?? ''"
         [mPlugins]="plugins.list"
-        [mPluginOptions]="plugins.options"
-        [mPrerender]="prerender"
     />
   `,
 })
@@ -30,6 +29,7 @@ export class WikiMarkdownViewComponent {
       localImage,
       structureDefinitionCodePlugin,
       structureDefinitionFshPlugin,
+      codeSystemConceptMatrixPlugin,
       drawioPlugin
     ],
     options: {
