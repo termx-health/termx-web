@@ -3,6 +3,7 @@ import {interval, map, Observable, of} from 'rxjs';
 import {HttpCacheService} from '@kodality-web/core-util';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {ValueSetLibService} from '../services/value-set-lib.service';
+import {AuthService} from 'term-web/core/auth';
 
 interface ConceptView {
   code: string;
@@ -17,13 +18,14 @@ class ValueSetConceptMatrixService {
   private cache = new HttpCacheService();
 
   public constructor(
+    private authService: AuthService,
     private valueSetService: ValueSetLibService,
   ) {
     interval(10_000).pipe(takeUntilDestroyed()).subscribe(() => this.cache.clear());
   }
 
   public load(id: string, version: string): Observable<ConceptView[]> {
-    if (!id || !version) {
+    if (!id || !version || !this.authService.hasPrivilege(`${id}.ValueSet.view`)) {
       return of([]);
     }
 
@@ -49,8 +51,8 @@ export class ValueSetConceptMatrixComponent implements OnChanges {
 
   @Input() public id: string;
   @Input() public version: string;
-  @Input() public limit: number;
   protected _langs: string[] = [];
+  @Input() public limit: number;
 
   @Input()
   public set langs(v: string | string[]) {

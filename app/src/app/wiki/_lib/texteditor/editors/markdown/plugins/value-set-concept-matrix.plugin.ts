@@ -16,8 +16,8 @@ export function valueSetConceptMatrixPlugin(md): void {
     const match: string = content.match(/{{vsc:(.*)}}/)[1];
 
     if (match.includes(';')) {
-      const [idd, ...options] = match.split(";");
-      const [id, version] = idd.split('|');
+      const [idv, ...options] = match.split(";");
+      const [id, version] = idv.split('|');
 
       token.attrs = [['id', id], ['version', version] ,...options.map(t => t.trim()).map(t => t.split('='))];
     } else {

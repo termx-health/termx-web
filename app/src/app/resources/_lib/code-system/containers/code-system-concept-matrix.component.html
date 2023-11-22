@@ -1,19 +1,19 @@
 <m-table [mData]="concepts" mSize="small">
   <tr *mTableHead>
-    <th>
-      {{'entities.code-system-concept.code' | translate}} {{concepts?.length < conceptsTotal ? (concepts.length + '/' + conceptsTotal) : ''}}
-    </th>
-    <th *ngFor="let ep of entityProperties | filter: displayedProperties: _properties">
-      {{ep.description | localName: ep.name}}
+    <th *ngFor="let ep of entityProperties | apply: displayedProperties: _properties">
+      <ng-container *ngIf="ep.name === 'code'">
+        {{'entities.code-system-concept.code' | translate}} {{concepts?.length < conceptsTotal ? (concepts.length + '/' + conceptsTotal) : ''}}
+      </ng-container>
+
+      <ng-container *ngIf="ep.name !== 'code'">
+        {{ep.description | localName: ep.name}}
+      </ng-container>
     </th>
   </tr>
 
   <tr *mTableRow="let c">
-    <td style="white-space: nowrap">
-      {{c.code}}
-    </td>
-    <td *ngFor="let ep of entityProperties | filter: displayedProperties: _properties">
-      <ng-container *ngFor="let prop of c.properties[ep.name]">
+    <td *ngFor="let ep of entityProperties | apply: displayedProperties: _properties">
+      <ng-container *ngFor="let prop of c[ep.name]">
         <div *ngIf="!prop.lang || !_langs?.length  || (_langs | includes: prop.lang)">
           {{prop.value}}
         </div>

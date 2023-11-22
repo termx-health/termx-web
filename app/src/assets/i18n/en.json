@@ -720,6 +720,7 @@
 		},
 		"value-set-version-concept": {
 			"additional-designations": "Additional designations",
+			"designations": "Designations",
 			"concept": "Concept",
 			"display": "Display",
 			"order-number": "Order"

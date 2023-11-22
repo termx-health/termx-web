@@ -16,10 +16,12 @@ export function codeSystemConceptMatrixPlugin(md): void {
     const match: string = content.match(/{{csc:(.*)}}/)[1];
 
     if (match.includes(';')) {
-      const [id, ...options] = match.split(";");
-      token.attrs = [['id', id], ...options.map(t => t.trim()).map(t => t.split('='))];
+      const [idv, ...options] = match.split(";");
+      const [id, version] = idv.split('|');
+      token.attrs = [['id', id], ['version', version] ,...options.map(t => t.trim()).map(t => t.split('='))];
     } else {
-      token.attrs = [['id', match]];
+      const [id, version] = match.split('|');
+      token.attrs = [['id', id], ['version', version]];
     }
     state.line = end.line + (autoClosed ? 1 : 0);
     return true;
