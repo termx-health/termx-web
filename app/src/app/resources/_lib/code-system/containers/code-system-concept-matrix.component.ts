@@ -1,7 +1,7 @@
 import {Component, Injectable, Input, OnChanges} from '@angular/core';
-import {CodeSystemLibService, EntityProperty} from 'term-web/resources/_lib';
+import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, EntityProperty} from 'term-web/resources/_lib';
 import {interval, map, mergeMap, Observable, of} from 'rxjs';
-import {collect, group, HttpCacheService} from '@kodality-web/core-util';
+import {collect, group, HttpCacheService, isNil} from '@kodality-web/core-util';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 import {AuthService} from 'term-web/core/auth';
 
@@ -36,24 +36,46 @@ class CodeSystemConceptMatrixService {
       const properties = group(cs.properties, p => p.id);
 
       return this.codeSystemService.searchConcepts(id, {limit, codeSystemVersion: version}).pipe(map(resp => {
-        const concepts = resp.data.map(c => {
-          const cVersion = c.versions[c.versions.length - 1];
-          return {
-            code: [{value: c.code}],
-            ...collect(cVersion.designations ?? [], d => properties[d.designationTypeId].name, d => ({value: d.name, lang: d.language})),
-            ...collect(cVersion.propertyValues ?? [], d => properties[d.entityPropertyId].name, d => ({value: d.value})),
-          };
-        });
-
         return ({
-          properties: [{name: 'code'}, ...Object.values(properties)],
-          concepts: concepts,
+          properties: [
+            {name: 'code'},
+            ...Object.values(properties)
+          ],
+          concepts: this
+            .buildStructure(resp.data, cs.hierarchyMeaning)
+            .map(({concept: c, version, level}) => ({
+              code: [{value: c.code}],
+              level: [{value: String(level)}],
+              ...collect(version.designations ?? [], d => properties[d.designationTypeId].name, d => ({value: d.name, lang: d.language})),
+              ...collect(version.propertyValues ?? [], d => properties[d.entityPropertyId].name, d => ({value: d.value})),
+            })),
           total: resp.meta.total
         });
       }));
     }));
 
     return this.cache.put(`${id}#${version}#${limit}`, req$);
+  }
+
+  private buildStructure(concepts: CodeSystemConcept[], hierarchyMeaning: string): {
+    concept: CodeSystemConcept;
+    version: CodeSystemEntityVersion,
+    level: number
+  }[] {
+    const _concepts = concepts.map(c => ({
+      concept: c,
+      version: c.versions[c.versions.length - 1],
+      parent: c.versions[c.versions.length - 1]?.associations?.find(a => a.associationType === hierarchyMeaning)?.targetCode
+    }));
+
+    const buildTree = (parents: typeof _concepts, level = 1) => {
+      return parents?.flatMap(p => {
+        const children = _concepts.filter(n => n.parent === p.concept.code);
+        return [{concept: p.concept, version: p.version, level}, ...buildTree(children, level + 1)];
+      }) ?? [];
+    };
+
+    return buildTree(_concepts.filter(n => isNil(n.parent)));
   }
 }
 

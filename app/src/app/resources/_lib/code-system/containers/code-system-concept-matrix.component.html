@@ -12,9 +12,12 @@
   </tr>
 
   <tr *mTableRow="let c">
-    <td *ngFor="let ep of entityProperties | apply: displayedProperties: _properties">
+    <td *ngFor="let ep of entityProperties | apply: displayedProperties: _properties; let first = first">
       <ng-container *ngFor="let prop of c[ep.name]">
-        <div *ngIf="!prop.lang || !_langs?.length  || (_langs | includes: prop.lang)">
+        <div
+            *ngIf="!prop.lang || !_langs?.length  || (_langs | includes: prop.lang)"
+            [style.padding-left.px]="first ? (c['level'][0].value - 1) * 10 : undefined"
+        >
           {{prop.value}}
         </div>
       </ng-container>
