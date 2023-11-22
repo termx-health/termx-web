@@ -12,6 +12,8 @@ import {OutputFormatType} from 'diff2html/lib/types';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {AuthService} from 'term-web/core/auth';
 import {NzTimelineItemColor} from 'ng-zorro-antd/timeline/typings';
+import {SeoService} from 'term-web/core/ui/services/seo.service';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   templateUrl: 'wiki-page-history.component.html',
@@ -40,7 +42,9 @@ export class WikiPageHistoryComponent implements OnInit {
     private router: Router,
     private clipboard: Clipboard,
     private pageService: PageService,
+    private translate: TranslateService,
     private spaceService: WikiSpaceService,
+    private seo: SeoService,
   ) { }
 
 
@@ -67,6 +71,8 @@ export class WikiPageHistoryComponent implements OnInit {
   private init(page?: Page, slug?: string): void {
     this.pageContent = page.contents.find(c => c.slug === slug);
     this.queryNext();
+
+    this.seo.title(this.translate.instant('web.wiki-page.history.timeline.header') + ' - ' + this.pageContent.name);
   }
 
   private _queryNext(): Observable<any> {

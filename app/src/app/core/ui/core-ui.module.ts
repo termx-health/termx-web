@@ -11,18 +11,19 @@ import {AddButtonComponent} from './components/add-button/add-button.component';
 import {AuthModule} from 'term-web/core/auth';
 import {ValidateUrlPipe} from './pipes/validate-url.pipe';
 import {CodeSystemLibModule, ValueSetLibModule} from '../../resources/_lib';
-import {TerminologyConceptSearchComponent} from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
+import {TerminologyConceptSearchComponent} from './components/inputs/terminology-concept-select/terminology-concept-search.component';
 import {MeasurementUnitLibModule} from '../../measurement-unit/_lib';
 import {IntegrationLibModule} from '../../integration/_lib';
-import {SemanticVersionSelectComponent} from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
-import {InputDebounceDirective} from 'term-web/core/ui/directives/input-debounce.directive';
-import {EntityPropertyValueInputComponent} from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
-import {TableComponent} from 'term-web/core/ui/components/table-container/table.component';
-import {TableFilterComponent} from 'term-web/core/ui/components/table-container/table-filter.component';
-import {DropListComponent} from 'term-web/core/ui/components/drop-list/drop-list.component';
+import {SemanticVersionSelectComponent} from './components/inputs/version-select/semantic-version-select.component';
+import {InputDebounceDirective} from './directives/input-debounce.directive';
+import {EntityPropertyValueInputComponent} from './components/inputs/property-value-input/entity-property-value-input.component';
+import {TableComponent} from './components/table-container/table.component';
+import {TableFilterComponent} from './components/table-container/table-filter.component';
+import {DropListComponent} from './components/drop-list/drop-list.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
-import {CopyContainerComponent} from 'term-web/core/ui/components/copy-container/copy-container.component';
-import {DiffViewComponent} from 'term-web/core/ui/components/diff/diff-view.component';
+import {CopyContainerComponent} from './components/copy-container/copy-container.component';
+import {DiffViewComponent} from './components/diff/diff-view.component';
+import {SeoService} from './services/seo.service';
 
 
 const commonModules = [
@@ -80,6 +81,9 @@ const pipes = [
     ...components,
     ...pipes,
     ...directives
+  ],
+  providers: [
+    SeoService,
   ]
 })
 export class CoreUiModule {

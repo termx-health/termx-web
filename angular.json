@@ -51,7 +51,17 @@
             ],
             "assets": [
               "app/src/favicon.ico",
-              "app/src/assets",
+              {
+                "glob": "**/*",
+                "input": "app/src/assets/",
+                "output": "/assets/",
+                "ignore": ["base/*"]
+              },
+              {
+                "glob": "**/*",
+                "input": "app/src/assets/base",
+                "output": "/"
+              },
               {
                 "glob": "**/*",
                 "input": "./node_modules/@kodality-web/marina-ui/src/icons",

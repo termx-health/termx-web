@@ -10,6 +10,7 @@ import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-spac
 import {TranslateService} from '@ngx-translate/core';
 import {MediaMatcher} from '@angular/cdk/layout';
 import {AuthService} from 'term-web/core/auth';
+import {SeoService} from 'term-web/core/ui/services/seo.service';
 
 @Component({
   templateUrl: './wiki-page.component.html',
@@ -35,6 +36,7 @@ export class WikiPageComponent implements OnInit {
     protected router: Router,
     private route: ActivatedRoute,
     private destroy$: DestroyService,
+    private seo: SeoService,
     media: MediaMatcher
   ) {
     this.mobileQuery = media.matchMedia('(max-width: 992px)');
@@ -96,6 +98,13 @@ export class WikiPageComponent implements OnInit {
 
     if (page) {
       this.loader.wrap('path', this.pageService.getPath(page.id)).subscribe(path => this.path = path);
+
+      const content = page.contents.find(c => c.slug === slug);
+      this.seo.title(content?.name);
+      this.seo.description(content?.content?.slice(0, 1000));
+    } else {
+      this.seo.reset();
+      this.seo.title(this.translateService.instant('web.wiki-page.overview.pages') + ' - ' + this.space?.code ?? '');
     }
   }
 

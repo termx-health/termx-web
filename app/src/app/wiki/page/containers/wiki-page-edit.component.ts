@@ -10,6 +10,7 @@ import {StructureDefinition, StructureDefinitionLibService} from 'term-web/model
 import {MuiModalContainerComponent} from '@kodality-web/marina-ui';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
 import {UnsavedChangesGuardComponent} from 'term-web/core/ui/guard/unsaved-changes.guard';
+import {SeoService} from 'term-web/core/ui/services/seo.service';
 
 @Component({
   templateUrl: 'wiki-page-edit.component.html',
@@ -50,6 +51,7 @@ export class WikiPageEditComponent implements OnInit, UnsavedChangesGuardCompone
     private pageCommentService: PageCommentService,
     private structureDefinitionService: StructureDefinitionLibService,
     private clipboard: Clipboard,
+    private seoService: SeoService,
     private router: Router,
     private route: ActivatedRoute,
   ) {}
@@ -104,6 +106,8 @@ export class WikiPageEditComponent implements OnInit, UnsavedChangesGuardCompone
           this.versionInfo = ver.modifiedAt;
         });
       }
+
+      this.seoService.title(this.pageContent.name);
     });
   }
 
