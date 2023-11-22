@@ -1,19 +1,13 @@
 <m-table [mData]="concepts" mSize="small">
   <tr *mTableHead>
-    <th>
-      {{'entities.value-set-version-concept.concept' | translate}}
-    </th>
-    <th>
-      {{'entities.value-set-version-concept.designations' | translate}}
+    <th *ngFor="let pk of ['code', 'display', 'designations'] | apply: displayedProperties: _properties">
+      {{pk | apply: translateKey | translate}}
     </th>
   </tr>
 
   <tr *ngFor="let c of concepts | apply: slice: limit">
-    <td style="white-space: nowrap">
-      {{c.code}}
-    </td>
-    <td>
-      <ng-container *ngFor="let prop of c.properties">
+    <td *ngFor="let pk of ['code', 'display', 'designations'] | apply: displayedProperties: _properties">
+      <ng-container *ngFor="let prop of c[pk]">
         <div *ngIf="!prop.lang || !_langs?.length  || (_langs | includes: prop.lang)">
           {{prop.value}}
         </div>

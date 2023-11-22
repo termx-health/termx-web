@@ -32,8 +32,9 @@ export class WikiPageEditComponent implements OnInit, UnsavedChangesGuardCompone
   @ViewChild(WikiSmartTextEditorComponent) public editor?: WikiSmartTextEditorComponent;
 
   @HostListener('window:beforeunload', ['$event'])
-  public beforeunload(): boolean {
-    return this.canDeactivate(true);
+  public handleClose(e: BeforeUnloadEvent): void {
+    e.preventDefault();
+    e.returnValue = this.canDeactivate(true);
   }
 
   public canDeactivate(beforeunload?: boolean): boolean {
