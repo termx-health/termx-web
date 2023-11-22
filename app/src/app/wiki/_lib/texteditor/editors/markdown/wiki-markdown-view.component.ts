@@ -16,6 +16,8 @@ import {valueSetConceptMatrixPlugin} from 'term-web/wiki/_lib/texteditor/editors
     <m-markdown
         [mData]="value ?? ''"
         [mPlugins]="plugins.list"
+        [mPluginOptions]="plugins.options"
+        [mPrerender]="prerender"
     />
   `,
 })
