@@ -11,6 +11,7 @@ import {MediaMatcher} from '@angular/cdk/layout';
 import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 import {environment} from 'environments/environment';
 import {Router} from '@angular/router';
+import {AuthService} from 'term-web/core/auth';
 
 @Component({
   selector: 'tw-wiki-page-details',
@@ -46,6 +47,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   } = {};
 
   public constructor(
+    private authService: AuthService,
     private pageService: PageService,
     private pageCommentService: PageCommentService,
     private clipboard: Clipboard,
@@ -94,9 +96,10 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
       }).subscribe(resp => {
         this.pageUsages = resp.data
           // local links (doesn't start with "$space/") should be from the same space
-          .filter(r => r.spaceId === this.space.id || r.target.startsWith(`${this.space?.code}/`))
+          .filter(u => u.spaceId === this.space.id || u.target.startsWith(`${this.space?.code}/`))
           // include usages where current page is referenced from
-          .filter(u => u.target.endsWith(slug));
+          .filter(u => u.target.endsWith(slug))
+          .filter(u => this.authService.hasPrivilege(`${u.spaceId}.Wiki.view`));
       });
 
       this.pageCommentService.search({
