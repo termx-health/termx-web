@@ -1,6 +1,6 @@
 <m-spinner [mLoading]="loader.state['save']">
-  <form #form="ngForm" *ngIf="valueSet">
-    <div style="display: grid; grid-template-columns: 3fr 1fr; gap: 1rem">
+  <form nz-row [nzGutter]="12" #form="ngForm" *ngIf="valueSet">
+    <div nz-col [nzMd]="18" [nzXs]="24" style="margin-bottom: 1rem">
       <m-card [mTitle]="'web.value-set.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
         <div *mCardContent="!loader.isLoading">
           <tw-resource-form resourceType="ValueSet" [resource]="valueSet" [mode]="mode"></tw-resource-form>
@@ -13,7 +13,9 @@
           {{'core.btn.save' | translate}}
         </m-button>
       </m-card>
+    </div>
 
+    <div nz-col [nzMd]="6" [nzXs]="24">
       <m-card [mShowSkeleton]="loader.isLoading">
         <tw-resource-side-info [copyright]="valueSet.copyright" [permissions]="valueSet.permissions" [settings]="valueSet.settings"></tw-resource-side-info>
       </m-card>

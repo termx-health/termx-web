@@ -149,7 +149,8 @@
                     valueSet="concept-property-type"
                     [(ngModel)]="p.type"
                     name="type-{{prefix}}"
-                    required></tw-value-set-concept-select>
+                    required
+                ></tw-value-set-concept-select>
                 <label *ngIf="p.definedEntityPropertyId">{{p.type | localName}}</label>
               </m-form-item>
               <div *mFormCol class="m-items-middle">
@@ -175,13 +176,15 @@
                     name="cs-{{prefix}}"
                     valuePrimitive
                     multiple
-                    [disabled]="p.rule.valueSet"></tw-code-system-search>
+                    [disabled]="p.rule.valueSet"
+                ></tw-code-system-search>
               </m-form-item>
               <m-form-item *ngIf="'Coding' === p.type" mLabel="entities.entity-property.rule.value-set" mName="vs-{{prefix}}">
                 <tw-value-set-search [(ngModel)]="p.rule.valueSet"
                     name="vs-{{prefix}}"
                     valuePrimitive
-                    [disabled]="p.rule.codeSystems?.length > 0"></tw-value-set-search>
+                    [disabled]="p.rule.codeSystems?.length > 0"
+                ></tw-value-set-search>
               </m-form-item>
               <m-form-item *ngIf="'code' === p.type" mLabel="entities.entity-property.rule.filters">
                 <m-editable-table #rowsTable [mData]="p.rule.filters" [mRowInstance]="filterRowInstance">
@@ -205,7 +208,8 @@
                           [name]="ngModelName"
                           [(ngModel)]="f.association"
                           valuePrimitive
-                          autofocus></tw-association-type-search>
+                          autofocus
+                      ></tw-association-type-search>
                     </ng-template>
                   </m-editable-column>
                   <m-editable-column [mTitle]="'entities.entity-property.rule.value'" mName="value">
@@ -215,13 +219,15 @@
                         <tw-property-value-input [(ngModel)]="f.value"
                             [name]="ngModelName"
                             [codeSystem]="codeSystemId"
-                            [property]="f.property"></tw-property-value-input>
+                            [property]="f.property"
+                        ></tw-property-value-input>
                       </ng-container>
                       <ng-container *ngIf="f.type === 'association'">
                         <tw-term-concept-search [name]="ngModelName"
                             valueType="code"
                             [(ngModel)]="f.value"
-                            [codeSystem]="codeSystemId"></tw-term-concept-search>
+                            [codeSystem]="codeSystemId"
+                        ></tw-term-concept-search>
                       </ng-container>
                     </ng-template>
                   </m-editable-column>
