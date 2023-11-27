@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable, tap} from 'rxjs';
-import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
+import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {CodeSystemAssociation, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthService} from 'term-web/core/auth';
@@ -37,8 +37,9 @@ export class LoincListComponent implements OnInit {
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
     if (state) {
-      this.query = Object.assign(new QueryParams(), state.query);
-      this.searchInput.input = this.query.textContains || this.query.textEq;
+      this.searchInput = state.searchInput;
+      this.filter = state.filter;
+      this.isFilterOpen = state.isFilterOpen;
     }
 
     this.loadData();
@@ -56,7 +57,8 @@ export class LoincListComponent implements OnInit {
     q.textContains = this.searchInput.type === 'contains' ? this.searchInput.input : undefined;
     q.textEq = this.searchInput.type === 'eq' ? this.searchInput.input : undefined;
     q.propertyValues = this.getPropertyValues(this.filter);
-    this.stateStore.put(this.STORE_KEY, {query: q});
+
+    this.stateStore.put(this.STORE_KEY, {searchInput: this.searchInput, filter: this.filter, isFilterOpen: this.isFilterOpen});
     return this.loader.wrap('search', this.codeSystemService.searchConcepts('loinc', q));
   }
 
