@@ -109,8 +109,8 @@ export class LoincAnswerListListComponent {
     return this.getLastVersion(concept.versions)?.associations?.find(a => a.targetCode === code)?.orderNumber;
   }
 
-  protected openConcept(code: string, cs: string = 'loinc-answer-list'): void {
-    const canEdit = this.authService.hasPrivilege('*.CodeSystem.edit');
+  protected openConcept(code: string, cs = 'loinc-answer-list'): void {
+    const canEdit = this.authService.hasPrivilege(`${cs}.CodeSystem.edit`);
     const path = '/resources/code-systems/' + cs + '/concepts/' + code + (canEdit ? '/edit' : '/view');
     this.router.navigate([path]);
   }

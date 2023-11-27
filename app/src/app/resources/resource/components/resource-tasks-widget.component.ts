@@ -29,7 +29,7 @@ export class ResourceTasksWidgetComponent implements OnChanges {
   public constructor(private taskLibService: TaskLibService, private router: Router) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['resourceId'] || changes['resurceType']) && isDefined(this.resourceId) && isDefined(this.resourceType)) {
+    if ((changes['resourceId'] || changes['resourceType']) && isDefined(this.resourceId) && isDefined(this.resourceType)) {
       this.loadTasks();
     }
   }

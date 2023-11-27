@@ -142,7 +142,7 @@ export class LoincListComponent implements OnInit {
 
 
   protected openConcept(code: string): void {
-    const canEdit = this.authService.hasPrivilege('*.CodeSystem.edit');
+    const canEdit = this.authService.hasPrivilege('loinc.CodeSystem.edit');
     const path = '/resources/code-systems/loinc/concepts/' + code + (canEdit ? '/edit' : '/view');
     this.router.navigate([path]);
   }
