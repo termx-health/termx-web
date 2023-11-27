@@ -66,7 +66,8 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   protected groupOpened: boolean = false;
   protected tableView: {langs?: string[], properties?: string[]} = {};
   protected filter: {
-    open: boolean, languages?: string[],
+    open: boolean,
+    languages?: string[],
     version?: CodeSystemVersion,
     propertyName?: string,
     propertyValue?: string,
@@ -158,7 +159,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   }
 
   protected reset(): void {
-    this.filter = {open: false, inputType: 'contains'};
+    this.filter = {open: this.filter.open, inputType: 'contains'};
   }
 
   protected selectConcept(concept: CodeSystemConcept): void {
