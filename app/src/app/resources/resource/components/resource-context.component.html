@@ -7,7 +7,7 @@
         <!-- Left -->
         <div class="resource-context__item resource-context__info" style="display: grid">
           <div class="m-title">
-            {{resourceType}}: {{resource.title | localName}}
+            {{resourceType}}: {{resource.title | localName: resource.name ?? resource.id}}
           </div>
 
           <div style="display: flex; gap: 1rem">
