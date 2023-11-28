@@ -26,9 +26,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
 
+  <script src="assets/poc/layout.js"></script>
   <script src="assets/env.js"></script>
 </head>
 <body>
-  <tw-root></tw-root>
+
+<ce-layout>
+  <tw-root slot="ce-content"></tw-root>
+
+  <style>
+      :root {
+          --page-header-height: 0;
+          --header-border-bottom-width: 0;
+          --page-content-padding: 1rem;
+          --color-primary: #0083ba;
+          --border-radius: 0.3em;
+      }
+
+      .m-page__layout .m-page__header-wrapper {
+          border-bottom-width: var(--header-border-bottom-width, var(--border-width));
+          position: absolute;
+          top: 0;
+          right: 0;
+          left: 0;
+      }
+
+      .resource-context__container {
+          border-radius: var(--border-radius);
+          margin-inline: 1rem;
+      }
+
+      .page__sidebar {
+          border-radius: var(--border-radius);
+      }
+
+      .m-card__header {
+          color: var(--color-primary);
+      }
+
+      .header.title, .header .title {
+          color: var(--color-primary);
+      }
+
+  </style>
+</ce-layout>
+
+<link rel="stylesheet" href="assets/poc/mta.css">
+
 </body>
 </html>
