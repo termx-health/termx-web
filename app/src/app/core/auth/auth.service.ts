@@ -43,7 +43,7 @@ export class AuthService {
 
     eventService.registerForEvents()
       .pipe(filter(e => e.type === EventTypes.CheckingAuthFinished))
-      .subscribe(e => {
+      .subscribe(() => {
         const redirectOriginUrl = sessionStorage.getItem(REDIRECT_ORIGIN_URL);
         if (redirectOriginUrl) {
           sessionStorage.removeItem(REDIRECT_ORIGIN_URL);
@@ -62,7 +62,7 @@ export class AuthService {
 
 
   private refreshUserInfo(): Observable<UserInfo> {
-    return this.oidcSecurityService.checkAuth().pipe(mergeMap(lr => {
+    return this.oidcSecurityService.checkAuth().pipe(mergeMap(() => {
       return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`, {context: new HttpContext().set(MuiSkipErrorHandler, true)}).pipe(catchError(() => {
         this.login();
         return of(null as UserInfo);
@@ -71,7 +71,7 @@ export class AuthService {
   }
 
   public login(): void {
-    sessionStorage.setItem(REDIRECT_ORIGIN_URL, this.router.url);
+    sessionStorage.setItem(REDIRECT_ORIGIN_URL, window.location.pathname + window.location.search);
     this.oidcSecurityService.authorize();
   }
 
