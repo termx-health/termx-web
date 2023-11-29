@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable, tap} from 'rxjs';
-import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, SearchResult, unique} from '@kodality-web/core-util';
 import {CodeSystemAssociation, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthService} from 'term-web/core/auth';
@@ -55,6 +55,7 @@ export class LoincListComponent implements OnInit {
   private search(): Observable<SearchResult<CodeSystemConcept>> {
     const q = copyDeep(this.query);
     q.textContains = this.searchInput.type === 'contains' ? this.searchInput.input : undefined;
+    q.textContainsSep = ' ';
     q.textEq = this.searchInput.type === 'eq' ? this.searchInput.input : undefined;
     q.propertyValues = this.getPropertyValues(this.filter);
 
@@ -111,7 +112,7 @@ export class LoincListComponent implements OnInit {
 
   private loadParts(concepts: CodeSystemConcept[]): void {
     const properties = concepts.map(c => this.getLastVersion(c.versions)).filter(v => isDefined(v)).flatMap(v => v.propertyValues);
-    const partCodes = properties?.map(p => p?.value?.code).filter(c => isDefined(c));
+    const partCodes = properties?.map(p => p?.value?.code).filter(c => isDefined(c)).filter(unique);
     if (!partCodes || partCodes.length === 0) {
       return;
     }
