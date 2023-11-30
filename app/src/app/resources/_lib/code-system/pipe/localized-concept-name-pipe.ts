@@ -100,13 +100,12 @@ class LocalizedConceptNameService {
       return concept.code;
     }
 
-    return this.localize(
-      {
-        display: conceptVersion.designations.filter(d => d.designationType === 'display'),
-        additional: conceptVersion.designations.filter(d => d.designationType !== 'display'),
-      },
-      [lang, environment.defaultLanguage]
-    );
+    const localized = this.localize({
+      display: conceptVersion.designations.filter(d => d.designationType === 'display'),
+      additional: conceptVersion.designations.filter(d => d.designationType !== 'display'),
+    }, [lang, environment.defaultLanguage]);
+
+    return localized ?? concept.code;
   }
 
   private $valueSet(reqIds: string[] | number[], resource: ValueSetResourceParams): Observable<OptimizedResponse[]> {
@@ -116,12 +115,10 @@ class LocalizedConceptNameService {
     }).pipe(map(expansion =>
       reqIds.map(reqId => {
         const concept = expansion.find(c => c.concept.code === reqId);
+        const langs = [this.translateService.currentLang, environment.defaultLanguage];
         return ({
           id: reqId,
-          name: concept ? this.localize({
-            display: [concept.display],
-            additional: concept.additionalDesignations
-          }, [this.translateService.currentLang, environment.defaultLanguage]) : reqId
+          name: concept ? this.localize({display: [concept.display], additional: concept.additionalDesignations}, langs) ?? concept.concept.code : reqId
         });
       }).filter(isDefined)));
   }
@@ -140,12 +137,12 @@ class LocalizedConceptNameService {
       })));
   }
 
-  private localize = (concept: {display: Designation[], additional: Designation[]}, langPriority: string[]): string => {
+  private localize = (data: {display: Designation[], additional: Designation[]}, langPriority: string[]): string => {
     const match = (dns: Designation[], l: string): string => dns
       .filter(d => d.language === l)
       .sort(sortFn('preferred'))[0]
       ?.name;
-    return langPriority.map(l => match(concept.display, l) ?? match(concept.additional, l)).find(isDefined);
+    return langPriority.map(l => match(data.display, l) ?? match(data.additional, l)).find(isDefined);
   };
 }
 
