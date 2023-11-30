@@ -6,8 +6,8 @@ import {MapSetLibModule} from './map-set';
 import {ContactLibModule} from './contact';
 import {NamingSystemLibModule} from './naming-system';
 import {AssociationLibModule} from './association';
-import {RelatedArtifactLibModule} from 'term-web/resources/_lib/related-artifacts/related-artifact-lib.module';
-import {DefinedPropertyLibModule} from 'app/src/app/resources/_lib/defined-property';
+import {RelatedArtifactLibModule} from './related-artifacts';
+import {DefinedPropertyLibModule} from './defined-property';
 
 @NgModule({
   declarations: [],
@@ -20,7 +20,7 @@ import {DefinedPropertyLibModule} from 'app/src/app/resources/_lib/defined-prope
     NamingSystemLibModule,
     AssociationLibModule,
     RelatedArtifactLibModule,
-    DefinedPropertyLibModule
+    DefinedPropertyLibModule,
   ],
   exports: [
     CodeSystemLibModule,
@@ -31,7 +31,7 @@ import {DefinedPropertyLibModule} from 'app/src/app/resources/_lib/defined-prope
     NamingSystemLibModule,
     AssociationLibModule,
     RelatedArtifactLibModule,
-    DefinedPropertyLibModule
+    DefinedPropertyLibModule,
   ]
 })
 export class ResourcesLibModule {

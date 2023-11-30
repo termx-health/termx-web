@@ -5,6 +5,7 @@ export class CodeSystemVersionReference {
   public id?: number;
   public version?: string;
   public status?: string;
+  public releaseDate?: Date;
 }
 
 export class CodeSystemVersion extends CodeSystemVersionReference {
@@ -12,7 +13,7 @@ export class CodeSystemVersion extends CodeSystemVersionReference {
   public preferredLanguage?: string;
   public supportedLanguages?: string[];
   public description?: LocalizedName;
-  public releaseDate?: Date;
+  // public releaseDate?: Date;
   public expirationDate?: Date;
   public created?: Date;
   public algorithm?: string;
