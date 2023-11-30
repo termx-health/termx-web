@@ -37,7 +37,7 @@
 		"load-more": "Load more",
 		"no-data": "No data",
 		"no-privilege": {
-			"access": "To access: {{path}}",
+			"access": "To access \"<i>{{path}}</i>\"",
 			"error": "403 Forbidden",
 			"privileges": {
 				"plural": "You lack the privileges: {{privileges}}",
@@ -1258,7 +1258,8 @@
 					"survey": "Survey",
 					"system": "System",
 					"timing": "Timing",
-					"type": "Type"
+					"type": "Type",
+					"recent-searches": "Recent searches"
 				},
 				"method": "Method",
 				"name": "Long Common Name",

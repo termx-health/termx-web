@@ -3,11 +3,12 @@ import {Router} from '@angular/router';
 import {CommonModule} from '@angular/common';
 import {TranslateModule} from '@ngx-translate/core';
 import {CoreUtilModule} from '@kodality-web/core-util';
+import {MarinaUiModule} from '@kodality-web/marina-ui';
 
 @Component({
   selector: 'tw-no-privilege',
   standalone: true,
-  imports: [CommonModule, TranslateModule, CoreUtilModule],
+  imports: [CommonModule, TranslateModule, CoreUtilModule, MarinaUiModule],
   templateUrl: 'no-privilege.component.html',
 })
 export class NoPrivilegeComponent {

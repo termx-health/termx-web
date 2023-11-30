@@ -38,7 +38,11 @@
   <ng-container *ngIf="activeRoutePrivileges$ | async as privileges">
     <router-outlet *ngIf="!privileges?.length || (privileges | twHasAnyPrivilege); else accessError"/>
     <ng-template #accessError>
-      <tw-no-privilege [privileges]="privileges"/>
+      <m-form-row>
+        <div *m-form-col>
+          <tw-no-privilege style="display: block; margin-top: calc(var(--page-content-padding) * 3)" [privileges]="privileges"/>
+        </div>
+      </m-form-row>
     </ng-template>
   </ng-container>
 </m-page-layout>

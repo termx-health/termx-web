@@ -1,31 +1,48 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {Observable, tap} from 'rxjs';
-import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, SearchResult, unique} from '@kodality-web/core-util';
+import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, QueryParams, SearchResult, unique} from '@kodality-web/core-util';
 import {CodeSystemAssociation, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthService} from 'term-web/core/auth';
 import {Router} from '@angular/router';
 import {MuiTableComponent} from '@kodality-web/marina-ui';
 
+
 @Component({
   selector: 'tw-loinc-list',
   templateUrl: './loinc-list.component.html',
+  styles: [`
+    .hide-context .needle {
+      transition: 0.2s ease-in;
+      opacity: 1;
+    }
+
+    .hide-context:not(:hover) .needle {
+      opacity: 0;
+    }
+  `]
 })
 export class LoincListComponent implements OnInit {
   protected readonly STORE_KEY = 'loinc-list';
   protected readonly TYPES = ['CLIN', 'Lab', 'Survey'];
   protected readonly TYPE_ICONS = {'CLIN': 'medicine-box', 'Lab': 'experiment', 'Survey': 'file-text'};
 
+
+  // quick search
+  protected searchInput: {input?: string, type: 'eq' | 'contains'} = {type: 'contains'};
+  protected searchOptions: string[] = this.recentSearches();
+  // backend table
   protected query = new ConceptSearchParams();
   protected searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
-  protected searchInput: {input?: string, type: 'eq' | 'contains'} = {type: 'contains'};
+  // filter
+  protected filter: any = {}; // get values from temp filter when 'Search' button is clicked
+  protected _filter: any = {}; // temp filter
   protected isFilterOpen = false;
-  protected filter: any = {};
-  protected loader = new LoadingManager();
 
+  protected loader = new LoadingManager();
   protected parts: {[key: string]: CodeSystemConcept} = {};
 
-  @ViewChild(MuiTableComponent) public table?: MuiTableComponent<CodeSystemConcept>;
+  @ViewChild(MuiTableComponent) protected table?: MuiTableComponent<CodeSystemConcept>;
 
   public constructor(
     private codeSystemService: CodeSystemLibService,
@@ -38,18 +55,41 @@ export class LoincListComponent implements OnInit {
     const state = this.stateStore.pop(this.STORE_KEY);
     if (state) {
       this.searchInput = state.searchInput;
+      this.query = Object.assign(new QueryParams(), state.query);
       this.filter = state.filter;
+      this._filter = state.filter;
       this.isFilterOpen = state.isFilterOpen;
     }
 
     this.loadData();
   }
 
+
   protected loadData(): void {
     this.search().subscribe(r => {
       this.searchResult = r;
       this.loadParts(r.data);
     });
+  }
+
+  protected onDebounced = (): Observable<SearchResult<CodeSystemConcept>> => {
+    const text = this.searchInput.input;
+    this.query.offset = 0;
+    return this.search().pipe(
+      tap(resp => this.searchResult = resp),
+      tap(() => this.addRecentSearch(text))
+    );
+  };
+
+  protected onFilterSearch = (): void => {
+    this.query.offset = 0;
+
+    this.filter = structuredClone(this._filter);
+    this.loadData();
+  };
+
+  public onFilterReset(): void {
+    this._filter = {};
   }
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
@@ -59,14 +99,9 @@ export class LoincListComponent implements OnInit {
     q.textEq = this.searchInput.type === 'eq' ? this.searchInput.input : undefined;
     q.propertyValues = this.getPropertyValues(this.filter);
 
-    this.stateStore.put(this.STORE_KEY, {searchInput: this.searchInput, filter: this.filter, isFilterOpen: this.isFilterOpen});
+    this.stateStore.put(this.STORE_KEY, {query: this.query, searchInput: this.searchInput, filter: this.filter, isFilterOpen: this.isFilterOpen});
     return this.loader.wrap('search', this.codeSystemService.searchConcepts('loinc', q));
   }
-
-  public onSearch = (): Observable<SearchResult<CodeSystemConcept>> => {
-    this.query.offset = 0;
-    return this.search().pipe(tap(resp => this.searchResult = resp));
-  };
 
 
   protected getName = (c: CodeSystemConcept, type = 'display'): string => {
@@ -124,9 +159,6 @@ export class LoincListComponent implements OnInit {
     });
   }
 
-  public reset(): void {
-    this.filter = {};
-  }
 
   private getPropertyValues(filter: any): string {
     let propertyValues = [];
@@ -164,5 +196,24 @@ export class LoincListComponent implements OnInit {
       this.table.expand(i);
     }
     c['_expanded'] = !c['_expanded'];
+  }
+
+
+  private recentSearches(): string[] {
+    try {
+      return JSON.parse(localStorage.getItem('__tw-loinc-list-search#' + this.authService.user.username) || '[]');
+    } catch (e) {
+      return [];
+    }
+  }
+
+  private addRecentSearch(token: string): void {
+    this.searchOptions = [token, ...this.searchOptions].map(t => t.trim()).filter(Boolean).filter(unique);
+    localStorage.setItem('__tw-loinc-list-search#' + this.authService.user.username, JSON.stringify(this.searchOptions))
+  }
+
+  protected clearRecentSearches(): void {
+    this.searchOptions = [];
+    localStorage.removeItem('__tw-loinc-list-search#' + this.authService.user.username);
   }
 }

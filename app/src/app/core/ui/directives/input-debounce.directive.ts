@@ -1,25 +1,29 @@
-import {Directive, Input, OnInit} from '@angular/core';
-import {catchError, debounceTime, distinctUntilChanged, EMPTY, Observable, Subject, switchMap} from 'rxjs';
-import {MuiInputComponent} from '@kodality-web/marina-ui';
+import {Directive, Input, Optional, Self} from '@angular/core';
+import {catchError, debounceTime, distinctUntilChanged, EMPTY, Observable, skip, Subject, switchMap} from 'rxjs';
+import {NgControl} from '@angular/forms';
+import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
 @Directive({
-  selector: 'm-input[twDebounce]'
+  selector: 'm-input[twDebounce], input[twDebounce]'
 })
-export class InputDebounceDirective implements OnInit {
-  @Input() public debounce: number = 250;
+export class InputDebounceDirective {
+  @Input() public debounce = 250;
   @Input() public debounced: (text?: string) => Observable<any> = () => EMPTY;
 
   public constructor(
-    private input: MuiInputComponent
-  ) { }
-
-  public ngOnInit(): void {
+    @Optional() @Self() public ngControl: NgControl,
+  ) {
     const search$ = new Subject<string>();
     search$.pipe(
       debounceTime(this.debounce),
       distinctUntilChanged(),
       switchMap(e => this.debounced(e).pipe(catchError(() => EMPTY))),
     ).subscribe();
-    this.input.mChange.subscribe(e => search$.next(e));
+
+    if (this.ngControl) {
+      this.ngControl.valueChanges.pipe(takeUntilDestroyed(), skip(1)).subscribe(e => search$.next(e));
+    } else {
+      console.error("Couldn't initialize 'twDebounce' pipe, no NgControl!")
+    }
   }
 }
