@@ -1,14 +1,18 @@
-<m-card>
-  <div *m-card-header class="m-justify-between">
-    <div class="m-items-middle">
-      <m-button [routerLink]="'/resources/finder/code-systems'">
-        <m-icon mCode="layout"></m-icon>
-      </m-button>
-      <span>{{'web.code-system.list.title' | translate}}</span>
-    </div>
+<tw-table [(filterOpen)]="filter.open">
+  <!-- Header -->
+  <div header class="m-justify-between">
+    <span>{{'web.code-system.list.title' | translate}}</span>
 
     <div class="m-items-middle">
-      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+      <!-- Quick Search -->
+      <m-input
+          [(ngModel)]="searchInput"
+          twDebounce [debounced]="onDebounced"
+          placeholder="marina.ui.inputs.search.placeholder"
+          autofocus
+      ></m-input>
+
+      <!-- Add/Edit actions -->
       <m-dropdown *twPrivileged="'*.CodeSystem.edit'">
         <tw-add-button *m-dropdown-container icon="down" placement="right">
           {{'web.code-system.list.add-code-system' | translate}}
@@ -20,9 +24,34 @@
           {{'web.code-system.list.import-fhir' | translate}}
         </a>
       </m-dropdown>
+
+      <!-- Finder -->
+      <m-button [routerLink]="'/resources/finder/code-systems'">
+        <m-icon mCode="layout"></m-icon>
+      </m-button>
+
+      <!-- Filter toggle -->
+      <m-button *ngIf="!filter.open" (mClick)="filter.open = true">
+        <m-icon mCode="filter"></m-icon>
+      </m-button>
     </div>
   </div>
 
+
+  <!-- Filter -->
+  <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
+    <m-form-item>
+      <m-form-item mLabel="entities.code-system.publisher">
+        <tw-value-set-concept-select [(ngModel)]="filter.publisher" valueSet="publisher" valuePrimitive/>
+      </m-form-item>
+      <m-form-item mLabel="web.code-system.list.status">
+        <tw-value-set-concept-select [(ngModel)]="filter.status" valueSet="publication-status" valuePrimitive/>
+      </m-form-item>
+    </m-form-item>
+  </tw-table-filter>
+
+
+  <!-- Backend Table -->
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
       <th></th>
@@ -72,15 +101,18 @@
       <td></td>
       <td colspan="100%">
         <div style="display: grid">
-          <div><label><b>{{'web.code-system.list.uri' | translate}}:</b> {{cs.uri}}</label></div>
-          <div><label><b>{{'entities.code-system.content' | translate}}:</b> {{cs.content | localizedConceptName: {valueSet: 'codesystem-content-mode'} | async}}</label></div>
-          <div *ngIf="cs.caseSensitive"><label><b>{{'entities.code-system.case-sensitivity' | translate}}:</b> {{'web.case-sensitive.options.' + cs.caseSensitive | translate}}</label></div>
+          <div><b>{{'web.code-system.list.uri' | translate}}:</b> {{cs.uri}}</div>
+          <div><b>{{'entities.code-system.content' | translate}}:</b> {{cs.content | localizedConceptName: {valueSet: 'codesystem-content-mode'} | async}}</div>
+          <div *ngIf="cs.caseSensitive"><b>{{'entities.code-system.case-sensitivity' | translate}}:</b> {{'web.case-sensitive.options.' + cs.caseSensitive | translate}}</div>
           <div style="display: grid" *ngIf="cs.versions.length > 0">
-            <label><b>{{'entities.code-system.versions' | translate}}</b></label>
-            <label *ngFor="let version of cs.versions">
-              <b style="margin-right: 1rem">{{version.version}}</b>
-              <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
-            </label>
+            <b>{{'entities.code-system.versions' | translate}}:</b>
+            <div style="display: grid;grid-template-columns: auto auto auto;width: max-content; column-gap: 1rem; row-gap: 0.2rem">
+              <ng-container *ngFor="let version of cs.versions">
+                <b>{{version.version}}</b>
+                <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
+                <tw-status-tag [status]="version.status"></tw-status-tag>
+              </ng-container>
+            </div>
           </div>
         </div>
       </td>
@@ -92,7 +124,7 @@
       </td>
     </tr>
   </m-backend-table>
-</m-card>
+</tw-table>
 
-<tw-code-system-duplicate-modal #duplicateModal (duplicated)="loadData()"></tw-code-system-duplicate-modal>
-<tw-resource-fhir-import-modal #importModal (imported)="loadData()" resourceType="CodeSystem"></tw-resource-fhir-import-modal>
+<tw-code-system-duplicate-modal #duplicateModal (duplicated)="loadData()"/>
+<tw-resource-fhir-import-modal #importModal (imported)="loadData()" resourceType="CodeSystem"/>

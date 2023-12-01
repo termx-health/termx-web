@@ -1,10 +1,10 @@
-import {finalize, map, mergeMap, Observable, shareReplay, Subject, take, timer} from 'rxjs';
-import {HttpCacheService} from '@kodality-web/core-util';
+import {finalize, map, mergeMap, Observable, Subject, take, timer} from 'rxjs';
+import {HttpCacheService, remove} from '@kodality-web/core-util';
 
 export class QueuedCacheService {
   private readonly tick$ = new Subject();
   private valStore = {};
-  private cache: Record<string, Observable<any>> = {};
+  private cache = new HttpCacheService();
   private httpCache = new HttpCacheService();
 
   public constructor(private options: {interval?: number, invalidateAfter?: number} = {}) {
@@ -16,9 +16,9 @@ export class QueuedCacheService {
     combineKey: string,
     combineVal: Val,
     reqProvider: (combineValues: Val[]) => Observable<Req>,
-    respMapper?: (resp: Req, val?: Val) => Resp
+    respMapper: (resp: Req, val?: Val) => Resp
   ): Observable<Resp> {
-    const httpCacheKey = combineVal + combineKey;
+    const httpCacheKey = `${combineVal}$${combineKey}`;
     const cachedReq$ = this.httpCache.get<Resp>(httpCacheKey);
     if (cachedReq$) {
       return cachedReq$;
@@ -30,19 +30,20 @@ export class QueuedCacheService {
     return this.tick$.asObservable().pipe(
       take(1),
       mergeMap(() => {
-        const rawReq$: Observable<Req> = reqProvider(this.valStore[combineKey]);
-        const cachedReq$ = this.cache[combineKey] ?? (this.cache[combineKey] = rawReq$.pipe(shareReplay(1)));
+        const rawReq$ = reqProvider(this.valStore[combineKey]);
+        const cachedReq$ = this.cache.put(combineKey, rawReq$);
 
-        const valReq$ = cachedReq$.pipe(map(resp => respMapper ? respMapper(resp, combineVal) : resp));
-        const httpCacheReq$ = this.httpCache.put(httpCacheKey, valReq$);
-        return httpCacheReq$.pipe(
+        const mappedResp$ = cachedReq$.pipe(map(resp => respMapper(resp, combineVal)));
+        const httpCacheResp$ = this.httpCache.put(httpCacheKey, mappedResp$);
+
+        return httpCacheResp$.pipe(
           finalize(() => {
             if (this.options.invalidateAfter) {
               setTimeout(() => this.httpCache.remove(httpCacheKey), this.options.invalidateAfter);
             }
 
-            delete this.valStore[combineKey];
-            delete this.cache[combineKey];
+            remove(this.valStore[combineKey], combineVal);
+            this.cache.remove(combineKey);
           })
         );
       }));

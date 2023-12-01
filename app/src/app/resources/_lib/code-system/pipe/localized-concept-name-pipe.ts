@@ -64,6 +64,7 @@ class LocalizedConceptNameService {
     if (resource.valueSet) {
       return this.$valueSet(ids, resource);
     }
+    return EMPTY;
   }
 
 

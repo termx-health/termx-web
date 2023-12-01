@@ -4,12 +4,17 @@ export class CodeSystemSearchParams extends QueryParams {
   public id?: string;
   public ids?: string;
   public idContains?: string;
+  public publisher?: string;
   public uri?: string;
   public uriContains?: string;
+  public content?: string;
   public name?: string;
   public nameContains?: string;
+  public title?: string;
+  public titleContains?: string;
   public description?: string;
   public descriptionContains?: string;
+  public baseCodeSystem?: string;
 
   public text?: string;
   public textContains?: string;
@@ -20,6 +25,7 @@ export class CodeSystemSearchParams extends QueryParams {
 
   public versionId?: number;
   public versionVersion?: string;
+  public versionStatus?: string;
   public versionReleaseDateGe?: Date;
   public versionExpirationDateLe?: Date;
   public versionsDecorated?: boolean;
