@@ -1,9 +1,17 @@
 import {Component, OnInit} from '@angular/core';
-import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult, sortFn} from '@kodality-web/core-util';
+import {ComponentStateStore, copyDeep, DestroyService, isDefined, QueryParams, SearchResult, sortFn} from '@kodality-web/core-util';
 import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemService} from '../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {finalize, Observable, tap} from 'rxjs';
+
+
+interface Filter {
+  open: boolean,
+  searchInput?: string,
+  publisher?: string,
+  status?: string,
+}
 
 @Component({
   templateUrl: 'code-system-list.component.html',
@@ -12,20 +20,11 @@ import {finalize, Observable, tap} from 'rxjs';
 export class CodeSystemListComponent implements OnInit {
   protected readonly STORE_KEY = 'code-system-list';
 
-  // quick search
-  public searchInput: string;
-  // backend table
-  public query = new CodeSystemSearchParams();
-  public searchResult: SearchResult<CodeSystem> = SearchResult.empty();
-  // filter
-  protected filter: {
-    open: boolean,
-    publisher?: string,
-    status?: string,
-  } = {open: false};
-
-
-  public loading: boolean;
+  protected query = new CodeSystemSearchParams();
+  protected searchResult: SearchResult<CodeSystem> = SearchResult.empty();
+  protected filter: Filter = {open: false};
+  protected _filter: Omit<Filter, 'open'> = this.filter; // temp, use only in tw-table-filter
+  protected loading: boolean;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -36,7 +35,6 @@ export class CodeSystemListComponent implements OnInit {
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
     if (state) {
-      this.searchInput = this.query.textContains;
       this.query = Object.assign(new QueryParams(), state.query);
       this.filter = state.filter;
     }
@@ -47,7 +45,6 @@ export class CodeSystemListComponent implements OnInit {
 
   // searches
 
-
   protected loadData(): void {
     this.search().subscribe(resp => this.searchResult = resp);
   }
@@ -57,20 +54,27 @@ export class CodeSystemListComponent implements OnInit {
     return this.search().pipe(tap(resp => this.searchResult = resp));
   };
 
+  protected onFilterOpen(): void {
+    this.filter.open = true;
+    this._filter = structuredClone(this.filter); // copy 'active' to 'temp'
+  }
+
   protected onFilterSearch(): void {
+    this.filter = {...structuredClone(this._filter)} as Filter; // copy 'temp' to 'active'
     this.query.offset = 0;
     this.loadData();
   }
 
   protected onFilterReset(): void {
     this.filter = {open: this.filter.open};
+    this._filter = structuredClone(this.filter);
   }
 
   private search(): Observable<SearchResult<CodeSystem>> {
     const q = copyDeep(this.query);
     q.lang = this.translateService.currentLang;
-    q.textContains = this.searchInput;
     q.versionsDecorated = true;
+    q.textContains = this.filter.searchInput;
     q.publisher = this.filter.publisher;
     q.versionStatus = this.filter.status;
     this.stateStore.put(this.STORE_KEY, {query: q, filter: this.filter});
@@ -80,16 +84,25 @@ export class CodeSystemListComponent implements OnInit {
   }
 
 
-  // misc
+  // events
 
-
-  public deleteCodeSystem(codeSystemId: string): void {
+  protected deleteCodeSystem(codeSystemId: string): void {
     this.loading = true;
     this.codeSystemService.deleteCodeSystem(codeSystemId).subscribe(() => this.loadData()).add(() => this.loading = false);
   }
 
-  public openFhir(id: string): void {
+  protected openFhir(id: string): void {
     window.open(window.location.origin + '/fhir/CodeSystem/' + id, '_blank');
+  }
+
+
+  // utils
+
+  protected isFilterSelected(filter: Filter): boolean {
+    const exclude: (keyof Filter)[] = ['open', 'searchInput'];
+    return Object.keys(filter)
+      .filter((k: keyof Filter) => !exclude.includes(k))
+      .some(k => Array.isArray(filter[k]) ? !!filter[k].length : isDefined(filter[k]));
   }
 
   protected findLastVersion = (versions: CodeSystemVersion[]): CodeSystemVersion => {

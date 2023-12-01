@@ -8,6 +8,23 @@ import {Router} from '@angular/router';
 import {MuiTableComponent} from '@kodality-web/marina-ui';
 
 
+interface Filter {
+  open: boolean,
+  searchInput?: string,
+  type: 'eq' | 'contains',
+
+  clinicalType?: boolean,
+  labType?: boolean,
+  surveyType?: boolean,
+  class?: string[],
+  orderObs?: string,
+  property?: string[],
+  time?: string[],
+  system?: string[],
+  scale?: string[],
+  method?: string[]
+}
+
 @Component({
   selector: 'tw-loinc-list',
   templateUrl: './loinc-list.component.html',
@@ -28,16 +45,13 @@ export class LoincListComponent implements OnInit {
   protected readonly TYPE_ICONS = {'CLIN': 'medicine-box', 'Lab': 'experiment', 'Survey': 'file-text'};
 
 
-  // quick search
-  protected searchInput: {input?: string, type: 'eq' | 'contains'} = {type: 'contains'};
-  protected searchOptions: string[] = this.recentSearches();
   // backend table
   protected query = new ConceptSearchParams();
   protected searchResult: SearchResult<CodeSystemConcept> = SearchResult.empty();
   // filter
-  protected filter: any = {}; // get values from temp filter when 'Search' button is clicked
-  protected _filter: any = {}; // temp filter
-  protected isFilterOpen = false;
+  protected filter: Filter = {open: false, type: 'contains'};
+  protected _filter: Omit<Filter, 'open'> = this.filter; // temp, use only in tw-table-filter
+  protected recent: string[] = this.recentSearches();
 
   protected loader = new LoadingManager();
   protected parts: {[key: string]: CodeSystemConcept} = {};
@@ -54,11 +68,8 @@ export class LoincListComponent implements OnInit {
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
     if (state) {
-      this.searchInput = state.searchInput;
       this.query = Object.assign(new QueryParams(), state.query);
       this.filter = state.filter;
-      this._filter = state.filter;
-      this.isFilterOpen = state.isFilterOpen;
     }
 
     this.loadData();
@@ -73,7 +84,7 @@ export class LoincListComponent implements OnInit {
   }
 
   protected onDebounced = (): Observable<SearchResult<CodeSystemConcept>> => {
-    const text = this.searchInput.input;
+    const text = this.filter.searchInput;
     this.query.offset = 0;
     return this.search().pipe(
       tap(resp => this.searchResult = resp),
@@ -81,28 +92,106 @@ export class LoincListComponent implements OnInit {
     );
   };
 
-  protected onFilterSearch = (): void => {
-    this.query.offset = 0;
 
-    this.filter = structuredClone(this._filter);
+  protected onFilterOpen(): void {
+    this.filter.open = true;
+    this._filter = structuredClone(this.filter); // copy 'active' to 'temp'
+  }
+
+  protected onFilterSearch(): void {
+    this.filter = {...structuredClone(this._filter)} as Filter; // copy 'temp' to 'active'
+    this.addRecentSearch(this.filter.searchInput);
+
+    this.query.offset = 0;
     this.loadData();
-  };
+  }
 
   public onFilterReset(): void {
-    this._filter = {};
+    this.filter = {open: this.filter.open, type: 'contains'};
+    this._filter = structuredClone(this.filter);
   }
+
+
+  // search
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
     const q = copyDeep(this.query);
-    q.textContains = this.searchInput.type === 'contains' ? this.searchInput.input : undefined;
+    q.textEq = this.filter.type === 'eq' ? this.filter.searchInput : undefined;
+    q.textContains = this.filter.type === 'contains' ? this.filter.searchInput : undefined;
     q.textContainsSep = ' ';
-    q.textEq = this.searchInput.type === 'eq' ? this.searchInput.input : undefined;
     q.propertyValues = this.getPropertyValues(this.filter);
 
-    this.stateStore.put(this.STORE_KEY, {query: this.query, searchInput: this.searchInput, filter: this.filter, isFilterOpen: this.isFilterOpen});
+    this.stateStore.put(this.STORE_KEY, {query: this.query, filter: this.filter});
     return this.loader.wrap('search', this.codeSystemService.searchConcepts('loinc', q));
   }
 
+  private loadParts(concepts: CodeSystemConcept[]): void {
+    const properties = concepts.map(c => this.getLastVersion(c.versions)).filter(v => isDefined(v)).flatMap(v => v.propertyValues);
+    const partCodes = properties?.map(p => p?.value?.code).filter(c => isDefined(c)).filter(unique);
+    if (!partCodes || partCodes.length === 0) {
+      return;
+    }
+    const params = new ConceptSearchParams();
+    params.code = partCodes.join(',');
+    params.limit = -1;
+    this.loader.wrap('parts', this.codeSystemService.searchConcepts('loinc-part', params)).subscribe(r => {
+      this.parts = group(r.data, c => c.code, c => c);
+    });
+  }
+
+
+  // properties
+
+  private getPropertyValues(filter: Filter): string {
+    const propertyValues = [];
+    this.addPropertyParams(propertyValues, 'CLASS', [
+      ...(filter.class || []),
+      filter.clinicalType ? 'LP7787-7' : undefined,
+      filter.labType ? 'LP29693-6' : undefined,
+      filter.surveyType ? 'LP29696-9' : undefined]);
+    this.addPropertyParams(propertyValues, 'ORDER_OBS', [filter.orderObs]);
+    this.addPropertyParams(propertyValues, 'TIME', filter.time);
+    this.addPropertyParams(propertyValues, 'SCALE', filter.scale);
+    this.addPropertyParams(propertyValues, 'METHOD', filter.method);
+    this.addPropertyParams(propertyValues, 'SYSTEM', filter.system);
+    this.addPropertyParams(propertyValues, 'PROPERTY', filter.property);
+    return propertyValues.length > 0 ? propertyValues.join(';') : undefined;
+  }
+
+  private addPropertyParams(propertyValues: string[], type: string, values: string[]): void {
+    values = values?.filter(v => isDefined(v));
+    if (values?.length > 0) {
+      propertyValues.push(type + '|' + values.join(','));
+    }
+  }
+
+
+  // events
+
+  protected openConcept(code: string): void {
+    const canEdit = this.authService.hasPrivilege('loinc.CodeSystem.edit');
+    const path = `/resources/code-systems/loinc/concepts/${code}${canEdit ? '/edit' : '/view'}`;
+    this.router.navigate([path]);
+  }
+
+  protected showAssociations(c: CodeSystemConcept, i: number): void {
+    if (c['_expanded']) {
+      this.table.collapse(i);
+    } else {
+      this.table.expand(i);
+    }
+    c['_expanded'] = !c['_expanded'];
+  }
+
+
+  // utils
+
+  protected isFilterSelected(filter: Filter): boolean {
+    const exclude: (keyof Filter)[] = ['open', 'searchInput', 'type'];
+    return Object.keys(filter)
+      .filter((k: keyof Filter)=> !exclude.includes(k))
+      .some(k=> Array.isArray(filter[k]) ? !!filter[k].length : isDefined(filter[k]))
+  }
 
   protected getName = (c: CodeSystemConcept, type = 'display'): string => {
     const lang = this.translateService.currentLang;
@@ -141,63 +230,12 @@ export class LoincListComponent implements OnInit {
     return this.TYPE_ICONS[type];
   };
 
-  private getLastVersion(versions: CodeSystemEntityVersion[]): CodeSystemEntityVersion {
+  private getLastVersion = (versions: CodeSystemEntityVersion[]): CodeSystemEntityVersion => {
     return versions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.created, b.created))?.[0];
-  }
-
-  private loadParts(concepts: CodeSystemConcept[]): void {
-    const properties = concepts.map(c => this.getLastVersion(c.versions)).filter(v => isDefined(v)).flatMap(v => v.propertyValues);
-    const partCodes = properties?.map(p => p?.value?.code).filter(c => isDefined(c)).filter(unique);
-    if (!partCodes || partCodes.length === 0) {
-      return;
-    }
-    const params = new ConceptSearchParams();
-    params.code = partCodes.join(',');
-    params.limit = -1;
-    this.loader.wrap('parts', this.codeSystemService.searchConcepts('loinc-part', params)).subscribe(r => {
-      this.parts = group(r.data, c => c.code, c => c);
-    });
-  }
+  };
 
 
-  private getPropertyValues(filter: any): string {
-    let propertyValues = [];
-    this.addPropertyParams(propertyValues, 'CLASS', [...(filter.class || []),
-      filter.clinicalType ? 'LP7787-7' : undefined,
-      filter.labType ? 'LP29693-6' : undefined,
-      filter.surveyType ? 'LP29696-9' : undefined]);
-    this.addPropertyParams(propertyValues, 'ORDER_OBS', [filter.orderObs]);
-    this.addPropertyParams(propertyValues, 'TIME', filter.time);
-    this.addPropertyParams(propertyValues, 'SCALE', filter.scale);
-    this.addPropertyParams(propertyValues, 'METHOD', filter.method);
-    this.addPropertyParams(propertyValues, 'SYSTEM', filter.system);
-    this.addPropertyParams(propertyValues, 'PROPERTY', filter.property);
-    return propertyValues.length > 0 ? propertyValues.join(';') : undefined;
-  }
-
-
-  protected openConcept(code: string): void {
-    const canEdit = this.authService.hasPrivilege('loinc.CodeSystem.edit');
-    const path = '/resources/code-systems/loinc/concepts/' + code + (canEdit ? '/edit' : '/view');
-    this.router.navigate([path]);
-  }
-
-  private addPropertyParams(propertyValues: string[], type: string, values: string[]): void {
-    values = values?.filter(v => isDefined(v));
-    if (values?.length > 0) {
-      propertyValues.push(type + '|' + values.join(','));
-    }
-  }
-
-  protected showAssociations(c: CodeSystemConcept, i: number): void {
-    if (c['_expanded']) {
-      this.table.collapse(i);
-    } else {
-      this.table.expand(i);
-    }
-    c['_expanded'] = !c['_expanded'];
-  }
-
+  // recent searches
 
   private recentSearches(): string[] {
     try {
@@ -208,12 +246,12 @@ export class LoincListComponent implements OnInit {
   }
 
   private addRecentSearch(token: string): void {
-    this.searchOptions = [token, ...this.searchOptions].map(t => t.trim()).filter(Boolean).filter(unique);
-    localStorage.setItem('__tw-loinc-list-search#' + this.authService.user.username, JSON.stringify(this.searchOptions))
+    this.recent = [token, ...this.recent].map(t => t.trim()).filter(Boolean).filter(unique);
+    localStorage.setItem('__tw-loinc-list-search#' + this.authService.user.username, JSON.stringify(this.recent));
   }
 
   protected clearRecentSearches(): void {
-    this.searchOptions = [];
+    this.recent = [];
     localStorage.removeItem('__tw-loinc-list-search#' + this.authService.user.username);
   }
 }

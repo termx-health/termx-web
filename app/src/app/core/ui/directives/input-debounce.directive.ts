@@ -1,5 +1,5 @@
 import {Directive, Input, Optional, Self} from '@angular/core';
-import {catchError, debounceTime, distinctUntilChanged, EMPTY, Observable, skip, Subject, switchMap} from 'rxjs';
+import {catchError, debounceTime, distinctUntilChanged, EMPTY, filter, Observable, skip, Subject, switchMap} from 'rxjs';
 import {NgControl} from '@angular/forms';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
 
@@ -21,7 +21,7 @@ export class InputDebounceDirective {
     ).subscribe();
 
     if (this.ngControl) {
-      this.ngControl.valueChanges.pipe(takeUntilDestroyed(), skip(1)).subscribe(e => search$.next(e));
+      this.ngControl.valueChanges.pipe(takeUntilDestroyed(), skip(1), filter(() => !ngControl.disabled)).subscribe(e => search$.next(e));
     } else {
       console.error("Couldn't initialize 'twDebounce' pipe, no NgControl!")
     }

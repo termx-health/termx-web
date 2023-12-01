@@ -6,7 +6,8 @@
     <div class="m-items-middle">
       <!-- Quick Search -->
       <m-input
-          [(ngModel)]="searchInput"
+          *ngIf="!filter.open"
+          [(ngModel)]="filter.searchInput"
           twDebounce [debounced]="onDebounced"
           placeholder="marina.ui.inputs.search.placeholder"
           autofocus
@@ -27,12 +28,12 @@
 
       <!-- Finder -->
       <m-button [routerLink]="'/resources/finder/code-systems'">
-        <m-icon mCode="layout"></m-icon>
+        <m-icon mCode="layout"/>
       </m-button>
 
       <!-- Filter toggle -->
-      <m-button *ngIf="!filter.open" (mClick)="filter.open = true">
-        <m-icon mCode="filter"></m-icon>
+      <m-button *ngIf="!filter.open" [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+        <m-icon mCode="filter"/>
       </m-button>
     </div>
   </div>
@@ -41,11 +42,18 @@
   <!-- Filter -->
   <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
     <m-form-item>
+      <m-form-item *ngIf="filter.open">
+        <m-input
+            [(ngModel)]="_filter.searchInput"
+            placeholder="marina.ui.inputs.search.placeholder"
+            autofocus
+        ></m-input>
+      </m-form-item>
       <m-form-item mLabel="entities.code-system.publisher">
-        <tw-value-set-concept-select [(ngModel)]="filter.publisher" valueSet="publisher" valuePrimitive/>
+        <tw-value-set-concept-select [(ngModel)]="_filter.publisher" valueSet="publisher" valuePrimitive/>
       </m-form-item>
       <m-form-item mLabel="web.code-system.list.status">
-        <tw-value-set-concept-select [(ngModel)]="filter.status" valueSet="publication-status" valuePrimitive/>
+        <tw-value-set-concept-select [(ngModel)]="_filter.status" valueSet="publication-status" valuePrimitive/>
       </m-form-item>
     </m-form-item>
   </tw-table-filter>
@@ -74,7 +82,7 @@
       </td>
       <td>{{cs.title | localName}}</td>
       <td>{{cs.publisher | localizedConceptName: {codeSystem: 'publisher'} | async}}</td>
-      <td><tw-status-tag [status]="(cs.versions | apply:findLastVersion)?.status"></tw-status-tag></td>
+      <td><tw-status-tag [status]="(cs.versions | apply:findLastVersion)?.status"/></td>
       <td>
         <ng-container *ngIf="(cs.versions | apply:findLastVersion) as v">
           <a [routerLink]="[cs.id, 'versions', v?.version, 'concepts']">{{v?.conceptsTotal}}</a>
@@ -83,15 +91,15 @@
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="openFhir(cs.id)">
-            <m-icon [mCode]="'link'"></m-icon>&nbsp; {{'web.code-system.list.open-fhir' | translate}}
+            <m-icon [mCode]="'link'"/>&nbsp; {{'web.code-system.list.open-fhir' | translate}}
           </a>
           <ng-container *twPrivileged="'*.CodeSystem.edit'">
             <a *m-dropdown-item (click)="duplicateModal.toggleModal({sourceCodeSystem: cs.id})">
-              <m-icon [mCode]="'copy'"></m-icon>&nbsp; {{'core.btn.duplicate' | translate}}
+              <m-icon [mCode]="'copy'"/>&nbsp; {{'core.btn.duplicate' | translate}}
             </a>
           </ng-container>
           <ng-container *twPrivileged="'*.CodeSystem.publish'">
-            <a *m-dropdown-item (click)="deleteCodeSystem(cs.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
+            <a *m-dropdown-item (click)="deleteCodeSystem(cs.id)"> <m-icon [mCode]="'delete'"/>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>
       </td>
@@ -110,7 +118,7 @@
               <ng-container *ngFor="let version of cs.versions">
                 <b>{{version.version}}</b>
                 <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
-                <tw-status-tag [status]="version.status"></tw-status-tag>
+                <tw-status-tag [status]="version.status"/>
               </ng-container>
             </div>
           </div>
@@ -120,7 +128,7 @@
 
     <tr *mTableNoData>
       <td colspan="100%">
-        <m-no-data></m-no-data>
+        <m-no-data/>
       </td>
     </tr>
   </m-backend-table>

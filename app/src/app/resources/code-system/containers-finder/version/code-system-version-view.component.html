@@ -27,7 +27,7 @@
     </m-form-row>
 
     <m-form-item mLabel="entities.code-system-version.description">
-      {{version?.description || '-'}}
+      {{version?.description | localName: '-'}}
     </m-form-item>
 
     <m-form-row mFull>

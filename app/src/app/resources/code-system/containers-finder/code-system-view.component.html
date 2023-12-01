@@ -33,7 +33,7 @@
     </m-form-row>
 
     <m-form-item mLabel="entities.code-system.description">
-      {{codeSystem?.description || '-'}}
+      {{codeSystem?.description | localName: '-'}}
     </m-form-item>
 
     <m-form-item mLabel="entities.code-system.narrative">

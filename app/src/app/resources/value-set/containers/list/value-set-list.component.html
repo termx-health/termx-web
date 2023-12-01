@@ -1,13 +1,12 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
+    <span>{{'web.value-set.list.title' | translate}}</span>
+
     <div class="m-items-middle">
-      <m-button [routerLink]="'/resources/finder/value-sets'">
-        <m-icon mCode="layout"></m-icon>
-      </m-button>
-      <span>{{'web.value-set.list.title' | translate}}</span>
-    </div>
-    <div class="m-items-middle">
+      <!-- Quick Search -->
       <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+
+      <!-- Add/Edit actions -->
       <m-dropdown *twPrivileged="'*.ValueSet.edit'">
         <tw-add-button *m-dropdown-container icon="down" placement="right">
           {{'web.value-set.list.add-value-set' | translate}}
@@ -19,6 +18,11 @@
           {{'web.value-set.list.import-fhir' | translate}}
         </a>
       </m-dropdown>
+
+      <!-- Finder -->
+      <m-button [routerLink]="'/resources/finder/value-sets'">
+        <m-icon mCode="layout"/>
+      </m-button>
     </div>
   </div>
 
@@ -44,7 +48,7 @@
       </td>
       <td>{{vs.title | localName}}</td>
       <td>{{vs.publisher | localizedConceptName: {codeSystem: 'publisher'} | async}}</td>
-      <td><tw-status-tag [status]="(vs.versions | apply:findLastVersion)?.status"></tw-status-tag></td>
+      <td><tw-status-tag [status]="(vs.versions | apply:findLastVersion)?.status"/></td>
       <td>
         <ng-container *ngIf="(vs.versions | apply:findLastVersion) as v">
           <a [routerLink]="[vs.id, 'versions', v?.version, 'concepts']">{{v?.snapshot?.conceptsTotal}}</a>
@@ -53,10 +57,10 @@
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="openFhir(vs.id)">
-            <m-icon [mCode]="'link'"></m-icon>&nbsp; {{'web.value-set.list.open-fhir' | translate}}
+            <m-icon [mCode]="'link'"/>&nbsp; {{'web.value-set.list.open-fhir' | translate}}
           </a>
           <ng-container *twPrivileged="'*.ValueSet.publish'">
-            <a *m-dropdown-item (click)="deleteValueSet(vs.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
+            <a *m-dropdown-item (click)="deleteValueSet(vs.id)"> <m-icon [mCode]="'delete'"/>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>
       </td>
@@ -89,10 +93,10 @@
 
     <tr *mTableNoData>
       <td colspan="100%">
-        <m-no-data></m-no-data>
+        <m-no-data/>
       </td>
     </tr>
   </m-backend-table>
 </m-card>
 
-<tw-resource-fhir-import-modal #importModal (imported)="loadData()" resourceType="ValueSet"></tw-resource-fhir-import-modal>
+<tw-resource-fhir-import-modal #importModal (imported)="loadData()" resourceType="ValueSet"/>

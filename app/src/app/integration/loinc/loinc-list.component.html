@@ -1,82 +1,90 @@
-<tw-table [(filterOpen)]="isFilterOpen">
-  <div header>
+<tw-table [(filterOpen)]="filter.open">
+  <!-- Header -->
+  <div header class="tw-flex-container tw-flex-container--default" *ngIf="!filter.open">
     <div class="m-justify-between">
       <div class="m-items-middle" style="white-space: nowrap">
         <m-input
-            [(ngModel)]="searchInput.input"
-            twDebounce
-            [debounced]="onDebounced"
-            [placeholder]="'core.btn.search' | translate"
+            [(ngModel)]="filter.searchInput"
+            twDebounce [debounced]="onDebounced"
+            placeholder="marina.ui.inputs.search.placeholder"
             autofocus
-        />
+        ></m-input>
 
-        <m-radio-group [(ngModel)]="searchInput.type" (ngModelChange)="onDebounced().subscribe()">
-          <label m-radio-button [mValue]="'contains'">{{'web.loinc.loinc.filter.contains' | translate}}</label>
-          <label m-radio-button [mValue]="'eq'">{{'web.loinc.loinc.filter.eq' | translate}}</label>
+        <m-radio-group [(ngModel)]="filter.type" (ngModelChange)="onDebounced().subscribe()">
+          <label m-radio-button mValue="contains">{{'web.loinc.loinc.filter.contains' | translate}}</label>
+          <label m-radio-button mValue="eq">{{'web.loinc.loinc.filter.eq' | translate}}</label>
         </m-radio-group>
       </div>
-      <m-button *ngIf="!isFilterOpen" (mClick)="isFilterOpen = true">
-        <m-icon mCode="filter"></m-icon>
+
+      <m-button [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+        <m-icon mCode="filter"/>
       </m-button>
     </div>
 
-    <div class="hide-context" style="margin-top: 0.75rem;" *ngIf="searchOptions?.length">
-      <div class="m-items-middle" style="font-size: 0.9rem">
-        <span>{{'web.loinc.loinc.filter.recent-searches' | translate}}</span>
-        <m-icon class="m-clickable needle" mCode="delete" (click)="clearRecentSearches()"></m-icon>
-      </div>
-
-      <div class="m-items-middle" style="flex-wrap: wrap" *ngIf="{limit: 10} as d">
-        <m-tag
-            class="m-clickable"
-            [class.m-text-secondary]="loader.state['search']"
-            *ngFor="let opt of searchOptions | slice: d.limit"
-            (click)="searchInput.input = opt"
-        >
-          <m-abbreviate [mValue]="opt" [mLength]="30" [mThreshold]="10"/>
-        </m-tag>
-
-        <m-tag class="m-clickable" *ngIf="searchOptions.length > d.limit"  (click)="d.limit = d.limit + 10">
-          {{'core.load-more' | translate}}
-        </m-tag>
-      </div>
-    </div>
-
+    <ng-container *ngTemplateOutlet="recentSrchs"/>
   </div>
 
+
+  <!-- Filter -->
   <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
-    <m-form-item [mLabel]="'web.loinc.loinc.filter.type'">
-      <m-checkbox [(mChecked)]="_filter['clinicalType']">{{'web.loinc.loinc.filter.clinical' | translate}}</m-checkbox>
-      <m-checkbox [(mChecked)]="_filter['labType']">{{'web.loinc.loinc.filter.lab' | translate}}</m-checkbox>
-      <m-checkbox [(mChecked)]="_filter['surveyType']">{{'web.loinc.loinc.filter.survey' | translate}}</m-checkbox>
+    <m-form-item *ngIf="filter.open">
+      <div class="tw-flex-container tw-flex-container--default">
+        <m-input
+            [(ngModel)]="_filter.searchInput"
+            placeholder="marina.ui.inputs.search.placeholder"
+            autofocus
+        ></m-input>
+
+        <m-radio-group [(ngModel)]="_filter.type">
+          <label m-radio-button mValue="contains">{{'web.loinc.loinc.filter.contains' | translate}}</label>
+          <label m-radio-button mValue="eq">{{'web.loinc.loinc.filter.eq' | translate}}</label>
+        </m-radio-group>
+
+        <ng-container *ngTemplateOutlet="recentSrchs"/>
+      </div>
     </m-form-item>
-    <m-form-item [mLabel]="'web.loinc.loinc.filter.class'">
-      <tw-loinc-part-search [(ngModel)]="_filter['class']" type="CLASS" multiple></tw-loinc-part-search>
+
+    <m-form-item mLabel="web.loinc.loinc.filter.type">
+      <m-checkbox [(ngModel)]="_filter.clinicalType">{{'web.loinc.loinc.filter.clinical' | translate}}</m-checkbox>
+      <m-checkbox [(ngModel)]="_filter.labType">{{'web.loinc.loinc.filter.lab' | translate}}</m-checkbox>
+      <m-checkbox [(ngModel)]="_filter.surveyType">{{'web.loinc.loinc.filter.survey' | translate}}</m-checkbox>
     </m-form-item>
-    <m-form-item [mLabel]="'web.loinc.loinc.filter.ord-obs'">
-      <m-radio-group [(ngModel)]="_filter['orderObs']">
+
+    <m-form-item mLabel="web.loinc.loinc.filter.class">
+      <tw-loinc-part-search [(ngModel)]="_filter.class" type="CLASS" multiple/>
+    </m-form-item>
+
+    <m-form-item mLabel="web.loinc.loinc.filter.ord-obs">
+      <m-radio-group [(ngModel)]="_filter.orderObs">
         <label m-radio-button [mValue]="'Order'">{{'web.loinc.loinc.filter.order' | translate}}</label>
         <label m-radio-button [mValue]="'Observation'">{{'web.loinc.loinc.filter.observation' | translate}}</label>
         <label m-radio-button [mValue]="'Both'">{{'web.loinc.loinc.filter.both' | translate}}</label>
       </m-radio-group>
     </m-form-item>
-    <m-form-item [mLabel]="'web.loinc.loinc.filter.property'">
-      <tw-loinc-part-search [(ngModel)]="_filter['property']" type="PROPERTY" mode="select" multiple></tw-loinc-part-search>
+
+    <m-form-item mLabel="web.loinc.loinc.filter.property">
+      <tw-loinc-part-search [(ngModel)]="_filter.property" type="PROPERTY" mode="select" multiple/>
     </m-form-item>
-    <m-form-item [mLabel]="'web.loinc.loinc.filter.timing'">
-      <tw-loinc-part-search [(ngModel)]="_filter['time']" type="TIME" mode="select" multiple></tw-loinc-part-search>
+
+    <m-form-item mLabel="web.loinc.loinc.filter.timing">
+      <tw-loinc-part-search [(ngModel)]="_filter.time" type="TIME" mode="select" multiple/>
     </m-form-item>
-    <m-form-item [mLabel]="'web.loinc.loinc.filter.system'">
-      <tw-loinc-part-search [(ngModel)]="_filter['system']" type="SYSTEM" multiple></tw-loinc-part-search>
+
+    <m-form-item mLabel="web.loinc.loinc.filter.system">
+      <tw-loinc-part-search [(ngModel)]="_filter.system" type="SYSTEM" multiple/>
     </m-form-item>
-    <m-form-item [mLabel]="'web.loinc.loinc.filter.scale'">
-      <tw-loinc-part-search [(ngModel)]="_filter['scale']" type="SCALE" mode="select" multiple></tw-loinc-part-search>
+
+    <m-form-item mLabel="web.loinc.loinc.filter.scale">
+      <tw-loinc-part-search [(ngModel)]="_filter.scale" type="SCALE" mode="select" multiple/>
     </m-form-item>
-    <m-form-item [mLabel]="'web.loinc.loinc.filter.method'">
-      <tw-loinc-part-search [(ngModel)]="_filter['method']" type="METHOD" multiple></tw-loinc-part-search>
+
+    <m-form-item mLabel="web.loinc.loinc.filter.method">
+      <tw-loinc-part-search [(ngModel)]="_filter.method" type="METHOD" multiple/>
     </m-form-item>
   </tw-table-filter>
 
+
+  <!-- Backend Table -->
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
     <tr *mTableHead>
       <th mColumnKey="code">{{'web.loinc.loinc.code' | translate}}</th>
@@ -125,7 +133,8 @@
         <m-tag class="m-clickable"
             mColor="blue"
             (click)="showAssociations(c, i)"
-            *ngIf="(c | apply: getAssociations)">{{(c | apply: getAssociations)?.length}}</m-tag>
+            *ngIf="(c | apply: getAssociations)"
+        >{{(c | apply: getAssociations)?.length}}</m-tag>
       </td>
       <td>
         <div *ngFor="let name of (c | apply:getPropName:'ORDER_OBS')">{{name}}</div>
@@ -147,3 +156,28 @@
     </tr>
   </m-backend-table>
 </tw-table>
+
+
+<ng-template #recentSrchs>
+  <div class="hide-context" *ngIf="recent?.length">
+    <div class="m-items-middle" style="font-size: 0.9rem">
+      <span>{{'web.loinc.loinc.filter.recent-searches' | translate}}</span>
+      <m-icon class="m-clickable needle" mCode="delete" (click)="clearRecentSearches()"></m-icon>
+    </div>
+
+    <div class="m-items-middle" style="flex-wrap: wrap" *ngIf="{limit: 10} as d">
+      <m-tag
+          *ngFor="let opt of recent | slice: d.limit"
+          (click)="filter.open ? _filter.searchInput  = opt : filter.searchInput = opt"
+          [class.m-text-secondary]="loader.state['search']"
+          class="m-clickable"
+      >
+        <m-abbreviate [mValue]="opt" [mLength]="30" [mThreshold]="10"/>
+      </m-tag>
+
+      <m-tag *ngIf="recent.length > d.limit" class="m-clickable" (click)="d.limit = d.limit + 10">
+        {{'core.load-more' | translate}}
+      </m-tag>
+    </div>
+  </div>
+</ng-template>
