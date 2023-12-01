@@ -10,7 +10,20 @@ import {
   EntityPropertyValue
 } from 'app/src/app/resources/_lib';
 import {forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
-import {BooleanInput, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, SearchResult, validateForm} from '@kodality-web/core-util';
+import {
+  BooleanInput,
+  collect,
+  ComponentStateStore,
+  copyDeep,
+  group,
+  isDefined,
+  LoadingManager,
+  remove,
+  SearchResult,
+  serializeDate,
+  unique,
+  validateForm
+} from '@kodality-web/core-util';
 import {CodeSystemService} from '../../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {NgForm} from '@angular/forms';
@@ -27,6 +40,19 @@ interface ConceptNode {
   loading?: boolean;
 
   concept: CodeSystemConcept
+}
+
+interface Filter {
+  open: boolean,
+  searchInput?: string,
+  inputType: 'eq' | 'contains',
+
+  properties?: FilterProperty[],
+}
+
+interface FilterProperty {
+  property: EntityProperty,
+  value: string | Date | {code: string};
 }
 
 @Component({
@@ -63,23 +89,18 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   @Input() public versions?: CodeSystemVersion[];
   @Input() @BooleanInput() public viewMode: boolean | string;
 
-  protected groupOpened: boolean = false;
-  protected tableView: {langs?: string[], properties?: string[]} = {};
-  protected filter: {
-    open: boolean,
-    languages?: string[],
-    version?: CodeSystemVersion,
-    propertyName?: string,
-    propertyValue?: string,
-    searchInput?: string,
-    inputType: 'eq' | 'contains'
-  } = {open: false, inputType: 'contains'};
+  protected tableSummary: {langs?: string[], properties?: string[]} = {};
+  protected selectedConcept: {code: string, version: CodeSystemEntityVersion};
 
   protected query = new ConceptSearchParams();
   protected searchResult = SearchResult.empty<CodeSystemConcept>();
   protected rootConcepts?: ConceptNode[] = [];
 
-  protected selectedConcept: {code: string, version: CodeSystemEntityVersion};
+  protected filter: Filter = {open: false, inputType: 'contains'};
+  protected _filter: Omit<Filter, 'open'> = this.filter; // temp, use only in tw-table-filter
+  protected groupOpened = false;
+
+
   protected loader = new LoadingManager();
 
   protected taskModalData: {visible?: boolean, assignee?: string, comment?: string, conceptVersion?: CodeSystemEntityVersion} = {};
@@ -140,13 +161,46 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
     return this.loader.wrap('group', this.codeSystemService.searchConcepts(this.codeSystem.id, params)).pipe(map(resp => resp.data));
   }
 
-  protected loadData(): void {
-    this.search().subscribe(resp => this.searchResult = resp);
+
+  // filter
+
+  protected onFilterOpen(): void {
+    this.filter.open = true;
+    this._filter = structuredClone(this.filter); // copy 'active' to 'temp'
   }
 
   protected onFilterSearch(): void {
+    this.filter = {...structuredClone(this._filter)} as Filter; // copy 'temp' to 'active'
     this.query.offset = 0;
     this.loadData();
+  }
+
+  protected onFilterReset(): void {
+    this.filter = {open: this.filter.open, inputType: 'contains'};
+    this._filter = structuredClone(this.filter);
+  }
+
+  protected onFilterPropertyAdd(ep: EntityProperty): void {
+    this._filter.properties ??= [];
+    this._filter.properties = [...this._filter.properties, {property: ep, value: undefined}];
+  }
+
+  protected onFilterPropertyRemove(ep: FilterProperty): void {
+    this._filter.properties = remove(this._filter.properties, ep);
+  }
+
+  protected isFilterSelected(filter: Filter): boolean {
+    const exclude: (keyof Filter)[] = ['open', 'searchInput', 'inputType'];
+    return Object.keys(filter)
+      .filter((k: keyof Filter) => !exclude.includes(k))
+      .some(k => Array.isArray(filter[k]) ? !!filter[k].length : isDefined(filter[k]));
+  }
+
+
+  // searches
+
+  protected loadData(): void {
+    this.search().subscribe(resp => this.searchResult = resp);
   }
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
@@ -154,21 +208,26 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
     q.textContains = this.filter.inputType === 'contains' ? this.filter.searchInput : undefined;
     q.textEq = this.filter.inputType === 'eq' ? this.filter.searchInput : undefined;
     q.codeSystemVersion = this.version?.version;
-    q.propertyValues = this.filter.propertyName && this.filter.propertyValue ? `${this.filter.propertyName}|${this.filter.propertyValue}` : undefined;
+
+    const collected = collect(this.filter.properties ?? [],
+      p => p.property.name,
+      p => {
+        if (typeof p.value === 'object') {
+          if (p.value instanceof Date) {
+            return serializeDate(p.value);
+          }
+          return p.value?.code;
+        }
+        return p.value;
+      });
+
+    q.propertyValues = Object.entries(collected).map(([k, v]) => `${k}|${v.join(',')}`).join(';');
+
     return this.loader.wrap('search', this.codeSystemService.searchConcepts(this.codeSystem.id, q));
   }
 
-  protected reset(): void {
-    this.filter = {open: this.filter.open, inputType: 'contains'};
-  }
 
-  protected selectConcept(concept: CodeSystemConcept): void {
-    if (concept?.code === this.selectedConcept?.code) {
-      this.selectedConcept = undefined;
-    } else {
-      this.selectedConcept = {code: concept.code, version: concept.versions[concept.versions.length - 1]};
-    }
-  }
+  // tree
 
   protected expandNode(node: ConceptNode): void {
     if (node.expanded) {
@@ -204,16 +263,24 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
     };
   }
 
+
+  // routes
+
   protected getConceptEditRoute = (code?: string, parentCode?: string): {path: any[], query: any} => {
     if (!code) {
-      const path = `/resources/code-systems/${this.codeSystem.id}${this.version?.version ? `/versions/${this.version?.version}/concepts/add` : '/concepts/add'}`;
+      const path = `/resources/code-systems/${this.codeSystem.id}${this.version?.version ? `/versions/${this.version?.version}/concepts/add` :
+        '/concepts/add'}`;
       return {path: [path], query: {parent: parentCode}};
     }
 
     const mode = this.viewMode ? '/view' : '/edit';
-    const path = `/resources/code-systems/${this.codeSystem.id}${this.version?.version ? `/versions/${this.version?.version}/concepts/` : '/concepts/'}${encodeURIComponent(code)}${mode}`;
+    const path = `/resources/code-systems/${this.codeSystem.id}${this.version?.version ? `/versions/${this.version?.version}/concepts/` :
+      '/concepts/'}${encodeURIComponent(code)}${mode}`;
     return {path: [path], query: {parent: parentCode}};
   };
+
+
+  // utils
 
   protected getDesignations = (concept: CodeSystemConcept): Designation[] => {
     return concept.versions.flatMap(v => v.designations).filter(d => isDefined(d));
@@ -222,6 +289,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   protected getPropertyValues = (concept: CodeSystemConcept): EntityPropertyValue[] => {
     return concept.versions.flatMap(v => v.propertyValues).filter(pv => isDefined(pv));
   };
+
   protected filterPropertyValues = (pv: EntityPropertyValue, selectedProperties: string[], csProperties: EntityProperty[]): boolean => {
     if (selectedProperties?.length > 0) {
       return selectedProperties.includes(pv.entityProperty);
@@ -229,12 +297,12 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
     return !!csProperties?.find(p => p.id === pv.entityPropertyId && p.showInList);
   };
 
-  protected getSupportedLangs = (version: CodeSystemVersion, versions: CodeSystemVersion[]) => {
+  protected getSupportedLangs = (version: CodeSystemVersion, versions: CodeSystemVersion[]): string[] => {
     if (version) {
       return version.supportedLanguages;
     }
     if (versions) {
-      return [...new Set(versions.flatMap(v => v.supportedLanguages))];
+      return versions.flatMap(v => v.supportedLanguages).filter(unique);
     }
     return [];
   };
@@ -242,6 +310,21 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   protected getProperty = (id: number, properties: EntityProperty[]): EntityProperty => {
     return properties?.find(p => p.id === id);
   };
+
+
+  // events
+
+  protected selectConcept(concept: CodeSystemConcept): void {
+    if (concept?.code === this.selectedConcept?.code) {
+      this.selectedConcept = undefined;
+    } else {
+      this.selectedConcept = {code: concept.code, version: concept.versions[concept.versions.length - 1]};
+    }
+  }
+
+  protected openFhir(code: string): void {
+    window.open(window.location.origin + '/fhir/CodeSystem/' + this.codeSystem.id + '/lookup' + '?_code=' + code, '_blank');
+  }
 
   protected unlink(concept: CodeSystemConcept): void {
     const entityVersionIds = concept.versions.map(v => v.id);
@@ -261,6 +344,30 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
     });
   }
 
+  protected createTask(): void {
+    if (!validateForm(this.taskModalForm)) {
+      return;
+    }
+
+    const task = new Task();
+    task.workflow ??= 'concept-review';
+    task.assignee = this.taskModalData.assignee;
+    task.title = `Review code system "${this.codeSystem?.id}" concept "${this.taskModalData.conceptVersion.code}"`;
+    task.context = [
+      {type: 'code-system', id: this.codeSystem.id},
+      this.taskModalData.conceptVersion?.id ? {type: 'concept-version', id: this.taskModalData.conceptVersion.id} : undefined,
+      this.version?.id ? {type: 'code-system-version', id: this.version.id} : undefined
+    ].filter(c => isDefined(c));
+    task.content = this.taskModalData.comment;
+    this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
+      this.taskModalData = {};
+      this.resourceTasksWidgetComponent.loadTasks();
+    });
+  }
+
+
+  // state
+
   private saveState(): void {
     const collectExpandedCodes = (nodes: ConceptNode[], res: string[]) => {
       nodes?.filter(n => n.expanded).forEach(n => {
@@ -276,7 +383,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
       codeSystemId: this.codeSystem.id,
 
       groupOpened: this.groupOpened,
-      tableView: this.tableView,
+      tableView: this.tableSummary,
       filter: this.filter,
 
       query: this.query,
@@ -289,7 +396,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   private restoreState(state): void {
     this.groupOpened = state.groupOpened;
 
-    this.tableView = state.tableView;
+    this.tableSummary = state.tableView;
     this.filter = state.filter;
     this.query = state.query;
 
@@ -328,31 +435,6 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
           behavior: 'smooth',
         });
       });
-    });
-  }
-
-  protected openFhir(code: string): void {
-    window.open(window.location.origin + '/fhir/CodeSystem/' + this.codeSystem.id + '/lookup' + '?_code=' + code, '_blank');
-  }
-
-  protected createTask(): void {
-    if (!validateForm(this.taskModalForm)) {
-      return;
-    }
-
-    const task = new Task();
-    task.workflow ??= 'concept-review';
-    task.assignee = this.taskModalData.assignee;
-    task.title = `Review code system "${this.codeSystem?.id}" concept "${this.taskModalData.conceptVersion.code}"`;
-    task.context = [
-      {type: 'code-system', id: this.codeSystem.id},
-      this.taskModalData.conceptVersion?.id ? {type: 'concept-version', id: this.taskModalData.conceptVersion.id} : undefined,
-      this.version?.id ? {type: 'code-system-version', id: this.version.id} : undefined
-    ].filter(c => isDefined(c));
-    task.content = this.taskModalData.comment;
-    this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
-      this.taskModalData = {};
-      this.resourceTasksWidgetComponent.loadTasks();
     });
   }
 }

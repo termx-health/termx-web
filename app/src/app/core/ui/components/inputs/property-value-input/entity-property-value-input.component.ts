@@ -33,6 +33,7 @@ export class EntityPropertyValueInputComponent implements OnChanges, ControlValu
 
   public writeValue(obj: any): void {
     this.value = obj;
+    this.prepareValue(this.property);
   }
 
   public fireOnChange(): void {

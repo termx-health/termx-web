@@ -239,19 +239,19 @@ export class LoincListComponent implements OnInit {
 
   private recentSearches(): string[] {
     try {
-      return JSON.parse(localStorage.getItem('__tw-loinc-list-search#' + this.authService.user.username) || '[]');
+      return JSON.parse(sessionStorage.getItem('__tw-loinc-list-search#' + this.authService.user.username) || '[]');
     } catch (e) {
       return [];
     }
   }
 
   private addRecentSearch(token: string): void {
-    this.recent = [token, ...this.recent].map(t => t.trim()).filter(Boolean).filter(unique);
-    localStorage.setItem('__tw-loinc-list-search#' + this.authService.user.username, JSON.stringify(this.recent));
+    this.recent = [token, ...this.recent].map(t => t?.trim()).filter(Boolean).filter(unique);
+    sessionStorage.setItem('__tw-loinc-list-search#' + this.authService.user.username, JSON.stringify(this.recent));
   }
 
   protected clearRecentSearches(): void {
     this.recent = [];
-    localStorage.removeItem('__tw-loinc-list-search#' + this.authService.user.username);
+    sessionStorage.removeItem('__tw-loinc-list-search#' + this.authService.user.username);
   }
 }
