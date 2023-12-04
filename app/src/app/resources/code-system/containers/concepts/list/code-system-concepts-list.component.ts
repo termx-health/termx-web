@@ -61,6 +61,10 @@ interface FilterProperty {
   styles: [`
     @import "../../../../../../../../node_modules/@kodality-web/marina-ui/src/components/card/style/card.style.less";
 
+    ::ng-deep .initial:not(:last-of-type) .ant-form-item {
+      margin-bottom: 0;
+    }
+
     ::ng-deep .recursive-card-inside-flatten .m-card {
       .m-card-inside;
     }
@@ -181,8 +185,10 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   }
 
   protected onFilterPropertyAdd(ep: EntityProperty): void {
-    this._filter.properties ??= [];
-    this._filter.properties = [...this._filter.properties, {property: ep, value: undefined}];
+    if (ep) {
+      this._filter.properties ??= [];
+      this._filter.properties = [...this._filter.properties, {property: ep, value: undefined}];
+    }
   }
 
   protected onFilterPropertyRemove(ep: FilterProperty): void {
@@ -281,6 +287,13 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
 
 
   // utils
+
+  protected availableProps = (eps: EntityProperty[], filterEps: FilterProperty[]): EntityProperty[] => {
+    const applied = filterEps?.map(fep => fep.property.name) ?? [];
+    return eps
+      .filter(ep => !applied.includes(ep.name))
+      .filter(ep => ep.kind === 'property');
+  };
 
   protected getDesignations = (concept: CodeSystemConcept): Designation[] => {
     return concept.versions.flatMap(v => v.designations).filter(d => isDefined(d));

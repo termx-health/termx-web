@@ -26,7 +26,11 @@ import {environment} from 'environments/environment';
     }
 
     .m-subtitle {
-      margin-block: 0.5rem;
+      margin-block: 0.75rem 0.25rem;
+
+      &:first-child {
+        margin-top: 0;
+      }
     }
   `]
 })

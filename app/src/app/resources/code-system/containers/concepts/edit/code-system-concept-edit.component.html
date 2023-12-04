@@ -159,7 +159,6 @@
             </m-dropdown>
           </div>
           <tw-code-system-designation-edit #designationEdit
-              class="padded"
               [properties]="codeSystem?.properties"
               [designations]="conceptVersion?.designations"
               [supportedLangs]="codeSystemVersion?.supportedLanguages || []"
@@ -181,7 +180,6 @@
             </m-dropdown>
           </div>
           <tw-code-system-property-value-edit #propertyValueEdit
-              class="padded"
               [codeSystemId]="codeSystem?.id"
               [properties]="codeSystem?.properties"
               [propertyValues]="conceptVersion?.propertyValues"
@@ -198,7 +196,6 @@
             </tw-add-button>
           </div>
           <tw-code-system-association-edit #associationEdit
-              class="padded"
               [codeSystemId]="codeSystemId"
               [code]="conceptVersion?.code"
               [associations]="conceptVersion?.associations"
@@ -209,7 +206,7 @@
         <m-divider></m-divider>
         <m-card class="m-card-inside">
           <m-title *m-card-header mTitle="entities.code-system-entity-version.references"></m-title>
-          <tw-cs-concept-reference-list class="padded" [codeSystem]="codeSystemId" [entityVersionId]="conceptVersion?.id"/>
+          <tw-cs-concept-reference-list [codeSystem]="codeSystemId" [entityVersionId]="conceptVersion?.id"/>
         </m-card>
       </m-card>
     </div>

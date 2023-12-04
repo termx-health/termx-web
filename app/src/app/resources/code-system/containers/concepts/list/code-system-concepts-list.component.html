@@ -46,26 +46,35 @@
     </m-form-item>
 
     <m-form-item mLabel="Properties">
-      <m-form-item *ngFor="let pv of _filter.properties" [mLabel]="lbl">
+      <m-form-item class="initial" *ngFor="let pv of _filter.properties" [mLabel]="lbl">
         <ng-template #lbl>
-          <span class="m-description">{{pv.property.description | localName: pv.property.name}}</span>
+          <span style="font-weight: initial">{{pv.property.description | localName: pv.property.name}}</span>
         </ng-template>
 
         <div class="m-items-middle">
-          <tw-property-value-input style="flex: 1" [(ngModel)]="pv.value" [property]="pv.property" [codeSystem]="codeSystem.id" autofocus/>
+          <tw-property-value-input
+              style="flex: 1"
+              [(ngModel)]="pv.value"
+              [property]="pv.property"
+              [codeSystem]="codeSystem.id"
+              autofocus
+          ></tw-property-value-input>
+
           <m-button [mDisplay]="!pv.value ? 'primary' : 'default'" (mClick)="onFilterPropertyRemove(pv)">
             <m-icon mCode="delete"/>
           </m-button>
         </div>
       </m-form-item>
 
-      <m-select (mChange)="onFilterPropertyAdd($event)" clearOnSelect>
-        <m-option
-            *ngFor="let prop of codeSystem?.properties"
-            [mValue]="prop"
-            [mLabel]="prop.description | localName: prop.name"
-        ></m-option>
-      </m-select>
+      <ng-container *ngIf="codeSystem?.properties | apply: availableProps: _filter.properties as availableProps">
+        <m-select *ngIf="availableProps.length" (mChange)="onFilterPropertyAdd($event)" clearOnSelect>
+          <m-option
+              *ngFor="let prop of availableProps"
+              [mValue]="prop"
+              [mLabel]="prop.description | localName: prop.name"
+          ></m-option>
+        </m-select>
+      </ng-container>
     </m-form-item>
   </tw-table-filter>
 
@@ -220,7 +229,6 @@
       </m-dropdown>
     </td>
   </ng-template>
-
 </tw-table>
 
 <m-modal [(mVisible)]="taskModalData.visible" (mClose)="taskModalData = {visible: false}">

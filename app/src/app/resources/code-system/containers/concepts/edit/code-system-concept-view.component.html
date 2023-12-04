@@ -47,7 +47,7 @@
         <m-divider></m-divider>
         <m-card class="m-card-inside">
           <m-title *m-card-header mTitle="entities.code-system-entity-version.designations"></m-title>
-          <tw-code-system-designation-edit class="padded"
+          <tw-code-system-designation-edit
               [properties]="codeSystem?.properties"
               [designations]="conceptVersion?.designations"
               [supportedLangs]="codeSystemVersion?.supportedLanguages || []"
@@ -58,7 +58,7 @@
         <m-divider></m-divider>
         <m-card class="m-card-inside">
           <m-title *m-card-header mTitle="entities.code-system-entity-version.property-values"></m-title>
-          <tw-code-system-property-value-edit class="padded"
+          <tw-code-system-property-value-edit
               [codeSystemId]="codeSystem?.id"
               [properties]="codeSystem?.properties"
               [propertyValues]="conceptVersion?.propertyValues"
@@ -69,7 +69,7 @@
         <m-divider></m-divider>
         <m-card class="m-card-inside">
           <m-title *m-card-header mTitle="entities.code-system-entity-version.associations"></m-title>
-          <tw-code-system-association-edit class="padded"
+          <tw-code-system-association-edit
               [codeSystemId]="codeSystemId"
               [associations]="conceptVersion?.associations"
               viewMode></tw-code-system-association-edit>
