@@ -1,90 +1,115 @@
-<tw-table [(filterOpen)]="filterOpened">
+<tw-table [(filterOpen)]="filter.open">
+  <!-- Header -->
   <div header class="m-justify-between">
     <span>{{'entities.task.plural' | translate}}</span>
 
     <div class="m-items-middle">
-      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
-      <div style="display: flex; gap: 0.5rem">
-        <tw-add-button *twPrivileged="'*.Task.edit'" [routerLink]="['./add']">
-          {{'web.task.add-btn' | translate}}
-        </tw-add-button>
-        <m-button *ngIf="!filterOpened" (mClick)="filterOpened = true">
-          <m-icon mCode="filter"></m-icon>
-        </m-button>
-      </div>
+      <!-- Quick Search -->
+      <m-input
+          *ngIf="!filter.open"
+          [(ngModel)]="filter.searchInput"
+          twDebounce [debounced]="onDebounced"
+          placeholder="marina.ui.inputs.search.placeholder"
+          autofocus
+      ></m-input>
+
+      <!-- Add actions -->
+      <tw-add-button *twPrivileged="'*.Task.edit'" [routerLink]="['./add']">
+        {{'web.task.add-btn' | translate}}
+      </tw-add-button>
+
+      <!-- Finder -->
+      <m-button *ngIf="!filter.open" [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+        <m-icon mCode="filter"/>
+      </m-button>
     </div>
   </div>
 
-  <tw-table-filter (twSearch)="loadData()" (twReset)="reset()">
-    <m-form-item [mLabel]="'web.task.filter.presets.header'">
+  <!-- Filter -->
+  <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
+    <m-form-item *ngIf="filter.open">
+      <m-input
+          [(ngModel)]="_filter.searchInput"
+          placeholder="marina.ui.inputs.search.placeholder"
+          autofocus
+      ></m-input>
+    </m-form-item>
+
+    <m-form-item mLabel="web.task.filter.presets.header">
       <div style="display: flex; flex-direction: column">
-        <a (click)="searchFromPreset('mine')">{{'web.task.filter.presets.mine' | translate}}</a>
-        <a (click)="searchFromPreset('to-me')">{{'web.task.filter.presets.to-me' | translate}}</a>
+        <a (click)="onFilterPresetSelect('mine')">{{'web.task.filter.presets.mine' | translate}}</a>
+        <a (click)="onFilterPresetSelect('to-me')">{{'web.task.filter.presets.to-me' | translate}}</a>
       </div>
     </m-form-item>
 
-    <m-form-item [mLabel]="'web.task.filter.project'" mName="project">
-      <m-select name="project" [(ngModel)]="filter['project']" multiple>
-        <m-option *ngFor="let p of projects" [mLabel]="p.names | localName" [mValue]="p.code"></m-option>
+    <m-form-item mLabel="web.task.filter.project">
+      <m-select [(ngModel)]="_filter.project" multiple>
+        <m-option *ngFor="let p of projects" [mLabel]="p.names | localName" [mValue]="p.code"/>
       </m-select>
     </m-form-item>
-    <m-form-item [mLabel]="'web.task.filter.status'">
+
+    <m-form-item mLabel="web.task.filter.status">
       <div class="m-items-middle">
-        <m-select style="flex: 1" name="status-option" [(ngModel)]="filter['status-option']" (ngModelChange)="filter['status'] = undefined">
-          <m-option mLabel="Open" [mValue]="'open'"></m-option>
-          <m-option mLabel="Is (Or)" [mValue]="'is'"></m-option>
-          <m-option mLabel="Close" [mValue]="'close'"></m-option>
-          <m-option mLabel="Is not" [mValue]="'is-not'"></m-option>
+        <m-select style="flex: 1" [(ngModel)]="_filter.statusOption" (ngModelChange)="_filter.status = undefined">
+          <m-option mLabel="Open" mValue="open"/>
+          <m-option mLabel="Is (Or)" mValue="is"/>
+          <m-option mLabel="Close" mValue="close"/>
+          <m-option mLabel="Is not" mValue="is-not"/>
         </m-select>
         <tw-value-set-concept-select style="flex: 1"
-            *ngIf="['is', 'is-not'] | includes:filter['status-option']"
-            [(ngModel)]="filter['status']"
-            name="status"
+            *ngIf="['is', 'is-not'] | includes: _filter.statusOption"
+            [(ngModel)]="_filter.status"
             valueSet="task-status"
-            multiple></tw-value-set-concept-select>
+            multiple
+        ></tw-value-set-concept-select>
       </div>
     </m-form-item>
-    <m-form-item [mLabel]="'web.task.filter.assignee'" mName="assignee">
-      <m-select name="assignee" [(ngModel)]="filter['assignee']">
-        <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"></m-option>
+
+    <m-form-item mLabel="web.task.filter.assignee">
+      <m-select [(ngModel)]="_filter.assignee">
+        <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"/>
       </m-select>
     </m-form-item>
-    <m-form-item [mLabel]="'web.task.filter.priority'">
-      <m-form-item mName="priority">
-        <tw-value-set-concept-select [(ngModel)]="filter['priority']" name="priority" valueSet="request-priority" multiple></tw-value-set-concept-select>
-      </m-form-item>
+
+    <m-form-item mLabel="web.task.filter.priority">
+      <tw-value-set-concept-select [(ngModel)]="_filter.priority" valueSet="request-priority" multiple/>
     </m-form-item>
-    <m-form-item [mLabel]="'web.task.filter.type'" mName="type" multiple>
-      <m-select name="type" [(ngModel)]="filter['type']">
-        <m-option mLabel="Task" [mValue]="'task'"></m-option>
-        <m-option mLabel="Phase" [mValue]="'phase'"></m-option>
-        <m-option mLabel="Epic" [mValue]="'epic'"></m-option>
-        <m-option mLabel="Feature" [mValue]="'feature'"></m-option>
-        <m-option mLabel="Milestone" [mValue]="'milestone'"></m-option>
-        <m-option mLabel="Bug" [mValue]="'bug'"></m-option>
-        <m-option mLabel="User story" [mValue]="'user-story'"></m-option>
+
+    <m-form-item mLabel="web.task.filter.type">
+      <m-select [(ngModel)]="_filter.type">
+        <m-option mLabel="Task" mValue="task"/>
+        <m-option mLabel="Phase" mValue="phase"/>
+        <m-option mLabel="Epic" mValue="epic"/>
+        <m-option mLabel="Feature" mValue="feature"/>
+        <m-option mLabel="Milestone" mValue="milestone"/>
+        <m-option mLabel="Bug" mValue="bug"/>
+        <m-option mLabel="User story" mValue="user-story"/>
       </m-select>
     </m-form-item>
-    <m-form-item [mLabel]="'web.task.filter.author'" mName="author">
-      <m-select name="author" [(ngModel)]="filter['author']">
-        <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"></m-option>
+
+    <m-form-item mLabel="web.task.filter.author">
+      <m-select [(ngModel)]="_filter.author">
+        <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"/>
       </m-select>
     </m-form-item>
-    <m-form-item [mLabel]="'web.task.filter.created'">
+
+    <m-form-item mLabel="web.task.filter.created">
       <div class="m-items-middle">
-        <m-date-picker style="flex: 1" name="createdFrom" [(ngModel)]="filter['created-from']"></m-date-picker>
-        <m-date-picker style="flex: 1" name="createdTo" [(ngModel)]="filter['created-to']"></m-date-picker>
+        <m-date-picker style="flex: 1" [(ngModel)]="_filter.createdFrom"/>
+        <m-date-picker style="flex: 1" [(ngModel)]="_filter.createdTo"/>
       </div>
     </m-form-item>
-    <m-form-item [mLabel]="'web.task.filter.finished'">
+
+    <m-form-item mLabel="web.task.filter.finished">
       <div class="m-items-middle">
-        <m-date-picker style="flex: 1" name="finishedFrom" [(ngModel)]="filter['finished-from']"></m-date-picker>
-        <m-date-picker style="flex: 1" name="finishedTo" [(ngModel)]="filter['finished-to']"></m-date-picker>
+        <m-date-picker style="flex: 1" [(ngModel)]="_filter.finishedFrom"/>
+        <m-date-picker style="flex: 1" [(ngModel)]="_filter.finishedTo"/>
       </div>
     </m-form-item>
   </tw-table-filter>
 
 
+  <!-- Backend Table -->
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading">
     <tr *mTableHead>
       <th mColumnKey="number">{{'entities.task.number' | translate}}</th>
@@ -103,18 +128,18 @@
         <ng-template #view>{{task.number}}</ng-template>
       </td>
       <td>{{task.title}}</td>
-      <td><tw-task-type [ngModel]="task.type" readonly></tw-task-type></td>
-      <td><tw-task-status [status]="task.status"></tw-task-status></td>
+      <td><tw-task-type [ngModel]="task.type" readonly/></td>
+      <td><tw-task-status [status]="task.status"/></td>
       <td>
         <label *ngIf="task.assignee">{{task.assignee}}</label>
-        <m-icon *ngIf="!task.assignee" mCode="question"></m-icon>
+        <m-icon *ngIf="!task.assignee" mCode="question"/>
       <td>{{task.createdBy}}</td>
       <td>{{task.createdAt | localDate}}</td>
       <td>{{task.updatedAt | localDate}}</td>
     </tr>
     <tr *mTableNoData>
       <td colspan="5">
-        <m-no-data></m-no-data>
+        <m-no-data/>
       </td>
     </tr>
   </m-backend-table>

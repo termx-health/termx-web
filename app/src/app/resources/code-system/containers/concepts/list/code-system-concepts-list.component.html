@@ -33,7 +33,7 @@
 
 
   <!-- Filter -->
-  <tw-table-filter *ngIf="!groupOpened" (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
+  <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()" *ngIf="!groupOpened">
     <m-form-item>
       <m-input placeholder="marina.ui.inputs.search.placeholder" [(ngModel)]="_filter.searchInput"/>
     </m-form-item>

@@ -11,9 +11,17 @@
     </m-alert>
   </div>
 
-  <tw-table [(filterOpen)]="isFilterOpen">
+
+  <tw-table [(filterOpen)]="filter.open">
     <div header class="m-justify-between">
-      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+      <!-- Quick Search -->
+      <m-input
+          [(ngModel)]="filter.searchInput"
+          twDebounce [debounced]="onDebounced"
+          placeholder="marina.ui.inputs.search.placeholder"
+          autofocus
+          [disabled]="filter.open"
+      ></m-input>
 
       <div class="m-items-middle">
         <tw-add-button *twPrivileged="'*.ObservationDefinition.edit'" [routerLink]="['add']">
@@ -22,28 +30,41 @@
         <m-button *twPrivileged="'*.ObservationDefinition.edit'" (mClick)="importData.visible = true">
           {{'web.observation-definition.import-from-loinc' | translate}}
         </m-button>
-        <m-button *ngIf="!isFilterOpen" (mClick)="isFilterOpen = true">
-          <m-icon mCode="filter"></m-icon>
+
+        <!-- Filter toggle -->
+        <m-button *ngIf="!filter.open" [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+          <m-icon mCode="filter"/>
         </m-button>
       </div>
     </div>
 
-    <tw-table-filter (twSearch)="loadData()" (twReset)="reset()">
-      <m-form-item [mLabel]="'web.observation-definition.filter.category'" mName="category">
-        <tw-obs-def-value-select [(ngModel)]="filter['categories']" name="category"></tw-obs-def-value-select>
+
+    <!-- Filter -->
+    <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
+      <m-form-item *ngIf="filter.open">
+        <m-input
+            [(ngModel)]="_filter.searchInput"
+            placeholder="marina.ui.inputs.search.placeholder"
+            autofocus
+        ></m-input>
       </m-form-item>
-      <m-form-item [mLabel]="'web.observation-definition.filter.structure'" mName="structure">
-        <m-select name="structure" [(ngModel)]="filter['structure']" multiple>
-          <m-option [mLabel]="'web.observation-definition.structure.value'" [mValue]="'value'"></m-option>
-          <m-option [mLabel]="'web.observation-definition.structure.panel'" [mValue]="'panel'"></m-option>
-          <m-option [mLabel]="'web.observation-definition.structure.component'" [mValue]="'component'"></m-option>
+      <m-form-item mLabel="web.observation-definition.filter.category">
+        <tw-obs-def-value-select [(ngModel)]="_filter.categories"/>
+      </m-form-item>
+      <m-form-item mLabel="web.observation-definition.filter.structure">
+        <m-select name="structure" [(ngModel)]="_filter.structure" multiple>
+          <m-option mLabel="web.observation-definition.structure.value" [mValue]="'value'"/>
+          <m-option mLabel="web.observation-definition.structure.panel" [mValue]="'panel'"/>
+          <m-option mLabel="web.observation-definition.structure.component" [mValue]="'component'"/>
         </m-select>
       </m-form-item>
-      <m-form-item [mLabel]="'web.observation-definition.filter.value-type'" mName="valueType">
-        <tw-value-set-concept-select [(ngModel)]="filter['value-type']" name="valueType" valueSet="permitted-data-type" multiple></tw-value-set-concept-select>
+      <m-form-item mLabel="web.observation-definition.filter.value-type">
+        <tw-value-set-concept-select [(ngModel)]="_filter.valueType" valueSet="permitted-data-type" multiple/>
       </m-form-item>
     </tw-table-filter>
 
+
+    <!-- Backend Table -->
     <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading">
       <tr *mTableHead>
         <th mColumnKey="code">{{'entities.observation-definition.code' | translate}}</th>
@@ -116,6 +137,7 @@
     </m-backend-table>
   </tw-table>
 </m-page>
+
 
 <m-modal #modal [(mVisible)]="importData.visible" (mClose)="importData.visible = false" [mMaskClosable]="false">
   <ng-container *m-modal-header>Import data</ng-container>
