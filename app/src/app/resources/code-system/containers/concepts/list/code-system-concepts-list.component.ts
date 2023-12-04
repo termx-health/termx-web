@@ -290,9 +290,11 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
 
   protected availableProps = (eps: EntityProperty[], filterEps: FilterProperty[]): EntityProperty[] => {
     const applied = filterEps?.map(fep => fep.property.name) ?? [];
-    return eps
-      .filter(ep => !applied.includes(ep.name))
-      .filter(ep => ep.kind === 'property');
+    return eps.filter(ep => !applied.includes(ep.name))
+  };
+
+  protected propertyKind = (ep: EntityProperty): boolean => {
+    return ep.kind === 'property';
   };
 
   protected getDesignations = (concept: CodeSystemConcept): Designation[] => {

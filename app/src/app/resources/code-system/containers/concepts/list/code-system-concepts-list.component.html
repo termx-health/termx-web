@@ -40,42 +40,44 @@
 
     <m-form-item>
       <m-radio-group [(ngModel)]="_filter.inputType">
-        <label m-radio-button [mValue]="'contains'">{{'web.code-system.form.concepts.contains' | translate}}</label>
-        <label m-radio-button [mValue]="'eq'">{{'web.code-system.form.concepts.eq' | translate}}</label>
+        <label m-radio-button mValue="contains">{{'web.code-system.form.concepts.contains' | translate}}</label>
+        <label m-radio-button mValue="eq">{{'web.code-system.form.concepts.eq' | translate}}</label>
       </m-radio-group>
     </m-form-item>
 
-    <m-form-item mLabel="Properties">
-      <m-form-item class="initial" *ngFor="let pv of _filter.properties" [mLabel]="lbl">
-        <ng-template #lbl>
-          <span style="font-weight: initial">{{pv.property.description | localName: pv.property.name}}</span>
-        </ng-template>
+    <ng-container *ngIf="codeSystem?.properties | filter: propertyKind as properties">
+      <m-form-item mLabel="entities.code-system.properties" *ngIf="properties?.length">
+        <m-form-item class="initial" *ngFor="let pv of _filter.properties" [mLabel]="lbl">
+          <ng-template #lbl>
+            <span style="font-weight: initial">{{pv.property.description | localName: pv.property.name}}</span>
+          </ng-template>
 
-        <div class="m-items-middle">
-          <tw-property-value-input
-              style="flex: 1"
-              [(ngModel)]="pv.value"
-              [property]="pv.property"
-              [codeSystem]="codeSystem.id"
-              autofocus
-          ></tw-property-value-input>
+          <div class="m-items-middle">
+            <tw-property-value-input
+                style="flex: 1"
+                [(ngModel)]="pv.value"
+                [property]="pv.property"
+                [codeSystem]="codeSystem.id"
+                autofocus
+            ></tw-property-value-input>
 
-          <m-button [mDisplay]="!pv.value ? 'primary' : 'default'" (mClick)="onFilterPropertyRemove(pv)">
-            <m-icon mCode="delete"/>
-          </m-button>
-        </div>
+            <m-button [mDisplay]="!pv.value ? 'primary' : 'default'" (mClick)="onFilterPropertyRemove(pv)">
+              <m-icon mCode="delete"/>
+            </m-button>
+          </div>
+        </m-form-item>
+
+        <ng-container *ngIf="properties | apply: availableProps: _filter.properties as availableProps">
+          <m-select *ngIf="availableProps.length" (mChange)="onFilterPropertyAdd($event)" clearOnSelect>
+            <m-option
+                *ngFor="let prop of availableProps"
+                [mValue]="prop"
+                [mLabel]="prop.description | localName: prop.name"
+            ></m-option>
+          </m-select>
+        </ng-container>
       </m-form-item>
-
-      <ng-container *ngIf="codeSystem?.properties | apply: availableProps: _filter.properties as availableProps">
-        <m-select *ngIf="availableProps.length" (mChange)="onFilterPropertyAdd($event)" clearOnSelect>
-          <m-option
-              *ngFor="let prop of availableProps"
-              [mValue]="prop"
-              [mLabel]="prop.description | localName: prop.name"
-          ></m-option>
-        </m-select>
-      </ng-container>
-    </m-form-item>
+    </ng-container>
   </tw-table-filter>
 
 
