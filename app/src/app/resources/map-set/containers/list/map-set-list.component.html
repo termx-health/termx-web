@@ -1,10 +1,19 @@
-<m-card>
-  <div *m-card-header class="m-justify-between">
+<tw-table [(filterOpen)]="filter.open">
+  <!-- Header -->
+  <div header class="m-justify-between">
     <span>{{'web.map-set.list.title' | translate}}</span>
 
     <div class="m-items-middle">
-      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+      <!-- Quick Search -->
+      <m-input
+          *ngIf="!filter.open"
+          [(ngModel)]="filter.searchInput"
+          twDebounce [debounced]="onDebounced"
+          placeholder="marina.ui.inputs.search.placeholder"
+          autofocus
+      ></m-input>
 
+      <!-- Add/Edit actions -->
       <m-dropdown *twPrivileged="'*.MapSet.edit'">
         <tw-add-button *m-dropdown-container icon="down" placement="right">
           {{'web.map-set.list.add-map-set' | translate}}
@@ -16,9 +25,37 @@
           {{'web.map-set.list.import-fhir' | translate}}
         </a>
       </m-dropdown>
+
+      <!-- Filter toggle -->
+      <m-button *ngIf="!filter.open" [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+        <m-icon mCode="filter"/>
+      </m-button>
     </div>
   </div>
 
+
+  <!-- Filter -->
+  <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
+    <m-form-item>
+      <m-form-item *ngIf="filter.open">
+        <m-input
+            [(ngModel)]="_filter.searchInput"
+            placeholder="marina.ui.inputs.search.placeholder"
+            autofocus
+        ></m-input>
+      </m-form-item>
+      <m-form-item mLabel="entities.code-system.publisher">
+        <tw-value-set-concept-select [(ngModel)]="_filter.publisher" valueSet="publisher" valuePrimitive/>
+      </m-form-item>
+      <m-form-item mLabel="web.code-system.list.status">
+        <tw-value-set-concept-select [(ngModel)]="_filter.status" valueSet="publication-status" valuePrimitive/>
+      </m-form-item>
+    </m-form-item>
+  </tw-table-filter>
+
+
+
+  <!-- Backend Table -->
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
       <th></th>
@@ -27,7 +64,7 @@
       <th>{{'entities.map-set.title' | translate}}</th>
       <th>{{'entities.map-set.publisher' | translate}}</th>
       <th>{{'web.map-set.list.status' | translate}}</th>
-      <th *twPrivileged="'*.MapSet.edit'" class="tw-table-actions"></th>
+      <th class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let ms">
@@ -40,14 +77,14 @@
       </td>
       <td>{{ms.title | localName}}</td>
       <td>{{ms.publisher | localizedConceptName: {codeSystem: 'publisher'} | async}}</td>
-      <td><tw-status-tag [status]="(ms.versions | apply:findLastVersion)?.status"></tw-status-tag></td>
+      <td><tw-status-tag [status]="(ms.versions | apply:findLastVersion)?.status"/></td>
       <td class="tw-table-actions">
         <m-dropdown>
           <a *m-dropdown-item (click)="openFhir(ms.id)">
-            <m-icon [mCode]="'link'"></m-icon>&nbsp; {{'web.map-set.list.open-fhir' | translate}}
+            <m-icon mCode="link"/>&nbsp; {{'web.map-set.list.open-fhir' | translate}}
           </a>
           <ng-container *twPrivileged="'*.MapSet.publish'">
-            <a *m-dropdown-item (click)="deleteMapSet(ms.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
+            <a *m-dropdown-item (click)="deleteMapSet(ms.id)"> <m-icon mCode="delete"/>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>
       </td>
@@ -57,13 +94,18 @@
       <td></td>
       <td colspan="100%">
         <div style="display: grid">
-          <div><label><b>{{'entities.map-set.uri' | translate}}:</b> {{ms.uri}}</label></div>
-          <div style="display: grid" *ngIf="ms.versions.length > 0">
-            <label><b>{{'entities.map-set.versions' | translate}}</b></label>
-            <label *ngFor="let version of ms.versions">
-              <b style="margin-right: 1rem">{{version.version}}</b>
-              <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
-            </label>
+          <div><b>{{'entities.map-set.uri' | translate}}:</b> {{ms.uri}}</div>
+          <div *ngIf="ms.versions.length > 0">
+            <b>{{'entities.map-set.versions' | translate}}:</b>
+            <div style="display: grid ;grid-template-columns: repeat(5, auto); width: max-content; column-gap: 0.5rem; row-gap: 0.2rem">
+              <ng-container *ngFor="let version of ms.versions">
+                <b>{{version.version}}</b>
+                <m-divider mVertical/>
+                <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
+                <m-divider mVertical/>
+                <tw-status-tag [status]="version.status"/>
+              </ng-container>
+            </div>
           </div>
         </div>
       </td>
@@ -71,10 +113,10 @@
 
     <tr *mTableNoData>
       <td colspan="100%">
-        <m-no-data></m-no-data>
+        <m-no-data/>
       </td>
     </tr>
   </m-backend-table>
-</m-card>
+</tw-table>
 
-<tw-resource-fhir-import-modal #importModal (imported)="loadData()" resourceType="ConceptMap"></tw-resource-fhir-import-modal>
+<tw-resource-fhir-import-modal #importModal (imported)="loadData()" resourceType="ConceptMap"/>

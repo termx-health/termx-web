@@ -73,10 +73,10 @@ export class CodeSystemListComponent implements OnInit {
   private search(): Observable<SearchResult<CodeSystem>> {
     const q = copyDeep(this.query);
     q.lang = this.translateService.currentLang;
+    q.textContains = this.filter.searchInput || undefined;
+    q.publisher = this.filter.publisher || undefined;
+    q.versionStatus = this.filter.status || undefined;
     q.versionsDecorated = true;
-    q.textContains = this.filter.searchInput;
-    q.publisher = this.filter.publisher;
-    q.versionStatus = this.filter.status;
     this.stateStore.put(this.STORE_KEY, {query: q, filter: this.filter});
 
     this.loading = true;
@@ -92,7 +92,7 @@ export class CodeSystemListComponent implements OnInit {
   }
 
   protected openFhir(id: string): void {
-    window.open(window.location.origin + '/fhir/CodeSystem/' + id, '_blank');
+    window.open(`${window.location.origin}/fhir/CodeSystem/${id}`, '_blank');
   }
 
 

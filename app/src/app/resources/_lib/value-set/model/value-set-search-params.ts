@@ -4,6 +4,7 @@ export class ValueSetSearchParams extends QueryParams {
   public id?: string;
   public ids?: string;
   public idContains?: string;
+  public publisher?: string;
   public uri?: string;
   public uriContains?: string;
   public name?: string;
@@ -13,6 +14,11 @@ export class ValueSetSearchParams extends QueryParams {
 
   public text?: string;
   public textContains?: string;
+
+  public versionId?:number;
+  public versionVersion?:string;
+  public versionStatus?:string;
+  public versionSource?:string;
 
   public decorated?: boolean;
 

@@ -1,10 +1,17 @@
-<m-card>
-  <div *m-card-header class="m-justify-between">
+<tw-table [(filterOpen)]="filter.open">
+  <!-- Header -->
+  <div header class="m-justify-between">
     <span>{{'web.value-set.list.title' | translate}}</span>
 
     <div class="m-items-middle">
       <!-- Quick Search -->
-      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+      <m-input
+          *ngIf="!filter.open"
+          [(ngModel)]="filter.searchInput"
+          twDebounce [debounced]="onDebounced"
+          placeholder="marina.ui.inputs.search.placeholder"
+          autofocus
+      ></m-input>
 
       <!-- Add/Edit actions -->
       <m-dropdown *twPrivileged="'*.ValueSet.edit'">
@@ -23,9 +30,36 @@
       <m-button [routerLink]="'/resources/finder/value-sets'">
         <m-icon mCode="layout"/>
       </m-button>
+
+      <!-- Filter toggle -->
+      <m-button *ngIf="!filter.open" [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+        <m-icon mCode="filter"/>
+      </m-button>
     </div>
   </div>
 
+
+  <!-- Filter -->
+  <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
+    <m-form-item>
+      <m-form-item *ngIf="filter.open">
+        <m-input
+            [(ngModel)]="_filter.searchInput"
+            placeholder="marina.ui.inputs.search.placeholder"
+            autofocus
+        ></m-input>
+      </m-form-item>
+      <m-form-item mLabel="entities.code-system.publisher">
+        <tw-value-set-concept-select [(ngModel)]="_filter.publisher" valueSet="publisher" valuePrimitive/>
+      </m-form-item>
+      <m-form-item mLabel="web.code-system.list.status">
+        <tw-value-set-concept-select [(ngModel)]="_filter.status" valueSet="publication-status" valuePrimitive/>
+      </m-form-item>
+    </m-form-item>
+  </tw-table-filter>
+
+
+  <!-- Backend Table -->
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
       <th></th>
@@ -35,7 +69,7 @@
       <th>{{'entities.value-set.publisher' | translate}}</th>
       <th>{{'web.value-set.list.status' | translate}}</th>
       <th>{{'web.value-set.list.expansion' | translate}}</th>
-      <th *twPrivileged="'*.ValueSet.edit'" class="tw-table-actions"></th>
+      <th class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let vs">
@@ -78,12 +112,14 @@
               {{vs.description | localName:'-'}}
             </m-form-item>
             <m-form-item mLabel="entities.value-set.versions">
-              <div *ngFor="let version of vs.versions">{{
-                version | apply: getVersionTranslateTokens: ({
-                  releaseDate: (version.releaseDate | localDate),
-                  expirationDate: (version.expirationDate | localDate),
-                  version: version.version
-                }) | join: ' '}}
+              <div style="display: grid; grid-template-columns: repeat(5, auto); width: max-content; column-gap: 0.5rem; row-gap: 0.2rem">
+                <ng-container *ngFor="let version of vs.versions">
+                  <b>{{version.version}}</b>
+                  <m-divider mVertical/>
+                  <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
+                  <m-divider mVertical/>
+                  <tw-status-tag [status]="version.status"/>
+                </ng-container>
               </div>
             </m-form-item>
           </div>
@@ -97,6 +133,6 @@
       </td>
     </tr>
   </m-backend-table>
-</m-card>
+</tw-table>
 
 <tw-resource-fhir-import-modal #importModal (imported)="loadData()" resourceType="ValueSet"/>

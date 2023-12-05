@@ -4,6 +4,7 @@ export class MapSetSearchParams extends QueryParams {
   public id?: string;
   public ids?: string;
   public idContains?: string;
+  public publisher?: string;
   public uri?: string;
   public uriContains?: string;
   public name?: string;
@@ -26,6 +27,8 @@ export class MapSetSearchParams extends QueryParams {
 
   public versionVersion?: string;
   public versionsDecorated?: boolean;
+  public versionStatus?:string;
+  public versionSource?:string;
 
   public lang?: string;
 
