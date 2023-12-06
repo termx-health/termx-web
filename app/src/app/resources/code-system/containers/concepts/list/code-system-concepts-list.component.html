@@ -241,7 +241,11 @@
   <ng-container *mModalContent>
     <form #taskModalForm="ngForm">
       <m-form-item mName="assignee" mLabel="entities.task.assignee" required>
-        <tw-user-select name="assignee" [(ngModel)]="taskModalData.assignee" required></tw-user-select>
+        <tw-user-select
+            name="assignee"
+            [(ngModel)]="taskModalData.assignee"
+            [anyRole]="[codeSystem.id + '.CodeSystem.edit', codeSystem.id + '.CodeSystem.publish']"
+            required></tw-user-select>
       </m-form-item>
       <m-form-item mName="comment" mLabel="web.code-system-concept.form.task-modal.comment">
         <m-textarea name="comment" [(ngModel)]="taskModalData.comment"></m-textarea>

@@ -14,10 +14,12 @@
     <tr *mTableHead>
       <th mColumnKey="code">{{'entities.privilege.code' | translate}}</th>
       <th mColumnKey="name">{{'entities.privilege.name' | translate}}</th>
-      <th colSpan="3" style="display: flex; text-align: left; padding: 0">
-        <div style="flex: 1; padding: 0.8rem">{{'entities.privilege.kind' | translate}}</div>
-        <div style="flex: 1; padding: 0.8rem">{{'entities.privilege.resources' | translate}}</div>
-        <div style="flex: 1; padding: 0.8rem">{{'entities.privilege.actions' | translate}}</div>
+      <th colSpan="3" style="text-align: left">
+        <div style="display: grid; grid-template-columns: 1fr 1fr 1fr">
+          <div>{{'entities.privilege.kind' | translate}}</div>
+          <div>{{'entities.privilege.resources' | translate}}</div>
+          <div>{{'entities.privilege.actions' | translate}}</div>
+        </div>
       </th>
     </tr>
 
@@ -31,7 +33,7 @@
         </ng-template>
       </td>
       <td>{{privilege.names | localName}}</td>
-      <td style="padding: 0.8rem 0">
+      <td style="padding: 0">
         <div *ngTemplateOutlet="nestedTable; context: {privilege: privilege}"></div>
       </td>
     </tr>
@@ -44,7 +46,7 @@
 </m-card>
 
 <ng-template #nestedTable let-privilege="privilege">
-  <m-table mOutlined="false" [mData]="privilege.resources">
+  <m-table mOutlined="false" [mData]="privilege.resources" mSize="small">
     <tr *mTableRow="let resource" style="display: flex; justify-content: space-between">
       <td style="flex: 1">
         {{resource.resourceType}}

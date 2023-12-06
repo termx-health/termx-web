@@ -184,9 +184,11 @@
           </m-form-item>
 
           <m-form-item mName="assignee" mLabel="entities.task.assignee">
-            <m-select name="assignee" [(ngModel)]="task.assignee" (ngModelChange)="patch({assignee: $event})">
-              <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"/>
-            </m-select>
+            <tw-user-select
+                name="assignee"
+                [(ngModel)]="task.assignee"
+                (ngModelChange)="patch({assignee: $event})"
+            ></tw-user-select>
           </m-form-item>
 
           <m-form-item mName="priority" mLabel="entities.task.priority" required>

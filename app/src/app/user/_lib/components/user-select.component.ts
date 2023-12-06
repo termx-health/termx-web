@@ -12,7 +12,8 @@ import {UserLibService} from '../services/user-lib.service';
 })
 export class UserSelectComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
-  @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
+  @Input() public placeholder = 'marina.ui.inputs.search.placeholder';
+  @Input() public anyRole: string[];
   @Input() public idNe?: number;
 
   public data: {[id: string]: User} = {};
@@ -29,7 +30,10 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
   }
 
   private loadUsers(): void {
-    this.loader.wrap('load', this.userService.loadAll()).subscribe(users => this.data = group(users, u => u.sub));
+    const req$ = this.userService.loadAll({
+      roles: this.anyRole?.join(',') || undefined
+    });
+    this.loader.wrap('load', req$).subscribe(users => this.data = group(users, u => u.sub));
   }
 
   public writeValue(obj: User | string): void {
