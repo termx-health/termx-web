@@ -5,6 +5,7 @@ export const environment: Environment = {
   appVersion: require('../../../package.json').version,
   production: false,
   yupiEnabled: false,
+  baseHref: '/',
 
   defaultLanguage: 'en',
   uiLanguages: [...UI_LANGS],

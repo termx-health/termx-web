@@ -32,6 +32,7 @@ import {UserModule} from 'term-web/user/user.module';
 import {LangInterceptor} from 'term-web/core/http';
 import {environment as env, environment} from 'environments/environment';
 import {ImplementationGuideModule} from 'term-web/implementation-guide/implementation-guide.module';
+import {APP_BASE_HREF} from '@angular/common';
 
 
 export function HttpLoaderFactory(_http: HttpBackend): TranslateLoader {
@@ -103,7 +104,8 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
   providers: [
     {provide: LOCALE_ID, useValue: environment.defaultLanguage},
     {provide: APP_INITIALIZER, useFactory: preloadAuth, deps: [AuthService], multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: LangInterceptor, multi: true}
+    {provide: APP_BASE_HREF, useFactory: (): string => environment.baseHref},
+    {provide: HTTP_INTERCEPTORS, useClass: LangInterceptor, multi: true},
   ],
   bootstrap: [
     RootComponent

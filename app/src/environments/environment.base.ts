@@ -4,6 +4,7 @@ export interface Environment {
   appVersion: string,
   production: boolean,
   yupiEnabled: boolean,
+  baseHref: string,
 
   defaultLanguage: string,
   uiLanguages: string[],
