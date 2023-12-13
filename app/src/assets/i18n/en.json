@@ -1142,6 +1142,7 @@
 				"concept-map": {
 					"delete-associations": "Delete all associations before import?",
 					"file": "File",
+					"download-template": "Download template",
 					"hold": "Hold",
 					"ignore": "Ignore duplicates",
 					"import": "Concept Map file import",

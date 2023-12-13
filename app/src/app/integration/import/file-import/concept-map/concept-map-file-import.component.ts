@@ -99,4 +99,7 @@ export class ConceptMapFileImportComponent {
     return this.data?.mapSetVersion?.['_new'];
   }
 
+  protected downloadTemplate(): void {
+    this.mapSetFileImportService.getTemplate();
+  }
 }

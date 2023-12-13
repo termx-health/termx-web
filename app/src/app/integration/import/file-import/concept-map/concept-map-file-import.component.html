@@ -106,8 +106,14 @@
       </ng-template>
     </div>
 
-    <m-form-item mName="file" mLabel="web.integration.file-import.concept-map.file" required>
-        <input #fileInput id="fileInput" name="file" type="file" [(ngModel)]="data.file" required>
+    <m-form-item mName="file" [mLabel]="fileLabel" required>
+      <ng-template #fileLabel>
+        <div class="m-items-middle">
+          <label>{{'web.integration.file-import.concept-map.file' | translate}}</label>
+          <a (mClick)="downloadTemplate()"><m-icon mCode="download"/> {{'web.integration.file-import.concept-map.download-template' | translate}}</a>
+        </div>
+      </ng-template>
+      <input #fileInput id="fileInput" name="file" type="file" [(ngModel)]="data.file" required>
     </m-form-item>
 
     <tw-import-job-log *ngIf="jobResponse" [jobLog]="jobResponse"/>
