@@ -46,7 +46,7 @@
 
   </form>
 
-  <m-button *m-card-footer (click)="importLoinc()" [mLoading]="loading['process']" [disabled]="form.invalid">
+  <m-button *m-card-footer (click)="modalData = {visible: true}" [mLoading]="loading['process']" [disabled]="form.invalid">
     {{'web.integration.loinc-import.import' | translate}}
   </m-button>
   <div *ngIf="jobResponse">
@@ -69,3 +69,15 @@
     <a (click)="openCodeSystem('view')">{{'web.integration.loinc-import.loinc' | translate}}</a>
   </ng-template>
 </ng-template>
+
+
+<m-modal [(mVisible)]="modalData.visible" (mClose)="modalData = {visible: false}">
+  <m-title *mModalHeader>
+    {{'web.integration.loinc-import.loinc-import' | translate}}
+  </m-title>
+  <label *mModalContent>{{'web.integration.loinc-import.loinc-import-warning' | translate}}</label>
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="modalData.visible = false">{{'core.btn.cancel' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="importLoinc()">{{'core.btn.confirm' | translate}}</m-button>
+  </div>
+</m-modal>

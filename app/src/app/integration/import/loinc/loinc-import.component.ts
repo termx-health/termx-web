@@ -4,7 +4,6 @@ import {DestroyService} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {Router} from '@angular/router';
-import {CodeSystemLibService} from '../../../resources/_lib';
 import {environment} from 'environments/environment';
 import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 
@@ -21,7 +20,6 @@ export class LoincImportComponent {
   } = {};
 
   public loading: {[k: string]: boolean} = {};
-  public validationErrors: string[] = [];
 
   @ViewChild('form') public form?: NgForm;
   @ViewChild('partsFileInput') public partsFileInput?: ElementRef<HTMLInputElement>;
@@ -35,11 +33,11 @@ export class LoincImportComponent {
   @ViewChild('successNotificationContent') public successNotificationContent?: TemplateRef<any>;
 
   public jobResponse: JobLog | null = null;
+  protected modalData: {visible?: boolean} = {};
 
   public constructor(
     private http: HttpClient,
     private notificationService: MuiNotificationService,
-    private codeSystemLibService: CodeSystemLibService,
     private jobService: JobLibService,
     private destroy$: DestroyService,
     private router: Router

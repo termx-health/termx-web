@@ -1190,6 +1190,7 @@
 				"loinc": "LOINC",
 				"loinc-import": "LOINC import",
 				"loinc-terminology": "LOINC terminology",
+				"loinc-import-warning": "NB! LOINC import is a time-consuming operation. It took 10-60 minutes depending on the computer. Would you like to continue?",
 				"order-observation": "Order observation",
 				"panels": "Panels",
 				"parts": "Parts",
