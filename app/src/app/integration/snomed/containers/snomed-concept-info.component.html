@@ -147,4 +147,14 @@
     </m-table>
   </m-card>
 
+  <m-card class="m-card-inside">
+    <div *m-card-header class="m-justify-between">
+      <div class="m-card__title">
+        {{'entities.snomed-concept.provenance' | translate}}
+      </div>
+      <m-button (mClick)="loadProvenances()">{{'core.btn.query' | translate}}</m-button>
+    </div>
+    <tw-provenance-list [provenances]="provenances"></tw-provenance-list>
+  </m-card>
+
 </m-card>

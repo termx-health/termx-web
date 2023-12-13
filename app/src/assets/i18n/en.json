@@ -542,7 +542,8 @@
 			"relationships": "Relationships",
 			"snomed-references": "References in SNOMED",
 			"term": "Term",
-			"translations": "Translations"
+			"translations": "Translations",
+			"provenance": "Provenance"
 		},
 		"snomed-description": {
 			"acceptability": "Acceptability",

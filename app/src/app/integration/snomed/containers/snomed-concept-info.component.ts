@@ -9,7 +9,7 @@ import {Router} from '@angular/router';
 import {AuthService} from 'app/src/app/core/auth';
 import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
-import {LorqueLibService} from 'term-web/sys/_lib';
+import {LorqueLibService, Provenance} from 'term-web/sys/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 
 @Component({
@@ -26,7 +26,8 @@ export class SnomedConceptInfoComponent implements OnChanges {
   public ktsReferences?: {type?: string, id?: any, name?: string}[];
   public descriptions?: {[key: string]: SnomedDescription[]};
   public relationships?: SnomedRelationship[];
-  public dataChanged: boolean = false;
+  public provenances?: Provenance[];
+  public dataChanged?: boolean = false;
 
   @Input() public conceptId?: string;
   @Output() public conceptSelected: EventEmitter<string> = new EventEmitter<string>();
@@ -132,6 +133,12 @@ export class SnomedConceptInfoComponent implements OnChanges {
         }
         this.snomedTranslationService.getRF2(process.id);
       });
+    });
+  }
+
+  public loadProvenances(): void {
+    this.loader.wrap('kts-references', this.snomedTranslationService.loadProvenances(this.conceptId)).subscribe(p => {
+      this.provenances = p;
     });
   }
 }

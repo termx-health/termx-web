@@ -41,6 +41,7 @@ import {OrphanetImportComponent} from 'term-web/integration/import/file-import/c
 import {MapSetModule} from 'term-web/resources/map-set/map-set.module';
 import {ValueSetFileImportComponent} from 'term-web/integration/import/file-import/value-set/value-set-file-import.component';
 import {SnomedCodesystemEditComponent} from 'term-web/integration/snomed/containers/management/codesystem/snomed-codesystem-edit.component';
+import {SysLibModule} from 'term-web/sys/_lib';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -81,7 +82,8 @@ export const INTEGRATION_ROUTES: Routes = [
     ResourcesLibModule,
     FhirLibModule,
     IntegrationLibModule,
-    MapSetModule
+    MapSetModule,
+    SysLibModule
   ],
   exports: [
     LoincListComponent,
