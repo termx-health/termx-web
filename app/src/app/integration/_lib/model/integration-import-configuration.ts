@@ -32,7 +32,7 @@ export class IntegrationImportConfiguration {
       };
       const est = {
         sourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/est-atc.csv',
-        uri: 'https://www.ravimiregister.ee',
+        uri: 'https://fhir.ee/CodeSystem/atc-ee',
         publisher: 'Ravimiregister',
         version: '1',
         validFrom: new Date(),
@@ -56,7 +56,7 @@ export class IntegrationImportConfiguration {
     };
     const est = {
       sourceUrl: 'https://kexus.kodality.com/repository/store-public/terminology/rhk10_v8.zip',
-      uri: 'https://pub.e-tervis.ee/classifications/RHK-10',
+      uri: 'https://fhir.ee/CodeSystem/rhk10',
       publisher: 'Ministry of Social Affairs of Estonia',
       version: '8',
       validFrom: new Date(),

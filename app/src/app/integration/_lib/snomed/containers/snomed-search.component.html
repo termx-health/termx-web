@@ -50,7 +50,11 @@
             <th>{{'entities.snomed-concept.term' | translate}}</th>
           </tr>
           <tr *mTableRow="let concept">
-            <td><a (click)="conceptSelected.emit(concept.conceptId)">{{concept | snomedConceptName | async}}</a></td>
+            <td>
+              <div class="m-items-middle">
+                <a (click)="conceptSelected.emit(concept.conceptId)">{{concept.conceptId}}</a>
+                <label>{{concept.term || (concept | snomedConceptName | async)}}</label>
+              </div>
           </tr>
           <tr *mTableNoData>
             <td colspan="100%">
