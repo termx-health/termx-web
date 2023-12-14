@@ -33,7 +33,7 @@ export class FhirValueSetLibService {
     return this.http.get<any>(`${this.baseUrl}/$validate-code`, {params: SearchHttpParams.build(params)});
   }
 
-  public import(urls: FhirParameters): Observable<FhirParameters> {
-    return this.http.post<FhirParameters>(`${this.baseUrl}/$sync`, urls);
+  public import(params: FhirParameters): Observable<FhirParameters> {
+    return this.http.post<FhirParameters>(`${this.baseUrl}/$sync`, {...params, resourceType: 'Parameters'});
   }
 }

@@ -19,8 +19,8 @@ export class FhirCodeSystemLibService {
     return this.http.get<any>(`${this.baseUrl}/${id}${version ? SEPARATOR + version : ''}`);
   }
 
-  public import(urls: FhirParameters): Observable<FhirParameters> {
-    return this.http.post<FhirParameters>(`${this.baseUrl}/$sync`, urls);
+  public import(params: FhirParameters): Observable<FhirParameters> {
+    return this.http.post<FhirParameters>(`${this.baseUrl}/$sync`, {...params, resourceType: 'Parameters'});
   }
 
   public lookup(params: FhirCodeSystemLookupParams): Observable<FhirParameters> {
@@ -36,6 +36,6 @@ export class FhirCodeSystemLibService {
   }
 
   public findMatches(params: FhirParameters): Observable<FhirParameters> {
-    return this.http.post<FhirParameters>(`${this.baseUrl}/$find-matches`, params);
+    return this.http.post<FhirParameters>(`${this.baseUrl}/$find-matches`, {...params, resourceType: 'Parameters'});
   }
 }

@@ -16,8 +16,8 @@ export class FhirConceptMapLibService {
     return this.http.get<any>(`${this.baseUrl}/${id}${version ? SEPARATOR + version : ''}`);
   }
 
-  public import(urls: FhirParameters): Observable<FhirParameters> {
-    return this.http.post<FhirParameters>(`${this.baseUrl}/$sync`, urls);
+  public import(params: FhirParameters): Observable<FhirParameters> {
+    return this.http.post<FhirParameters>(`${this.baseUrl}/$sync`, {...params, resourceType: 'Parameters'});
   }
 
   public translate(params: FhirConceptMapTranslateParams): Observable<FhirParameters> {
@@ -25,6 +25,6 @@ export class FhirConceptMapLibService {
   }
 
   public closure(params: FhirParameters): Observable<any> {
-    return this.http.post<any>(`${this.baseUrl}/$closure`, params);
+    return this.http.post<FhirParameters>(`${this.baseUrl}/$closure`, {...params, resourceType: 'Parameters'});
   }
 }
