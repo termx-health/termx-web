@@ -1,12 +1,4 @@
 {
-	"language": {
-		"et": "Eesti",
-		"en": "Inglise",
-		"lt": "Leedu",
-		"de": "Saksa",
-		"fr": "Prantsuse",
-		"nl": "Hollandi"
-	},
 	"core": {
 		"back": "Tagasi",
 		"btn": {
@@ -172,6 +164,51 @@
 			"type": "Tüüp",
 			"uri": "URI",
 			"value": "Väärtus"
+		},
+		"implementation-guide": {
+			"id": "ID",
+			"multiple": "Rakendusjuhendid (IG)",
+			"single": "Rakendusjuhend",
+			"title": "Pealkiri"
+		},
+		"implementation-guide-version": {
+			"algorithm": "Algoritm",
+			"date": "Kuupäev",
+			"depends-on": {
+				"package-id": "Pakett",
+				"reason": "Põhjus",
+				"single": "Sõltub",
+				"version": "Versioon"
+			},
+			"empty-github-url": "Esialgne tühi IG Github projekt",
+			"fhir-version": "FHIR versioon",
+			"github-url": "Github projekti täis url",
+			"group": {
+				"description": "Kirjeldus",
+				"multiple": "Rühmad",
+				"name": "Nimetus"
+			},
+			"multiple": "Versioonid",
+			"package-id": "Pakett",
+			"page": {
+				"group": "Rühm",
+				"multiple": "Leheküljed",
+				"name": "Nimetus",
+				"page": "Lehekülg",
+				"space": "Ruum",
+				"type": "Tüüp"
+			},
+			"resource": {
+				"group": "Rühm",
+				"multiple": "Ressurssid",
+				"name": "Nimetus",
+				"reference": "Viide",
+				"type": "Tüüp",
+				"version": "Versioon"
+			},
+			"single": "Versioon",
+			"template": "Mall",
+			"version": "Versioon"
 		},
 		"map-set": {
 			"associations": "Assotsioon",
@@ -494,6 +531,7 @@
 			"descriptions": "Kirjeldused",
 			"fsn": "Fully Specified Name (FSN)",
 			"kts-references": "Viited TermX-is",
+			"provenance": "Päritolu",
 			"pt": "Preferred term (PT)",
 			"refsets": "Refsets",
 			"relationships": "Suhted",
@@ -678,9 +716,21 @@
 		"value-set-version-concept": {
 			"additional-designations": "Täiendavad tekstid",
 			"concept": "Mõiste",
+			"designations": "Nimetused",
 			"display": "Põhitekst",
 			"order-number": "Jnr"
 		}
+	},
+	"language": {
+		"de": "Saksa",
+		"en": "Inglise",
+		"et": "Eesti",
+		"fr": "Prantsuse",
+		"lt": "Leedu",
+		"nl": "Hollandi"
+	},
+	"marina.ui.form.validationError": {
+		"sequenceInvalidCharacters": "Sisaldab lubamatu märke: \"{{sequenceInvalidCharacters}}\""
 	},
 	"web": {
 		"app": {
@@ -693,7 +743,8 @@
 				"view-header": "Vaata assotsioonitüübi"
 			},
 			"list": {
-				"add-association-type": "Lisa assotsioonitüüp"
+				"add-association-type": "Lisa assotsioonitüüp",
+				"title": "Assotsiooni tüübid"
 			}
 		},
 		"case-sensitive": {
@@ -830,6 +881,7 @@
 			},
 			"form": {
 				"add-header": "Lisa mõiste",
+				"add-task": "Lisa ülesanne",
 				"all-tasks": "Kõik ülesanded",
 				"concept": "Mõiste",
 				"linked-with-code-systems": "Seotud koodisüsteemi versioonidega",
@@ -843,6 +895,10 @@
 				},
 				"opened-tasks": "Avatud ülesanded",
 				"related-artifacts": "Seotud artifaktid",
+				"task-modal": {
+					"comment": "Kommentaar",
+					"header": "Loo ülesanne"
+				},
 				"value-sets": {
 					"definition": "Kirjeldus",
 					"header": "Seotud loendid",
@@ -1015,6 +1071,36 @@
 				"value-sets": "Loendid"
 			}
 		},
+		"implementation-guide": {
+			"form": {
+				"add-header": "Lisa rakendusjuhend",
+				"edit-header": "Muuda rakendusjuhend"
+			},
+			"list": {
+				"add": "Lisa rakendusjuhend",
+				"add-fhir": "Import välist FHIR definitsiooni",
+				"add-manual": "Käsitsi",
+				"last-version": "Viimane versioon",
+				"open-fhir": "Ava FHIR definitsiooni"
+			},
+			"summary": {
+				"add-version": "Lisa versioon"
+			}
+		},
+		"implementation-guide-version": {
+			"form": {
+				"add-header": "Lisa versioon",
+				"edit-header": "Muuda versioon"
+			},
+			"summary": {
+				"activate": "Aktiveeri",
+				"edit-version": "Muuda versioon",
+				"last-modified": "Viimane muudatus",
+				"make-draft": "Tee mustandiks",
+				"none": "Puudub",
+				"retire": "Aegunud"
+			}
+		},
 		"integration": {
 			"fhir": {
 				"code-system": {
@@ -1132,6 +1218,7 @@
 				},
 				"concept-map": {
 					"delete-associations": "Kas kustutada kõik seosed enne importimist?",
+					"download-template": "Laadi mall alla",
 					"file": "Fail",
 					"hold": "Hoia",
 					"ignore": "Ignoreeri duplikaadid",
@@ -1183,6 +1270,7 @@
 				"language": "Keel",
 				"loinc": "LOINC",
 				"loinc-import": "LOINC import",
+				"loinc-import-warning": "NB! LOINC'i importimine on aeganõudev toiming.  Sõltuvalt arvuti võimsusest sellele kuulub 10-60 minutit.  Kas soovite jätkata?",
 				"loinc-terminology": "LOINC terminoloogia",
 				"order-observation": "Näitajate järjestamine (order observation)",
 				"panels": "Paneelid",
@@ -1250,6 +1338,7 @@
 					"ord-obs": "Tel/Vas",
 					"order": "Tellimus",
 					"property": "Tunnus",
+					"recent-searches": "Viimased otsingud",
 					"scale": "Vastuse tüüp",
 					"survey": "Küsitlus",
 					"system": "Süsteem",
@@ -1307,6 +1396,7 @@
 				"open-fhir": "Ava FHIr URL",
 				"operations": "Toimingud",
 				"status": "Staatus",
+				"title": "Vastanduskaardid",
 				"versions": "Versioonid",
 				"versions-expiration-date": "kuni {{expirationDate}}",
 				"versions-release-date": "Alates: {{releaseDate}}",
@@ -1438,6 +1528,9 @@
 				"to": "Kuni",
 				"view-header": "Vaata mõõtühiku"
 			},
+			"list": {
+				"title": "Mõõtühikud"
+			},
 			"mapping": {
 				"list": {
 					"add-mapping": "Lisa seos"
@@ -1457,6 +1550,7 @@
 			"list": {
 				"add-naming-system": "Lisa nimesüsteemi",
 				"naming-system": "Nimesüsteem",
+				"title": "Nimesüsteemid",
 				"type": "Tüüp"
 			}
 		},
@@ -1725,15 +1819,15 @@
 			"github-pull-confirm-achtung": "ETTEVAATUST: SEE TOIMING ON PÖÖRDAMATU! Te võite kaotada muudatused TermX-is",
 			"github-push": "Salvesta andmed repositooriumi",
 			"github-sync": "Sünkroniseeri Github-iga",
-			"ig-base": "",
-			"ig-header": "",
-			"ig-initialize": "",
-			"ig-integration": "",
-			"ig-menu": "",
-			"ig-menu-add": "",
-			"ig-menu-submenu-add": "",
-			"ig-not-initialized": "",
-			"ig-pages": "",
+			"ig-base": "Baas rakendusjuhend (IG)",
+			"ig-header": "Implementation Guide päis",
+			"ig-initialize": "Initsieeri rakendusjuhend",
+			"ig-integration": "Rakendusjuhendi integratsioon",
+			"ig-menu": "Menüü",
+			"ig-menu-add": "Lisa",
+			"ig-menu-submenu-add": "Lisa alammenüü",
+			"ig-not-initialized": "Rakendusjuhend on initsialiseerimata",
+			"ig-pages": "Leheküljed",
 			"import-btn": "Impordi ruum",
 			"import-error-message": "Ruumi import ebaõnnestunud",
 			"import-success-message": "Ruumi import on edukas",
@@ -1777,7 +1871,8 @@
 				"short-description": "Lühikirjeldus",
 				"strength": "Tugevus",
 				"system": "Süsteem",
-				"value-set": "Loend"
+				"value-set": "Loend",
+				"view-header": "Struktuuride kirjeldused"
 			},
 			"list": {
 				"add-structure-definition": "Lisa struktuuri definitsioon",
@@ -1843,6 +1938,7 @@
 		},
 		"template": {
 			"form": {
+				"add-content": "Lisa sisu",
 				"add-header": "Lisa mall",
 				"edit-header": "Muuda mall"
 			},
@@ -1874,6 +1970,10 @@
 				"button": "Terminology Service API",
 				"content": "Terminoloogiateenuse API-d võimaldavad kliinilise terminoloogia sisu ja ressursside automaatset vahetamist.",
 				"header": "Terminology Service API"
+			},
+			"termx-service-api": {
+				"content": "TermX Service API-d võimaldavad kliinilise terminoloogia sisu ja ressursside automaatset vahetamist.",
+				"header": "TermX Service API"
 			}
 		},
 		"transformation-definition": {
@@ -2061,9 +2161,11 @@
 				"resolve": "Lahenda"
 			},
 			"details": {
+				"add-content": "Lisa sisu",
 				"concept": "Mõiste",
 				"contents": "Sisu",
 				"cs": "Koodisüsteem",
+				"csc": "Koodisüsteemi mõisted",
 				"def": "Structure definition",
 				"ms": "Vastandustabel",
 				"none": "Puudub",
@@ -2071,7 +2173,8 @@
 				"relations": "Seosed",
 				"tags": "Tagid",
 				"usages": "Viited",
-				"vs": "Loend"
+				"vs": "Loend",
+				"vsc": "Loendi mõisted"
 			},
 			"edit": {
 				"header": {
@@ -2135,10 +2238,6 @@
 				"desc": "Palun valige \"ruum\" jätkamiseks",
 				"title": "\"Ruum\" ei ole valitud"
 			},
-			"sidebar": {
-				"delete-confirm": "Kas sa oled kindel? NB! Ka selle kausta all olevad lehed kustutatakse!",
-				"pages": "Leheküljed"
-			},
 			"overview": {
 				"pages": "Leheküljed",
 				"recently-modified": {
@@ -2146,6 +2245,20 @@
 					"header": "Hiljuti muudetud",
 					"updated": "Uuendatud {{date}}"
 				}
+			},
+			"setup": {
+				"add-header": "Lisa lehekülg",
+				"add-structure-definition": "Ava vorm struktuuri definitsiooniga",
+				"content-header": "Lisa sisu",
+				"content-type-tooltip": "Lehekülje tüübi muutmine võib muuta sisu",
+				"copy-to-clipboard": "Kopeeri {{val}}",
+				"edit-header": "Muuda lehekülg",
+				"relation-header": "Seosed teiste lehekülgedega",
+				"usages": "Viited"
+			},
+			"sidebar": {
+				"delete-confirm": "Kas sa oled kindel? NB! Ka selle kausta all olevad lehed kustutatakse!",
+				"pages": "Leheküljed"
 			},
 			"spaces": "\"Ruumid\"",
 			"texteditor": {
@@ -2177,20 +2290,7 @@
 						"template": "Mall"
 					}
 				}
-			},
-			"setup": {
-				"add-header": "Lisa lehekülg",
-				"add-structure-definition": "Ava vorm struktuuri definitsiooniga",
-				"content-header": "Lisa sisu",
-				"content-type-tooltip": "Lehekülje tüübi muutmine võib muuta sisu",
-				"copy-to-clipboard": "Kopeeri {{val}}",
-				"edit-header": "Muuda lehekülg",
-				"relation-header": "Seosed teiste lehekülgedega",
-				"usages": "Viited"
 			}
 		}
-	},
-	"marina.ui.form.validationError": {
-		"sequenceInvalidCharacters": "Sisaldab lubamatu märke: \"{{sequenceInvalidCharacters}}\""
 	}
 }

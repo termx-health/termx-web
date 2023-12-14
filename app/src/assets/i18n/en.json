@@ -1,13 +1,5 @@
 {
-    "language": {
-        "en": "English",
-        "et": "Estonian",
-        "lt": "Lithuanian",
-        "de": "German",
-        "fr": "French",
-        "nl": "Dutch"
-    },
-    "core": {
+	"core": {
 		"back": "Back",
 		"btn": {
 			"add": "Add",
@@ -49,51 +41,6 @@
 		}
 	},
 	"entities": {
-		"implementation-guide": {
-			"id": "ID",
-			"title": "Title",
-			"single": "Implementation guide",
-			"multiple": "Implementation guides"
-		},
-		"implementation-guide-version": {
-			"algorithm": "Algorithm",
-			"version": "Version",
-			"fhir-version": "FHIR version",
-			"github-url": "Github project full url",
-			"empty-github-url": "Initial empty IG Github project",
-			"package-id": "Package ID",
-			"template": "Template",
-			"date": "Date",
-			"single": "Version",
-			"multiple": "Versions",
-			"group": {
-				"multiple": "Groups",
-				"name": "Name",
-				"description": "Description"
-			},
-			"resource": {
-				"multiple": "Resources",
-				"name": "Name",
-				"type": "Type",
-				"group": "Group",
-				"reference": "Reference",
-				"version": "Version"
-			},
-			"page": {
-				"multiple": "Pages",
-				"name": "Name",
-				"type": "Type",
-				"group": "Group",
-				"page": "Page",
-				"space": "Space"
-			},
-			"depends-on": {
-				"single": "Depends on",
-				"package-id": "Package ID",
-				"version": "Version",
-				"reason": "Reason"
-			}
-		},
 		"association-type": {
 			"code": "Code",
 			"description": "Description",
@@ -218,8 +165,55 @@
 			"uri": "URI",
 			"value": "Value"
 		},
+		"implementation-guide": {
+			"id": "ID",
+			"multiple": "Implementation guides",
+			"single": "Implementation guide",
+			"title": "Title"
+		},
+		"implementation-guide-version": {
+			"algorithm": "Algorithm",
+			"date": "Date",
+			"depends-on": {
+				"package-id": "Package ID",
+				"reason": "Reason",
+				"single": "Depends on",
+				"version": "Version"
+			},
+			"empty-github-url": "Initial empty IG Github project",
+			"fhir-version": "FHIR version",
+			"github-url": "Github project full url",
+			"group": {
+				"description": "Description",
+				"multiple": "Groups",
+				"name": "Name"
+			},
+			"multiple": "Versions",
+			"package-id": "Package ID",
+			"page": {
+				"group": "Group",
+				"multiple": "Pages",
+				"name": "Name",
+				"page": "Page",
+				"space": "Space",
+				"type": "Type"
+			},
+			"resource": {
+				"group": "Group",
+				"multiple": "Resources",
+				"name": "Name",
+				"reference": "Reference",
+				"type": "Type",
+				"version": "Version"
+			},
+			"single": "Version",
+			"template": "Template",
+			"version": "Version"
+		},
 		"map-set": {
+			"associations": "",
 			"description": "Description",
+			"domain": "",
 			"id": "ID",
 			"name": "Name",
 			"plural": "Map Sets",
@@ -537,13 +531,13 @@
 			"descriptions": "Descriptions",
 			"fsn": "Fully Specified Name (FSN)",
 			"kts-references": "References in TermX",
+			"provenance": "Provenance",
 			"pt": "Preferred term (PT)",
 			"refsets": "Refsets",
 			"relationships": "Relationships",
 			"snomed-references": "References in SNOMED",
 			"term": "Term",
-			"translations": "Translations",
-			"provenance": "Provenance"
+			"translations": "Translations"
 		},
 		"snomed-description": {
 			"acceptability": "Acceptability",
@@ -721,43 +715,24 @@
 		},
 		"value-set-version-concept": {
 			"additional-designations": "Additional designations",
-			"designations": "Designations",
 			"concept": "Concept",
+			"designations": "Designations",
 			"display": "Display",
 			"order-number": "Order"
 		}
 	},
+	"language": {
+		"de": "German",
+		"en": "English",
+		"et": "Estonian",
+		"fr": "French",
+		"lt": "Lithuanian",
+		"nl": "Dutch"
+	},
+	"marina.ui.form.validationError": {
+		"sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
+	},
 	"web": {
-		"implementation-guide": {
-			"list": {
-				"add": "Add implementation guide",
-				"add-manual": "Manual",
-				"add-fhir": "Import external FHIR definition",
-				"open-fhir": "Open FHIR definition",
-				"last-version": "Last version"
-			},
-			"form": {
-				"edit-header": "Edit implementation guide",
-				"add-header": "Add implementation guide"
-			},
-			"summary": {
-				"add-version": "Add version"
-			}
-		},
-		"implementation-guide-version": {
-			"form": {
-				"edit-header": "Edit version",
-				"add-header": "Add version"
-			},
-			"summary": {
-				"edit-version": "Edit version",
-				"last-modified": "Last modified",
-				"none": "None",
-				"activate": "Activate",
-				"retire": "Retire",
-				"make-draft": "Make draft"
-			}
-		},
 		"app": {
 			"header": "TermX"
 		},
@@ -768,8 +743,8 @@
 				"view-header": "View association type"
 			},
 			"list": {
-				"title": "Association types",
-				"add-association-type": "Add association type"
+				"add-association-type": "Add association type",
+				"title": "Association types"
 			}
 		},
 		"case-sensitive": {
@@ -827,6 +802,7 @@
 			"list": {
 				"add-code-system": "Add code system",
 				"count": "Count",
+				"domain": "",
 				"duplicate": {
 					"header": "Create duplicate code system",
 					"source-code-system": "Source code system:",
@@ -839,7 +815,10 @@
 				"open-fhir": "Open FHIR URL",
 				"status": "Status",
 				"title": "Code systems",
-				"uri": "URI"
+				"uri": "URI",
+				"versions-expiration-date": "",
+				"versions-release-date": "",
+				"versions-version": ""
 			},
 			"summary": {
 				"add-concept": "Add concept",
@@ -874,6 +853,11 @@
 				"versions": "Versions"
 			}
 		},
+		"code-system-association": {
+			"form": {
+				"target": ""
+			}
+		},
 		"code-system-compare": {
 			"added": "Added",
 			"changed": "Changed",
@@ -886,29 +870,60 @@
 		},
 		"code-system-concept": {
 			"filter": {
+				"language-filter": "",
 				"property-filter": "Property filter",
 				"property-name-filter": "Property name filter",
 				"search-property-value-placeholder": "Search property name",
-				"select-property-placeholder": "Select property"
+				"select-language-placeholder": "",
+				"select-property-placeholder": "Select property",
+				"select-version-placeholder": "",
+				"version-filter": ""
 			},
 			"form": {
 				"add-header": "Add concept",
+				"add-task": "Add task",
 				"all-tasks": "All tasks",
+				"concept": "",
 				"linked-with-code-systems": "Linked with code system versions",
+				"map-sets": {
+					"concept-code": "",
+					"concept-display": "",
+					"direction": "",
+					"equivalence": "",
+					"header": "",
+					"map-set": ""
+				},
 				"opened-tasks": "Opened tasks",
 				"related-artifacts": "Related artifacts",
-				"add-task": "Add task",
-				"version": {
-					"header": "Version {{created}}",
-					"new": "New version"
-				},
 				"task-modal": {
-					"header": "Create task",
-					"comment": "Comment"
+					"comment": "Comment",
+					"header": "Create task"
+				},
+				"value-sets": {
+					"definition": "",
+					"header": "",
+					"value-set": ""
+				},
+				"version": {
+					"code-system-version": "",
+					"header": "Version {{created}}",
+					"new": "New version",
+					"new-version": ""
+				},
+				"wiki": {
+					"header": "",
+					"name": "",
+					"slug": ""
 				}
+			},
+			"group": {
+				"association": "",
+				"property": "",
+				"type": ""
 			},
 			"list": {
 				"add-concept-child": "Add subconcept",
+				"external": "",
 				"open-fhir": "Open FHIR URL",
 				"propagate-properties": "Propagate properties to children",
 				"unlink-concept": "Unlink concept from version"
@@ -921,13 +936,26 @@
 		"code-system-concept-version": {
 			"add-version": "Add version",
 			"association": {
-				"add-association": "Add association"
+				"add-association": "Add association",
+				"delete-association": "",
+				"edit-association": ""
 			},
 			"designation": {
-				"add-designation": "Add designation"
+				"add-designation": "Add designation",
+				"add-supplement": "",
+				"delete-designation": "",
+				"edit-designation": "",
+				"multi-language-input": {
+					"add-translation": "",
+					"placeholder": ""
+				}
 			},
 			"property-value": {
-				"add-property-value": "Add property value"
+				"add-property-value": "Add property value",
+				"add-supplement": "",
+				"coding-value-system": "",
+				"delete-property-value": "",
+				"edit-property-value": ""
 			}
 		},
 		"code-system-validator": {
@@ -951,7 +979,16 @@
 		"code-system-version": {
 			"form": {
 				"add-header": "Add version",
-				"edit-header": "Edit version"
+				"edit-header": "Edit version",
+				"entities": {
+					"add-entity": "",
+					"entity-version": "",
+					"modal": {
+						"add-header": "",
+						"entity-version": ""
+					}
+				},
+				"view-header": ""
 			},
 			"summary": {
 				"all-tasks": "All tasks",
@@ -987,7 +1024,8 @@
 			},
 			"modal": {
 				"add-header": "Add contact",
-				"edit-header": "Edit contact"
+				"edit-header": "Edit contact",
+				"name": ""
 			}
 		},
 		"defined-entity-property": {
@@ -1006,12 +1044,20 @@
 			}
 		},
 		"dev-code-system-relation": {
+			"map-set": {
+				"code": "",
+				"header": "",
+				"name": ""
+			},
 			"value-set": {
 				"code": "Code",
 				"generate": "Generate snapshot",
+				"header": "",
+				"name": "",
 				"publisher": "Publisher",
 				"uri": "URI",
-				"value-set": "Value set"
+				"value-set": "Value set",
+				"value-set-code": ""
 			}
 		},
 		"global-search": {
@@ -1023,6 +1069,36 @@
 				"measurement-unit": "Measurement unit",
 				"snomed": "SNOMED",
 				"value-sets": "ValueSets"
+			}
+		},
+		"implementation-guide": {
+			"form": {
+				"add-header": "Add implementation guide",
+				"edit-header": "Edit implementation guide"
+			},
+			"list": {
+				"add": "Add implementation guide",
+				"add-fhir": "Import external FHIR definition",
+				"add-manual": "Manual",
+				"last-version": "Last version",
+				"open-fhir": "Open FHIR definition"
+			},
+			"summary": {
+				"add-version": "Add version"
+			}
+		},
+		"implementation-guide-version": {
+			"form": {
+				"add-header": "Add version",
+				"edit-header": "Edit version"
+			},
+			"summary": {
+				"activate": "Activate",
+				"edit-version": "Edit version",
+				"last-modified": "Last modified",
+				"make-draft": "Make draft",
+				"none": "None",
+				"retire": "Retire"
 			}
 		},
 		"integration": {
@@ -1142,14 +1218,18 @@
 				},
 				"concept-map": {
 					"delete-associations": "Delete all associations before import?",
-					"file": "File",
 					"download-template": "Download template",
+					"file": "File",
 					"hold": "Hold",
 					"ignore": "Ignore duplicates",
 					"import": "Concept Map file import",
 					"keep-both": "Keep both",
 					"map-id": "Map ID",
-					"overlap-of-associations": "Behavior on overlap of associations"
+					"map-name": "",
+					"map-version": "",
+					"overlap-of-associations": "Behavior on overlap of associations",
+					"source-value-set": "",
+					"target-value-set": ""
 				},
 				"create-new": "Create new",
 				"not-found": "Not found?",
@@ -1158,6 +1238,7 @@
 				"title": "File import",
 				"value-set": {
 					"analyze": "Analyze",
+					"file": "",
 					"import": "Value Set file import",
 					"import-data": "Import data",
 					"source": "Source",
@@ -1189,8 +1270,8 @@
 				"language": "Language",
 				"loinc": "LOINC",
 				"loinc-import": "LOINC import",
-				"loinc-terminology": "LOINC terminology",
 				"loinc-import-warning": "NB! LOINC import is a time-consuming operation. It took 10-60 minutes depending on the computer. Would you like to continue?",
+				"loinc-terminology": "LOINC terminology",
 				"order-observation": "Order observation",
 				"panels": "Panels",
 				"parts": "Parts",
@@ -1257,12 +1338,12 @@
 					"ord-obs": "Ord/Obs",
 					"order": "Order",
 					"property": "Property",
+					"recent-searches": "Recent searches",
 					"scale": "Scale",
 					"survey": "Survey",
 					"system": "System",
 					"timing": "Timing",
-					"type": "Type",
-					"recent-searches": "Recent searches"
+					"type": "Type"
 				},
 				"method": "Method",
 				"name": "Long Common Name",
@@ -1307,13 +1388,19 @@
 				"view-header": ""
 			},
 			"list": {
-				"title": "Map sets",
 				"add-map-set": "Add map set",
+				"add-version": "",
 				"import-fhir": "Import external FHIR definition",
 				"last-version": "Last version",
 				"manual": "Manual",
 				"open-fhir": "Open FHIR URL",
-				"status": "Status"
+				"operations": "",
+				"status": "Status",
+				"title": "Map sets",
+				"versions": "",
+				"versions-expiration-date": "",
+				"versions-release-date": "",
+				"versions-version": ""
 			},
 			"summary": {
 				"add-version": "Add version",
@@ -1324,10 +1411,45 @@
 				"versions": "Versions"
 			}
 		},
+		"map-set-association": {
+			"form": {
+				"add-header": "",
+				"edit-header": "",
+				"source-concept": "",
+				"source-system": "",
+				"status": "",
+				"target-concept": "",
+				"target-system": "",
+				"type": "",
+				"view-header": ""
+			},
+			"list": {
+				"add-association": "",
+				"associations": "",
+				"code-system": "",
+				"operations": ""
+			}
+		},
+		"map-set-entity-version": {
+			"modal": {
+				"add-header": "",
+				"edit-header": "",
+				"entity-version": "",
+				"link-header": ""
+			},
+			"table": {
+				"activate": "",
+				"add-version": "",
+				"header": "",
+				"link-version": "",
+				"retire": ""
+			}
+		},
 		"map-set-version": {
 			"form": {
 				"add-header": "Add version",
-				"edit-header": "Edit version"
+				"edit-header": "Edit version",
+				"view-header": ""
 			},
 			"summary": {
 				"associations": {
@@ -1426,9 +1548,9 @@
 				"view-header": "View naming system"
 			},
 			"list": {
-				"title": "Naming systems",
 				"add-naming-system": "Add naming system",
 				"naming-system": "NamingSystem",
+				"title": "Naming systems",
 				"type": "Type"
 			}
 		},
@@ -1480,6 +1602,7 @@
 				"value-set": "In use (value set)",
 				"values": "In use (values)"
 			},
+			"select-snomed": "",
 			"structure": {
 				"component": "Component",
 				"panel": "Panel",
@@ -1534,7 +1657,8 @@
 				}
 			},
 			"table": {
-				"add-privilege": "Add privilege"
+				"add-privilege": "Add privilege",
+				"delete-privilege": ""
 			}
 		},
 		"publication-status": {
@@ -1565,6 +1689,15 @@
 			"source": "Source",
 			"type": "Type",
 			"url": "URL"
+		},
+		"resources": {
+			"tabset": {
+				"association-types": "",
+				"code-systems": "",
+				"map-sets": "",
+				"naming-systems": "",
+				"value-sets": ""
+			}
 		},
 		"sequence": {
 			"form": {
@@ -1667,6 +1800,7 @@
 			"search": {
 				"ecl": "ECL",
 				"ecl-placeholder": "ECL expression",
+				"import-refset-concepts": "",
 				"refsets": "Refsets",
 				"taxonomy": "Taxonomy"
 			}
@@ -1706,8 +1840,8 @@
 		},
 		"structure-definition": {
 			"form": {
+				"add-element": "",
 				"add-header": "Add structure definition",
-				"view-header": "Structure definition",
 				"binding": "Binding",
 				"cardinality": "Cardinality",
 				"code": "Code",
@@ -1717,7 +1851,10 @@
 				"edit-header": "Edit structure definition",
 				"element-header": "Elements",
 				"error-modal": {
-					"delete-content": "Delete content and proceed"
+					"delete-content": "Delete content and proceed",
+					"fhir-to-fsh": "",
+					"fsh-to-fhir": "",
+					"no-save-proceed": ""
 				},
 				"fixed-coding": "Fixed coding",
 				"fixed-uri": "Fixed URI",
@@ -1728,12 +1865,14 @@
 					"no-save-proceed": "Proceed",
 					"save-proceed": "Save and proceed"
 				},
+				"name": "",
 				"path": "Path",
 				"primary-source": "Primary source",
 				"short-description": "Short description",
 				"strength": "Strength",
 				"system": "System",
-				"value-set": "Value set"
+				"value-set": "Value set",
+				"view-header": "Structure definition"
 			},
 			"list": {
 				"add-structure-definition": "Add structure definition",
@@ -1791,15 +1930,17 @@
 				},
 				"priority": "Priority",
 				"project": "Project",
+				"requested-performer": "",
 				"status": "Status",
 				"type": "Type"
-			}
+			},
+			"select-project": ""
 		},
 		"template": {
 			"form": {
+				"add-content": "Add content",
 				"add-header": "Add template",
-				"edit-header": "Edit template",
-				"add-content": "Add content"
+				"edit-header": "Edit template"
 			},
 			"list": {
 				"add-template": "Add template"
@@ -1825,9 +1966,14 @@
 			}
 		},
 		"tools": {
+			"terminology-service-api": {
+				"button": "",
+				"content": "",
+				"header": ""
+			},
 			"termx-service-api": {
-				"header": "TermX Service API",
-				"content": "TermX Service APIs empower the automated exchange of clinical terminology content and resources."
+				"content": "TermX Service APIs empower the automated exchange of clinical terminology content and resources.",
+				"header": "TermX Service API"
 			}
 		},
 		"transformation-definition": {
@@ -1929,10 +2075,12 @@
 		},
 		"value-set-version": {
 			"form": {
+				"add-concept": "",
 				"add-header": "Add version",
 				"concepts": {
 					"warning": "Concept has no active version"
 				},
+				"download": "",
 				"edit-header": "Edit version",
 				"rule-set": {
 					"rule": {
@@ -1947,7 +2095,8 @@
 						"include": "Include",
 						"value-set": "Value set"
 					}
-				}
+				},
+				"view-header": ""
 			},
 			"summary": {
 				"edit-version": "Edit version",
@@ -1961,52 +2110,84 @@
 					"create-review": "Create review task",
 					"definition": "Definition",
 					"download": "Download",
+					"expansion": "",
 					"last-approved": "Last approval date",
 					"last-modified": "Last modified",
 					"last-reviewed": "Last review date",
 					"make-draft": "Make draft",
 					"none": "None",
-					"retire": "Retire"
+					"retire": "Retire",
+					"show-changes": "",
+					"sync-with-github": ""
 				},
 				"rule": "Rule",
 				"rule-set": "Rule set",
 				"task-modal": {
+					"assignee": "",
 					"header": "Create {{type}} task",
 					"success-msg": "Task created"
 				},
 				"value-set-version": "Value set version"
 			}
 		},
-		"wiki-page": {
-			"spaces": "Spaces",
-			"no-space": {
-				"desc": "Please select space to proceed",
-				"title": "Space not selected"
-			},
-
-			"sidebar": {
-				"delete-confirm": "Are you sure? Pages under this folder will be deleted too!",
-				"pages": "Pages"
-			},
-			"overview": {
-				"pages": "Pages",
-				"recently-modified": {
-					"created": "Created {{date}}",
-					"header": "Recently modified",
-					"updated": "Updated {{date}}"
+		"value-set-version-concept": {
+			"form": {
+				"add-header": "",
+				"designation-language": "",
+				"designation-name": "",
+				"edit-header": ""
+			}
+		},
+		"value-set-version-rule": {
+			"form": {
+				"add-header": "",
+				"concept": {
+					"add-concept": "",
+					"modal-header": ""
+				},
+				"edit-header": "",
+				"filter": {
+					"add-filter": "",
+					"modal-header": ""
 				}
+			}
+		},
+		"wiki-page": {
+			"comments": {
+				"created-at": "Created at {{date}}",
+				"modified-at": "Modified at {{date}}",
+				"read-more": "Read more",
+				"reply": "Reply",
+				"resolve": "Resolve"
 			},
-
-			"setup": {
-				"add-header": "Add page",
-				"content-type-tooltip": "Changing the content type can change the content value",
-				"edit-header": "Configure"
+			"details": {
+				"add-content": "Add content",
+				"concept": "Concept",
+				"contents": "Contents",
+				"cs": "Code System",
+				"csc": "Code System concepts",
+				"def": "Structure definition",
+				"ms": "Map Set",
+				"none": "None",
+				"page": "Page",
+				"relations": "Relations",
+				"tags": "Tags",
+				"usages": "References",
+				"vs": "Value Set",
+				"vsc": "Value Set concepts"
 			},
 			"edit": {
 				"header": {
 					"version": "Version {{version}}"
 				},
+				"image-modal": {
+					"choose-file": "Choose a file to upload",
+					"header": "Files"
+				},
 				"menu": {
+					"comments": {
+						"title": ""
+					},
 					"diagrams": "Diagrams",
 					"files": "Files",
 					"line-wrap": {
@@ -2023,10 +2204,6 @@
 						"title": "Structure definition"
 					}
 				},
-				"image-modal": {
-					"choose-file": "Choose a file to upload",
-					"header": "Files"
-				},
 				"structure-definition-modal": {
 					"description": "Do you want to save the current page content before navigating to the Structure Definition?",
 					"header": "Your unsaved changes will be lost!",
@@ -2034,6 +2211,56 @@
 					"save-and-proceed": "Save and proceed"
 				}
 			},
+			"header": {
+				"add-subpage": "Add subpage",
+				"copy-raw": "Copy raw file",
+				"modified": "<b>{{user}}</b> edited this page on {{date}}"
+			},
+			"history": {
+				"header": {
+					"tooltips": {
+						"copy-raw": "Copy raw file",
+						"edit": "Use as template for editing",
+						"line-by-line": "Line-by-line view",
+						"preview": "Preview",
+						"side-by-side": "Side-by-side view",
+						"view-diff": "Diff"
+					}
+				},
+				"timeline": {
+					"header": "History",
+					"load-more": "Load more",
+					"source-item": "A",
+					"target-item": "B"
+				}
+			},
+			"no-space": {
+				"desc": "Please select space to proceed",
+				"title": "Space not selected"
+			},
+			"overview": {
+				"pages": "Pages",
+				"recently-modified": {
+					"created": "Created {{date}}",
+					"header": "Recently modified",
+					"updated": "Updated {{date}}"
+				}
+			},
+			"setup": {
+				"add-header": "Add page",
+				"add-structure-definition": "",
+				"content-header": "",
+				"content-type-tooltip": "Changing the content type can change the content value",
+				"copy-to-clipboard": "",
+				"edit-header": "Configure",
+				"relation-header": "",
+				"usages": ""
+			},
+			"sidebar": {
+				"delete-confirm": "Are you sure? Pages under this folder will be deleted too!",
+				"pages": "Pages"
+			},
+			"spaces": "Spaces",
 			"texteditor": {
 				"quick-actions": {
 					"link-modal": {
@@ -2052,66 +2279,18 @@
 						"value-set": "ValueSet"
 					},
 					"structure-definition-modal": {
+						"base-definition-url": "",
 						"header": "Choose structure definition",
-						"structure-definition": "Structure definition"
+						"simplifier": "",
+						"structure-definition": "Structure definition",
+						"url": ""
 					},
 					"template-modal": {
 						"header": "Choose template",
 						"template": "Template"
 					}
 				}
-			},
-
-			"header": {
-				"add-subpage": "Add subpage",
-				"copy-raw": "Copy raw file",
-				"modified": "<b>{{user}}</b> edited this page on {{date}}"
-			},
-			"details": {
-				"concept": "Concept",
-				"contents": "Contents",
-				"cs": "Code System",
-				"csc": "Code System concepts",
-				"def": "Structure definition",
-				"ms": "Map Set",
-				"none": "None",
-				"page": "Page",
-				"relations": "Relations",
-				"tags": "Tags",
-				"usages": "References",
-				"vs": "Value Set",
-				"vsc": "Value Set concepts",
-				"add-content": "Add content"
-			},
-			"comments": {
-				"created-at": "Created at {{date}}",
-				"modified-at": "Modified at {{date}}",
-				"read-more": "Read more",
-				"reply": "Reply",
-				"resolve": "Resolve"
-			},
-
-			"history": {
-				"header": {
-					"tooltips": {
-						"copy-raw": "Copy raw file",
-						"edit": "Use as template for editing",
-						"line-by-line": "Line-by-line view",
-						"preview": "Preview",
-						"side-by-side": "Side-by-side view",
-						"view-diff": "Diff"
-					}
-				},
-				"timeline": {
-					"header": "History",
-					"load-more": "Load more",
-					"source-item": "A",
-					"target-item": "B"
-				}
 			}
 		}
-	},
-    "marina.ui.form.validationError": {
-    "sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
-  }
+	}
 }
