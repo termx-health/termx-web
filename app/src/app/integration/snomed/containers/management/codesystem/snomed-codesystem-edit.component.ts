@@ -6,6 +6,7 @@ import {SnomedCodeSystem, SnomedCodeSystemVersion} from 'app/src/app/integration
 import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
 import {saveAs} from 'file-saver';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -32,7 +33,8 @@ export class SnomedCodesystemEditComponent implements OnInit {
     private snomedService: SnomedService,
     private notificationService: MuiNotificationService,
     private route: ActivatedRoute,
-    private destroy$: DestroyService
+    private destroy$: DestroyService,
+    private location: Location
   ) {}
 
   public ngOnInit(): void {
@@ -131,4 +133,8 @@ export class SnomedCodesystemEditComponent implements OnInit {
     return !this.snomedCodeSystem.latestVersion?.dependantVersionEffectiveTime ||
       compareStrings(version.effectiveDate, this.snomedCodeSystem.latestVersion.dependantVersionEffectiveTime) === 1;
   };
+
+  protected deleteCodeSystem(): void {
+    this.snomedService.deleteCodeSystem(this.snomedCodeSystem.shortName).subscribe(() => this.location.back());
+  }
 }
