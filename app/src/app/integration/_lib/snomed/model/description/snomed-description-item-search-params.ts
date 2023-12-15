@@ -9,4 +9,6 @@ export class SnomedDescriptionItemSearchParams {
   public groupByConcept?: Boolean;
 
   public rootId?: string;
+
+  public branch?: string;
 }

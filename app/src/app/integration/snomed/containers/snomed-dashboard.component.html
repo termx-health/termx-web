@@ -1,8 +1,27 @@
+<m-page-bar mPosition="top">
+  <div>
+    <div class="context-container">
+      <span class="context-item" style="width: 100%; grid-column: 3 span">SNOMED CT</span>
+      <div class="context-item">
+        <ng-container *ngIf="branches">
+          <m-dropdown>
+            <a *m-dropdown-container>{{branch}}</a>
+            <ng-container *ngFor="let b of branches">
+              <a *m-dropdown-item (mClick)="branch = b.path">{{b.path}}</a>
+            </ng-container>
+          </m-dropdown>
+        </ng-container>
+      </div>
+    </div>
+  </div>
+</m-page-bar>
+
+
 <div nz-row nzGutter="12" class="m-row">
   <div nz-col [nzMd]="8" [nzXs]="24">
-    <tw-snomed-search #searchComponent (conceptSelected)="conceptSelected($event)" [conceptId]="conceptId"></tw-snomed-search>
+    <tw-snomed-search #searchComponent (conceptSelected)="conceptSelected($event)" [conceptId]="conceptId" [branch]="branch"/>
   </div>
   <div nz-col [nzMd]="16" [nzXs]="24">
-    <tw-snomed-concept-info *ngIf="conceptId" [conceptId]="conceptId" (conceptSelected)="conceptSelected($event)"></tw-snomed-concept-info>
+    <tw-snomed-concept-info *ngIf="conceptId" (conceptSelected)="conceptSelected($event)" [conceptId]="conceptId" [branch]="branch"/>
   </div>
 </div>

@@ -6,4 +6,6 @@ export class SnomedConceptSearchParams extends QueryParams {
   public termActive?: Boolean;
   public language?: string;
   public ecl?: string;
+
+  public branch?: string;
 }

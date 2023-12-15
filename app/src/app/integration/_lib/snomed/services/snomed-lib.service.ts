@@ -88,8 +88,9 @@ export class SnomedLibService {
     return this.http.get<any>(`${this.baseUrl}/imports/${jobId}`);
   }
 
-  public loadConcept(conceptId: string): Observable<SnomedConcept> {
-    return this.http.get(`${this.baseUrl}/concepts/${conceptId}`).pipe(map(c => c as SnomedConcept));
+  public loadConcept(conceptId: string, branch?: string): Observable<SnomedConcept> {
+    return this.http.get(`${this.baseUrl}/concepts/${conceptId}`, {params: SearchHttpParams.build({branch: branch})})
+      .pipe(map(c => c as SnomedConcept));
   }
 
   public findConcepts(params: SnomedConceptSearchParams): Observable<SnomedSearchResult<SnomedConcept>> {
@@ -107,8 +108,9 @@ export class SnomedLibService {
     }).subscribe(res => saveAs(res, `snomed-concepts.csv`));
   }
 
-  public findConceptChildren(conceptId: string): Observable<Array<SnomedConcept>> {
-    return this.http.get(`${this.baseUrl}/concepts/${conceptId}/children`).pipe(map(r => r as Array<SnomedConcept>));
+  public findConceptChildren(conceptId: string, branch?: string): Observable<Array<SnomedConcept>> {
+    return this.http.get(`${this.baseUrl}/concepts/${conceptId}/children`, {params: SearchHttpParams.build({branch: branch})})
+      .pipe(map(r => r as Array<SnomedConcept>));
   }
 
   public findDescriptions(params: SnomedDescriptionItemSearchParams): Observable<SnomedDescriptionItemSearchResult> {
@@ -123,8 +125,8 @@ export class SnomedLibService {
     return this.http.get(`${this.baseUrl}/refset-members`, {params: SearchHttpParams.build(params)}).pipe(map(r => r as SnomedRefsetMemberSearchResult));
   }
 
-  public loadRefsets(conceptId: string): Observable<SnomedConcept[]> {
-    return this.findRefsets({referencedComponentId: conceptId}).pipe(map(resp => {
+  public loadRefsets(conceptId: string, branch?: string): Observable<SnomedConcept[]> {
+    return this.findRefsets({referencedComponentId: conceptId, branch: branch}).pipe(map(resp => {
       const refsets: SnomedConcept[] = [];
       const refsetItems = resp.items!.filter(i => !!i.additionalFields?.mapTarget);
       refsetItems.forEach(item => {

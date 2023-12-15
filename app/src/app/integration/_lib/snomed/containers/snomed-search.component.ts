@@ -18,6 +18,7 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
 
   @Input() public ecl: string;
   @Input() public conceptId: string;
+  @Input() public branch: string;
 
   public loading: {[key: string]: boolean} = {};
 
@@ -45,25 +46,16 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
   ) {}
 
   public ngOnInit(): void {
-    if (this.conceptId) {
-      this.expandTree(this.conceptId);
-    } else {
-      this.loadTaxonomyRootTree();
-    }
-
-    this.searchUpdate.pipe(
-      debounceTime(250),
-      distinctUntilChanged(),
-      switchMap(() => this.searchConcepts(this.searchText)),
-    ).subscribe();
-
-    this.loadRefsets();
+    this.initData();
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['ecl'] && this.ecl) {
       this.eclParams.ecl = this.ecl;
       this.loadEclConcepts();
+    }
+    if (changes['branch']) {
+      this.initData();
     }
   }
 
@@ -75,8 +67,8 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
     this.parents = conceptId === SnomedSearchComponent.snomed_root ? [] : this.parents || [];
     this.loading['taxonomy'] = true;
     forkJoin([
-      this.snomedService.loadConcept(conceptId),
-      this.snomedService.findConceptChildren(conceptId),
+      this.snomedService.loadConcept(conceptId, this.branch),
+      this.snomedService.findConceptChildren(conceptId, this.branch),
     ]).subscribe(([concept, children]) => {
       this.parents.push(concept);
       this.children = children.sort((a, b) => a.fsn!.term!.localeCompare(b.fsn!.term!));
@@ -85,7 +77,7 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
 
   private loadRefsets(): void {
     this.loading['refsets'] = true;
-    this.snomedService.findRefsets({}).subscribe(refsets => {
+    this.snomedService.findRefsets({branch: this.branch}).subscribe(refsets => {
       this.refsets = Object.values(refsets.referenceSets!).sort(function (a, b) {
         return a.fsn!.term!.localeCompare(b.fsn!.term!);
       });
@@ -109,7 +101,7 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
     }
     this.parents = [];
     this.loading['taxonomy'] = true;
-    return this.snomedService.findDescriptions({term: searchText}).pipe(
+    return this.snomedService.findDescriptions({term: searchText, branch: this.branch}).pipe(
       tap(res => this.children = res.items!.map(i => {
         i.concept['term'] = i.term;
         return i.concept;
@@ -124,6 +116,7 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
       return;
     }
     this.loading['refset-concepts'] = true;
+    this.refsetParams.branch = this.branch;
     this.snomedService.findRefsetMembers(this.refsetParams).subscribe(members => {
       this.refsetConcepts = {meta: {total: members.total}, data: members.items!.map(i => i.referencedComponent!)};
     }).add(() => this.loading['refset-concepts'] = false);
@@ -131,6 +124,7 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
 
   public loadEclConcepts(): void {
     this.loading['ecl-concepts'] = true;
+    this.eclParams.branch = this.branch;
     this.snomedService.findConcepts(this.eclParams).subscribe(concepts => {
       this.eclConcepts = {data: concepts.items || [], meta: {total: concepts.total, offset: concepts.offset}};
     }).add(() => this.loading['ecl-concepts'] = false);
@@ -138,10 +132,10 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
 
   public expandTree(conceptId: string): void {
     this.loading['taxonomy'] = true;
-    this.snomedService.loadConcept(conceptId).subscribe(c => {
+    this.snomedService.loadConcept(conceptId, this.branch).subscribe(c => {
       const relation = c.relationships?.[0];
       if (relation) {
-        this.snomedService.findConceptChildren(relation.target.conceptId).subscribe(children => this.children = children);
+        this.snomedService.findConceptChildren(relation.target.conceptId, this.branch).subscribe(children => this.children = children);
       } else {
         this.children = [c];
       }
@@ -156,7 +150,7 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
     const relation = c.relationships?.[0];
     if (relation) {
       this.loading['taxonomy'] = true;
-      this.snomedService.loadConcept(relation.target.conceptId).subscribe(r => {
+      this.snomedService.loadConcept(relation.target.conceptId, this.branch).subscribe(r => {
         this.parents = [r, ...(this.parents || [])];
         this.loadParents(r);
         this.loading['taxonomy'] = false;
@@ -173,6 +167,7 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
       params.ecl = this.eclParams?.ecl;
     }
     this.loading['csv-export'] = true;
+    params.branch = this.branch;
     this.snomedService.startConceptCsvExport(params).subscribe(process => {
       this.lorqueService.pollFinishedProcess(process.id, this.destroy$).subscribe(status => {
         if (status === 'failed') {
@@ -182,5 +177,21 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
         this.snomedService.getConceptCsv(process.id);
       }).add(() => this.loading['csv-export'] = false);
     }, () => this.loading['csv-export'] = false);
+  }
+
+  private initData(): void {
+    if (this.conceptId) {
+      this.expandTree(this.conceptId);
+    } else {
+      this.loadTaxonomyRootTree();
+    }
+
+    this.searchUpdate.pipe(
+      debounceTime(250),
+      distinctUntilChanged(),
+      switchMap(() => this.searchConcepts(this.searchText)),
+    ).subscribe();
+
+    this.loadRefsets();
   }
 }

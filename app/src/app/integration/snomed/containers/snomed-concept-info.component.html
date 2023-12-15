@@ -25,7 +25,7 @@
         <th>{{'entities.snomed-description.acceptability' | translate}}</th>
       </tr>
       <tr *mTableRow="let dk">
-        <td>{{dk | snomedConceptName | async}}</td>
+        <td>{{dk | snomedConceptName:'pt' : branch | async}}</td>
         <td><div *ngFor="let description of descriptions[dk]" [style]="!description.active ? 'text-decoration:line-through' : ''">{{description.descriptionId}}</div></td>
         <td><div *ngFor="let description of descriptions[dk]" [style]="!description.active ? 'text-decoration:line-through' : ''">{{description.lang}}</div></td>
         <td><div *ngFor="let description of descriptions[dk]" [style]="!description.active ? 'text-decoration:line-through' : ''">{{description.term}}</div></td>

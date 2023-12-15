@@ -30,6 +30,7 @@ export class SnomedConceptInfoComponent implements OnChanges {
   public dataChanged?: boolean = false;
 
   @Input() public conceptId?: string;
+  @Input() public branch?: string;
   @Output() public conceptSelected: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild(SnomedTranslationListComponent) public translationListComponent?: SnomedTranslationListComponent;
 
@@ -48,7 +49,7 @@ export class SnomedConceptInfoComponent implements OnChanges {
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['conceptId'] && isDefined(this.conceptId)) {
+    if ((changes['conceptId'] || changes['branch']) && isDefined(this.conceptId)) {
       this.loadConceptData(this.conceptId);
       this.snomedReferences = undefined;
       this.dataChanged = false;
@@ -58,8 +59,8 @@ export class SnomedConceptInfoComponent implements OnChanges {
   private loadConceptData(conceptId: string): void {
     this.descriptions = {};
     this.loader.wrap('load', forkJoin([
-      this.snomedService.loadConcept(conceptId),
-      this.snomedService.loadRefsets(conceptId),
+      this.snomedService.loadConcept(conceptId, this.branch),
+      this.snomedService.loadRefsets(conceptId, this.branch),
     ])).subscribe(([concept, refsets]) => {
       this.concept = concept;
       this.refsets = refsets;
@@ -79,7 +80,7 @@ export class SnomedConceptInfoComponent implements OnChanges {
   }
 
   public loadSnomedReferences(): void {
-    this.loader.wrap('snomed-references', this.snomedService.findConceptChildren(this.conceptId))
+    this.loader.wrap('snomed-references', this.snomedService.findConceptChildren(this.conceptId, this.branch))
       .subscribe(children => this.snomedReferences = children);
   }
 
