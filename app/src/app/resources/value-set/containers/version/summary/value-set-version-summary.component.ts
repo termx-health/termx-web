@@ -57,10 +57,12 @@ export class ValueSetVersionSummaryComponent implements OnInit {
       this.rule = undefined;
       return;
     }
-    this.loader.wrap('delete-rule', this.valueSetService.deleteRule(this.valueSet.id, this.valueSetVersion.version, this.rule.rule.id)).subscribe(() => {
-      this.rule = undefined;
-      this.loadData(this.valueSet.id, this.valueSetVersion.version);
-    });
+    if (this.rule.rule?.id) {
+      this.loader.wrap('delete-rule', this.valueSetService.deleteRule(this.valueSet.id, this.valueSetVersion.version, this.rule.rule.id)).subscribe(() => {
+        this.rule = undefined;
+        this.loadData(this.valueSet.id, this.valueSetVersion.version);
+      });
+    }
   }
 
   protected reloadExpansion(): void {
