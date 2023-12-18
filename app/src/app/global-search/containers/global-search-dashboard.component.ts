@@ -17,7 +17,7 @@ import {
 } from 'term-web/resources/_lib';
 import {MeasurementUnit, MeasurementUnitLibService, MeasurementUnitSearchParams} from 'term-web/measurement-unit/_lib';
 import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'term-web/integration/_lib';
-import {ComponentStateStore, HttpCacheService, LoadingManager} from '@kodality-web/core-util';
+import {ComponentStateStore, HttpCacheService, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {AuthService} from 'term-web/core/auth';
 
 @Component({
@@ -26,7 +26,8 @@ import {AuthService} from 'term-web/core/auth';
 export class GlobalSearchDashboardComponent implements OnInit {
   public searchText?: string;
 
-  public concepts: CodeSystemConcept[] = [];
+  public conceptParams: ConceptSearchParams;
+  public concepts: SearchResult<CodeSystemConcept> = SearchResult.empty();
   public codeSystems: CodeSystem[] = [];
   public valueSets: ValueSet[] = [];
   public mapSets: MapSet[] = [];
@@ -60,7 +61,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
 
   public search(text: string): void {
     if (!text || text.length < 1) {
-      this.concepts = [];
+      this.concepts = SearchResult.empty();
       this.codeSystems = [];
       this.valueSets = [];
       this.mapSets = [];
@@ -88,13 +89,15 @@ export class GlobalSearchDashboardComponent implements OnInit {
       });
   }
 
-  private searchConcepts(text: string): Observable<CodeSystemConcept[]> {
-    const q = new ConceptSearchParams();
-    q.textContains = text;
-    q.limit = 100;
+  private searchConcepts(text: string): Observable<SearchResult<CodeSystemConcept>> {
+    this.conceptParams = new ConceptSearchParams();
+    this.conceptParams.textContains = text;
+    return !this.authService.hasAnyPrivilege(['*.CodeSystem.view']) ? of(SearchResult.empty())
+      : this.codeSystemConceptService.search(this.conceptParams).pipe(map(c => c), catchError(() => of(SearchResult.empty())));
+  }
 
-    return !this.authService.hasAnyPrivilege(['*.CodeSystem.view']) ? of([])
-      : this.codeSystemConceptService.search(q).pipe(map(c => c.data), catchError(() => of([])));
+  protected loadConcepts(): void {
+   this.loader.wrap('load-concepts', this.codeSystemConceptService.search(this.conceptParams)).subscribe(r => this.concepts = r);
   }
 
   private searchCodeSystems(text: string): Observable<CodeSystem[]> {
@@ -167,11 +170,16 @@ export class GlobalSearchDashboardComponent implements OnInit {
   }
 
   protected get isEmpty(): boolean {
-    return !this.concepts?.length &&
+    return !this.concepts?.data?.length &&
       !this.codeSystems?.length &&
       !this.valueSets?.length &&
       !this.mapSets?.length &&
       !this.measurementUnits?.length &&
       !this.snomedConcepts?.length;
   }
+
+  protected findDesignationMatch = (c: CodeSystemConcept): string => {
+   return c?.versions?.flatMap(v => v.designations)?.find(d => d.name.toLowerCase().includes(this.searchText.toLowerCase())).name;
+  };
+
 }

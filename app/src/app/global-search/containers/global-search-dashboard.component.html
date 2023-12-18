@@ -13,14 +13,16 @@
   </m-card>
 
   <ng-container *ngIf="!loader.isLoading">
-    <m-card mTitle="web.global-search.dashboard.concepts" *ngIf="concepts?.length > 0">
-      <m-table [mData]="concepts">
+    <m-card mTitle="web.global-search.dashboard.concepts" *ngIf="concepts?.data?.length > 0">
+      <m-backend-table [mResult]="concepts" [(mQuery)]="conceptParams" (mQueryChange)="loadConcepts()" [mLoading]="loader.isLoading">
         <tr *mTableHead>
-          <th>{{'entities.code-system-concept.code' | translate}}</th>
-          <th>{{'entities.code-system-concept.code-system' | translate}}</th>
+          <th mColumnKey="code">{{'entities.code-system-concept.code' | translate}}</th>
+          <th>{{'entities.code-system-entity-version.designation' | translate}}</th>
+          <th mColumnKey="codeSystem">{{'entities.code-system-concept.code-system' | translate}}</th>
         </tr>
         <tr *mTableRow="let concept">
           <td><a (click)="openConcept(concept.codeSystem, concept.code)">{{concept.code}}</a></td>
+          <td>{{concept | apply: findDesignationMatch}}</td>
           <td>{{concept.codeSystem}}</td>
         </tr>
         <tr *mTableNoData>
@@ -28,7 +30,7 @@
             <m-no-data/>
           </td>
         </tr>
-      </m-table>
+      </m-backend-table>
     </m-card>
 
     <m-card mTitle="web.global-search.dashboard.code-systems" *ngIf="codeSystems?.length > 0">

@@ -99,6 +99,7 @@
 			"created": "Created at",
 			"description": "Description",
 			"designations": "Designations",
+			"designation": "Designation",
 			"id": "ID",
 			"property-values": "Property values",
 			"references": "References",
@@ -1963,7 +1964,8 @@
 				"fhir": "FHIR server",
 				"snomed": "SNOMED server",
 				"terminology": "Terminology server"
-			}
+			},
+			"test": "Test"
 		},
 		"tools": {
 			"terminology-service-api": {

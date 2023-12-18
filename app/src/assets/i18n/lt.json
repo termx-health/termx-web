@@ -64,7 +64,7 @@
 			"plural": "Kodų sistemos",
 			"properties": "Savybės (properties)",
 			"publisher": "Leidėjas",
-			"sequence": "Termino identifikacinio kodo seka",
+			"sequence": "Sąvokos identifikacinio kodo seka",
 			"supported-languages": "Palaikomos kalbos",
 			"title": "Antraštė",
 			"uri": "Universalusis ištekliaus identifikatorius (URI)",
@@ -81,9 +81,9 @@
 		"code-system-concept": {
 			"code": "Kodas",
 			"code-system": "Kodų sistema (code system)",
-			"description": "Aprašas",
+			"description": "Komentaras",
 			"type": "Tipas",
-			"versions": "Termino versijos"
+			"versions": "Sąvokos versijos"
 		},
 		"code-system-entity": {
 			"type": "Tipas",
@@ -97,7 +97,7 @@
 			"associations": "Sąsajos",
 			"code": "Kodas",
 			"created": "Sukurta",
-			"description": "Aprašas",
+			"description": "Komentaras",
 			"designations": "Pavadinimai (designations)",
 			"id": "ID",
 			"property-values": "Savybės",
@@ -152,7 +152,7 @@
 				"code-systems": "Kodų sistemos",
 				"compose": "Sukurti",
 				"filters": "Filtrai",
-				"operator": "Operatorius",
+				"operator": "Priskyrimas",
 				"property": "Savybė",
 				"singular": "Taisyklė",
 				"type": "Tipas",
@@ -166,19 +166,19 @@
 			"value": "Reikšmė"
 		},
 		"implementation-guide": {
-			"id": "",
-			"multiple": "",
-			"single": "",
-			"title": ""
+			"id": "ID",
+			"multiple": "daug",
+			"single": "vienas",
+			"title": "Pavadinimas"
 		},
 		"implementation-guide-version": {
-			"algorithm": "",
-			"date": "",
+			"algorithm": "Algoritmas",
+			"date": "Data",
 			"depends-on": {
-				"package-id": "",
-				"reason": "",
-				"single": "",
-				"version": ""
+				"package-id": "Paketo ID",
+				"reason": "Priežastis",
+				"single": "vienas",
+				"version": "Versija"
 			},
 			"empty-github-url": "",
 			"fhir-version": "",
@@ -211,9 +211,9 @@
 			"version": ""
 		},
 		"map-set": {
-			"associations": "",
+			"associations": "Ryšiai",
 			"description": "Aprašas",
-			"domain": "",
+			"domain": "Domenas",
 			"id": "ID",
 			"name": "Pavadinimas",
 			"plural": "Terminologijų ryšių (map sets) rinkiniai",
@@ -527,9 +527,9 @@
 			"effective-date": "Galiojimo pradžios data"
 		},
 		"snomed-concept": {
-			"concept-id": "Termino ID",
+			"concept-id": "Sąvokos ID",
 			"descriptions": "Aprašai",
-			"fsn": "Termino pilnas pavadinimas (FSN)",
+			"fsn": "Sąvokos pilnas pavadinimas (FSN)",
 			"kts-references": "Nuorodos terminologijų sistemoje",
 			"provenance": "",
 			"pt": "Pageidaujamas aprašymas (PT)",
@@ -540,8 +540,8 @@
 			"translations": "Vertimai"
 		},
 		"snomed-description": {
-			"acceptability": "Termino kategorija (acceptability)",
-			"concept-id": "Termino ID",
+			"acceptability": "Sąvokos priimtinumas (acceptability)",
+			"concept-id": "Sąvokos ID",
 			"description-id": "Aprašo ID",
 			"lang": "Kalba",
 			"refset": "Refsets",
@@ -563,13 +563,13 @@
 			"type": "Tipas"
 		},
 		"snomed-translation": {
-			"acceptability": "Termino priimtinumas (acceptability)",
+			"acceptability": "Sąvokos priimtinumas (acceptability)",
 			"acceptability-options": {
 				"acceptable": "Priimtinas",
 				"preferred": "Pageidaujamas"
 			},
 			"branch": "Atšaka",
-			"concept-id": "Termino ID",
+			"concept-id": "Sąvokos ID",
 			"description-id": "Aprašo ID",
 			"language": "Kalba",
 			"module": "Modulis",
@@ -667,11 +667,11 @@
 		},
 		"value-set-rule-filter": {
 			"operator": {
-				"descendent-of": "Kilmė",
+				"descendent-of": "Reikšmė kilusi iš sąvokos (descendant)",
 				"equal": "=",
-				"in": "Čia",
-				"is-a": "Yra",
-				"label": "Operatorius"
+				"in": "Reikšmė įeina į sudėtį (in)",
+				"is-a": "Reikšmė yra (is a)",
+				"label": "Ryšys"
 			},
 			"property": {
 				"concept": "Terminas",
@@ -686,7 +686,7 @@
 			"include": "Įtraukti",
 			"locked-date": "Užrakinimo data",
 			"rule": {
-				"based-on": "Sukurtas pagal",
+				"based-on": "Atranka",
 				"code-system": "Kodų sistema (code system)",
 				"code-system-version": "Kodų sistemos versija",
 				"compose": "Sukurti",
@@ -716,8 +716,8 @@
 		"value-set-version-concept": {
 			"additional-designations": "Papildomi pavadinimai",
 			"concept": "Terminas",
-			"designations": "",
-			"display": "Rodyti",
+			"designations": "Pavadinimai",
+			"display": "Pavadinimas",
 			"order-number": "Eilės tvarka"
 		}
 	},
@@ -870,60 +870,60 @@
 		},
 		"code-system-concept": {
 			"filter": {
-				"language-filter": "",
+				"language-filter": "Kalbos filtras",
 				"property-filter": "Savybių filtras",
 				"property-name-filter": "Savybių pavadinimų filtras",
 				"search-property-value-placeholder": "Ieškoti savybės pavadinimo",
-				"select-language-placeholder": "",
+				"select-language-placeholder": "Pasirinkti kalbą",
 				"select-property-placeholder": "Pasirinkti savybę",
-				"select-version-placeholder": "",
-				"version-filter": ""
+				"select-version-placeholder": "Pasirinkti versiją",
+				"version-filter": "Versijos filtras"
 			},
 			"form": {
-				"add-header": "Pridėti terminą",
-				"add-task": "",
+				"add-header": "Pridėti sąvoką",
+				"add-task": "Pridėti komentarą",
 				"all-tasks": "Visos užduotys",
-				"concept": "",
+				"concept": "Sąvoka",
 				"linked-with-code-systems": "Susieta su kodų sistemos versijomis",
 				"map-sets": {
-					"concept-code": "",
-					"concept-display": "",
-					"direction": "",
-					"equivalence": "",
-					"header": "",
-					"map-set": ""
+					"concept-code": "Sąvokos kodas",
+					"concept-display": "Sąvokos pavadinimas",
+					"direction": "Kryptis",
+					"equivalence": "Atitikimas",
+					"header": "Ryšiai",
+					"map-set": "Ryšių rinkinys"
 				},
 				"opened-tasks": "Aktyvios užduotys",
 				"related-artifacts": "Susiję artefaktai",
 				"task-modal": {
-					"comment": "",
-					"header": ""
+					"comment": "Komentaras",
+					"header": "Pridėti komentarą"
 				},
 				"value-sets": {
-					"definition": "",
-					"header": "",
-					"value-set": ""
+					"definition": "Apibrėžimas",
+					"header": "Antraštė",
+					"value-set": "Reikšmių rinkinys"
 				},
 				"version": {
 					"code-system-version": "",
 					"header": "Versija {{created}}",
 					"new": "Nauja versija",
-					"new-version": ""
+					"new-version": "Nauja versija"
 				},
 				"wiki": {
-					"header": "",
-					"name": "",
-					"slug": ""
+					"header": "Antraštė",
+					"name": "Pavadinimas",
+					"slug": "Santrumpa"
 				}
 			},
 			"group": {
-				"association": "",
-				"property": "",
-				"type": ""
+				"association": "Ryšiai",
+				"property": "Savybė",
+				"type": "Tipas"
 			},
 			"list": {
 				"add-concept-child": "Pridėti priklausantį terminą",
-				"external": "",
+				"external": "Išorinis",
 				"open-fhir": "Atidaryti FHIR URL",
 				"propagate-properties": "Įkelti savybes į priklausančius terminus",
 				"unlink-concept": "Atsieti terminą nuo versijos"
@@ -937,25 +937,25 @@
 			"add-version": "Pridėti versiją",
 			"association": {
 				"add-association": "Pridėti sąsają",
-				"delete-association": "",
-				"edit-association": ""
+				"delete-association": "Pašalinti sąsają",
+				"edit-association": "Redaguoti sąsają"
 			},
 			"designation": {
 				"add-designation": "Pridėti pavadinimą",
-				"add-supplement": "",
-				"delete-designation": "",
-				"edit-designation": "",
+				"add-supplement": "Pridėti papildymą",
+				"delete-designation": "Pašalinti pavadinimą",
+				"edit-designation": "Redaguoti pavadinimą",
 				"multi-language-input": {
-					"add-translation": "",
-					"placeholder": ""
+					"add-translation": "Pridėti vertimą",
+					"placeholder": "Šablonas"
 				}
 			},
 			"property-value": {
 				"add-property-value": "Pridėti savybės reikšmę",
-				"add-supplement": "",
-				"coding-value-system": "",
-				"delete-property-value": "",
-				"edit-property-value": ""
+				"add-supplement": "Pridėti papildymą",
+				"coding-value-system": "Kodo reikšmių sistema",
+				"delete-property-value": "Pašalinti savybę",
+				"edit-property-value": "Redaguoti savybę"
 			}
 		},
 		"code-system-validator": {
@@ -981,11 +981,11 @@
 				"add-header": "Pridėti versiją",
 				"edit-header": "Redaguoti versiją",
 				"entities": {
-					"add-entity": "",
-					"entity-version": "",
+					"add-entity": "Pridėti esybę",
+					"entity-version": "Pridėti versiją",
 					"modal": {
-						"add-header": "",
-						"entity-version": ""
+						"add-header": "Pridėti",
+						"entity-version": "Versija"
 					}
 				},
 				"view-header": ""
