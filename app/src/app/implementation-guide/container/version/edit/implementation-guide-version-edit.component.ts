@@ -52,6 +52,7 @@ export class ImplementationGuideVersionEditComponent implements OnInit {
     version.algorithm ??= 'semver';
     version.template ??= 'local-template';
     version.dependsOn ??= [];
+    version.github ??= {};
     return version;
   }
 

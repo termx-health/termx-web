@@ -18,7 +18,6 @@ import {SpaceLibModule} from 'term-web/space/_lib';
 import {SpaceGithubComponent} from 'term-web/space/containers/space/space-github.component';
 import {SpaceGithubService} from 'term-web/space/services/space-github.service';
 import {WikiLibModule} from 'term-web/wiki/_lib';
-import {SpaceEditIgComponent} from 'term-web/space/containers/space/space-edit-ig.component';
 
 export const SPACE_CTX_ROUTES: Routes = [
   {path: '', component: SpaceDashboardComponent},
@@ -57,7 +56,6 @@ export const TERMINOLOGY_SERVER_ROUTES: Routes = [
     SpaceDashboardComponent,
     SpaceListComponent,
     SpaceEditComponent,
-    SpaceEditIgComponent,
     SpaceDiffComponent,
     SpaceDiffMatrixComponent,
     SpaceGithubComponent,

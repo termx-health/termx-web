@@ -30,6 +30,8 @@ import {ModelerLibModule} from 'term-web/modeler/_lib';
 import {ImplementationGuidePageListComponent} from 'term-web/implementation-guide/container/version/summary/widgets/implementation-guide-page-list.component';
 import {SpaceLibModule} from 'term-web/space/_lib';
 import {WikiLibModule} from 'term-web/wiki/_lib';
+import {ImplementationguideGithubComponent} from 'term-web/implementation-guide/container/github/implementationguide-github.component';
+import {ImplementationGuideGithubService} from 'term-web/implementation-guide/services/implementation-guide-github.service';
 
 const EDIT = {privilege: ['{id}.ImplementationGuide.edit']};
 const VIEW = {privilege: ['{id}.ImplementationGuide.view']};
@@ -44,7 +46,8 @@ export const IG_ROUTES: Routes = [
   {path: ':id/versions/add', component: ImplementationGuideVersionEditComponent, data: EDIT},
   {path: ':id/versions/:versionCode/summary', component: ImplementationGuideVersionSummaryComponent, data: VIEW},
   {path: ':id/versions/:versionCode/edit', component: ImplementationGuideVersionEditComponent, data: EDIT},
-  {path: ':id/versions/:versionCode/provenances', component: ImplementationGuideProvenancesComponent, data: VIEW}
+  {path: ':id/versions/:versionCode/provenances', component: ImplementationGuideProvenancesComponent, data: VIEW},
+  {path: ':id/versions/:versionCode/github', component: ImplementationguideGithubComponent, data: EDIT}
 ];
 
 @NgModule({
@@ -61,7 +64,8 @@ export const IG_ROUTES: Routes = [
     ImplementationGuideVersionInfoWidgetComponent,
     ImplementationGuideGroupListComponent,
     ImplementationGuideResourceListComponent,
-    ImplementationGuidePageListComponent
+    ImplementationGuidePageListComponent,
+    ImplementationguideGithubComponent
   ],
   imports: [
     CoreUiModule,
@@ -76,7 +80,8 @@ export const IG_ROUTES: Routes = [
     WikiLibModule
   ],
   providers: [
-    ImplementationGuideService
+    ImplementationGuideService,
+    ImplementationGuideGithubService
   ]
 })
 export class ImplementationGuideModule {

@@ -184,6 +184,7 @@
 			"empty-github-url": "Initial empty IG Github project",
 			"fhir-version": "FHIR version",
 			"github-url": "Github project full url",
+			"github-branch": "Branch",
 			"group": {
 				"description": "Description",
 				"multiple": "Groups",
@@ -1102,6 +1103,17 @@
 				"retire": "Retire"
 			}
 		},
+		"implementation-guide-github": {
+			"ig-initialize": "Initialize Implementation Guide from",
+			"ig-not-initialized": "Implementation Guide is not initialized",
+			"branch-not-exists": "Branch does not exist",
+			"github-base-branch": "Base branch",
+			"create-branch": "Create branch",
+			"github-clean": "Everything is up to date!",
+			"github-commit-message": "Commit message",
+			"github-empty": "Nothing to commit",
+			"github-push": "Push changes to"
+		},
 		"integration": {
 			"fhir": {
 				"code-system": {
@@ -1820,15 +1832,6 @@
 			"github-pull-confirm-achtung": "CAUTION: THIS ACTION IS IRREVERSIBLE! YOU MAY LOSE DATA",
 			"github-push": "Push changes to",
 			"github-sync": "Sync with github",
-			"ig-base": "Base Implementation Guide",
-			"ig-header": "Implementation Guide header",
-			"ig-initialize": "Initialize Implementation Guide",
-			"ig-integration": "Implementation Guide integration",
-			"ig-menu": "Menu",
-			"ig-menu-add": "Add",
-			"ig-menu-submenu-add": "Add submenu",
-			"ig-not-initialized": "Implementation Guide is not initialized",
-			"ig-pages": "Pages",
 			"import-btn": "Import space",
 			"import-error-message": "Space import failed",
 			"import-success-message": "Space import succeeded",

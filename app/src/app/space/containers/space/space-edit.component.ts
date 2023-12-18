@@ -8,7 +8,6 @@ import {Package, Space, TerminologyServer, TerminologyServerLibService} from 'te
 import {forkJoin} from 'rxjs';
 import {PackageService} from '../../services/package.service';
 import {SpaceGithubService} from 'term-web/space/services/space-github.service';
-import {SpaceEditIgComponent} from 'term-web/space/containers/space/space-edit-ig.component';
 
 @Component({
   templateUrl: './space-edit.component.html',
@@ -33,7 +32,6 @@ export class SpaceEditComponent implements OnInit {
   public mode: 'add' | 'edit' = 'add';
 
   @ViewChild("form") public form?: NgForm;
-  @ViewChild("igForm") public igForm?: SpaceEditIgComponent;
 
   public constructor(
     private spaceService: SpaceService,
@@ -71,13 +69,12 @@ export class SpaceEditComponent implements OnInit {
   }
 
   public save(): void {
-    if (!validateForm(this.form) || (this.igForm && !this.igForm.validate())) {
+    if (!validateForm(this.form)) {
       return;
     }
     this.loading = true;
-    this.space.integration.github.ig =  this.igForm?.readForm();
     this.space.integration.github = this.githubEnabled ? this.space.integration.github : null;
-    this.spaceService.save(this.space!)
+    this.spaceService.save(this.space)
       .subscribe(() => this.location.back())
       .add(() => this.loading = false);
   }
@@ -88,7 +85,6 @@ export class SpaceEditComponent implements OnInit {
     s.integration ??= {};
     s.integration.github ??= {dirs: this.githubProviders};
     s.integration.github.dirs ??= {};
-    s.integration.github.ig ??= {};
     return s;
   }
 

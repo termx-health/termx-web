@@ -6,15 +6,16 @@ import {ProvenanceListComponent} from './components/provenance-list.component';
 import {MarinaUiModule} from '@kodality-web/marina-ui';
 import {TranslateModule} from '@ngx-translate/core';
 import {CoreUtilModule} from '@kodality-web/core-util';
-import {JsonPipe, NgForOf} from '@angular/common';
+import {JsonPipe} from '@angular/common';
+import {BrowserModule} from '@angular/platform-browser';
 
 @NgModule({
   imports: [
     MarinaUiModule,
     TranslateModule,
     CoreUtilModule,
-    JsonPipe,
-    NgForOf
+    BrowserModule,
+    JsonPipe
   ],
   declarations: [ProvenanceListComponent],
   exports: [ProvenanceListComponent],
