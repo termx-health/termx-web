@@ -10,10 +10,10 @@
           <m-icon mCode="fire"></m-icon>
           <span>{{version.fhirVersion}}</span>
         </ng-container>
-        <ng-container *ngIf="version.githubUrl">
+        <ng-container *ngIf="version.github?.repo">
           <m-divider mVertical></m-divider>
           <m-icon mCode="github"></m-icon>
-          <span>{{version.githubUrl}}</span>
+          <span>{{version.github.repo}}</span>
         </ng-container>
       </div>
       <div class="m-items-middle">

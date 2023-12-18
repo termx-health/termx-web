@@ -13,14 +13,7 @@ export class Space {
   public integration?: {
     github?: {
       repo?: string,
-      dirs?: {[key: string]: string},
-      ig?: SpaceIntegrationIg;
+      dirs?: {[key: string]: string}
     };
   };
-}
-
-export class SpaceIntegrationIg {
-  public header?: string;
-  public pageContents?: number[];
-  public menu?: {name?: string, page?: number, children?: {name?: string, page?: number}[]}[];
 }

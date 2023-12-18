@@ -6,8 +6,7 @@ export class ImplementationGuideVersion {
   public version?: string;
   public status?: string;
   public fhirVersion?: string;
-  public githubUrl?: string;
-  public emptyGithubUrl?: string;
+  public github?: ImplementationGuideVersionGithub;
   public template?: string;
   public packageId?: string;
   public algorithm?: string;
@@ -16,6 +15,12 @@ export class ImplementationGuideVersion {
   public groups?: ImplementationGuideVersionGroup[];
   public resources?: ImplementationGuideVersionResource[];
   public pages?: ImplementationGuideVersionPage[];
+}
+
+export class ImplementationGuideVersionGithub {
+  public repo?: string;
+  public branch?: string;
+  public init?: string;
 }
 
 export class ImplementationGuideVersionDependsOn {

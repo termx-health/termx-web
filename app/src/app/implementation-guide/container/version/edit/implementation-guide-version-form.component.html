@@ -16,12 +16,20 @@
     </m-form-item>
   </m-form-row>
   <m-form-row>
-    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.github-url" mName="github-url">
-      <m-input name="github-url" [(ngModel)]="version.githubUrl"/>
+    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.github-url" mName="github-url" class="tw-input-group">
+      <span class="tw-input-group-addon ant-input-group-addon">https://github.com/</span>
+      <m-input name="github-url" [(ngModel)]="version.github.repo"/>
     </m-form-item>
-    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.empty-github-url" mName="empty-github-url">
-      <m-input name="empty-github-url" [(ngModel)]="version.emptyGithubUrl"/>
+    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.github-branch" mName="github-branch">
+      <m-input name="github-branch" [(ngModel)]="version.github.branch" placeholder="main"/>
     </m-form-item>
+  </m-form-row>
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.implementation-guide-version.empty-github-url" mName="empty-github-url" class="tw-input-group">
+      <span class="tw-input-group-addon ant-input-group-addon">https://github.com/</span>
+      <m-input name="empty-github-url" [(ngModel)]="version.github.init"/>
+    </m-form-item>
+    <div *mFormCol></div>
   </m-form-row>
   <m-form-row>
     <m-form-item *mFormCol mLabel="entities.implementation-guide-version.template" mName="template">

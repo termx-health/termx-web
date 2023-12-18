@@ -9,7 +9,7 @@ import {ImplementationGuideVersion} from 'app/src/app/implementation-guide/_lib'
   templateUrl: 'implementation-guide-version-form.component.html'
 })
 export class ImplementationGuideVersionFormComponent {
-  @Input() public version: ImplementationGuideVersion = {status: 'draft', version: '1.0.0', algorithm: 'semver', template: 'local-template', dependsOn: []};
+  @Input() public version: ImplementationGuideVersion = {status: 'draft', version: '1.0.0', algorithm: 'semver', template: 'local-template', dependsOn: [], github: {}};
   @Input() public versions: ImplementationGuideVersion[] = [];
 
   protected loader = new LoadingManager();
