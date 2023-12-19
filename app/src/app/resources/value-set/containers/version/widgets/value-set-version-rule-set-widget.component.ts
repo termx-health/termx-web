@@ -9,5 +9,6 @@ import {BooleanInput} from '@kodality-web/core-util';
 export class ValueSetVersionRuleSetWidgetComponent{
   @Input() public ruleSet: ValueSetVersionRuleSet;
   @Input() @BooleanInput() public clickable: boolean | string = false;
+  @Output() public ruleSetChanged: EventEmitter<void> = new EventEmitter();
   @Output() public ruleSelected: EventEmitter<{index: number, rule: ValueSetVersionRule}> = new EventEmitter();
 }

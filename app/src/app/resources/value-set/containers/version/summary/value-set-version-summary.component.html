@@ -19,12 +19,18 @@
       <!-- RuleSet -->
       <m-card>
         <m-title *m-card-header mTitle="web.value-set-version.summary.rule-set">
-          <m-button *ngIf="valueSetVersion?.status === 'draft' && ('edit' | twPrivileged)" mControls mDisplay="text" mShape="circle" (mClick)="addRule()">
-            <m-icon mCode="plus"></m-icon>
-          </m-button>
+          <div class="m-items-middle" mControls>
+            <m-button *ngIf="ruleSetChanged && ('edit' | twPrivileged)" mDisplay="text" mShape="circle" (mClick)="saveRuleSet()">
+              <m-icon mCode="check"></m-icon>
+            </m-button>
+            <m-button *ngIf="valueSetVersion?.status === 'draft' && ('edit' | twPrivileged)" mDisplay="text" mShape="circle" (mClick)="addRule()">
+              <m-icon mCode="plus"></m-icon>
+            </m-button>
+          </div>
         </m-title>
         <tw-value-set-version-rule-set-widget [ruleSet]="valueSetVersion?.ruleSet"
             (ruleSelected)="rule = $event"
+            (ruleSetChanged)="ruleSetChanged = true"
             clickable></tw-value-set-version-rule-set-widget>
       </m-card>
     </div>

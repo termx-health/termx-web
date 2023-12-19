@@ -16,6 +16,7 @@ export class ValueSetVersionSummaryComponent implements OnInit {
   protected valueSet?: ValueSet;
   protected valueSetVersion?: ValueSetVersion;
   protected rule?: {index: number, rule: ValueSetVersionRule};
+  protected ruleSetChanged?: boolean;
   protected loader = new LoadingManager();
 
   @ViewChild(ValueSetRuleFormComponent) public ruleFormComponent?: ValueSetRuleFormComponent;
@@ -44,6 +45,13 @@ export class ValueSetVersionSummaryComponent implements OnInit {
     }
     this.loader.wrap('save-rule', this.valueSetService.saveRule(this.valueSet.id, this.valueSetVersion.version, this.rule.rule)).subscribe(() => {
       this.rule = undefined;
+      this.loadData(this.valueSet.id, this.valueSetVersion.version);
+    });
+  }
+
+  protected saveRuleSet(): void {
+    this.loader.wrap('save-rule-set', this.valueSetService.saveRuleSet(this.valueSet.id, this.valueSetVersion.version, this.valueSetVersion.ruleSet)).subscribe(() => {
+      this.ruleSetChanged = false;
       this.loadData(this.valueSet.id, this.valueSetVersion.version);
     });
   }

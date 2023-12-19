@@ -1,4 +1,4 @@
-import {ValueSetLibService, ValueSetTransactionRequest, ValueSetVersion, ValueSetVersionRule} from 'term-web/resources/_lib';
+import {ValueSetLibService, ValueSetTransactionRequest, ValueSetVersion, ValueSetVersionRule, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
@@ -50,6 +50,10 @@ export class ValueSetService extends ValueSetLibService {
       return this.http.put<ValueSetVersionRule>(`${this.baseUrl}/${valueSetId}/versions/${valueSetVersion}/rules/${rule.id}`, rule);
     }
     return this.http.post<ValueSetVersionRule>(`${this.baseUrl}/${valueSetId}/versions/${valueSetVersion}/rules`, rule);
+  }
+
+  public saveRuleSet(valueSetId: string, valueSetVersion: string, ruleSet: ValueSetVersionRuleSet): Observable<ValueSetVersionRuleSet> {
+    return this.http.put<ValueSetVersionRule>(`${this.baseUrl}/${valueSetId}/versions/${valueSetVersion}/rule-sets/${ruleSet.id}`, ruleSet);
   }
 
   public deleteRule(valueSetId: string, valueSetVersion: string, id: number): Observable<void> {

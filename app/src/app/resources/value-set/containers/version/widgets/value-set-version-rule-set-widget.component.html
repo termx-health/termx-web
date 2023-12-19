@@ -1,5 +1,9 @@
 <m-no-data *ngIf="!ruleSet"></m-no-data>
 
+<m-form-item mName="inactive" *ngIf="ruleSet && ('edit' | twPrivileged)">
+  <m-checkbox name="inactive" [(ngModel)]="ruleSet.inactive" (ngModelChange)="ruleSetChanged.emit()">{{'entities.value-set-rule-set.inactive' | translate}}</m-checkbox>
+</m-form-item>
+
 <m-list *ngIf="ruleSet?.rules?.length > 0" mSeparated>
   <m-list-item *ngFor="let rule of ruleSet.rules; let i = index" [mClickable]="clickable | toBoolean" (mClick)="ruleSelected.emit({index: i, rule:rule})">
     <div class="m-items-middle">
