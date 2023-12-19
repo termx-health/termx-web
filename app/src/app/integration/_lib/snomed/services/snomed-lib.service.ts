@@ -64,14 +64,19 @@ export class SnomedLibService {
     return this.http.get(`${this.baseUrl}/${path}/authoring-stats/reactivated-synonyms`).pipe(map(c => c as SnomedAuthoringStatsItem[]));
   }
 
-  public getRF2File(jobId: string): Observable<any> {
-    return this.http.get(`${this.baseUrl}/exports/${jobId}/archive`, {
-      responseType: 'blob',
-      headers: new HttpHeaders({Accept: 'application/zip'})
-    });
+  public startRF2FileDownload(jobId: string): Observable<LorqueProcess> {
+    return this.http.get(`${this.baseUrl}/exports/${jobId}/archive`).pipe(map(res => res as LorqueProcess));
   }
 
-  public pollJob = (jobId: string, destroy$: Observable<any> = timer(60_000)): Observable<any> => {
+  public getRF2File(processId: number): void {
+    this.http.get(`${this.baseUrl}/exports/archive/result/${processId}`, {
+      responseType: 'blob',
+      headers: new HttpHeaders({Accept: 'application/zip'})
+    }).subscribe(res => saveAs(res, `SnomedCT_Export.zip`));
+  }
+
+
+  public pollImportJob = (jobId: string, destroy$: Observable<any> = timer(60_000)): Observable<any> => {
     const pollComplete$ = new Subject();
     timer(0, 3000).pipe(
       switchMap(() => this.loadImportJob(jobId)),

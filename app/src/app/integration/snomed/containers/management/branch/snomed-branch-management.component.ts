@@ -6,8 +6,8 @@ import {SnomedAuthoringStatsItem, SnomedBranch, SnomedTranslation} from 'app/src
 import {forkJoin} from 'rxjs';
 import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {saveAs} from 'file-saver';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
+import {LorqueLibService} from 'term-web/sys/_lib';
 
 @Component({
   templateUrl: 'snomed-branch-management.component.html',
@@ -44,6 +44,7 @@ export class SnomedBranchManagementComponent implements OnInit {
 
   public constructor(
     private snomedService: SnomedService,
+    private lorqueService: LorqueLibService,
     private snomedTranslationService: SnomedTranslationService,
     private notificationService: MuiNotificationService,
     private route: ActivatedRoute,
@@ -101,8 +102,9 @@ export class SnomedBranchManagementComponent implements OnInit {
   }
 
   protected delete(): void {
-    this.loader.wrap('delete', this.snomedService.deleteBranch(this.snomedBranch.path)).subscribe(() => this.router.navigate(['/integration/snomed/management']));
-  };
+    this.loader.wrap('delete', this.snomedService.deleteBranch(this.snomedBranch.path))
+      .subscribe(() => this.router.navigate(['/integration/snomed/management']));
+  }
 
   protected exportToRF2(): void {
     if (!validateForm(this.exportModalForm)) {
@@ -157,14 +159,20 @@ export class SnomedBranchManagementComponent implements OnInit {
   };
 
   private getRF2File(jobId: string): void {
-    this.loader.wrap('export', this.snomedService.getRF2File(jobId)).subscribe(res => {
-      this.exportModalData = {};
-      saveAs(res, `SnomedCT_Export.zip`);
+    this.exportModalData = {type: 'SNAPSHOT'};
+    this.loader.wrap('export', this.snomedService.startRF2FileDownload(jobId)).subscribe(process => {
+      this.loader.wrap('export', this.lorqueService.pollFinishedProcess(process.id, this.destroy$)).subscribe(status => {
+        if (status === 'failed') {
+          this.lorqueService.load(process.id).subscribe(p => this.notificationService.error(p.resultText));
+          return;
+        }
+        this.snomedService.getRF2File(process.id);
+      });
     });
   }
 
   private pollJobStatus(jobId: string): void {
-    this.loader.wrap('import', this.snomedService.pollJob(jobId, this.destroy$)).subscribe(jobResp => {
+    this.loader.wrap('import', this.snomedService.pollImportJob(jobId, this.destroy$)).subscribe(jobResp => {
       this.importModalData = {type: 'SNAPSHOT'};
       if (jobResp.status === 'FAILED') {
         this.notificationService.error(jobResp.errorMessage || 'web.snomed.branch.management.import-failed');
@@ -203,7 +211,8 @@ export class SnomedBranchManagementComponent implements OnInit {
     if (!validateForm(this.synonymDeactivationModalForm)) {
       return;
     }
-    this.loader.wrap('deactivate-description', this.snomedService.deactivateDescription(this.snomedBranch.path, this.synonymDeactivationModalData.descriptionId))
+    this.loader.wrap('deactivate-description',
+      this.snomedService.deactivateDescription(this.snomedBranch.path, this.synonymDeactivationModalData.descriptionId))
       .subscribe(() => {
         this.loadAuthoringStats(this.snomedBranch.path);
         this.synonymDeactivationModalData = {};
@@ -214,7 +223,8 @@ export class SnomedBranchManagementComponent implements OnInit {
     if (!validateForm(this.synonymReactivationModalForm)) {
       return;
     }
-    this.loader.wrap('reactivate-description', this.snomedService.reactivateDescription(this.snomedBranch.path, this.synonymReactivationModalData.descriptionId))
+    this.loader.wrap('reactivate-description',
+      this.snomedService.reactivateDescription(this.snomedBranch.path, this.synonymReactivationModalData.descriptionId))
       .subscribe(() => {
         this.loadAuthoringStats(this.snomedBranch.path);
         this.synonymReactivationModalData = {};
