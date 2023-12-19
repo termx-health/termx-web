@@ -6,11 +6,12 @@
           <m-form-item mName="code" mLabel="entities.measurement-unit.code" required>
             <m-input name="code" [(ngModel)]="measurementUnit.code" required></m-input>
           </m-form-item>
-          <m-form-item mLabel="entities.measurement-unit.name" required>
+
+          <m-form-item mName="name" mLabel="entities.measurement-unit.name" required>
             <m-multi-language-input name="name" [(ngModel)]="measurementUnit.names" required></m-multi-language-input>
           </m-form-item>
 
-          <m-form-item mLabel="entities.measurement-unit.alias" required>
+          <m-form-item mName="alias" mLabel="entities.measurement-unit.alias" required>
             <m-multi-language-input name="alias" [(ngModel)]="measurementUnit.alias" required></m-multi-language-input>
           </m-form-item>
 
