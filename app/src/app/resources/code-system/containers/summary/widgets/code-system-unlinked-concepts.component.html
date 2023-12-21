@@ -20,19 +20,28 @@
   </tr>
 
   <tr *mTableRow="let entityVersion; let i = index">
-    <td *ngIf="!viewMode"><m-checkbox [(ngModel)]="entityVersion['checked']" name="{{i}}-checked"></m-checkbox></td>
+    <td *ngIf="!viewMode">
+      <m-checkbox [(ngModel)]="entityVersion['checked']" name="{{i}}-checked"></m-checkbox>
+    </td>
     <td><a (click)="openConcept(entityVersion)">{{entityVersion.code}}</a></td>
     <td>{{entityVersion.created | localDate}}</td>
-    <td><div class="m-items-middle"><span *ngFor="let d of entityVersion.designations; let i = index">{{d.name}}{{i !== (entityVersion.designations?.length - 1) ? ', ' : ''}}</span></div></td>
+    <td>
+      <div class="m-items-middle">
+        <span *ngFor="let d of entityVersion.designations; let i = index">{{d.name}}{{i !== (entityVersion.designations?.length - 1) ? ', ' : ''}}</span></div>
+    </td>
     <ng-container *ngIf="(tasks | apply: findTask:entityVersion.id) as task">
       <td>{{task.createdBy}}</td>
       <td><a [routerLink]="['/tasks', task?.number,'edit']">{{task.number}}</a></td>
     </ng-container>
     <ng-container *ngIf="!(tasks | apply: findTask:entityVersion.id)">
       <td></td>
-      <td><a *ngIf="approvalRequired" (mClick)="taskModalData.entityVersionId = entityVersion.id;taskModalData.visible = true">{{'web.code-system.summary.unlinked-concepts.create-task' | translate}}</a></td>
+      <td><a *ngIf="approvalRequired"
+          (mClick)="taskModalData.entityVersionId = entityVersion.id;taskModalData.visible = true">{{'web.code-system.summary.unlinked-concepts.create-task' | translate}}</a>
+      </td>
     </ng-container>
-    <td><tw-status-tag [status]="entityVersion.status"></tw-status-tag></td>
+    <td>
+      <tw-status-tag [status]="entityVersion.status"></tw-status-tag>
+    </td>
     <td *ngIf="!viewMode">
       <m-dropdown>
         <ng-container *ngFor="let v of versions | filter: filterDraftVersions">
@@ -64,7 +73,10 @@
         </m-select>
       </m-form-item>
       <m-form-item mName="assignee" mLabel="web.code-system.summary.unlinked-concepts.task-modal.assignee" required>
-        <tw-user-select name="assignee" [(ngModel)]="taskModalData.assignee" required></tw-user-select>
+        <tw-user-select name="assignee"
+            [(ngModel)]="taskModalData.assignee"
+            [anyRole]="[codeSystem + '.CodeSystem.edit', codeSystem + '.CodeSystem.publish']"
+            required></tw-user-select>
       </m-form-item>
     </form>
   </ng-container>

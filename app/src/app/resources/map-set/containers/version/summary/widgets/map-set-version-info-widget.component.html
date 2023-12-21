@@ -43,7 +43,8 @@
   <div>{{version.description | localName}}</div>
   <div class="m-items-middle">
     <m-icon mCode="download"></m-icon>
-    <span>{{'web.map-set-version.summary.info.download' | translate}} (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
+    <span>{{'web.map-set-version.summary.info.download' | translate}}
+      (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
     <m-divider mVertical></m-divider>
     <span>{{'web.map-set-version.summary.info.definition' | translate}} <a (mClick)="openJson()">FHIR</a></span>
   </div>
@@ -67,18 +68,19 @@
   <div class="m-items-middle" *twPrivileged="version.mapSet + '.MapSet.publish'">
     <m-icon mCode="tool"></m-icon>
     <a *ngIf="version.status !== 'draft'" (mClick)="changeVersionStatus('draft')">{{'web.map-set-version.summary.info.make-draft' | translate}}</a>
-    <a *ngIf="version.status !== 'active' && version.status !== 'retired'" (mClick)="changeVersionStatus('active')">{{'web.map-set-version.summary.info.activate' | translate}}</a>
+    <a *ngIf="version.status !== 'active' && version.status !== 'retired'"
+        (mClick)="changeVersionStatus('active')">{{'web.map-set-version.summary.info.activate' | translate}}</a>
     <ng-container *ngIf="version.status !== 'retired'">
       <m-divider mVertical></m-divider>
       <a (mClick)="changeVersionStatus('retired')">{{'web.map-set-version.summary.info.retire' | translate}}</a>
     </ng-container>
   </div>
-<!--  <div class="m-items-middle">-->
-<!--    <m-icon mCode="github"></m-icon>-->
-<!--    <a>{{'web.map-set-version.summary.info.load-from-github' | translate}}</a>-->
-<!--    <m-divider mVertical></m-divider>-->
-<!--    <a>{{'web.map-set-version.summary.info.push-to-github' | translate}}</a>-->
-<!--  </div>-->
+  <!--  <div class="m-items-middle">-->
+  <!--    <m-icon mCode="github"></m-icon>-->
+  <!--    <a>{{'web.map-set-version.summary.info.load-from-github' | translate}}</a>-->
+  <!--    <m-divider mVertical></m-divider>-->
+  <!--    <a>{{'web.map-set-version.summary.info.push-to-github' | translate}}</a>-->
+  <!--  </div>-->
 </div>
 
 
@@ -90,7 +92,10 @@
   <ng-container *mModalContent>
     <form #taskModalForm="ngForm">
       <m-form-item mName="assignee" mLabel="web.map-set-version.summary.task-modal.assignee" required>
-        <tw-user-select name="assignee" [(ngModel)]="taskModalData.assignee" required></tw-user-select>
+        <tw-user-select name="assignee"
+            [(ngModel)]="taskModalData.assignee"
+            [anyRole]="[mapSet?.id + '.MapSet.edit', mapSet.id + '.MapSet.publish']"
+            required></tw-user-select>
       </m-form-item>
     </form>
   </ng-container>

@@ -20,7 +20,8 @@
   </div>
   <div class="m-items-middle">
     <m-icon mCode="download"></m-icon>
-    <span>{{'web.value-set-version.summary.info.download' | translate}} (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
+    <span>{{'web.value-set-version.summary.info.download' | translate}}
+      (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
     <m-divider mVertical></m-divider>
     <span>{{'web.value-set-version.summary.info.definition' | translate}}</span>
     <a (mClick)="openJson()">FHIR</a>
@@ -45,7 +46,8 @@
   <div class="m-items-middle" *twPrivileged="version.valueSet + '.ValueSet.publish'">
     <m-icon mCode="tool"></m-icon>
     <a *ngIf="version.status !== 'draft'" (mClick)="changeVersionStatus('draft')">{{'web.value-set-version.summary.info.make-draft' | translate}}</a>
-    <a *ngIf="version.status !== 'active' && version.status !== 'retired'" (mClick)="changeVersionStatus('active')">{{'web.value-set-version.summary.info.activate' | translate}}</a>
+    <a *ngIf="version.status !== 'active' && version.status !== 'retired'"
+        (mClick)="changeVersionStatus('active')">{{'web.value-set-version.summary.info.activate' | translate}}</a>
     <ng-container *ngIf="version.status !== 'retired'">
       <m-divider mVertical></m-divider>
       <a (mClick)="changeVersionStatus('retired')">{{'web.value-set-version.summary.info.retire' | translate}}</a>
@@ -77,7 +79,10 @@
   <ng-container *mModalContent>
     <form #taskModalForm="ngForm">
       <m-form-item mName="assignee" mLabel="web.code-system-version.summary.task-modal.assignee" required>
-        <tw-user-select name="assignee" [(ngModel)]="taskModalData.assignee" required></tw-user-select>
+        <tw-user-select name="assignee"
+            [(ngModel)]="taskModalData.assignee"
+            [anyRole]="[valueSet?.id + '.ValueSet.edit', valueSet?.id + '.ValueSet.publish']"
+            required></tw-user-select>
       </m-form-item>
     </form>
   </ng-container>

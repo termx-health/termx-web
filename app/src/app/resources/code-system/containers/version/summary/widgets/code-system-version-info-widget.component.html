@@ -20,7 +20,8 @@
   </div>
   <div class="m-items-middle">
     <m-icon mCode="download"></m-icon>
-    <span>{{'web.code-system-version.summary.info.download' | translate}} (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
+    <span>{{'web.code-system-version.summary.info.download' | translate}}
+      (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
     <m-divider mVertical></m-divider>
     <span>{{'web.code-system-version.summary.info.definition' | translate}} <a (mClick)="openJson()">FHIR</a></span>
   </div>
@@ -28,24 +29,27 @@
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.code-system-version.summary.info.last-modified' | translate}}:
       {{((provenances | apply:getLastProvenance: 'modified')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
-    <a [routerLink]="['/resources/code-systems/compare', {'code-system': version?.codeSystem, 'version': version?.id}]" >{{'web.code-system-version.summary.info.show-changes' | translate}}</a>
+    <a [routerLink]="['/resources/code-systems/compare', {'code-system': version?.codeSystem, 'version': version?.id}]">{{'web.code-system-version.summary.info.show-changes' | translate}}</a>
   </div>
   <div class="m-items-middle" *ngIf="codeSystem?.settings?.reviewRequired">
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.code-system-version.summary.info.last-reviewed' | translate}}:
       {{((provenances | apply:getLastProvenance: 'reviewed')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
-    <a *twPrivileged="'edit'" (mClick)="taskModalData.type = 'review';taskModalData.visible = true">{{'web.code-system-version.summary.info.create-review' | translate}}</a>
+    <a *twPrivileged="'edit'"
+        (mClick)="taskModalData.type = 'review';taskModalData.visible = true">{{'web.code-system-version.summary.info.create-review' | translate}}</a>
   </div>
   <div class="m-items-middle" *ngIf="codeSystem?.settings?.approvalRequired">
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.code-system-version.summary.info.last-approved' | translate}}:
       {{((provenances | apply:getLastProvenance: 'approved')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
-    <a *twPrivileged="'edit'" (mClick)="taskModalData.type = 'approval';taskModalData.visible = true">{{'web.code-system-version.summary.info.create-approve' | translate}}</a>
+    <a *twPrivileged="'edit'"
+        (mClick)="taskModalData.type = 'approval';taskModalData.visible = true">{{'web.code-system-version.summary.info.create-approve' | translate}}</a>
   </div>
   <div class="m-items-middle" *twPrivileged="'publish'">
     <m-icon mCode="tool"></m-icon>
     <a *ngIf="version.status !== 'draft'" (mClick)="changeVersionStatus('draft')">{{'web.code-system-version.summary.info.make-draft' | translate}}</a>
-    <a *ngIf="version.status !== 'active' && version.status !== 'retired'" (mClick)="changeVersionStatus('active')">{{'web.code-system-version.summary.info.activate' | translate}}</a>
+    <a *ngIf="version.status !== 'active' && version.status !== 'retired'"
+        (mClick)="changeVersionStatus('active')">{{'web.code-system-version.summary.info.activate' | translate}}</a>
     <ng-container *ngIf="version.status !== 'retired'">
       <m-divider mVertical></m-divider>
       <a (mClick)="changeVersionStatus('retired')">{{'web.code-system-version.summary.info.retire' | translate}}</a>
@@ -78,7 +82,10 @@
   <ng-container *mModalContent>
     <form #taskModalForm="ngForm">
       <m-form-item mName="assignee" mLabel="web.code-system-version.summary.task-modal.assignee" required>
-        <tw-user-select name="assignee" [(ngModel)]="taskModalData.assignee" required></tw-user-select>
+        <tw-user-select name="assignee"
+            [(ngModel)]="taskModalData.assignee"
+            [anyRole]="[codeSystem?.id + '.CodeSystem.edit', codeSystem?.id + '.CodeSystem.publish']"
+            required></tw-user-select>
       </m-form-item>
     </form>
   </ng-container>
