@@ -9,7 +9,7 @@ import {ResourceVersion} from 'term-web/resources/resource/model/resource-versio
   templateUrl: 'resource-version-form.component.html'
 })
 export class ResourceVersionFormComponent {
-  public version: ResourceVersion = {status: 'draft', version: '1.0.0', algorithm: 'semver', from: new Date()};
+  public version: ResourceVersion = {status: 'draft', version: '1.0.0', algorithm: 'semver', from: new Date(), identifiers: []};
 
   protected loader = new LoadingManager();
 

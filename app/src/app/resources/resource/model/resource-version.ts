@@ -1,4 +1,5 @@
 import {LocalizedName} from '@kodality-web/marina-util';
+import {Identifier} from '@kodality-web/core-util';
 
 export class ResourceVersion {
   public status?: string;
@@ -8,4 +9,5 @@ export class ResourceVersion {
   public to?: Date;
   public description?: LocalizedName;
   public preferredLanguage?: string;
+  public identifiers?: Identifier[];
 }

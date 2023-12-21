@@ -1,5 +1,6 @@
 import {CodeSystemEntityVersion} from './code-system-entity';
 import {LocalizedName} from '@kodality-web/marina-util';
+import {Identifier} from '@kodality-web/core-util';
 
 export class CodeSystemVersionReference {
   public id?: number;
@@ -17,6 +18,7 @@ export class CodeSystemVersion extends CodeSystemVersionReference {
   public expirationDate?: Date;
   public created?: Date;
   public algorithm?: string;
+  public identifiers?: Identifier[];
 
   public conceptsTotal?: number;
 

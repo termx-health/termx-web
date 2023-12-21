@@ -1,6 +1,7 @@
 import {ValueSetVersionRuleSet} from './value-set-version-rule-set';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {ValueSetSnapshot} from 'term-web/resources/_lib';
+import {Identifier} from '@kodality-web/core-util';
 
 export class ValueSetVersionReference {
   public id?: number;
@@ -18,6 +19,7 @@ export class ValueSetVersion extends ValueSetVersionReference {
   public created?: Date;
   public algorithm?: string;
   public ruleSet?: ValueSetVersionRuleSet;
+  public identifiers?: Identifier[];
 
   public snapshot?: ValueSetSnapshot;
 }

@@ -1,4 +1,5 @@
 import {LocalizedName} from '@kodality-web/marina-util';
+import {Identifier} from '@kodality-web/core-util';
 
 export class MapSetVersion {
   public id?: number;
@@ -11,6 +12,7 @@ export class MapSetVersion {
   public expirationDate?: Date;
   public created?: Date;
   public algorithm?: string;
+  public identifiers?: Identifier[];
 
   public scope?: MapSetScope;
   public statistics?: MapSetStatistics;

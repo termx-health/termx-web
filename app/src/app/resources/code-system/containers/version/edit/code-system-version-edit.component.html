@@ -47,6 +47,8 @@
               <tw-value-set-concept-select name="algorithm" [(ngModel)]="version.algorithm" valueSet="version-algorithm"></tw-value-set-concept-select>
             </m-form-item>
           </m-form-row>
+
+          <tw-resource-identifiers [identifiers]="version.identifiers"></tw-resource-identifiers>
         </form>
 
         <ng-container *m-card-footer>
