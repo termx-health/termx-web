@@ -188,6 +188,7 @@
                 name="assignee"
                 [(ngModel)]="task.assignee"
                 (ngModelChange)="patch({assignee: $event})"
+                [anyRole]="task.context | apply:getContextPrivileges"
             ></tw-user-select>
           </m-form-item>
 

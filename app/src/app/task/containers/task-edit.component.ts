@@ -7,7 +7,6 @@ import {map, mergeMap} from 'rxjs';
 import {TaskService} from 'term-web/task/services/task-service';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {CodeName} from '@kodality-web/marina-util';
-import {UserLibService} from 'term-web/user/_lib';
 import {CodeSystemVersionLibService} from 'term-web/resources/_lib/code-system/services/code-system-version-lib.service';
 import {CodeSystemEntityVersionLibService, MapSetVersionLibService, ValueSetVersionLibService} from 'term-web/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
@@ -126,11 +125,17 @@ export class TaskEditComponent implements OnInit {
   protected projects: CodeName[];
   protected workflows: Workflow[];
 
+  private taskContextResourceMap = {
+    "code-system": "CodeSystem",
+    "value-set": "ValueSet",
+    "map-set": "MapSet",
+    "snomed-translation": "CodeSystem"
+  };
+
   @ViewChild(NgForm) public form: NgForm;
 
   public constructor(
     private taskService: TaskService,
-    private userService: UserLibService,
     protected authService: AuthService,
     protected contextLinkService: TaskContextLinkService,
     private route: ActivatedRoute,
@@ -302,4 +307,17 @@ export class TaskEditComponent implements OnInit {
       data.activity['edit-mode'] = true;
     }
   }
+
+  protected getContextPrivileges = (ctx: TaskContextItem[]): string[] => {
+    if (!isDefined(ctx) || ctx.length == 0) {
+      return undefined;
+    }
+    return ctx.filter(c => isDefined(this.taskContextResourceMap[c.type]))
+      .flatMap(c => {
+        const resource = this.taskContextResourceMap[c.type];
+        const id = c.type == 'snomed-translation' ? 'snomed-ct' : c.id;
+        return [[id, resource, 'edit'].join('.'), [id, resource, 'publish'].join('.')];
+      });
+  };
+
 }
