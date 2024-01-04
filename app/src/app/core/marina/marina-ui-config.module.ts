@@ -49,17 +49,20 @@ export class MarinaUiConfigModule {
     muiConfig: MuiConfigService
   ) {
     translate.onLangChange.subscribe(({lang}) => {
-      import(/* webpackInclude: /\/\w\w.mjs$/ */ `../../../../../node_modules/@angular/common/locales/${lang}.mjs`)
+      import(/* webpackInclude: /\/\w\w.mjs$/ */ `node_modules/@angular/common/locales/${lang}.mjs`)
         .then(locale => registerLocaleData(locale.default))
         .then(() => {
           i18nService.use(lang);
 
           // 'lang' translations in other locales
           const translations = translate.store.translations?.[lang]?.['language'];
-          // update multi language input
+          // update content languages in multi language input
           muiConfig.set('multiLanguageInput', {
-            languages: env.contentLanguages.map(k => ({code: k, names: {[lang]: translations[k] ?? k}})),
-            requiredLanguages: [env.defaultLanguage]
+            requiredLanguages: [env.defaultLanguage],
+            languages: env.contentLanguages.map(k => ({
+              code: k,
+              names: {[lang]: translations[k] ?? k}
+            }))
           });
         });
     });

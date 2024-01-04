@@ -59,7 +59,7 @@ interface FilterProperty {
   selector: 'tw-code-system-concepts-list',
   templateUrl: './code-system-concepts-list.component.html',
   styles: [`
-    @import "../../../../../../../../node_modules/@kodality-web/marina-ui/src/components/card/style/card.style.less";
+    @import "@kodality-web/marina-ui/src/components/card/style/card.style.less";
 
     ::ng-deep .initial:not(:last-of-type) .ant-form-item {
       margin-bottom: 0;

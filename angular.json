@@ -31,6 +31,9 @@
             "polyfills": "app/src/polyfills.ts",
             "tsConfig": "app/tsconfig.app.json",
             "inlineStyleLanguage": "less",
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            },
             "allowedCommonJsDependencies": [
               "slugify",
               "file-saver",
@@ -69,10 +72,7 @@
               }
             ],
             "styles": [
-              "app/src/styles/styles.less",
-              "node_modules/@kodality-web/marina-quill/quill.styles.less",
-              "node_modules/@kodality-web/marina-markdown-parser/markdown.styles.less",
-              "node_modules/prismjs/themes/prism.css"
+              "app/src/styles/styles.less"
             ],
             "preserveSymlinks": true,
             "scripts": [

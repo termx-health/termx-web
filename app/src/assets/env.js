@@ -20,7 +20,7 @@ for (const [key, val] of Object.entries(twConfig)) {
     try {
       twConfig[key] = JSON.parse(val.substring("json:".length));
     } catch (e) {
-      console.error(`Failed to parse config property ${key} with value: ${val}`, e);
+      console.warn(`Failed to parse config property ${key} with value: ${val}`, e);
       twConfig[key] = undefined;
     }
   }
