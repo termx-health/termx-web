@@ -1840,7 +1840,10 @@
 			"resource-import-error-message": "Resource import failed",
 			"resource-import-success-message": "Resource import succeeded",
 			"resources": "Resources",
-			"select-context": "Select context"
+			"select-context": "Select context",
+			"change-source-server": "Change resource source server",
+			"reload-diff-matrix": "Reload diff matrix",
+			"sync-resources": "Sync all resources (from current installation to target server)"
 		},
 		"structure-definition": {
 			"form": {

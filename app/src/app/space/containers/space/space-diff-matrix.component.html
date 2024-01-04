@@ -1,15 +1,21 @@
 <m-table [mData]="diffItems" [mLoading]="loading">
   <tr *mTableHead>
+    <th><m-checkbox [(ngModel)]="allChecked" name="checked" (ngModelChange)="checkAllItems($event)"/></th>
     <th mSort="resourceType">Resource type</th>
     <th mSort="resourceId">Resource id</th>
     <th>{{'entities.terminology-server.current-installation' | translate}}</th>
     <th *ngFor="let server of (diffItems | apply:extractServers)">
-      <label>{{server}}</label>
+      <label>{{server}}</label>&nbsp;
+      <m-button m-popover mTitle="web.space.change-source-server" (mClick)="changeSourceServer(server)"><m-icon mCode="aim"></m-icon></m-button>
     </th>
-    <th><m-button (mClick)="loadDiff(true)"><m-icon mCode="redo"></m-icon></m-button></th>
+    <th>
+      <m-button m-popover mTitle="web.space.sync-resources" (mClick)="sync()"><m-icon mCode="sync"/></m-button>&nbsp;
+      <m-button m-popover mTitle="web.space.reload-diff-matrix" (mClick)="loadDiff(true)"><m-icon mCode="redo"/></m-button>
+    </th>
   </tr>
 
-  <tr *mTableRow="let item">
+  <tr *mTableRow="let item; let i = index">
+    <td><m-checkbox [(ngModel)]="item['_checked']" [name]="'checked' + i"/></td>
     <td>{{item.resourceType}}</td>
     <td>{{item.resourceId}}</td>
     <td>

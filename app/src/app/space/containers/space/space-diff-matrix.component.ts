@@ -4,6 +4,9 @@ import {combineLatest, takeUntil} from 'rxjs';
 import {DestroyService, isDefined} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
 import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {PackageResourceService} from 'term-web/space/services/package-resource.service';
+import {SpaceService} from 'term-web/space/services/space.service';
 
 @Component({
   templateUrl: './space-diff-matrix.component.html',
@@ -11,10 +14,13 @@ import {SpaceContextComponent} from 'term-web/core/context/space-context.compone
 })
 export class SpaceDiffMatrixComponent implements OnInit {
   public loading: boolean;
+  public allChecked: boolean;
   public diffItems: SpaceDiffItem[];
 
   public constructor(
-    public spaceService: SpaceLibService,
+    public spaceService: SpaceService,
+    public packageResourceService: PackageResourceService,
+    public notificationService: MuiNotificationService,
     public router: Router,
     public ctx: SpaceContextComponent,
     private destroy$: DestroyService,
@@ -40,9 +46,37 @@ export class SpaceDiffMatrixComponent implements OnInit {
       this.ctx.version$.pipe(takeUntil(this.destroy$))
     ]).subscribe(([s, p, v]) => {
       this.loading = true;
-      this.spaceService.diff(s.id, p?.code, v?.version, clearCache).subscribe(diff => {
+      this.spaceService.diff(s.id, p?.code, v?.version, this.destroy$, clearCache).subscribe(diff => {
         this.diffItems = diff.items;
+        if (isDefined(diff.error)) {
+          this.notificationService.error('Diff error', diff.error);
+        }
       }).add(() => this.loading = false);
     });
+  }
+
+  protected sync(): void {
+    combineLatest([
+      this.ctx.space$.pipe(takeUntil(this.destroy$)),
+      this.ctx.pack$.pipe(takeUntil(this.destroy$)),
+      this.ctx.version$.pipe(takeUntil(this.destroy$))
+    ]).subscribe(([s, p, v]) => {
+      this.loading = true;
+      this.spaceService.sync(s.id, p?.code, v?.version, this.destroy$).subscribe(jobLog => {
+        if (isDefined(jobLog.errors)) {
+          jobLog.errors.forEach(err =>  this.notificationService.error('Sync error', err));
+        }
+        this.loadDiff(true);
+      }).add(() => this.loading = false);
+    });
+  }
+
+  protected checkAllItems(checked: boolean): void {
+    this.diffItems?.forEach(i => i['_checked'] = checked);
+  }
+
+  protected changeSourceServer(server: string): void {
+    const ids = this.diffItems.filter(i => !!i['_checked']).map(i => i.id);
+    this.packageResourceService.changeServer(ids, server).subscribe(() => this.loadDiff(true));
   }
 }
