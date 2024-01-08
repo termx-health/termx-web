@@ -1479,7 +1479,7 @@
 					"unverified": "Kontrollimata",
 					"verify": "Kontrolli"
 				},
-				"edit-version": "Muusa versiooni",
+				"edit-version": "Muuda versiooni",
 				"info": {
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitusülesanne",
@@ -1504,7 +1504,7 @@
 					"equivalent": "Võrdsed",
 					"inactive-sources": "Mitteaktiivsed lähtemõisted",
 					"inactive-targets": "Mitteaktiivsed sihtmõisted",
-					"narrower": "Litsamad",
+					"narrower": "Lihtsamad",
 					"no-map": "Ei ole seostavad",
 					"source-concepts": "Lähtemõisted",
 					"title": "Statistika",
