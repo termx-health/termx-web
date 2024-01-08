@@ -459,6 +459,7 @@
 			"id": "ID",
 			"identifiers": {
 				"multiple": "Identifiers",
+				"multiple-version": "Version identifiers",
 				"system": "System",
 				"value": "Value"
 			},

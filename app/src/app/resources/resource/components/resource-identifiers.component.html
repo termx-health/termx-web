@@ -1,4 +1,4 @@
-<m-divider>{{'entities.resource.identifiers.multiple' | translate}}</m-divider>
+<m-divider>{{'entities.resource.identifiers.multiple' + (version ? '-version' : '') | translate}}</m-divider>
 <form #form="ngForm" *ngIf="identifiers">
   <m-editable-table #rowsTable [mData]="identifiers" [mRowInstance]="rowInstance" required>
     <m-editable-column [mTitle]="'entities.resource.identifiers.system'" mName="system">

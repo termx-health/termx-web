@@ -36,7 +36,7 @@
             </m-form-item>
           </m-form-row>
 
-          <tw-resource-identifiers [identifiers]="version.identifiers"></tw-resource-identifiers>
+          <tw-resource-identifiers [identifiers]="version.identifiers" version></tw-resource-identifiers>
         </form>
 
         <tw-ms-scope-form *ngIf="version?.scope" [scope]="version.scope"></tw-ms-scope-form>
