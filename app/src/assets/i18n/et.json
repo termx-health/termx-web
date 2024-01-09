@@ -457,6 +457,7 @@
 			"id": "ID",
 			"identifiers": {
 				"multiple": "Identifikaatorid",
+				"multiple-version": "Versiooni identifikaatorid",
 				"system": "Süsteem",
 				"value": "Väärtus"
 			},

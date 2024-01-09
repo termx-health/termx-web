@@ -457,6 +457,7 @@
 			"id": "ID",
 			"identifiers": {
 				"multiple": "Identifikatoriai",
+				"multiple-version": "Versijų identifikatoriai",
 				"system": "Sistema",
 				"value": "Reikšmė"
 			},
