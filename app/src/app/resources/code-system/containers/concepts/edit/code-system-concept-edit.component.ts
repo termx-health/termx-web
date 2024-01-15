@@ -257,7 +257,9 @@ export class CodeSystemConceptEditComponent implements OnInit {
       this.conceptVersion?.id ? {type: 'concept-version', id: this.conceptVersion.id} : undefined,
       this.codeSystemVersion?.id ? {type: 'code-system-version', id: this.codeSystemVersion.id} : undefined
     ].filter(c => isDefined(c));
-    task.content = this.taskModalData.comment;
+    task.content = 'Review the content of the concept [' + this.concept.code + ']'+
+      '(concept:' + this.codeSystem.id + '|' + this.concept.code + ').' +
+      (this.taskModalData.comment ? '\n' + this.taskModalData.comment : '');
     this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
       this.taskModalData = {};
       this.resourceTasksWidgetComponent.loadTasks();

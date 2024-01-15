@@ -373,7 +373,9 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
       this.taskModalData.conceptVersion?.id ? {type: 'concept-version', id: this.taskModalData.conceptVersion.id} : undefined,
       this.version?.id ? {type: 'code-system-version', id: this.version.id} : undefined
     ].filter(c => isDefined(c));
-    task.content = this.taskModalData.comment;
+    task.content = 'Review the content of the concept [' + this.taskModalData.conceptVersion.code + ']'+
+      '(concept:' + this.codeSystem.id + '|' + this.taskModalData.conceptVersion.code + ').' +
+      (this.taskModalData.comment ? '\n' + this.taskModalData.comment : '');
     this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
       this.taskModalData = {};
       this.resourceTasksWidgetComponent.loadTasks();
