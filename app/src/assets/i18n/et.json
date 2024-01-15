@@ -2077,7 +2077,7 @@
 				"rule-set": {
 					"rule": {
 						"add-designation": "Lisa tekst",
-						"all": "Lisa mõisted",
+						"all": "Kõik mõisted",
 						"bulk-copy": "Massmuutmine",
 						"code-system": "Koodisüsteem",
 						"content": "Sisu",
