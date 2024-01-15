@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PackageResource, TerminologyServer, TerminologyServerLibService} from 'term-web/space/_lib';
 import {combineLatest, forkJoin, map, Observable, of, takeUntil} from 'rxjs';
-import {collect, DestroyService, group} from '@kodality-web/core-util';
+import {collect, DestroyService, group, isNil} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirValueSetLibService} from '../../../fhir/_lib';
 import {PackageResourceService} from '../../services/package-resource.service';
@@ -136,6 +136,9 @@ export class SpaceDiffComponent implements OnInit {
   }
 
   protected normalize(json: string): string {
+    if (isNil(json)) {
+      return null;
+    }
     try {
       return JSON.stringify(JSON.parse(json), null, 2);
     } catch (e) {
