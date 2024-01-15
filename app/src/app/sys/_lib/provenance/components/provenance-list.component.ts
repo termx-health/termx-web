@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {LoadingManager} from '@kodality-web/core-util';
-import {Provenance, ProvenanceLibService} from '../../_lib';
+import {Provenance, ProvenanceLibService} from 'term-web/sys/_lib';
 
 @Component({
   selector: 'tw-provenance-list',

@@ -1,0 +1,24 @@
+<m-spinner [mLoading]="loader.state['save']">
+  <form #form="ngForm" *ngIf="release">
+    <m-card [mTitle]="'web.release.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+      <div *mCardContent="!loader.isLoading">
+        <m-form-item mName="code" mLabel="entities.release.code" required>
+          <m-input name="code" [(ngModel)]="release.code" required></m-input>
+        </m-form-item>
+        <m-form-item mName="name" mLabel="entities.release.name" required>
+          <m-multi-language-input name="name" [(ngModel)]="release.names" required></m-multi-language-input>
+        </m-form-item>
+        <m-form-item mName="planned" mLabel="entities.release.planned">
+          <m-date-picker name="planned" [(ngModel)]="release.planned"></m-date-picker>
+        </m-form-item>
+        <m-form-item mName="release-date" mLabel="entities.release.release-date">
+          <m-date-picker name="release-date" [(ngModel)]="release.releaseDate"></m-date-picker>
+        </m-form-item>
+      </div>
+
+      <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+        {{'core.btn.save' | translate}}
+      </m-button>
+    </m-card>
+  </form>
+</m-spinner>

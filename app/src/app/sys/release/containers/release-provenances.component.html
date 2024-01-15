@@ -1,0 +1,40 @@
+<m-page-bar mPosition="top">
+  <div>
+    <div class="context-container">
+      <span class="context-item" style="width: 100%; grid-column: 3 span">
+        <div *ngIf="!release">...</div>
+        <div *ngIf="release" style="display: flex; flex-direction: column; gap: 0.5rem">
+          <div class="m-title" *ngIf="release">{{'entities.release.single' | translate}}: {{release.code}} | {{release.names | localName}}</div>
+          <div style="display: flex; gap: 1rem">
+            <div>
+              <a class="m-items-middle" [routerLink]="['/releases', release?.id, 'summary']">{{'Summary' | translate}}
+                <m-icon mCode="appstore"/>
+              </a>
+            </div>
+
+            <div *twPrivileged="release?.code + '.Release.edit'" [routerLink]="['/releases', release?.id, 'edit']">
+              <a class="m-items-middle">{{'core.btn.edit' | translate}}
+                <m-icon mCode="form"/>
+              </a>
+            </div>
+
+            <div>
+              <span class="m-items-middle">{{'Provenance' | translate}}
+                <m-icon mCode="history"/>
+              </span>
+            </div>
+        </div>
+        </div>
+      </span>
+      <div class="context-item">
+        <div>
+          <tw-status-tag [status]="release?.status"></tw-status-tag>
+        </div>
+      </div>
+    </div>
+  </div>
+</m-page-bar>
+
+<m-page [mLoading]="loader.isLoading">
+  <tw-provenance-list [provenances]="provenances"></tw-provenance-list>
+</m-page>

@@ -2,8 +2,8 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
 import {environment} from 'app/src/environments/environment';
-import {Provenance} from '../../_lib';
 import {SearchHttpParams} from '@kodality-web/core-util';
+import {Provenance} from '../model/provenance';
 
 @Injectable()
 export class ProvenanceLibService {

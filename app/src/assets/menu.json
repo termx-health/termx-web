@@ -401,6 +401,36 @@
             },
             {
                 "label": {
+                    "en": "Releases",
+                    "et": "Väljaanded",
+                    "lt": "Išleidimai",
+                    "de": "Veröffentlichungen",
+                    "fr": "Sorties",
+                    "nl": "Releases"
+                },
+                "icon": "rocket",
+                "link": "releases",
+                "privileges": [
+                    "*.Release.view"
+                ]
+            },
+            {
+                "label": {
+                    "en": "Checklist",
+                    "et": "Kontrollnimekiri",
+                    "lt": "Kontrolinis sąrašas",
+                    "de": "Checkliste",
+                    "fr": "Liste de contrôle",
+                    "nl": "Controlelijst"
+                },
+                "icon": "check-square",
+                "link": "checklists",
+                "privileges": [
+                    "*.Checklist.view"
+                ]
+            },
+            {
+                "label": {
                     "en": "Privileges",
                     "et": "Privileegid",
                     "lt": "Privilegijos",

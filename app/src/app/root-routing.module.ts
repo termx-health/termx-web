@@ -17,6 +17,7 @@ import {SpaceContextModule} from 'term-web/core/context/space-context.module';
 import {AppComponent} from 'term-web/app.component';
 import {LandingPageComponent} from 'term-web/landing/landing-page.component';
 import {MODELER_ROUTES} from 'term-web/modeler/modeler.module';
+import {SYS_ROUTES} from 'term-web/sys/sys.module';
 
 
 const APP_ROUTES: Routes = [
@@ -35,6 +36,7 @@ const APP_ROUTES: Routes = [
   {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.view']}},
   {path: 'tasks', children: TASK_ROUTES, data: {privilege: ['*.Task.view']}},
   {path: 'fhir', children: FHIR_ROUTES},
+  {path: '', children: SYS_ROUTES},
   {
     path: 'spaces',
     children: [

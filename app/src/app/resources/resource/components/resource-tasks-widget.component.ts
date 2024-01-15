@@ -2,6 +2,8 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {BooleanInput, isDefined} from '@kodality-web/core-util';
 import {Task, TaskLibService} from 'term-web/task/_lib';
 import {Router} from '@angular/router';
+import {ReleaseLibService} from 'term-web/sys/_lib';
+import {map, Observable} from 'rxjs';
 
 @Component({
   selector: 'tw-resource-tasks-widget',
@@ -10,7 +12,8 @@ import {Router} from '@angular/router';
 export class ResourceTasksWidgetComponent implements OnChanges {
   @Input() public resourceId: string;
   @Input() public taskFilters: {statuses?: string[]};
-  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'CodeSystemVersion' | 'ValueSetVersion' | 'MapSetVersion' | 'CodeSystemEntityVersion';
+  @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'CodeSystemVersion' | 'ValueSetVersion' | 'MapSetVersion' | 'CodeSystemEntityVersion' |
+    'Release';
   @Input() public displayType: 'full' | 'content' = 'full';
   @Input() @BooleanInput() public openInNewTab: boolean | string = false;
 
@@ -26,7 +29,7 @@ export class ResourceTasksWidgetComponent implements OnChanges {
     'CodeSystemEntityVersion': 'concept-version'
   };
 
-  public constructor(private taskLibService: TaskLibService, private router: Router) {}
+  public constructor(private taskLibService: TaskLibService, private router: Router, private releaseService: ReleaseLibService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['resourceId'] || changes['resourceType']) && isDefined(this.resourceId) && isDefined(this.resourceType)) {
@@ -47,7 +50,16 @@ export class ResourceTasksWidgetComponent implements OnChanges {
   };
 
   public loadTasks(): void {
-    this.taskLibService.searchTasks({context: this.resourceTypeMap[this.resourceType] + '|' + this.resourceId, limit: 100})
-      .subscribe(tasks => this.tasks = tasks.data);
+    if (this.resourceType === 'Release') {
+      this.releaseService.loadResources(Number(this.resourceId)).subscribe(resources => {
+        this.tasks = [];
+        resources.forEach(r => this.loadResourceTasks(r.resourceId, this.resourceTypeMap[r.resourceType]).subscribe(t => this.tasks = [...this.tasks, ...t]));
+      });
+    }
+    this.loadResourceTasks(this.resourceId, this.resourceTypeMap[this.resourceType]).subscribe(t => this.tasks = t);
+  }
+
+  private loadResourceTasks(id: string, type: string): Observable<Task[]> {
+    return this.taskLibService.searchTasks({context: type + '|' + id, limit: 100}).pipe(map(tasks => tasks.data));
   }
 }

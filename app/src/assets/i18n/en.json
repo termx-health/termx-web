@@ -41,6 +41,39 @@
 		}
 	},
 	"entities": {
+		"checklist-rule": {
+			"code": "Code",
+			"title": "Title",
+			"description": "Description",
+			"type": "Type",
+			"target": "Target",
+			"verification": "Verification",
+			"severity": "Severity",
+			"active": "Active",
+			"resource-type": "Resource type"
+		},
+		"release": {
+			"code": "Code",
+			"name": "Name",
+			"planned": "Planned",
+			"release-date": "Release date",
+			"status": "Status",
+			"plural": "Releases",
+			"single": "Release",
+			"resource": {
+				"plural": "Resources",
+				"type": "Type",
+				"reference": "Reference",
+				"version": "Version",
+				"name": "Name",
+				"errors": "Errors",
+				"code-system": "Code system",
+				"value-set": "Value set",
+				"map-set": "Map set",
+				"structure-definition": "Structure definition",
+				"structure-map": "Structure map"
+			}
+		},
 		"association-type": {
 			"code": "Code",
 			"description": "Description",
@@ -736,6 +769,24 @@
 		"sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
 	},
 	"web": {
+		"checklist-rule": {
+			"checklist": "Checklist",
+			"add-btn": "Add rule",
+			"add-header": "Add rule",
+			"edit-header": "Edit rule"
+		},
+		"release": {
+			"add-btn": "Add release",
+			"unaccomplished-checks": "Unaccomplished checks",
+			"run-checks": "Run all checks",
+			"add-header": "Add release",
+			"edit-header": "Edit release",
+			"add-resource": "Add resource",
+			"edit-resource": "Edit resource",
+			"activate": "Activate",
+			"retire": "Retire",
+			"make-draft": "Make draft"
+		},
 		"app": {
 			"header": "TermX"
 		},

@@ -1,0 +1,213 @@
+<m-page-bar mPosition="top">
+  <div>
+    <div class="context-container">
+      <span class="context-item" style="width: 100%; grid-column: 3 span">
+        <div *ngIf="!release">...</div>
+        <div *ngIf="release" style="display: flex; flex-direction: column; gap: 0.5rem">
+          <div class="m-title" *ngIf="release">{{'entities.release.single' | translate}}: {{release.code}} | {{release.names | localName}}</div>
+          <div style="display: flex; gap: 1rem">
+            <div>
+              <span class="m-items-middle">{{'Summary' | translate}}
+                <m-icon mCode="appstore"/>
+              </span>
+            </div>
+            <div *twPrivileged="release?.code + '.Release.edit'" [routerLink]="['/releases', release?.id, 'edit']">
+              <a class="m-items-middle">{{'core.btn.edit' | translate}}
+                <m-icon mCode="form"/>
+              </a>
+            </div>
+            <div>
+              <a class="m-items-middle" [routerLink]="['/releases', release?.id, 'provenances']">{{'Provenance' | translate}}
+                <m-icon mCode="history"/>
+              </a>
+            </div>
+        </div>
+        </div>
+      </span>
+      <div class="context-item">
+        <div style="display: flex; flex-direction: column; gap: 0.5rem">
+          <div style="align-self: flex-end">
+            <tw-status-tag [status]="release?.status"></tw-status-tag>
+          </div>
+          <div class="m-items-middle" *twPrivileged="release?.id + '.Release.publish'">
+            <a *ngIf="release?.status !== 'draft'" (mClick)="changeStatus('draft')">{{'web.release.make-draft' | translate}}</a>
+            <a *ngIf="release?.status !== 'active' && release?.status !== 'retired'" (mClick)="changeStatus('active')">{{'web.release.activate' | translate}}</a>
+            <ng-container *ngIf="release?.status !== 'retired'">
+              <m-divider mVertical></m-divider>
+              <a (mClick)="changeStatus('retired')">{{'web.release.retire' | translate}}</a>
+            </ng-container>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</m-page-bar>
+
+<m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[release?.id, 'Release']">
+
+  <div style="display: flex; flex-direction: column; gap: 1rem">
+    <m-form-row>
+
+      <!-- Resources -->
+      <m-card>
+        <div *m-card-header class="m-justify-between">
+          <m-title mTitle="entities.release.resource.plural"></m-title>
+          <m-button *ngIf="release?.status === 'draft'" mDisplay="text" (mClick)="modalData = {visible: true, resource: {}}">
+            <m-icon mCode="plus"></m-icon>&nbsp; {{'web.release.add-resource' | translate}}
+          </m-button>
+        </div>
+        <m-table [mData]="resources">
+          <tr *mTableHead>
+            <th>{{'entities.release.resource.type' | translate}}</th>
+            <th>{{'entities.release.resource.reference' | translate}}</th>
+            <th>{{'entities.release.resource.version' | translate}}</th>
+            <th>{{'entities.release.resource.name' | translate}}</th>
+            <th>{{'entities.release.resource.errors' | translate}}</th>
+            <th class="tw-table-actions" *ngIf="release.status === 'draft'"></th>
+          </tr>
+          <tr *mTableRow="let r">
+            <td>{{r.resourceType}}</td>
+            <td>
+              <a *ngIf="release?.status === 'draft'" (mClick)="modalData = {resource: r, visible: true}">{{r.resourceId}}</a>
+              <label *ngIf="release?.status !== 'draft'">{{r.resourceId}}</label>
+            </td>
+            <td>{{r.resourceVersion}}</td>
+            <td>{{r.resourceNames | localName}}</td>
+            <td><a>{{r.errorCount}}</a></td>
+            <td *ngIf="release?.status === 'draft'">
+              <m-dropdown *twPrivileged="release?.id + '.Release.edit'">
+                <a *m-dropdown-item (mClick)="deleteResource(r.id)">{{'core.btn.delete' | translate}}</a>
+              </m-dropdown>
+            </td>
+          </tr>
+          <tr *mTableNoData>
+            <td colspan="100%">
+              <m-no-data/>
+            </td>
+          </tr>
+        </m-table>
+      </m-card>
+    </m-form-row>
+
+    <m-form-row class="with-row-gap" mGap="1rem">
+
+      <!-- Checks -->
+      <div *mFormCol>
+        <m-card>
+          <m-title *m-card-header mTitle="web.release.unaccomplished-checks">
+            <div mControls class="m-items-middle">
+              <m-button mDisplay="text">
+                {{'web.release.run-checks' | translate}}&nbsp;
+                <m-icon mCode="reload"></m-icon>
+              </m-button>
+            </div>
+          </m-title>
+        </m-card>
+      </div>
+
+      <!-- Tasks -->
+      <div *mFormCol>
+        <m-card *twPrivileged="'*.Task.view'">
+          <div *m-card-header class="m-items-middle">
+            <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+              <m-title mTitle="web.code-system.summary.opened-tasks"/>
+            </a>
+            <m-title *ngIf="showOnlyOpenedTasks" mTitle="web.code-system.summary.opened-tasks"/>
+            <span>|</span>
+            <a *ngIf="showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+              <m-title mTitle="web.code-system.summary.all-tasks"/>
+            </a>
+            <m-title *ngIf="!showOnlyOpenedTasks" mTitle="web.code-system.summary.all-tasks"/>
+          </div>
+          <tw-resource-tasks-widget [resourceId]="release?.id | toString"
+              [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined"
+              resourceType="Release"/>
+        </m-card>
+      </div>
+    </m-form-row>
+  </div>
+</m-page>
+
+
+<m-modal #modal [(mVisible)]="modalData.visible" (mClose)="modalData.visible = false">
+  <ng-container *m-modal-header>{{(modalData.resource?.id ? 'web.release.edit-resource' : 'web.release.add-resource') | translate}}</ng-container>
+
+  <ng-container *m-modal-content>
+    <form #form="ngForm" *ngIf="modalData.resource">
+      <m-form-item mName="type" mLabel="entities.release.resource.type" required>
+        <m-select name="type" [(ngModel)]="modalData.resource.resourceType" required>
+          <m-option *ngFor="let t of ['CodeSystem', 'ValueSet', 'MapSet', 'StructureDefinition', 'StructureMap']" [mLabel]="t" [mValue]="t"/>
+        </m-select>
+      </m-form-item>
+      <ng-container [ngSwitch]="modalData.resource.resourceType">
+        <m-form-item *ngSwitchCase="'CodeSystem'" mName="code-system" mLabel="entities.release.resource.code-system" required>
+          <tw-code-system-search name="code-system"
+              [(ngModel)]="modalData.resource.resourceId"
+              (twSelect)="modalData.resource.resourceNames = $event?.title"
+              valuePrimitive
+              required/>
+        </m-form-item>
+        <m-form-item *ngSwitchCase="'ValueSet'" mName="value-set" mLabel="entities.release.resource.value-set" required>
+          <tw-value-set-search name="value-set"
+              [(ngModel)]="modalData.resource.resourceId"
+              (twSelect)="modalData.resource.resourceNames = $event?.title"
+              valuePrimitive
+              required/>
+        </m-form-item>
+        <m-form-item *ngSwitchCase="'MapSet'" mName="map-set" mLabel="entities.release.resource.map-set" required>
+          <tw-map-set-search name="map-set"
+              [(ngModel)]="modalData.resource.resourceId"
+              (twSelect)="modalData.resource.resourceNames = $event?.title"
+              valuePrimitive
+              required/>
+        </m-form-item>
+        <m-form-item *ngSwitchCase="'StructureDefinition'" mName="structure-definition" mLabel="entities.release.resource.structure-definition" required>
+          <tw-structure-definition-select name="structure-definition"
+              [(ngModel)]="modalData.resource.resourceId"
+              (twSelect)="modalData.resource.resourceVersion = $event.version"
+              valueType="code"
+              required/>
+        </m-form-item>
+        <m-form-item *ngSwitchCase="'StructureMap'" mName="structure-map" mLabel="entities.release.resource.structure-map" required>
+          <tw-transformation-definition-select name="structure-map"
+              [(ngModel)]="modalData.resource.resourceId"
+              (twSelect)="modalData.resource.resourceNames = {en: $event.name}"
+              valueType="id"
+              required/>
+        </m-form-item>
+      </ng-container>
+      <ng-container *ngIf="modalData.resource.resourceId && (['CodeSystem', 'ValueSet', 'MapSet'] | includes:modalData.resource.resourceType)"
+          [ngSwitch]="modalData.resource.resourceType">
+        <m-form-item *ngSwitchCase="'CodeSystem'" mName="code-system-version" mLabel="entities.release.resource.version" required>
+          <tw-code-system-version-select name="code-system-version"
+              [codeSystemId]="modalData.resource.resourceId"
+              [(ngModel)]="modalData.resource.resourceVersion"
+              valueType="version"
+              required/>
+        </m-form-item>
+        <m-form-item *ngSwitchCase="'ValueSet'" mName="value-set-version" mLabel="entities.release.resource.version" required>
+          <tw-value-set-version-select name="value-set-version"
+              [valueSetId]="modalData.resource.resourceId"
+              [(ngModel)]="modalData.resource.resourceVersion"
+              valueType="version"
+              required/>
+        </m-form-item>
+        <m-form-item *ngSwitchCase="'MapSet'" mName="map-set-version" mLabel="entities.release.resource.version" required>
+          <tw-map-set-version-select name="map-set-version"
+              [mapSetId]="modalData.resource.resourceId"
+              [(ngModel)]="modalData.resource.resourceVersion"
+              valueType="version"
+              required/>
+        </m-form-item>
+      </ng-container>
+      <m-form-item mName="name" mLabel="entities.release.resource.name">
+        <m-multi-language-input name="name" [(ngModel)]="modalData.resource.resourceNames"/>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="saveResource()">{{'core.btn.save' | translate}}</m-button>
+  </div>
+</m-modal>

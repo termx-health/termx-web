@@ -1,0 +1,37 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <span>{{'entities.release.plural' | translate}}</span>
+
+    <div class="m-items-middle">
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+      <tw-add-button *twPrivileged="'*.Release.edit'" [routerLink]="['./add']">
+        {{'web.release.add-btn' | translate}}
+      </tw-add-button>
+    </div>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading">
+    <tr *mTableHead>
+      <th mColumnKey="code">{{'entities.release.code' | translate}}</th>
+      <th>{{'entities.release.name' | translate}}</th>
+      <th>{{'entities.release.status' | translate}}</th>
+      <th>{{'entities.release.planned' | translate}}</th>
+      <th>{{'entities.release.release-date' | translate}}</th>
+    </tr>
+
+    <tr *mTableRow="let r">
+      <td>
+        <a [routerLink]="[r.id, 'summary']">{{r.code}}</a>
+      </td>
+      <td>{{r.names | localName}}</td>
+      <td><tw-status-tag [status]="r.status"/></td>
+      <td>{{r.planned | localDate}}</td>
+      <td>{{r.releaseDate | localDate}}</td>
+    </tr>
+    <tr *mTableNoData>
+      <td colspan="5">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>

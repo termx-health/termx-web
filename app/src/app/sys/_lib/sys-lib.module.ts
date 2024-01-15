@@ -1,28 +1,24 @@
 import {NgModule} from '@angular/core';
-import {JobLibService} from './services/job-lib.service';
-import {LorqueLibService} from './services/lorque-lib.service';
-import {ProvenanceLibService} from './services/provenance-lib.service';
-import {ProvenanceListComponent} from './components/provenance-list.component';
-import {MarinaUiModule} from '@kodality-web/marina-ui';
-import {TranslateModule} from '@ngx-translate/core';
-import {CoreUtilModule} from '@kodality-web/core-util';
-import {JsonPipe} from '@angular/common';
-import {BrowserModule} from '@angular/platform-browser';
+import {ReleaseLibModule} from './release';
+import {JobLibModule} from './job';
+import {LorqueLibModule} from './lorque';
+import {ProvenanceLibModule} from './provenance';
+import {ChecklistLibModule} from 'term-web/sys/_lib/checklist';
 
 @NgModule({
   imports: [
-    MarinaUiModule,
-    TranslateModule,
-    CoreUtilModule,
-    BrowserModule,
-    JsonPipe
+    JobLibModule,
+    LorqueLibModule,
+    ProvenanceLibModule,
+    ReleaseLibModule,
+    ChecklistLibModule,
   ],
-  declarations: [ProvenanceListComponent],
-  exports: [ProvenanceListComponent],
-  providers: [
-    JobLibService,
-    LorqueLibService,
-    ProvenanceLibService
+  exports: [
+    JobLibModule,
+    LorqueLibModule,
+    ProvenanceLibModule,
+    ReleaseLibModule,
+    ChecklistLibModule,
   ]
 })
 export class SysLibModule {
