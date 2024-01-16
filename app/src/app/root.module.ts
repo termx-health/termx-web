@@ -38,7 +38,7 @@ import {APP_BASE_HREF} from '@angular/common';
 export function HttpLoaderFactory(_http: HttpBackend): TranslateLoader {
   return {
     getTranslation(lang: string): Observable<object> {
-      return new HttpClient(_http).get(`/assets/i18n/${lang}.json`).pipe(
+      return new HttpClient(_http).get(`./assets/i18n/${lang}.json`).pipe(
         catchError(() => of({})),
         map(translations => {
           const extraLangs = env.extraLanguages ?? {};
