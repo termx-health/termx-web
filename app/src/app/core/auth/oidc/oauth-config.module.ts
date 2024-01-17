@@ -9,8 +9,8 @@ import {environment} from 'environments/environment';
     AuthModule.forRoot({
       config: {
         authority: environment.oauthIssuer,
-        redirectUrl: window.location.origin,
-        postLogoutRedirectUri: window.location.origin,
+        redirectUrl: window.location.origin + environment.baseHref,
+        postLogoutRedirectUri: window.location.origin + environment.baseHref,
         clientId: environment.oauthClientId,
         scope: 'openid profile offline_access',
         responseType: 'code',
