@@ -6,6 +6,7 @@ import {delay, forkJoin, mergeMap, Observable, tap} from 'rxjs';
 import {GithubDiff} from 'term-web/integration/_lib/github/github';
 import {SpaceGithubService} from 'term-web/space/services/space-github.service';
 import {LoadingManager} from '@kodality-web/core-util';
+import {environment} from 'environments/environment';
 
 @Component({
   templateUrl: './space-github.component.html',
@@ -60,7 +61,7 @@ export class SpaceGithubComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.loading = true;
 
-    this.spaceGithubService.authenticate(id, `${window.location.origin}/${window.location.pathname}`).subscribe(r => {
+    this.spaceGithubService.authenticate(id, `${window.location.origin + environment.baseHref}/${window.location.pathname}`).subscribe(r => {
       if (!r.isAuthenticated) {
         window.location.href = r.redirectUrl;
         return;

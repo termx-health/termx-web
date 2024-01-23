@@ -2,6 +2,7 @@ import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {BooleanInput, isDefined} from '@kodality-web/core-util';
 import {Task, TaskLibService} from 'term-web/task/_lib';
 import {Router} from '@angular/router';
+import {environment} from 'environments/environment';
 import {ReleaseLibService} from 'term-web/sys/_lib';
 import {map, Observable} from 'rxjs';
 
@@ -39,7 +40,7 @@ export class ResourceTasksWidgetComponent implements OnChanges {
 
   protected openTask(number: string): void {
     if (this.openInNewTab) {
-      window.open(window.location.origin + '/tasks/' + number + '/edit', '_blank');
+      window.open(window.location.origin + environment.baseHref + '/tasks/' + number + '/edit', '_blank');
     } else {
       this.router.navigate(['/tasks', number, 'edit']);
     }

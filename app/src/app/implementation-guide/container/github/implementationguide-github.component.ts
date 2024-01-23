@@ -6,6 +6,7 @@ import {GithubDiff} from 'term-web/integration/_lib/github/github';
 import {LoadingManager} from '@kodality-web/core-util';
 import {ImplementationGuideGithubService} from '../../services/implementation-guide-github.service';
 import {ImplementationGuideService} from '../../services/implementation-guide.service';
+import {environment} from 'environments/environment';
 
 @Component({
   templateUrl: './implementationguide-github.component.html',
@@ -66,7 +67,7 @@ export class ImplementationguideGithubComponent implements OnInit {
     const version = this.route.snapshot.paramMap.get('versionCode');
     this.loading = true;
 
-    this.githubService.authenticate(id, version, `${window.location.origin}/${window.location.pathname}`).subscribe(r => {
+    this.githubService.authenticate(id, version, `${window.location.origin + environment.baseHref}/${window.location.pathname}`).subscribe(r => {
       if (!r.isAuthenticated) {
         window.location.href = r.redirectUrl;
         return;

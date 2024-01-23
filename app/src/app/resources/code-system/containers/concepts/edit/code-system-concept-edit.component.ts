@@ -21,6 +21,7 @@ import {ResourceContextComponent} from 'term-web/resources/resource/components/r
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
+import {environment} from 'environments/environment';
 
 @Component({
   templateUrl: './code-system-concept-edit.component.html',
@@ -240,7 +241,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   };
 
   protected openFhir(code: string): void {
-    window.open(window.location.origin + '/fhir/CodeSystem/' + this.codeSystem.id + '/lookup' + '?_code=' + code, '_blank');
+    window.open(window.location.origin + environment.baseHref + '/fhir/CodeSystem/' + this.codeSystem.id + '/lookup' + '?_code=' + code, '_blank');
   }
 
   protected createTask(): void {
