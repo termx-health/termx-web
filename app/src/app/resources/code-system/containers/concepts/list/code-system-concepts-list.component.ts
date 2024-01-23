@@ -30,6 +30,7 @@ import {NgForm} from '@angular/forms';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
+import {environment} from 'environments/environment';
 
 interface ConceptNode {
   code: string;
@@ -338,7 +339,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   }
 
   protected openFhir(code: string): void {
-    window.open(window.location.origin + '/fhir/CodeSystem/' + this.codeSystem.id + '/lookup' + '?_code=' + code, '_blank');
+    window.open(window.location.origin + environment.baseHref + '/fhir/CodeSystem/' + this.codeSystem.id + '/lookup' + '?_code=' + code, '_blank');
   }
 
   protected unlink(concept: CodeSystemConcept): void {

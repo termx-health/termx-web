@@ -4,6 +4,7 @@ import {TranslateService} from '@ngx-translate/core';
 import {finalize, Observable, tap} from 'rxjs';
 import {MapSet, MapSetSearchParams, MapSetVersion} from 'app/src/app/resources/_lib';
 import {MapSetService} from '../../services/map-set-service';
+import {environment} from 'environments/environment';
 
 interface Filter {
   open: boolean,
@@ -85,7 +86,7 @@ export class MapSetListComponent implements OnInit {
   // events
 
   protected openFhir(id: string): void {
-    window.open(`${window.location.origin}/fhir/ConceptMap/${id}`, '_blank');
+    window.open(`${window.location.origin + environment.baseHref}/fhir/ConceptMap/${id}`, '_blank');
   }
 
   protected deleteMapSet(mapSetId: string): void {

@@ -4,6 +4,7 @@ import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'term-web/re
 import {CodeSystemService} from '../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
 import {finalize, Observable, tap} from 'rxjs';
+import {environment} from 'environments/environment';
 
 
 interface Filter {
@@ -92,7 +93,7 @@ export class CodeSystemListComponent implements OnInit {
   }
 
   protected openFhir(id: string): void {
-    window.open(`${window.location.origin}/fhir/CodeSystem/${id}`, '_blank');
+    window.open(`${window.location.origin + environment.baseHref}/fhir/CodeSystem/${id}`, '_blank');
   }
 
 

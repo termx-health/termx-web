@@ -66,7 +66,7 @@ export class CodeSystemCompareComponent implements OnInit {
     if (!this.sourceVersion || !this.targetVersion) {
       return;
     }
-    window.open(window.location.origin + '/fhir/CodeSystem/' + this.sourceCodeSystem + '/compare'
+    window.open(window.location.origin + environment.baseHref + '/fhir/CodeSystem/' + this.sourceCodeSystem + '/compare'
       + '?versionA=' + this.sourceVersion.version + '&versionB=' + this.targetVersion.version, '_blank');
   }
 

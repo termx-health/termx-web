@@ -1,6 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
 import {FhirValueSetLibService} from 'term-web/fhir/_lib';
+import {environment} from 'environments/environment';
 
 @Component({
   selector: 'tw-fhir-value-set',
@@ -27,7 +28,7 @@ export class FhirValueSetComponent implements OnChanges {
   }
 
   public openValueSetExpand(): void {
-    window.open(window.location.origin + '/fhir/ValueSet/' + this.valueSet.id + '/expand?includeDesignations=true' +
+    window.open(window.location.origin + environment.baseHref + '/fhir/ValueSet/' + this.valueSet.id + '/expand?includeDesignations=true' +
       (this.valueSet.language ? '&displayLanguage=' + this.valueSet.language : '') , '_blank');
   }
 }

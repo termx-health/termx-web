@@ -3,6 +3,7 @@ import {ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult
 import {Observable, tap} from 'rxjs';
 import {ImplementationGuide, ImplementationGuideSearchParams, ImplementationGuideVersion} from 'app/src/app/implementation-guide/_lib';
 import {ImplementationGuideService} from 'app/src/app/implementation-guide/services/implementation-guide.service';
+import {environment} from 'environments/environment';
 
 
 @Component({
@@ -58,6 +59,6 @@ export class ImplementationGuideListComponent implements OnInit {
   }
 
   public openFhir(id: string): void {
-    window.open(window.location.origin + '/fhir/ImplementationGuide/' + id, '_blank');
+    window.open(window.location.origin + environment.baseHref + '/fhir/ImplementationGuide/' + id, '_blank');
   }
 }

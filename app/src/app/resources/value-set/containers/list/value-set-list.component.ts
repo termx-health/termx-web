@@ -4,6 +4,7 @@ import {ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, sor
 import {TranslateService} from '@ngx-translate/core';
 import {finalize, Observable, tap} from 'rxjs';
 import {ValueSet, ValueSetSearchParams, ValueSetVersion} from 'app/src/app/resources/_lib';
+import {environment} from 'environments/environment';
 
 interface Filter {
   open: boolean,
@@ -90,7 +91,7 @@ export class ValueSetListComponent implements OnInit {
   }
 
   protected openFhir(id: string): void {
-    window.open(`${window.location.origin}/fhir/ValueSet/${id}`, '_blank');
+    window.open(`${window.location.origin + environment.baseHref}/fhir/ValueSet/${id}`, '_blank');
   }
 
 
