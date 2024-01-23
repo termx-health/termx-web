@@ -33,6 +33,10 @@
               <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'provenance', title: 'web.resource-context.provenance', icon: 'history'}"/>
             </div>
 
+            <div *ngIf="resourceType === 'CodeSystem'" (click)="navigate('checklists')">
+              <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'checklist', title: 'web.resource-context.checklist', icon: 'check-square'}"/>
+            </div>
+
 
             <ng-template #tabTpl let-tmode="mode" let-title="title" let-icon="icon">
               <a *ngIf="mode !== tmode; else iconTpl">

@@ -1,0 +1,46 @@
+<m-spinner [mLoading]="loader.isLoading">
+  <ng-container *ngIf="(checklist | apply:collectChecklists) as groups">
+    <div *ngFor="let target of groups | keys" style="margin-bottom: 1.5rem">
+      <div class="m-justify-between" style="margin-bottom: 0.5rem">
+        <label class="m-title">{{target}}</label>
+        <a (mClick)="runChecks(target)">
+          <m-icon mCode="sync"/>
+          {{'web.code-system-checklist.run-checks' | translate}}</a>
+      </div>
+      <m-list>
+        <m-list-item *ngFor="let check of groups[target]">
+          <div class="m-justify-between">
+            <div>
+              <div>{{check.rule.code}} {{check.rule.title | localName}}</div>
+              <div>{{check.rule.description | localName}}</div>
+              <nz-collapse *ngIf="check.assertions?.[0]?.errors" nzGhost>
+                <nz-collapse-panel [nzHeader]="error">
+                  <ng-template #error>
+                    <label>{{'web.code-system-checklist.errors' | translate}}</label>&nbsp;
+                    <m-tag mColor="error">{{check.assertions[0].errors.length}}</m-tag>
+                  </ng-template>
+                  <div *ngFor="let error of check.assertions[0].errors">{{error.error}}</div>
+                </nz-collapse-panel>
+              </nz-collapse>
+            </div>
+            <div>
+              <div class="m-items-middle">
+                <a *ngIf="check.rule.verification === 'software'" (mClick)="runCheck(check.id)">{{'web.code-system-checklist.run-check' | translate}}</a>
+                <ng-container *ngIf="check.rule.verification === 'human'">
+                  <a (mClick)="createAssertion(check.id, true)">{{'web.code-system-checklist.passed' | translate}}</a>
+                  <m-divider mVertical/>
+                  <a (mClick)="createAssertion(check.id, false)">{{'web.code-system-checklist.failed' | translate}}</a>
+                </ng-container>
+                <m-icon *ngIf="check | apply:getCheckCode as code" [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
+              </div>
+              <ng-container *ngIf="check.assertions?.[0] as lastAssertion">
+                <div>{{lastAssertion.executor}}</div>
+                <div>{{lastAssertion.executionDate | localDate}}</div>
+              </ng-container>
+            </div>
+          </div>
+        </m-list-item>
+      </m-list>
+    </div>
+  </ng-container>
+</m-spinner>

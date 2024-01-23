@@ -52,6 +52,10 @@
 			"active": "Active",
 			"resource-type": "Resource type"
 		},
+		"checklist": {
+			"rule": "Rule",
+			"whitelist": "Whitelist"
+		},
 		"release": {
 			"code": "Code",
 			"name": "Name",
@@ -769,6 +773,20 @@
 		"sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
 	},
 	"web": {
+		"code-system-checklist": {
+			"errors": "Errors",
+			"passed": "Passed",
+			"run-check": "Run check",
+			"run-checks": "Run all software checks",
+			"failed": "Failed",
+			"show-all": "Show all",
+			"show-unaccomplished": "Unaccomplished only",
+			"add-whitelist-item": "Add whitelist item",
+			"mode": {
+				"configuration": "Configuration",
+				"validation": "Validation"
+			}
+		},
 		"checklist-rule": {
 			"checklist": "Checklist",
 			"add-btn": "Add rule",
@@ -1738,7 +1756,8 @@
 			"concepts": "Concepts",
 			"properties": "Properties",
 			"provenance": "Provenance",
-			"summary": "Summary"
+			"summary": "Summary",
+			"checklist": "Checklist"
 		},
 		"resource-form": {
 			"id-change-modal": {

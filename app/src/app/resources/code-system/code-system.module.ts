@@ -45,6 +45,9 @@ import {SysLibModule} from 'term-web/sys/_lib';
 import {CodeSystemValidatorComponent} from 'term-web/resources/code-system/containers/version/validator/code-system-validator.component';
 import {CodeSystemConceptsPropertyViewComponent} from 'term-web/resources/code-system/containers/concepts/code-system-concepts-property-view.component';
 import {CodeSystemConceptReferenceComponent} from 'term-web/resources/code-system/containers/concepts/edit/reference/code-system-concept-reference.component';
+import {CodeSystemChecklistComponent} from 'term-web/resources/code-system/containers/checklist/code-system-checklist.component';
+import {CodeSystemChecklistConfigurationComponent} from 'term-web/resources/code-system/containers/checklist/code-system-checklist-configuration.component';
+import {CodeSystemChecklistValidationComponent} from 'term-web/resources/code-system/containers/checklist/code-system-checklist-validation.component';
 
 const EDIT = {privilege: ['{id}.CodeSystem.edit']};
 const VIEW = {privilege: ['{id}.CodeSystem.view']};
@@ -56,6 +59,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/concepts', component: CodeSystemConceptsComponent, data: VIEW},
   {path: ':id/properties', component: CodeSystemConceptsPropertyViewComponent, data: VIEW},
   {path: ':id/provenances', component: CodeSystemProvenancesComponent, data: VIEW},
+  {path: ':id/checklists', component: CodeSystemChecklistComponent, data: VIEW},
   {path: ':id/concepts/add', component: CodeSystemConceptEditComponent, data: EDIT},
   {path: ':id/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: EDIT},
   {path: ':id/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent, data: VIEW},
@@ -64,6 +68,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/versions/:versionCode/concepts', component: CodeSystemVersionConceptsComponent, data: VIEW},
   {path: ':id/versions/:versionCode/properties', component: CodeSystemConceptsPropertyViewComponent, data: VIEW},
   {path: ':id/versions/:versionCode/provenances', component: CodeSystemProvenancesComponent, data: VIEW},
+  {path: ':id/versions/:versionCode/checklists', component: CodeSystemChecklistComponent, data: VIEW},
   {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: EDIT},
   {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: EDIT},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: EDIT},
@@ -128,6 +133,9 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemValueSetAddComponent,
     CodeSystemConceptsComponent,
     CodeSystemProvenancesComponent,
+    CodeSystemChecklistComponent,
+    CodeSystemChecklistConfigurationComponent,
+    CodeSystemChecklistValidationComponent,
     CodeSystemUnlinkedConceptsComponent,
 
     CodeSystemVersionSummaryComponent,

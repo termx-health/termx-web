@@ -1,0 +1,48 @@
+<form #form="ngForm">
+  <m-editable-table #rowsTable *ngIf="checklist" [mData]="checklist">
+    <m-editable-column mName="code" mTitle="entities.checklist-rule.code">
+      <ng-template #viewTemplate let-c>{{c.rule?.code}}</ng-template>
+    </m-editable-column>
+    <m-editable-column mName="target" mTitle="entities.checklist-rule.target">
+      <ng-template #viewTemplate let-c>{{c.rule?.target}}</ng-template>
+    </m-editable-column>
+    <m-editable-column mName="title" mTitle="entities.checklist-rule.title">
+      <ng-template #viewTemplate let-c>{{c.rule?.title | localName}}</ng-template>
+    </m-editable-column>
+    <m-editable-column mName="verification" mTitle="entities.checklist-rule.verification">
+      <ng-template #viewTemplate let-c>{{c.rule?.verification}}</ng-template>
+    </m-editable-column>
+    <m-editable-column mName="severity" mTitle="entities.checklist-rule.severity">
+      <ng-template #viewTemplate let-c>{{c.rule?.severity}}</ng-template>
+    </m-editable-column>
+    <m-editable-column mName="whitelist" mTitle="entities.checklist.whitelist">
+      <ng-template #viewTemplate let-c>
+        <div *ngFor="let w of c.whitelist">{{w.resourceId}}</div>
+      </ng-template>
+    </m-editable-column>
+
+    <ng-template #expandEditTemplate let-c let-prefix="ngModelNamePrefix">
+      <tr>
+        <td colspan="8">
+          <m-form-item mName="{{prefix}}-rule" mLabel="entities.checklist.rule">
+            <m-select name="{{prefix}}-rule" [(ngModel)]="c.rule" compareWith="id">
+              <m-option *ngFor="let r of rules | filter:filterRules:checklist:c.rule" [mValue]="r" [mLabel]="r.code + ' - ' + (r.title | localName)"/>
+            </m-select>
+          </m-form-item>
+          <m-form-item mName="whitelist" mLabel="entities.checklist.whitelist">
+            <div class="m-items-middle" *ngFor="let item of c.whitelist; let i = index" style="margin-bottom: 0.5rem">
+              <tw-term-concept-search *ngIf="resourceType === 'CodeSystem'"
+                  [codeSystem]="resourceId"
+                  [(ngModel)]="item.resourceId"
+                  valueType="code"
+                  name="{{i}}-c"
+                  style="flex: 1"/>
+              <m-icon style="flex: 1" class="m-clickable" mCode="delete" (click)="removeWhitelistItem(c, i)"/>
+            </div>
+            <tw-add-button (click)="addWhitelistItem(c)">{{'web.code-system-checklist.add-whitelist-item' | translate}}</tw-add-button>
+          </m-form-item>
+        </td>
+      </tr>
+    </ng-template>
+  </m-editable-table>
+</form>

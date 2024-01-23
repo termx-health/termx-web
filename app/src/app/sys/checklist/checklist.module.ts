@@ -31,8 +31,7 @@ export const CHECKLIST_ROUTES: Routes = [
     ModelerLibModule
   ],
   declarations: [
-    ChecklistRuleListComponent,
-    ChecklistRuleEditComponent
+    ChecklistRuleListComponent, ChecklistRuleEditComponent,
   ],
   providers: [
     ChecklistService

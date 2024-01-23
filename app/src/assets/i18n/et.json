@@ -633,7 +633,7 @@
 			"active": "Aktiivne",
 			"auth-config": "OAuth 2.0",
 			"code": "Kood",
-			"current-installation": "antud installatsioon",
+			"current-installation": "Antud installatsioon",
 			"headers": "HTTP päised",
 			"kind": "Tüüp",
 			"name": "Nimi",

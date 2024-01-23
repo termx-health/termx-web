@@ -1,0 +1,23 @@
+<tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [version]="version" [versions]="versions" mode="checklist"></tw-resource-context>
+<m-page [mLoading]="loader.isLoading">
+  <div style="display: flex; flex-direction: column; gap: 1rem">
+    <div class="m-justify-between">
+      <m-radio-group name="mode" [(ngModel)]="mode">
+        <label m-radio-button [mValue]="'validation'">{{'web.code-system-checklist.mode.validation' | translate}}</label>
+        <label m-radio-button [mValue]="'configuration'">{{'web.code-system-checklist.mode.configuration' | translate}}</label>
+      </m-radio-group>
+      <div *ngIf="mode === 'validation'" class="m-items-middle">
+        <label *ngIf="validationShowAll">{{'web.code-system-checklist.show-all' | translate}}</label>
+        <a *ngIf="!validationShowAll" (mClick)="validationShowAll = true">{{'web.code-system-checklist.show-all' | translate}}</a>
+        <m-divider mVertical/>
+        <label *ngIf="!validationShowAll">{{'web.code-system-checklist.show-unaccomplished' | translate}}</label>
+        <a *ngIf="validationShowAll" (mClick)="validationShowAll = false">{{'web.code-system-checklist.show-unaccomplished' | translate}}</a>
+      </div>
+      <m-button *ngIf="mode === 'configuration'" (mClick)="saveConfiguration()">{{'core.btn.save' | translate}}</m-button>
+    </div>
+    <div>
+      <tw-cs-checklist-validation *ngIf="mode === 'validation'" resourceType="CodeSystem" [resourceId]="codeSystem?.id" [showUnaccomplished]="!validationShowAll"/>
+      <tw-cs-checklist-configuration *ngIf="mode === 'configuration'" resourceType="CodeSystem" [resourceId]="codeSystem?.id"/>
+    </div>
+  </div>
+</m-page>

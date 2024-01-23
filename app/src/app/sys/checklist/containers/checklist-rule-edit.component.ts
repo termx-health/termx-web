@@ -39,7 +39,7 @@ export class ChecklistRuleEditComponent implements OnInit {
     if (!this.validate()) {
       return;
     }
-    this.loader.wrap('save', this.checklistService.save(this.rule)).subscribe(() => this.location.back());
+    this.loader.wrap('save', this.checklistService.saveRule(this.rule)).subscribe(() => this.location.back());
   }
 
   public validate(): boolean {
