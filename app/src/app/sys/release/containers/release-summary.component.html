@@ -31,7 +31,8 @@
           </div>
           <div class="m-items-middle" *twPrivileged="release?.id + '.Release.publish'">
             <a *ngIf="release?.status !== 'draft'" (mClick)="changeStatus('draft')">{{'web.release.make-draft' | translate}}</a>
-            <a *ngIf="release?.status !== 'active' && release?.status !== 'retired'" (mClick)="changeStatus('active')">{{'web.release.activate' | translate}}</a>
+            <a *ngIf="release?.status !== 'active' && release?.status !== 'retired'"
+                (mClick)="changeStatus('active')">{{'web.release.activate' | translate}}</a>
             <ng-container *ngIf="release?.status !== 'retired'">
               <m-divider mVertical></m-divider>
               <a (mClick)="changeStatus('retired')">{{'web.release.retire' | translate}}</a>
@@ -96,12 +97,30 @@
         <m-card>
           <m-title *m-card-header mTitle="web.release.unaccomplished-checks">
             <div mControls class="m-items-middle">
-              <m-button mDisplay="text">
+              <m-button mDisplay="text" (mClick)="runChecks()">
                 {{'web.release.run-checks' | translate}}&nbsp;
-                <m-icon mCode="reload"></m-icon>
+                <m-icon mCode="reload"/>
               </m-button>
             </div>
           </m-title>
+          <m-no-data *ngIf="!(checklists?.length > 0)"></m-no-data>
+          <m-list *ngIf="checklists?.length > 0" mSeparated>
+            <m-list-item *ngFor="let group of (checklists | apply:collectChecklists) | keyvalue">
+              <div class="m-justify-between">
+                <a class="m-bold" (mClick)="openResource(group.value?.[0]?.resourceType, group.value?.[0]?.resourceId)">{{group.value?.[0]?.resourceId}}</a>
+                <a (mClick)="runChecks(group.value?.[0]?.resourceType, group.value?.[0]?.resourceId)">
+                  <m-icon mCode="reload"/>
+                </a>
+              </div>
+              <div *ngFor="let c of group.value" class="m-items-middle">
+                <m-icon *ngIf="c | apply:getCheckCode as code" [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
+                <div class="m-bold">{{c.rule.code}}</div>
+                <div *ngIf=" c.assertions?.[0]?.errors">
+                  <div *ngFor="let err of c.assertions[0].errors">{{err.error}}</div>
+                </div>
+              </div>
+            </m-list-item>
+          </m-list>
         </m-card>
       </div>
 

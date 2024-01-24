@@ -12,6 +12,8 @@ import {ReleaseSummaryComponent} from 'term-web/sys/release/containers/release-s
 import {ReleaseProvenancesComponent} from 'term-web/sys/release/containers/release-provenances.component';
 import {ProvenanceLibModule} from 'term-web/sys/_lib';
 import {ModelerLibModule} from 'term-web/modeler/_lib';
+import {TaskLibModule} from 'term-web/task/_lib';
+import {WikiLibModule} from 'term-web/wiki/_lib';
 
 export const RELEASE_ROUTES: Routes = [
   {path: '', data: {privilege: ['*.Release.view']}, component: ReleaseListComponent},
@@ -32,7 +34,9 @@ export const RELEASE_ROUTES: Routes = [
     ValueSetLibModule,
     ProvenanceLibModule,
     MapSetLibModule,
-    ModelerLibModule
+    ModelerLibModule,
+    TaskLibModule,
+    WikiLibModule
   ],
   declarations: [
     ReleaseListComponent,

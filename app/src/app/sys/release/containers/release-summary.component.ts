@@ -1,15 +1,17 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {LoadingManager, validateForm} from '@kodality-web/core-util';
-import {ActivatedRoute} from '@angular/router';
-import {Release, ReleaseResource} from 'term-web/sys/_lib';
+import {collect, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {ActivatedRoute, Router} from '@angular/router';
+import {Checklist, Release, ReleaseResource} from 'term-web/sys/_lib';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
 import {forkJoin} from 'rxjs';
 import {NgForm} from '@angular/forms';
+import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
 
 @Component({
   templateUrl: 'release-summary.component.html',
   styles: [`
     @import "../../../../styles/variables";
+
     @space-context-bg: var(--color-action-bar-background);
     .context-container {
       display: grid;
@@ -17,6 +19,7 @@ import {NgForm} from '@angular/forms';
       background: @space-context-bg;
       overflow: auto;
     }
+
     .context-item {
       display: flex;
       gap: .5rem;
@@ -30,14 +33,24 @@ import {NgForm} from '@angular/forms';
 export class ReleaseSummaryComponent implements OnInit {
   protected release?: Release;
   protected resources?: ReleaseResource[];
+  protected checklists?: Checklist[];
+
   protected loader = new LoadingManager();
   protected showOnlyOpenedTasks: boolean;
   protected modalData: {visible?: boolean, resource?: ReleaseResource} = {resource: new ReleaseResource()};
   protected mode: 'summary' | 'provenance' = 'summary';
 
+  private static colorMap = {
+    'question-circle': 'grey',
+    'exclamation-circle': 'orange',
+    'close-circle': 'red'
+  };
+
   public constructor(
     private route: ActivatedRoute,
-    private releaseService: ReleaseService
+    private router: Router,
+    private releaseService: ReleaseService,
+    private checklistService: ChecklistService
   ) {}
 
   @ViewChild("form") public form?: NgForm;
@@ -54,6 +67,7 @@ export class ReleaseSummaryComponent implements OnInit {
       .subscribe(([release, resources]) => {
         this.release = release;
         this.resources = resources;
+        this.loadChecklist(resources);
       });
   }
 
@@ -77,4 +91,50 @@ export class ReleaseSummaryComponent implements OnInit {
     this.loader.wrap('change-status', this.releaseService.changeStatus(this.release.id, status))
       .subscribe(() => this.loadData(this.release.id));
   }
+
+  private loadChecklist(resources: ReleaseResource[]): void {
+    this.checklists = [];
+    resources.forEach(r => this.loader.wrap('load-checks', this.checklistService.search({
+      resourceType: r.resourceType,
+      resourceId: r.resourceId,
+      assertionsDecorated: true
+    })).subscribe(res => this.checklists = [...this.checklists, ...res.data?.filter(c => !c.assertions?.[0]?.passed)]));
+  }
+
+  protected runChecks(resourceType?: string, resourceId?: string): void {
+    if (!resourceType && !resourceId) {
+      this.resources.filter(r => isDefined(r.resourceType) && isDefined(r.resourceId))
+        .forEach(r => this.runChecks(r.resourceType, r.resourceId));
+      return;
+    }
+    const request = {resourceType: resourceType, resourceId: resourceId};
+    this.loader.wrap('run-check', this.checklistService.runChecks(request)).subscribe(() => this.loadChecklist(this.resources));
+  }
+
+  protected collectChecklists = (checklists: Checklist[]): {[resource: string]: Checklist[]} => {
+    if (!isDefined(checklists)) {
+      return undefined;
+    }
+    return collect(checklists, c => c.resourceId + c.resourceType);
+  };
+
+  protected openResource(resourceType: string, resourceId: string): void {
+    if (resourceType === 'CodeSystem') {
+      this.router.navigate(['/resources/code-systems', resourceId, 'checklists']);
+    }
+  }
+
+  protected getCheckCode = (check: Checklist): 'question-circle' | 'exclamation-circle' | 'close-circle' => {
+    if (!isDefined(check.assertions) || check.assertions.length === 0) {
+      return 'question-circle';
+    }
+    if (!check.assertions[0].passed && check.rule.severity === 'error') {
+      return 'close-circle';
+    }
+    return 'exclamation-circle';
+  };
+
+  protected getCheckColor = (code: 'question-circle' | 'exclamation-circle' | 'close-circle'): string => {
+    return ReleaseSummaryComponent.colorMap[code];
+  };
 }
