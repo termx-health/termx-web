@@ -61,7 +61,7 @@ export class SpaceGithubComponent implements OnInit {
     const id = Number(this.route.snapshot.paramMap.get('id'));
     this.loading = true;
 
-    this.spaceGithubService.authenticate(id, `${window.location.origin + environment.baseHref}/${window.location.pathname}`).subscribe(r => {
+    this.spaceGithubService.authenticate(id, `${window.location.origin + environment.baseHref}${window.location.pathname}`).subscribe(r => {
       if (!r.isAuthenticated) {
         window.location.href = r.redirectUrl;
         return;

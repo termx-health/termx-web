@@ -339,7 +339,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   }
 
   protected openFhir(code: string): void {
-    window.open(window.location.origin + environment.baseHref + '/fhir/CodeSystem/' + this.codeSystem.id + '/lookup' + '?_code=' + code, '_blank');
+    window.open(window.location.origin + environment.baseHref + 'fhir/CodeSystem/' + this.codeSystem.id + '/lookup' + '?_code=' + code, '_blank');
   }
 
   protected unlink(concept: CodeSystemConcept): void {

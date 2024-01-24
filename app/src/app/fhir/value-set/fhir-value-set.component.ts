@@ -28,7 +28,7 @@ export class FhirValueSetComponent implements OnChanges {
   }
 
   public openValueSetExpand(): void {
-    window.open(window.location.origin + environment.baseHref + '/fhir/ValueSet/' + this.valueSet.id + '/expand?includeDesignations=true' +
+    window.open(window.location.origin + environment.baseHref + 'fhir/ValueSet/' + this.valueSet.id + '/expand?includeDesignations=true' +
       (this.valueSet.language ? '&displayLanguage=' + this.valueSet.language : '') , '_blank');
   }
 }

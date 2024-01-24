@@ -59,6 +59,6 @@ export class ImplementationGuideListComponent implements OnInit {
   }
 
   public openFhir(id: string): void {
-    window.open(window.location.origin + environment.baseHref + '/fhir/ImplementationGuide/' + id, '_blank');
+    window.open(window.location.origin + environment.baseHref + 'fhir/ImplementationGuide/' + id, '_blank');
   }
 }
