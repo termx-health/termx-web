@@ -40,7 +40,7 @@ export class ResourceTasksWidgetComponent implements OnChanges {
 
   protected openTask(number: string): void {
     if (this.openInNewTab) {
-      window.open(window.location.origin + environment.baseHref + '/tasks/' + number + '/edit', '_blank');
+      window.open(window.location.origin + environment.baseHref + 'tasks/' + number + '/edit', '_blank');
     } else {
       this.router.navigate(['/tasks', number, 'edit']);
     }

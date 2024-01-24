@@ -67,7 +67,7 @@ export class ImplementationguideGithubComponent implements OnInit {
     const version = this.route.snapshot.paramMap.get('versionCode');
     this.loading = true;
 
-    this.githubService.authenticate(id, version, `${window.location.origin + environment.baseHref}/${window.location.pathname}`).subscribe(r => {
+    this.githubService.authenticate(id, version, `${window.location.origin + environment.baseHref}${window.location.pathname}`).subscribe(r => {
       if (!r.isAuthenticated) {
         window.location.href = r.redirectUrl;
         return;

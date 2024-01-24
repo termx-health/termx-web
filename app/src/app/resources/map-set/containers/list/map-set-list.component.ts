@@ -86,7 +86,7 @@ export class MapSetListComponent implements OnInit {
   // events
 
   protected openFhir(id: string): void {
-    window.open(`${window.location.origin + environment.baseHref}/fhir/ConceptMap/${id}`, '_blank');
+    window.open(`${window.location.origin + environment.baseHref}fhir/ConceptMap/${id}`, '_blank');
   }
 
   protected deleteMapSet(mapSetId: string): void {

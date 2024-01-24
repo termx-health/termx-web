@@ -101,7 +101,7 @@ export class FhirResourceComponent implements OnInit {
 
   private composeCurl(l: string): void {
     if (l.startsWith('/')) {
-      l = window.location.origin + environment.baseHref + l;
+      l = window.location.origin + environment.baseHref + l.substring(1);
     }
     this.oidcSecurityService.getAccessToken().subscribe(token => {
       this.curl =  '```\n' +'curl --location \'' + l + '\'' +
