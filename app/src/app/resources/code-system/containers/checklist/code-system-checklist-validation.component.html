@@ -1,5 +1,5 @@
 <m-spinner [mLoading]="loader.isLoading">
-  <ng-container *ngIf="(checklist | apply:collectChecklists) as groups">
+  <ng-container *ngIf="(checklist | filter: filterCheckList:showUnaccomplished | apply:collectChecklists) as groups">
     <div *ngFor="let target of groups | keys" style="margin-bottom: 1.5rem">
       <div class="m-justify-between" style="margin-bottom: 0.5rem">
         <label class="m-title">{{target}}</label>
@@ -19,7 +19,10 @@
                     <label>{{'web.code-system-checklist.errors' | translate}}</label>&nbsp;
                     <m-tag mColor="error">{{check.assertions[0].errors.length}}</m-tag>
                   </ng-template>
-                  <div *ngFor="let error of check.assertions[0].errors">{{error.error}}</div>
+                  <div *ngFor="let error of check.assertions[0].errors" class="m-items-middle">
+                    <label>{{error.error}}</label>
+                    <a *ngFor="let r of error.resources" (mClick)="openResource(r.resourceType, r.resourceId)">{{r.resourceId}}</a>
+                  </div>
                 </nz-collapse-panel>
               </nz-collapse>
             </div>

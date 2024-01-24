@@ -16,7 +16,7 @@
       <m-button *ngIf="mode === 'configuration'" (mClick)="saveConfiguration()">{{'core.btn.save' | translate}}</m-button>
     </div>
     <div>
-      <tw-cs-checklist-validation *ngIf="mode === 'validation'" resourceType="CodeSystem" [resourceId]="codeSystem?.id" [showUnaccomplished]="!validationShowAll"/>
+      <tw-cs-checklist-validation *ngIf="mode === 'validation'" [codeSystemId]="codeSystem?.id" [showUnaccomplished]="!validationShowAll"/>
       <tw-cs-checklist-configuration *ngIf="mode === 'configuration'" resourceType="CodeSystem" [resourceId]="codeSystem?.id"/>
     </div>
   </div>

@@ -2,14 +2,15 @@ import {Component, Input, SimpleChanges} from '@angular/core';
 import {collect, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
 import {Checklist} from 'term-web/sys/_lib';
+import {Router} from '@angular/router';
+import {AuthService} from 'term-web/core/auth';
 
 @Component({
   selector: 'tw-cs-checklist-validation',
   templateUrl: './code-system-checklist-validation.component.html'
 })
 export class CodeSystemChecklistValidationComponent {
-  @Input() public resourceType: string;
-  @Input() public resourceId: string;
+  @Input() public codeSystemId: string;
   @Input() public showUnaccomplished: boolean;
 
   protected loader = new LoadingManager();
@@ -23,18 +24,22 @@ export class CodeSystemChecklistValidationComponent {
     'close-circle': 'red'
   };
 
-  public constructor(private checklistService: ChecklistService) { }
+  public constructor(
+    private checklistService: ChecklistService,
+    protected router: Router,
+    protected authService: AuthService,
+  ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if ((changes['resourceType'] || changes['resourceId']) && this.resourceType && this.resourceId) {
-      this.loadChecklist(this.resourceType, this.resourceId);
+    if (changes['codeSystemId'] && this.codeSystemId) {
+      this.loadChecklist(this.codeSystemId);
     }
   }
 
-  private loadChecklist(resourceType: string, resourceId: string): void {
+  private loadChecklist(csId: string): void {
     this.loader.wrap('load', this.checklistService.search({
-      resourceType: resourceType,
-      resourceId: resourceId,
+      resourceType: 'CodeSystem',
+      resourceId: csId,
       assertionsDecorated: true, limit: -1
     })).subscribe(r => this.checklist = r.data);
   }
@@ -63,21 +68,35 @@ export class CodeSystemChecklistValidationComponent {
     return CodeSystemChecklistValidationComponent.colorMap[code];
   };
 
+  public filterCheckList = (checklist: Checklist, showUnaccomplished: boolean): boolean => {
+    if (!showUnaccomplished) {
+      return true;
+    }
+    return !checklist.assertions?.[0]?.passed;
+  };
+
   protected createAssertion(checklistId: number, passed: boolean): void {
     this.loader.wrap('create-assertion', this.checklistService.createAssertion(checklistId, passed))
-      .subscribe(() => this.loadChecklist(this.resourceType, this.resourceId));
+      .subscribe(() => this.loadChecklist(this.codeSystemId));
   }
 
   protected runCheck(checklistId: number): void {
     this.loader.wrap('create-assertion', this.checklistService.runChecks({checklistId: checklistId}))
-      .subscribe(() => this.loadChecklist(this.resourceType, this.resourceId));
+      .subscribe(() => this.loadChecklist(this.codeSystemId));
   }
 
   protected runChecks(ruleTarget: string): void {
     this.loader.wrap('create-assertion', this.checklistService.runChecks({
       ruleTarget: ruleTarget,
-      resourceType: this.resourceType,
-      resourceId: this.resourceId
-    })).subscribe(() => this.loadChecklist(this.resourceType, this.resourceId));
+      resourceType: 'CodeSystem',
+      resourceId: this.codeSystemId
+    })).subscribe(() => this.loadChecklist(this.codeSystemId));
+  }
+
+  public openResource(type: string, id: string): void {
+    if (type === 'Concept') {
+      const canEdit = this.authService.hasPrivilege(`${this.codeSystemId}.CodeSystem.edit`);
+      this.router.navigate(['/resources', 'code-systems', this.codeSystemId, 'concepts', id, canEdit ? 'edit' : 'view']);
+    }
   }
 }

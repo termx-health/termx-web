@@ -9,4 +9,5 @@ export class ChecklistAssertion {
 
 export class ChecklistAssertionError {
   public error?: string;
+  public resources?: {resourceType?: string, resourceId?: string}[];
 }
