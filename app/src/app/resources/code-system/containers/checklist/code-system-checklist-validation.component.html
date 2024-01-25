@@ -28,13 +28,25 @@
             </div>
             <div>
               <div class="m-items-middle">
-                <a *ngIf="check.rule.verification === 'software'" (mClick)="runCheck(check.id)">{{'web.code-system-checklist.run-check' | translate}}</a>
                 <ng-container *ngIf="check.rule.verification === 'human'">
-                  <a (mClick)="createAssertion(check.id, true)">{{'web.code-system-checklist.passed' | translate}}</a>
-                  <m-divider mVertical/>
-                  <a (mClick)="createAssertion(check.id, false)">{{'web.code-system-checklist.failed' | translate}}</a>
+                  <ng-container *ngIf="check.assertions?.[0]?.passed">
+                    <label>{{'web.code-system-checklist.passed' | translate}}</label>
+                    <m-icon *ngIf="check | apply:getCheckCode as code" [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
+                    <m-divider mVertical/>
+                    <a (mClick)="createAssertion(check.id, false)">{{'web.code-system-checklist.failed' | translate}}</a>
+                  </ng-container>
+                  <ng-container *ngIf="!check.assertions?.[0]?.passed">
+                    <a (mClick)="createAssertion(check.id, true)">{{'web.code-system-checklist.passed' | translate}}</a>
+                    <m-divider mVertical/>
+                    <a *ngIf="!check.assertions?.[0]" (mClick)="createAssertion(check.id, false)">{{'web.code-system-checklist.failed' | translate}}</a>
+                    <label *ngIf="check.assertions?.[0]">{{'web.code-system-checklist.failed' | translate}}</label>
+                    <m-icon *ngIf="check | apply:getCheckCode as code" [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
+                  </ng-container>
                 </ng-container>
-                <m-icon *ngIf="check | apply:getCheckCode as code" [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
+                <ng-container *ngIf="check.rule.verification === 'software'">
+                  <a (mClick)="runCheck(check.id)">{{'web.code-system-checklist.run-check' | translate}}</a>
+                  <m-icon *ngIf="check | apply:getCheckCode as code" [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
+                </ng-container>
               </div>
               <ng-container *ngIf="check.assertions?.[0] as lastAssertion">
                 <div>{{lastAssertion.executor}}</div>

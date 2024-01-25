@@ -1,4 +1,4 @@
-import {Component, Input, SimpleChanges} from '@angular/core';
+import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import {collect, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
 import {Checklist} from 'term-web/sys/_lib';
@@ -12,6 +12,7 @@ import {AuthService} from 'term-web/core/auth';
 export class CodeSystemChecklistValidationComponent {
   @Input() public codeSystemId: string;
   @Input() public showUnaccomplished: boolean;
+  @Output() public emptyConfiguration = new EventEmitter<void>();
 
   protected loader = new LoadingManager();
 
@@ -41,7 +42,12 @@ export class CodeSystemChecklistValidationComponent {
       resourceType: 'CodeSystem',
       resourceId: csId,
       assertionsDecorated: true, limit: -1
-    })).subscribe(r => this.checklist = r.data);
+    })).subscribe(r => {
+      this.checklist = r.data;
+      if (this.checklist.length === 0) {
+        this.emptyConfiguration.emit();
+      }
+    });
   }
 
   protected collectChecklists = (checklists: Checklist[]): {[target: string]: Checklist[]} => {

@@ -15,6 +15,7 @@ export class CodeSystemChecklistComponent implements OnInit {
   protected loader = new LoadingManager();
 
   protected mode: 'validation' | 'configuration' = 'validation';
+  protected emptyConfiguration: boolean = false;
   protected validationShowAll: boolean = true;
 
   @ViewChild(CodeSystemChecklistConfigurationComponent) public configurationComponent?: CodeSystemChecklistConfigurationComponent;
@@ -40,5 +41,6 @@ export class CodeSystemChecklistComponent implements OnInit {
 
   public saveConfiguration(): void {
     this.configurationComponent?.save();
+    this.emptyConfiguration = false;
   }
 }
