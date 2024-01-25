@@ -4,7 +4,7 @@
       <m-input name="copyright-holder" [(ngModel)]="copyright.holder"></m-input>
     </m-form-item>
     <m-form-item mName="jurisdiction" mLabel="entities.resource.copyright.jurisdiction">
-      <m-input name="jurisdiction" [(ngModel)]="copyright.jurisdiction"></m-input>
+      <tw-value-set-concept-select name="jurisdiction" [(ngModel)]="copyright.jurisdiction" valueSet="jurisdiction"/>
     </m-form-item>
     <m-form-item mName="copyright-statement" mLabel="entities.resource.copyright.statement">
       <m-textarea name="copyright-statement" [(ngModel)]="copyright.statement"></m-textarea>
