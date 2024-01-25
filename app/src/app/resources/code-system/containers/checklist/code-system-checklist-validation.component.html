@@ -2,7 +2,7 @@
   <ng-container *ngIf="(checklist | filter: filterCheckList:showUnaccomplished | apply:collectChecklists) as groups">
     <div *ngFor="let target of groups | keys" style="margin-bottom: 1.5rem">
       <div class="m-justify-between" style="margin-bottom: 0.5rem">
-        <label class="m-title">{{target}}</label>
+        <label class="m-subtitle">{{target}}</label>
         <a (mClick)="runChecks(target)">
           <m-icon mCode="sync"/>
           {{'web.code-system-checklist.run-checks' | translate}}</a>
@@ -11,7 +11,7 @@
         <m-list-item *ngFor="let check of groups[target]">
           <div class="m-justify-between">
             <div>
-              <div>{{check.rule.code}} {{check.rule.title | localName}}</div>
+              <div class="m-title--bold">{{check.rule.code}} {{check.rule.title | localName}}</div>
               <div>{{check.rule.description | localName}}</div>
               <nz-collapse *ngIf="check.assertions?.[0]?.errors" nzGhost>
                 <nz-collapse-panel [nzHeader]="error">
