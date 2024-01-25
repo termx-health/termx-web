@@ -66,7 +66,7 @@
       </m-card>
 
       <!-- Opened tasks -->
-      <m-card *ngIf="conceptVersion?.id">
+      <m-card *ngIf="conceptVersion?.id && ('*.Task.view' | twPrivileged)">
         <div *m-card-header class="m-justify-between">
           <div class="m-items-middle">
             <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">

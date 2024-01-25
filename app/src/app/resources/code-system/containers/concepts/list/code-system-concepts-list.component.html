@@ -135,7 +135,7 @@
       <tw-code-system-concepts-list-concept-preview [codeSystemId]="codeSystem.id"
           [version]="selectedConcept.version"
           [editRoute]="(selectedConcept.code | apply: getConceptEditRoute)?.path"/>
-      <m-card mDisplay="bordered">
+      <m-card mDisplay="bordered" *twPrivileged="'*.Task.view'">
         <div *m-card-header class="m-justify-between">
           <label>{{'entities.task.plural' | translate}}</label>
           <m-button *ngIf="[codeSystem.id + '.CodeSystem.edit', '*.Task.edit'] | twHasAllPrivileges" mDisplay="text" (mClick)="taskModalData = {visible: true, conceptVersion: selectedConcept.version}">
