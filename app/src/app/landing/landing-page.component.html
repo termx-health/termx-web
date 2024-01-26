@@ -1,7 +1,7 @@
 <m-page mFull>
   <div class="wrapper animated">
     <!-- Resources -->
-    <ng-container *twPrivileged="['*.CodeSystem.view', '*.ValueSets.view', '*.MapSets.view']">
+    <ng-container *twPrivileged="['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view']">
       <section class="fade-in-350ms" *ngIf="!loader.state['resource']">
         <div class="header title">{{'web.landing.resources.title' | translate}}</div>
 

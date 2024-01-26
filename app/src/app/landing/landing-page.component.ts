@@ -61,8 +61,8 @@ export class LandingPageComponent {
 
   private loadResources(): void {
     const codeSystems$ = this.withPrivilege(this.codeSystemService.search({limit: 0}), '*.CodeSystem.view');
-    const valueSets$ = this.withPrivilege(this.valueSetService.search({limit: 0}), '*.ValueSets.view');
-    const mapSets$ = this.withPrivilege(this.mapSetService.search({limit: 0}), '*.MapSets.view');
+    const valueSets$ = this.withPrivilege(this.valueSetService.search({limit: 0}), '*.ValueSet.view');
+    const mapSets$ = this.withPrivilege(this.mapSetService.search({limit: 0}), '*.MapSet.view');
 
     this.loader.wrap('resource', forkJoin([codeSystems$, valueSets$, mapSets$])).subscribe(([cs, vs, ms]) => {
       this.data.codeSystemCount = cs.meta.total;
