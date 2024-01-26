@@ -11,12 +11,12 @@
             <div class="title">{{data.codeSystemCount}}</div>
           </a>
 
-          <a class="initial card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.ValueSets.view'" [routerLink]="['/resources/value-sets']">
+          <a class="initial card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.ValueSet.view'" [routerLink]="['/resources/value-sets']">
             <div class="m-subtitle">{{'web.landing.resources.types.value-set' | translate}}</div>
             <div class="title">{{data.valueSetCount}}</div>
           </a>
 
-          <a class="initial card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.MapSets.view'" [routerLink]="['/resources/map-sets']">
+          <a class="initial card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.MapSet.view'" [routerLink]="['/resources/map-sets']">
             <div class="m-subtitle">{{'web.landing.resources.types.map-set' | translate}}</div>
             <div class="title">{{data.mapSetsCount}}</div>
           </a>
