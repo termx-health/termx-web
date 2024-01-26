@@ -116,9 +116,12 @@ export class LoincListComponent implements OnInit {
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
     const q = copyDeep(this.query);
-    q.textEq = this.filter.type === 'eq' ? this.filter.searchInput : undefined;
-    q.textContains = this.filter.type === 'contains' ? this.filter.searchInput : undefined;
-    q.textContainsSep = ' ';
+    if (this.filter.type === 'eq') {
+      q.textEq = this.filter.searchInput;
+    } else if (this.filter.type === 'contains') {
+      q.textContains = this.filter.searchInput;
+      q.textContainsSep = ' ';
+    }
     q.propertyValues = this.getPropertyValues(this.filter);
 
     this.stateStore.put(this.STORE_KEY, {query: this.query, filter: this.filter});
@@ -189,8 +192,8 @@ export class LoincListComponent implements OnInit {
   protected isFilterSelected(filter: Filter): boolean {
     const exclude: (keyof Filter)[] = ['open', 'searchInput', 'type'];
     return Object.keys(filter)
-      .filter((k: keyof Filter)=> !exclude.includes(k))
-      .some(k=> Array.isArray(filter[k]) ? !!filter[k].length : isDefined(filter[k]))
+      .filter((k: keyof Filter) => !exclude.includes(k))
+      .some(k => Array.isArray(filter[k]) ? !!filter[k].length : isDefined(filter[k]))
   }
 
   protected getName = (c: CodeSystemConcept, type = 'display'): string => {
