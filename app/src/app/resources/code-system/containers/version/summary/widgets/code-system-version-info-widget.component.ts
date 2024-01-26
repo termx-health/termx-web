@@ -8,16 +8,17 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {environment} from 'app/src/environments/environment';
 import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
 import {NgForm} from '@angular/forms';
-import {compareDates, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {compareDates, DestroyService, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {TaskService} from 'term-web/task/services/task-service';
 import {Task} from 'term-web/task/_lib';
-import {Provenance} from 'term-web/sys/_lib';
+import {LorqueLibService, Provenance} from 'term-web/sys/_lib';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
 import {AuthService} from 'term-web/core/auth';
 
 @Component({
   selector: 'tw-code-system-version-info-widget',
-  templateUrl: 'code-system-version-info-widget.component.html'
+  templateUrl: 'code-system-version-info-widget.component.html',
+  providers: [DestroyService]
 })
 export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
   protected SEPARATOR = SEPARATOR;
@@ -39,7 +40,9 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
     private spaceService: SpaceLibService,
-    private authService: AuthService
+    private authService: AuthService,
+    private lorqueService: LorqueLibService,
+    private destroy$: DestroyService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -57,9 +60,21 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
   }
 
   protected downloadDefinition(format: string): void {
-    this.fhirCodeSystemService.loadCodeSystem(this.version.codeSystem, this.version.version).subscribe(fhirCs => {
-      this.saveFile(fhirCs, format);
-    });
+    if (['csv', 'xlsx'].includes(format)) {
+      this.codeSystemService.exportConcepts(this.version.codeSystem, this.version.version, format).subscribe(process => {
+        this.lorqueService.pollFinishedProcess(process.id, this.destroy$).subscribe(status => {
+          if (status === 'failed') {
+            this.lorqueService.load(process.id).subscribe(p => this.notificationService.error(p.resultText));
+          } else  {
+            this.codeSystemService.getConceptExportResult(process.id, format);
+          }
+        });
+      });
+    } else {
+      this.fhirCodeSystemService.loadCodeSystem(this.version.codeSystem, this.version.version).subscribe(fhirCs => {
+        this.saveFile(fhirCs, format);
+      });
+    }
   }
 
   private saveFile(fhirCs: any, format: string): void {
@@ -99,8 +114,8 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     task.workflow = 'version-' + this.taskModalData.type;
     task.assignee = this.taskModalData.assignee;
     task.title = 'Code System "' + this.version.codeSystem + '" version "' + this.version.version + '" ' + this.taskModalData.type;
-    task.content = (this.taskModalData.type === 'review' ? 'Review' : 'Approve')  +
-      ' the content of the code system [' + this.version.codeSystem + '|' + this.version.version + ']'+
+    task.content = (this.taskModalData.type === 'review' ? 'Review' : 'Approve') +
+      ' the content of the code system [' + this.version.codeSystem + '|' + this.version.version + ']' +
       '(csv:' + this.version.codeSystem + '|' + this.version.version + ').';
     task.context = [{type: 'code-system', id: this.version.codeSystem}, {type: 'code-system-version', id: this.version.id}];
     this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {

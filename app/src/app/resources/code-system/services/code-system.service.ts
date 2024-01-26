@@ -1,6 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {CodeSystemConcept, CodeSystemLibService, CodeSystemTransactionRequest, CodeSystemVersion, ConceptTransactionRequest} from 'term-web/resources/_lib';
+import {LorqueProcess} from 'term-web/sys/_lib';
+import {map} from 'rxjs/operators';
+import {HttpHeaders} from '@angular/common/http';
+import {saveAs} from 'file-saver';
 
 @Injectable()
 export class CodeSystemService extends CodeSystemLibService {
@@ -55,6 +59,19 @@ export class CodeSystemService extends CodeSystemLibService {
     }
     return this.http.post(`${this.baseUrl}/${codeSystemId}/concepts/transaction`, request);
   }
+
+  public exportConcepts(codeSystemId: string, version: string, format: string): Observable<LorqueProcess> {
+    return this.http.get(`${this.baseUrl}/${codeSystemId}/versions/${version}/concepts/export?format=${format}`)
+      .pipe(map(res => res as LorqueProcess));
+  }
+
+  public getConceptExportResult(processId: number, format: string): void {
+    this.http.get(`${this.baseUrl}/concepts/export-${format}/result/${processId}`, {
+      responseType: 'blob',
+      headers: new HttpHeaders({Accept: format === 'xlsx' ? `application/vnd.ms-excel` : `application/csv`})
+    }).subscribe(res => saveAs(res, `concepts.` + format));
+  }
+
 
   public propagateProperties(codeSystemId: string, conceptCode: string, targetConceptIds: number[]): Observable<void> {
     conceptCode = encodeURIComponent(encodeURIComponent(conceptCode));
