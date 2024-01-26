@@ -212,8 +212,12 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
 
   private search(): Observable<SearchResult<CodeSystemConcept>> {
     const q = copyDeep(this.query);
-    q.textContains = this.filter.inputType === 'contains' ? this.filter.searchInput : undefined;
-    q.textEq = this.filter.inputType === 'eq' ? this.filter.searchInput : undefined;
+    if (this.filter.inputType === 'eq') {
+      q.textEq = this.filter.searchInput;
+    } else if (this.filter.inputType === 'contains') {
+      q.textContains = this.filter.searchInput;
+      q.textContainsSep = ' ';
+    }
     q.codeSystemVersion = this.version?.version;
 
     const collected = collect(this.filter.properties ?? [],
@@ -374,7 +378,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
       this.taskModalData.conceptVersion?.id ? {type: 'concept-version', id: this.taskModalData.conceptVersion.id} : undefined,
       this.version?.id ? {type: 'code-system-version', id: this.version.id} : undefined
     ].filter(c => isDefined(c));
-    task.content = 'Review the content of the concept [' + this.taskModalData.conceptVersion.code + ']'+
+    task.content = 'Review the content of the concept [' + this.taskModalData.conceptVersion.code + ']' +
       '(concept:' + this.codeSystem.id + '|' + this.taskModalData.conceptVersion.code + ').' +
       (this.taskModalData.comment ? '\n' + this.taskModalData.comment : '');
     this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
