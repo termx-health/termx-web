@@ -6,6 +6,8 @@
       <span class="m-bold">{{version.version}}</span>
       <m-divider mVertical></m-divider>
       <span>{{(version.releaseDate | localDate) || '...'}} - {{(version.expirationDate | localDate) || '...'}}</span>
+      <m-divider mVertical></m-divider>
+      <a (mClick)="openVersionConcepts()">{{version.conceptsTotal}} {{'web.code-system.summary.concepts' | translate}}</a>
     </div>
 
     <tw-status-tag [status]="version.status"></tw-status-tag>
