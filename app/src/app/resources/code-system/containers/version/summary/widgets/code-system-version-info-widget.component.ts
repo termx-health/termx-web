@@ -14,6 +14,7 @@ import {Task} from 'term-web/task/_lib';
 import {Provenance} from 'term-web/sys/_lib';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
 import {AuthService} from 'term-web/core/auth';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'tw-code-system-version-info-widget',
@@ -39,7 +40,8 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
     private spaceService: SpaceLibService,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -114,4 +116,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     return provenances?.filter(p => p.activity === activity).sort((p1, p2) => compareDates(new Date(p2.date), new Date(p1.date)))?.[0];
   };
 
+  protected openVersionConcepts(): void {
+    this.router.navigate(['/resources/code-systems', this.version.codeSystem, 'versions', this.version.version, 'concepts']);
+  }
 }
