@@ -69,6 +69,7 @@ export class LoincImportComponent {
 
     this.jobResponse = null;
     this.loading['process'] = true;
+    this.modalData = {};
     this.http.post<JobLogResponse>(`${environment.termxApi}/loinc/import`, formData)
       .subscribe({
         next: (resp) => {
