@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'app/src/app/integration/_lib';
 import {forkJoin} from 'rxjs';
-import {DestroyService, isDefined, LoadingManager} from '@kodality-web/core-util';
+import {DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {MapSetLibService, ValueSetLibService} from 'app/src/app/resources/_lib';
 import {PageLibService} from 'app/src/app/wiki/_lib';
 import {TranslateService} from '@ngx-translate/core';
@@ -11,6 +11,9 @@ import {SnomedTranslationListComponent} from 'term-web/integration/snomed/contai
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {LorqueLibService, Provenance} from 'term-web/sys/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {Task} from 'term-web/task/_lib';
+import {NgForm} from '@angular/forms';
+import {TaskService} from 'term-web/task/services/task-service';
 
 @Component({
   selector: 'tw-snomed-concept-info',
@@ -29,6 +32,9 @@ export class SnomedConceptInfoComponent implements OnChanges {
   public provenances?: Provenance[];
   public dataChanged?: boolean = false;
 
+  protected taskModalData: {visible?: boolean, assignee?: string, comment?: string} = {};
+  @ViewChild("taskModalForm") public taskModalForm?: NgForm;
+
   @Input() public conceptId?: string;
   @Input() public branch?: string;
   @Output() public conceptSelected: EventEmitter<string> = new EventEmitter<string>();
@@ -45,6 +51,7 @@ export class SnomedConceptInfoComponent implements OnChanges {
     private authService: AuthService,
     private destroy$: DestroyService,
     private notificationService: MuiNotificationService,
+    private taskService: TaskService,
     private router: Router
   ) {}
 
@@ -140,6 +147,23 @@ export class SnomedConceptInfoComponent implements OnChanges {
   public loadProvenances(): void {
     this.loader.wrap('kts-references', this.snomedTranslationService.loadProvenances(this.conceptId)).subscribe(p => {
       this.provenances = p;
+    });
+  }
+
+  public createTask(): void {
+    if (!validateForm(this.taskModalForm)) {
+      return;
+    }
+
+    const task = new Task();
+    task.workflow = 'concept-review';
+    task.assignee = this.taskModalData.assignee;
+    task.title = `Review code system "snomed-ct" concept "${this.conceptId}"`;
+    task.content = this.taskModalData.comment;
+    task.context = [{type: 'code-system', id: 'snomed-ct'}, {type: 'snomed-concept', id: this.conceptId}];
+    this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
+      this.notificationService.success('web.snomed.task.success-msg');
+      this.taskModalData = {};
     });
   }
 }

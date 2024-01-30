@@ -157,4 +157,44 @@
     <tw-provenance-list [provenances]="provenances"></tw-provenance-list>
   </m-card>
 
+  <m-card class="m-card-inside" *ngIf="'*.Task.view' | twPrivileged">
+    <div *m-card-header class="m-justify-between">
+      <div class="m-card__title">
+        {{'web.snomed.task.card-header' | translate}}
+      </div>
+      <m-button (mClick)="taskModalData = {visible: true}" *twPrivileged="'*.Task.edit'">
+        <m-icon mCode="plus"/>&nbsp; {{'core.btn.add' | translate}}
+      </m-button>
+    </div>
+    <tw-resource-tasks-widget resourceType="SnomedConcept" [resourceId]="conceptId"></tw-resource-tasks-widget>
+  </m-card>
+
 </m-card>
+
+
+<m-modal [(mVisible)]="taskModalData.visible" (mClose)="taskModalData = {visible: false}">
+  <m-title *mModalHeader>
+    {{'web.snomed.task.modal-header' | translate}}
+  </m-title>
+  <ng-container *mModalContent>
+    <form #taskModalForm="ngForm">
+      <m-form-item mName="assignee" mLabel="entities.task.assignee" required>
+        <tw-user-select name="assignee"
+            [(ngModel)]="taskModalData.assignee"
+            [anyRole]="['snomed-ct.CodeSystem.edit', 'snomed-ct.CodeSystem.publish']"
+            required/>
+      </m-form-item>
+      <m-form-item mName="comment" mLabel="web.snomed.task.comment">
+        <m-textarea name="comment" [(ngModel)]="taskModalData.comment"></m-textarea>
+      </m-form-item>
+    </form>
+  </ng-container>
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="taskModalData.visible = false">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="createTask()" [mLoading]="loader.isLoading" [disabled]="loader.state['create-task']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>

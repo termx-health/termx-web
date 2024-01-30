@@ -1811,6 +1811,11 @@
 				}
 			},
 			"rf2-export": "RF2 export",
+			"task": {
+				"card-header": "Tasks",
+				"modal-header": "Create concept task",
+				"comment": "Comment"
+			},
 			"search": {
 				"ecl": "ECL",
 				"ecl-placeholder": "ECL expression",

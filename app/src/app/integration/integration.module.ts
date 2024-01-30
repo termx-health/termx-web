@@ -42,6 +42,8 @@ import {MapSetModule} from 'term-web/resources/map-set/map-set.module';
 import {ValueSetFileImportComponent} from 'term-web/integration/import/file-import/value-set/value-set-file-import.component';
 import {SnomedCodesystemEditComponent} from 'term-web/integration/snomed/containers/management/codesystem/snomed-codesystem-edit.component';
 import {SysLibModule} from 'term-web/sys/_lib';
+import {ResourceModule} from 'term-web/resources/resource/resource.module';
+import {UserLibModule} from 'term-web/user/_lib';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -83,7 +85,9 @@ export const INTEGRATION_ROUTES: Routes = [
     FhirLibModule,
     IntegrationLibModule,
     MapSetModule,
-    SysLibModule
+    SysLibModule,
+    ResourceModule,
+    UserLibModule
   ],
   exports: [
     LoincListComponent,

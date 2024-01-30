@@ -1,6 +1,7 @@
-<m-no-data *ngIf="!(tasks?.length > 0)"></m-no-data>
-
-<m-list *ngIf="tasks?.length > 0" mSeparated>
+<m-spinner [mLoading]="loader.isLoading">
+  <m-no-data *ngIf="!(tasks?.length > 0)"></m-no-data>
+</m-spinner>
+<m-list *ngIf="tasks?.length > 0 && !loader.isLoading" mSeparated>
   <m-list-item *ngFor="let task of tasks| filter:filterTask:taskFilters" [mClickable]="'*.Task.edit' | twPrivileged" (mClick)="openTask(task.number)">
 
     <ng-container [ngSwitch]="displayType">

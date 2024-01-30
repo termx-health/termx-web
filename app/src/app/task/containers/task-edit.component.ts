@@ -20,6 +20,9 @@ class TaskContextLinkService {
         this.router.navigate(['/integration/snomed/dashboard', t.conceptId]);
       });
     },
+    'snomed-concept': (ctx: TaskContextItem): void => {
+      this.router.navigate(['/integration/snomed/dashboard', ctx.id]);
+    },
 
     // Code System
     'code-system': (ctx: TaskContextItem): void => {
