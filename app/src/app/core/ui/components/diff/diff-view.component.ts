@@ -71,7 +71,7 @@ export class DiffViewComponent implements OnChanges {
     target ||= '';
 
     const patch = createPatch('history', source, target, '', '', {
-      context: full ? Math.max(source.match(/\n/g)?.length, target.match(/\n/g)?.length) : undefined
+      context: full ? Math.max(source.match(/\n/g)?.length ?? 0, target.match(/\n/g)?.length ?? 0) : undefined
     });
     return this.render(patch, viewMode);
   }
