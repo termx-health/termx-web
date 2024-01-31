@@ -51,4 +51,8 @@ export class ChecklistRuleEditComponent implements OnInit {
     rule.verification ??= 'human';
     return rule;
   }
+
+  public delete(): void {
+    this.checklistService.deleteRule(this.rule.id).subscribe(() => this.location.back());
+  }
 }

@@ -30,7 +30,10 @@
         </ng-template>
       </td>
       <td>{{cr.target}}</td>
-      <td>{{cr.title | localName}}</td>
+      <td>
+        <div>{{cr.title | localName}}</div>
+        <div>{{cr.description | localName}}</div>
+      </td>
       <td>{{cr.type}}</td>
       <td>{{cr.verification}}</td>
       <td><m-checkbox readOnly [ngModel]="cr.active"></m-checkbox></td>

@@ -41,6 +41,43 @@
 		}
 	},
 	"entities": {
+		"checklist-rule": {
+			"code": "Kood",
+			"title": "Pealkiri",
+			"description": "Kirjeldus",
+			"type": "Tüüp",
+			"target": "Siht",
+			"verification": "Verifitseerimine",
+			"severity": "Raskusaste",
+			"active": "Aktiivne",
+			"resource-type": "Ressurssi tüüp"
+		},
+		"checklist": {
+			"rule": "Reegel",
+			"whitelist": "Lubatud nimekiri"
+		},
+		"release": {
+			"code": "Kood",
+			"name": "Nimetus",
+			"planned": "Planeeritud",
+			"release-date": "Väljalaske kuupäev",
+			"status": "Staatus",
+			"plural": "Väljaanded",
+			"single": "Väljalase",
+			"resource": {
+				"plural": "Ressurssid",
+				"type": "Tüüp",
+				"reference": "Viide",
+				"version": "Versioon",
+				"name": "Nimetus",
+				"errors": "Vead",
+				"code-system": "Koodisüsteem",
+				"value-set": "Loend",
+				"map-set": "Vastavustabel",
+				"structure-definition": "Struktuuri definitsioon",
+				"structure-map": "Struktuuri transformatsioon"
+			}
+		},
 		"association-type": {
 			"code": "Kood",
 			"description": "Kirjeldus",
@@ -736,6 +773,38 @@
 	"web": {
 		"app": {
 			"header": "TermX"
+		},
+		"code-system-checklist": {
+			"errors": "Vead",
+			"passed": "Läbitud",
+			"run-check": "Käivita kontroll",
+			"run-checks": "Käivita kõik kontrollid",
+			"failed": "Ebaõnnestunud",
+			"show-all": "Näita kõike",
+			"show-unaccomplished": "Ainult täitmata",
+			"add-whitelist-item": "Lisa lubatud nimekirja",
+			"mode": {
+				"configuration": "Konfigureerimine",
+				"validation": "Valideerimine"
+			}
+		},
+		"checklist-rule": {
+			"checklist": "Kontrollnimekiri",
+			"add-btn": "Lisa reegel",
+			"add-header": "Lisa reegl",
+			"edit-header": "Muuda reegl"
+		},
+		"release": {
+			"add-btn": "Lisa väljalase",
+			"unaccomplished-checks": "Täitmata kontrollid",
+			"run-checks": "Käivita kõik kontrollid",
+			"add-header": "Lisa väljalase",
+			"edit-header": "Muuda väljalase",
+			"add-resource": "Lisa ressurss",
+			"edit-resource": "Muuda ressurss",
+			"activate": "Aktiveeri",
+			"retire": "Tühista",
+			"make-draft": "Muuda \"mustandiks\""
 		},
 		"association-type": {
 			"form": {
@@ -1674,7 +1743,8 @@
 			"concepts": "Mõisted",
 			"properties": "Tunnused",
 			"provenance": "Ajalugu",
-			"summary": "Kokkuvõte"
+			"summary": "Kokkuvõte",
+			"checklist": "Kontrollnimekiri"
 		},
 		"resource-form": {
 			"id-change-modal": {

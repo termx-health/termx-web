@@ -1,6 +1,19 @@
 <m-spinner [mLoading]="loader.state['save']">
   <form #form="ngForm" *ngIf="rule">
     <m-card [mTitle]="'web.checklist-rule.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+      <div *m-card-header class="m-justify-between">
+        <div class="m-card__title">
+          {{'web.checklist-rule.' + mode + '-header' | translate}}
+        </div>
+        <m-dropdown>
+          <ng-container *ngIf="('*.Checklist.edit' | twPrivileged) && rule?.id && rule.type !== 'system'">
+            <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()" mPosition="leftTop">
+              {{'core.btn.delete' | translate}}
+            </a>
+          </ng-container>
+        </m-dropdown>
+      </div>
+
       <ng-container *mCardContent="!loader.isLoading">
 
         <m-form-row>
