@@ -8,6 +8,7 @@ import {environment} from 'environments/environment';
   imports: [
     AuthModule.forRoot({
       config: {
+        configId: 'termx-client',
         authority: environment.oauthIssuer,
         redirectUrl: window.location.origin + environment.baseHref,
         postLogoutRedirectUri: window.location.origin + environment.baseHref,
