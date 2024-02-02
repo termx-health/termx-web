@@ -8,7 +8,8 @@ import {isDefined} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
 import {MuiSkipErrorHandler} from '@kodality-web/marina-ui';
 
-const REDIRECT_ORIGIN_URL = '__redirect_origin_url';
+const COOKIE_OAUTH_TOKEN_KEY = 'termx-oauth-token';
+const REDIRECT_ORIGIN_URL = '__termx-redirect_origin_url';
 
 export interface UserInfo {
   username: string;
@@ -32,12 +33,12 @@ export class AuthService {
       .pipe(mergeMap(() => oidcSecurityService.getAuthenticationResult()))
       .subscribe(ar => {
         if (isDefined(ar)) {
-          Cookies.set('oauth-token', ar['access_token'], {
+          Cookies.set(COOKIE_OAUTH_TOKEN_KEY, ar['access_token'], {
             expires: new Date(new Date().getTime() + ar['expires_in'] * 1000),
             secure: environment.production
           });
         } else {
-          Cookies.remove('oauth-token');
+          Cookies.remove(COOKIE_OAUTH_TOKEN_KEY);
         }
       });
 
