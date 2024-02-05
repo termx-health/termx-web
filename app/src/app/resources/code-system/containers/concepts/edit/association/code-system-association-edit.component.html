@@ -5,39 +5,48 @@
 <div *ngIf="!viewMode" class="m-items-middle">
   <div class="col">
     <div class="row" *ngFor="let a of associations; let i = index">
-      <tw-association-type-search [(ngModel)]="a.associationType"
+      <tw-association-type-search *ngIf="!a.supplement"
+          [(ngModel)]="a.associationType"
           name="type-{{i}}"
           placeholder="entities.code-system-entity-version.association-type"
           valuePrimitive/>
+      <span *ngIf="a.supplement" class="m-subtitle">{{a.associationType}}</span>
     </div>
   </div>
   <div class="col" style="width: 100%">
     <div class="row" *ngFor="let a of associations; let i = index">
-      <tw-code-system-entity-version-search style="width: 100%"
+      <tw-code-system-entity-version-search *ngIf="!a.supplement"
+          style="width: 100%"
           [codeSystem]="codeSystemId"
           [codesNe]="code"
           [(ngModel)]="a.targetId"
           name="targetConcept-{{i}}"
           placeholder="entities.code-system-entity-version.association-target"
           valuePrimitive/>
+      <span *ngIf="a.supplement">{{a.targetCode}}</span>
     </div>
   </div>
   <div class="col">
     <div class="row" *ngFor="let a of associations; let i = index">
-      <tw-value-set-concept-select [(ngModel)]="a.status"
+      <tw-value-set-concept-select *ngIf="!a.supplement"
+          [(ngModel)]="a.status"
           name="status-{{i}}"
           placeholder="entities.code-system-entity-version.association-status"
           valueSet="publication-status"/>
+      <span *ngIf="a.supplement"
+          class="tw-circled"
+          [style.color]="a.status === 'draft' ? 'var(&#45;&#45;color-amber-7)' : 'initial'">{{a.status?.[0] | uppercase}}</span>
     </div>
   </div>
   <div class="col">
     <div class="row" *ngFor="let a of associations; let i = index">
-      <m-number-input name="order-{{i}}" [(ngModel)]="a.orderNumber" placeholder="entities.code-system-entity-version.association-order"/>
+      <m-number-input *ngIf="!a.supplement" name="order-{{i}}" [(ngModel)]="a.orderNumber" placeholder="entities.code-system-entity-version.association-order"/>
+      <span *ngIf="a.supplement">{{a.orderNumber}}</span>
     </div>
   </div>
   <div class="col">
     <div class="row" *ngFor="let a of associations; let i = index">
-      <m-icon [mCode]="'close'" class="m-clickable" (click)="deleteAssociation(a)"></m-icon>
+      <m-icon *ngIf="!a.supplement" [mCode]="'close'" class="m-clickable" (click)="deleteAssociation(a)"></m-icon>
     </div>
   </div>
 </div>

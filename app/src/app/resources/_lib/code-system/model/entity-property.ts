@@ -17,5 +17,5 @@ export class EntityPropertyValue {
   public entityPropertyId?: number;
   public entityProperty?: string;
 
-  public supplementId?: number;
+  public supplement?: boolean;
 }

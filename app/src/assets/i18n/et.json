@@ -833,6 +833,7 @@
 				"add-header": "Lisa koodisüsteem",
 				"concepts": {
 					"add-concept": "Lisa mõiste",
+					"add-supplement-concept": "Lisa täienduse mõiste",
 					"concept": "Mõiste",
 					"contains": "Sisaldab",
 					"eq": "Võrdub",

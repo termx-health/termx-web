@@ -5,6 +5,7 @@ import {LorqueProcess} from 'term-web/sys/_lib';
 import {map} from 'rxjs/operators';
 import {HttpHeaders} from '@angular/common/http';
 import {saveAs} from 'file-saver';
+import {isDefined} from '@kodality-web/core-util';
 
 @Injectable()
 export class CodeSystemService extends CodeSystemLibService {
@@ -95,8 +96,15 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.delete(`${this.baseUrl}/${codeSystemId}/entity-versions/${id}`);
   }
 
-  public duplicateEntityVersion(codeSystemId: string, entityId: number, id: number): Observable<void> {
+  public duplicateEntityVersion(codeSystemId: string, id: number): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/${id}/duplicate`, {});
+  }
+
+  public supplementEntityVersions(codeSystemId: string, codeSystemVersion: string, ids: number[]): Observable<void> {
+    if (isDefined(codeSystemVersion)) {
+      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${codeSystemVersion}/entity-versions/supplement`, {ids: ids});
+    }
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/supplement`, {ids: ids});
   }
 
   public unlinkEntityVersions(codeSystemId: string, codeSystemVersion: string, entityVersionIds: number[]): Observable<void> {

@@ -1,0 +1,46 @@
+<m-drawer *ngIf="drawerOpened" [mVisible]="drawerOpened" (mClose)="closeDrawer()">
+  <m-card mDisplay="flat">
+    <div *m-card-header class="m-justify-between">
+      <m-title mTitle="entities.code-system-concept.plural"/>
+      <div class="m-items-middle">
+        <m-button (mClick)="selectAll()">{{'web.concept-drawer.add-all' | translate}}</m-button>
+        <m-button (mClick)="selectPicked()" mDisplay="primary">{{'web.concept-drawer.add-selected' | translate}}</m-button>
+      </div>
+    </div>
+    <m-alert *ngIf="!codeSystem" mTitle="web.concept-drawer.code-system-required" mType="warning"/>
+    <m-form-row>
+      <m-form-item *mFormCol mName="codeSystem" mLabel="entities.code-system.single">
+        <tw-code-system-search *ngIf="codeSystemModifiable" name="codeSystem" [(ngModel)]="codeSystem" valuePrimitive/>
+        <label *ngIf="!codeSystemModifiable">{{codeSystem}}</label>
+      </m-form-item>
+      <m-form-item *mFormCol mName="codeSystemVersion" mLabel="entities.code-system-version.single">
+        <tw-code-system-version-select name="codeSystemVersion" [(ngModel)]="codeSystemVersion" [codeSystemId]="codeSystem" valueType="version"/>
+      </m-form-item>
+    </m-form-row>
+    <m-form-row>
+      <m-form-item mName="text">
+          <m-input style="flex: 4" name="text" [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+      </m-form-item>
+    </m-form-row>
+
+    <tw-snomed-search *ngIf="codeSystem === 'snomed-ct'"></tw-snomed-search>
+
+    <m-list *ngIf="codeSystem !== 'snomed-ct'">
+      <m-list-item *ngFor="let concept of concepts?.data">
+        <div class="m-title--bold">{{concept.code}}</div>
+        <div class="m-subtitle">{{concept | apply:getDisplay}}</div>
+        <div style="margin-left: 1rem">
+          <div class="m-items-middle" *ngFor="let ver of concept.versions;let i = index">
+            <m-checkbox [(ngModel)]="ver['selected']" name="selected-{{i}}"></m-checkbox>
+            <a (mClick)="selectConcept(ver.id)">{{ver.created | localDate}}</a>
+          </div>
+        </div>
+      </m-list-item>
+      <m-list-item *ngIf="concepts?.meta?.total > concepts?.data?.length" (mClick)="loadConcepts(codeSystem, codeSystemVersion)" mClickable>
+        Load more
+      </m-list-item>
+    </m-list>
+
+  </m-card>
+</m-drawer>
+

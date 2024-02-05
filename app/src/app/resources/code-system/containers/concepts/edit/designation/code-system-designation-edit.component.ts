@@ -61,7 +61,7 @@ export class CodeSystemDesignationEditComponent implements OnChanges {
     const langs = this.supportedLangs?.length > 0 ? this.supportedLangs : [environment.defaultLanguage];
     properties.forEach(p => {
       langs
-        .filter(l => !this.designations.find(d => d.designationTypeId === p.id && d.language === l))
+        .filter(l => !this.designations.find(d => d.designationType === p.name && d.language === l))
         .forEach(l => {
           this.designations.push({designationTypeId: p.id, designationType: p.name, language: l, status: 'draft', caseSignificance: 'ci'});
           this.designations = [...this.designations];
@@ -70,6 +70,9 @@ export class CodeSystemDesignationEditComponent implements OnChanges {
   }
 
   protected deleteDesignation(designation: Designation): void {
+    if (designation.supplement) {
+      return;
+    }
     this.designations = [...this.designations.filter(d => d !== designation)];
   }
 }

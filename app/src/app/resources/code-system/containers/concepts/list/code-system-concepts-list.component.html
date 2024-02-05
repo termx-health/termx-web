@@ -4,17 +4,20 @@
       <m-icon mCode="folder-open"/>
     </m-button>
 
-    <m-select [(ngModel)]="tableSummary.langs" multiple placeholder="Designation languages" style="flex: 1">
+    <m-select [(ngModel)]="tableSummary.langs" multiple placeholder="web.code-system.form.concepts.designation-languages" style="flex: 1">
       <m-option *ngFor="let lang of version | apply: getSupportedLangs: versions" [mValue]="lang" [mLabel]="lang"/>
     </m-select>
 
-    <m-select [(ngModel)]="tableSummary.properties" multiple placeholder="Properties" style="flex: 1">
+    <m-select [(ngModel)]="tableSummary.properties" multiple placeholder="web.code-system.form.concepts.properties" style="flex: 1">
       <m-option *ngFor="let prop of codeSystem?.properties" [mValue]="prop.name" [mLabel]="prop | entityPropertyName"/>
     </m-select>
 
     <!-- Add action -->
     <tw-add-button *ngIf="!viewMode && null | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">
       {{'web.code-system.form.concepts.add-concept' | translate}}
+    </tw-add-button>
+    <tw-add-button *ngIf="!viewMode && codeSystem.baseCodeSystem" (click)="conceptDrawerSearchComponent.openDrawer()">
+      {{'web.code-system.form.concepts.add-supplement-concept' | translate}}
     </tw-add-button>
 
     <!-- Validation -->
@@ -263,3 +266,4 @@
   </div>
 </m-modal>
 
+<tw-concept-drawer-search [codeSystem]="codeSystem?.baseCodeSystem" (twChange)="createSupplement($event)"></tw-concept-drawer-search>

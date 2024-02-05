@@ -61,7 +61,7 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   private addDefProperties(): void {
     const properties = this.properties.filter(p => p.kind === 'property');
     properties
-      .filter(p => !this.propertyValues?.find(pv => pv.entityPropertyId === p.id))
+      .filter(p => !this.propertyValues?.find(pv => pv.entityProperty === p.name))
       .forEach(p => {
         const pv = {entityPropertyId: p.id, entityProperty: p.name, value: p.type === 'Coding' ? {} : undefined};
         this.propertyValues = [...this.propertyValues || [], pv];
