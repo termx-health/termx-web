@@ -2,7 +2,7 @@
   <m-card mDisplay="flat">
     <div *m-card-header class="m-justify-between">
       <m-title mTitle="entities.code-system-concept.plural"/>
-      <div class="m-items-middle">
+      <div class="m-items-middle" *ngIf="codeSystem !== 'snomed-ct'">
         <m-button (mClick)="selectAll()">{{'web.concept-drawer.add-all' | translate}}</m-button>
         <m-button (mClick)="selectPicked()" mDisplay="primary">{{'web.concept-drawer.add-selected' | translate}}</m-button>
       </div>
