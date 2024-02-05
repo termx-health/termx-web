@@ -16,33 +16,37 @@
       </div>
       <div class="col" style="width: 100%">
         <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <m-input name="{{i}}-name" [(ngModel)]="d.name" style="width: 100%"/>
+          <m-input *ngIf="!d.supplement" name="{{i}}-name" [(ngModel)]="d.name" style="width: 100%"/>
+          <span *ngIf="d.supplement">{{d.name}}</span>
         </div>
       </div>
       <div class="col">
         <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <m-select name="{{i}}-caseSignificance" [(ngModel)]="d.caseSignificance" [allowClear]="false">
+          <m-select *ngIf="!d.supplement" name="{{i}}-caseSignificance" [(ngModel)]="d.caseSignificance" [allowClear]="false">
             <m-option *ngFor="let cs of ['ci', 'cs', 'cl']" [mValue]="cs" [mLabel]="cs" [mLabelTemplate]="option">
               <ng-template #option>{{'web.case-sensitive.options.' + cs | translate}}</ng-template>
             </m-option>
           </m-select>
+          <span *ngIf="d.supplement" m-tooltip [mTitle]="'web.case-sensitive.options.' + d.caseSignificance">{{d.caseSignificance}}</span>
         </div>
       </div>
       <div class="col">
         <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <m-button (mClick)="d.preferred = !d.preferred">
+          <m-button *ngIf="!d.supplement" (mClick)="d.preferred = !d.preferred">
             <m-icon [mOptions]="{nzTheme : d.preferred ? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
           </m-button>
+          <m-icon *ngIf="d.supplement" [mOptions]="{nzTheme : d.preferred ? 'fill' : 'outline'}" [mCode]="'star'"/>
         </div>
       </div>
       <div class="col">
         <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <tw-value-set-concept-select name="{{i}}-status" [(ngModel)]="d.status" valueSet="publication-status" [allowClear]="false"/>
+          <tw-value-set-concept-select *ngIf="!d.supplement" name="{{i}}-status" [(ngModel)]="d.status" valueSet="publication-status" [allowClear]="false"/>
+          <span *ngIf="d.supplement" class="tw-circled" [style.color]="d.status === 'draft' ? 'var(&#45;&#45;color-amber-7)' : 'initial'">{{d.status?.[0] | uppercase}}</span>
         </div>
       </div>
       <div class="col">
         <div class="row m-clickable" *ngFor="let d of groups[dType] | sort: 'language'; let i = index" (click)="deleteDesignation(d)">
-          <m-icon [mCode]="'close'"></m-icon>
+          <m-icon *ngIf="!d.supplement" [mCode]="'close'"></m-icon>
         </div>
       </div>
     </div>

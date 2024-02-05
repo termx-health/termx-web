@@ -9,4 +9,6 @@ export class CodeSystemAssociation extends CodeSystemEntity{
 
   public sourceCode?: string;
   public targetCode?: string;
+
+  public supplement?: boolean;
 }

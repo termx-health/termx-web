@@ -19,6 +19,8 @@ import {RouterModule} from '@angular/router';
 import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
 import {EntityPropertyNamePipe} from './pipe/entity-propertye-name-pipe';
 import {CodeSystemConceptMatrixComponent} from 'term-web/resources/_lib/code-system/containers/code-system-concept-matrix.component';
+import {ConceptDrawerSearchComponent} from 'term-web/resources/_lib/code-system/containers/concept-drawer-search.component';
+import {IntegrationLibModule} from 'term-web/integration/_lib';
 
 @NgModule({
   imports: [
@@ -28,7 +30,8 @@ import {CodeSystemConceptMatrixComponent} from 'term-web/resources/_lib/code-sys
     FormsModule,
     CoreUtilModule,
     TranslateModule,
-    MarinaUtilModule
+    MarinaUtilModule,
+    IntegrationLibModule
   ],
   providers: [
     CodeSystemLibService,
@@ -40,6 +43,7 @@ import {CodeSystemConceptMatrixComponent} from 'term-web/resources/_lib/code-sys
   declarations: [
     CodeSystemSearchComponent,
     ConceptSearchComponent,
+    ConceptDrawerSearchComponent,
     CodeSystemVersionSelectComponent,
     CodeSystemEntityVersionSearchComponent,
     CodeSystemWidgetComponent,
@@ -51,6 +55,7 @@ import {CodeSystemConceptMatrixComponent} from 'term-web/resources/_lib/code-sys
   exports: [
     CodeSystemSearchComponent,
     ConceptSearchComponent,
+    ConceptDrawerSearchComponent,
     CodeSystemVersionSelectComponent,
     CodeSystemEntityVersionSearchComponent,
     CodeSystemWidgetComponent,

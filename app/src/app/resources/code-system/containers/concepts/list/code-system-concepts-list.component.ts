@@ -31,6 +31,7 @@ import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/componen
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
 import {environment} from 'environments/environment';
+import {ConceptDrawerSearchComponent} from 'term-web/resources/_lib/code-system/containers/concept-drawer-search.component';
 
 interface ConceptNode {
   code: string;
@@ -111,6 +112,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   protected taskModalData: {visible?: boolean, assignee?: string, comment?: string, conceptVersion?: CodeSystemEntityVersion} = {};
   @ViewChild("taskModalForm") public taskModalForm?: NgForm;
   @ViewChild(ResourceTasksWidgetComponent) public resourceTasksWidgetComponent?: ResourceTasksWidgetComponent;
+  @ViewChild(ConceptDrawerSearchComponent) public conceptDrawerSearchComponent?: ConceptDrawerSearchComponent;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -303,11 +305,11 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   };
 
   protected getDesignations = (concept: CodeSystemConcept): Designation[] => {
-    return concept.versions.flatMap(v => v.designations).filter(d => isDefined(d));
+    return concept.versions?.flatMap(v => v.designations).filter(d => isDefined(d));
   };
 
   protected getPropertyValues = (concept: CodeSystemConcept): EntityPropertyValue[] => {
-    return concept.versions.flatMap(v => v.propertyValues).filter(pv => isDefined(pv));
+    return concept.versions?.flatMap(v => v.propertyValues).filter(pv => isDefined(pv));
   };
 
   protected filterPropertyValues = (pv: EntityPropertyValue, selectedProperties: string[], csProperties: EntityProperty[]): boolean => {
@@ -338,7 +340,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
     if (concept?.code === this.selectedConcept?.code) {
       this.selectedConcept = undefined;
     } else {
-      this.selectedConcept = {code: concept.code, version: concept.versions[concept.versions.length - 1]};
+      this.selectedConcept = {code: concept.code, version: concept.versions?.[concept.versions.length - 1]};
     }
   }
 
@@ -458,5 +460,9 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
         });
       });
     });
+  }
+
+  public createSupplement(versionIds: number[]): void {
+    this.codeSystemService.supplementEntityVersions(this.codeSystem?.id, this.version?.version, versionIds).subscribe(() => this.loadData());
   }
 }

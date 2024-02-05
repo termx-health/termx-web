@@ -99,6 +99,7 @@
 			"name": "Computable name",
 			"narrative": "Narrative",
 			"plural": "Code Systems",
+			"single": "Code System",
 			"properties": "Properties",
 			"publisher": "Publisher",
 			"sequence": "Sequence for concept code",
@@ -120,7 +121,8 @@
 			"code-system": "Code system",
 			"description": "Description",
 			"type": "Type",
-			"versions": "Concept versions"
+			"versions": "Concept versions",
+			"plural": "Concepts"
 		},
 		"code-system-entity": {
 			"type": "Type",
@@ -143,6 +145,7 @@
 			"status": "Status"
 		},
 		"code-system-version": {
+			"single": "Code System Version",
 			"description": "Description",
 			"entities": "Entity versions",
 			"expiration-date": "Expected use until",
@@ -773,6 +776,11 @@
 		"sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
 	},
 	"web": {
+		"concept-drawer": {
+			"add-all": "Add all",
+			"add-selected": "Add selected",
+			"code-system-required": "Code System is required"
+		},
 		"code-system-checklist": {
 			"errors": "Errors",
 			"passed": "Passed",
@@ -834,7 +842,10 @@
 			"form": {
 				"add-header": "Create a new code system",
 				"concepts": {
+					"properties": "Properties",
+					"designation-languages": "Designation languages",
 					"add-concept": "Add concept",
+					"add-supplement-concept": "Add supplement concept",
 					"concept": "Concept",
 					"contains": "Contains",
 					"eq": "Equals",

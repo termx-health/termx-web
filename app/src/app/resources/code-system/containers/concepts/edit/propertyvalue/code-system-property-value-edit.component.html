@@ -16,7 +16,8 @@
               name="{{i}}-propertyValue"
               [property]="pv.entityPropertyId | apply:getProperty:properties"
               [codeSystem]="codeSystemId"
-              [required]="(i | apply:isRequired:properties)"></tw-property-value-input>
+              [required]="(i | apply:isRequired:properties)"
+              [viewMode]="pv.supplement"></tw-property-value-input>
         </m-form-item>
       </div>
     </div>
@@ -27,7 +28,7 @@
     </div>
     <div class="col">
         <div class="row" *ngFor="let pv of propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue; let i = index">
-          <m-icon *ngIf="!(i | apply:isRequired:properties)" [mCode]="'close'" class="m-clickable" (click)="deleteProperty(pv)"></m-icon>
+          <m-icon *ngIf="!(i | apply:isRequired:properties) && !pv.supplement" [mCode]="'close'" class="m-clickable" (click)="deleteProperty(pv)"></m-icon>
         </div>
     </div>
   </div>

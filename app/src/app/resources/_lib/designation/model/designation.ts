@@ -10,5 +10,5 @@ export class Designation {
   public description?: string;
   public status?: string;
 
-  public supplementId?: number;
+  public supplement?: boolean;
 }

@@ -147,7 +147,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
   }
 
   public duplicateVersion(version: CodeSystemEntityVersion): void {
-    this.loader.wrap('duplicate', this.codeSystemService.duplicateEntityVersion(this.codeSystemId!, this.concept.id, version.id!))
+    this.loader.wrap('duplicate', this.codeSystemService.duplicateEntityVersion(this.codeSystemId!, version.id!))
       .subscribe(() => {
         if (isDefined(this.codeSystemVersion)) {
           this.resourceContextComponent.unselectResourceOrVersion();
