@@ -29,7 +29,7 @@
   <div>
     <h2>Content Logical Definition</h2>
     <ul>
-      <li *ngFor="let i of valueSet.compose.include">Include all codes defined in <a (click)="openCodeSystem(i.system)">{{i.system}}</a></li>
+      <li *ngFor="let i of valueSet.compose.include">Include {{i.concept?.length ? i.concept.length : 'all'}} codes defined in <a (click)="openCodeSystem(i.system)">{{i.system}}</a></li>
     </ul>
   </div>
 
