@@ -463,6 +463,9 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   }
 
   public createSupplement(versionIds: number[]): void {
-    this.codeSystemService.supplementEntityVersions(this.codeSystem?.id, this.version?.version, versionIds).subscribe(() => this.loadData());
+    this.codeSystemService.supplementEntityVersions(this.codeSystem?.id, this.version?.version, {ids: versionIds}).subscribe(() => this.loadData());
+  }
+  public createSnomedSupplement(code: string): void {
+    this.codeSystemService.supplementEntityVersions(this.codeSystem?.id, this.version?.version, {snomedCode: code}).subscribe(() => this.loadData());
   }
 }

@@ -15,7 +15,8 @@ export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
   @Input() public codeSystemVersion: string;
   @Input() @BooleanInput() public codeSystemModifiable: string | boolean;
 
-  @Output() public twChange = new EventEmitter<number[]>();
+  @Output() public conceptSelect = new EventEmitter<number[]>();
+  @Output() public snomedSelect = new EventEmitter<string>();
 
   protected drawerOpened: boolean;
   protected concepts: SearchResult<CodeSystemConcept> = SearchResult.empty();
@@ -51,6 +52,10 @@ export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
     this.onSelect([id]);
   }
 
+  protected selectConceptCode(code: string): void {
+    this.snomedSelect.emit(code);
+  }
+
   protected selectAll(): void {
     this.conceptService.search({ codeSystem: this.codeSystem, codeSystemVersion: this.codeSystemVersion, limit: -1}).subscribe(r => {
       this.onSelect(r.data?.flatMap(c => c.versions.map(v => v.id)));
@@ -62,7 +67,7 @@ export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
   }
 
   protected onSelect(ids: number[]): void {
-    this.twChange.emit(ids);
+    this.conceptSelect.emit(ids);
     this.closeDrawer();
   }
 

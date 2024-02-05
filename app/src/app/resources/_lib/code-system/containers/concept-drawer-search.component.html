@@ -17,29 +17,32 @@
         <tw-code-system-version-select name="codeSystemVersion" [(ngModel)]="codeSystemVersion" [codeSystemId]="codeSystem" valueType="version"/>
       </m-form-item>
     </m-form-row>
-    <m-form-row>
-      <m-form-item mName="text">
+
+
+    <tw-snomed-search *ngIf="codeSystem === 'snomed-ct'" (conceptSelected)="selectConceptCode($event)"></tw-snomed-search>
+
+    <ng-container *ngIf="codeSystem !== 'snomed-ct'">
+      <m-form-row>
+        <m-form-item mName="text">
           <m-input style="flex: 4" name="text" [(ngModel)]="searchInput" (mChange)="searchUpdate.next($event)" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
-      </m-form-item>
-    </m-form-row>
-
-    <tw-snomed-search *ngIf="codeSystem === 'snomed-ct'"></tw-snomed-search>
-
-    <m-list *ngIf="codeSystem !== 'snomed-ct'">
-      <m-list-item *ngFor="let concept of concepts?.data">
-        <div class="m-title--bold">{{concept.code}}</div>
-        <div class="m-subtitle">{{concept | apply:getDisplay}}</div>
-        <div style="margin-left: 1rem">
-          <div class="m-items-middle" *ngFor="let ver of concept.versions;let i = index">
-            <m-checkbox [(ngModel)]="ver['selected']" name="selected-{{i}}"></m-checkbox>
-            <a (mClick)="selectConcept(ver.id)">{{ver.created | localDate}}</a>
+        </m-form-item>
+      </m-form-row>
+      <m-list>
+        <m-list-item *ngFor="let concept of concepts?.data">
+          <div class="m-title--bold">{{concept.code}}</div>
+          <div class="m-subtitle">{{concept | apply:getDisplay}}</div>
+          <div style="margin-left: 1rem">
+            <div class="m-items-middle" *ngFor="let ver of concept.versions;let i = index">
+              <m-checkbox [(ngModel)]="ver['selected']" name="selected-{{i}}"></m-checkbox>
+              <a (mClick)="selectConcept(ver.id)">{{ver.created | localDate}}</a>
+            </div>
           </div>
-        </div>
-      </m-list-item>
-      <m-list-item *ngIf="concepts?.meta?.total > concepts?.data?.length" (mClick)="loadConcepts(codeSystem, codeSystemVersion)" mClickable>
-        Load more
-      </m-list-item>
-    </m-list>
+        </m-list-item>
+        <m-list-item *ngIf="concepts?.meta?.total > concepts?.data?.length" (mClick)="loadConcepts(codeSystem, codeSystemVersion)" mClickable>
+          Load more
+        </m-list-item>
+      </m-list>
+    </ng-container>
 
   </m-card>
 </m-drawer>

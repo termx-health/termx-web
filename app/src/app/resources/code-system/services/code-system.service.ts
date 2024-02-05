@@ -100,11 +100,11 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/${id}/duplicate`, {});
   }
 
-  public supplementEntityVersions(codeSystemId: string, codeSystemVersion: string, ids: number[]): Observable<void> {
+  public supplementEntityVersions(codeSystemId: string, codeSystemVersion: string, request: {ids?: number[], snomedCode?: string}): Observable<void> {
     if (isDefined(codeSystemVersion)) {
-      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${codeSystemVersion}/entity-versions/supplement`, {ids: ids});
+      return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${codeSystemVersion}/entity-versions/supplement`, request);
     }
-    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/supplement`, {ids: ids});
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/supplement`, request);
   }
 
   public unlinkEntityVersions(codeSystemId: string, codeSystemVersion: string, entityVersionIds: number[]): Observable<void> {
