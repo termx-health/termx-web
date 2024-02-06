@@ -11,7 +11,14 @@
 
       <!-- Concept info -->
       <m-card *ngIf="concept">
-        <m-title *m-card-header [mTitle]="mode === 'edit' ? concept.code : 'web.code-system-concept.form.add-header'" class="m-bold"></m-title>
+        <div *m-card-header class="m-justify-between">
+          <m-title [mTitle]="mode === 'edit' ? concept.code : 'web.code-system-concept.form.add-header'" class="m-bold"></m-title>
+          <m-dropdown>
+            <a *m-dropdown-item (mClick)="deleteConcept(concept.code)">
+              {{'core.btn.delete' | translate}}
+            </a>
+          </m-dropdown>
+        </div>
         <form #form="ngForm">
           <ng-container *ngIf="!concept.immutable">
             <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>

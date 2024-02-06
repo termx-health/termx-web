@@ -16,7 +16,7 @@ export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
   @Input() @BooleanInput() public codeSystemModifiable: string | boolean;
 
   @Output() public conceptSelect = new EventEmitter<number[]>();
-  @Output() public snomedSelect = new EventEmitter<string>();
+  @Output() public codeSelect = new EventEmitter<string>();
 
   protected drawerOpened: boolean;
   protected concepts: SearchResult<CodeSystemConcept> = SearchResult.empty();
@@ -53,7 +53,8 @@ export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
   }
 
   protected selectConceptCode(code: string): void {
-    this.snomedSelect.emit(code);
+    this.codeSelect.emit(code);
+    this.closeDrawer();
   }
 
   protected selectAll(): void {

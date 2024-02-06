@@ -157,6 +157,13 @@ export class CodeSystemConceptEditComponent implements OnInit {
       });
   }
 
+  public deleteConcept(code: string): void {
+    if (!isDefined(code)) {
+      return;
+    }
+    this.loader.wrap('concept-delete', this.codeSystemService.deleteConcept(code, this.codeSystemId)).subscribe(() => this.location.back());
+  }
+
   public deleteVersion(id: number): void {
     if (!isDefined(id)) {
       this.concept.versions = [...this.concept.versions.filter(v => isDefined(v.id)) || []];

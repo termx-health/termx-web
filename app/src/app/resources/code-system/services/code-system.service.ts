@@ -61,6 +61,10 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post(`${this.baseUrl}/${codeSystemId}/concepts/transaction`, request);
   }
 
+  public deleteConcept(code: string, codeSystemId: string): Observable<void> {
+    return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}/concepts/${code}`);
+  }
+
   public exportConcepts(codeSystemId: string, version: string, format: string): Observable<LorqueProcess> {
     return this.http.get(`${this.baseUrl}/${codeSystemId}/versions/${version}/concepts/export?format=${format}`)
       .pipe(map(res => res as LorqueProcess));
@@ -100,7 +104,7 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/${id}/duplicate`, {});
   }
 
-  public supplementEntityVersions(codeSystemId: string, codeSystemVersion: string, request: {ids?: number[], snomedCode?: string}): Observable<void> {
+  public supplementEntityVersions(codeSystemId: string, codeSystemVersion: string, request: {ids?: number[], externalSystemCode?: string}): Observable<void> {
     if (isDefined(codeSystemVersion)) {
       return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${codeSystemVersion}/entity-versions/supplement`, request);
     }
