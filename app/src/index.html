@@ -6,20 +6,20 @@
 
   <!-- Primary Meta Tags -->
   <title>TermX</title>
-  <meta name="title" content="TermX" />
-  <meta name="description" content="Unique open-source knowledge development platform" />
+  <meta name="title" content="TermX"/>
+  <meta name="description" content="Unique open-source knowledge development platform"/>
 
   <!-- Open Graph / Facebook -->
-  <meta property="og:type" content="website" />
-  <meta property="og:title" content="TermX" />
-  <meta property="og:description" content="Unique open-source knowledge development platform" />
-  <meta property="og:image" content="./assets/termx-logo.png" />
+  <meta property="og:type" content="website"/>
+  <meta property="og:title" content="TermX"/>
+  <meta property="og:description" content="Unique open-source knowledge development platform"/>
+  <meta property="og:image" content="./assets/termx-logo.png"/>
 
   <!-- Twitter -->
-  <meta property="twitter:card" content="summary_large_image" />
-  <meta property="twitter:title" content="TermX" />
-  <meta property="twitter:description" content="Unique open-source knowledge development platform" />
-  <meta property="twitter:image" content="./assets/termx-logo.png" />
+  <meta property="twitter:card" content="summary_large_image"/>
+  <meta property="twitter:title" content="TermX"/>
+  <meta property="twitter:description" content="Unique open-source knowledge development platform"/>
+  <meta property="twitter:image" content="./assets/termx-logo.png"/>
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="referrer" content="no-referrer">
@@ -27,6 +27,51 @@
   <script src="./assets/env.js"></script>
 </head>
 <body>
-  <tw-root></tw-root>
+
+<style>
+    #preloader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+
+        z-index: 9999;
+        height: 100vh;
+        height: 100dvh;
+        background: #f7f8fa;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 150ms;
+
+        scrollbar-gutter: stable;
+    }
+
+    .preloader-img {
+        width: 80px;
+        height: 80px;
+        transition: 100ms;
+        margin-bottom: 20%;
+        animation: bounce2 1s ease infinite;
+    }
+
+    @keyframes bounce2 {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateY(0);
+        }
+        40% {
+            transform: translateY(-35px);
+        }
+        60% {
+            transform: translateY(-15px);
+        }
+    }
+</style>
+<div id="preloader">
+  <img class="preloader-img" src="./assets/termx-logo-transparent.png" alt="TermX Logo">
+</div>
+
+<tw-root></tw-root>
 </body>
 </html>

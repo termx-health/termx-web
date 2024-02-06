@@ -113,20 +113,20 @@ export class AuthService {
     if (!this.user) {
       return false;
     }
-    return this.includesPrivilege(this.user!.privileges, privilege);
+    return this.includesPrivilege(this.user.privileges, privilege);
   }
 
   public hasAllPrivileges(privileges: string[]): boolean {
     if (!this.user) {
       return false;
     }
-    return privileges.every(p => this.includesPrivilege(this.user!.privileges, p));
+    return privileges.every(p => this.includesPrivilege(this.user.privileges, p));
   }
 
   public hasAnyPrivilege(privileges: string[]): boolean {
     if (!this.user) {
       return false;
     }
-    return privileges.some(p => this.includesPrivilege(this.user!.privileges, p));
+    return privileges.some(p => this.includesPrivilege(this.user.privileges, p));
   }
 }
