@@ -3,7 +3,7 @@ import {MuiPageMenuItem} from '@kodality-web/marina-ui';
 import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
-import {filter, map, pairwise, startWith, switchMap} from 'rxjs';
+import {delay, filter, map, pairwise, startWith, switchMap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {group} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
@@ -53,6 +53,12 @@ export class AppComponent implements OnInit {
       if (fromEmbedded && !toEmbedded) {
         this.router.navigateByUrl('/embedded' + to.url);
       }
+    });
+
+    auth.isAuthenticated.pipe(delay(50)).subscribe(() => {
+      const el = document.getElementById('preloader');
+      el.classList.add('hide');
+      setTimeout(() => el.remove(), 150);
     });
   }
 
