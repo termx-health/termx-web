@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {CodeSystemEntityVersion, CodeSystemEntityVersionSearchParams, CodeSystemVersion} from 'term-web/resources/_lib';
 import {BooleanInput, copyDeep, isDefined, LoadingManager, SearchResult, validateForm} from '@kodality-web/core-util';
@@ -12,7 +12,7 @@ import {TaskService} from 'term-web/task/services/task-service';
   selector: 'tw-code-system-unlinked-concepts',
   templateUrl: 'code-system-unlinked-concepts.component.html'
 })
-export class CodeSystemUnlinkedConceptsComponent implements OnInit {
+export class CodeSystemUnlinkedConceptsComponent implements OnInit, OnChanges {
   @Input() public codeSystem: string;
   @Input() public approvalRequired: boolean;
   @Input() public versions: CodeSystemVersion[];
@@ -39,6 +39,12 @@ export class CodeSystemUnlinkedConceptsComponent implements OnInit {
       distinctUntilChanged(),
       switchMap(() => this.search()),
     ).subscribe(data => this.searchResult = data);
+  }
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['codeSystem'] && this.codeSystem) {
+      this.loadUnlinkedConcepts();
+    }
   }
 
   public loadUnlinkedConcepts(): void {

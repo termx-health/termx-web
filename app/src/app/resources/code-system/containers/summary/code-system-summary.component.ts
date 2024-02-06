@@ -26,8 +26,10 @@ export class CodeSystemSummaryComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    const id = this.route.snapshot.paramMap.get('id');
-    this.loadData(id);
+    this.route.paramMap.subscribe(pm => {
+      const id= pm.get('id');
+      this.loadData(id);
+    });
   }
 
   public openVersionSummary(version: string): void {

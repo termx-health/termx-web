@@ -8,7 +8,7 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {environment} from 'app/src/environments/environment';
 import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
 import {NgForm} from '@angular/forms';
-import {compareDates, DestroyService, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {compareDates, DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {TaskService} from 'term-web/task/services/task-service';
 import {Task} from 'term-web/task/_lib';
 import {LorqueLibService, Provenance} from 'term-web/sys/_lib';
@@ -127,8 +127,8 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     });
   }
 
-  protected getLastProvenance = (provenances: Provenance[], activity: string): Provenance => {
-    return provenances?.filter(p => p.activity === activity).sort((p1, p2) => compareDates(new Date(p2.date), new Date(p1.date)))?.[0];
+  protected getLastProvenance = (provenances: Provenance[], activity?: string): Provenance => {
+    return provenances?.filter(p => !isDefined(activity) || p.activity === activity).sort((p1, p2) => compareDates(new Date(p2.date), new Date(p1.date)))?.[0];
   };
 
   protected openVersionConcepts(): void {

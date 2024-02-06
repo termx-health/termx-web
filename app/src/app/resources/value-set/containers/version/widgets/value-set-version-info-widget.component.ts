@@ -9,7 +9,7 @@ import {ValueSetService} from 'app/src/app/resources/value-set/services/value-se
 import {environment} from 'app/src/environments/environment';
 import {Provenance} from 'term-web/sys/_lib';
 import {NgForm} from '@angular/forms';
-import {compareDates, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {compareDates, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
@@ -110,7 +110,7 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
     });
   }
 
-  protected getLastProvenance = (provenances: Provenance[], activity: string): Provenance => {
-    return provenances?.filter(p => p.activity === activity).sort((p1, p2) => compareDates(new Date(p2.date), new Date(p1.date)))?.[0];
+  protected getLastProvenance = (provenances: Provenance[], activity?: string): Provenance => {
+    return provenances?.filter(p => !isDefined(activity) || p.activity === activity).sort((p1, p2) => compareDates(new Date(p2.date), new Date(p1.date)))?.[0];
   };
 }

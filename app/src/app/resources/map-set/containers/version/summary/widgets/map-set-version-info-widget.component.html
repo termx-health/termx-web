@@ -51,7 +51,7 @@
   <div class="m-items-middle">
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.map-set-version.summary.info.last-modified' | translate}}:
-      {{((provenances | apply:getLastProvenance: 'modified')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
+      {{((provenances | apply:getLastProvenance)?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
   </div>
   <div class="m-items-middle" *ngIf="mapSet?.settings?.reviewRequired">
     <m-icon mCode="calendar"></m-icon>

@@ -30,7 +30,7 @@
   <div class="m-items-middle">
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.code-system-version.summary.info.last-modified' | translate}}:
-      {{((provenances | apply:getLastProvenance: 'modified')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
+      {{((provenances | apply:getLastProvenance)?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
     <a [routerLink]="['/resources/code-systems/compare', {'code-system': version?.codeSystem, 'version': version?.id}]">{{'web.code-system-version.summary.info.show-changes' | translate}}</a>
   </div>
   <div class="m-items-middle" *ngIf="codeSystem?.settings?.reviewRequired">

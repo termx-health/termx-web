@@ -7,7 +7,7 @@ import {ChefService} from 'app/src/app/integration/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {environment} from 'app/src/environments/environment';
 import {NgForm} from '@angular/forms';
-import {compareDates, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {compareDates, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {TaskService} from 'term-web/task/services/task-service';
 import {Task} from 'term-web/task/_lib';
 import {Provenance} from 'term-web/sys/_lib';
@@ -96,7 +96,7 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
     });
   }
 
-  protected getLastProvenance = (provenances: Provenance[], activity: string): Provenance => {
-    return provenances?.filter(p => p.activity === activity).sort((p1, p2) => compareDates(new Date(p2.date), new Date(p1.date)))?.[0];
+  protected getLastProvenance = (provenances: Provenance[], activity?: string): Provenance => {
+    return provenances?.filter(p => !isDefined(activity) || p.activity === activity).sort((p1, p2) => compareDates(new Date(p2.date), new Date(p1.date)))?.[0];
   };
 }
