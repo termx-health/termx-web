@@ -69,14 +69,14 @@
           <tr *mTableRow="let r">
             <td>{{r.resourceType}}</td>
             <td>
-              <a *ngIf="release?.status === 'draft'" (mClick)="modalData = {resource: r, visible: true}">{{r.resourceId}}</a>
-              <label *ngIf="release?.status !== 'draft'">{{r.resourceId}}</label>
+              <a (mClick)="openResource(r.resourceType, r.resourceId, r.resourceVersion, 'summary')">{{r.resourceId}}</a>
             </td>
             <td>{{r.resourceVersion}}</td>
             <td>{{r.resourceNames | localName}}</td>
             <td><a>{{r.errorCount}}</a></td>
             <td *ngIf="release?.status === 'draft'">
               <m-dropdown *twPrivileged="release?.id + '.Release.edit'">
+                <a *m-dropdown-item (mClick)="modalData = {resource: r, visible: true}">{{'core.btn.edit' | translate}}</a>
                 <a *m-dropdown-item (mClick)="deleteResource(r.id)">{{'core.btn.delete' | translate}}</a>
               </m-dropdown>
             </td>
@@ -106,9 +106,11 @@
           <m-no-data *ngIf="!(checklists?.length > 0)"></m-no-data>
           <m-list *ngIf="checklists?.length > 0" mSeparated>
             <m-list-item *ngFor="let group of (checklists | apply:collectChecklists) | keyvalue">
-              <div class="m-justify-between">
-                <a class="m-bold" (mClick)="openResource(group.value?.[0]?.resourceType, group.value?.[0]?.resourceId)">{{group.value?.[0]?.resourceId}}</a>
-                <a (mClick)="runChecks(group.value?.[0]?.resourceType, group.value?.[0]?.resourceId)">
+              <div class="m-justify-between" *ngIf="group.value?.[0] as first">
+                <a class="m-bold" (mClick)="openResource(first.resourceType, first.resourceId, first.assertions?.[0]?.resourceVersion, 'checklists')">
+                  {{group.key}}
+                </a>
+                <a (mClick)="runChecks(first.resourceType, first.resourceId, first.assertions?.[0]?.resourceVersion)">
                   <m-icon mCode="reload"/>
                 </a>
               </div>

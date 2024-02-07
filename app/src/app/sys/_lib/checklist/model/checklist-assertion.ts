@@ -1,6 +1,7 @@
 
 export class ChecklistAssertion {
   public id?: number;
+  public resourceVersion?: string;
   public passed?: boolean;
   public executor?: string;
   public executionDate?: Date;

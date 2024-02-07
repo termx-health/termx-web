@@ -97,17 +97,18 @@ export class ReleaseSummaryComponent implements OnInit {
     resources.forEach(r => this.loader.wrap('load-checks', this.checklistService.search({
       resourceType: r.resourceType,
       resourceId: r.resourceId,
+      resourceVersion: r.resourceVersion,
       assertionsDecorated: true
     })).subscribe(res => this.checklists = [...this.checklists, ...res.data?.filter(c => !c.assertions?.[0]?.passed)]));
   }
 
-  protected runChecks(resourceType?: string, resourceId?: string): void {
-    if (!resourceType && !resourceId) {
+  protected runChecks(resourceType?: string, resourceId?: string, resourceVersion?: string): void {
+    if (!resourceType && !resourceId && !resourceVersion) {
       this.resources.filter(r => isDefined(r.resourceType) && isDefined(r.resourceId))
-        .forEach(r => this.runChecks(r.resourceType, r.resourceId));
+        .forEach(r => this.runChecks(r.resourceType, r.resourceId, r.resourceVersion));
       return;
     }
-    const request = {resourceType: resourceType, resourceId: resourceId};
+    const request = {resourceType: resourceType, resourceId: resourceId, resourceVersion: resourceVersion};
     this.loader.wrap('run-check', this.checklistService.runChecks(request)).subscribe(() => this.loadChecklist(this.resources));
   }
 
@@ -115,12 +116,18 @@ export class ReleaseSummaryComponent implements OnInit {
     if (!isDefined(checklists)) {
       return undefined;
     }
-    return collect(checklists, c => c.resourceId + c.resourceType);
+    return collect(checklists, c => `${c.resourceType}  ${c.resourceId}  ${c.assertions?.[0]?.resourceVersion}`);
   };
 
-  protected openResource(resourceType: string, resourceId: string): void {
+  protected openResource(resourceType: string, resourceId: string, resourceVersion: string, action: 'summary' | 'checklists'): void {
     if (resourceType === 'CodeSystem') {
-      this.router.navigate(['/resources/code-systems', resourceId, 'checklists']);
+      this.router.navigate(['/resources/code-systems', resourceId, 'versions', resourceVersion, action]);
+    }
+    if (resourceType === 'ValueSet') {
+      this.router.navigate(['/resources/value-sets', resourceId, 'versions', resourceVersion, action]);
+    }
+    if (resourceType === 'MapSet') {
+      this.router.navigate(['/resources/map-sets', resourceId, 'versions', resourceVersion, action]);
     }
   }
 

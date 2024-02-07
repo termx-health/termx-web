@@ -11,6 +11,7 @@ import {AuthService} from 'term-web/core/auth';
 })
 export class CodeSystemChecklistValidationComponent {
   @Input() public codeSystemId: string;
+  @Input() public codeSystemVersion: string;
   @Input() public showUnaccomplished: boolean;
   @Output() public emptyConfiguration = new EventEmitter<void>();
 
@@ -32,7 +33,7 @@ export class CodeSystemChecklistValidationComponent {
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['codeSystemId'] && this.codeSystemId) {
+    if ((changes['codeSystemId'] || changes['codeSystemVersion']) && this.codeSystemId && this.codeSystemVersion) {
       this.loadChecklist(this.codeSystemId);
     }
   }
@@ -82,20 +83,23 @@ export class CodeSystemChecklistValidationComponent {
   };
 
   protected createAssertion(checklistId: number, passed: boolean): void {
-    this.loader.wrap('create-assertion', this.checklistService.createAssertion(checklistId, passed))
+    this.loader.wrap('create-assertion', this.checklistService.createAssertion(checklistId, this.codeSystemVersion, passed))
       .subscribe(() => this.loadChecklist(this.codeSystemId));
   }
 
   protected runCheck(checklistId: number): void {
-    this.loader.wrap('create-assertion', this.checklistService.runChecks({checklistId: checklistId}))
-      .subscribe(() => this.loadChecklist(this.codeSystemId));
+    this.loader.wrap('create-assertion', this.checklistService.runChecks({
+      checklistId: checklistId,
+      resourceVersion: this.codeSystemVersion
+    })).subscribe(() => this.loadChecklist(this.codeSystemId));
   }
 
   protected runChecks(ruleTarget: string): void {
     this.loader.wrap('create-assertion', this.checklistService.runChecks({
       ruleTarget: ruleTarget,
       resourceType: 'CodeSystem',
-      resourceId: this.codeSystemId
+      resourceId: this.codeSystemId,
+      resourceVersion: this.codeSystemVersion
     })).subscribe(() => this.loadChecklist(this.codeSystemId));
   }
 

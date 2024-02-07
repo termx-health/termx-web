@@ -21,8 +21,8 @@ export class ChecklistService extends ChecklistLibService {
     return this.http.delete<void>(`${this.baseUrl}/rules/${id}`);
   }
 
-  public createAssertion(checklistId: number, passed: boolean): Observable<any> {
-    return this.http.post(`${this.baseUrl}/${checklistId}/assertions`, {passed: passed});
+  public createAssertion(checklistId: number, resourceVersion: string, passed: boolean): Observable<any> {
+    return this.http.post(`${this.baseUrl}/${checklistId}/assertions`, {resourceVersion: resourceVersion, passed: passed});
   }
 
   public runChecks(request: ChecklistValidationRequest): Observable<any> {

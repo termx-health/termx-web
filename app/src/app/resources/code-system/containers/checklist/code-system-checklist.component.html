@@ -18,6 +18,7 @@
     <div>
       <tw-cs-checklist-validation *ngIf="mode === 'validation'"
           [codeSystemId]="codeSystem?.id"
+          [codeSystemVersion]="version?.version"
           [showUnaccomplished]="!validationShowAll"
           (emptyConfiguration)="mode = 'configuration'; emptyConfiguration = true"/>
       <tw-cs-checklist-configuration *ngIf="mode === 'configuration'" resourceType="CodeSystem" [resourceId]="codeSystem?.id"/>
