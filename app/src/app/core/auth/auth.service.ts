@@ -48,7 +48,7 @@ export class AuthService {
         const redirectOriginUrl = sessionStorage.getItem(REDIRECT_ORIGIN_URL);
         if (redirectOriginUrl) {
           sessionStorage.removeItem(REDIRECT_ORIGIN_URL);
-          router.navigate([redirectOriginUrl]);
+          window.location.replace(redirectOriginUrl);
         }
       });
   }
