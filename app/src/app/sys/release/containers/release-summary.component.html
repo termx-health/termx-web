@@ -112,12 +112,15 @@
                   <m-icon mCode="reload"/>
                 </a>
               </div>
-              <div *ngFor="let c of group.value" class="m-items-middle">
-                <m-icon *ngIf="c | apply:getCheckCode as code" [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
-                <div class="m-bold">{{c.rule.code}}</div>
-                <div *ngIf=" c.assertions?.[0]?.errors">
-                  <div *ngFor="let err of c.assertions[0].errors">{{err.error}}</div>
+              <div *ngFor="let c of group.value">
+                <div class="m-items-middle">
+                  <m-icon *ngIf="c | apply:getCheckCode as code" [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
+                  <div class="m-bold">{{c.rule.code}}</div>
+                  <div *ngIf=" c.assertions?.[0]?.errors">
+                    <div *ngFor="let err of c.assertions[0].errors">{{err.error}}</div>
+                  </div>
                 </div>
+                <div>{{c.rule.title | localName}}</div>
               </div>
             </m-list-item>
           </m-list>
