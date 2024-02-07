@@ -13,12 +13,14 @@
     </m-select>
 
     <!-- Add action -->
-    <tw-add-button *ngIf="!viewMode && null | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">
-      {{'web.code-system.form.concepts.add-concept' | translate}}
-    </tw-add-button>
-    <tw-add-button *ngIf="!viewMode && codeSystem.baseCodeSystem" (click)="conceptDrawerSearchComponent.openDrawer()">
-      {{'web.code-system.form.concepts.add-supplement-concept' | translate}}
-    </tw-add-button>
+    <ng-container *ngIf="!viewMode">
+      <tw-add-button *ngIf="null | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">
+        {{'web.code-system.form.concepts.add-concept' | translate}}
+      </tw-add-button>
+      <tw-add-button *ngIf="codeSystem.baseCodeSystem" (click)="conceptDrawerSearchComponent.openDrawer()">
+        {{'web.code-system.form.concepts.add-supplement-concept' | translate}}
+      </tw-add-button>
+    </ng-container>
 
     <!-- Validation -->
     <m-button
