@@ -130,6 +130,10 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
       return;
     }
 
+    this.initConcepts();
+  }
+
+  private initConcepts(): void {
     if (this.codeSystem.hierarchyMeaning) {
       this.groupOpened = true;
       this.expandTree();
@@ -463,9 +467,9 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   }
 
   public createSupplement(versionIds: number[]): void {
-    this.codeSystemService.supplementEntityVersions(this.codeSystem?.id, this.version?.version, {ids: versionIds}).subscribe(() => this.loadData());
+    this.codeSystemService.supplementEntityVersions(this.codeSystem?.id, this.version?.version, {ids: versionIds}).subscribe(() => this.initConcepts());
   }
   public createExternalSupplement(code: string): void {
-    this.codeSystemService.supplementEntityVersions(this.codeSystem?.id, this.version?.version, {externalSystemCode: code}).subscribe(() => this.loadData());
+    this.codeSystemService.supplementEntityVersions(this.codeSystem?.id, this.version?.version, {externalSystemCode: code}).subscribe(() => this.initConcepts());
   }
 }
