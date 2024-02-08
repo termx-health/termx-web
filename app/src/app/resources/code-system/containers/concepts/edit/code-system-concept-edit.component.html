@@ -172,7 +172,7 @@
               <tw-add-button *m-dropdown-container>
                 {{ 'web.code-system-concept-version.property-value.add-property-value' | translate }}
               </tw-add-button>
-              <ng-container *ngFor="let prop of codeSystem.properties ">
+              <ng-container *ngFor="let prop of codeSystem.properties | filter: filterProperties: 'property'">
                 <a *m-dropdown-item (mClick)="addPropertyValue(prop)">{{ prop.name }}</a>
               </ng-container>
             </m-dropdown>
