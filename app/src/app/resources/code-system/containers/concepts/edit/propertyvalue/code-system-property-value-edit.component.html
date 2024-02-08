@@ -1,54 +1,56 @@
-<m-no-data *ngIf="!propertyValues?.length"/>
-
-
-<!--        Edit mode        -->
-<form *ngIf="!viewMode" #form="ngForm">
-  <div class="m-items-middle">
-    <div class="col">
-      <div class="row" *ngFor="let pv of propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue">
-        <span style="white-space: nowrap" class="m-subtitle">{{pv.entityProperty}}</span>
-      </div>
-    </div>
-    <div class="col" style="width: 100%">
-      <div class="row" *ngFor="let pv of propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue; let i = index">
-        <m-form-item style="width: 100%" *ngIf="pv.entityPropertyId" mName="{{i}}-propertyValue">
-          <tw-property-value-input [(ngModel)]="pv.value"
-              name="{{i}}-propertyValue"
-              [property]="pv.entityPropertyId | apply:getProperty:properties"
-              [codeSystem]="codeSystemId"
-              [required]="(i | apply:isRequired:properties)"></tw-property-value-input>
-        </m-form-item>
-      </div>
-    </div>
-    <div class="col">
-      <div class="row" *ngFor="let pv of propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue; let i = index">
-        <span>{{pv.value?.code}}</span>
-      </div>
-    </div>
-    <div class="col">
-        <div class="row" *ngFor="let pv of propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue; let i = index">
-          <m-icon *ngIf="!(i | apply:isRequired:properties)" [mCode]="'close'" class="m-clickable" (click)="deleteProperty(pv)"></m-icon>
+<m-no-data *ngIf="!propertyValues?.length || !properties?.length"/>
+<ng-container *ngIf="propertyValues?.length && properties?.length">
+  <!--        Edit mode        -->
+  <form *ngIf="!viewMode" #form="ngForm">
+    <div class="m-items-middle" *ngIf="{data: propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue} as d">
+      <div class="col">
+        <div class="row" *ngFor="let pv of d.data">
+          <span style="white-space: nowrap" class="m-subtitle">{{ pv.entityProperty }}</span>
         </div>
+      </div>
+      <div class="col" style="width: 100%">
+        <div class="row" *ngFor="let pv of d.data">
+          <m-form-item style="width: 100%" *ngIf="pv.entityPropertyId" mName="{{pv._key}}-propertyValue">
+            <tw-property-value-input name="{{pv._key}}-propertyValue"
+                [(ngModel)]="pv.value"
+                [property]="pv.entityPropertyId | apply:getProperty:properties"
+                [codeSystem]="codeSystemId"
+                [required]="(pv._key | apply:isRequired:properties)"></tw-property-value-input>
+          </m-form-item>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row" *ngFor="let pv of d.data">
+          <span>{{ pv.value?.code }}</span>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row" *ngFor="let pv of d.data">
+          <m-icon *ngIf="!(pv._key | apply:isRequired:properties)" [mCode]="'close'" class="m-clickable" (click)="deleteProperty(pv)"></m-icon>
+        </div>
+      </div>
     </div>
-  </div>
-</form>
+  </form>
 
 
-<!--        View mode        -->
-<div *ngIf="viewMode" class="m-items-middle">
-  <div class="col">
-    <div class="row" *ngFor="let pv of propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue; let i = index">
-      <span style="white-space: nowrap" class="m-subtitle">{{pv.entityProperty}}</span>
-    </div>
+  <!--        View mode        -->
+  <div *ngIf="viewMode" class="m-items-middle">
+    <ng-container *ngIf="{data: propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue} as d">
+      <div class="col">
+        <div class="row" *ngFor="let pv of d.data">
+          <span style="white-space: nowrap" class="m-subtitle">{{ pv.entityProperty }}</span>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row" *ngFor="let pv of d.data">
+          <tw-property-value-input [ngModel]="pv.value" [property]="pv.entityPropertyId | apply: getProperty: properties" [codeSystem]="codeSystemId" viewMode/>
+        </div>
+      </div>
+      <div class="col">
+        <div class="row" *ngFor="let pv of d.data">
+          <span>{{ pv.value?.code }}</span>
+        </div>
+      </div>
+    </ng-container>
   </div>
-  <div class="col">
-    <div class="row" *ngFor="let pv of propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue; let i = index">
-      <tw-property-value-input [ngModel]="pv.value" [property]="pv.entityPropertyId | apply: getProperty: properties" [codeSystem]="codeSystemId" viewMode/>
-    </div>
-  </div>
-  <div class="col">
-    <div class="row" *ngFor="let pv of propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue; let i = index">
-      <span>{{pv.value?.code}}</span>
-    </div>
-  </div>
-</div>
+</ng-container>

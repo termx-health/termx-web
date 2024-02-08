@@ -3,72 +3,75 @@
 
 <ng-container *ngIf="designations | apply: collectDesignations as groups">
   <ng-container *ngFor="let dType of groups | keys">
-    <div class="m-subtitle">{{dType}}</div>
-
+    <div class="m-subtitle">{{ dType }}</div>
 
     <!--        Edit mode        -->
     <div *ngIf="!viewMode" class="m-items-middle">
-      <div class="col">
-        <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <span *ngIf="d.language" class="italic">{{d.language}}</span>
-          <tw-value-set-concept-select *ngIf="!d.language" name="{{i}}-lang" [(ngModel)]="d.language" valueSet="languages"/>
+      <ng-container *ngIf="{designations: groups[dType] | sort: 'language'} as t">
+        <div class="col">
+          <div class="row" *ngFor="let d of t.designations">
+            <span *ngIf="d.language" class="italic">{{ d.language }}</span>
+            <tw-value-set-concept-select *ngIf="!d.language" name="{{d._key}}-lang" [(ngModel)]="d.language" valueSet="languages"/>
+          </div>
         </div>
-      </div>
-      <div class="col" style="width: 100%">
-        <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <m-input name="{{i}}-name" [(ngModel)]="d.name" style="width: 100%"/>
+        <div class="col" style="width: 100%">
+          <div class="row" *ngFor="let d of t.designations">
+            <m-input name="{{d._key}}-name" [(ngModel)]="d.name" style="width: 100%"/>
+          </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <m-select name="{{i}}-caseSignificance" [(ngModel)]="d.caseSignificance" [allowClear]="false">
-            <m-option *ngFor="let cs of ['ci', 'cs', 'cl']" [mValue]="cs" [mLabel]="cs" [mLabelTemplate]="option">
-              <ng-template #option>{{'web.case-sensitive.options.' + cs | translate}}</ng-template>
-            </m-option>
-          </m-select>
+        <div class="col">
+          <div class="row" *ngFor="let d of t.designations">
+            <m-select name="{{d._key}}-caseSignificance" [(ngModel)]="d.caseSignificance" [allowClear]="false">
+              <m-option *ngFor="let cs of ['ci', 'cs', 'cl']" [mValue]="cs" [mLabel]="cs" [mLabelTemplate]="option">
+                <ng-template #option>{{ 'web.case-sensitive.options.' + cs | translate }}</ng-template>
+              </m-option>
+            </m-select>
+          </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <m-button (mClick)="d.preferred = !d.preferred">
-            <m-icon [mOptions]="{nzTheme : d.preferred ? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
-          </m-button>
+        <div class="col">
+          <div class="row" *ngFor="let d of t.designations">
+            <m-button (mClick)="d.preferred = !d.preferred">
+              <m-icon [mOptions]="{nzTheme : d.preferred ? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
+            </m-button>
+          </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <tw-value-set-concept-select name="{{i}}-status" [(ngModel)]="d.status" valueSet="publication-status" [allowClear]="false"/>
+        <div class="col">
+          <div class="row" *ngFor="let d of t.designations">
+            <tw-value-set-concept-select name="{{d._key}}-status" [(ngModel)]="d.status" valueSet="publication-status" [allowClear]="false"/>
+          </div>
         </div>
-      </div>
-      <div class="col">
-        <div class="row m-clickable" *ngFor="let d of groups[dType] | sort: 'language'; let i = index" (click)="deleteDesignation(d)">
-          <m-icon [mCode]="'close'"></m-icon>
+        <div class="col">
+          <div class="row m-clickable" *ngFor="let d of t.designations" (click)="deleteDesignation(d)">
+            <m-icon [mCode]="'close'"></m-icon>
+          </div>
         </div>
-      </div>
+      </ng-container>
     </div>
 
 
     <!--        View mode        -->
     <div *ngIf="viewMode" class="m-items-middle">
-      <div class="col">
-        <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <span class="italic">{{d.language}}</span>
-        </div>
-      </div>
-      <div class="col" style="width: 100%">
-        <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <span>{{d.name}}</span>
-        </div>
-      </div>
-      <div class="col">
-        <div class="row" *ngFor="let d of groups[dType] | sort: 'language'; let i = index">
-          <div class="m-items-middle">
-            <span m-tooltip [mTitle]="'web.case-sensitive.options.' + d.caseSignificance">{{d.caseSignificance}}</span>
-            <m-icon [mOptions]="{nzTheme : d.preferred ? 'fill' : 'outline'}" [mCode]="'star'"/>
-            <span class="tw-circled" [style.color]="d.status === 'draft' ? 'var(&#45;&#45;color-amber-7)' : 'initial'">{{d.status?.[0] | uppercase}}</span>
+      <ng-container *ngIf="{designations: groups[dType] | sort: 'language'} as t">
+        <div class="col">
+          <div class="row" *ngFor="let d of t.designations">
+            <span class="italic">{{ d.language }}</span>
           </div>
         </div>
-      </div>
+        <div class="col" style="width: 100%">
+          <div class="row" *ngFor="let d of t.designations">
+            <span>{{ d.name }}</span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="row" *ngFor="let d of t.designations">
+            <div class="m-items-middle">
+              <span m-tooltip [mTitle]="'web.case-sensitive.options.' + d.caseSignificance">{{ d.caseSignificance }}</span>
+              <m-icon [mOptions]="{nzTheme : d.preferred ? 'fill' : 'outline'}" [mCode]="'star'"/>
+              <span class="tw-circled" [style.color]="d.status === 'draft' ? 'var(&#45;&#45;color-amber-7)' : 'initial'">{{ d.status?.[0] | uppercase }}</span>
+            </div>
+          </div>
+        </div>
+      </ng-container>
     </div>
   </ng-container>
 </ng-container>
