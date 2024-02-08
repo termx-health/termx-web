@@ -94,7 +94,7 @@
           </td>
 
           <td>
-            <m-input [(ngModel)]="item.propertyDelimiter" *ngIf="(['string', 'Coding'] | includes:item.propertyType) && !(['concept-code', 'hierarchical-concept'] | includes:item.propertyName)"></m-input>
+            <m-input [(ngModel)]="item.propertyDelimiter" *ngIf="(['designation', 'string', 'Coding'] | includes:item.propertyType) && !(['concept-code', 'hierarchical-concept'] | includes:item.propertyName)"></m-input>
           </td>
 
           <td>

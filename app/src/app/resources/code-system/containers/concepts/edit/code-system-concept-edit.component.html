@@ -94,10 +94,9 @@
             [resourceId]="conceptVersion.id | toString"
             [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined"></tw-resource-tasks-widget>
       </m-card>
-
     </div>
-    <div style="display: flex; gap: 1rem; flex-direction: column; flex: 2; min-width: 0">
 
+    <div style="display: flex; gap: 1rem; flex-direction: column; flex: 2; min-width: 0">
       <!-- Version info -->
       <m-card *ngIf="conceptVersion">
         <div *m-card-header class="m-justify-between">
@@ -154,17 +153,17 @@
         <!-- Designations -->
         <m-divider></m-divider>
         <m-card class="m-card-inside">
-          <div *m-card-header class="m-justify-between">
-            <m-title mTitle="entities.code-system-entity-version.designations"></m-title>
-            <m-dropdown *ngIf="conceptVersion?.status === 'draft'">
+          <m-title *m-card-header mTitle="entities.code-system-entity-version.designations">
+            <m-dropdown mControls *ngIf="codeSystem && conceptVersion?.status === 'draft'">
               <tw-add-button *m-dropdown-container>
-                {{'web.code-system-concept-version.designation.add-designation' | translate}}
+                {{ 'web.code-system-concept-version.designation.add-designation' | translate }}
               </tw-add-button>
-              <ng-container *ngFor="let prop of codeSystem?.properties | filter: filterProperties: 'designation' ">
-                <a *m-dropdown-item (mClick)="addDesignation(prop)">{{prop.name}}</a>
+              <ng-container *ngFor="let prop of codeSystem.properties | filter: filterProperties: 'designation' ">
+                <a *m-dropdown-item (mClick)="addDesignation(prop)">{{ prop.name }}</a>
               </ng-container>
             </m-dropdown>
-          </div>
+          </m-title>
+
           <tw-code-system-designation-edit #designationEdit
               [properties]="codeSystem?.properties"
               [designations]="conceptVersion?.designations"
@@ -175,17 +174,17 @@
         <!-- Property values -->
         <m-divider></m-divider>
         <m-card class="m-card-inside">
-          <div *m-card-header class="m-justify-between">
-            <m-title mTitle="entities.code-system-entity-version.property-values"></m-title>
-            <m-dropdown *ngIf="conceptVersion?.status === 'draft'">
+          <m-title *m-card-header mTitle="entities.code-system-entity-version.property-values">
+            <m-dropdown mControls *ngIf="codeSystem && conceptVersion?.status === 'draft'">
               <tw-add-button *m-dropdown-container>
-                {{'web.code-system-concept-version.property-value.add-property-value' | translate}}
+                {{ 'web.code-system-concept-version.property-value.add-property-value' | translate }}
               </tw-add-button>
-              <ng-container *ngFor="let prop of codeSystem?.properties | filter: filterProperties: 'property' ">
-                <a *m-dropdown-item (mClick)="addPropertyValue(prop)">{{prop.name}}</a>
+              <ng-container *ngFor="let prop of codeSystem.properties ">
+                <a *m-dropdown-item (mClick)="addPropertyValue(prop)">{{ prop.name }}</a>
               </ng-container>
             </m-dropdown>
-          </div>
+          </m-title>
+
           <tw-code-system-property-value-edit #propertyValueEdit
               [codeSystemId]="codeSystem?.id"
               [properties]="codeSystem?.properties"

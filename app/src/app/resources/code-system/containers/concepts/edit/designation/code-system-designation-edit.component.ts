@@ -1,7 +1,10 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {BooleanInput, collect, isDefined} from '@kodality-web/core-util';
+import {BooleanInput, collect, isDefined, remove} from '@kodality-web/core-util';
 import {Designation, EntityProperty} from 'app/src/app/resources/_lib';
 import {environment} from 'environments/environment';
+import {v4 as uuid} from "uuid";
+
+type ExtendedDesignation = Designation & {_key?: string};
 
 @Component({
   selector: 'tw-code-system-designation-edit',
@@ -36,11 +39,14 @@ import {environment} from 'environments/environment';
 })
 export class CodeSystemDesignationEditComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
-  @Input() public designations?: Designation[];
+  @Input() public designations?: ExtendedDesignation[];
   @Input() public properties?: EntityProperty[];
   @Input() public supportedLangs?: string[];
 
   public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['designations']) {
+      this.designations?.forEach(d => d._key = uuid());
+    }
     if ((changes['properties'] || changes['supportedLangs'])
       && this.properties && this.designations && this.supportedLangs
       && !this.viewMode) {
@@ -52,7 +58,7 @@ export class CodeSystemDesignationEditComponent implements OnChanges {
     return this.designations.filter(d => isDefined(d.name) && d.name !== '');
   }
 
-  protected collectDesignations = (designations: Designation[]): {[dType: string]: Designation[]} => {
+  protected collectDesignations = (designations: ExtendedDesignation[]): {[dType: string]: ExtendedDesignation[]} => {
     return collect(designations, d => d.designationType);
   };
 
@@ -65,6 +71,7 @@ export class CodeSystemDesignationEditComponent implements OnChanges {
         .forEach(l => {
           this.designations.push({designationTypeId: p.id, designationType: p.name, language: l, status: 'draft', caseSignificance: 'ci'});
           this.designations = [...this.designations];
+          this.designations.forEach(d => d._key = uuid());
         });
     });
   }
@@ -73,6 +80,6 @@ export class CodeSystemDesignationEditComponent implements OnChanges {
     if (designation.supplement) {
       return;
     }
-    this.designations = [...this.designations.filter(d => d !== designation)];
+    this.designations = remove(this.designations, designation);
   }
 }

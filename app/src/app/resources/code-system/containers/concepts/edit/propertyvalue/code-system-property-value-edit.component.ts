@@ -1,8 +1,11 @@
 import {Component, Input, OnChanges, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
 import {EntityProperty, EntityPropertyValue} from 'app/src/app/resources/_lib';
 import {NgForm} from '@angular/forms';
-import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, remove, validateForm} from '@kodality-web/core-util';
 import {EntityPropertyValueInputComponent} from 'app/src/app/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
+import {v4 as uuid} from "uuid";
+
+type ExtendedEntityPropertyValue = EntityPropertyValue & {_key?: string};
 
 @Component({
   selector: 'tw-code-system-property-value-edit',
@@ -14,6 +17,7 @@ import {EntityPropertyValueInputComponent} from 'app/src/app/core/ui/components/
       gap: 0.3rem;
       align-self: stretch;
     }
+
     .row {
       flex: 1;
       display: flex;
@@ -23,7 +27,7 @@ import {EntityPropertyValueInputComponent} from 'app/src/app/core/ui/components/
 })
 export class CodeSystemPropertyValueEditComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
-  @Input() public propertyValues?: EntityPropertyValue[];
+  @Input() public propertyValues?: ExtendedEntityPropertyValue[];
   @Input() public properties?: EntityProperty[];
   @Input() public codeSystemId?: string;
 
@@ -31,6 +35,9 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
   @ViewChildren(EntityPropertyValueInputComponent) public propertyValueInputs?: QueryList<EntityPropertyValueInputComponent>;
 
   public ngOnChanges(changes: SimpleChanges): void {
+    if (changes['propertyValues']) {
+      this.propertyValues?.forEach(pv => pv._key = uuid());
+    }
     if ((changes['properties'] || changes['propertyValues'])
       && this.properties && this.propertyValues
       && !this.viewMode) {
@@ -54,7 +61,7 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
     return properties?.find(p => p.id === id);
   };
 
-  protected filterPropertyValue = (v: EntityPropertyValue): boolean => {
+  protected filterPropertyValue = (v: ExtendedEntityPropertyValue): boolean => {
     return !['status', 'is-a', 'parent', 'child', 'partOf', 'groupedBy', 'classifiedWith'].includes(v?.entityProperty);
   };
 
@@ -65,17 +72,21 @@ export class CodeSystemPropertyValueEditComponent implements OnChanges {
       .forEach(p => {
         const pv = {entityPropertyId: p.id, entityProperty: p.name, value: p.type === 'Coding' ? {} : undefined};
         this.propertyValues = [...this.propertyValues || [], pv];
+        this.propertyValues?.forEach(pv => pv._key = uuid());
       });
   }
 
-  protected isRequired = (i: number, properties: EntityProperty[]): boolean => {
-    const val = this.propertyValues.filter(pv => this.filterPropertyValue(pv))[i];
-    const requiredProperty = properties?.find(p => p.id === val.entityPropertyId)?.required;
-    const samePropertyValue = this.propertyValues.find(p => p.entityPropertyId === val.entityPropertyId && this.propertyValues.indexOf(p) < i);
-    return requiredProperty && !samePropertyValue;
+  protected isRequired = (key: string, properties: EntityProperty[]): boolean => {
+    const epValue = this.propertyValues.find(v => v._key === key);
+    const isEpValueRequired = properties?.find(p => p.id === epValue.entityPropertyId)?.required;
+
+    const sameEpValues = this.propertyValues.filter(pv => pv.entityPropertyId === epValue.entityPropertyId);
+    const isEpValueFirst = sameEpValues.indexOf(epValue) === 0;
+
+    return isEpValueRequired && isEpValueFirst;
   };
 
-  protected deleteProperty(propertyValue: EntityPropertyValue): void {
-    this.propertyValues = [...this.propertyValues.filter(pv => pv !== propertyValue)];
+  protected deleteProperty(propertyValue: ExtendedEntityPropertyValue): void {
+    this.propertyValues = remove(this.propertyValues, propertyValue);
   }
 }
