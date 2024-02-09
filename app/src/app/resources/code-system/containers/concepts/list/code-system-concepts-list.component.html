@@ -31,7 +31,13 @@
     </m-button>
 
     <!-- Filter toggle -->
-    <m-button *ngIf="!filter.open && !groupOpened" [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+    <m-button
+        *ngIf="!filter.open"
+        [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'"
+        [disabled]="groupOpened"
+        [mTooltip]="groupOpened" mTitle="web.code-system.form.concepts.filter-disabled"
+        (mClick)="onFilterOpen()"
+    >
       <m-icon mCode="filter"></m-icon>
     </m-button>
   </div>

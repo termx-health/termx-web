@@ -849,7 +849,8 @@
 					"concept": "Concept",
 					"contains": "Contains",
 					"eq": "Equals",
-					"validate": "Validate code system"
+					"validate": "Validate code system",
+					"filter-disabled": "Switch to the flattened list mode to enable the filter functionality"
 				},
 				"delete-property-usages": "Delete property usages",
 				"edit-header": "Edit code system",
