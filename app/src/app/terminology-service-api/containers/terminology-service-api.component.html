@@ -1,23 +1,25 @@
 <m-form-row>
   <m-card *m-form-col mTitle="web.tools.termx-service-api.header">
     <div class="tw-flex-container">
-      <div style="margin-bottom: 0.5rem">{{'web.tools.termx-service-api.content' | translate}}</div>
+      <div style="margin-bottom: 0.5rem">{{ 'web.tools.termx-service-api.content' | translate }}</div>
 
       <m-form-row mGap="1rem">
         <m-card *m-form-col mDisplay="bordered" mTitle="Swagger">
           <div class="m-items-middle">
             <m-button mDisplay="default" (mClick)="openTermXApi()">TermX</m-button>
             <m-button mDisplay="default" (mClick)="openTermXFhirApi()">TermX FHIR</m-button>
-            <m-button mDisplay="dashed" (mClick)="openSnowstormApi()">Snowstorm</m-button>
+            <m-button *ngIf="env.snowstormUrl" mDisplay="dashed" (mClick)="openSnowstormApi()">Snowstorm</m-button>
           </div>
         </m-card>
 
-        <m-card *m-form-col mDisplay="bordered" mTitle="SNOMED CT Browser">
-          <div class="m-items-middle">
-            <m-button mDisplay="default" (mClick)="openSnowstormBrowser()">Public browser</m-button>
-            <m-button mDisplay="dashed" (mClick)="openSnowstormDailyBuildBrowser()">Daily build browser</m-button>
-          </div>
-        </m-card>
+        <ng-container *ngIf="env.snowstormUrl || env.snowstormDailyBuildUrl">
+          <m-card *m-form-col mDisplay="bordered" mTitle="SNOMED CT Browser">
+            <div class="m-items-middle">
+              <m-button *ngIf="env.snowstormUrl" mDisplay="default" (mClick)="openSnowstormBrowser()">Public browser</m-button>
+              <m-button *ngIf="env.snowstormDailyBuildUrl" mDisplay="dashed" (mClick)="openSnowstormDailyBuildBrowser()">Daily build browser</m-button>
+            </div>
+          </m-card>
+        </ng-container>
       </m-form-row>
     </div>
   </m-card>

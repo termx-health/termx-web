@@ -57,8 +57,8 @@ export class AppComponent implements OnInit {
 
     auth.isAuthenticated.pipe(delay(50)).subscribe(() => {
       const el = document.getElementById('preloader');
-      el.classList.add('hide');
-      setTimeout(() => el.remove(), 150);
+      el?.classList.add('hide');
+      setTimeout(() => el?.remove(), 150);
     });
   }
 

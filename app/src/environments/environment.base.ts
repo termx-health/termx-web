@@ -31,6 +31,6 @@ export interface Environment {
   plantUmlUrl: string,
   fmlEditor: string,
 
-  snowstormUrl: string,
-  snowstormDailyBuildUrl: string,
+  snowstormUrl?: string,
+  snowstormDailyBuildUrl?: string,
 }

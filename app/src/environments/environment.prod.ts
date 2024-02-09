@@ -18,6 +18,6 @@ export const environment: Environment = {
   chefUrl: dynamicEnv.chefUrl || '/chef',
   plantUmlUrl: dynamicEnv.plantUmlUrl || '/plantuml',
   fmlEditor: dynamicEnv.fmlEditor || '/fml-editor',
-  snowstormUrl: dynamicEnv.snowstormUrl || 'https://snowstorm-public.kodality.dev/',
-  snowstormDailyBuildUrl: dynamicEnv.snowstormDailyBuildUrl || 'https://snowstorm-public-dailybuild.kodality.dev/',
+  snowstormUrl: dynamicEnv.snowstormUrl,
+  snowstormDailyBuildUrl: dynamicEnv.snowstormDailyBuildUrl,
 };

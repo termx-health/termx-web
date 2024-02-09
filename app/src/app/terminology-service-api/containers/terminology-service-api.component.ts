@@ -5,24 +5,25 @@ import {environment} from 'app/src/environments/environment';
   templateUrl: 'terminology-service-api.component.html',
 })
 export class TerminologyServiceApiComponent {
+  protected env = environment;
 
-  public openTermXApi(): void {
-    window.open(environment.swaggerUrl + '?urls.primaryName=termx', '_blank');
+  protected openTermXApi(): void {
+    window.open(this.env.swaggerUrl + '?urls.primaryName=termx', '_blank');
   }
 
-  public openTermXFhirApi(): void {
-    window.open(environment.swaggerUrl + '?urls.primaryName=termx-fhir', '_blank');
+  protected openTermXFhirApi(): void {
+    window.open(this.env.swaggerUrl + '?urls.primaryName=termx-fhir', '_blank');
   }
 
-  public openSnowstormApi(): void {
-    window.open(environment.snowstormUrl, '_blank');
+  protected openSnowstormApi(): void {
+    window.open(this.env.snowstormUrl, '_blank');
   }
 
-  public openSnowstormBrowser(): void {
-    window.open(environment.snowstormUrl + 'snomed-browser', '_blank');
+  protected openSnowstormBrowser(): void {
+    window.open(this.env.snowstormUrl + 'snomed-browser', '_blank');
   }
 
-  public openSnowstormDailyBuildBrowser(): void {
-    window.open(environment.snowstormDailyBuildUrl + 'snomed-browser', '_blank');
+  protected openSnowstormDailyBuildBrowser(): void {
+    window.open(this.env.snowstormDailyBuildUrl + 'snomed-browser', '_blank');
   }
 }
