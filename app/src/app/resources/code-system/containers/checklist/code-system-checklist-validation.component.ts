@@ -42,6 +42,7 @@ export class CodeSystemChecklistValidationComponent {
     this.loader.wrap('load', this.checklistService.search({
       resourceType: 'CodeSystem',
       resourceId: csId,
+      resourceVersion: this.codeSystemVersion,
       assertionsDecorated: true, limit: -1
     })).subscribe(r => {
       this.checklist = r.data;

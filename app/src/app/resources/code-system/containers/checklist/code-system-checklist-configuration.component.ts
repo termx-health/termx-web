@@ -1,8 +1,9 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
+import {isDefined, isNil, LoadingManager} from '@kodality-web/core-util';
 import {Checklist, ChecklistRule} from 'term-web/sys/_lib';
 import {NgForm} from '@angular/forms';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
+import {MuiEditableTableComponent} from '@kodality-web/marina-ui';
 
 @Component({
   selector: 'tw-cs-checklist-configuration',
@@ -13,6 +14,7 @@ export class CodeSystemChecklistConfigurationComponent implements OnChanges {
   @Input() public resourceId: string;
 
   @ViewChild("form") public form?: NgForm;
+  @ViewChild(MuiEditableTableComponent) public table?: MuiEditableTableComponent<ChecklistRule>;
 
   protected loader = new LoadingManager();
 
@@ -37,25 +39,37 @@ export class CodeSystemChecklistConfigurationComponent implements OnChanges {
   private loadRules(resourceType: string): void {
     this.checklistService.searchRules({resourceType: resourceType, limit: -1})
       .subscribe(r => this.rules = r.data);
-
   }
 
-  protected filterRules = (rule: ChecklistRule, checklist: Checklist[], currentRule: ChecklistRule): boolean => {
-    return rule?.id === currentRule?.id || !checklist.find(c => c.rule?.id === rule?.id);
-  };
-
-  protected removeWhitelistItem(c: Checklist, i: number): void {
-    c.whitelist?.splice(i, 1);
-    c.whitelist = [...c.whitelist];
+  protected removeWhitelistItem(r: ChecklistRule, i: number): void {
+    r['_whitelist']?.splice(i, 1);
+    r['_whitelist'] = [...r['_whitelist']];
   }
 
-  protected addWhitelistItem(c: Checklist): void {
-    c.whitelist = [...(c.whitelist || []), {resourceType: 'Concept'}];
+  protected addWhitelistItem(r: ChecklistRule): void {
+    r['_whitelist'] = [...(r['_whitelist'] || []), {resourceType: 'Concept'}];
   }
 
 
   public save(): void {
-    this.checklistService.save(this.checklist, this.resourceType, this.resourceId)
+    let checklist = this.checklist.filter(cl => {
+      const checkedRule= this.table.mData.find(r => r['_checked'] && r['_checklistId'] === cl.id);
+      cl.whitelist = checkedRule?.['_whitelist'];
+      return isDefined(checkedRule);
+    });
+    checklist = [...checklist, ...this.table.mData.filter(r => r['_checked'] && isNil(r['_checklistId'])).map(r => ({rule: r, whitelist: r['_whitelist']}))];
+    this.loader.wrap('load', this.checklistService.save(checklist, this.resourceType, this.resourceId))
       .subscribe(() => this.loadChecklist(this.resourceType, this.resourceId));
   }
+
+  public mergerChecklist = (rules: ChecklistRule[], checklist: Checklist[]): ChecklistRule[] => {
+   rules.forEach(r => {
+     const cl = checklist.find(c => c.rule.id === r.id);
+     r['_checked'] = isDefined(cl);
+     r['_whitelist'] = cl?.whitelist;
+     r['_checklistId'] = cl?.id;
+   });
+   return rules.filter(r => r.active || r['_checked']);
+  };
+
 }
