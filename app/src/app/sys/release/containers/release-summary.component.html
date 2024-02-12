@@ -103,14 +103,14 @@
               </m-button>
             </div>
           </m-title>
-          <m-no-data *ngIf="!(checklists?.length > 0)"></m-no-data>
-          <m-list *ngIf="checklists?.length > 0" mSeparated>
-            <m-list-item *ngFor="let group of (checklists | apply:collectChecklists) | keyvalue">
+          <m-no-data *ngIf="!((checklists | keyvalue)?.length > 0)"></m-no-data>
+          <m-list *ngIf="(checklists | keyvalue)?.length > 0" mSeparated>
+            <m-list-item *ngFor="let group of (checklists | keyvalue)">
               <div class="m-justify-between" *ngIf="group.value?.[0] as first">
-                <a class="m-bold" (mClick)="openResource(first.resourceType, first.resourceId, first.assertions?.[0]?.resourceVersion, 'checklists')">
+                <a class="m-bold" (mClick)="openResourceFromKey(group.key, 'checklists')">
                   {{group.key}}
                 </a>
-                <a (mClick)="runChecks(first.resourceType, first.resourceId, first.assertions?.[0]?.resourceVersion)">
+                <a (mClick)="runChecksFromKey(group.key)">
                   <m-icon mCode="reload"/>
                 </a>
               </div>

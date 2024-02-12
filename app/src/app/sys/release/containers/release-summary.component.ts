@@ -33,7 +33,7 @@ import {ChecklistService} from 'term-web/sys/checklist/services/checklist.servic
 export class ReleaseSummaryComponent implements OnInit {
   protected release?: Release;
   protected resources?: ReleaseResource[];
-  protected checklists?: Checklist[];
+  protected checklists?: {[key: string]: Checklist[]} = {};
 
   protected loader = new LoadingManager();
   protected showOnlyOpenedTasks: boolean;
@@ -93,13 +93,18 @@ export class ReleaseSummaryComponent implements OnInit {
   }
 
   private loadChecklist(resources: ReleaseResource[]): void {
-    this.checklists = [];
+    this.checklists = {};
     resources.forEach(r => this.loader.wrap('load-checks', this.checklistService.search({
       resourceType: r.resourceType,
       resourceId: r.resourceId,
       resourceVersion: r.resourceVersion,
       assertionsDecorated: true
-    })).subscribe(res => this.checklists = [...this.checklists, ...res.data?.filter(c => !c.assertions?.[0]?.passed)]));
+    })).subscribe(res => {
+      const checklist = res.data?.filter(c => !c.assertions?.[0]?.passed);
+      if (checklist?.length > 0) {
+        this.checklists[`${r.resourceType} ${r.resourceId} ${r.resourceVersion}`] = res.data?.filter(c => !c.assertions?.[0]?.passed);
+      }
+    }));
   }
 
   protected runChecks(resourceType?: string, resourceId?: string, resourceVersion?: string): void {
@@ -112,12 +117,10 @@ export class ReleaseSummaryComponent implements OnInit {
     this.loader.wrap('run-check', this.checklistService.runChecks(request)).subscribe(() => this.loadChecklist(this.resources));
   }
 
-  protected collectChecklists = (checklists: Checklist[]): {[resource: string]: Checklist[]} => {
-    if (!isDefined(checklists)) {
-      return undefined;
-    }
-    return collect(checklists, c => `${c.resourceType}  ${c.resourceId}  ${c.assertions?.[0]?.resourceVersion}`);
-  };
+  protected runChecksFromKey(key: string): void {
+    const resource = key.split(' ');
+    this.runChecks(resource[0], resource[1], resource[2]);
+  }
 
   protected openResource(resourceType: string, resourceId: string, resourceVersion: string, action: 'summary' | 'checklists'): void {
     if (resourceType === 'CodeSystem') {
@@ -131,6 +134,10 @@ export class ReleaseSummaryComponent implements OnInit {
     }
   }
 
+  protected openResourceFromKey(key: string, action: 'summary' | 'checklists'): void {
+    const resource = key.split(' ');
+    this.openResource(resource[0], resource[1], resource[2], action);
+  }
   protected getCheckCode = (check: Checklist): 'question-circle' | 'exclamation-circle' | 'close-circle' => {
     if (!isDefined(check.assertions) || check.assertions.length === 0) {
       return 'question-circle';
