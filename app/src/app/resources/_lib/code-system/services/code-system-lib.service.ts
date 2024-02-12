@@ -16,6 +16,7 @@ import {CodeSystemEntityVersionSearchParams} from '../model/code-system-entity-v
 import {CodeSystemEntityVersion} from '../model/code-system-entity';
 import {CodeSystemAssociation} from 'term-web/resources/_lib';
 import {Provenance} from 'term-web/sys/_lib';
+import {UriUtil} from 'term-web/core/utils/uri-util';
 
 @Injectable()
 export class CodeSystemLibService {
@@ -44,7 +45,7 @@ export class CodeSystemLibService {
   }
 
   public loadConcept(codeSystemId: string, conceptCode: string, version?: string): Observable<CodeSystemConcept> {
-    conceptCode = encodeURIComponent(encodeURIComponent(conceptCode));
+    conceptCode = UriUtil.encodeUriAll(UriUtil.encodeUriAll(conceptCode));
     return this.http.get<CodeSystemConcept>(`${this.baseUrl}/${codeSystemId}` + (version ? `/versions/${version}` : ``) + `/concepts/${conceptCode}`);
   }
 

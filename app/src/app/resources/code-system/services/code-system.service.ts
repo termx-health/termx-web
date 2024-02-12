@@ -6,6 +6,7 @@ import {map} from 'rxjs/operators';
 import {HttpHeaders} from '@angular/common/http';
 import {saveAs} from 'file-saver';
 import {isDefined} from '@kodality-web/core-util';
+import {UriUtil} from 'term-web/core/utils/uri-util';
 
 @Injectable()
 export class CodeSystemService extends CodeSystemLibService {
@@ -79,7 +80,7 @@ export class CodeSystemService extends CodeSystemLibService {
 
 
   public propagateProperties(codeSystemId: string, conceptCode: string, targetConceptIds: number[]): Observable<void> {
-    conceptCode = encodeURIComponent(encodeURIComponent(conceptCode));
+    conceptCode = UriUtil.encodeUriAll(UriUtil.encodeUriAll(conceptCode));
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/concepts/${conceptCode}/propagate-properties`, {targetConceptIds: targetConceptIds});
   }
 
