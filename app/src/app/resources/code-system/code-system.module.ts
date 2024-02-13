@@ -48,6 +48,7 @@ import {CodeSystemConceptReferenceComponent} from 'term-web/resources/code-syste
 import {CodeSystemChecklistComponent} from 'term-web/resources/code-system/containers/checklist/code-system-checklist.component';
 import {CodeSystemChecklistConfigurationComponent} from 'term-web/resources/code-system/containers/checklist/code-system-checklist-configuration.component';
 import {CodeSystemChecklistValidationComponent} from 'term-web/resources/code-system/containers/checklist/code-system-checklist-validation.component';
+import {CodeSystemSupplementModalComponent} from 'term-web/resources/code-system/containers/edit/code-system-supplement-modal.component';
 
 const EDIT = {privilege: ['{id}.CodeSystem.edit']};
 const VIEW = {privilege: ['{id}.CodeSystem.view']};
@@ -104,6 +105,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     CodeSystemListComponent,
     CodeSystemEditComponent,
     CodeSystemDuplicateModalComponent,
+    CodeSystemSupplementModalComponent,
 
     CodeSystemVersionEditComponent,
     CodeSystemVersionDuplicateModalComponent,

@@ -893,10 +893,18 @@
 					"target-code-system": "Target code system:",
 					"target-uri": "Target URI:"
 				},
+				"supplement": {
+					"header": "Create supplement code system",
+					"source-code-system": "Base code system:",
+					"target-code-system": "Supplement code system ID:",
+					"target-uri": "Supplement code system URI:",
+					"create-supplement": "Create supplement"
+				},
 				"import-fhir": "Import external FHIR definition",
 				"last-version": "Last version",
 				"manual": "Manual",
 				"open-fhir": "Open FHIR URL",
+				"create-supplement": "Create supplement",
 				"status": "Status",
 				"title": "Code systems",
 				"uri": "URI",
