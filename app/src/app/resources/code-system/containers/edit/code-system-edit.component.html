@@ -5,10 +5,6 @@
         <div *mCardContent="!loader.isLoading">
           <tw-resource-form resourceType="CodeSystem" [resource]="codeSystem" [mode]="mode"></tw-resource-form>
 
-          <m-form-item mName="baseCodeSystem" mLabel="entities.code-system.base-code-system">
-            <tw-code-system-search name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive></tw-code-system-search>
-          </m-form-item>
-
           <m-form-row>
             <m-form-item *mFormCol mName="content" mLabel="entities.code-system.content" required>
               <tw-value-set-concept-select name="content"
@@ -16,12 +12,21 @@
                   valueSet="codesystem-content-mode"
                   required></tw-value-set-concept-select>
             </m-form-item>
+            <div *mFormCol>
+              <m-form-item *ngIf="codeSystem.content === 'supplement'" mName="baseCodeSystem" mLabel="entities.code-system.base-code-system">
+                <tw-code-system-search name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive></tw-code-system-search>
+              </m-form-item>
+            </div>
+          </m-form-row>
+
+          <m-form-row>
             <m-form-item *mFormCol mName="caseSensitive" mLabel="entities.code-system.case-sensitivity" required>
               <m-radio-group name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive" required>
                 <label m-radio-button [mValue]="'ci'">{{'web.case-sensitive.options.ci' | translate}}</label>
                 <label m-radio-button [mValue]="'cs'">{{'web.case-sensitive.options.cs' | translate}}</label>
               </m-radio-group>
             </m-form-item>
+            <div *mFormCol></div>
           </m-form-row>
 
           <m-form-row>
