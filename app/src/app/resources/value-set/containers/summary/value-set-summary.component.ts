@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {ValueSet, ValueSetSnapshot, ValueSetVersion} from 'app/src/app/resources/_lib';
 import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
 import {forkJoin} from 'rxjs';
+import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 
 @Component({
   templateUrl: 'value-set-summary.component.html'
@@ -13,6 +14,8 @@ export class ValueSetSummaryComponent implements OnInit {
   protected versions?: ValueSetVersion[];
   protected loader = new LoadingManager();
   protected showOnlyOpenedTasks?: boolean = true;
+
+  @ViewChild(ResourceTasksWidgetComponent) public tasksWidgetComponent?: ResourceTasksWidgetComponent;
 
   public constructor(
     private route: ActivatedRoute,

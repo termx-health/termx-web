@@ -27,7 +27,7 @@
             </ng-container>
           </div>
         </m-title>
-        <tw-code-system-versions-widget [codeSystem]="codeSystem?.id" [versions]="versions" (versionsChanged)="loadData(codeSystem.id)"></tw-code-system-versions-widget>
+        <tw-code-system-versions-widget [codeSystem]="codeSystem?.id" [versions]="versions" (versionsChanged)="loadData(codeSystem.id)"/>
       </m-card>
 
     </div>
@@ -64,16 +64,23 @@
 
       <!-- Tasks -->
       <m-card *twPrivileged="'*.Task.view'">
-        <div *m-card-header class="m-items-middle">
-          <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
-            <m-title mTitle="web.code-system.summary.opened-tasks"></m-title>
-          </a>
-          <m-title *ngIf="showOnlyOpenedTasks" mTitle="web.code-system.summary.opened-tasks"></m-title>
-          <span>|</span>
-          <a *ngIf="showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
-            <m-title mTitle="web.code-system.summary.all-tasks"></m-title>
-          </a>
-          <m-title *ngIf="!showOnlyOpenedTasks" mTitle="web.code-system.summary.all-tasks"></m-title>
+        <div *m-card-header class="m-justify-between">
+          <div class="m-items-middle">
+            <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+              <m-title mTitle="web.code-system.summary.opened-tasks"></m-title>
+            </a>
+            <m-title *ngIf="showOnlyOpenedTasks" mTitle="web.code-system.summary.opened-tasks"></m-title>
+            <span>|</span>
+            <a *ngIf="showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+              <m-title mTitle="web.code-system.summary.all-tasks"></m-title>
+            </a>
+            <m-title *ngIf="!showOnlyOpenedTasks" mTitle="web.code-system.summary.all-tasks"></m-title>
+          </div>
+          <m-button mDisplay="text"
+              (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version', context: {resourceId: codeSystem?.id}})"
+              *twPrivileged="'*.Task.edit'">
+            <m-icon mCode="plus"/>&nbsp; {{'web.code-system.summary.add-task' | translate}}
+          </m-button>
         </div>
         <tw-resource-tasks-widget [resourceId]="codeSystem?.id"
             [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined"
@@ -88,9 +95,7 @@
 
     </div>
   </m-form-row>
-  <m-form-row>
-
-
-  </m-form-row>
 
 </m-page>
+
+<tw-resource-task-modal #taskModal (taskCreated)="tasksWidgetComponent.loadTasks()" resourceType="CodeSystem"/>

@@ -7,10 +7,7 @@ import {ChefService} from 'app/src/app/integration/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {environment} from 'app/src/environments/environment';
 import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
-import {NgForm} from '@angular/forms';
-import {compareDates, DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {TaskService} from 'term-web/task/services/task-service';
-import {Task} from 'term-web/task/_lib';
+import {compareDates, DestroyService, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {LorqueLibService, Provenance} from 'term-web/sys/_lib';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
 import {AuthService} from 'term-web/core/auth';
@@ -27,17 +24,14 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
   @Input() public version: CodeSystemVersion;
   @Output() public taskCreated: EventEmitter<void> = new EventEmitter();
 
-  protected taskModalData: {visible?: boolean, assignee?: string, type?: 'review' | 'approval'} = {};
   protected provenances: Provenance[];
   protected githubSpaces: Space[];
-  @ViewChild("taskModalForm") public taskModalForm?: NgForm;
 
   protected loader = new LoadingManager();
 
   public constructor(
     private codeSystemService: CodeSystemService,
     private fhirCodeSystemService: FhirCodeSystemLibService,
-    private taskService: TaskService,
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
     private spaceService: SpaceLibService,
@@ -105,26 +99,6 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
 
   public openJson(): void {
     window.open(window.location.origin + environment.baseHref + 'fhir/CodeSystem/' + this.version.codeSystem + SEPARATOR + this.version.version, '_blank');
-  }
-
-  public createTask(): void {
-    if (!validateForm(this.taskModalForm)) {
-      return;
-    }
-
-    const task = new Task();
-    task.workflow = 'version-' + this.taskModalData.type;
-    task.assignee = this.taskModalData.assignee;
-    task.title = 'Code System "' + this.version.codeSystem + '" version "' + this.version.version + '" ' + this.taskModalData.type;
-    task.content = (this.taskModalData.type === 'review' ? 'Review' : 'Approve') +
-      ' the content of the code system [' + this.version.codeSystem + '|' + this.version.version + ']' +
-      '(csv:' + this.version.codeSystem + '|' + this.version.version + ').';
-    task.context = [{type: 'code-system', id: this.version.codeSystem}, {type: 'code-system-version', id: this.version.id}];
-    this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
-      this.taskCreated.emit();
-      this.notificationService.success('web.code-system-version.summary.task-modal.success-msg');
-      this.taskModalData = {};
-    });
   }
 
   protected getLastProvenance = (provenances: Provenance[], activity?: string): Provenance => {

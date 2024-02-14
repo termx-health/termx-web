@@ -37,15 +37,17 @@
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.code-system-version.summary.info.last-reviewed' | translate}}:
       {{((provenances | apply:getLastProvenance: 'reviewed')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
-    <a *twPrivileged="'edit'"
-        (mClick)="taskModalData.type = 'review';taskModalData.visible = true">{{'web.code-system-version.summary.info.create-review' | translate}}</a>
+    <a *twPrivileged="['*.CodeSystem.edit', '*.Task.edit']"
+        (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version', context: {resourceId: codeSystem?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})">
+      {{'web.code-system-version.summary.info.create-review' | translate}}</a>
   </div>
   <div class="m-items-middle" *ngIf="codeSystem?.settings?.approvalRequired">
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.code-system-version.summary.info.last-approved' | translate}}:
       {{((provenances | apply:getLastProvenance: 'approved')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
-    <a *twPrivileged="'edit'"
-        (mClick)="taskModalData.type = 'approval';taskModalData.visible = true">{{'web.code-system-version.summary.info.create-approve' | translate}}</a>
+    <a *twPrivileged="['*.CodeSystem.edit', '*.Task.edit']"
+        (mClick)="taskModal.toggleModal({type: 'approval', workflowPrefix: 'version', context: {resourceId: codeSystem?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})">
+      {{'web.code-system-version.summary.info.create-approve' | translate}}</a>
   </div>
   <div class="m-items-middle" *twPrivileged="'publish'">
     <m-icon mCode="tool"></m-icon>
@@ -75,29 +77,4 @@
   </div>
 </div>
 
-
-<m-modal [(mVisible)]="taskModalData.visible" (mClose)="taskModalData = {visible: false}">
-  <m-title *mModalHeader>
-    {{'web.code-system-version.summary.task-modal.header' | translate :{type: taskModalData.type} }}
-  </m-title>
-
-  <ng-container *mModalContent>
-    <form #taskModalForm="ngForm">
-      <m-form-item mName="assignee" mLabel="web.code-system-version.summary.task-modal.assignee" required>
-        <tw-user-select name="assignee"
-            [(ngModel)]="taskModalData.assignee"
-            [anyRole]="[codeSystem?.id + '.CodeSystem.edit', codeSystem?.id + '.CodeSystem.publish']"
-            required></tw-user-select>
-      </m-form-item>
-    </form>
-  </ng-container>
-
-  <div *m-modal-footer class="m-items-middle">
-    <m-button mDisplay="text" (click)="taskModalData.visible = false">
-      {{'core.btn.cancel' | translate}}
-    </m-button>
-    <m-button mDisplay="primary" (click)="createTask()" [mLoading]="loader.isLoading" [disabled]="loader.state['create-task']">
-      {{'core.btn.confirm' | translate}}
-    </m-button>
-  </div>
-</m-modal>
+<tw-resource-task-modal #taskModal (taskCreated)="taskCreated.emit()" resourceType="CodeSystem"/>

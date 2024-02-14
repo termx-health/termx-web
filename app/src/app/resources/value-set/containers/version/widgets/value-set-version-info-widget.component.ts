@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {ValueSet, ValueSetVersion} from 'app/src/app/resources/_lib';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
@@ -8,10 +8,7 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
 import {environment} from 'app/src/environments/environment';
 import {Provenance} from 'term-web/sys/_lib';
-import {NgForm} from '@angular/forms';
-import {compareDates, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {Task} from 'term-web/task/_lib';
-import {TaskService} from 'term-web/task/services/task-service';
+import {compareDates, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
 import {AuthService} from 'term-web/core/auth';
 
@@ -25,17 +22,14 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
   @Input() public version: ValueSetVersion;
   @Output() public taskCreated: EventEmitter<void> = new EventEmitter();
 
-  protected taskModalData: {visible?: boolean, assignee?: string, type?: 'review' | 'approval'} = {};
   protected provenances: Provenance[];
   protected githubSpaces: Space[];
-  @ViewChild("taskModalForm") public taskModalForm?: NgForm;
 
   protected loader = new LoadingManager();
 
   public constructor(
     private valueSetService: ValueSetService,
     private fhirValueSetService: FhirValueSetLibService,
-    private taskService: TaskService,
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
     private spaceService: SpaceLibService,
@@ -88,26 +82,6 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
 
   public openJson(): void {
     window.open(window.location.origin + environment.baseHref + 'fhir/ValueSet/' + this.version.valueSet + SEPARATOR + this.version.version, '_blank');
-  }
-
-  public createTask(): void {
-    if (!validateForm(this.taskModalForm)) {
-      return;
-    }
-
-    const task = new Task();
-    task.workflow = 'version-' + this.taskModalData.type;
-    task.assignee = this.taskModalData.assignee;
-    task.title = 'Value Set "' + this.version.valueSet + '" version "' + this.version.version + '" ' + this.taskModalData.type;
-    task.content = (this.taskModalData.type === 'review' ? 'Review' : 'Approve') +
-      ' the content of the value set [' + this.version.valueSet + '|' + this.version.version + ']' +
-      '(vsv:' + this.version.valueSet + '|' + this.version.version + ').';
-    task.context = [{type: 'value-set', id: this.version.valueSet}, {type: 'value-set-version', id: this.version.id}];
-    this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
-      this.taskCreated.emit();
-      this.notificationService.success('web.value-set-version.summary.task-modal.success-msg');
-      this.taskModalData = {};
-    });
   }
 
   protected getLastProvenance = (provenances: Provenance[], activity?: string): Provenance => {

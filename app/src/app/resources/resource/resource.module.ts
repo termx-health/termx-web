@@ -12,6 +12,8 @@ import {ResourceRelatedArtifactWidgetComponent} from 'term-web/resources/resourc
 import {ResourceFhirImportModalComponent} from 'term-web/resources/resource/components/resource-fhir-import-modal-component';
 import {TaskLibModule} from 'term-web/task/_lib';
 import {WikiLibModule} from 'term-web/wiki/_lib';
+import {ResourceTaskModalComponent} from 'term-web/resources/resource/components/resource-task-modal-component';
+import {UserLibModule} from 'term-web/user/_lib';
 
 
 @NgModule({
@@ -19,7 +21,8 @@ import {WikiLibModule} from 'term-web/wiki/_lib';
     CoreUiModule,
     ResourcesLibModule,
     TaskLibModule,
-    WikiLibModule
+    WikiLibModule,
+    UserLibModule
   ],
   exports: [
     ResourceContactsComponent,
@@ -30,7 +33,8 @@ import {WikiLibModule} from 'term-web/wiki/_lib';
     ResourceVersionFormComponent,
     ResourceTasksWidgetComponent,
     ResourceRelatedArtifactWidgetComponent,
-    ResourceFhirImportModalComponent
+    ResourceFhirImportModalComponent,
+    ResourceTaskModalComponent
   ],
   declarations: [
     ResourceContactsComponent,
@@ -41,7 +45,8 @@ import {WikiLibModule} from 'term-web/wiki/_lib';
     ResourceVersionFormComponent,
     ResourceTasksWidgetComponent,
     ResourceRelatedArtifactWidgetComponent,
-    ResourceFhirImportModalComponent
+    ResourceFhirImportModalComponent,
+    ResourceTaskModalComponent
   ]
 })
 export class ResourceModule {

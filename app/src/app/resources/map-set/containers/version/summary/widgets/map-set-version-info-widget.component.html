@@ -57,13 +57,15 @@
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.map-set-version.summary.info.last-reviewed' | translate}}:
       {{((provenances | apply:getLastProvenance: 'reviewed')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
-    <a (mClick)="taskModalData.type = 'review';taskModalData.visible = true">{{'web.map-set-version.summary.info.create-review' | translate}}</a>
+    <a (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version', context: {resourceId: mapSet?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})"
+        *twPrivileged="'*.Task.edit'">{{'web.map-set-version.summary.info.create-review' | translate}}</a>
   </div>
   <div class="m-items-middle" *ngIf="mapSet?.settings?.approvalRequired">
     <m-icon mCode="calendar"></m-icon>
     <span>{{'web.map-set-version.summary.info.last-approved' | translate}}:
       {{((provenances | apply:getLastProvenance: 'approved')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
-    <a (mClick)="taskModalData.type = 'approval';taskModalData.visible = true">{{'web.map-set-version.summary.info.create-approve' | translate}}</a>
+    <a (mClick)="taskModal.toggleModal({type: 'approval', workflowPrefix: 'version', context: {resourceId: mapSet?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})"
+        *twPrivileged="'*.Task.edit'">{{'web.map-set-version.summary.info.create-approve' | translate}}</a>
   </div>
   <div class="m-items-middle" *twPrivileged="version.mapSet + '.MapSet.publish'">
     <m-icon mCode="tool"></m-icon>
@@ -75,37 +77,6 @@
       <a (mClick)="changeVersionStatus('retired')">{{'web.map-set-version.summary.info.retire' | translate}}</a>
     </ng-container>
   </div>
-  <!--  <div class="m-items-middle">-->
-  <!--    <m-icon mCode="github"></m-icon>-->
-  <!--    <a>{{'web.map-set-version.summary.info.load-from-github' | translate}}</a>-->
-  <!--    <m-divider mVertical></m-divider>-->
-  <!--    <a>{{'web.map-set-version.summary.info.push-to-github' | translate}}</a>-->
-  <!--  </div>-->
 </div>
 
-
-<m-modal [(mVisible)]="taskModalData.visible" (mClose)="taskModalData = {visible: false}">
-  <m-title *mModalHeader>
-    {{'web.map-set-version.summary.task-modal.header' | translate :{type: taskModalData.type} }}
-  </m-title>
-
-  <ng-container *mModalContent>
-    <form #taskModalForm="ngForm">
-      <m-form-item mName="assignee" mLabel="web.map-set-version.summary.task-modal.assignee" required>
-        <tw-user-select name="assignee"
-            [(ngModel)]="taskModalData.assignee"
-            [anyRole]="[mapSet?.id + '.MapSet.edit', mapSet.id + '.MapSet.publish']"
-            required></tw-user-select>
-      </m-form-item>
-    </form>
-  </ng-container>
-
-  <div *m-modal-footer class="m-items-middle">
-    <m-button mDisplay="text" (click)="taskModalData.visible = false">
-      {{'core.btn.cancel' | translate}}
-    </m-button>
-    <m-button mDisplay="primary" (click)="createTask()" [mLoading]="loader.isLoading" [disabled]="loader.state['create-task']">
-      {{'core.btn.confirm' | translate}}
-    </m-button>
-  </div>
-</m-modal>
+<tw-resource-task-modal #taskModal (taskCreated)="taskCreated.emit()" resourceType="MapSet"/>

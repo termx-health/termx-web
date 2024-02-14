@@ -1,0 +1,44 @@
+<m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal()" [mMaskClosable]="false">
+  <m-title *mModalHeader>
+    {{'web.resource-task-modal.header' | translate}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #form="ngForm" *ngIf="params">
+      <m-form-item *ngIf="params.context | apply:versionMissing" mName="version" mLabel="web.resource-task-modal.version" required>
+        <tw-code-system-version-select *ngIf="resourceType === 'CodeSystem'"
+            name="version"
+            [(ngModel)]="params.resourceVersion"
+            [codeSystemId]="params.context.resourceId"
+            required/>
+        <tw-value-set-version-select *ngIf="resourceType === 'ValueSet'"
+            name="version"
+            [(ngModel)]="params.resourceVersion"
+            [valueSetId]="params.context.resourceId"
+            required/>
+        <tw-map-set-version-select *ngIf="resourceType === 'MapSet'"
+            name="version"
+            [(ngModel)]="params.resourceVersion"
+            [mapSetId]="params.context.resourceId"
+            required/>
+      </m-form-item>
+
+      <m-form-item mName="assignee" mLabel="web.resource-task-modal.assignee" required>
+        <tw-user-select name="assignee" [(ngModel)]="params.assignee" [anyRole]="params.context | apply:getRoles" required/>
+      </m-form-item>
+
+      <m-form-item mName="comment" mLabel="web.resource-task-modal.comment">
+        <m-textarea name="comment" [(ngModel)]="params.comment"></m-textarea>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="modal.close()">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="createTask()" [mLoading]="loader.isLoading" [disabled]="loader.state['create-task']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>

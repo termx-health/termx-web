@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {MapSet, MapSetVersion} from 'app/src/app/resources/_lib';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
@@ -6,10 +6,7 @@ import {FhirConceptMapLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
 import {ChefService} from 'app/src/app/integration/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {environment} from 'app/src/environments/environment';
-import {NgForm} from '@angular/forms';
-import {compareDates, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {TaskService} from 'term-web/task/services/task-service';
-import {Task} from 'term-web/task/_lib';
+import {compareDates, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {Provenance} from 'term-web/sys/_lib';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 
@@ -22,16 +19,13 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
   @Input() public version: MapSetVersion;
   @Output() public taskCreated: EventEmitter<void> = new EventEmitter();
 
-  protected taskModalData: {visible?: boolean, assignee?: string, type?: 'review' | 'approval'} = {};
   protected provenances: Provenance[];
-  @ViewChild("taskModalForm") public taskModalForm?: NgForm;
 
   protected loader = new LoadingManager();
 
   public constructor(
     private mapSetService: MapSetService,
     private fhirConceptMapService: FhirConceptMapLibService,
-    private taskService: TaskService,
     private chefService: ChefService,
     private notificationService: MuiNotificationService) {}
 
@@ -74,26 +68,6 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
 
   public openJson(): void {
     window.open(window.location.origin + environment.baseHref + 'fhir/ConceptMap/' + this.version.mapSet + SEPARATOR + this.version.version, '_blank');
-  }
-
-  public createTask(): void {
-    if (!validateForm(this.taskModalForm)) {
-      return;
-    }
-
-    const task = new Task();
-    task.workflow = 'version-' + this.taskModalData.type;
-    task.assignee = this.taskModalData.assignee;
-    task.title = 'Map Set "' + this.version.mapSet + '" version "' + this.version.version + '" ' + this.taskModalData.type;
-    task.content = (this.taskModalData.type === 'review' ? 'Review' : 'Approve')  +
-      ' the content of the map set [' + this.version.mapSet + '|' + this.version.version + ']'+
-      '(msv:' + this.version.mapSet + '|' + this.version.version + ').';
-    task.context = [{type: 'map-set', id: this.version.mapSet}, {type: 'map-set-version', id: this.version.id}];
-    this.loader.wrap('create-task', this.taskService.save(task)).subscribe(() => {
-      this.taskCreated.emit();
-      this.notificationService.success('web.map-set-version.summary.task-modal.success-msg');
-      this.taskModalData = {};
-    });
   }
 
   protected getLastProvenance = (provenances: Provenance[], activity?: string): Provenance => {
