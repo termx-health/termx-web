@@ -913,6 +913,7 @@
 				"versions-version": ""
 			},
 			"summary": {
+				"add-task": "Add task",
 				"add-concept": "Add concept",
 				"add-version": "Add version",
 				"all-tasks": "All tasks",
@@ -1083,6 +1084,7 @@
 				"view-header": ""
 			},
 			"summary": {
+				"add-task": "Add task",
 				"all-tasks": "All tasks",
 				"code-system-version": "Code system version",
 				"edit-version": "Edit version",
@@ -1506,6 +1508,7 @@
 				"versions-version": ""
 			},
 			"summary": {
+				"add-task": "Add task",
 				"add-version": "Add version",
 				"all-tasks": "All tasks",
 				"map-set": "Map set",
@@ -1793,6 +1796,12 @@
 			"source": "Source",
 			"type": "Type",
 			"url": "URL"
+		},
+		"resource-task-modal": {
+			"header": "Create task",
+			"assignee": "Assignee",
+			"version": "Version",
+			"comment": "Comment"
 		},
 		"resources": {
 			"tabset": {
@@ -2163,6 +2172,7 @@
 				"versions-version": "Version name: {{version}}"
 			},
 			"summary": {
+				"add-task": "Add task",
 				"add-version": "Add version",
 				"all-tasks": "All tasks",
 				"duplicate-version-modal": {
