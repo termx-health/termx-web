@@ -74,7 +74,7 @@ export class WikiPageCommentsComponent implements OnChanges {
     setTimeout(() => this.trigger = {});
   }
 
-  protected getCommentStyle = (com: PageComment, idx: number): string => {
+  protected getCommentStyle = (com: PageComment, idx: number, _ngTrigger?: any): string => {
     if (this.mode === 'feed' || isNil(this.lineOffset)) {
       return undefined;
     }
@@ -94,7 +94,7 @@ export class WikiPageCommentsComponent implements OnChanges {
 
   /* Utils */
 
-  protected sorted = (comments: ExtendedPageComment[]): ExtendedPageComment[] => {
+  protected sorted = (comments: ExtendedPageComment[], _ngTrigger?: any): ExtendedPageComment[] => {
     return this.mode === 'feed'
       ? comments.sort((a, b): number => compareDates(new Date(a.createdAt), new Date(b.createdAt)))
       : sort(comments, 'options.lineNumber');

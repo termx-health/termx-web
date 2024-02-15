@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {ComponentStateStore, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import {ComponentStateStore, duplicate, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {catchError, forkJoin, Observable, of} from 'rxjs';
 import {CoreUiModule} from '../core/ui/core-ui.module';
 import {AuthService} from '../core/auth';
@@ -9,6 +9,7 @@ import {TaskService} from 'term-web/task/services/task-service';
 import {Task, TaskLibModule} from 'term-web/task/_lib';
 import {PageLibService, WikiLibModule} from 'term-web/wiki/_lib';
 import {SpaceModule} from 'term-web/space/space.module';
+import {InfoService} from 'term-web/core/info/info.service';
 
 @Component({
   standalone: true,
@@ -31,6 +32,8 @@ export class LandingPageComponent {
     tasksAssigned?: SearchResult<Task>
   } = {};
 
+  protected modules: string[] = [];
+
   protected loader = new LoadingManager();
 
 
@@ -43,11 +46,14 @@ export class LandingPageComponent {
     private pageService: PageLibService,
     private taskService: TaskService,
     stateStore: ComponentStateStore,
+    info: InfoService,
   ) {
     stateStore.clear();
     this.loadResources();
     this.loadSummary();
     this.loadTasks();
+
+    this.loader.wrap('info', info.modules()).subscribe(resp => this.modules = resp);
   }
 
 
@@ -101,4 +107,8 @@ export class LandingPageComponent {
   protected taskRoute = (task: Task): any[] => {
     return this.authService.hasPrivilege('*.Task.edit') ? ['/tasks', task.number, 'edit'] : [];
   };
+
+  protected intersects(arr1: any[], arr2: any[]): boolean {
+    return [...arr1, ...arr2].filter(duplicate)?.length > 0;
+  }
 }

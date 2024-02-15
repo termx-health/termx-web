@@ -44,7 +44,8 @@ const APP_ROUTES: Routes = [
       {path: 'context', component: SpaceContextComponent, children: SPACE_CTX_ROUTES}
     ],
     data: {privilege: ['*.Space.view']}
-  }
+  },
+  {path: 'info', loadComponent: () => import('./core/info/info.component')}
 ];
 
 const routes: Routes = [

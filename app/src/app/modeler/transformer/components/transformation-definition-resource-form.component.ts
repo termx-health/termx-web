@@ -184,10 +184,10 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
     this.resource.name = this.resource.name || this.findUrl(this.resource.reference.content);
   }
 
-  protected getServerUrl = (serverId: number): Observable<string> => {
+  protected getServerUrl = (serverId: string): Observable<string> => {
     const normalize = (url: string): string => url?.endsWith("/") ? url.slice(0, url.length - 1) : url;
     return this.servers$.pipe(
-      map(servers => servers.find(s => s.id === serverId)),
+      map(servers => servers.find(s => s.id === Number(serverId))),
       map(s => normalize(s?.rootUrl))
     );
   }

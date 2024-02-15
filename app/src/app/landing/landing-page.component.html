@@ -1,7 +1,7 @@
 <m-page mFull>
   <div class="wrapper animated">
     <!-- Resources -->
-    <ng-container *twPrivileged="['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view']">
+    <ng-container *ngIf="(['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view'] | twPrivileged) && (modules | includes: 'terminology')">
       <section class="fade-in-350ms" *ngIf="!loader.state['resource']">
         <div class="header title">{{'web.landing.resources.title' | translate}}</div>
 
@@ -27,21 +27,21 @@
 
     <ng-container *ngIf="!loader.isLoading">
       <!-- Summary -->
-      <section class="fade-in-350ms-delay-200ms" *twPrivileged="['*.Space.view', '*.Wiki.view', '*.Task.view']">
+      <section class="fade-in-350ms-delay-200ms" *ngIf="(['*.Space.view', '*.Wiki.view', '*.Task.view'] | twPrivileged) && (modules | apply: intersects: ['core', 'wiki', 'task'])">
         <div class="header title">{{'web.landing.summary.title' | translate}}</div>
 
         <div class="grid-auto-fit">
-          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/spaces']" *twPrivileged="'*.Space.view'">
+          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/spaces']" *ngIf="('*.Space.view' | twPrivileged) && (modules | includes: 'core')">
             <div class="m-subtitle">{{'web.landing.summary.spaces' | translate}}</div>
             <div class="title">{{data.spacesCount}}</div>
           </a>
 
-          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/wiki/pages']" *twPrivileged="'*.Wiki.view'">
+          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/wiki/pages']" *ngIf="('*.Wiki.view' | twPrivileged) && (modules | includes: 'wiki')">
             <div class="m-subtitle">{{'web.landing.summary.pages' | translate}}</div>
             <div class="title">{{data.pagesCount}}</div>
           </a>
 
-          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/tasks']" *twPrivileged="'*.Task.view'">
+          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/tasks']" *ngIf="('*.Task.view' | twPrivileged) && (modules | includes: 'task')">
             <div class="m-subtitle">{{'web.landing.summary.open-tasks' | translate}}</div>
             <div class="title">{{data.tasksOpenCount}}</div>
           </a>
@@ -50,7 +50,7 @@
 
 
       <!-- Tasks -->
-      <section class="fade-in-350ms-delay-400ms" *twPrivileged="'*.Task.view'">
+      <section class="fade-in-350ms-delay-400ms" *ngIf="('*.Task.view' | twPrivileged) && (modules | includes: 'task')">
         <div class="header m-justify-between m-items-top">
           <div class="title">{{'web.landing.tasks.title' | translate}}</div>
 

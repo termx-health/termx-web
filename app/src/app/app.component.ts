@@ -1,23 +1,34 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {MuiPageMenuItem} from '@kodality-web/marina-ui';
-import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Router} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Params, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
 import {delay, filter, map, pairwise, startWith, switchMap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {group} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
+import {InfoService} from 'term-web/core/info/info.service';
+import {LocalizedName} from '@kodality-web/marina-util';
+
+
+interface FileMenu {
+  label: LocalizedName;
+  icon?: string,
+  link: string;
+  items?: FileMenu[];
+}
 
 const getRouteLastChild = (snap: ActivatedRouteSnapshot): ActivatedRouteSnapshot => snap.firstChild ? getRouteLastChild(snap.firstChild) : snap;
+
 
 @Component({
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.less']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
   protected menu$ = this.translateService.onLangChange.pipe(
     startWith({lang: this.translateService.currentLang}),
-    switchMap(() => this.http.get<any[]>("./assets/menu.json")),
+    switchMap(() => this.http.get<FileMenu[]>("./assets/menu.json")),
     map(resp => this.createMenu(resp))
   );
   protected activeRoutePrivileges$ = this.router.events.pipe(
@@ -42,6 +53,7 @@ export class AppComponent implements OnInit {
     private route: ActivatedRoute,
     private http: HttpClient,
     private translateService: TranslateService,
+    info: InfoService,
   ) {
     router.events.pipe(
       filter(e => e instanceof NavigationStart),
@@ -60,10 +72,15 @@ export class AppComponent implements OnInit {
       el?.classList.add('hide');
       setTimeout(() => el?.remove(), 150);
     });
+
+    info.version().subscribe(r => {
+      this.versions.service = r;
+    });
   }
 
-  public ngOnInit(): void {
-    this.http.get(`${environment.termxApi}/info`).subscribe(r => this.versions.service = r['version']);
+
+  protected onLangChange(lang: string): void {
+    this.translateService.use(lang);
   }
 
   protected login(): void {
@@ -74,20 +91,27 @@ export class AppComponent implements OnInit {
     this.auth.logout().subscribe();
   }
 
-  protected onLangChange(lang: string): void {
-    this.translateService.use(lang);
-  }
 
-
-  private createMenu = (items: any[] = []): MuiPageMenuItem[] => items.map(i => {
-    const [route, query] = (i.link?.split('?') || []) as [string, string];
-    return {
-      label: i.label?.[this.translateService.currentLang],
-      icon: i.icon,
-      route: route,
-      queryParams: group(query?.split("&") || [], k => k.split('=')[0], k => k.split('=')[1]),
-      disabled: i.privileges && !this.auth.hasAnyPrivilege(i.privileges),
-      items: this.createMenu(i.items)
+  private createMenu = (items: (FileMenu | FileMenu[])[] = []): MuiPageMenuItem[] => {
+    const parseLink = (link: string): [string, Params] => {
+      const [route, query]: string[] = link?.split('?') || [];
+      const queryParams = query?.split("&").map(p => p.split('=')) || [];
+      const params: Params = group(queryParams, ([k]) => k, ([, v]) => v);
+      return [route, params];
     };
-  });
+
+    return items.map(fm => {
+      const map = (fm: FileMenu): MuiPageMenuItem => {
+        const [route, queryParams] = parseLink(fm.link);
+        return {
+          label: fm.label?.[this.translateService.currentLang],
+          icon: fm.icon,
+          route: route,
+          queryParams: queryParams,
+          items: this.createMenu(fm.items)
+        };
+      };
+      return Array.isArray(fm) ? fm.flatMap(map) : map(fm);
+    });
+  };
 }

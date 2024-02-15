@@ -434,7 +434,7 @@ export class WikiPageTreeComponent implements OnChanges {
     return page?.contents?.find(c => c.lang === this.translateService.currentLang) || page?.contents?.[0];
   };
 
-  protected findLinkId = (pageId: number, nodes: DropListNode[]): number => {
+  protected findLinkId = (pageId: number | string, nodes: DropListNode[]): number => {
     return findInTree(nodes, String(pageId), n => n[NODE_OBJECT_KEY].page.id, n => n.children)?.[NODE_OBJECT_KEY]?.link?.id;
   };
 }
