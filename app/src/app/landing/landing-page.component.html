@@ -2,21 +2,19 @@
   <div class="wrapper animated">
     <!-- Resources -->
     <ng-container *ngIf="(['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view'] | twPrivileged) && (modules | includes: 'terminology')">
-      <section class="fade-in-350ms" *ngIf="!loader.state['resource']">
+      <section class="fade-in-350ms" *ngIf="!loader.state.resources">
         <div class="header title">{{'web.landing.resources.title' | translate}}</div>
 
         <div class="grid-auto-fit">
-          <a class="initial card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.CodeSystem.view'" [routerLink]="['/resources/code-systems']">
+          <a class="card" [routerLink]="['/resources/code-systems']" *twPrivileged="'*.CodeSystem.view'">
             <div class="m-subtitle">{{'web.landing.resources.types.code-system' | translate}}</div>
             <div class="title">{{data.codeSystemCount}}</div>
           </a>
-
-          <a class="initial card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.ValueSet.view'" [routerLink]="['/resources/value-sets']">
+          <a class="card" [routerLink]="['/resources/value-sets']" *twPrivileged="'*.ValueSet.view'">
             <div class="m-subtitle">{{'web.landing.resources.types.value-set' | translate}}</div>
             <div class="title">{{data.valueSetCount}}</div>
           </a>
-
-          <a class="initial card m-rounded m-raised m-clickable v-align" *twPrivileged="'*.MapSet.view'" [routerLink]="['/resources/map-sets']">
+          <a class="card" [routerLink]="['/resources/map-sets']" *twPrivileged="'*.MapSet.view'">
             <div class="m-subtitle">{{'web.landing.resources.types.map-set' | translate}}</div>
             <div class="title">{{data.mapSetsCount}}</div>
           </a>
@@ -27,21 +25,24 @@
 
     <ng-container *ngIf="!loader.isLoading">
       <!-- Summary -->
-      <section class="fade-in-350ms-delay-200ms" *ngIf="(['*.Space.view', '*.Wiki.view', '*.Task.view'] | twPrivileged) && (modules | apply: intersects: ['core', 'wiki', 'task'])">
+      <section
+          class="fade-in-350ms-delay-200ms"
+          *ngIf="(['*.Space.view', '*.Wiki.view', '*.Task.view'] | twPrivileged) && (modules | apply: intersects: ['core', 'wiki', 'task'])"
+      >
         <div class="header title">{{'web.landing.summary.title' | translate}}</div>
 
         <div class="grid-auto-fit">
-          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/spaces']" *ngIf="('*.Space.view' | twPrivileged) && (modules | includes: 'core')">
+          <a class="card" [routerLink]="['/spaces']" *ngIf="('*.Space.view' | twPrivileged) && (modules | includes: 'core')">
             <div class="m-subtitle">{{'web.landing.summary.spaces' | translate}}</div>
             <div class="title">{{data.spacesCount}}</div>
           </a>
 
-          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/wiki/pages']" *ngIf="('*.Wiki.view' | twPrivileged) && (modules | includes: 'wiki')">
+          <a class="card" [routerLink]="['/wiki/pages']" *ngIf="('*.Wiki.view' | twPrivileged) && (modules | includes: 'wiki')">
             <div class="m-subtitle">{{'web.landing.summary.pages' | translate}}</div>
             <div class="title">{{data.pagesCount}}</div>
           </a>
 
-          <a class="initial card m-rounded m-raised m-clickable v-align" [routerLink]="['/tasks']" *ngIf="('*.Task.view' | twPrivileged) && (modules | includes: 'task')">
+          <a class="card" [routerLink]="['/tasks']" *ngIf="('*.Task.view' | twPrivileged) && (modules | includes: 'task')">
             <div class="m-subtitle">{{'web.landing.summary.open-tasks' | translate}}</div>
             <div class="title">{{data.tasksOpenCount}}</div>
           </a>
@@ -50,7 +51,10 @@
 
 
       <!-- Tasks -->
-      <section class="fade-in-350ms-delay-400ms" *ngIf="('*.Task.view' | twPrivileged) && (modules | includes: 'task')">
+      <section
+          class="fade-in-350ms-delay-400ms"
+          *ngIf="('*.Task.view' | twPrivileged) && (modules | includes: 'task')"
+      >
         <div class="header m-justify-between m-items-top">
           <div class="title">{{'web.landing.tasks.title' | translate}}</div>
 
@@ -96,10 +100,9 @@
 
 <ng-template #taskTemplate let-task>
   <div class="m-items-top m-justify-between">
-
     <div>
       <div>{{task.title}}</div>
     </div>
-    <tw-task-status [status]="task.status" readonly/>
+    <tw-task-status [status]="task.status"/>
   </div>
 </ng-template>

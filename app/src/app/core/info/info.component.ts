@@ -40,7 +40,7 @@ import {CorePipesModule} from '@kodality-web/core-util';
               </section>
 
               <section>
-                  <h4 class="m-items-middle">
+                  <h4 class="small">
                       Modules
                   </h4>
 
@@ -91,11 +91,12 @@ import {CorePipesModule} from '@kodality-web/core-util';
   styles: [`
     .small {
       font-size: 0.9rem;
+      word-break: break-all;
     }
 
     .cardy {
       background: var(--color-background-component);
-      padding: 1rem
+      padding:  0.8rem 1rem
     }
   `]
 })
