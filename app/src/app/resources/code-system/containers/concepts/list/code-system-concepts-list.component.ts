@@ -83,7 +83,7 @@ interface FilterProperty {
 
     .preview-container {
       position: sticky;
-      top: calc(var(--page-header-height) + var(--gap-default) + 6rem); // fixme: magic number 6rem, approximate height of context header (OP-5276)
+      top: calc(var(--page-header-height) + var(--gap-default) + 5rem); // fixme: magic number 6rem, approximate height of context header (OP-5276)
     }
   `]
 })

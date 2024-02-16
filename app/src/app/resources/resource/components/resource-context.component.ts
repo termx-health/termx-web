@@ -62,4 +62,9 @@ export class ResourceContextComponent {
    return resource?.['properties']?.find(p => p.type === 'Coding');
   };
 
+
+  protected capitalz = (n:string): string=>{
+    return n.split('').filter(l=> l === l.toUpperCase()).join('')
+  }
+
 }

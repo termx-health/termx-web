@@ -18,7 +18,8 @@
 
   .resource-context__item {
     display: flex;
-    gap: .5rem;
+    align-items: center;
+    gap: .3rem;
 
     height: 100%;
     padding: 1rem 2rem;
@@ -47,5 +48,34 @@
 
 
 .resource-context__info {
-  align-items: center;
+  padding-bottom: 0;
+  gap: 1.5rem;
+
+  .m-title + .submenu {
+    margin-top: 0.2rem
+  }
+
+  .submenu {
+    display: flex;
+    gap: 1rem;
+
+    .submenu__item {
+      color: currentColor;
+
+      &_wrapper {
+        height: 2.2rem;
+        transition: 100ms;
+
+        &.active {
+          border-bottom: 2px solid var(--color-primary);
+          color: var(--color-primary-8);
+        }
+      }
+
+      &:hover .submenu__item_wrapper:not(.active),
+      &:focus .submenu__item_wrapper:not(.active) {
+        border-bottom: 2px solid var(--color-borders);
+      }
+    }
+  }
 }

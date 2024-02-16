@@ -5,46 +5,51 @@
 
       <ng-container *ngIf="resource">
         <!-- Left -->
-        <div class="resource-context__item resource-context__info" style="display: grid">
-          <div class="m-title">
-            {{resourceType}}: {{resource.title | localName: resource.name ?? resource.id}}
+        <div class="resource-context__item resource-context__info">
+          <div class="m-subtitle" style="padding-bottom: 1rem;">
+            {{resourceType | apply: capitalz}}
           </div>
 
-          <div style="display: flex; gap: 1rem">
-            <div (click)="navigate('summary')">
-              <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'summary', title: 'web.resource-context.summary', icon: 'appstore'}"/>
+          <div>
+            <div class="m-title">
+              {{resource.title | localName: resource.name ?? resource.id}}
             </div>
 
-            <div *twPrivileged="resource.id + '.' + resourceType + '.edit'" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']">
-              <a class="m-items-middle">{{'core.btn.edit' | translate}}
-                <m-icon mCode="form"/>
+            <div class="submenu">
+              <a class="submenu__item" (click)="navigate('summary')">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'summary', title: 'web.resource-context.summary', icon: 'appstore'}"/>
               </a>
-            </div>
 
-            <div (click)="navigate('concepts')" *ngIf="['CodeSystem' , 'ValueSet'] | includes: resourceType">
-              <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'concept-list', title: 'web.resource-context.concepts', icon: 'database'}"/>
-            </div>
-
-            <div *ngIf="resourceType === 'CodeSystem' && resource | apply:hasExternalReference" (click)="navigate('properties')">
-              <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'properties', title: 'web.resource-context.properties', icon: 'unordered-list'}"/>
-            </div>
-
-            <div (click)="navigate('provenances')">
-              <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'provenance', title: 'web.resource-context.provenance', icon: 'history'}"/>
-            </div>
-
-            <div *ngIf="resourceType === 'CodeSystem' && '*.Checklist.view' | twPrivileged" (click)="navigate('checklists')">
-              <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'checklist', title: 'web.resource-context.checklist', icon: 'check-square'}"/>
-            </div>
-
-
-            <ng-template #tabTpl let-tmode="mode" let-title="title" let-icon="icon">
-              <a *ngIf="mode !== tmode; else iconTpl">
-                <ng-container *ngTemplateOutlet="iconTpl"/>
+              <a class="submenu__item" *twPrivileged="resource.id + '.' + resourceType + '.edit'" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'edit', title: 'core.btn.edit', icon: 'form'}"/>
               </a>
-              <ng-template #iconTpl>
-                <span class="m-items-middle">{{title | translate}}<m-icon [mCode]="icon"/></span></ng-template>
-            </ng-template>
+
+              <a class="submenu__item" *ngIf="['CodeSystem' , 'ValueSet'] | includes: resourceType" (click)="navigate('concepts')">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'concept-list', title: 'web.resource-context.concepts', icon: 'database'}"/>
+              </a>
+
+              <a class="submenu__item" *ngIf="resourceType === 'CodeSystem' && resource | apply:hasExternalReference" (click)="navigate('properties')">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'properties', title: 'web.resource-context.properties', icon: 'unordered-list'}"/>
+              </a>
+
+              <a class="submenu__item" (click)="navigate('provenances')">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'provenance', title: 'web.resource-context.provenance', icon: 'history'}"/>
+              </a>
+
+              <a class="submenu__item" *ngIf="resourceType === 'CodeSystem' && '*.Checklist.view' | twPrivileged" (click)="navigate('checklists')">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'checklist', title: 'web.resource-context.checklist', icon: 'check-square'}"/>
+              </a>
+
+
+              <ng-template #tabTpl let-tmode="mode" let-title="title" let-icon="icon">
+                <div class="submenu__item_wrapper " [class.active]="mode === tmode">
+                  <div class="m-items-middle">
+                    {{title | translate}}
+                    <m-icon [mCode]="icon"/>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
           </div>
         </div>
 
@@ -52,7 +57,7 @@
         <div class="resource-context__item"></div>
 
         <!-- Right -->
-        <div class="resource-context__item resource-context__info">
+        <div class="resource-context__item ">
           <ng-container *ngIf="!version">
             <m-dropdown>
               <a *m-dropdown-container>{{'web.resource-context.all-versions' | translate}}</a>
@@ -74,7 +79,7 @@
           </div>
         </div>
 
-        <div class="resource-context__item resource-context__info selectable" (click)="unselectResourceOrVersion()">
+        <div class="resource-context__item  selectable" (click)="unselectResourceOrVersion()">
           <m-icon mCode="close"/>
         </div>
       </ng-container>
