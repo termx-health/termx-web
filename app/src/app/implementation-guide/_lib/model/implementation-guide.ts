@@ -8,10 +8,14 @@ export class ImplementationGuide {
   public publisher?: string;
   public name?: string;
   public title?: LocalizedName;
+  public otherTitle?: {name?: string, preferred?: boolean}[];
   public description?: LocalizedName;
   public purpose?: LocalizedName;
+  public topic?: {text?: string};
+  public useContext?: {type?: string, value?: string}[];
   public licence?: string;
   public experimental?: boolean;
+  public sourceReference?: string;
   public identifiers?: Identifier[];
   public contacts?: ContactDetail[];
   public copyright?: {holder?: string, jurisdiction?: string, statement?: string};

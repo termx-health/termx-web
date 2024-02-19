@@ -8,12 +8,17 @@ export class MapSet {
   public uri?: string;
   public name?: string;
   public title?: LocalizedName;
+  public otherTitle?: {name?: string, preferred?: boolean}[];
   public publisher?: string;
   public description?: LocalizedName;
   public purpose?: LocalizedName;
+  public topic?: {text?: string, tags?: string[]};
+  public useContext?: {type?: string, value?: string}[];
   public experimental?: boolean;
+  public sourceReference?: string;
   public narrative?: string;
   public identifiers?: Identifier[];
+  public configurationAttributes?: any[];
   public contacts?: ContactDetail[];
 
   public copyright?: {holder?: string, jurisdiction?: string, statement?: string};

@@ -4,7 +4,7 @@ import {compareValues} from '@kodality-web/core-util';
 export class ConceptUtil {
 
   public static getLastVersion(concept: CodeSystemConcept): CodeSystemEntityVersion {
-    return concept.versions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.created, b.created))?.[0];
+    return concept?.versions?.filter(v => ['draft', 'active'].includes(v.status!)).sort((a, b) => compareValues(a.created, b.created))?.[0];
   }
 
   public static getDisplay(concept: CodeSystemConcept, lang: string): string {

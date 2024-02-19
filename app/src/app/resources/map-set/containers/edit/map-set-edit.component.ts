@@ -82,8 +82,10 @@ export class MapSetEditComponent implements OnInit {
   private writeMS(ms: MapSet): MapSet {
     ms.copyright ??= {};
     ms.settings ??= {};
+    ms.topic ??= {};
     ms.identifiers ??= [];
     ms.properties ??= [];
+    ms.configurationAttributes ??= [];
     return ms;
   }
 }

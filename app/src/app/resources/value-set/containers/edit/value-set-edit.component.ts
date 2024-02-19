@@ -68,8 +68,10 @@ export class ValueSetEditComponent implements OnInit {
   private writeVS(vs: ValueSet): ValueSet {
     vs.copyright ??= {};
     vs.permissions ??= {};
+    vs.topic ??= {};
     vs.settings ??= {};
     vs.identifiers ??= [];
+    vs.configurationAttributes ??= [];
     return vs;
   }
 }

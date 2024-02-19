@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {isDefined, LoadingManager, remove, validateForm} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {TranslateService} from '@ngx-translate/core';
 import slugify from 'slugify';
@@ -119,4 +119,20 @@ export class ResourceFormComponent implements OnChanges {
   protected getDisplay = (concept: ValueSetVersionConcept): string => {
     return VsConceptUtil.getDisplay(concept, this.translateService.currentLang);
   };
+
+  protected addOtherTitle(): void {
+    this.resource.otherTitle = [...(this.resource.otherTitle || []), {}];
+  }
+
+  protected deleteOtherTitle(otherTitle: any): void {
+    this.resource.otherTitle = remove(this.resource.otherTitle, otherTitle);
+  }
+
+  protected addContext(): void {
+    this.resource.useContext = [...(this.resource.useContext || []), {}];
+  }
+
+  protected deleteContext(ctx: any): void {
+    this.resource.useContext = remove(this.resource.useContext, ctx);
+  }
 }

@@ -7,6 +7,7 @@
 
           <tw-ms-properties [properties]="mapSet.properties"></tw-ms-properties>
           <tw-resource-identifiers [identifiers]="mapSet.identifiers"></tw-resource-identifiers>
+          <tw-resource-configuration-attributes [attributes]="mapSet.configurationAttributes"></tw-resource-configuration-attributes>
           <tw-resource-contacts [(contacts)]="mapSet.contacts"></tw-resource-contacts>
           <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
           <tw-ms-scope-form *ngIf="mode === 'add'" [scope]="scope"></tw-ms-scope-form>

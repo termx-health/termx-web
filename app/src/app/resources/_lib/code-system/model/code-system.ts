@@ -10,10 +10,14 @@ export class CodeSystem {
   public uri?: string;
   public name?: string;
   public title?: LocalizedName;
+  public otherTitle?: {name?: string, preferred?: boolean}[];
   public publisher?: string;
   public description?: LocalizedName;
   public purpose?: LocalizedName;
+  public topic?: {text?: string, tags?: string[]};
+  public useContext?: {type?: string, value?: string}[];
   public experimental?: boolean;
+  public sourceReference?: string;
   public content?: string;
   public caseSensitive?: string;
   public narrative?: string;
@@ -21,6 +25,7 @@ export class CodeSystem {
   public hierarchyMeaning?: string;
   public sequence?: string;
   public identifiers?: Identifier[];
+  public configurationAttributes?: any[];
   public contacts?: ContactDetail[];
   public properties?: EntityProperty[];
 

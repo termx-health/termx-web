@@ -14,6 +14,7 @@ import {TaskLibModule} from 'term-web/task/_lib';
 import {WikiLibModule} from 'term-web/wiki/_lib';
 import {ResourceTaskModalComponent} from 'term-web/resources/resource/components/resource-task-modal-component';
 import {UserLibModule} from 'term-web/user/_lib';
+import {ResourceConfigurationAttributesComponent} from 'term-web/resources/resource/components/resource-configuration-attributes.component';
 
 
 @NgModule({
@@ -29,6 +30,7 @@ import {UserLibModule} from 'term-web/user/_lib';
     ResourceContextComponent,
     ResourceFormComponent,
     ResourceIdentifiersComponent,
+    ResourceConfigurationAttributesComponent,
     ResourceSideInfoComponent,
     ResourceVersionFormComponent,
     ResourceTasksWidgetComponent,
@@ -41,6 +43,7 @@ import {UserLibModule} from 'term-web/user/_lib';
     ResourceContextComponent,
     ResourceFormComponent,
     ResourceIdentifiersComponent,
+    ResourceConfigurationAttributesComponent,
     ResourceSideInfoComponent,
     ResourceVersionFormComponent,
     ResourceTasksWidgetComponent,

@@ -9,11 +9,16 @@ export class ValueSet {
   public publisher?: string;
   public name?: string;
   public title?: LocalizedName;
+  public otherTitle?: {name?: string, preferred?: boolean}[];
   public description?: LocalizedName;
   public purpose?: LocalizedName;
+  public topic?: {text?: string, tags?: string[]};
+  public useContext?: {type?: string, value?: string}[];
   public narrative?: string;
   public experimental?: boolean;
+  public sourceReference?: string;
   public identifiers?: Identifier[];
+  public configurationAttributes?: any[];
   public contacts?: ContactDetail[];
 
   public versions?: ValueSetVersion[];

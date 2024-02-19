@@ -81,8 +81,10 @@ export class CodeSystemEditComponent implements OnInit {
     cs.copyright ??= {};
     cs.permissions ??= {};
     cs.settings ??= {};
+    cs.topic ??= {};
     cs.identifiers ??= [];
     cs.properties ??= [];
+    cs.configurationAttributes ??= [];
     return cs;
   }
 }

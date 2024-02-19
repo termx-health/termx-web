@@ -67,6 +67,7 @@ export class ImplementationGuideEditComponent implements OnInit {
 
   private writeIG(ig: ImplementationGuide): ImplementationGuide {
     ig.copyright ??= {};
+    ig.topic ??= {};
     ig.identifiers ??= [];
     ig.contacts ??= [];
     return ig;

@@ -494,6 +494,15 @@
 				"single": "Copyright",
 				"statement": "Copyright statement"
 			},
+			"replaces": "Replaces",
+			"other-title": "Other title",
+			"source-reference": "Source reference",
+			"topic": "Topic",
+			"conf-attribute": {
+				"multiple": "Configuration attributes",
+				"attribute": "Attribute",
+				"value": "Value"
+			},
 			"description": "Description",
 			"experimental": "Experimental",
 			"id": "ID",
@@ -503,7 +512,7 @@
 				"system": "System",
 				"value": "Value"
 			},
-			"name": "Name",
+			"name": "Computable name",
 			"permissions": {
 				"admin": "Admin",
 				"editor": "Editor",
@@ -1783,6 +1792,8 @@
 			"checklist": "Checklist"
 		},
 		"resource-form": {
+			"add-other-title": "Add other title",
+			"add-use-context": "Add use context",
 			"id-change-modal": {
 				"header": "Change ID",
 				"id": "New ID"
