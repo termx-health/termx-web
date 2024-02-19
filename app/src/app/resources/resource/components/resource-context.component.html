@@ -6,7 +6,7 @@
       <ng-container *ngIf="resource">
         <!-- Left -->
         <div class="resource-context__item resource-context__info">
-          <div class="m-subtitle" style="padding-bottom: 1rem;">
+          <div class="m-subtitle" style="padding-bottom: 1rem">
             {{resourceType | apply: capitalz}}
           </div>
 
@@ -16,37 +16,35 @@
             </div>
 
             <div class="submenu">
-              <a class="submenu__item" (click)="navigate('summary')">
-                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'summary', title: 'web.resource-context.summary', icon: 'appstore'}"/>
+              <a class="submenu__item" [routerLink]="navigate('summary')" routerLinkActive="active">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.summary', icon: 'appstore'}"/>
               </a>
 
-              <a class="submenu__item" *twPrivileged="resource.id + '.' + resourceType + '.edit'" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']">
-                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'edit', title: 'core.btn.edit', icon: 'form'}"/>
+              <a class="submenu__item" *twPrivileged="resource.id + '.' + resourceType + '.edit'" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']" routerLinkActive="active">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'core.btn.edit', icon: 'form'}"/>
               </a>
 
-              <a class="submenu__item" *ngIf="['CodeSystem' , 'ValueSet'] | includes: resourceType" (click)="navigate('concepts')">
-                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'concept-list', title: 'web.resource-context.concepts', icon: 'database'}"/>
+              <a class="submenu__item" *ngIf="['CodeSystem' , 'ValueSet'] | includes: resourceType" [routerLink]="navigate('concepts')" routerLinkActive="active">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.concepts', icon: 'database'}"/>
               </a>
 
-              <a class="submenu__item" *ngIf="resourceType === 'CodeSystem' && resource | apply:hasExternalReference" (click)="navigate('properties')">
-                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'properties', title: 'web.resource-context.properties', icon: 'unordered-list'}"/>
+              <a class="submenu__item" *ngIf="resourceType === 'CodeSystem' && resource | apply:hasExternalReference" [routerLink]="navigate('properties')" routerLinkActive="active">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.properties', icon: 'unordered-list'}"/>
               </a>
 
-              <a class="submenu__item" (click)="navigate('provenances')">
-                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'provenance', title: 'web.resource-context.provenance', icon: 'history'}"/>
+              <a class="submenu__item" [routerLink]="navigate('provenances')" routerLinkActive="active">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.provenance', icon: 'history'}"/>
               </a>
 
-              <a class="submenu__item" *ngIf="resourceType === 'CodeSystem' && '*.Checklist.view' | twPrivileged" (click)="navigate('checklists')">
-                <ng-container *ngTemplateOutlet="tabTpl; context: {mode: 'checklist', title: 'web.resource-context.checklist', icon: 'check-square'}"/>
+              <a class="submenu__item" *ngIf="resourceType === 'CodeSystem' && '*.Checklist.view' | twPrivileged" [routerLink]="navigate('checklists')" routerLinkActive="active">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.checklist', icon: 'check-square'}"/>
               </a>
 
 
-              <ng-template #tabTpl let-tmode="mode" let-title="title" let-icon="icon">
-                <div class="submenu__item_wrapper " [class.active]="mode === tmode">
-                  <div class="m-items-middle">
-                    {{title | translate}}
-                    <m-icon [mCode]="icon"/>
-                  </div>
+              <ng-template #tabTpl let-title="title" let-icon="icon">
+                <div class="m-items-middle">
+                  {{title | translate}}
+                  <m-icon [mCode]="icon"/>
                 </div>
               </ng-template>
             </div>

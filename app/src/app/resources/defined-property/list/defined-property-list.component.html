@@ -20,10 +20,13 @@
 
     <tr *mTableRow="let ep">
       <td>
-        <a *ngIf="('*.CodeSystem.edit' | twHasAnyPrivilege); else view" [routerLink]="[ep.id, 'edit']">{{ep.name}}
-          <m-icon *ngIf="ep.used" mCode="info-circle" m-tooltip mTitle="web.defined-entity-property.list.property-used"></m-icon></a>
-        <ng-template #view>{{ep.name}}
-          <m-icon *ngIf="ep.used" mCode="info-circle" m-tooltip mTitle="web.defined-entity-property.list.property-used"></m-icon></ng-template>
+        <a *ngIf="('*.CodeSystem.edit' | twPrivileged); else view" [routerLink]="[ep.id, 'edit']">{{ep.name}}
+          <m-icon *ngIf="ep.used" mCode="info-circle" m-tooltip mTitle="web.defined-entity-property.list.property-used"></m-icon>
+        </a>
+        <ng-template #view>
+          {{ep.name}}
+          <m-icon *ngIf="ep.used" mCode="info-circle" m-tooltip mTitle="web.defined-entity-property.list.property-used"></m-icon>
+        </ng-template>
       </td>
       <td>{{ep.description | localName}}</td>
       <td>{{ep.uri}}</td>

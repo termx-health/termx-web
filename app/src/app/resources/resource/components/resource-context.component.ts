@@ -14,7 +14,7 @@ export class ResourceContextComponent {
   @Input() public conceptCode: string;
   @Input() public version: ResourceVersion;
   @Input() public versions: ResourceVersion[];
-  @Input() public mode: 'summary' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties' | 'checklist'  = 'summary';
+  @Input() public mode: 'summary' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties' | 'checklist' = 'summary';
 
   public constructor(private router: Router) {}
 
@@ -50,21 +50,21 @@ export class ResourceContextComponent {
     this.router.navigate(commands[this.mode], {replaceUrl: true});
   }
 
-  public navigate(mode: string): void {
+  public navigate(mode: string): any[] {
     if (this.version?.version) {
-      this.router.navigate(['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', this.version.version, mode]);
+      return ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', this.version.version, mode];
     } else {
-      this.router.navigate(['/resources', this.typeMap[this.resourceType], this.resource.id, mode]);
+      return ['/resources', this.typeMap[this.resourceType], this.resource.id, mode];
     }
   }
 
   protected hasExternalReference = (resource: any): boolean => {
-   return resource?.['properties']?.find(p => p.type === 'Coding');
+    return resource?.['properties']?.find(p => p.type === 'Coding');
   };
 
 
-  protected capitalz = (n:string): string=>{
-    return n.split('').filter(l=> l === l.toUpperCase()).join('')
+  protected capitalz = (n: string): string => {
+    return n.split('').filter(l => l === l.toUpperCase()).join('')
   }
 
 }

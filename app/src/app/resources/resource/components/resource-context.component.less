@@ -61,20 +61,17 @@
 
     .submenu__item {
       color: currentColor;
+      height: 2.2rem;
 
-      &_wrapper {
-        height: 2.2rem;
-        transition: 100ms;
-
-        &.active {
-          border-bottom: 2px solid var(--color-primary);
-          color: var(--color-primary-8);
-        }
+      &.active {
+        border-bottom: 2px solid var(--color-primary);
+        color: var(--color-primary-8);
       }
 
-      &:hover .submenu__item_wrapper:not(.active),
-      &:focus .submenu__item_wrapper:not(.active) {
-        border-bottom: 2px solid var(--color-borders);
+      &:not(.active) {
+        &:hover, &:focus {
+          border-bottom: 2px solid var(--color-borders);
+        }
       }
     }
   }

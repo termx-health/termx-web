@@ -5,7 +5,7 @@
       <h2 class="m-bold" style="margin: 0">
         {{'entities.transformation-definition.singular' | translate}}
       </h2>
-      <div style="font-size: 0.9rem;" class="m-text-secondary" *ngIf="definition.id && (definition.modifiedBy || definition.createdBy)">
+      <div class="m-text-secondary m-text-small" *ngIf="definition.id && (definition.modifiedBy || definition.createdBy)">
         <m-icon mCode="clock-circle"/>
         {{(definition.modifiedAt ? 'web.transformation-definition.edit.updated' : 'web.transformation-definition.edit.created') | translate: ({date: (definition.modifiedBy ? definition.modifiedAt : definition.createdAt) | localDateTime})}}
 

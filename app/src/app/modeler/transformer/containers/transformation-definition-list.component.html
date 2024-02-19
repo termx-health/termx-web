@@ -27,12 +27,12 @@
       </td>
 
       <td>
-        <div style="font-size: 0.9rem" [mPopover]="td.modifiedBy && td.modifiedAt !== td.createdAt" [mTitle]="pop" mPosition="left">
+        <div class="m-text-small" [mPopover]="td.modifiedBy && td.modifiedAt !== td.createdAt" [mTitle]="pop" mPosition="left">
           <div>{{td.modifiedBy ?? td.createdBy }}</div>
           <div class="m-text-secondary">{{(td.modifiedBy ? td.modifiedAt : td.createdAt) | localDateTime}}</div>
 
           <ng-template #pop>
-            <div style="font-size: 0.9rem">
+            <div class="m-text-small">
               {{'web.transformation-definition.list.created-by' | translate: ({user: td.createdBy})}}
               <div class="m-text-secondary">{{td.createdAt | localDateTime}}</div>
             </div>
