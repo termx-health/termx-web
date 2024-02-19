@@ -1,5 +1,4 @@
-<m-form-row>
-  <div *mFormCol>
+<m-page-container>
     <m-card [mTitle]="mode === 'edit' ? 'web.terminology-server.edit-header' : 'web.terminology-server.add-header'" [mShowSkeleton]="loader.state['load']">
       <form #form="ngForm" *ngIf="server">
         <m-form-item mName="code" mLabel="entities.terminology-server.code" required>
@@ -114,5 +113,4 @@
         {{'core.btn.save' | translate}}
       </m-button>
     </m-card>
-  </div>
-</m-form-row>
+</m-page-container>

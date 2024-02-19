@@ -1,7 +1,7 @@
 <m-no-data *ngIf="!propertyValues?.length || !properties?.length"/>
 <ng-container *ngIf="propertyValues?.length && properties?.length">
   <!--        Edit mode        -->
-  <form *ngIf="!viewMode" #form="ngForm">
+  <form *ngIf="!viewMode" #form="ngForm" style="overflow: auto">
     <div class="m-items-middle" *ngIf="{data: propertyValues | sort: 'entityPropertyId' | filter: filterPropertyValue} as d">
       <div class="col">
         <div class="row" *ngFor="let pv of d.data">

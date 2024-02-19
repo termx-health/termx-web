@@ -6,8 +6,8 @@
 
       <!-- Concept info -->
       <m-card *ngIf="concept">
-        <m-title *m-card-header [mTitle]="concept.code" class="m-bold"></m-title>
-        <span>{{concept.description}}</span>
+        <m-title [mTitle]="concept.code" class="m-card__title"></m-title>
+        <span *ngIf="concept.description">{{concept.description}}</span>
       </m-card>
 
       <!-- Concept Versions -->
@@ -41,11 +41,12 @@
           <m-divider mVertical></m-divider>
           <tw-status-tag [status]="conceptVersion.status"></tw-status-tag>
         </div>
-        <span>{{conceptVersion.description}}</span>
+
+        <div class="tw-flex-container">
+        <span *ngIf="conceptVersion.description">{{conceptVersion.description}}</span>
 
         <!-- Designations -->
-        <m-divider></m-divider>
-        <m-card class="m-card-inside">
+        <m-card>
           <m-title *m-card-header mTitle="entities.code-system-entity-version.designations"></m-title>
           <tw-code-system-designation-edit
               [properties]="codeSystem?.properties"
@@ -55,8 +56,7 @@
         </m-card>
 
         <!-- Property values -->
-        <m-divider></m-divider>
-        <m-card class="m-card-inside">
+        <m-card>
           <m-title *m-card-header mTitle="entities.code-system-entity-version.property-values"></m-title>
           <tw-code-system-property-value-edit
               [codeSystemId]="codeSystem?.id"
@@ -66,14 +66,14 @@
         </m-card>
 
         <!-- Associations -->
-        <m-divider></m-divider>
-        <m-card class="m-card-inside">
+        <m-card>
           <m-title *m-card-header mTitle="entities.code-system-entity-version.associations"></m-title>
           <tw-code-system-association-edit
               [codeSystemId]="codeSystemId"
               [associations]="conceptVersion?.associations"
               viewMode></tw-code-system-association-edit>
         </m-card>
+        </div>
       </m-card>
     </div>
   </div>

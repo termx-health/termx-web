@@ -13,6 +13,9 @@ export function TranslationHandlerFactory(translateService: TranslateService): C
 
 export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
   return {
+    card: {
+      display: 'fancy'
+    },
     notifications: {
       top: '4em'
     },

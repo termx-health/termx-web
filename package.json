@@ -23,7 +23,7 @@
     "@kodality-web/core-util": "^16.0.0-snapshot",
     "@kodality-web/marina-markdown": "^16.0.0-snapshot",
     "@kodality-web/marina-quill": "^16.0.0-snapshot",
-    "@kodality-web/marina-ui": "^16.0.0-snapshot",
+    "@kodality-web/marina-ui": "^16.1.0-snapshot",
     "@kodality-web/marina-util": "^16.0.0-snapshot",
     "@kodality-web/structure-definition-viewer": "5.0.7",
     "@codemirror/lang-markdown": "^6.2.0",

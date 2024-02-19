@@ -102,7 +102,7 @@ export class FinderMenuComponent {
         </ng-container>
       </ng-container>
 
-      <m-card [mShowSkeleton]="loading" class="m-card-inside">
+      <m-card [mShowSkeleton]="loading" mDisplay="headless">
         <div class="tw-finder-outlet">
           <ng-content></ng-content>
         </div>

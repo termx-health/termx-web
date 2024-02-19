@@ -11,7 +11,7 @@
 
       <!-- Concept info -->
       <m-card *ngIf="concept">
-        <div *m-card-header class="m-justify-between">
+        <div class="m-card__title m-justify-between">
           <m-title [mTitle]="mode === 'edit' ? concept.code : 'web.code-system-concept.form.add-header'" class="m-bold"></m-title>
           <m-dropdown>
             <a *m-dropdown-item (mClick)="deleteConcept(concept.code)">
@@ -19,6 +19,7 @@
             </a>
           </m-dropdown>
         </div>
+
         <form #form="ngForm">
           <ng-container *ngIf="!concept.immutable">
             <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>
@@ -129,6 +130,9 @@
             </m-dropdown>
           </div>
         </div>
+
+        <div class="tw-flex-container">
+        <section>
         <m-form-item *ngIf="conceptVersion.status === 'draft'" mName="versionDescription" mLabel="entities.code-system-entity-version.description">
           <m-textarea name="versionDescription" [(ngModel)]="conceptVersion.description"></m-textarea>
         </m-form-item>
@@ -149,10 +153,10 @@
             </m-dropdown>
           </div>
         </m-form-item>
+        </section>
 
         <!-- Designations -->
-        <m-divider></m-divider>
-        <m-card class="m-card-inside">
+        <m-card>
           <m-title *m-card-header mTitle="entities.code-system-entity-version.designations">
             <m-dropdown mControls *ngIf="codeSystem && conceptVersion?.status === 'draft'">
               <tw-add-button *m-dropdown-container>
@@ -172,8 +176,7 @@
         </m-card>
 
         <!-- Property values -->
-        <m-divider></m-divider>
-        <m-card class="m-card-inside">
+        <m-card>
           <m-title *m-card-header mTitle="entities.code-system-entity-version.property-values">
             <m-dropdown mControls *ngIf="codeSystem && conceptVersion?.status === 'draft'">
               <tw-add-button *m-dropdown-container>
@@ -193,8 +196,7 @@
         </m-card>
 
         <!-- Associations -->
-        <m-divider></m-divider>
-        <m-card class="m-card-inside">
+        <m-card>
           <div *m-card-header class="m-justify-between">
             <m-title mTitle="entities.code-system-entity-version.associations"></m-title>
             <tw-add-button *ngIf="conceptVersion?.status === 'draft'" (click)="addAssociation()">
@@ -209,11 +211,11 @@
         </m-card>
 
         <!-- References -->
-        <m-divider></m-divider>
-        <m-card class="m-card-inside">
+        <m-card>
           <m-title *m-card-header mTitle="entities.code-system-entity-version.references"></m-title>
           <tw-cs-concept-reference-list [codeSystem]="codeSystemId" [entityVersionId]="conceptVersion?.id"/>
         </m-card>
+        </div>
       </m-card>
     </div>
   </div>

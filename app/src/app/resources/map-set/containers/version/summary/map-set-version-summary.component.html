@@ -1,6 +1,6 @@
 <tw-resource-context resourceType="MapSet" [resource]="mapSet" [version]="mapSetVersion" mode="summary"></tw-resource-context>
 <m-page [mLoading]="loader.isLoading">
-
+<m-page-container breakpoint="xl">
   <m-form-row class="with-row-gap" mGap="1rem">
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
 
@@ -148,4 +148,5 @@
           (associationsChanged)="loadData(mapSet?.id, mapSetVersion?.version)"></tw-map-set-unmapped-concept-list>
     </div>
   </m-form-row>
+</m-page-container>
 </m-page>

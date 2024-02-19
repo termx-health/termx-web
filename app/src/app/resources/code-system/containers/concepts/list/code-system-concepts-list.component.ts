@@ -67,9 +67,6 @@ interface FilterProperty {
       margin-bottom: 0;
     }
 
-    ::ng-deep .recursive-card-inside-flatten .m-card {
-      .m-card-inside;
-    }
 
     ::ng-deep .concept-tree {
       .m-tree-node__option {
