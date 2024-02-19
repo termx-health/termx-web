@@ -1,5 +1,5 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {compareStrings, DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {SnomedCodeSystem, SnomedCodeSystemVersion} from 'app/src/app/integration/_lib';
@@ -20,7 +20,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
   protected upgradeModalData: {visible?: boolean, dependantVersion?: string} = {};
   protected exportModalData: {visible?: boolean, type?: string} = {type: 'SNAPSHOT'};
-  protected importModalData: {visible?: boolean, type?: string, file?: any} = {type: 'SNAPSHOT'};
+  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number} = {type: 'SNAPSHOT'};
 
 
   @ViewChild("form") public form?: NgForm;
@@ -33,6 +33,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
     private snomedService: SnomedService,
     private lorqueService: LorqueLibService,
     private notificationService: MuiNotificationService,
+    private router: Router,
     private route: ActivatedRoute,
     private destroy$: DestroyService,
     private location: Location
@@ -57,6 +58,15 @@ export class SnomedCodesystemEditComponent implements OnInit {
   private loadCodesystem(shortName: string): void {
     this.loader.wrap('load', this.snomedService.loadCodeSystem(shortName)).subscribe(cs => {
       this.snomedCodeSystem = this.writeCodesystem(cs);
+      if (this.route.snapshot.queryParamMap.has('import')) {
+        this.importModalData.visible = true;
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {import: null},
+          queryParamsHandling: 'merge',
+          replaceUrl: true
+        });
+      }
     });
   }
 
@@ -107,7 +117,11 @@ export class SnomedCodesystemEditComponent implements OnInit {
       type: this.importModalData.type,
       createCodeSystemVersion: true
     }, file)).subscribe(resp => {
-      this.pollJobStatus(resp.jobId);
+      if (resp.finished) {
+        this.pollJobStatus(resp.body.jobId);
+      } else {
+        this.importModalData.progress = resp.progress;
+      }
     });
   }
 

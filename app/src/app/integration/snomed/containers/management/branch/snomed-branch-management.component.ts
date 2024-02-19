@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
 import {DestroyService, format, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {SnomedAuthoringStatsItem, SnomedBranch, SnomedTranslation} from 'app/src/app/integration/_lib';
-import {forkJoin} from 'rxjs';
+import {filter, forkJoin} from 'rxjs';
 import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
@@ -29,7 +29,7 @@ export class SnomedBranchManagementComponent implements OnInit {
 
   protected lockModalData: {visible?: boolean, message?: string} = {};
   protected exportModalData: {visible?: boolean, type?: string} = {};
-  protected importModalData: {visible?: boolean, type?: string, file?: any} = {type: 'SNAPSHOT'};
+  protected importModalData: {visible?: boolean, type?: string, file?: any, progress?: number} = {type: 'SNAPSHOT'};
   protected csVersionModalData: {visible?: boolean, shortName?: string, effectiveDate?: number} = {};
   protected synonymDeactivationModalData: {visible?: boolean, descriptionId?: string} = {};
   protected synonymReactivationModalData: {visible?: boolean, descriptionId?: string} = {};
@@ -125,8 +125,12 @@ export class SnomedBranchManagementComponent implements OnInit {
       branchPath: this.snomedBranch.path,
       type: this.importModalData.type,
       createCodeSystemVersion: false
-    }, file)).subscribe(resp => {
-      this.pollJobStatus(resp.jobId);
+    }, file)).pipe(filter(r => r.finished)).subscribe(resp => {
+      if (resp.finished) {
+        this.pollJobStatus(resp.body.jobId);
+      } else {
+        this.importModalData.progress = resp.progress;
+      }
     });
   }
 

@@ -19,12 +19,12 @@
         <tr>
           <td>
             <div class="m-items-middle">
-              <m-icon-button *ngIf="cs.versions"
+              <m-icon-button *ngIf="cs.versions?.length"
                   [mIcon]="cs['expanded'] ? 'folder-open' : 'folder'"
                   (mClick)="cs['expanded'] = !cs['expanded']"></m-icon-button>
               <div>
                 <div>
-                  <a [routerLink]="['/integration', 'snomed', 'codesystems', cs.shortName, 'edit']">{{cs.shortName}}</a> {{cs.name ? '(' + cs.name + ')' : ''}}
+                  <a class="m-bold" [routerLink]="['/integration', 'snomed', 'codesystems', cs.shortName, 'edit']">{{cs.shortName}}</a> {{cs.name ? '(' + cs.name + ')' : ''}}
                 </div>
                 <ng-container *ngFor="let module of cs.modules">
                   <div *ngIf="module.conceptId === module.moduleId">{{module?.pt?.term}}</div>
@@ -37,7 +37,10 @@
             <div *ngFor="let lang of cs.languages | values">{{lang}}</div>
           </td>
           <td>
-            <div>{{'web.snomed.branch.list.codesystem.imported' | translate}}: {{cs.latestVersion?.importDate | localDateTime}}</div>
+            <a *ngIf="!cs.latestVersion?.importDate" [routerLink]="['/integration', 'snomed', 'codesystems', cs.shortName, 'edit']" [queryParams]="{import: ''}">
+              {{'web.snomed.codesystem.form.import-from-rf2' | translate}}
+            </a>
+            <div *ngIf="!!cs.latestVersion?.importDate">{{'web.snomed.branch.list.codesystem.imported' | translate}}: {{cs.latestVersion?.importDate | localDateTime}}</div>
             <div>{{cs.latestVersion?.branchPath}}</div>
           </td>
         </tr>

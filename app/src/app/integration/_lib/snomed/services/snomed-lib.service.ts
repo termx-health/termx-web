@@ -12,7 +12,7 @@ import {SnomedDescriptionItemSearchResult} from '../model/description/snomed-des
 import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-params';
 import {SnomedRefsetSearchResult} from '../model/refset/snomed-refset-search-result';
 import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-member-search-result';
-import {SnomedAuthoringStatsItem, SnomedBranch, SnomedCodeSystem, SnomedDescription, SnomedDescriptionSearchParams} from 'term-web/integration/_lib';
+import {SnomedAuthoringStatsItem, SnomedBranch, SnomedCodeSystem} from 'term-web/integration/_lib';
 import {LorqueProcess} from 'term-web/sys/_lib';
 import {saveAs} from 'file-saver';
 
@@ -82,7 +82,7 @@ export class SnomedLibService {
       switchMap(() => this.loadImportJob(jobId)),
       takeUntil(merge(pollComplete$, destroy$))
     ).subscribe(resp => {
-      if (resp?.status !== 'RUNNING') {
+      if (!['WAITING_FOR_FILE', 'RUNNING'].includes(resp?.status)) {
         pollComplete$.next(resp);
       }
     });

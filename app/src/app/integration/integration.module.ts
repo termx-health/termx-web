@@ -44,6 +44,7 @@ import {SnomedCodesystemEditComponent} from 'term-web/integration/snomed/contain
 import {SysLibModule} from 'term-web/sys/_lib';
 import {ResourceModule} from 'term-web/resources/resource/resource.module';
 import {UserLibModule} from 'term-web/user/_lib';
+import {NzProgressModule} from 'ng-zorro-antd/progress';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -87,7 +88,8 @@ export const INTEGRATION_ROUTES: Routes = [
     MapSetModule,
     SysLibModule,
     ResourceModule,
-    UserLibModule
+    UserLibModule,
+    NzProgressModule
   ],
   exports: [
     LoincListComponent,
