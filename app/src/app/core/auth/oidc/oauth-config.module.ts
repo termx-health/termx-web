@@ -17,6 +17,7 @@ import {environment} from 'environments/environment';
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,
+        renewTimeBeforeTokenExpiresInSeconds: Math.floor(Math.random() * 20) + 10 ,
         ignoreNonceAfterRefresh: true,
         logLevel: LogLevel.Debug
       }
