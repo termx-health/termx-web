@@ -1,12 +1,11 @@
 import {Injectable} from '@angular/core';
 import {catchError, filter, map, mergeMap, Observable, of, tap} from 'rxjs';
-import {HttpClient, HttpContext} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {EventTypes, OidcSecurityService, PublicEventsService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import Cookies from 'js-cookie';
 import {isDefined} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
-import {MuiSkipErrorHandler} from '@kodality-web/marina-ui';
 
 const COOKIE_OAUTH_TOKEN_KEY = 'termx-oauth-token';
 const REDIRECT_ORIGIN_URL = '__termx-redirect_origin_url';
@@ -51,6 +50,16 @@ export class AuthService {
           window.location.replace(redirectOriginUrl);
         }
       });
+
+    eventService.registerForEvents()
+      .pipe(
+        filter(e => e.type === EventTypes.SilentRenewFailed),
+        mergeMap(() => {
+          console.warn("Silent renew failed, calling 'refreshUserInfo' manually!");
+          return this.refresh();
+        })
+      )
+      .subscribe();
   }
 
 
@@ -58,18 +67,49 @@ export class AuthService {
     if (environment.yupiEnabled) {
       return of({username: 'yupi', privileges: ['*.*.*']}).pipe(tap(u => this.user = u));
     }
-    return this.refreshUserInfo().pipe(tap(u => this.user = u));
-  }
 
+    return this.refreshUserInfo().pipe(
+      tap(resp => {
+        this.user = resp;
+      }),
+      catchError(() => {
+        this.user = undefined;
+        this.login();
+        return of();
+      })
+    );
+  }
 
   private refreshUserInfo(): Observable<UserInfo> {
-    return this.oidcSecurityService.checkAuth().pipe(mergeMap(() => {
-      return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`, {context: new HttpContext().set(MuiSkipErrorHandler, true)}).pipe(catchError(() => {
-        this.login();
-        return of(null as UserInfo);
-      }));
-    }));
+    return this.oidcSecurityService.checkAuth().pipe(
+      mergeMap(lr => {
+        if (lr.isAuthenticated || !lr.accessToken) {
+          // 1. user is authenticated -> load valid userinfo
+          // 2. no token -> load guest userinfo
+          return this.loadUserInfo();
+        }
+
+        //  trigger session refresh when user is not authenticated and access token exists
+        return this.forceRefreshSession();
+      })
+    );
   }
+
+  private forceRefreshSession(): Observable<UserInfo> {
+    return this.oidcSecurityService.forceRefreshSession().pipe(
+      // angular-auth-oidc-client "feature":
+      //  Silent renew is not started when 'forceRefreshSession' is called.
+      //  In order to start it again, the 'checkAuth' must be triggered.
+      //  p.s: 'checkAuth' starts silent refresh only when user is authenticated.
+      mergeMap(() => this.oidcSecurityService.checkAuth()),
+      mergeMap(() => this.loadUserInfo())
+    );
+  }
+
+  private loadUserInfo(): Observable<UserInfo> {
+    return this.http.get<UserInfo>(`${this.baseUrl}/userinfo`);
+  }
+
 
   public login(): void {
     sessionStorage.setItem(REDIRECT_ORIGIN_URL, window.location.pathname + window.location.search);

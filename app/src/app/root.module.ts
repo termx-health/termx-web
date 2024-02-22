@@ -53,7 +53,7 @@ export function HttpLoaderFactory(_http: HttpBackend): TranslateLoader {
   };
 }
 
-export function preloadAuth(authService: AuthService): () => Observable<any> {
+export function initAuth(authService: AuthService): () => Observable<any> {
   return () => authService.refresh();
 }
 
@@ -103,7 +103,7 @@ export function preloadAuth(authService: AuthService): () => Observable<any> {
   ],
   providers: [
     {provide: LOCALE_ID, useValue: environment.defaultLanguage},
-    {provide: APP_INITIALIZER, useFactory: preloadAuth, deps: [AuthService], multi: true},
+    {provide: APP_INITIALIZER, useFactory: initAuth, deps: [AuthService], multi: true},
     {provide: APP_BASE_HREF, useFactory: (): string => environment.baseHref},
     {provide: HTTP_INTERCEPTORS, useClass: LangInterceptor, multi: true},
   ],

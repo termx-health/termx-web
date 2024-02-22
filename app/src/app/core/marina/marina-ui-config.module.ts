@@ -68,7 +68,7 @@ export class MarinaUiConfigModule {
     });
 
 
-    new HttpClient(http).get('/assets/ui-languages.json').subscribe(uiLangs => {
+    new HttpClient(http).get('./assets/ui-languages.json').subscribe(uiLangs => {
       muiConfig.set('systemLanguages',
         group(env.uiLanguages.filter(k => uiLangs[k]), k => k, k => ({label: [k.toUpperCase(), uiLangs[k]].filter(isDefined).join(' ')})));
     });
