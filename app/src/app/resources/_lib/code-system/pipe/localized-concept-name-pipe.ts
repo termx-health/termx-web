@@ -126,7 +126,7 @@ class LocalizedConceptNameService {
 
   private $snomed(reqIds: string[] | number[]): Observable<OptimizedResponse[]> {
     return this.snomedService.findConcepts({conceptIds: reqIds as string[], limit: reqIds.length}).pipe(map(
-      res => res.items.map(i => ({id: i.conceptId, name: i.pt.term}))));
+      res => res.items.map(i => ({id: i.conceptId, name: i.fsn.term}))));
   }
 
   private $ucum(reqIds: string[] | number[]): Observable<OptimizedResponse[]> {
