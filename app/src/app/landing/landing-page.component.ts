@@ -4,18 +4,16 @@ import {catchError, forkJoin, Observable, of} from 'rxjs';
 import {CoreUiModule} from '../core/ui/core-ui.module';
 import {AuthService} from '../core/auth';
 import {CodeSystemLibService, MapSetLibService, ValueSetLibService} from 'term-web/resources/_lib';
-import {SpaceService} from 'term-web/space/services/space.service';
-import {TaskService} from 'term-web/task/services/task-service';
-import {Task, TaskLibModule} from 'term-web/task/_lib';
+import {Task, TaskLibModule, TaskLibService} from 'term-web/task/_lib';
 import {PageLibService, WikiLibModule} from 'term-web/wiki/_lib';
-import {SpaceModule} from 'term-web/space/space.module';
 import {InfoService} from 'term-web/core/info/info.service';
+import {SpaceLibModule, SpaceLibService} from 'term-web/space/_lib';
 
 type Modules = 'terminology' | 'core' | 'task' | 'wiki';
 
 @Component({
   standalone: true,
-  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SpaceModule],
+  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SpaceLibModule],
   templateUrl: 'landing-page.component.html',
   styleUrls: ['landing-page.component.less']
 })
@@ -43,9 +41,9 @@ export class LandingPageComponent {
     private codeSystemService: CodeSystemLibService,
     private valueSetService: ValueSetLibService,
     private mapSetService: MapSetLibService,
-    private spaceService: SpaceService,
+    private spaceService: SpaceLibService,
     private pageService: PageLibService,
-    private taskService: TaskService,
+    private taskService: TaskLibService,
     stateStore: ComponentStateStore,
     info: InfoService,
   ) {

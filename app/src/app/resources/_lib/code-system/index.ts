@@ -1,4 +1,3 @@
-export * from './code-system-lib.module';
 export * from './containers/code-system-entity-version-search.component';
 export * from './containers/code-system-search.component';
 export * from './containers/code-system-version-select.component';
@@ -25,3 +24,4 @@ export * from './services/code-system-entity-version-lib.service';
 export * from './services/code-system-lib.service';
 export * from './util/code-system-util';
 export * from './util/concept-util';
+export * from './code-system-lib.module';
