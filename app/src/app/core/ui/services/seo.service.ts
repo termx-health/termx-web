@@ -1,7 +1,7 @@
-import {filter, tap} from 'rxjs';
 import {Injectable} from '@angular/core';
-import {NavigationEnd, Router} from '@angular/router';
 import {Meta, Title} from '@angular/platform-browser';
+import {NavigationEnd, Router} from '@angular/router';
+import {filter, tap} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class SeoService {

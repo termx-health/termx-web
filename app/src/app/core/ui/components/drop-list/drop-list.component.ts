@@ -1,5 +1,5 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, TrackByFunction} from '@angular/core';
 import {CdkDragDrop, CdkDragMove} from '@angular/cdk/drag-drop';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, TrackByFunction} from '@angular/core';
 import {BooleanInput} from '@kodality-web/core-util';
 
 

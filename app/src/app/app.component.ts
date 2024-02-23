@@ -1,14 +1,14 @@
-import {Component} from '@angular/core';
-import {MuiPageMenuItem} from '@kodality-web/marina-ui';
-import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Params, Router} from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
 import {HttpClient} from '@angular/common/http';
+import {Component} from '@angular/core';
+import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Params, Router} from '@angular/router';
+import {group} from '@kodality-web/core-util';
+import {MuiPageMenuItem} from '@kodality-web/marina-ui';
+import {LocalizedName} from '@kodality-web/marina-util';
+import {TranslateService} from '@ngx-translate/core';
+import {environment} from 'environments/environment';
 import {delay, filter, map, pairwise, startWith, switchMap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
-import {group} from '@kodality-web/core-util';
-import {environment} from 'environments/environment';
 import {InfoService} from 'term-web/core/info/info.service';
-import {LocalizedName} from '@kodality-web/marina-util';
 
 
 interface FileMenu {
