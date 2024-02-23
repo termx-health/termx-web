@@ -19,7 +19,7 @@
               <m-icon *ngIf="!child.isLeafInferred" (click)="loadTaxonomyTree(child.conceptId)" mCode="down"></m-icon>
               <a (click)="selectConcept(child.conceptId)" class="m-items-middle" [style]="conceptId === child.conceptId ? 'font-weight:bold': ''">
                 <m-icon *ngIf="child.isLeafInferred" mCode="minus"></m-icon>
-                <label>{{child['term'] || (child | snomedConceptName | async)}}</label>
+                <label>{{child['term'] || (child | snomedConceptName:'fsn' | async)}}</label>
                 <label *ngIf="child['term']" style="color: grey">{{child | snomedConceptName: 'fsn' | async}}</label>
               </a>
             </div>
