@@ -16,6 +16,7 @@ interface FileMenu {
   icon?: string,
   link: string;
   items?: FileMenu[];
+  privileges?: string[]
 }
 
 const getRouteLastChild = (snap: ActivatedRouteSnapshot): ActivatedRouteSnapshot => snap.firstChild ? getRouteLastChild(snap.firstChild) : snap;
@@ -108,6 +109,7 @@ export class AppComponent {
           icon: fm.icon,
           route: route,
           queryParams: queryParams,
+          disabled: fm.privileges && !this.auth.hasAnyPrivilege(fm.privileges),
           items: this.createMenu(fm.items)
         };
       };

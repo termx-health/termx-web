@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
-import {catchError, filter, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {Router} from '@angular/router';
+import {isDefined} from '@kodality-web/core-util';
 import {EventTypes, OidcSecurityService, PublicEventsService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import Cookies from 'js-cookie';
-import {isDefined} from '@kodality-web/core-util';
-import {Router} from '@angular/router';
+import {catchError, filter, map, mergeMap, Observable, of, tap} from 'rxjs';
 
 const COOKIE_OAUTH_TOKEN_KEY = 'termx-oauth-token';
 const REDIRECT_ORIGIN_URL = '__termx-redirect_origin_url';
@@ -17,10 +17,14 @@ export interface UserInfo {
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
+  private readonly baseUrl = `${environment.termxApi}/auth`;
+
   public user?: UserInfo;
   public isAuthenticated = this.oidcSecurityService.isAuthenticated$.pipe(map(r => r.isAuthenticated));
 
-  private baseUrl = `${environment.termxApi}/auth`;
+  public get token(): Observable<string> {
+    return this.oidcSecurityService.getAccessToken();
+  }
 
   public constructor(
     protected http: HttpClient,
