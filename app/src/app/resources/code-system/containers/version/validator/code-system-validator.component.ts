@@ -4,7 +4,7 @@ import {ActivatedRoute} from '@angular/router';
 import {DestroyService, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {TranslateService} from '@ngx-translate/core';
-import {environment} from 'app/src/environments/environment';
+import {environment} from 'environments/environment';
 import {CodeSystemConcept, ConceptUtil} from 'term-web/resources/_lib';
 import {LorqueLibService, LorqueProcess} from 'term-web/sys/_lib';
 

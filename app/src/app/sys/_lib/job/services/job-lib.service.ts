@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {environment} from 'app/src/environments/environment';
+import {environment} from 'environments/environment';
 import {merge, Observable, Subject, switchMap, take, takeUntil, timer} from 'rxjs';
 import {JobLog} from '../model/job-log';
 

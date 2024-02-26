@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {environment} from 'app/src/environments/environment';
+import {environment} from 'environments/environment';
 import {CodeSystemVersion} from 'term-web/resources/_lib';
 
 class CodeSystemCompareResult {

@@ -6,7 +6,7 @@ import {FhirCodeSystemLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
 import {ChefService} from 'app/src/app/integration/_lib';
 import {CodeSystem, CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
-import {environment} from 'app/src/environments/environment';
+import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import {AuthService} from 'term-web/core/auth';

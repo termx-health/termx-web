@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {SearchHttpParams} from '@kodality-web/core-util';
-import {environment} from 'app/src/environments/environment';
+import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
 import {Provenance} from '../model/provenance';
 

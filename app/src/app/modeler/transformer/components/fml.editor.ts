@@ -164,7 +164,7 @@ const createEditorState = ({editorUrl}): EditorState => ({
 });
 
 
-const FML_EDITOR_URL = environment.fmlEditor.startsWith('/')
+const FML_EDITOR_URL = environment.fmlEditor?.startsWith('/')
   ? location.origin + environment.fmlEditor
   : environment.fmlEditor;
 

@@ -1,6 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {environment} from 'app/src/environments/environment';
+import {environment} from 'environments/environment';
 import {filter, merge, Observable, Subject, switchMap, takeUntil, tap, timer} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {LorqueProcess} from '../model/lorque-process';

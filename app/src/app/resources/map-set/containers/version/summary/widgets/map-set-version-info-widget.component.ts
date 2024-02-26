@@ -4,7 +4,7 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {FhirConceptMapLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
 import {ChefService} from 'app/src/app/integration/_lib';
 import {MapSet, MapSetVersion} from 'app/src/app/resources/_lib';
-import {environment} from 'app/src/environments/environment';
+import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';

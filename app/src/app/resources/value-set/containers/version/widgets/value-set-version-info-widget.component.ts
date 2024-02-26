@@ -5,7 +5,7 @@ import {FhirValueSetLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
 import {ChefService} from 'app/src/app/integration/_lib';
 import {ValueSet, ValueSetVersion} from 'app/src/app/resources/_lib';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
-import {environment} from 'app/src/environments/environment';
+import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import {AuthService} from 'term-web/core/auth';

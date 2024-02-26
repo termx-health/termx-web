@@ -26,10 +26,10 @@ export interface Environment {
   oauthClientId: string,
 
   termxApi: string,
-  swaggerUrl: string,
-  chefUrl: string,
-  plantUmlUrl: string,
-  fmlEditor: string,
+  swaggerUrl?: string,
+  chefUrl?: string,
+  plantUmlUrl?: string,
+  fmlEditor?: string,
 
   snowstormUrl?: string,
   snowstormDailyBuildUrl?: string,
