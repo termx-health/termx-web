@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
-import {environment} from '../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
 import {Space} from 'term-web/space/_lib';
+import {environment} from '../../../../environments/environment';
 
 export type WikiSpace = Pick<Space, 'id' | 'code' | 'names' | 'active'>;
 

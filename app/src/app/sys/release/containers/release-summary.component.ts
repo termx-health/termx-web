@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {collect, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Checklist, Release, ReleaseResource} from 'term-web/sys/_lib';
-import {ReleaseService} from 'term-web/sys/release/services/release.service';
-import {forkJoin} from 'rxjs';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {forkJoin} from 'rxjs';
+import {Checklist, Release, ReleaseResource} from 'term-web/sys/_lib';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
+import {ReleaseService} from 'term-web/sys/release/services/release.service';
 
 @Component({
   templateUrl: 'release-summary.component.html',

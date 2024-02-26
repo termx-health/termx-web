@@ -1,6 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import {remove} from '@kodality-web/core-util';
+import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
 
 @Component({
   selector: 'tw-transformation-definition-resources',

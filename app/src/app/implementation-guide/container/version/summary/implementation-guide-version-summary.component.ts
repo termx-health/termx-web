@@ -1,14 +1,14 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
+import {LoadingManager} from '@kodality-web/core-util';
 import {forkJoin} from 'rxjs';
 import {ImplementationGuide, ImplementationGuideVersion} from 'term-web/implementation-guide/_lib';
-import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 import {ImplementationGuideGroupListComponent} from 'term-web/implementation-guide/container/version/summary/widgets/implementation-guide-group-list.component';
+import {ImplementationGuidePageListComponent} from 'term-web/implementation-guide/container/version/summary/widgets/implementation-guide-page-list.component';
 import {
   ImplementationGuideResourceListComponent
 } from 'term-web/implementation-guide/container/version/summary/widgets/implementation-guide-resource-list.component';
-import {ImplementationGuidePageListComponent} from 'term-web/implementation-guide/container/version/summary/widgets/implementation-guide-page-list.component';
+import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 
 @Component({
   templateUrl: 'implementation-guide-version-summary.component.html'

@@ -1,11 +1,11 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {Observable, tap} from 'rxjs';
-import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, QueryParams, SearchResult, unique} from '@kodality-web/core-util';
-import {CodeSystemAssociation, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
-import {TranslateService} from '@ngx-translate/core';
-import {AuthService} from 'term-web/core/auth';
 import {Router} from '@angular/router';
+import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, QueryParams, SearchResult, unique} from '@kodality-web/core-util';
 import {MuiTableComponent} from '@kodality-web/marina-ui';
+import {TranslateService} from '@ngx-translate/core';
+import {Observable, tap} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
+import {CodeSystemAssociation, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
 
 
 interface Filter {

@@ -1,10 +1,10 @@
 import {Component, forwardRef, Input, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput, isDefined, isNil} from '@kodality-web/core-util';
-import {launchDrawioEditor} from './editor-external/drawio.editor';
-import {contentFromSelection} from './utils/selection.utils';
 import {BehaviorSubject, concat, debounceTime, take} from 'rxjs';
+import {launchDrawioEditor} from './editor-external/drawio.editor';
 import {WikiAbstractEditor} from './editors/abstract-text-editor';
+import {contentFromSelection} from './utils/selection.utils';
 
 
 @Component({

@@ -1,10 +1,10 @@
+import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ChecklistRule} from 'term-web/sys/_lib';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
-import {Location} from '@angular/common';
 
 
 @Component({

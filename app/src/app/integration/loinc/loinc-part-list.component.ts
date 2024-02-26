@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams, EntityProperty} from 'term-web/resources/_lib';
+import {ActivatedRoute, Router} from '@angular/router';
 import {compareStrings, compareValues, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
-import {ActivatedRoute, Router} from '@angular/router';
+import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams, EntityProperty} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-loinc-part-list',

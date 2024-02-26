@@ -1,10 +1,10 @@
+import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {ImplementationGuideLibService} from './services/implementation-guide-lib.service';
-import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
+import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
-import {CommonModule} from '@angular/common';
+import {ImplementationGuideLibService} from './services/implementation-guide-lib.service';
 
 @NgModule({
   imports: [

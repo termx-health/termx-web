@@ -1,11 +1,11 @@
+import {Location} from '@angular/common';
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {compareStrings, DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {SnomedCodeSystem, SnomedCodeSystemVersion} from 'app/src/app/integration/_lib';
 import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {Location} from '@angular/common';
 import {LorqueLibService} from 'term-web/sys/_lib';
 
 

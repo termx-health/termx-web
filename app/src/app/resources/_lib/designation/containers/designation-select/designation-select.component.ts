@@ -3,8 +3,8 @@ import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput, DestroyService, group, isNil} from '@kodality-web/core-util';
 import {takeUntil} from 'rxjs';
 import {Designation} from '../../model/designation';
-import {DesignationLibService} from '../../services/designation-lib.service';
 import {DesignationSearchParams} from '../../model/designation-search-params';
+import {DesignationLibService} from '../../services/designation-lib.service';
 
 @Component({
   selector: 'tw-designation-select',

@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {DestroyService, isNil, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {TaskService} from 'term-web/task/services/task-service';
-import {Task, TaskContextItem} from 'term-web/task/_lib';
 import {ResourceVersion} from 'term-web/resources/resource/model/resource-version';
+import {Task, TaskContextItem} from 'term-web/task/_lib';
+import {TaskService} from 'term-web/task/services/task-service';
 
 @Component({
   selector: 'tw-resource-task-modal',

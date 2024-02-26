@@ -1,6 +1,6 @@
+import {ValueSetTransactionRequest} from '../../value-set';
 import {CodeSystem} from './code-system';
 import {CodeSystemVersion} from './code-system-version';
-import {ValueSetTransactionRequest} from '../../value-set';
 import {EntityProperty} from './entity-property';
 
 

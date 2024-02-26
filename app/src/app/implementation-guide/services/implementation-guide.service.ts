@@ -4,7 +4,9 @@ import {
   ImplementationGuideLibService,
   ImplementationGuideTransactionRequest,
   ImplementationGuideVersion,
-  ImplementationGuideVersionGroup, ImplementationGuideVersionPage, ImplementationGuideVersionResource
+  ImplementationGuideVersionGroup,
+  ImplementationGuideVersionPage,
+  ImplementationGuideVersionResource
 } from 'term-web/implementation-guide/_lib';
 
 @Injectable()

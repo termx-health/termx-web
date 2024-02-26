@@ -1,10 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ValueSet, ValueSetVersion} from 'app/src/app/resources/_lib';
-import {LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
+import {LoadingManager} from '@kodality-web/core-util';
+import {ValueSet, ValueSetVersion} from 'app/src/app/resources/_lib';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
-import {Resource} from 'app/src/app/resources/resource/model/resource';
-import {ResourceUtil} from 'app/src/app/resources/resource/util/resource-util';
 import {forkJoin} from 'rxjs';
 
 @Component({

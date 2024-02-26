@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'app/src/app/resources/_lib';
-import {CodeSystemService} from '../../../services/code-system.service';
 import {ActivatedRoute} from '@angular/router';
 import {LoadingManager} from '@kodality-web/core-util';
+import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {forkJoin, of} from 'rxjs';
+import {CodeSystemService} from '../../../services/code-system.service';
 
 @Component({
   templateUrl: './code-system-concept-view.component.html',

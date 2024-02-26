@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {BehaviorSubject, distinctUntilChanged, filter, map, Observable} from 'rxjs';
 import {isDefined, toNumber} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
+import {BehaviorSubject, distinctUntilChanged, filter, map, Observable} from 'rxjs';
 
 const LOCALE = 'locale';
 const SPACE = 'space';

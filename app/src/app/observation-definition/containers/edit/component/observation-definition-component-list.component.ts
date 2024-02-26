@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {ObservationDefinitionComponent} from 'term-web/observation-definition/_lib';
 
 @Component({

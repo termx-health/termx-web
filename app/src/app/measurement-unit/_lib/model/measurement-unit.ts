@@ -1,6 +1,6 @@
+import {DateRange} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {MeasurementUnitMapping} from './measurement-unit-mapping';
-import {DateRange} from '@kodality-web/core-util';
 
 export class MeasurementUnit {
   public id?: number;

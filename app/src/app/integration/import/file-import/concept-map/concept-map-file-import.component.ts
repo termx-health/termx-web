@@ -1,12 +1,12 @@
 import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
+import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {of} from 'rxjs';
-import {DestroyService, LoadingManager} from '@kodality-web/core-util';
-import {Router} from '@angular/router';
-import {MapSet, MapSetFileImportService, MapSetLibService, MapSetVersion} from '../../../../resources/_lib';
-import {JobLog} from 'term-web/sys/_lib';
 import {FileProcessingRequest} from 'term-web/resources/_lib/map-set/services/map-set-file-import.service';
+import {JobLog} from 'term-web/sys/_lib';
+import {MapSet, MapSetFileImportService, MapSetLibService, MapSetVersion} from '../../../../resources/_lib';
 
 @Component({
   templateUrl: 'concept-map-file-import.component.html',

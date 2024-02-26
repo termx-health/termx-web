@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
-import {EntityProperty, EntityPropertyValue} from 'app/src/app/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, isDefined, remove, validateForm} from '@kodality-web/core-util';
 import {EntityPropertyValueInputComponent} from 'app/src/app/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
+import {EntityProperty, EntityPropertyValue} from 'app/src/app/resources/_lib';
 import {v4 as uuid} from "uuid";
 
 type ExtendedEntityPropertyValue = EntityPropertyValue & {_key?: string};

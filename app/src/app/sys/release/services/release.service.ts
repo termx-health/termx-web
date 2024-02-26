@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
+import {isDefined} from '@kodality-web/core-util';
 import {Observable, of} from 'rxjs';
 import {Release, ReleaseLibService, ReleaseResource} from 'term-web/sys/_lib';
-import {isDefined} from '@kodality-web/core-util';
 
 @Injectable()
 export class ReleaseService extends ReleaseLibService {

@@ -1,14 +1,14 @@
 import {AfterViewInit, Component, ElementRef, forwardRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {basicSetup, EditorView} from 'codemirror';
-import {markdown} from '@codemirror/lang-markdown';
-import {Compartment, EditorState} from '@codemirror/state';
-import {keymap} from '@codemirror/view';
 
 
 import {indentWithTab} from "@codemirror/commands";
-import {WikiAbstractEditor} from '../abstract-text-editor';
+import {markdown} from '@codemirror/lang-markdown';
+import {Compartment, EditorState} from '@codemirror/state';
+import {keymap} from '@codemirror/view';
 import {BooleanInput} from '@kodality-web/core-util';
+import {basicSetup, EditorView} from 'codemirror';
+import {WikiAbstractEditor} from '../abstract-text-editor';
 
 
 @Component({

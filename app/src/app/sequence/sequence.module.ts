@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
-import {SequenceLibModule} from './_lib/sequence-lib.module';
-import {SequenceService} from './services/sequence.service';
 import {Routes} from '@angular/router';
-import {SequenceListComponent} from './containers/sequence-list.component';
-import {CoreUiModule} from '../core/ui/core-ui.module';
 import {InvalidSequenceCodeValidatorDirective, SequenceEditComponent} from 'term-web/sequence/containers/sequence-edit.component';
+import {CoreUiModule} from '../core/ui/core-ui.module';
+import {SequenceLibModule} from './_lib/sequence-lib.module';
+import {SequenceListComponent} from './containers/sequence-list.component';
+import {SequenceService} from './services/sequence.service';
 
 export const SEQUENCE_ROUTES: Routes = [
   {path: '', component: SequenceListComponent},

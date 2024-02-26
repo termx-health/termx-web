@@ -1,10 +1,11 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
-import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
-import {CodeSystem, CodeSystemLibService, CodeSystemSearchParams} from '../../code-system';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil, forkJoin} from 'rxjs';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {ArrayUtil} from 'term-web/core/utils/array-util';
+import {CodeSystem, CodeSystemLibService, CodeSystemSearchParams} from '../../code-system';
 
 
 @Component({
@@ -64,12 +65,15 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
     );
   }
 
-  private loadCodeSystems(id?: string): void {
-    if (isDefined(id)) {
+  private loadCodeSystems(ids?: string[]): void {
+    if (isDefined(ids) && ids.length > 0) {
       this.loading['load'] = true;
-      this.codeSystemService.search({ids: id, propertiesDecorated: true, versionsDecorated: true})
-        .pipe(takeUntil(this.destroy$)).subscribe(resp => {
-        this.data = {...(this.data || {}), ...group(resp.data, c => c.id)};
+
+      const batches = ArrayUtil.batchArray(ids, 100);
+      const requests = batches.map(batch => this.codeSystemService.search({ids: batch.join(','), propertiesDecorated: true, versionsDecorated: true})
+        .pipe(takeUntil(this.destroy$)));
+      forkJoin(requests).subscribe(responses => {
+        responses.forEach(resp => this.data = { ...(this.data || {}), ...group(resp.data, c => c.id)});
       }).add(() => this.loading['load'] = false);
     }
   }
@@ -78,10 +82,10 @@ export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   public writeValue(obj: CodeSystem | CodeSystem[] | string | string[]): void {
     if (Array.isArray(obj)) {
       this.value = obj.map(p => typeof p === 'object' ? p?.id : p);
-      this.loadCodeSystems(this.value.join(','));
+      this.loadCodeSystems(this.value);
     } else {
       this.value = typeof obj === 'object' ? obj?.id : obj;
-      this.loadCodeSystems(this.value);
+      this.loadCodeSystems([this.value]);
     }
   }
 

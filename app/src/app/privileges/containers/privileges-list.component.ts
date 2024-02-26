@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {finalize, Observable, tap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
+import {finalize, Observable, tap} from 'rxjs';
 import {Privilege, PrivilegeResourceActions, PrivilegeSearchParams} from 'term-web/privileges/_lib';
 import {PrivilegeService} from '../services/privilege.service';
 

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {MapSetVersion} from 'app/src/app/resources/_lib';
 import {Router} from '@angular/router';
 import {LoadingManager} from '@kodality-web/core-util';
+import {MapSetVersion} from 'app/src/app/resources/_lib';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 
 @Component({

@@ -1,6 +1,6 @@
+import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
 import {environment} from 'app/src/environments/environment';
 import {CodeSystemVersion} from 'term-web/resources/_lib';
 

@@ -1,9 +1,9 @@
 import {Component, Injectable, Input, OnChanges} from '@angular/core';
-import {interval, map, Observable, of} from 'rxjs';
-import {HttpCacheService} from '@kodality-web/core-util';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {ValueSetLibService} from '../services/value-set-lib.service';
+import {HttpCacheService} from '@kodality-web/core-util';
+import {interval, map, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
+import {ValueSetLibService} from '../services/value-set-lib.service';
 
 type ConceptView = {
   [type in 'code' | 'display' | 'designations']: {

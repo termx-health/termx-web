@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
+import {LoadingManager} from '@kodality-web/core-util';
 import {forkJoin, of} from 'rxjs';
-import {Provenance} from 'term-web/sys/_lib';
 import {ImplementationGuide, ImplementationGuideVersion} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
+import {Provenance} from 'term-web/sys/_lib';
 
 @Component({
   templateUrl: 'implementation-guide-provenances.component.html'

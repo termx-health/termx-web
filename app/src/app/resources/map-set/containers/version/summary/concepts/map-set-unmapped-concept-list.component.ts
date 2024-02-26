@@ -1,14 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
+import {AssociationType, MapSet, MapSetAssociation, MapSetConcept, MapSetConceptSearchParams} from 'app/src/app/resources/_lib';
 import {finalize, Observable, of, tap} from 'rxjs';
-import {
-  AssociationType, MapSet,
-  MapSetAssociation,
-  MapSetConcept,
-  MapSetConceptSearchParams
-} from 'app/src/app/resources/_lib';
-import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
+import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 
 
 @Component({

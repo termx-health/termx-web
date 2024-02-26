@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {SpaceDiffItem, SpaceLibService} from 'term-web/space/_lib';
-import {combineLatest, takeUntil} from 'rxjs';
-import {DestroyService, isDefined} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
-import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
+import {DestroyService, isDefined} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {combineLatest, takeUntil} from 'rxjs';
+import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
+import {SpaceDiffItem} from 'term-web/space/_lib';
 import {PackageResourceService} from 'term-web/space/services/package-resource.service';
 import {SpaceService} from 'term-web/space/services/space.service';
 

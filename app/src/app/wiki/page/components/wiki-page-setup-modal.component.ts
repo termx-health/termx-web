@@ -1,11 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {LoadingManager, validateForm} from '@kodality-web/core-util';
+import {TranslateService} from '@ngx-translate/core';
+import {environment} from 'environments/environment';
+import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {Page, PageContent, PageLink, Tag, TagLibService, Template, TemplateLibService} from 'term-web/wiki/_lib';
 import {PageService} from '../services/page.service';
-import {TranslateService} from '@ngx-translate/core';
-import {PreferencesService} from 'term-web/core/preferences/preferences.service';
-import {environment} from 'environments/environment';
 
 @Component({
   selector: 'tw-wiki-page-setup',

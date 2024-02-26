@@ -1,13 +1,13 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
+import {TranslateService} from '@ngx-translate/core';
 import {
   ObservationDefinition,
   ObservationDefinitionComponent,
   ObservationDefinitionMapping,
   ObservationDefinitionMappingTarget
 } from 'term-web/observation-definition/_lib';
-import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'tw-obs-def-mapping-list',

@@ -1,16 +1,17 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
+import {Observable} from 'rxjs';
 import {
   ImplementationGuideVersion,
   ImplementationGuideSearchParams,
   ImplementationGuideVersionSearchParams,
-  ImplementationGuideVersionResource, ImplementationGuideVersionPage
+  ImplementationGuideVersionResource,
+  ImplementationGuideVersionPage
 } from 'term-web/implementation-guide/_lib';
-import {ImplementationGuide} from '../model/implementation-guide';
 import {Provenance} from 'term-web/sys/_lib';
+import {ImplementationGuide} from '../model/implementation-guide';
 
 @Injectable()
 export class ImplementationGuideLibService {

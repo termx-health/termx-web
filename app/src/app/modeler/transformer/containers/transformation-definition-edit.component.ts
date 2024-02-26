@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
-import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 import {Location} from '@angular/common';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {copyDeep} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {Observable, of} from 'rxjs';
-import {copyDeep} from '@kodality-web/core-util';
+import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
+import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 
 @Component({
   templateUrl: './transformation-definition-edit.component.html'

@@ -1,7 +1,7 @@
-import {LocalizedName} from '@kodality-web/marina-util';
-import {ValueSetVersion} from './value-set-version';
-import {ContactDetail} from '../../contact';
 import {Identifier} from '@kodality-web/core-util';
+import {LocalizedName} from '@kodality-web/marina-util';
+import {ContactDetail} from '../../contact';
+import {ValueSetVersion} from './value-set-version';
 
 export class ValueSet {
   public id?: string;

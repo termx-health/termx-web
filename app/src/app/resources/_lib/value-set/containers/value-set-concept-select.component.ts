@@ -1,13 +1,13 @@
 import {Component, EventEmitter, forwardRef, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput, DestroyService, group, isNil} from '@kodality-web/core-util';
+import {TranslateService} from '@ngx-translate/core';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 import {takeUntil} from 'rxjs';
+import {VsConceptUtil} from 'term-web/resources/_lib';
 import {CodeSystemConcept, CodeSystemConceptLibService} from '../../code-system';
 import {ValueSetVersionConcept} from '../model/value-set-version-concept';
 import {ValueSetLibService} from '../services/value-set-lib.service';
-import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
-import {TranslateService} from '@ngx-translate/core';
-import {VsConceptUtil} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-value-set-concept-select',

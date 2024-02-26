@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {AbstractSecurityStorage, AuthModule, LogLevel} from 'angular-auth-oidc-client';
-import {OauthStorageService} from './oauth-storage.service';
 import {environment} from 'environments/environment';
+import {OauthStorageService} from './oauth-storage.service';
 
 
 @NgModule({

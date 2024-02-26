@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {DefinedProperty, EntityProperty, PropertyRule, PropertyRuleFilter} from 'app/src/app/resources/_lib';
-import {BooleanInput, copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {BooleanInput, copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {DefinedProperty, EntityProperty, PropertyRule, PropertyRuleFilter} from 'app/src/app/resources/_lib';
 import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 

@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
 import {FhirCodeSystemLibService} from './code-system';
-import {FhirValueSetLibService} from './value-set';
 import {FhirConceptMapLibService} from './concept-map';
+import {FhirValueSetLibService} from './value-set';
 
 @NgModule({
   imports: [

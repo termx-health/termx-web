@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {ValueSet, ValueSetVersion} from 'term-web/resources/_lib';
 import {ActivatedRoute} from '@angular/router';
-import {forkJoin, takeUntil} from 'rxjs';
 import {DestroyService, isNil} from '@kodality-web/core-util';
+import {forkJoin, takeUntil} from 'rxjs';
+import {ValueSet, ValueSetVersion} from 'term-web/resources/_lib';
 import {ValueSetService} from '../services/value-set.service';
 
 

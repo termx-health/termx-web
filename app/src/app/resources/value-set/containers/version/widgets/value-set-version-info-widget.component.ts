@@ -1,16 +1,16 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {ValueSet, ValueSetVersion} from 'app/src/app/resources/_lib';
-import {Fhir} from 'fhir/fhir';
-import {saveAs} from 'file-saver';
+import {compareDates, isDefined, LoadingManager} from '@kodality-web/core-util';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {FhirValueSetLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
 import {ChefService} from 'app/src/app/integration/_lib';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {ValueSet, ValueSetVersion} from 'app/src/app/resources/_lib';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
 import {environment} from 'app/src/environments/environment';
-import {Provenance} from 'term-web/sys/_lib';
-import {compareDates, isDefined, LoadingManager} from '@kodality-web/core-util';
-import {Space, SpaceLibService} from 'term-web/space/_lib';
+import {Fhir} from 'fhir/fhir';
+import {saveAs} from 'file-saver';
 import {AuthService} from 'term-web/core/auth';
+import {Space, SpaceLibService} from 'term-web/space/_lib';
+import {Provenance} from 'term-web/sys/_lib';
 
 @Component({
   selector: 'tw-value-set-version-info-widget',

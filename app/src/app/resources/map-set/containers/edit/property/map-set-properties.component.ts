@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {DefinedProperty, PropertyRule, MapSetProperty} from 'app/src/app/resources/_lib';
-import {BooleanInput, copyDeep, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {BooleanInput, copyDeep, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {DefinedProperty, PropertyRule, MapSetProperty} from 'app/src/app/resources/_lib';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 

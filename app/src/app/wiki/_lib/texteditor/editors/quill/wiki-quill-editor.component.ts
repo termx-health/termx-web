@@ -1,7 +1,7 @@
 import {Component, forwardRef, ViewChild} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {WikiAbstractEditor} from '../abstract-text-editor';
 import {MuiQuillComponent} from '@kodality-web/marina-quill';
+import {WikiAbstractEditor} from '../abstract-text-editor';
 
 
 @Component({

@@ -1,16 +1,16 @@
-import {inject, Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, Observable} from 'rxjs';
+import {inject, Injectable} from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {Page, PageAttachment} from '../models/page';
-import {PageSearchParams} from '../models/page-search-params';
-import {PageContentSearchParams} from '../models/page-content-search-params';
-import {PageContent} from '../models/page-content';
-import {PageRelationSearchParams} from '../models/page-relation-search-params';
-import {PageRelation} from '../models/page-relation';
-import {PageTreeItem} from 'term-web/wiki/_lib/page/models/page-tree.item';
+import {map, Observable} from 'rxjs';
 import {PageContentHistoryItem} from 'term-web/wiki/_lib/page/models/page-content-history-item';
+import {PageTreeItem} from 'term-web/wiki/_lib/page/models/page-tree.item';
+import {Page, PageAttachment} from '../models/page';
+import {PageContent} from '../models/page-content';
+import {PageContentSearchParams} from '../models/page-content-search-params';
+import {PageRelation} from '../models/page-relation';
+import {PageRelationSearchParams} from '../models/page-relation-search-params';
+import {PageSearchParams} from '../models/page-search-params';
 
 @Injectable()
 export class PageLibService {

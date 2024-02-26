@@ -1,15 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {MapSetService} from '../../services/map-set-service';
-import {MapSet, MapSetProperty, MapSetScope, MapSetVersion} from 'term-web/resources/_lib';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {MapSet, MapSetProperty, MapSetScope, MapSetVersion} from 'term-web/resources/_lib';
+import {MapSetPropertiesComponent} from 'term-web/resources/map-set/containers/edit/property/map-set-properties.component';
+import {MapSetScopeFormComponent} from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
 import {ResourceFormComponent} from 'term-web/resources/resource/components/resource-form.component';
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
 import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
 import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
-import {MapSetScopeFormComponent} from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
-import {MapSetPropertiesComponent} from 'term-web/resources/map-set/containers/edit/property/map-set-properties.component';
+import {MapSetService} from '../../services/map-set-service';
 
 @Component({
   templateUrl: './map-set-edit.component.html',

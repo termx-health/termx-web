@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {Observable, tap} from 'rxjs';
 import {ImplementationGuide, ImplementationGuideSearchParams, ImplementationGuideVersion} from 'app/src/app/implementation-guide/_lib';
 import {ImplementationGuideService} from 'app/src/app/implementation-guide/services/implementation-guide.service';
 import {environment} from 'environments/environment';
+import {Observable, tap} from 'rxjs';
 
 
 @Component({

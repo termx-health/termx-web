@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ValueSet, ValueSetTransactionRequest} from 'app/src/app/resources/_lib';
 import {NgForm} from '@angular/forms';
-import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {ResourceFormComponent} from 'app/src/app/resources/resource/components/resource-form.component';
 import {ActivatedRoute, Router} from '@angular/router';
-import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
+import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {ValueSet, ValueSetTransactionRequest} from 'app/src/app/resources/_lib';
+import {ResourceFormComponent} from 'app/src/app/resources/resource/components/resource-form.component';
 import {ResourceIdentifiersComponent} from 'app/src/app/resources/resource/components/resource-identifiers.component';
 import {ResourceVersionFormComponent} from 'app/src/app/resources/resource/components/resource-version-form.component';
 import {ResourceUtil} from 'app/src/app/resources/resource/util/resource-util';
+import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
 
 
 @Component({

@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {environment} from 'app/src/environments/environment';
 import {filter, merge, Observable, Subject, switchMap, takeUntil, tap, timer} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {environment} from 'app/src/environments/environment';
 import {LorqueProcess} from '../model/lorque-process';
 
 @Injectable()

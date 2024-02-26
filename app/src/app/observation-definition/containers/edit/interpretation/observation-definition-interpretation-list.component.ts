@@ -1,13 +1,16 @@
 import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {BooleanInput, copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {BooleanInput, copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {TranslateService} from '@ngx-translate/core';
 import {
   ObservationDefinition,
   ObservationDefinitionComponent,
-  ObservationDefinitionInterpretation, ObservationDefinitionInterpretationRange, ObservationDefinitionInterpretationState,
-  ObservationDefinitionInterpretationTarget, ObservationDefinitionLibService
+  ObservationDefinitionInterpretation,
+  ObservationDefinitionInterpretationRange,
+  ObservationDefinitionInterpretationState,
+  ObservationDefinitionInterpretationTarget,
+  ObservationDefinitionLibService
 } from 'term-web/observation-definition/_lib';
-import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'tw-obs-def-interpretation-list',

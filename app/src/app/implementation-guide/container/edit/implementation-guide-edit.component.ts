@@ -1,13 +1,13 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ImplementationGuide, ImplementationGuideTransactionRequest} from 'term-web/implementation-guide/_lib';
+import {ImplementationGuideVersionFormComponent} from 'term-web/implementation-guide/container/version/edit/implementation-guide-version-form.component';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 import {ResourceFormComponent} from 'term-web/resources/resource/components/resource-form.component';
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
 import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
-import {ImplementationGuideVersionFormComponent} from 'term-web/implementation-guide/container/version/edit/implementation-guide-version-form.component';
 
 @Component({
   templateUrl: 'implementation-guide-edit.component.html'

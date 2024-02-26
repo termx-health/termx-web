@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {SnomedBranch} from 'app/src/app/integration/_lib';
 import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';

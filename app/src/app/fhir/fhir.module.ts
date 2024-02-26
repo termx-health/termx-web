@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
-import {CoreUiModule} from '../core/ui/core-ui.module';
-import {FhirValueSetComponent} from './value-set/fhir-value-set.component';
-import {FhirCodeSystemComponent} from './code-system/fhir-code-system.component';
 import {FhirLibModule} from 'term-web/fhir/_lib';
-import {FhirResourceComponent} from 'term-web/fhir/fhir-resource.component';
-import {FhirConceptMapComponent} from 'term-web/fhir/concept-map/fhir-concept-map.component';
-import {WikiLibModule} from 'term-web/wiki/_lib';
 import {FhirCodeSystemLookupComponent} from 'term-web/fhir/code-system/fhir-code-system-lookup.component';
+import {FhirConceptMapComponent} from 'term-web/fhir/concept-map/fhir-concept-map.component';
+import {FhirResourceComponent} from 'term-web/fhir/fhir-resource.component';
+import {WikiLibModule} from 'term-web/wiki/_lib';
+import {CoreUiModule} from '../core/ui/core-ui.module';
+import {FhirCodeSystemComponent} from './code-system/fhir-code-system.component';
+import {FhirValueSetComponent} from './value-set/fhir-value-set.component';
 
 export const FHIR_ROUTES: Routes = [
   {path: ':type', component: FhirResourceComponent},

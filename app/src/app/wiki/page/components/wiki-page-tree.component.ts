@@ -1,14 +1,14 @@
 import {Component, Injectable, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {TranslateService} from '@ngx-translate/core';
-import {PageService} from '../services/page.service';
-import {EMPTY, forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
-import {compareValues, copyDeep, isNil, LoadingManager, remove, SearchResult, unique} from '@kodality-web/core-util';
-import {Page, PageContent, PageLink} from 'term-web/wiki/_lib';
-import {DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
-import {PageLinkService} from '../services/page-link.service';
-import {WikiPageSetupModalComponent} from './wiki-page-setup-modal.component';
-import {Space} from 'term-web/space/_lib';
 import {Router} from '@angular/router';
+import {compareValues, copyDeep, isNil, LoadingManager, remove, SearchResult, unique} from '@kodality-web/core-util';
+import {TranslateService} from '@ngx-translate/core';
+import {EMPTY, forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
+import {DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
+import {Space} from 'term-web/space/_lib';
+import {Page, PageContent, PageLink} from 'term-web/wiki/_lib';
+import {PageLinkService} from '../services/page-link.service';
+import {PageService} from '../services/page.service';
+import {WikiPageSetupModalComponent} from './wiki-page-setup-modal.component';
 
 function findInTree<Node, Key>(nodesToSearch: Node[], key: Key, getKey: (n: Node) => Key, getChildren: (n: Node) => Node[]): Node {
   for (const node of nodesToSearch) {

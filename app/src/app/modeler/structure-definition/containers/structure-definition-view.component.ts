@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {isDefined, LoadingManager} from '@kodality-web/core-util';
-import {StructureDefinition} from 'term-web/modeler/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {Fhir} from 'fhir/fhir';
 import {map, Observable} from 'rxjs';
 import {ChefService} from 'term-web/integration/_lib';
+import {StructureDefinition} from 'term-web/modeler/_lib';
 import {StructureDefinitionService} from '../services/structure-definition.service';
-import {Fhir} from 'fhir/fhir';
 
 @Component({
   templateUrl: 'structure-definition-view.component.html'

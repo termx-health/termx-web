@@ -1,8 +1,8 @@
 import {Component, forwardRef, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
-import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './wiki-quick-actions.base';
 import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
+import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './wiki-quick-actions.base';
 
 
 @Component({

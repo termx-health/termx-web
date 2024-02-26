@@ -1,28 +1,29 @@
-import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
-import {DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {forkJoin, takeUntil} from 'rxjs';
 import {
-  ObservationDefinition, ObservationDefinitionComponent,
+  ObservationDefinition,
+  ObservationDefinitionComponent,
   ObservationDefinitionProtocol,
   ObservationDefinitionProtocolValue,
   ObservationDefinitionUnit,
   ObservationDefinitionValue
 } from 'term-web/observation-definition/_lib';
-import {ObservationDefinitionService} from 'term-web/observation-definition/services/observation-definition.service';
-import {forkJoin, takeUntil} from 'rxjs';
-import {CodeSystemLibService} from 'term-web/resources/_lib';
-import {ObservationDefinitionValueComponent} from 'term-web/observation-definition/containers/edit/value/observation-definition-value.component';
-import {ObservationDefinitionMemberListComponent} from 'term-web/observation-definition/containers/edit/member/observation-definition-member-list.component';
 import {
   ObservationDefinitionComponentListComponent
 } from 'term-web/observation-definition/containers/edit/component/observation-definition-component-list.component';
-import {ObservationDefinitionProtocolComponent} from 'term-web/observation-definition/containers/edit/protocol/observation-definition-protocol.component';
 import {
   ObservationDefinitionInterpretationListComponent
 } from 'term-web/observation-definition/containers/edit/interpretation/observation-definition-interpretation-list.component';
 import {ObservationDefinitionMappingListComponent} from 'term-web/observation-definition/containers/edit/mapping/observation-definition-mapping-list.component';
+import {ObservationDefinitionMemberListComponent} from 'term-web/observation-definition/containers/edit/member/observation-definition-member-list.component';
+import {ObservationDefinitionProtocolComponent} from 'term-web/observation-definition/containers/edit/protocol/observation-definition-protocol.component';
+import {ObservationDefinitionValueComponent} from 'term-web/observation-definition/containers/edit/value/observation-definition-value.component';
+import {ObservationDefinitionService} from 'term-web/observation-definition/services/observation-definition.service';
+import {CodeSystemLibService} from 'term-web/resources/_lib';
 
 @Component({
   templateUrl: './observation-definition-edit.component.html',

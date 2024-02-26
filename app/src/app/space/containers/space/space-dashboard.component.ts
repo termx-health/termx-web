@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ComponentStateStore} from '@kodality-web/core-util';
 import {EMPTY, Observable} from 'rxjs';
+import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
 
 @Component({
   templateUrl: './space-dashboard.component.html',

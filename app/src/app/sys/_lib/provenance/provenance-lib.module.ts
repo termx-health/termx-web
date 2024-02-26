@@ -1,11 +1,11 @@
-import {NgModule} from '@angular/core';
-import {MarinaComponentsModule} from '@kodality-web/marina-ui';
-import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
+import {MarinaComponentsModule} from '@kodality-web/marina-ui';
+import {TranslateModule} from '@ngx-translate/core';
 import {ProvenanceListComponent} from './components/provenance-list.component';
 import {ProvenanceLibService} from './services/provenance-lib.service';
-import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [

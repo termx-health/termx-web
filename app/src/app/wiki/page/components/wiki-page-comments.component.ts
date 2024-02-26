@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {collect, compareDates, isNil, sort} from '@kodality-web/core-util';
+import {NgChanges} from '@kodality-web/marina-ui';
 import {PageComment, PageContent} from 'term-web/wiki/_lib';
 import {ExtendedPageComment} from 'term-web/wiki/page/components/wiki-page-comment.component';
-import {NgChanges} from '@kodality-web/marina-ui';
 
 
 @Component({

@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {CodeSystem, CodeSystemVersion} from 'app/src/app/resources/_lib';
-import {LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
+import {LoadingManager} from '@kodality-web/core-util';
+import {CodeSystem, CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {forkJoin} from 'rxjs';
-import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {CodeSystemUnlinkedConceptsComponent} from 'term-web/resources/code-system/containers/summary/widgets/code-system-unlinked-concepts.component';
+import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 
 @Component({

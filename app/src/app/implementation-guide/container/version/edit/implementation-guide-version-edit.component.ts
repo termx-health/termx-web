@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ImplementationGuideVersion} from 'term-web/implementation-guide/_lib';
-import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 import {ImplementationGuideVersionFormComponent} from 'term-web/implementation-guide/container/version/edit/implementation-guide-version-form.component';
+import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 
 
 @Component({

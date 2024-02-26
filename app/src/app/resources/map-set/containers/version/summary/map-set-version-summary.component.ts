@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {AssociationType, AssociationTypeLibService, MapSet, MapSetAutomapRequest, MapSetVersion} from 'app/src/app/resources/_lib';
-import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
-import {forkJoin} from 'rxjs';
+import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {AssociationType, AssociationTypeLibService, MapSet, MapSetAutomapRequest, MapSetVersion} from 'app/src/app/resources/_lib';
+import {forkJoin} from 'rxjs';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {JobLibService} from 'term-web/sys/_lib';
 

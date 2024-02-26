@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
-import {BooleanInput, NumberInput} from '@kodality-web/core-util';
-import {ActivatedRoute} from '@angular/router';
 import {BreakpointState} from '@angular/cdk/layout';
-import {MuiBreakpointService} from '@kodality-web/marina-ui';
 import {Location} from '@angular/common';
+import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {BooleanInput, NumberInput} from '@kodality-web/core-util';
+import {MuiBreakpointService} from '@kodality-web/marina-ui';
 
 
 @Component({

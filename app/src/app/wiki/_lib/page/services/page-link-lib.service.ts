@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
-import {Page} from '../models/page';
-import {PageLinkSearchParams} from '../models/page-link-search-params';
-import {PageLink} from '../models/page-link';
 import {environment} from 'environments/environment';
+import {Observable} from 'rxjs';
+import {Page} from '../models/page';
+import {PageLink} from '../models/page-link';
+import {PageLinkSearchParams} from '../models/page-link-search-params';
 
 @Injectable()
 export class PageLinkLibService {

@@ -1,22 +1,22 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 
 import {environment} from 'environments/environment';
-import {CodeSystemVersion} from '../model/code-system-version';
-import {EntityProperty} from '../model/entity-property';
-import {CodeSystemSearchParams} from '../model/code-system-search-params';
-import {CodeSystem} from '../model/code-system';
-import {CodeSystemVersionSearchParams} from '../model/code-system-version-search-params';
-import {ConceptSearchParams} from '../model/concept-search-params';
-import {CodeSystemConcept} from '../model/code-system-concept';
-import {EntityPropertySearchParams} from '../model/entity-property-search-params';
-import {CodeSystemEntityVersionSearchParams} from '../model/code-system-entity-version-search-params';
-import {CodeSystemEntityVersion} from '../model/code-system-entity';
+import {Observable} from 'rxjs';
+import {UriUtil} from 'term-web/core/utils/uri-util';
 import {CodeSystemAssociation} from 'term-web/resources/_lib';
 import {Provenance} from 'term-web/sys/_lib';
-import {UriUtil} from 'term-web/core/utils/uri-util';
+import {CodeSystem} from '../model/code-system';
+import {CodeSystemConcept} from '../model/code-system-concept';
+import {CodeSystemEntityVersion} from '../model/code-system-entity';
+import {CodeSystemEntityVersionSearchParams} from '../model/code-system-entity-version-search-params';
+import {CodeSystemSearchParams} from '../model/code-system-search-params';
+import {CodeSystemVersion} from '../model/code-system-version';
+import {CodeSystemVersionSearchParams} from '../model/code-system-version-search-params';
+import {ConceptSearchParams} from '../model/concept-search-params';
+import {EntityProperty} from '../model/entity-property';
+import {EntityPropertySearchParams} from '../model/entity-property-search-params';
 
 @Injectable()
 export class CodeSystemLibService {

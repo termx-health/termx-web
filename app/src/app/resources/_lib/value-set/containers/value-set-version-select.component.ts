@@ -2,9 +2,9 @@ import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/c
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {takeUntil} from 'rxjs';
+import {ValueSetVersionSearchParams} from 'term-web/resources/_lib';
 import {ValueSetVersion} from '../model/value-set-version';
 import {ValueSetLibService} from '../services/value-set-lib.service';
-import {ValueSetVersionSearchParams} from 'term-web/resources/_lib';
 
 
 @Component({

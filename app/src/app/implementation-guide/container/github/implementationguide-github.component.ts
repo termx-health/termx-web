@@ -1,12 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {ImplementationGuideVersion} from '../../_lib';
+import {LoadingManager} from '@kodality-web/core-util';
+import {environment} from 'environments/environment';
 import {delay, forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {GithubDiff} from 'term-web/integration/_lib/github/github';
-import {LoadingManager} from '@kodality-web/core-util';
+import {ImplementationGuideVersion} from '../../_lib';
 import {ImplementationGuideGithubService} from '../../services/implementation-guide-github.service';
 import {ImplementationGuideService} from '../../services/implementation-guide.service';
-import {environment} from 'environments/environment';
 
 @Component({
   templateUrl: './implementationguide-github.component.html',

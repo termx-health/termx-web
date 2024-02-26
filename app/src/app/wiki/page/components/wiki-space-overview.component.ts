@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {PageService} from '../services/page.service';
+import {LoadingManager} from '@kodality-web/core-util';
 import {Space} from 'term-web/space/_lib';
 import {PageContent} from 'term-web/wiki/_lib';
-import {LoadingManager} from '@kodality-web/core-util';
+import {PageService} from '../services/page.service';
 
 @Component({
   selector: 'tw-wiki-space-overview',

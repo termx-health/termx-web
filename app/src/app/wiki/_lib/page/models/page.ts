@@ -1,7 +1,7 @@
 import {PageContent} from './page-content';
 import {PageLink} from './page-link';
-import {PageTag} from './page-tag';
 import {PageRelation} from './page-relation';
+import {PageTag} from './page-tag';
 
 export class Page {
   public id?: number;

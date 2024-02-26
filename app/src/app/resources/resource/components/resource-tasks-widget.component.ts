@@ -1,11 +1,11 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {BooleanInput, isDefined, LoadingManager} from '@kodality-web/core-util';
-import {Task, TaskLibService} from 'term-web/task/_lib';
 import {Router} from '@angular/router';
+import {BooleanInput, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {ReleaseLibService} from 'term-web/sys/_lib';
 import {map, Observable} from 'rxjs';
 import {SnomedTranslationLibService} from 'term-web/integration/_lib';
+import {ReleaseLibService} from 'term-web/sys/_lib';
+import {Task, TaskLibService} from 'term-web/task/_lib';
 
 @Component({
   selector: 'tw-resource-tasks-widget',

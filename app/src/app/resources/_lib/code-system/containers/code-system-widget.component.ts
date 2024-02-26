@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
 import {SearchResult} from '@kodality-web/core-util';
+import {LocalizedName} from '@kodality-web/marina-util';
 import {Subscription} from 'rxjs';
 import {CodeSystem, CodeSystemLibService, CodeSystemSearchParams} from '../../code-system';
-import {LocalizedName} from '@kodality-web/marina-util';
 
 @Component({
   selector: 'tw-code-system-widget',

@@ -1,16 +1,16 @@
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
-import {isNil, LoadingManager, remove, sort} from '@kodality-web/core-util';
-import {ActivatedRoute, Router} from '@angular/router';
-import {Page, PageAttachment, PageComment, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
-import {PageService} from '../services/page.service';
 import {Clipboard} from '@angular/cdk/clipboard';
-import {combineLatest, mergeMap} from 'rxjs';
-import {SpaceService} from 'term-web/space/services/space.service';
-import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
+import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {isNil, LoadingManager, remove, sort} from '@kodality-web/core-util';
 import {MuiModalContainerComponent} from '@kodality-web/marina-ui';
-import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
+import {combineLatest, mergeMap} from 'rxjs';
 import {UnsavedChangesGuardComponent} from 'term-web/core/ui/guard/unsaved-changes.guard';
 import {SeoService} from 'term-web/core/ui/services/seo.service';
+import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
+import {SpaceService} from 'term-web/space/services/space.service';
+import {Page, PageAttachment, PageComment, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
+import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
+import {PageService} from '../services/page.service';
 
 @Component({
   templateUrl: 'wiki-page-edit.component.html',

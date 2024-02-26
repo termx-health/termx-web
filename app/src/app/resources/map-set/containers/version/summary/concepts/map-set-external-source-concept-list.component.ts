@@ -1,13 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {isDefined, validateForm} from '@kodality-web/core-util';
-import {finalize, map, Observable, of} from 'rxjs';
-import {
-  AssociationType, MapSet,
-  MapSetAssociation, MapSetAssociationSearchParams
-} from 'app/src/app/resources/_lib';
-import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {NgForm} from '@angular/forms';
+import {isDefined, validateForm} from '@kodality-web/core-util';
+import {AssociationType, MapSet, MapSetAssociation, MapSetAssociationSearchParams} from 'app/src/app/resources/_lib';
+import {finalize, map, Observable, of} from 'rxjs';
 import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
+import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 
 
 @Component({

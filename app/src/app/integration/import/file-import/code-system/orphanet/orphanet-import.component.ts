@@ -1,13 +1,13 @@
-import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {Router} from '@angular/router';
+import {IntegrationImportConfiguration, IntegrationOrphanetLibService} from 'term-web/integration/_lib';
+import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
+import {JobLibService, JobLog} from 'term-web/sys/_lib';
 import {CodeSystem, CodeSystemLibService, ValueSetLibService} from '../../../../../resources/_lib';
 import {FileAnalysisService} from '../../file-analysis.service';
-import {JobLibService, JobLog} from 'term-web/sys/_lib';
-import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
-import {IntegrationImportConfiguration, IntegrationOrphanetLibService} from 'term-web/integration/_lib';
 
 
 @Component({

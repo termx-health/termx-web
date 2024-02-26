@@ -1,12 +1,13 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
-import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil, forkJoin} from 'rxjs';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
+import {ArrayUtil} from 'term-web/core/utils/array-util';
 import {ValueSet} from '../model/value-set';
-import {ValueSetLibService} from '../services/value-set-lib.service';
 import {ValueSetSearchParams} from '../model/value-set-search-params';
+import {ValueSetLibService} from '../services/value-set-lib.service';
 
 
 @Component({
@@ -65,11 +66,14 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
     );
   }
 
-  private loadValueSets(id?: string): void {
-    if (isDefined(id)) {
+  private loadValueSets(ids?: string[]): void {
+    if (isDefined(ids) && ids.length > 0) {
       this.loading['load'] = true;
-      this.valueSetService.search({ids: id, decorated: true}).pipe(takeUntil(this.destroy$)).subscribe(resp => {
-        this.data = {...(this.data || {}), ...group(resp.data, v => v.id)};
+
+      const batches = ArrayUtil.batchArray(ids, 100);
+      const requests = batches.map(batch => this.valueSetService.search({ids: batch.join(','), decorated: true}).pipe(takeUntil(this.destroy$)));
+      forkJoin(requests).subscribe(responses => {
+        responses.forEach(resp => this.data = { ...(this.data || {}), ...group(resp.data, vs => vs.id)});
       }).add(() => this.loading['load'] = false);
     }
   }
@@ -78,10 +82,10 @@ export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
   public writeValue(obj: ValueSet | ValueSet[] | string | string[]): void {
     if (Array.isArray(obj)) {
       this.value = obj.map(p => typeof p === 'object' ? p?.id : p);
-      this.loadValueSets(this.value.join(','));
+      this.loadValueSets(this.value);
     } else {
       this.value = typeof obj === 'object' ? obj?.id : obj;
-      this.loadValueSets(this.value);
+      this.loadValueSets([this.value]);
     }
   }
 

@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {MarinaComponentsModule} from '@kodality-web/marina-ui';
-import {CoreUtilModule} from '@kodality-web/core-util';
-import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {CoreUtilModule} from '@kodality-web/core-util';
+import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {RelatedArtifactLibService} from 'term-web/resources/_lib/related-artifacts/services/related-artifact-lib.service';
 
 @NgModule({

@@ -1,18 +1,18 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'app/src/app/integration/_lib';
-import {forkJoin} from 'rxjs';
+import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
 import {DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {TranslateService} from '@ngx-translate/core';
+import {AuthService} from 'app/src/app/core/auth';
+import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'app/src/app/integration/_lib';
 import {MapSetLibService, ValueSetLibService} from 'app/src/app/resources/_lib';
 import {PageLibService} from 'app/src/app/wiki/_lib';
-import {TranslateService} from '@ngx-translate/core';
-import {Router} from '@angular/router';
-import {AuthService} from 'app/src/app/core/auth';
+import {forkJoin} from 'rxjs';
 import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {LorqueLibService, Provenance} from 'term-web/sys/_lib';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {Task} from 'term-web/task/_lib';
-import {NgForm} from '@angular/forms';
 import {TaskService} from 'term-web/task/services/task-service';
 
 @Component({

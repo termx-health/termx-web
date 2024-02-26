@@ -1,8 +1,8 @@
+import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Observable} from 'rxjs';
-import {GithubDiff, GithubStatus} from '../../integration/_lib/github/github';
 import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {GithubDiff, GithubStatus} from '../../integration/_lib/github/github';
 
 @Injectable()
 export class ImplementationGuideGithubService {

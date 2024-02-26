@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {ContactDetail} from 'app/src/app/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, copyDeep, isDefined} from '@kodality-web/core-util';
+import {ContactDetail} from 'app/src/app/resources/_lib';
 
 
 @Component({

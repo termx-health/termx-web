@@ -1,11 +1,11 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {environment} from 'environments/environment';
 import {Template, TemplateContent} from 'term-web/wiki/_lib';
 import {TemplateService} from './template.service';
-import {environment} from 'environments/environment';
 
 
 @Component({

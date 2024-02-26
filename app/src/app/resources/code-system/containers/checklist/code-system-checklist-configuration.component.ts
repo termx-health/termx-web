@@ -1,9 +1,9 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {isDefined, isNil, LoadingManager} from '@kodality-web/core-util';
-import {Checklist, ChecklistRule} from 'term-web/sys/_lib';
 import {NgForm} from '@angular/forms';
-import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
+import {isDefined, isNil, LoadingManager} from '@kodality-web/core-util';
 import {MuiEditableTableComponent} from '@kodality-web/marina-ui';
+import {Checklist, ChecklistRule} from 'term-web/sys/_lib';
+import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
 
 @Component({
   selector: 'tw-cs-checklist-configuration',

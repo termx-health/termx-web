@@ -1,10 +1,10 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
-import {NgForm} from '@angular/forms';
-import {MeasurementUnitService} from '../../services/measurement-unit.service';
-import {ActivatedRoute} from '@angular/router';
 import {Location} from '@angular/common';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 import {isDefined, validateForm} from '@kodality-web/core-util';
+import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
+import {MeasurementUnitService} from '../../services/measurement-unit.service';
 
 @Component({
   templateUrl: './measurement-unit-view.component.html',

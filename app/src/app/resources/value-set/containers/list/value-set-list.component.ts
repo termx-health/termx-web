@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {ValueSetService} from '../../services/value-set.service';
 import {ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, sortFn} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {finalize, Observable, tap} from 'rxjs';
 import {ValueSet, ValueSetSearchParams, ValueSetVersion} from 'app/src/app/resources/_lib';
 import {environment} from 'environments/environment';
+import {finalize, Observable, tap} from 'rxjs';
+import {ValueSetService} from '../../services/value-set.service';
 
 interface Filter {
   open: boolean,

@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput, LoadingManager} from '@kodality-web/core-util';
-import {PageLibService} from '../services/page-lib.service';
 import {PageTreeItem} from '../models/page-tree.item';
+import {PageLibService} from '../services/page-lib.service';
 
 
 @Component({

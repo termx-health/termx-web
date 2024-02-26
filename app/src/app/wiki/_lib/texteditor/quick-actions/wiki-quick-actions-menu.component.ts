@@ -1,7 +1,7 @@
+import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
 import {AfterViewInit, Component, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {DestroyService, isDefined} from '@kodality-web/core-util';
 import {delay, filter, fromEvent, map, startWith, takeUntil} from 'rxjs';
-import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
 import {WikiQuickActionsDropdownOptionComponent} from '../../texteditor/quick-actions/components/wiki-quick-actions-dropdown-option.component';
 import {WikiQuickActionsDropdownComponent} from '../../texteditor/quick-actions/components/wiki-quick-actions-dropdown.component';
 import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './actions/wiki-quick-actions.base';

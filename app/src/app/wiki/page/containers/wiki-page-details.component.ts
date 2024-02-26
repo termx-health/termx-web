@@ -1,17 +1,17 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {collect, group, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {PageService} from '../services/page.service';
-import {NgForm} from '@angular/forms';
 import {Clipboard} from '@angular/cdk/clipboard';
-import {Page, PageComment, PageContent, PageRelation, parsePageRelationLink} from 'term-web/wiki/_lib';
-import {Space} from 'term-web/space/_lib';
-import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
-import {WikiComment} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment';
 import {MediaMatcher} from '@angular/cdk/layout';
-import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
-import {environment} from 'environments/environment';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
+import {collect, group, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {environment} from 'environments/environment';
 import {AuthService} from 'term-web/core/auth';
+import {Space} from 'term-web/space/_lib';
+import {Page, PageComment, PageContent, PageRelation, parsePageRelationLink} from 'term-web/wiki/_lib';
+import {WikiComment} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment';
+import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
+import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
+import {PageService} from '../services/page.service';
 
 @Component({
   selector: 'tw-wiki-page-details',

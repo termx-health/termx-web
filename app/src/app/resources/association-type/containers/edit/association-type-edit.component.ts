@@ -1,9 +1,9 @@
+import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AssociationType} from 'term-web/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
 import {validateForm} from '@kodality-web/core-util';
+import {AssociationType} from 'term-web/resources/_lib';
 import {AssociationTypeService} from '../../services/association-type.service';
 
 @Component({

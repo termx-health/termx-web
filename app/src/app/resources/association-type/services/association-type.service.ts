@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {AssociationType, AssociationTypeLibService} from 'term-web/resources/_lib';
 import {Observable} from 'rxjs';
+import {AssociationType, AssociationTypeLibService} from 'term-web/resources/_lib';
 
 @Injectable()
 export class AssociationTypeService extends AssociationTypeLibService {

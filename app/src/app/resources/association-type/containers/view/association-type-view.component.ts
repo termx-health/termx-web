@@ -1,8 +1,8 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {AssociationType} from 'term-web/resources/_lib';
 import {NgForm} from '@angular/forms';
-import {AssociationTypeService} from '../../services/association-type.service';
 import {ActivatedRoute} from '@angular/router';
+import {AssociationType} from 'term-web/resources/_lib';
+import {AssociationTypeService} from '../../services/association-type.service';
 
 @Component({
   templateUrl: './association-type-view.component.html',

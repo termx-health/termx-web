@@ -1,10 +1,10 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
 import {SearchResult} from '@kodality-web/core-util';
+import {LocalizedName} from '@kodality-web/marina-util';
 import {Subscription} from 'rxjs';
 import {ValueSet} from '../model/value-set';
 import {ValueSetSearchParams} from '../model/value-set-search-params';
 import {ValueSetLibService} from '../services/value-set-lib.service';
-import {LocalizedName} from '@kodality-web/marina-util';
 
 @Component({
   selector: 'tw-value-set-widget',

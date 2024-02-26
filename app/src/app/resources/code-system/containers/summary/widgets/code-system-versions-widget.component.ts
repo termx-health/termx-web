@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {CodeSystemVersion} from 'app/src/app/resources/_lib';
-import {Router} from '@angular/router';
-import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
-import {LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
+import {LoadingManager, validateForm} from '@kodality-web/core-util';
+import {CodeSystemVersion} from 'app/src/app/resources/_lib';
+import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 
 @Component({
   selector: 'tw-code-system-versions-widget',

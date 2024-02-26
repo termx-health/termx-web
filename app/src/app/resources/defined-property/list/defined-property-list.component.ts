@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {Observable, tap} from 'rxjs';
 import {ComponentStateStore, copyDeep, DestroyService, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
+import {Observable, tap} from 'rxjs';
 import {DefinedProperty, DefinedPropertySearchParams} from 'term-web/resources/_lib';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 

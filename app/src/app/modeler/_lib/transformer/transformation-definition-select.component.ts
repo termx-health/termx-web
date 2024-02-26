@@ -1,11 +1,11 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
+import {TransformationDefinition} from './transformation-definition';
 import {TransformationDefinitionLibService} from './transformation-definition-lib.service';
 import {TransformationDefinitionQueryParams} from './transformation-definition-query.params';
-import {TransformationDefinition} from './transformation-definition';
 
 
 @Component({

@@ -1,6 +1,6 @@
+import {Clipboard} from '@angular/cdk/clipboard';
 import {Component} from '@angular/core';
 import {FhirValueSetExpandParams, FhirValueSetLibService} from '../../../fhir/_lib';
-import {Clipboard} from '@angular/cdk/clipboard';
 
 
 @Component({

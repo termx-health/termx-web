@@ -1,7 +1,7 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {merge, Observable, Subject, switchMap, take, takeUntil, timer} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {environment} from 'app/src/environments/environment';
+import {merge, Observable, Subject, switchMap, take, takeUntil, timer} from 'rxjs';
 import {JobLog} from '../model/job-log';
 
 @Injectable()

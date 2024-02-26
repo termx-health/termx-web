@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {environment} from '../../../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
-import {JobLibService, JobLog, JobLogResponse} from '../../../../sys/_lib';
+import {Injectable} from '@angular/core';
 import {collect, isNil} from '@kodality-web/core-util';
-import {mergeMap, Observable, timer} from 'rxjs';
 import {LocalizedName} from '@kodality-web/marina-util';
+import {mergeMap, Observable, timer} from 'rxjs';
+import {environment} from '../../../../../environments/environment';
+import {JobLibService, JobLog, JobLogResponse} from '../../../../sys/_lib';
 
 
 export interface FileProcessingRequestProperty {

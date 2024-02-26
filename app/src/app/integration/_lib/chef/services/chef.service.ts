@@ -1,11 +1,11 @@
-import {Injectable} from '@angular/core';
 import {HttpBackend, HttpClient} from '@angular/common/http';
-import {catchError, Observable, of} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {environment} from 'environments/environment';
-import {FshToFhirRequest} from '../model/fsh-to-fhir-request';
-import {FshToFhirResponse} from '../model/fsh-to-fhir-response';
+import {catchError, Observable, of} from 'rxjs';
 import {FhirToFshRequest} from '../model/fhir-to-fsh-request';
 import {FhirToFshResponse} from '../model/fhir-to-fsh-response';
+import {FshToFhirRequest} from '../model/fsh-to-fhir-request';
+import {FshToFhirResponse} from '../model/fsh-to-fhir-response';
 
 @Injectable()
 export class ChefService {

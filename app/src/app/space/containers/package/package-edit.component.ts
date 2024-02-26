@@ -1,13 +1,13 @@
+import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
 import {collect, copyDeep, group, isDefined, validateForm} from '@kodality-web/core-util';
-import {Package, PackageResource, PackageVersion, TerminologyServerLibService} from 'term-web/space/_lib';
-import {SpaceService} from '../../services/space.service';
-import {forkJoin} from 'rxjs';
 import {saveAs} from 'file-saver';
+import {forkJoin} from 'rxjs';
+import {Package, PackageResource, PackageVersion, TerminologyServerLibService} from 'term-web/space/_lib';
 import {PackageService} from 'term-web/space/services/package.service';
+import {SpaceService} from '../../services/space.service';
 
 @Component({
   templateUrl: './package-edit.component.html',

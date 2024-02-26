@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NamingSystemIdentifier} from 'term-web/resources/_lib';
-import {validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {validateForm} from '@kodality-web/core-util';
+import {NamingSystemIdentifier} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-naming-system-identifier-form',

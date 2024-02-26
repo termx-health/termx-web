@@ -1,5 +1,5 @@
-import {CodeSystemConcept, CodeSystemEntityVersion} from 'term-web/resources/_lib';
 import {compareValues} from '@kodality-web/core-util';
+import {CodeSystemConcept, CodeSystemEntityVersion} from 'term-web/resources/_lib';
 
 export class ConceptUtil {
 

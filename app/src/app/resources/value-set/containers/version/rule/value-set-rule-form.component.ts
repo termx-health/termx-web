@@ -1,10 +1,10 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {BooleanInput, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {BooleanInput, validateForm} from '@kodality-web/core-util';
 import {CodeSystemLibService, EntityProperty, ValueSetVersionRule} from 'app/src/app/resources/_lib';
-import {ValueSetRuleFilterListComponent} from 'term-web/resources/value-set/containers/version/rule/filter/value-set-rule-filter-list.component';
-import {ValueSetRuleConceptListComponent} from 'term-web/resources/value-set/containers/version/rule/concept/value-set-rule-concept-list.component';
 import {map, Observable} from 'rxjs';
+import {ValueSetRuleConceptListComponent} from 'term-web/resources/value-set/containers/version/rule/concept/value-set-rule-concept-list.component';
+import {ValueSetRuleFilterListComponent} from 'term-web/resources/value-set/containers/version/rule/filter/value-set-rule-filter-list.component';
 
 @Component({
   selector: 'tw-value-set-rule-form',

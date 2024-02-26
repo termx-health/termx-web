@@ -1,10 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {finalize, Observable, tap} from 'rxjs';
 import {ComponentStateStore, copyDeep, DestroyService, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {SpaceService} from '../../services/space.service';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {finalize, Observable, tap} from 'rxjs';
 import {Space, SpaceSearchParams} from 'term-web/space/_lib';
 import {JobLibService} from 'term-web/sys/_lib';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {SpaceService} from '../../services/space.service';
 
 @Component({
   templateUrl: './space-list.component.html',

@@ -1,9 +1,9 @@
-import {Component, inject} from '@angular/core';
-import {MuiFormModule, MuiListModule} from '@kodality-web/marina-ui';
-import {InfoService} from './info.service';
 import {CommonModule} from '@angular/common';
-import {environment} from 'environments/environment';
+import {Component, inject} from '@angular/core';
 import {CorePipesModule} from '@kodality-web/core-util';
+import {MuiFormModule, MuiListModule} from '@kodality-web/marina-ui';
+import {environment} from 'environments/environment';
+import {InfoService} from './info.service';
 
 @Component({
   standalone: true,

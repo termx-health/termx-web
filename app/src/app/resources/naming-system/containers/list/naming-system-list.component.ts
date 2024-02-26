@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
+import {TranslateService} from '@ngx-translate/core';
 import {finalize, Observable, tap} from 'rxjs';
 import {NamingSystem, NamingSystemSearchParams} from 'term-web/resources/_lib';
 import {NamingSystemService} from '../../services/naming-system-service';
-import {TranslateService} from '@ngx-translate/core';
 
 
 @Component({

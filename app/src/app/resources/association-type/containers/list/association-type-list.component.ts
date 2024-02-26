@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
-import {AssociationType, AssociationTypeSearchParams} from 'term-web/resources/_lib';
-import {finalize, Observable, tap} from 'rxjs';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
+import {finalize, Observable, tap} from 'rxjs';
+import {AssociationType, AssociationTypeSearchParams} from 'term-web/resources/_lib';
 import {AssociationTypeService} from '../../services/association-type.service';
 
 @Component({

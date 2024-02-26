@@ -1,9 +1,9 @@
-import {EntityProperty} from './entity-property';
-import {CodeSystemVersion} from './code-system-version';
-import {CodeSystemConcept} from './code-system-concept';
-import {ContactDetail} from '../../contact/model/contact-detail';
-import {LocalizedName} from '@kodality-web/marina-util';
 import {Identifier} from '@kodality-web/core-util';
+import {LocalizedName} from '@kodality-web/marina-util';
+import {ContactDetail} from '../../contact/model/contact-detail';
+import {CodeSystemConcept} from './code-system-concept';
+import {CodeSystemVersion} from './code-system-version';
+import {EntityProperty} from './entity-property';
 
 export class CodeSystem {
   public id?: string;

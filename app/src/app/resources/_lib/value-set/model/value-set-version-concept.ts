@@ -1,5 +1,5 @@
-import {Designation} from '../../designation';
 import {CodeSystemConcept} from '../../code-system';
+import {Designation} from '../../designation';
 
 export class ValueSetVersionConcept {
   public id?: number;

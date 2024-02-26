@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {SearchHttpParams} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
+import {Observable} from 'rxjs';
 import {PackageResource} from '../model/package';
 
 @Injectable()

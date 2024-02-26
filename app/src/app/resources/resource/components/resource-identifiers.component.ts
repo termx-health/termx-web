@@ -1,6 +1,6 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import {BooleanInput, Identifier, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {BooleanInput, Identifier, isDefined, validateForm} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-resource-identifiers',

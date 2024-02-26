@@ -1,16 +1,16 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
 import {isDefined, LoadingManager, remove, validateForm} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {TranslateService} from '@ngx-translate/core';
-import slugify from 'slugify';
-import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
 import {ConceptUtil, ValueSetVersionConcept, VsConceptUtil} from 'app/src/app/resources/_lib';
-import {Resource} from 'term-web/resources/resource/model/resource';
-import {Router} from '@angular/router';
-import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
-import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
+import slugify from 'slugify';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
+import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import {Resource} from 'term-web/resources/resource/model/resource';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 
 
 @Component({
