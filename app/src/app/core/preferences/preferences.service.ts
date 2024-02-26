@@ -1,10 +1,13 @@
-import {Injectable} from '@angular/core';
+import {Injectable, InjectionToken, inject} from '@angular/core';
 import {isDefined, toNumber} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {BehaviorSubject, distinctUntilChanged, filter, map, Observable} from 'rxjs';
 
 const LOCALE = 'locale';
 const SPACE = 'space';
+
+export const PREFERENCES_LANG_PROVIDER = new InjectionToken<() => string>('PREFERENCES_LANG_PROVIDER');
+
 
 const getBrowserLang = (): string | undefined => {
   const lang = navigator.language; // en-US
@@ -21,8 +24,10 @@ const getLang = (): string => {
 
 @Injectable({providedIn: 'root'})
 export class PreferencesService {
-  private _lang = new BehaviorSubject<string>(getLang());
-  private _spaceId = new BehaviorSubject<{id: number, emit?: boolean}>({id: toNumber(localStorage.getItem(SPACE)), emit: false});
+  private _langProvider = inject(PREFERENCES_LANG_PROVIDER, {optional: true});
+
+  private _lang = new BehaviorSubject<string>(this._langProvider?.() ?? getLang());
+  private _spaceId = new BehaviorSubject<{id: number, emit?: boolean}>({id: toNumber(localStorage.getItem(SPACE))});
 
 
   public setLang(lang: string): void {
