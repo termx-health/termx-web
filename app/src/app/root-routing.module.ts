@@ -3,6 +3,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {AppComponent} from 'term-web/app.component';
 import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
 import {SpaceContextModule} from 'term-web/core/context/space-context.module';
+import {IG_ROUTES} from 'term-web/implementation-guide/implementation-guide.module';
 import {LandingPageComponent} from 'term-web/landing/landing-page.component';
 import {MODELER_ROUTES} from 'term-web/modeler/modeler.module';
 import {OBSERVATION_DEFINITION_ROUTES} from 'term-web/observation-definition/observation-definition.module';
@@ -23,6 +24,7 @@ import {WIKI_MANAGEMENT_ROUTES, WIKI_ROUTES} from './wiki/wiki.module';
 const APP_ROUTES: Routes = [
   {path: 'landing', component: LandingPageComponent},
   {path: 'resources', children: RESOURCES_ROUTES},
+  {path: 'resources/implementation-guides', children: IG_ROUTES, data: {privilege: ['*.ImplementationGuide.view']}},
   {path: 'global-search', children: GLOBAL_SEARCH_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view']}},
   {path: 'integration', children: INTEGRATION_ROUTES, data: {privilege: ['*.CodeSystem.view', '*.ValueSet.view', '*.MapSet.view']}},
   {path: 'privileges', children: PRIVILEGES_ROUTES, data: {privilege: ['*.Privilege.view']}},

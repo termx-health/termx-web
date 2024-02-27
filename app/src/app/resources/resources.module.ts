@@ -1,6 +1,5 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
-import {IG_ROUTES} from 'term-web/implementation-guide/implementation-guide.module';
 import {DEFINED_PROPERTY_ROUTES, DefinedPropertyModule} from 'term-web/resources/defined-property/defined-property.module';
 import {CoreUiModule} from '../core/ui/core-ui.module';
 import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './association-type/association-type.module';
@@ -17,7 +16,6 @@ export const RESOURCES_ROUTES: Routes = [
   {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES, data: {privilege: ['*.NamingSystem.view']}},
   {path: 'association-types', children: ASSOCIATION_TYPE_ROUTES, data: {privilege: ['*.AssociationType.view']}},
   {path: 'defined-properties', children: DEFINED_PROPERTY_ROUTES, data: {privilege: ['*.CodeSystem.view']}},
-  {path: 'implementation-guides', children: IG_ROUTES, data: {privilege: ['*.ImplementationGuide.view']}},
 
   {
     path: 'finder', children: [
@@ -39,8 +37,7 @@ export const RESOURCES_ROUTES: Routes = [
     DefinedPropertyModule
   ],
   declarations: [],
-  exports: [
-  ]
+  exports: []
 })
 export class ResourcesModule {
 }
