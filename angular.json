@@ -30,10 +30,6 @@
             "main": "app/src/main.ts",
             "polyfills": "app/src/polyfills.ts",
             "tsConfig": "app/tsconfig.app.json",
-            "inlineStyleLanguage": "less",
-            "stylePreprocessorOptions": {
-              "includePaths": ["node_modules/"]
-            },
             "allowedCommonJsDependencies": [
               "slugify",
               "file-saver",
@@ -55,15 +51,20 @@
             "assets": [
               "app/src/favicon.ico",
               {
-                "glob": "**/*",
-                "input": "app/src/assets/",
-                "output": "/assets/",
-                "ignore": ["base/*"]
+                "glob": "env.js",
+                "input": "app/src/environments/",
+                "output": "/assets/"
               },
               {
                 "glob": "**/*",
                 "input": "app/src/assets/base",
                 "output": "/"
+              },
+              {
+                "glob": "**/*",
+                "input": "app/src/assets/",
+                "output": "/assets/",
+                "ignore": ["base/*"]
               },
               {
                 "glob": "**/*",
@@ -74,14 +75,18 @@
             "styles": [
               "app/src/styles/styles.less"
             ],
-            "preserveSymlinks": true,
+            "inlineStyleLanguage": "less",
+            "stylePreprocessorOptions": {
+              "includePaths": ["node_modules/"]
+            },
             "scripts": [
               "node_modules/quill/dist/quill.js",
               "node_modules/prismjs/prism.js",
               "node_modules/prismjs/components/prism-json.min.js",
               "node_modules/prismjs/components/prism-javascript.min.js",
               "node_modules/prismjs/components/prism-yaml.min.js"
-            ]
+            ],
+            "preserveSymlinks": true
           },
           "configurations": {
             "production": {
