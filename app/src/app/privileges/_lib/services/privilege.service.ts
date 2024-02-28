@@ -8,7 +8,7 @@ import {PrivilegeSearchParams} from '../model/privilege-search-params';
 
 @Injectable()
 export class PrivilegeService {
-  protected baseUrl = `${environment.termxApi}/auth/privileges`;
+  protected baseUrl = `${environment.termxApi}/uam/privileges`;
 
   public constructor(protected http: HttpClient) { }
 
