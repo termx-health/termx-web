@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ViewChild, Optional} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
 import {isDefined, LoadingManager, remove, validateForm} from '@kodality-web/core-util';
@@ -37,7 +37,7 @@ export class ResourceFormComponent implements OnChanges {
     private codeSystemService: CodeSystemService,
     private valueSetService: ValueSetService,
     private mapSetService: MapSetService,
-    private implementationGuideService: ImplementationGuideService
+    @Optional() private implementationGuideService: ImplementationGuideService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -110,7 +110,7 @@ export class ResourceFormComponent implements OnChanges {
       });
     }
     if (this.resourceType === 'ImplementationGuide') {
-      this.implementationGuideService.changeId(this.resource.id, this.idChangeModalData.id).subscribe(() => {
+      this.implementationGuideService?.changeId(this.resource.id, this.idChangeModalData.id).subscribe(() => {
         this.router.navigate(['/resources/implementation-guides', this.idChangeModalData.id, 'edit'], {replaceUrl: true});
       });
     }
