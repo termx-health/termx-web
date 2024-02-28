@@ -53,6 +53,7 @@
               "markdown-it-task-lists"
             ],
             "assets": [
+              "app/src/environments/env.js",
               "app/src/favicon.ico",
               {
                 "glob": "**/*",
