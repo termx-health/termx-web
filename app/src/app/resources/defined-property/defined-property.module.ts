@@ -8,8 +8,8 @@ import {CoreUiModule} from '../../core/ui/core-ui.module';
 
 export const DEFINED_PROPERTY_ROUTES: Routes = [
   {path: '', component: DefinedPropertyListComponent},
-  {path: 'add', component: DefinedPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/edit', component: DefinedPropertyEditComponent, data: {privilege: ['*.CodeSystem.edit']}}
+  {path: 'add', component: DefinedPropertyEditComponent, data: {privilege: ['*.DefinedProperty.edit']}},
+  {path: ':id/edit', component: DefinedPropertyEditComponent, data: {privilege: ['*.DefinedProperty.edit']}}
 ];
 
 @NgModule({
