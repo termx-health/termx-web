@@ -15,7 +15,7 @@ export const RESOURCES_ROUTES: Routes = [
   {path: 'map-sets', children: MAP_SET_ROUTES, data: {privilege: ['*.MapSet.view']}},
   {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES, data: {privilege: ['*.NamingSystem.view']}},
   {path: 'association-types', children: ASSOCIATION_TYPE_ROUTES, data: {privilege: ['*.AssociationType.view']}},
-  {path: 'defined-properties', children: DEFINED_PROPERTY_ROUTES, data: {privilege: ['*.CodeSystem.view']}},
+  {path: 'defined-properties', children: DEFINED_PROPERTY_ROUTES, data: {privilege: ['*.DefinedProperty.view']}},
 
   {
     path: 'finder', children: [

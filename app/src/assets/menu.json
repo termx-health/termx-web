@@ -136,7 +136,7 @@
                 },
                 "link": "resources/defined-properties",
                 "privileges": [
-                    "*.CodeSystem.view"
+                    "*.DefinedProperty.view"
                 ]
             },
             {

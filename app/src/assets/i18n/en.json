@@ -1754,6 +1754,7 @@
 						"code-system": "CodeSystem",
 						"map-set": "MapSet",
 						"naming-system": "NamingSystem",
+						"defined-property": "Defined property",
 						"observation-definition": "Observation definition",
 						"privilege": "Privilege",
 						"space": "Space",

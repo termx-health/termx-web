@@ -1710,6 +1710,7 @@
 						"code-system": "CodeSystem",
 						"map-set": "MapSet",
 						"naming-system": "Nimesüsteem",
+						"defined-property": "Globaalne tunnus",
 						"observation-definition": "Näitajate definitsioon",
 						"privilege": "Privileeg",
 						"space": "Space",
