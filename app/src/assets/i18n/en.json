@@ -146,6 +146,7 @@
 		},
 		"code-system-version": {
 			"single": "Code System Version",
+			"uri": "URI",
 			"description": "Description",
 			"entities": "Entity versions",
 			"expiration-date": "Expected use until",

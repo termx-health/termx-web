@@ -144,6 +144,7 @@
 		"code-system-version": {
 			"description": "Kirjeldus",
 			"entities": "Mõiste versioonid",
+			"uri": "Ühtne ressursiidentifikaator (URI)",
 			"expiration-date": "Eeldatav kasutus kuni",
 			"id": "Identifikaator",
 			"preferred-language": "Eelistatav keel",
@@ -1720,7 +1721,9 @@
 						"Task": "Ülesanne",
 						"Privilege": "Privileeg",
 						"Sequence": "Numeratsioon",
-						"TerminologyServer": "Terminoloogia server"
+						"TerminologyServer": "Terminoloogia server",
+                        "Release": "Väljalase",
+                        "Checklist": "Kontrollnimekiri"
 					}
 				},
 				"table": {

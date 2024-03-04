@@ -8,12 +8,17 @@
         </div>
 
         <form #form="ngForm" *ngIf="version">
-          <m-form-item mName="version" mLabel="entities.code-system-version.version" required>
-            <tw-semantic-version-select name="version"
-                [(ngModel)]="version.version"
-                [versions]="codeSystemId | apply: versions | async"
-                required></tw-semantic-version-select>
-          </m-form-item>
+          <m-form-row>
+            <m-form-item *mFormCol mName="version" mLabel="entities.code-system-version.version" required>
+              <tw-semantic-version-select name="version"
+                  [(ngModel)]="version.version"
+                  [versions]="codeSystemId | apply: versions | async"
+                  required></tw-semantic-version-select>
+            </m-form-item>
+            <m-form-item *mFormCol mName="uri" mLabel="entities.code-system-version.uri">
+              <m-input name="uri" [(ngModel)]="version.uri"/>
+            </m-form-item>
+          </m-form-row>
 
           <m-form-row>
             <m-form-item *mFormCol mName="releaseDate" mLabel="entities.code-system-version.release-date" required>
