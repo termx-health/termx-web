@@ -68,7 +68,7 @@
     <m-card>
       <div *m-card-header class="m-justify-between">
         <m-title>{{'web.snomed.branch.list.' + type | translate}}</m-title>
-        <div class="m-items-middle" *ngIf="type === 'working'">
+        <div class="m-items-middle" *ngIf="type === 'working' && ('snomed-ct.CodeSystem.edit' | twPrivileged)">
           <tw-add-button [routerLink]="['/integration', 'snomed', 'branches', 'add']">
             {{'web.snomed.branch.list.add-branch' | translate}}
           </tw-add-button>
