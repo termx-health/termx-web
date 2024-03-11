@@ -1,11 +1,11 @@
+import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {MapSetScope, MapSetVersion} from 'app/src/app/resources/_lib';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
 import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MapSetService} from '../../../services/map-set-service';
+import {MapSetScope, MapSetVersion} from 'app/src/app/resources/_lib';
 import {map, Observable} from 'rxjs';
+import {MapSetService} from '../../../services/map-set-service';
 
 
 @Component({

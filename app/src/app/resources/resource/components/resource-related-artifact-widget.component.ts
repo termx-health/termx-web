@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {Router} from '@angular/router';
+import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {RelatedArtifact, RelatedArtifactLibService} from 'app/src/app/resources/_lib/related-artifacts';
 import {RelatedArtifactUtil} from 'term-web/resources/_lib/related-artifacts/util/related-artifact-util';
 

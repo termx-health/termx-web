@@ -39,7 +39,7 @@
               {{'web.privileges.resources.table.add-resource' | translate}}
             </tw-add-button>
           </div>
-          <m-table [mData]="resourceMap | keys">
+          <m-table [mData]="resourceMap | keys" mSize="small">
             <tr *mTableHead>
               <th>{{'entities.privilege-resource.type' | translate}}</th>
               <th>{{'entities.privilege-resource.resource-id' | translate}}</th>
@@ -59,13 +59,13 @@
                   <m-abbreviate [mValue]="resource.resourceName || resource.resourceId" [mLength]="35"></m-abbreviate>
                 </td>
                 <td>
-                  <m-checkbox disabled [ngModel]="resource.actions?.view"></m-checkbox>
+                  <m-icon *ngIf="resource.actions?.view" mCode="check"></m-icon>
                 </td>
                 <td>
-                  <m-checkbox disabled [ngModel]="resource.actions?.edit"></m-checkbox>
+                  <m-icon *ngIf="resource.actions?.edit" mCode="check"></m-icon>
                 </td>
                 <td>
-                  <m-checkbox disabled [ngModel]="resource.actions?.publish"></m-checkbox>
+                  <m-icon *ngIf="resource.actions?.publish" mCode="check"></m-icon>
                 </td>
                 <td class="tw-table-actions">
                   <m-dropdown>
@@ -98,23 +98,23 @@
     <form #resourceForm="ngForm">
       <m-form-item mName="resourceType" mLabel="web.privileges.resources.modal.resource-type" required>
         <m-select name="resourceType" [(ngModel)]="modalData.resource.resourceType" required>
-          <m-option mLabel="web.privileges.resources.modal.type.any" mValue="Any"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.admin" mValue="Admin"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.code-system" mValue="CodeSystem"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.value-set" mValue="ValueSet"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.map-set" mValue="MapSet"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.naming-system" mValue="NamingSystem"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.association-type" mValue="AssociationType"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.space" mValue="Space"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.wiki" mValue="Wiki"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.observation-definition" mValue="ObservationDefinition"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.structure-definition" mValue="StructureDefinition"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.transformation-definition" mValue="TransformationDefinition"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.task" mValue="Task"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.privilege" mValue="Privilege"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.terminology-server" mValue="TerminologyServer"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.release" mValue="Release"></m-option>
-          <m-option mLabel="web.privileges.resources.modal.type.checklist" mValue="ChecklistRule"></m-option>
+          <m-option
+              *ngFor="let t of [
+                'Any', 'Admin',
+                'CodeSystem', 'ValueSet', 'MapSet', 'NamingSystem', 'AssociationType', 'DefinedProperty',
+                'Space', 'Wiki',
+                'ObservationDefinition',
+                'StructureDefinition',
+                'TransformationDefinition',
+                'Task',
+                'Privilege',
+                'TerminologyServer',
+                'Release', 'ChecklistRule',
+                'Sequence'
+              ]"
+              mLabel="web.privileges.resources.modal.type.{{t}}"
+              [mValue]="t"
+          ></m-option>
         </m-select>
       </m-form-item>
       <m-form-item *ngIf="modalData.resource.resourceType

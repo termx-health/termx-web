@@ -1,10 +1,10 @@
+import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
-import {PrivilegeService} from '../services/privilege.service';
 import {collect, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {Privilege, PrivilegeResource, PrivilegeResourceActions} from 'term-web/privileges/_lib';
+import {PrivilegeService} from '../services/privilege.service';
 
 @Component({
   templateUrl: './privilege-edit.component.html',

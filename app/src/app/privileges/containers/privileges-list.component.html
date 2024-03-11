@@ -24,7 +24,7 @@
     </tr>
 
     <tr *mTableRow="let privilege">
-      <td>
+      <td style="width: 10%">
         <a *ngIf="'*.Privilege.edit' | twHasAnyPrivilege; else view" [routerLink]="['./edit', privilege.id]">
           {{privilege.code}}
         </a>
@@ -32,11 +32,16 @@
           {{privilege.code}}
         </ng-template>
       </td>
-      <td>{{privilege.names | localName}}</td>
+      <td style="width: 50%">
+        {{privilege.names | localName}}
+      </td>
       <td style="padding: 0">
-        <div *ngTemplateOutlet="nestedTable; context: {privilege: privilege}"></div>
+        <div style="overflow: hidden">
+          <ng-container *ngTemplateOutlet="nestedTable; context: {privilege: privilege}"></ng-container>
+        </div>
       </td>
     </tr>
+
     <tr *mTableNoData>
       <td colspan="5">
         <m-no-data></m-no-data>
@@ -46,17 +51,25 @@
 </m-card>
 
 <ng-template #nestedTable let-privilege="privilege">
-  <m-table mOutlined="false" [mData]="privilege.resources" mSize="small">
-    <tr *mTableRow="let resource" style="display: flex; justify-content: space-between">
-      <td style="flex: 1">
-        {{resource.resourceType}}
-      </td>
-      <td style="flex: 1; word-wrap: anywhere">
-        <m-abbreviate [mValue]="resource.resourceName || resource.resourceId" [mLength]="50"></m-abbreviate>
-      </td>
-      <td style="flex: 1">
-        {{resource.actions | apply:toPlainString}}
-      </td>
-    </tr>
+  <m-table
+      *ngIf="privilege.resources | apply: collectResourcesByType  as data"
+      mOutlined="false"
+      mSize="small"
+      mFixed
+      style="display: block; margin-bottom: -1px"
+  >
+    <ng-container *ngFor="let resourceType of data | keys">
+      <tr *ngFor="let resource of data[resourceType]; let idx = index">
+        <td style="vertical-align: top" *ngIf="idx === 0" [rowSpan]="data[resourceType].length">
+          {{resourceType}}
+        </td>
+        <td>
+          <m-abbreviate [mValue]="resource.resourceName || resource.resourceId" [mLength]="50"></m-abbreviate>
+        </td>
+        <td>
+          {{resource.actions | apply:toPlainString}}
+        </td>
+      </tr>
+    </ng-container>
   </m-table>
 </ng-template>

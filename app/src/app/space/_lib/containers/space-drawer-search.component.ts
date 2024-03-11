@@ -2,9 +2,9 @@ import {Component, EventEmitter, forwardRef, Input, OnChanges, Output, SimpleCha
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {Space} from '../model/space';
-import {Package, PackageVersion} from '../model/package';
 import {PackageLibService, SpaceLibService} from 'term-web/space/_lib';
+import {Package, PackageVersion} from '../model/package';
+import {Space} from '../model/space';
 
 export class SpaceItem {
   public space: Space;

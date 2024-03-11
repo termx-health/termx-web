@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {map, mergeMap, Observable, timer} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {HttpCacheService, SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {Space} from '../model/space';
-import {Package} from '../model/package';
+import {map, mergeMap, Observable, timer} from 'rxjs';
 import {SpaceSearchParams} from 'term-web/space/_lib';
-import {SpaceDiff} from '../model/space-diff';
 import {JobLibService, LorqueLibService, LorqueProcess} from 'term-web/sys/_lib';
+import {Package} from '../model/package';
+import {Space} from '../model/space';
+import {SpaceDiff} from '../model/space-diff';
 
 @Injectable()
 export class SpaceLibService {

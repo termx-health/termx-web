@@ -1,7 +1,7 @@
+import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
 import {LoadingManager, validateForm} from '@kodality-web/core-util';
 import {DefinedProperty} from 'term-web/resources/_lib';
 import {DefinedPropertyService} from '../services/defined-property.service';

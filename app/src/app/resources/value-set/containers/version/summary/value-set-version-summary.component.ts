@@ -1,12 +1,12 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ValueSet, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule} from 'app/src/app/resources/_lib';
-import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
-import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
-import {forkJoin} from 'rxjs';
-import {ValueSetRuleFormComponent} from 'app/src/app/resources/value-set/containers/version/rule/value-set-rule-form.component';
-import {JobLibService} from 'app/src/app/sys/_lib';
+import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {ValueSet, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule} from 'app/src/app/resources/_lib';
+import {ValueSetRuleFormComponent} from 'app/src/app/resources/value-set/containers/version/rule/value-set-rule-form.component';
+import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
+import {JobLibService} from 'app/src/app/sys/_lib';
+import {forkJoin} from 'rxjs';
 
 @Component({
   templateUrl: 'value-set-version-summary.component.html',

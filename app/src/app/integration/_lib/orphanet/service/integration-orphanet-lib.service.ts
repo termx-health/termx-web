@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {environment} from 'environments/environment';
 import {mergeMap, Observable, timer} from 'rxjs';
 import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
-import {environment} from 'environments/environment';
 import {IntegrationImportConfiguration} from '../../model/integration-import-configuration';
 
 @Injectable()

@@ -1,0 +1,36 @@
+<m-card class="m-card-inside">
+  <div *m-card-header class="m-card__title">
+    {{'entities.resource.conf-attribute.multiple' | translate}}
+  </div>
+
+  <form #form="ngForm" *ngIf="attributes">
+    <m-editable-table #rowsTable [mData]="attributes" [mRowInstance]="rowInstance" required>
+      <m-editable-column [mTitle]="'entities.resource.conf-attribute.attribute'" mName="attribute">
+        <ng-template #viewTemplate let-a>{{a.attribute | localizedConceptName: {codeSystem: 'termx-resource-configuration'} | async}}</ng-template>
+        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+          <m-select [name]="ngModelName" [(ngModel)]="a.attribute">
+            <m-option *ngFor="let attr of configurationAttributes " [mLabel]="attr.code" [mValue]="attr.code"/>
+          </m-select>
+        </ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.resource.conf-attribute.value'" mName="value" required>
+        <ng-template #viewTemplate let-a>
+          <div class="m-items-middle" style="width: 100%">
+            <span *ngIf="a.language" class="m-subtitle">{{a.language}}</span>
+            <span *ngIf="!(a.attribute | apply:markdownInput:configurationAttributes)">{{a.value}}</span>
+            <tw-smart-text-editor-view *ngIf="(a.attribute | apply:markdownInput:configurationAttributes)" [value]="a.value" valueType="markdown"/>
+          </div>
+        </ng-template>
+        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+          <div class="m-items-middle">
+            <tw-value-set-concept-select style="width: 100%; flex: 1" *ngIf="a.attribute | apply:languageRequired:configurationAttributes" valueSet="languages" name="{{ngModelName}}-lang" [(ngModel)]="a.language" required/>
+            <m-textarea *ngIf="!(a.attribute | apply:markdownInput:configurationAttributes)" style="width: 100%; flex: 3" [name]="ngModelName" [(ngModel)]="a.value" required/>
+            <div class="text-editor-wrapper" *ngIf="(a.attribute | apply:markdownInput:configurationAttributes)">
+              <tw-smart-text-editor style="width: 100%; flex: 3" [name]="ngModelName" [(ngModel)]="a.value" valueType="markdown" required/>
+            </div>
+          </div>
+        </ng-template>
+      </m-editable-column>
+    </m-editable-table>
+  </form>
+</m-card>

@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {CodeSystemVersion, ValueSetVersion} from 'app/src/app/resources/_lib';
-import {Router} from '@angular/router';
-import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
-import {LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {Router} from '@angular/router';
+import {LoadingManager, validateForm} from '@kodality-web/core-util';
+import {CodeSystemVersion, ValueSetVersion} from 'app/src/app/resources/_lib';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 
 @Component({
   selector: 'tw-value-set-versions-widget',

@@ -1,5 +1,5 @@
-import {ElementDefinition} from 'fhir/model/element-definition';
 import {isDefined} from '@kodality-web/core-util';
+import {ElementDefinition} from 'fhir/model/element-definition';
 
 export class StructureDefinitionFhirMapperUtil {
   public static mapToKeyValue(fhirObj: any): {[key: string]: any} {

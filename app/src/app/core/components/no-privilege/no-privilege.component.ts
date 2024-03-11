@@ -1,9 +1,9 @@
+import {CommonModule} from '@angular/common';
 import {Component, inject, Input} from '@angular/core';
 import {Router} from '@angular/router';
-import {CommonModule} from '@angular/common';
-import {TranslateModule} from '@ngx-translate/core';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {MarinaUiModule} from '@kodality-web/marina-ui';
+import {TranslateModule} from '@ngx-translate/core';
 
 @Component({
   selector: 'tw-no-privilege',

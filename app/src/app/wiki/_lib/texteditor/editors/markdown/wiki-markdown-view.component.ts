@@ -1,13 +1,13 @@
 import {Component, Input} from '@angular/core';
-import {sourceLinePlugin} from './plugins/source-line.plugin';
-import {localLink} from './plugins/link.plugin';
-import {localImage} from './plugins/image.plugin';
-import {structureDefinitionCodePlugin} from './plugins/structure-definition-code.plugin';
-import {structureDefinitionFshPlugin} from './plugins/structure-definition-fsh.plugin';
-import {drawioPlugin} from './plugins/drawio.plugin';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {codeSystemConceptMatrixPlugin} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/code-system-concept-matrix.plugin';
 import {valueSetConceptMatrixPlugin} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/value-set-concept-matrix.plugin';
+import {drawioPlugin} from './plugins/drawio.plugin';
+import {localImage} from './plugins/image.plugin';
+import {localLink} from './plugins/link.plugin';
+import {sourceLinePlugin} from './plugins/source-line.plugin';
+import {structureDefinitionCodePlugin} from './plugins/structure-definition-code.plugin';
+import {structureDefinitionFshPlugin} from './plugins/structure-definition-fsh.plugin';
 
 
 @Component({

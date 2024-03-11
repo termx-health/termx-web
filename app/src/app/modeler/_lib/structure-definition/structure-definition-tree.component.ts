@@ -1,11 +1,11 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {StructureDefinitionLibService} from './structure-definition-lib.service';
 import {LoadingManager} from '@kodality-web/core-util';
-import {ChefService} from 'term-web/integration/_lib';
-import {map, Observable, tap} from 'rxjs';
-import {StructureDefinition} from 'term-web/modeler/_lib';
-import {Fhir} from 'fhir/fhir';
 import {initializeWebComponent} from '@kodality-web/structure-definition-viewer';
+import {Fhir} from 'fhir/fhir';
+import {map, Observable, tap} from 'rxjs';
+import {ChefService} from 'term-web/integration/_lib';
+import {StructureDefinition} from 'term-web/modeler/_lib';
+import {StructureDefinitionLibService} from './structure-definition-lib.service';
 
 @Component({
   selector: 'tw-structure-definition-tree',

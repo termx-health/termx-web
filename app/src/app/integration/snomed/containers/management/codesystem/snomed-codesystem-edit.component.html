@@ -99,10 +99,13 @@
           </m-select>
         </m-form-item>
         <m-form-item mName="file" mLabel="web.snomed.branch.management.import-modal.file" required>
-          <input #fileInput type="file" name="file" [(ngModel)]="importModalData.file" required>
+          <input #fileInput type="file" name="file" [(ngModel)]="importModalData.file" [disabled]="loader.state['import']" required>
+        </m-form-item>
+        <m-form-item *ngIf="importModalData.progress">
+          <nz-progress [nzPercent]="importModalData.progress"></nz-progress>
         </m-form-item>
       </form>
-      <m-alert mType="warning">{{'web.snomed.codesystem.form.import-warning' | translate}}</m-alert>
+      <m-alert mType="warning" mShowIcon>{{'web.snomed.codesystem.form.import-warning' | translate}}</m-alert>
     </ng-container>
 
     <div *m-modal-footer class="m-items-middle">

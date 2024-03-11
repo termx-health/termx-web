@@ -1,16 +1,16 @@
+import {MediaMatcher} from '@angular/cdk/layout';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PageService} from '../services/page.service';
 import {compareStrings, DestroyService, LoadingManager} from '@kodality-web/core-util';
-import {Page} from 'term-web/wiki/_lib';
-import {map, takeUntil} from 'rxjs';
-import {Space} from 'term-web/space/_lib';
-import {PreferencesService} from 'term-web/core/preferences/preferences.service';
-import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 import {TranslateService} from '@ngx-translate/core';
-import {MediaMatcher} from '@angular/cdk/layout';
+import {map, takeUntil} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
+import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {SeoService} from 'term-web/core/ui/services/seo.service';
+import {Space} from 'term-web/space/_lib';
+import {Page} from 'term-web/wiki/_lib';
+import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
+import {PageService} from '../services/page.service';
 
 @Component({
   templateUrl: './wiki-page.component.html',

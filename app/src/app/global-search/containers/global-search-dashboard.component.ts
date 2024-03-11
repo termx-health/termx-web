@@ -1,6 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {catchError, forkJoin, map, Observable, of} from 'rxjs';
 import {Router} from '@angular/router';
+import {ComponentStateStore, HttpCacheService, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import {catchError, forkJoin, map, Observable, of} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
+import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'term-web/integration/_lib';
+import {MeasurementUnit, MeasurementUnitLibService, MeasurementUnitSearchParams} from 'term-web/measurement-unit/_lib';
 import {
   CodeSystem,
   CodeSystemConcept,
@@ -15,10 +19,6 @@ import {
   ValueSetLibService,
   ValueSetSearchParams
 } from 'term-web/resources/_lib';
-import {MeasurementUnit, MeasurementUnitLibService, MeasurementUnitSearchParams} from 'term-web/measurement-unit/_lib';
-import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'term-web/integration/_lib';
-import {ComponentStateStore, HttpCacheService, LoadingManager, SearchResult} from '@kodality-web/core-util';
-import {AuthService} from 'term-web/core/auth';
 
 @Component({
   templateUrl: './global-search-dashboard.component.html'

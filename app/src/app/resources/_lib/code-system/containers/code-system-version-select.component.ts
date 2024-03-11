@@ -1,8 +1,8 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
-import {CodeSystemLibService, CodeSystemVersion, CodeSystemVersionSearchParams} from '../../code-system';
 import {takeUntil} from 'rxjs';
+import {CodeSystemLibService, CodeSystemVersion, CodeSystemVersionSearchParams} from '../../code-system';
 
 
 @Component({
@@ -10,6 +10,7 @@ import {takeUntil} from 'rxjs';
   templateUrl: './code-system-version-select.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemVersionSelectComponent), multi: true}, DestroyService]
 })
+
 export class CodeSystemVersionSelectComponent implements OnChanges, ControlValueAccessor {
   @Input() public codeSystemId?: string;
   @Input() public valueType: 'id' | 'version' | 'full' = 'full';

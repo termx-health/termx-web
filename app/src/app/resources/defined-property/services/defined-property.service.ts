@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
-import {DefinedProperty} from 'term-web/resources/_lib';
 import {Observable} from 'rxjs';
+import {DefinedProperty} from 'term-web/resources/_lib';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 
 @Injectable()

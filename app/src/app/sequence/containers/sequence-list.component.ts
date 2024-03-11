@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {finalize, Observable, tap} from 'rxjs';
 import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {SequenceSearchParams} from 'term-web/sequence/_lib/models/sequence-search-params';
+import {finalize, Observable, tap} from 'rxjs';
 import {Sequence} from 'term-web/sequence/_lib/models/sequence';
+import {SequenceSearchParams} from 'term-web/sequence/_lib/models/sequence-search-params';
 import {SequenceLibService} from 'term-web/sequence/_lib/services/sequence-lib.service';
 
 

@@ -13,6 +13,10 @@
     <tw-status-tag [status]="version.status"></tw-status-tag>
   </div>
   <span>{{version.description | localName}}</span>
+  <div class="m-items-middle" *ngIf="version.uri">
+    <m-icon mCode="link"></m-icon>
+    <tw-copy-container [text]="version.uri">{{version.uri}}</tw-copy-container>
+  </div>
   <div class="m-items-middle" *ngIf="version.supportedLanguages">
     <m-icon mCode="global"></m-icon>
     <ng-container *ngFor="let lang of version.supportedLanguages; let i = index">

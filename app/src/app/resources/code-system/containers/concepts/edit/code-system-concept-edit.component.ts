@@ -1,4 +1,8 @@
+import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
+import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {
   CodeSystem,
   CodeSystemConcept,
@@ -8,20 +12,16 @@ import {
   ConceptUtil,
   EntityProperty
 } from 'app/src/app/resources/_lib';
-import {NgForm} from '@angular/forms';
-import {CodeSystemService} from '../../../services/code-system.service';
-import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
-import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {CodeSystemDesignationEditComponent} from './designation/code-system-designation-edit.component';
-import {CodeSystemPropertyValueEditComponent} from './propertyvalue/code-system-property-value-edit.component';
-import {CodeSystemAssociationEditComponent} from './association/code-system-association-edit.component';
+import {environment} from 'environments/environment';
 import {forkJoin, of} from 'rxjs';
 import {ResourceContextComponent} from 'term-web/resources/resource/components/resource-context.component';
+import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
-import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
-import {environment} from 'environments/environment';
+import {CodeSystemService} from '../../../services/code-system.service';
+import {CodeSystemAssociationEditComponent} from './association/code-system-association-edit.component';
+import {CodeSystemDesignationEditComponent} from './designation/code-system-designation-edit.component';
+import {CodeSystemPropertyValueEditComponent} from './propertyvalue/code-system-property-value-edit.component';
 
 @Component({
   templateUrl: './code-system-concept-edit.component.html',

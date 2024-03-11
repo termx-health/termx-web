@@ -1,13 +1,13 @@
-import {Component, ElementRef, Injectable, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {environment} from 'app/src/environments/environment';
-import {copyDeep, DestroyService, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {Component, ElementRef, Injectable, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {copyDeep, DestroyService, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {mergeMap, Observable} from 'rxjs';
-import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../file-analysis.service';
-import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
+import {environment} from 'environments/environment';
 import {saveAs} from 'file-saver';
+import {mergeMap, Observable} from 'rxjs';
+import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
+import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../file-analysis.service';
 
 interface AssociationFileImportRequest {
   codeSystemId?: string;

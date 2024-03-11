@@ -1,9 +1,9 @@
 import {Component, forwardRef, Input} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {CodeSystemConcept} from 'term-web/resources/_lib';
-import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
 import {BooleanInput} from '@kodality-web/core-util';
 import {SnomedLibService} from 'term-web/integration/_lib';
+import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
+import {CodeSystemConcept} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-term-concept-search',

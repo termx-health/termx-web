@@ -1,19 +1,19 @@
-import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
+import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Router} from '@angular/router';
 import {compareNumbers, copyDeep, DestroyService, group, LoadingManager, sort} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {of} from 'rxjs';
-import {Router} from '@angular/router';
-import {CodeSystem, EntityProperty, ValueSetLibService} from '../../../../../resources/_lib';
-import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../../file-analysis.service';
-import {JobLog} from 'term-web/sys/_lib';
+import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
 import {
   CodeSystemFileImportService,
   FileImportPropertyRow,
   FileProcessingRequest
 } from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
-import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
+import {JobLog} from 'term-web/sys/_lib';
+import {CodeSystem, EntityProperty, ValueSetLibService} from '../../../../../resources/_lib';
+import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../../file-analysis.service';
 
 
 const DEF_PROP_WEIGHT = {

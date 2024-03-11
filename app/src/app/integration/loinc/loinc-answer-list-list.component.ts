@@ -1,11 +1,11 @@
 import {Component, ViewChild} from '@angular/core';
-import {compareNumbers, compareValues, ComponentStateStore, copyDeep, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
-import {Observable, tap} from 'rxjs';
-import {TranslateService} from '@ngx-translate/core';
-import {MuiTableComponent} from '@kodality-web/marina-ui';
-import {AuthService} from 'term-web/core/auth';
 import {ActivatedRoute, Router} from '@angular/router';
+import {compareNumbers, compareValues, ComponentStateStore, copyDeep, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
+import {MuiTableComponent} from '@kodality-web/marina-ui';
+import {TranslateService} from '@ngx-translate/core';
+import {Observable, tap} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
+import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-loinc-answer-list-list',

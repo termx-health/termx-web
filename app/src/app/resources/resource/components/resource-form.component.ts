@@ -1,16 +1,16 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, OnChanges, SimpleChanges, ViewChild, Optional} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {Router} from '@angular/router';
+import {isDefined, LoadingManager, remove, validateForm} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {TranslateService} from '@ngx-translate/core';
-import slugify from 'slugify';
-import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
 import {ConceptUtil, ValueSetVersionConcept, VsConceptUtil} from 'app/src/app/resources/_lib';
-import {Resource} from 'term-web/resources/resource/model/resource';
-import {Router} from '@angular/router';
-import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
-import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
+import slugify from 'slugify';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
+import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import {Resource} from 'term-web/resources/resource/model/resource';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 
 
 @Component({
@@ -37,7 +37,7 @@ export class ResourceFormComponent implements OnChanges {
     private codeSystemService: CodeSystemService,
     private valueSetService: ValueSetService,
     private mapSetService: MapSetService,
-    private implementationGuideService: ImplementationGuideService
+    @Optional() private implementationGuideService: ImplementationGuideService
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -110,7 +110,7 @@ export class ResourceFormComponent implements OnChanges {
       });
     }
     if (this.resourceType === 'ImplementationGuide') {
-      this.implementationGuideService.changeId(this.resource.id, this.idChangeModalData.id).subscribe(() => {
+      this.implementationGuideService?.changeId(this.resource.id, this.idChangeModalData.id).subscribe(() => {
         this.router.navigate(['/resources/implementation-guides', this.idChangeModalData.id, 'edit'], {replaceUrl: true});
       });
     }
@@ -119,4 +119,20 @@ export class ResourceFormComponent implements OnChanges {
   protected getDisplay = (concept: ValueSetVersionConcept): string => {
     return VsConceptUtil.getDisplay(concept, this.translateService.currentLang);
   };
+
+  protected addOtherTitle(): void {
+    this.resource.otherTitle = [...(this.resource.otherTitle || []), {}];
+  }
+
+  protected deleteOtherTitle(otherTitle: any): void {
+    this.resource.otherTitle = remove(this.resource.otherTitle, otherTitle);
+  }
+
+  protected addContext(): void {
+    this.resource.useContext = [...(this.resource.useContext || []), {}];
+  }
+
+  protected deleteContext(ctx: any): void {
+    this.resource.useContext = remove(this.resource.useContext, ctx);
+  }
 }

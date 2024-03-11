@@ -1,6 +1,6 @@
-import {ValueSetLibService, ValueSetTransactionRequest, ValueSetVersion, ValueSetVersionRule, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
+import {ValueSetLibService, ValueSetTransactionRequest, ValueSetVersion, ValueSetVersionRule, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 
 @Injectable()
 export class ValueSetService extends ValueSetLibService {

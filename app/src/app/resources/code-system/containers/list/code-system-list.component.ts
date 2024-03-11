@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ComponentStateStore, copyDeep, DestroyService, isDefined, QueryParams, SearchResult, sortFn} from '@kodality-web/core-util';
+import {TranslateService} from '@ngx-translate/core';
+import {environment} from 'environments/environment';
+import {finalize, Observable, tap} from 'rxjs';
 import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemService} from '../../services/code-system.service';
-import {TranslateService} from '@ngx-translate/core';
-import {finalize, Observable, tap} from 'rxjs';
-import {environment} from 'environments/environment';
 
 
 interface Filter {

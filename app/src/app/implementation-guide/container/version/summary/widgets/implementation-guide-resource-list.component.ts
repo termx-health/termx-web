@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {BooleanInput, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {BooleanInput, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ImplementationGuideLibService, ImplementationGuideVersion, ImplementationGuideVersionResource} from 'term-web/implementation-guide/_lib';
 
 @Component({

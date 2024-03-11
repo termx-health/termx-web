@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {HttpCacheService, SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {ValueSetVersionSearchParams} from '../model/value-set-version-search-params';
+import {Observable} from 'rxjs';
+import {JobLogResponse, Provenance} from 'term-web/sys/_lib';
+import {ValueSet} from '../model/value-set';
+import {ValueSetExpandRequest} from '../model/value-set-expand-request';
+import {ValueSetSearchParams} from '../model/value-set-search-params';
 import {ValueSetVersion} from '../model/value-set-version';
 import {ValueSetVersionConcept} from '../model/value-set-version-concept';
-import {ValueSetExpandRequest} from '../model/value-set-expand-request';
-import {ValueSet} from '../model/value-set';
-import {ValueSetSearchParams} from '../model/value-set-search-params';
-import {JobLogResponse, Provenance} from 'term-web/sys/_lib';
+import {ValueSetVersionSearchParams} from '../model/value-set-version-search-params';
 
 @Injectable()
 export class ValueSetLibService {

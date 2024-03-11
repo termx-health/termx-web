@@ -1,7 +1,7 @@
 import {Directive, Input, OnInit, Optional, TemplateRef, ViewContainerRef} from '@angular/core';
+import {PrivilegedPipe} from 'term-web/core/auth/privileges/privileged.pipe';
 import {AuthService} from '../auth.service';
 import {PrivilegeContextDirective} from './privilege-context.directive';
-import {PrivilegedPipe} from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Directive({
   selector: '[twPrivileged]',

@@ -1,9 +1,9 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
+import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {BooleanInput, DestroyService, group} from '@kodality-web/core-util';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 import {catchError, finalize, map, of, takeUntil} from 'rxjs';
 import {AssociationType, AssociationTypeLibService, AssociationTypeSearchParams} from '../../association';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 @Component({
   selector: 'tw-association-type-search',

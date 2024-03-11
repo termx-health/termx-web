@@ -1,8 +1,8 @@
 import {Component, ElementRef, Input, OnChanges, ViewChild} from '@angular/core';
-import {OutputFormatType} from 'diff2html/lib/types';
+import {BooleanInput, isNil} from '@kodality-web/core-util';
 import {createPatch} from 'diff';
 import {html} from 'diff2html';
-import {BooleanInput, isNil} from '@kodality-web/core-util';
+import {OutputFormatType} from 'diff2html/lib/types';
 
 
 @Component({

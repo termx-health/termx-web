@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {MeasurementUnit, MeasurementUnitLibService} from 'term-web/measurement-unit/_lib';
-import {Observable} from 'rxjs';
 import {isDefined} from '@kodality-web/core-util';
+import {Observable} from 'rxjs';
+import {MeasurementUnit, MeasurementUnitLibService} from 'term-web/measurement-unit/_lib';
 
 @Injectable()
 export class MeasurementUnitService extends MeasurementUnitLibService {

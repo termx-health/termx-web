@@ -146,6 +146,7 @@
 		},
 		"code-system-version": {
 			"single": "Code System Version",
+			"uri": "URI",
 			"description": "Description",
 			"entities": "Entity versions",
 			"expiration-date": "Expected use until",
@@ -494,6 +495,15 @@
 				"single": "Copyright",
 				"statement": "Copyright statement"
 			},
+			"replaces": "Replaces",
+			"other-title": "Other title",
+			"source-reference": "Source reference",
+			"topic": "Topic",
+			"conf-attribute": {
+				"multiple": "Configuration attributes",
+				"attribute": "Attribute",
+				"value": "Value"
+			},
 			"description": "Description",
 			"experimental": "Experimental",
 			"id": "ID",
@@ -503,7 +513,7 @@
 				"system": "System",
 				"value": "Value"
 			},
-			"name": "Name",
+			"name": "Computable name",
 			"permissions": {
 				"admin": "Admin",
 				"editor": "Editor",
@@ -1739,21 +1749,25 @@
 					"resource-id": "Resource",
 					"resource-type": "Type",
 					"type": {
-						"admin": "Admin",
-						"any": "Any",
-						"association-type": "AssociationType",
-						"code-system": "CodeSystem",
-						"map-set": "MapSet",
-						"naming-system": "NamingSystem",
-						"observation-definition": "Observation definition",
-						"privilege": "Privilege",
-						"space": "Space",
-						"structure-definition": "Structure definition",
-						"task": "Task",
-						"terminology-server": "TerminologyServer",
-						"transformation-definition": "Transformation definition",
-						"value-set": "ValueSet",
-						"wiki": "Wiki"
+						"Admin": "Admin",
+						"Any": "Any",
+						"CodeSystem": "CodeSystem",
+						"ValueSet": "ValueSet",
+						"MapSet": "MapSet",
+						"NamingSystem": "NamingSystem",
+						"AssociationType": "AssociationType",
+						"DefinedProperty": "Defined property",
+						"Space": "Space",
+						"Wiki": "Wiki",
+						"ObservationDefinition": "Observation definition",
+						"StructureDefinition": "Structure definition",
+						"TransformationDefinition": "Transformation definition",
+						"Task": "Task",
+						"Privilege": "Privilege",
+						"TerminologyServer": "TerminologyServer",
+						"Release": "Release",
+						"ChecklistRule": "ChecklistRule",
+						"Sequence": "Sequence"
 					}
 				},
 				"table": {
@@ -1783,6 +1797,8 @@
 			"checklist": "Checklist"
 		},
 		"resource-form": {
+			"add-other-title": "Add other title",
+			"add-use-context": "Add use context",
 			"id-change-modal": {
 				"header": "Change ID",
 				"id": "New ID"
@@ -2086,7 +2102,8 @@
 			},
 			"termx-service-api": {
 				"content": "TermX Service APIs empower the automated exchange of clinical terminology content and resources.",
-				"header": "TermX Service API"
+				"header": "TermX Service API",
+				"no-data": "The tools for viewing APIs are not configured."
 			}
 		},
 		"transformation-definition": {

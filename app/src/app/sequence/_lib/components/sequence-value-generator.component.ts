@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {LoadingManager} from '@kodality-web/core-util';
-import {SequenceLibService} from '../services/sequence-lib.service';
 import {map, of} from 'rxjs';
+import {SequenceLibService} from '../services/sequence-lib.service';
 
 @Component({
   selector: 'tw-sequence-value-generator',

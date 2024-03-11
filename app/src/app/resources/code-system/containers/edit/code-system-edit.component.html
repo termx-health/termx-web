@@ -7,14 +7,11 @@
 
           <m-form-row>
             <m-form-item *mFormCol mName="content" mLabel="entities.code-system.content" required>
-              <tw-value-set-concept-select name="content"
-                  [(ngModel)]="codeSystem.content"
-                  valueSet="codesystem-content-mode"
-                  required></tw-value-set-concept-select>
+              <tw-value-set-concept-select name="content" [(ngModel)]="codeSystem.content" valueSet="codesystem-content-mode" required/>
             </m-form-item>
             <div *mFormCol>
               <m-form-item *ngIf="codeSystem.content === 'supplement'" mName="baseCodeSystem" mLabel="entities.code-system.base-code-system">
-                <tw-code-system-search name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive></tw-code-system-search>
+                <tw-code-system-search name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive/>
               </m-form-item>
             </div>
           </m-form-row>
@@ -31,15 +28,19 @@
 
           <m-form-row>
             <m-form-item *mFormCol mName="hierarchyMeaning" mLabel="entities.code-system.hierarchy-meaning">
-              <tw-association-type-search name="hierarchyMeaning" [(ngModel)]="codeSystem.hierarchyMeaning" associationKind="codesystem-hierarchy-meaning" valuePrimitive></tw-association-type-search>
+              <tw-association-type-search name="hierarchyMeaning"
+                  [(ngModel)]="codeSystem.hierarchyMeaning"
+                  associationKind="codesystem-hierarchy-meaning"
+                  valuePrimitive/>
             </m-form-item>
             <m-form-item *mFormCol mName="sequence" mLabel="entities.code-system.sequence">
-              <tw-sequence-select name="sequence" [(ngModel)]="codeSystem.sequence"></tw-sequence-select>
+              <tw-sequence-select name="sequence" [(ngModel)]="codeSystem.sequence"/>
             </m-form-item>
           </m-form-row>
 
 
           <tw-resource-identifiers [identifiers]="codeSystem.identifiers"></tw-resource-identifiers>
+          <tw-resource-configuration-attributes [attributes]="codeSystem.configurationAttributes"></tw-resource-configuration-attributes>
           <tw-cs-properties [properties]="codeSystem.properties" [codeSystemId]="codeSystem.id"></tw-cs-properties>
           <tw-resource-contacts [(contacts)]="codeSystem.contacts"></tw-resource-contacts>
           <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
@@ -54,7 +55,7 @@
 
     <div nz-col [nzMd]="6" [nzXs]="24">
       <m-card [mShowSkeleton]="loader.isLoading">
-        <tw-resource-side-info [copyright]="codeSystem.copyright" [permissions]="codeSystem.permissions" [settings]="codeSystem.settings"></tw-resource-side-info>
+        <tw-resource-side-info [copyright]="codeSystem.copyright" [permissions]="codeSystem.permissions" [settings]="codeSystem.settings"/>
       </m-card>
     </div>
   </form>

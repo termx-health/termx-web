@@ -1,8 +1,8 @@
 import {Component, OnInit} from '@angular/core';
-import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from 'term-web/resources/_lib';
 import {ActivatedRoute} from '@angular/router';
-import {takeUntil} from 'rxjs';
 import {DestroyService, isNil} from '@kodality-web/core-util';
+import {takeUntil} from 'rxjs';
+import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from 'term-web/resources/_lib';
 
 @Component({
   template: `

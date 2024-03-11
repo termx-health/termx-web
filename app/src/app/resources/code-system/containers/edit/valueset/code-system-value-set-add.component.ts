@@ -1,8 +1,8 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {CodeSystemLibService, ValueSet, ValueSetLibService, ValueSetTransactionRequest} from 'term-web/resources/_lib';
-import {forkJoin} from 'rxjs';
 import {NgForm} from '@angular/forms';
 import {LoadingManager, validateForm} from '@kodality-web/core-util';
+import {forkJoin} from 'rxjs';
+import {CodeSystemLibService, ValueSet, ValueSetLibService, ValueSetTransactionRequest} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-cs-value-set',

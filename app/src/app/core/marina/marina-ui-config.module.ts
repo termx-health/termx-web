@@ -1,11 +1,11 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
-import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiConfigService, MuiHttpErrorHandler} from '@kodality-web/marina-ui';
-import {HTTP_INTERCEPTORS, HttpBackend, HttpClient} from '@angular/common/http';
-import {CoreI18nService, CoreI18nTranslationHandler, group, isDefined, TRANSLATION_HANDLER} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
-import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
-import {environment as env} from 'environments/environment';
 import {registerLocaleData} from '@angular/common';
+import {HTTP_INTERCEPTORS, HttpBackend, HttpClient} from '@angular/common/http';
+import {ModuleWithProviders, NgModule} from '@angular/core';
+import {CoreI18nService, CoreI18nTranslationHandler, group, isDefined, TRANSLATION_HANDLER} from '@kodality-web/core-util';
+import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
+import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiConfigService, MuiHttpErrorHandler} from '@kodality-web/marina-ui';
+import {TranslateService} from '@ngx-translate/core';
+import {environment as env} from 'environments/environment';
 
 export function TranslationHandlerFactory(translateService: TranslateService): CoreI18nTranslationHandler {
   return (key, params) => translateService.instant(key, params);
@@ -71,7 +71,7 @@ export class MarinaUiConfigModule {
     });
 
 
-    new HttpClient(http).get('/assets/ui-languages.json').subscribe(uiLangs => {
+    new HttpClient(http).get('./assets/ui-languages.json').subscribe(uiLangs => {
       muiConfig.set('systemLanguages',
         group(env.uiLanguages.filter(k => uiLangs[k]), k => k, k => ({label: [k.toUpperCase(), uiLangs[k]].filter(isDefined).join(' ')})));
     });

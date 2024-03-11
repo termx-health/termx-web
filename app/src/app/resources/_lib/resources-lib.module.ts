@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
-import {CodeSystemLibModule} from './code-system';
-import {DesignationLibModule} from './designation';
-import {ValueSetLibModule} from './value-set';
-import {MapSetLibModule} from './map-set';
-import {ContactLibModule} from './contact';
-import {NamingSystemLibModule} from './naming-system';
 import {AssociationLibModule} from './association';
-import {RelatedArtifactLibModule} from './related-artifacts';
+import {CodeSystemLibModule} from './code-system';
+import {ContactLibModule} from './contact';
 import {DefinedPropertyLibModule} from './defined-property';
+import {DesignationLibModule} from './designation';
+import {MapSetLibModule} from './map-set';
+import {NamingSystemLibModule} from './naming-system';
+import {RelatedArtifactLibModule} from './related-artifacts';
+import {ValueSetLibModule} from './value-set';
 
 @NgModule({
   declarations: [],

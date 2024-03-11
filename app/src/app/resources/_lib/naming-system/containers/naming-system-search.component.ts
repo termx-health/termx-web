@@ -1,12 +1,12 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
-import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
-import {NamingSystemLibService} from '../services/naming-system-lib.service';
+import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
+import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {NamingSystem} from '../model/naming-system';
 import {NamingSystemSearchParams} from '../model/naming-system-search-params';
+import {NamingSystemLibService} from '../services/naming-system-lib.service';
 
 
 @Component({

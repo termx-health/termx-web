@@ -1,10 +1,10 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
-import {StructureDefinitionLibService} from './structure-definition-lib.service';
 import {StructureDefinition} from './structure-definition';
+import {StructureDefinitionLibService} from './structure-definition-lib.service';
 import {StructureDefinitionSearchParams} from './structure-definition-search-params';
 
 

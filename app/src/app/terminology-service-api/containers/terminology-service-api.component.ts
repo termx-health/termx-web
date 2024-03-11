@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {environment} from 'app/src/environments/environment';
+import {environment} from 'environments/environment';
 
 @Component({
   templateUrl: 'terminology-service-api.component.html',

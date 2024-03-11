@@ -1,5 +1,5 @@
-import {tokenAttrValue} from './plugin.util';
 import {matchSection} from '@kodality-web/marina-markdown-parser';
+import {tokenAttrValue} from './plugin.util';
 
 
 export function structureDefinitionFshPlugin(md): void {

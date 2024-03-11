@@ -1,13 +1,13 @@
+import {Clipboard} from '@angular/cdk/clipboard';
+import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
+import {isDefined} from '@kodality-web/core-util';
+import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
-import {HttpClient} from '@angular/common/http';
-import formatXml from 'xml-formatter';
-import {isDefined} from '@kodality-web/core-util';
-import {Clipboard} from '@angular/cdk/clipboard';
 import {saveAs} from 'file-saver';
-import {OidcSecurityService} from 'angular-auth-oidc-client';
+import formatXml from 'xml-formatter';
 
 @Component({
   templateUrl: './fhir-resource.component.html',

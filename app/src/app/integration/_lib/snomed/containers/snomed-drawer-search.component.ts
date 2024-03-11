@@ -48,7 +48,7 @@ export class SnomedDrawerSearchComponent {
       return of(val);
     }
     return this.snomedService.loadConcept(val).pipe(map(concept => {
-      return this.displayType === 'name' ? concept.pt.term : concept.conceptId + ' | ' + concept.pt.term;
+      return this.displayType === 'name' ? concept.fsn.term : concept.conceptId + ' | ' + concept.fsn.term;
     }));
   };
 

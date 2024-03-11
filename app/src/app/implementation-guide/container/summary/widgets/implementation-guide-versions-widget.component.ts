@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {Router} from '@angular/router';
+import {isDefined} from '@kodality-web/core-util';
 import {ImplementationGuideVersion, ImplementationGuideVersionDependsOn} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
-import {isDefined} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-implementation-guide-versions-widget',

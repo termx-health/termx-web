@@ -1,7 +1,7 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ValueSet, ValueSetSnapshot, ValueSetVersion} from 'app/src/app/resources/_lib';
-import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
+import {isDefined, LoadingManager} from '@kodality-web/core-util';
+import {ValueSet, ValueSetSnapshot, ValueSetVersion} from 'app/src/app/resources/_lib';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
 import {forkJoin} from 'rxjs';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';

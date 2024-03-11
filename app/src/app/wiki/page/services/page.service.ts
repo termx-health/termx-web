@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {Page, PageAttachment, PageContent, PageLibService} from 'term-web/wiki/_lib';
-import {map, Observable} from 'rxjs';
 import {isDefined} from '@kodality-web/core-util';
+import {map, Observable} from 'rxjs';
+import {Page, PageAttachment, PageContent, PageLibService} from 'term-web/wiki/_lib';
 
 @Injectable()
 export class PageService extends PageLibService {

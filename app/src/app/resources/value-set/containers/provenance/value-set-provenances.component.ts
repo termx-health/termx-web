@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute, Router} from '@angular/router';
+import {LoadingManager} from '@kodality-web/core-util';
 import {forkJoin, of} from 'rxjs';
 import {ValueSet, ValueSetLibService, ValueSetVersion} from 'term-web/resources/_lib';
 import {Provenance} from 'term-web/sys/_lib';

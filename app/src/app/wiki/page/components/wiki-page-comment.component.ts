@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {compareDates, isDefined, isNil} from '@kodality-web/core-util';
+import {AuthService} from 'term-web/core/auth';
 import {PageComment, PageContent} from 'term-web/wiki/_lib';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
-import {AuthService} from 'term-web/core/auth';
 
 export interface ExtendedPageComment extends PageComment {
   children?: PageComment[]

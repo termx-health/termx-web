@@ -1,6 +1,6 @@
 import {isNil} from '@kodality-web/core-util';
-import {Bundle} from 'fhir/model/bundle';
 import {environment} from 'environments/environment';
+import {Bundle} from 'fhir/model/bundle';
 import {Observable} from 'rxjs';
 
 interface EditorFacade {
@@ -164,7 +164,7 @@ const createEditorState = ({editorUrl}): EditorState => ({
 });
 
 
-const FML_EDITOR_URL = environment.fmlEditor.startsWith('/')
+const FML_EDITOR_URL = environment.fmlEditor?.startsWith('/')
   ? location.origin + environment.fmlEditor
   : environment.fmlEditor;
 

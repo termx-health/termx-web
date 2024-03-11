@@ -1,11 +1,11 @@
+import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute} from '@angular/router';
 import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {CodeSystemVersion} from 'app/src/app/resources/_lib';
-import {ActivatedRoute} from '@angular/router';
-import {CodeSystemService} from '../../../services/code-system.service';
-import {Location} from '@angular/common';
 import {map, Observable} from 'rxjs';
+import {CodeSystemService} from '../../../services/code-system.service';
 
 
 @Component({

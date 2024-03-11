@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {DestroyService, isNil, SearchResult} from '@kodality-web/core-util';
+import {takeUntil} from 'rxjs';
 import {CodeSystemEntityVersion, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemService} from '../../services/code-system.service';
-import {ActivatedRoute} from '@angular/router';
-import {takeUntil} from 'rxjs';
-import {DestroyService, isNil, SearchResult} from '@kodality-web/core-util';
 
 @Component({
   templateUrl: 'code-system-version-view.component.html',

@@ -1,5 +1,5 @@
-import {ObservationDefinitionCardinality} from './observation-definition-cardinality';
 import {CodeName} from '@kodality-web/marina-util';
+import {ObservationDefinitionCardinality} from './observation-definition-cardinality';
 
 export class ObservationDefinitionMember {
   public id?: number;

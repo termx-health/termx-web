@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, sortFn} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {finalize, Observable, tap} from 'rxjs';
 import {MapSet, MapSetSearchParams, MapSetVersion} from 'app/src/app/resources/_lib';
-import {MapSetService} from '../../services/map-set-service';
 import {environment} from 'environments/environment';
+import {finalize, Observable, tap} from 'rxjs';
+import {MapSetService} from '../../services/map-set-service';
 
 interface Filter {
   open: boolean,

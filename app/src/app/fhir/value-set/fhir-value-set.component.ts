@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
-import {FhirValueSetLibService} from 'term-web/fhir/_lib';
 import {environment} from 'environments/environment';
+import {FhirValueSetLibService} from 'term-web/fhir/_lib';
 
 @Component({
   selector: 'tw-fhir-value-set',

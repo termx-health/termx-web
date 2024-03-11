@@ -1,17 +1,17 @@
-import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
-import {CoreUtilModule} from '@kodality-web/core-util';
-import {FormsModule} from '@angular/forms';
-import {MarinaComponentsModule} from '@kodality-web/marina-ui';
-import {MarinaQuillModule} from '@kodality-web/marina-quill';
-import {NzListModule} from 'ng-zorro-antd/list';
 import {PortalModule} from '@angular/cdk/portal';
-import {StructureDefinitionLibService} from './structure-definition/structure-definition-lib.service';
-import {StructureDefinitionTreeComponent} from './structure-definition/structure-definition-tree.component';
-import {StructureDefinitionSelectComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-select.component';
+import {CUSTOM_ELEMENTS_SCHEMA, NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
+import {CoreUtilModule} from '@kodality-web/core-util';
+import {MarinaQuillModule} from '@kodality-web/marina-quill';
+import {MarinaComponentsModule} from '@kodality-web/marina-ui';
+import {NzListModule} from 'ng-zorro-antd/list';
 import {StructureDefinitionEditableTreeComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-editable-tree.component';
+import {StructureDefinitionSelectComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-select.component';
 import {TransformationDefinitionLibService} from 'term-web/modeler/_lib/transformer/transformation-definition-lib.service';
 import {TransformationDefinitionSelectComponent} from 'term-web/modeler/_lib/transformer/transformation-definition-select.component';
+import {CoreUiModule} from '../../core/ui/core-ui.module';
+import {StructureDefinitionLibService} from './structure-definition/structure-definition-lib.service';
+import {StructureDefinitionTreeComponent} from './structure-definition/structure-definition-tree.component';
 
 @NgModule({
   imports: [

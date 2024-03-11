@@ -1,20 +1,20 @@
-import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {merge, Observable, Subject, switchMap, take, takeUntil, timer} from 'rxjs';
-import {map} from 'rxjs/operators';
+import {Injectable} from '@angular/core';
 import {SearchHttpParams} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
+import {saveAs} from 'file-saver';
+import {merge, Observable, Subject, switchMap, take, takeUntil, timer} from 'rxjs';
+import {map} from 'rxjs/operators';
+import {SnomedAuthoringStatsItem, SnomedBranch, SnomedCodeSystem} from 'term-web/integration/_lib';
+import {LorqueProcess} from 'term-web/sys/_lib';
 import {SnomedConcept} from '../model/concept/snomed-concept';
 import {SnomedConceptSearchParams} from '../model/concept/snomed-concept-search-params';
-import {SnomedSearchResult} from '../model/snomed-search-result';
 import {SnomedDescriptionItemSearchParams} from '../model/description/snomed-description-item-search-params';
 import {SnomedDescriptionItemSearchResult} from '../model/description/snomed-description-item-search-result';
+import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-member-search-result';
 import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-params';
 import {SnomedRefsetSearchResult} from '../model/refset/snomed-refset-search-result';
-import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-member-search-result';
-import {SnomedAuthoringStatsItem, SnomedBranch, SnomedCodeSystem, SnomedDescription, SnomedDescriptionSearchParams} from 'term-web/integration/_lib';
-import {LorqueProcess} from 'term-web/sys/_lib';
-import {saveAs} from 'file-saver';
+import {SnomedSearchResult} from '../model/snomed-search-result';
 
 @Injectable()
 export class SnomedLibService {
@@ -82,7 +82,7 @@ export class SnomedLibService {
       switchMap(() => this.loadImportJob(jobId)),
       takeUntil(merge(pollComplete$, destroy$))
     ).subscribe(resp => {
-      if (resp?.status !== 'RUNNING') {
+      if (!['WAITING_FOR_FILE', 'RUNNING'].includes(resp?.status)) {
         pollComplete$.next(resp);
       }
     });

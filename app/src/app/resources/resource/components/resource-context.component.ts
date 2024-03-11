@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
+import {Router} from '@angular/router';
 import {Resource} from 'term-web/resources/resource/model/resource';
 import {ResourceVersion} from 'term-web/resources/resource/model/resource-version';
-import {Router} from '@angular/router';
 
 @Component({
   selector: 'tw-resource-context',

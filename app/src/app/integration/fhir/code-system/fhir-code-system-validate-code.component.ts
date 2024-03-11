@@ -1,6 +1,6 @@
+import {Clipboard} from '@angular/cdk/clipboard';
 import {Component} from '@angular/core';
 import {FhirCodeSystemLibService, FhirCodeSystemValidateCodeParams} from '../../../fhir/_lib';
-import {Clipboard} from '@angular/cdk/clipboard';
 
 @Component({
   templateUrl: './fhir-code-system-validate-code.component.html',

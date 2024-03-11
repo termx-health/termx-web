@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
+import {copyDeep, SearchResult, collect, sortFn} from '@kodality-web/core-util';
 import {finalize, Observable, tap} from 'rxjs';
-import {copyDeep, SearchResult} from '@kodality-web/core-util';
-import {Privilege, PrivilegeResourceActions, PrivilegeSearchParams} from 'term-web/privileges/_lib';
+import {Privilege, PrivilegeResourceActions, PrivilegeSearchParams, PrivilegeResource} from 'term-web/privileges/_lib';
 import {PrivilegeService} from '../services/privilege.service';
 
 @Component({
@@ -42,5 +42,9 @@ export class PrivilegesListComponent implements OnInit {
       return '';
     }
     return Object.keys(actions).filter(key => !!(actions as any)[key]).join(', ');
+  };
+
+  protected collectResourcesByType = (resources: PrivilegeResource[]): {[k: string]: PrivilegeResource[]} => {
+    return collect(resources.sort(sortFn('resourceType')), r => r.resourceType);
   };
 }

@@ -1,8 +1,8 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {isDefined, LoadingManager} from '@kodality-web/core-util';
-import {StructureDefinitionFhirMapperUtil} from 'term-web/modeler/structure-definition/services/structure-definition-fhir-mapper.util';
-import {StructureDefinitionUtil} from 'term-web/modeler/_lib';
 import {DropListComponent, DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
+import {StructureDefinitionUtil} from 'term-web/modeler/_lib';
+import {StructureDefinitionFhirMapperUtil} from 'term-web/modeler/structure-definition/services/structure-definition-fhir-mapper.util';
 
 export class Element {
   public id?: string;

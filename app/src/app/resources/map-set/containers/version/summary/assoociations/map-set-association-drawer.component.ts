@@ -1,4 +1,7 @@
-import {Component, EventEmitter, Input, OnChanges, Output, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
+import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
+import {copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
+import {finalize, Observable, of, tap} from 'rxjs';
 import {
   AssociationType,
   MapSet,
@@ -6,14 +9,11 @@ import {
   MapSetAssociationEntity,
   MapSetConcept,
   MapSetConceptSearchParams,
-  MapSetProperty, MapSetPropertyValue
+  MapSetProperty,
+  MapSetPropertyValue
 } from 'term-web/resources/_lib';
-import {copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
-import {finalize, Observable, of, tap} from 'rxjs';
-import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
-import {NgForm} from '@angular/forms';
-import {EntityPropertyValueInputComponent} from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
 import {MapSetPropertyValuesComponent} from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-values.component';
+import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 
 @Component({
   selector: 'tw-map-set-association-drawer',

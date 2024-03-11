@@ -1,15 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {StructureDefinition, StructureDefinitionEditableTreeComponent, StructureDefinitionUtil} from 'term-web/modeler/_lib';
-import {StructureDefinitionType} from '../components/structure-definition-type-list.component';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {Fhir} from 'fhir/fhir';
 import {map, Observable, of} from 'rxjs';
 import {ChefService} from 'term-web/integration/_lib';
-import {StructureDefinitionService} from '../services/structure-definition.service';
+import {StructureDefinition, StructureDefinitionEditableTreeComponent, StructureDefinitionUtil} from 'term-web/modeler/_lib';
 import {Element} from 'term-web/modeler/_lib/structure-definition/structure-definition-editable-tree.component';
-import {Fhir} from 'fhir/fhir';
+import {StructureDefinitionType} from '../components/structure-definition-type-list.component';
+import {StructureDefinitionService} from '../services/structure-definition.service';
 
 @Component({
   templateUrl: 'structure-definition-edit.component.html'

@@ -1,7 +1,8 @@
+import {HttpEvent, HttpEventType, HttpResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {Observable} from 'rxjs';
-import {SnomedBranch, SnomedCodeSystem, SnomedLibService} from 'term-web/integration/_lib';
 import {SearchHttpParams} from '@kodality-web/core-util';
+import {EMPTY, mergeMap, Observable, of} from 'rxjs';
+import {SnomedBranch, SnomedCodeSystem, SnomedLibService} from 'term-web/integration/_lib';
 
 
 @Injectable()
@@ -14,6 +15,7 @@ export class SnomedService extends SnomedLibService {
   public updateCodeSystem(shortName: string, cs: SnomedCodeSystem): Observable<SnomedCodeSystem> {
     return this.http.put(`${this.baseUrl}/codesystems/${shortName}`, cs);
   }
+
   public upgradeCodeSystem(shortName: string, newDependantVersion: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/codesystems/${shortName}/upgrade`, {newDependantVersion: newDependantVersion});
   }
@@ -59,13 +61,31 @@ export class SnomedService extends SnomedLibService {
     return this.http.post(`${this.baseUrl}/exports`, request);
   }
 
-  public createImportJob(request: any, file: Blob): Observable<any> {
+  public createImportJob(
+    request: {
+      branchPath: string,
+      createCodeSystemVersion: boolean,
+      type: string
+    },
+    file: Blob
+  ): Observable<{finished: boolean, body?: {jobId: string}, progress?: number}> {
     const fd = new FormData();
     fd.append('request', JSON.stringify(request));
     if (file) {
       fd.append('file', file, 'files');
     }
-    return this.http.post(`${this.baseUrl}/imports`, fd);
+
+    return this.http.post(`${this.baseUrl}/imports`, fd, {
+      reportProgress: true,
+      observe: 'events'
+    }).pipe(mergeMap((event: HttpEvent<any>) => {
+      if (event.type === HttpEventType.UploadProgress) {
+        return of({finished: false, progress: Math.round(100 * event.loaded / event.total)});
+      } else if (event instanceof HttpResponse) {
+        return of({finished: true, body: event.body});
+      }
+      return EMPTY;
+    }));
   }
 
   public deactivateDescription(path: string, descriptionId: string): Observable<any> {

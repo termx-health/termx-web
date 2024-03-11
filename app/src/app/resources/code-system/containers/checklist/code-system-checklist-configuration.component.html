@@ -1,5 +1,5 @@
 <form #form="ngForm">
-  <m-editable-table #rowsTable *ngIf="rules && checklist" [mData]="rules | apply: mergerChecklist:checklist" [mAddAllowed]="false" [mLoading]="loader.isLoading">
+  <m-editable-table #rowsTable *ngIf="rules && checklist" [mData]="rules | apply: mergerChecklist:checklist" [mAddAllowed]="false" [mDeleteAllowed]="false" [mEditAllowed]="false" [mLoading]="loader.isLoading">
     <m-editable-column mName="checked">
       <ng-template #viewTemplate let-r let-ngModelName="ngModelName">
         <m-checkbox [(ngModel)]="r['_checked']" [name]="ngModelName"></m-checkbox>
@@ -26,9 +26,9 @@
       </ng-template>
     </m-editable-column>
 
-    <ng-template #expandEditTemplate let-r let-prefix="ngModelNamePrefix">
+    <ng-template #expandViewTemplate let-r let-prefix="ngModelNamePrefix">
       <tr>
-        <td colspan="9">
+        <td colspan="8">
           <m-form-item mName="whitelist" mLabel="entities.checklist.whitelist">
             <div class="m-items-middle" *ngFor="let item of r['_whitelist']; let i = index" style="margin-bottom: 0.5rem">
               <tw-term-concept-search *ngIf="resourceType === 'CodeSystem'"

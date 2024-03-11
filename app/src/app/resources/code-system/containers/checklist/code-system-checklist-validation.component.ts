@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
-import {collect, isDefined, LoadingManager} from '@kodality-web/core-util';
-import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
-import {Checklist} from 'term-web/sys/_lib';
 import {Router} from '@angular/router';
+import {collect, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {AuthService} from 'term-web/core/auth';
+import {Checklist} from 'term-web/sys/_lib';
+import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
 
 @Component({
   selector: 'tw-cs-checklist-validation',

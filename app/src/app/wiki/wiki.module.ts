@@ -1,14 +1,14 @@
+import {PortalModule} from '@angular/cdk/portal';
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
-import {CoreUiModule} from '../core/ui/core-ui.module';
-import {PortalModule} from '@angular/cdk/portal';
-import {TemplateService} from './template/template.service';
-import {TemplateListComponent} from './template/template-list.component';
-import {TemplateEditComponent} from './template/template-edit.component';
 import {WikiLibModule} from 'term-web/wiki/_lib';
-import {ResourcesLibModule} from '../resources/_lib';
+import {CoreUiModule} from '../core/ui/core-ui.module';
 import {IntegrationLibModule} from '../integration/_lib';
+import {ResourcesLibModule} from '../resources/_lib';
 import {PageModule, WIKI_PAGE_ROUTES} from './page/page.module';
+import {TemplateEditComponent} from './template/template-edit.component';
+import {TemplateListComponent} from './template/template-list.component';
+import {TemplateService} from './template/template.service';
 
 export const WIKI_ROUTES: Routes = [
   {path: ':space', children: WIKI_PAGE_ROUTES},

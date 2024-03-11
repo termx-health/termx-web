@@ -1,11 +1,11 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {catchError, map, Observable, of, takeUntil} from 'rxjs';
-import {BooleanInput, DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
+import {BooleanInput, DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import {catchError, map, Observable, of, takeUntil} from 'rxjs';
 import {Space} from '../model/space';
 import {SpaceSearchParams} from '../model/space-search-params';
 import {SpaceLibService} from '../services/space-lib-service';
-import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
 
 @Component({
   selector: 'tw-space-select',

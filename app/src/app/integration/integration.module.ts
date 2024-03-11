@@ -1,49 +1,50 @@
 import {NgModule} from '@angular/core';
-import {CoreUiModule} from '../core/ui/core-ui.module';
-import {IntegrationDashboardComponent} from './dashboard/integration-dashboard.component';
-import {IntegrationFhirSyncComponent} from './fhir/integration-fhir-sync.component';
 import {Routes} from '@angular/router';
-import {FhirCodeSystemLookupComponent} from './fhir/code-system/fhir-code-system-lookup.component';
-import {FhirCodeSystemValidateCodeComponent} from './fhir/code-system/fhir-code-system-validate-code.component';
-import {FhirConceptMapTranslateComponent} from './fhir/concept-map/fhir-concept-map-translate.component';
-import {IntegrationAtcImportComponent} from './import/atc/integration-atc-import.component';
-import {IntegrationIcdImportComponent} from './import/icd-10/integration-icd-import.component';
-import {FhirCodeSystemSubsumesComponent} from './fhir/code-system/fhir-code-system-subsumes.component';
-import {FhirConceptMapClosureComponent} from './fhir/concept-map/fhir-concept-map-closure.component';
-import {FhirValueSetExpandComponent} from './fhir/value-set/fhir-value-set-expand.component';
-import {FhirValueSetValidateCodeComponent} from './fhir/value-set/fhir-value-set-validate-code.component';
-import {FhirCodeSystemFindMatchesComponent} from './fhir/code-system/fhir-code-system-find-matches.component';
-import {CodeSystemFileImportFormComponent} from './import/file-import/code-system/code-system-file-import-form.component';
-import {ConceptMapFileImportComponent} from './import/file-import/concept-map/concept-map-file-import.component';
-import {SnomedDashboardComponent} from './snomed/containers/snomed-dashboard.component';
-import {SnomedConceptInfoComponent} from './snomed/containers/snomed-concept-info.component';
-import {IntegrationIchiImportComponent} from './import/ichi/integration-ichi-import.component';
+import {NzProgressModule} from 'ng-zorro-antd/progress';
 import {FhirLibModule} from 'term-web/fhir/_lib';
 import {IntegrationLibModule} from 'term-web/integration/_lib';
-import {ResourcesLibModule} from 'term-web/resources/_lib';
-import {LoincImportComponent} from 'term-web/integration/import/loinc/loinc-import.component';
-import {LoincDashboardComponent} from 'term-web/integration/loinc/loinc-dashboard.component';
-import {LoincPartListComponent} from 'term-web/integration/loinc/loinc-part-list.component';
-import {LoincListComponent} from 'term-web/integration/loinc/loinc-list.component';
-import {LoincAnswerListListComponent} from 'term-web/integration/loinc/loinc-answer-list-list.component';
-import {LoincPartSearchComponent} from 'term-web/integration/loinc/loinc-part-search.component';
-import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
-import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {ImportJobLogComponent} from 'term-web/integration/import-job-log.component';
-import {FileAnalysisService} from 'term-web/integration/import/file-import/file-analysis.service';
 import {AssociationFileImportComponent} from 'term-web/integration/import/file-import/association/association-file-import.component';
-import {SnomedManagementComponent} from 'term-web/integration/snomed/containers/management/snomed-management.component';
-import {SnomedBranchEditComponent} from 'term-web/integration/snomed/containers/management/branch/snomed-branch-edit.component';
-import {SnomedBranchManagementComponent} from 'term-web/integration/snomed/containers/management/branch/snomed-branch-management.component';
-import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
 import {CodeSystemFileImportComponent} from 'term-web/integration/import/file-import/code-system/csv/code-system-file-import.component';
 import {OrphanetImportComponent} from 'term-web/integration/import/file-import/code-system/orphanet/orphanet-import.component';
-import {MapSetModule} from 'term-web/resources/map-set/map-set.module';
+import {FileAnalysisService} from 'term-web/integration/import/file-import/file-analysis.service';
 import {ValueSetFileImportComponent} from 'term-web/integration/import/file-import/value-set/value-set-file-import.component';
+import {LoincImportComponent} from 'term-web/integration/import/loinc/loinc-import.component';
+import {LoincAnswerListListComponent} from 'term-web/integration/loinc/loinc-answer-list-list.component';
+import {LoincDashboardComponent} from 'term-web/integration/loinc/loinc-dashboard.component';
+import {LoincListComponent} from 'term-web/integration/loinc/loinc-list.component';
+import {LoincPartListComponent} from 'term-web/integration/loinc/loinc-part-list.component';
+import {LoincPartSearchComponent} from 'term-web/integration/loinc/loinc-part-search.component';
+import {SnomedBranchEditComponent} from 'term-web/integration/snomed/containers/management/branch/snomed-branch-edit.component';
+import {SnomedBranchManagementComponent} from 'term-web/integration/snomed/containers/management/branch/snomed-branch-management.component';
 import {SnomedCodesystemEditComponent} from 'term-web/integration/snomed/containers/management/codesystem/snomed-codesystem-edit.component';
-import {SysLibModule} from 'term-web/sys/_lib';
+import {SnomedManagementComponent} from 'term-web/integration/snomed/containers/management/snomed-management.component';
+import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
+import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
+import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
+import {ResourcesLibModule} from 'term-web/resources/_lib';
+import {MapSetModule} from 'term-web/resources/map-set/map-set.module';
 import {ResourceModule} from 'term-web/resources/resource/resource.module';
+import {SysLibModule} from 'term-web/sys/_lib';
 import {UserLibModule} from 'term-web/user/_lib';
+import {CoreUiModule} from '../core/ui/core-ui.module';
+import {IntegrationDashboardComponent} from './dashboard/integration-dashboard.component';
+import {FhirCodeSystemFindMatchesComponent} from './fhir/code-system/fhir-code-system-find-matches.component';
+import {FhirCodeSystemLookupComponent} from './fhir/code-system/fhir-code-system-lookup.component';
+import {FhirCodeSystemSubsumesComponent} from './fhir/code-system/fhir-code-system-subsumes.component';
+import {FhirCodeSystemValidateCodeComponent} from './fhir/code-system/fhir-code-system-validate-code.component';
+import {FhirConceptMapClosureComponent} from './fhir/concept-map/fhir-concept-map-closure.component';
+import {FhirConceptMapTranslateComponent} from './fhir/concept-map/fhir-concept-map-translate.component';
+import {IntegrationFhirSyncComponent} from './fhir/integration-fhir-sync.component';
+import {FhirValueSetExpandComponent} from './fhir/value-set/fhir-value-set-expand.component';
+import {FhirValueSetValidateCodeComponent} from './fhir/value-set/fhir-value-set-validate-code.component';
+import {IntegrationAtcImportComponent} from './import/atc/integration-atc-import.component';
+import {CodeSystemFileImportFormComponent} from './import/file-import/code-system/code-system-file-import-form.component';
+import {ConceptMapFileImportComponent} from './import/file-import/concept-map/concept-map-file-import.component';
+import {IntegrationIcdImportComponent} from './import/icd-10/integration-icd-import.component';
+import {IntegrationIchiImportComponent} from './import/ichi/integration-ichi-import.component';
+import {SnomedConceptInfoComponent} from './snomed/containers/snomed-concept-info.component';
+import {SnomedDashboardComponent} from './snomed/containers/snomed-dashboard.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -87,7 +88,8 @@ export const INTEGRATION_ROUTES: Routes = [
     MapSetModule,
     SysLibModule,
     ResourceModule,
-    UserLibModule
+    UserLibModule,
+    NzProgressModule
   ],
   exports: [
     LoincListComponent,

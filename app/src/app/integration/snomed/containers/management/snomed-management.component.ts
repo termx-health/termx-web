@@ -1,10 +1,10 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {LoadingManager, validateForm} from '@kodality-web/core-util';
-import {SnomedBranch, SnomedCodeSystem} from 'app/src/app/integration/_lib';
 import {NgForm} from '@angular/forms';
+import {LoadingManager, validateForm} from '@kodality-web/core-util';
+import {MuiTableComponent} from '@kodality-web/marina-ui';
+import {SnomedBranch, SnomedCodeSystem} from 'app/src/app/integration/_lib';
 import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
 import {forkJoin} from 'rxjs';
-import {MuiTableComponent} from '@kodality-web/marina-ui';
 
 @Component({
   templateUrl: './snomed-management.component.html',

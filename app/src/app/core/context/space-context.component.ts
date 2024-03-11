@@ -1,10 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SpaceContextParams, SpaceContextService} from './space-context.service';
-import {distinctUntilChanged, map, Observable} from 'rxjs';
-import {saveAs} from 'file-saver';
 import {isDefined} from '@kodality-web/core-util';
+import {saveAs} from 'file-saver';
+import {distinctUntilChanged, map, Observable} from 'rxjs';
 import {Package, PackageVersion, Space, SpaceLibService} from 'term-web/space/_lib';
+import {SpaceContextParams, SpaceContextService} from './space-context.service';
 
 
 @Component({

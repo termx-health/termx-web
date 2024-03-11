@@ -1,8 +1,8 @@
-import {NgModule} from '@angular/core';
-import {MarinaComponentsModule} from '@kodality-web/marina-ui';
-import {FormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
+import {NgModule} from '@angular/core';
+import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
+import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {DefinedPropertyLibService} from './services/defined-property-lib.service';
 
 @NgModule({

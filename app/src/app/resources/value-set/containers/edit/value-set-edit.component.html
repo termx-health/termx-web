@@ -5,6 +5,7 @@
         <div *mCardContent="!loader.isLoading">
           <tw-resource-form resourceType="ValueSet" [resource]="valueSet" [mode]="mode"></tw-resource-form>
           <tw-resource-identifiers [identifiers]="valueSet.identifiers"></tw-resource-identifiers>
+          <tw-resource-configuration-attributes [attributes]="valueSet.configurationAttributes"></tw-resource-configuration-attributes>
           <tw-resource-contacts [(contacts)]="valueSet.contacts"></tw-resource-contacts>
           <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
         </div>

@@ -1,16 +1,11 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {
-  SnomedBranch,
-  SnomedLibService,
-  SnomedTranslation,
-  SnomedTranslationLibService
-} from 'app/src/app/integration/_lib';
-import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
-import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
-import {Task, TaskLibService} from 'term-web/task/_lib';
+import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {SnomedBranch, SnomedLibService, SnomedTranslation, SnomedTranslationLibService} from 'app/src/app/integration/_lib';
 import {forkJoin} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
+import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
+import {Task, TaskLibService} from 'term-web/task/_lib';
 
 @Component({
   selector: 'tw-snomed-translations',

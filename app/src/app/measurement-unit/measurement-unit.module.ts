@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
-import {CoreUiModule} from '../core/ui/core-ui.module';
-import {MeasurementUnitService} from './services/measurement-unit.service';
-import {MeasurementUnitListComponent} from './containers/measurement-unit-list.component';
 import {Routes} from '@angular/router';
+import {MeasurementUnitLibModule} from 'term-web/measurement-unit/_lib';
+import {CoreUiModule} from '../core/ui/core-ui.module';
 import {MeasurementUnitEditComponent} from './containers/edit/measurement-unit-edit.component';
 import {MeasurementUnitViewComponent} from './containers/edit/measurement-unit-view.component';
 import {MeasurementUnitMappingListComponent} from './containers/mapping/measurement-unit-mapping-list.component';
-import {MeasurementUnitLibModule} from 'term-web/measurement-unit/_lib';
+import {MeasurementUnitListComponent} from './containers/measurement-unit-list.component';
+import {MeasurementUnitService} from './services/measurement-unit.service';
 
 
 export const MEASUREMENT_UNIT_ROUTES: Routes = [

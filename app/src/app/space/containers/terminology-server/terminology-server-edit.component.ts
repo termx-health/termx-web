@@ -1,7 +1,7 @@
+import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
 import {copyDeep, isDefined, isNil, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {TerminologyServer, TerminologyServerHeader} from 'term-web/space/_lib';
 import {TerminologyServerService} from '../../services/terminology-server.service';

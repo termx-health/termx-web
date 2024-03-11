@@ -1,6 +1,6 @@
 import {Component, forwardRef, Input} from '@angular/core';
-import {BooleanInput, DestroyService} from '@kodality-web/core-util';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {BooleanInput, DestroyService} from '@kodality-web/core-util';
 
 @Component({
   selector: 'tw-task-type',

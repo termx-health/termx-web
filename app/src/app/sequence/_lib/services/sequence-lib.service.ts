@@ -1,9 +1,9 @@
-import {environment} from 'environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
+import {environment} from 'environments/environment';
 import {map, Observable} from 'rxjs';
 import {Sequence} from '../models/sequence';
-import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {SequenceSearchParams} from '../models/sequence-search-params';
 
 @Injectable()

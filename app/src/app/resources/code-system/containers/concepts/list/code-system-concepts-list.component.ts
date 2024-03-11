@@ -1,15 +1,5 @@
 import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {
-  CodeSystem,
-  CodeSystemConcept,
-  CodeSystemEntityVersion,
-  CodeSystemVersion,
-  ConceptSearchParams,
-  Designation,
-  EntityProperty,
-  EntityPropertyValue
-} from 'app/src/app/resources/_lib';
-import {forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
+import {NgForm} from '@angular/forms';
 import {
   BooleanInput,
   collect,
@@ -24,14 +14,24 @@ import {
   unique,
   validateForm
 } from '@kodality-web/core-util';
-import {CodeSystemService} from '../../../services/code-system.service';
 import {TranslateService} from '@ngx-translate/core';
-import {NgForm} from '@angular/forms';
+import {
+  CodeSystem,
+  CodeSystemConcept,
+  CodeSystemEntityVersion,
+  CodeSystemVersion,
+  ConceptSearchParams,
+  Designation,
+  EntityProperty,
+  EntityPropertyValue
+} from 'app/src/app/resources/_lib';
+import {environment} from 'environments/environment';
+import {forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
+import {ConceptDrawerSearchComponent} from 'term-web/resources/_lib/code-system/containers/concept-drawer-search.component';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
-import {environment} from 'environments/environment';
-import {ConceptDrawerSearchComponent} from 'term-web/resources/_lib/code-system/containers/concept-drawer-search.component';
+import {CodeSystemService} from '../../../services/code-system.service';
 
 interface ConceptNode {
   code: string;

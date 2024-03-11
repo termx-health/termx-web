@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
 import {ActivatedRoute} from '@angular/router';
+import {LoadingManager} from '@kodality-web/core-util';
 import {forkJoin, of} from 'rxjs';
 import {CodeSystem, CodeSystemLibService, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemChecklistConfigurationComponent} from 'term-web/resources/code-system/containers/checklist/code-system-checklist-configuration.component';

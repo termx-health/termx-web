@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
-import {environment} from 'environments/environment';
+import {Injectable} from '@angular/core';
 import {RelatedArtifact} from 'app/src/app/resources/_lib/related-artifacts';
+import {environment} from 'environments/environment';
+import {Observable} from 'rxjs';
 
 @Injectable()
 export class RelatedArtifactLibService {

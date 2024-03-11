@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {CodeSystemEntityVersion, Designation, EntityProperty} from 'app/src/app/resources/_lib';
 import {collect, SearchResult} from '@kodality-web/core-util';
+import {CodeSystemEntityVersion, Designation, EntityProperty} from 'app/src/app/resources/_lib';
 import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
 import {of} from 'rxjs';
 

@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {CodeSystemLibService, ValueSetLibService, ValueSetVersionConcept, ValueSetVersionRule} from 'app/src/app/resources/_lib';
-import {NgForm} from '@angular/forms';
 
 @Component({
   selector: 'tw-value-set-rule-concept-list',

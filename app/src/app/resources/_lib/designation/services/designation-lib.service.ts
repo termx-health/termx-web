@@ -1,9 +1,9 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
-import {Designation, DesignationSearchParams} from '../../designation';
 import {environment} from 'environments/environment';
+import {Observable} from 'rxjs';
+import {Designation, DesignationSearchParams} from '../../designation';
 
 @Injectable()
 export class DesignationLibService {

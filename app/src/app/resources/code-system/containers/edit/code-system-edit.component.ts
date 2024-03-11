@@ -1,15 +1,15 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {CodeSystemService} from '../../services/code-system.service';
 import {NgForm} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {CodeSystem, CodeSystemTransactionRequest} from 'term-web/resources/_lib';
 import {CodeSystemPropertiesComponent} from 'term-web/resources/code-system/containers/edit/property/code-system-properties.component';
+import {CodeSystemValueSetAddComponent} from 'term-web/resources/code-system/containers/edit/valueset/code-system-value-set-add.component';
 import {ResourceFormComponent} from 'term-web/resources/resource/components/resource-form.component';
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
 import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
 import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
-import {CodeSystemValueSetAddComponent} from 'term-web/resources/code-system/containers/edit/valueset/code-system-value-set-add.component';
+import {CodeSystemService} from '../../services/code-system.service';
 
 
 @Component({
@@ -81,8 +81,10 @@ export class CodeSystemEditComponent implements OnInit {
     cs.copyright ??= {};
     cs.permissions ??= {};
     cs.settings ??= {};
+    cs.topic ??= {};
     cs.identifiers ??= [];
     cs.properties ??= [];
+    cs.configurationAttributes ??= [];
     return cs;
   }
 }

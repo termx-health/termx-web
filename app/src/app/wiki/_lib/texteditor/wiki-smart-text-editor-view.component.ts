@@ -1,13 +1,13 @@
 import {Component, ElementRef, EnvironmentInjector, EventEmitter, Input, OnChanges, Output} from '@angular/core';
 import {createCustomElement} from '@angular/elements';
-import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib';
-import {debounceTime, filter, fromEvent, map} from 'rxjs';
-import {WikiCommentPopoverComponent} from '../texteditor/comments/wiki-comment-popover.component';
-import {WikiComment} from '../texteditor/comments/wiki-comment';
-import {NgChanges} from '@kodality-web/marina-ui';
 import {group, isDefined} from '@kodality-web/core-util';
+import {NgChanges} from '@kodality-web/marina-ui';
+import {debounceTime, filter, fromEvent, map} from 'rxjs';
+import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib';
 import {CodeSystemConceptMatrixComponent} from 'term-web/resources/_lib/code-system/containers/code-system-concept-matrix.component';
 import {ValueSetConceptMatrixComponent} from 'term-web/resources/_lib/value-set/containers/value-set-concept-matrix.component';
+import {WikiComment} from '../texteditor/comments/wiki-comment';
+import {WikiCommentPopoverComponent} from '../texteditor/comments/wiki-comment-popover.component';
 
 @Component({
   selector: 'tw-smart-text-editor-view',

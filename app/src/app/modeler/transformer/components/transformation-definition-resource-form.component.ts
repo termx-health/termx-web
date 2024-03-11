@@ -1,18 +1,18 @@
+import {HttpErrorResponse} from '@angular/common/http';
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {TransformationDefinition, TransformationDefinitionResource} from '../../_lib/transformer/transformation-definition';
+import {group, HttpCacheService, isNil, LoadingManager} from '@kodality-web/core-util';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {Fhir} from 'fhir/fhir';
+import {Bundle} from 'fhir/model/bundle';
+import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
+import {saveAs} from 'file-saver';
+import {catchError, defaultIfEmpty, forkJoin, map, Observable, of, shareReplay} from 'rxjs';
 import {StructureDefinition} from 'term-web/modeler/_lib';
+import {launchFMLEditor} from 'term-web/modeler/transformer/components/fml.editor';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 import {MapSet} from 'term-web/resources/_lib';
-import {saveAs} from 'file-saver';
-import {Fhir} from 'fhir/fhir';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {launchFMLEditor} from 'term-web/modeler/transformer/components/fml.editor';
-import {Bundle} from 'fhir/model/bundle';
-import {catchError, defaultIfEmpty, forkJoin, map, Observable, of, shareReplay} from 'rxjs';
-import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
-import {group, HttpCacheService, isNil, LoadingManager} from '@kodality-web/core-util';
 import {TerminologyServerLibService} from 'term-web/space/_lib';
-import {HttpErrorResponse} from '@angular/common/http';
+import {TransformationDefinition, TransformationDefinitionResource} from '../../_lib/transformer/transformation-definition';
 
 
 @Component({

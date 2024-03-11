@@ -1,9 +1,9 @@
 import {Pipe, PipeTransform} from '@angular/core';
 import {EMPTY, Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {SnomedUtil} from '../util/snomed-util';
-import {SnomedLibService} from '../services/snomed-lib.service';
 import {SnomedConcept} from '../model/concept/snomed-concept';
+import {SnomedLibService} from '../services/snomed-lib.service';
+import {SnomedUtil} from '../util/snomed-util';
 
 @Pipe({
   name: 'snomedConceptName'

@@ -1,11 +1,11 @@
+import {CommonModule} from '@angular/common';
 import {NgModule} from '@angular/core';
-import {SequenceLibService} from './services/sequence-lib.service';
-import {SequenceSelectComponent} from './components/sequence-select.component';
-import {MarinaUiModule} from '@kodality-web/marina-ui';
 import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
-import {CommonModule} from '@angular/common';
+import {MarinaUiModule} from '@kodality-web/marina-ui';
+import {SequenceSelectComponent} from './components/sequence-select.component';
 import {SequenceValueGeneratorComponent} from './components/sequence-value-generator.component';
+import {SequenceLibService} from './services/sequence-lib.service';
 
 @NgModule({
   imports: [

@@ -1,8 +1,8 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
+import {Observable} from 'rxjs';
 import {DefinedProperty} from '../model/defined-property';
 import {DefinedPropertySearchParams} from '../model/defined-property-search-params';
 

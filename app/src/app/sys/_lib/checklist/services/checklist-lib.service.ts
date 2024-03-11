@@ -1,12 +1,12 @@
-import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Injectable} from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {ChecklistSearchParams} from '../model/checklist-search-params';
-import {ChecklistRuleSearchParams} from '../model/checklist-rule-search-params';
+import {Observable} from 'rxjs';
 import {Checklist} from '../model/checklist';
 import {ChecklistRule} from '../model/checklist-rule';
+import {ChecklistRuleSearchParams} from '../model/checklist-rule-search-params';
+import {ChecklistSearchParams} from '../model/checklist-search-params';
 
 @Injectable()
 export class ChecklistLibService {

@@ -1,14 +1,14 @@
+import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {Location} from '@angular/common';
 import {compareValues, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {ValueSetVersion, ValueSetVersionRuleSet} from 'app/src/app/resources/_lib';
-import {map, Observable} from 'rxjs';
-import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
-import {saveAs} from 'file-saver';
-import {Fhir} from 'fhir/fhir';
 import {FhirValueSetLibService} from 'app/src/app/fhir/_lib';
+import {ValueSetVersion, ValueSetVersionRuleSet} from 'app/src/app/resources/_lib';
+import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
+import {Fhir} from 'fhir/fhir';
+import {saveAs} from 'file-saver';
+import {map, Observable} from 'rxjs';
 
 @Component({
   templateUrl: 'value-set-version-edit.component.html',

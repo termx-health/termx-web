@@ -1,12 +1,12 @@
+import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {environment} from 'app/src/environments/environment';
 import {DestroyService, isDefined, LoadingManager} from '@kodality-web/core-util';
-import {LorqueLibService, LorqueProcess} from 'term-web/sys/_lib';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {CodeSystemConcept, ConceptUtil} from 'term-web/resources/_lib';
 import {TranslateService} from '@ngx-translate/core';
+import {environment} from 'environments/environment';
+import {CodeSystemConcept, ConceptUtil} from 'term-web/resources/_lib';
+import {LorqueLibService, LorqueProcess} from 'term-web/sys/_lib';
 
 class CodeSystemUniquenessResult {
   public duplicates: {[key: string]: CodeSystemConcept[]};

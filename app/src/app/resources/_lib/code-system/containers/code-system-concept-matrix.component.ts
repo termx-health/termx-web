@@ -1,9 +1,9 @@
 import {Component, Injectable, Input, OnChanges} from '@angular/core';
-import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, EntityProperty} from 'term-web/resources/_lib';
-import {interval, map, mergeMap, Observable, of} from 'rxjs';
-import {collect, group, HttpCacheService, isNil} from '@kodality-web/core-util';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
+import {collect, group, HttpCacheService, isNil} from '@kodality-web/core-util';
+import {interval, map, mergeMap, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
+import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, EntityProperty} from 'term-web/resources/_lib';
 
 type ConceptView = {
   [propertyCode: string]: {

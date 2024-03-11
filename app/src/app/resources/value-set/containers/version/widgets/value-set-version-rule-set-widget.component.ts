@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {ValueSetVersionRule, ValueSetVersionRuleSet} from '../../../../_lib';
 import {BooleanInput} from '@kodality-web/core-util';
+import {ValueSetVersionRule, ValueSetVersionRuleSet} from '../../../../_lib';
 
 @Component({
   selector: 'tw-value-set-version-rule-set-widget',

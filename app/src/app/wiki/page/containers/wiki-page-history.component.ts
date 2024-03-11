@@ -1,19 +1,19 @@
+import {Clipboard} from '@angular/cdk/clipboard';
+import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {PageService} from '../services/page.service';
 import {isDefined, isNil, LoadingManager} from '@kodality-web/core-util';
-import {Page, PageContent} from 'term-web/wiki/_lib';
-import {map, Observable, tap} from 'rxjs';
-import {Space} from 'term-web/space/_lib';
-import {WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
-import {PageContentHistoryItem} from 'term-web/wiki/_lib/page/models/page-content-history-item';
-import {Location} from '@angular/common';
-import {OutputFormatType} from 'diff2html/lib/types';
-import {Clipboard} from '@angular/cdk/clipboard';
-import {AuthService} from 'term-web/core/auth';
-import {NzTimelineItemColor} from 'ng-zorro-antd/timeline/typings';
-import {SeoService} from 'term-web/core/ui/services/seo.service';
 import {TranslateService} from '@ngx-translate/core';
+import {OutputFormatType} from 'diff2html/lib/types';
+import {NzTimelineItemColor} from 'ng-zorro-antd/timeline/typings';
+import {map, Observable, tap} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
+import {SeoService} from 'term-web/core/ui/services/seo.service';
+import {Space} from 'term-web/space/_lib';
+import {Page, PageContent} from 'term-web/wiki/_lib';
+import {PageContentHistoryItem} from 'term-web/wiki/_lib/page/models/page-content-history-item';
+import {WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
+import {PageService} from '../services/page.service';
 
 @Component({
   templateUrl: 'wiki-page-history.component.html',

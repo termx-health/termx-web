@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import {finalize, Observable, tap} from 'rxjs';
 import {ComponentStateStore, copyDeep, QueryParams, SearchResult} from '@kodality-web/core-util';
+import {finalize, Observable, tap} from 'rxjs';
 import {TerminologyServer, TerminologyServerLibService, TerminologyServerSearchParams} from 'term-web/space/_lib';
 
 @Component({

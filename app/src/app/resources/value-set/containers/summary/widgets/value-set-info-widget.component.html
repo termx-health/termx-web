@@ -4,7 +4,7 @@
 <div *ngIf="valueSet as vs">
   <div class="m-items-middle m-bold">
     <m-icon mCode="key"></m-icon>
-    <span>{{vs.id}}</span>
+    <tw-copy-container [text]="vs.id">{{vs.id}}</tw-copy-container>
   </div>
   <span>{{vs.description | localName}}</span>
   <div class="m-items-middle" *ngIf="(vs | apply:getTelecoms) as telecoms">

@@ -1,16 +1,16 @@
-import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {SpaceLibService} from './services/space-lib-service';
-import {PackageLibService} from './services/package-lib-service';
-import {SpaceDrawerSearchComponent} from './containers/space-drawer-search.component';
-import {SpaceSelectComponent} from './containers/space-select.component';
-import {TerminologyServerLibService} from './services/terminology-server-lib-service';
-import {PackageResourceLibService} from './services/package-resource-lib-service';
+import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
+import {CoreUtilModule} from '@kodality-web/core-util';
 import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
-import {CoreUtilModule} from '@kodality-web/core-util';
 import {TranslateModule} from '@ngx-translate/core';
+import {SpaceDrawerSearchComponent} from './containers/space-drawer-search.component';
+import {SpaceSelectComponent} from './containers/space-select.component';
+import {PackageLibService} from './services/package-lib-service';
+import {PackageResourceLibService} from './services/package-resource-lib-service';
+import {SpaceLibService} from './services/space-lib-service';
+import {TerminologyServerLibService} from './services/terminology-server-lib-service';
 
 @NgModule({
   imports: [

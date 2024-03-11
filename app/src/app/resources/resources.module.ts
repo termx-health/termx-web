@@ -1,13 +1,12 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
-import {CODE_SYSTEM_FINDER_ROUTES, CODE_SYSTEM_ROUTES, CodeSystemModule} from './code-system/code-system.module';
-import {VALUE_SET_FINDER_ROUTES, VALUE_SET_ROUTES, ValueSetModule} from './value-set/value-set.module';
+import {DEFINED_PROPERTY_ROUTES, DefinedPropertyModule} from 'term-web/resources/defined-property/defined-property.module';
 import {CoreUiModule} from '../core/ui/core-ui.module';
+import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './association-type/association-type.module';
+import {CODE_SYSTEM_FINDER_ROUTES, CODE_SYSTEM_ROUTES, CodeSystemModule} from './code-system/code-system.module';
 import {MAP_SET_ROUTES, MapSetModule} from './map-set/map-set.module';
 import {NAMING_SYSTEM_ROUTES, NamingSystemModule} from './naming-system/naming-system.module';
-import {ASSOCIATION_TYPE_ROUTES, AssociationTypeModule} from './association-type/association-type.module';
-import {DEFINED_PROPERTY_ROUTES, DefinedPropertyModule} from 'term-web/resources/defined-property/defined-property.module';
-import {IG_ROUTES} from 'term-web/implementation-guide/implementation-guide.module';
+import {VALUE_SET_FINDER_ROUTES, VALUE_SET_ROUTES, ValueSetModule} from './value-set/value-set.module';
 
 
 export const RESOURCES_ROUTES: Routes = [
@@ -16,8 +15,7 @@ export const RESOURCES_ROUTES: Routes = [
   {path: 'map-sets', children: MAP_SET_ROUTES, data: {privilege: ['*.MapSet.view']}},
   {path: 'naming-systems', children: NAMING_SYSTEM_ROUTES, data: {privilege: ['*.NamingSystem.view']}},
   {path: 'association-types', children: ASSOCIATION_TYPE_ROUTES, data: {privilege: ['*.AssociationType.view']}},
-  {path: 'defined-properties', children: DEFINED_PROPERTY_ROUTES, data: {privilege: ['*.CodeSystem.view']}},
-  {path: 'implementation-guides', children: IG_ROUTES, data: {privilege: ['*.ImplementationGuide.view']}},
+  {path: 'defined-properties', children: DEFINED_PROPERTY_ROUTES, data: {privilege: ['*.DefinedProperty.view']}},
 
   {
     path: 'finder', children: [
@@ -39,8 +37,7 @@ export const RESOURCES_ROUTES: Routes = [
     DefinedPropertyModule
   ],
   declarations: [],
-  exports: [
-  ]
+  exports: []
 })
 export class ResourcesModule {
 }

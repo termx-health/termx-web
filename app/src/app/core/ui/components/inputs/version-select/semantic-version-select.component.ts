@@ -1,6 +1,6 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {compareNumbers} from '@kodality-web/core-util';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import {compareNumbers} from '@kodality-web/core-util';
 
 interface Semver {
   src: string,

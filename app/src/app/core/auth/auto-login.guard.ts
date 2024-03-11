@@ -1,8 +1,8 @@
 import {inject} from '@angular/core';
 import {CanActivateFn, UrlTree} from '@angular/router';
-import {Observable, of} from 'rxjs';
 import {AutoLoginAllRoutesGuard} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
+import {Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth/auth.service';
 
 

@@ -1,13 +1,13 @@
+import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {Location} from '@angular/common';
-import {SpaceService} from '../../services/space.service';
 import {validateForm} from '@kodality-web/core-util';
-import {Package, Space, TerminologyServer, TerminologyServerLibService} from 'term-web/space/_lib';
 import {forkJoin} from 'rxjs';
-import {PackageService} from '../../services/package.service';
+import {Package, Space, TerminologyServer, TerminologyServerLibService} from 'term-web/space/_lib';
 import {SpaceGithubService} from 'term-web/space/services/space-github.service';
+import {PackageService} from '../../services/package.service';
+import {SpaceService} from '../../services/space.service';
 
 @Component({
   templateUrl: './space-edit.component.html',

@@ -1,4 +1,8 @@
+import {HttpClient} from '@angular/common/http';
 import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute, Router} from '@angular/router';
+import {copyDeep, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import {TranslateService} from '@ngx-translate/core';
 import {
   CodeSystem,
   CodeSystemConcept,
@@ -9,12 +13,8 @@ import {
   EntityProperty,
   EntityPropertyValue
 } from 'app/src/app/resources/_lib';
-import {forkJoin, Observable, of} from 'rxjs';
-import {copyDeep, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
-import {ActivatedRoute, Router} from '@angular/router';
-import {TranslateService} from '@ngx-translate/core';
 import {environment} from 'environments/environment';
-import {HttpClient} from '@angular/common/http';
+import {forkJoin, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 
 class CodeSystemEntityPropertySummary {

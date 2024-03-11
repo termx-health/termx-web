@@ -20,7 +20,9 @@ for (const [key, val] of Object.entries(twConfig)) {
     try {
       twConfig[key] = JSON.parse(val.substring("json:".length));
     } catch (e) {
-      twConfig[key] = undefined;
+      delete twConfig[key];
     }
+  } else if (val === '' || val === undefined) {
+    delete twConfig[key]
   }
 }

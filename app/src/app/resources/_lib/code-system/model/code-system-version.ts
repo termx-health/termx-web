@@ -1,10 +1,11 @@
-import {CodeSystemEntityVersion} from './code-system-entity';
-import {LocalizedName} from '@kodality-web/marina-util';
 import {Identifier} from '@kodality-web/core-util';
+import {LocalizedName} from '@kodality-web/marina-util';
+import {CodeSystemEntityVersion} from './code-system-entity';
 
 export class CodeSystemVersionReference {
   public id?: number;
   public version?: string;
+  public uri?: string;
   public status?: string;
   public releaseDate?: Date;
 }

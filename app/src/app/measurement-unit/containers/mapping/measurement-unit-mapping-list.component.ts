@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {NgForm} from '@angular/forms';
+import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
 import {MeasurementUnitMapping} from 'term-web/measurement-unit/_lib';
 
 @Component({

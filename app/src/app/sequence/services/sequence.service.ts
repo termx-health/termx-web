@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
-import {SequenceLibService} from '../_lib/services/sequence-lib.service';
 import {Observable} from 'rxjs';
 import {Sequence} from 'term-web/sequence/_lib/models/sequence';
+import {SequenceLibService} from '../_lib/services/sequence-lib.service';
 
 @Injectable()
 export class SequenceService extends SequenceLibService {
