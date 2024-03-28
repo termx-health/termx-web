@@ -17,6 +17,8 @@ export class SpaceDiffMatrixComponent implements OnInit {
   public allChecked: boolean;
   public diffItems: SpaceDiffItem[];
 
+  protected filter: {upToDate: boolean, notUpToDate: boolean} = {upToDate: true, notUpToDate: true};
+
   public constructor(
     public spaceService: SpaceService,
     public packageResourceService: PackageResourceService,
@@ -32,6 +34,10 @@ export class SpaceDiffMatrixComponent implements OnInit {
 
   public extractServers = (items: SpaceDiffItem[]): string[] => {
     return [...new Set(items.map(i => i.resourceServer).filter(s => isDefined(s)))];
+  };
+
+  public filterItems = (items: SpaceDiffItem[], filer: any): SpaceDiffItem[] => {
+   return items?.filter(i => !(!filer.upToDate && i.upToDate || !filer.notUpToDate && !i.upToDate));
   };
 
 
@@ -55,14 +61,14 @@ export class SpaceDiffMatrixComponent implements OnInit {
     });
   }
 
-  protected sync(): void {
+  protected sync(clearSync?: boolean): void {
     combineLatest([
       this.ctx.space$.pipe(takeUntil(this.destroy$)),
       this.ctx.pack$.pipe(takeUntil(this.destroy$)),
       this.ctx.version$.pipe(takeUntil(this.destroy$))
     ]).subscribe(([s, p, v]) => {
       this.loading = true;
-      this.spaceService.sync(s.id, p?.code, v?.version, this.destroy$).subscribe(jobLog => {
+      this.spaceService.sync(s.id, p?.code, v?.version, this.destroy$, clearSync).subscribe(jobLog => {
         if (isDefined(jobLog.errors)) {
           jobLog.errors.forEach(err =>  this.notificationService.error('Sync error', err));
         }
@@ -78,5 +84,13 @@ export class SpaceDiffMatrixComponent implements OnInit {
   protected changeSourceServer(server: string): void {
     const ids = this.diffItems.filter(i => !!i['_checked']).map(i => i.id);
     this.packageResourceService.changeServer(ids, server).subscribe(() => this.loadDiff(true));
+  }
+
+  protected upToDateChanged(val: boolean): void {
+    this.filter = {...this.filter, upToDate: val};
+  }
+
+  protected notUpToDateChanged(val: boolean): void {
+    this.filter = {...this.filter, notUpToDate: val};
   }
 }

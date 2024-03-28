@@ -16,6 +16,7 @@ import {MapSetLibService} from '../services/map-set-lib.service';
 })
 export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() @BooleanInput() public autoUnselect: string | boolean = false;
   @Input() @BooleanInput() public multiple: string | boolean;
   @Input() public filter?: (resource: MapSet) => boolean;
 

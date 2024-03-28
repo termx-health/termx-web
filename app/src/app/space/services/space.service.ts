@@ -23,8 +23,8 @@ export class SpaceService extends SpaceLibService {
     return this.http.post<JobLogResponse>(`${this.baseUrl}/sync`, formdata);
   }
 
-  public sync(spaceId: number, packageCode: string, version: string, destroy$: Observable<any> = timer(60_000)): Observable<JobLog> {
-    return this.http.post<JobLogResponse>(`${this.baseUrl}/${spaceId}/sync`, {packageCode: packageCode, version: version})
+  public sync(spaceId: number, packageCode: string, version: string, destroy$: Observable<any> = timer(60_000), clearSync?: boolean): Observable<JobLog> {
+    return this.http.post<JobLogResponse>(`${this.baseUrl}/${spaceId}/sync`, {packageCode: packageCode, version: version, clearSync: clearSync})
       .pipe(mergeMap(resp => this.jobService.pollFinishedJobLog(resp.jobId, destroy$)
         .pipe(mergeMap(jobLog => this.jobService.getLog(jobLog.id)))));
   }

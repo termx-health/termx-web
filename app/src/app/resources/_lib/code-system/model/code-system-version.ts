@@ -23,5 +23,8 @@ export class CodeSystemVersion extends CodeSystemVersionReference {
 
   public conceptsTotal?: number;
 
+  public baseCodeSystem?: string;
+  public baseCodeSystemVersion?: CodeSystemVersionReference;
+
   public entities?: CodeSystemEntityVersion[];
 }

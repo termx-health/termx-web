@@ -1,4 +1,4 @@
-<m-table [mData]="diffItems" [mLoading]="loading">
+<m-table [mData]="diffItems | apply:filterItems:filter" [mLoading]="loading">
   <tr *mTableHead>
     <th><m-checkbox [(ngModel)]="allChecked" name="checked" (ngModelChange)="checkAllItems($event)"/></th>
     <th mSort="resourceType">Resource type</th>
@@ -9,8 +9,17 @@
       <m-button m-popover mTitle="web.space.change-source-server" (mClick)="changeSourceServer(server)"><m-icon mCode="aim"></m-icon></m-button>
     </th>
     <th>
-      <m-button m-popover mTitle="web.space.sync-resources" (mClick)="sync()"><m-icon mCode="sync"/></m-button>&nbsp;
-      <m-button m-popover mTitle="web.space.reload-diff-matrix" (mClick)="loadDiff(true)"><m-icon mCode="redo"/></m-button>
+      <div class="m-items-middle">
+        <m-button [mDisplay]="filter.upToDate ? 'default' : 'text'" (mClick)="upToDateChanged(!filter.upToDate)"><m-icon style="color: green" mCode="check-circle"/></m-button>
+        <m-button [mDisplay]="filter.notUpToDate ? 'default' : 'text'" (mClick)="notUpToDateChanged(!filter.notUpToDate)"><m-icon style="color: red" mCode="exclamation-circle"/></m-button>
+        <m-divider mVertical/>
+        <m-button m-popover mTitle="web.space.sync-resources" (mClick)="sync()"><m-icon mCode="sync"/></m-button>
+        <m-button m-popconfirm mPopconfirmTitle="web.space.confirm" m-popover mTitle="web.space.clear-sync-resources" (mOnConfirm)="sync(true)">
+          <m-icon mCode="sync"/>&nbsp;
+          <m-icon mCode="warning"/>
+        </m-button>
+        <m-button m-popover mTitle="web.space.reload-diff-matrix" (mClick)="loadDiff(true)"><m-icon mCode="redo"/></m-button>
+      </div>
     </th>
   </tr>
 
@@ -25,8 +34,8 @@
     </td>
     <td *ngFor="let server of (diffItems | apply:extractServers)">
       <ng-container *ngIf="item.resourceServer === server">
-        <label *ngIf="item.upToDate" class="m-clickable" (click)="openDiff(item)"><m-icon style="color: green" mCode="check-circle"></m-icon></label>
-        <label *ngIf="!item.upToDate" class="m-clickable" (click)="openDiff(item)"><m-icon style="color: red" mCode="exclamation-circle"></m-icon></label>
+        <label *ngIf="item.upToDate" class="m-clickable" (click)="openDiff(item)"><m-icon style="color: green" mCode="check-circle"/></label>
+        <label *ngIf="!item.upToDate" class="m-clickable" (click)="openDiff(item)"><m-icon style="color: red" mCode="exclamation-circle"/></label>
       </ng-container>
     </td>
     <td></td>

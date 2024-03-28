@@ -105,9 +105,14 @@
     </div>
   </m-form-row>
 
-  <m-form-item mLabel="entities.resource.experimental" mName="experimental">
-    <m-checkbox name="experimental" [(ngModel)]="resource.experimental"></m-checkbox>
-  </m-form-item>
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.resource.experimental" mName="experimental">
+      <m-checkbox name="experimental" [(ngModel)]="resource.experimental"></m-checkbox>
+    </m-form-item>
+    <m-form-item *mFormCol mLabel="entities.resource.external-web-source" mName="externalWebSource">
+      <m-checkbox name="externalWebSource" [(ngModel)]="resource.externalWebSource"></m-checkbox>
+    </m-form-item>
+  </m-form-row>
 </form>
 
 

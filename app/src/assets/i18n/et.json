@@ -142,6 +142,7 @@
 			"status": "Staatus"
 		},
 		"code-system-version": {
+			"base-version": "Vanem koodisüsteemi versioon",
 			"description": "Kirjeldus",
 			"entities": "Mõiste versioonid",
 			"uri": "Ühtne ressursiidentifikaator (URI)",
@@ -492,6 +493,7 @@
 			},
 			"description": "Kirjeldus",
 			"experimental": "Eksperimentaalne",
+			"external-web-source": "Väline veebiallikas",
 			"id": "ID",
 			"identifiers": {
 				"multiple": "Identifikaatorid",

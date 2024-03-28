@@ -16,6 +16,7 @@ import {CodeSystem, CodeSystemLibService, CodeSystemSearchParams} from '../../co
 export class CodeSystemSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public disabled: string | boolean = false;
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() @BooleanInput() public autoUnselect: string | boolean = false;
   @Input() @BooleanInput() public multiple: string | boolean;
   @Input() public filter?: (resource: CodeSystem) => boolean;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';

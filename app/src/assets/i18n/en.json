@@ -145,6 +145,7 @@
 			"status": "Status"
 		},
 		"code-system-version": {
+			"base-version": "Parent code system version",
 			"single": "Code System Version",
 			"uri": "URI",
 			"description": "Description",
@@ -506,6 +507,7 @@
 			},
 			"description": "Description",
 			"experimental": "Experimental",
+			"external-web-source": "External web source",
 			"id": "ID",
 			"identifiers": {
 				"multiple": "Identifiers",
@@ -1964,7 +1966,8 @@
 			"select-context": "Select context",
 			"change-source-server": "Change resource source server",
 			"reload-diff-matrix": "Reload diff matrix",
-			"sync-resources": "Sync all resources (from current installation to target server)"
+			"sync-resources": "Sync all resources (from current installation to target server)",
+			"clear-sync-resources": "Delete and sync all resources (from current installation to target server)"
 		},
 		"structure-definition": {
 			"form": {

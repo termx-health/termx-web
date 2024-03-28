@@ -53,6 +53,10 @@
             </m-form-item>
           </m-form-row>
 
+          <m-form-item *ngIf="version.baseCodeSystem" mName="baseVersion" mLabel="entities.code-system-version.base-version">
+            <tw-code-system-version-select name="baseVersion" [codeSystemId]="version.baseCodeSystem" [(ngModel)]="version.baseCodeSystemVersion" [autoSelect]="false"/>
+          </m-form-item>
+
           <tw-resource-identifiers [identifiers]="version.identifiers" version></tw-resource-identifiers>
         </form>
 
