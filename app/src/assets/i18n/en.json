@@ -87,6 +87,7 @@
 			"reverse-name": "Reverse name"
 		},
 		"code-system": {
+			"supplement": "Supplement",
 			"base-code-system": "Parent code system",
 			"case-sensitivity": "Case sensitivity",
 			"concepts": "Concepts",

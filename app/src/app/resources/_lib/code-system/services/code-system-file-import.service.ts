@@ -26,11 +26,13 @@ export interface FileProcessingRequest {
     uri?: string;
     title?: LocalizedName;
     description?: LocalizedName;
+    supplement?: string;
   };
   version?: {
     number?: string;
     status?: string;
     releaseDate?: Date;
+    supplementVersion?: string;
   };
 
   properties?: FileProcessingRequestProperty[];

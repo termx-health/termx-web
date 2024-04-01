@@ -87,6 +87,7 @@
 			"reverse-name": "Vastand"
 		},
 		"code-system": {
+			"supplement": "Täiend",
 			"base-code-system": "Vanem koodisüsteem",
 			"case-sensitivity": "Tõstutundlikkus",
 			"concepts": "Mõisted",
