@@ -24,6 +24,7 @@ export interface Environment {
 
   oauthIssuer: string,
   oauthClientId: string,
+  oauthScope: string,
 
   termxApi: string,
   swaggerUrl?: string,

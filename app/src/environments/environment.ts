@@ -17,6 +17,7 @@ export const environment: Environment = {
 
   oauthIssuer: 'https://auth.kodality.dev/realms/terminology',
   oauthClientId: 'term-client',
+  oauthScope: 'openid profile offline_access',
 
   swaggerUrl: 'https://termx.kodality.dev/swagger/',
   chefUrl: 'https://termx.kodality.dev/chef',

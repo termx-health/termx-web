@@ -13,7 +13,7 @@ import {OauthStorageService} from './oauth-storage.service';
         redirectUrl: window.location.origin + environment.baseHref,
         postLogoutRedirectUri: window.location.origin + environment.baseHref,
         clientId: environment.oauthClientId,
-        scope: 'openid profile offline_access',
+        scope: environment.oauthScope,
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,

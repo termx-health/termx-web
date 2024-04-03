@@ -2,6 +2,7 @@ twConfig = {
   "baseHref": "${BASE_HREF}",
   "oauthIssuer": "${OAUTH_ISSUER}",
   "oauthClientId": "${OAUTH_CLIENT_ID}",
+  "oauthScope": "${OAUTH_SCOPE}",
   "termxApi": "${TERMX_API}",
   "swaggerUrl": "${SWAGGER_URL}",
   "chefUrl": "${CHEF_URL}",
