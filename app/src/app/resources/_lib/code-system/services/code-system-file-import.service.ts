@@ -12,6 +12,7 @@ export interface FileProcessingRequestProperty {
   propertyName?: string;
   propertyType?: string;
   propertyTypeFormat?: string;
+  propertyCodeSystem?: string;
   propertyDelimiter?: string;
   preferred?: boolean;
   language?: string;
@@ -69,10 +70,10 @@ export class CodeSystemFileImportService {
       propertiesWithoutFormat.forEach(p => errors.push(`Please define the type format for the "${p.propertyName}" property`));
     }
 
-    const forbiddenNewProperties = props.filter(p => ['code', 'Coding'].includes(p.propertyType) && p['_newProp']);
-    if (forbiddenNewProperties.length) {
-      errors.push(`Please create code system and define ${forbiddenNewProperties.map(p => `"${p.propertyName}"`).join(', ')} properties there`);
-    }
+    // const forbiddenNewProperties = props.filter(p => ['code', 'Coding'].includes(p.propertyType) && p['_newProp']);
+    // if (forbiddenNewProperties.length) {
+    //   errors.push(`Please create code system and define ${forbiddenNewProperties.map(p => `"${p.propertyName}"`).join(', ')} properties there`);
+    // }
 
     return errors;
   }
