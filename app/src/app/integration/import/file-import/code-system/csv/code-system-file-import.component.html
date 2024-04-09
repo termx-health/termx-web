@@ -66,7 +66,10 @@
               <m-select-button mLabel="ADD NEW" (mClick)="item['_newProp'] = true"/>
             </m-select>
 
-            <m-input *ngIf="item['_newProp']" [(ngModel)]="item.propertyName" style="flex: 1"/>
+            <div *ngIf="item['_newProp']" class="m-items-middle">
+              <m-input [(ngModel)]="item.propertyName"/>
+              <m-icon-button mIcon="close" (click)="item['_newProp'] = false" />
+            </div>
           </td>
 
           <td *ngIf="hasDuplicateIdentifiers">
