@@ -502,6 +502,7 @@
 			"source-reference": "Source reference",
 			"topic": "Topic",
 			"conf-attribute": {
+				"often-used-attributes": "Often used attributes",
 				"multiple": "Configuration attributes",
 				"attribute": "Attribute",
 				"value": "Value"

@@ -492,6 +492,16 @@
 				"single": "Autoriõigus",
 				"statement": "Autoriõigusavaldus"
 			},
+			"conf-attribute": {
+				"often-used-attributes": "Tihti kasutatavad atribuudid",
+				"multiple": "Konfiguratsiooni atribuudid",
+				"attribute": "Atribuut",
+				"value": "Väärtus"
+			},
+			"replaces": "Asendab",
+			"topic": "Teema",
+			"other-title": "Muu pealkiri",
+			"source-reference": "Allikaviide",
 			"description": "Kirjeldus",
 			"experimental": "Eksperimentaalne",
 			"external-web-source": "Väline veebiallikas",
@@ -633,7 +643,7 @@
 			"name": "Nimi",
 			"owners": "Omanikud",
 			"packages": "Paketid",
-			"plural": "\"Ruumid\"",
+			"plural": "Ruumid",
 			"shared": "Jagatud",
 			"singular": "Space",
 			"terminology-servers": "Terminoloogia server",
@@ -899,6 +909,7 @@
 				"add-concept": "Lisa mõiste",
 				"add-version": "Lisa versioon",
 				"all-tasks": "Kõik ülesanded",
+				"add-task": "Lisa ülesanne",
 				"code-system": "Koodisüsteem",
 				"compare": "Võrdle",
 				"concepts": "Mõisted",
@@ -1377,7 +1388,7 @@
 			"summary": {
 				"open-tasks": "Avatud ülesanded",
 				"pages": "Leheküljed",
-				"spaces": "\"Ruumid\"",
+				"spaces": "Ruumid",
 				"title": "Kokkuvõtte"
 			},
 			"tasks": {
@@ -1716,7 +1727,7 @@
 						"NamingSystem": "Nimesüsteem",
 						"AssociationType": "AssociationType",
 						"DefinedProperty": "Globaalne tunnus",
-						"Space": "\"Ruum\"",
+						"Space": "Ruum",
 						"Wiki": "Wiki",
 						"ObservationDefinition": "Näitajate definitsioon",
 						"StructureDefinition": "Struktuuri kirjeldus",
@@ -1756,6 +1767,8 @@
 			"checklist": "Kontrollnimekiri"
 		},
 		"resource-form": {
+			"add-other-title": "Lisa muu pealkiri",
+			"add-use-context": "Lisa kastuskontekst",
 			"id-change-modal": {
 				"header": "Muuda ID",
 				"id": "Uus ID"
@@ -2306,8 +2319,8 @@
 				}
 			},
 			"no-space": {
-				"desc": "Palun valige \"ruum\" jätkamiseks",
-				"title": "\"Ruum\" ei ole valitud"
+				"desc": "Palun valige ruum jätkamiseks",
+				"title": "Ruum ei ole valitud"
 			},
 			"overview": {
 				"pages": "Leheküljed",
@@ -2331,7 +2344,7 @@
 				"delete-confirm": "Kas sa oled kindel? NB! Ka selle kausta all olevad lehed kustutatakse!",
 				"pages": "Leheküljed"
 			},
-			"spaces": "\"Ruumid\"",
+			"spaces": "Ruumid",
 			"texteditor": {
 				"quick-actions": {
 					"link-modal": {
@@ -2344,8 +2357,8 @@
 						"page": "Lehekülg",
 						"resource": "Ressurss",
 						"resource-type": "Ressurssitüüp",
-						"search-externally": "Otsi teises \"ruumis\"",
-						"space": "\"Ruum\"",
+						"search-externally": "Otsi teises ruumis",
+						"space": "Ruum",
 						"url": "URL",
 						"value-set": "Loend"
 					},

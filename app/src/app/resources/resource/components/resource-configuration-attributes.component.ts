@@ -1,7 +1,8 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {isDefined, validateForm} from '@kodality-web/core-util';
-import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
+import {isDefined, validateForm, copyDeep} from '@kodality-web/core-util';
+import {TranslateService} from '@ngx-translate/core';
+import {CodeSystemConcept, CodeSystemLibService, ConceptUtil, DefinedProperty, EntityProperty} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-resource-configuration-attributes',
@@ -23,7 +24,8 @@ export class ResourceConfigurationAttributesComponent implements OnInit {
 
   protected rowInstance: any = {};
   protected configurationAttributes: CodeSystemConcept[];
-  public constructor(private codeSystemService: CodeSystemLibService) {}
+
+  public constructor(private codeSystemService: CodeSystemLibService, private translateService: TranslateService) {}
 
   public ngOnInit(): void {
     this.codeSystemService.searchConcepts('termx-resource-configuration', {limit: -1}).subscribe(resp => this.configurationAttributes = resp.data);
@@ -34,10 +36,21 @@ export class ResourceConfigurationAttributesComponent implements OnInit {
   }
 
   protected languageRequired = (attr: string, attributes: CodeSystemConcept[]): boolean => {
-    return !!ConceptUtil.getLastVersion(attributes?.find(a => a.code === attr))?.propertyValues?.find(pv => pv.entityProperty === 'language' && pv.value === true);
+    return !!ConceptUtil.getLastVersion(attributes?.find(a => a.code === attr))?.propertyValues
+      ?.find(pv => pv.entityProperty === 'language' && pv.value === true);
   };
 
   protected markdownInput = (attr: string, attributes: CodeSystemConcept[]): boolean => {
-    return !!ConceptUtil.getLastVersion(attributes?.find(a => a.code === attr))?.propertyValues?.find(pv => pv.entityProperty === 'markdown' && pv.value === true);
+    return !!ConceptUtil.getLastVersion(attributes?.find(a => a.code === attr))?.propertyValues
+      ?.find(pv => pv.entityProperty === 'markdown' && pv.value === true);
+  };
+
+  protected addAttribute(attr: CodeSystemConcept): void {
+    this.attributes = [...this.attributes, {attribute: attr.code}];
+  }
+
+  protected attributeDesignation = (attr: string, attributes: CodeSystemConcept[], designationType: string, defCode?: boolean): string => {
+    return ConceptUtil.getLastVersion(attributes?.find(a => a.code === attr))?.designations
+      ?.find(d => d.designationType === designationType && d.language === this.translateService.currentLang)?.name || defCode && attr;
   };
 }
