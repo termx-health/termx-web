@@ -7,7 +7,7 @@
           <m-dropdown>
             <a *m-dropdown-container>{{branch}}</a>
             <ng-container *ngFor="let b of branches">
-              <a *m-dropdown-item (mClick)="branch = b.path">{{b.path}}</a>
+              <a *m-dropdown-item (mClick)="changeBranch(b.path)">{{b.path}}</a>
             </ng-container>
           </m-dropdown>
         </ng-container>

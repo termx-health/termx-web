@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
+import {ComponentStateStore} from '@kodality-web/core-util';
 import {SnomedBranch, SnomedLibService, SnomedSearchComponent} from 'term-web/integration/_lib';
 
 @Component({
@@ -30,9 +31,16 @@ export class SnomedDashboardComponent implements OnInit {
   protected branch?: string = 'MAIN';
   protected branches?: SnomedBranch[];
 
-  public constructor(private route: ActivatedRoute, private router: Router, private snomedService: SnomedLibService) {}
+  protected readonly STORE_KEY = 'snomed-management-branch';
+
+  public constructor(private route: ActivatedRoute, private router: Router, private stateStore: ComponentStateStore, private snomedService: SnomedLibService) {}
 
   public ngOnInit(): void {
+    const branch = this.stateStore.pop(this.STORE_KEY);
+    if (branch) {
+      this.branch = branch;
+    }
+
     this.initData();
     this.route.paramMap.subscribe(pm => {
       this.conceptId = pm.get("conceptId") || this.conceptId;
@@ -50,5 +58,10 @@ export class SnomedDashboardComponent implements OnInit {
     this.snomedService.loadBranches().subscribe(branches => {
       this.branches = branches;
     });
+  }
+
+  public changeBranch(path: string): void {
+    this.stateStore.put(this.STORE_KEY, path);
+    this.branch = path;
   }
 }
