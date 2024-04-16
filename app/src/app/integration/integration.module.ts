@@ -66,7 +66,7 @@ export const INTEGRATION_ROUTES: Routes = [
       {path: 'file-import/code-system', component: CodeSystemFileImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/value-set', component: ValueSetFileImportComponent, data: {privilege: ['*.CodeSystem.edit']}},
       {path: 'file-import/concept-map', component: ConceptMapFileImportComponent, data: {privilege: ['*.MapSet.edit']}},
-      {path: 'file-import/association', component: AssociationFileImportComponent, data: {privilege: ['*.MapSet.edit']}}
+      {path: 'file-import/association', component: AssociationFileImportComponent, data: {privilege: ['*.CodeSystem.edit']}}
     ]
   },
   {path: 'loinc', component: LoincDashboardComponent, data: {privilege: ['loinc.CodeSystem.view']}},
