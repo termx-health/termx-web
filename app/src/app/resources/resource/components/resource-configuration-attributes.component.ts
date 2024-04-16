@@ -1,8 +1,10 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {isDefined, validateForm, copyDeep} from '@kodality-web/core-util';
+import {isDefined, validateForm} from '@kodality-web/core-util';
+import {MuiEditableTableComponent} from '@kodality-web/marina-ui';
 import {TranslateService} from '@ngx-translate/core';
-import {CodeSystemConcept, CodeSystemLibService, ConceptUtil, DefinedProperty, EntityProperty} from 'term-web/resources/_lib';
+import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
+import {ChecklistRule} from 'term-web/sys/_lib';
 
 @Component({
   selector: 'tw-resource-configuration-attributes',
@@ -21,6 +23,7 @@ import {CodeSystemConcept, CodeSystemLibService, ConceptUtil, DefinedProperty, E
 export class ResourceConfigurationAttributesComponent implements OnInit {
   @Input() public attributes?: any[];
   @ViewChild("form") public form?: NgForm;
+  @ViewChild(MuiEditableTableComponent) public table?: MuiEditableTableComponent<ChecklistRule>;
 
   protected rowInstance: any = {};
   protected configurationAttributes: CodeSystemConcept[];
@@ -32,7 +35,7 @@ export class ResourceConfigurationAttributesComponent implements OnInit {
   }
 
   public valid(): boolean {
-    return isDefined(this.form) && validateForm(this.form);
+    return isDefined(this.form) && validateForm(this.form) && isDefined(this.table) && this.table.validate();
   }
 
   protected languageRequired = (attr: string, attributes: CodeSystemConcept[]): boolean => {

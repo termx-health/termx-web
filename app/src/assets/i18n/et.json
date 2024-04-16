@@ -496,6 +496,7 @@
 				"often-used-attributes": "Tihti kasutatavad atribuudid",
 				"multiple": "Konfiguratsiooni atribuudid",
 				"attribute": "Atribuut",
+				"language": "Keel",
 				"value": "Väärtus"
 			},
 			"replaces": "Asendab",

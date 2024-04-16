@@ -505,6 +505,7 @@
 				"often-used-attributes": "Often used attributes",
 				"multiple": "Configuration attributes",
 				"attribute": "Attribute",
+				"language": "Language",
 				"value": "Value"
 			},
 			"description": "Description",

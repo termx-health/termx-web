@@ -25,21 +25,34 @@
           </label>
         </ng-template>
       </m-editable-column>
+      <m-editable-column [mTitle]="'entities.resource.conf-attribute.language'" mName="language" mWidth="10%" required>
+        <ng-template #viewTemplate let-a>
+          <span *ngIf="a.language" class="m-subtitle">{{a.language}}</span>
+        </ng-template>
+        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+          <tw-value-set-concept-select style="width: 100%; flex: 1"
+              *ngIf="a.attribute | apply:languageRequired:configurationAttributes"
+              valueSet="languages"
+              [name]="ngModelName"
+              [(ngModel)]="a.language"
+              required/>
+        </ng-template>
+      </m-editable-column>
       <m-editable-column [mTitle]="'entities.resource.conf-attribute.value'" mName="value" required>
         <ng-template #viewTemplate let-a>
-          <div class="m-items-middle" style="width: 100%">
-            <span *ngIf="a.language" class="m-subtitle">{{a.language}}</span>
+          <div style="word-break: break-word">
             <span *ngIf="!(a.attribute | apply:markdownInput:configurationAttributes)">{{a.value}}</span>
             <tw-smart-text-editor-view *ngIf="(a.attribute | apply:markdownInput:configurationAttributes)" [value]="a.value" valueType="markdown"/>
           </div>
         </ng-template>
         <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-          <div class="m-items-middle">
-            <tw-value-set-concept-select style="width: 100%; flex: 1" *ngIf="a.attribute | apply:languageRequired:configurationAttributes" valueSet="languages" name="{{ngModelName}}-lang" [(ngModel)]="a.language" required/>
-            <m-textarea *ngIf="!(a.attribute | apply:markdownInput:configurationAttributes)" style="width: 100%; flex: 3" [name]="ngModelName" [(ngModel)]="a.value" required/>
-            <div class="text-editor-wrapper" *ngIf="(a.attribute | apply:markdownInput:configurationAttributes)">
-              <tw-smart-text-editor style="width: 100%; flex: 3" [name]="ngModelName" [(ngModel)]="a.value" valueType="markdown" required/>
-            </div>
+          <m-textarea *ngIf="!(a.attribute | apply:markdownInput:configurationAttributes)"
+              style="width: 100%; flex: 3"
+              [name]="ngModelName"
+              [(ngModel)]="a.value"
+              required/>
+          <div class="text-editor-wrapper" *ngIf="(a.attribute | apply:markdownInput:configurationAttributes)">
+            <tw-smart-text-editor style="width: 100%; flex: 3" [name]="ngModelName" [(ngModel)]="a.value" valueType="markdown" required/>
           </div>
         </ng-template>
       </m-editable-column>
