@@ -861,6 +861,7 @@
 					"designation-languages": "Designation languages",
 					"add-concept": "Add concept",
 					"add-supplement-concept": "Add supplement concept",
+					"activate-draft-concepts": "Activate draft concepts",
 					"concept": "Concept",
 					"contains": "Contains",
 					"eq": "Equals",

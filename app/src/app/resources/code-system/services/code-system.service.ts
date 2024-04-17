@@ -116,6 +116,10 @@ export class CodeSystemService extends CodeSystemLibService {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/supplement`, request);
   }
 
+  public activateEntityVersions(codeSystemId: string, version: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/entity-versions/activate`, {});
+  }
+
   public unlinkEntityVersions(codeSystemId: string, codeSystemVersion: string, entityVersionIds: number[]): Observable<void> {
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${codeSystemVersion}/concepts/unlink`, {entityVersionIds: entityVersionIds});
   }

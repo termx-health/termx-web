@@ -14,12 +14,17 @@
 
     <!-- Add action -->
     <ng-container *ngIf="!viewMode">
-      <tw-add-button *ngIf="null | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">
-        {{'web.code-system.form.concepts.add-concept' | translate}}
-      </tw-add-button>
+      <ng-container *ngIf="null | apply: getConceptEditRoute as route">
+        <tw-add-button *ngIf="!codeSystem.baseCodeSystem" [routerLink]="route.path" [queryParams]="route.query">
+          {{'web.code-system.form.concepts.add-concept' | translate}}
+        </tw-add-button>
+      </ng-container>
       <tw-add-button *ngIf="codeSystem.baseCodeSystem" (click)="conceptDrawerSearchComponent.openDrawer()">
         {{'web.code-system.form.concepts.add-supplement-concept' | translate}}
       </tw-add-button>
+      <m-button *ngIf="version?.status === 'draft'" m-popconfirm mPopconfirmTitle="core.confirm" (mOnConfirm)="activateConcepts()">
+        {{'web.code-system.form.concepts.activate-draft-concepts' | translate}}
+      </m-button>
     </ng-container>
 
     <!-- Validation -->

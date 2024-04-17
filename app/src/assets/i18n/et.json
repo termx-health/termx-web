@@ -849,6 +849,7 @@
 				"concepts": {
 					"add-concept": "Lisa mõiste",
 					"add-supplement-concept": "Lisa täienduse mõiste",
+					"activate-draft-concepts": "Aktiveeri \"mustand\" mõisted ",
 					"concept": "Mõiste",
 					"contains": "Sisaldab",
 					"eq": "Võrdub",

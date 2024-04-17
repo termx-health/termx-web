@@ -472,4 +472,8 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   public createExternalSupplement(code: string): void {
     this.codeSystemService.supplementEntityVersions(this.codeSystem?.id, this.version?.version, {externalSystemCode: code}).subscribe(() => this.initConcepts());
   }
+
+  public activateConcepts(): void {
+    this.codeSystemService.activateEntityVersions(this.codeSystem?.id, this.version?.version).subscribe(() => this.initConcepts());
+  }
 }
