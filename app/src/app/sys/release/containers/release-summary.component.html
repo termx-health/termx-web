@@ -73,7 +73,11 @@
             </td>
             <td>{{r.resourceVersion}}</td>
             <td>{{r.resourceNames | localName}}</td>
-            <td><a>{{r.errorCount}}</a></td>
+            <td>
+              <m-tag mColor="red" *ngIf="checklists[r.resourceType + ' ' + r.resourceId + ' ' + r.resourceVersion]?.length > 0">
+                {{checklists[r.resourceType + ' ' + r.resourceId + ' ' + r.resourceVersion]?.length}}
+              </m-tag>
+            </td>
             <td *ngIf="release?.status === 'draft'">
               <m-dropdown *twPrivileged="release?.id + '.Release.edit'">
                 <a *m-dropdown-item (mClick)="modalData = {resource: r, visible: true}">{{'core.btn.edit' | translate}}</a>

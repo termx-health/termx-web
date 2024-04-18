@@ -11,6 +11,7 @@ import {ReleaseService} from '../../release/services/release.service';
 })
 export class ReleaseEditComponent implements OnInit {
   protected release?: Release;
+  protected newAuthor?: string;
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
 
@@ -28,9 +29,9 @@ export class ReleaseEditComponent implements OnInit {
 
       if (isDefined(id)) {
         this.mode = 'edit';
-        this.loader.wrap('load', this.releaseService.load(Number(id))).subscribe(r => this.release = r);
+        this.loader.wrap('load', this.releaseService.load(Number(id))).subscribe(r => this.release = this.writeRelease(r));
       }
-      this.release = new Release();
+      this.release = this.writeRelease(new Release());
     });
   }
 
@@ -44,5 +45,20 @@ export class ReleaseEditComponent implements OnInit {
 
   public validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
+  }
+
+  public addAuthor(): void {
+    this.release.authors = [...this.release.authors, this.newAuthor];
+    this.newAuthor = undefined;
+  }
+
+  public deleteAuthor(author: string): void {
+    this.release.authors = [...this.release.authors.filter(a => a!== author)];
+    this.newAuthor = undefined;
+  }
+
+  private writeRelease(r: Release): Release {
+    r.authors ??= [];
+    return r;
   }
 }

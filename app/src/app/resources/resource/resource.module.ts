@@ -7,6 +7,7 @@ import {ResourceFhirImportModalComponent} from 'term-web/resources/resource/comp
 import {ResourceFormComponent} from 'term-web/resources/resource/components/resource-form.component';
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
 import {ResourceRelatedArtifactWidgetComponent} from 'term-web/resources/resource/components/resource-related-artifact-widget.component';
+import {ResourceReleaseModalComponent} from 'term-web/resources/resource/components/resource-release-modal-component';
 import {ResourceSideInfoComponent} from 'term-web/resources/resource/components/resource-side-info.component';
 import {ResourceTaskModalComponent} from 'term-web/resources/resource/components/resource-task-modal-component';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
@@ -36,7 +37,8 @@ import {CoreUiModule} from '../../core/ui/core-ui.module';
     ResourceTasksWidgetComponent,
     ResourceRelatedArtifactWidgetComponent,
     ResourceFhirImportModalComponent,
-    ResourceTaskModalComponent
+    ResourceTaskModalComponent,
+    ResourceReleaseModalComponent
   ],
   declarations: [
     ResourceContactsComponent,
@@ -49,7 +51,8 @@ import {CoreUiModule} from '../../core/ui/core-ui.module';
     ResourceTasksWidgetComponent,
     ResourceRelatedArtifactWidgetComponent,
     ResourceFhirImportModalComponent,
-    ResourceTaskModalComponent
+    ResourceTaskModalComponent,
+    ResourceReleaseModalComponent
   ]
 })
 export class ResourceModule {

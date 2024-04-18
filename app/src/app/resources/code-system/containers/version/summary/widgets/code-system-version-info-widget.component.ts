@@ -11,7 +11,7 @@ import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import {AuthService} from 'term-web/core/auth';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
-import {LorqueLibService, Provenance} from 'term-web/sys/_lib';
+import {LorqueLibService, Provenance, ReleaseLibService, Release} from 'term-web/sys/_lib';
 
 @Component({
   selector: 'tw-code-system-version-info-widget',
@@ -26,6 +26,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
 
   protected provenances: Provenance[];
   protected githubSpaces: Space[];
+  protected releases: Release[];
 
   protected loader = new LoadingManager();
 
@@ -35,6 +36,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
     private spaceService: SpaceLibService,
+    private releaseService: ReleaseLibService,
     private authService: AuthService,
     private lorqueService: LorqueLibService,
     private destroy$: DestroyService,
@@ -52,6 +54,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
           );
         });
       }
+      this.loadRelease();
     }
   }
 
@@ -107,5 +110,17 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
 
   protected openVersionConcepts(): void {
     this.router.navigate(['/resources/code-systems', this.version.codeSystem, 'versions', this.version.version, 'concepts']);
+  }
+
+  public openRelease(id: number): void {
+    this.router.navigate(['/releases', id, 'summary']);
+  }
+
+  protected loadRelease(): void {
+    if (this.authService.hasPrivilege('*.Release.view')) {
+      this.releaseService.search({resource: ['CodeSystem', this.version.codeSystem, this.version.version].join('|')}).subscribe(r => {
+        this.releases = r.data;
+      });
+    }
   }
 }

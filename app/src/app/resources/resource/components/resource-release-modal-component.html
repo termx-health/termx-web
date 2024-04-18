@@ -1,0 +1,27 @@
+<m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal()" [mMaskClosable]="false">
+  <m-title *mModalHeader>
+    {{'web.resource-release-modal.header' | translate:({resource: ([params?.resourceId, params?.resourceVersion] | join:'|')})}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #form="ngForm">
+      <m-form-item mName="release" mLabel="web.resource-release-modal.release" required>
+        <m-select name="release" [(ngModel)]="params.releaseId" [filterOption]="filterOption" required>
+          <m-option *ngFor="let release of releases"
+              mLabel="{{release.code}} | {{release.names | localName}} | {{(release.releaseDate || release.planned) | localDate}}"
+              [mValue]="release.id"/>
+        </m-select>
+      </m-form-item>
+    </form>
+    <a (mClick)="openReleaseManagement()">{{'web.resource-release-modal.navigate-to-release-management' | translate}}</a>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="modal.close()">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="connectToRelease()" [mLoading]="loader.isLoading" [disabled]="loader.state['save']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>

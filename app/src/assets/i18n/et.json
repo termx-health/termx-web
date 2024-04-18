@@ -57,6 +57,7 @@
 			"whitelist": "Lubatud nimekiri"
 		},
 		"release": {
+			"authors": "Autorid",
 			"code": "Kood",
 			"name": "Nimetus",
 			"planned": "Planeeritud",
@@ -811,6 +812,7 @@
 		},
 		"release": {
 			"add-btn": "Lisa väljalase",
+			"add-author": "Lisa autor",
 			"unaccomplished-checks": "Täitmata kontrollid",
 			"run-checks": "Käivita kõik kontrollid",
 			"add-header": "Lisa väljalase",
@@ -1083,6 +1085,8 @@
 				"code-system-version": "Koodisüsteemi versioon",
 				"edit-version": "Muuda versiooni",
 				"info": {
+					"add-to-release": "Lisa väljaandele",
+					"release-unspecified": "Väljalase on määramata",
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitusülesanne",
 					"create-review": "Loo ülevaatuse ülesanne",
@@ -1784,6 +1788,11 @@
 			"source": "Allikas",
 			"type": "Tüüp",
 			"url": "URL"
+		},
+		"resource-release-modal": {
+			"header": "Lisa ressurss {{resource}} väljaandele",
+			"release": "Väljalase",
+			"navigate-to-release-management": "Mine väljalaske haldusessse"
 		},
 		"resources": {
 			"tabset": {
