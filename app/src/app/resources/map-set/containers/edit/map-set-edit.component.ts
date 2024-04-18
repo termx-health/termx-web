@@ -64,10 +64,9 @@ export class MapSetEditComponent implements OnInit {
       return;
     }
 
-
+    this.mapSet.configurationAttributes = this.resourceConfigurationAttributesComponent.attributes;
     const ms = copyDeep(this.mapSet);
     ResourceUtil.merge(ms, this.resourceFormComponent.getResource());
-    ms.configurationAttributes = this.resourceConfigurationAttributesComponent.attributes;
 
     const msv: MapSetVersion = this.resourceVersionFormComponent ? copyDeep(this.resourceVersionFormComponent.getVersion()) : undefined;
     const properties: MapSetProperty[] = this.mapSetPropertiesComponent ? copyDeep(this.mapSetPropertiesComponent.getProperties()) : undefined;

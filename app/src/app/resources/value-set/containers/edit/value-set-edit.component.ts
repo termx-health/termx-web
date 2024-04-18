@@ -54,9 +54,9 @@ export class ValueSetEditComponent implements OnInit {
       return;
     }
 
+    this.valueSet.configurationAttributes = this.resourceConfigurationAttributesComponent.attributes;
     const vs = copyDeep(this.valueSet);
     ResourceUtil.merge(vs, this.resourceFormComponent.getResource());
-    vs.configurationAttributes = this.resourceConfigurationAttributesComponent.attributes;
     const request: ValueSetTransactionRequest = {
       valueSet: vs,
       version: this.resourceVersionFormComponent?.getVersion()

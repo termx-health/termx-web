@@ -61,10 +61,9 @@ export class CodeSystemEditComponent implements OnInit {
       return;
     }
 
-
+    this.codeSystem.configurationAttributes = this.resourceConfigurationAttributesComponent.attributes;
     const cs = copyDeep(this.codeSystem);
     ResourceUtil.merge(cs, this.resourceFormComponent.getResource());
-    cs.configurationAttributes = this.resourceConfigurationAttributesComponent.attributes;
     const request: CodeSystemTransactionRequest = {
       codeSystem: cs,
       properties: this.codeSystemPropertiesComponent.getProperties(),
