@@ -35,7 +35,7 @@
   </m-form-row>
 
   <m-form-row>
-    <m-form-item *mFormCol mLabel="entities.resource.publisher" mName="publisher" required>
+    <m-form-item *mFormCol mLabel="entities.resource.publisher" mName="publisher">
       <div class="m-items-middle" *ngIf="!customPublisher">
         <m-select style="width: 100%" name="publisher" [(ngModel)]="resource.publisher" (ngModelChange)="publisherChanged($event)">
           <m-option *ngFor="let p of publishers" [mValue]="p.concept.code" [mLabel]="p | apply:getDisplay"></m-option>
