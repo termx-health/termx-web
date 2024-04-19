@@ -44,6 +44,17 @@
         <tw-property-value-input viewMode [ngModel]="f.value" [property]="f.property" [codeSystem]="rule.codeSystem"></tw-property-value-input></span>)
       </div>
     </div>
+    <div class="m-items-middle" *twPrivileged="'*.Release.view'">
+      <m-icon mCode="rocket"/>
+      <div *ngIf="releases?.[version.valueSet + version.version]?.length > 0">
+        <div *ngFor="let release of releases?.[version.valueSet + version.version]">
+          <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
+        </div>
+      </div>
+      <a (mClick)="releaseModal.toggleModal({resourceId: valueSet, resourceVersion: version?.version, resourceTitle: valueSetTitle})"
+          *ngIf="!(releases?.[version.valueSet + version.version]?.length > 0) && ('*.Release.edit' | twPrivileged)">{{'web.value-set-version.summary.info.add-to-release' | translate}}</a>
+      <span *ngIf="!(releases?.[version.valueSet + version.version]?.length > 0) && !('*.Release.edit' | twPrivileged)">{{'web.value-set-version.summary.info.release-unspecified' | translate}}</span>
+    </div>
     <div>{{version.description | localName}}</div>
   </m-list-item>
 </m-list>
@@ -75,3 +86,4 @@
   </div>
 </m-modal>
 
+<tw-resource-release-modal #releaseModal (connectedToRelease)="loadRelease()" resourceType="ValueSet"/>

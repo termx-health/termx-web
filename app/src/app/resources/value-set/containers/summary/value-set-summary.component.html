@@ -18,7 +18,7 @@
             <m-icon mCode="plus"></m-icon>
           </m-button>
         </m-title>
-        <tw-value-set-versions-widget [valueSet]="valueSet?.id" [versions]="versions" (versionsChanged)="loadData(valueSet.id)"/>
+        <tw-value-set-versions-widget [valueSet]="valueSet?.id" [valueSetTitle]="valueSet?.title" [versions]="versions" (versionsChanged)="loadData(valueSet.id)"/>
       </m-card>
 
     </div>

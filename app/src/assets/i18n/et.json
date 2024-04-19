@@ -1573,6 +1573,8 @@
 				},
 				"edit-version": "Muuda versiooni",
 				"info": {
+					"add-to-release": "Lisa väljaandele",
+					"release-unspecified": "Väljalase on määramata",
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitusülesanne",
 					"create-review": "Loo ülevaatamisülesanne",
@@ -2200,6 +2202,8 @@
 				"expansion-see-all": "Vaata kõik mõisted.",
 				"expansion-warning": "Väljavõte ümberarvutamiseks versioon olema olekus „mustand/draft”.",
 				"info": {
+					"add-to-release": "Lisa väljaandele",
+					"release-unspecified": "Väljalase on määramata",
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitus ülesanne",
 					"create-review": "Loo ülevaatus ülesanne",

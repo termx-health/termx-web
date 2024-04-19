@@ -77,6 +77,18 @@
       <a (mClick)="changeVersionStatus('retired')">{{'web.map-set-version.summary.info.retire' | translate}}</a>
     </ng-container>
   </div>
+  <div class="m-items-middle" *twPrivileged="'*.Release.view'">
+    <m-icon mCode="rocket"/>
+    <div *ngIf="releases?.length > 0">
+      <div *ngFor="let release of releases">
+        <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
+      </div>
+    </div>
+    <a (mClick)="releaseModal.toggleModal({resourceId: mapSet?.id, resourceVersion: version?.version, resourceTitle: mapSet?.title})"
+        *ngIf="!(releases?.length > 0) && ('*.Release.edit' | twPrivileged)">{{'web.map-set-version.summary.info.add-to-release' | translate}}</a>
+    <span *ngIf="!(releases?.length > 0) && !('*.Release.edit' | twPrivileged)">{{'web.map-set-version.summary.info.release-unspecified' | translate}}</span>
+  </div>
 </div>
 
 <tw-resource-task-modal #taskModal (taskCreated)="taskCreated.emit()" resourceType="MapSet"/>
+<tw-resource-release-modal #releaseModal (connectedToRelease)="loadRelease()" resourceType="MapSet"/>

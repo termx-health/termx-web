@@ -1607,6 +1607,8 @@
 				},
 				"edit-version": "Edit version",
 				"info": {
+					"add-to-release": "Add to release",
+					"release-unspecified": "Release is unspecified",
 					"activate": "Activate",
 					"create-approve": "Create approval task",
 					"create-review": "Create review task",
@@ -2252,6 +2254,8 @@
 				"expansion-see-all": "See full list of the concepts.",
 				"expansion-warning": "The value set version should be in the 'draft' status to recalculate expansion.",
 				"info": {
+					"add-to-release": "Add to release",
+					"release-unspecified": "Release is unspecified",
 					"activate": "Activate",
 					"create-approve": "Create approval task",
 					"create-review": "Create review task",

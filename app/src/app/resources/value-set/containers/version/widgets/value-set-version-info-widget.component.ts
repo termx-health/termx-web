@@ -1,4 +1,5 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import {Router} from '@angular/router';
 import {compareDates, isDefined, LoadingManager} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {FhirValueSetLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
@@ -10,7 +11,7 @@ import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import {AuthService} from 'term-web/core/auth';
 import {Space, SpaceLibService} from 'term-web/space/_lib';
-import {Provenance} from 'term-web/sys/_lib';
+import {Provenance, Release, ReleaseLibService} from 'term-web/sys/_lib';
 
 @Component({
   selector: 'tw-value-set-version-info-widget',
@@ -24,6 +25,7 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
 
   protected provenances: Provenance[];
   protected githubSpaces: Space[];
+  protected releases: Release[];
 
   protected loader = new LoadingManager();
 
@@ -33,7 +35,9 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
     private spaceService: SpaceLibService,
-    private authService: AuthService
+    private authService: AuthService,
+    private releaseService: ReleaseLibService,
+    private router: Router
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -47,6 +51,7 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
           );
         });
       }
+      this.loadRelease();
     }
   }
 
@@ -87,4 +92,16 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
   protected getLastProvenance = (provenances: Provenance[], activity?: string): Provenance => {
     return provenances?.filter(p => !isDefined(activity) || p.activity === activity).sort((p1, p2) => compareDates(new Date(p2.date), new Date(p1.date)))?.[0];
   };
+
+  public openRelease(id: number): void {
+    this.router.navigate(['/releases', id, 'summary']);
+  }
+
+  protected loadRelease(): void {
+    if (this.authService.hasPrivilege('*.Release.view')) {
+      this.releaseService.search({resource: ['ValueSet', this.version.valueSet, this.version.version].join('|')}).subscribe(r => {
+        this.releases = r.data;
+      });
+    }
+  }
 }

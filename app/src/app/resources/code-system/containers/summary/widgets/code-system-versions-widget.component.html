@@ -38,11 +38,11 @@
     </div>
     <div class="m-items-middle" *twPrivileged="'*.Release.view'">
       <m-icon mCode="rocket"/>
-      <ng-container *ngIf="releases?.[version.codeSystem + version.version]?.length > 0">
+      <div *ngIf="releases?.[version.codeSystem + version.version]?.length > 0">
         <div *ngFor="let release of releases?.[version.codeSystem + version.version]">
           <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
         </div>
-      </ng-container>
+      </div>
       <a (mClick)="releaseModal.toggleModal({resourceId: codeSystem, resourceVersion: version?.version, resourceTitle: codeSystemTitle})"
           *ngIf="!(releases?.[version.codeSystem + version.version]?.length > 0) && ('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.add-to-release' | translate}}</a>
       <span *ngIf="!(releases?.[version.codeSystem + version.version]?.length > 0) && !('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.release-unspecified' | translate}}</span>

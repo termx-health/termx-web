@@ -17,6 +17,7 @@
       <th>{{'entities.release.status' | translate}}</th>
       <th>{{'entities.release.planned' | translate}}</th>
       <th>{{'entities.release.release-date' | translate}}</th>
+      <th>{{'entities.release.authors' | translate}}</th>
     </tr>
 
     <tr *mTableRow="let r">
@@ -27,9 +28,12 @@
       <td><tw-status-tag [status]="r.status"/></td>
       <td>{{r.planned | localDate}}</td>
       <td>{{r.releaseDate | localDate}}</td>
+      <td>
+        <div *ngFor="let author of r.authors">{{author}}</div>
+      </td>
     </tr>
     <tr *mTableNoData>
-      <td colspan="5">
+      <td colspan="6">
         <m-no-data></m-no-data>
       </td>
     </tr>
