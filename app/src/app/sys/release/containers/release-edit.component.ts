@@ -53,7 +53,10 @@ export class ReleaseEditComponent implements OnInit {
   }
 
   public deleteAuthor(author: string): void {
-    this.release.authors = [...this.release.authors.filter(a => a!== author)];
+    const index = this.release.authors.indexOf(author);
+    if (index !== -1) {
+      this.release.authors.splice(index, 1);
+    }
     this.newAuthor = undefined;
   }
 
