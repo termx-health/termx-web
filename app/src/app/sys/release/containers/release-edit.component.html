@@ -24,7 +24,7 @@
             </div>
             <div class="m-items-middle">
               <m-input name="authors" [(ngModel)]="newAuthor"/>
-              <tw-add-button (click)="addAuthor()" [disabled]="!newAuthor">{{'web.release.add-author' | translate}}</tw-add-button>
+              <tw-add-button (click)="addAuthor()" [disabled]="!newAuthor || (release.authors | includes:newAuthor)">{{'web.release.add-author' | translate}}</tw-add-button>
             </div>
           </div>
         </m-form-item>
