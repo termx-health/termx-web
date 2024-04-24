@@ -71,7 +71,7 @@ export class ValueSetVersionsWidgetComponent implements OnChanges{
     });
   }
 
-  protected getVersions = (versions: CodeSystemVersion[]): string[] => versions.map(v => v.version);
+  protected getVersions = (versions: ValueSetVersion[]): string[] => versions.map(v => v.version);
 
   public openRelease(id: number): void {
     this.router.navigate(['/releases', id, 'summary']);

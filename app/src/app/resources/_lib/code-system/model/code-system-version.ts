@@ -1,5 +1,6 @@
 import {Identifier} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
+import {ValueSetVersionReference} from 'term-web/resources/_lib';
 import {CodeSystemEntityVersion} from './code-system-entity';
 
 export class CodeSystemVersionReference {
@@ -22,6 +23,8 @@ export class CodeSystemVersion extends CodeSystemVersionReference {
   public identifiers?: Identifier[];
 
   public conceptsTotal?: number;
+
+  public valueSet?: ValueSetVersionReference;
 
   public baseCodeSystem?: string;
   public baseCodeSystemVersion?: CodeSystemVersionReference;

@@ -1109,6 +1109,7 @@
 				"info": {
 					"add-to-release": "Add to release",
 					"release-unspecified": "Release is unspecified",
+					"create-related-vs-version": "Create related ValueSet version",
 					"activate": "Activate",
 					"create-approve": "Create approval task",
 					"create-review": "Create review task",
@@ -1824,6 +1825,9 @@
 			"source": "Source",
 			"type": "Type",
 			"url": "URL"
+		},
+		"value-set-version-modal": {
+			"header": "Create value set version"
 		},
 		"resource-task-modal": {
 			"header": "Create task",

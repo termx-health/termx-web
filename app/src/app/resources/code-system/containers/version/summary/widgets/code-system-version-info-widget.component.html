@@ -74,6 +74,17 @@
         *ngIf="!(releases?.length > 0) && ('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.add-to-release' | translate}}</a>
     <span *ngIf="!(releases?.length > 0) && !('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.release-unspecified' | translate}}</span>
   </div>
+  <div class="m-items-middle" *ngIf="version.valueSet || codeSystem?.valueSet">
+    <m-icon mCode="tag"></m-icon>
+    <span *ngIf="version.valueSet">VS | <a [routerLink]="['/resources/value-sets', version.valueSet.valueSet, 'versions', version.valueSet.version, 'summary']">{{version.valueSet.valueSet}}
+      |{{version.valueSet.version}}</a></span>
+    <ng-container *ngIf="!version.valueSet">
+      <a *twPrivileged="'*.CodeSystem.edit'" (mClick)="valueSetModal.toggleModal({valueSet: codeSystem?.valueSet, codeSystem: codeSystem?.id, codeSystemVersionId: version?.id})">
+        {{'web.code-system-version.summary.info.create-related-vs-version' | translate}}
+      </a>
+      <m-icon mCode="warning" style="color: orange"/>
+    </ng-container>
+  </div>
   <div class="m-items-middle" *ngIf="githubSpaces?.length && 'edit' | twPrivileged">
     <m-icon mCode="github"></m-icon>
     <m-dropdown [mHideIfEmpty]="false">
@@ -83,8 +94,7 @@
       <ng-container *ngFor="let s of githubSpaces">
         <a *m-dropdown-item [routerLink]="['/spaces', s.id, 'github', {files: [
         'codesystem-fhir-json|' + version.codeSystem + SEPARATOR + version.version,
-        'codesystem-fhir-fsh|' + version.codeSystem + SEPARATOR + version.version,
-        ]}]">
+        'codesystem-fhir-fsh|' + version.codeSystem + SEPARATOR + version.version]}]">
           {{s.names | localName}}
         </a>
       </ng-container>
@@ -94,3 +104,4 @@
 
 <tw-resource-task-modal #taskModal (taskCreated)="taskCreated.emit()" resourceType="CodeSystem"/>
 <tw-resource-release-modal #releaseModal (connectedToRelease)="loadRelease()" resourceType="CodeSystem"/>
+<tw-value-set-version-save-modal #valueSetModal (created)="versionChanged.emit()"></tw-value-set-version-save-modal>

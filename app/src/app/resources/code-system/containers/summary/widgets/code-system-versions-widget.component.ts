@@ -7,6 +7,7 @@ import {CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {ResourceReleaseModalComponent} from 'term-web/resources/resource/components/resource-release-modal-component';
+import {ValueSetVersionSaveModalComponent} from 'term-web/resources/value-set/components/value-set-version-save-modal-component';
 import {Release, ReleaseLibService} from 'term-web/sys/_lib';
 
 @Component({
@@ -16,11 +17,13 @@ import {Release, ReleaseLibService} from 'term-web/sys/_lib';
 export class CodeSystemVersionsWidgetComponent implements OnChanges {
   @Input() public codeSystem: string;
   @Input() public codeSystemTitle: LocalizedName;
+  @Input() public codeSystemValueSet: string;
   @Input() public versions: CodeSystemVersion[];
   @Output() public versionsChanged: EventEmitter<void> = new EventEmitter();
 
   protected releases: {[key: string]: Release[]};
   protected loader = new LoadingManager();
+  protected openVersionBlocked: boolean;
 
   protected duplicateModalData: {
     visible?: boolean,
@@ -29,6 +32,7 @@ export class CodeSystemVersionsWidgetComponent implements OnChanges {
   } = {};
   @ViewChild("duplicateModalForm") public duplicateModalForm?: NgForm;
   @ViewChild("releaseModal") public releaseModal?: ResourceReleaseModalComponent;
+  @ViewChild("valueSetModal") public valueSetModal?: ValueSetVersionSaveModalComponent;
 
   public constructor(
     private router: Router,
@@ -44,7 +48,7 @@ export class CodeSystemVersionsWidgetComponent implements OnChanges {
   }
 
   protected openVersionSummary(version: string): void {
-    if (this.releaseModal.modalVisible) {
+    if (this.openVersionBlocked) {
       return;
     }
     this.router.navigate(['/resources/code-systems', this.codeSystem, 'versions', version, 'summary']);
@@ -89,5 +93,21 @@ export class CodeSystemVersionsWidgetComponent implements OnChanges {
           i => i.release);
       });
     }
+  }
+
+  protected toggleReleaseModal(version: CodeSystemVersion): void {
+    this.blockVersionOpening();
+    this.releaseModal.toggleModal({resourceId: this.codeSystem, resourceVersion: version?.version, resourceTitle: this.codeSystemTitle});
+  }
+
+  protected toggleRelatedValueSetModal(version: CodeSystemVersion): void {
+    this.blockVersionOpening();
+    this.valueSetModal.toggleModal({valueSet: this.codeSystemValueSet, codeSystem: this.codeSystem, codeSystemVersionId: version?.id});
+
+  }
+
+  protected blockVersionOpening(): void {
+    this.openVersionBlocked = true;
+    setTimeout(() => this.openVersionBlocked = false, 150);
   }
 }

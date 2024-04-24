@@ -23,6 +23,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
   @Input() public codeSystem: CodeSystem;
   @Input() public version: CodeSystemVersion;
   @Output() public taskCreated: EventEmitter<void> = new EventEmitter();
+  @Output() public versionChanged: EventEmitter<void> = new EventEmitter();
 
   protected provenances: Provenance[];
   protected githubSpaces: Space[];

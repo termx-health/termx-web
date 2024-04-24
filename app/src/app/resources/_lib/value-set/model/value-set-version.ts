@@ -6,10 +6,10 @@ import {ValueSetVersionRuleSet} from './value-set-version-rule-set';
 export class ValueSetVersionReference {
   public id?: number;
   public version?: string;
+  public valueSet?: string;
 }
 
 export class ValueSetVersion extends ValueSetVersionReference {
-  public valueSet?: string;
   public preferredLanguage?: string;
   public supportedLanguages?: string[];
   public description?: LocalizedName;

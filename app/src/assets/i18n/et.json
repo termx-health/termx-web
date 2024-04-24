@@ -790,6 +790,9 @@
 		"app": {
 			"header": "TermX"
 		},
+		"value-set-version-modal": {
+			"header": "Loo loendi versioon"
+		},
 		"code-system-checklist": {
 			"errors": "Vead",
 			"passed": "Läbitud",
@@ -1087,6 +1090,7 @@
 				"info": {
 					"add-to-release": "Lisa väljaandele",
 					"release-unspecified": "Väljalase on määramata",
+					"create-related-vs-version": "Loo seotud loendi versioon",
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitusülesanne",
 					"create-review": "Loo ülevaatuse ülesanne",

@@ -43,9 +43,19 @@
           <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
         </div>
       </div>
-      <a (mClick)="releaseModal.toggleModal({resourceId: codeSystem, resourceVersion: version?.version, resourceTitle: codeSystemTitle})"
+      <a (mClick)="toggleReleaseModal(version)"
           *ngIf="!(releases?.[version.codeSystem + version.version]?.length > 0) && ('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.add-to-release' | translate}}</a>
       <span *ngIf="!(releases?.[version.codeSystem + version.version]?.length > 0) && !('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.release-unspecified' | translate}}</span>
+    </div>
+    <div class="m-items-middle" *ngIf="version.valueSet || codeSystemValueSet">
+      <m-icon mCode="tag"></m-icon>
+      <span *ngIf="version.valueSet">VS | <a [routerLink]="['/resources/value-sets', version.valueSet.valueSet, 'versions', version.valueSet.version, 'summary']">{{version.valueSet.valueSet}}|{{version.valueSet.version}}</a></span>
+      <ng-container *ngIf="!version.valueSet">
+        <a *twPrivileged="'*.ValueSet.edit'" (mClick)="toggleRelatedValueSetModal(version)">
+          {{'web.code-system-version.summary.info.create-related-vs-version' | translate}}
+        </a>
+        <m-icon mCode="warning" style="color: orange"/>
+      </ng-container>
     </div>
     <div>{{version.description | localName}}</div>
   </m-list-item>
@@ -78,3 +88,4 @@
 </m-modal>
 
 <tw-resource-release-modal #releaseModal (connectedToRelease)="loadRelease()" resourceType="CodeSystem"/>
+<tw-value-set-version-save-modal #valueSetModal (created)="versionsChanged.emit()"></tw-value-set-version-save-modal>
