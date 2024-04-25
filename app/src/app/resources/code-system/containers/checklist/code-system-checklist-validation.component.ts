@@ -1,13 +1,15 @@
 import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
-import {collect, isDefined, LoadingManager} from '@kodality-web/core-util';
+import {collect, isDefined, LoadingManager, DestroyService} from '@kodality-web/core-util';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {AuthService} from 'term-web/core/auth';
-import {Checklist} from 'term-web/sys/_lib';
+import {Checklist, LorqueLibService} from 'term-web/sys/_lib';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
 
 @Component({
   selector: 'tw-cs-checklist-validation',
-  templateUrl: './code-system-checklist-validation.component.html'
+  templateUrl: './code-system-checklist-validation.component.html',
+  providers: [DestroyService]
 })
 export class CodeSystemChecklistValidationComponent {
   @Input() public codeSystemId: string;
@@ -28,8 +30,11 @@ export class CodeSystemChecklistValidationComponent {
 
   public constructor(
     private checklistService: ChecklistService,
+    private lorqueService: LorqueLibService,
     protected router: Router,
+    protected notificationService: MuiNotificationService,
     protected authService: AuthService,
+    private destroy$: DestroyService
   ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -83,6 +88,10 @@ export class CodeSystemChecklistValidationComponent {
     return !checklist.assertions?.[0]?.passed;
   };
 
+  protected hasErrors = (lists: Checklist[]): boolean => {
+    return !!lists.find(checklist => !checklist.assertions?.[0]?.passed);
+  };
+
   protected createAssertion(checklistId: number, passed: boolean): void {
     this.loader.wrap('create-assertion', this.checklistService.createAssertion(checklistId, this.codeSystemVersion, passed))
       .subscribe(() => this.loadChecklist(this.codeSystemId));
@@ -109,5 +118,18 @@ export class CodeSystemChecklistValidationComponent {
       const canEdit = this.authService.hasPrivilege(`${this.codeSystemId}.CodeSystem.edit`);
       this.router.navigate(['/resources', 'code-systems', this.codeSystemId, 'concepts', id, canEdit ? 'edit' : 'view']);
     }
+  }
+
+  protected downloadErrorCsv(): void {
+    this.loader.wrap('csv', this.checklistService.startAssertionExport('CodeSystem', this.codeSystemId, this.codeSystemVersion)).subscribe(process => {
+      this.loader.wrap('csv', this.lorqueService.pollFinishedProcess(process.id, this.destroy$))
+        .subscribe(status => {
+          if (status === 'failed') {
+            this.lorqueService.load(process.id).subscribe(p => this.notificationService.error(p.resultText));
+            return;
+          }
+          this.checklistService.getAssertionExportResult(process.id);
+        });
+    });
   }
 }

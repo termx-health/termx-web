@@ -2,6 +2,10 @@
   <ng-container *ngIf="!codeSystemVersion">
     <m-alert mType="warning">Version is not selected</m-alert>
   </ng-container>
+  <div *ngIf="checklist | apply:hasErrors" class="m-justify-between" style="margin-bottom: 1rem">
+    <div></div>
+    <m-button (mClick)="downloadErrorCsv()">Download error CSV</m-button>
+  </div>
   <ng-container *ngIf="(checklist | filter: filterCheckList:showUnaccomplished | apply:collectChecklists) as groups">
     <div *ngFor="let target of groups | keys" style="margin-bottom: 1.5rem">
       <div class="m-justify-between" style="margin-bottom: 0.5rem">
