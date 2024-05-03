@@ -44,7 +44,7 @@
           <tw-cs-properties [properties]="codeSystem.properties" [codeSystemId]="codeSystem.id"></tw-cs-properties>
           <tw-resource-contacts [(contacts)]="codeSystem.contacts"></tw-resource-contacts>
           <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
-          <tw-cs-value-set [codeSystemId]="codeSystem.id"></tw-cs-value-set>
+          <tw-cs-value-set [codeSystemId]="codeSystem.id" [hasRelatedValueSet]="!!codeSystem.valueSet"></tw-cs-value-set>
         </div>
 
         <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
