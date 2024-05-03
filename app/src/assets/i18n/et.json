@@ -1937,7 +1937,10 @@
 			"resource-import-error-message": "Ressurssi import ebaõnnestus",
 			"resource-import-success-message": "Ressurssi import õnnestus",
 			"resources": "Ressurssid",
-			"select-context": "Vali kontekst"
+			"select-context": "Vali kontekst",
+			"diff": {
+				"sync-tooltip": "Allikas: {{source}}\n Siht: {{target}}"
+			}
 		},
 		"structure-definition": {
 			"form": {

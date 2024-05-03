@@ -30,7 +30,9 @@
         </div>
         <div class="m-items-middle">
           <m-button [routerLink]="['/spaces/context', ctx.params, 'diff-matrix']">
-            <div class="m-items-middle"><label>{{'Diff matrix'}}</label><m-icon mCode="table"></m-icon></div>
+            <div class="m-items-middle"><label>{{'Diff matrix'}}</label>
+              <m-icon mCode="table"></m-icon>
+            </div>
           </m-button>
         </div>
       </div>
@@ -39,8 +41,12 @@
       <m-card style="max-width: 33%">
         <div *m-card-header class="m-justify-between">
           <label>{{'entities.terminology-server.current-installation' | translate}}</label>
-          <m-button mDisplay="primary" (mClick)="sync('local')">
-            <div class="m-items-middle"><label>{{'Sync'}}</label><m-icon mCode="sync"></m-icon></div>
+          <m-button m-tooltip [mTitle]="'web.space.diff.sync-tooltip' | translate: {
+              source: (terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName: '...'),
+              target: ('entities.terminology-server.current-installation' | translate)}" mDisplay="primary" (mClick)="sync('local')">
+            <div class="m-items-middle"><label>{{'Sync'}}</label>
+              <m-icon mCode="sync"></m-icon>
+            </div>
           </m-button>
         </div>
 
@@ -51,8 +57,12 @@
       <m-card style="max-width: 33%">
         <div *m-card-header class="m-justify-between">
           <label>{{terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName: '...'}}</label>
-          <m-button mDisplay="primary" (mClick)="sync('external')">
-            <div class="m-items-middle"><label>{{'Sync'}}</label><m-icon mCode="sync"></m-icon></div>
+          <m-button  m-tooltip [mTitle]="'web.space.diff.sync-tooltip' | translate: {
+              source: ('entities.terminology-server.current-installation' | translate),
+              target: (terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName: '...')}" mDisplay="primary" (mClick)="sync('external')">
+            <div class="m-items-middle"><label>{{'Sync'}}</label>
+              <m-icon mCode="sync"></m-icon>
+            </div>
           </m-button>
         </div>
 
@@ -68,13 +78,11 @@
           </m-button>
         </div>
 
-        <tw-diff-view
-            *ngIf="current && comparable"
+        <tw-diff-view *ngIf="current && comparable"
             [src]="current | apply: normalize"
             [tgt]="comparable | apply: normalize"
             [full]="current.length < 200000 && comparable.length < 200000"
-            [display]="d.mode"
-        />
+            [display]="d.mode"/>
       </m-card>
     </div>
   </div>

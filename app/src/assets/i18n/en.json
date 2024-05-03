@@ -1986,7 +1986,10 @@
 			"change-source-server": "Change resource source server",
 			"reload-diff-matrix": "Reload diff matrix",
 			"sync-resources": "Sync all resources (from current installation to target server)",
-			"clear-sync-resources": "Delete and sync all resources (from current installation to target server)"
+			"clear-sync-resources": "Delete and sync all resources (from current installation to target server)",
+			"diff": {
+				"sync-tooltip": "Source: {{source}}\n Target: {{target}}"
+			}
 		},
 		"structure-definition": {
 			"form": {
