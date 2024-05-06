@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {collect, isNil} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {mergeMap, Observable, timer} from 'rxjs';
-import {environment} from '../../../../../environments/environment';
+import {environment} from 'environments/environment';
 import {JobLibService, JobLog, JobLogResponse} from '../../../../sys/_lib';
 
 
