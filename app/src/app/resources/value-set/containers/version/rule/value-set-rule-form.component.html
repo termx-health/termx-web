@@ -94,6 +94,13 @@
           </m-form-item>
         </m-form-row>
 
+        <m-form-row *ngIf="rule.properties?.length > 0">
+          <m-form-item *mFormCol mName="codeSystemProperties" mLabel="entities.value-set-rule-set.rule.properties">
+            {{rule.properties | join: ', '}}
+          </m-form-item>
+          <div *mFormCol></div>
+        </m-form-row>
+
         <m-form-item mName="concept-based-on" mLabel="entities.value-set-rule-set.rule.based-on">
           {{'web.value-set-version.form.rule-set.rule.' + conceptsBase | translate}}
         </m-form-item>
