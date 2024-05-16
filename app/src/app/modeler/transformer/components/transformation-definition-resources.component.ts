@@ -1,6 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {remove} from '@kodality-web/core-util';
+import {remove, unique, uniqueBy, group, LoadingManager} from '@kodality-web/core-util';
 import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
+import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 
 @Component({
   selector: 'tw-transformation-definition-resources',
@@ -56,6 +57,10 @@ import {TransformationDefinition, TransformationDefinitionResource} from 'term-w
       &--invalid {
         color: @mui-error;
       }
+
+      &--imported {
+        color: var(--color-green-7);
+      }
     }
 
     .resource-dir {
@@ -69,39 +74,71 @@ import {TransformationDefinition, TransformationDefinitionResource} from 'term-w
 })
 export class TransformationDefinitionResourcesComponent implements OnInit {
   @Input() public definition: TransformationDefinition;
-  public types: TransformationDefinitionResource['type'][] = ['definition', 'conceptmap', 'mapping'];
-  public selectedResource: TransformationDefinitionResource;
+
+  protected readonly types: TransformationDefinitionResource['type'][] = ['definition', 'conceptmap', 'mapping'];
+  protected selectedResource: TransformationDefinitionResource;
+  protected loader = new LoadingManager<'import'>();
+
+  public constructor(
+    private service: TransformationDefinitionService
+  ) { }
 
   public ngOnInit(): void {
-    this.selectResource(this.definition.mapping);
+    this.onResourceSelect(this.definition.mapping);
   }
 
-  public onAdd(type: any): void {
+  protected onResourceSelect(r: TransformationDefinitionResource): void {
+    this.selectedResource = r;
+  }
+
+  public onResourceAdd(type: TransformationDefinitionResource['type']): void {
     const resource = new TransformationDefinitionResource();
     resource.type = type;
     resource.reference = {};
     this.definition.resources = [...this.definition.resources, resource];
-    this.selectResource(resource);
+    this.onResourceSelect(resource);
   }
 
-  protected selectResource(r: TransformationDefinitionResource): void {
-    this.selectedResource = r;
-  }
-
-  protected filterType = (r: TransformationDefinitionResource, type: string): boolean => {
-    return r.type === type;
-  };
-
-  protected deleteResource(r: TransformationDefinitionResource): void {
+  protected onResourceDelete(r: TransformationDefinitionResource): void {
     this.selectedResource = null;
     this.definition.resources = remove(this.definition.resources, r);
   }
 
-  protected isResourceInvalid = (r: TransformationDefinitionResource, dummy: any): boolean => {
+  protected importResourcesFromImportMaps(): void {
+    const importMapIds = this.definition.resources
+      .filter(r => r.type === 'mapping')
+      .filter(r => r.source === 'local')
+      .map(im => im.reference.localId)
+      .filter(unique);
+
+    this.loader.wrap('import', this.service.search({
+      ids: importMapIds.join(','),
+      limit: importMapIds.length
+    })).subscribe(resp => {
+      const resources = resp.data.flatMap(td => td.resources ?? []).filter(r => r.type === 'definition');
+      const resourcesUnique = uniqueBy(resources, r => r.name);
+
+      const merged = {
+        ...group(this.definition.resources, r => r.name),
+        ...group(resourcesUnique, r => r.name, r => ({...r, _imported: true}))
+      };
+
+      this.definition.resources = Object.values(merged);
+    });
+  }
+
+
+  // Utils
+
+  protected filterByType = (r: TransformationDefinitionResource, type: string): boolean => {
+    return r.type === type;
+  };
+
+  protected isResourceInvalid = (r: TransformationDefinitionResource, _: any): boolean => {
     return !TransformationDefinitionResource.isValid(r);
   };
 
-  protected compactName(name: string, source: TransformationDefinitionResource['source']): string {
+  protected compactName = (name: string, source: TransformationDefinitionResource['source']): string => {
     if (source === 'url') {
       return name?.includes("/") ? name.substring(name.lastIndexOf('/') + 1) : name;
     }

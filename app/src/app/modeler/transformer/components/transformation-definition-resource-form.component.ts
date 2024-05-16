@@ -1,6 +1,6 @@
 import {HttpErrorResponse} from '@angular/common/http';
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {group, HttpCacheService, isNil, LoadingManager} from '@kodality-web/core-util';
+import {group, HttpCacheService, isNil, LoadingManager, BooleanInput} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {Fhir} from 'fhir/fhir';
 import {Bundle} from 'fhir/model/bundle';
@@ -22,6 +22,7 @@ import {TransformationDefinition, TransformationDefinitionResource} from '../../
 export class TransformationDefinitionResourceFormComponent implements OnChanges {
   @Input() public resource: TransformationDefinitionResource;
   @Input() public definition: TransformationDefinition;
+  @Input() @BooleanInput() public disabled: boolean | string;
 
   protected loader = new LoadingManager();
   private httpCache = new HttpCacheService();

@@ -2181,6 +2181,12 @@
 				"type.definition": "Definitions",
 				"type.mapping": "Imports",
 				"type.mapping-main": "Mapping"
+			},
+			"import": {
+				"import-map": {
+					"title": "This resource was imported from ImportMap!",
+					"description": "If you need to make changes, you can either delete and recreate it manually, or save the Transformation Definition!"
+				}
 			}
 		},
 		"value-set": {
