@@ -2,7 +2,7 @@ import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {compareValues, isDefined, LoadingManager, validateForm, serializeDate, format} from '@kodality-web/core-util';
 import {CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {map, Observable} from 'rxjs';
 import {CodeSystemService} from '../../../services/code-system.service';
@@ -47,6 +47,9 @@ export class CodeSystemVersionEditComponent implements OnInit {
     if (!validateForm(this.form)) {
       return;
     }
+
+    this.version.releaseDate = serializeDate(this.version.releaseDate);
+    this.version.expirationDate = this.version.expirationDate ? serializeDate(this.version.expirationDate) : undefined;
     this.loader.wrap('save', this.codeSystemService.saveCodeSystemVersion(this.codeSystemId!, this.version!)).subscribe(() => this.location.back());
   }
 

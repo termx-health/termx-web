@@ -8,7 +8,7 @@ export class CodeSystemVersionReference {
   public version?: string;
   public uri?: string;
   public status?: string;
-  public releaseDate?: Date;
+  public releaseDate?: Date | string;
 }
 
 export class CodeSystemVersion extends CodeSystemVersionReference {
@@ -16,8 +16,7 @@ export class CodeSystemVersion extends CodeSystemVersionReference {
   public preferredLanguage?: string;
   public supportedLanguages?: string[];
   public description?: LocalizedName;
-  // public releaseDate?: Date;
-  public expirationDate?: Date;
+  public expirationDate?: Date | string;
   public created?: Date;
   public algorithm?: string;
   public identifiers?: Identifier[];

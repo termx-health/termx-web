@@ -2,7 +2,7 @@ import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {compareValues, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {compareValues, LoadingManager, validateForm, serializeDate} from '@kodality-web/core-util';
 import {FhirValueSetLibService} from 'app/src/app/fhir/_lib';
 import {ValueSetVersion, ValueSetVersionRuleSet} from 'app/src/app/resources/_lib';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
@@ -60,6 +60,8 @@ export class ValueSetVersionEditComponent implements OnInit {
       return;
     }
     this.version.status = 'draft';
+    this.version.releaseDate = serializeDate(this.version.releaseDate);
+    this.version.expirationDate = this.version.expirationDate ? serializeDate(this.version.expirationDate) : undefined;
     this.loader.wrap('save', this.valueSetService.saveValueSetVersion(this.valueSetId!, this.version)).subscribe(() => {
       this.location.back();
     });

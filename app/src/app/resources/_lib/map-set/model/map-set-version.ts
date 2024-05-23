@@ -8,8 +8,8 @@ export class MapSetVersion {
   public mapSet?: string;
   public preferredLanguage?: string;
   public description?: LocalizedName;
-  public releaseDate?: Date;
-  public expirationDate?: Date;
+  public releaseDate?: Date | string;
+  public expirationDate?: Date | string;
   public created?: Date;
   public algorithm?: string;
   public identifiers?: Identifier[];
