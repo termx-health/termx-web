@@ -17,10 +17,10 @@
 
       <m-form-row>
         <m-form-item *mFormCol mName="releaseDate" mLabel="entities.value-set-version.release-date" required>
-          <m-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" [mMax]="version.expirationDate" required></m-date-picker>
+          <m-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" [mMax]="version.expirationDate" [mDisableTime]="true" required/>
         </m-form-item>
         <m-form-item *mFormCol mName="expirationDate" mLabel="entities.value-set-version.expiration-date">
-          <m-date-picker name="expirationDate" [(ngModel)]="version.expirationDate" [mMin]="version.releaseDate"></m-date-picker>
+          <m-date-picker name="expirationDate" [(ngModel)]="version.expirationDate" [mMin]="version.releaseDate" [mDisableTime]="true"/>
         </m-form-item>
       </m-form-row>
 
