@@ -6,8 +6,8 @@ export class ResourceVersion {
   public status?: string;
   public version?: string;
   public algorithm?: string;
-  public from?: Date;
-  public to?: Date;
+  public releaseDate?: Date | string;
+  public expirationDate?: Date | string;
   public description?: LocalizedName;
   public preferredLanguage?: string;
   public identifiers?: Identifier[];
