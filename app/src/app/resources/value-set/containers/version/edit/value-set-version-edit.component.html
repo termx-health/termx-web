@@ -38,7 +38,7 @@
 
       <m-form-row>
         <m-form-item *mFormCol mName="description" mLabel="entities.value-set-version.description">
-          <m-multi-language-input [(ngModel)]="version.description" name="description"></m-multi-language-input>
+          <m-multi-language-input [(ngModel)]="version.description" name="description" mInputType="textarea"/>
         </m-form-item>
         <m-form-item *mFormCol mLabel="entities.value-set-version.algorithm" mName="algorithm">
           <tw-value-set-concept-select name="algorithm" [(ngModel)]="version.algorithm" valueSet="version-algorithm"></tw-value-set-concept-select>

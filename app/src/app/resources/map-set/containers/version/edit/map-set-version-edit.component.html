@@ -29,7 +29,7 @@
 
           <m-form-row>
             <m-form-item *mFormCol mName="description" mLabel="entities.map-set-version.description">
-              <m-multi-language-input name="description" [(ngModel)]="version.description"></m-multi-language-input>
+              <m-multi-language-input name="description" [(ngModel)]="version.description" mInputType="textarea"/>
             </m-form-item>
             <m-form-item *mFormCol mName="preferredLanguage" mLabel="entities.map-set-version.preferred-language">
               <tw-value-set-concept-select name="preferredLanguage" [(ngModel)]="version.preferredLanguage" valueSet="languages"></tw-value-set-concept-select>
