@@ -80,12 +80,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
     this.loadData();
 
     if (this.mode === 'edit') {
-      this.loader.wrap('init', this.codeSystemService.loadConcept(this.codeSystemId, conceptCode, this.versionCode)).subscribe(c => {
-        this.concept = this.writeConcept(c);
-        const conceptVersion = this.concept?.versions?.find(v => v.id === Number(conceptVersionId)) ||
-          this.concept?.versions?.[this.concept?.versions?.length - 1];
-        this.selectVersion(conceptVersion);
-      });
+      this.loadConcept(conceptCode, Number(conceptVersionId));
     } else {
       this.concept = this.writeConcept(new CodeSystemConcept());
       this.addVersion();
@@ -105,9 +100,12 @@ export class CodeSystemConceptEditComponent implements OnInit {
       .subscribe(() => this.location.back());
   }
 
-  private loadConcept(conceptCode: string): void {
-    this.codeSystemService.loadConcept(this.codeSystemId!, conceptCode).subscribe(c => this.concept = c).add(() => {
-      this.selectVersion(this.concept?.versions?.[this.concept?.versions?.length - 1]);
+  private loadConcept(conceptCode: string, conceptVersionId?: number): void {
+    this.loader.wrap('init', this.codeSystemService.loadConcept(this.codeSystemId, conceptCode, this.versionCode)).subscribe(c => {
+      this.concept = this.writeConcept(c);
+      const conceptVersion = this.concept?.versions?.find(v => v.id === Number(conceptVersionId)) ||
+        this.concept?.versions?.[this.concept?.versions?.length - 1];
+      this.selectVersion(conceptVersion);
     });
   }
 
@@ -232,7 +230,7 @@ export class CodeSystemConceptEditComponent implements OnInit {
       if (codeSystemVersion === this.codeSystemVersion?.version) {
         this.resourceContextComponent.unselectResourceOrVersion();
       } else {
-        this.loadData();
+        this.loadConcept(this.concept?.code, entityVersionId);
       }
     });
   }
