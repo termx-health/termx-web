@@ -15,7 +15,7 @@ export class CodeSystemValueSetAddComponent {
 
   protected loader = new LoadingManager();
   protected generateValueSet: boolean;
-  protected valueSet: ValueSet = {versions: [{status: 'draft', version: '1'}]};
+  protected valueSet: ValueSet = {versions: [{status: 'draft'}]};
 
 
   public constructor(private codeSystemService: CodeSystemLibService) {}

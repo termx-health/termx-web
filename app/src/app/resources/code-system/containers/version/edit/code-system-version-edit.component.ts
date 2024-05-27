@@ -1,7 +1,6 @@
-import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {compareValues, isDefined, LoadingManager, validateForm, serializeDate, format} from '@kodality-web/core-util';
 import {CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {map, Observable} from 'rxjs';
@@ -22,7 +21,7 @@ export class CodeSystemVersionEditComponent implements OnInit {
   public constructor(
     private codeSystemService: CodeSystemService,
     private route: ActivatedRoute,
-    private location: Location
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
@@ -50,7 +49,8 @@ export class CodeSystemVersionEditComponent implements OnInit {
 
     this.version.releaseDate = serializeDate(this.version.releaseDate);
     this.version.expirationDate = this.version.expirationDate ? serializeDate(this.version.expirationDate) : undefined;
-    this.loader.wrap('save', this.codeSystemService.saveCodeSystemVersion(this.codeSystemId!, this.version!)).subscribe(() => this.location.back());
+    this.loader.wrap('save', this.codeSystemService.saveCodeSystemVersion(this.codeSystemId!, this.version!))
+      .subscribe(() => this.router.navigate(['/resources/code-systems', this.codeSystemId, 'versions', this.version.version, 'summary'], {replaceUrl: true}));
   }
 
   public versions = (id): Observable<string[]> => {
