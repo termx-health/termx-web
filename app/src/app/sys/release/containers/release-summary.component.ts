@@ -2,8 +2,9 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {forkJoin} from 'rxjs';
-import {Checklist, Release, ReleaseResource} from 'term-web/sys/_lib';
+import {Checklist, Release, ReleaseResource, JobLog} from 'term-web/sys/_lib';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
 
@@ -34,6 +35,7 @@ export class ReleaseSummaryComponent implements OnInit {
   protected release?: Release;
   protected resources?: ReleaseResource[];
   protected checklists?: {[key: string]: Checklist[]} = {};
+  protected syncResult?: JobLog;
 
   protected loader = new LoadingManager();
   protected showOnlyOpenedTasks: boolean;
@@ -50,7 +52,8 @@ export class ReleaseSummaryComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private releaseService: ReleaseService,
-    private checklistService: ChecklistService
+    private checklistService: ChecklistService,
+    private notificationService: MuiNotificationService
   ) {}
 
   @ViewChild("form") public form?: NgForm;
@@ -150,5 +153,28 @@ export class ReleaseSummaryComponent implements OnInit {
 
   protected getCheckColor = (code: 'question-circle' | 'exclamation-circle' | 'close-circle'): string => {
     return ReleaseSummaryComponent.colorMap[code];
+  };
+
+  protected serverSync(): void {
+    this.loader.wrap('sync', this.releaseService.serverSync(this.release.id)).subscribe(jobLog => {
+      if (isDefined(jobLog.errors)) {
+        jobLog.errors.forEach(err =>  this.notificationService.error('Sync error', err));
+      }
+    });
+  }
+
+  protected validateSync(): void {
+    this.loader.wrap('sync', this.releaseService.validateSync(this.release.id)).subscribe(jobLog => {
+      this.syncResult = jobLog;
+      if (isDefined(jobLog.errors)) {
+        jobLog.errors.forEach(err =>  this.notificationService.error('Sync error', err));
+      }
+    });
+  }
+
+  protected getResourceResult = (resource: ReleaseResource, result: JobLog): 'success' | 'warning' | 'error' => {
+    const success = !!result.successes?.find(s => s === String(resource.id));
+    const warning = !!result.warnings?.find(s => s === String(resource.id));
+    return success ? 'success' : warning ? 'warning' : 'error';
   };
 }

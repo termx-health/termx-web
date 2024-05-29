@@ -65,6 +65,7 @@
 			"status": "Staatus",
 			"plural": "Väljaanded",
 			"single": "Väljalase",
+			"terminology-server": "Terminoloogia server",
 			"resource": {
 				"plural": "Ressurssid",
 				"type": "Tüüp",
@@ -72,6 +73,7 @@
 				"version": "Versioon",
 				"name": "Nimetus",
 				"errors": "Vead",
+				"sync-state": "Sündikeerimise seis",
 				"code-system": "Koodisüsteem",
 				"value-set": "Loend",
 				"map-set": "Vastavustabel",
@@ -824,7 +826,8 @@
 			"edit-resource": "Muuda ressurss",
 			"activate": "Aktiveeri",
 			"retire": "Tühista",
-			"make-draft": "Muuda \"mustandiks\""
+			"make-draft": "Muuda \"mustandiks\"",
+			"server-sync": "Sündikeeri serveriga"
 		},
 		"association-type": {
 			"form": {

@@ -1,7 +1,7 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {PrivilegeModule} from 'term-web/privileges/_lib';
-import {SpaceLibModule} from 'term-web/space/_lib';
+import {SysLibModule} from 'term-web/sys/_lib';
 import {CoreUiModule} from '../core/ui/core-ui.module';
 import {AssociationLibModule, CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from '../resources/_lib';
 import {PrivilegeEditComponent} from './containers/privilege-edit.component';
@@ -23,7 +23,7 @@ export const PRIVILEGES_ROUTES: Routes = [
     MapSetLibModule,
     NamingSystemLibModule,
     AssociationLibModule,
-    SpaceLibModule,
+    SysLibModule,
     PrivilegeModule
   ],
   declarations: [

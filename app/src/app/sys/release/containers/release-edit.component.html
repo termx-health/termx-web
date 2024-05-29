@@ -14,6 +14,11 @@
         <m-form-item mName="release-date" mLabel="entities.release.release-date">
           <m-date-picker name="release-date" [(ngModel)]="release.releaseDate"></m-date-picker>
         </m-form-item>
+        <m-form-item mName="terminology-server" mLabel="entities.release.terminology-server">
+          <m-select name="terminology-server" [(ngModel)]="release.terminologyServer">
+            <m-option *ngFor="let ts of terminologyServers" [mLabel]="ts.names | localName" [mValue]="ts.code"/>
+          </m-select>
+        </m-form-item>
         <m-form-item mName="authors" mLabel="entities.release.authors">
           <div style="display: flex; flex-direction: column; gap: 0.5rem">
             <div class="m-items-middle">

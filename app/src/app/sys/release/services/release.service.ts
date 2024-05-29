@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {isDefined} from '@kodality-web/core-util';
-import {Observable, of} from 'rxjs';
-import {Release, ReleaseLibService, ReleaseResource} from 'term-web/sys/_lib';
+import {Observable, of, timer, mergeMap} from 'rxjs';
+import {Release, ReleaseLibService, ReleaseResource, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 
 @Injectable()
 export class ReleaseService extends ReleaseLibService {
@@ -35,5 +35,17 @@ export class ReleaseService extends ReleaseLibService {
       return this.http.post<void>(`${this.baseUrl}/${id}/retire`, {});
     }
     return of();
+  }
+
+  public serverSync(releaseId: number, destroy$: Observable<any> = timer(60_000), resourceId?: number): Observable<JobLog> {
+    return this.http.post<JobLogResponse>(`${this.baseUrl}/${releaseId}/server-sync`, {resourceId: resourceId})
+      .pipe(mergeMap(resp => this.jobService.pollFinishedJobLog(resp.jobId, destroy$)
+        .pipe(mergeMap(jobLog => this.jobService.getLog(jobLog.id)))));
+  }
+
+  public validateSync(releaseId: number, destroy$: Observable<any> = timer(60_000)): Observable<JobLog> {
+    return this.http.post<JobLogResponse>(`${this.baseUrl}/${releaseId}/validate-sync`, {})
+      .pipe(mergeMap(resp => this.jobService.pollFinishedJobLog(resp.jobId, destroy$)
+        .pipe(mergeMap(jobLog => this.jobService.getLog(jobLog.id)))));
   }
 }

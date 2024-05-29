@@ -11,13 +11,11 @@
                 <m-icon mCode="appstore"/>
               </a>
             </div>
-
             <div *twPrivileged="release?.code + '.Release.edit'" [routerLink]="['/releases', release?.id, 'edit']">
               <a class="m-items-middle">{{'core.btn.edit' | translate}}
                 <m-icon mCode="form"/>
               </a>
             </div>
-
             <div>
               <span class="m-items-middle">{{'Provenance' | translate}}
                 <m-icon mCode="history"/>

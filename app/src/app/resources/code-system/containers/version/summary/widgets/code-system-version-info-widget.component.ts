@@ -10,7 +10,7 @@ import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import {AuthService} from 'term-web/core/auth';
-import {Space, SpaceLibService} from 'term-web/space/_lib';
+import {Space, SpaceLibService} from 'term-web/sys/_lib/space';
 import {LorqueLibService, Provenance, ReleaseLibService, Release} from 'term-web/sys/_lib';
 
 @Component({

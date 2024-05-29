@@ -11,7 +11,7 @@ import {StructureDefinition} from 'term-web/modeler/_lib';
 import {launchFMLEditor} from 'term-web/modeler/transformer/components/fml.editor';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 import {MapSet} from 'term-web/resources/_lib';
-import {TerminologyServerLibService} from 'term-web/space/_lib';
+import {TerminologyServerLibService} from 'term-web/sys/_lib/space';
 import {TransformationDefinition, TransformationDefinitionResource} from '../../_lib/transformer/transformation-definition';
 
 

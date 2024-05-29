@@ -65,6 +65,7 @@
 			"status": "Status",
 			"plural": "Releases",
 			"single": "Release",
+			"terminology-server": "Terminology server",
 			"resource": {
 				"plural": "Resources",
 				"type": "Type",
@@ -72,6 +73,7 @@
 				"version": "Version",
 				"name": "Name",
 				"errors": "Errors",
+				"sync-state": "Sync state",
 				"code-system": "Code system",
 				"value-set": "Value set",
 				"map-set": "Map set",
@@ -828,7 +830,8 @@
 			"edit-resource": "Edit resource",
 			"activate": "Activate",
 			"retire": "Retire",
-			"make-draft": "Make draft"
+			"make-draft": "Make draft",
+			"server-sync": "Sync with server"
 		},
 		"app": {
 			"header": "TermX"

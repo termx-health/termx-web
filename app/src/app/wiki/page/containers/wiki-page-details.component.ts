@@ -6,7 +6,7 @@ import {Router} from '@angular/router';
 import {collect, group, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {AuthService} from 'term-web/core/auth';
-import {Space} from 'term-web/space/_lib';
+import {Space} from 'term-web/sys/_lib/space';
 import {Page, PageComment, PageContent, PageRelation, parsePageRelationLink} from 'term-web/wiki/_lib';
 import {WikiComment} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';

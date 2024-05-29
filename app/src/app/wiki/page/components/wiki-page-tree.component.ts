@@ -4,7 +4,7 @@ import {compareValues, copyDeep, isNil, LoadingManager, remove, SearchResult, un
 import {TranslateService} from '@ngx-translate/core';
 import {EMPTY, forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
-import {Space} from 'term-web/space/_lib';
+import {Space} from 'term-web/sys/_lib/space';
 import {Page, PageContent, PageLink} from 'term-web/wiki/_lib';
 import {PageLinkService} from '../services/page-link.service';
 import {PageService} from '../services/page.service';

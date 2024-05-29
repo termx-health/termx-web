@@ -7,7 +7,7 @@ import {combineLatest, mergeMap} from 'rxjs';
 import {UnsavedChangesGuardComponent} from 'term-web/core/ui/guard/unsaved-changes.guard';
 import {SeoService} from 'term-web/core/ui/services/seo.service';
 import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
-import {SpaceService} from 'term-web/space/services/space.service';
+import {SpaceService} from 'term-web/sys/space/services/space.service';
 import {Page, PageAttachment, PageComment, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
 import {PageService} from '../services/page.service';

@@ -26,7 +26,6 @@ import {ResourcesModule} from 'term-web/resources/resources.module';
 import {RootRoutingModule} from 'term-web/root-routing.module';
 import {RootComponent} from 'term-web/root.component';
 import {SequenceModule} from 'term-web/sequence/sequence.module';
-import {SpaceModule} from 'term-web/space/space.module';
 import {SysModule} from 'term-web/sys/sys.module';
 import {TaskModule} from 'term-web/task/task.module';
 import {TerminologyServiceApiModule} from 'term-web/terminology-service-api/terminology-service-api.module';
@@ -94,7 +93,6 @@ export function initAuth(authService: AuthService): () => Observable<any> {
     ObservationDefinitionModule,
     TerminologyServiceApiModule,
     MeasurementUnitModule,
-    SpaceModule,
     SysModule,
     UserModule,
     SequenceModule,

@@ -9,7 +9,7 @@ import {NzTimelineItemColor} from 'ng-zorro-antd/timeline/typings';
 import {map, Observable, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {SeoService} from 'term-web/core/ui/services/seo.service';
-import {Space} from 'term-web/space/_lib';
+import {Space} from 'term-web/sys/_lib/space';
 import {Page, PageContent} from 'term-web/wiki/_lib';
 import {PageContentHistoryItem} from 'term-web/wiki/_lib/page/models/page-content-history-item';
 import {WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';

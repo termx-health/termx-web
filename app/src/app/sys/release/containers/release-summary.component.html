@@ -56,6 +56,9 @@
           <m-button *ngIf="release?.status === 'draft'" mDisplay="text" (mClick)="modalData = {visible: true, resource: {}}">
             <m-icon mCode="plus"></m-icon>&nbsp; {{'web.release.add-resource' | translate}}
           </m-button>
+          <m-button *ngIf="release?.status === 'active' && release?.terminologyServer && (release.id + '.Release.publish' | twPrivileged)" mDisplay="text" (mClick)="serverSync()">
+            <m-icon mCode="sync"/>&nbsp; {{'web.release.server-sync' | translate}}
+          </m-button>
         </div>
         <m-table [mData]="resources">
           <tr *mTableHead>
@@ -64,6 +67,11 @@
             <th>{{'entities.release.resource.version' | translate}}</th>
             <th>{{'entities.release.resource.name' | translate}}</th>
             <th>{{'entities.release.resource.errors' | translate}}</th>
+            <th *ngIf="release?.status === 'active' && release?.terminologyServer">{{'entities.release.resource.sync-state' | translate}}
+              <m-button mDisplay="text" (mClick)="validateSync()">
+                <m-icon mCode="reload"/>
+              </m-button>
+            </th>
             <th class="tw-table-actions" *ngIf="release.status === 'draft'"></th>
           </tr>
           <tr *mTableRow="let r">
@@ -77,6 +85,19 @@
               <m-tag mColor="red" *ngIf="checklists[r.resourceType + ' ' + r.resourceId + ' ' + r.resourceVersion]?.length > 0">
                 {{checklists[r.resourceType + ' ' + r.resourceId + ' ' + r.resourceVersion]?.length}}
               </m-tag>
+              <m-icon style="color: green"
+                  mCode="check-circle"
+                  *ngIf="!(checklists[r.resourceType + ' ' + r.resourceId + ' ' + r.resourceVersion]?.length > 0)"/>
+            </td>
+            <td *ngIf="release?.status === 'active' && release?.terminologyServer">
+              <div class="m-items-middle">
+                <ng-container [ngSwitch]="r | apply: getResourceResult: syncResult">
+                  <m-icon *ngSwitchCase="'success'" style="color: green" mCode="check-circle"/>
+                  <m-icon *ngSwitchCase="'warning'" style="color: orange" mCode="warning"/>
+                  <m-icon *ngSwitchCase="'error'" style="color: red" mCode="warning"/>
+                </ng-container>
+                <a [routerLink]="['/releases', release?.id, 'diff', {'resourceId': r.id}]"><m-icon mCode="diff"/></a>
+              </div>
             </td>
             <td *ngIf="release?.status === 'draft'">
               <m-dropdown *twPrivileged="release?.id + '.Release.edit'">

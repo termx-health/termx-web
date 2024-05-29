@@ -7,7 +7,7 @@ import {map, takeUntil} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {SeoService} from 'term-web/core/ui/services/seo.service';
-import {Space} from 'term-web/space/_lib';
+import {Space} from 'term-web/sys/_lib/space';
 import {Page} from 'term-web/wiki/_lib';
 import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
 import {PageService} from '../services/page.service';

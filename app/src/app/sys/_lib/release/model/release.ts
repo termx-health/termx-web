@@ -10,4 +10,5 @@ export class Release {
   public status?: string;
   public authors?: string[];
   public resources?: ReleaseResource[];
+  public terminologyServer?: string;
 }

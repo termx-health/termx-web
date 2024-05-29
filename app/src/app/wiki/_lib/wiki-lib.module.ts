@@ -8,7 +8,7 @@ import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {NzListModule} from 'ng-zorro-antd/list';
 import {ModelerLibModule} from 'term-web/modeler/_lib';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
-import {SpaceLibModule} from 'term-web/space/_lib';
+import {SpaceLibModule} from 'term-web/sys/_lib/space';
 import {PageContentSelectComponent} from 'term-web/wiki/_lib/page/components/page-content-select.component';
 import {PageContentTreeSelectComponent} from 'term-web/wiki/_lib/page/components/page-content-tree-select.component';
 import {PageCommentLibService} from 'term-web/wiki/_lib/page/services/page-comment-lib.service';
