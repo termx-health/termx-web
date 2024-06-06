@@ -831,7 +831,9 @@
 			"activate": "Activate",
 			"retire": "Retire",
 			"make-draft": "Make draft",
-			"server-sync": "Sync with server"
+			"server-sync": "Sync with server",
+			"records": "Notes",
+			"generate-records": "Generate notes"
 		},
 		"app": {
 			"header": "TermX"

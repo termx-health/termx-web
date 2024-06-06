@@ -3,6 +3,7 @@ import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {saveAs} from 'file-saver';
 import {forkJoin} from 'rxjs';
 import {Checklist, Release, ReleaseResource, JobLog} from 'term-web/sys/_lib';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
@@ -36,6 +37,8 @@ export class ReleaseSummaryComponent implements OnInit {
   protected resources?: ReleaseResource[];
   protected checklists?: {[key: string]: Checklist[]} = {};
   protected syncResult?: JobLog;
+  protected attachments: any[];
+
 
   protected loader = new LoadingManager();
   protected showOnlyOpenedTasks: boolean;
@@ -66,11 +69,12 @@ export class ReleaseSummaryComponent implements OnInit {
   protected loadData(id: number): void {
     this.loader.wrap('load', forkJoin([
       this.releaseService.load(id),
-      this.releaseService.loadResources(id)]))
-      .subscribe(([release, resources]) => {
+      this.releaseService.loadNotes(id)]))
+      .subscribe(([release, notes]) => {
         this.release = release;
-        this.resources = resources;
-        this.loadChecklist(resources);
+        this.resources = release.resources;
+        this.attachments = notes;
+        this.loadChecklist(this.resources);
       });
   }
 
@@ -177,4 +181,13 @@ export class ReleaseSummaryComponent implements OnInit {
     const warning = !!result.warnings?.find(s => s === String(resource.id));
     return success ? 'success' : warning ? 'warning' : 'error';
   };
+
+  protected generateNotes(): void {
+    this.loader.wrap('generate-notes', this.releaseService.generateNotes(this.release.id))
+      .subscribe(() => this.loadData(this.release.id));
+  }
+
+  public downloadFile(attachment: any): void {
+    this.releaseService.downloadFile(this.release.id, attachment.fileName).subscribe(blob => saveAs(blob, attachment.fileName));
+  }
 }

@@ -48,4 +48,8 @@ export class ReleaseService extends ReleaseLibService {
       .pipe(mergeMap(resp => this.jobService.pollFinishedJobLog(resp.jobId, destroy$)
         .pipe(mergeMap(jobLog => this.jobService.getLog(jobLog.id)))));
   }
+
+  public generateNotes(id: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${id}/generate-notes`, {});
+  }
 }

@@ -827,7 +827,9 @@
 			"activate": "Aktiveeri",
 			"retire": "Tühista",
 			"make-draft": "Muuda \"mustandiks\"",
-			"server-sync": "Sündikeeri serveriga"
+			"server-sync": "Sündikeeri serveriga",
+			"records": "Kirjed",
+			"generate-records": "Genereeri kirjed"
 		},
 		"association-type": {
 			"form": {

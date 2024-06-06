@@ -56,7 +56,9 @@
           <m-button *ngIf="release?.status === 'draft'" mDisplay="text" (mClick)="modalData = {visible: true, resource: {}}">
             <m-icon mCode="plus"></m-icon>&nbsp; {{'web.release.add-resource' | translate}}
           </m-button>
-          <m-button *ngIf="release?.status === 'active' && release?.terminologyServer && (release.id + '.Release.publish' | twPrivileged)" mDisplay="text" (mClick)="serverSync()">
+          <m-button *ngIf="release?.status === 'active' && release?.terminologyServer && (release.id + '.Release.publish' | twPrivileged)"
+              mDisplay="text"
+              (mClick)="serverSync()">
             <m-icon mCode="sync"/>&nbsp; {{'web.release.server-sync' | translate}}
           </m-button>
         </div>
@@ -96,7 +98,9 @@
                   <m-icon *ngSwitchCase="'warning'" style="color: orange" mCode="warning"/>
                   <m-icon *ngSwitchCase="'error'" style="color: red" mCode="warning"/>
                 </ng-container>
-                <a [routerLink]="['/releases', release?.id, 'diff', {'resourceId': r.id}]"><m-icon mCode="diff"/></a>
+                <a [routerLink]="['/releases', release?.id, 'diff', {'resourceId': r.id}]">
+                  <m-icon mCode="diff"/>
+                </a>
               </div>
             </td>
             <td *ngIf="release?.status === 'draft'">
@@ -155,7 +159,19 @@
       </div>
 
       <!-- Tasks -->
-      <div *mFormCol>
+      <div *mFormCol style="display: flex; flex-direction: column; gap: 1rem">
+        <m-card>
+          <div *m-card-header class="m-justify-between">
+            <m-title mTitle="web.release.records"></m-title>
+            <m-button *ngIf="release?.status === 'draft'" mLabel="web.release.generate-records" (mClick)="generateNotes()"></m-button>
+          </div>
+          <div class="m-items-middle" style="gap: 2rem">
+            <a *ngFor="let attachment of attachments" style="display: flex; flex-direction: column; gap: 0.25rem; align-items: center" (mClick)="downloadFile(attachment)">
+              <m-icon mCode="file"/>
+              <span>{{attachment.fileName}}</span>
+            </a>
+          </div>
+        </m-card>
         <m-card *twPrivileged="'*.Task.view'">
           <div *m-card-header class="m-items-middle">
             <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">

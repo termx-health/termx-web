@@ -26,4 +26,12 @@ export class ReleaseLibService {
   public loadProvenances(id: number): Observable<Provenance[]> {
     return this.http.get<Provenance[]>(`${this.baseUrl}/${id}/provenances`);
   }
+
+  public loadNotes(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.baseUrl}/${id}/notes`);
+  }
+
+  public downloadFile(id: number, fileName: string): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/${id}/notes/${fileName}`, { responseType: 'blob' });
+  }
 }
