@@ -15,10 +15,10 @@
     </m-form-row>
     <m-form-row>
       <m-form-item *mFormCol mLabel="entities.resource.version.from" mName="from" required>
-        <m-date-picker name="from" [(ngModel)]="version.releaseDate" required></m-date-picker>
+        <m-date-picker name="from" [(ngModel)]="version.releaseDate" mLocalDate required></m-date-picker>
       </m-form-item>
       <m-form-item *mFormCol mLabel="entities.resource.version.to" mName="to">
-        <m-date-picker name="to" [(ngModel)]="version.expirationDate"></m-date-picker>
+        <m-date-picker name="to" [(ngModel)]="version.expirationDate" mLocalDate></m-date-picker>
       </m-form-item>
     </m-form-row>
     <m-form-row>
