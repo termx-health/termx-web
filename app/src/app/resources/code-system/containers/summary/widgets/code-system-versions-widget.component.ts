@@ -102,7 +102,7 @@ export class CodeSystemVersionsWidgetComponent implements OnChanges {
 
   protected toggleRelatedValueSetModal(version: CodeSystemVersion): void {
     this.blockVersionOpening();
-    this.valueSetModal.toggleModal({valueSet: this.codeSystemValueSet, codeSystem: this.codeSystem, codeSystemVersionId: version?.id});
+    this.valueSetModal.toggleModal({valueSet: this.codeSystemValueSet, codeSystem: this.codeSystem, codeSystemVersion: version});
 
   }
 

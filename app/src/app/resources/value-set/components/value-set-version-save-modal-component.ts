@@ -3,7 +3,7 @@ import {NgForm} from '@angular/forms';
 import {DestroyService, LoadingManager, isDefined} from '@kodality-web/core-util';
 import {Observable, map, switchMap} from 'rxjs';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
-import {ValueSetVersion, ValueSetVersionRule} from 'term-web/resources/_lib';
+import {ValueSetVersion, ValueSetVersionRule, CodeSystemVersion} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-value-set-version-save-modal',
@@ -14,7 +14,7 @@ export class ValueSetVersionSaveModalComponent {
   @Output() public created: EventEmitter<boolean> = new EventEmitter();
 
   public modalVisible = false;
-  public params: {version?: string, releaseDate?: Date, valueSet: string, codeSystem: string, codeSystemVersionId: number};
+  public params: {version?: string, releaseDate?: Date, valueSet: string, codeSystem: string, codeSystemVersion: CodeSystemVersion};
   protected loader = new LoadingManager();
 
   @ViewChild("form") public form?: NgForm;
@@ -38,9 +38,12 @@ export class ValueSetVersionSaveModalComponent {
       version: this.params.version,
       valueSet: this.params.valueSet,
       releaseDate: this.params.releaseDate,
+      algorithm: this.params.codeSystemVersion?.algorithm,
+      preferredLanguage: this.params.codeSystemVersion?.preferredLanguage,
+      supportedLanguages: this.params.codeSystemVersion?.supportedLanguages,
       status: 'draft'
     };
-    const rule: ValueSetVersionRule = {codeSystem: this.params.codeSystem, codeSystemVersion: {id: this.params.codeSystemVersionId}, type: 'include'};
+    const rule: ValueSetVersionRule = {codeSystem: this.params.codeSystem, codeSystemVersion: {id: this.params.codeSystemVersion.id}, type: 'include'};
     this.loader.wrap('save',
       this.valueSetService.saveValueSetVersion(this.params.valueSet, vsv).pipe(switchMap(ver =>
         this.valueSetService.saveRule(ver.valueSet, ver.version, rule)))).subscribe(() => {
@@ -51,6 +54,6 @@ export class ValueSetVersionSaveModalComponent {
 
   protected isValid = (): boolean => {
     return isDefined(this.params?.valueSet) && isDefined(this.params?.version) && isDefined(this.params?.releaseDate)
-      && isDefined(this.params?.codeSystem) && isDefined(this.params?.codeSystemVersionId);
+      && isDefined(this.params?.codeSystem) && isDefined(this.params?.codeSystemVersion?.id);
   };
 }

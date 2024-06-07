@@ -2,14 +2,14 @@ import {Component, Input, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {LoadingManager, validateForm} from '@kodality-web/core-util';
 import {forkJoin} from 'rxjs';
-import {CodeSystemLibService, ValueSet, ValueSetTransactionRequest} from 'term-web/resources/_lib';
+import {CodeSystemLibService, ValueSet, ValueSetTransactionRequest, CodeSystem} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-cs-value-set',
   templateUrl: 'code-system-value-set-add.component.html'
 })
 export class CodeSystemValueSetAddComponent {
-  @Input() public codeSystemId?: string | null;
+  @Input() public codeSystem?: CodeSystem;
   @Input() public hasRelatedValueSet: boolean;
   @ViewChild("form") public form?: NgForm;
 
@@ -46,7 +46,9 @@ export class CodeSystemValueSetAddComponent {
 
   public generate(generate: boolean): void {
     if (generate) {
-      this.valueSet.id = this.codeSystemId ? this.codeSystemId + '-vs' : this.valueSet.id;
+      this.valueSet.id = this.codeSystem?.id || this.valueSet.id;
+      this.valueSet.publisher = this.codeSystem?.publisher || this.valueSet.publisher;
+      this.publisherChanged(this.valueSet.publisher);
     }
   }
 }

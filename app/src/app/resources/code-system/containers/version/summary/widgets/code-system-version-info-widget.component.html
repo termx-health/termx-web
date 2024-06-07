@@ -80,7 +80,7 @@
     <span *ngIf="version.valueSet">VS | <a [routerLink]="['/resources/value-sets', version.valueSet.valueSet, 'versions', version.valueSet.version, 'summary']">{{version.valueSet.valueSet}}
       |{{version.valueSet.version}}</a></span>
     <ng-container *ngIf="!version.valueSet">
-      <a *twPrivileged="'*.CodeSystem.edit'" (mClick)="valueSetModal.toggleModal({valueSet: codeSystem?.valueSet, codeSystem: codeSystem?.id, codeSystemVersionId: version?.id})">
+      <a *twPrivileged="'*.CodeSystem.edit'" (mClick)="valueSetModal.toggleModal({valueSet: codeSystem?.valueSet, codeSystem: codeSystem?.id, codeSystemVersion: version})">
         {{'web.code-system-version.summary.info.create-related-vs-version' | translate}}
       </a>
       <m-icon mCode="warning" style="color: orange"/>
