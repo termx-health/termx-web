@@ -1,6 +1,6 @@
 import {HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {isDefined} from '@kodality-web/core-util';
+import {isDefined, serializeDate} from '@kodality-web/core-util';
 import {saveAs} from 'file-saver';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -32,6 +32,9 @@ export class CodeSystemService extends CodeSystemLibService {
   }
 
   public saveCodeSystemVersion(codeSystemId: string, version: CodeSystemVersion): Observable<CodeSystemVersion> {
+    version.releaseDate = serializeDate(version.releaseDate);
+    version.expirationDate = version.expirationDate ? serializeDate(version.expirationDate) : undefined;
+
     if (version.id && version.version) {
       return this.http.put(`${this.baseUrl}/${codeSystemId}/versions/${version.version}`, version);
     }

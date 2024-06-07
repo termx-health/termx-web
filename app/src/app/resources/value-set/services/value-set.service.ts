@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {serializeDate} from '@kodality-web/core-util';
 import {Observable, of} from 'rxjs';
 import {ValueSetLibService, ValueSetTransactionRequest, ValueSetVersion, ValueSetVersionRule, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 
@@ -18,6 +19,9 @@ export class ValueSetService extends ValueSetLibService {
   }
 
   public saveValueSetVersion(valueSetId: string, version: ValueSetVersion): Observable<ValueSetVersion> {
+    version.releaseDate = serializeDate(version.releaseDate);
+    version.expirationDate = version.expirationDate ? serializeDate(version.expirationDate) : undefined;
+
     if (version.id && version.version) {
       return this.http.put(`${this.baseUrl}/${valueSetId}/versions/${version.version}`, version);
     }

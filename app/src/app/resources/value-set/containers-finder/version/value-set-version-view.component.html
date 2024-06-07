@@ -19,13 +19,13 @@
     <m-form-row mFull>
       <div *mFormCol>
         <m-form-item mLabel="entities.value-set-version.release-date">
-          {{(version?.releaseDate | localDate:undefined:undefined:true) || '-'}}
+          {{(version?.releaseDate | localDate) || '-'}}
         </m-form-item>
       </div>
 
       <div *mFormCol>
         <m-form-item mLabel="entities.value-set-version.expiration-date">
-          {{(version?.expirationDate | localDate:undefined:undefined:true) || '-'}}
+          {{(version?.expirationDate | localDate) || '-'}}
         </m-form-item>
       </div>
     </m-form-row>

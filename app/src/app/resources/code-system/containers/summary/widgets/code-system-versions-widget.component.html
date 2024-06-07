@@ -6,8 +6,8 @@
       <div class="m-items-middle">
         <span class="m-bold">{{version.version}}</span>
         <m-divider mVertical></m-divider>
-        <span>{{(version.releaseDate | localDate:undefined:undefined:true) || '...'}} -
-          {{(version.expirationDate | localDate:undefined:undefined:true) || '...'}}</span>
+        <span>{{(version.releaseDate | localDate) || '...'}} -
+          {{(version.expirationDate | localDate) || '...'}}</span>
         <m-divider mVertical></m-divider>
         <a (mClick)="openVersionConcepts(version.version)">{{version.conceptsTotal}} {{'web.code-system.summary.concepts' | translate}}</a>
       </div>

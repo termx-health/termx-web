@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {serializeDate} from '@kodality-web/core-util';
 import {Observable, of} from 'rxjs';
 import {MapSetAssociation, MapSetAutomapRequest, MapSetLibService, MapSetTransactionRequest, MapSetVersion} from 'term-web/resources/_lib';
 import {JobLogResponse} from 'term-web/sys/_lib';
@@ -20,6 +21,9 @@ export class MapSetService extends MapSetLibService {
   }
 
   public saveMapSetVersion(mapSetId: string, version: MapSetVersion): Observable<MapSetVersion> {
+    version.releaseDate = serializeDate(version.releaseDate);
+    version.expirationDate = version.expirationDate ? serializeDate(version.expirationDate) : undefined;
+
     if (version.id && version.version) {
       return this.http.put(`${this.baseUrl}/${mapSetId}/versions/${version.version}`, version);
     }
