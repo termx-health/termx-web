@@ -78,11 +78,11 @@ export class CodeSystemService extends CodeSystemLibService {
       .pipe(map(res => res as LorqueProcess));
   }
 
-  public getConceptExportResult(processId: number, format: string): void {
+  public getConceptExportResult(processId: number, format: string, fileName: string): void {
     this.http.get(`${this.baseUrl}/concepts/export-${format}/result/${processId}`, {
       responseType: 'blob',
       headers: new HttpHeaders({Accept: format === 'xlsx' ? `application/vnd.ms-excel` : `application/csv`})
-    }).subscribe(res => saveAs(res, `concepts.` + format));
+    }).subscribe(res => saveAs(res, `${fileName}.${format}`));
   }
 
 

@@ -66,7 +66,8 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
           if (status === 'failed') {
             this.lorqueService.load(process.id).subscribe(p => this.notificationService.error(p.resultText));
           } else  {
-            this.codeSystemService.getConceptExportResult(process.id, format);
+            const fileName = `CS-${this.version?.codeSystem}-${this.version.version}`;
+            this.codeSystemService.getConceptExportResult(process.id, format, fileName);
           }
         });
       });
@@ -81,18 +82,18 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     const json = JSON.stringify(fhirCs, null, 2);
 
     if (format === 'json') {
-      saveAs(new Blob([json], {type: 'application/json'}), `${fhirCs.id}.json`);
+      saveAs(new Blob([json], {type: 'application/json'}), `CS-${fhirCs.id}.json`);
     }
     if (format === 'xml') {
       const xml = new Fhir().jsonToXml(json);
-      saveAs(new Blob([xml], {type: 'application/xml'}), `${fhirCs.id}.xml`);
+      saveAs(new Blob([xml], {type: 'application/xml'}), `CS-${fhirCs.id}.xml`);
     }
     if (format === 'fsh') {
       this.chefService.fhirToFsh({fhir: [json]}).subscribe(r => {
         r.warnings?.forEach(w => this.notificationService.warning('JSON to FSH conversion warning', w.message!, {duration: 0, closable: true}));
         r.errors?.forEach(e => this.notificationService.error('JSON to FSH conversion failed!', e.message!, {duration: 0, closable: true}));
         const fsh = typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
-        saveAs(new Blob([fsh], {type: 'application/fsh'}), `${fhirCs.id}.fsh`);
+        saveAs(new Blob([fsh], {type: 'application/fsh'}), `CS-${fhirCs.id}.fsh`);
       });
     }
   }

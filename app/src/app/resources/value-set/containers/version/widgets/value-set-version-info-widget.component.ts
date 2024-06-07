@@ -65,18 +65,18 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
     const json = JSON.stringify(fhirVs, null, 2);
 
     if (format === 'json') {
-      saveAs(new Blob([json], {type: 'application/json'}), `${fhirVs.id}.json`);
+      saveAs(new Blob([json], {type: 'application/json'}), `VS-${fhirVs.id}.json`);
     }
     if (format === 'xml') {
       const xml = new Fhir().jsonToXml(json);
-      saveAs(new Blob([xml], {type: 'application/xml'}), `${fhirVs.id}.xml`);
+      saveAs(new Blob([xml], {type: 'application/xml'}), `VS-${fhirVs.id}.xml`);
     }
     if (format === 'fsh') {
       this.chefService.fhirToFsh({fhir: [json]}).subscribe(r => {
         r.warnings?.forEach(w => this.notificationService.warning('JSON to FSH conversion warning', w.message!, {duration: 0, closable: true}));
         r.errors?.forEach(e => this.notificationService.error('JSON to FSH conversion failed!', e.message!, {duration: 0, closable: true}));
         const fsh = typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
-        saveAs(new Blob([fsh], {type: 'application/fsh'}), `${fhirVs.id}.fsh`);
+        saveAs(new Blob([fsh], {type: 'application/fsh'}), `VS-${fhirVs.id}.fsh`);
       });
     }
   }

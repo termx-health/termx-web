@@ -71,29 +71,6 @@ export class ValueSetVersionEditComponent implements OnInit {
     return this.valueSetService.searchVersions(id, {limit: -1}).pipe(map(r => r.data.map(d => d.version)));
   };
 
-  protected downloadDefinition(format: string): void {
-    this.fhirValueSetService.loadValueSet(this.version.valueSet, this.version.version).subscribe(fhirVs => {
-      this.saveFile(fhirVs, format);
-    });
-  }
-
-  protected downloadExpansion(format: string): void {
-    this.fhirValueSetService.expandValueSet(this.version.valueSet, {valueSetVersion: this.version.version}).subscribe(fhirVs => {
-      this.saveFile(fhirVs, format);
-    });
-  }
-
-  private saveFile(fhirVs: any, format: string): void {
-    const json = JSON.stringify(fhirVs, null, 2);
-    if (format === 'json') {
-      saveAs(new Blob([json], {type: 'application/json'}), `${fhirVs.id}.json`);
-    }
-    if (format === 'xml') {
-      const xml = new Fhir().jsonToXml(json);
-      saveAs(new Blob([xml], {type: 'application/xml'}), `${fhirVs.id}.xml`);
-    }
-  }
-
   private writeVersion(version: ValueSetVersion): ValueSetVersion {
     version.status ??= 'draft';
     version.releaseDate ??= new Date();
