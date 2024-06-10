@@ -1,7 +1,11 @@
+import {HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {serializeDate} from '@kodality-web/core-util';
+import {saveAs} from 'file-saver';
 import {Observable, of} from 'rxjs';
+import {map} from 'rxjs/operators';
 import {ValueSetLibService, ValueSetTransactionRequest, ValueSetVersion, ValueSetVersionRule, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
+import {LorqueProcess} from 'term-web/sys/_lib';
 
 @Injectable()
 export class ValueSetService extends ValueSetLibService {
@@ -63,4 +67,17 @@ export class ValueSetService extends ValueSetLibService {
   public deleteRule(valueSetId: string, valueSetVersion: string, id: number): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${valueSetId}/versions/${valueSetVersion}/rules/${id}`);
   }
+
+  public exportConcepts(valueSet: string, version: string, format: string): Observable<LorqueProcess> {
+    return this.http.get(`${this.baseUrl}/${valueSet}/versions/${version}/expansion-export?format=${format}`)
+      .pipe(map(res => res as LorqueProcess));
+  }
+
+  public getConceptExportResult(processId: number, format: string, fileName: string): void {
+    this.http.get(`${this.baseUrl}/expansion-export-${format}/result/${processId}`, {
+      responseType: 'blob',
+      headers: new HttpHeaders({Accept: format === 'xlsx' ? `application/vnd.ms-excel` : `application/csv`})
+    }).subscribe(res => saveAs(res, `${fileName}.${format}`));
+  }
+
 }

@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
 import {Router} from '@angular/router';
-import {compareDates, isDefined, LoadingManager} from '@kodality-web/core-util';
+import {compareDates, isDefined, LoadingManager, DestroyService} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {FhirValueSetLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
 import {ChefService} from 'app/src/app/integration/_lib';
@@ -11,11 +11,12 @@ import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import {AuthService} from 'term-web/core/auth';
 import {Space, SpaceLibService} from 'term-web/sys/_lib/space';
-import {Provenance, Release, ReleaseLibService} from 'term-web/sys/_lib';
+import {Provenance, Release, ReleaseLibService, LorqueLibService} from 'term-web/sys/_lib';
 
 @Component({
   selector: 'tw-value-set-version-info-widget',
-  templateUrl: 'value-set-version-info-widget.component.html'
+  templateUrl: 'value-set-version-info-widget.component.html',
+  providers: [DestroyService]
 })
 export class ValueSetVersionInfoWidgetComponent implements OnChanges {
   protected SEPARATOR = SEPARATOR;
@@ -30,6 +31,7 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
   protected loader = new LoadingManager();
 
   public constructor(
+    private destroy$: DestroyService,
     private valueSetService: ValueSetService,
     private fhirValueSetService: FhirValueSetLibService,
     private chefService: ChefService,
@@ -37,6 +39,7 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
     private spaceService: SpaceLibService,
     private authService: AuthService,
     private releaseService: ReleaseLibService,
+    private lorqueService: LorqueLibService,
     private router: Router
   ) {}
 
@@ -56,9 +59,22 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
   }
 
   protected downloadDefinition(format: string): void {
-    this.fhirValueSetService.loadValueSet(this.version.valueSet, this.version.version).subscribe(fhirVs => {
-      this.saveFile(fhirVs, format);
-    });
+    if (['csv', 'xlsx'].includes(format)) {
+      this.valueSetService.exportConcepts(this.version.valueSet, this.version.version, format).subscribe(process => {
+        this.lorqueService.pollFinishedProcess(process.id, this.destroy$).subscribe(status => {
+          if (status === 'failed') {
+            this.lorqueService.load(process.id).subscribe(p => this.notificationService.error(p.resultText));
+          } else  {
+            const fileName = `VS-${this.version?.valueSet}-${this.version.version}`;
+            this.valueSetService.getConceptExportResult(process.id, format, fileName);
+          }
+        });
+      });
+    } else  {
+      this.fhirValueSetService.loadValueSet(this.version.valueSet, this.version.version).subscribe(fhirVs => {
+        this.saveFile(fhirVs, format);
+      });
+    }
   }
 
   private saveFile(fhirVs: any, format: string): void {
