@@ -1,7 +1,7 @@
 <m-no-data *ngIf="!(versions?.length > 0)"></m-no-data>
 
 <m-list *ngIf="versions?.length > 0" mSeparated>
-  <m-list-item *ngFor="let version of versions" mClickable (mClick)="openVersionSummary(version.version)">
+  <m-list-item *ngFor="let version of versions | sort: 'version': 'descend'" mClickable (mClick)="openVersionSummary(version.version)">
     <div class="m-justify-between">
       <div class="m-items-middle">
         <span class="m-bold">{{version.version}}</span>
@@ -39,7 +39,7 @@
         <span *ngIf="rule.codeSystem" class="m-items-middle">CS: {{rule.codeSystem}} <m-divider mVertical></m-divider> {{rule.codeSystemVersion?.version}}</span>
         <span *ngIf="rule.valueSet" class="m-items-middle">VS: {{rule.valueSet}} <m-divider mVertical></m-divider> {{rule.valueSetVersion?.version}}</span>
       </div>
-      <div *ngIf="rule.concepts?.length > 0">(<span *ngFor="let c of rule.concepts">#{{c.concept.code}} </span>)</div>
+      <div *ngIf="rule.concepts?.length > 0">(<m-abbreviate [mValue]="rule.concepts | map: 'concept.code' | join: ' #'" [mLength]="400"/>)</div>
       <div *ngIf="rule.filters?.length > 0" class="m-items-middle">(<span *ngFor="let f of rule.filters" class="m-items-middle">#{{f.property?.name}} {{f.operator || '='}}
         <tw-property-value-input viewMode [ngModel]="f.value" [property]="f.property" [codeSystem]="rule.codeSystem"></tw-property-value-input></span>)
       </div>
