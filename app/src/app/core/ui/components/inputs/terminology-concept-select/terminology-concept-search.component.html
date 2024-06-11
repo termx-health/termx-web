@@ -10,7 +10,8 @@
       [value]="value | apply:getCode"
       (twChange)="fromSnomed($event)"
       [multiple]="multiple"
-      [displayType]="displayType"></tw-snomed-drawer-search>
+      [displayType]="displayType"
+      [branch]="snomedBranch"></tw-snomed-drawer-search>
 
   <tw-concept-search *ngSwitchDefault
       [(ngModel)]="value"

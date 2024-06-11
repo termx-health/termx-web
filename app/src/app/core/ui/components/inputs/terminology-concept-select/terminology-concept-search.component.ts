@@ -1,16 +1,17 @@
-import {Component, forwardRef, Input} from '@angular/core';
+import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput} from '@kodality-web/core-util';
+import {BooleanInput, isDefined} from '@kodality-web/core-util';
+import {Observable, map} from 'rxjs';
 import {SnomedLibService} from 'term-web/integration/_lib';
 import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
-import {CodeSystemConcept} from 'term-web/resources/_lib';
+import {CodeSystemConcept, CodeSystemLibService, SnomedUtil} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-term-concept-search',
   templateUrl: './terminology-concept-search.component.html',
   providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TerminologyConceptSearchComponent), multi: true}]
 })
-export class TerminologyConceptSearchComponent {
+export class TerminologyConceptSearchComponent implements OnChanges {
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
   @Input() public displayType: 'code' | 'name' | 'codeName' = 'codeName';
   @Input() @BooleanInput() public multiple: string | boolean;
@@ -18,6 +19,7 @@ export class TerminologyConceptSearchComponent {
 
   @Input() public codeSystem?: string;
   @Input() public codeSystemVersion?: string;
+  @Input() public codeSystemVersionUri?: string;
   @Input() public codeSystemVersionId?: number;
   @Input() public codeSystemVersionReleaseDateLe?: Date;
   @Input() public codeSystemVersionExpirationDateGe?: Date;
@@ -25,11 +27,18 @@ export class TerminologyConceptSearchComponent {
   @Input() public propertyValues?: string;
 
   public value?: CodeSystemConcept | number | string;
+  public snomedBranch?: string;
 
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
 
-  public constructor(private snomedService: SnomedLibService) {}
+  public constructor(private snomedService: SnomedLibService, private codeSystemService: CodeSystemLibService) {}
+
+  public ngOnChanges(changes: SimpleChanges): void {
+    if ((changes['codeSystem'] || changes['codeSystemVersionUri']) && this.codeSystem === 'snomed-ct' && isDefined(this.codeSystemVersionUri)) {
+      this.getBranch(this.codeSystemVersionUri).subscribe(b => this.snomedBranch = b);
+    }
+  }
 
   public writeValue(obj: CodeSystemConcept | number | string): void {
     this.value = obj;
@@ -89,4 +98,8 @@ export class TerminologyConceptSearchComponent {
     return value;
   };
 
+  private getBranch(uri: string): Observable<string> {
+    return this.codeSystemService.searchConcepts('snomed-module', {limit: -1})
+      .pipe(map(r => SnomedUtil.getBranch(uri, r.data)));
+  }
 }

@@ -25,7 +25,8 @@
               [codeSystemVersionId]="rule.codeSystemVersion?.id"
               [codeSystemVersionReleaseDateLe]="lockedDate"
               [codeSystemVersionExpirationDateGe]="lockedDate"
-              [codeSystemEntityVersionStatus]="inactiveConcepts ? 'active' : inactiveConcepts === false ? 'retired': null "
+              [codeSystemEntityVersionStatus]="inactiveConcepts ? 'active' : inactiveConcepts === false ? 'retired': null"
+              [codeSystemVersionUri]="rule.codeSystemVersion?.uri"
               valueType="code"
               autofocus
               required></tw-term-concept-search>

@@ -279,4 +279,7 @@
   </div>
 </m-modal>
 
-<tw-concept-drawer-search [codeSystem]="codeSystem?.baseCodeSystem" (conceptSelect)="createSupplement($event)" (codeSelect)="createExternalSupplement($event)"/>
+<tw-concept-drawer-search [codeSystem]="codeSystem?.baseCodeSystem"
+    [codeSystemVersion]="version?.baseCodeSystemVersion?.version"
+    (conceptSelect)="createSupplement($event)"
+    (codeSelect)="createExternalSupplement($event)"/>

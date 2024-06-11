@@ -24,4 +24,5 @@ export * from './services/code-system-entity-version-lib.service';
 export * from './services/code-system-lib.service';
 export * from './util/code-system-util';
 export * from './util/concept-util';
+export * from './util/snomed-util';
 export * from './code-system-lib.module';

@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
 import {BooleanInput} from '@kodality-web/core-util';
 import {map, Observable, of} from 'rxjs';
-import {SnomedLibService} from '../services/snomed-lib.service';
+import {SnomedLibService} from 'term-web/integration/_lib';
 
 
 @Component({
@@ -11,6 +11,7 @@ import {SnomedLibService} from '../services/snomed-lib.service';
 export class SnomedDrawerSearchComponent {
   @Input() public displayType: 'code' | 'name' | 'codeName' = 'codeName';
   @Input() public value: string;
+  @Input() public branch: string;
   @Input() @BooleanInput() public multiple: string | boolean;
   @Input() @BooleanInput() public allowClear: string | boolean = true;
   @Input() @BooleanInput() public disabled: string | boolean;

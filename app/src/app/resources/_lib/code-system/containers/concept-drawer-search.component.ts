@@ -1,9 +1,9 @@
 import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {BooleanInput, isDefined, SearchResult} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, SearchResult, isNil} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {Observable, of, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {CodeSystemConcept, CodeSystemConceptLibService, ConceptUtil} from 'term-web/resources/_lib';
+import {CodeSystemConcept, CodeSystemConceptLibService, ConceptUtil, CodeSystemVersion, CodeSystemLibService, SnomedUtil} from 'term-web/resources/_lib';
 
 
 @Component({
@@ -21,10 +21,15 @@ export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
   protected drawerOpened: boolean;
   protected concepts: SearchResult<CodeSystemConcept> = SearchResult.empty();
 
+  protected snomedBranch: string;
   protected searchInput: string;
   public searchUpdate = new Subject<string>();
 
-  public constructor(private conceptService: CodeSystemConceptLibService, private translateService: TranslateService) {}
+  public constructor(
+    private codeSystemService: CodeSystemLibService,
+    private conceptService: CodeSystemConceptLibService,
+    private translateService: TranslateService
+  ) {}
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(
@@ -41,6 +46,10 @@ export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
     if ((changes['codeSystem'] || changes['codeSystemVersion'])) {
       this.concepts = SearchResult.empty();
       this.loadConcepts(this.codeSystem, this.codeSystemVersion);
+    }
+
+    if (changes['codeSystem'] || changes['codeSystemVersion'] || changes['codeSystemVersions']) {
+      this.loadSnomedBranch();
     }
   }
 
@@ -103,4 +112,18 @@ export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
   protected getDisplay = (concept: CodeSystemConcept): string => {
     return ConceptUtil.getDisplay(concept, this.translateService.currentLang);
   };
+
+  protected loadSnomedBranch(): void {
+    if (this.codeSystem !== 'snomed-ct' || isNil(this.codeSystemVersion)) {
+      return;
+    }
+    this.codeSystemService.searchVersions('snomed-ct', {limit: -1}).subscribe(versions => {
+      const uri = versions.data?.find(v => v.version === this.codeSystemVersion)?.uri;
+      if (!uri) {
+        return;
+      }
+      this.codeSystemService.searchConcepts('snomed-module', {limit: -1})
+        .subscribe(r => this.snomedBranch = SnomedUtil.getBranch(uri, r.data));
+    });
+  }
 }
