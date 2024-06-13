@@ -59,7 +59,7 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
         concept.concept = {code: cols?.[0]};
         concept.display = {name: cols?.[1]};
         const additionalDesignations = cols.slice(2, cols.length);
-        concept.additionalDesignations = additionalDesignations.map((ad, i) => ({name: ad, language: langs[i]}));
+        concept.additionalDesignations = additionalDesignations.flatMap((ad, i) => ad.split("#").map(ads => ({name: ads, language: langs[i]})));
         concept.additionalDesignations = concept.additionalDesignations.filter(ad => isDefined(ad.name) && ad.name !== '');
         return concept;
       })];
