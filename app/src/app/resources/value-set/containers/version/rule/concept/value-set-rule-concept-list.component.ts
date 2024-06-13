@@ -50,28 +50,59 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
 
   protected addConcepts(): void {
     const rows = this.modalData.content.split('\n').slice(1, this.modalData.content.split('\n').length);
-    const langs = this.modalData.content.split('\n')[0].split(',').splice(2, this.modalData.content.split('\n')[0].split(',').length).map(l => l.split("#")[1]);
-    this.rule.concepts = [...rows.filter(r => {
-      const cols = r.split(',');
-      return isDefined(cols?.[0]) && cols?.[0] !== '';
-    }).map(r => {
-      const concept = new ValueSetVersionConcept();
-      const cols = r.split(',');
-      concept.concept = {code: cols?.[0]};
-      concept.display = {name: cols?.[1]};
-      const additionalDesignations = cols.slice(2, cols.length);
-      concept.additionalDesignations = additionalDesignations.map((ad, i) => ({name: ad, language: langs[i]}));
-      return concept;
-    })];
+    const langs = this.modalData.content.split('\n')[0].split(';').splice(2, this.modalData.content.split('\n')[0].split(';').length).map(l => l.split("#")[1]);
+    this.rule.concepts = [...rows
+      .map(r => this.parseRow(r))
+      .filter(cols => isDefined(cols?.[0]) && cols?.[0] !== '')
+      .map(cols => {
+        const concept = new ValueSetVersionConcept();
+        concept.concept = {code: cols?.[0]};
+        concept.display = {name: cols?.[1]};
+        const additionalDesignations = cols.slice(2, cols.length);
+        concept.additionalDesignations = additionalDesignations.map((ad, i) => ({name: ad, language: langs[i]}));
+        concept.additionalDesignations = concept.additionalDesignations.filter(ad => isDefined(ad.name) && ad.name !== '');
+        return concept;
+      })];
     this.modalData.visible = false;
   }
 
   public openModal(): void {
     let langs = this.rule.concepts?.flatMap(c => c.additionalDesignations?.map(d => d.language));
     langs = langs.filter((l, i) => langs.indexOf(l) === i).filter(l => isDefined(l));
-    this.modalData.content = ['ConceptId', 'Display', ...(langs || []).map(l => 'lang#' + l)].join(',') + '\n';
+    this.modalData.content = ['code', 'display', ...(langs || []).map(l => 'additionalDesignation#' + l)].join(';') + '\n';
     this.rule.concepts?.forEach(c => this.modalData.content +=
-      [(c.concept.code || ''), (c.display?.name || ''), ...langs.map(l => c.additionalDesignations?.find(ad => ad.language === l)?.name)].filter(c => isDefined(c)).join(",") + '\n');
+      [(c.concept.code || ''), (c.display?.name || ''),
+        ...langs.map(l => c.additionalDesignations?.filter(ad => ad.language === l)?.map(ad => ad.name).join("#"))]
+        .filter(c => isDefined(c))
+        .map(c => this.addBracesIfSemicolon(c))
+        .join(";") + '\n');
     this.modalData.visible = true;
   }
+
+  private addBracesIfSemicolon(str: string): string {
+    if (str.includes(';')) {
+      return `"${str}"`;
+    }
+    return str;
+  }
+
+  private parseRow(row: string): string[] {
+    const result: string[] = [];
+    let current = '';
+    let inQuotes = false;
+
+    for (const char of row){
+      if (char === '"') {
+        inQuotes = !inQuotes;
+      } else if (char === ';' && !inQuotes) {
+        result.push(current);
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    result.push(current);
+    return result;
+  }
+
 }
