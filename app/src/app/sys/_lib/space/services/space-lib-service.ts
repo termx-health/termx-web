@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {HttpCacheService, SearchHttpParams, SearchResult} from '@kodality-web/core-util';
-import {environment} from 'app/src/environments/environment';
+import {environment} from 'environments/environment';
 import {map, mergeMap, Observable, timer} from 'rxjs';
 import {SpaceSearchParams} from 'app/src/app/sys/_lib/space/index';
 import {JobLibService, LorqueLibService, LorqueProcess} from 'app/src/app/sys/_lib/index';

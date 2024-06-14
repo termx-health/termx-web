@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {LoadingManager} from '@kodality-web/core-util';
-import {environment} from 'app/src/environments/environment';
+import {environment} from 'environments/environment';
 import {delay, forkJoin, mergeMap, Observable, tap} from 'rxjs';
 import {GithubDiff} from 'app/src/app/integration/_lib/github/github';
 import {SpaceGithubService} from 'app/src/app/sys/space/services/space-github.service';
