@@ -8,7 +8,7 @@ import {AuthService} from 'app/src/app/core/auth';
 import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'app/src/app/integration/_lib';
 import {MapSetLibService, ValueSetLibService} from 'app/src/app/resources/_lib';
 import {PageLibService} from 'app/src/app/wiki/_lib';
-import {forkJoin} from 'rxjs';
+import {forkJoin, of} from 'rxjs';
 import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {LorqueLibService, Provenance} from 'term-web/sys/_lib';
@@ -93,10 +93,10 @@ export class SnomedConceptInfoComponent implements OnChanges {
 
   public loadKtsReferences(): void {
     this.loader.wrap('kts-references', forkJoin([
-      this.valueSetService.search({codeSystem: 'snomed-ct', conceptCode: this.conceptId, limit: 100}),
-      this.mapSetService.search({associationSourceCode: this.conceptId, associationSourceSystem: 'snomed-ct', associationsDecorated: true, limit: 100}),
-      this.mapSetService.search({associationTargetCode: this.conceptId, associationTargetSystem: 'snomed-ct', associationsDecorated: true, limit: 100}),
-      this.pageService.searchPageRelations({type: 'concept', target: 'snomed-ct|' + this.conceptId, limit: 100})]
+      this.authService.hasPrivilege('*.ValueSet.view') ? this.valueSetService.search({codeSystem: 'snomed-ct', conceptCode: this.conceptId, limit: 100}) : of({data: []}),
+      this.authService.hasPrivilege('*.MapSet.view') ? this.mapSetService.search({associationSourceCode: this.conceptId, associationSourceSystem: 'snomed-ct', associationsDecorated: true, limit: 100}) : of({data: []}),
+      this.authService.hasPrivilege('*.MapSet.view') ? this.mapSetService.search({associationTargetCode: this.conceptId, associationTargetSystem: 'snomed-ct', associationsDecorated: true, limit: 100}) : of({data: []}),
+      this.authService.hasPrivilege('*.Page.view') ? this.pageService.searchPageRelations({type: 'concept', target: 'snomed-ct|' + this.conceptId, limit: 100}) : of({data: []})]
     )).subscribe(([vs, ms1, ms2, p]) => {
       const lang = this.translateService.currentLang;
       this.ktsReferences = [
