@@ -11,5 +11,5 @@
     [filterOption]="filterOption">
   <m-option *ngFor="let key of data | keys"
       [mValue]="key"
-      [mLabel]="data[key] | apply: getDisplay"></m-option>
+      [mLabel]="data[key] | apply: getDisplay: translateService.currentLang"></m-option>
 </m-select>
