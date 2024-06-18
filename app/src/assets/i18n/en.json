@@ -24,6 +24,8 @@
 		"confirm": "Are you sure?",
 		"data-lost-warning": "Your changes wouldn't be saved!",
 		"delete-confirm": "Are you sure you want to delete?",
+		"session-expiration-warning": "Session expires in less than 5 minutes!",
+		"session-expiration-error": "Session is expired!",
 		"filter": "Filter",
 		"form-invalid": "Form invalid.  Please review the data",
 		"load-more": "Load more",

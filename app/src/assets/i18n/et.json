@@ -21,6 +21,8 @@
 			"select": "Vali",
 			"send": "Saada"
 		},
+		"session-expiration-warning": "Sessioon aegub vähem kui 5 minuti pärast! Vajadusel salvesta!",
+		"session-expiration-error": "Sessioon on aegunud!",
 		"confirm": "Kas oled kindel?",
 		"data-lost-warning": "Sinu muudatusi ei salvestata!",
 		"delete-confirm": "Kas oled kindel, et soovid kustutada?",

@@ -17,7 +17,7 @@ import {OauthStorageService} from './oauth-storage.service';
         responseType: 'code',
         silentRenew: true,
         useRefreshToken: true,
-        renewTimeBeforeTokenExpiresInSeconds: 30 ,
+        renewTimeBeforeTokenExpiresInSeconds: 30,
         ignoreNonceAfterRefresh: true,
         logLevel: LogLevel.Debug
       }
