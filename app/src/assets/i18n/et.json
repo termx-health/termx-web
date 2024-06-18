@@ -1802,6 +1802,12 @@
 			"type": "Tüüp",
 			"url": "URL"
 		},
+		"resource-task-modal": {
+			"header": "Loo ülesanne",
+			"assignee": "Teostaja",
+			"version": "Versioon",
+			"comment": "Kommentaar"
+		},
 		"resource-release-modal": {
 			"header": "Lisa ressurss {{resource}} väljaandele",
 			"release": "Väljalase",

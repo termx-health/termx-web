@@ -2294,7 +2294,7 @@
 				"rule": "Rule",
 				"rule-set": "Rule set",
 				"task-modal": {
-					"assignee": "",
+					"assignee": "Assignee",
 					"header": "Create {{type}} task",
 					"success-msg": "Task created"
 				},
