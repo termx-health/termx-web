@@ -86,7 +86,7 @@ export class SpaceDiffComponent implements OnInit {
   }
 
 
-  private loadData(): void {
+  private loadData(resourceId?: string, resourceType?: string): void {
     combineLatest([
       this.ctx.space$.pipe(takeUntil(this.destroy$)),
       this.ctx.pack$.pipe(takeUntil(this.destroy$)),
@@ -99,7 +99,9 @@ export class SpaceDiffComponent implements OnInit {
       ]).subscribe(([servers, resources]) => {
         this.terminologyServers = group(servers.data, s => s.code);
         this.resources = resources;
-        this.diffItem.resource = resources.find(r => r.resourceId === params.get('resourceId') && r.resourceType === params.get('resourceType'));
+        this.diffItem.resource = resources.find(r =>
+          r.resourceId === (resourceId ? resourceId : params.get('resourceId')) &&
+          r.resourceType === (resourceType ? resourceType : params.get('resourceType')));
         this.loadFhirResources();
       });
     });
@@ -131,7 +133,7 @@ export class SpaceDiffComponent implements OnInit {
     this.jobService.pollFinishedJobLog(jobId, this.destroy$).subscribe(jobResp => {
       if (!jobResp.errors) {
         this.notificationService.success("web.space.resource-import-success-message");
-        this.loadData();
+        this.loadData(this.diffItem?.resource?.resourceId, this.diffItem?.resource?.resourceType);
       } else {
         this.notificationService.error("web.space.resource-import-error-message", jobResp.errors.join(","), {duration: 0, closable: true});
       }
