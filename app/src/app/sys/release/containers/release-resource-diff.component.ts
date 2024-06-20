@@ -50,11 +50,12 @@ export class ReleaseResourceDiffComponent implements OnInit {
     if (isNil(this.resource?.resourceId)) {
       return of(null);
     }
+    const id = this.resource.resourceId + (this.resource.resourceVersion ? '--' + this.resource.resourceVersion : '');
     if (this.resource.resourceType === 'CodeSystem') {
-      return this.fhirCSService.loadCodeSystem(this.resource.resourceId).pipe(map(r => JSON.stringify(r, null, 2)));
+      return this.fhirCSService.loadCodeSystem(id).pipe(map(r => JSON.stringify(r, null, 2)));
     }
     if (this.resource.resourceType === 'ValueSet') {
-      return this.fhirVSService.loadValueSet(this.resource.resourceId).pipe(map(r => JSON.stringify(r, null, 2)));
+      return this.fhirVSService.loadValueSet(id).pipe(map(r => JSON.stringify(r, null, 2)));
     }
     return of(null);
   }

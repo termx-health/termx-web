@@ -162,7 +162,9 @@ export class ReleaseSummaryComponent implements OnInit {
   protected serverSync(): void {
     this.loader.wrap('sync', this.releaseService.serverSync(this.release.id)).subscribe(jobLog => {
       if (isDefined(jobLog.errors)) {
-        jobLog.errors.forEach(err =>  this.notificationService.error('Sync error', err));
+        jobLog.errors.forEach(err => this.notificationService.error('web.release.sync-error', err));
+      } else {
+        this.notificationService.success('web.release.sync-success');
       }
     });
   }
@@ -171,7 +173,7 @@ export class ReleaseSummaryComponent implements OnInit {
     this.loader.wrap('sync', this.releaseService.validateSync(this.release.id)).subscribe(jobLog => {
       this.syncResult = jobLog;
       if (isDefined(jobLog.errors)) {
-        jobLog.errors.forEach(err =>  this.notificationService.error('Sync error', err));
+        jobLog.errors.forEach(err => this.notificationService.error('web.release.sync-validation-error', err));
       }
     });
   }

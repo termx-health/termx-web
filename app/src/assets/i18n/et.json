@@ -831,7 +831,10 @@
 			"make-draft": "Muuda \"mustandiks\"",
 			"server-sync": "Sündikeeri serveriga",
 			"records": "Kirjed",
-			"generate-records": "Genereeri kirjed"
+			"generate-records": "Genereeri kirjed",
+			"sync-success": "Sündikeerimine õnnestus",
+			"sync-error": "Sündikeerimise viga",
+			"sync-validation-error": "Sündikeerimise validatsiooni viga"
 		},
 		"association-type": {
 			"form": {

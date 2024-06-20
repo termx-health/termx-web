@@ -835,7 +835,10 @@
 			"make-draft": "Make draft",
 			"server-sync": "Sync with server",
 			"records": "Notes",
-			"generate-records": "Generate notes"
+			"generate-records": "Generate notes",
+			"sync-success": "Sync was successful",
+			"sync-error": "Sync error",
+			"sync-validation-error": "Sync validation error"
 		},
 		"app": {
 			"header": "TermX"
