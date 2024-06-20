@@ -27,7 +27,7 @@
       </div>
       <div class="prop-col">
         <div class="prop-row" *ngFor="let pv of d.data">
-          <m-icon *ngIf="!(pv._key | apply:isRequired:properties) && !pv.supplement" [mCode]="'close'" class="m-clickable" (click)="deleteProperty(pv)"></m-icon>
+          <m-icon *ngIf="!(pv._key | apply:isRequired:properties) && !pv.supplement" [mCode]="'close'" class="m-clickable" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteProperty(pv)"/>
         </div>
       </div>
     </div>

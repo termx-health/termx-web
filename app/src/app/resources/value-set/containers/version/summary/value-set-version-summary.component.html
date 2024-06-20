@@ -88,7 +88,7 @@
             <m-button *ngIf="valueSetVersion?.status === 'draft' && (valueSet.id + '.ValueSet.edit' | twHasAnyPrivilege)"
                 mDisplay="text"
                 mShape="circle"
-                (mClick)="deleteRule()">
+                m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteRule()">
               <m-icon mCode="delete"></m-icon>
             </m-button>
           </div>

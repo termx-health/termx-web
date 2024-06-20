@@ -46,7 +46,7 @@
   </div>
   <div class="association-col">
     <div class="association-row" *ngFor="let a of associations; let i = index">
-      <m-icon *ngIf="!a.supplement" [mCode]="'close'" class="m-clickable" (click)="deleteAssociation(a)"></m-icon>
+      <m-icon *ngIf="!a.supplement" [mCode]="'close'" class="m-clickable" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteAssociation(a)"/>
     </div>
   </div>
 </div>

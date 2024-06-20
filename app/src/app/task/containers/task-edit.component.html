@@ -79,7 +79,7 @@
                   <span class="m-subtitle">{{activity.updatedAt | localDateTime}}</span>
                   <ng-container *ngIf="activity | apply: isEditable">
                     <m-divider mVertical/>
-                    <m-icon class="m-clickable" mCode="delete" (click)="deleteActivity(activity.id)"/>
+                    <m-icon class="m-clickable" mCode="delete" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteActivity(activity.id)"/>
                   </ng-container>
                 </div>
               </div>

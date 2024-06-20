@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="designation-col">
-          <div class="row m-clickable" *ngFor="let d of t.designations" (click)="deleteDesignation(d)">
+          <div class="row m-clickable" *ngFor="let d of t.designations" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteDesignation(d)">
             <m-icon *ngIf="!d.supplement" [mCode]="'close'"></m-icon>
           </div>
         </div>

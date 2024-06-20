@@ -27,10 +27,10 @@
               <a (click)="duplicateVersion(v)" *ngIf="v.id" m-tooltip mTitle="core.btn.duplicate">
                 <m-icon mCode="copy"></m-icon>
               </a>
-              <a (click)="removeVersion(index)" *ngIf="!v.id && versions.length > 1">
+              <a m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="removeVersion(index)" *ngIf="!v.id && versions.length > 1">
                 <m-icon mCode="delete"></m-icon>
               </a>
-              <a (click)="deleteVersion(v.id)" *ngIf="v.id && versions.length > 1">
+              <a m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteVersion(v.id)" *ngIf="v.id && versions.length > 1">
                 <m-icon mCode="delete"></m-icon>
               </a>
             </div>

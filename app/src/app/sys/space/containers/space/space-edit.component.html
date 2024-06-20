@@ -32,7 +32,7 @@
                 <div class="m-items-middle">
                   <div class="m-whitespace-pre m-bold"><a (click)="openPackage(p.id)">{{p.code}}</a></div>
                 </div>
-                <a class="m-subtitle" (click)="deletePackage(p.id)">
+                <a class="m-subtitle" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deletePackage(p.id)">
                   {{'core.btn.delete' | translate}}
                 </a>
               </div>

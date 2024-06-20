@@ -17,7 +17,7 @@
               <m-icon mCode="copy"></m-icon>&nbsp;{{'core.btn.duplicate' | translate}}
             </a>
             <ng-container *ngIf="version.status === 'draft' && versions?.length > 1 && ('publish' | twPrivileged)">
-              <a *m-dropdown-item (click)="deleteVersion(version.version)">
+              <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteVersion(version.version)">
                 <m-icon  mCode="delete"></m-icon>&nbsp;{{'core.btn.delete' | translate}}
               </a>
             </ng-container>

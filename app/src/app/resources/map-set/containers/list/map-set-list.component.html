@@ -84,7 +84,7 @@
             <m-icon mCode="link"/>&nbsp; {{'web.map-set.list.open-fhir' | translate}}
           </a>
           <ng-container *twPrivileged="'*.MapSet.publish'">
-            <a *m-dropdown-item (click)="deleteMapSet(ms.id)"> <m-icon mCode="delete"/>&nbsp; {{'core.btn.delete' | translate}}</a>
+            <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteMapSet(ms.id)"> <m-icon mCode="delete"/>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>
       </td>
