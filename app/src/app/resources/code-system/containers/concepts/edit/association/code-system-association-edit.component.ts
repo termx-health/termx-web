@@ -6,13 +6,13 @@ import {CodeSystemAssociation} from 'app/src/app/resources/_lib';
   selector: 'tw-code-system-association-edit',
   templateUrl: './code-system-association-edit.component.html',
   styles: [`
-    .col {
+    .association-col {
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
       align-self: stretch;
     }
-    .row {
+    .association-row {
       flex: 1;
       display: flex;
       align-items: center;

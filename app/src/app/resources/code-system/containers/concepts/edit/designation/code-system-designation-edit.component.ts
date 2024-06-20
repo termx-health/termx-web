@@ -15,14 +15,14 @@ type ExtendedDesignation = Designation & {_key?: string};
       white-space: nowrap;
     }
 
-    .col {
+    .designation-col {
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
       align-self: stretch;
     }
 
-    .row {
+    .designation-row {
       flex: 1;
       display: flex;
       align-items: center;
