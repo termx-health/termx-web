@@ -6,7 +6,7 @@
 > ```
 > git remote add upstream https://gitlab.com/kodality/terminology/termx-web
 > git fetch upstream
-> git pull upstream main
+> git merge upstream/main
 > git push
 > ```
 
