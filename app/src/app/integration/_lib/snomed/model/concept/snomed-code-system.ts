@@ -3,6 +3,7 @@ export class SnomedCodeSystem {
   public shortName?: string;
   public branchPath?: string;
   public countryCode?: string;
+  public dependantVersionEffectiveTime?: string;
   public dailyBuildAvailable?: boolean;
   public languages?: {[key:string]: string};
   public latestVersion?: SnomedCodeSystemVersion;

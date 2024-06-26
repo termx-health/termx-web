@@ -47,7 +47,7 @@
               <m-input name="name" [(ngModel)]="snomedCodeSystem.name"></m-input>
             </m-form-item>
             <m-form-item *mFormCol mName="dependantVersionEffectiveTime" mLabel="entities.snomed-codesystem.dependant-version-effective-time">
-              {{snomedCodeSystem.latestVersion?.dependantVersionEffectiveTime || '-'}}
+              {{snomedCodeSystem.dependantVersionEffectiveTime || '-'}}
             </m-form-item>
           </m-form-row>
           <m-form-row>
