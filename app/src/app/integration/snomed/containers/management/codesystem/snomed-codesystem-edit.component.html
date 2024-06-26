@@ -128,7 +128,7 @@
       <form #upgradeModalForm="ngForm">
         <m-form-item mName="dependant-version" mLabel="web.snomed.codesystem.form.upgrade-modal.dependant-version" required>
           <m-select name="dependant-version" [(ngModel)]="upgradeModalData.dependantVersion" required>
-            <m-option *ngFor="let v of dependantVersions | filter:filterDependantVersion" [mValue]="v.effectiveDate" [mLabel]="v.effectiveDate"/>
+            <m-option *ngFor="let v of dependantVersions | filter:filterDependantVersion" [mValue]="v.effectiveDate" [mLabel]="v.effectiveDate | toString"/>
           </m-select>
         </m-form-item>
       </form>

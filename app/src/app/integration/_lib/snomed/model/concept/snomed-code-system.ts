@@ -17,7 +17,7 @@ export class SnomedCodeSystemVersion {
   public dependantVersionEffectiveTime: string;
   public parentBranchPath?: string;
   public version?: string;
-  public effectiveDate?: string;
+  public effectiveDate?: number;
   public description?: string;
   public branchPath?: string;
 }
