@@ -152,7 +152,7 @@ export class SnomedCodesystemEditComponent implements OnInit {
 
   protected filterDependantVersion = (version: SnomedCodeSystemVersion): boolean => {
     return !this.snomedCodeSystem.latestVersion?.dependantVersionEffectiveTime ||
-      compareStrings(String(version.effectiveDate), this.snomedCodeSystem.latestVersion.dependantVersionEffectiveTime) === 1;
+      compareStrings(String(version.effectiveDate), this.snomedCodeSystem.dependantVersionEffectiveTime) === 1;
   };
 
   protected deleteCodeSystem(): void {
