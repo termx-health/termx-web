@@ -14,6 +14,11 @@
               {{'web.snomed.codesystem.form.export-to-rf2' | translate}}
             </a>
             <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+              <a *m-dropdown-item (mClick)="upgradeModalData.visible = true">
+                {{'web.snomed.codesystem.form.upgrade' | translate}}
+              </a>
+            </ng-container>
+            <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
               <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteCodeSystem()">
                 {{'core.btn.delete' | translate}}
               </a>
