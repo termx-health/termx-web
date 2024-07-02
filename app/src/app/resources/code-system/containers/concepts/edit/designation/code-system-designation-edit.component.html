@@ -16,7 +16,7 @@
         </div>
         <div class="designation-col" style="width: 100%">
           <div class="designation-row" *ngFor="let d of t.designations">
-            <m-input *ngIf="!d.supplement"  name="{{d._key}}-name" [(ngModel)]="d.name" style="width: 100%"/>
+            <m-textarea *ngIf="!d.supplement"  name="{{d._key}}-name" [(ngModel)]="d.name" style="width: 100%"></m-textarea>
             <span *ngIf="d.supplement">{{d.name}}</span>
           </div>
         </div>
