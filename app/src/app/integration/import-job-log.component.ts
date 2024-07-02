@@ -15,6 +15,7 @@ import {JobLog} from 'term-web/sys/_lib';
       <m-alert *ngFor="let success of jobLog.successes" mType="success" class="tw-alert--vertical" mShowIcon>
         {{success}}
       </m-alert>
+      <m-alert *ngIf="!jobLog.errors?.length" class="tw-alert--vertical" mType="success" mTitle="No errors found"/>
     </div>
   `
 })
