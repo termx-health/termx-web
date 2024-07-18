@@ -15,6 +15,7 @@ export const environment: Environment = {
 
   oauthIssuer: dynamicEnv.oauthIssuer,
   oauthClientId: dynamicEnv.oauthClientId,
+  oauthScope: dynamicEnv.oauthScope || 'openid profile offline_access',
 
   termxApi: dynamicEnv.termxApi || '/api',
   swaggerUrl: dynamicEnv.swaggerUrl || '/swagger/',

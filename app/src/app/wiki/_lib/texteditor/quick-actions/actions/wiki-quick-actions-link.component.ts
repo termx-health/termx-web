@@ -2,7 +2,7 @@ import {Component, forwardRef, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {validateForm} from '@kodality-web/core-util';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
-import {Space} from 'term-web/space/_lib';
+import {Space} from 'term-web/sys/_lib/space';
 import {PageContent} from '../../../page/models/page-content';
 import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './wiki-quick-actions.base';
 

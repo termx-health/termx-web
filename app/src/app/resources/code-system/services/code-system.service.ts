@@ -1,6 +1,6 @@
 import {HttpHeaders} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {isDefined} from '@kodality-web/core-util';
+import {isDefined, serializeDate} from '@kodality-web/core-util';
 import {saveAs} from 'file-saver';
 import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -32,6 +32,9 @@ export class CodeSystemService extends CodeSystemLibService {
   }
 
   public saveCodeSystemVersion(codeSystemId: string, version: CodeSystemVersion): Observable<CodeSystemVersion> {
+    version.releaseDate = serializeDate(version.releaseDate);
+    version.expirationDate = version.expirationDate ? serializeDate(version.expirationDate) : undefined;
+
     if (version.id && version.version) {
       return this.http.put(`${this.baseUrl}/${codeSystemId}/versions/${version.version}`, version);
     }
@@ -75,11 +78,11 @@ export class CodeSystemService extends CodeSystemLibService {
       .pipe(map(res => res as LorqueProcess));
   }
 
-  public getConceptExportResult(processId: number, format: string): void {
+  public getConceptExportResult(processId: number, format: string, fileName: string): void {
     this.http.get(`${this.baseUrl}/concepts/export-${format}/result/${processId}`, {
       responseType: 'blob',
       headers: new HttpHeaders({Accept: format === 'xlsx' ? `application/vnd.ms-excel` : `application/csv`})
-    }).subscribe(res => saveAs(res, `concepts.` + format));
+    }).subscribe(res => saveAs(res, `${fileName}.${format}`));
   }
 
 
@@ -114,6 +117,10 @@ export class CodeSystemService extends CodeSystemLibService {
       return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${codeSystemVersion}/entity-versions/supplement`, request);
     }
     return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/entity-versions/supplement`, request);
+  }
+
+  public activateEntityVersions(codeSystemId: string, version: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${codeSystemId}/versions/${version}/entity-versions/activate`, {});
   }
 
   public unlinkEntityVersions(codeSystemId: string, codeSystemVersion: string, entityVersionIds: number[]): Observable<void> {

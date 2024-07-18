@@ -5,7 +5,8 @@
     <div class="m-items-middle">
       <span class="m-bold">{{version.version}}</span>
       <m-divider mVertical></m-divider>
-      <span>{{(version.releaseDate | localDate) || '...'}} - {{(version.expirationDate | localDate) || '...'}}</span>
+      <span>{{(version.releaseDate | localDate) || '...'}} -
+        {{(version.expirationDate | localDate) || '...'}}</span>
       <m-divider mVertical></m-divider>
       <a (mClick)="openVersionConcepts()">{{version.conceptsTotal}} {{'web.code-system.summary.concepts' | translate}}</a>
     </div>
@@ -63,6 +64,28 @@
       <a (mClick)="changeVersionStatus('retired')">{{'web.code-system-version.summary.info.retire' | translate}}</a>
     </ng-container>
   </div>
+  <div class="m-items-middle" *twPrivileged="'*.Release.view'">
+    <m-icon mCode="rocket"/>
+    <div *ngIf="releases?.length > 0">
+      <div *ngFor="let release of releases">
+        <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
+      </div>
+    </div>
+    <a (mClick)="releaseModal.toggleModal({resourceId: codeSystem?.id, resourceVersion: version?.version, resourceTitle: codeSystem?.title})"
+        *ngIf="!(releases?.length > 0) && ('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.add-to-release' | translate}}</a>
+    <span *ngIf="!(releases?.length > 0) && !('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.release-unspecified' | translate}}</span>
+  </div>
+  <div class="m-items-middle" *ngIf="version.valueSet || codeSystem?.valueSet">
+    <m-icon mCode="tag"></m-icon>
+    <span *ngIf="version.valueSet">VS | <a [routerLink]="['/resources/value-sets', version.valueSet.valueSet, 'versions', version.valueSet.version, 'summary']">{{version.valueSet.valueSet}}
+      |{{version.valueSet.version}}</a></span>
+    <ng-container *ngIf="!version.valueSet">
+      <a *twPrivileged="'*.CodeSystem.edit'" (mClick)="valueSetModal.toggleModal({valueSet: codeSystem?.valueSet, codeSystem: codeSystem?.id, codeSystemVersion: version})">
+        {{'web.code-system-version.summary.info.create-related-vs-version' | translate}}
+      </a>
+      <m-icon mCode="warning" style="color: orange"/>
+    </ng-container>
+  </div>
   <div class="m-items-middle" *ngIf="githubSpaces?.length && 'edit' | twPrivileged">
     <m-icon mCode="github"></m-icon>
     <m-dropdown [mHideIfEmpty]="false">
@@ -72,8 +95,7 @@
       <ng-container *ngFor="let s of githubSpaces">
         <a *m-dropdown-item [routerLink]="['/spaces', s.id, 'github', {files: [
         'codesystem-fhir-json|' + version.codeSystem + SEPARATOR + version.version,
-        'codesystem-fhir-fsh|' + version.codeSystem + SEPARATOR + version.version,
-        ]}]">
+        'codesystem-fhir-fsh|' + version.codeSystem + SEPARATOR + version.version]}]">
           {{s.names | localName}}
         </a>
       </ng-container>
@@ -82,3 +104,5 @@
 </div>
 
 <tw-resource-task-modal #taskModal (taskCreated)="taskCreated.emit()" resourceType="CodeSystem"/>
+<tw-resource-release-modal #releaseModal (connectedToRelease)="loadRelease()" resourceType="CodeSystem"/>
+<tw-value-set-version-save-modal #valueSetModal (created)="versionChanged.emit()"></tw-value-set-version-save-modal>

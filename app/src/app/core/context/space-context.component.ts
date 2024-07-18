@@ -3,7 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {isDefined} from '@kodality-web/core-util';
 import {saveAs} from 'file-saver';
 import {distinctUntilChanged, map, Observable} from 'rxjs';
-import {Package, PackageVersion, Space, SpaceLibService} from 'term-web/space/_lib';
+import {Package, PackageVersion, Space, SpaceLibService} from 'term-web/sys/_lib/space';
 import {SpaceContextParams, SpaceContextService} from './space-context.service';
 
 

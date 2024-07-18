@@ -21,7 +21,7 @@
   <div class="m-items-middle">
     <m-icon mCode="download"></m-icon>
     <span>{{'web.value-set-version.summary.info.download' | translate}}
-      (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
+      (<span *ngFor="let format of ['json', 'xml', 'fsh', 'csv', 'xlsx']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 4 ? '|' : ''}}</span>)</span>
     <m-divider mVertical></m-divider>
     <span>{{'web.value-set-version.summary.info.definition' | translate}}</span>
     <a (mClick)="openJson()">FHIR</a>
@@ -55,6 +55,17 @@
       <a (mClick)="changeVersionStatus('retired')">{{'web.value-set-version.summary.info.retire' | translate}}</a>
     </ng-container>
   </div>
+  <div class="m-items-middle" *twPrivileged="'*.Release.view'">
+    <m-icon mCode="rocket"/>
+    <div *ngIf="releases?.length > 0">
+      <div *ngFor="let release of releases">
+        <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
+      </div>
+    </div>
+    <a (mClick)="releaseModal.toggleModal({resourceId: valueSet?.id, resourceVersion: version?.version, resourceTitle: valueSet?.title})"
+        *ngIf="!(releases?.length > 0) && ('*.Release.edit' | twPrivileged)">{{'web.value-set-version.summary.info.add-to-release' | translate}}</a>
+    <span *ngIf="!(releases?.length > 0) && !('*.Release.edit' | twPrivileged)">{{'web.value-set-version.summary.info.release-unspecified' | translate}}</span>
+  </div>
   <div class="m-items-middle" *ngIf="githubSpaces?.length">
     <m-icon mCode="github"></m-icon>
     <m-dropdown>
@@ -74,3 +85,4 @@
 </div>
 
 <tw-resource-task-modal #taskModal (taskCreated)="taskCreated.emit()" resourceType="ValueSet"/>
+<tw-resource-release-modal #releaseModal (connectedToRelease)="loadRelease()" resourceType="ValueSet"/>

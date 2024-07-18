@@ -6,5 +6,4 @@ export class ReleaseResource {
   public resourceId?: string;
   public resourceVersion?: string;
   public resourceNames?: LocalizedName;
-  public errorCount?: number;
 }

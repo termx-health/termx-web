@@ -11,14 +11,14 @@ type ExtendedEntityPropertyValue = EntityPropertyValue & {_key?: string};
   selector: 'tw-code-system-property-value-edit',
   templateUrl: 'code-system-property-value-edit.component.html',
   styles: [`
-    .col {
+    .prop-col {
       display: flex;
       flex-direction: column;
       gap: 0.3rem;
       align-self: stretch;
     }
 
-    .row {
+    .prop-row {
       flex: 1;
       display: flex;
       align-items: center;

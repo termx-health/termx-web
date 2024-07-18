@@ -8,6 +8,7 @@ import {ResourceIdentifiersComponent} from 'app/src/app/resources/resource/compo
 import {ResourceVersionFormComponent} from 'app/src/app/resources/resource/components/resource-version-form.component';
 import {ResourceUtil} from 'app/src/app/resources/resource/util/resource-util';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
+import {ResourceConfigurationAttributesComponent} from 'term-web/resources/resource/components/resource-configuration-attributes.component';
 
 
 @Component({
@@ -22,6 +23,7 @@ export class ValueSetEditComponent implements OnInit {
   @ViewChild(ResourceFormComponent) public resourceFormComponent?: ResourceFormComponent;
   @ViewChild(ResourceIdentifiersComponent) public resourceIdentifiersComponent?: ResourceIdentifiersComponent;
   @ViewChild(ResourceVersionFormComponent) public resourceVersionFormComponent?: ResourceVersionFormComponent;
+  @ViewChild(ResourceConfigurationAttributesComponent) public resourceConfigurationAttributesComponent?: ResourceConfigurationAttributesComponent;
 
   public constructor(
     private route: ActivatedRoute,
@@ -46,11 +48,13 @@ export class ValueSetEditComponent implements OnInit {
       this.validate(),
       (!this.resourceFormComponent || this.resourceFormComponent.valid()),
       (!this.resourceIdentifiersComponent || this.resourceIdentifiersComponent.valid()),
-      (!this.resourceVersionFormComponent || this.resourceVersionFormComponent.valid())
+      (!this.resourceVersionFormComponent || this.resourceVersionFormComponent.valid()),
+      (!this.resourceConfigurationAttributesComponent || this.resourceConfigurationAttributesComponent.valid())
     ].every(Boolean)) {
       return;
     }
 
+    this.valueSet.configurationAttributes = this.resourceConfigurationAttributesComponent.attributes;
     const vs = copyDeep(this.valueSet);
     ResourceUtil.merge(vs, this.resourceFormComponent.getResource());
     const request: ValueSetTransactionRequest = {

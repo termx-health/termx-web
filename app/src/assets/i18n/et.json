@@ -21,6 +21,8 @@
 			"select": "Vali",
 			"send": "Saada"
 		},
+		"session-expiration-warning": "Sessioon aegub vähem kui 5 minuti pärast! Vajadusel salvesta!",
+		"session-expiration-error": "Sessioon on aegunud!",
 		"confirm": "Kas oled kindel?",
 		"data-lost-warning": "Sinu muudatusi ei salvestata!",
 		"delete-confirm": "Kas oled kindel, et soovid kustutada?",
@@ -57,6 +59,7 @@
 			"whitelist": "Lubatud nimekiri"
 		},
 		"release": {
+			"authors": "Autorid",
 			"code": "Kood",
 			"name": "Nimetus",
 			"planned": "Planeeritud",
@@ -64,6 +67,7 @@
 			"status": "Staatus",
 			"plural": "Väljaanded",
 			"single": "Väljalase",
+			"terminology-server": "Terminoloogia server",
 			"resource": {
 				"plural": "Ressurssid",
 				"type": "Tüüp",
@@ -71,6 +75,7 @@
 				"version": "Versioon",
 				"name": "Nimetus",
 				"errors": "Vead",
+				"sync-state": "Sündikeerimise seis",
 				"code-system": "Koodisüsteem",
 				"value-set": "Loend",
 				"map-set": "Vastavustabel",
@@ -87,6 +92,7 @@
 			"reverse-name": "Vastand"
 		},
 		"code-system": {
+			"supplement": "Täiend",
 			"base-code-system": "Vanem koodisüsteem",
 			"case-sensitivity": "Tõstutundlikkus",
 			"concepts": "Mõisted",
@@ -142,6 +148,7 @@
 			"status": "Staatus"
 		},
 		"code-system-version": {
+			"base-version": "Vanem koodisüsteemi versioon",
 			"description": "Kirjeldus",
 			"entities": "Mõiste versioonid",
 			"uri": "Ühtne ressursiidentifikaator (URI)",
@@ -490,8 +497,20 @@
 				"single": "Autoriõigus",
 				"statement": "Autoriõigusavaldus"
 			},
+			"conf-attribute": {
+				"often-used-attributes": "Tihti kasutatavad atribuudid",
+				"multiple": "Konfiguratsiooni atribuudid",
+				"attribute": "Atribuut",
+				"language": "Keel",
+				"value": "Väärtus"
+			},
+			"replaces": "Asendab",
+			"topic": "Teema",
+			"other-title": "Muu pealkiri",
+			"source-reference": "Allikaviide",
 			"description": "Kirjeldus",
 			"experimental": "Eksperimentaalne",
+			"external-web-source": "Väline veebiallikas",
 			"id": "ID",
 			"identifiers": {
 				"multiple": "Identifikaatorid",
@@ -630,7 +649,7 @@
 			"name": "Nimi",
 			"owners": "Omanikud",
 			"packages": "Paketid",
-			"plural": "\"Ruumid\"",
+			"plural": "Ruumid",
 			"shared": "Jagatud",
 			"singular": "Space",
 			"terminology-servers": "Terminoloogia server",
@@ -775,6 +794,9 @@
 		"app": {
 			"header": "TermX"
 		},
+		"value-set-version-modal": {
+			"header": "Loo loendi versioon"
+		},
 		"code-system-checklist": {
 			"errors": "Vead",
 			"passed": "Läbitud",
@@ -797,6 +819,7 @@
 		},
 		"release": {
 			"add-btn": "Lisa väljalase",
+			"add-author": "Lisa autor",
 			"unaccomplished-checks": "Täitmata kontrollid",
 			"run-checks": "Käivita kõik kontrollid",
 			"add-header": "Lisa väljalase",
@@ -805,7 +828,13 @@
 			"edit-resource": "Muuda ressurss",
 			"activate": "Aktiveeri",
 			"retire": "Tühista",
-			"make-draft": "Muuda \"mustandiks\""
+			"make-draft": "Muuda \"mustandiks\"",
+			"server-sync": "Sündikeeri serveriga",
+			"records": "Kirjed",
+			"generate-records": "Genereeri kirjed",
+			"sync-success": "Sündikeerimine õnnestus",
+			"sync-error": "Sündikeerimise viga",
+			"sync-validation-error": "Sündikeerimise validatsiooni viga"
 		},
 		"association-type": {
 			"form": {
@@ -835,6 +864,7 @@
 				"concepts": {
 					"add-concept": "Lisa mõiste",
 					"add-supplement-concept": "Lisa täienduse mõiste",
+					"activate-draft-concepts": "Aktiveeri \"mustand\" mõisted ",
 					"concept": "Mõiste",
 					"contains": "Sisaldab",
 					"eq": "Võrdub",
@@ -896,6 +926,7 @@
 				"add-concept": "Lisa mõiste",
 				"add-version": "Lisa versioon",
 				"all-tasks": "Kõik ülesanded",
+				"add-task": "Lisa ülesanne",
 				"code-system": "Koodisüsteem",
 				"compare": "Võrdle",
 				"concepts": "Mõisted",
@@ -1067,6 +1098,9 @@
 				"code-system-version": "Koodisüsteemi versioon",
 				"edit-version": "Muuda versiooni",
 				"info": {
+					"add-to-release": "Lisa väljaandele",
+					"release-unspecified": "Väljalase on määramata",
+					"create-related-vs-version": "Loo seotud loendi versioon",
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitusülesanne",
 					"create-review": "Loo ülevaatuse ülesanne",
@@ -1374,7 +1408,7 @@
 			"summary": {
 				"open-tasks": "Avatud ülesanded",
 				"pages": "Leheküljed",
-				"spaces": "\"Ruumid\"",
+				"spaces": "Ruumid",
 				"title": "Kokkuvõtte"
 			},
 			"tasks": {
@@ -1553,6 +1587,8 @@
 				},
 				"edit-version": "Muuda versiooni",
 				"info": {
+					"add-to-release": "Lisa väljaandele",
+					"release-unspecified": "Väljalase on määramata",
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitusülesanne",
 					"create-review": "Loo ülevaatamisülesanne",
@@ -1713,7 +1749,7 @@
 						"NamingSystem": "Nimesüsteem",
 						"AssociationType": "AssociationType",
 						"DefinedProperty": "Globaalne tunnus",
-						"Space": "\"Ruum\"",
+						"Space": "Ruum",
 						"Wiki": "Wiki",
 						"ObservationDefinition": "Näitajate definitsioon",
 						"StructureDefinition": "Struktuuri kirjeldus",
@@ -1753,6 +1789,8 @@
 			"checklist": "Kontrollnimekiri"
 		},
 		"resource-form": {
+			"add-other-title": "Lisa muu pealkiri",
+			"add-use-context": "Lisa kastuskontekst",
 			"id-change-modal": {
 				"header": "Muuda ID",
 				"id": "Uus ID"
@@ -1766,6 +1804,17 @@
 			"source": "Allikas",
 			"type": "Tüüp",
 			"url": "URL"
+		},
+		"resource-task-modal": {
+			"header": "Loo ülesanne",
+			"assignee": "Teostaja",
+			"version": "Versioon",
+			"comment": "Kommentaar"
+		},
+		"resource-release-modal": {
+			"header": "Lisa ressurss {{resource}} väljaandele",
+			"release": "Väljalase",
+			"navigate-to-release-management": "Mine väljalaske haldusessse"
 		},
 		"resources": {
 			"tabset": {
@@ -1904,7 +1953,10 @@
 			"resource-import-error-message": "Ressurssi import ebaõnnestus",
 			"resource-import-success-message": "Ressurssi import õnnestus",
 			"resources": "Ressurssid",
-			"select-context": "Vali kontekst"
+			"select-context": "Vali kontekst",
+			"diff": {
+				"sync-tooltip": "Allikas: {{source}}\n Siht: {{target}}"
+			}
 		},
 		"structure-definition": {
 			"form": {
@@ -2173,6 +2225,8 @@
 				"expansion-see-all": "Vaata kõik mõisted.",
 				"expansion-warning": "Väljavõte ümberarvutamiseks versioon olema olekus „mustand/draft”.",
 				"info": {
+					"add-to-release": "Lisa väljaandele",
+					"release-unspecified": "Väljalase on määramata",
 					"activate": "Aktiveeri",
 					"create-approve": "Loo kinnitus ülesanne",
 					"create-review": "Loo ülevaatus ülesanne",
@@ -2303,8 +2357,8 @@
 				}
 			},
 			"no-space": {
-				"desc": "Palun valige \"ruum\" jätkamiseks",
-				"title": "\"Ruum\" ei ole valitud"
+				"desc": "Palun valige ruum jätkamiseks",
+				"title": "Ruum ei ole valitud"
 			},
 			"overview": {
 				"pages": "Leheküljed",
@@ -2328,7 +2382,7 @@
 				"delete-confirm": "Kas sa oled kindel? NB! Ka selle kausta all olevad lehed kustutatakse!",
 				"pages": "Leheküljed"
 			},
-			"spaces": "\"Ruumid\"",
+			"spaces": "Ruumid",
 			"texteditor": {
 				"quick-actions": {
 					"link-modal": {
@@ -2341,8 +2395,8 @@
 						"page": "Lehekülg",
 						"resource": "Ressurss",
 						"resource-type": "Ressurssitüüp",
-						"search-externally": "Otsi teises \"ruumis\"",
-						"space": "\"Ruum\"",
+						"search-externally": "Otsi teises ruumis",
+						"space": "Ruum",
 						"url": "URL",
 						"value-set": "Loend"
 					},

@@ -18,6 +18,7 @@ import {ValueSetLibService} from '../services/value-set-lib.service';
 export class ValueSetSearchComponent implements OnInit, ControlValueAccessor {
   @Input() @BooleanInput() public disabled: string | boolean = false;
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
+  @Input() @BooleanInput() public autoUnselect: string | boolean = false;
   @Input() @BooleanInput() public multiple: string | boolean;
   @Input() public filter?: (resource: ValueSet) => boolean;
 

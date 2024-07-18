@@ -1,0 +1,25 @@
+<m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal()" [mMaskClosable]="false">
+  <m-title *mModalHeader>
+    {{'web.value-set-version-modal.header' | translate}}
+  </m-title>
+
+  <ng-container *mModalContent>
+    <form #form="ngForm" *ngIf="params">
+      <m-form-item mName="version" mLabel="entities.value-set-version.version" required>
+        <tw-semantic-version-select name="version" [(ngModel)]="params.version" [versions]="params.valueSet | apply: versions | async" required/>
+      </m-form-item>
+      <m-form-item mName="versionReleaseDate" mLabel="entities.value-set-version.release-date" required>
+        <m-date-picker name="versionReleaseDate" [(ngModel)]="params.releaseDate" required/>
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="modal.close()">
+      {{'core.btn.cancel' | translate}}
+    </m-button>
+    <m-button mDisplay="primary" (click)="saveVersion()" [mLoading]="loader.isLoading" [disabled]="loader.state['save']">
+      {{'core.btn.confirm' | translate}}
+    </m-button>
+  </div>
+</m-modal>

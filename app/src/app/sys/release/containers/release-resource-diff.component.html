@@ -1,0 +1,56 @@
+<m-page [mLoading]="loader.isLoading">
+  <div style="display: flex; flex-direction: column; gap: 1rem" *ngIf="release">
+    <m-card>
+      <div class="m-justify-between">
+        <div style="display: flex; gap: 1rem">
+          <m-form-item mName="resource" mLabel="Resource">
+            <m-select name="resource" [(ngModel)]="resource" compareWith="id" (ngModelChange)="loadFhirResources()">
+              <m-option *ngFor="let r of release.resources" [mValue]="r" mLabel="{{r.resourceType}} - {{r.resourceId}} - {{r.resourceVersion}}"/>
+            </m-select>
+          </m-form-item>
+        </div>
+      </div>
+    </m-card>
+    <div style="display: flex; gap: 1rem">
+      <m-card style="max-width: 33%">
+        <div *m-card-header class="m-justify-between">
+          <label>{{'entities.terminology-server.current-installation' | translate}}</label>
+        </div>
+
+        <pre *ngIf="current?.length > 200000">{{current | apply: normalize}}</pre>
+        <tw-diff-view *ngIf="current?.length <= 200000" [value]="current | apply: normalize"/>
+      </m-card>
+
+      <m-card style="max-width: 33%">
+        <div *m-card-header class="m-justify-between">
+          <label>{{terminologyServers?.[release.terminologyServer]?.names | localName: '...'}}</label>
+          <m-button *twPrivileged="release.id + '.Release.publish'" m-tooltip [mTitle]="'web.space.diff.sync-tooltip' | translate: {
+              source: ('entities.terminology-server.current-installation' | translate),
+              target: (terminologyServers?.[release.terminologyServer]?.names | localName: '...')}" mDisplay="primary" (mClick)="sync()">
+            <div class="m-items-middle"><label>{{'Sync'}}</label>
+              <m-icon mCode="sync"></m-icon>
+            </div>
+          </m-button>
+        </div>
+
+        <pre *ngIf="comparable?.length > 200000">{{comparable | apply: normalize}}</pre>
+        <tw-diff-view *ngIf="comparable?.length <= 200000" [value]="comparable | apply: normalize"/>
+      </m-card>
+
+      <m-card style="max-width: 33%" *ngIf="{mode: 'line-by-line'} as d">
+        <div *m-card-header class="m-justify-between">
+          <label>{{'Diff'}}</label>
+          <m-button (mClick)="d.mode = d.mode === 'line-by-line' ? 'side-by-side' : 'line-by-line'">
+            <m-icon [mCode]="d.mode === 'line-by-line' ? 'read' : 'pic-center' "/>
+          </m-button>
+        </div>
+
+        <tw-diff-view *ngIf="current && comparable"
+            [src]="current | apply: normalize"
+            [tgt]="comparable | apply: normalize"
+            [full]="current.length < 200000 && comparable.length < 200000"
+            [display]="d.mode"/>
+      </m-card>
+    </div>
+  </div>
+</m-page>

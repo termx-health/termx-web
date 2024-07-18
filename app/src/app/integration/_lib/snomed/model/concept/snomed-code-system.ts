@@ -3,6 +3,7 @@ export class SnomedCodeSystem {
   public shortName?: string;
   public branchPath?: string;
   public countryCode?: string;
+  public dependantVersionEffectiveTime?: string;
   public dailyBuildAvailable?: boolean;
   public languages?: {[key:string]: string};
   public latestVersion?: SnomedCodeSystemVersion;
@@ -17,7 +18,7 @@ export class SnomedCodeSystemVersion {
   public dependantVersionEffectiveTime: string;
   public parentBranchPath?: string;
   public version?: string;
-  public effectiveDate?: string;
+  public effectiveDate?: number;
   public description?: string;
   public branchPath?: string;
 }

@@ -15,6 +15,7 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
   @Input() public codeSystemId?: string;
   @Input() public valueType: 'id' | 'version' | 'full' = 'full';
   @Input() @BooleanInput() public disabled: string | boolean;
+  @Input() @BooleanInput() public autoSelect: string | boolean = true;
 
   public data: {[version: string]: CodeSystemVersion} = {};
   public value?: number | string;

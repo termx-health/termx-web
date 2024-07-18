@@ -16,6 +16,7 @@
       <th mColumnKey="uri">{{'entities.entity-property.uri' | translate}}</th>
       <th mColumnKey="title">{{'entities.entity-property.kind' | translate}}</th>
       <th mColumnKey="type">{{'entities.entity-property.type' | translate}}</th>
+      <th class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let ep">
@@ -32,6 +33,13 @@
       <td>{{ep.uri}}</td>
       <td>{{ep.kind}}</td>
       <td>{{ep.type}}</td>
+      <td class="tw-table-actions">
+        <m-dropdown>
+          <a *m-dropdown-item (click)="updateRelatedProperties(ep.id)">
+            {{'web.defined-entity-property.list.update-related-properties' | translate}}
+          </a>
+        </m-dropdown>
+      </td>
     </tr>
     <tr *mTableNoData>
       <td colspan="5">

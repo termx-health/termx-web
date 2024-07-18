@@ -3,10 +3,18 @@
     [(ngModel)]="value"
     (mChange)="fireOnChange()"
     [loading]="isLoading"
-    [autoSelect]="true"
+    [autoSelect]="autoSelect | toBoolean"
     [autoUnselect]="true"
     [disabled]="!!disabled">
   <m-option *ngFor="let key of data | keys"
       [mValue]="valueType === 'id' ? data[key]?.id : data[key]?.version"
-      [mLabel]="data[key]?.version + ((data[key]?.description | localName) ? (' (' + (data[key]?.description | localName)+ ')') : '' )"/>
+      [mLabel]="data[key]?.version"
+      [mLabelTemplate]="label">
+    <ng-template #label>
+      <div class="m-items-middle">
+        <span>{{data[key]?.version}}</span>
+        <m-abbreviate [mLength]="40" [mThreshold]="10" *ngIf="(data[key]?.description | localName) as description" mValue="({{description}})"/>
+      </div>
+    </ng-template>
+  </m-option>
 </m-select>

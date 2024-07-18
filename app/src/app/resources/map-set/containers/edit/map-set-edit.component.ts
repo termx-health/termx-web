@@ -5,6 +5,7 @@ import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/c
 import {MapSet, MapSetProperty, MapSetScope, MapSetVersion} from 'term-web/resources/_lib';
 import {MapSetPropertiesComponent} from 'term-web/resources/map-set/containers/edit/property/map-set-properties.component';
 import {MapSetScopeFormComponent} from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
+import {ResourceConfigurationAttributesComponent} from 'term-web/resources/resource/components/resource-configuration-attributes.component';
 import {ResourceFormComponent} from 'term-web/resources/resource/components/resource-form.component';
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
 import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
@@ -30,6 +31,7 @@ export class MapSetEditComponent implements OnInit {
   @ViewChild(ResourceIdentifiersComponent) public resourceIdentifiersComponent?: ResourceIdentifiersComponent;
   @ViewChild(ResourceVersionFormComponent) public resourceVersionFormComponent?: ResourceVersionFormComponent;
   @ViewChild(MapSetScopeFormComponent) public mapSetScopeFormComponent?: MapSetScopeFormComponent;
+  @ViewChild(ResourceConfigurationAttributesComponent) public resourceConfigurationAttributesComponent?: ResourceConfigurationAttributesComponent;
 
   public constructor(
     private mapSetService: MapSetService,
@@ -56,12 +58,13 @@ export class MapSetEditComponent implements OnInit {
       (!this.resourceIdentifiersComponent || this.resourceIdentifiersComponent.valid()),
       (!this.resourceVersionFormComponent || this.resourceVersionFormComponent.valid()),
       (!this.mapSetPropertiesComponent || this.mapSetPropertiesComponent.valid()),
-      (!this.mapSetScopeFormComponent || this.mapSetScopeFormComponent.valid())
+      (!this.mapSetScopeFormComponent || this.mapSetScopeFormComponent.valid()),
+      (!this.resourceConfigurationAttributesComponent || this.resourceConfigurationAttributesComponent.valid())
     ].every(Boolean)) {
       return;
     }
 
-
+    this.mapSet.configurationAttributes = this.resourceConfigurationAttributesComponent.attributes;
     const ms = copyDeep(this.mapSet);
     ResourceUtil.merge(ms, this.resourceFormComponent.getResource());
 

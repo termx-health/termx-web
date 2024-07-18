@@ -1,7 +1,7 @@
 <m-no-data *ngIf="!(versions?.length > 0)"></m-no-data>
 
 <m-list *ngIf="versions?.length > 0" mSeparated>
-  <m-list-item *ngFor="let version of versions" mClickable (mClick)="openVersionSummary(version.version)">
+  <m-list-item *ngFor="let version of versions | sort: 'version': 'descend'" mClickable (mClick)="openVersionSummary(version.version)">
     <div class="m-justify-between">
       <div class="m-items-middle">
         <span class="m-bold">{{version.version}}</span>
@@ -17,7 +17,7 @@
               <m-icon mCode="copy"></m-icon>&nbsp;{{'core.btn.duplicate' | translate}}
             </a>
             <ng-container *ngIf="version.status === 'draft' && versions?.length > 1 && ('publish' | twPrivileged)">
-              <a *m-dropdown-item (click)="deleteVersion(version.version)">
+              <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteVersion(version.version)">
                 <m-icon  mCode="delete"></m-icon>&nbsp;{{'core.btn.delete' | translate}}
               </a>
             </ng-container>
@@ -39,10 +39,21 @@
         <span *ngIf="rule.codeSystem" class="m-items-middle">CS: {{rule.codeSystem}} <m-divider mVertical></m-divider> {{rule.codeSystemVersion?.version}}</span>
         <span *ngIf="rule.valueSet" class="m-items-middle">VS: {{rule.valueSet}} <m-divider mVertical></m-divider> {{rule.valueSetVersion?.version}}</span>
       </div>
-      <div *ngIf="rule.concepts?.length > 0">(<span *ngFor="let c of rule.concepts">#{{c.concept.code}} </span>)</div>
+      <div *ngIf="rule.concepts?.length > 0">(<m-abbreviate [mValue]="rule.concepts | map: 'concept.code' | join: ' #'" [mLength]="400"/>)</div>
       <div *ngIf="rule.filters?.length > 0" class="m-items-middle">(<span *ngFor="let f of rule.filters" class="m-items-middle">#{{f.property?.name}} {{f.operator || '='}}
         <tw-property-value-input viewMode [ngModel]="f.value" [property]="f.property" [codeSystem]="rule.codeSystem"></tw-property-value-input></span>)
       </div>
+    </div>
+    <div class="m-items-middle" *twPrivileged="'*.Release.view'">
+      <m-icon mCode="rocket"/>
+      <div *ngIf="releases?.[version.valueSet + version.version]?.length > 0">
+        <div *ngFor="let release of releases?.[version.valueSet + version.version]">
+          <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
+        </div>
+      </div>
+      <a (mClick)="releaseModal.toggleModal({resourceId: valueSet, resourceVersion: version?.version, resourceTitle: valueSetTitle})"
+          *ngIf="!(releases?.[version.valueSet + version.version]?.length > 0) && ('*.Release.edit' | twPrivileged)">{{'web.value-set-version.summary.info.add-to-release' | translate}}</a>
+      <span *ngIf="!(releases?.[version.valueSet + version.version]?.length > 0) && !('*.Release.edit' | twPrivileged)">{{'web.value-set-version.summary.info.release-unspecified' | translate}}</span>
     </div>
     <div>{{version.description | localName}}</div>
   </m-list-item>
@@ -75,3 +86,4 @@
   </div>
 </m-modal>
 
+<tw-resource-release-modal #releaseModal (connectedToRelease)="loadRelease()" resourceType="ValueSet"/>

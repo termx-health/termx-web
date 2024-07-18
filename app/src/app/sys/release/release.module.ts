@@ -9,6 +9,7 @@ import {ProvenanceLibModule} from 'term-web/sys/_lib';
 import {ReleaseEditComponent} from 'term-web/sys/release/containers/release-edit.component';
 import {ReleaseListComponent} from 'term-web/sys/release/containers/release-list.component';
 import {ReleaseProvenancesComponent} from 'term-web/sys/release/containers/release-provenances.component';
+import {ReleaseResourceDiffComponent} from 'term-web/sys/release/containers/release-resource-diff.component';
 import {ReleaseSummaryComponent} from 'term-web/sys/release/containers/release-summary.component';
 import {TaskLibModule} from 'term-web/task/_lib';
 import {WikiLibModule} from 'term-web/wiki/_lib';
@@ -21,6 +22,7 @@ export const RELEASE_ROUTES: Routes = [
   {path: ':id/edit', data: {privilege: ['{id}.Release.edit']}, component: ReleaseEditComponent},
   {path: ':id/summary', data: {privilege: ['{id}.Release.view']}, component: ReleaseSummaryComponent},
   {path: ':id/provenances', data: {privilege: ['{id}.Release.view']}, component: ReleaseProvenancesComponent},
+  {path: ':id/diff', data: {privilege: ['{id}.Release.view']}, component: ReleaseResourceDiffComponent},
 ];
 
 @NgModule({
@@ -42,7 +44,8 @@ export const RELEASE_ROUTES: Routes = [
     ReleaseListComponent,
     ReleaseEditComponent,
     ReleaseSummaryComponent,
-    ReleaseProvenancesComponent
+    ReleaseProvenancesComponent,
+    ReleaseResourceDiffComponent
   ],
   providers: [
     ReleaseService

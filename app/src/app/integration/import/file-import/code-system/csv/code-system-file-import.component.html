@@ -66,7 +66,10 @@
               <m-select-button mLabel="ADD NEW" (mClick)="item['_newProp'] = true"/>
             </m-select>
 
-            <m-input *ngIf="item['_newProp']" [(ngModel)]="item.propertyName" style="flex: 1"/>
+            <div *ngIf="item['_newProp']" class="m-items-middle">
+              <m-input [(ngModel)]="item.propertyName"/>
+              <m-icon-button mIcon="close" (click)="item['_newProp'] = false" />
+            </div>
           </td>
 
           <td *ngIf="hasDuplicateIdentifiers">
@@ -78,9 +81,12 @@
               {{item.propertyType}}
             </ng-container>
 
-            <m-select *ngIf="item['_newProp'] || !item.propertyName" [(ngModel)]="item.propertyType" (ngModelChange)="onPropertyTypeChange(item)">
-              <m-option *ngFor="let t of dataTypes" [mLabel]="t" [mValue]="t"></m-option>
-            </m-select>
+            <div class="m-items-middle">
+              <m-select style="width: 100%" *ngIf="item['_newProp'] || !item.propertyName" [(ngModel)]="item.propertyType" (ngModelChange)="onPropertyTypeChange(item)">
+                <m-option *ngFor="let t of dataTypes" [mLabel]="t" [mValue]="t"/>
+              </m-select>
+              <tw-code-system-search style="width: 100%" *ngIf="item.propertyType === 'Coding'" valuePrimitive [(ngModel)]="item.propertyCodeSystem"/>
+            </div>
           </td>
 
           <td>

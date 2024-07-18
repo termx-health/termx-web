@@ -34,7 +34,7 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
   public constructor(
     private valueSetService: ValueSetLibService,
     private conceptService: CodeSystemConceptLibService,
-    private translateService: TranslateService,
+    public translateService: TranslateService,
     private destroy$: DestroyService
   ) {}
 
@@ -119,8 +119,8 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
       this.data[nzValue]?.additionalDesignations?.find(d => d?.name?.toLowerCase().includes(_input.toLowerCase()));
   };
 
-  protected getDisplay = (concept: ValueSetVersionConcept): string => {
-    return VsConceptUtil.getDisplay(concept, this.translateService.currentLang);
+  protected getDisplay = (concept: ValueSetVersionConcept, lang: string): string => {
+    return VsConceptUtil.getDisplay(concept, lang);
   };
 
 }

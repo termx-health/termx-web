@@ -1,6 +1,6 @@
 <form *ngIf="resource">
-  <m-form-item mName="source" mLabel="entities.transformation-definition.source" required>
-    <m-radio-group name="source" [(ngModel)]="resource.source">
+  <m-form-item mName="source" mLabel="entities.transformation-definition.source" [required]="!disabled">
+    <m-radio-group name="source" [(ngModel)]="resource.source" [disabled]="disabled">
       <label m-radio-button mValue="local" *ngIf="resource !== definition.mapping">
         {{ ('entities.transformation-definition.source-local' | translate) }}
       </label>
@@ -16,12 +16,13 @@
   <!-- local -->
   <ng-container *ngIf="resource.source === 'local'">
     <ng-container *ngIf="resource.type === 'definition'">
-      <m-form-item mName="structureDefinition" mLabel="web.transformation-definition.resource-form.definition" required>
+      <m-form-item mName="structureDefinition" mLabel="web.transformation-definition.resource-form.definition" [required]="!disabled">
         <tw-structure-definition-select
             name="structureDefinition"
             [ngModel]="resource.reference.localId | toNumber"
             (twSelect)="onDefinitionSelect($event)"
             valueType="id"
+            [disabled]="disabled"
         ></tw-structure-definition-select>
       </m-form-item>
 
@@ -31,23 +32,25 @@
     </ng-container>
 
     <ng-container *ngIf="resource.type === 'conceptmap'">
-      <m-form-item mName="conceptmap" mLabel="web.transformation-definition.resource-form.map-set" required>
+      <m-form-item mName="conceptmap" mLabel="web.transformation-definition.resource-form.map-set" [required]="!disabled">
         <tw-map-set-search
             name="conceptmap"
             [ngModel]="resource.reference.localId"
             (ngModelChange)="onMapSetSelect($event)"
             [valuePrimitive]="false"
+            [disabled]="disabled"
         ></tw-map-set-search>
       </m-form-item>
     </ng-container>
 
     <ng-container *ngIf="resource.type === 'mapping'">
-      <m-form-item mName="mapping" mLabel="web.transformation-definition.resource-form.mapping" required>
+      <m-form-item mName="mapping" mLabel="web.transformation-definition.resource-form.mapping" [required]="!disabled">
         <tw-transformation-definition-select
             name="mapping"
             [ngModel]="resource.reference.localId | toNumber"
             (twSelect)="onStructureMapSelect($event)"
             valueType="id"
+            [disabled]="disabled"
         ></tw-transformation-definition-select>
       </m-form-item>
     </ng-container>
@@ -57,12 +60,12 @@
   <!-- url -->
   <ng-container *ngIf="resource.source === 'url'">
     <m-form-item mName="fhirServer" mLabel="web.transformation-definition.resource-form.fhir-server">
-      <m-select name="fhirServer" [(ngModel)]="resource.reference.resourceServerId">
+      <m-select name="fhirServer" [(ngModel)]="resource.reference.resourceServerId" [disabled]="disabled">
         <m-option *ngFor="let server of servers$ | async" [mValue]="server.id" [mLabel]="server.names | localName"></m-option>
       </m-select>
     </m-form-item>
 
-    <m-form-item mName="resourceUrl" mLabel="web.transformation-definition.resource-form.resource-url" class="tw-input-group" required>
+    <m-form-item mName="resourceUrl" mLabel="web.transformation-definition.resource-form.resource-url" class="tw-input-group" [required]="!disabled">
       <div style="display: inherit; width: 100%">
         <span class="tw-input-group-addon ant-input-group-addon" *ngIf="resource.reference.resourceServerId">
           {{resource.reference.resourceServerId | apply: getServerUrl | async}}{{urlSuffix[resource.type]}}
@@ -72,7 +75,8 @@
             name="resourceUrl"
             [(ngModel)]="resource.reference['_url']"
             (ngModelChange)="onResourceUrlChange(resource); resource.name = $event; resource['_preview'] = undefined"
-            required
+            [disabled]="disabled"
+            [required]="!disabled"
         ></m-input>
       </div>
     </m-form-item>
@@ -105,8 +109,8 @@
   <!-- static -->
   <ng-container *ngIf="resource.source === 'static'">
     <ng-container *ngIf="resource !== definition.mapping">
-      <m-form-item mName="name" mLabel="entities.transformation-definition.name" required>
-        <m-input [(ngModel)]="resource.name" name="name" required/>
+      <m-form-item mName="name" mLabel="entities.transformation-definition.name" [required]="!disabled">
+        <m-input [(ngModel)]="resource.name" name="name" [required]="!disabled" [disabled]="disabled"/>
       </m-form-item>
 
       <m-form-item mLabel="web.transformation-definition.resource-form.url" *ngIf="resource.reference.content | apply: findUrl as url">
@@ -115,7 +119,7 @@
     </ng-container>
 
 
-    <m-form-item *ngIf="{showPreview: false} as d" mName="content" [mLabel]="lbl" required>
+    <m-form-item *ngIf="{showPreview: false} as d" mName="content" [mLabel]="lbl" [required]="!disabled">
       <ng-template #lbl>
         <span>{{ 'web.transformation-definition.resource-form.content' | translate }}</span>
         <ng-container *ngIf="resource === definition.mapping && !resource.reference.content && definition.name">
@@ -207,7 +211,8 @@
               [(ngModel)]="resource.reference.content"
               (ngModelChange)="onContentChange()"
               [autosize]="{minRows: 5, maxRows: 30}"
-              required
+              [disabled]="disabled | toBoolean"
+              [required]="!disabled"
           ></m-textarea>
         </ng-template>
 

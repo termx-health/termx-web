@@ -5,6 +5,7 @@ import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/c
 import {CodeSystem, CodeSystemTransactionRequest} from 'term-web/resources/_lib';
 import {CodeSystemPropertiesComponent} from 'term-web/resources/code-system/containers/edit/property/code-system-properties.component';
 import {CodeSystemValueSetAddComponent} from 'term-web/resources/code-system/containers/edit/valueset/code-system-value-set-add.component';
+import {ResourceConfigurationAttributesComponent} from 'term-web/resources/resource/components/resource-configuration-attributes.component';
 import {ResourceFormComponent} from 'term-web/resources/resource/components/resource-form.component';
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
 import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
@@ -27,6 +28,7 @@ export class CodeSystemEditComponent implements OnInit {
   @ViewChild(ResourceVersionFormComponent) public resourceVersionFormComponent?: ResourceVersionFormComponent;
   @ViewChild(CodeSystemPropertiesComponent) public codeSystemPropertiesComponent?: CodeSystemPropertiesComponent;
   @ViewChild(CodeSystemValueSetAddComponent) public codeSystemRelationsComponent?: CodeSystemValueSetAddComponent;
+  @ViewChild(ResourceConfigurationAttributesComponent) public resourceConfigurationAttributesComponent?: ResourceConfigurationAttributesComponent;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -53,12 +55,13 @@ export class CodeSystemEditComponent implements OnInit {
       (!this.resourceIdentifiersComponent || this.resourceIdentifiersComponent.valid()),
       (!this.resourceVersionFormComponent || this.resourceVersionFormComponent.valid()),
       (!this.codeSystemRelationsComponent || this.codeSystemRelationsComponent.valid()),
-      (!this.codeSystemPropertiesComponent || this.codeSystemPropertiesComponent.valid())
+      (!this.codeSystemPropertiesComponent || this.codeSystemPropertiesComponent.valid()),
+      (!this.resourceConfigurationAttributesComponent || this.resourceConfigurationAttributesComponent.valid())
     ].every(Boolean)) {
       return;
     }
 
-
+    this.codeSystem.configurationAttributes = this.resourceConfigurationAttributesComponent.attributes;
     const cs = copyDeep(this.codeSystem);
     ResourceUtil.merge(cs, this.resourceFormComponent.getResource());
     const request: CodeSystemTransactionRequest = {

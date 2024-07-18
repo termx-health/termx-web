@@ -5,7 +5,7 @@
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
     [loading]="isLoading"
-    [autoUnselect]="false"
+    [autoUnselect]="autoUnselect | toBoolean"
     [filterOption]="filterOption"
     [multiple]="multiple | toBoolean"
     [disabled]="disabled | toBoolean"

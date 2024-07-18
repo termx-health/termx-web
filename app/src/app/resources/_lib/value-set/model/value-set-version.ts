@@ -6,16 +6,16 @@ import {ValueSetVersionRuleSet} from './value-set-version-rule-set';
 export class ValueSetVersionReference {
   public id?: number;
   public version?: string;
+  public valueSet?: string;
 }
 
 export class ValueSetVersion extends ValueSetVersionReference {
-  public valueSet?: string;
   public preferredLanguage?: string;
   public supportedLanguages?: string[];
   public description?: LocalizedName;
   public status?: string;
-  public releaseDate?: Date;
-  public expirationDate?: Date;
+  public releaseDate?: Date | string;
+  public expirationDate?: Date | string;
   public created?: Date;
   public algorithm?: string;
   public ruleSet?: ValueSetVersionRuleSet;

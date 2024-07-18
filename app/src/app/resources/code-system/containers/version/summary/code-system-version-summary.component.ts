@@ -28,7 +28,7 @@ export class CodeSystemVersionSummaryComponent implements OnInit {
     this.loadData(id, versionCode);
   }
 
-  private loadData(codeSystem: string, versionCode: string): void {
+  protected loadData(codeSystem: string, versionCode: string): void {
     this.loader.wrap('load',
       forkJoin([this.codeSystemService.load(codeSystem), this.codeSystemService.loadVersion(codeSystem, versionCode)])
     ).subscribe(([cs, csv]) => {

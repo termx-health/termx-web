@@ -39,6 +39,7 @@ export class CodeSystemFileImportComponent implements OnInit {
       version?: string;
       status?: string;
       releaseDate?: Date;
+      baseCodeSystemVersion?: string;
     },
     generateValueSet?: boolean;
     dryRun?: boolean;
@@ -164,12 +165,14 @@ export class CodeSystemFileImportComponent implements OnInit {
           uri: this.data.codeSystem.uri,
           title: this.data.codeSystem.title,
           description: this.data.codeSystem.description,
+          supplement: this.data.codeSystem.baseCodeSystem,
         })
       },
       version: {
         number: this.data.codeSystemVersion.version,
         status: this.data.codeSystemVersion.status,
         releaseDate: this.data.codeSystemVersion.releaseDate,
+        supplementVersion: this.data.codeSystemVersion.baseCodeSystemVersion,
       },
     };
 

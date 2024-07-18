@@ -21,6 +21,7 @@ export class CodeSystemFileImportFormComponent {
       version?: string;
       status?: string;
       releaseDate?: Date;
+      baseCodeSystemVersion?: string;
     },
     generateValueSet?: boolean;
     dryRun?: boolean;
@@ -113,5 +114,13 @@ export class CodeSystemFileImportFormComponent {
 
   public get valid(): boolean {
     return this.form?.valid;
+  }
+
+  public cleanSupplementInfo(isSupplement: boolean): void {
+    if (isSupplement) {
+      return;
+    }
+    this.data.codeSystem.baseCodeSystem = undefined;
+    this.data.codeSystemVersion.baseCodeSystemVersion = undefined;
   }
 }

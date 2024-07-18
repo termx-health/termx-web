@@ -27,7 +27,11 @@
             </ng-container>
           </div>
         </m-title>
-        <tw-code-system-versions-widget [codeSystem]="codeSystem?.id" [versions]="versions" (versionsChanged)="loadData(codeSystem.id)"/>
+        <tw-code-system-versions-widget [codeSystem]="codeSystem?.id"
+            [codeSystemTitle]="codeSystem?.title"
+            [codeSystemValueSet]="codeSystem?.valueSet"
+            [versions]="versions"
+            (versionsChanged)="loadData(codeSystem.id)"/>
       </m-card>
 
     </div>

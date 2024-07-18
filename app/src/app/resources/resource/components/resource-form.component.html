@@ -35,7 +35,7 @@
   </m-form-row>
 
   <m-form-row>
-    <m-form-item *mFormCol mLabel="entities.resource.publisher" mName="publisher" required>
+    <m-form-item *mFormCol mLabel="entities.resource.publisher" mName="publisher">
       <div class="m-items-middle" *ngIf="!customPublisher">
         <m-select style="width: 100%" name="publisher" [(ngModel)]="resource.publisher" (ngModelChange)="publisherChanged($event)">
           <m-option *ngFor="let p of publishers" [mValue]="p.concept.code" [mLabel]="p | apply:getDisplay"></m-option>
@@ -58,10 +58,10 @@
 
   <m-form-row>
     <m-form-item *mFormCol mLabel="entities.resource.description" mName="description">
-      <m-multi-language-input name="description" [(ngModel)]="resource.description"></m-multi-language-input>
+      <m-multi-language-input name="description" [(ngModel)]="resource.description" mInputType="textarea"></m-multi-language-input>
     </m-form-item>
     <m-form-item *mFormCol mLabel="entities.resource.purpose" mName="purpose">
-      <m-multi-language-input name="purpose" [(ngModel)]="resource.purpose"></m-multi-language-input>
+      <m-multi-language-input name="purpose" [(ngModel)]="resource.purpose" mInputType="textarea"></m-multi-language-input>
     </m-form-item>
   </m-form-row>
 
@@ -105,9 +105,14 @@
     </div>
   </m-form-row>
 
-  <m-form-item mLabel="entities.resource.experimental" mName="experimental">
-    <m-checkbox name="experimental" [(ngModel)]="resource.experimental"></m-checkbox>
-  </m-form-item>
+  <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.resource.experimental" mName="experimental">
+      <m-checkbox name="experimental" [(ngModel)]="resource.experimental"></m-checkbox>
+    </m-form-item>
+    <m-form-item *mFormCol mLabel="entities.resource.external-web-source" mName="externalWebSource">
+      <m-checkbox name="externalWebSource" [(ngModel)]="resource.externalWebSource"></m-checkbox>
+    </m-form-item>
+  </m-form-row>
 </form>
 
 

@@ -15,15 +15,15 @@
     </m-form-row>
     <m-form-row>
       <m-form-item *mFormCol mLabel="entities.resource.version.from" mName="from" required>
-        <m-date-picker name="from" [(ngModel)]="version.from" required></m-date-picker>
+        <m-date-picker name="from" [(ngModel)]="version.releaseDate" required></m-date-picker>
       </m-form-item>
       <m-form-item *mFormCol mLabel="entities.resource.version.to" mName="to">
-        <m-date-picker name="to" [(ngModel)]="version.to"></m-date-picker>
+        <m-date-picker name="to" [(ngModel)]="version.expirationDate"></m-date-picker>
       </m-form-item>
     </m-form-row>
     <m-form-row>
       <m-form-item *mFormCol mLabel="entities.resource.version.description" mName="description">
-        <m-multi-language-input name="description" [(ngModel)]="version.description"></m-multi-language-input>
+        <m-multi-language-input name="description" [(ngModel)]="version.description" mInputType="textarea"></m-multi-language-input>
       </m-form-item>
       <m-form-item *mFormCol mLabel="entities.resource.version.preferred-language" mName="preferredLanguage">
         <tw-value-set-concept-select name="preferredLanguage" [(ngModel)]="version.preferredLanguage" valueSet="languages"></tw-value-set-concept-select>

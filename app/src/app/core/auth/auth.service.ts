@@ -1,7 +1,8 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {Router} from '@angular/router';
-import {isDefined} from '@kodality-web/core-util';
+import {isDefined, isNil} from '@kodality-web/core-util';
+import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {EventTypes, OidcSecurityService, PublicEventsService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import Cookies from 'js-cookie';
@@ -21,6 +22,7 @@ export class AuthService {
 
   public user?: UserInfo;
   public isAuthenticated = this.oidcSecurityService.isAuthenticated$.pipe(map(r => r.isAuthenticated));
+  public notificationShown?: boolean = false;
 
   public get token(): Observable<string> {
     return this.oidcSecurityService.getAccessToken();
@@ -30,42 +32,16 @@ export class AuthService {
     protected http: HttpClient,
     protected router: Router,
     private oidcSecurityService: OidcSecurityService,
+    private notificationService: MuiNotificationService,
     eventService: PublicEventsService,
   ) {
-    oidcSecurityService.isAuthenticated$
-      .pipe(mergeMap(() => oidcSecurityService.getAuthenticationResult()))
-      .subscribe(ar => {
-        if (isDefined(ar)) {
-          Cookies.set(COOKIE_OAUTH_TOKEN_KEY, ar['access_token'], {
-            expires: new Date(new Date().getTime() + ar['expires_in'] * 1000),
-            secure: environment.production
-          });
-        } else {
-          Cookies.remove(COOKIE_OAUTH_TOKEN_KEY);
-        }
-      });
+    eventService.registerForEvents().subscribe(e => console.log(e));
 
-    eventService.registerForEvents()
-      .pipe(filter(e => e.type === EventTypes.CheckingAuthFinished))
-      .subscribe(() => {
-        const redirectOriginUrl = sessionStorage.getItem(REDIRECT_ORIGIN_URL);
-        if (redirectOriginUrl) {
-          sessionStorage.removeItem(REDIRECT_ORIGIN_URL);
-          window.location.replace(redirectOriginUrl);
-        }
-      });
-
-    eventService.registerForEvents()
-      .pipe(
-        filter(e => e.type === EventTypes.SilentRenewFailed),
-        mergeMap(() => {
-          console.warn("Silent renew failed, calling 'refreshUserInfo' manually!");
-          return this.refresh();
-        })
-      )
-      .subscribe();
+    this.updateAuthTokenCookie(oidcSecurityService);
+    this.processAuthFinishEvents(eventService);
+    this.processNewAuthenticationEvents(eventService);
+    this.processUserDataChangeEvents(eventService);
   }
-
 
   public refresh(): Observable<UserInfo> {
     if (environment.yupiEnabled) {
@@ -172,5 +148,54 @@ export class AuthService {
       return false;
     }
     return privileges.some(p => this.includesPrivilege(this.user.privileges, p));
+  }
+
+  private updateAuthTokenCookie(oidcSecurityService: OidcSecurityService): void {
+    oidcSecurityService.isAuthenticated$
+      .pipe(mergeMap(() => oidcSecurityService.getAuthenticationResult()))
+      .subscribe(ar => {
+        if (isDefined(ar)) {
+          Cookies.set(COOKIE_OAUTH_TOKEN_KEY, ar['access_token'], {
+            expires: new Date(new Date().getTime() + ar['expires_in'] * 1000),
+            secure: environment.production
+          });
+        } else {
+          Cookies.remove(COOKIE_OAUTH_TOKEN_KEY);
+        }
+      });
+  }
+
+  private processAuthFinishEvents(eventService: PublicEventsService): void {
+    eventService.registerForEvents()
+      .pipe(filter(e => e.type === EventTypes.CheckingAuthFinished))
+      .subscribe(() => {
+        const redirectOriginUrl = sessionStorage.getItem(REDIRECT_ORIGIN_URL);
+        if (redirectOriginUrl) {
+          sessionStorage.removeItem(REDIRECT_ORIGIN_URL);
+          window.location.replace(redirectOriginUrl);
+        }
+      });
+  }
+
+  private processNewAuthenticationEvents(eventService: PublicEventsService): void {
+    eventService.registerForEvents()
+      .pipe(filter(e => e.type === EventTypes.NewAuthenticationResult))
+      .subscribe(() => {
+        this.oidcSecurityService.getAuthenticationResult().subscribe(r => {
+          if ((r['expires_in'] < 300 || r['refresh_expires_in'] < 300) && !this.notificationShown) {
+            this.notificationShown = true;
+            this.notificationService.warning('core.session-expiration-warning' , null, {duration: 0, closable: true});
+          }
+        });
+      });
+  }
+
+  private processUserDataChangeEvents(eventService: PublicEventsService): void {
+    eventService.registerForEvents().pipe(filter(e => e.type === EventTypes.UserDataChanged))
+      .subscribe(e => {
+        if (isNil(e.value?.['userData'])) {
+          this.notificationService.error('core.session-expiration-error' , null, {duration: 0, closable: true});
+        }
+      });
   }
 }

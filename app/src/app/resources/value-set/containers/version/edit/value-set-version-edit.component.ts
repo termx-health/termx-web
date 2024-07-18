@@ -1,7 +1,6 @@
-import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {compareValues, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {FhirValueSetLibService} from 'app/src/app/fhir/_lib';
 import {ValueSetVersion, ValueSetVersionRuleSet} from 'app/src/app/resources/_lib';
@@ -28,7 +27,7 @@ export class ValueSetVersionEditComponent implements OnInit {
     private valueSetService: ValueSetService,
     private fhirValueSetService: FhirValueSetLibService,
     private route: ActivatedRoute,
-    private location: Location
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
@@ -60,13 +59,8 @@ export class ValueSetVersionEditComponent implements OnInit {
       return;
     }
     this.version.status = 'draft';
-    this.loader.wrap('save', this.valueSetService.saveValueSetVersion(this.valueSetId!, this.version)).subscribe(() => {
-      this.location.back();
-    });
-  }
-
-  public expand(): void {
-    this.valueSetService.expand({valueSet: this.valueSetId!, valueSetVersion: this.valueSetVersion!}).subscribe(vsConcepts => {});
+    this.loader.wrap('save', this.valueSetService.saveValueSetVersion(this.valueSetId!, this.version))
+      .subscribe(() => this.router.navigate(['/resources/value-sets', this.valueSetId, 'versions', this.version.version, 'summary'], {replaceUrl: true}));
   }
 
   public get isLoading(): boolean {
@@ -76,29 +70,6 @@ export class ValueSetVersionEditComponent implements OnInit {
   public versions = (id): Observable<string[]> => {
     return this.valueSetService.searchVersions(id, {limit: -1}).pipe(map(r => r.data.map(d => d.version)));
   };
-
-  protected downloadDefinition(format: string): void {
-    this.fhirValueSetService.loadValueSet(this.version.valueSet, this.version.version).subscribe(fhirVs => {
-      this.saveFile(fhirVs, format);
-    });
-  }
-
-  protected downloadExpansion(format: string): void {
-    this.fhirValueSetService.expandValueSet(this.version.valueSet, {valueSetVersion: this.version.version}).subscribe(fhirVs => {
-      this.saveFile(fhirVs, format);
-    });
-  }
-
-  private saveFile(fhirVs: any, format: string): void {
-    const json = JSON.stringify(fhirVs, null, 2);
-    if (format === 'json') {
-      saveAs(new Blob([json], {type: 'application/json'}), `${fhirVs.id}.json`);
-    }
-    if (format === 'xml') {
-      const xml = new Fhir().jsonToXml(json);
-      saveAs(new Blob([xml], {type: 'application/xml'}), `${fhirVs.id}.xml`);
-    }
-  }
 
   private writeVersion(version: ValueSetVersion): ValueSetVersion {
     version.status ??= 'draft';

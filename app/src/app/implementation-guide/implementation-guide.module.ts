@@ -26,7 +26,6 @@ import {ImplementationGuideGithubService} from 'term-web/implementation-guide/se
 import {ModelerLibModule} from 'term-web/modeler/_lib';
 import {CodeSystemLibModule, MapSetLibModule, ValueSetLibModule} from 'term-web/resources/_lib';
 import {ResourceModule} from 'term-web/resources/resource/resource.module';
-import {SpaceLibModule} from 'term-web/space/_lib';
 import {SysLibModule} from 'term-web/sys/_lib';
 import {WikiLibModule} from 'term-web/wiki/_lib';
 import {CoreUiModule} from '../core/ui/core-ui.module';
@@ -76,7 +75,6 @@ export const IG_ROUTES: Routes = [
     SysLibModule,
     MapSetLibModule,
     ModelerLibModule,
-    SpaceLibModule,
     WikiLibModule
   ],
   providers: [

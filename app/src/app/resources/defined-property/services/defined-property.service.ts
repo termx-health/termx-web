@@ -12,4 +12,8 @@ export class DefinedPropertyService extends DefinedPropertyLibService {
     }
     return this.http.post<DefinedProperty>(`${this.baseUrl}`, entityProperty);
   }
+
+  public updateRelated(id: number): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${id}/update-related`, {});
+  }
 }

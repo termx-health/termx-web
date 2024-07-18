@@ -11,6 +11,6 @@
 
 
 <m-drawer *ngIf="drawerOpened" [mVisible]="drawerOpened" (mClose)="closeDrawer()">
-  <tw-snomed-search (conceptSelected)="onSelect($event)" [conceptId]="value"></tw-snomed-search>
+  <tw-snomed-search (conceptSelected)="onSelect($event)" [conceptId]="value" [branch]="branch"></tw-snomed-search>
 </m-drawer>
 

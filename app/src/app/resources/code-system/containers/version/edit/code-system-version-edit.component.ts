@@ -1,8 +1,7 @@
-import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import {ActivatedRoute, Router} from '@angular/router';
+import {compareValues, isDefined, LoadingManager, validateForm, copyDeep, serializeDate} from '@kodality-web/core-util';
 import {CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {map, Observable} from 'rxjs';
 import {CodeSystemService} from '../../../services/code-system.service';
@@ -22,7 +21,7 @@ export class CodeSystemVersionEditComponent implements OnInit {
   public constructor(
     private codeSystemService: CodeSystemService,
     private route: ActivatedRoute,
-    private location: Location
+    private router: Router
   ) {}
 
   public ngOnInit(): void {
@@ -47,7 +46,8 @@ export class CodeSystemVersionEditComponent implements OnInit {
     if (!validateForm(this.form)) {
       return;
     }
-    this.loader.wrap('save', this.codeSystemService.saveCodeSystemVersion(this.codeSystemId!, this.version!)).subscribe(() => this.location.back());
+    this.loader.wrap('save', this.codeSystemService.saveCodeSystemVersion(this.codeSystemId!, this.version))
+      .subscribe(() => this.router.navigate(['/resources/code-systems', this.codeSystemId, 'versions', this.version.version, 'summary'], {replaceUrl: true}));
   }
 
   public versions = (id): Observable<string[]> => {

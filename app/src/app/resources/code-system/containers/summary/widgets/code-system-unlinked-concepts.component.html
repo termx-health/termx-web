@@ -35,7 +35,7 @@
     </ng-container>
     <ng-container *ngIf="!(tasks | apply: findTask:entityVersion.id)">
       <td></td>
-      <td><a *ngIf="approvalRequired"
+      <td><a *ngIf="approvalRequired && ('*.Task.edit' | twHasAnyPrivilege)"
           (mClick)="taskModalData.entityVersionId = entityVersion.id;taskModalData.visible = true">{{'web.code-system.summary.unlinked-concepts.create-task' | translate}}</a>
       </td>
     </ng-container>

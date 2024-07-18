@@ -14,6 +14,11 @@
               {{'web.snomed.codesystem.form.export-to-rf2' | translate}}
             </a>
             <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+              <a *m-dropdown-item (mClick)="upgradeModalData.visible = true">
+                {{'web.snomed.codesystem.form.upgrade' | translate}}
+              </a>
+            </ng-container>
+            <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
               <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteCodeSystem()">
                 {{'core.btn.delete' | translate}}
               </a>
@@ -42,7 +47,7 @@
               <m-input name="name" [(ngModel)]="snomedCodeSystem.name"></m-input>
             </m-form-item>
             <m-form-item *mFormCol mName="dependantVersionEffectiveTime" mLabel="entities.snomed-codesystem.dependant-version-effective-time">
-              {{snomedCodeSystem.latestVersion?.dependantVersionEffectiveTime || '-'}}
+              {{snomedCodeSystem.dependantVersionEffectiveTime || '-'}}
             </m-form-item>
           </m-form-row>
           <m-form-row>
@@ -123,7 +128,7 @@
       <form #upgradeModalForm="ngForm">
         <m-form-item mName="dependant-version" mLabel="web.snomed.codesystem.form.upgrade-modal.dependant-version" required>
           <m-select name="dependant-version" [(ngModel)]="upgradeModalData.dependantVersion" required>
-            <m-option *ngFor="let v of dependantVersions | filter:filterDependantVersion" [mValue]="v.effectiveDate" [mLabel]="v.effectiveDate"/>
+            <m-option *ngFor="let v of dependantVersions | filter:filterDependantVersion" [mValue]="v.effectiveDate" [mLabel]="v.effectiveDate | toString"/>
           </m-select>
         </m-form-item>
       </form>

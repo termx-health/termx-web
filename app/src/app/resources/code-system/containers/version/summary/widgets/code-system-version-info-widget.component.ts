@@ -10,8 +10,8 @@ import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import {AuthService} from 'term-web/core/auth';
-import {Space, SpaceLibService} from 'term-web/space/_lib';
-import {LorqueLibService, Provenance} from 'term-web/sys/_lib';
+import {Space, SpaceLibService} from 'term-web/sys/_lib/space';
+import {LorqueLibService, Provenance, ReleaseLibService, Release} from 'term-web/sys/_lib';
 
 @Component({
   selector: 'tw-code-system-version-info-widget',
@@ -23,9 +23,11 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
   @Input() public codeSystem: CodeSystem;
   @Input() public version: CodeSystemVersion;
   @Output() public taskCreated: EventEmitter<void> = new EventEmitter();
+  @Output() public versionChanged: EventEmitter<void> = new EventEmitter();
 
   protected provenances: Provenance[];
   protected githubSpaces: Space[];
+  protected releases: Release[];
 
   protected loader = new LoadingManager();
 
@@ -35,6 +37,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
     private spaceService: SpaceLibService,
+    private releaseService: ReleaseLibService,
     private authService: AuthService,
     private lorqueService: LorqueLibService,
     private destroy$: DestroyService,
@@ -52,6 +55,7 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
           );
         });
       }
+      this.loadRelease();
     }
   }
 
@@ -62,7 +66,8 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
           if (status === 'failed') {
             this.lorqueService.load(process.id).subscribe(p => this.notificationService.error(p.resultText));
           } else  {
-            this.codeSystemService.getConceptExportResult(process.id, format);
+            const fileName = `CS-${this.version?.codeSystem}-${this.version.version}`;
+            this.codeSystemService.getConceptExportResult(process.id, format, fileName);
           }
         });
       });
@@ -77,18 +82,18 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
     const json = JSON.stringify(fhirCs, null, 2);
 
     if (format === 'json') {
-      saveAs(new Blob([json], {type: 'application/json'}), `${fhirCs.id}.json`);
+      saveAs(new Blob([json], {type: 'application/json'}), `CS-${fhirCs.id}.json`);
     }
     if (format === 'xml') {
       const xml = new Fhir().jsonToXml(json);
-      saveAs(new Blob([xml], {type: 'application/xml'}), `${fhirCs.id}.xml`);
+      saveAs(new Blob([xml], {type: 'application/xml'}), `CS-${fhirCs.id}.xml`);
     }
     if (format === 'fsh') {
       this.chefService.fhirToFsh({fhir: [json]}).subscribe(r => {
         r.warnings?.forEach(w => this.notificationService.warning('JSON to FSH conversion warning', w.message!, {duration: 0, closable: true}));
         r.errors?.forEach(e => this.notificationService.error('JSON to FSH conversion failed!', e.message!, {duration: 0, closable: true}));
         const fsh = typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
-        saveAs(new Blob([fsh], {type: 'application/fsh'}), `${fhirCs.id}.fsh`);
+        saveAs(new Blob([fsh], {type: 'application/fsh'}), `CS-${fhirCs.id}.fsh`);
       });
     }
   }
@@ -107,5 +112,17 @@ export class CodeSystemVersionInfoWidgetComponent implements OnChanges {
 
   protected openVersionConcepts(): void {
     this.router.navigate(['/resources/code-systems', this.version.codeSystem, 'versions', this.version.version, 'concepts']);
+  }
+
+  public openRelease(id: number): void {
+    this.router.navigate(['/releases', id, 'summary']);
+  }
+
+  protected loadRelease(): void {
+    if (this.authService.hasPrivilege('*.Release.view')) {
+      this.releaseService.search({resource: ['CodeSystem', this.version.codeSystem, this.version.version].join('|')}).subscribe(r => {
+        this.releases = r.data;
+      });
+    }
   }
 }

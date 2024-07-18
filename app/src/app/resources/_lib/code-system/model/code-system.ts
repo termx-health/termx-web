@@ -32,6 +32,8 @@ export class CodeSystem {
   public concepts?: CodeSystemConcept[];
   public versions?: CodeSystemVersion[];
 
+  public valueSet?: string;
+
   public copyright?: {holder?: string, jurisdiction?: string, statement?: string};
   public permissions?: {admin?: string, editor?: string, viewer?: string, endorser?: string};
   public settings?: {reviewRequired?: boolean, approvalRequired?: boolean};

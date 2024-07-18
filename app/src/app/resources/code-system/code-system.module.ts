@@ -26,6 +26,7 @@ import {
 } from 'term-web/resources/code-system/containers/version/summary/widgets/code-system-version-info-widget.component';
 import {CodeSystemValidatorComponent} from 'term-web/resources/code-system/containers/version/validator/code-system-validator.component';
 import {ResourceModule} from 'term-web/resources/resource/resource.module';
+import {ValueSetModule} from 'term-web/resources/value-set/value-set.module';
 import {SequenceLibModule} from 'term-web/sequence/_lib/sequence-lib.module';
 import {SysLibModule} from 'term-web/sys/_lib';
 import {UserLibModule} from 'term-web/user/_lib';
@@ -100,6 +101,7 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
     ResourceModule,
     UserLibModule,
     SysLibModule,
+    ValueSetModule,
   ],
   declarations: [
     CodeSystemListComponent,

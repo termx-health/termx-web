@@ -3,6 +3,7 @@ import {Routes} from '@angular/router';
 import {MarinaQuillModule} from '@kodality-web/marina-quill';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {ResourceModule} from 'term-web/resources/resource/resource.module';
+import {ValueSetVersionSaveModalComponent} from 'term-web/resources/value-set/components/value-set-version-save-modal-component';
 import {ValueSetConceptsComponent} from 'term-web/resources/value-set/containers/concepts/value-set-concepts.component';
 import {ValueSetEditComponent} from 'term-web/resources/value-set/containers/edit/value-set-edit.component';
 import {ValueSetProvenancesComponent} from 'term-web/resources/value-set/containers/provenance/value-set-provenances.component';
@@ -87,9 +88,12 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
     ValueSetVersionInfoWidgetComponent,
     ValueSetVersionRuleSetWidgetComponent,
     ValueSetVersionConceptsComponent,
+
+    ValueSetVersionSaveModalComponent,
   ],
   exports: [
-    ValueSetListComponent
+    ValueSetListComponent,
+    ValueSetVersionSaveModalComponent,
   ],
   providers: [
     ValueSetService

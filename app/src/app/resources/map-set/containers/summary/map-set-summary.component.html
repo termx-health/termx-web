@@ -20,7 +20,7 @@
             </m-button>
           </div>
         </m-title>
-        <tw-map-set-versions-widget [mapSet]="mapSet?.id" [versions]="versions" (versionsChanged)="loadData(mapSet.id)"></tw-map-set-versions-widget>
+        <tw-map-set-versions-widget [mapSet]="mapSet?.id" [mapSetTitle]="mapSet?.title" [versions]="versions" (versionsChanged)="loadData(mapSet.id)"></tw-map-set-versions-widget>
       </m-card>
 
     </div>

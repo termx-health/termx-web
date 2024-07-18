@@ -1,31 +1,24 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, Input, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {LoadingManager, validateForm} from '@kodality-web/core-util';
 import {forkJoin} from 'rxjs';
-import {CodeSystemLibService, ValueSet, ValueSetLibService, ValueSetTransactionRequest} from 'term-web/resources/_lib';
+import {CodeSystemLibService, ValueSet, ValueSetTransactionRequest, CodeSystem} from 'term-web/resources/_lib';
 
 @Component({
   selector: 'tw-cs-value-set',
   templateUrl: 'code-system-value-set-add.component.html'
 })
-export class CodeSystemValueSetAddComponent implements OnChanges {
-  @Input() public codeSystemId?: string | null;
+export class CodeSystemValueSetAddComponent {
+  @Input() public codeSystem?: CodeSystem;
+  @Input() public hasRelatedValueSet: boolean;
   @ViewChild("form") public form?: NgForm;
 
   protected loader = new LoadingManager();
-  protected hasRelatedValueSet: boolean = false;
-  protected generateValueSet: boolean = false;
-  protected valueSet: ValueSet = {versions: [{status: 'draft', version: '1'}]};
+  protected generateValueSet: boolean;
+  protected valueSet: ValueSet = {versions: [{status: 'draft'}]};
 
 
-  public constructor(private codeSystemService: CodeSystemLibService, private valueSetService: ValueSetLibService) {}
-
-  public ngOnChanges(changes: SimpleChanges): void {
-    if (changes['codeSystemId'] && this.codeSystemId) {
-      this.loader.wrap('load', this.valueSetService.search({codeSystem: this.codeSystemId, limit: 0}))
-        .subscribe(result => this.hasRelatedValueSet = result.meta?.total > 0);
-    }
-  }
+  public constructor(private codeSystemService: CodeSystemLibService) {}
 
   public publisherChanged(publisher: string): void {
     if (!publisher) {
@@ -53,7 +46,9 @@ export class CodeSystemValueSetAddComponent implements OnChanges {
 
   public generate(generate: boolean): void {
     if (generate) {
-      this.valueSet.id = this.codeSystemId ? this.codeSystemId + '-vs' : this.valueSet.id;
+      this.valueSet.id = this.codeSystem?.id || this.valueSet.id;
+      this.valueSet.publisher = this.codeSystem?.publisher || this.valueSet.publisher;
+      this.publisherChanged(this.valueSet.publisher);
     }
   }
 }

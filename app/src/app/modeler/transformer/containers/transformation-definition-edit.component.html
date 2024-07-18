@@ -1,11 +1,17 @@
-<m-spinner [mLoading]="!definition"></m-spinner>
+<m-spinner [mLoading]="!definition"/>
+
 <div *ngIf="!!definition" class="tw-flex-container" style="gap: 12px" [twPrivilegeContext]="[definition?.id, 'TransformationDefinition']">
-  <div class="m-justify-between m-items-middle">
-    <div>
-      <h2 class="m-bold" style="margin: 0">
-        {{'entities.transformation-definition.singular' | translate}}
+  <div class="m-justify-between m-items-top" style="margin-bottom: 0.5rem">
+    <div style="flex: 1">
+      <m-form-item mName="name" required *ngIf="'' | twPrivileged">
+        <m-input [(ngModel)]="definition.name" name="name" placeholder="entities.transformation-definition.name" required/>
+      </m-form-item>
+
+      <h2 class="m-bold" style="margin: 0" *ngIf="!('' | twPrivileged)">
+        {{definition.name}}
       </h2>
-      <div class="m-text-secondary m-text-small" *ngIf="definition.id && (definition.modifiedBy || definition.createdBy)">
+
+      <div *ngIf="definition.id && (definition.modifiedBy || definition.createdBy)" class="m-text-secondary m-text-small">
         <m-icon mCode="clock-circle"/>
         {{(definition.modifiedAt ? 'web.transformation-definition.edit.updated' : 'web.transformation-definition.edit.created') | translate: ({date: (definition.modifiedBy ? definition.modifiedAt : definition.createdAt) | localDateTime})}}
 
@@ -15,7 +21,7 @@
     </div>
 
     <div class="m-items-middle" *twPrivileged>
-      <m-button (click)="save()" mDisplay="primary">
+      <m-button mDisplay="primary" (mClick)="save()">
         <div class="m-items-middle">
           <m-icon [mCode]="loading ? 'loading' : 'save'"/>
           {{'core.btn.save' | translate}}
@@ -32,13 +38,6 @@
       </m-dropdown>
     </div>
   </div>
-
-
-  <m-card>
-    <m-form-item mName="name" mLabel="entities.transformation-definition.name" required>
-      <m-input [(ngModel)]="definition.name" name="name" required></m-input>
-    </m-form-item>
-  </m-card>
 
   <tw-transformation-definition-resources [definition]="definition"/>
 

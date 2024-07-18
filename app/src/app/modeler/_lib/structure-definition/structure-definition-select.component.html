@@ -5,6 +5,7 @@
     (mInputChange)="onSearch($event)"
     (mChange)="fireOnChange()"
     [loading]="loader.isLoading"
+    [disabled]="disabled"
     [autoUnselect]="false"
 >
   <m-option

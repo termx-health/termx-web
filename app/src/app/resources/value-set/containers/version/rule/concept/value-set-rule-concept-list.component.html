@@ -25,7 +25,8 @@
               [codeSystemVersionId]="rule.codeSystemVersion?.id"
               [codeSystemVersionReleaseDateLe]="lockedDate"
               [codeSystemVersionExpirationDateGe]="lockedDate"
-              [codeSystemEntityVersionStatus]="inactiveConcepts ? 'active' : inactiveConcepts === false ? 'retired': null "
+              [codeSystemEntityVersionStatus]="inactiveConcepts ? 'active' : inactiveConcepts === false ? 'retired': null"
+              [codeSystemVersionUri]="rule.codeSystemVersion?.uri"
               valueType="code"
               autofocus
               required></tw-term-concept-search>
@@ -38,7 +39,7 @@
         <ng-template #editTemplate let-c let-ngModelName="ngModelName">
           <div class="m-items-middle">
             <tw-value-set-concept-select style="flex: 1" valueSet="languages" [name]="ngModelName + 'lang'" [(ngModel)]="c.display.language"></tw-value-set-concept-select>
-            <m-input style="flex: 1" [name]="ngModelName + 'name'" [(ngModel)]="c.display.name" ></m-input>
+            <m-textarea style="flex: 1" [name]="ngModelName + 'name'" [(ngModel)]="c.display.name" ></m-textarea>
           </div>
         </ng-template>
       </m-editable-column>
@@ -52,7 +53,7 @@
         <ng-template #editTemplate let-c let-ngModelName="ngModelName">
           <div class="m-items-middle" *ngFor="let d of c.additionalDesignations; let i = index" style="margin-bottom: 0.5rem">
             <tw-value-set-concept-select style="flex: 1" valueSet="languages" [(ngModel)]="d.language" name="{{i}}-lang"></tw-value-set-concept-select>
-            <m-input style="flex: 1" [(ngModel)]="d.name" name="{{i}}-name"></m-input>
+            <m-textarea style="flex: 1" [(ngModel)]="d.name" name="{{i}}-name"></m-textarea>
             <m-icon style="flex: 1" class="m-clickable" mCode="delete" (click)="removeDesignation(c, i)"></m-icon>
           </div>
           <tw-add-button (click)="addDesignation(c)">{{'web.value-set-version.form.rule-set.rule.add-designation' | translate}}</tw-add-button>

@@ -3,7 +3,7 @@ import {Injectable} from '@angular/core';
 import {collect, isNil} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {mergeMap, Observable, timer} from 'rxjs';
-import {environment} from '../../../../../environments/environment';
+import {environment} from 'environments/environment';
 import {JobLibService, JobLog, JobLogResponse} from '../../../../sys/_lib';
 
 
@@ -12,6 +12,7 @@ export interface FileProcessingRequestProperty {
   propertyName?: string;
   propertyType?: string;
   propertyTypeFormat?: string;
+  propertyCodeSystem?: string;
   propertyDelimiter?: string;
   preferred?: boolean;
   language?: string;
@@ -26,11 +27,13 @@ export interface FileProcessingRequest {
     uri?: string;
     title?: LocalizedName;
     description?: LocalizedName;
+    supplement?: string;
   };
   version?: {
     number?: string;
     status?: string;
     releaseDate?: Date;
+    supplementVersion?: string;
   };
 
   properties?: FileProcessingRequestProperty[];
@@ -67,10 +70,10 @@ export class CodeSystemFileImportService {
       propertiesWithoutFormat.forEach(p => errors.push(`Please define the type format for the "${p.propertyName}" property`));
     }
 
-    const forbiddenNewProperties = props.filter(p => ['code', 'Coding'].includes(p.propertyType) && p['_newProp']);
-    if (forbiddenNewProperties.length) {
-      errors.push(`Please create code system and define ${forbiddenNewProperties.map(p => `"${p.propertyName}"`).join(', ')} properties there`);
-    }
+    // const forbiddenNewProperties = props.filter(p => ['code', 'Coding'].includes(p.propertyType) && p['_newProp']);
+    // if (forbiddenNewProperties.length) {
+    //   errors.push(`Please create code system and define ${forbiddenNewProperties.map(p => `"${p.propertyName}"`).join(', ')} properties there`);
+    // }
 
     return errors;
   }

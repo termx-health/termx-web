@@ -17,7 +17,8 @@
         </m-title>
         <tw-code-system-version-info-widget [codeSystem]="codeSystem"
             [version]="codeSystemVersion"
-            (taskCreated)="tasksWidgetComponent.loadTasks()"></tw-code-system-version-info-widget>
+            (taskCreated)="tasksWidgetComponent.loadTasks()"
+            (versionChanged)="loadData(codeSystem?.id, codeSystemVersion?.version)"></tw-code-system-version-info-widget>
       </m-card>
 
 

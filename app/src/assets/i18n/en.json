@@ -24,6 +24,8 @@
 		"confirm": "Are you sure?",
 		"data-lost-warning": "Your changes wouldn't be saved!",
 		"delete-confirm": "Are you sure you want to delete?",
+		"session-expiration-warning": "Session expires in less than 5 minutes!",
+		"session-expiration-error": "Session is expired!",
 		"filter": "Filter",
 		"form-invalid": "Form invalid.  Please review the data",
 		"load-more": "Load more",
@@ -57,6 +59,7 @@
 			"whitelist": "Whitelist"
 		},
 		"release": {
+			"authors": "Authors",
 			"code": "Code",
 			"name": "Name",
 			"planned": "Planned",
@@ -64,6 +67,7 @@
 			"status": "Status",
 			"plural": "Releases",
 			"single": "Release",
+			"terminology-server": "Terminology server",
 			"resource": {
 				"plural": "Resources",
 				"type": "Type",
@@ -71,6 +75,7 @@
 				"version": "Version",
 				"name": "Name",
 				"errors": "Errors",
+				"sync-state": "Sync state",
 				"code-system": "Code system",
 				"value-set": "Value set",
 				"map-set": "Map set",
@@ -87,6 +92,7 @@
 			"reverse-name": "Reverse name"
 		},
 		"code-system": {
+			"supplement": "Supplement",
 			"base-code-system": "Parent code system",
 			"case-sensitivity": "Case sensitivity",
 			"concepts": "Concepts",
@@ -145,6 +151,7 @@
 			"status": "Status"
 		},
 		"code-system-version": {
+			"base-version": "Parent code system version",
 			"single": "Code System Version",
 			"uri": "URI",
 			"description": "Description",
@@ -500,12 +507,15 @@
 			"source-reference": "Source reference",
 			"topic": "Topic",
 			"conf-attribute": {
+				"often-used-attributes": "Often used attributes",
 				"multiple": "Configuration attributes",
 				"attribute": "Attribute",
+				"language": "Language",
 				"value": "Value"
 			},
 			"description": "Description",
 			"experimental": "Experimental",
+			"external-web-source": "External web source",
 			"id": "ID",
 			"identifiers": {
 				"multiple": "Identifiers",
@@ -813,6 +823,7 @@
 		},
 		"release": {
 			"add-btn": "Add release",
+			"add-author": "Add author",
 			"unaccomplished-checks": "Unaccomplished checks",
 			"run-checks": "Run all checks",
 			"add-header": "Add release",
@@ -821,7 +832,13 @@
 			"edit-resource": "Edit resource",
 			"activate": "Activate",
 			"retire": "Retire",
-			"make-draft": "Make draft"
+			"make-draft": "Make draft",
+			"server-sync": "Sync with server",
+			"records": "Notes",
+			"generate-records": "Generate notes",
+			"sync-success": "Sync was successful",
+			"sync-error": "Sync error",
+			"sync-validation-error": "Sync validation error"
 		},
 		"app": {
 			"header": "TermX"
@@ -856,6 +873,7 @@
 					"designation-languages": "Designation languages",
 					"add-concept": "Add concept",
 					"add-supplement-concept": "Add supplement concept",
+					"activate-draft-concepts": "Activate draft concepts",
 					"concept": "Concept",
 					"contains": "Contains",
 					"eq": "Equals",
@@ -1099,6 +1117,9 @@
 				"code-system-version": "Code system version",
 				"edit-version": "Edit version",
 				"info": {
+					"add-to-release": "Add to release",
+					"release-unspecified": "Release is unspecified",
+					"create-related-vs-version": "Create related ValueSet version",
 					"activate": "Activate",
 					"create-approve": "Create approval task",
 					"create-review": "Create review task",
@@ -1597,6 +1618,8 @@
 				},
 				"edit-version": "Edit version",
 				"info": {
+					"add-to-release": "Add to release",
+					"release-unspecified": "Release is unspecified",
 					"activate": "Activate",
 					"create-approve": "Create approval task",
 					"create-review": "Create review task",
@@ -1813,11 +1836,19 @@
 			"type": "Type",
 			"url": "URL"
 		},
+		"value-set-version-modal": {
+			"header": "Create value set version"
+		},
 		"resource-task-modal": {
 			"header": "Create task",
 			"assignee": "Assignee",
 			"version": "Version",
 			"comment": "Comment"
+		},
+		"resource-release-modal": {
+			"header": "Add resource {{resource}} to release",
+			"release": "Release",
+			"navigate-to-release-management": "Navigate to release management"
 		},
 		"resources": {
 			"tabset": {
@@ -1964,7 +1995,11 @@
 			"select-context": "Select context",
 			"change-source-server": "Change resource source server",
 			"reload-diff-matrix": "Reload diff matrix",
-			"sync-resources": "Sync all resources (from current installation to target server)"
+			"sync-resources": "Sync all resources (from current installation to target server)",
+			"clear-sync-resources": "Delete and sync all resources (from current installation to target server)",
+			"diff": {
+				"sync-tooltip": "Source: {{source}}\n Target: {{target}}"
+			}
 		},
 		"structure-definition": {
 			"form": {
@@ -2156,6 +2191,12 @@
 				"type.definition": "Definitions",
 				"type.mapping": "Imports",
 				"type.mapping-main": "Mapping"
+			},
+			"import": {
+				"import-map": {
+					"title": "This resource was imported from ImportMap!",
+					"description": "If you need to make changes, you can either delete and recreate it manually, or save the Transformation Definition!"
+				}
 			}
 		},
 		"value-set": {
@@ -2236,6 +2277,8 @@
 				"expansion-see-all": "See full list of the concepts.",
 				"expansion-warning": "The value set version should be in the 'draft' status to recalculate expansion.",
 				"info": {
+					"add-to-release": "Add to release",
+					"release-unspecified": "Release is unspecified",
 					"activate": "Activate",
 					"create-approve": "Create approval task",
 					"create-review": "Create review task",
@@ -2254,7 +2297,7 @@
 				"rule": "Rule",
 				"rule-set": "Rule set",
 				"task-modal": {
-					"assignee": "",
+					"assignee": "Assignee",
 					"header": "Create {{type}} task",
 					"success-msg": "Task created"
 				},

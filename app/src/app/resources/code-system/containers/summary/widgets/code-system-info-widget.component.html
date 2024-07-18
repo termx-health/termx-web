@@ -35,4 +35,8 @@
     <m-icon mCode="environment"></m-icon>
     <span>{{cs.publisher | localizedConceptName:{codeSystem: 'publisher'} | async}}</span>
   </div>
+  <div class="m-items-middle" *ngIf="cs.valueSet">
+    <m-icon mCode="tag"></m-icon>
+    <span>VS | <a [routerLink]="['/resources/value-sets', cs.valueSet, 'summary']">{{cs.valueSet}}</a></span>
+  </div>
 </div>

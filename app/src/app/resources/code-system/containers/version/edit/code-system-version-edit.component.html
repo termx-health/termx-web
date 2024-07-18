@@ -22,11 +22,11 @@
 
           <m-form-row>
             <m-form-item *mFormCol mName="releaseDate" mLabel="entities.code-system-version.release-date" required>
-              <m-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" [mMax]="version.expirationDate" required></m-date-picker>
+              <m-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" [mMax]="version.expirationDate" required/>
             </m-form-item>
 
             <m-form-item *mFormCol mName="expirationDate" mLabel="entities.code-system-version.expiration-date">
-              <m-date-picker name="expirationDate" [(ngModel)]="version.expirationDate" [mMin]="version.releaseDate"></m-date-picker>
+              <m-date-picker name="expirationDate" [(ngModel)]="version.expirationDate" [mMin]="version.releaseDate"/>
             </m-form-item>
           </m-form-row>
 
@@ -45,13 +45,17 @@
 
           <m-form-row>
             <m-form-item  *mFormCol mName="description" mLabel="entities.code-system-version.description">
-              <m-multi-language-input name="description" [(ngModel)]="version.description"></m-multi-language-input>
+              <m-multi-language-input name="description" [(ngModel)]="version.description" mInputType="textarea"/>
             </m-form-item>
 
             <m-form-item *mFormCol mName="algorithm" mLabel="entities.resource.version.algorithm">
               <tw-value-set-concept-select name="algorithm" [(ngModel)]="version.algorithm" valueSet="version-algorithm"></tw-value-set-concept-select>
             </m-form-item>
           </m-form-row>
+
+          <m-form-item *ngIf="version.baseCodeSystem" mName="baseVersion" mLabel="entities.code-system-version.base-version">
+            <tw-code-system-version-select name="baseVersion" [codeSystemId]="version.baseCodeSystem" [(ngModel)]="version.baseCodeSystemVersion" [autoSelect]="false"/>
+          </m-form-item>
 
           <tw-resource-identifiers [identifiers]="version.identifiers" version></tw-resource-identifiers>
         </form>

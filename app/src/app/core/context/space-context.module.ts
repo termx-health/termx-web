@@ -6,8 +6,8 @@ import {MarinaUiModule} from '@kodality-web/marina-ui';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {TranslateModule} from '@ngx-translate/core';
 import {AuthModule} from 'term-web/core/auth';
-import {SpaceLibModule} from 'term-web/space/_lib';
-import {SpaceModule} from 'term-web/space/space.module';
+import {SpaceLibModule} from 'term-web/sys/_lib/space';
+import {SpaceModule} from 'term-web/sys/space/space.module';
 import {SpaceContextComponent} from './space-context.component';
 
 @NgModule({

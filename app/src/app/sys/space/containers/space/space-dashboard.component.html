@@ -1,0 +1,101 @@
+<m-page [mLoading]="spaceContext.loading">
+  <div style="display: flex; gap: 1rem">
+    <m-card style="flex: 1; height: min-content; position: sticky; top: calc(var(--page-header-height) + var(--page-content-padding) + 3.5rem);">
+      <m-form-item mLabel="core.filter">
+        <div class="m-items-middle">
+          <m-input style="flex: 1" placeholder="marina.ui.inputs.search.placeholder" [ngModel]="searchText" twDebounce [debounced]="textSearch"/>
+          <m-icon-button *ngIf="searchText?.length" mIcon="close" (mClick)="searchText = undefined"/>
+        </div>
+      </m-form-item>
+
+      <m-form-item mLabel="web.space.resources">
+        <m-list [(ngModel)]="selectedResourceType" (ngModelChange)="selectResourceType($event)" mSelectable mSeparated [mAllowClear]="false">
+          <m-list-item mValue="code-system" mClickable>
+            {{'entities.code-system.plural' | translate}}
+          </m-list-item>
+          <m-list-item mValue="value-set" mClickable>
+            {{'entities.value-set.plural' | translate}}
+          </m-list-item>
+          <m-list-item mValue="map-set" mClickable>
+            {{'entities.map-set.plural' | translate}}
+          </m-list-item>
+        </m-list>
+      </m-form-item>
+    </m-card>
+
+
+    <div class="uw-flex-container" style="flex: 3">
+      <ng-container [ngSwitch]="selectedResourceType">
+        <!-- Code Systems -->
+        <m-card *ngSwitchCase="'code-system'">
+          <label *m-card-header>{{'entities.code-system.plural' | translate}}</label>
+          <tw-code-system-widget [spaceId]="spaceContext?.space?.id"
+              [packageId]="spaceContext?.pack?.id"
+              [packageVersionId]="spaceContext?.version?.id"
+              [text]="searchText"
+              [actionsTpl]="csActions"
+              (loaded)="restoreScrollPosition()">
+            <ng-template #csActions let-cs>
+              <m-icon-button mIcon="select"
+                  (mClick)="$event.stopPropagation(); openInTab(['/resources', 'code-systems', cs.id, 'summary'])"
+                  m-tooltip
+                  mTitle="web.space.open-in-new-tab"/>
+              <m-icon-button mIcon="diff" [routerLink]="['diff']" [queryParams]="{resourceId: cs.id, resourceType: 'code-system'}"/>
+            </ng-template>
+          </tw-code-system-widget>
+        </m-card>
+
+        <!-- Value Sets -->
+        <m-card *ngSwitchCase="'value-set'">
+          <label *m-card-header>{{'entities.value-set.plural' | translate}}</label>
+          <tw-value-set-widget [spaceId]="spaceContext?.space?.id"
+              [packageId]="spaceContext?.pack?.id"
+              [packageVersionId]="spaceContext?.version?.id"
+              [text]="searchText"
+              [actionsTpl]="vsActions"
+              (loaded)="restoreScrollPosition()">
+            <ng-template #vsActions let-vs>
+              <m-icon-button mIcon="select"
+                  (mClick)="$event.stopPropagation(); openInTab(['/resources', 'value-sets', vs.id, 'summary'])"
+                  m-tooltip
+                  mTitle="web.space.open-in-new-tab"/>
+              <m-icon-button mIcon="diff" [routerLink]="['diff']" [queryParams]="{resourceId: vs.id, resourceType: 'value-set'}"/>
+            </ng-template>
+          </tw-value-set-widget>
+        </m-card>
+
+        <!-- Map Sets -->
+        <m-card *ngSwitchCase="'map-set'">
+          <label *m-card-header>{{'entities.map-set.plural' | translate}}</label>
+          <tw-map-set-widget [spaceId]="spaceContext?.space?.id"
+              [packageId]="spaceContext?.pack?.id"
+              [packageVersionId]="spaceContext?.version?.id"
+              [text]="searchText"
+              [actionsTpl]="msActions"
+              (loaded)="restoreScrollPosition()">
+            <ng-template #msActions let-ms>
+              <m-icon-button mIcon="select"
+                  (mClick)="$event.stopPropagation(); openInTab(['/resources', 'map-sets', ms.id, 'summary'])"
+                  m-tooltip
+                  mTitle="web.space.open-in-new-tab"/>
+              <m-icon-button mIcon="diff" [routerLink]="['diff']" [queryParams]="{resourceId: ms.id, resourceType: 'map-set'}"/>
+            </ng-template>
+          </tw-map-set-widget>
+        </m-card>
+
+        <!-- Pages -->
+        <!--        <m-card *ngSwitchCase="'page'">-->
+        <!--          <label *m-card-header>{{'entities.page.plural' | translate}}</label>-->
+
+        <!--        </m-card>-->
+
+        <!-- Structure Definitions -->
+        <!--        <m-card *ngSwitchCase="'structure-definition'">-->
+        <!--          <label *m-card-header>{{'entities.structure-definition.plural' | translate}}</label>-->
+
+        <!--        </m-card>-->
+      </ng-container>
+
+    </div>
+  </div>
+</m-page>

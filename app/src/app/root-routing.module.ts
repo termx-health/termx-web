@@ -17,7 +17,7 @@ import {INTEGRATION_ROUTES} from './integration/integration.module';
 import {MEASUREMENT_UNIT_ROUTES} from './measurement-unit/measurement-unit.module';
 import {PRIVILEGES_ROUTES} from './privileges/privileges.module';
 import {RESOURCES_ROUTES} from './resources/resources.module';
-import {SPACE_CTX_ROUTES, SPACE_ROUTES, TERMINOLOGY_SERVER_ROUTES} from './space/space.module';
+import {SPACE_CTX_ROUTES, SPACE_ROUTES, TERMINOLOGY_SERVER_ROUTES} from './sys/space/space.module';
 import {WIKI_MANAGEMENT_ROUTES, WIKI_ROUTES} from './wiki/wiki.module';
 
 

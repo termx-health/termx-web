@@ -1,4 +1,5 @@
 import {Component, Input} from '@angular/core';
+import {BooleanInput} from '@kodality-web/core-util';
 import {MuiBreakpointService} from '@kodality-web/marina-ui';
 
 @Component({
@@ -12,6 +13,7 @@ export class AddButtonComponent {
   @Input() public icon: string = 'plus';
   @Input() public placement: 'left' | 'right' = 'left';
   @Input() public size: number = 12;
+  @Input() @BooleanInput() public disabled: string | boolean;
 
   public isDesktop = true;
 

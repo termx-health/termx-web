@@ -1,12 +1,13 @@
 <m-no-data *ngIf="!(versions?.length > 0)"></m-no-data>
 
 <m-list *ngIf="versions?.length > 0" mSeparated>
-  <m-list-item *ngFor="let version of versions" mClickable (mClick)="openVersionSummary(version.version)">
+  <m-list-item *ngFor="let version of versions | sort: 'version': 'descend'" mClickable (mClick)="openVersionSummary(version.version)">
     <div class="m-justify-between">
       <div class="m-items-middle">
         <span class="m-bold">{{version.version}}</span>
         <m-divider mVertical></m-divider>
-        <span>{{(version.releaseDate | localDate) || '...'}} - {{(version.expirationDate | localDate) || '...'}}</span>
+        <span>{{(version.releaseDate | localDate) || '...'}} -
+          {{(version.expirationDate | localDate) || '...'}}</span>
         <m-divider mVertical></m-divider>
         <a (mClick)="openVersionConcepts(version.version)">{{version.conceptsTotal}} {{'web.code-system.summary.concepts' | translate}}</a>
       </div>
@@ -21,7 +22,7 @@
               </a>
             </ng-container>
             <ng-container *ngIf="version.status === 'draft' && versions?.length > 1 && (codeSystem  + '.CodeSystem.publish' | twHasAnyPrivilege)">
-              <a *m-dropdown-item (click)="deleteVersion(version.version)">
+              <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteVersion(version.version)">
                 <m-icon mCode="delete"></m-icon>&nbsp;{{'core.btn.delete' | translate}}
               </a>
             </ng-container>
@@ -29,11 +30,32 @@
         </ng-container>
       </div>
     </div>
-    <div class="m-items-middle">
+    <div class="m-items-middle" *ngIf="version.supportedLanguages">
       <m-icon mCode="global"></m-icon>
       <ng-container *ngFor="let lang of version.supportedLanguages; let i = index">
         <span>{{lang}}</span>
         <m-divider mVertical *ngIf="i !== (version.supportedLanguages?.length - 1)"></m-divider>
+      </ng-container>
+    </div>
+    <div class="m-items-middle" *twPrivileged="'*.Release.view'">
+      <m-icon mCode="rocket"/>
+      <div *ngIf="releases?.[version.codeSystem + version.version]?.length > 0">
+        <div *ngFor="let release of releases?.[version.codeSystem + version.version]">
+          <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
+        </div>
+      </div>
+      <a (mClick)="toggleReleaseModal(version)"
+          *ngIf="!(releases?.[version.codeSystem + version.version]?.length > 0) && ('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.add-to-release' | translate}}</a>
+      <span *ngIf="!(releases?.[version.codeSystem + version.version]?.length > 0) && !('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.release-unspecified' | translate}}</span>
+    </div>
+    <div class="m-items-middle" *ngIf="version.valueSet || codeSystemValueSet">
+      <m-icon mCode="tag"></m-icon>
+      <span *ngIf="version.valueSet">VS | <a [routerLink]="['/resources/value-sets', version.valueSet.valueSet, 'versions', version.valueSet.version, 'summary']">{{version.valueSet.valueSet}}|{{version.valueSet.version}}</a></span>
+      <ng-container *ngIf="!version.valueSet">
+        <a *twPrivileged="'*.ValueSet.edit'" (mClick)="toggleRelatedValueSetModal(version)">
+          {{'web.code-system-version.summary.info.create-related-vs-version' | translate}}
+        </a>
+        <m-icon mCode="warning" style="color: orange"/>
       </ng-container>
     </div>
     <div>{{version.description | localName}}</div>
@@ -66,3 +88,5 @@
   </div>
 </m-modal>
 
+<tw-resource-release-modal #releaseModal (connectedToRelease)="loadRelease()" resourceType="CodeSystem"/>
+<tw-value-set-version-save-modal #valueSetModal (created)="versionsChanged.emit()"></tw-value-set-version-save-modal>

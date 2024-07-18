@@ -94,7 +94,7 @@
             <m-icon [mCode]="'link'"/>&nbsp; {{'web.value-set.list.open-fhir' | translate}}
           </a>
           <ng-container *twPrivileged="'*.ValueSet.publish'">
-            <a *m-dropdown-item (click)="deleteValueSet(vs.id)"> <m-icon [mCode]="'delete'"/>&nbsp; {{'core.btn.delete' | translate}}</a>
+            <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteValueSet(vs.id)"> <m-icon [mCode]="'delete'"/>&nbsp; {{'core.btn.delete' | translate}}</a>
           </ng-container>
         </m-dropdown>
       </td>

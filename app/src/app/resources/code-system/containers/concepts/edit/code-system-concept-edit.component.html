@@ -14,7 +14,7 @@
         <div class="m-card__title m-justify-between">
           <m-title [mTitle]="mode === 'edit' ? concept.code : 'web.code-system-concept.form.add-header'" class="m-bold"></m-title>
           <m-dropdown>
-            <a *m-dropdown-item (mClick)="deleteConcept(concept.code)">
+            <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteConcept(concept.code)">
               {{'core.btn.delete' | translate}}
             </a>
           </m-dropdown>
@@ -56,7 +56,7 @@
               </div>
               <div class="m-items-middle">
                 <m-icon (click)="duplicateVersion(version)" *ngIf="version.id" mCode="copy" m-tooltip mTitle="core.btn.duplicate" class="m-clickable"></m-icon>
-                <m-icon (click)="deleteVersion(version.id)"
+                <m-icon m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteVersion(version.id)"
                     *ngIf="version.status === 'draft' && concept.versions?.length > 1"
                     mCode="delete"
                     class="m-clickable"></m-icon>

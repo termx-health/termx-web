@@ -56,6 +56,19 @@
         <m-form-item mName="description" mLabel="entities.code-system.description">
           <m-multi-language-input name="description" [(ngModel)]="data.codeSystem.description"/>
         </m-form-item>
+
+        <m-form-item mName="supplement" mLabel="entities.code-system.supplement">
+          <m-checkbox name="supplement" [(ngModel)]="data['_supplement']" (ngModelChange)="cleanSupplementInfo($event)"/>
+        </m-form-item>
+
+        <m-form-row *ngIf="data['_supplement']">
+          <m-form-item *mFormCol mName="supplementCS" mLabel="entities.code-system.base-code-system">
+            <tw-code-system-search name="supplementCS" [(ngModel)]="data.codeSystem.baseCodeSystem" valuePrimitive/>
+          </m-form-item>
+          <m-form-item *mFormCol mName="supplementCSV" mLabel="entities.code-system-version.base-version">
+            <tw-code-system-version-select name="supplementCSV" [(ngModel)]="data.codeSystemVersion.baseCodeSystemVersion" [codeSystemId]="data.codeSystem.baseCodeSystem" valueType="version"/>
+          </m-form-item>
+        </m-form-row>
       </ng-template>
     </div>
 

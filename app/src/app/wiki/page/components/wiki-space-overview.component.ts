@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {LoadingManager} from '@kodality-web/core-util';
-import {Space} from 'term-web/space/_lib';
+import {Space} from 'term-web/sys/_lib/space';
 import {PageContent} from 'term-web/wiki/_lib';
 import {PageService} from '../services/page.service';
 

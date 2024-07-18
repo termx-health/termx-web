@@ -1,5 +1,6 @@
 import {Identifier} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
+import {ValueSetVersionReference} from 'term-web/resources/_lib';
 import {CodeSystemEntityVersion} from './code-system-entity';
 
 export class CodeSystemVersionReference {
@@ -7,7 +8,7 @@ export class CodeSystemVersionReference {
   public version?: string;
   public uri?: string;
   public status?: string;
-  public releaseDate?: Date;
+  public releaseDate?: Date | string;
 }
 
 export class CodeSystemVersion extends CodeSystemVersionReference {
@@ -15,13 +16,17 @@ export class CodeSystemVersion extends CodeSystemVersionReference {
   public preferredLanguage?: string;
   public supportedLanguages?: string[];
   public description?: LocalizedName;
-  // public releaseDate?: Date;
-  public expirationDate?: Date;
+  public expirationDate?: Date | string;
   public created?: Date;
   public algorithm?: string;
   public identifiers?: Identifier[];
 
   public conceptsTotal?: number;
+
+  public valueSet?: ValueSetVersionReference;
+
+  public baseCodeSystem?: string;
+  public baseCodeSystemVersion?: CodeSystemVersionReference;
 
   public entities?: CodeSystemEntityVersion[];
 }

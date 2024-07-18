@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ComponentStateStore, copyDeep, DestroyService, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
 import {Observable, tap} from 'rxjs';
 import {DefinedProperty, DefinedPropertySearchParams} from 'term-web/resources/_lib';
-import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
+import {DefinedPropertyService} from 'term-web/resources/defined-property/services/defined-property.service';
 
 @Component({
   templateUrl: './defined-property-list.component.html',
@@ -17,7 +17,7 @@ export class DefinedPropertyListComponent implements OnInit {
   protected readonly STORE_KEY = 'defined-entity-property-list';
 
   public constructor(
-    private definedEntityPropertyService: DefinedPropertyLibService,
+    private definedEntityPropertyService: DefinedPropertyService,
     private stateStore: ComponentStateStore
   ) {}
 
@@ -46,4 +46,8 @@ export class DefinedPropertyListComponent implements OnInit {
     this.query.offset = 0;
     return this.search().pipe(tap(resp => this.searchResult = resp));
   };
+
+  public updateRelatedProperties(id: number): void {
+    this.loader.wrap('load', this.definedEntityPropertyService.updateRelated(id)).subscribe();
+  }
 }

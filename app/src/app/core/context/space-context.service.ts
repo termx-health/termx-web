@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter, forkJoin, Observable, of, ReplaySubject} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {Package, PackageLibService, PackageVersion, Space, SpaceLibService} from 'term-web/space/_lib';
+import {Package, PackageLibService, PackageVersion, Space, SpaceLibService} from 'term-web/sys/_lib/space';
 
 
 export class SpaceContext {

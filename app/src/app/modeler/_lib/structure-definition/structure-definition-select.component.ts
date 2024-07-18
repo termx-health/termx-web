@@ -1,6 +1,6 @@
 import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
+import {DestroyService, group, isDefined, LoadingManager, BooleanInput} from '@kodality-web/core-util';
 import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {StructureDefinition} from './structure-definition';
@@ -16,6 +16,7 @@ import {StructureDefinitionSearchParams} from './structure-definition-search-par
 export class StructureDefinitionSelectComponent implements OnInit, ControlValueAccessor {
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
   @Input() public placeholder = 'marina.ui.inputs.search.placeholder';
+  @Input() @BooleanInput() public disabled: string | boolean;
 
   @Output() public twSelect = new EventEmitter<StructureDefinition>();
 
@@ -87,6 +88,9 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
   }
 
   public fireOnChange(): void {
+    if (this.disabled) {
+      return;
+    }
     this.twSelect.emit(this.data?.[this.value]);
     if (['id', 'code'].includes(this.valueType)) {
       this.onChange(this.value);
@@ -101,5 +105,9 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
 
   public registerOnTouched(fn: any): void {
     this.onTouched = fn;
+  }
+
+  public setDisabledState(isDisabled: boolean): void {
+    this.disabled = isDisabled;
   }
 }

@@ -1,5 +1,6 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {compareDates, isDefined, LoadingManager} from '@kodality-web/core-util';
+import {Router} from '@angular/router';
+import {compareDates, isDefined, LoadingManager, DestroyService} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {FhirValueSetLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
 import {ChefService} from 'app/src/app/integration/_lib';
@@ -9,12 +10,13 @@ import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import {AuthService} from 'term-web/core/auth';
-import {Space, SpaceLibService} from 'term-web/space/_lib';
-import {Provenance} from 'term-web/sys/_lib';
+import {Space, SpaceLibService} from 'term-web/sys/_lib/space';
+import {Provenance, Release, ReleaseLibService, LorqueLibService} from 'term-web/sys/_lib';
 
 @Component({
   selector: 'tw-value-set-version-info-widget',
-  templateUrl: 'value-set-version-info-widget.component.html'
+  templateUrl: 'value-set-version-info-widget.component.html',
+  providers: [DestroyService]
 })
 export class ValueSetVersionInfoWidgetComponent implements OnChanges {
   protected SEPARATOR = SEPARATOR;
@@ -24,16 +26,21 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
 
   protected provenances: Provenance[];
   protected githubSpaces: Space[];
+  protected releases: Release[];
 
   protected loader = new LoadingManager();
 
   public constructor(
+    private destroy$: DestroyService,
     private valueSetService: ValueSetService,
     private fhirValueSetService: FhirValueSetLibService,
     private chefService: ChefService,
     private notificationService: MuiNotificationService,
     private spaceService: SpaceLibService,
-    private authService: AuthService
+    private authService: AuthService,
+    private releaseService: ReleaseLibService,
+    private lorqueService: LorqueLibService,
+    private router: Router
   ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -47,31 +54,45 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
           );
         });
       }
+      this.loadRelease();
     }
   }
 
   protected downloadDefinition(format: string): void {
-    this.fhirValueSetService.loadValueSet(this.version.valueSet, this.version.version).subscribe(fhirVs => {
-      this.saveFile(fhirVs, format);
-    });
+    if (['csv', 'xlsx'].includes(format)) {
+      this.valueSetService.exportConcepts(this.version.valueSet, this.version.version, format).subscribe(process => {
+        this.lorqueService.pollFinishedProcess(process.id, this.destroy$).subscribe(status => {
+          if (status === 'failed') {
+            this.lorqueService.load(process.id).subscribe(p => this.notificationService.error(p.resultText));
+          } else  {
+            const fileName = `VS-${this.version?.valueSet}-${this.version.version}`;
+            this.valueSetService.getConceptExportResult(process.id, format, fileName);
+          }
+        });
+      });
+    } else  {
+      this.fhirValueSetService.loadValueSet(this.version.valueSet, this.version.version).subscribe(fhirVs => {
+        this.saveFile(fhirVs, format);
+      });
+    }
   }
 
   private saveFile(fhirVs: any, format: string): void {
     const json = JSON.stringify(fhirVs, null, 2);
 
     if (format === 'json') {
-      saveAs(new Blob([json], {type: 'application/json'}), `${fhirVs.id}.json`);
+      saveAs(new Blob([json], {type: 'application/json'}), `VS-${fhirVs.id}.json`);
     }
     if (format === 'xml') {
       const xml = new Fhir().jsonToXml(json);
-      saveAs(new Blob([xml], {type: 'application/xml'}), `${fhirVs.id}.xml`);
+      saveAs(new Blob([xml], {type: 'application/xml'}), `VS-${fhirVs.id}.xml`);
     }
     if (format === 'fsh') {
       this.chefService.fhirToFsh({fhir: [json]}).subscribe(r => {
         r.warnings?.forEach(w => this.notificationService.warning('JSON to FSH conversion warning', w.message!, {duration: 0, closable: true}));
         r.errors?.forEach(e => this.notificationService.error('JSON to FSH conversion failed!', e.message!, {duration: 0, closable: true}));
         const fsh = typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
-        saveAs(new Blob([fsh], {type: 'application/fsh'}), `${fhirVs.id}.fsh`);
+        saveAs(new Blob([fsh], {type: 'application/fsh'}), `VS-${fhirVs.id}.fsh`);
       });
     }
   }
@@ -87,4 +108,16 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
   protected getLastProvenance = (provenances: Provenance[], activity?: string): Provenance => {
     return provenances?.filter(p => !isDefined(activity) || p.activity === activity).sort((p1, p2) => compareDates(new Date(p2.date), new Date(p1.date)))?.[0];
   };
+
+  public openRelease(id: number): void {
+    this.router.navigate(['/releases', id, 'summary']);
+  }
+
+  protected loadRelease(): void {
+    if (this.authService.hasPrivilege('*.Release.view')) {
+      this.releaseService.search({resource: ['ValueSet', this.version.valueSet, this.version.version].join('|')}).subscribe(r => {
+        this.releases = r.data;
+      });
+    }
+  }
 }

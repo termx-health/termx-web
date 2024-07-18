@@ -8,7 +8,8 @@ import {AuthService} from 'app/src/app/core/auth';
 import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'app/src/app/integration/_lib';
 import {MapSetLibService, ValueSetLibService} from 'app/src/app/resources/_lib';
 import {PageLibService} from 'app/src/app/wiki/_lib';
-import {forkJoin} from 'rxjs';
+import {forkJoin, of} from 'rxjs';
+import {InfoService} from 'term-web/core/info/info.service';
 import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {LorqueLibService, Provenance} from 'term-web/sys/_lib';
@@ -52,6 +53,7 @@ export class SnomedConceptInfoComponent implements OnChanges {
     private destroy$: DestroyService,
     private notificationService: MuiNotificationService,
     private taskService: TaskService,
+    private info: InfoService,
     private router: Router
   ) {}
 
@@ -92,19 +94,21 @@ export class SnomedConceptInfoComponent implements OnChanges {
   }
 
   public loadKtsReferences(): void {
-    this.loader.wrap('kts-references', forkJoin([
-      this.valueSetService.search({codeSystem: 'snomed-ct', conceptCode: this.conceptId, limit: 100}),
-      this.mapSetService.search({associationSourceCode: this.conceptId, associationSourceSystem: 'snomed-ct', associationsDecorated: true, limit: 100}),
-      this.mapSetService.search({associationTargetCode: this.conceptId, associationTargetSystem: 'snomed-ct', associationsDecorated: true, limit: 100}),
-      this.pageService.searchPageRelations({type: 'concept', target: 'snomed-ct|' + this.conceptId, limit: 100})]
-    )).subscribe(([vs, ms1, ms2, p]) => {
-      const lang = this.translateService.currentLang;
-      this.ktsReferences = [
-        ...vs.data.map(d => ({type: 'Value set', id: d.id, name: d.title[lang] || Object.values(d.title)?.[0] || '-'})),
-        ...ms1.data.map(d => ({type: 'Map set', id: d.id, name: d.title[lang] || Object.values(d.title)?.[0] || '-'})),
-        ...ms2.data.map(d => ({type: 'Map set', id: d.id, name: d.title[lang] || Object.values(d.title)?.[0] || '-'})),
-        ...p.data.map(d => ({type: 'Page', id: d.content.code, name: d.content.names[lang] || Object.values(d.content.names)?.[0]}))
-      ];
+    this.loader.wrap('modules', this.info.modules()).subscribe(modules => {
+      this.loader.wrap('kts-references', forkJoin([
+        this.authService.hasPrivilege('*.ValueSet.view') ? this.valueSetService.search({codeSystem: 'snomed-ct', conceptCode: this.conceptId, limit: 100}) : of({data: []}),
+        this.authService.hasPrivilege('*.MapSet.view') ? this.mapSetService.search({associationSourceCode: this.conceptId, associationSourceSystem: 'snomed-ct', associationsDecorated: true, limit: 100}) : of({data: []}),
+        this.authService.hasPrivilege('*.MapSet.view') ? this.mapSetService.search({associationTargetCode: this.conceptId, associationTargetSystem: 'snomed-ct', associationsDecorated: true, limit: 100}) : of({data: []}),
+        this.authService.hasPrivilege('*.Page.view') && modules.includes('wiki') ? this.pageService.searchPageRelations({type: 'concept', target: 'snomed-ct|' + this.conceptId, limit: 100}) : of({data: []})]
+      )).subscribe(([vs, ms1, ms2, p]) => {
+        const lang = this.translateService.currentLang;
+        this.ktsReferences = [
+          ...vs.data.map(d => ({type: 'Value set', id: d.id, name: d.title[lang] || Object.values(d.title)?.[0] || '-'})),
+          ...ms1.data.map(d => ({type: 'Map set', id: d.id, name: d.title[lang] || Object.values(d.title)?.[0] || '-'})),
+          ...ms2.data.map(d => ({type: 'Map set', id: d.id, name: d.title[lang] || Object.values(d.title)?.[0] || '-'})),
+          ...p.data.map(d => ({type: 'Page', id: d.content.code, name: d.content.names[lang] || Object.values(d.content.names)?.[0]}))
+        ];
+      });
     });
   }
 

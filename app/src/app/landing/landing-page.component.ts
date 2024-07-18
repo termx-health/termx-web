@@ -3,7 +3,7 @@ import {ComponentStateStore, duplicate, LoadingManager, SearchResult} from '@kod
 import {catchError, forkJoin, Observable, of} from 'rxjs';
 import {InfoService} from 'term-web/core/info/info.service';
 import {CodeSystemLibService, MapSetLibService, ValueSetLibService} from 'term-web/resources/_lib';
-import {SpaceLibModule, SpaceLibService} from 'term-web/space/_lib';
+import {SpaceLibService} from 'term-web/sys/_lib/space';
 import {SysLibModule} from 'term-web/sys/_lib';
 import {Task, TaskLibModule, TaskLibService} from 'term-web/task/_lib';
 import {PageLibService, WikiLibModule} from 'term-web/wiki/_lib';
@@ -14,7 +14,7 @@ type Modules = 'terminology' | 'core' | 'task' | 'wiki';
 
 @Component({
   standalone: true,
-  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SpaceLibModule, SysLibModule],
+  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SysLibModule],
   templateUrl: 'landing-page.component.html',
   styleUrls: ['landing-page.component.less']
 })
