@@ -20,7 +20,7 @@
               class="m-items-middle resource"
               [class.resource--selected]="selectedResource === res"
               [class.resource--invalid]="res | apply:isResourceInvalid:selectedResource"
-              [class.resource--imported]="res['_imported']"
+              [class.resource--imported]="res?.['_imported']"
               (click)="onResourceSelect(res)"
           >
             <m-icon [mCode]="res.source === 'local' ? 'file-done' : res.source === 'url' ? 'fire' : 'file'"/>
@@ -69,7 +69,7 @@
 
 
       <m-alert
-          *ngIf="selectedResource['_imported']"
+          *ngIf="selectedResource?.['_imported']"
           class="tw-alert--no-line m-rounded"
           mTitle="web.transformation-definition.import.import-map.title"
           mDescription="web.transformation-definition.import.import-map.description"
@@ -81,7 +81,7 @@
           style="position: sticky; top: calc(var(--page-header-height) + var(--page-content-padding));"
           [definition]="definition"
           [resource]="selectedResource"
-          [disabled]="selectedResource['_imported']"
+          [disabled]="selectedResource?.['_imported']"
       ></tw-transformation-definition-resource-form>
     </div>
   </div>
