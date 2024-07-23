@@ -1,62 +1,65 @@
-<m-spinner [mLoading]="loader.state['save']">
-  <form nz-row [nzGutter]="12" #form="ngForm" *ngIf="codeSystem">
-    <div nz-col [nzMd]="18" [nzXs]="24" style="margin-bottom: 1rem">
-      <m-card [mTitle]="'web.code-system.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
-        <div *mCardContent="!loader.isLoading">
-          <tw-resource-form resourceType="CodeSystem" [resource]="codeSystem" [mode]="mode"></tw-resource-form>
+<m-page-container breakpoint="xxl">
+  <m-spinner [mLoading]="loader.state['save']">
+    <form nz-row [nzGutter]="12" #form="ngForm" *ngIf="codeSystem">
+      <div nz-col [nzMd]="18" [nzXs]="24" style="margin-bottom: 1rem">
+        <m-card [mTitle]="'web.code-system.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+          <div *mCardContent="!loader.isLoading">
+            <tw-resource-form resourceType="CodeSystem" [resource]="codeSystem" [mode]="mode"></tw-resource-form>
 
-          <m-form-row>
-            <m-form-item *mFormCol mName="content" mLabel="entities.code-system.content" required>
-              <tw-value-set-concept-select name="content" [(ngModel)]="codeSystem.content" valueSet="codesystem-content-mode" required/>
-            </m-form-item>
-            <div *mFormCol>
-              <m-form-item *ngIf="codeSystem.content === 'supplement'" mName="baseCodeSystem" mLabel="entities.code-system.base-code-system">
-                <tw-code-system-search name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive/>
+            <m-form-row>
+              <m-form-item *mFormCol mName="content" mLabel="entities.code-system.content" required>
+                <tw-value-set-concept-select name="content" [(ngModel)]="codeSystem.content" valueSet="codesystem-content-mode" required/>
               </m-form-item>
-            </div>
-          </m-form-row>
+              <div *mFormCol>
+                <m-form-item *ngIf="codeSystem.content === 'supplement'" mName="baseCodeSystem" mLabel="entities.code-system.base-code-system">
+                  <tw-code-system-search name="baseCodeSystem" [(ngModel)]="codeSystem.baseCodeSystem" valuePrimitive/>
+                </m-form-item>
+              </div>
+            </m-form-row>
 
-          <m-form-row>
-            <m-form-item *mFormCol mName="caseSensitive" mLabel="entities.code-system.case-sensitivity" required>
-              <m-radio-group name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive" required>
-                <label m-radio-button [mValue]="'ci'">{{'web.case-sensitive.options.ci' | translate}}</label>
-                <label m-radio-button [mValue]="'cs'">{{'web.case-sensitive.options.cs' | translate}}</label>
-              </m-radio-group>
-            </m-form-item>
-            <div *mFormCol></div>
-          </m-form-row>
+            <m-form-row>
+              <m-form-item *mFormCol mName="caseSensitive" mLabel="entities.code-system.case-sensitivity" required>
+                <m-radio-group name="caseSensitive" [(ngModel)]="codeSystem.caseSensitive" required>
+                  <label m-radio-button [mValue]="'ci'">{{'web.case-sensitive.options.ci' | translate}}</label>
+                  <label m-radio-button [mValue]="'cs'">{{'web.case-sensitive.options.cs' | translate}}</label>
+                </m-radio-group>
+              </m-form-item>
+              <div *mFormCol></div>
+            </m-form-row>
 
-          <m-form-row>
-            <m-form-item *mFormCol mName="hierarchyMeaning" mLabel="entities.code-system.hierarchy-meaning">
-              <tw-association-type-search name="hierarchyMeaning"
-                  [(ngModel)]="codeSystem.hierarchyMeaning"
-                  associationKind="codesystem-hierarchy-meaning"
-                  valuePrimitive/>
-            </m-form-item>
-            <m-form-item *mFormCol mName="sequence" mLabel="entities.code-system.sequence">
-              <tw-sequence-select name="sequence" [(ngModel)]="codeSystem.sequence"/>
-            </m-form-item>
-          </m-form-row>
+            <m-form-row>
+              <m-form-item *mFormCol mName="hierarchyMeaning" mLabel="entities.code-system.hierarchy-meaning">
+                <tw-association-type-search name="hierarchyMeaning"
+                    [(ngModel)]="codeSystem.hierarchyMeaning"
+                    associationKind="codesystem-hierarchy-meaning"
+                    valuePrimitive/>
+              </m-form-item>
+              <m-form-item *mFormCol mName="sequence" mLabel="entities.code-system.sequence">
+                <tw-sequence-select name="sequence" [(ngModel)]="codeSystem.sequence"/>
+              </m-form-item>
+            </m-form-row>
 
 
-          <tw-resource-identifiers [identifiers]="codeSystem.identifiers"></tw-resource-identifiers>
-          <tw-resource-configuration-attributes [attributes]="codeSystem.configurationAttributes"></tw-resource-configuration-attributes>
-          <tw-cs-properties [properties]="codeSystem.properties" [codeSystemId]="codeSystem.id"></tw-cs-properties>
-          <tw-resource-contacts [(contacts)]="codeSystem.contacts"></tw-resource-contacts>
-          <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
-          <tw-cs-value-set [codeSystem]="codeSystem" [hasRelatedValueSet]="!!codeSystem.valueSet"></tw-cs-value-set>
-        </div>
+            <tw-resource-identifiers [identifiers]="codeSystem.identifiers"></tw-resource-identifiers>
+            <tw-resource-configuration-attributes [attributes]="codeSystem.configurationAttributes"></tw-resource-configuration-attributes>
+            <tw-cs-properties [properties]="codeSystem.properties" [codeSystemId]="codeSystem.id"></tw-cs-properties>
+            <tw-resource-contacts [(contacts)]="codeSystem.contacts"></tw-resource-contacts>
+            <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
+            <tw-cs-value-set [codeSystem]="codeSystem" [hasRelatedValueSet]="!!codeSystem.valueSet"></tw-cs-value-set>
+          </div>
 
-        <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
-          {{'core.btn.save' | translate}}
-        </m-button>
-      </m-card>
-    </div>
+          <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </m-card>
+      </div>
 
-    <div nz-col [nzMd]="6" [nzXs]="24">
-      <m-card [mShowSkeleton]="loader.isLoading">
-        <tw-resource-side-info [copyright]="codeSystem.copyright" [permissions]="codeSystem.permissions" [settings]="codeSystem.settings"/>
-      </m-card>
-    </div>
-  </form>
-</m-spinner>
+      <div nz-col [nzMd]="6" [nzXs]="24">
+        <m-card [mShowSkeleton]="loader.isLoading">
+          <tw-resource-side-info [copyright]="codeSystem.copyright" [permissions]="codeSystem.permissions" [settings]="codeSystem.settings"/>
+        </m-card>
+      </div>
+    </form>
+  </m-spinner>
+
+</m-page-container>

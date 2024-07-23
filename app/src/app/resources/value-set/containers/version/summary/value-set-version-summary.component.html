@@ -1,5 +1,6 @@
 <tw-resource-context resourceType="ValueSet" [resource]="valueSet" [version]="valueSetVersion" mode="summary"></tw-resource-context>
 <m-page [mLoading]="loader.state['load']" [twPrivilegeContext]="[valueSet?.id, 'ValueSet']">
+<m-page-container breakpoint="xl">
   <m-form-row class="with-row-gap" mGap="1rem">
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
       <!-- ValueSetVersion info -->
@@ -100,4 +101,5 @@
       </m-card>
     </div>
   </m-form-row>
+</m-page-container>
 </m-page>

@@ -45,7 +45,7 @@
       </m-button>
     </div>
 
-    <m-card *ngIf="response || error" class="m-card-inside">
+    <m-card *ngIf="response || error" mDisplay="headless">
       <div *m-card-header class="m-items-middle">
         <div class="m-card__title">{{'web.integration.response' | translate}}</div>
         <m-button (click)="copyResult()">

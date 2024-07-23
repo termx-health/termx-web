@@ -1,92 +1,88 @@
-<m-form-row>
-  <div *mFormCol>
-    <m-spinner [mLoading]="loading">
-      <m-card>
-        <div *m-card-header class="m-justify-between">
-          <div class="m-card__title">
-            {{(mode === 'edit' ? 'web.space.edit-header' : 'web.space.add-header') | translate}}
-          </div>
+<m-page-container>
+  <m-spinner [mLoading]="loading">
+    <m-card>
+      <div *m-card-header class="m-justify-between">
+        <div class="m-card__title">
+          {{(mode === 'edit' ? 'web.space.edit-header' : 'web.space.add-header') | translate}}
         </div>
-        <form #form="ngForm" *ngIf="space">
-          <m-form-item mName="code" mLabel="entities.space.code" required>
-            <m-input name="code" [(ngModel)]="space.code" required></m-input>
-          </m-form-item>
-          <m-form-item mName="name" mLabel="entities.space.name" required>
-            <m-multi-language-input name="name" [(ngModel)]="space.names" required></m-multi-language-input>
-          </m-form-item>
-          <m-form-item mName="active" mLabel="entities.space.active">
-            <m-checkbox name="active" [(ngModel)]="space.active"></m-checkbox>
-          </m-form-item>
-          <m-form-item mName="servers" mLabel="entities.space.terminology-servers">
-            <m-select name="servers" [(ngModel)]="space.terminologyServers" multiple>
-              <m-option *ngFor="let ts of terminologyServers" [mLabel]="ts.names | localName" [mValue]="ts.code"></m-option>
-            </m-select>
-          </m-form-item>
+      </div>
+      <form #form="ngForm" *ngIf="space">
+        <m-form-item mName="code" mLabel="entities.space.code" required>
+          <m-input name="code" [(ngModel)]="space.code" required></m-input>
+        </m-form-item>
+        <m-form-item mName="name" mLabel="entities.space.name" required>
+          <m-multi-language-input name="name" [(ngModel)]="space.names" required></m-multi-language-input>
+        </m-form-item>
+        <m-form-item mName="active" mLabel="entities.space.active">
+          <m-checkbox name="active" [(ngModel)]="space.active"></m-checkbox>
+        </m-form-item>
+        <m-form-item mName="servers" mLabel="entities.space.terminology-servers">
+          <m-select name="servers" [(ngModel)]="space.terminologyServers" multiple>
+            <m-option *ngFor="let ts of terminologyServers" [mLabel]="ts.names | localName" [mValue]="ts.code"></m-option>
+          </m-select>
+        </m-form-item>
 
 
-
-          <m-divider mText="entities.space.packages"></m-divider>
-          <m-list>
-            <m-list-item *ngFor="let p of packages">
-              <div class="m-justify-between">
-                <div class="m-items-middle">
-                  <div class="m-whitespace-pre m-bold"><a (click)="openPackage(p.id)">{{p.code}}</a></div>
-                </div>
-                <a class="m-subtitle" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deletePackage(p.id)">
-                  {{'core.btn.delete' | translate}}
-                </a>
-              </div>
-            </m-list-item>
-            <m-list-item mClickable (click)="addPackage()">
+        <m-divider mText="entities.space.packages"></m-divider>
+        <m-list>
+          <m-list-item *ngFor="let p of packages">
+            <div class="m-justify-between">
               <div class="m-items-middle">
-                <m-icon mCode="plus"></m-icon>
-                {{'core.btn.add' | translate}}
+                <div class="m-whitespace-pre m-bold"><a (click)="openPackage(p.id)">{{p.code}}</a></div>
               </div>
-            </m-list-item>
-          </m-list>
+              <a class="m-subtitle" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deletePackage(p.id)">
+                {{'core.btn.delete' | translate}}
+              </a>
+            </div>
+          </m-list-item>
+          <m-list-item mClickable (click)="addPackage()">
+            <div class="m-items-middle">
+              <m-icon mCode="plus"></m-icon>
+              {{'core.btn.add' | translate}}
+            </div>
+          </m-list-item>
+        </m-list>
 
 
-
-          <m-divider>
-            <span>{{'web.space.github-integration' | translate}}</span>
-            <m-checkbox style="padding-left: 10px" [(mChecked)]="githubEnabled"></m-checkbox>
-          </m-divider>
-          <ng-container *ngIf="githubEnabled">
-            <m-form-item mName="github" mLabel="entities.space.github" *ngIf="githubProviders" class="tw-input-group">
-              <span class="tw-input-group-addon ant-input-group-addon">https://github.com/</span>
-              <m-input name="github" [(ngModel)]="space.integration.github.repo"></m-input>
-            </m-form-item>
-            <ng-container *ngIf="space.integration.github.repo">
-              <div class="github-dirs" *ngIf="githubProviders">
-                <m-form-item *ngFor="let p of githubProviders | keys | apply:sort" mName="github-{{p}}" class="tw-input-group">
-                  <span class="tw-input-group-addon ant-input-group-addon">{{p}}</span>
-                  <m-input name="github-{{p}}" [(ngModel)]="space.integration.github.dirs[p]"></m-input>
-                </m-form-item>
-              </div>
-            </ng-container>
+        <m-divider>
+          <span>{{'web.space.github-integration' | translate}}</span>
+          <m-checkbox style="padding-left: 10px" [(mChecked)]="githubEnabled"></m-checkbox>
+        </m-divider>
+        <ng-container *ngIf="githubEnabled">
+          <m-form-item mName="github" mLabel="entities.space.github" *ngIf="githubProviders" class="tw-input-group">
+            <span class="tw-input-group-addon ant-input-group-addon">https://github.com/</span>
+            <m-input name="github" [(ngModel)]="space.integration.github.repo"></m-input>
+          </m-form-item>
+          <ng-container *ngIf="space.integration.github.repo">
+            <div class="github-dirs" *ngIf="githubProviders">
+              <m-form-item *ngFor="let p of githubProviders | keys | apply:sort" mName="github-{{p}}" class="tw-input-group">
+                <span class="tw-input-group-addon ant-input-group-addon">{{p}}</span>
+                <m-input name="github-{{p}}" [(ngModel)]="space.integration.github.dirs[p]"></m-input>
+              </m-form-item>
+            </div>
           </ng-container>
-
-          <m-divider mText="entities.space.acl"></m-divider>
-          <m-form-item mName="shared" mLabel="entities.space.shared">
-            <m-checkbox name="shared" [(ngModel)]="space.shared"></m-checkbox>
-          </m-form-item>
-          <m-form-item mName="owners" mLabel="entities.space.owners">
-            <m-input name="owners" [(ngModel)]="space.acl.owners"></m-input>
-          </m-form-item>
-          <m-form-item mName="editors" mLabel="entities.space.editors">
-            <m-input name="editors" [(ngModel)]="space.acl.editors"></m-input>
-          </m-form-item>
-          <m-form-item mName="viewers" mLabel="entities.space.viewers">
-            <m-input name="viewers" [(ngModel)]="space.acl.viewers"></m-input>
-          </m-form-item>
-        </form>
-
-        <ng-container *m-card-footer>
-          <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
-            {{'core.btn.save' | translate}}
-          </m-button>
         </ng-container>
-      </m-card>
-    </m-spinner>
-  </div>
-</m-form-row>
+
+        <m-divider mText="entities.space.acl"></m-divider>
+        <m-form-item mName="shared" mLabel="entities.space.shared">
+          <m-checkbox name="shared" [(ngModel)]="space.shared"></m-checkbox>
+        </m-form-item>
+        <m-form-item mName="owners" mLabel="entities.space.owners">
+          <m-input name="owners" [(ngModel)]="space.acl.owners"></m-input>
+        </m-form-item>
+        <m-form-item mName="editors" mLabel="entities.space.editors">
+          <m-input name="editors" [(ngModel)]="space.acl.editors"></m-input>
+        </m-form-item>
+        <m-form-item mName="viewers" mLabel="entities.space.viewers">
+          <m-input name="viewers" [(ngModel)]="space.acl.viewers"></m-input>
+        </m-form-item>
+      </form>
+
+      <ng-container *m-card-footer>
+        <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
+          {{'core.btn.save' | translate}}
+        </m-button>
+      </ng-container>
+    </m-card>
+  </m-spinner>
+</m-page-container>

@@ -1,4 +1,4 @@
-<m-card class="m-card-inside">
+<m-card mDisplay="headless">
   <div *m-card-header class="m-justify-between">
     <div class="m-card__title">{{'entities.code-system.designations' | translate}}</div>
     <m-dropdown *ngIf="!viewMode && definedEntityProperties">
@@ -77,7 +77,7 @@
 </m-card>
 
 
-<m-card class="m-card-inside">
+<m-card mDisplay="headless">
   <div *m-card-header class="m-justify-between">
     <div class="m-card__title">{{'entities.code-system.properties' | translate}}</div>
     <m-dropdown *ngIf="!viewMode && definedEntityProperties">

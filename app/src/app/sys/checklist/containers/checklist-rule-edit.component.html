@@ -1,73 +1,75 @@
-<m-spinner [mLoading]="loader.state['save']">
-  <form #form="ngForm" *ngIf="rule">
-    <m-card [mTitle]="'web.checklist-rule.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
-      <div *m-card-header class="m-justify-between">
-        <div class="m-card__title">
-          {{'web.checklist-rule.' + mode + '-header' | translate}}
+<m-page-container>
+  <m-spinner [mLoading]="loader.state['save']">
+    <form #form="ngForm" *ngIf="rule">
+      <m-card [mTitle]="'web.checklist-rule.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+        <div *m-card-header class="m-justify-between">
+          <div class="m-card__title">
+            {{'web.checklist-rule.' + mode + '-header' | translate}}
+          </div>
+          <m-dropdown>
+            <ng-container *ngIf="('*.Checklist.edit' | twPrivileged) && rule?.id && rule.type !== 'system'">
+              <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()" mPosition="leftTop">
+                {{'core.btn.delete' | translate}}
+              </a>
+            </ng-container>
+          </m-dropdown>
         </div>
-        <m-dropdown>
-          <ng-container *ngIf="('*.Checklist.edit' | twPrivileged) && rule?.id && rule.type !== 'system'">
-            <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()" mPosition="leftTop">
-              {{'core.btn.delete' | translate}}
-            </a>
-          </ng-container>
-        </m-dropdown>
-      </div>
 
-      <ng-container *mCardContent="!loader.isLoading">
+        <ng-container *mCardContent="!loader.isLoading">
 
-        <m-form-row>
-          <m-form-item *mFormCol mName="code" mLabel="entities.checklist-rule.code" [required]="rule.type !== 'system'">
-            <m-input *ngIf="rule.type !== 'system'" name="code" [(ngModel)]="rule.code" required></m-input>
-            <label *ngIf="rule.type === 'system'">{{rule.code}}</label>
+          <m-form-row>
+            <m-form-item *mFormCol mName="code" mLabel="entities.checklist-rule.code" [required]="rule.type !== 'system'">
+              <m-input *ngIf="rule.type !== 'system'" name="code" [(ngModel)]="rule.code" required></m-input>
+              <label *ngIf="rule.type === 'system'">{{rule.code}}</label>
+            </m-form-item>
+            <m-form-item *mFormCol mName="target" mLabel="entities.checklist-rule.target" required>
+              <m-select *ngIf="rule.type !== 'system'" name="target" [(ngModel)]="rule.target" required>
+                <m-option *ngFor="let t of ['design', 'concept', 'release']" [mValue]="t" [mLabel]="t"/>
+              </m-select>
+              <label *ngIf="rule.type === 'system'">{{rule.target}}</label>
+            </m-form-item>
+          </m-form-row>
+
+          <m-form-row>
+            <m-form-item *mFormCol mName="type" mLabel="entities.checklist-rule.type">
+              {{rule.type}}
+            </m-form-item>
+            <m-form-item *mFormCol mName="resourceType" mLabel="entities.checklist-rule.resource-type" required>
+              <m-select *ngIf="rule.type !== 'system'" name="resourceType" [(ngModel)]="rule.resourceType" required>
+                <m-option *ngFor="let rt of ['CodeSystem', 'ValueSet', 'MapSet']" [mValue]="rt" [mLabel]="rt"/>
+              </m-select>
+              <label *ngIf="rule.type === 'system'">{{rule.resourceType}}</label>
+            </m-form-item>
+          </m-form-row>
+
+          <m-form-item mName="title" mLabel="entities.checklist-rule.title" required>
+            <m-multi-language-input name="title" [(ngModel)]="rule.title" required></m-multi-language-input>
           </m-form-item>
-          <m-form-item *mFormCol mName="target" mLabel="entities.checklist-rule.target" required>
-            <m-select *ngIf="rule.type !== 'system'" name="target" [(ngModel)]="rule.target" required>
-              <m-option *ngFor="let t of ['design', 'concept', 'release']" [mValue]="t" [mLabel]="t"/>
-            </m-select>
-            <label *ngIf="rule.type === 'system'">{{rule.target}}</label>
+          <m-form-item mName="description" mLabel="entities.checklist-rule.description">
+            <m-multi-language-input name="description" [(ngModel)]="rule.description"></m-multi-language-input>
           </m-form-item>
-        </m-form-row>
 
-        <m-form-row>
-          <m-form-item *mFormCol mName="type" mLabel="entities.checklist-rule.type">
-            {{rule.type}}
+          <m-form-row>
+            <m-form-item *mFormCol mName="verification" mLabel="entities.checklist-rule.verification" required>
+              <m-select *ngIf="rule.type !== 'system'" name="verification" [(ngModel)]="rule.verification" [required]="rule.type !== 'system'">
+                <m-option *ngFor="let v of ['human', 'software']" [mValue]="v" [mLabel]="v"/>
+              </m-select>
+              <label *ngIf="rule.type === 'system'">{{rule.verification}}</label>
+            </m-form-item>
+            <m-form-item *mFormCol mName="severity" mLabel="entities.checklist-rule.severity" required>
+              <tw-value-set-concept-select name="severity" [(ngModel)]="rule.severity" valueSet="issue-severity" required/>
+            </m-form-item>
+          </m-form-row>
+
+          <m-form-item mName="active" mLabel="entities.checklist-rule.active">
+            <m-checkbox name="active" [(ngModel)]="rule.active"></m-checkbox>
           </m-form-item>
-          <m-form-item *mFormCol mName="resourceType" mLabel="entities.checklist-rule.resource-type" required>
-            <m-select *ngIf="rule.type !== 'system'" name="resourceType" [(ngModel)]="rule.resourceType" required>
-              <m-option *ngFor="let rt of ['CodeSystem', 'ValueSet', 'MapSet']" [mValue]="rt" [mLabel]="rt"/>
-            </m-select>
-            <label *ngIf="rule.type === 'system'">{{rule.resourceType}}</label>
-          </m-form-item>
-        </m-form-row>
+        </ng-container>
 
-        <m-form-item mName="title" mLabel="entities.checklist-rule.title" required>
-          <m-multi-language-input name="title" [(ngModel)]="rule.title" required></m-multi-language-input>
-        </m-form-item>
-        <m-form-item mName="description" mLabel="entities.checklist-rule.description">
-          <m-multi-language-input name="description" [(ngModel)]="rule.description"></m-multi-language-input>
-        </m-form-item>
-
-        <m-form-row>
-          <m-form-item *mFormCol mName="verification" mLabel="entities.checklist-rule.verification" required>
-            <m-select *ngIf="rule.type !== 'system'" name="verification" [(ngModel)]="rule.verification" [required]="rule.type !== 'system'">
-              <m-option *ngFor="let v of ['human', 'software']" [mValue]="v" [mLabel]="v"/>
-            </m-select>
-            <label *ngIf="rule.type === 'system'">{{rule.verification}}</label>
-          </m-form-item>
-          <m-form-item *mFormCol mName="severity" mLabel="entities.checklist-rule.severity" required>
-            <tw-value-set-concept-select name="severity" [(ngModel)]="rule.severity" valueSet="issue-severity" required/>
-          </m-form-item>
-        </m-form-row>
-
-        <m-form-item mName="active" mLabel="entities.checklist-rule.active">
-          <m-checkbox name="active" [(ngModel)]="rule.active"></m-checkbox>
-        </m-form-item>
-      </ng-container>
-
-      <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
-        {{'core.btn.save' | translate}}
-      </m-button>
-    </m-card>
-  </form>
-</m-spinner>
+        <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+          {{'core.btn.save' | translate}}
+        </m-button>
+      </m-card>
+    </form>
+  </m-spinner>
+</m-page-container>

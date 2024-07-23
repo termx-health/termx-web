@@ -1,4 +1,4 @@
-<m-card *ngIf="!hasRelatedValueSet" class="m-card-inside" mTitle="web.dev-code-system-relation.value-set.value-set" [mShowSkeleton]="loader.isLoading">
+<m-card *ngIf="!hasRelatedValueSet" mDisplay="headless" mTitle="web.dev-code-system-relation.value-set.value-set" [mShowSkeleton]="loader.isLoading">
   <form #form="ngForm">
     <m-form-item mName="generate">
       <m-checkbox [(ngModel)]="generateValueSet"

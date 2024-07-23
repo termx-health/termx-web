@@ -1,7 +1,7 @@
 <tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [versions]="versions" mode="summary"></tw-resource-context>
 <m-page [mLoading]="loader.isLoading" [twPrivilegeContext]="[codeSystem?.id, 'CodeSystem']">
-
-  <m-form-row class="with-row-gap" mGap="1rem">
+<m-page-container breakpoint="xl">
+  <m-form-row mGap="1rem">
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
 
       <!-- CodeSystem info -->
@@ -99,7 +99,7 @@
 
     </div>
   </m-form-row>
-
+</m-page-container>
 </m-page>
 
 <tw-resource-task-modal #taskModal (taskCreated)="tasksWidgetComponent.loadTasks()" resourceType="CodeSystem"/>
