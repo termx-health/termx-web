@@ -2,7 +2,7 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {ValueSet, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule} from 'app/src/app/resources/_lib';
+import {ValueSet, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule, ValueSetVersionRuleSet} from 'app/src/app/resources/_lib';
 import {ValueSetRuleFormComponent} from 'app/src/app/resources/value-set/containers/version/rule/value-set-rule-form.component';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
 import {JobLibService} from 'app/src/app/sys/_lib';
@@ -100,8 +100,9 @@ export class ValueSetVersionSummaryComponent implements OnInit {
 
   protected addRule(): void {
     const rule = {type: 'include'};
-    this.valueSetVersion.ruleSet ??= {};
+    this.valueSetVersion.ruleSet ??= new ValueSetVersionRuleSet();
     this.valueSetVersion.ruleSet.rules = [...(this.valueSetVersion.ruleSet.rules || []), rule];
+    this.valueSetVersion.ruleSet.inactive ??= false;
     this.rule = {index: this.valueSetVersion.ruleSet.rules.indexOf(rule), rule: rule};
   }
 }
