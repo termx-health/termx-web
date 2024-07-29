@@ -75,6 +75,7 @@ export class ValueSetVersionEditComponent implements OnInit {
     version.status ??= 'draft';
     version.releaseDate ??= new Date();
     version.ruleSet ??= new ValueSetVersionRuleSet();
+    version.ruleSet.inactive ??= false;
     version.identifiers ??= [];
     return version;
   }
