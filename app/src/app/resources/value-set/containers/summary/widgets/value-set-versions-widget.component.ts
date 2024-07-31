@@ -80,9 +80,11 @@ export class ValueSetVersionsWidgetComponent implements OnChanges{
   protected loadRelease(): void {
     if (this.authService.hasPrivilege('*.Release.view')) {
       this.releaseService.search({resource: ['ValueSet', this.valueSet].join('|')}).subscribe(r => {
-        this.releases = collect(r.data.flatMap(rel => rel.resources.map(res => ({release: rel, resource: res}))),
-          i => i.resource.resourceId + i.resource.resourceVersion,
-          i => i.release);
+        this.releases = collect(r.data.flatMap(rel => rel.resources
+            .filter(res => res.resourceType === 'ValueSet')
+            .map(res => ({release: rel, resource: res}))),
+            i => i.resource.resourceId + i.resource.resourceVersion,
+            i => i.release);
       });
     }
   }

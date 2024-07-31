@@ -88,9 +88,11 @@ export class CodeSystemVersionsWidgetComponent implements OnChanges {
   protected loadRelease(): void {
     if (this.authService.hasPrivilege('*.Release.view')) {
       this.releaseService.search({resource: ['CodeSystem', this.codeSystem].join('|')}).subscribe(r => {
-        this.releases = collect(r.data.flatMap(rel => rel.resources.map(res => ({release: rel, resource: res}))),
-          i => i.resource.resourceId + i.resource.resourceVersion,
-          i => i.release);
+        this.releases = collect(r.data.flatMap(rel => rel.resources
+            .filter(res => res.resourceType === 'CodeSystem')
+            .map(res => ({release: rel, resource: res}))),
+            i => i.resource.resourceId + i.resource.resourceVersion,
+            i => i.release);
       });
     }
   }
