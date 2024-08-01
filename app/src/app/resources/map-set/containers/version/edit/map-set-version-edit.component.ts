@@ -57,7 +57,6 @@ export class MapSetVersionEditComponent implements OnInit {
   private writeVersion(version: MapSetVersion): MapSetVersion {
     version.status ??= 'draft';
     version.releaseDate ??= new Date();
-    version.algorithm ??= 'semver';
     version.scope ??= new MapSetScope();
     version.identifiers ??= [];
     return version;
