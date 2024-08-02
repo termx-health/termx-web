@@ -63,6 +63,12 @@ export class CodeSystemService extends CodeSystemLibService {
   }
 
   public saveConcept(codeSystemId: string, version: string, request: ConceptTransactionRequest): Observable<CodeSystemConcept> {
+    request.concept?.versions?.forEach(v => v?.propertyValues?.forEach(pv => {
+      if (pv.value instanceof Date) {
+        pv.value = serializeDate(pv.value);
+      }
+    }));
+
     if (version) {
       return this.http.post(`${this.baseUrl}/${codeSystemId}/versions/${version}/concepts/transaction`, request);
     }
