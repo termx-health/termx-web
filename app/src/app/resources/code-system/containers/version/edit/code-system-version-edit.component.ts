@@ -57,7 +57,6 @@ export class CodeSystemVersionEditComponent implements OnInit {
   private writeVersion(version: CodeSystemVersion): CodeSystemVersion {
     version.status ??= 'draft';
     version.releaseDate ??= new Date();
-    version.algorithm ??= 'semver';
     version.identifiers ??= [];
     return version;
   }

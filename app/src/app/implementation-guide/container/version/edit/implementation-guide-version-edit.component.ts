@@ -49,7 +49,6 @@ export class ImplementationGuideVersionEditComponent implements OnInit {
 
   private writeVersion(version: ImplementationGuideVersion): ImplementationGuideVersion {
     version.status ??= 'draft';
-    version.algorithm ??= 'semver';
     version.template ??= 'local-template';
     version.dependsOn ??= [];
     version.github ??= {};

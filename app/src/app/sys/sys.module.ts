@@ -6,7 +6,7 @@ import {SpaceModule} from 'term-web/sys/space/space.module';
 
 export const SYS_ROUTES: Routes = [
   {path: 'releases', children: RELEASE_ROUTES, data: {privilege: ['*.Release.view']}},
-  {path: 'checklists', children: CHECKLIST_ROUTES, data: {privilege: ['*.ChecklistRule.view']}},
+  {path: 'checklists', children: CHECKLIST_ROUTES, data: {privilege: ['*.Checklist.view']}},
 ];
 
 @NgModule({
