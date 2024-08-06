@@ -58,6 +58,7 @@
 			"description": "Description",
 			"designations": "Designations",
 			"hierarchy-meaning": "Hierarchy meaning",
+			"disable-hierarchy-grouping": "Disable hierarchy grouping",
 			"id": "ID",
 			"name": "Computable name",
 			"narrative": "Narrative",

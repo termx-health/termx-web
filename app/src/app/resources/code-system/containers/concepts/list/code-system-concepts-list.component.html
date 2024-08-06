@@ -1,6 +1,6 @@
 <tw-table [(filterOpen)]="filter.open">
   <div header class="m-items-middle" style="flex: 1">
-    <m-button *ngIf="codeSystem.hierarchyMeaning" (mClick)="toggleView()" [mDisplay]="groupOpened ? 'primary' : 'default'">
+    <m-button *ngIf="codeSystem.hierarchyMeaning && !codeSystem.settings?.disableHierarchyGrouping" (mClick)="toggleView()" [mDisplay]="groupOpened ? 'primary' : 'default'">
       <m-icon mCode="folder-open"/>
     </m-button>
 

@@ -29,5 +29,5 @@ export class CodeSystem {
 
   public copyright?: {holder?: string, jurisdiction?: string, statement?: string};
   public permissions?: {admin?: string, editor?: string, viewer?: string, endorser?: string};
-  public settings?: {reviewRequired?: boolean, approvalRequired?: boolean};
+  public settings?: {reviewRequired?: boolean, approvalRequired?: boolean, disableHierarchyGrouping?: boolean};
 }

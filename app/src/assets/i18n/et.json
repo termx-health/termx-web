@@ -58,6 +58,7 @@
 			"description": "Kirjeldus",
 			"designations": "Tekstid",
 			"hierarchy-meaning": "Hierarhia tüüp",
+			"disable-hierarchy-grouping": "Keela hierarhiline grupeerimine",
 			"id": "ID",
 			"name": "Tehniline nimi",
 			"narrative": "Tekstiline presentatsioon",
