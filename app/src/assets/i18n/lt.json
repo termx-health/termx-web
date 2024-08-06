@@ -58,6 +58,7 @@
 			"description": "Aprašas",
 			"designations": "Pavadinimai",
 			"hierarchy-meaning": "Hierarchijos reikšmė",
+			"disable-hierarchy-grouping": "Atjungti hierarchinį grupavimą",
 			"id": "ID",
 			"name": "Kompiuterinis pavadinimas",
 			"narrative": "Naratyvas",

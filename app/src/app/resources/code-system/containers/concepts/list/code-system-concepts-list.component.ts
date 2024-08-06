@@ -134,7 +134,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   }
 
   private initConcepts(): void {
-    if (this.codeSystem.hierarchyMeaning) {
+    if (this.codeSystem.hierarchyMeaning && !this.codeSystem.settings?.disableHierarchyGrouping) {
       this.groupOpened = true;
       this.expandTree();
     }
