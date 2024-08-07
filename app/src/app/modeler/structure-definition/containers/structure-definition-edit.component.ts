@@ -204,7 +204,7 @@ export class StructureDefinitionEditComponent implements OnInit {
     structureDefinition.resourceType ||= 'StructureDefinition';
     structureDefinition.kind = this.structureDefinition?.contentType;
     structureDefinition.url = this.structureDefinition?.url;
-    structureDefinition.type = this.structureDefinition.contentFormat === 'json' ? this.structureDefinition?.url : undefined;
+    structureDefinition.type = this.structureDefinition.contentFormat === 'json' ? this.structureDefinition?.code : undefined;
     structureDefinition.parent = this.structureDefinition?.parent;
     structureDefinition.version = this.structureDefinition?.version;
     structureDefinition.fhirVersion = '5.0.0';
