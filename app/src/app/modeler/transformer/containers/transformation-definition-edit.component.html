@@ -1,15 +1,7 @@
-<m-spinner [mLoading]="!definition"/>
-
-<div *ngIf="!!definition" class="tw-flex-container" style="gap: 12px" [twPrivilegeContext]="[definition?.id, 'TransformationDefinition']">
-  <div class="m-justify-between m-items-top" style="margin-bottom: 0.5rem">
-    <div style="flex: 1">
-      <m-form-item mName="name" required *ngIf="'' | twPrivileged">
-        <m-input [(ngModel)]="definition.name" name="name" placeholder="entities.transformation-definition.name" required/>
-      </m-form-item>
-
-      <h2 class="m-bold" style="margin: 0" *ngIf="!('' | twPrivileged)">
-        {{definition.name}}
-      </h2>
+<m-page mFull class="transformation-definition" *ngIf="definition">
+  <div class="header m-items-middle">
+    <div>
+      {{definition.name}}
 
       <div *ngIf="definition.id && (definition.modifiedBy || definition.createdBy)" class="m-text-secondary m-text-small">
         <m-icon mCode="clock-circle"/>
@@ -19,29 +11,62 @@
         {{definition.modifiedBy ?? definition.createdBy}}
       </div>
     </div>
+  </div>
 
-    <div class="m-items-middle" *twPrivileged>
-      <m-button mDisplay="primary" (mClick)="save()">
-        <div class="m-items-middle">
-          <m-icon [mCode]="loading ? 'loading' : 'save'"/>
-          {{'core.btn.save' | translate}}
-        </div>
+  <div class="container">
+    <div
+        class="tabs-wrapper"
+        [class.tabs-wrapper--open]="selectedResourceType"
+    >
+      <div class="tabs-container">
+        <ng-container *ngFor="let type of types">
+          <div class="tab-item" [class.active]="selectedResourceType === type" (click)="onTypeSelect(type)">
+            <div>
+<!--              <nz-badge [nzCount]="(definition.resources | filter: filterByType: type).length" nzSize="small">-->
+                <m-icon mCode="file"/>
+<!--              </nz-badge>-->
+            </div>
+          </div>
+        </ng-container>
+
+        <span class="filler"></span>
+      </div>
+
+      <div class="tabs-content">
+        <tw-transformation-definition-resource
+            [definition]="definition"
+            [type]="selectedResourceType"
+            [(selectedResource)]="selectedResource"
+        ></tw-transformation-definition-resource>
+      </div>
+    </div>
+
+
+    <div style="padding: 1rem; background: var(--color-background-component)">
+      <m-button *ngIf="selectedResourceType" (mClick)="selectedResource = definition.mapping" mSize="small">
+        Back to mapping
       </m-button>
 
-      <m-dropdown *ngIf="definition.id">
-        <a *m-dropdown-item>
-          <div class="m-items-middle" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()">
-            <m-icon mCode="delete"/>
-            {{'core.btn.delete' | translate}}
-          </div>
-        </a>
-      </m-dropdown>
+      <tw-transformation-definition-resource-form
+          [definition]="definition"
+          [resource]="selectedResource"
+          [disabled]="selectedResource?.['_imported']"
+      ></tw-transformation-definition-resource-form>
+    </div>
+
+
+    <div>
+      input/output
     </div>
   </div>
 
-  <tw-transformation-definition-resources [definition]="definition"/>
 
-  <m-card>
-    <tw-transformation-definition-execution [definition]="definition"/>
-  </m-card>
-</div>
+  <!--  top bar-->
+
+  <!-- categories-->
+  <!--  left sidebar-->
+
+  <!-- main content -->
+  <!-- input/output-->
+
+</m-page>

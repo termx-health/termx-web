@@ -1,7 +1,9 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
+import {NzBadgeModule} from 'ng-zorro-antd/badge';
 import {TransformationDefinitionExecutionComponent} from 'term-web/modeler/transformer/components/transformation-definition-execution.component';
 import {TransformationDefinitionResourceFormComponent} from 'term-web/modeler/transformer/components/transformation-definition-resource-form.component';
+import {TransformationDefinitionResourceComponent} from 'term-web/modeler/transformer/components/transformation-definition-resource.component';
 import {TransformationDefinitionResourcesComponent} from 'term-web/modeler/transformer/components/transformation-definition-resources.component';
 import {TransformationDefinitionEditComponent} from 'term-web/modeler/transformer/containers/transformation-definition-edit.component';
 import {TransformationDefinitionListComponent} from 'term-web/modeler/transformer/containers/transformation-definition-list.component';
@@ -20,10 +22,12 @@ export const TRANSFORMATION_DEFINITION_ROUTES: Routes = [
   imports: [
     CoreUiModule,
     ModelerLibModule,
-    ResourcesLibModule
+    ResourcesLibModule,
+    NzBadgeModule
   ],
   declarations: [
     TransformationDefinitionResourcesComponent,
+    TransformationDefinitionResourceComponent,
     TransformationDefinitionResourceFormComponent,
     TransformationDefinitionExecutionComponent,
 

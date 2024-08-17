@@ -1,0 +1,33 @@
+<div class="m-items-middle resource-dir">
+
+  <span>{{('web.transformation-definition.resources.type.' + type) | translate}}</span>
+
+  <m-icon-button
+      *ngIf="type === 'mapping'"
+      [mIcon]="loader.state.import ? 'loading' : 'sync'"
+      mSize="small"
+      (mClick)="importResourcesFromImportMaps()"
+  ></m-icon-button>
+</div>
+
+
+<div
+    *ngFor="let res of definition.resources | filter: filterByType: type | sort: 'name'"
+    class="m-items-middle resource"
+    [class.resource--selected]="selectedResource === res"
+    [class.resource--invalid]="res | apply:isResourceInvalid:selectedResource"
+    [class.resource--imported]="res?.['_imported']"
+    (click)="onResourceSelect(res)"
+>
+  <m-icon [mCode]="res.source === 'local' ? 'file-done' : res.source === 'url' ? 'fire' : 'file'"/>
+  <div>{{(res.name | apply: compactName: res.source) || ('web.transformation-definition.resources.new' | translate)}}</div>
+</div>
+
+<div class="resource-add">
+  <m-button mSize="small" mDisplay="dashed" (mClick)="onResourceAdd(type)" style="padding: 3px">
+    <div class="m-items-middle">
+      <m-icon mCode="plus"/>
+      {{'core.btn.add' | translate}}
+    </div>
+  </m-button>
+</div>

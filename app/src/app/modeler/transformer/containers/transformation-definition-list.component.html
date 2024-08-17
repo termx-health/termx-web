@@ -1,9 +1,6 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <div class="m-card__title">{{'entities.transformation-definition.plural' | translate}}</div>
-  </div>
-  <div class="m-justify-between" style="margin-bottom: 1em">
-    <m-input [(ngModel)]="query.nameContains" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <m-input [(ngModel)]="query.nameContains" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
     <tw-add-button *twPrivileged="'*.TransformationDefinition.edit'" [routerLink]="['./add']">
       {{'web.transformation-definition.list.add-btn' | translate}}
     </tw-add-button>
@@ -28,7 +25,7 @@
 
       <td>
         <div class="m-text-small" [mPopover]="td.modifiedBy && td.modifiedAt !== td.createdAt" [mTitle]="pop" mPosition="left">
-          <div>{{td.modifiedBy ?? td.createdBy }}</div>
+          <div>{{td.modifiedBy ?? td.createdBy}}</div>
           <div class="m-text-secondary">{{(td.modifiedBy ? td.modifiedAt : td.createdAt) | localDateTime}}</div>
 
           <ng-template #pop>

@@ -1,0 +1,76 @@
+@import "../../../../styles/variables";
+
+
+::ng-deep .transformation-definition {
+  --header-height: 4rem;
+
+  .header {
+    height: var(--header-height);
+    border-bottom: @mui-border;
+    padding-left: 1rem;
+  }
+
+  .container {
+    display: flex;
+    height: calc(100dvh - var(--page-header-height) - var(--header-height));
+  }
+
+  .tabs-wrapper {
+    display: grid;
+    grid-template-columns: auto 1fr;
+
+    &--open {
+      .tabs-content {
+        display: block !important;
+      }
+    }
+
+    .tabs-container {
+      display: flex;
+      flex-direction: column;
+
+      .tab-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1rem;
+        border-bottom: @mui-border;
+        border-right: @mui-border;
+        cursor: pointer;
+
+        &:hover {
+          background: @mui-bg-color-dark;
+        }
+
+        &:last-of-type {
+          border-bottom: unset;
+        }
+
+
+        &.active {
+          background: @mui-bg-component;
+          border-right: unset;
+
+          &:last-of-type {
+            border-bottom: @mui-border;
+          }
+        }
+      }
+
+      .filler {
+        height: 100%;
+        border-right: @mui-border;
+      }
+    }
+
+    .tabs-content {
+      display: none;
+      background: @mui-bg-component;
+      border-right: @mui-border;
+      padding: 0.5rem 0.75rem;
+      width: 300px;
+      overflow-y: auto;
+      scrollbar-gutter: stable;
+    }
+  }
+}

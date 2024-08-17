@@ -8,11 +8,17 @@ import {TransformationDefinition, TransformationDefinitionResource} from 'term-w
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 
 @Component({
-  templateUrl: './transformation-definition-edit.component.html'
+  templateUrl: './transformation-definition-edit.component.html',
+  styleUrls: ['./transformation-definition-edit.component.less']
 })
 export class TransformationDefinitionEditComponent implements OnInit {
   public definition: TransformationDefinition;
   public loading = false;
+
+
+  public readonly types: TransformationDefinitionResource['type'][] = ['definition', 'conceptmap', 'mapping'];
+  public selectedResourceType: TransformationDefinitionResource['type'];
+  public selectedResource: TransformationDefinitionResource;
 
   public constructor(
     private route: ActivatedRoute,
@@ -76,5 +82,24 @@ export class TransformationDefinitionEditComponent implements OnInit {
       : r.source === 'url' ? {resourceUrl: r.reference.resourceUrl, resourceServerId: r.reference.resourceServerId}
         : r.source === 'static' ? {content: r.reference.content}
           : {};
+  }
+
+  // new methods
+
+  protected onTypeSelect(type: TransformationDefinitionResource['type']): void {
+    if (this.selectedResourceType !== type) {
+      this.selectedResourceType = type;
+    } else {
+      this.resetView();
+    }
+  }
+
+  protected resetView(): void {
+    this.selectedResourceType = undefined;
+    this.selectedResource = this.definition.mapping;
+  }
+
+  protected filterByType (r: TransformationDefinitionResource, type: string): boolean {
+    return r.type === type;
   }
 }
