@@ -1,5 +1,5 @@
 <m-page mFull class="transformation-definition" *ngIf="definition">
-  <div class="header m-items-middle">
+  <div class="header m-items-middle m-justify-between">
     <div>
       {{definition.name}}
 
@@ -11,6 +11,14 @@
         {{definition.modifiedBy ?? definition.createdBy}}
       </div>
     </div>
+
+    <div class="m-items-middle">
+      <m-icon-button mIcon="rocket"/>
+      <m-divider mVertical></m-divider>
+      <m-button mDisplay="primary">Save</m-button>
+      <m-button>Cancel</m-button>
+
+    </div>
   </div>
 
   <div class="container">
@@ -18,32 +26,47 @@
         class="tabs-wrapper"
         [class.tabs-wrapper--open]="selectedResourceType"
     >
-      <div class="tabs-container">
+<!--      <div class="tabs-container">
         <ng-container *ngFor="let type of types">
           <div class="tab-item" [class.active]="selectedResourceType === type" (click)="onTypeSelect(type)">
             <div>
-<!--              <nz-badge [nzCount]="(definition.resources | filter: filterByType: type).length" nzSize="small">-->
-                <m-icon mCode="file"/>
-<!--              </nz-badge>-->
+              &lt;!&ndash;              <nz-badge [nzCount]="(definition.resources | filter: filterByType: type).length" nzSize="small">&ndash;&gt;
+              <m-icon mCode="file"/>
+              &lt;!&ndash;              </nz-badge>&ndash;&gt;
             </div>
           </div>
         </ng-container>
 
         <span class="filler"></span>
-      </div>
+      </div>-->
 
       <div class="tabs-content">
-        <tw-transformation-definition-resource
-            [definition]="definition"
-            [type]="selectedResourceType"
-            [(selectedResource)]="selectedResource"
-        ></tw-transformation-definition-resource>
+        <ng-container *ngFor="let type of types">
+          <tw-transformation-definition-resource
+              [type]="type"
+              [definition]="definition"
+              [(selectedResource)]="selectedResource"
+          ></tw-transformation-definition-resource>
+        </ng-container>
       </div>
     </div>
 
 
-    <div style="padding: 1rem; background: var(--color-background-component)">
-      <m-button *ngIf="selectedResourceType" (mClick)="selectedResource = definition.mapping" mSize="small">
+    <div class="main">
+      <m-alert
+          *ngIf="selectedResource?.['_imported']"
+          class="tw-alert--no-line m-rounded"
+          mTitle="web.transformation-definition.import.import-map.title"
+          mDescription="web.transformation-definition.import.import-map.description"
+          mType="warning"
+          mShowIcon
+      ></m-alert>
+
+      <m-button
+          *ngIf="selectedResource !== definition.mapping"
+          mSize="small"
+          (mClick)="selectedResource = definition.mapping"
+      >
         Back to mapping
       </m-button>
 
@@ -54,10 +77,15 @@
       ></tw-transformation-definition-resource-form>
     </div>
 
-
-    <div>
-      input/output
-    </div>
+    <m-collapse-panel
+        class="input"
+        mKey="fml-execution"
+        mCollapsePosition="right"
+        mResizable
+        [mResizableMinWidth]="300"
+    >
+      <tw-transformation-definition-execution [definition]="definition"/>
+    </m-collapse-panel>
   </div>
 
 

@@ -1,4 +1,5 @@
 <div class="m-items-middle resource-dir">
+  <m-icon mCode="folder"/>
 
   <span>{{('web.transformation-definition.resources.type.' + type) | translate}}</span>
 
@@ -20,7 +21,9 @@
     (click)="onResourceSelect(res)"
 >
   <m-icon [mCode]="res.source === 'local' ? 'file-done' : res.source === 'url' ? 'fire' : 'file'"/>
-  <div>{{(res.name | apply: compactName: res.source) || ('web.transformation-definition.resources.new' | translate)}}</div>
+  <div style="text-wrap: nowrap; overflow: hidden; text-overflow: ellipsis; display: block;">
+    {{(res.name | apply: compactName: res.source) || ('web.transformation-definition.resources.new' | translate)}}
+  </div>
 </div>
 
 <div class="resource-add">

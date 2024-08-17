@@ -28,16 +28,6 @@ import {TransformationDefinitionService} from 'term-web/modeler/transformer/serv
       position: relative
     }
 
-    ::ng-deep .fml-editor {
-      z-index: 1000;
-      position: fixed;
-      inset: 0;
-      border: 0;
-      height: 100%;
-      width: 100%;
-      visibility: hidden;
-    }
-
     .resource {
       padding: 0 0.5rem 0 1rem;
       border-left: 1px dashed @mui-border-color;

@@ -8,6 +8,19 @@ html {
   --color-table-header-background--sorter: #f9f9f9;
 }
 
+html.dark {
+  --color-background: white;
+  --shadow-base: 0 0px 0px 1px var(--color-background-dark);
+  --shadow-large: 0 0px 0px 1px var(--color-background-dark);
+  --shadow-small: 0 0px 0px 1px var(--color-background-dark);
+  --color-background-component: #fafafa;
+  filter: invert(1) hue-rotate(180deg);
+
+  img {
+    filter: invert(1) hue-rotate(180deg);
+  }
+}
+
 
 // MUI overrides
 

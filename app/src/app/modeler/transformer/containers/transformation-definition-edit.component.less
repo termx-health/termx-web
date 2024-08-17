@@ -1,76 +1,101 @@
 @import "../../../../styles/variables";
 
 
+::ng-deep .fml-editor {
+  z-index: 1000;
+  position: fixed;
+  inset: 0;
+  border: 0;
+  height: 100%;
+  width: 100%;
+  visibility: hidden;
+}
+
 ::ng-deep .transformation-definition {
   --header-height: 4rem;
 
   .header {
     height: var(--header-height);
     border-bottom: @mui-border;
-    padding-left: 1rem;
+    padding-inline: 1rem;
   }
 
   .container {
     display: flex;
     height: calc(100dvh - var(--page-header-height) - var(--header-height));
-  }
 
-  .tabs-wrapper {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    .tabs-wrapper {
+      display: grid;
+      grid-template-columns: auto 1fr;
 
-    &--open {
-      .tabs-content {
-        display: block !important;
+      &--open {
+        .tabs-content {
+          display: block !important;
+        }
       }
-    }
 
-    .tabs-container {
-      display: flex;
-      flex-direction: column;
-
-      .tab-item {
+      .tabs-container {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        padding: 0.5rem 1rem;
-        border-bottom: @mui-border;
-        border-right: @mui-border;
-        cursor: pointer;
+        flex-direction: column;
 
-        &:hover {
-          background: @mui-bg-color-dark;
-        }
-
-        &:last-of-type {
-          border-bottom: unset;
-        }
-
-
-        &.active {
-          background: @mui-bg-component;
-          border-right: unset;
+        .tab-item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 0.5rem 1rem;
+          border-bottom: @mui-border;
+          border-right: @mui-border;
+          cursor: pointer;
 
           &:last-of-type {
-            border-bottom: @mui-border;
+            border-bottom: unset;
           }
+
+          &:hover {
+            background: @mui-bg-color-dark;
+          }
+
+          &.active {
+            background: @mui-bg-component;
+            border-right: unset;
+
+            &:last-of-type {
+              border-bottom: @mui-border;
+            }
+          }
+
+        }
+
+        .filler {
+          height: 100%;
+          border-right: @mui-border;
         }
       }
 
-      .filler {
-        height: 100%;
+      .tabs-content {
+        display: none;
+        background: @mui-bg-component;
         border-right: @mui-border;
+        padding: 0.5rem 0.75rem;
+        width: 300px;
+        overflow-y: auto;
+        scrollbar-gutter: stable;
       }
     }
 
-    .tabs-content {
-      display: none;
-      background: @mui-bg-component;
-      border-right: @mui-border;
-      padding: 0.5rem 0.75rem;
-      width: 300px;
+
+    .main {
+      background: var(--color-background-component);
+      width: 100%;
+      padding: 1rem;
       overflow-y: auto;
       scrollbar-gutter: stable;
     }
+
+    .input {
+      border-left: @mui-border;
+    }
   }
+
+
 }

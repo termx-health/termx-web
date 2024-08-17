@@ -17,7 +17,7 @@ export class TransformationDefinitionEditComponent implements OnInit {
 
 
   public readonly types: TransformationDefinitionResource['type'][] = ['definition', 'conceptmap', 'mapping'];
-  public selectedResourceType: TransformationDefinitionResource['type'];
+  public selectedResourceType: TransformationDefinitionResource['type'] = 'definition';
   public selectedResource: TransformationDefinitionResource;
 
   public constructor(
