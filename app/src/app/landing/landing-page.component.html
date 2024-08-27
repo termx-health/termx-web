@@ -67,30 +67,10 @@
 
         <div class="grid-auto-fit" style="--column: 20rem">
           <!-- Created by me tasks -->
-          <m-card class="task-card">
-            <div class="subtitle m-bold">
-              {{'web.landing.tasks.created-by-me' | translate}}
-            </div>
-
-            <m-list class="borderless" [mEmpty]="!data.tasksCreated?.meta.total">
-              <m-list-item *ngFor="let task of data.tasksCreated?.data" [routerLink]="task | apply: taskRoute" mClickable>
-                <ng-container *ngTemplateOutlet="taskTemplate; context: {$implicit: task}"></ng-container>
-              </m-list-item>
-            </m-list>
-          </m-card>
+          <tw-landing-task [tasks]="data.tasksCreated" type="created-by-me"/>
 
           <!-- Assigned to me tasks -->
-          <m-card class="task-card">
-            <div class="subtitle m-bold">
-              {{'web.landing.tasks.assigned-to-me' | translate}}
-            </div>
-
-            <m-list class="borderless" [mEmpty]="!data.tasksAssigned?.meta.total">
-              <m-list-item *ngFor="let task of data.tasksAssigned?.data" [routerLink]="task | apply: taskRoute" mClickable>
-                <ng-container *ngTemplateOutlet="taskTemplate; context: {$implicit: task}"></ng-container>
-              </m-list-item>
-            </m-list>
-          </m-card>
+          <tw-landing-task [tasks]="data.tasksAssigned" type="assigned-to-me"/>
         </div>
       </section>
     </ng-container>
