@@ -1,13 +1,26 @@
-<m-button (mClick)="evaluate()" [mLoading]="loading">{{'web.transformation-definition.execution.transform' | translate}}</m-button>
+<m-button (mClick)="evaluate()" [mLoading]="loading">
+  {{'web.transformation-definition.execution.transform' | translate}}
+</m-button>
 <m-form-item mName="input" [mLabel]="lbl">
   <ng-template #lbl>
-    <span>{{'web.transformation-definition.execution.input' | translate}}</span> &nbsp;|&nbsp;
+    <span>{{'web.transformation-definition.execution.input' | translate}}</span> <m-divider mVertical></m-divider>
     <a (click)="generate()">{{'web.transformation-definition.execution.generate' | translate}}</a>
   </ng-template>
   <m-textarea [(ngModel)]="definition.testSource" name="input" [autosize]="{minRows: 5, maxRows: 30}"></m-textarea>
 </m-form-item>
-<m-button (mClick)="evaluate()" [mLoading]="loading">{{'web.transformation-definition.execution.transform' | translate}}</m-button>
-<m-form-item *ngIf="!!result?.result" mName="output" mLabel="web.transformation-definition.execution.output">
-    <pre id="resultEl">{{result.result}}</pre>
+<m-button (mClick)="evaluate()" [mLoading]="loading">
+  {{'web.transformation-definition.execution.transform' | translate}}
+</m-button>
+
+
+<m-form-item *ngIf="!!result?.result" mLabel="web.transformation-definition.execution.output">
+  <pre id="resultEl" class="language-javascript m-rounded"><code class="language-javascript">{{result.result}}</code></pre>
 </m-form-item>
-<m-alert mType="error" [mTitle]="result.error" *ngIf="!!result?.error"></m-alert>
+<m-alert
+    *ngIf="!!result?.error"
+    style="margin-top: 0.5rem"
+    class="tw-alert--vertical "
+    mType="error"
+    mTitle="Transformation error"
+    [mDescription]="result.error"
+></m-alert>

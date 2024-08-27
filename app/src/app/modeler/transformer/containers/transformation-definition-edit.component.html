@@ -22,37 +22,36 @@
   </div>
 
   <div class="container">
-    <div
-        class="tabs-wrapper"
-        [class.tabs-wrapper--open]="selectedResourceType"
-    >
-<!--      <div class="tabs-container">
-        <ng-container *ngFor="let type of types">
-          <div class="tab-item" [class.active]="selectedResourceType === type" (click)="onTypeSelect(type)">
-            <div>
-              &lt;!&ndash;              <nz-badge [nzCount]="(definition.resources | filter: filterByType: type).length" nzSize="small">&ndash;&gt;
-              <m-icon mCode="file"/>
-              &lt;!&ndash;              </nz-badge>&ndash;&gt;
-            </div>
-          </div>
-        </ng-container>
-
-        <span class="filler"></span>
-      </div>-->
-
-      <div class="tabs-content">
-        <ng-container *ngFor="let type of types">
-          <tw-transformation-definition-resource
-              [type]="type"
-              [definition]="definition"
-              [(selectedResource)]="selectedResource"
-          ></tw-transformation-definition-resource>
-        </ng-container>
-      </div>
+    <div class="sidebar">
+      <ng-container *ngFor="let type of types">
+        <tw-transformation-definition-resource
+            [type]="type"
+            [definition]="definition"
+            [(selectedResource)]="selectedResource"
+        ></tw-transformation-definition-resource>
+      </ng-container>
     </div>
 
 
     <div class="main">
+      <!-- return to main mapping -->
+      <div *ngIf="selectedResource !== definition.mapping" class="m-justify-between" style="margin-bottom: 0.5  rem;">
+        <m-button mSize="small" (mClick)="selectedResource = definition.mapping">
+          Back to mapping
+        </m-button>
+
+        <m-button
+            *ngIf="selectedResource !== definition.mapping"
+            mStyle="border-color: var(--color-error); color: var(--color-error)"
+            mSize="small"
+            m-popconfirm
+            mPopconfirmTitle="core.delete-confirm"
+            (mOnConfirm)="onResourceDelete(selectedResource)"
+        >
+          <m-icon mCode="delete"/>
+        </m-button>
+      </div>
+
       <m-alert
           *ngIf="selectedResource?.['_imported']"
           class="tw-alert--no-line m-rounded"
@@ -62,14 +61,7 @@
           mShowIcon
       ></m-alert>
 
-      <m-button
-          *ngIf="selectedResource !== definition.mapping"
-          mSize="small"
-          (mClick)="selectedResource = definition.mapping"
-      >
-        Back to mapping
-      </m-button>
-
+      <!-- form for each type -->
       <tw-transformation-definition-resource-form
           [definition]="definition"
           [resource]="selectedResource"
@@ -77,24 +69,17 @@
       ></tw-transformation-definition-resource-form>
     </div>
 
+
+    <!-- execution -->
     <m-collapse-panel
-        class="input"
+        class="execution"
         mKey="fml-execution"
         mCollapsePosition="right"
         mResizable
         [mResizableMinWidth]="300"
+        [mResizableMaxWidth]="3024"
     >
       <tw-transformation-definition-execution [definition]="definition"/>
     </m-collapse-panel>
   </div>
-
-
-  <!--  top bar-->
-
-  <!-- categories-->
-  <!--  left sidebar-->
-
-  <!-- main content -->
-  <!-- input/output-->
-
 </m-page>

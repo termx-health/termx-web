@@ -22,6 +22,7 @@ export class TransformationDefinitionExecutionComponent {
       this.definition.testSource = r;
     });
   }
+
   public evaluate(): void {
     if (!TransformationDefinition.isValid(this.definition)) {
       this.notificationService.error('core.form-invalid');
@@ -31,7 +32,11 @@ export class TransformationDefinitionExecutionComponent {
     this.loading = true;
     this.transformationDefinitionService.transform(this.definition.testSource, this.definition).subscribe(r => {
       this.result = r;
-      setTimeout(() => document.getElementById('resultEl')?.scrollIntoView({behavior: 'smooth'}));
+      this.result.error = r.error?.replace("Transformation error: ", '');
+      setTimeout(() => {
+        document.getElementById('resultEl')?.scrollIntoView({behavior: 'smooth'});
+        window['Prism'].highlightAll();
+      });
     }).add(() => this.loading = false);
   }
 }

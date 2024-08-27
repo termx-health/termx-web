@@ -1,6 +1,10 @@
-import {Component, Input, OnInit, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {unique, uniqueBy, group, LoadingManager} from '@kodality-web/core-util';
-import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
+import {
+  TransformationDefinition,
+  TransformationDefinitionResource,
+  TransformationDefinitionResourceType
+} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 
 @Component({
@@ -43,41 +47,31 @@ import {TransformationDefinitionService} from 'term-web/modeler/transformer/serv
     }
   `]
 })
-export class TransformationDefinitionResourceComponent implements OnInit {
+export class TransformationDefinitionResourceComponent {
   @Input() public definition: TransformationDefinition;
-  @Input() public type: TransformationDefinitionResource['type'];
+  @Input() public type: TransformationDefinitionResourceType;
 
   @Input() public selectedResource: TransformationDefinitionResource;
   @Output() public selectedResourceChange = new EventEmitter<TransformationDefinitionResource>()
 
   protected loader = new LoadingManager<'import'>();
 
-  public constructor(
-    private service: TransformationDefinitionService
-  ) { }
+  public constructor(private service: TransformationDefinitionService) { }
 
-  public ngOnInit(): void {
-    this.onResourceSelect(this.definition.mapping);
-  }
+
+  // Internal API
 
   protected onResourceSelect(r: TransformationDefinitionResource): void {
     this.selectedResource = r;
     this.selectedResourceChange.emit(r);
   }
 
-  public onResourceAdd(type: TransformationDefinitionResource['type']): void {
+  public onResourceAdd(type: TransformationDefinitionResourceType): void {
     const resource = new TransformationDefinitionResource();
     resource.type = type;
     resource.reference = {};
     this.definition.resources = [...this.definition.resources, resource];
     this.onResourceSelect(resource);
-  }
-
-  protected onResourceDelete(r: TransformationDefinitionResource): void {
-    // todo: call from parent
-
-    // this.selectedResource = null;
-    // this.definition.resources = remove(this.definition.resources, r);
   }
 
   protected importResourcesFromImportMaps(): void {

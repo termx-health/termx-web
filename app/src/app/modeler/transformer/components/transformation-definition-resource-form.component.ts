@@ -80,7 +80,7 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
   protected previewResourceUrl(resource: TransformationDefinitionResource): void {
     this.loader.wrap(`preview-${resource.name}`, this.transformationDefinitionService.transformResourceContent(resource, true)).pipe(
       map(resp => ({value: encodeURIComponent(JSON.stringify(resp))})),
-      catchError((err: HttpErrorResponse) => of({error: err.error[0].message}))
+      catchError((err: HttpErrorResponse) => of({error: err.error[0].params?.details ?? err.error[0].message}))
     ).subscribe((resp: {value: any, error: string}) => {
       resource['_preview'] = resp;
     });
@@ -104,9 +104,9 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
   protected compileMap(): void {
     this.transformationDefinitionService.parseFml(this.resource.reference.content).subscribe(r => {
       if (r.error) {
-        this.notificationService.error('', r.error, {duration: 10000});
+        this.notificationService.error('Failed', r.error, {duration: 10000});
       } else {
-        this.notificationService.success('ok');
+        this.notificationService.success('Compiled successfully');
       }
     });
   }
@@ -145,7 +145,7 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
               next: fml => {
                 sm['text'] = {
                   status: 'generated',
-                  div: `<div>\n${fml.replace(/,\s\s/gm, ',\n    ').replace(/\s->\s/gm, ' ->\n   ')}</div>`
+                  div: `<div>\n${fml.replace(/,\s\s/gm, ',\n    ')}</div>`
                 };
               },
               error: err => this.notificationService.error("web.transformation-definition.resource-form.fml-generation-failed", err)

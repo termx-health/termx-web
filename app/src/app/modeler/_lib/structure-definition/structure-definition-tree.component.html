@@ -1,6 +1,6 @@
 <m-skeleton [mLoading]="loader.isLoading"/>
 <tx-sd-view
-    *ngIf="fhirJson"
+    *ngIf="fhirJson && !loader.isLoading"
     style="--color-primary: var(--color-primary-6);"
     [attr.data]="encodeURIComponent(fhirJson | json)"
     [attr.mode]="type"

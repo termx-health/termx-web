@@ -2,13 +2,14 @@
   <m-form-item mName="source" mLabel="entities.transformation-definition.source" [required]="!disabled">
     <m-radio-group name="source" [(ngModel)]="resource.source" [disabled]="disabled">
       <label m-radio-button mValue="local" *ngIf="resource !== definition.mapping">
-        {{ ('entities.transformation-definition.source-local' | translate) }}
+        {{('entities.transformation-definition.source-local' | translate)}}
       </label>
-      <label m-radio-button mValue="url">{{ ('entities.transformation-definition.source-url' | translate) }}</label>
-      <label m-radio-button
-          mValue="static"
-          *ngIf="resource.type !== 'mapping' || resource === definition.mapping"
-      >{{ ('entities.transformation-definition.source-static' | translate) }}</label>
+      <label m-radio-button mValue="url">
+        {{('entities.transformation-definition.source-url' | translate)}}
+      </label>
+      <label m-radio-button mValue="static" *ngIf="resource.type !== 'mapping' || resource === definition.mapping">
+        {{('entities.transformation-definition.source-static' | translate)}}
+      </label>
     </m-radio-group>
   </m-form-item>
 
@@ -88,18 +89,18 @@
           [mLoading]="loader.state['preview-' + resource.name]"
           (mClick)="resource['_preview'] ? resource['_preview'] = undefined : previewResourceUrl(resource)"
       >
-        {{ ('web.transformation-definition.resource-form.' + (resource['_preview'] ? 'preview-hide' : 'preview-show')) | translate }}
+        {{('web.transformation-definition.resource-form.' + (resource['_preview'] ? 'preview-hide' : 'preview-show')) | translate}}
       </m-button>
 
       <ng-container *ngIf="resource['_preview'] as data">
         <tw-structure-definition-tree *ngIf="data.value" [content]="data.value"/>
         <m-alert
             *ngIf="data.error"
+            class="tw-alert--no-line m-rounded"
             mTitle="web.transformation-definition.resource-form.invalid-resource-url"
             [mDescription]="data.error"
             mType="error"
             mShowIcon
-            style="margin-block: .5rem 0"
         />
       </ng-container>
     </ng-container>
@@ -114,16 +115,16 @@
       </m-form-item>
 
       <m-form-item mLabel="web.transformation-definition.resource-form.url" *ngIf="resource.reference.content | apply: findUrl as url">
-        {{ url }}
+        {{url}}
       </m-form-item>
     </ng-container>
 
 
     <m-form-item *ngIf="{showPreview: false} as d" mName="content" [mLabel]="lbl" [required]="!disabled">
       <ng-template #lbl>
-        <span>{{ 'web.transformation-definition.resource-form.content' | translate }}</span>
+        <span>{{'web.transformation-definition.resource-form.content' | translate}}</span>
         <ng-container *ngIf="resource === definition.mapping && !resource.reference.content && definition.name">
-          &nbsp;|&nbsp; <a (click)="generateMap()">{{ 'web.transformation-definition.resource-form.generate' | translate }}</a>
+          &nbsp;|&nbsp; <a (click)="generateMap()">{{'web.transformation-definition.resource-form.generate' | translate}}</a>
         </ng-container>
       </ng-template>
 
@@ -132,7 +133,7 @@
       <div style="position: absolute; right: 0; top: -2rem" class="m-items-middle">
         <m-button *ngIf="resource.type === 'definition'" mSize="small" mDisplay="dashed" (mClick)="d.showPreview = !d.showPreview">
           <m-icon [mCode]="!d.showPreview ? 'read' : 'menu-unfold'"/>
-          &nbsp;{{ ('web.transformation-definition.resource-form.' + (d.showPreview ? 'preview-hide' : 'preview-show')) | translate }}
+          &nbsp;{{('web.transformation-definition.resource-form.' + (d.showPreview ? 'preview-hide' : 'preview-show')) | translate}}
         </m-button>
 
         <ng-container *ngIf="resource.type === 'mapping'">
@@ -146,7 +147,7 @@
               mPosition="left"
               (mClick)="launchEditor()"
           >
-            <m-icon [mCode]="loader.state['visual-editor'] ? 'loading' : 'experiment'"/>&nbsp;{{ 'web.transformation-definition.resource-form.visual-editor' | translate }}
+            <m-icon [mCode]="loader.state['visual-editor'] ? 'loading' : 'experiment'"/>&nbsp;{{'web.transformation-definition.resource-form.visual-editor' | translate}}
           </m-button>
 
           <ng-container *ngIf="resource.reference.content | apply: fmlContent as fml">
@@ -159,33 +160,33 @@
                 mCancelText="web.transformation-definition.resource-form.switch-to-text-editor.cancel"
                 (mOnConfirm)="switchToTextEditor()"
             >
-              {{ 'web.transformation-definition.resource-form.switch-to-text-editor.title' | translate }}
+              {{'web.transformation-definition.resource-form.switch-to-text-editor.title' | translate}}
             </m-button>
 
             <m-dropdown>
               <m-button *m-dropdown-container mSize="small" mDisplay="dashed">
-                <m-icon mCode="download"/> &nbsp;{{ 'web.transformation-definition.resource-form.save-as' | translate }}&nbsp;
+                <m-icon mCode="download"/> &nbsp;{{'web.transformation-definition.resource-form.save-as' | translate}}&nbsp;
                 <m-icon mCode="caret-down"/>
               </m-button>
               <a *m-dropdown-item (mClick)="downloadContent(fml, 'plain')">
-                {{ 'web.transformation-definition.resource-form.download-fml' | translate }}
+                {{'web.transformation-definition.resource-form.download-fml' | translate}}
               </a>
               <a *m-dropdown-item (mClick)="downloadContent(resource.reference.content, 'json')">
-                {{ 'web.transformation-definition.resource-form.download-json' | translate }}
+                {{'web.transformation-definition.resource-form.download-json' | translate}}
               </a>
             </m-dropdown>
           </ng-container>
 
           <m-dropdown *ngIf="resource.reference.content | apply: isFml">
             <m-button *m-dropdown-container mSize="small" mDisplay="dashed">
-              <m-icon mCode="download"/> &nbsp;{{ 'web.transformation-definition.resource-form.save-as' | translate }}&nbsp;
+              <m-icon mCode="download"/> &nbsp;{{'web.transformation-definition.resource-form.save-as' | translate}}&nbsp;
               <m-icon mCode="caret-down"/>
             </m-button>
             <a *m-dropdown-item (mClick)="downloadMap('json')">
-              {{ 'web.transformation-definition.resource-form.download-json' | translate }}
+              {{'web.transformation-definition.resource-form.download-json' | translate}}
             </a>
             <a *m-dropdown-item (mClick)="downloadMap('xml')">
-              {{ 'web.transformation-definition.resource-form.download-xml' | translate }}
+              {{'web.transformation-definition.resource-form.download-xml' | translate}}
             </a>
           </m-dropdown>
         </ng-container>
@@ -200,7 +201,7 @@
           </ng-container>
 
           <ng-template #fml>
-            <span class="m-whitespace-pre">{{ (resource.reference.content | apply: fmlContent) ?? resource.reference.content }}</span>
+            <span class="m-whitespace-pre">{{(resource.reference.content | apply: fmlContent) ?? resource.reference.content}}</span>
           </ng-template>
         </div>
 
@@ -226,7 +227,7 @@
 
       <div class="m-items-middle">
         <m-button style="padding-top: 5px" *ngIf="resource.type === 'mapping' && (resource.reference.content | apply:isFml)" (mClick)="compileMap()">
-          {{ 'web.transformation-definition.resource-form.compile' | translate }}
+          {{'web.transformation-definition.resource-form.compile' | translate}}
         </m-button>
       </div>
     </m-form-item>
