@@ -22,27 +22,32 @@ jobs:
       packages: write
       contents: read
 
-    strategy:
-      matrix:
-        node-version: [ 18.x, 20.x, 22.x ]
+#    strategy:
+#      matrix:
+#        node-version: [ 18.x, 20.x, 22.x ]
 
     steps:
       - name: Checkout sources
         uses: actions/checkout@v4
 
-      - name: Use Node.js ${{ matrix.node-version }}
+#      - name: Use Node.js ${{ matrix.node-version }}
+#        uses: actions/setup-node@v4
+#        with:
+#          node-version: ${{ matrix.node-version }}
+
+      - name: Use Node.js 18
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
+          node-version: 18
 
       - name: Resolve dependencies
-        run: npm ci
-
-      - name: Test
-        run: npm run test
+        run: npm install
 
       - name: Lint
         run: npm run lint
+
+      - name: Test
+        run: npm test
 
       - name: Build
         run: npm run build
