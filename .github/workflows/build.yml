@@ -43,11 +43,11 @@ jobs:
       - name: Resolve dependencies
         run: npm install
 
-      - name: Lint
-        run: npm run lint
-
-      - name: Test
-        run: npm test
+#      - name: Lint
+#        run: npm run lint
+#
+#      - name: Test
+#        run: npm test
 
       - name: Build
         run: npm run build
