@@ -5,6 +5,7 @@ import {BehaviorSubject, distinctUntilChanged, filter, map, Observable} from 'rx
 
 const LOCALE = 'locale';
 const SPACE = 'space';
+const THEME = 'theme';
 
 export const PREFERENCES_LANG_PROVIDER = new InjectionToken<() => string>('PREFERENCES_LANG_PROVIDER');
 
@@ -22,13 +23,23 @@ const getLang = (): string => {
 };
 
 
+type Theme = 'light' | 'dark';
+
+const getTheme = (): Theme => {
+  return localStorage.getItem(THEME) as Theme ?? 'light';
+};
+
+
 @Injectable({providedIn: 'root'})
 export class PreferencesService {
   private _langProvider = inject(PREFERENCES_LANG_PROVIDER, {optional: true});
 
   private _lang = new BehaviorSubject<string>(this._langProvider?.() ?? getLang());
   private _spaceId = new BehaviorSubject<{id: number, emit?: boolean}>({id: toNumber(localStorage.getItem(SPACE))});
+  private _theme = new BehaviorSubject<Theme>(getTheme());
 
+
+  // lang
 
   public setLang(lang: string): void {
     localStorage.setItem(LOCALE, lang);
@@ -43,6 +54,8 @@ export class PreferencesService {
     return this._lang.getValue();
   }
 
+
+  // space
 
   public setSpace(spaceId: number, options?: {emitEvent?: boolean}): void {
     localStorage.setItem(SPACE, spaceId ? String(spaceId) : undefined);
@@ -62,6 +75,24 @@ export class PreferencesService {
     return this.toNumber(this._spaceId.getValue()?.id);
   }
 
+
+  // theme
+
+  public setTheme(theme: Theme): void {
+    localStorage.setItem(THEME, theme);
+    this._theme.next(theme);
+  }
+
+  public get theme$(): Observable<Theme> {
+    return this._theme.asObservable();
+  }
+
+  public get theme(): string {
+    return this._theme.getValue();
+  }
+
+
+  // utils
 
   private toNumber(v: any): number {
     return isDefined(v) ? Number(v) : undefined;

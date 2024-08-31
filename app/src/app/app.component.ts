@@ -9,6 +9,7 @@ import {environment} from 'environments/environment';
 import {delay, filter, map, pairwise, startWith, switchMap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {InfoService} from 'term-web/core/info/info.service';
+import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 
 
 interface FileMenu {
@@ -54,6 +55,7 @@ export class AppComponent {
     private route: ActivatedRoute,
     private http: HttpClient,
     private translateService: TranslateService,
+    protected preferences: PreferencesService,
     info: InfoService,
   ) {
     router.events.pipe(
