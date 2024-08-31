@@ -1,6 +1,7 @@
-<m-page mFull class="transformation-definition" *ngIf="definition">
+<m-page mFull class="transformation-definition" >
   <div class="header m-items-middle m-justify-between">
-    <div>
+    <div *ngIf="!definition"><m-icon mCode="loading"></m-icon></div>
+    <div *ngIf="definition">
       {{definition.name}}
 
       <div *ngIf="definition.id && (definition.modifiedBy || definition.createdBy)" class="m-text-secondary m-text-small">
@@ -15,16 +16,17 @@
     <div class="m-items-middle">
       <m-icon-button mIcon="rocket"/>
       <m-divider mVertical></m-divider>
-      <m-button mDisplay="primary">Save</m-button>
-      <m-button>Cancel</m-button>
-
+      <m-button mDisplay="primary" [disabled]="loading">Save</m-button>
+      <m-button [disabled]="loading">Cancel</m-button>
     </div>
   </div>
 
   <div class="container">
     <div class="sidebar">
       <ng-container *ngFor="let type of types">
+        <m-skeleton *ngIf="!definition"/>
         <tw-transformation-definition-resource
+            *ngIf="definition"
             [type]="type"
             [definition]="definition"
             [(selectedResource)]="selectedResource"
@@ -33,7 +35,8 @@
     </div>
 
 
-    <div class="main">
+    <m-skeleton class="main" *ngIf="!definition"/>
+    <div class="main" *ngIf="definition">
       <!-- return to main mapping -->
       <div *ngIf="selectedResource !== definition.mapping" class="m-justify-between" style="margin-bottom: 0.5  rem;">
         <m-button mSize="small" (mClick)="selectedResource = definition.mapping">
@@ -79,7 +82,8 @@
         [mResizableMinWidth]="300"
         [mResizableMaxWidth]="3024"
     >
-      <tw-transformation-definition-execution [definition]="definition"/>
+      <tw-transformation-definition-execution *ngIf="definition" [definition]="definition"/>
+      <m-skeleton *ngIf="!definition"/>
     </m-collapse-panel>
   </div>
 </m-page>
