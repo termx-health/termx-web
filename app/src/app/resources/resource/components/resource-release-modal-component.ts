@@ -5,6 +5,7 @@ import {DestroyService, LoadingManager, validateForm, format, getDateFormat} fro
 import {LocalizedName} from '@kodality-web/marina-util';
 import {TranslateService} from '@ngx-translate/core';
 import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import {AuthService} from 'term-web/core/auth';
 import {Release} from 'term-web/sys/_lib';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
 
@@ -24,12 +25,19 @@ export class ResourceReleaseModalComponent implements OnInit {
 
   @ViewChild("form") public form?: NgForm;
 
-  public constructor(private releaseService: ReleaseService, private translateService: TranslateService, private router: Router) {}
+  public constructor(
+    private releaseService: ReleaseService,
+    private translateService: TranslateService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   public ngOnInit(): void {
-    this.loader.wrap('load', this.releaseService.search({status: 'draft', limit: 10_000})).subscribe(r => {
-      this.releases = r.data;
-    });
+    if (this.authService.hasPrivilege('*.Release.view')) {
+      this.loader.wrap('load', this.releaseService.search({status: 'draft', limit: 10_000})).subscribe(r => {
+        this.releases = r.data;
+      });
+    }
   }
 
   public toggleModal(params?: any): void {
