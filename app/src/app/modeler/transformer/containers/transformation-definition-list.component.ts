@@ -22,7 +22,7 @@ export class TransformationDefinitionListComponent implements OnInit {
     private router: Router,
   ) {
     this.query.summary = true;
-    this.query.sort = 'id';
+    this.query.sort = '-modified';
   }
 
   public ngOnInit(): void {

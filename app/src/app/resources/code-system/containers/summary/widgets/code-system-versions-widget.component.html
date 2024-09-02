@@ -1,7 +1,7 @@
 <m-no-data *ngIf="!(versions?.length > 0)"></m-no-data>
 
 <m-list *ngIf="versions?.length > 0" mSeparated>
-  <m-list-item *ngFor="let version of versions | sort: 'releaseDate': 'descend'" mClickable (mClick)="openVersionSummary(version.version)">
+  <m-list-item *ngFor="let version of versions | sort: 'version' : 'descend' | sort: 'releaseDate': 'descend'" mClickable (mClick)="openVersionSummary(version.version)">
     <div class="m-justify-between">
       <div class="m-items-middle">
         <span class="m-bold">{{version.version}}</span>

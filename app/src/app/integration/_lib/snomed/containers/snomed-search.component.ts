@@ -103,7 +103,7 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
     this.loading['taxonomy'] = true;
     return this.snomedService.findDescriptions({term: searchText, branch: this.branch}).pipe(
       tap(res => this.children = res.items!.map(i => {
-        i.concept['term'] = i.term;
+        i.concept['term'] = searchText == i.concept?.conceptId ? i.concept?.pt?.term : i.term;
         return i.concept;
       })),
       finalize(() => this.loading['taxonomy'] = false)

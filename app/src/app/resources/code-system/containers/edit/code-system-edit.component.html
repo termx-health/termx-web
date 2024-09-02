@@ -37,6 +37,12 @@
               <tw-sequence-select name="sequence" [(ngModel)]="codeSystem.sequence"/>
             </m-form-item>
           </m-form-row>
+          <m-form-row *ngIf="codeSystem.hierarchyMeaning">
+            <m-form-item *mFormCol mName="hierarchyGrouping" mLabel="entities.code-system.disable-hierarchy-grouping">
+              <m-checkbox name="hierarchyGrouping" [(ngModel)]="codeSystem.settings.disableHierarchyGrouping"/>
+            </m-form-item>
+            <div *mFormCol></div>
+          </m-form-row>
 
 
           <tw-resource-identifiers [identifiers]="codeSystem.identifiers"></tw-resource-identifiers>
