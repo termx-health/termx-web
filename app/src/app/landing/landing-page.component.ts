@@ -2,9 +2,10 @@ import {Component} from '@angular/core';
 import {ComponentStateStore, duplicate, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {catchError, forkJoin, Observable, of} from 'rxjs';
 import {InfoService} from 'term-web/core/info/info.service';
+import {LandingTaskComponent} from 'term-web/landing/components/landing-task.component';
 import {CodeSystemLibService, MapSetLibService, ValueSetLibService} from 'term-web/resources/_lib';
-import {SpaceLibService} from 'term-web/sys/_lib/space';
 import {SysLibModule} from 'term-web/sys/_lib';
+import {SpaceLibService} from 'term-web/sys/_lib/space';
 import {Task, TaskLibModule, TaskLibService} from 'term-web/task/_lib';
 import {PageLibService, WikiLibModule} from 'term-web/wiki/_lib';
 import {AuthService} from '../core/auth';
@@ -14,7 +15,7 @@ type Modules = 'terminology' | 'core' | 'task' | 'wiki';
 
 @Component({
   standalone: true,
-  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SysLibModule],
+  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SysLibModule, LandingTaskComponent],
   templateUrl: 'landing-page.component.html',
   styleUrls: ['landing-page.component.less']
 })
@@ -116,11 +117,6 @@ export class LandingPageComponent {
       this.data.tasksAssigned = assigned;
     });
   }
-
-
-  protected taskRoute = (task: Task): any[] => {
-    return this.authService.hasPrivilege('*.Task.edit') ? ['/tasks', task.number, 'edit'] : [];
-  };
 
   protected intersects(arr1: Modules[], arr2: Modules[]): boolean {
     return [...arr1, ...arr2].filter(duplicate)?.length > 0;

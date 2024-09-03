@@ -14,6 +14,7 @@
 
   <ng-template #userInfoTpl>
     <div class="tw-form-view">
+<!--      <nz-switch [ngModel]="(preferences.theme$ | async) === 'dark'" (ngModelChange)="preferences.setTheme($event ? 'dark' : 'light')"></nz-switch>-->
       <div class="tw-user-info__user">
         <div>{{auth.user?.username}}</div>
       </div>

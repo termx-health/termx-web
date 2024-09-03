@@ -16,10 +16,13 @@ export class TransformationDefinition {
   }
 }
 
+export type TransformationDefinitionResourceType = 'mapping' | 'definition' | 'conceptmap'
+export type TransformationDefinitionResourceSource = 'local' | 'url' | 'static'
+
 export class TransformationDefinitionResource {
   public name?: string;
-  public type?: 'mapping' | 'definition' | 'conceptmap';
-  public source?: 'local' | 'url' | 'static';
+  public type?: TransformationDefinitionResourceType;
+  public source?: TransformationDefinitionResourceSource;
   public reference?: {
     localId?: string;
     resourceServerId?: string;

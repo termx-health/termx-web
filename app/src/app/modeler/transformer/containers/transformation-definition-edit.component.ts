@@ -1,18 +1,28 @@
 import {Location} from '@angular/common';
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {copyDeep} from '@kodality-web/core-util';
+import {copyDeep, remove} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {Observable, of} from 'rxjs';
-import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
+import {
+  TransformationDefinition,
+  TransformationDefinitionResource,
+  TransformationDefinitionResourceType
+} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 
 @Component({
-  templateUrl: './transformation-definition-edit.component.html'
+  templateUrl: './transformation-definition-edit.component.html',
+  styleUrls: ['./transformation-definition-edit.component.less']
 })
 export class TransformationDefinitionEditComponent implements OnInit {
   public definition: TransformationDefinition;
   public loading = false;
+
+
+  public readonly types: TransformationDefinitionResourceType[] = ['definition', 'conceptmap', 'mapping'];
+  public selectedResourceType: TransformationDefinitionResourceType = 'definition';
+  public selectedResource: TransformationDefinitionResource;
 
   public constructor(
     private route: ActivatedRoute,
@@ -28,6 +38,7 @@ export class TransformationDefinitionEditComponent implements OnInit {
       this.definition = r;
       this.definition.mapping.type = 'mapping';
       this.definition.mapping.name = 'main';
+      this.selectedResource = this.definition.mapping;
     }).add(() => this.loading = false);
   }
 
@@ -76,5 +87,29 @@ export class TransformationDefinitionEditComponent implements OnInit {
       : r.source === 'url' ? {resourceUrl: r.reference.resourceUrl, resourceServerId: r.reference.resourceServerId}
         : r.source === 'static' ? {content: r.reference.content}
           : {};
+  }
+
+  // new methods
+
+  protected onResourceDelete(r: TransformationDefinitionResource): void {
+    this.definition.resources = remove(this.definition.resources, r);
+    this.resetView();
+  }
+
+  protected onTypeSelect(type: TransformationDefinitionResourceType): void {
+    if (this.selectedResourceType !== type) {
+      this.selectedResourceType = type;
+    } else {
+      this.resetView();
+    }
+  }
+
+  protected resetView(): void {
+    // this.selectedResourceType = undefined;
+    this.selectedResource = this.definition.mapping;
+  }
+
+  protected filterByType(r: TransformationDefinitionResource, type: string): boolean {
+    return r.type === type;
   }
 }

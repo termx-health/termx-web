@@ -1,0 +1,49 @@
+@import "../../../../styles/variables";
+
+
+::ng-deep .fml-editor {
+  z-index: 1000;
+  position: fixed;
+  inset: 0;
+  border: 0;
+  height: 100%;
+  width: 100%;
+  visibility: hidden;
+}
+
+::ng-deep .transformation-definition {
+  --header-height: 4rem;
+
+  .header {
+    height: var(--header-height);
+    border-bottom: @mui-border;
+    padding-inline: 1rem;
+  }
+
+  .container {
+    display: flex;
+    height: calc(100dvh - var(--page-header-height) - var(--header-height));
+
+    .sidebar {
+        background: @mui-bg-component;
+        border-right: @mui-border;
+        padding: 0.5rem 0.75rem;
+        width: 300px;
+      min-width: 300px;
+        overflow-y: auto;
+        scrollbar-gutter: stable;
+    }
+
+    .main {
+      background: var(--color-background-component);
+      width: 100%;
+      padding: 1rem;
+      overflow-y: auto;
+      scrollbar-gutter: stable;
+    }
+
+    .execution {
+      border-left: @mui-border;
+    }
+  }
+}

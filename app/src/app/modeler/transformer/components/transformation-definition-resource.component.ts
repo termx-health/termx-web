@@ -1,42 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {remove, unique, uniqueBy, group, LoadingManager} from '@kodality-web/core-util';
-import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {unique, uniqueBy, group, LoadingManager} from '@kodality-web/core-util';
+import {
+  TransformationDefinition,
+  TransformationDefinitionResource,
+  TransformationDefinitionResourceType
+} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 
 @Component({
-  selector: 'tw-transformation-definition-resources',
-  templateUrl: './transformation-definition-resources.component.html',
+  selector: 'tw-transformation-definition-resource',
+  templateUrl: './transformation-definition-resource.component.html',
   styles: [`
     @import "../../../../styles/variables";
-
-    .tw-transformation-definition-collapse-panel {
-      z-index: 1;
-
-      ::ng-deep .m-collapse-panel_container--collapsed {
-        width: 0px !important;
-      }
-
-      ::ng-deep .m-collapse-panel_content__wrapper {
-        padding: 0 1rem 0 0;
-      }
-    }
-
-    .tw-transformation-definition-container {
-      flex: 1;
-      padding-left: 1rem;
-      border-left: 1px solid var(--color-borders);
-      position: relative
-    }
-
-    ::ng-deep .fml-editor {
-      z-index: 1000;
-      position: fixed;
-      inset: 0;
-      border: 0;
-      height: 100%;
-      width: 100%;
-      visibility: hidden;
-    }
 
     .resource {
       padding: 0 0.5rem 0 1rem;
@@ -72,36 +47,31 @@ import {TransformationDefinitionService} from 'term-web/modeler/transformer/serv
     }
   `]
 })
-export class TransformationDefinitionResourcesComponent implements OnInit {
+export class TransformationDefinitionResourceComponent {
   @Input() public definition: TransformationDefinition;
+  @Input() public type: TransformationDefinitionResourceType;
 
-  protected readonly types: TransformationDefinitionResource['type'][] = ['definition', 'conceptmap', 'mapping'];
-  protected selectedResource: TransformationDefinitionResource;
+  @Input() public selectedResource: TransformationDefinitionResource;
+  @Output() public selectedResourceChange = new EventEmitter<TransformationDefinitionResource>()
+
   protected loader = new LoadingManager<'import'>();
 
-  public constructor(
-    private service: TransformationDefinitionService
-  ) { }
+  public constructor(private service: TransformationDefinitionService) { }
 
-  public ngOnInit(): void {
-    this.onResourceSelect(this.definition.mapping);
-  }
+
+  // Internal API
 
   protected onResourceSelect(r: TransformationDefinitionResource): void {
     this.selectedResource = r;
+    this.selectedResourceChange.emit(r);
   }
 
-  public onResourceAdd(type: TransformationDefinitionResource['type']): void {
+  public onResourceAdd(type: TransformationDefinitionResourceType): void {
     const resource = new TransformationDefinitionResource();
     resource.type = type;
     resource.reference = {};
     this.definition.resources = [...this.definition.resources, resource];
     this.onResourceSelect(resource);
-  }
-
-  protected onResourceDelete(r: TransformationDefinitionResource): void {
-    this.selectedResource = null;
-    this.definition.resources = remove(this.definition.resources, r);
   }
 
   protected importResourcesFromImportMaps(): void {
@@ -143,5 +113,5 @@ export class TransformationDefinitionResourcesComponent implements OnInit {
       return name?.includes("/") ? name.substring(name.lastIndexOf('/') + 1) : name;
     }
     return name;
-  }
+  };
 }
