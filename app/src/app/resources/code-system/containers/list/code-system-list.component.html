@@ -55,6 +55,9 @@
       <m-form-item mLabel="web.code-system.list.status">
         <tw-value-set-concept-select [(ngModel)]="_filter.status" valueSet="publication-status" valuePrimitive/>
       </m-form-item>
+      <m-form-item mLabel="web.code-system.list.space">
+        <tw-space-select [(ngModel)]="_filter.spaceId" valuePrimitive/>
+      </m-form-item>
     </m-form-item>
   </tw-table-filter>
 
