@@ -12,6 +12,7 @@ interface Filter {
   searchInput?: string,
   publisher?: string,
   status?: string,
+  spaceId?: number,
 }
 
 @Component({
@@ -78,6 +79,7 @@ export class CodeSystemListComponent implements OnInit {
     q.publisher = this.filter.publisher || undefined;
     q.versionStatus = this.filter.status || undefined;
     q.versionsDecorated = true;
+    q.spaceId = this.filter.spaceId;
     this.stateStore.put(this.STORE_KEY, {query: q, filter: this.filter});
 
     this.loading = true;
