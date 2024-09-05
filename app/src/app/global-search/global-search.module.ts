@@ -3,6 +3,7 @@ import {Routes} from '@angular/router';
 import {CoreUiModule} from '../core/ui/core-ui.module';
 import {CodeSystemLibModule, MapSetLibModule, NamingSystemLibModule, ValueSetLibModule} from '../resources/_lib';
 import {GlobalSearchDashboardComponent} from './containers/global-search-dashboard.component';
+import { SysLibModule } from 'term-web/sys/_lib/index';
 
 export const GLOBAL_SEARCH_ROUTES: Routes = [
   {path: '', component: GlobalSearchDashboardComponent},
@@ -14,7 +15,8 @@ export const GLOBAL_SEARCH_ROUTES: Routes = [
     CodeSystemLibModule,
     ValueSetLibModule,
     MapSetLibModule,
-    NamingSystemLibModule
+    NamingSystemLibModule,
+    SysLibModule
   ],
   declarations: [
     GlobalSearchDashboardComponent

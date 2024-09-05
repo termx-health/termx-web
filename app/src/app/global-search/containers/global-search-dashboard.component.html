@@ -1,11 +1,42 @@
 <div class="tw-flex-container">
   <m-card mTitle="web.global-search.dashboard.header">
     <nz-input-group [nzSuffix]="suffixIconSearch">
-      <input nz-input name="searchText" [(ngModel)]="searchText" (keydown.enter)="search(searchText)"/>
+      <input nz-input name="searchText" [(ngModel)]="searchText" (keydown.enter)="search()"/>
     </nz-input-group>
     <ng-template #suffixIconSearch>
       <i nz-icon nzType="search"></i>
+      <i nz-icon *ngIf="!filter.open" nzType="filter" (click)="onFilterOpen()"></i>
     </ng-template>
+  </m-card>
+
+  <m-card *ngIf="filter.open">
+    <div *m-card-header>
+      <div class="m-card__title">
+        <m-button mDisplay="text" (mClick)="closeFilter()">
+          <m-icon mCode="left"></m-icon>
+        </m-button>
+        <span>{{'core.filter' | translate}}</span>
+      </div>
+    </div>
+    <!-- Filter -->
+    <form (ngSubmit)="search()">
+      <m-form-item mLabel="web.code-system.list.space">
+        <tw-space-select [(ngModel)]="filter.spaceId" name="spaceId" valuePrimitive/>
+      </m-form-item>
+      <m-form-item mLabel="entities.code-system.publisher">
+        <tw-value-set-concept-select [(ngModel)]="filter.publisher" name="publisher" valueSet="publisher" valuePrimitive/>
+      </m-form-item>
+      <m-form-item mName="cs" mLabel="entities.code-system.plural">
+        <tw-code-system-search name="cs" [(ngModel)]="filter.codeSystems" multiple valuePrimitive/>
+      </m-form-item>
+
+      <m-button type="submit" mDisplay="primary" style="margin-top: 1rem;">
+        {{'core.btn.search' | translate}}
+      </m-button>
+      <m-button mDisplay="text" (mClick)="reset()">
+        <span class="m-subtitle">{{'core.btn.clear-all' | translate}}</span>
+      </m-button>
+    </form>
   </m-card>
 
   <m-card [mShowSkeleton]="loader.isLoading" *ngIf="loader.isLoading || isEmpty">

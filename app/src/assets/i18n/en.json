@@ -1195,7 +1195,10 @@
 				"map-sets": "MapSets",
 				"measurement-unit": "Measurement unit",
 				"snomed": "SNOMED",
-				"value-sets": "ValueSets"
+				"value-sets": "ValueSets",
+				"filter": {
+					"space": "Space"
+				}
 			}
 		},
 		"implementation-guide": {
