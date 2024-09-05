@@ -20,6 +20,13 @@ import {
   ValueSetSearchParams
 } from 'term-web/resources/_lib';
 
+interface Filter {
+  open: boolean;
+  spaceId?: number;
+  publisher?: string;
+  codeSystems?: string[];
+}
+
 @Component({
   templateUrl: './global-search-dashboard.component.html'
 })
@@ -33,6 +40,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
   public mapSets: MapSet[] = [];
   public measurementUnits: MeasurementUnit[] = [];
   public snomedConcepts: SnomedConcept[] = [];
+  public filter: Filter = { open: false };
 
   protected readonly STORE_KEY = 'global-search';
 
@@ -53,13 +61,15 @@ export class GlobalSearchDashboardComponent implements OnInit {
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
-    if (state?.text) {
+    if (state) {
       this.searchText = state.text;
-      this.search(this.searchText);
+      this.filter = state.filter;
+      this.search();
     }
   }
 
-  public search(text: string): void {
+  public search(): void {
+    const text = this.searchText;
     if (!text || text.length < 1) {
       this.concepts = SearchResult.empty();
       this.codeSystems = [];
@@ -67,7 +77,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
       this.mapSets = [];
       return;
     }
-    this.stateStore.put(this.STORE_KEY, {text: text});
+    this.stateStore.put(this.STORE_KEY, {text, filter: this.filter});
 
     const searchRequests = forkJoin([
       this.searchConcepts(text),
@@ -78,7 +88,8 @@ export class GlobalSearchDashboardComponent implements OnInit {
       this.searchSnomed(text)
     ]);
 
-    this.loader.wrap('load', this.cacheService.put(text, searchRequests))
+    const cacheKey = `${text}-${this.getFilterCacheKey()}`;
+    this.loader.wrap('load', this.cacheService.put(cacheKey, searchRequests))
       .subscribe(([concepts, codeSystems, valueSets, mapSets, measurementUnits, snomedConcepts]) => {
         this.concepts = concepts;
         this.codeSystems = codeSystems;
@@ -88,6 +99,18 @@ export class GlobalSearchDashboardComponent implements OnInit {
         this.snomedConcepts = snomedConcepts;
       });
   }
+
+  public onFilterOpen = (): void => {
+    this.filter.open = true;
+  };
+
+  public closeFilter = (): void => {
+    this.filter.open = false;
+  };
+
+  public reset = (): void => {
+    this.filter = {open: this.filter.open};
+  };
 
   private searchConcepts(text: string): Observable<SearchResult<CodeSystemConcept>> {
     this.conceptParams = new ConceptSearchParams();
@@ -103,6 +126,9 @@ export class GlobalSearchDashboardComponent implements OnInit {
   private searchCodeSystems(text: string): Observable<CodeSystem[]> {
     const q = new CodeSystemSearchParams();
     q.textContains = text;
+    q.spaceId = this.filter.spaceId;
+    q.publisher = this.filter.publisher;
+    q.ids = this.filter.codeSystems?.join(',') || undefined;
     q.limit = 100;
 
     return !this.authService.hasAnyPrivilege(['*.CodeSystem.view']) ? of([])
@@ -112,6 +138,8 @@ export class GlobalSearchDashboardComponent implements OnInit {
   private searchValueSets(text: string): Observable<ValueSet[]> {
     const q = new ValueSetSearchParams();
     q.textContains = text;
+    q.spaceId = this.filter.spaceId;
+    q.publisher = this.filter.publisher;
     q.limit = 100;
 
     return !this.authService.hasAnyPrivilege(['*.ValueSet.view']) ? of([])
@@ -121,6 +149,8 @@ export class GlobalSearchDashboardComponent implements OnInit {
   private searchMapSets(text: string): Observable<MapSet[]> {
     const q = new MapSetSearchParams();
     q.textContains = text;
+    q.spaceId = this.filter.spaceId;
+    q.publisher = this.filter.publisher;
     q.limit = 100;
 
     return !this.authService.hasAnyPrivilege(['*.MapSet.view']) ? of([])
@@ -182,4 +212,9 @@ export class GlobalSearchDashboardComponent implements OnInit {
    return c?.versions?.flatMap(v => v.designations)?.find(d => d.name.toLowerCase().includes(this.searchText.toLowerCase())).name;
   };
 
+  private getFilterCacheKey = (): string => [
+    this.filter.spaceId,
+    this.filter.publisher,
+    this.filter.codeSystems?.map(v => `cs:${v}`).join(',')]
+      .filter(x => x).join('-');
 }
