@@ -11,6 +11,7 @@ interface Filter {
   searchInput?: string,
   publisher?: string,
   status?: string,
+  spaceId?: number,
 }
 
 @Component({
@@ -75,6 +76,7 @@ export class MapSetListComponent implements OnInit {
     q.textContains = this.filter.searchInput || undefined;
     q.publisher = this.filter.publisher || undefined;
     q.versionStatus = this.filter.status || undefined;
+    q.spaceId = this.filter.spaceId;
     q.versionsDecorated = true;
     this.stateStore.put(this.STORE_KEY, {query: q, filter: this.filter});
 
