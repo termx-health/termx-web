@@ -1,5 +1,6 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
+import {serializeDate} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {environment} from 'environments/environment';
 import {mergeMap, Observable, timer} from 'rxjs';
@@ -10,7 +11,7 @@ export interface FileProcessingRequest {
   type?: string; //json, fsh, csv, tsv
 
   valueSet?: {id?: string, uri?: string, name?: string, oid?: string, title?: LocalizedName, description?: LocalizedName};
-  version?: {number?: string, status?: string, releaseDate?: Date, rule?: {id?: number, codeSystem?: string, codeSystemVersionId?: number}};
+  version?: {number?: string, status?: string, releaseDate?: Date | string, rule?: {id?: number, codeSystem?: string, codeSystemVersionId?: number}};
   mapping?: {code?: string, display?: string};
 
   dryRun?: boolean;
@@ -24,6 +25,9 @@ export class ValueSetFileImportService {
   public constructor(private http: HttpClient, private jobService: JobLibService) {}
 
   public processRequest(req: FileProcessingRequest, file: Blob, destroy$: Observable<any> = timer(60_000)): Observable<JobLog> {
+    if (req.version?.releaseDate) {
+      req.version.releaseDate = serializeDate(req.version.releaseDate);
+    }
     const fd = new FormData();
     fd.append('request', JSON.stringify(req));
     if (file) {

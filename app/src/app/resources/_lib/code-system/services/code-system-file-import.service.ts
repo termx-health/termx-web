@@ -32,7 +32,7 @@ export interface FileProcessingRequest {
   version?: {
     number?: string;
     status?: string;
-    releaseDate?: Date;
+    releaseDate?: Date | string;
     supplementVersion?: string;
   };
 

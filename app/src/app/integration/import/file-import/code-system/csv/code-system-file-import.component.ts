@@ -1,7 +1,7 @@
 import {HttpClient} from '@angular/common/http';
 import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
-import {compareNumbers, copyDeep, DestroyService, group, LoadingManager, sort} from '@kodality-web/core-util';
+import {compareNumbers, copyDeep, DestroyService, group, LoadingManager, sort, serializeDate} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {of} from 'rxjs';
 import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
@@ -171,7 +171,7 @@ export class CodeSystemFileImportComponent implements OnInit {
       version: {
         number: this.data.codeSystemVersion.version,
         status: this.data.codeSystemVersion.status,
-        releaseDate: this.data.codeSystemVersion.releaseDate,
+        releaseDate: serializeDate(this.data.codeSystemVersion.releaseDate),
         supplementVersion: this.data.codeSystemVersion.baseCodeSystemVersion,
       },
     };
