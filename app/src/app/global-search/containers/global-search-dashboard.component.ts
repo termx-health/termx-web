@@ -115,6 +115,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
   private searchConcepts(text: string): Observable<SearchResult<CodeSystemConcept>> {
     this.conceptParams = new ConceptSearchParams();
     this.conceptParams.textContains = text;
+    this.conceptParams.codeSystem = this.filter.codeSystems?.join(',') || undefined;
     return !this.authService.hasAnyPrivilege(['*.CodeSystem.view']) ? of(SearchResult.empty())
       : this.codeSystemConceptService.search(this.conceptParams).pipe(map(c => c), catchError(() => of(SearchResult.empty())));
   }
