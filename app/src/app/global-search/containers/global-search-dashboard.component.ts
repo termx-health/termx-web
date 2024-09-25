@@ -104,10 +104,6 @@ export class GlobalSearchDashboardComponent implements OnInit {
     this.filter.open = true;
   };
 
-  public closeFilter = (): void => {
-    this.filter.open = false;
-  };
-
   public reset = (): void => {
     this.filter = {open: this.filter.open};
   };
