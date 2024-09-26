@@ -164,7 +164,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
   }
 
   private searchSnomed(text: string): Observable<SnomedConcept[]> {
-    if (text.length < 3) {
+    if (text.length < 3 || this.isSnomedNotSelectedInFilter()) {
       return of([]);
     }
     const q = new SnomedConceptSearchParams();
@@ -214,4 +214,6 @@ export class GlobalSearchDashboardComponent implements OnInit {
     this.filter.publisher,
     this.filter.codeSystems?.map(v => `cs:${v}`).join(',')]
       .filter(x => x).join('-');
+
+  private isSnomedNotSelectedInFilter = (): boolean => this.filter.codeSystems?.length > 0 && !this.filter.codeSystems.some(cs => cs.includes('snomed'));
 }
