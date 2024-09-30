@@ -2,7 +2,7 @@
   <div class="header m-items-middle m-justify-between">
     <div *ngIf="!definition"><m-icon mCode="loading"></m-icon></div>
 
-    <m-form-item mName="name" required>
+    <m-form-item mName="name" required class="name" *ngIf="definition">
       <m-input [(ngModel)]="definition.name" name="name" placeholder="entities.transformation-definition.name" required/>
     </m-form-item>
 
