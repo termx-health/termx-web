@@ -25,8 +25,8 @@ import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './action
 
     <!-- WikiQuickActionsBaseComponent -->
     <tw-wiki-link-action/>
-    <tw-wiki-structure-definition-action/>
-    <tw-wiki-template-action [lang]="lang"/>
+    <tw-wiki-structure-definition-action *twPrivileged="'*.StructureDefinition.view'"/>
+    <tw-wiki-template-action *twPrivileged="'*.Wiki.view'" [lang]="lang"/>
   `,
   styles: [`
     .dropdown-options-container {
