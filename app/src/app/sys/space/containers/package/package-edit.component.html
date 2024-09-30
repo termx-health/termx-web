@@ -75,6 +75,9 @@
               <m-form-item mName="mapSet" mLabel="entities.map-set.plural">
                 <tw-map-set-search name="mapSet" [(ngModel)]="resources['map-set']" (ngModelChange)="addResource($event, 'map-set')" multiple valuePrimitive/>
               </m-form-item>
+              <m-form-item mName="structureDefinitions" mLabel="entities.structure-definition.plural">
+                <tw-structure-definition-search name="structureDefinitions" [(ngModel)]="resources['structure-definition']" (ngModelChange)="addResource($event, 'structure-definition')" multiple valuePrimitive/>
+              </m-form-item>
             </ng-container>
           </ng-container>
         </form>

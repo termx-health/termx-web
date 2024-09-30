@@ -12,6 +12,7 @@ import {TransformationDefinitionSelectComponent} from 'term-web/modeler/_lib/tra
 import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {StructureDefinitionLibService} from './structure-definition/structure-definition-lib.service';
 import {StructureDefinitionTreeComponent} from './structure-definition/structure-definition-tree.component';
+import {StructureDefinitionSearchComponent} from './structure-definition/containers/structure-definition-search/structure-definition-search.component';
 
 @NgModule({
   imports: [
@@ -31,13 +32,15 @@ import {StructureDefinitionTreeComponent} from './structure-definition/structure
     StructureDefinitionTreeComponent,
     StructureDefinitionEditableTreeComponent,
     StructureDefinitionSelectComponent,
-    TransformationDefinitionSelectComponent
+    TransformationDefinitionSelectComponent,
+    StructureDefinitionSearchComponent
   ],
   exports: [
     StructureDefinitionTreeComponent,
     StructureDefinitionEditableTreeComponent,
     StructureDefinitionSelectComponent,
-    TransformationDefinitionSelectComponent
+    TransformationDefinitionSelectComponent,
+    StructureDefinitionSearchComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
