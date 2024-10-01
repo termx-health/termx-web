@@ -13,6 +13,7 @@ import {CoreUiModule} from '../../core/ui/core-ui.module';
 import {StructureDefinitionLibService} from './structure-definition/structure-definition-lib.service';
 import {StructureDefinitionTreeComponent} from './structure-definition/structure-definition-tree.component';
 import {StructureDefinitionSearchComponent} from './structure-definition/containers/structure-definition-search/structure-definition-search.component';
+import { TransformationDefinitionSearchComponent } from './transformer/containers/transformation-definition-search/transformation-definition-search.component';
 
 @NgModule({
   imports: [
@@ -33,14 +34,16 @@ import {StructureDefinitionSearchComponent} from './structure-definition/contain
     StructureDefinitionEditableTreeComponent,
     StructureDefinitionSelectComponent,
     TransformationDefinitionSelectComponent,
-    StructureDefinitionSearchComponent
+    StructureDefinitionSearchComponent,
+    TransformationDefinitionSearchComponent
   ],
   exports: [
     StructureDefinitionTreeComponent,
     StructureDefinitionEditableTreeComponent,
     StructureDefinitionSelectComponent,
     TransformationDefinitionSelectComponent,
-    StructureDefinitionSearchComponent
+    StructureDefinitionSearchComponent,
+    TransformationDefinitionSearchComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
