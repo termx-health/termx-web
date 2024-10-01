@@ -1,6 +1,7 @@
 import {Component, forwardRef, Input, OnInit} from '@angular/core';
 import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
 import {BooleanInput, group, LoadingManager} from '@kodality-web/core-util';
+import {AuthService} from 'term-web/core/auth';
 import {User} from '../model/user';
 import {UserLibService} from '../services/user-lib.service';
 
@@ -23,13 +24,16 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
   public onChange = (x: any) => x;
   public onTouched = (x: any) => x;
 
-  public constructor(private userService: UserLibService) {}
+  public constructor(private userService: UserLibService, private auth: AuthService) {}
 
   public ngOnInit(): void {
     this.loadUsers();
   }
 
   private loadUsers(): void {
+    if (this.auth.hasPrivilege('*.Users.view')) {
+      return;
+    }
     const req$ = this.userService.loadAll({
       roles: this.anyRole?.join(',') || undefined
     });
