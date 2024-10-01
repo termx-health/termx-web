@@ -59,7 +59,9 @@ export class TaskListComponent implements OnInit {
   }
 
   private loadUsers(): void {
-    this.loader.wrap('user-list', this.userService.loadAll()).subscribe(users => this.users = users);
+    if (this.auth.hasPrivilege("*.Users.view")) {
+      this.loader.wrap('user-list', this.userService.loadAll()).subscribe(users => this.users = users);
+    }
   }
 
   private loadProjects(): void {
