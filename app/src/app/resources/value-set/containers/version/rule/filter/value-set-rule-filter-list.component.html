@@ -39,7 +39,8 @@
         <ng-template #editTemplate let-f let-ngModelName="ngModelName">
           <ng-container [ngSwitch]="codeSystem">
             <ng-container *ngSwitchDefault>
-              <m-select *ngIf="f.property?.name === 'code'" [name]="ngModelName" [(ngModel)]="f.operator">
+              <!--m-select *ngIf="f.property?.name === 'code'" [name]="ngModelName" [(ngModel)]="f.operator"-->
+              <m-select [name]="ngModelName" [(ngModel)]="f.operator">
                 <m-option [mLabel]="'='" [mValue]="'='"></m-option>
                 <m-option [mLabel]="'regex'" [mValue]="'regex'"></m-option>
               </m-select>
