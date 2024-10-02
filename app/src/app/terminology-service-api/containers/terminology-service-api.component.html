@@ -1,7 +1,7 @@
 <m-form-row>
   <m-card *m-form-col mTitle="web.tools.termx-service-api.header">
     <div class="tw-flex-container">
-      <ng-container *ngIf="env.swaggerUrl || env.snowstormUrl || env.snowstormDailyBuildUrl; else noData">
+      <ng-container *ngIf="env.swaggerUrl || env.snowstormUrl || env.snomedBrowserUrl || env.snomedBrowserDailyBuildUrl; else noData">
         <div>
           {{'web.tools.termx-service-api.content' | translate}}
         </div>
@@ -17,11 +17,11 @@
             </m-card>
           </ng-container>
 
-          <ng-container *ngIf="env.snowstormUrl || env.snowstormDailyBuildUrl">
+          <ng-container *ngIf="env.snomedBrowserUrl || env.snomedBrowserDailyBuildUrl">
             <m-card *m-form-col mDisplay="bordered" mTitle="SNOMED CT Browser">
               <div class="m-items-middle">
-                <m-button *ngIf="env.snowstormUrl" mDisplay="default" (mClick)="openSnowstormBrowser()">Public browser</m-button>
-                <m-button *ngIf="env.snowstormDailyBuildUrl" mDisplay="dashed" (mClick)="openSnowstormDailyBuildBrowser()">Daily build browser</m-button>
+                <m-button *ngIf="env.snomedBrowserUrl" mDisplay="default" (mClick)="openSnomedBrowser()">Public browser</m-button>
+                <m-button *ngIf="env.snomedBrowserDailyBuildUrl" mDisplay="dashed" (mClick)="openSnomedBrowserDailyBuild()">Daily build browser</m-button>
               </div>
             </m-card>
           </ng-container>

@@ -33,5 +33,7 @@ export interface Environment {
   fmlEditor?: string,
 
   snowstormUrl?: string,
+  snomedBrowserUrl?: string,
   snowstormDailyBuildUrl?: string,
+  snomedBrowserDailyBuildUrl?: string,
 }

@@ -25,5 +25,7 @@ export const environment: Environment = {
   fmlEditor: 'https://demo.termx.org/fml-editor',
 
   snowstormUrl: 'https://snowstorm.termx.org/',
-  snowstormDailyBuildUrl: 'https://snowstorm-public-dailybuild.termx.org/',
+  snomedBrowserUrl: 'https://snomed.termx.org/',
+  snowstormDailyBuildUrl: 'https://snowstorm-dailybuild.termx.org/',
+  snomedBrowserDailyBuildUrl: 'https://snomed-dailybuild.termx.org/',
 };

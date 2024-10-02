@@ -10,6 +10,8 @@ twConfig = {
   "fmlEditor": "${FML_EDITOR}",
   "snowstormUrl": "${SNOWSTORM_URL}",
   "snowstormDailyBuildUrl": "${SNOWSTORM_DAILY_BUILD_URL}",
+  "snomedBrowserUrl": "${SNOMED_BROWSER_URL}",
+  "snomedBrowserDailyBuildUrl": "${SNOMED_BROWSER_DAILY_BUILD_URL}",
   "defaultLanguage": "${DEFAULT_LANGUAGE}",
   "uiLanguages": 'json:${UI_LANGUAGES}',
   "contentLanguages": 'json:${CONTENT_LANGUAGES}',

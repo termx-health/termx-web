@@ -24,5 +24,7 @@ export const environment: Environment = {
   fmlEditor: dynamicEnv.fmlEditor || '/fml-editor',
 
   snowstormUrl: dynamicEnv.snowstormUrl,
+  snomedBrowserUrl: dynamicEnv.snomedBrowserUrl,
   snowstormDailyBuildUrl: dynamicEnv.snowstormDailyBuildUrl,
+  snomedBrowserDailyBuildUrl: dynamicEnv.snomedBrowserDailyBuildUrl,
 };

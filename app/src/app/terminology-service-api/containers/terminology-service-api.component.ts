@@ -16,14 +16,15 @@ export class TerminologyServiceApiComponent {
   }
 
   protected openSnowstormApi(): void {
-    window.open(this.env.snowstormUrl, '_blank');
+    window.open(this.env.snowstormUrl + '/swagger-ui/index.html', '_blank');
   }
 
-  protected openSnowstormBrowser(): void {
-    window.open(this.env.snowstormUrl + 'snomed-browser', '_blank');
+  protected openSnomedBrowser(): void {
+    window.open(this.env.snomedBrowserUrl, '_blank');
   }
 
-  protected openSnowstormDailyBuildBrowser(): void {
-    window.open(this.env.snowstormDailyBuildUrl + 'snomed-browser', '_blank');
+  protected openSnomedBrowserDailyBuild(): void {
+    window.open(this.env.snomedBrowserDailyBuildUrl, '_blank');
   }
+
 }
