@@ -104,10 +104,6 @@ export class GlobalSearchDashboardComponent implements OnInit {
     this.filter.open = true;
   };
 
-  public closeFilter = (): void => {
-    this.filter.open = false;
-  };
-
   public reset = (): void => {
     this.filter = {open: this.filter.open};
   };
@@ -115,6 +111,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
   private searchConcepts(text: string): Observable<SearchResult<CodeSystemConcept>> {
     this.conceptParams = new ConceptSearchParams();
     this.conceptParams.textContains = text;
+    this.conceptParams.codeSystem = this.filter.codeSystems?.join(',') || undefined;
     return !this.authService.hasAnyPrivilege(['*.CodeSystem.view']) ? of(SearchResult.empty())
       : this.codeSystemConceptService.search(this.conceptParams).pipe(map(c => c), catchError(() => of(SearchResult.empty())));
   }
@@ -167,7 +164,7 @@ export class GlobalSearchDashboardComponent implements OnInit {
   }
 
   private searchSnomed(text: string): Observable<SnomedConcept[]> {
-    if (text.length < 3) {
+    if (text.length < 3 || this.isSnomedNotSelectedInFilter()) {
       return of([]);
     }
     const q = new SnomedConceptSearchParams();
@@ -217,4 +214,6 @@ export class GlobalSearchDashboardComponent implements OnInit {
     this.filter.publisher,
     this.filter.codeSystems?.map(v => `cs:${v}`).join(',')]
       .filter(x => x).join('-');
+
+  private isSnomedNotSelectedInFilter = (): boolean => this.filter.codeSystems?.length > 0 && !this.filter.codeSystems.some(cs => cs.includes('snomed'));
 }

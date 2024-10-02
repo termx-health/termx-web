@@ -1,8 +1,13 @@
 <m-page mFull class="transformation-definition" >
   <div class="header m-items-middle m-justify-between">
     <div *ngIf="!definition"><m-icon mCode="loading"></m-icon></div>
+
+    <m-form-item mName="name" required class="name" *ngIf="definition">
+      <m-input [(ngModel)]="definition.name" name="name" placeholder="entities.transformation-definition.name" required/>
+    </m-form-item>
+
     <div *ngIf="definition">
-      {{definition.name}}
+<!--      {{definition.name}}-->
 
       <div *ngIf="definition.id && (definition.modifiedBy || definition.createdBy)" class="m-text-secondary m-text-small">
         <m-icon mCode="clock-circle"/>
@@ -14,10 +19,10 @@
     </div>
 
     <div class="m-items-middle">
-      <m-icon-button mIcon="rocket"/>
+<!--      <m-icon-button mIcon="rocket"/>-->
       <m-divider mVertical></m-divider>
-      <m-button mDisplay="primary" [disabled]="loading">Save</m-button>
-      <m-button [disabled]="loading">Cancel</m-button>
+      <m-button mDisplay="primary" [disabled]="loading" (mClick)="save()">{{'core.btn.save' | translate}}</m-button>
+<!--      <m-button [disabled]="loading">Cancel</m-button>-->
     </div>
   </div>
 
