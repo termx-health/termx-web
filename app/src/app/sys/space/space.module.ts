@@ -18,6 +18,7 @@ import {PackageResourceService} from './services/package-resource.service';
 import {PackageService} from './services/package.service';
 import {SpaceService} from './services/space.service';
 import {TerminologyServerService} from './services/terminology-server.service';
+import { ModelerLibModule } from 'term-web/modeler/_lib/index';
 
 export const SPACE_CTX_ROUTES: Routes = [
   {path: '', component: SpaceDashboardComponent},
@@ -49,6 +50,7 @@ export const TERMINOLOGY_SERVER_ROUTES: Routes = [
     WikiLibModule,
     NamingSystemLibModule,
     AssociationLibModule,
+    ModelerLibModule,
 
     SpaceLibModule
   ],
