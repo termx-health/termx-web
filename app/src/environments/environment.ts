@@ -12,18 +12,18 @@ export const environment: Environment = {
   contentLanguages: [...UI_LANGS],
   extraLanguages: {},
 
-  termxApi: 'https://termx.kodality.dev/api',
+  termxApi: 'https://demo.termx.org/api',
   // termxApi: 'http://localhost:8200',
 
-  oauthIssuer: 'https://auth.kodality.dev/realms/terminology',
+  oauthIssuer: 'https://auth.termx.org/realms/termx',
   oauthClientId: 'term-client',
   oauthScope: 'openid profile offline_access',
 
-  swaggerUrl: 'https://termx.kodality.dev/swagger/',
-  chefUrl: 'https://termx.kodality.dev/chef',
-  plantUmlUrl: 'https://termx.kodality.dev/plantuml',
-  fmlEditor: 'https://termx.kodality.dev/fml-editor',
+  swaggerUrl: 'https://demo.termx.org/swagger/',
+  chefUrl: 'https://demo.termx.org/chef',
+  plantUmlUrl: 'https://demo.termx.org/plantuml',
+  fmlEditor: 'https://demo.termx.org/fml-editor',
 
-  snowstormUrl: 'https://snowstorm-public.kodality.dev/',
-  snowstormDailyBuildUrl: 'https://snowstorm-public-dailybuild.kodality.dev/',
+  snowstormUrl: 'https://snowstorm.termx.org/',
+  snowstormDailyBuildUrl: 'https://snowstorm-public-dailybuild.termx.org/',
 };
