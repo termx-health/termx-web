@@ -1,7 +1,7 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { BooleanInput, DestroyService, group, isDefined } from '@kodality-web/core-util';
-import { TransformationDefinition, TransformationDefinitionLibService, TransformationDefinitionQueryParams } from 'term-web/modeler/_lib/index';
+import { TransformationDefinition, TransformationDefinitionLibService, TransformationDefinitionQueryParams } from 'term-web/modeler/_lib';
 import { catchError, finalize, forkJoin, map, Observable, of, Subject, takeUntil } from 'rxjs';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { NzSelectItemInterface } from 'ng-zorro-antd/select/select.types';
@@ -96,6 +96,7 @@ export class TransformationDefinitionSearchComponent implements OnInit, ControlV
 
 		const q = new TransformationDefinitionQueryParams();
 		q.nameContains = text;
+		q.summary = true;
 		q.limit = 10_000;
 
 		this.loading['search'] = true;
@@ -113,7 +114,7 @@ export class TransformationDefinitionSearchComponent implements OnInit, ControlV
 
 			const batches = ArrayUtil.batchArray(ids, 100);
 			const requests = batches.map(batch =>
-				this.transformationDefinitionService.search({ ids: batch.join(',') })
+				this.transformationDefinitionService.search({ ids: batch.join(','), summary: true })
 					.pipe(takeUntil(this.destroy$))
 			);
 			forkJoin(requests).subscribe(responses => {

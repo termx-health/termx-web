@@ -19,6 +19,12 @@
           <m-list-item mValue="map-set" mClickable>
             {{'entities.map-set.plural' | translate}}
           </m-list-item>
+          <m-list-item mValue="structure-definition" mClickable>
+            {{'entities.structure-definition.plural' | translate}}
+          </m-list-item>
+          <m-list-item mValue="transformation-definition" mClickable>
+            {{'entities.transformation-definition.plural' | translate}}
+          </m-list-item>
         </m-list>
       </m-form-item>
     </m-card>
@@ -83,15 +89,35 @@
           </tw-map-set-widget>
         </m-card>
 
+        <!-- Structure Definitions -->
+        <m-card *ngSwitchCase="'structure-definition'">
+          <label *m-card-header>{{'entities.structure-definition.plural' | translate}}</label>
+          <tw-structure-definition-widget
+                  [spaceId]="spaceContext?.space?.id"
+                  [packageId]="spaceContext?.pack?.id"
+                  [packageVersionId]="spaceContext?.version?.id"
+                  [text]="searchText"
+                  [actionsTpl]="sdActions"
+                  (loaded)="restoreScrollPosition()">
+            <ng-template #sdActions let-sd>
+              <m-icon-button mIcon="select"
+                             (mClick)="$event.stopPropagation(); openInTab(['modeler', 'structure-definitions', sd.id, 'edit'])"
+                             m-tooltip
+                             mTitle="web.space.open-in-new-tab"/>
+              <m-icon-button mIcon="diff" [routerLink]="['diff']" [queryParams]="{resourceId: sd.id, resourceType: 'structure-definition'}"/>
+            </ng-template>
+          </tw-structure-definition-widget>
+        </m-card>
+
+        <!-- Structure Map -->
+        <m-card *ngSwitchCase="'transformation-definition'">
+          <label *m-card-header>{{'entities.transformation-definition.plural' | translate}}</label>
+
+        </m-card>
+
         <!-- Pages -->
         <!--        <m-card *ngSwitchCase="'page'">-->
         <!--          <label *m-card-header>{{'entities.page.plural' | translate}}</label>-->
-
-        <!--        </m-card>-->
-
-        <!-- Structure Definitions -->
-        <!--        <m-card *ngSwitchCase="'structure-definition'">-->
-        <!--          <label *m-card-header>{{'entities.structure-definition.plural' | translate}}</label>-->
 
         <!--        </m-card>-->
       </ng-container>
