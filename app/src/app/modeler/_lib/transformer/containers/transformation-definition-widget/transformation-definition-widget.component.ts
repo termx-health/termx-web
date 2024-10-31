@@ -1,17 +1,26 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from "@angular/core";
+import {
+    Component,
+    EventEmitter,
+    Input,
+    OnChanges,
+    Output,
+    SimpleChanges,
+    TemplateRef
+} from "@angular/core";
 import {SearchResult} from "@kodality-web/core-util";
 import {
-    StructureDefinition,
-    StructureDefinitionLibService,
-    StructureDefinitionSearchParams
+    TransformationDefinition,
+    TransformationDefinitionLibService,
+    TransformationDefinitionQueryParams
 } from "term-web/modeler/_lib";
 
 
 @Component({
-    selector: 'tw-structure-definition-widget',
-    templateUrl: 'structure-definition-widget.component.html'
+    selector: 'tw-transformation-definition-widget',
+    templateUrl: 'transformation-definition-widget.component.html'
 })
-export class StructureDefinitionWidgetComponent implements OnChanges {
+export class TransformationDefinitionWidgetComponent implements OnChanges {
+
     @Input() public spaceId: number;
     @Input() public packageId: number;
     @Input() public packageVersionId: number;
@@ -20,11 +29,12 @@ export class StructureDefinitionWidgetComponent implements OnChanges {
     @Input() public actionsTpl: TemplateRef<any>;
     @Output() public loaded = new EventEmitter<void>();
 
-    protected searchResult = SearchResult.empty<StructureDefinition>();
-    protected query = new StructureDefinitionSearchParams();
+    protected searchResult = SearchResult.empty<TransformationDefinition>();
+    protected query = new TransformationDefinitionQueryParams();
     protected loading = false;
 
-    public constructor(private structureDefinitionService: StructureDefinitionLibService) {
+
+    public constructor(private transformationDefinitionService: TransformationDefinitionLibService) {
         this.query.limit = 50;
     }
 
@@ -41,12 +51,12 @@ export class StructureDefinitionWidgetComponent implements OnChanges {
         }
 
         this.loading = true;
-        this.structureDefinitionService.search({
+        this.transformationDefinitionService.search({
             ...this.query,
             spaceId: this.spaceId,
             packageId: this.packageId,
             packageVersionId: this.packageVersionId,
-            textContains: this.text
+            nameContains: this.text
         }).subscribe(resp => {
             this.searchResult = resp;
             this.loading = false;

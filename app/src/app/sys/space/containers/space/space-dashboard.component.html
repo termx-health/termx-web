@@ -104,7 +104,7 @@
                              (mClick)="$event.stopPropagation(); openInTab(['modeler', 'structure-definitions', sd.id, 'edit'])"
                              m-tooltip
                              mTitle="web.space.open-in-new-tab"/>
-              <m-icon-button mIcon="diff" [routerLink]="['diff']" [queryParams]="{resourceId: sd.id, resourceType: 'structure-definition'}"/>
+<!--              <m-icon-button mIcon="diff" [routerLink]="['diff']" [queryParams]="{resourceId: sd.id, resourceType: 'structure-definition'}"/>-->
             </ng-template>
           </tw-structure-definition-widget>
         </m-card>
@@ -112,7 +112,20 @@
         <!-- Structure Map -->
         <m-card *ngSwitchCase="'transformation-definition'">
           <label *m-card-header>{{'entities.transformation-definition.plural' | translate}}</label>
-
+          <tw-transformation-definition-widget
+                  [spaceId]="spaceContext?.space?.id"
+                  [packageId]="spaceContext?.pack?.id"
+                  [packageVersionId]="spaceContext?.version?.id"
+                  [text]="searchText"
+                  [actionsTpl]="tdActions"
+                  (loaded)="restoreScrollPosition()">
+            <ng-template #tdActions let-td>
+              <m-icon-button mIcon="select"
+                             (mClick)="$event.stopPropagation(); openInTab(['modeler', 'transformation-definitions', td.id, 'edit'])"
+                             m-tooltip
+                             mTitle="web.space.open-in-new-tab"/>
+            </ng-template>
+          </tw-transformation-definition-widget>
         </m-card>
 
         <!-- Pages -->
