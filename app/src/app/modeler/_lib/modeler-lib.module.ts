@@ -14,6 +14,12 @@ import {StructureDefinitionLibService} from './structure-definition/structure-de
 import {StructureDefinitionTreeComponent} from './structure-definition/structure-definition-tree.component';
 import {StructureDefinitionSearchComponent} from './structure-definition/containers/structure-definition-search/structure-definition-search.component';
 import { TransformationDefinitionSearchComponent } from './transformer/containers/transformation-definition-search/transformation-definition-search.component';
+import {
+  StructureDefinitionWidgetComponent
+} from "./structure-definition/containers/structure-definition-widget/structure-definition-widget.component";
+import {
+  TransformationDefinitionWidgetComponent
+} from "./transformer/containers/transformation-definition-widget/transformation-definition-widget.component";
 
 @NgModule({
   imports: [
@@ -35,7 +41,9 @@ import { TransformationDefinitionSearchComponent } from './transformer/container
     StructureDefinitionSelectComponent,
     TransformationDefinitionSelectComponent,
     StructureDefinitionSearchComponent,
-    TransformationDefinitionSearchComponent
+    TransformationDefinitionSearchComponent,
+    StructureDefinitionWidgetComponent,
+    TransformationDefinitionWidgetComponent
   ],
   exports: [
     StructureDefinitionTreeComponent,
@@ -43,7 +51,9 @@ import { TransformationDefinitionSearchComponent } from './transformer/container
     StructureDefinitionSelectComponent,
     TransformationDefinitionSelectComponent,
     StructureDefinitionSearchComponent,
-    TransformationDefinitionSearchComponent
+    TransformationDefinitionSearchComponent,
+    StructureDefinitionWidgetComponent,
+    TransformationDefinitionWidgetComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

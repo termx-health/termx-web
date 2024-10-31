@@ -1,0 +1,24 @@
+<m-skeleton [mLoading]="loading && !searchResult.data.length">
+    <m-list mSeparated [mEmpty]="searchResult.data.length === 0">
+        <m-list-item *ngFor="let td of searchResult.data" mClickable
+                     [routerLink]="['/modeler', 'transformation-definitions', td.id, 'edit']">
+            <div class="m-justify-between m-items-top">
+                <div class="m-items-middle">
+                    <span class="m-bold">{{td.name}}</span>
+                    <m-divider mVertical></m-divider>
+                </div>
+
+                <div *ngIf="actionsTpl" class="m-items-middle">
+                    <ng-container *ngTemplateOutlet="actionsTpl; context {$implicit: td}"></ng-container>
+                </div>
+            </div>
+        </m-list-item>
+
+        <m-list-item *ngIf="searchResult.meta.total > searchResult.data.length" mClickable (mClick)="loadMore()">
+            <div class="m-items-middle">
+                <m-icon *ngIf="loading" mCode="loading"/>
+                <span class="m-subtitle">{{'core.load-more' | translate}}</span>
+            </div>
+        </m-list-item>
+    </m-list>
+</m-skeleton>

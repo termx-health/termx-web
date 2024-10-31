@@ -5,5 +5,8 @@ export class TransformationDefinitionQueryParams extends QueryParams {
   public name?: string | number;
   public nameContains?: string;
   public summary?: boolean;
+  public spaceId?: number;
+  public packageId?: number;
+  public packageVersionId?: number;
 }
 
