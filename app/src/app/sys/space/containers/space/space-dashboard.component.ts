@@ -5,13 +5,16 @@ import {environment} from 'environments/environment';
 import {EMPTY, Observable} from 'rxjs';
 import {SpaceContextComponent} from 'app/src/app/core/context/space-context.component';
 
+
+type ResourceType = 'code-system' | 'value-set' | 'map-set' | 'structure-definition' | 'transformation-definition';
+
 @Component({
   templateUrl: './space-dashboard.component.html',
 })
 export class SpaceDashboardComponent implements OnInit, OnDestroy {
   protected readonly STORE_KEY = 'space-dashboard';
 
-  protected selectedResourceType: 'code-system' | 'value-set' | 'map-set';
+  protected selectedResourceType: ResourceType;
   protected searchText: string;
 
   public constructor(
@@ -36,7 +39,7 @@ export class SpaceDashboardComponent implements OnInit, OnDestroy {
   }
 
 
-  protected selectResourceType(type: 'code-system' | 'value-set' | 'map-set'): void {
+  protected selectResourceType(type: ResourceType): void {
     this.selectedResourceType = type;
     this.mergeQueryParams({resource: type});
   }
