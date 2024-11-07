@@ -36,7 +36,7 @@
                 <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.provenance', icon: 'history'}"/>
               </a>
 
-              <a class="submenu__item" *ngIf="resourceType === 'CodeSystem' && '*.Checklist.view' | twPrivileged" [routerLink]="navigate('checklists')" routerLinkActive="active">
+              <a class="submenu__item" *ngIf="resourceType === 'CodeSystem' && ('*.Checklist.view' | twPrivileged)" [routerLink]="navigate('checklists')" routerLinkActive="active">
                 <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.checklist', icon: 'check-square'}"/>
               </a>
 
