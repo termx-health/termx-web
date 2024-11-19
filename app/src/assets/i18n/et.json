@@ -1760,7 +1760,8 @@
 						"Sequence": "Numeratsioon",
 						"TerminologyServer": "Terminoloogiaserver",
                         "Release": "Väljalase",
-                        "Checklist": "Kontrollide nimekiri"
+                        "Checklist": "Kontrollide nimekiri",
+                        "Users": "Kasutajad"
 					}
 				},
 				"table": {
