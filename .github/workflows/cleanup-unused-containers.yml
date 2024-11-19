@@ -1,0 +1,16 @@
+name: Cleanup Unused Container Versions
+
+on:
+  schedule:
+    - cron: '0 0 * * 0' # Runs weekly on Sunday 00:00
+  workflow_dispatch:
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Run cleanup script
+        run: ./etc/cleanup.sh ${{ secrets.GITHUB_TOKEN }} ${{ github.repository_owner }} termx-web
