@@ -11,10 +11,6 @@ env:
   REGISTRY: ghcr.io  
   IMAGE_NAME: termx-web
 
-defaults:
-  run:
-    working-directory: ./termx-web  
-
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -83,7 +79,6 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ./termx-web
           platforms: linux/amd64,linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
