@@ -1791,7 +1791,8 @@
 						"TerminologyServer": "TerminologyServer",
 						"Release": "Release",
 						"ChecklistRule": "ChecklistRule",
-						"Sequence": "Sequence"
+						"Sequence": "Sequence",
+						"Users": "Users"
 					}
 				},
 				"table": {
