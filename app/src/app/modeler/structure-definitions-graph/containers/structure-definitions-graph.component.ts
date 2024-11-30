@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
 import { SearchResult } from '@kodality-web/core-util';
 import { finalize, Observable } from 'rxjs';
 import cytoscape, { Core, EdgeDefinition, ElementsDefinition, NodeDefinition } from 'cytoscape';
+import klay from 'cytoscape-klay';
 import { StructureDefinitionService } from 'term-web/modeler/structure-definition/services/structure-definition.service';
 import { StructureDefinition } from 'term-web/modeler/_lib';
 
@@ -34,6 +35,25 @@ export class StructureDefinitionsGraphComponent implements OnInit {
   private initCytoscape(structureDefinitions: StructureDefinition[]): void {
     const elements: ElementsDefinition = this.generateGraphElements(structureDefinitions);
 
+    cytoscape.use(klay);
+
+    const options = {
+      name: 'klay', // Use the Klay layout
+      nodeDimensionsIncludeLabels: true, // Ensure labels are considered in layout
+      fit: true, // Fit the graph to the viewport
+      klay: {
+        spacing: 40, // Spacing between nodes
+        edgeSpacingFactor: 0.5, // Spacing for edges
+        direction: 'DOWN', // Layout direction: 'RIGHT', 'DOWN', etc.
+        borderSpacing: 20, // Space around the graph
+        compactComponents: false, // Compact disconnected components
+        separateConnectedComponents: true,
+        nodeLayering: 'NETWORK_SIMPLEX', // Node layering algorithm
+        nodePlacement: 'BRANDES_KOEPF', // Node placement algorithm
+        thoroughness: 10 // Iterations for layout optimization
+      }
+    };
+
     this.cy = cytoscape({
       container: this.cyContainer.nativeElement,
       elements,
@@ -42,29 +62,29 @@ export class StructureDefinitionsGraphComponent implements OnInit {
           selector: 'node',
           style: {
             'label': 'data(label)',
-            'background-color': '#007BFF',
+            'background-color': '#e0218a',
             'color': '#ffffff',
             'text-valign': 'center',
             'text-halign': 'center',
-            'width': '100%',
-            'height': '100%'
+            'width': 50,
+            'height': 50,
+            'font-size': '10px'
           }
         },
         {
           selector: 'edge',
           style: {
             'width': 3,
-            'line-color': '#cccccc',
-            'target-arrow-color': '#cccccc',
-            'target-arrow-shape': 'triangle'
+            'line-color': '#e0218a',
+            'target-arrow-color': '#e0218a',
+            'target-arrow-shape': 'triangle',
+            'curve-style': 'bezier'
           }
         },
-      ],
-      layout: {
-        name: 'circle',
-        //rows: 10
-      }
+      ]
     });
+
+    this.cy.layout(options).run();
   }
 
   private generateGraphElements(structureDefinitions: StructureDefinition[]): ElementsDefinition {
