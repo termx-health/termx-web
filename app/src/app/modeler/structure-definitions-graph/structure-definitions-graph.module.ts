@@ -1,13 +1,16 @@
 import {Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
-import { StructureDefinitionsGraphComponent } from './containers/structure-definitions-graph.component';
+import {CoreUiModule} from '../../core/ui/core-ui.module';
+import {StructureDefinitionsGraphComponent} from './containers/structure-definitions-graph.component';
 
 export const STRUCTURE_DEFINITIONS_GRAPH_ROUTES: Routes = [
     {path: 'structure-definitions-graph', component: StructureDefinitionsGraphComponent},
 ];
 
 @NgModule({
-    imports: [],
+    imports: [
+      CoreUiModule
+    ],
     declarations: [
       StructureDefinitionsGraphComponent,
     ]
