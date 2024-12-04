@@ -167,7 +167,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
     params.associationRoot = groupParam;
     params.codeSystemVersion = this.version?.version;
     params.sort = 'code';
-    params.limit = 1000;
+    params.limit = 10000;
 
     return this.loader.wrap('group', this.codeSystemService.searchConcepts(this.codeSystem.id, params)).pipe(map(resp => resp.data));
   }
@@ -268,7 +268,7 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
     params.associationSource = `${this.codeSystem.hierarchyMeaning}|${code}`;
     params.codeSystemVersion = this.version?.version;
     params.sort = 'code';
-    params.limit = 1000;
+    //params.limit = 1000;
     return this.codeSystemService.searchConcepts(this.codeSystem.id, params);
   }
 
