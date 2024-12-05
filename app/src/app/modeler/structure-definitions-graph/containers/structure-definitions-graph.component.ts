@@ -42,7 +42,7 @@ export class StructureDefinitionsGraphComponent implements OnInit {
       nodeDimensionsIncludeLabels: true, // Ensure labels are considered in layout
       fit: true, // Fit the graph to the viewport
       klay: {
-        spacing: 40, // Spacing between nodes
+        spacing: 25, // Spacing between nodes
         edgeSpacingFactor: 0.5, // Spacing for edges
         direction: 'DOWN', // Layout direction: 'RIGHT', 'DOWN', etc.
         borderSpacing: 20, // Space around the graph
@@ -85,6 +85,43 @@ export class StructureDefinitionsGraphComponent implements OnInit {
     });
 
     this.cy.layout(options).run();
+
+    this.cy.on('tap', 'node', (event) => {
+      const nodeId = event.target.id();
+      this.onNodeClick(nodeId);
+    });
+  }
+
+  private onNodeClick(nodeId: string): void {
+    const clickedNode = this.cy.getElementById(nodeId);
+
+    // Reset all styles
+    this.cy.elements().style({ 'background-color': '#e0218a', 'line-color': '#e0218a', 'target-arrow-color': '#e0218a' });
+
+    // Highlight the clicked node
+    clickedNode.style({ 'background-color': '#ffd700' });
+
+    // Get the neighborhood of the clicked node
+    const neighborhood = clickedNode.closedNeighborhood();
+
+    // Highlight outgoing edges and their target nodes
+    neighborhood.forEach(ele => {
+      if (ele.isEdge() && ele.source().id() === nodeId) {
+        ele.style({
+          'line-color': '#ff9f1a',
+          'target-arrow-color': '#ff9f1a'
+        });
+
+        // Highlight the target node
+        ele.target().style({
+          'background-color': '#ff9f1a'
+        });
+      }
+    });
+
+    // Fit the clicked node and its outgoing edges/targets
+    const outgoingElements = neighborhood.filter(ele => ele.isEdge() && ele.source().id() === nodeId);
+    this.cy.fit(clickedNode.union(outgoingElements), 50); // Fit with padding
   }
 
   private generateGraphElements(structureDefinitions: StructureDefinition[]): ElementsDefinition {
@@ -93,11 +130,11 @@ export class StructureDefinitionsGraphComponent implements OnInit {
   
     // Create a map for quick lookup of StructureDefinitions by code
     const codeToStructureMap = new Map(
-      structureDefinitions.map(sd => [sd.code, sd])
+      structureDefinitions.map(sd => [sd.url, sd])
     );
   
     // Generate nodes
-    structureDefinitions.forEach(sd => {
+    structureDefinitions.filter(x => x.contentFormat === 'json').forEach(sd => {
       nodes.push({
         data: {
           id: sd.id.toString(),
@@ -108,8 +145,9 @@ export class StructureDefinitionsGraphComponent implements OnInit {
   
     // Generate edges
     for (const sourceSd of structureDefinitions) {
-
+      
       if (sourceSd.contentFormat !== 'json') continue;
+
       const content = JSON.parse(sourceSd.content);
 
       if (!content || !content.differential || !content.differential.element) continue;
