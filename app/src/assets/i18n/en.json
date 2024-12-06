@@ -2006,6 +2006,7 @@
 			"sync-resources": "Sync all resources (from current installation to target server)",
 			"clear-sync-resources": "Delete and sync all resources (from current installation to target server)",
 			"diff": {
+				"not-render": "Large resources are not rendered by default",
 				"sync-tooltip": "Source: {{source}}\n Target: {{target}}"
 			}
 		},

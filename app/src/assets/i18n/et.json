@@ -1963,6 +1963,7 @@
 			"resources": "Ressursid",
 			"select-context": "Vali kontekst",
 			"diff": {
+				"not-render": "Suuri ressursse vaikimisi ei renderdata",
 				"sync-tooltip": "Allikas: {{source}}\n Siht: {{target}}"
 			}
 		},
