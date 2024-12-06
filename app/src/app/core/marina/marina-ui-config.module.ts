@@ -3,9 +3,10 @@ import {HTTP_INTERCEPTORS, HttpBackend, HttpClient} from '@angular/common/http';
 import {ModuleWithProviders, NgModule} from '@angular/core';
 import {CoreI18nService, CoreI18nTranslationHandler, group, isDefined, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
-import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiConfigService, MuiHttpErrorHandler} from '@kodality-web/marina-ui';
+import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiConfigService} from '@kodality-web/marina-ui';
 import {TranslateService} from '@ngx-translate/core';
 import {environment as env} from 'environments/environment';
+import {HttpErrorHandler} from './http-error-handler';
 
 export function TranslationHandlerFactory(translateService: TranslateService): CoreI18nTranslationHandler {
   return (key, params) => translateService.instant(key, params);
@@ -80,7 +81,7 @@ export class MarinaUiConfigModule {
       providers: [
         {provide: MUI_CONFIG, useFactory: () => MarinaUiConfigFactory(marinaConfig)},
         {provide: TRANSLATION_HANDLER, useFactory: TranslationHandlerFactory, deps: [TranslateService]},
-        {provide: HTTP_INTERCEPTORS, useClass: MuiHttpErrorHandler, multi: true},
+        {provide: HTTP_INTERCEPTORS, useClass: HttpErrorHandler, multi: true},
       ]
     };
   }

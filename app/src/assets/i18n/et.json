@@ -21,6 +21,12 @@
 			"select": "Vali",
 			"send": "Saada"
 		},
+		"error": {
+			"403": {
+				"title": "Juurdepääs keelatud",
+				"message": "Teil puudub juurdepääs ressursi pärimiseks."
+			}
+		},
 		"session-expiration-warning": "Sessioon aegub vähem kui 5 minuti pärast! Vajadusel salvesta!",
 		"session-expiration-error": "Sessioon on aegunud!",
 		"confirm": "Kas oled kindel?",

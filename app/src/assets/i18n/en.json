@@ -21,6 +21,12 @@
 			"select": "Select",
 			"send": "Send"
 		},
+		"error": {
+			"403": {
+				"title": "Access Denied",
+				"message": "You do not have access to resource."
+			}
+		},
 		"confirm": "Are you sure?",
 		"data-lost-warning": "Your changes wouldn't be saved!",
 		"delete-confirm": "Are you sure you want to delete?",
