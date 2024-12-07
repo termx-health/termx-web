@@ -40,7 +40,7 @@
 
       <ng-container *ngIf="codeSystem.hierarchyMeaning">
         <m-button (click)="expandAll()" style="margin-left: 10px;">
-          <m-icon mCode="caret-down" style="margin-right: 5px;"></m-icon>
+          <m-icon mCode="caret-right" style="margin-right: 5px;"></m-icon>
           Expand all
         </m-button>
         <m-button (click)="collapseAll()" style="margin-left: 10px;">
@@ -66,9 +66,9 @@
       <tr>
         <td [style.padding-left.px]="level * 25" [style.padding-right.px]="10" style="white-space: nowrap;">
           <ng-container *ngIf="concepts.concept && concepts.concept.length > 0">
-          <span (click)="toggleCollapse(concepts.code)" style="cursor: pointer; display: inline-block; width: 16px;">
-            {{collapseState[concepts.code] ? '►' : '▼'}}
-          </span>
+            <span (click)="toggleCollapse(concepts.code)" style="cursor: pointer; display: inline-block; width: 24px; padding-right: 20px">
+               <i nz-icon [nzType]="collapseState[concepts.code] ? 'caret-right' : 'caret-down'"></i>
+            </span>
           </ng-container>
           <a [routerLink]="['/fhir/CodeSystem', codeSystem.id, 'lookup']"
              [queryParams]="{ _code: concepts.code }"
