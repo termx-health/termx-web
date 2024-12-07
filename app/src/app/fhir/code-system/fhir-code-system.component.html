@@ -34,17 +34,64 @@
   <div>
     <h2>Content</h2>
     <p>This code system <m-tag>{{codeSystem.url}}</m-tag> defines the following codes:</p>
-    <m-table [mData]="codeSystem.concept">
+
+    <div style="display: flex; align-items: center; margin-bottom: 10px;">
+      <m-input type="text" placeholder="marina.ui.inputs.search.placeholder" (input)="onSearchInput($event)" class="search-input" style="flex-grow: 1;" />
+
+      <ng-container *ngIf="codeSystem.hierarchyMeaning">
+        <m-button (click)="expandAll()" style="margin-left: 10px;">
+          <m-icon mCode="caret-down" style="margin-right: 5px;"></m-icon>
+          Expand all
+        </m-button>
+        <m-button (click)="collapseAll()" style="margin-left: 10px;">
+          <m-icon mCode="caret-up" style="margin-right: 5px;"></m-icon>
+          Collapse All
+        </m-button>
+      </ng-container>
+    </div>
+
+    <m-table [mData]=[{}]>
       <tr *mTableHead>
         <th>Code</th>
         <th>Display</th>
         <th>Definition</th>
       </tr>
-      <tr *mTableRow="let c">
-        <td><a [routerLink]="['/fhir/CodeSystem', this.codeSystem.id, 'lookup']" [queryParams]="{ _code: c.code }">{{c.code}}</a></td>
-        <td>{{c.display}}</td>
-        <td>{{c.definition}}</td>
-      </tr>
+      <!-- Use ng-container to recursively render the hierarchical data -->
+      <ng-container *ngFor="let c of filteredConcepts">
+        <ng-template [ngTemplateOutlet]="treeView" [ngTemplateOutletContext]="{ concepts: c, level: 1 }"></ng-template>
+      </ng-container>
     </m-table>
+
+    <ng-template #treeView let-concepts="concepts" let-level="level">
+      <tr>
+        <td [style.padding-left.px]="level * 25" [style.padding-right.px]="10" style="white-space: nowrap;">
+          <ng-container *ngIf="concepts.concept && concepts.concept.length > 0">
+          <span (click)="toggleCollapse(concepts.code)" style="cursor: pointer; display: inline-block; width: 16px;">
+            {{collapseState[concepts.code] ? '►' : '▼'}}
+          </span>
+          </ng-container>
+          <a [routerLink]="['/fhir/CodeSystem', codeSystem.id, 'lookup']"
+             [queryParams]="{ _code: concepts.code }"
+             style="white-space: nowrap;">{{concepts.code}}</a>
+        </td>
+
+        <td>{{concepts.display}}</td>
+        <td>{{concepts.definition}}</td>
+      </tr>
+<!--      <tr *ngIf="!collapseState[concepts.code] && concepts.concept">
+        <td colspan="3">
+          <ng-container *ngFor="let child of concepts.concept">
+            <ng-template [ngTemplateOutlet]="treeView" [ngTemplateOutletContext]="{ concepts: child, level: level + 1 }"></ng-template>
+          </ng-container>
+        </td>
+      </tr>-->
+      <ng-container *ngIf="!collapseState[concepts.code] && concepts.concept">
+          <ng-container *ngFor="let child of concepts.concept">
+            <ng-template [ngTemplateOutlet]="treeView" [ngTemplateOutletContext]="{ concepts: child, level: level + 1 }"></ng-template>
+          </ng-container>
+      </ng-container>
+    </ng-template>
+
   </div>
 </div>
+
