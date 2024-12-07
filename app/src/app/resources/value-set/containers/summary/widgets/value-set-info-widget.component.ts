@@ -10,6 +10,7 @@ export class ValueSetInfoWidgetComponent {
   @Input() public valueSet: ValueSet;
 
   protected getTelecoms = (vs: ValueSet):  {[dType: string]: Telecom[]} => {
-    return collect(vs.contacts?.flatMap(c => c.telecoms), t => t.system);
+    const telecoms = vs.contacts ? vs.contacts.flatMap(c => c.telecoms || []) : [];
+    return collect(telecoms, t => t.system);
   };
 }
