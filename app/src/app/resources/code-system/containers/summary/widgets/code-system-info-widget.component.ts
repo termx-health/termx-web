@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {group, collect} from '@kodality-web/core-util';
+import {collect, group} from '@kodality-web/core-util';
 import {CodeSystem, Telecom} from 'app/src/app/resources/_lib';
 
 @Component({
@@ -10,7 +10,8 @@ export class CodeSystemInfoWidgetComponent {
   @Input() public codeSystem: CodeSystem;
 
   protected getTelecoms = (cs: CodeSystem): {[dType: string]: Telecom[]} => {
-    return collect(cs.contacts?.flatMap(c => c.telecoms), t => t.system);
+    const telecoms = cs.contacts ? cs.contacts.flatMap(c => c.telecoms || []) : [];
+    return collect(telecoms, t => t.system);
   };
   protected readonly group = group;
 }
