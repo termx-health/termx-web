@@ -6,6 +6,7 @@ import {map, Observable} from 'rxjs';
 import {SnomedTranslationLibService} from 'term-web/integration/_lib';
 import {ReleaseLibService} from 'term-web/sys/_lib';
 import {Task, TaskLibService} from 'term-web/task/_lib';
+import {AuthService} from 'term-web/core/auth';
 
 @Component({
   selector: 'tw-resource-tasks-widget',
@@ -37,6 +38,7 @@ export class ResourceTasksWidgetComponent implements OnChanges {
     private taskLibService: TaskLibService,
     private router: Router,
     private snomedService: SnomedTranslationLibService,
+    private authService: AuthService,
     private releaseService: ReleaseLibService
   ) {}
 
@@ -59,7 +61,7 @@ export class ResourceTasksWidgetComponent implements OnChanges {
   };
 
   public loadTasks(): void {
-    if (this.resourceType === 'Release') {
+    if (this.resourceType === 'Release' && this.authService.hasPrivilege('*.Release.view')) {
       this.loader.wrap('load', this.releaseService.loadResources(Number(this.resourceId))).subscribe(resources => {
         this.tasks = [];
         resources.forEach(r => this.loader.wrap('load', this.loadResourceTasks(r.resourceId, this.resourceTypeMap[r.resourceType])).subscribe(t => this.tasks = [...this.tasks, ...t]));

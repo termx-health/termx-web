@@ -21,6 +21,12 @@
 			"select": "Select",
 			"send": "Send"
 		},
+		"error": {
+			"403": {
+				"title": "Access Denied",
+				"message": "You do not have access to resource."
+			}
+		},
 		"confirm": "Are you sure?",
 		"data-lost-warning": "Your changes wouldn't be saved!",
 		"delete-confirm": "Are you sure you want to delete?",
@@ -2000,6 +2006,7 @@
 			"sync-resources": "Sync all resources (from current installation to target server)",
 			"clear-sync-resources": "Delete and sync all resources (from current installation to target server)",
 			"diff": {
+				"not-render": "Large resources are not rendered by default",
 				"sync-tooltip": "Source: {{source}}\n Target: {{target}}"
 			}
 		},
