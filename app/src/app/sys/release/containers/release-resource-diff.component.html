@@ -17,8 +17,8 @@
           <label>{{'entities.terminology-server.current-installation' | translate}}</label>
         </div>
 
-        <span *ngIf="current?.length > 100000">{{'web.space.diff.not-render' | translate}}</span>
-        <pre *ngIf="current?.length > 10000 && current?.length <= 100000">{{current | apply: normalize}}</pre>
+        <span *ngIf="current?.length > 15000000">{{'web.space.diff.not-render' | translate}}</span>
+        <pre *ngIf="current?.length > 10000 && current?.length <= 15000000">{{current | apply: normalize}}</pre>
         <tw-diff-view *ngIf="current?.length <= 10000" [value]="current | apply: normalize"/>
       </m-card>
 
@@ -34,8 +34,8 @@
           </m-button>
         </div>
 
-        <span *ngIf="comparable?.length > 100000">{{'web.space.diff.not-render' | translate}}</span>
-        <pre *ngIf="comparable?.length > 10000 && comparable?.length <= 100000">{{comparable | apply: normalize}}</pre>
+        <span *ngIf="comparable?.length > 15000000">{{'web.space.diff.not-render' | translate}}</span>
+        <pre *ngIf="comparable?.length > 10000 && comparable?.length <= 15000000">{{comparable | apply: normalize}}</pre>
         <tw-diff-view *ngIf="comparable?.length <= 10000" [value]="comparable | apply: normalize"/>
       </m-card>
 
@@ -50,7 +50,7 @@
         <tw-diff-view *ngIf="current && comparable"
             [src]="current | apply: normalize"
             [tgt]="comparable | apply: normalize"
-            [full]="current.length < 100000 && comparable.length < 100000"
+            [full]="current.length < 15000000 && comparable.length < 15000000"
             [display]="d.mode"/>
       </m-card>
     </div>
