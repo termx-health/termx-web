@@ -120,7 +120,7 @@
 			"target-code": "Sihtkood",
 			"target-id": "Siht ID",
 			"type": "Tüüp",
-			"versions": "Assotsioonide versioonid"
+			"versions": "Assotsiatsioonide versioonid"
 		},
 		"code-system-concept": {
 			"code": "Kood",
@@ -137,8 +137,8 @@
 			"association-order": "Jnr",
 			"association-status": "Staatus",
 			"association-target": "Siht",
-			"association-type": "Assotsioon",
-			"associations": "Assotsioonid",
+			"association-type": "Assotsiatsioon",
+			"associations": "Assotsiatsioonid",
 			"code": "Kood",
 			"created": "Loodud",
 			"description": "Kirjeldus",
@@ -257,7 +257,7 @@
 			"version": "Versioon"
 		},
 		"map-set": {
-			"associations": "Assotsioon",
+			"associations": "Assotsiatsioon",
 			"description": "Kirjeldus",
 			"domain": "Kirjastaja",
 			"id": "Identifikaator",
@@ -839,13 +839,13 @@
 		},
 		"association-type": {
 			"form": {
-				"add-header": "Lisa assotsioonitüüp",
-				"edit-header": "Muuda assotsioonitüüp",
-				"view-header": "Vaata assotsioonitüübi"
+				"add-header": "Lisa assotsiatsioonitüüp",
+				"edit-header": "Muuda assotsiatsioonitüüp",
+				"view-header": "Vaata assotsiatsioonitüübi"
 			},
 			"list": {
-				"add-association-type": "Lisa assotsioonitüüp",
-				"title": "Assotsiooni tüübid"
+				"add-association-type": "Lisa assotsiatsioonitüüp",
+				"title": "Assotsiatsiooni tüübid"
 			}
 		},
 		"case-sensitive": {
@@ -1021,7 +1021,7 @@
 				}
 			},
 			"group": {
-				"association": "Assotsioon",
+				"association": "Assotsiatsioon",
 				"property": "Tunnus",
 				"type": "Tüüp"
 			},
@@ -1040,9 +1040,9 @@
 		"code-system-concept-version": {
 			"add-version": "Lisa versioon",
 			"association": {
-				"add-association": "Lisa assotsioon",
-				"delete-association": "Kustuta assotsioon",
-				"edit-association": "Muuda assotsioon"
+				"add-association": "Lisa assotsiatsioon",
+				"delete-association": "Kustuta assotsiatsioon",
+				"edit-association": "Muuda assotsiatsioon"
 			},
 			"designation": {
 				"add-designation": "Lisa tekst",
@@ -1273,14 +1273,14 @@
 			},
 			"file-import": {
 				"association": {
-					"association-type": "Assotsiooni tüüp",
+					"association-type": "Assotsiatsiooni tüüp",
 					"code-system": "Koodisüsteem",
 					"code-system-version": "Koodisüsteemi versioon",
 					"column-value-separator": "Väärtuste eraldaja veerus",
 					"download-template": "Laadi alla näidismall",
-					"file": "Assotsioonide CSV fail",
+					"file": "Assotsiatsioonide CSV fail",
 					"file-column": "Veerg failis",
-					"import": "Assotsiooni faili import",
+					"import": "Assotsiatsiooni faili import",
 					"mapped-column": "Seotud veerud",
 					"order": "Jnr",
 					"source": "Allikas",
@@ -1520,18 +1520,18 @@
 		},
 		"map-set-association": {
 			"form": {
-				"add-header": "Lisa assotsioon",
-				"edit-header": "Muuda assotsioon",
+				"add-header": "Lisa assotsiatsioon",
+				"edit-header": "Muuda assotsiatsioon",
 				"source-concept": "Lähtemõiste",
 				"source-system": "Lähtekoodisüsteem",
 				"status": "staatus",
 				"target-concept": "Sihtmõiste",
 				"target-system": "Sihtkoodisüsteem",
-				"type": "Assotsioonitüüp",
-				"view-header": "Vaata assotsiooni"
+				"type": "Assotsiatsioonitüüp",
+				"view-header": "Vaata assotsiatsiooni"
 			},
 			"list": {
-				"add-association": "Lisa assotsioon",
+				"add-association": "Lisa assotsiatsioon",
 				"associations": "Seosed",
 				"code-system": "Koodisüsteem",
 				"operations": "Toimingud"
@@ -1819,7 +1819,7 @@
 		},
 		"resources": {
 			"tabset": {
-				"association-types": "Assotsiooni tüübid",
+				"association-types": "Assotsiatsiooni tüübid",
 				"code-systems": "Koodisüsteemid",
 				"map-sets": "Vastavustabelid",
 				"naming-systems": "Nimesüsteemid",
