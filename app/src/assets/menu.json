@@ -6,7 +6,8 @@
             "lt": "Bendra informacija",
             "de": "Armaturenbretter",
             "fr": "Tableaux de bord",
-            "nl": "Dashboards"
+            "nl": "Dashboards",
+            "cs": "Nástěnky"
         },
         "items": [
             {
@@ -16,7 +17,8 @@
                     "lt": "Apžvalga",
                     "de": "Startseite",
                     "fr": "Page d'accueil",
-                    "nl": "Landingspagina"
+                    "nl": "Landingspagina",
+                    "cs": "Úvodní stránka"
                 },
                 "link": "landing"
             },
@@ -27,7 +29,8 @@
                     "lt": "Visuotinė paieška",
                     "de": "Globale Suche",
                     "fr": "Recherche globale",
-                    "nl": "Globaal zoeken"
+                    "nl": "Globaal zoeken",
+                    "cs": "Globální vyhledávání"
                 },
                 "link": "global-search",
                 "privileges": [
@@ -45,7 +48,8 @@
             "lt": "Terminologija",
             "de": "Terminologie",
             "fr": "Terminologie",
-            "nl": "Terminologie"
+            "nl": "Terminologie",
+            "cs": "Terminologie"
         },
         "privileges": [
             "*.CodeSystem.view",
@@ -62,7 +66,8 @@
                     "lt": "Kodų sistemos",
                     "de": "Code-Systeme",
                     "fr": "Systèmes de codage",
-                    "nl": "Codesystemen"
+                    "nl": "Codesystemen",
+                    "cs": "Kódové systémy"
                 },
                 "link": "resources/code-systems",
                 "privileges": [
@@ -91,7 +96,8 @@
                     "lt": "Terminologijų ryšių rinkiniai",
                     "de": "Abbildungssätze",
                     "fr": "Sets de mapping",
-                    "nl": "Mapsets"
+                    "nl": "Mapsets",
+                    "cs": "Sady map"
                 },
                 "link": "resources/map-sets",
                 "privileges": [
@@ -120,7 +126,8 @@
                     "lt": "Sąsajų tipai",
                     "de": "Assoziationstypen",
                     "fr": "Types d'association",
-                    "nl": "Associatietypen"
+                    "nl": "Associatietypen",
+                    "cs": "Typy asociací"
                 },
                 "link": "resources/association-types",
                 "privileges": [
@@ -134,7 +141,8 @@
                     "lt": "Apibrėžtos savybės",
                     "de": "Definierte Eigenschaften",
                     "fr": "Propriétés définies",
-                    "nl": "Gedefinieerde eigenschappen"
+                    "nl": "Gedefinieerde eigenschappen",
+                    "cs": "Definované vlastnosti"
                 },
                 "link": "resources/defined-properties",
                 "privileges": [
@@ -148,7 +156,8 @@
                     "lt": "Importavimas",
                     "de": "Importieren",
                     "fr": "Importer",
-                    "nl": "Importeren"
+                    "nl": "Importeren",
+                    "cs": "Import"
                 },
                 "icon": "interaction",
                 "link": "integration/dashboard",
@@ -167,7 +176,8 @@
             "lt": "Išoriniai ištekliai",
             "de": "Externe Ressourcen",
             "fr": "Ressources externes",
-            "nl": "Externe bronnen"
+            "nl": "Externe bronnen",
+            "cs": "Externí zdroje"
         },
         "privileges": [
             "snomed-ct.CodeSystem.view",
@@ -182,7 +192,8 @@
                     "lt": "SNOMED CT naršyklė",
                     "de": "SNOMED CT-Browser",
                     "fr": "Navigateur SNOMED CT",
-                    "nl": "SNOMED CT-browser"
+                    "nl": "SNOMED CT-browser",
+                    "cs": "Prohlížeč SNOMED CT"
                 },
                 "link": "integration/snomed/dashboard",
                 "privileges": [
@@ -196,7 +207,8 @@
                     "lt": "SNOMED CT valdymas",
                     "de": "SNOMED CT-Verwaltung",
                     "fr": "Gestion SNOMED CT",
-                    "nl": "SNOMED CT-beheer"
+                    "nl": "SNOMED CT-beheer",
+                    "cs": "Managment SNOMED CT"
                 },
                 "link": "integration/snomed/management",
                 "privileges": [
@@ -210,7 +222,8 @@
                     "lt": "LOINC",
                     "de": "LOINC",
                     "fr": "LOINC",
-                    "nl": "LOINC"
+                    "nl": "LOINC",
+                    "cs": "LOINC"
                 },
                 "link": "integration/loinc",
                 "privileges": [
@@ -225,7 +238,7 @@
                     "de": "Maßeinheiten",
                     "fr": "Unités de mesure",
                     "nl": "Meeteenheden",
-                    "cs": "Jednotky měření"
+                    "cs": "Měrné jednotky"
                 },
                 "link": "measurement-units",
                 "privileges": [
@@ -239,7 +252,8 @@
                     "lt": "Stebėjimų apibrėžimai",
                     "de": "Beobachtungsdefinition",
                     "fr": "Définition d'observation",
-                    "nl": "Observatiedefinitie"
+                    "nl": "Observatiedefinitie",
+                    "cs": "Definice pozorování"
                 },
                 "link": "observation-definitions",
                 "privileges": [
@@ -255,7 +269,8 @@
             "lt": "Wiki",
             "de": "Wiki",
             "fr": "Wiki",
-            "nl": "Wiki"
+            "nl": "Wiki",
+            "cs": "Wiki"
         },
         "privileges": [
             "*.Wiki.view"
@@ -268,7 +283,8 @@
                     "lt": "Wiki",
                     "de": "Wiki",
                     "fr": "Wiki",
-                    "nl": "Wiki"
+                    "nl": "Wiki",
+                    "cs": "Wiki"
                 },
                 "link": "wiki",
                 "privileges": [
@@ -282,7 +298,8 @@
                     "lt": "Šablonai",
                     "de": "Vorlagen",
                     "fr": "Modèles",
-                    "nl": "Sjablonen"
+                    "nl": "Sjablonen",
+                    "cs": "Šablony"
                 },
                 "link": "wiki-management/templates",
                 "privileges": [
@@ -298,7 +315,8 @@
             "lt": "Modeliavimas",
             "de": "Modellierer",
             "fr": "Modélisateur",
-            "nl": "Modelleur"
+            "nl": "Modelleur",
+            "cs": "Modeler"
         },
         "privileges": [
             "*.StructureDefinition.view",
@@ -315,7 +333,8 @@
                     "lt": "Struktūros apibrėžimai",
                     "de": "Strukturdefinitionen",
                     "fr": "Définitions de structure",
-                    "nl": "Structuurdefinities"
+                    "nl": "Structuurdefinities",
+                    "cs": "Definice struktury"
                 },
                 "link": "modeler/structure-definitions",
                 "privileges": [
@@ -329,7 +348,8 @@
                     "lt": "FML transformacijos",
                     "de": "FML-Transformationen",
                     "fr": "Transformations FML",
-                    "nl": "FML-transformaties"
+                    "nl": "FML-transformaties",
+                    "cs": "Transformace FML"
                 },
                 "link": "modeler/transformation-definitions",
                 "privileges": [
@@ -339,7 +359,7 @@
             {
                 "label": {
                     "en": "Implementation guide",
-                    "cs": "Implementační příručky"
+                    "cs": "Implementační příručka"
                 },
                 "link": "resources/implementation-guides",
                 "privileges": [
@@ -355,7 +375,8 @@
             "lt": "Valdymas",
             "de": "Verwaltung",
             "fr": "Gestion",
-            "nl": "Beheer"
+            "nl": "Beheer",
+            "cs": "Managment"
         },
         "items": [
             {
@@ -365,7 +386,8 @@
                     "lt": "Užduotys",
                     "de": "Aufgaben",
                     "fr": "Tâches",
-                    "nl": "Taken"
+                    "nl": "Taken",
+                    "cs": "Úkoly"
                 },
                 "icon": "inbox",
                 "link": "tasks",
@@ -380,7 +402,8 @@
                     "lt": "Darbalaukiai",
                     "de": "Räume",
                     "fr": "Espaces",
-                    "nl": "Ruimtes"
+                    "nl": "Ruimtes",
+                    "cs": "Prostory"
                 },
                 "icon": "appstore",
                 "link": "spaces",
@@ -395,7 +418,8 @@
                     "lt": "Serveriai",
                     "de": "Server",
                     "fr": "Serveurs",
-                    "nl": "Servers"
+                    "nl": "Servers",
+                    "cs": "Servery"
                 },
                 "icon": "cloud-server",
                 "link": "terminology-servers",
@@ -426,7 +450,8 @@
                     "lt": "Kontrolinis sąrašas",
                     "de": "Checkliste",
                     "fr": "Liste de contrôle",
-                    "nl": "Controlelijst"
+                    "nl": "Controlelijst",
+                    "cs": "Kontrolní seznam"
                 },
                 "icon": "check-square",
                 "link": "checklists",
@@ -441,7 +466,8 @@
                     "lt": "Privilegijos",
                     "de": "Privilegien",
                     "fr": "Privilèges",
-                    "nl": "Privileges"
+                    "nl": "Privileges",
+                    "cs": "Oprávnění"
                 },
                 "icon": "key",
                 "link": "privileges",
@@ -456,7 +482,8 @@
                     "lt": "Terminologijų paslaugų API",
                     "de": "Terminologie-Service-API",
                     "fr": "API du service de terminologie",
-                    "nl": "Terminologieservice-API"
+                    "nl": "Terminologieservice-API",
+                    "cs": "API terminologické služby"
                 },
                 "icon": "cloud",
                 "link": "terminology-service-api"
@@ -468,7 +495,8 @@
                     "lt": "Sekos",
                     "de": "Sequenzen",
                     "fr": "Séquences",
-                    "nl": "Sequenties"
+                    "nl": "Sequenties",
+                    "cs": "Sekvence"
                 },
                 "icon": "field-binary",
                 "link": "sequences",

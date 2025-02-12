@@ -787,7 +787,7 @@
 		"fr": "Prantsuse",
 		"lt": "Leedu",
 		"nl": "Hollandi",
-		"cz": "Czech"
+		"cs": "Czech"
 	},
 	"marina.ui.form.validationError": {
 		"sequenceInvalidCharacters": "Sisaldab lubamatu märke: \"{{sequenceInvalidCharacters}}\""

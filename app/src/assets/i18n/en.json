@@ -804,7 +804,7 @@
 		"fr": "French",
 		"lt": "Lithuanian",
 		"nl": "Dutch",
-		"cz": "Czech"
+		"cs": "Czech"
 	},
 	"marina.ui.form.validationError": {
 		"sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
