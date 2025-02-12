@@ -1288,7 +1288,7 @@
                 "concepts": "Koncepty",
                 "header": "Vyhledávání",
                 "map-sets": "Sady map",
-                "measurement-unit": "Jednotka měření",
+                "measurement-unit": "Měrná jednotka",
                 "snomed": "SNOMED",
                 "value-sets": "Sady hodnot"
             }
@@ -1794,16 +1794,16 @@
         },
         "measurement-unit": {
             "form": {
-                "add-header": "Přidat jednotku měření",
+                "add-header": "Přidat měrnou jednotku",
                 "add-kind": "Přidat typ",
-                "edit-header": "Upravit jednotku měření",
+                "edit-header": "Upravit měrnou jednotku",
                 "from": "Období od",
                 "select-kind": "Vybrat typ",
                 "to": "Období do",
-                "view-header": "Zobrazit jednotku měření"
+                "view-header": "Zobrazit měrnou jednotku"
             },
             "list": {
-                "title": "Jednotky měření"
+                "title": "Měrné jednotky"
             },
             "mapping": {
                 "list": {

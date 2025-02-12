@@ -730,7 +730,7 @@
 		"fr": "Prancūzų",
 		"lt": "Lietuvių",
 		"nl": "Olandų",
-		"cz": "Czech"
+		"cs": "Czech"
 	},
 	"marina.ui.form.validationError": {
 		"sequenceInvalidCharacters": "Netinkami simboliai: \"{{sequenceInvalidCharacters}}\""
