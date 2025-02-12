@@ -1,0 +1,2605 @@
+{
+    "core": {
+        "back": "Zpět",
+        "btn": {
+            "add": "Přidat",
+            "cancel": "Zrušit",
+            "clear-all": "Vymazat vše",
+            "close": "Zavřít",
+            "confirm": "Potvrdit",
+            "copied": "Zkopírováno",
+            "copy": "Kopírovat",
+            "custom": "Vlastní",
+            "delete": "Smazat",
+            "duplicate": "Duplikovat",
+            "edit": "Upravit",
+            "import": "Importovat",
+            "proceed": "Pokračovat",
+            "query": "Dotaz",
+            "save": "Uložit",
+            "search": "Vyhledat",
+            "select": "Vybrat",
+            "send": "Odeslat"
+        },
+        "confirm": "Jste si jistý?",
+        "data-lost-warning": "Vaše změny nebudou uloženy!",
+        "delete-confirm": "Opravdu chcete smazat?",
+        "session-expiration-warning": "Relace vyprší za méně než 5 minut!",
+        "session-expiration-error": "Relace vypršela!",
+        "filter": "Filtr",
+        "form-invalid": "Formulář je neplatný. Zkontrolujte data.",
+        "load-more": "Načíst více",
+        "no-data": "Žádná data",
+        "no-privilege": {
+            "access": "Přístup k \"<i>{{path}}</i>\"",
+            "error": "403 Zakázáno",
+            "privileges": {
+                "plural": "Nemáte oprávnění: {{privileges}}",
+                "singular": "Nemáte oprávnění: {{privilege}}"
+            }
+        },
+        "version-select": {
+            "custom": "Vlastní"
+        },
+        "period": {
+            "days": "d",
+            "hours": "h",
+            "minutes": "m",
+            "months": "mon",
+            "seconds": "s",
+            "years": "y"
+        },
+        "pipe": {
+            "distanceInWords": {
+                "yesterday": "včera",
+                "today": "dnes",
+                "days": "před více než {{days}} dnem/dny",
+                "weeks": "před více než {{weeks}} týdnem/týdny",
+                "months": "před více než {{months}} měsícem/měsíci",
+                "year": "před více než rokem"
+            }
+        }
+    },
+    "entities": {
+        "checklist-rule": {
+            "code": "Kód",
+            "title": "Název",
+            "description": "Popis",
+            "type": "Typ",
+            "target": "Cíl",
+            "verification": "Ověření",
+            "severity": "Závažnost",
+            "active": "Aktivní",
+            "resource-type": "Typ zdroje",
+            "codeSystem": "Kódový systém",
+			"valueSet": "Hodnotová množina",
+			"mapSet": "Mapa množín",
+            "design": "Design",
+			"concept": "Koncept",
+			"release": "Distribuce",
+            "human": "Človek",
+			"software": "Software"
+        },
+        "checklist": {
+            "rule": "Pravidlo",
+            "whitelist": "Bílá lista"
+        },
+        "release": {
+            "authors": "Autoři",
+            "code": "Kód",
+            "name": "Název",
+            "planned": "Plánováno",
+            "release-date": "Datum distribuce",
+            "status": "Stav",
+            "plural": "Distribuce",
+            "single": "Distribuce",
+            "terminology-server": "Terminologický server",
+            "resource": {
+                "plural": "Zdroje",
+                "type": "Typ",
+                "reference": "Odkaz",
+                "version": "Verze",
+                "name": "Název",
+                "errors": "Chyby",
+                "sync-state": "Stav synchronizace",
+                "code-system": "Kódový systém",
+                "value-set": "Sada hodnot",
+                "map-set": "Sada map",
+                "structure-definition": "Definice struktury",
+                "structure-map": "Mapa struktury"
+            }
+        },
+        "association-type": {
+            "code": "Kód",
+            "description": "Popis",
+            "directed": "Směrovaný",
+            "forward-name": "Přímé jméno",
+            "kind": "Typ",
+            "reverse-name": "Opačné jméno"
+        },
+        "code-system": {
+            "supplement": "Doplněk",
+            "base-code-system": "Rodičovský kódový systém",
+            "case-sensitivity": "Citlivost na velikost písmen",
+            "concepts": "Koncepty",
+            "contacts": "Kontakty",
+            "content": "Obsah",
+            "description": "Popis",
+            "designations": "Označení",
+            "hierarchy-meaning": "Význam hierarchie",
+            "disable-hierarchy-grouping": "Zakázat seskupení hierarchie",
+            "id": "ID",
+            "name": "Výpočetní jméno",
+            "narrative": "Narativ",
+            "plural": "Kódové systémy",
+            "single": "Kódový systém",
+            "properties": "Vlastnosti",
+            "publisher": "Vydavatel",
+            "sequence": "Sekvence pro kód konceptu",
+            "supported-languages": "Podporované jazyky",
+            "title": "Název",
+            "uri": "Identifikátor URI",
+            "uri-short": "URI",
+            "versions": "Verze"
+        },
+        "code-system-association": {
+            "status": "Stav",
+            "target-code": "Cílový kód",
+            "target-id": "Cílové ID",
+            "type": "Typ",
+            "versions": "Verze asociace"
+        },
+        "code-system-concept": {
+            "code": "Kód",
+            "code-system": "Kódový systém",
+            "description": "Popis",
+            "type": "Typ",
+            "versions": "Verze konceptu",
+            "plural": "Koncepty"
+        },
+        "code-system-entity": {
+            "type": "Typ",
+            "versions": "Verze entity"
+        },
+        "code-system-entity-version": {
+            "association-order": "Pořadí",
+            "association-status": "Stav",
+            "association-target": "Cíl",
+            "association-type": "Asociace",
+            "associations": "Asociace",
+            "code": "Kód",
+            "created": "Vytvořeno v",
+            "description": "Popis",
+            "designations": "Označení",
+            "designation": "Označení",
+            "id": "ID",
+            "property-values": "Hodnoty vlastností",
+            "references": "Odkazy",
+            "status": "Stav"
+        },
+        "code-system-version": {
+            "base-version": "Verze rodičovského kódového systému",
+            "single": "Verze kódového systému",
+            "uri": "URI",
+            "description": "Popis",
+            "entities": "Verze entity",
+            "expiration-date": "Očekávané použití do",
+            "id": "Identifikátor",
+            "preferred-language": "Preferovaný jazyk",
+            "release-date": "Očekávané použití od",
+            "source": "Vydavatel",
+            "status": "Stav",
+            "supported-languages": "Podporované jazyky",
+            "type": "Typ",
+            "version": "Verze"
+        },
+        "common": {
+            "privileges": "Oprávnění",
+            "versions": "Verze"
+        },
+        "contact-detail": {
+            "name": "Jméno",
+            "telecom": {
+                "system": "Systém",
+                "use": "Použití",
+                "value": "Hodnota"
+            },
+            "telecoms": "Telekomunikace"
+        },
+        "designation": {
+            "case-significance": "Význam velikosti písmen",
+            "description": "Popis",
+            "designation-kind": "Typ označení",
+            "language": "Jazyk",
+            "name": "Jméno",
+            "preferred": "Preferované",
+            "rendering": "Zobrazení",
+            "status": "Stav",
+            "type": "Typ"
+        },
+        "entity-property": {
+            "description": "Popis",
+            "kind": "Typ",
+            "name": "Kód",
+            "order-number": "Pořadí",
+            "preferred": "Preferované",
+            "required": "Povinné",
+            "rule": {
+                "code-systems": "Kódové systémy",
+                "compose": "Složit",
+                "filters": "Filtry",
+                "operator": "Operátor",
+                "property": "Vlastnost",
+                "singular": "Pravidlo",
+                "type": "Typ",
+                "value": "Hodnota",
+                "value-set": "Sada hodnot"
+            },
+            "show-in-list": "Zobrazit v seznamu",
+            "status": "Stav",
+            "type": "Typ",
+            "uri": "URI",
+            "value": "Hodnota"
+        },
+        "implementation-guide": {
+            "id": "ID",
+            "multiple": "Implementační příručky",
+            "single": "Implementační příručka",
+            "title": "Název"
+        },
+        "implementation-guide-version": {
+            "algorithm": "Algoritmus",
+            "date": "Datum",
+            "depends-on": {
+                "package-id": "ID balíčku",
+                "reason": "Důvod",
+                "single": "Závisí na",
+                "version": "Verze"
+            },
+            "empty-github-url": "Původní prázdný projekt IG na GitHubu",
+            "fhir-version": "Verze FHIR",
+            "github-url": "Celá URL projektu na GitHubu",
+            "github-branch": "Větev",
+            "group": {
+                "description": "Popis",
+                "multiple": "Skupiny",
+                "name": "Jméno"
+            },
+            "multiple": "Verze",
+            "package-id": "ID balíčku",
+            "page": {
+                "group": "Skupina",
+                "multiple": "Stránky",
+                "name": "Jméno",
+                "page": "Stránka",
+                "space": "Prostor",
+                "type": "Typ"
+            },
+            "resource": {
+                "group": "Skupina",
+                "multiple": "Zdroje",
+                "name": "Jméno",
+                "reference": "Odkaz",
+                "type": "Typ",
+                "version": "Verze"
+            },
+            "single": "Verze",
+            "template": "Šablona",
+            "version": "Verze"
+        },
+        "map-set": {
+            "associations": "",
+            "description": "Popis",
+            "domain": "",
+            "id": "ID",
+            "name": "Název",
+            "plural": "Sady map",
+            "properties": "Vlastnosti",
+            "publisher": "Vydavatel",
+            "source-code-systems": "Kódové systémy zdroje",
+            "source-value-set": "Sada hodnot zdroje",
+            "target-code-systems": "Kódové systémy cíle",
+            "target-value-set": "Sada hodnot cíle",
+            "title": "Název",
+            "uri": "URI",
+            "versions": "Verze"
+        },
+        "map-set-association": {
+            "concept": "Koncept",
+            "source": "Zdroj",
+            "status": "Stav",
+            "target": "Cíl",
+            "type": "Typ"
+        },
+        "map-set-entity": {
+            "id": "ID",
+            "versions": "Verze"
+        },
+        "map-set-entity-version": {
+            "created-at": "Vytvořeno v",
+            "description": "Popis",
+            "id": "ID",
+            "status": "Stav"
+        },
+        "map-set-version": {
+            "algorithm": "Algoritmus",
+            "description": "Popis",
+            "expiration-date": "Očekávané použití do",
+            "id": "Identifikátor",
+            "preferred-language": "Preferovaný jazyk",
+            "release-date": "Očekávané použití od",
+            "source": "Vydavatel",
+            "status": "Stav",
+            "supported-languages": "",
+            "version": "Verze"
+        },
+        "measurement-unit": {
+            "alias": "Alias",
+            "code": "Kód",
+            "definitionUnit": "Základní jednotka",
+            "definitionValue": "Základní hodnota",
+            "id": "ID",
+            "kind": "Typ",
+            "mappings": "Mapování",
+            "name": "Název",
+            "period": "Období",
+            "rounding": "Zaokrouhlení"
+        },
+        "measurement-unit-mapping": {
+            "system": "Systém",
+            "system-unit": "Jednotka systému",
+            "system-value": "Hodnota systému"
+        },
+        "naming-system": {
+            "code-system": "Kódový systém",
+            "description": "Popis",
+            "id": "ID",
+            "identifiers": "Identifikátory",
+            "kind": "Typ",
+            "name": "Název",
+            "source": "Vydavatel",
+            "status": "Stav"
+        },
+        "naming-system-identifier": {
+            "type": "Typ",
+            "value": "Hodnota"
+        },
+        "observation-definition": {
+            "alias": "Alias",
+            "category": "Kategorie",
+            "code": "Kód",
+            "components": {
+                "binding": "Vazba",
+                "cardinality": "Kardinálnost",
+                "code": "Kód",
+                "multiple": "Komponenty",
+                "names": "Názvy",
+                "order-number": "Pořadí",
+                "type": "Typ",
+                "unit": {
+                    "singular": "Jednotka",
+                    "system": "Jednotkový systém"
+                },
+                "value-set": "Sada hodnot"
+            },
+            "definition": "Definice",
+            "details": "Podrobnosti",
+            "interpretations": {
+                "category": {
+                    "age": "Věk",
+                    "gender": "Pohlaví",
+                    "gestation-age": "Doba těhotenství",
+                    "singular": "Kategorie"
+                },
+                "condition": "Podmínka (CQL)",
+                "fhir-interpretation-code": "FHIR interpretační kód",
+                "order-number": "Pořadí",
+                "range": {
+                    "code-system": "Kódový systém",
+                    "code-system-concepts": "Koncepty kódových systému",
+                    "numeric-range": "Číselný rozsah",
+                    "singular": "Rozsah",
+                    "value-set": "Sada hodnot"
+                },
+                "snomed-interpretation-code": "SNOMED interpretační kód",
+                "state": "Text kritérií",
+                "target": "Komponent"
+            },
+            "keywords": "Klíčová slova",
+            "mappings": {
+                "code-system": "Kódový systém",
+                "concept": "Koncept",
+                "condition": "Podmínka",
+                "map-set": "Sada map",
+                "multiple": "Mapování",
+                "order-number": "Pořadí",
+                "relation": "Vztah",
+                "target": "Komponent"
+            },
+            "members": {
+                "cardinality": "Kardinálnost",
+                "code": "Kód",
+                "multiple": "Členové",
+                "names": "Názvy",
+                "order-number": "Pořadí"
+            },
+            "name": "Jméno",
+            "protocol": {
+                "circumstances": "Podmínky sběru dat",
+                "circumstances-value-set": "Sada hodnot podrobností o sběru",
+                "circumstances-values": "Hodnoty podrobností o sběru",
+                "components": "Vlastní parametry",
+                "device": "Zařízení",
+                "device-value-set": "Sada hodnot zařízení",
+                "device-values": "Hodnoty zařízení",
+                "measurement-location": "Místo měření",
+                "measurement-location-value-set": "Sada hodnot místa měření",
+                "measurement-location-values": "Hodnoty místa měření",
+                "method": "Metoda",
+                "method-value-set": "Sada hodnot metody",
+                "method-values": "Hodnoty metody",
+                "position": "Pozice",
+                "position-value-set": "Sada hodnot pozice",
+                "position-values": "Hodnoty pozice",
+                "single": "Protokol",
+                "specimen": "Vzorek",
+                "specimen-value-set": "Sada hodnot vzorku",
+                "specimen-values": "Hodnoty vzorku"
+            },
+            "publisher": "Vydavatel",
+            "state": "Stav",
+            "status": "Stav",
+            "structure": "Struktura",
+            "time-precision": "Časová přesnost",
+            "url": "URL",
+            "value": {
+                "behaviour": "Chování",
+                "expression": "Výraz",
+                "multiple-results-allowed": "Povolené více výsledků",
+                "type": "Typ",
+                "unit": {
+                    "singular": "Jednotka",
+                    "system": "Jednotkový systém"
+                },
+                "usage": "Použití",
+                "value-set": "Sada hodnot",
+                "values": "Hodnoty"
+            },
+            "version": "Verze"
+        },
+        "package": {
+            "code": "Kód",
+            "plural": "Balíčky",
+            "singular": "Balíček",
+            "version": {
+                "plural": "Verze",
+                "singular": "Verze",
+                "version": "Verze"
+            }
+        },
+        "page": {
+            "contents": "Obsah",
+            "links": "Rodičovské stránky",
+            "plural": "Stránky",
+            "relations": "Vztahy",
+            "status": "Stav",
+            "tags": "Štítky",
+            "template": "Šablona"
+        },
+        "page-content": {
+            "content": "Obsah",
+            "content-type": "Typ obsahu",
+            "lang": "Jazyk",
+            "name": "Název"
+        },
+        "page-link": {
+            "order-number": "Číslo pořadí",
+            "source": "Zdroj",
+            "target": "Cíl"
+        },
+        "page-relation": {
+            "target": "Cíl",
+            "type": "Typ"
+        },
+        "privilege": {
+            "actions": "Akce",
+            "code": "Kód",
+            "kind": "Typ",
+            "name": "Název",
+            "resources": "Zdroje"
+        },
+        "privilege-resource": {
+            "edit": "Upravit",
+            "publish": "Publikovat",
+            "resource-id": "Zdroj",
+            "type": "Typ",
+            "view": "Zobrazit"
+        },
+        "provenance": {
+            "activity": "Aktivita",
+            "author": "Autor",
+            "changes": "Změny",
+            "date": "Datum",
+            "target": "Cíl"
+        },
+        "resource": {
+            "copyright": {
+                "holder": "Držitel autorských práv",
+                "jurisdiction": "Jurisdikce",
+                "single": "Autorské právo",
+                "statement": "Prohlášení o autorských právech"
+            },
+            "replaces": "Nahrazuje",
+            "other-title": "Jiný název",
+            "source-reference": "Odkaz na zdroj",
+            "topic": "Téma",
+            "conf-attribute": {
+                "often-used-attributes": "Často používané atributy",
+                "multiple": "Konfigurační atributy",
+                "attribute": "Atribut",
+                "language": "Jazyk",
+                "value": "Hodnota"
+            },
+            "description": "Popis",
+            "experimental": "Experimentální",
+            "external-web-source": "Externí webový zdroj",
+            "id": "ID",
+            "identifiers": {
+                "multiple": "Identifikátory",
+                "multiple-version": "Verzní identifikátory",
+                "system": "Systém",
+                "value": "Hodnota"
+            },
+            "name": "Výpočetní název",
+            "permissions": {
+                "admin": "Administrátor",
+                "editor": "Editor",
+                "endorser": "Podporovatel",
+                "multiple": "Oprávnění",
+                "viewer": "Prohlížeč"
+            },
+            "publisher": "Vydavatel",
+            "purpose": "Účel",
+            "settings": {
+                "approval-required": "Je vyžadováno schválení",
+                "multiple": "Nastavení",
+                "review-required": "Je vyžadován přehled"
+            },
+            "supported-languages": "Podporované jazyky",
+            "title": "Název",
+            "uri": "URI",
+            "use-context": "Použít kontext",
+            "version": {
+                "algorithm": "Algoritmus",
+                "description": "Popis",
+                "from": "Očekává se, že bude používán od",
+                "preferred-language": "Preferovaný jazyk",
+                "single": "Verze",
+                "to": "Očekává se, že bude používán do",
+                "version": "Verze"
+            }
+        },
+        "sequence": {
+            "code": "Kód",
+            "description": "Popis",
+            "luvs": "Poslední použité hodnoty",
+            "pattern": "Vzor",
+            "restart": "Restartovat",
+            "start-from": "Začít od",
+            "daily": "denně",
+            "monthly": "měsíčně",
+            "yearly": "ročně",
+            "never": "nikdy"
+        },
+        "sequence-luv": {
+            "luv": "Poslední použitá hodnota",
+            "period": "Období"
+        },
+        "snomed-branch": {
+            "base": "Základ",
+            "creation": "Vytvoření",
+            "deleted": "Smazáno",
+            "head": "Hlava",
+            "locked": "Uzamčeno",
+            "metadata": "Metadata",
+            "path": "Cesta",
+            "state": "Stav"
+        },
+        "snomed-codesystem": {
+            "branch-path": "Cesta větve",
+            "country-code": "Kód země",
+            "daily-build-available": "Denní sestavení k dispozici",
+            "dependant-version-effective-time": "Účinný čas závislé verze",
+            "imported": "Importováno",
+            "languages": "Jazyky",
+            "latest-version": "Nejnovější verze",
+            "name": "Název",
+            "short-name": "Krátký název",
+            "versions": "Verze"
+        },
+        "snomed-codesystem-version": {
+            "effective-date": "Účinné datum"
+        },
+        "snomed-concept": {
+            "concept-id": "ID konceptu",
+            "descriptions": "Popisy",
+            "fsn": "Úplně specifikovaný název (FSN)",
+            "kts-references": "Odkazy v TermX",
+            "provenance": "Původ",
+            "pt": "Preferovaný termín (PT)",
+            "refsets": "Refsety",
+            "relationships": "Vztahy",
+            "snomed-references": "Odkazy v SNOMED",
+            "term": "Termín",
+            "translations": "Překlady"
+        },
+        "snomed-description": {
+            "acceptability": "Akceptovatelnost",
+            "concept-id": "ID konceptu",
+            "description-id": "ID popisu",
+            "lang": "Jazyk",
+            "refset": "Refset",
+            "term": "Termín",
+            "type": "Typ"
+        },
+        "snomed-reference": {
+            "concept": "Koncept",
+            "type": "Typ"
+        },
+        "snomed-refset": {
+            "target": "Cíl",
+            "type": "Typ"
+        },
+        "snomed-relationship": {
+            "active": "Aktivní",
+            "group": "Skupina",
+            "target": "Cíl",
+            "type": "Typ"
+        },
+        "snomed-translation": {
+            "acceptability": "Akceptovatelnost",
+            "acceptability-options": {
+                "acceptable": "Akceptovatelné",
+                "preferred": "Preferované"
+            },
+            "branch": "Větev",
+            "concept-id": "ID konceptu",
+            "description-id": "ID popisu",
+            "language": "Jazyk",
+            "module": "Modul",
+            "status": "Stav",
+            "task": "Úkol",
+            "term": "Termín",
+            "type": "Typ",
+            "type-options": {
+                "fully-specified-name": "Úplně specifikovaný název",
+                "synonym": "Synonymum"
+            }
+        },
+        "space": {
+            "acl": "ACL",
+            "active": "Aktivní",
+            "code": "Kód",
+            "editors": "Editoři",
+            "github": "Github",
+            "name": "Název",
+            "owners": "Majitelé",
+            "packages": "Balíčky",
+            "plural": "Prostory",
+            "shared": "Sdílené",
+            "singular": "Prostor",
+            "terminology-servers": "Servery",
+            "viewers": "Prohlížeči"
+        },
+        "structure-definition": {
+            "code": "Kód",
+            "content": "Obsah",
+            "content-format": "Formát obsahu",
+            "content-type": "Typ obsahu",
+            "parent": "Rodič",
+            "plural": "Definice struktur",
+            "url": "URL",
+            "version": "Verze"
+        },
+        "task": {
+            "assignee": "Přiřazený",
+            "author": "Autor",
+            "created": "Vytvořeno",
+            "modified": "Změněno",
+            "modified-by": "Změněno kým",
+            "number": "Číslo",
+            "plural": "Úkoly",
+            "priority": "Priorita",
+            "project": "Projekt",
+            "status": "Stav",
+            "title": "Název",
+            "type": "Typ",
+            "workflow": "Pracovní postup"
+        },
+        "template": {
+            "code": "Kód",
+            "content": "Obsah",
+            "content-type": "Typ obsahu",
+            "names": "Názvy"
+        },
+        "terminology-server": {
+            "active": "Aktivní",
+            "auth-config": "OAuth 2.0",
+            "code": "Kód",
+            "current-installation": "Aktuální instalace",
+            "headers": "HTTP hlavičky",
+            "kind": "Typ",
+            "name": "Název",
+            "plural": "Servery",
+            "root-url": "Hlavní URL",
+            "singular": "Server"
+        },
+        "transformation-definition": {
+            "name": "Název",
+            "plural": "FML transformace",
+            "singular": "FML transformace",
+            "source": "Zdroj",
+            "source-fhir": "FHIR",
+            "source-local": "TermX",
+            "source-static": "Statický",
+            "source-url": "URL"
+        },
+        "value-set": {
+            "concepts": "Koncepty",
+            "contacts": "Kontakty",
+            "description": "Popis",
+            "id": "ID",
+            "name": "Výpočetní název",
+            "narrative": "Narativ",
+            "plural": "Sady hodnot",
+            "publisher": "Vydavatel",
+            "status": "Stav",
+            "title": "Název",
+            "uri": "Identifikátor URI",
+            "uri-short": "URI",
+            "versions": "Verze"
+        },
+        "value-set-rule-filter": {
+            "operator": {
+                "descendent-of": "Potomek",
+                "equal": "=",
+                "in": "V",
+                "is-a": "Je",
+                "label": "Operátor"
+            },
+            "property": {
+                "concept": "Koncept",
+                "constraint": "Omezení",
+                "label": "Vlastnost"
+            },
+            "value": "Hodnota"
+        },
+        "value-set-rule-set": {
+            "exclude": "Vyloučit",
+            "inactive": "Neaktivní koncepty",
+            "include": "Zahrnout",
+            "locked-date": "Datum uzamčení",
+            "rule": {
+                "based-on": "Na základě",
+                "code-system": "Kódový systém",
+                "code-system-version": "Verze kódových systému",
+                "compose": "Složit",
+                "concepts": "Koncepty",
+                "filters": "Filtry",
+                "properties": "Vlastnosti",
+                "value-set": "Sada hodnot",
+                "value-set-version": "Verze sady hodnot"
+            },
+            "rules": "Pravidla"
+        },
+        "value-set-version": {
+            "algorithm": "Algoritmus",
+            "concepts": "Koncepty",
+            "created": "Vytvořeno",
+            "description": "Popis",
+            "expiration-date": "Očekávané použití do",
+            "id": "Identifikátor",
+            "preferred-language": "Preferovaný jazyk",
+            "release-date": "Očekávané použití od",
+            "rule-set": "Sada pravidel",
+            "source": "Vydavatel",
+            "status": "Stav",
+            "supported-languages": "Podporované jazyky",
+            "version": "Verze"
+        },
+        "value-set-version-concept": {
+            "additional-designations": "Další označení",
+            "concept": "Koncept",
+            "designations": "Označení",
+            "display": "Zobrazení",
+            "order-number": "Číslo pořadí"
+        }
+    },
+    "language": {
+        "de": "Němčina",
+        "en": "Angličtina",
+        "et": "Estonština",
+        "fr": "Francouzština",
+        "lt": "Litevština",
+        "nl": "Nizozemština",
+        "cs": "Čeština"
+    },
+    "marina": {
+        "ui": {
+            "noData": "Žádná data",
+            "form": {
+                "validationError": {
+                    "required": "Povinné pole!",
+                    "email": "Neplatný email!",
+                    "format": "Neplatný formát!",
+                    "invalid": "Neplatné pole!",
+                    "maxlength": "Hodnota je příliš velká!",
+                    "minlength": "Hodnota je příliš malá!",
+                    "minDate": "Datum nemůže být nižší než {{minDate}}",
+                    "maxDate": "Datum nemůže být vyšší než {{maxDate}}",
+                    "sequenceInvalidCharacters": "Obsahuje neplatné znaky: \"{{sequenceInvalidCharacters}}\""
+                }
+            },
+            "inputs": {
+                "select": {
+                    "placeholder": "Vyberte"
+                },
+                "search": {
+                    "placeholder": "Hledat"
+                },
+                "multiLanguageInput": {
+                    "placeholder": "Zadejte překlad",
+                    "addTranslation": "Přidat překlad"
+                },
+                "datePicker": {
+                    "placeholder": "Vyberte datum"
+                },
+                "timePicker": {
+                    "placeholder": "Zadejte čas"
+                }
+            },
+            "editableTable": {
+                "delete": "Smazat",
+                "deleteConfirm": "Opravdu chcete smazat data?"
+            },
+            "table": {
+                "paginationTotal": "Zobrazeno {{lower}}-{{upper}} z {{total}} položek"
+            },
+            "popConfirm": {
+                "yes": "Ano",
+                "no": "Ne"
+            },
+            "http": {
+                "systemError": "Systémová chyba",
+                "showDetails": "Zobrazit detaily",
+                "hideDetails": "Skrýt detaily",
+                "copyDetails": "Kopírovat"
+            },
+            "page": {
+                "logout": "Odhlásit se",
+                "accessibility": {
+                    "header": "Přístupnost",
+                    "apply": "Použít",
+                    "reset": "Resetovat",
+                    "fontSize": {
+                        "header": "Velikost písma",
+                        "normal": "Normální",
+                        "large": "Velké",
+                        "extraLarge": "Extra velké"
+                    }
+                }
+            }
+        }
+    },
+    "web": {
+        "concept-drawer": {
+            "add-all": "Přidat vše",
+            "add-selected": "Přidat vybrané",
+            "code-system-required": "Je vyžadován kódový systém"
+        },
+        "code-system-checklist": {
+            "errors": "Chyby",
+            "passed": "Prošlo",
+            "run-check": "Spustit kontrolu",
+            "run-checks": "Spustit všechny softwarové kontroly",
+            "failed": "Neprošlo",
+            "show-all": "Zobrazit vše",
+            "show-unaccomplished": "Pouze nesplněné",
+            "add-whitelist-item": "Přidat položku do bílé listiny",
+            "mode": {
+                "configuration": "Konfigurace",
+                "validation": "Validace"
+            }
+        },
+        "checklist-rule": {
+            "checklist": "Kontrolní seznam",
+            "add-btn": "Přidat pravidlo",
+            "add-header": "Přidat pravidlo",
+            "edit-header": "Upravit pravidlo"
+        },
+        "release": {
+            "add-btn": "Přidat distribuce",
+            "add-author": "Přidat autora",
+            "unaccomplished-checks": "Nesplněné kontroly",
+            "run-checks": "Spustit všechny kontroly",
+            "add-header": "Přidat distribuce",
+            "edit-header": "Upravit distribuce",
+            "add-resource": "Přidat zdroj",
+            "edit-resource": "Upravit zdroj",
+            "activate": "Aktivovat",
+            "retire": "Ukončit",
+            "make-draft": "Vytvořit koncept",
+            "server-sync": "Synchronizace se serverem",
+            "records": "Poznámky",
+            "generate-records": "Generovat poznámky",
+            "sync-success": "Synchronizace byla úspěšná",
+            "sync-error": "Chyba synchronizace",
+            "sync-validation-error": "Chyba ověření synchronizace"
+        },
+        "app": {
+            "header": "TermX"
+        },
+        "association-type": {
+            "form": {
+                "add-header": "Přidat typ asociace",
+                "edit-header": "Upravit typ asociace",
+                "view-header": "Zobrazit typ asociace"
+            },
+            "list": {
+                "add-association-type": "Přidat typ asociace",
+                "title": "Typy asociací"
+            }
+        },
+        "case-sensitive": {
+            "code-is": {
+                "ci": "Kód je nezávislý na velikosti písmen",
+                "cs": "Kód rozlišuje velikost písmen"
+            },
+            "options": {
+                "ci": "Nezávislý na velikosti písmen",
+                "cl": "Nezávislý na velikosti prvního znaku",
+                "cs": "Rozlišuje velikost písmen"
+            }
+        },
+        "code-system": {
+            "form": {
+                "add-header": "Vytvořit nový kódový systém",
+                "concepts": {
+                    "properties": "Vlastnosti",
+                    "designation-languages": "Jazyky označení",
+                    "add-concept": "Přidat koncept",
+                    "add-supplement-concept": "Přidat doplňkový koncept",
+                    "activate-draft-concepts": "Aktivovat koncepty v konceptu",
+                    "concept": "Koncept",
+                    "contains": "Obsahuje",
+                    "eq": "Rovná se",
+                    "validate": "Ověřit kódový systém",
+                    "filter-disabled": "Přepněte na zploštěný seznam, abyste aktivovali funkci filtru"
+                },
+                "delete-property-usages": "Odstranit použití vlastností",
+                "edit-header": "Upravit kódový systém",
+                "header": "Kódový systém",
+                "properties": {
+                    "add-property": "Přidat vlastnost",
+                    "add-supplement": "Přidat doplněk",
+                    "delete-property": "Odstranit vlastnost",
+                    "delete-supplement": "Odstranit doplněk",
+                    "often-used-designations": "Často používaná označení",
+                    "often-used-properties": "Často používané vlastnosti"
+                },
+                "versions": {
+                    "duplicate": {
+                        "create-new-entity-version": "Vytvořit nové verze entit",
+                        "duplicate-header": "Vytvořit duplicitní verzi kódových systému",
+                        "source-code-system": "Zdrojový kódový systém:",
+                        "source-version": "Zdrojová verze:",
+                        "target-version": "Cílová verze:"
+                    },
+                    "list": {
+                        "add-new-version": "Přidat novou verzi",
+                        "add-version": "Přidat verzi",
+                        "compare": "Porovnat",
+                        "duplicate-version": "Duplikovat verzi",
+                        "export-fhir-json": "Exportovat FHIR JSON",
+                        "export-fhir-xml": "Exportovat FHIR XML",
+                        "open-fhir": "Otevřít FHIR URL"
+                    }
+                },
+                "view-header": "Zobrazit kódový systém"
+            },
+            "list": {
+                "add-code-system": "Přidat kódový systém",
+                "count": "Počet",
+                "domain": "",
+                "duplicate": {
+                    "header": "Vytvořit duplicitní kódový systém",
+                    "source-code-system": "Zdrojový kódový systém:",
+                    "target-code-system": "Cílový kódový systém:",
+                    "target-uri": "Cílová URI:"
+                },
+                "supplement": {
+                    "header": "Vytvořit doplněk kódových systému",
+                    "source-code-system": "Základní kódový systém:",
+                    "target-code-system": "ID doplňkového kódového systému:",
+                    "target-uri": "URI doplňkového kódového systému:",
+                    "create-supplement": "Vytvořit doplněk"
+                },
+                "import-fhir": "Importovat externí FHIR definici",
+                "last-version": "Poslední verze",
+                "manual": "Manuální",
+                "open-fhir": "Otevřít FHIR URL",
+                "create-supplement": "Vytvořit doplněk",
+                "status": "Stav",
+                "title": "Kódové systémy",
+                "uri": "URI",
+                "versions-expiration-date": "",
+                "versions-release-date": "",
+                "versions-version": "",
+                "space": "Prostor"
+            },
+            "summary": {
+                "add-task": "Přidat úkol",
+                "add-concept": "Přidat koncept",
+                "add-version": "Přidat verzi",
+                "all-tasks": "Všechny úkoly",
+                "code-system": "Kódový systém",
+                "compare": "Porovnat",
+                "concepts": "Koncepty",
+                "duplicate-version-modal": {
+                    "header": "Duplikovat verzi kódového systému",
+                    "version": "Nová verze"
+                },
+                "opened-tasks": "Otevřené úkoly",
+                "related-artifacts": "Související artefakty",
+                "unlinked-concepts": {
+                    "author": "Autor",
+                    "concept": "Koncept",
+                    "create-task": "Vytvořit úkol",
+                    "designation": "Označení",
+                    "link-to": "Propojit s {{version}}",
+                    "no-versions": "Nebyly nalezeny žádné konceptní verze",
+                    "status": "Stav",
+                    "task": "Úkol",
+                    "task-modal": {
+                        "assignee": "Přiřazený",
+                        "cs-version": "Propojit s verzí kódového systému",
+                        "header": "Vytvořit úkol ke schválení"
+                    },
+                    "title": "Nepřipojené koncepty",
+                    "version": "Verze"
+                },
+                "versions": "Verze"
+            }
+        },
+        "code-system-association": {
+            "form": {
+                "target": "Cíl"
+            }
+        },
+        "code-system-compare": {
+            "added": "Přidáno",
+            "changed": "Změněno",
+            "compare": "Porovnat",
+            "deleted": "Smazáno",
+            "source": "Zdroj",
+            "source-code-system": "Zdrojový kódový systém",
+            "target": "Cíl",
+            "target-code-system": "Cílový kódový systém"
+        },
+        "code-system-concept": {
+            "filter": {
+                "language-filter": "Filtr jazyka",
+                "property-filter": "Filtr vlastností",
+                "property-name-filter": "Filtr názvů vlastností",
+                "search-property-value-placeholder": "Hledat název vlastnosti",
+                "select-language-placeholder": "Vyberte jazyk",
+                "select-property-placeholder": "Vyberte vlastnost",
+                "select-version-placeholder": "Vyberte verzi",
+                "version-filter": "Filtr verzí"
+            },
+            "form": {
+                "add-header": "Přidat koncept",
+                "add-task": "Přidat úkol",
+                "all-tasks": "Všechny úkoly",
+                "concept": "Koncept",
+                "linked-with-code-systems": "Propojeno s verzemi kódového systému",
+                "map-sets": {
+                    "concept-code": "Kód konceptu",
+                    "concept-display": "Zobrazení konceptu",
+                    "direction": "Směr",
+                    "equivalence": "Ekvivalence",
+                    "header": "Sady map",
+                    "map-set": "Sada map"
+                },
+                "opened-tasks": "Otevřené úkoly",
+                "related-artifacts": "Související artefakty",
+                "task-modal": {
+                    "comment": "Komentář",
+                    "header": "Vytvořit úkol"
+                },
+                "value-sets": {
+                    "definition": "Definice",
+                    "header": "Sady hodnot",
+                    "value-set": "Sada hodnot"
+                },
+                "version": {
+                    "code-system-version": "Verze kódového systému",
+                    "header": "Verze {{created}}",
+                    "new": "Nová verze",
+                    "new-version": "Nová verze"
+                },
+                "wiki": {
+                    "header": "Wiki",
+                    "name": "Název",
+                    "slug": "Slug"
+                }
+            },
+            "group": {
+                "association": "Asociace",
+                "property": "Vlastnost",
+                "type": "Typ"
+            },
+            "list": {
+                "add-concept-child": "Přidat podkoncept",
+                "external": "Externí",
+                "open-fhir": "Otevřít FHIR URL",
+                "propagate-properties": "Propagovat vlastnosti na potomky",
+                "unlink-concept": "Odpojit koncept od verze"
+            },
+            "property-list": {
+                "concepts": "Koncepty",
+                "properties": "Vlastnosti"
+            }
+        },
+        "code-system-concept-version": {
+            "add-version": "Přidat verzi",
+            "association": {
+                "add-association": "Přidat asociaci",
+                "delete-association": "Smazat asociaci",
+                "edit-association": "Upravit asociaci"
+            },
+            "designation": {
+                "add-designation": "Přidat označení",
+                "add-supplement": "Přidat doplněk",
+                "delete-designation": "Smazat označení",
+                "edit-designation": "Upravit označení",
+                "multi-language-input": {
+                    "add-translation": "Přidat překlad",
+                    "placeholder": "Vložte překlad"
+                }
+            },
+            "property-value": {
+                "add-property-value": "Přidat hodnotu vlastnosti",
+                "add-supplement": "Přidat doplněk",
+                "coding-value-system": "Systém hodnot kódování",
+                "delete-property-value": "Smazat hodnotu vlastnosti",
+                "edit-property-value": "Upravit hodnotu vlastnosti"
+            }
+        },
+        "code-system-validator": {
+            "circular-dependencies-detector": {
+                "detect": "Detekovat",
+                "title": "Detektor kruhových závislostí"
+            },
+            "code-system": "Kódový systém",
+            "result": {
+                "title": "Výsledek"
+            },
+            "uniqueness-validator": {
+                "designations": "Označení",
+                "empty-properties": "Prázdné vlastnosti",
+                "ignore-empty-properties": "Ignorovat prázdné vlastnosti",
+                "properties": "Vlastnosti",
+                "title": "Validátor jedinečnosti",
+                "validate": "Ověřit"
+            }
+        },
+        "code-system-version": {
+            "form": {
+                "add-header": "Přidat verzi",
+                "edit-header": "Upravit verzi",
+                "entities": {
+                    "add-entity": "Přidat entitu",
+                    "entity-version": "Verze entity",
+                    "modal": {
+                        "add-header": "Přidat entitu",
+                        "entity-version": "Verze entity"
+                    }
+                },
+                "view-header": "Zobrazit verzi"
+            },
+            "summary": {
+                "add-task": "Přidat úkol",
+                "all-tasks": "Všechny úkoly",
+                "code-system-version": "Verze kódového systému",
+                "edit-version": "Upravit verzi",
+                "info": {
+                    "add-to-release": "Přidat do distribuce",
+                    "release-unspecified": "Distribuce není specifikováno",
+                    "create-related-vs-version": "Vytvořit související verzi sady hodnot",
+                    "activate": "Aktivovat",
+                    "create-approve": "Vytvořit úkol ke schválení",
+                    "create-review": "Vytvořit úkol k přezkoumání",
+                    "definition": "Definice",
+                    "download": "Stáhnout",
+                    "last-approved": "Datum posledního schválení",
+                    "last-modified": "Poslední úprava",
+                    "last-reviewed": "Datum posledního přezkoumání",
+                    "make-draft": "Vytvořit koncept",
+                    "none": "Žádné",
+                    "retire": "Ukončit",
+                    "show-changes": "Zobrazit změny",
+                    "sync-with-github": "Synchronizovat s GitHubem"
+                },
+                "opened-tasks": "Otevřené úkoly",
+                "task-modal": {
+                    "assignee": "Přiřazený",
+                    "header": "Vytvořit úkol typu {{type}}",
+                    "success-msg": "Úkol vytvořen"
+                }
+            }
+        },
+        "contacts": {
+            "list": {
+                "add-contact": "Přidat kontakt",
+                "header": "Kontakty"
+            },
+            "modal": {
+                "add-header": "Přidat kontakt",
+                "edit-header": "Upravit kontakt",
+                "name": "Jméno"
+            }
+        },
+        "defined-entity-property": {
+            "form": {
+                "add-header": "Přidat definovanou vlastnost",
+                "edit-header": "Upravit definovanou vlastnost",
+                "kind": {
+                    "designation": "Označení",
+                    "property": "Vlastnost"
+                }
+            },
+            "list": {
+                "add-new": "Přidat novou vlastnost",
+                "property-used": "Vlastnost je používána a nelze ji upravit.",
+                "title": "Definované vlastnosti"
+            }
+        },
+        "dev-code-system-relation": {
+            "map-set": {
+                "code": "Kód",
+                "header": "Sada map",
+                "name": "Název"
+            },
+            "value-set": {
+                "code": "Kód",
+                "generate": "Vygenerovat snímek",
+                "header": "Sada hodnot",
+                "name": "Název",
+                "publisher": "Vydavatel",
+                "uri": "URI",
+                "value-set": "Sada hodnot",
+                "value-set-code": "Kód sady hodnot"
+            }
+        },
+        "global-search": {
+            "dashboard": {
+                "code-systems": "Kódové systémy",
+                "concepts": "Koncepty",
+                "header": "Vyhledávání",
+                "map-sets": "Sady map",
+                "measurement-unit": "Jednotka měření",
+                "snomed": "SNOMED",
+                "value-sets": "Sady hodnot"
+            }
+        },
+        "implementation-guide": {
+            "form": {
+                "add-header": "Přidat implementační příručku",
+                "edit-header": "Upravit implementační příručku"
+            },
+            "list": {
+                "add": "Přidat implementační příručku",
+                "add-fhir": "Importovat externí FHIR definici",
+                "add-manual": "Manuální",
+                "last-version": "Poslední verze",
+                "open-fhir": "Otevřít FHIR definici"
+            },
+            "summary": {
+                "add-version": "Přidat verzi"
+            }
+        },
+        "implementation-guide-version": {
+            "form": {
+                "add-header": "Přidat verzi",
+                "edit-header": "Upravit verzi"
+            },
+            "summary": {
+                "activate": "Aktivovat",
+                "edit-version": "Upravit verzi",
+                "last-modified": "Poslední úprava",
+                "make-draft": "Vytvořit koncept",
+                "none": "Žádné",
+                "retire": "Ukončit"
+            }
+        },
+        "implementation-guide-github": {
+            "ig-initialize": "Inicializovat implementační příručku z",
+            "ig-not-initialized": "Implementační příručka není inicializována",
+            "branch-not-exists": "Větev neexistuje",
+            "github-base-branch": "Základní větev",
+            "create-branch": "Vytvořit větev",
+            "github-clean": "Vše je aktuální!",
+            "github-commit-message": "Zpráva k potvrzení",
+            "github-empty": "Není co potvrdit",
+            "github-push": "Odeslat změny na"
+        },
+        "integration": {
+            "fhir": {
+                "code-system": {
+                    "find-matches": {
+                        "exact": "Přesná shoda",
+                        "properties": "Vlastnosti",
+                        "property-name": "Název",
+                        "property-value": "Hodnota",
+                        "system": "Systém",
+                        "version": "Verze",
+                        "version-tooltip": "Verze systému pro provedení inferencí",
+                        "system-tooltip": "Systém, ve kterém má být provedena kompozice. Toto musí být poskytnuto, pokud není operace vyvolána na instanci kódového systému",
+                        "properties-tooltip": "Jedna nebo více vlastností, které obsahují informace k složení do kódu",
+                        "exact-tooltip": "Zda je operace používána člověkem ('false'), nebo strojem ('true'). Pokud je operace používána člověkem, terminologický server může vrátit seznam úplných nebo částečných shod. Pro stroj server vrací úplné shody. Výchozí hodnota je 'false'"
+                    },
+                    "lookup": {
+                        "code": "Kód",
+                        "date": "Datum",
+                        "properties": "Vlastnosti",
+                        "system": "Systém",
+                        "version": "Verze",
+                        "code-tooltip": "Kód, který má být nalezen. Pokud je poskytnut kód, musí být poskytnut systém",
+                        "system-tooltip": "Systém pro kód, který má být nalezen",
+                        "version-tooltip": "Verze systému, pokud byla poskytnuta ve zdrojových datech",
+                        "date-tooltip": "Datum, pro které by měly být informace vráceny. Normálně jsou to aktuální podmínky (což je výchozí hodnota), ale za určitých okolností systémy potřebují přístup k těmto informacím, jak by byly v minulosti. Typickým příkladem by bylo, kdy je výběr kódu omezen na sadu kódů, které byly dostupné, když byl pacient léčen, ne když je záznam upravován. Které datum je vhodné, je věcí implementační politiky.",
+                        "properties-tooltip": "Vlastnost, kterou si klient přeje vrátit ve výstupu. Pokud nejsou specifikovány žádné vlastnosti, server si vybere, co vrátit. Následující vlastnosti jsou definovány pro všechny kódové systémy: url, název, verze (informace o kódovém systému) a informace o kódu: zobrazení, definice, označení, rodič a dítě, a pro označení, lang.X kde X je kód jazyka označení. Některé vlastnosti jsou vráceny explicitně v pojmenovaných parametrech (když se názvy shodují), a zbytek (kromě lang.X) ve skupině parametrů vlastností"
+                    },
+                    "subsumes": {
+                        "code-a": "KódA",
+                        "code-b": "KódB",
+                        "system": "Systém",
+                        "version": "Verze",
+                        "code-a-tooltip": "'A' kód, který má být testován. Pokud je poskytnut kód, musí být poskytnut systém",
+                        "code-b-tooltip": "'B' kód, který má být testován. Pokud je poskytnut kód, musí být poskytnut systém",
+                        "system-tooltip": "Kódový systém, ve kterém má být provedeno testování subsumpce. Toto musí být poskytnuto, pokud není operace vyvolána na instanci kódového systému",
+                        "version-tooltip": "Verze kódového systému, pokud byla poskytnuta ve zdrojových datech"
+                    },
+                    "validate-code": {
+                        "code": "Kód",
+                        "display": "Zobrazení",
+                        "url": "URL",
+                        "version": "Verze",
+                        "code-tooltip": "Kód, který má být validován",
+                        "display-tooltip": "Zobrazení spojené s kódem, pokud je poskytnuto. Pokud je poskytnuto zobrazení, musí být poskytnut kód. Pokud není poskytnuto žádné zobrazení, server nemůže validovat hodnotu zobrazení, ale může se rozhodnout vrátit doporučený název zobrazení v rozšíření ve výsledku. Zda jsou zobrazení citlivá na velikost písmen, závisí na kódovém systému",
+                        "url-tooltip": "URL kódového systému. Server musí znát kódový systém (např. je explicitně definován v kódových systémech serveru, nebo je implicitně znám serveru)",
+                        "version-tooltip": "Verze kódového systému, pokud byla poskytnuta ve zdrojových datech"
+                    }
+                },
+                "concept-map": {
+                    "closure": {
+                        "code": "Kód",
+                        "concepts": "Koncepty",
+                        "name": "Název",
+                        "system": "Systém",
+                        "version": "Verze",
+                        "concepts-tooltip": "Koncepce k přidání do tabulky uzávěrky",
+                        "name-tooltip": "Název, který definuje konkrétní kontext pro tabulku uzávěrky založenou na subsumpci",
+                        "version-tooltip": "Žádost o resynchronizaci - žádost o zaslání všech nových záznamů od doby, kdy byla nominovaná verze odeslána serverem"
+                    },
+                    "translate": {
+                        "code": "Kód",
+                        "concept-map-version": "VerzeMapyKoncepcí",
+                        "system": "Systém(URL)",
+                        "target-system": "CílovýSystém",
+                        "uri": "URL",
+                        "version": "Verze",
+                        "code-tooltip": "Kód, který má být přeložen. Pokud je poskytnut kód, musí být poskytnut systém",
+                        "concept-map-version-tooltip": "Identifikátor, který se používá k identifikaci konkrétní verze mapy koncepcí, která má být použita pro překlad. Toto je libovolná hodnota spravovaná autorem mapy koncepcí a neočekává se, že bude globálně jedinečná. Například to může být časové razítko (např. rrrrmmdd), pokud není k dispozici spravovaná verze.",
+                        "system-tooltip": "Systém pro kód, který má být přeložen",
+                        "target-system-tooltip": "Identifikuje cílový kódový systém, ve kterém se hledá mapování. Tento parametr je alternativou k parametru cíle - je vyžadován pouze jeden. Hledání jakéhokoli překladu do cílového kódového systému bez ohledu na kontext (např. cílová hodnotová sada) může vést k nebezpečným výsledkům a je na uvážení serveru, kdy tuto podporu poskytne",
+                        "uri-tooltip": "Kanónická URL pro mapu koncepcí. Server musí znát mapu koncepcí (např. je explicitně definována v mapách koncepcí serveru, nebo je implicitně definována některým kódovým systémem známým serveru.",
+                        "version-tooltip": "Verze systému, pokud byla poskytnuta ve zdrojových datech"
+                    }
+                },
+                "value-set": {
+                   "expand": {
+                        "url": "URL",
+                        "value-set-version": "Verze sady hodnot",
+                        "url-tooltip": "Kanónický odkaz na hodnotovou sadu. Server musí znát hodnotovou sadu (např. je explicitně definována v hodnotových sadách serveru, nebo je implicitně definována některým kódovým systémem známým serveru",
+                        "value-set-version-tooltip": "Identifikátor, který se používá k identifikaci konkrétní verze hodnotové sady, která má být použita při generování rozšíření. Toto je libovolná hodnota spravovaná autorem hodnotové sady a neočekává se, že bude globálně jedinečná. Například to může být časové razítko (např. rrrrmmdd), pokud není k dispozici spravovaná verze."
+                    },
+                    "validate-code": {
+                        "code": "Kód",
+                        "display": "Zobrazení",
+                        "system": "Systém",
+                        "system-version": "Verze systému",
+                        "url": "URL",
+                        "value-set-version": "Verze sady hodnot",
+                        "code-tooltip": "Kód, který má být validován. Pokud je poskytnut kód, musí být poskytnut systém nebo kontext (pokud je poskytnut kontext, server ZAJISTÍ, že kód není nejednoznačný bez systému)",
+                        "display-tooltip": "Zobrazení spojené s kódem, pokud je poskytnuto. Pokud je poskytnuto zobrazení, musí být poskytnut kód. Pokud není poskytnuto žádné zobrazení, server nemůže validovat hodnotu zobrazení, ale může se rozhodnout vrátit doporučený název zobrazení pomocí parametru zobrazení ve výsledku. Zda jsou zobrazení citlivá na velikost písmen, závisí na kódovém systému",
+                        "system-tooltip": "Systém pro kód, který má být validován",
+                        "system-version-tooltip": "Verze systému, pokud byla poskytnuta ve zdrojových datech",
+                        "url-tooltip": "Kanónická URL hodnotové sady. Server musí znát hodnotovou sadu (např. je explicitně definována v hodnotových sadách serveru, nebo je implicitně definována některým kódovým systémem známým serveru)",
+                        "value-set-version-tooltip": "Identifikátor, který se používá k identifikaci konkrétní verze hodnotové sady, která má být použita při validaci kódu. Toto je libovolná hodnota spravovaná autorem hodnotové sady a neočekává se, že bude globálně jedinečná. Například to může být časové razítko (např. rrrrmmdd), pokud není k dispozici spravovaná verze."
+                    }
+                }
+            },
+            "file-import": {
+                "association": {
+                    "association-type": "Typ asociace",
+                    "code-system": "Kódový systém",
+                    "code-system-version": "Verze kódového systému",
+                    "column-value-separator": "Oddělovač hodnot sloupců",
+                    "download-template": "Stáhnout šablonu",
+                    "file": "CSV soubor asociací",
+                    "file-column": "Sloupec souboru",
+                    "import": "Import souboru asociací",
+                    "mapped-column": "Namapovaný sloupec",
+                    "order": "Pořadí",
+                    "source": "Zdroj",
+                    "target": "Cíl"
+                },
+                "code-system": {
+                    "general": {
+                        "delete-concepts": "Odstranit všechny koncepty před importem?",
+                        "generate-valueset": "Vygenerovat sadu hodnot",
+                        "hold": "Podržet",
+                        "merge": "Sloučit",
+                        "overlap-of-concepts": "Chování při překrývání konceptů",
+                        "replace": "Nahradit",
+                        "resource-id": "ID zdroje"
+                    },
+                    "import": "Import souboru kódového systému",
+                    "properties": {
+                        "delimiter": "Oddělovač",
+                        "download-diff": "Stáhnout rozdíly",
+                        "download-log": "Stáhnout protokol",
+                        "format": "Formát",
+                        "header": "Vlastnosti",
+                        "import": "Importovat",
+                        "import-data": "Importovat data",
+                        "kts-property": "Vlastnost TermX",
+                        "lang": "Jazyk",
+                        "preferred": "Preferované",
+                        "type": "Typ",
+                        "type-column": "Sloupec {{type}}",
+                        "validate-data": "Pouze ověřit data"
+                    },
+                    "source": {
+                        "analyze": "Analyzovat",
+                        "file": "Soubor",
+                        "header": "Zdroj",
+                        "link": "Odkaz",
+                        "types": {
+                            "csv": "CSV",
+                            "tsv": "TSV"
+                        }
+                    }
+                },
+                "concept-map": {
+                    "delete-associations": "Odstranit všechny asociace před importem?",
+                    "download-template": "Stáhnout šablonu",
+                    "file": "Soubor",
+                    "hold": "Podržet",
+                    "ignore": "Ignorovat duplikáty",
+                    "import": "Import souboru konceptu mapy",
+                    "keep-both": "Zachovat obojí",
+                    "map-id": "ID mapy",
+                    "map-name": "Název mapy",
+                    "map-version": "Verze mapy",
+                    "overlap-of-associations": "Chování při překrývání asociací",
+                    "source-value-set": "Zdrojová sada hodnot",
+                    "target-value-set": "Cílová sada hodnot"
+                },
+                "create-new": "Vytvořit nový",
+                "not-found": "Nenalezeno?",
+                "process": "Zpracovat",
+                "success-message": "Zpracování souboru je dokončeno",
+                "title": "Import souboru",
+                "value-set": {
+                    "analyze": "Analyzovat",
+                    "file": "Soubor",
+                    "import": "Import souboru sady hodnot",
+                    "import-data": "Importovat data",
+                    "source": "Zdroj",
+                    "validate-data": "Pouze ověřit data"
+                }
+            },
+            "import": {
+                "atc": "Import ATC {{edition}}",
+                "base-code-system": "Rodičovský kódový systém",
+                "code-system": "Kódový systém",
+                "code-system-description": "Popis kódového systému",
+                "code-system-name": "Název kódového systému",
+                "code-system-version-description": "Popis verze kódového systému",
+                "icd-10": "Import ICD-10 {{edition}}",
+                "ichi": "Import ICHI {{edition}}",
+                "loinc": "Import LOINC",
+                "orphanet": "Import vzácných onemocnění",
+                "publisher": "Vydavatel",
+                "source-url": "Zdrojová URL",
+                "uri": "URI",
+                "valid-from": "Platné od",
+                "valid-to": "Platné do",
+                "version": "Verze"
+            },
+            "loinc-import": {
+                "answer-list": "Seznam odpovědí",
+                "answer-list-link": "Odkaz na seznam odpovědí",
+                "import": "Importovat",
+                "language": "Jazyk",
+                "loinc": "LOINC",
+                "loinc-import": "Import LOINC",
+                "loinc-import-warning": "POZOR! Import LOINC je časově náročná operace. Může trvat 10 až 60 minut v závislosti na počítači. Chcete pokračovat?",
+                "loinc-terminology": "Terminologie LOINC",
+                "order-observation": "Objednat pozorování",
+                "panels": "Panely",
+                "parts": "Části",
+                "supplementary-properties": "Doplňkové vlastnosti",
+                "translations": "Překlady"
+            },
+            "response": "Odpověď",
+            "send-request": "Odeslat žádost",
+            "example": "Příklad",
+            "resource-json": "URL JSON zdroje",
+            "example-valueSet": "Nejprve musíte importovat zdroje CodeSystem použité pro hodnotovou sadu",
+            "example-conceptMap": "Nejprve musíte importovat zdroje CodeSystem použité pro mapu koncepcí",
+            "set-default-data": "Nastavit výchozí data",
+            "systems": {
+                "atc": "ATC",
+                "fhir": "FHIR",
+                "icd-10": "ICD-10",
+                "ichi": "ICHI",
+                "loinc": "LOINC",
+                "orphanet": "Orphanet"
+            }
+        },
+        "landing": {
+            "resources": {
+                "title": "Zdroje",
+                "types": {
+                    "code-system": "Kódové systémy",
+                    "map-set": "Sady map",
+                    "value-set": "Sady hodnot"
+                }
+            },
+            "summary": {
+                "open-tasks": "Otevřené úkoly",
+                "pages": "Stránky",
+                "spaces": "Prostory",
+                "title": "Shrnutí"
+            },
+            "tasks": {
+                "actions": {
+                    "create": "Vytvořit úkol"
+                },
+                "assigned-to-me": "Přiřazeno mně",
+                "created-by-me": "Vytvořeno mnou",
+                "title": "Úkoly"
+            }
+        },
+        "loinc": {
+            "answer-list": {
+                "answers": "Odpovědi",
+                "code": "Kód seznamu odpovědí",
+                "name": "Název seznamu odpovědí",
+                "oid": "OID",
+                "used-by": "Používáno"
+            },
+            "loinc": {
+                "class": "Třída",
+                "code": "LOINC",
+                "component": "Komponenta",
+                "filter": {
+                    "both": "Obojí",
+                    "class": "Třída",
+                    "clinical": "Klinické",
+                    "contains": "Obsahuje",
+                    "eq": "Rovná se",
+                    "lab": "Laboratoř",
+                    "method": "Metoda",
+                    "observation": "Pozorování",
+                    "ord-obs": "Ord/Obs",
+                    "order": "Objednávka",
+                    "property": "Vlastnost",
+                    "recent-searches": "Poslední hledání",
+                    "scale": "Stupnice",
+                    "survey": "Průzkum",
+                    "system": "Systém",
+                    "timing": "Načasování",
+                    "type": "Typ"
+                },
+                "method": "Metoda",
+                "name": "Dlouhý běžný název",
+                "ord-obs": "Ord/Obs",
+                "property": "Vlastnost",
+                "scale": "Stupnice",
+                "system": "Systém",
+                "timing": "Načasování",
+                "type": "Typ",
+                "values": "Hodnoty"
+            },
+            "part": {
+                "code": "Kód části",
+                "name": "Název části",
+                "used-by": "Používáno"
+            }
+        },
+        "map-set": {
+            "form": {
+                "add-header": "Vytvořit novou sadu map",
+                "edit-header": "Upravit sadu map",
+                "header": "Sada map",
+                "properties": {
+                    "delete-property-usages": "Odebrat asociace s danou vlastností",
+                    "often-used": "Často používané vlastnosti"
+                },
+                "scope": {
+                    "code-system": "Kódový systém",
+                    "code-system-version": "Verze kódového systému",
+                    "source": "Zdroj",
+                    "target": "Cíl",
+                    "title": "Rozsah",
+                    "type": {
+                        "code-system": "Kódový systém",
+                        "external-canonical-uri": "Externí kanonická URI",
+                        "value-set": "Sada hodnot"
+                    },
+                    "uri": "URI",
+                    "value-set": "Sada hodnot",
+                    "value-set-version": "Verze sady hodnot"
+                },
+                "view-header": ""
+            },
+            "list": {
+                "add-map-set": "Přidat sadu map",
+                "add-version": "Přidat verzi",
+                "import-fhir": "Importovat externí FHIR definici",
+                "last-version": "Poslední verze",
+                "manual": "Manuální",
+                "open-fhir": "Otevřít FHIR URL",
+                "operations": "Operace",
+                "status": "Stav",
+                "title": "Sady map",
+                "versions": "Verze",
+                "versions-expiration-date": "Datum expirace verzí",
+                "versions-release-date": "Datum distribuce verzí",
+                "versions-version": "Verze"
+            },
+            "summary": {
+                "add-task": "Přidat úkol",
+                "add-version": "Přidat verzi",
+                "all-tasks": "Všechny úkoly",
+                "map-set": "Sada map",
+                "opened-tasks": "Otevřené úkoly",
+                "related-artifacts": "Související artefakty",
+                "versions": "Verze"
+            }
+        },
+        "map-set-association": {
+            "form": {
+                "add-header": "Přidat asociaci",
+                "edit-header": "Upravit asociaci",
+                "source-concept": "Zdrojový koncept",
+                "source-system": "Zdrojový systém",
+                "status": "Stav",
+                "target-concept": "Cílový koncept",
+                "target-system": "Cílový systém",
+                "type": "Typ",
+                "view-header": "Zobrazit asociaci"
+            },
+            "list": {
+                "add-association": "Přidat asociaci",
+                "associations": "Asociace",
+                "code-system": "Kódový systém",
+                "operations": "Operace"
+            }
+        },
+        "map-set-entity-version": {
+            "modal": {
+                "add-header": "Přidat verzi entity",
+                "edit-header": "Upravit verzi entity",
+                "entity-version": "Verze entity",
+                "link-header": "Propojit verzi entity"
+            },
+            "table": {
+                "activate": "Aktivovat",
+                "add-version": "Přidat verzi",
+                "header": "Verze entity",
+                "link-version": "Propojit verzi",
+                "retire": "Ukončit"
+            }
+        },
+        "map-set-version": {
+            "form": {
+                "add-header": "Přidat verzi",
+                "edit-header": "Upravit verzi",
+                "view-header": "Zobrazit verzi"
+            },
+            "summary": {
+                "associations": {
+                    "add-property-value": "Přidat hodnotu vlastnosti",
+                    "add-target": "Přidat cílové mapování",
+                    "bulk-copy": "Hromadná kopie",
+                    "code": "Kód",
+                    "content": "Obsah",
+                    "display": "Zobrazení",
+                    "external-mapping": "Externí mapování",
+                    "mappings": "Mapování",
+                    "mark-as-verified": "Označit jako ověřené",
+                    "properties": "Vlastnosti",
+                    "relationship": "Vztah",
+                    "set-as-no-map": "Nastavit jako NoMap",
+                    "source-code": "Zdrojový kód",
+                    "source-concepts": "Zdrojové koncepty",
+                    "source-cs": "Zdrojový kódový systém",
+                    "source-display": "Zdrojové zobrazení",
+                    "target-code": "Cílový kód",
+                    "target-concepts": "Cílové koncepty",
+                    "target-cs": "Cílový kódový systém",
+                    "target-display": "Cílové zobrazení",
+                    "target-mapping": "Cílové mapování",
+                    "unmap": "Odmapovat",
+                    "unmapped-concepts": "Nemapované koncepty",
+                    "unverified": "Neověřeno",
+                    "verify": "Ověřit"
+                },
+                "edit-version": "Upravit verzi",
+                "info": {
+                    "add-to-release": "Přidat do distribuce",
+                    "release-unspecified": "Distribuce není specifikováno",
+                    "activate": "Aktivovat",
+                    "create-approve": "Vytvořit úkol ke schválení",
+                    "create-review": "Vytvořit úkol k přezkoumání",
+                    "definition": "Definice",
+                    "download": "Stáhnout",
+                    "last-approved": "Datum posledního schválení",
+                    "last-modified": "Poslední úprava",
+                    "last-reviewed": "Datum posledního přezkoumání",
+                    "load-from-github": "Načíst z Githubu",
+                    "make-draft": "Vytvořit koncept",
+                    "none": "Žádné",
+                    "push-to-github": "Odeslat na Github",
+                    "retire": "Ukončit"
+                },
+                "map-set-version": "Verze sady map",
+                "statistics": {
+                    "automap-code": "Automatické mapování podle kódu",
+                    "automap-code-designation": "Automatické mapování podle kódu a označení",
+                    "automap-designation": "Automatické mapování podle označení",
+                    "broader": "Širší",
+                    "equivalent": "Ekvivalentní",
+                    "inactive-sources": "Neaktivní zdroje",
+                    "inactive-targets": "Neaktivní cíle",
+                    "narrower": "Užší",
+                    "no-map": "Bez mapování",
+                    "source-concepts": "Zdrojové koncepty",
+                    "title": "Statistiky",
+                    "unmapped": "Nemapované"
+                },
+                "statistics-warning": "Sada map by měla být ve stavu 'koncept' pro přepočet statistik.",
+                "task-modal": {
+                    "assignee": "Přiřazený",
+                    "header": "Vytvořit úkol typu {{type}}",
+                    "success-msg": "Úkol vytvořen"
+                }
+            }
+        },
+        "measurement-unit": {
+            "form": {
+                "add-header": "Přidat jednotku měření",
+                "add-kind": "Přidat typ",
+                "edit-header": "Upravit jednotku měření",
+                "from": "Období od",
+                "select-kind": "Vybrat typ",
+                "to": "Období do",
+                "view-header": "Zobrazit jednotku měření"
+            },
+            "list": {
+                "title": "Jednotky měření"
+            },
+            "mapping": {
+                "list": {
+                    "add-mapping": "Přidat mapování"
+                },
+                "modal": {
+                    "add-header": "Přidat mapování",
+                    "edit-header": "Upravit mapování"
+                }
+            }
+        },
+        "naming-system": {
+            "form": {
+                "add-header": "Vytvořit nový systém názvů",
+                "edit-header": "Upravit systém názvů",
+                "view-header": "Zobrazit systém názvů"
+            },
+            "list": {
+                "add-naming-system": "Přidat systém názvů",
+                "naming-system": "Systém názvů",
+                "title": "Systémy názvů",
+                "type": "Typ"
+            }
+        },
+        "observation-definition": {
+            "behaviour": {
+                "computable": "Vypočitatelný",
+                "editable": "Upravitelný",
+                "read-only": "Pouze pro čtení"
+            },
+            "cardinality": {
+                "max": "max",
+                "min": "min"
+            },
+            "divider": {
+                "components": "Komponenty",
+                "data": "Data",
+                "description": "Popis",
+                "identification": "Identifikace",
+                "interpretation": "Interpretace",
+                "mappings": "Mapování",
+                "members": "Členové",
+                "protocol": "Protokol",
+                "state": "Stav",
+                "value": "Hodnota"
+            },
+            "filter": {
+                "category": "Kategorie",
+                "structure": "Struktura",
+                "value-type": "Typ hodnoty"
+            },
+            "header-add": "Přidat definici pozorování",
+            "header-edit": "Definice pozorování {{code}}",
+            "import": "Spustit import",
+            "import-from-loinc": "Importovat z LOINC",
+            "import-success-message": "Import definice pozorování byl úspěšný",
+            "info": {
+                "data": "Popis struktury dat",
+                "mappings": "Konceptová mapa z definice pozorování do jiných kódových systému",
+                "protocol": "Metodologie měření pozorování",
+                "state": "Schopnost popsat stav subjektu během procesu pozorování"
+            },
+            "interpretation-category": {
+                "absolute": "Absolutní",
+                "critical": "Kritické",
+                "reference": "Referenční"
+            },
+            "protocol-usage": {
+                "not-in-use": "Nepoužívá se",
+                "value-set": "Používá se (sada hodnot)",
+                "values": "Používá se (hodnoty)"
+            },
+            "select-snomed": "Vybrat SNOMED",
+            "structure": {
+                "component": "Komponenta",
+                "panel": "Panel",
+                "value": "Hodnota"
+            },
+            "time-precision": {
+                "period": "Období",
+                "timestamp": "Časová značka"
+            }
+        },
+        "package": {
+            "add-header": "Přidat balíček",
+            "edit-header": "Upravit balíček"
+        },
+        "privileges": {
+            "add-header": "Přidat oprávnění",
+            "edit-header": "Upravit oprávnění",
+            "privileges": "Oprávnění",
+            "resources": {
+                "modal": {
+                    "actions": {
+                        "edit": "Upravit",
+                        "publish": "Publikovat",
+                        "view": "Zobrazit"
+                    },
+                    "add-header": "Přidat zdroj",
+                    "edit-header": "Upravit zdroj",
+                    "resource-id": "Zdroj",
+                    "resource-type": "Typ",
+                    "type": {
+                        "Admin": "Administrátor",
+                        "Any": "Jakýkoliv",
+                        "CodeSystem": "Kódový systém",
+                        "ValueSet": "Sada hodnot",
+                        "MapSet": "Sada map",
+                        "NamingSystem": "Systém názvů",
+                        "AssociationType": "Typ asociace",
+                        "DefinedProperty": "Definovaná vlastnost",
+                        "Space": "Prostor",
+                        "Wiki": "Wiki",
+                        "ObservationDefinition": "Definice pozorování",
+                        "StructureDefinition": "Definice struktury",
+                        "TransformationDefinition": "Definice transformace",
+                        "Task": "Úkol",
+                        "Privilege": "Oprávnění",
+                        "TerminologyServer": "TerminologieServer",
+                        "Release": "Distribuce",
+                        "ChecklistRule": "Pravidlo kontrolního seznamu",
+                        "Sequence": "Sekvence"
+                    }
+                },
+                "table": {
+                    "add-resource": "Přidat zdroj",
+                    "delete-resource": "Smazat zdroj",
+                    "head": "Zdroje"
+                }
+            },
+            "table": {
+                "add-privilege": "Přidat oprávnění",
+                "delete-privilege": "Smazat oprávnění"
+            }
+        },
+        "publication-status": {
+            "operations": {
+                "activate": "Aktivovat",
+                "retire": "Ukončit",
+                "save-as-draft": "Vytvořit koncept"
+            }
+        },
+        "resource-context": {
+            "all-versions": "Všechny verze",
+            "concepts": "Koncepty",
+            "properties": "Vlastnosti",
+            "provenance": "Původ",
+            "summary": "Shrnutí",
+            "checklist": "Kontrolní seznam"
+        },
+        "resource-form": {
+            "add-other-title": "Přidat jiný název",
+            "add-use-context": "Přidat kontext použití",
+            "id-change-modal": {
+                "header": "Změna ID",
+                "id": "Nové ID"
+            },
+            "open-uri": "Otevřít URI"
+        },
+        "resource-import-modal": {
+            "file": "Soubor",
+            "header": "Importovat z externí FHIR definice",
+            "id": "ID",
+            "source": "Zdroj",
+            "type": "Typ",
+            "url": "URL"
+        },
+        "value-set-version-modal": {
+            "header": "Vytvořit verzi sady hodnot"
+        },
+        "resource-task-modal": {
+            "header": "Vytvořit úkol",
+            "assignee": "Přiřazený",
+            "version": "Verze",
+            "comment": "Komentář"
+        },
+        "resource-release-modal": {
+            "header": "Přidat zdroj {{resource}} do distribuce",
+            "release": "Distribuce",
+            "navigate-to-release-management": "Přejít na správu distribuce"
+        },
+        "resources": {
+            "tabset": {
+                "association-types": "Typy asociací",
+                "code-systems": "Kódové systémy",
+                "map-sets": "Sady map",
+                "naming-systems": "Systémy názvů",
+                "value-sets": "Sady hodnot"
+            }
+        },
+        "sequence": {
+            "form": {
+                "add-header": "Přidat sekvenci",
+                "edit-header": "Upravit sekvenci"
+            },
+            "list": {
+                "add-sequence": "Přidat sekvenci"
+            }
+        },
+        "snomed": {
+            "branch": {
+                "form": {
+                    "add-header": "Přidat větev",
+                    "based-on": "Na základě",
+                    "edit-header": "Větev {{path}}",
+                    "name": "Název",
+                    "parent-branch": "Rodičovská větev",
+                    "release-date": "Datum distribuce"
+                },
+                "list": {
+                    "add-branch": "Přidat větev",
+                    "codesystem": {
+                        "add-edition": "Přidat edici",
+                        "header": "Edice",
+                        "imported": "Importováno"
+                    },
+                    "daily-build": "Denní sestavení větví",
+                    "edition-modal": {
+                        "country-code": "2-písmenný kód země",
+                        "header": "Přidat edici",
+                        "name": "Název"
+                    },
+                    "header": "Seznam větví",
+                    "working": "Pracovní větve"
+                },
+                "management": {
+                    "add-to-branch": "Přidat do větve",
+                    "authoring-stats": "Statistiky autorství",
+                    "changed-fsn": "Změněný FSN",
+                    "create-cs-version": "Změny verze",
+                    "cs-version-modal": {
+                        "header": "Vytvořit novou verzi kódového systému"
+                    },
+                    "export-modal": {
+                        "header": "Exportovat do RF2 zip",
+                        "type": "Typ"
+                    },
+                    "export-to-rf2": "Exportovat do RF2",
+                    "header": "Větev {{path}}",
+                    "import-failed": "Import z RF2 zip selhal",
+                    "import-from-rf2": "Importovat z RF2",
+                    "import-modal": {
+                        "create-version": "Vytvořit verzi kódového systému",
+                        "file": "Soubor",
+                        "header": "Importovat z RF2 zip",
+                        "type": "Typ"
+                    },
+                    "import-succeeded": "Import z RF2 zip byl úspěšný",
+                    "import-warning": "Tento import vytvoří pracovní větev. Nebude vytvořena žádná verze kódového systému. Nahrávání může trvat více než 30-60 minut v závislosti na velikosti balíčku SNOMED.",
+                    "inactivate-synonym": "Deaktivovat synonymum",
+                    "inactivated-synonyms": "Deaktivovaná synonyma",
+                    "integrity-check": "Kontrola integrity",
+                    "lock": "Zamknout",
+                    "lock-modal": {
+                        "header": "Zamknout větev",
+                        "message": "Zpráva"
+                    },
+                    "new-descriptions": "Nové popisy",
+                    "new-synonyms": "Nová synonyma",
+                    "reactivate-synonym": "Znovu aktivovat synonymum",
+                    "reactivated-synonyms": "Znovu aktivovaná synonyma",
+                    "synonym-deactivation-modal": {
+                        "description": "ID popisu",
+                        "header": "Deaktivovat synonymum"
+                    },
+                    "synonym-reactivation-modal": {
+                        "description": "ID popisu",
+                        "header": "Znovu aktivovat synonymum"
+                    },
+                    "total-descriptions": "{{total}} popis(y) ve větvi",
+                    "unlinked-translations": "{{count}} nepropojené překlady",
+                    "unlock": "Odemknout"
+                }
+            },
+            "codesystem": {
+                "form": {
+                    "export-to-rf2": "Exportovat do RF2",
+                    "header": "Kódový systém {{name}}",
+                    "import-from-rf2": "Importovat z RF2",
+                    "import-warning": "Tento import vytvoří větev + verzi kódového systému a měl by být použit pro import publikovaných verzí nebo vytvoření finální verze z pracovní větve. Nahrávání může trvat více než 30-60 minut v závislosti na velikosti balíčku SNOMED.",
+                    "upgrade": "Aktualizovat",
+                    "upgrade-modal": {
+                        "dependant-version": "Nová závislá verze",
+                        "header": "Aktualizovat kódový systém na jinou závislou verzi"
+                    }
+                }
+            },
+            "rf2-export": "Export RF2",
+            "task": {
+                "card-header": "Úkoly",
+                "modal-header": "Vytvořit úkol pro koncept",
+                "comment": "Komentář"
+            },
+            "search": {
+                "ecl": "ECL",
+                "ecl-placeholder": "ECL výraz",
+                "import-refset-concepts": "Importovat koncepty referenční sady",
+                "refsets": "Referenční sady",
+                "taxonomy": "Taxonomie"
+            }
+        },
+        "space": {
+            "add-btn": "Přidat prostor",
+            "add-header": "Přidat prostor",
+            "all-packages": "Všechny balíčky",
+            "edit-header": "Upravit prostor",
+            "github-clean": "Všechno je aktuální!",
+            "github-commit-message": "Zpráva k potvrzení",
+            "github-empty": "Není co potvrdit",
+            "github-integration": "Integrace s Githubem",
+            "github-pull": "Načíst rozdíly z",
+            "github-pull-confirm": "Opravdu chcete nahradit aktuální data daty z repozitáře?",
+            "github-pull-confirm-achtung": "POZOR: TATO AKCE JE NEVRATNÁ! MŮŽETE ZTRATIT DATA",
+            "github-push": "Odeslat změny na",
+            "github-sync": "Synchronizovat s Githubem",
+            "import-btn": "Importovat prostor",
+            "import-error-message": "Import prostoru selhal",
+            "import-success-message": "Import prostoru byl úspěšný",
+            "new-version": "Nová verze",
+            "open-in-new-tab": "Otevřít v novém okně",
+            "resource-import-error-message": "Import zdroje selhal",
+            "resource-import-success-message": "Import zdroje byl úspěšný",
+            "resources": "Zdroje",
+            "select-context": "Vybrat kontext",
+            "change-source-server": "Změnit server zdroje",
+            "reload-diff-matrix": "Načíst matici rozdílů znovu",
+            "sync-resources": "Synchronizovat všechny zdroje (z aktuální instalace na cílový server)",
+            "clear-sync-resources": "Smazat a synchronizovat všechny zdroje (z aktuální instalace na cílový server)",
+            "diff": {
+                "sync-tooltip": "Zdroj: {{source}}\n Cíl: {{target}}"
+            }
+        },
+        "structure-definition": {
+            "form": {
+                "add-element": "Přidat prvek",
+                "add-header": "Přidat definici struktury",
+                "binding": "Vazba",
+                "cardinality": "Kardinalita",
+                "code": "Kód",
+                "definition": "Definice",
+                "definition-header": "Definice",
+                "display": "Zobrazení",
+                "edit-header": "Upravit definici struktury",
+                "element-header": "Prvky",
+                "error-modal": {
+                    "delete-content": "Smazat obsah a pokračovat",
+                    "fhir-to-fsh": "FHIR do FSH",
+                    "fsh-to-fhir": "FSH do FHIR",
+                    "no-save-proceed": "Pokračovat bez uložení"
+                },
+                "fixed-coding": "Pevné kódování",
+                "fixed-uri": "Pevné URI",
+                "fsh-header": "FSH",
+                "json-header": "JSON",
+                "modal": {
+                    "content": "Máte neuložené změny!",
+                    "no-save-proceed": "Pokračovat",
+                    "save-proceed": "Uložit a pokračovat"
+                },
+                "name": "Název",
+                "path": "Cesta",
+                "primary-source": "Primární zdroj",
+                "short-description": "Krátký popis",
+                "strength": "Síla",
+                "system": "Systém",
+                "value-set": "Sada hodnot",
+                "view-header": "Definice struktury"
+            },
+            "list": {
+                "add-structure-definition": "Přidat definici struktury",
+                "delete-confirm": "Opravdu chcete smazat? Zkontrolujte, prosím, další zdroje, které mohou na této definici záviset."
+            },
+            "view": {
+                "binding": "Vazba",
+                "fixed": "Pevné"
+            }
+        },
+        "struct-definition-constraint": {
+            "list": {
+                "add-constraint": "Přidat omezení",
+                "header": "Omezení"
+            },
+            "modal": {
+                "add-header": "Přidat omezení",
+                "edit-header": "Upravit omezení",
+                "error": "Chyba",
+                "expression": "Výraz",
+                "human": "Lidský",
+                "key": "Klíč",
+                "requirements": "Požadavky",
+                "severity": "Závažnost",
+                "source": "Zdroj",
+                "warning": "Upozornění"
+            }
+        },
+        "structure-definition-type": {
+            "list": {
+                "add-type": "Přidat typ",
+                "header": "Typ(y)"
+            },
+            "modal": {
+                "add-header": "Přidat typ",
+                "code": "Kód",
+                "edit-header": "Upravit typ",
+                "target-profile": "Cílový profil"
+            }
+        },
+        "task": {
+            "activity": "Aktivita",
+            "add-btn": "Přidat úkol",
+            "add-comment": "Přidat nový komentář",
+            "context": "Kontext",
+            "filter": {
+                "assignee": "Přiřazený",
+                "author": "Autor",
+                "created": "Vytvořeno",
+                "finished": "Dokončeno",
+                "presets": {
+                    "header": "Předvolby",
+                    "mine": "Napsáno mnou",
+                    "to-me": "Přiřazeno mně"
+                },
+                "priority": "Priorita",
+                "project": "Projekt",
+                "requested-performer": "Požadovaný vykonavatel",
+                "status": "Stav",
+                "type": "Typ"
+            },
+            "select-project": "Vybrat projekt"
+        },
+        "template": {
+            "form": {
+                "add-content": "Přidat obsah",
+                "add-header": "Přidat šablonu",
+                "edit-header": "Upravit šablonu"
+            },
+            "list": {
+                "add-template": "Přidat šablonu"
+            }
+        },
+        "terminology-server": {
+            "add-btn": "Přidat server",
+            "add-header": "Přidat server",
+            "auth-config": {
+                "access-token-url": "URL pro přístupový token",
+                "client-id": "ID klienta",
+                "client-secret": "Tajný klíč klienta"
+            },
+            "edit-header": "Upravit server",
+            "headers": {
+                "key": "Klíč",
+                "value": "Hodnota"
+            },
+            "kind": {
+                "fhir": "FHIR server",
+                "snomed": "SNOMED server",
+                "terminology": "Terminologie server"
+            },
+            "test": "Test"
+        },
+        "tools": {
+            "terminology-service-api": {
+                "button": "Tlačítko",
+                "content": "Obsah",
+                "header": "Hlava"
+            },
+            "termx-service-api": {
+                "content": "TermX Service APIs umožňují automatizovanou výměnu obsahu a zdrojů klinické terminologie.",
+                "header": "TermX Service API",
+                "no-data": "Nástroje pro prohlížení API nejsou nakonfigurovány."
+            }
+        },
+        "transformation-definition": {
+            "edit": {
+                "created": "Vytvořeno {{date}}",
+                "updated": "Aktualizováno {{date}}"
+            },
+            "execution": {
+                "generate": "Generovat",
+                "input": "Vstup",
+                "output": "Výstup",
+                "transform": "Transformovat"
+            },
+            "list": {
+                "add-btn": "Přidat transformaci",
+                "created-by": "Vytvořil {{user}}",
+                "last-modified": "Poslední úprava"
+            },
+            "resource-form": {
+                "compile": "Kompilovat",
+                "content": "Obsah",
+                "definition": "Definice struktury",
+                "download-fml": "FML",
+                "download-json": "JSON",
+                "download-xml": "XML",
+                "fhir-resource": "FHIR zdroj",
+                "fhir-server": "FHIR server",
+                "fml-generation-failed": "Generování FML selhalo",
+                "generate": "Generovat",
+                "invalid-resource-url": "Nelze načíst platnou definici struktury",
+                "map-set": "ConceptMap",
+                "mapping": "Mapování struktury",
+                "preview-hide": "Skrýt",
+                "preview-show": "Náhled",
+                "resource-url": "URL pro stažení zdroje",
+                "save-as": "Uložit jako",
+                "switch-to-text-editor": {
+                    "cancel": "Zrušit",
+                    "confirm": "Pokračovat",
+                    "title": "Přepnout na textový editor",
+                    "warning": "POZOR! Tato akce není vratná!"
+                },
+                "url": "URL",
+                "visual-editor": "Vizuální editor",
+                "visual-editor-disabled": "Prosím, vyplňte pole 'Název'"
+            },
+            "resources": {
+                "new": "-- nový --",
+                "type.conceptmap": "Konceptové mapy",
+                "type.definition": "Definice",
+                "type.mapping": "Importy",
+                "type.mapping-main": "Mapování"
+            },
+            "import": {
+                "import-map": {
+                    "title": "Tento zdroj byl importován z ImportMap!",
+                    "description": "Pokud potřebujete provést změny, můžete buď smazat a ručně znovu vytvořit, nebo uložit definici transformace!"
+                }
+            }
+        },
+        "value-set": {
+            "concepts": {
+                "no-version": "Verze není vybrána",
+                "select-version": "Prosím vyberte verzi pro zobrazení konceptů"
+            },
+            "form": {
+                "add-header": "Vytvořit novou sadu hodnot",
+                "edit-header": "Upravit sadu hodnot",
+                "versions": {
+                    "add-version": "Přidat verzi",
+                    "export-fhir-expansion": "Exportovat FHIR JSON s expanzí",
+                    "export-fhir-json": "Exportovat FHIR JSON",
+                    "export-fhir-xml": "Exportovat FHIR XML",
+                    "open-fhir": "Otevřít FHIR URL"
+                },
+                "view-header": "Zobrazit sadu hodnot"
+            },
+            "list": {
+                "add-value-set": "Přidat sadu hodnot",
+                "expansion": "Expanzní koncepty",
+                "import-fhir": "Importovat externí FHIR definici",
+                "last-version": "Poslední verze",
+                "manual": "Manuální",
+                "open-fhir": "Otevřít FHIR URL",
+                "status": "Stav",
+                "title": "Sady hodnot",
+                "versions-expiration-date": "do {{expirationDate}}",
+                "versions-release-date": "Od: {{releaseDate}}",
+                "versions-version": "Název verze: {{version}}"
+            },
+            "summary": {
+                "add-task": "Přidat úkol",
+                "add-version": "Přidat verzi",
+                "all-tasks": "Všechny úkoly",
+                "duplicate-version-modal": {
+                    "header": "Duplikovat verzi sady hodnot",
+                    "version": "Nová verze"
+                },
+                "expansions": "Expanze",
+                "opened-tasks": "Otevřené úkoly",
+                "related-artifacts": "Související artefakty",
+                "total-concepts": "Celkem konceptů",
+                "value-set": "Sada hodnot",
+                "versions": "Verze"
+            }
+        },
+        "value-set-version": {
+            "form": {
+                "add-concept": "Přidat koncept",
+                "add-header": "Přidat verzi",
+                "concepts": {
+                    "warning": "Koncept nemá aktivní verzi"
+                },
+                "download": "Stáhnout",
+                "edit-header": "Upravit verzi",
+                "rule-set": {
+                    "rule": {
+                        "add-designation": "Přidat označení",
+                        "all": "Všechny koncepty",
+                        "bulk-copy": "Hromadná kopie",
+                        "code-system": "Kódový systém",
+                        "content": "Obsah",
+                        "exact": "Přesné koncepty",
+                        "exclude": "Vyloučit",
+                        "filter": "Výraz založený na vlastnosti",
+                        "include": "Zahrnout",
+                        "value-set": "Sada hodnot"
+                    }
+                },
+                "view-header": "Zobrazit verzi"
+            },
+            "summary": {
+                "edit-version": "Upravit verzi",
+                "expansion": "Expanze",
+                "expansion-limit-info": "Načteno 20 konceptů. {{count}} konceptů je stále na serveru.",
+                "expansion-see-all": "Zobrazit úplný seznam konceptů.",
+                "expansion-warning": "Verze sady hodnot by měla být ve stavu 'koncept' pro přepočet expanze.",
+                "info": {
+                    "add-to-release": "Přidat do distribuce",
+                    "release-unspecified": "Distribuce není specifikováno",
+                    "activate": "Aktivovat",
+                    "create-approve": "Vytvořit úkol ke schválení",
+                    "create-review": "Vytvořit úkol k přezkoumání",
+                    "definition": "Definice",
+                    "download": "Stáhnout",
+                    "expansion": "Expanze",
+                    "last-approved": "Datum posledního schválení",
+                    "last-modified": "Poslední úprava",
+                    "last-reviewed": "Datum posledního přezkoumání",
+                    "make-draft": "Vytvořit koncept",
+                    "none": "Žádné",
+                    "retire": "Ukončit",
+                    "show-changes": "Zobrazit změny",
+                    "sync-with-github": "Synchronizovat s Githubem"
+                },
+                "rule": "Pravidlo",
+                "rule-set": "Sada pravidel",
+                "task-modal": {
+                    "assignee": "Přiřazený",
+                    "header": "Vytvořit úkol {{type}}",
+                    "success-msg": "Úkol vytvořen"
+                },
+                "value-set-version": "Verze sady hodnot"
+            }
+        },
+        "value-set-version-concept": {
+            "form": {
+                "add-header": "Přidat koncept",
+                "designation-language": "Jazyk označení",
+                "designation-name": "Název označení",
+                "edit-header": "Upravit koncept"
+            }
+        },
+        "value-set-version-rule": {
+            "form": {
+                "add-header": "Přidat pravidlo",
+                "concept": {
+                    "add-concept": "Přidat koncept",
+                    "modal-header": "Přidat koncept"
+                },
+                "edit-header": "Upravit pravidlo",
+                "filter": {
+                    "add-filter": "Přidat filtr",
+                    "modal-header": "Přidat filtr"
+                }
+            }
+        },
+        "wiki-page": {
+            "comments": {
+                "created-at": "Vytvořeno {{date}}",
+                "modified-at": "Upraveno {{date}}",
+                "read-more": "Číst více",
+                "reply": "Odpovědět",
+                "resolve": "Vyřešit"
+            },
+            "details": {
+                "add-content": "Přidat obsah",
+                "concept": "Koncept",
+                "contents": "Obsah",
+                "cs": "Kódový systém",
+                "csc": "Koncepty kódových systému",
+                "def": "Definice struktury",
+                "ms": "Sada map",
+                "none": "Žádné",
+                "page": "Stránka",
+                "relations": "Vztahy",
+                "tags": "Štítky",
+                "usages": "Odkazy",
+                "vs": "Sada hodnot",
+                "vsc": "Koncepty sady hodnot"
+            },
+            "edit": {
+                "header": {
+                    "version": "Verze {{version}}"
+                },
+                "image-modal": {
+                    "choose-file": "Vyberte soubor k nahrání",
+                    "header": "Soubory"
+                },
+                "menu": {
+                    "comments": {
+                        "title": "Komentáře"
+                    },
+                    "diagrams": "Diagramy",
+                    "files": "Soubory",
+                    "line-wrap": {
+                        "off": "Načíst inline",
+                        "on": "Měkké zalamování"
+                    },
+                    "preview": {
+                        "hide": "Skrýt náhled",
+                        "show": "Zobrazit náhled"
+                    },
+                    "structure-definition": {
+                        "add": "Přidat definici struktury",
+                        "copy": "Zkopírovat odkaz",
+                        "title": "Definice struktury"
+                    }
+                },
+                "structure-definition-modal": {
+                    "description": "Chcete před přechodem na definici struktury uložit aktuální obsah stránky?",
+                    "header": "Vaše neuložené změny budou ztraceny!",
+                    "proceed-without-saving": "Pokračovat bez uložení",
+                    "save-and-proceed": "Uložit a pokračovat"
+                }
+            },
+            "header": {
+                "add-subpage": "Přidat podstránku",
+                "copy-raw": "Zkopírovat surový soubor",
+                "modified": "<b>{{user}}</b> upravil tuto stránku {{date}}"
+            },
+            "history": {
+                "header": {
+                    "tooltips": {
+                        "copy-raw": "Zkopírovat surový soubor",
+                        "edit": "Použít jako šablonu pro úpravy",
+                        "line-by-line": "Zobrazení po řádcích",
+                        "preview": "Náhled",
+                        "side-by-side": "Zobrazení vedle sebe",
+                        "view-diff": "Rozdíl"
+                    }
+                },
+                "timeline": {
+                    "header": "Historie",
+                    "load-more": "Načíst více",
+                    "source-item": "A",
+                    "target-item": "B"
+                }
+            },
+            "no-space": {
+                "desc": "Prosím, vyberte prostor pro pokračování",
+                "title": "Prostor není vybrán"
+            },
+            "overview": {
+                "pages": "Stránky",
+                "recently-modified": {
+                    "created": "Vytvořeno {{date}}",
+                    "header": "Nedávno upraveno",
+                    "updated": "Aktualizováno {{date}}"
+                }
+            },
+            "setup": {
+                "add-header": "Přidat stránku",
+                "add-structure-definition": "Přidat definici struktury",
+                "content-header": "Obsah",
+                "content-type-tooltip": "Změna typu obsahu může změnit hodnotu obsahu",
+                "copy-to-clipboard": "Zkopírovat do schránky",
+                "edit-header": "Nastavení",
+                "relation-header": "Vztahy",
+                "usages": "Odkazy"
+            },
+            "sidebar": {
+                "delete-confirm": "Opravdu chcete smazat? Stránky v této složce budou také smazány!",
+                "pages": "Stránky"
+            },
+            "spaces": "Prostory",
+            "texteditor": {
+                "quick-actions": {
+                    "link-modal": {
+                        "code-system": "Kódový systém",
+                        "concept": "Koncept",
+                        "concept-code-system": "Kódový systém konceptu",
+                        "header": "Sestavit odkaz",
+                        "link-name": "Název odkazu",
+                        "map-set": "Sada map",
+                        "page": "Stránka",
+                        "resource": "Zdroje",
+                        "resource-type": "Typ zdroje",
+                        "search-externally": "Hledat z jiného prostoru",
+                        "space": "Prostor",
+                        "url": "URL",
+                        "value-set": "Sada hodnot"
+                    },
+                    "structure-definition-modal": {
+                        "base-definition-url": "URL základní definice",
+                        "header": "Vyberte definici struktury",
+                        "simplifier": "Zjednodušovač",
+                        "structure-definition": "Definice struktury",
+                        "url": "URL"
+                    },
+                    "template-modal": {
+                        "header": "Vyberte šablonu",
+                        "template": "Šablona"
+                    }
+                }
+            }
+        }
+    }
+}

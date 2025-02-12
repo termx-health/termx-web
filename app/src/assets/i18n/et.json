@@ -786,7 +786,8 @@
 		"et": "Eesti",
 		"fr": "Prantsuse",
 		"lt": "Leedu",
-		"nl": "Hollandi"
+		"nl": "Hollandi",
+		"cz": "Czech"
 	},
 	"marina.ui.form.validationError": {
 		"sequenceInvalidCharacters": "Sisaldab lubamatu märke: \"{{sequenceInvalidCharacters}}\""

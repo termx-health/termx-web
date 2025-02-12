@@ -23,7 +23,7 @@
           </m-form-item>
           <m-form-item *mFormCol mName="target" mLabel="entities.checklist-rule.target" required>
             <m-select *ngIf="rule.type !== 'system'" name="target" [(ngModel)]="rule.target" required>
-              <m-option *ngFor="let t of ['design', 'concept', 'release']" [mValue]="t" [mLabel]="t"/>
+              <m-option *ngFor="let t of ['entities.checklist-rule.design', 'entities.checklist-rule.concept', 'entities.checklist-rule.release']" [mValue]="t" [mLabel]="t | translate"/>
             </m-select>
             <label *ngIf="rule.type === 'system'">{{rule.target}}</label>
           </m-form-item>
@@ -35,7 +35,7 @@
           </m-form-item>
           <m-form-item *mFormCol mName="resourceType" mLabel="entities.checklist-rule.resource-type" required>
             <m-select *ngIf="rule.type !== 'system'" name="resourceType" [(ngModel)]="rule.resourceType" required>
-              <m-option *ngFor="let rt of ['CodeSystem', 'ValueSet', 'MapSet']" [mValue]="rt" [mLabel]="rt"/>
+              <m-option *ngFor="let rt of ['entities.checklist-rule.codeSystem', 'entities.checklist-rule.valueSet', 'entities.checklist-rule.mapSet']" [mValue]="rt" [mLabel]="rt | translate"/>
             </m-select>
             <label *ngIf="rule.type === 'system'">{{rule.resourceType}}</label>
           </m-form-item>
@@ -51,7 +51,7 @@
         <m-form-row>
           <m-form-item *mFormCol mName="verification" mLabel="entities.checklist-rule.verification" required>
             <m-select *ngIf="rule.type !== 'system'" name="verification" [(ngModel)]="rule.verification" [required]="rule.type !== 'system'">
-              <m-option *ngFor="let v of ['human', 'software']" [mValue]="v" [mLabel]="v"/>
+              <m-option *ngFor="let v of ['entities.checklist-rule.human', 'entities.checklist-rule.software']" [mValue]="v" [mLabel]="v | translate"/>
             </m-select>
             <label *ngIf="rule.type === 'system'">{{rule.verification}}</label>
           </m-form-item>

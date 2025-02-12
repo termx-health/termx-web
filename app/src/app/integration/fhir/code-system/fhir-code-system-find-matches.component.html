@@ -12,8 +12,7 @@
     <m-form-item [mLabel]="system" required>
       <ng-template #system>
         <div>{{'web.integration.fhir.code-system.find-matches.system' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="The system in which composition is to be performed. This must be provided unless the operation is
-        invoked on a code system instance"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.system-tooltip' | translate}}"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.system"></m-input>
     </m-form-item>
@@ -21,7 +20,7 @@
     <m-form-item [mLabel]="version">
       <ng-template #version>
         <div>{{'web.integration.fhir.code-system.find-matches.version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="The version of the system for the inferencing to be performed"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.version-tooltip' | translate}}"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.version"></m-input>
     </m-form-item>
@@ -29,7 +28,7 @@
     <m-form-item [mLabel]="properties" required>
       <ng-template #properties>
         <div>{{'web.integration.fhir.code-system.find-matches.properties' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="One or more properties that contain information to be composed into the code"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.properties-tooltip' | translate}}"></m-icon>
       </ng-template>
       <div class="m-items-middle">
         <m-input [(ngModel)]="propertyInput.propertyName" placeholder="web.integration.fhir.code-system.find-matches.property-name"></m-input>
@@ -49,9 +48,7 @@
     <m-form-item [mLabel]="exact">
       <ng-template #exact>
         <div>{{'web.integration.fhir.code-system.find-matches.exact' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="Whether the operation is being used by a human ('false'), or a machine ('true'). If the operation is
-        being used by a human, the terminology server can return a list of complete or partial matches. For a machine, the server returns complete matches.
-        The default value is 'false'"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.find-matches.exact-tooltip' | translate}}"></m-icon>
       </ng-template>
       <m-checkbox [(ngModel)]="data.exact"></m-checkbox>
     </m-form-item>

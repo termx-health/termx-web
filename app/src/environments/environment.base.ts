@@ -1,4 +1,4 @@
-export const UI_LANGS = ['en', 'et', 'lt', 'de', 'fr', 'nl'];
+export const UI_LANGS = ['en', 'et', 'lt', 'de', 'fr', 'nl', 'cs'];
 
 export interface Environment {
   appVersion: string,

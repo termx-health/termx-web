@@ -729,7 +729,8 @@
 		"et": "Estų",
 		"fr": "Prancūzų",
 		"lt": "Lietuvių",
-		"nl": "Olandų"
+		"nl": "Olandų",
+		"cz": "Czech"
 	},
 	"marina.ui.form.validationError": {
 		"sequenceInvalidCharacters": "Netinkami simboliai: \"{{sequenceInvalidCharacters}}\""
