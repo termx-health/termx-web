@@ -14,8 +14,7 @@
         <div>{{'web.integration.fhir.value-set.expand.url' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover [mContent]="urlContent"></m-icon>
         <ng-template #urlContent>
-          A canonical reference to a value set. The server must know the value set (e.g. it is defined explicitly in the server's value sets, or it is defined
-          implicitly by some code system known to the server
+          {{'web.integration.fhir.value-set.expand.url-tooltip' | translate}}
         </ng-template>
       </ng-template>
       <m-input [(ngModel)]="data.url"></m-input>
@@ -25,9 +24,7 @@
         <div>{{'web.integration.fhir.value-set.expand.value-set-version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover [mContent]="conceptMapVersion"></m-icon>
         <ng-template #conceptMapVersion>
-          The identifier that is used to identify a specific version of the value set to be used when generating the expansion. This is an arbitrary value
-          managed by the value set author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version
-          is not available.
+          {{'web.integration.fhir.value-set.expand.value-set-version-tooltip' | translate}}
         </ng-template>
       </ng-template>
       <m-input [(ngModel)]="data.valueSetVersion"></m-input>

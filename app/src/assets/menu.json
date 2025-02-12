@@ -76,7 +76,8 @@
                     "lt": "Reikšmių rinkiniai",
                     "de": "Wertelisten",
                     "fr": "Ensembles de valeurs",
-                    "nl": "Waardensets"
+                    "nl": "Waardensets",
+                    "cs": "Sady hodnot"
                 },
                 "link": "resources/value-sets",
                 "privileges": [
@@ -104,7 +105,8 @@
                     "lt": "Pavadinimų sistemos",
                     "de": "Namenssysteme",
                     "fr": "Systèmes de nommage",
-                    "nl": "Naamsystemen"
+                    "nl": "Naamsystemen",
+                    "cs": "Systémy názvů"
                 },
                 "link": "resources/naming-systems",
                 "privileges": [
@@ -222,7 +224,8 @@
                     "lt": "Matavimo vienetai",
                     "de": "Maßeinheiten",
                     "fr": "Unités de mesure",
-                    "nl": "Meeteenheden"
+                    "nl": "Meeteenheden",
+                    "cs": "Jednotky měření"
                 },
                 "link": "measurement-units",
                 "privileges": [
@@ -335,7 +338,8 @@
             },
             {
                 "label": {
-                    "en": "Implementation guide"
+                    "en": "Implementation guide",
+                    "cs": "Implementační příručky"
                 },
                 "link": "resources/implementation-guides",
                 "privileges": [
@@ -406,7 +410,8 @@
                     "lt": "Išleidimai",
                     "de": "Veröffentlichungen",
                     "fr": "Sorties",
-                    "nl": "Releases"
+                    "nl": "Releases",
+                    "cs": "Distribuce"
                 },
                 "icon": "rocket",
                 "link": "releases",

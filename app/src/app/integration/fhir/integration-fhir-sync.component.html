@@ -12,25 +12,25 @@
     <m-form-row>
       <m-form-item *mFormCol [mLabel]="label" required>
         <ng-template #label>
-          URL&nbsp;<m-icon mCode="info-circle" m-popover [mTitle]="source + ' resource JSON url'" [mContent]="info"></m-icon>
+          URL&nbsp;<m-icon mCode="info-circle" m-popover [mTitle]="source + ('web.integration.resource-json' | translate)" [mContent]="info"></m-icon>
 
           <ng-template #info>
             <div *ngIf="source === 'CodeSystem'">
-              Example: <a href="https://www.hl7.org/fhir/codesystem-days-of-week.json">codesystem-days-of-week</a>
+              {{'web.integration.example' | translate}}: <a href="https://www.hl7.org/fhir/codesystem-days-of-week.json">codesystem-days-of-week</a>
             </div>
 
             <div *ngIf="source === 'ValueSet'" style="display: flex; flex-direction: column">
-              <label>Example: <a href="https://www.hl7.org/fhir/valueset-marital-status.json">valueset-marital-status</a></label>
+              <label>{{'web.integration.example' | translate}}: <a href="https://www.hl7.org/fhir/valueset-marital-status.json">valueset-marital-status</a></label>
               <label>&nbsp;</label>
-              <label>First you need import CodeSystem resources used for value set</label>
+              <label>{{'web.integration.example-valueSet' | translate}}</label>
               <label><a href="https://www.hl7.org/fhir/v3/MaritalStatus/v3-MaritalStatus.cs.json">v3-MaritalStatus.cs</a></label>
               <label><a href="https://www.hl7.org/fhir/v3/NullFlavor/v3-NullFlavor.cs.json">v3-NullFlavor.cs</a></label>
             </div>
 
             <div *ngIf="source === 'ConceptMap'" style="display: flex; flex-direction: column">
-              <label>Example: <a href="https://www.hl7.org/fhir/sc-valueset-publication-status.json">sc-valueset-publication-status</a></label>
+              <label>{{'web.integration.example' | translate}}: <a href="https://www.hl7.org/fhir/sc-valueset-publication-status.json">sc-valueset-publication-status</a></label>
               <label>&nbsp;</label>
-              <label>First you need import CodeSystem resources used for concept map</label>
+              <label>{{'web.integration.example-conceptMap' | translate}}</label>
               <label><a href="https://www.hl7.org/fhir/codesystem-publication-status.json">codesystem-publication-status</a></label>
               <label><a href="http://hl7.org/fhir/R4/codesystem-resource-status.json">codesystem-resource-status</a></label>
               <label><a href="http://hl7.org/fhir/R4B/valueset-publication-status.json">valueset-publication-status</a></label>
