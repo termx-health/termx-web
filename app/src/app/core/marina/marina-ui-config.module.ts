@@ -49,7 +49,7 @@ export class MarinaUiConfigModule {
     muiConfig: MuiConfigService
   ) {
     translate.onLangChange.subscribe(({lang}) => {
-      import(/* webpackInclude: /\/(de|en|et|fr|lt|nl).mjs$/ */ `node_modules/@angular/common/locales/${lang}.mjs`)
+      import(/* webpackInclude: /\/(de|en|et|fr|lt|nl|cs).mjs$/ */ `node_modules/@angular/common/locales/${lang}.mjs`)
         .then(locale => registerLocaleData(locale.default))
         .then(() => {
           i18nService.use(lang);

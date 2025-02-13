@@ -52,7 +52,15 @@
 			"verification": "Verification",
 			"severity": "Severity",
 			"active": "Active",
-			"resource-type": "Resource type"
+			"resource-type": "Resource type",
+			"codeSystem": "CodeSystem",
+			"valueSet": "ValueSet",
+			"mapSet": "MapSet",
+			"design": "Design",
+			"concept": "Concept",
+			"release": "Release",
+			"human": "Human",
+			"software": "Software"
 		},
 		"checklist": {
 			"rule": "Rule",
@@ -559,7 +567,11 @@
 			"luvs": "Last used values",
 			"pattern": "Pattern",
 			"restart": "Restart",
-			"start-from": "Start from"
+			"start-from": "Start from",
+			"daily": "daily",
+            "monthly": "monthly",
+            "yearly": "yearly",
+            "never": "never"
 		},
 		"sequence-luv": {
 			"luv": "Last used value",
@@ -791,7 +803,8 @@
 		"et": "Estonian",
 		"fr": "French",
 		"lt": "Lithuanian",
-		"nl": "Dutch"
+		"nl": "Dutch",
+		"cs": "Czech"
 	},
 	"marina.ui.form.validationError": {
 		"sequenceInvalidCharacters": "Contains invalid characters: \"{{sequenceInvalidCharacters}}\""
@@ -1251,26 +1264,43 @@
 						"property-name": "Name",
 						"property-value": "Value",
 						"system": "System",
-						"version": "Version"
+						"version": "Version",
+						"version-tooltip": "The version of the system for the inferencing to be performed",
+						"system-tooltip": "The system in which composition is to be performed. This must be provided unless the operation is invoked on a code system instance",
+						"properties-tooltip": "One or more properties that contain information to be composed into the code",
+						"exact-tooltip": "Whether the operation is being used by a human ('false'), or a machine ('true'). If the operation is being used by a human, the terminology server can return a list of complete or partial matches. For a machine, the server returns complete matches. The default value is 'false'"
 					},
 					"lookup": {
 						"code": "Code",
 						"date": "Date",
 						"properties": "Properties",
 						"system": "System",
-						"version": "Version"
+						"version": "Version",
+						"code-tooltip": "The code that is to be located. If a code is provided, a system must be provided",
+						"system-tooltip": "The system for the code that is to be located",
+						"version-tooltip": "The version of the system, if one was provided in the source data",
+						"date-tooltip": "The date for which the information should be returned. Normally, this is the current conditions (which is the default value) but under some circumstances,<br> systems need to acccess this information as it would have been in the past.<br> A typical example of this would be where code selection is constrained to the set of codes that were available when the patient was treated,<br> not when the record is being edited. Note that which date is appropriate is a matter for implementation policy.",
+						"properties-tooltip": "A property that the client wishes to be returned in the output. If no properties are specified, the server chooses what to return.<br> The following properties are defined for all code systems: url, name, version (code system info) and code information:<br> display, definition, designation, parent and child, and for designations, lang.X where X is a designation language code.<br> Some of the properties are returned explicit in named parameters (when the names match), and the rest (except for lang.X) in the property parameter group"
 					},
 					"subsumes": {
 						"code-a": "CodeA",
 						"code-b": "CodeB",
 						"system": "System",
-						"version": "Version"
+						"version": "Version",
+						"code-a-tooltip": "The 'A' code that is to be tested. If a code is provided, a system must be provided",
+						"code-b-tooltip": "The 'B' code that is to be tested. If a code is provided, a system must be provided",
+						"system-tooltip": "The code system in which subsumption testing is to be performed. This must be provided unless the operation is invoked on a code system instance",
+						"version-tooltip": "The version of the code system, if one was provided in the source data"
 					},
 					"validate-code": {
 						"code": "Code",
 						"display": "Display",
 						"url": "URL",
-						"version": "Version"
+						"version": "Version",
+						"code-tooltip": "The code that is to be validated",
+						"display-tooltip": "The display associated with the code, if provided. If a display is provided a code must be provided. <br> If no display is provided, the server cannot validate the display value, but may choose to return a recommended display name in an extension in the outcome. <br> Whether displays are case sensitive is code system dependent",
+						"url-tooltip": "CodeSystem URL. The server must know the code system (e.g. it is defined explicitly in the servers code systems, or it is known implicitly by theserver)",
+						"version-tooltip": "The version of the code system, if one was provided in the source data"
 					}
 				},
 				"concept-map": {
@@ -1279,7 +1309,10 @@
 						"concepts": "Concepts",
 						"name": "Name",
 						"system": "System",
-						"version": "Version"
+						"version": "Version",
+						"concepts-tooltip": "Concepts to add to the closure table",
+						"name-tooltip": "The name that defines the particular context for the subsumption based closure table",
+						"version-tooltip": "A request to resynchronise - request to send all new entries since the nominated version was sent by the server"
 					},
 					"translate": {
 						"code": "Code",
@@ -1287,13 +1320,21 @@
 						"system": "System(URL)",
 						"target-system": "TargetSystem",
 						"uri": "URL",
-						"version": "Version"
+						"version": "Version",
+						"code-tooltip": "The code that is to be translated. If a code is provided, a system must be provided",
+						"concept-map-version-tooltip": "The identifier that is used to identify a specific version of the concept map to be used for the translation.<br> This is an arbitrary value managed by the concept map author and is not expected to be globally unique.<br> For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available.",
+						"system-tooltip": "The system for the code that is to be translated",
+						"target-system-tooltip": "identifies a target code system in which a mapping is sought. This parameter is an alternative to the target parameter - only one is required.<br> Searching for any translation to a target code system irrespective of the context (e.g. target valueset) may lead to unsafe results,<br> and it is at the discretion of the server to decide when to support this",
+						"uri-tooltip": " A canonical URL for a concept map. The server must know the concept map (e.g. it is defined explicitly in the server's concept maps,<br> or it is defined implicitly by some code system known to the server.",
+						"version-tooltip": "The version of the system, if one was provided in the source data"
 					}
 				},
 				"value-set": {
 					"expand": {
 						"url": "URL",
-						"value-set-version": "ValueSetVersion"
+						"value-set-version": "ValueSetVersion",
+						"url-tooltip": " A canonical reference to a value set. The server must know the value set (e.g. it is defined explicitly in the server's value sets, or it is defined implicitly by some code system known to the server",
+						"value-set-version-tooltip": " The identifier that is used to identify a specific version of the value set to be used when generating the expansion. This is an arbitrary value managed by the value set author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available."
 					},
 					"validate-code": {
 						"code": "Code",
@@ -1301,7 +1342,13 @@
 						"system": "System",
 						"system-version": "SystemVersion",
 						"url": "URL",
-						"value-set-version": "ValueSetVersion"
+						"value-set-version": "ValueSetVersion",
+						"code-tooltip": " The code that is to be validated. If a code is provided, a system or a context must be provided (if a context is provided, then the server SHALL ensure that the code is not ambiguous without a system)",
+						"display-tooltip": "The display associated with the code, if provided. If a display is provided a code must be provided. If no display is provided, the server cannot validate the display value, but may choose to return a recommended display name using the display parameter in the outcome. Whether displays are case sensitive is code system dependent",
+						"system-tooltip": "The system for the code that is to be validated",
+						"system-version-tooltip": "The version of the system, if one was provided in the source data",
+						"url-tooltip": "Value set Canonical URL. The server must know the value set (e.g. it is defined explicitly in the server's value sets, or it is defined implicitly by some code system known to the server",
+						"value-set-version-tooltip": "The identifier that is used to identify a specific version of the value set to be used when validating the code. This is an arbitrary value managed by the value set author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available."
 					}
 				}
 			},
@@ -1421,6 +1468,10 @@
 			},
 			"response": "Response",
 			"send-request": "Send request",
+			"example": "Example",
+			"resource-json": " resource JSON url",
+			"example-valueSet": "First you need import CodeSystem resources used for value set",
+			"example-conceptMap": "First you need import CodeSystem resources used for concept map",
 			"set-default-data": "Set default data",
 			"systems": {
 				"atc": "ATC",

@@ -12,7 +12,7 @@
     <m-form-item [mLabel]="codeA" required>
       <ng-template #codeA>
         <div>{{'web.integration.fhir.code-system.subsumes.code-a' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="The 'A' code that is to be tested. If a code is provided, a system must be provided"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.code-a-tooltip' | translate}}"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.codeA"></m-input>
     </m-form-item>
@@ -20,7 +20,7 @@
     <m-form-item [mLabel]="codeB" required>
       <ng-template #codeB>
         <div>{{'web.integration.fhir.code-system.subsumes.code-b' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="The 'B' code that is to be tested. If a code is provided, a system must be provided"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.code-b-tooltip' | translate}}"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.codeB"></m-input>
     </m-form-item>
@@ -28,7 +28,7 @@
     <m-form-item [mLabel]="system" required>
       <ng-template #system>
         <div>{{'web.integration.fhir.code-system.subsumes.system' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="The code system in which subsumption testing is to be performed. This must be provided unless the operation is invoked on a code system instance"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.system-tooltip' | translate}}"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.system"></m-input>
     </m-form-item>
@@ -36,7 +36,7 @@
     <m-form-item [mLabel]="version">
       <ng-template #version>
         <div>{{'web.integration.fhir.code-system.subsumes.version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="The version of the code system, if one was provided in the source data"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.version-tooltip' | translate}}"></m-icon>
       </ng-template>
       <m-input [(ngModel)]="data.version"></m-input>
     </m-form-item>
