@@ -36,7 +36,11 @@ export class ValueSetVersionConceptsComponent implements OnInit {
     if (!text) {
       return expansion;
     }
-    return expansion.filter(e => e.concept?.code?.includes(text) || e.display?.name?.includes(text) || !!e.additionalDesignations?.find(d => d.name?.includes(text)));
+    return expansion.filter(e =>
+      e.concept?.code?.toLowerCase().includes(text.toLowerCase()) ||
+      e.display?.name?.toLowerCase().includes(text.toLowerCase()) ||
+      !!e.additionalDesignations?.find(d => d.name?.toLowerCase().includes(text.toLowerCase()))
+    );
   };
 
   protected reloadExpansion(): void {
