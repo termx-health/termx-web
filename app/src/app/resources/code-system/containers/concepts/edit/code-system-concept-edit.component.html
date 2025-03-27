@@ -139,14 +139,16 @@
               <span>{{csv.version}}</span>&nbsp;
               <m-icon *ngIf="csv.status === 'draft'" class="m-clickable" mCode="close" (click)="unlink(conceptVersion.id, csv.version)"></m-icon>
             </m-tag>
-            <m-dropdown>
-              <m-button *m-dropdown-container mDisplay="link">
-                {{'web.code-system.summary.unlinked-concepts.link-to' | translate:{version: '...'} }}
-              </m-button>
-              <ng-container *ngFor="let v of codeSystemVersions | filter: filterDraftVersions:conceptVersion.versions">
-                <a *m-dropdown-item (mClick)="link(conceptVersion.id, v.version)">{{v.version}}</a>
-              </ng-container>
-            </m-dropdown>
+            <ng-container *ngIf="codeSystemVersions | filter: filterDraftVersions:conceptVersion.versions as draftVersions">
+              <m-dropdown *ngIf="draftVersions?.length" [mHideIfEmpty]="false" >
+                <m-button *m-dropdown-container mDisplay="link">
+                  {{'web.code-system.summary.unlinked-concepts.link-to' | translate:{version: '...'} }}
+                </m-button>
+                <ng-container *ngFor="let v of draftVersions">
+                  <a *m-dropdown-item (mClick)="link(conceptVersion.id, v.version)">{{v.version}}</a>
+                </ng-container>
+              </m-dropdown>
+            </ng-container>
           </div>
         </m-form-item>
 
