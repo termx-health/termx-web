@@ -22,6 +22,12 @@
                   [(ngModel)]="diffItem.resourceVersion"
                   (ngModelChange)="loadFhirResources()"
                   [valueSetId]="id"/>
+              <tw-map-set-version-select *ngSwitchCase="'map-set'"
+                  valueType="version"
+                  name="resource-version"
+                  [(ngModel)]="diffItem.resourceVersion"
+                  (ngModelChange)="loadFhirResources()"
+                  [mapSetId]="id"/>
             </ng-container>
           </m-form-item>
           <m-form-item mName="server" mLabel="Comparable server" *ngIf="diffItem.resource?.id">
