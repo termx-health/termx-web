@@ -14,14 +14,14 @@
         <div>{{'web.integration.fhir.code-system.validate-code.code' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The code that is to be validated"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.code"></m-input>
+      <m-textarea [(ngModel)]="data.code"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="version">
       <ng-template #version>
         <div>{{'web.integration.fhir.code-system.validate-code.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The version of the code system, if one was provided in the source data"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.version"></m-input>
+      <m-textarea [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="url" required>
       <ng-template #url>
@@ -32,7 +32,7 @@
           server)
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.url"></m-input>
+      <m-textarea [(ngModel)]="data.url"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="display">
       <ng-template #display>
@@ -45,7 +45,7 @@
           Whether displays are case sensitive is code system dependent
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.display"></m-input>
+      <m-textarea [(ngModel)]="data.display"></m-textarea>
     </m-form-item>
 
     <m-card *ngIf="response || error" class="m-card-inside">

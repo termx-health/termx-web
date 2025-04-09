@@ -5,14 +5,13 @@
         <div class="m-items-middle">
           <tw-task-type name="type" [(ngModel)]="task.type" (ngModelChange)="patch({type: $event})" required/>
           <m-form-control mName="title" style="flex: 1">
-            <m-input
+            <m-textarea
                 name="title"
                 [(ngModel)]="task.title"
                 (keyup.enter)="patch({title: task.title})"
                 (focusout)="patch({title: task.title})"
                 placeholder="Title"
-                required
-            ></m-input>
+                required/>
           </m-form-control>
           <m-button *ngIf="!task.number" mDisplay="primary" (mClick)="save()">{{'core.btn.save' | translate}}</m-button>
         </div>

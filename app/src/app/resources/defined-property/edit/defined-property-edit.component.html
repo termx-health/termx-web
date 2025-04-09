@@ -6,14 +6,14 @@
           <ng-container *ngIf="!entityProperty.used">
             <m-form-row>
               <m-form-item *mFormCol mName="name" mLabel="entities.entity-property.name" required>
-                <m-input name="name" [(ngModel)]="entityProperty.name" required></m-input>
+                <m-textarea name="name" [(ngModel)]="entityProperty.name" required></m-textarea>
               </m-form-item>
               <m-form-item *mFormCol mName="uri" mLabel="entities.entity-property.uri">
-                <m-input name="uri" [(ngModel)]="entityProperty.uri"></m-input>
+                <m-textarea name="uri" [(ngModel)]="entityProperty.uri"></m-textarea>
               </m-form-item>
             </m-form-row>
             <m-form-item mName="description" mLabel="entities.entity-property.description">
-              <m-multi-language-input name="description" [(ngModel)]="entityProperty.description"></m-multi-language-input>
+              <m-multi-language-input name="description" [(ngModel)]="entityProperty.description" mInputType="textarea"/>
             </m-form-item>
             <m-form-row>
               <m-form-item *mFormCol mName="kind" mLabel="entities.entity-property.kind" required>

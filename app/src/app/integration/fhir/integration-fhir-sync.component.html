@@ -39,11 +39,11 @@
           </ng-template>
         </ng-template>
 
-        <m-input [(ngModel)]="input"></m-input>
+        <m-textarea [(ngModel)]="input"></m-textarea>
       </m-form-item>
       <m-form-item *mFormCol mLabel="ID" required>
         <div class="m-items-middle">
-          <m-input [(ngModel)]="id"></m-input>
+          <m-textarea [(ngModel)]="id"></m-textarea>
           <m-button (click)="addUrl()">
             <m-icon [mCode]="'plus'"></m-icon>
           </m-button>

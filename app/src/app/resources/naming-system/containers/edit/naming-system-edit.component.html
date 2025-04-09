@@ -8,11 +8,11 @@
         </div>
         <form #form="ngForm" *ngIf="namingSystem">
           <m-form-item mName="id" mLabel="entities.naming-system.id" required>
-            <m-input name="id" [(ngModel)]="namingSystem.id" [disabled]="mode === 'edit'" required></m-input>
+            <m-textarea name="id" [(ngModel)]="namingSystem.id" [disabled]="mode === 'edit'" required/>
           </m-form-item>
 
           <m-form-item mLabel="entities.naming-system.name" required>
-            <m-multi-language-input name="names" [(ngModel)]="namingSystem.names" required></m-multi-language-input>
+            <m-multi-language-input name="names" [(ngModel)]="namingSystem.names" required mInputType="textarea"/>
           </m-form-item>
 
           <m-form-item mName="kind" mLabel="entities.naming-system.kind" required>

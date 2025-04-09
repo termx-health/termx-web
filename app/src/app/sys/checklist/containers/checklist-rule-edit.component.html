@@ -18,7 +18,7 @@
 
         <m-form-row>
           <m-form-item *mFormCol mName="code" mLabel="entities.checklist-rule.code" [required]="rule.type !== 'system'">
-            <m-input *ngIf="rule.type !== 'system'" name="code" [(ngModel)]="rule.code" required></m-input>
+            <m-textarea *ngIf="rule.type !== 'system'" name="code" [(ngModel)]="rule.code" required/>
             <label *ngIf="rule.type === 'system'">{{rule.code}}</label>
           </m-form-item>
           <m-form-item *mFormCol mName="target" mLabel="entities.checklist-rule.target" required>
@@ -42,10 +42,10 @@
         </m-form-row>
 
         <m-form-item mName="title" mLabel="entities.checklist-rule.title" required>
-          <m-multi-language-input name="title" [(ngModel)]="rule.title" required></m-multi-language-input>
+          <m-multi-language-input name="title" [(ngModel)]="rule.title" required mInputType="textarea"/>
         </m-form-item>
         <m-form-item mName="description" mLabel="entities.checklist-rule.description">
-          <m-multi-language-input name="description" [(ngModel)]="rule.description"></m-multi-language-input>
+          <m-multi-language-input name="description" [(ngModel)]="rule.description" mInputType="textarea"/>
         </m-form-item>
 
         <m-form-row>

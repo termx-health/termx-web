@@ -42,19 +42,19 @@
 
       <ng-template #resourceForm>
         <m-form-item mName="id" mLabel="web.integration.file-import.code-system.general.resource-id" required>
-          <m-input name="id" [(ngModel)]="data.codeSystem.id" autofocus [focusTimeout]="50" required/>
+          <m-textarea name="id" [(ngModel)]="data.codeSystem.id" autofocus [focusTimeout]="50" required/>
         </m-form-item>
 
         <m-form-item mName="title" mLabel="entities.code-system.title" required>
-          <m-multi-language-input name="title" [(ngModel)]="data.codeSystem.title" required/>
+          <m-multi-language-input name="title" [(ngModel)]="data.codeSystem.title" required mInputType="textarea"/>
         </m-form-item>
 
         <m-form-item mName="uri" mLabel="entities.code-system.uri" required>
-          <m-input name="uri" [(ngModel)]="data.codeSystem.uri" required/>
+          <m-textarea name="uri" [(ngModel)]="data.codeSystem.uri" required/>
         </m-form-item>
 
         <m-form-item mName="description" mLabel="entities.code-system.description">
-          <m-multi-language-input name="description" [(ngModel)]="data.codeSystem.description"/>
+          <m-multi-language-input name="description" [(ngModel)]="data.codeSystem.description" mInputType="textarea"/>
         </m-form-item>
 
         <m-form-item mName="supplement" mLabel="entities.code-system.supplement">

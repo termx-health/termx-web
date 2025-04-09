@@ -54,7 +54,7 @@
     <ng-container *m-modal-content>
       <form #form="ngForm" *ngIf="modalData.contact">
         <m-form-item mName="contactName" mLabel="entities.contact-detail.name">
-          <m-input name="contactName" [(ngModel)]="modalData.contact.name" autofocus></m-input>
+          <m-textarea name="contactName" [(ngModel)]="modalData.contact.name" autofocus></m-textarea>
         </m-form-item>
 
         <m-table [mData]="modalData.contact.telecoms" mSize="small">
@@ -73,7 +73,7 @@
                   autofocus></tw-value-set-concept-select>
             </td>
             <td>
-              <m-input name="value-{{index}}" [(ngModel)]="telecom.value"></m-input>
+              <m-textarea name="value-{{index}}" [(ngModel)]="telecom.value"></m-textarea>
             </td>
             <td>
               <tw-value-set-concept-select name="use-{{index}}" [(ngModel)]="telecom.use" valueSet="contact-point-use"></tw-value-set-concept-select>

@@ -15,7 +15,7 @@
         <m-icon mCode="info-circle" m-popover mContent="The system in which composition is to be performed. This must be provided unless the operation is
         invoked on a code system instance"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.system"></m-input>
+      <m-textarea [(ngModel)]="data.system"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="version">
@@ -23,7 +23,7 @@
         <div>{{'web.integration.fhir.code-system.find-matches.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The version of the system for the inferencing to be performed"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.version"></m-input>
+      <m-textarea [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="properties" required>
@@ -32,8 +32,8 @@
         <m-icon mCode="info-circle" m-popover mContent="One or more properties that contain information to be composed into the code"></m-icon>
       </ng-template>
       <div class="m-items-middle">
-        <m-input [(ngModel)]="propertyInput.propertyName" placeholder="web.integration.fhir.code-system.find-matches.property-name"></m-input>
-        <m-input [(ngModel)]="propertyInput.propertyValue" placeholder="web.integration.fhir.code-system.find-matches.property-value"></m-input>
+        <m-textarea [(ngModel)]="propertyInput.propertyName" placeholder="web.integration.fhir.code-system.find-matches.property-name"></m-textarea>
+        <m-textarea [(ngModel)]="propertyInput.propertyValue" placeholder="web.integration.fhir.code-system.find-matches.property-value"></m-textarea>
         <m-button (click)="addProperty()">
           <m-icon [mCode]="'plus'"></m-icon>
         </m-button>

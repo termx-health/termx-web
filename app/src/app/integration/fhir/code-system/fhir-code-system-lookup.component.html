@@ -14,7 +14,7 @@
         <div>{{'web.integration.fhir.code-system.lookup.code' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The code that is to be located. If a code is provided, a system must be provided"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.code"></m-input>
+      <m-textarea [(ngModel)]="data.code"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="system" required>
@@ -22,7 +22,7 @@
         <div>{{'web.integration.fhir.code-system.lookup.system' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The system for the code that is to be located"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.system"></m-input>
+      <m-textarea [(ngModel)]="data.system"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="version">
@@ -30,7 +30,7 @@
         <div>{{'web.integration.fhir.code-system.lookup.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The version of the system, if one was provided in the source data"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.version"></m-input>
+      <m-textarea [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="date">
@@ -61,7 +61,7 @@
         </ng-template>
       </ng-template>
       <div class="m-items-middle">
-        <m-input [(ngModel)]="data.propertyInput"></m-input>
+        <m-textarea [(ngModel)]="data.propertyInput"></m-textarea>
         <m-button (click)="addProperty()">
           <m-icon [mCode]="'plus'"></m-icon>
         </m-button>

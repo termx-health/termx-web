@@ -157,7 +157,7 @@
   <ng-container *mModalContent>
     <form #lockModalForm="ngForm">
       <m-form-item mName="message" mLabel="web.snomed.branch.management.lock-modal.message" required>
-        <m-input name="message" [(ngModel)]="lockModalData.message" required></m-input>
+        <m-textarea name="message" [(ngModel)]="lockModalData.message" required></m-textarea>
       </m-form-item>
     </form>
   </ng-container>
@@ -241,7 +241,7 @@
   <ng-container *mModalContent>
     <form #csVersionModalForm="ngForm">
       <m-form-item mName="name" mLabel="entities.snomed-codesystem.short-name" required>
-        <m-input name="name" [(ngModel)]="csVersionModalData.shortName"></m-input>
+        <m-textarea name="name" [(ngModel)]="csVersionModalData.shortName"></m-textarea>
       </m-form-item>
       <m-form-item mName="effectiveDate" mLabel="entities.snomed-codesystem-version.effective-date" required>
         <m-number-input name="effectiveDate" [(ngModel)]="csVersionModalData.effectiveDate"></m-number-input>
@@ -268,7 +268,7 @@
   <ng-container *mModalContent>
     <form #synonymDeactivationModalForm="ngForm">
       <m-form-item mName="description" mLabel="web.snomed.branch.management.synonym-deactivation-modal.description" required>
-        <m-input name="description" [(ngModel)]="synonymDeactivationModalData.descriptionId" required></m-input>
+        <m-textarea name="description" [(ngModel)]="synonymDeactivationModalData.descriptionId" required></m-textarea>
       </m-form-item>
     </form>
   </ng-container>
@@ -291,7 +291,7 @@
   <ng-container *mModalContent>
     <form #synonymReactivationModalForm="ngForm">
       <m-form-item mName="description" mLabel="web.snomed.branch.management.synonym-reactivation-modal.description" required>
-        <m-input name="description" [(ngModel)]="synonymReactivationModalData.descriptionId" required></m-input>
+        <m-textarea name="description" [(ngModel)]="synonymReactivationModalData.descriptionId" required></m-textarea>
       </m-form-item>
     </form>
   </ng-container>

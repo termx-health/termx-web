@@ -14,7 +14,7 @@
         <div>{{'web.integration.fhir.concept-map.closure.name' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The name that defines the particular context for the subsumption based closure table"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.name"></m-input>
+      <m-textarea [(ngModel)]="data.name"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="version">
@@ -22,7 +22,7 @@
         <div>{{'web.integration.fhir.concept-map.closure.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="A request to resynchronise - request to send all new entries since the nominated version was sent by the server"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.version"></m-input>
+      <m-textarea [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="concepts">
@@ -31,8 +31,8 @@
         <m-icon mCode="info-circle" m-popover mContent="Concepts to add to the closure table"></m-icon>
       </ng-template>
       <div class="m-items-middle">
-        <m-input [(ngModel)]="conceptInput.system" placeholder="web.integration.fhir.concept-map.closure.system"></m-input>
-        <m-input [(ngModel)]="conceptInput.code" placeholder="web.integration.fhir.concept-map.closure.code"></m-input>
+        <m-textarea [(ngModel)]="conceptInput.system" placeholder="web.integration.fhir.concept-map.closure.system"></m-textarea>
+        <m-textarea [(ngModel)]="conceptInput.code" placeholder="web.integration.fhir.concept-map.closure.code"></m-textarea>
         <m-button (click)="addConcept()">
           <m-icon [mCode]="'plus'"></m-icon>
         </m-button>

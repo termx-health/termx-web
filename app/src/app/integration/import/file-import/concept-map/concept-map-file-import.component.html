@@ -40,19 +40,19 @@
 
       <ng-template #resourceForm>
         <m-form-item mName="id" mLabel="entities.map-set.id" required>
-          <m-input name="id" [(ngModel)]="data.mapSet.id" autofocus [focusTimeout]="50" required/>
+          <m-textarea name="id" [(ngModel)]="data.mapSet.id" autofocus [focusTimeout]="50" required/>
         </m-form-item>
 
         <m-form-item mName="title" mLabel="entities.map-set.title" required>
-          <m-multi-language-input name="title" [(ngModel)]="data.mapSet.title" required/>
+          <m-multi-language-input name="title" [(ngModel)]="data.mapSet.title" required mInputType="textarea"/>
         </m-form-item>
 
         <m-form-item mName="uri" mLabel="entities.map-set.uri" required>
-          <m-input name="uri" [(ngModel)]="data.mapSet.uri" required/>
+          <m-textarea name="uri" [(ngModel)]="data.mapSet.uri" required/>
         </m-form-item>
 
         <m-form-item mName="description" mLabel="entities.map-set.description">
-          <m-multi-language-input name="description" [(ngModel)]="data.mapSet.description"/>
+          <m-multi-language-input name="description" [(ngModel)]="data.mapSet.description" mInputType="textarea"/>
         </m-form-item>
       </ng-template>
     </div>
