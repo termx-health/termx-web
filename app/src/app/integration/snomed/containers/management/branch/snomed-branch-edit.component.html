@@ -15,7 +15,7 @@
                 </m-select>
               </m-form-item>
               <m-form-item *mFormCol mName="name" mLabel="web.snomed.branch.form.name" required>
-                <m-input [(ngModel)]="formData.name" name="name" required></m-input>
+                <m-textarea [(ngModel)]="formData.name" name="name" required></m-textarea>
               </m-form-item>
             </m-form-row>
             <m-form-item  mName="metadata" mLabel="entities.snomed-branch.metadata">

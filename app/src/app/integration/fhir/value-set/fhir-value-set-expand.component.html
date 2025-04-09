@@ -18,7 +18,7 @@
           implicitly by some code system known to the server
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.url"></m-input>
+      <m-textarea [(ngModel)]="data.url"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="conceptMapVersion" required>
       <ng-template #conceptMapVersion>
@@ -30,7 +30,7 @@
           is not available.
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.valueSetVersion"></m-input>
+      <m-textarea [(ngModel)]="data.valueSetVersion"></m-textarea>
     </m-form-item>
 
     <m-card *ngIf="response || error" class="m-card-inside">

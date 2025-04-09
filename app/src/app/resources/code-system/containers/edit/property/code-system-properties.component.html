@@ -15,14 +15,14 @@
       <m-editable-column [mTitle]="'entities.entity-property.name'" mName="name">
         <ng-template #viewTemplate let-p>{{p.name}}</ng-template>
         <ng-template #editTemplate let-p let-ngModelName="ngModelName">
-          <m-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.name" [name]="ngModelName" required></m-input>
+          <m-textarea *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.name" [name]="ngModelName" required></m-textarea>
           <label *ngIf="p.definedEntityPropertyId">{{p.name}}</label>
         </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.uri'" mName="uri">
         <ng-template #viewTemplate let-p>{{p.uri}}</ng-template>
         <ng-template #editTemplate let-p let-ngModelName="ngModelName">
-          <m-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.uri" [name]="ngModelName"></m-input>
+          <m-textarea *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.uri" [name]="ngModelName"></m-textarea>
           <label *ngIf="p.definedEntityPropertyId">{{p.uri}}</label>
         </ng-template>
       </m-editable-column>
@@ -53,7 +53,7 @@
       <m-editable-column [mTitle]="'entities.entity-property.description'" mName="description">
         <ng-template #viewTemplate let-p>{{p.description | localName}}</ng-template>
         <ng-template #editTemplate let-p let-ngModelName="ngModelName">
-          <m-multi-language-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.description" [name]="ngModelName"></m-multi-language-input>
+          <m-multi-language-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.description" [name]="ngModelName" mInputType="textarea"/>
           <label *ngIf="p.definedEntityPropertyId">{{p.description | localName}}</label>
         </ng-template>
       </m-editable-column>
@@ -131,16 +131,16 @@
           <td colspan="9">
             <m-form-row>
               <m-form-item *mFormCol mLabel="entities.entity-property.name" mName="name-{{prefix}}" required>
-                <m-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.name" name="name-{{prefix}}" required></m-input>
+                <m-textarea *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.name" name="name-{{prefix}}" required></m-textarea>
                 <label *ngIf="p.definedEntityPropertyId">{{p.name}}</label>
               </m-form-item>
               <m-form-item *mFormCol mLabel="entities.entity-property.uri" mName="uri-{{prefix}}">
-                <m-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.uri" name="uri-{{prefix}}"></m-input>
+                <m-textarea *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.uri" name="uri-{{prefix}}"></m-textarea>
                 <label *ngIf="p.definedEntityPropertyId">{{p.uri}}</label>
               </m-form-item>
             </m-form-row>
             <m-form-item mLabel="entities.entity-property.description" mName="description-{{prefix}}">
-              <m-multi-language-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.description" name="description-{{prefix}}"></m-multi-language-input>
+              <m-multi-language-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.description" name="description-{{prefix}}" mInputType="textarea"/>
               <label *ngIf="p.definedEntityPropertyId">{{p.description | localName}}</label>
             </m-form-item>
             <m-form-row>

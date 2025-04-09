@@ -18,7 +18,7 @@
           or it is defined implicitly by some code system known to the server.
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.uri"></m-input>
+      <m-textarea [(ngModel)]="data.uri"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="conceptMapVersion">
       <ng-template #conceptMapVersion>
@@ -30,28 +30,28 @@
           For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available.
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.conceptMapVersion"></m-input>
+      <m-textarea [(ngModel)]="data.conceptMapVersion"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="code" required>
       <ng-template #code>
         <div>{{'web.integration.fhir.concept-map.translate.code' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The code that is to be translated. If a code is provided, a system must be provided"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.code"></m-input>
+      <m-textarea [(ngModel)]="data.code"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="system" required>
       <ng-template #system>
         <div>{{'web.integration.fhir.concept-map.translate.system' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The system for the code that is to be translated"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.system"></m-input>
+      <m-textarea [(ngModel)]="data.system"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="version">
       <ng-template #version>
         <div>{{'web.integration.fhir.concept-map.translate.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The version of the system, if one was provided in the source data"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.version"></m-input>
+      <m-textarea [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="targetSystem">
       <ng-template #targetSystem>
@@ -63,7 +63,7 @@
           and it is at the discretion of the server to decide when to support this
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.targetSystem"></m-input>
+      <m-textarea [(ngModel)]="data.targetSystem"></m-textarea>
     </m-form-item>
 
     <m-card *ngIf="response || error" class="m-card-inside">

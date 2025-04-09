@@ -9,10 +9,10 @@
         </div>
         <form #form="ngForm" *ngIf="space">
           <m-form-item mName="code" mLabel="entities.space.code" required>
-            <m-input name="code" [(ngModel)]="space.code" required></m-input>
+            <m-textarea name="code" [(ngModel)]="space.code" required></m-textarea>
           </m-form-item>
           <m-form-item mName="name" mLabel="entities.space.name" required>
-            <m-multi-language-input name="name" [(ngModel)]="space.names" required></m-multi-language-input>
+            <m-multi-language-input name="name" [(ngModel)]="space.names" required mInputType="textarea"/>
           </m-form-item>
           <m-form-item mName="active" mLabel="entities.space.active">
             <m-checkbox name="active" [(ngModel)]="space.active"></m-checkbox>

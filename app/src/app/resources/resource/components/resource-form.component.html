@@ -1,13 +1,13 @@
 <form #form="ngForm" *ngIf="resource">
   <m-form-row>
     <m-form-item *mFormCol mLabel="entities.resource.title" mName="title" required>
-      <m-multi-language-input name="title" [(ngModel)]="resource.title" (ngModelChange)="titleChanged($event)" required></m-multi-language-input>
+      <m-multi-language-input name="title" [(ngModel)]="resource.title" (ngModelChange)="titleChanged($event)" mInputType="textarea" required/>
     </m-form-item>
     <m-form-item *mFormCol mLabel="entities.resource.other-title" mName="otherTitle">
       <div style="display: flex; flex-direction: column; gap: 0.5rem">
         <div class="m-items-middle" *ngFor="let n of resource.otherTitle; let i = index">
           <m-form-control style="width: 100%" mName="otherTitle-name-{{i}}">
-            <m-input name="otherTitle-name-{{i}}" [(ngModel)]="n.name"></m-input>
+            <m-textarea name="otherTitle-name-{{i}}" [(ngModel)]="n.name"></m-textarea>
           </m-form-control>
           <m-button (mClick)="n.preferred = !n.preferred">
             <m-icon [mOptions]="{nzTheme : n.preferred ? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
@@ -30,7 +30,7 @@
       </div>
     </m-form-item>
     <m-form-item *mFormCol mLabel="entities.resource.name" mName="name">
-      <m-input name="name" [(ngModel)]="resource.name"></m-input>
+      <m-textarea name="name" [(ngModel)]="resource.name"></m-textarea>
     </m-form-item>
   </m-form-row>
 
@@ -69,7 +69,7 @@
     <m-form-item *mFormCol mLabel="entities.resource.topic">
       <div class="m-items-middle">
         <m-form-control style="width: 100%" mName="topic-text">
-          <m-input name="topic-text" [(ngModel)]="resource.topic.text"></m-input>
+          <m-textarea name="topic-text" [(ngModel)]="resource.topic.text"></m-textarea>
         </m-form-control>
         <m-form-control style="width: 100%" mName="topic-tags">
           <tw-value-set-concept-select name="topic-tags" [(ngModel)]="resource.topic.tags" valueSet="definition-topic" valuePrimitive multiple/>
@@ -83,7 +83,7 @@
             <tw-value-set-concept-select name="useContext-type-{{i}}" [(ngModel)]="c.type" valueSet="usage-context-type" valuePrimitive/>
           </m-form-control>
           <m-form-control style="width: 100%" mName="useContext-value-{{i}}">
-            <m-input name="useContext-value-{{i}}" [(ngModel)]="c.value"></m-input>
+            <m-textarea name="useContext-value-{{i}}" [(ngModel)]="c.value"></m-textarea>
           </m-form-control>
           <m-icon class="m-clickable" [mCode]="'close'" (click)="deleteContext(c)"></m-icon>
         </div>

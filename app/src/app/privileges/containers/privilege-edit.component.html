@@ -18,10 +18,10 @@
         </div>
         <form #form="ngForm" *ngIf="privilege">
           <m-form-item mName="code" mLabel="entities.privilege.code" required>
-            <m-input name="code" [(ngModel)]="privilege.code" required></m-input>
+            <m-textarea name="code" [(ngModel)]="privilege.code" required></m-textarea>
           </m-form-item>
           <m-form-item mName="name" mLabel="entities.privilege.name">
-            <m-multi-language-input name="name" [(ngModel)]="privilege.names"></m-multi-language-input>
+            <m-multi-language-input name="name" [(ngModel)]="privilege.names" mInputType="textarea"/>
           </m-form-item>
         </form>
         <ng-container *m-card-footer>

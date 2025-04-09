@@ -6,7 +6,7 @@
       </a>
       <ng-template nz-tab>
         <m-spinner [mLoading]="loading['taxonomy']">
-          <m-input name="searchText" [(ngModel)]="searchText" (ngModelChange)="searchUpdate.next($event)" style="display: block; margin-bottom: 1em"/>
+          <m-textarea name="searchText" [(ngModel)]="searchText" (ngModelChange)="searchUpdate.next($event)" style="display: block; margin-bottom: 1em"/>
 
           <nz-breadcrumb style="margin-block: 1rem">
             <nz-breadcrumb-item *ngFor="let parent of parents; let index = index">

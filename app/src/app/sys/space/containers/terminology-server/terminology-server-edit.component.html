@@ -3,11 +3,11 @@
     <m-card [mTitle]="mode === 'edit' ? 'web.terminology-server.edit-header' : 'web.terminology-server.add-header'" [mShowSkeleton]="loader.state['load']">
       <form #form="ngForm" *ngIf="server">
         <m-form-item mName="code" mLabel="entities.terminology-server.code" required>
-          <m-input name="code" [(ngModel)]="server.code" required/>
+          <m-textarea name="code" [(ngModel)]="server.code" required/>
         </m-form-item>
 
         <m-form-item mName="name" mLabel="entities.terminology-server.name" required>
-          <m-multi-language-input name="name" [(ngModel)]="server.names" required/>
+          <m-multi-language-input name="name" [(ngModel)]="server.names" required mInputType="textarea"/>
         </m-form-item>
 
         <m-form-item mName="kind" mLabel="entities.terminology-server.kind" required>
@@ -17,7 +17,7 @@
         </m-form-item>
 
         <m-form-item mName="url" mLabel="entities.terminology-server.root-url" required>
-          <m-input name="url" [(ngModel)]="server.rootUrl" required/>
+          <m-textarea name="url" [(ngModel)]="server.rootUrl" required/>
         </m-form-item>
 
         <m-form-item [mLabel]="headers">

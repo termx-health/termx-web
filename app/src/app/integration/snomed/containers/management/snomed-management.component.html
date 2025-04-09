@@ -110,10 +110,10 @@
   <ng-container *mModalContent>
     <form #form="ngForm">
       <m-form-item mName="countryCode" mLabel="web.snomed.branch.list.edition-modal.country-code" required>
-        <m-input name="countryCode" [(ngModel)]="editionModalData.countryCode" required/>
+        <m-textarea name="countryCode" [(ngModel)]="editionModalData.countryCode" required/>
       </m-form-item>
       <m-form-item mName="name" mLabel="web.snomed.branch.list.edition-modal.name">
-        <m-input name="name" [(ngModel)]="editionModalData.name"/>
+        <m-textarea name="name" [(ngModel)]="editionModalData.name"/>
       </m-form-item>
     </form>
   </ng-container>

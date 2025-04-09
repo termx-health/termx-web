@@ -18,7 +18,7 @@
           some code system known to the server
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.url"></m-input>
+      <m-textarea [(ngModel)]="data.url"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="conceptMapVersion" required>
       <ng-template #conceptMapVersion>
@@ -30,7 +30,7 @@
           not available.
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.valueSetVersion"></m-input>
+      <m-textarea [(ngModel)]="data.valueSetVersion"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="code" required>
@@ -42,7 +42,7 @@
           ensure that the code is not ambiguous without a system)
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.code"></m-input>
+      <m-textarea [(ngModel)]="data.code"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="system">
@@ -50,7 +50,7 @@
         <div>{{'web.integration.fhir.value-set.validate-code.system' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The system for the code that is to be validated"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.system"></m-input>
+      <m-textarea [(ngModel)]="data.system"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="systemVersion">
@@ -58,7 +58,7 @@
         <div>{{'web.integration.fhir.value-set.validate-code.system-version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="The version of the system, if one was provided in the source data"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.systemVersion"></m-input>
+      <m-textarea [(ngModel)]="data.systemVersion"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="display">
@@ -69,7 +69,7 @@
           the server cannot validate the display value, but may choose to return a recommended display name using the display parameter in the outcome.
           Whether displays are case sensitive is code system dependent</ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.display"></m-input>
+      <m-textarea [(ngModel)]="data.display"></m-textarea>
     </m-form-item>
 
     <m-card *ngIf="response || error" class="m-card-inside">

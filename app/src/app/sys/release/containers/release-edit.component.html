@@ -3,10 +3,10 @@
     <m-card [mTitle]="'web.release.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
       <div *mCardContent="!loader.isLoading">
         <m-form-item mName="code" mLabel="entities.release.code" required>
-          <m-input name="code" [(ngModel)]="release.code" required></m-input>
+          <m-textarea name="code" [(ngModel)]="release.code" required></m-textarea>
         </m-form-item>
         <m-form-item mName="name" mLabel="entities.release.name" required>
-          <m-multi-language-input name="name" [(ngModel)]="release.names" required></m-multi-language-input>
+          <m-multi-language-input name="name" [(ngModel)]="release.names" required mInputType="textarea"/>
         </m-form-item>
         <m-form-item mName="planned" mLabel="entities.release.planned">
           <m-date-picker name="planned" [(ngModel)]="release.planned"></m-date-picker>

@@ -35,19 +35,19 @@
 
       <ng-template #resourceForm>
         <m-form-item mName="id" mLabel="entities.value-set.id" required>
-          <m-input name="id" [(ngModel)]="data.valueSet.id" autofocus [focusTimeout]="50" required/>
+          <m-textarea name="id" [(ngModel)]="data.valueSet.id" autofocus [focusTimeout]="50" required/>
         </m-form-item>
 
         <m-form-item mName="title" mLabel="entities.value-set.title" required>
-          <m-multi-language-input name="title" [(ngModel)]="data.valueSet.title" required/>
+          <m-multi-language-input name="title" [(ngModel)]="data.valueSet.title" required mInputType="textarea"/>
         </m-form-item>
 
         <m-form-item mName="uri" mLabel="entities.value-set.uri" required>
-          <m-input name="uri" [(ngModel)]="data.valueSet.uri" required/>
+          <m-textarea name="uri" [(ngModel)]="data.valueSet.uri" required/>
         </m-form-item>
 
         <m-form-item mName="description" mLabel="entities.value-set.description">
-          <m-multi-language-input name="description" [(ngModel)]="data.valueSet.description"/>
+          <m-multi-language-input name="description" [(ngModel)]="data.valueSet.description" mInputType="textarea"/>
         </m-form-item>
       </ng-template>
     </div>

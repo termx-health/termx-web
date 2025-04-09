@@ -1,7 +1,7 @@
 <form #form="ngForm">
   <m-form-control mName="value">
     <ng-container *ngIf="!viewMode" [ngSwitch]="property?.type">
-      <m-input *ngSwitchDefault name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()" [required]="required"></m-input>
+      <m-textarea *ngSwitchDefault name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()" [required]="required"></m-textarea>
       <m-checkbox *ngSwitchCase="'boolean'" name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()" [required]="required"></m-checkbox>
       <m-date-picker *ngSwitchCase="'dateTime'" name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()" [required]="required"></m-date-picker>
       <m-number-input *ngSwitchCase="'decimal'" name="value" [(ngModel)]="value" (ngModelChange)="fireOnChange()" [required]="required"></m-number-input>

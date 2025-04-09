@@ -44,7 +44,7 @@
           </m-form-row>
           <m-form-row>
             <m-form-item *mFormCol mName="name" mLabel="entities.snomed-codesystem.name">
-              <m-input name="name" [(ngModel)]="snomedCodeSystem.name"></m-input>
+              <m-textarea name="name" [(ngModel)]="snomedCodeSystem.name"></m-textarea>
             </m-form-item>
             <m-form-item *mFormCol mName="dependantVersionEffectiveTime" mLabel="entities.snomed-codesystem.dependant-version-effective-time">
               {{snomedCodeSystem.dependantVersionEffectiveTime || '-'}}
@@ -52,7 +52,7 @@
           </m-form-row>
           <m-form-row>
             <m-form-item *mFormCol mName="countryCode" mLabel="entities.snomed-codesystem.country-code">
-              <m-input name="countryCode" [(ngModel)]="snomedCodeSystem.countryCode"></m-input>
+              <m-textarea name="countryCode" [(ngModel)]="snomedCodeSystem.countryCode"></m-textarea>
             </m-form-item>
             <m-form-item *mFormCol mName="dailyBuildAvailable" mLabel="entities.snomed-codesystem.daily-build-available">
               <m-checkbox name="dailyBuildAvailable" [(ngModel)]="snomedCodeSystem.dailyBuildAvailable"></m-checkbox>
