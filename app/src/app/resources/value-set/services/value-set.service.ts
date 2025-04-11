@@ -6,6 +6,7 @@ import {Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
 import {ValueSetLibService, ValueSetTransactionRequest, ValueSetVersion, ValueSetVersionRule, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 import {LorqueProcess} from 'term-web/sys/_lib';
+import {UriUtil} from 'term-web/core/utils/uri-util';
 
 @Injectable()
 export class ValueSetService extends ValueSetLibService {
@@ -19,6 +20,7 @@ export class ValueSetService extends ValueSetLibService {
   }
 
   public deleteValueSet(valueSetId: string): Observable<void> {
+    valueSetId = UriUtil.encodeUriAll(UriUtil.encodeUriAll(valueSetId));
     return this.http.delete<void>(`${this.baseUrl}/${valueSetId}`);
   }
 
