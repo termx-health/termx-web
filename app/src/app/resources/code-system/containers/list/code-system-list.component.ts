@@ -108,8 +108,7 @@ export class CodeSystemListComponent implements OnInit {
 
   protected findLastVersion = (versions: CodeSystemVersion[]): CodeSystemVersion => {
     return versions
-      ?.filter(v => ['draft', 'active'].includes(v.status))
-      .map(v => ({...v, created: v.created ? new Date(v.created) : undefined}))
-      .sort(sortFn('created', false))?.[0];
+      ?.map(v => ({...v, created: v.created ? new Date(v.created) : undefined}))
+      ?.sort(sortFn('created', false))?.[0];
   };
 }
