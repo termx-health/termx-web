@@ -50,8 +50,7 @@ export class ImplementationGuideListComponent implements OnInit {
   };
 
   protected findLastVersion = (versions: ImplementationGuideVersion[]): ImplementationGuideVersion => {
-    return  versions?.filter(v => ['draft', 'active'].includes(v.status!))
-      .sort((a, b) => new Date(a.date!) > new Date(b.date!) ? -1 : new Date(a.date!) > new Date(b.date!) ? 1 : 0)?.[0];
+    return  versions?.sort((a, b) => new Date(a.date!) > new Date(b.date!) ? -1 : new Date(a.date!) > new Date(b.date!) ? 1 : 0)?.[0];
   };
 
   public delete(id: string): void {

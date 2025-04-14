@@ -14,9 +14,9 @@
           <ng-container [ngSwitch]="codeSystem">
             <ng-container *ngSwitchDefault>
               <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'name'">
-                <m-option *ngFor="let property of properties" [mLabel]="property.name" [mValue]="property"></m-option>
                 <m-option [mLabel]="'concept'" [mValue]="{name: 'concept'}"></m-option>
                 <m-option [mLabel]="'code'" [mValue]="{name: 'code'}"></m-option>
+                <m-option *ngFor="let property of properties" [mLabel]="property.name" [mValue]="property"></m-option>
               </m-select>
             </ng-container>
             <ng-container *ngSwitchCase="'snomed-ct'">
@@ -39,11 +39,16 @@
         <ng-template #editTemplate let-f let-ngModelName="ngModelName">
           <ng-container [ngSwitch]="codeSystem">
             <ng-container *ngSwitchDefault>
-              <m-select *ngIf="f.property?.name === 'code'" [name]="ngModelName" [(ngModel)]="f.operator">
+              <m-select *ngIf="f.property?.name !== 'concept'" [name]="ngModelName" [(ngModel)]="f.operator">
                 <m-option [mLabel]="'='" [mValue]="'='"></m-option>
                 <m-option [mLabel]="'regex'" [mValue]="'regex'"></m-option>
+                <m-option [mLabel]="'in'" [mValue]="'in'"></m-option>
+                <m-option [mLabel]="'not-in'" [mValue]="'not-in'"></m-option>
               </m-select>
-              <tw-association-type-search *ngIf="f.property?.name === 'concept'" [name]="ngModelName" [(ngModel)]="f.operator" associationKind="codesystem-hierarchy-meaning" valuePrimitive></tw-association-type-search>
+              <m-select *ngIf="f.property?.name === 'concept'" [name]="ngModelName" [(ngModel)]="f.operator">
+                <m-option [mLabel]="'is-a'" [mValue]="'is-a'"></m-option>
+                <m-option [mLabel]="'descendant-of'" [mValue]="'descendant-of'"></m-option>
+              </m-select>
             </ng-container>
             <ng-container *ngSwitchCase="'snomed-ct'">
               <m-select [name]="ngModelName" [(ngModel)]="f.operator">
