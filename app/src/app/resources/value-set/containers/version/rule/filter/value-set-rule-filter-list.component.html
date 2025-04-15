@@ -48,6 +48,9 @@
               <m-select *ngIf="f.property?.name === 'concept'" [name]="ngModelName" [(ngModel)]="f.operator">
                 <m-option [mLabel]="'is-a'" [mValue]="'is-a'"></m-option>
                 <m-option [mLabel]="'descendant-of'" [mValue]="'descendant-of'"></m-option>
+                <m-option [mLabel]="'is-not-a'" [mValue]="'is-not-a'"></m-option>
+                <m-option [mLabel]="'generalizes'" [mValue]="'generalizes'"></m-option>
+                <m-option [mLabel]="'child-of'" [mValue]="'child-of'"></m-option>
               </m-select>
             </ng-container>
             <ng-container *ngSwitchCase="'snomed-ct'">
