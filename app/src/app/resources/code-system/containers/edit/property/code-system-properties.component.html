@@ -14,54 +14,30 @@
     <m-editable-table #rowsTable [mData]="designationProperties" [mLoading]="loader.isLoading" [mRowInstance]="designationRowInstance">
       <m-editable-column [mTitle]="'entities.entity-property.name'" mName="name">
         <ng-template #viewTemplate let-p>{{p.name}}</ng-template>
-        <ng-template #editTemplate let-p let-ngModelName="ngModelName">
-          <m-textarea *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.name" [name]="ngModelName" required></m-textarea>
-          <label *ngIf="p.definedEntityPropertyId">{{p.name}}</label>
-        </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.uri'" mName="uri">
         <ng-template #viewTemplate let-p>{{p.uri}}</ng-template>
-        <ng-template #editTemplate let-p let-ngModelName="ngModelName">
-          <m-textarea *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.uri" [name]="ngModelName"></m-textarea>
-          <label *ngIf="p.definedEntityPropertyId">{{p.uri}}</label>
-        </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.required'" mName="required">
         <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
           <m-checkbox [(ngModel)]="p.required" readOnly [name]="ngModelName"></m-checkbox>
-        </ng-template>
-        <ng-template #editTemplate let-p let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="p.required" [name]="ngModelName"></m-checkbox>
         </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.preferred'" mName="preferred">
         <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
           <m-checkbox [(ngModel)]="p.preferred" readOnly [name]="ngModelName"></m-checkbox>
         </ng-template>
-        <ng-template #editTemplate let-p let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="p.preferred" [name]="ngModelName"></m-checkbox>
-        </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.show-in-list'" mName="showInList">
         <ng-template #viewTemplate let-p let-ngModelName="ngModelName">
           <m-checkbox [(ngModel)]="p.showInList" readOnly [name]="ngModelName"></m-checkbox>
         </ng-template>
-        <ng-template #editTemplate let-p let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="p.showInList" [name]="ngModelName"></m-checkbox>
-        </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.description'" mName="description">
         <ng-template #viewTemplate let-p>{{p.description | localName}}</ng-template>
-        <ng-template #editTemplate let-p let-ngModelName="ngModelName">
-          <m-multi-language-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.description" [name]="ngModelName" mInputType="textarea"/>
-          <label *ngIf="p.definedEntityPropertyId">{{p.description | localName}}</label>
-        </ng-template>
       </m-editable-column>
       <m-editable-column [mTitle]="'entities.entity-property.order-number'" mName="order-number">
         <ng-template #viewTemplate let-p>{{p.orderNumber}}</ng-template>
-        <ng-template #editTemplate let-p let-ngModelName="ngModelName">
-          <m-number-input [(ngModel)]="p.orderNumber" [name]="ngModelName"></m-number-input>
-        </ng-template>
       </m-editable-column>
       <m-editable-column>
         <ng-template #viewTemplate let-p>
@@ -72,6 +48,42 @@
           </div>
         </ng-template>
       </m-editable-column>
+      <ng-template #expandEditTemplate let-p let-prefix="ngModelNamePrefix">
+        <tr>
+          <td colspan="9">
+            <m-form-row>
+              <m-form-item *mFormCol mLabel="entities.entity-property.name" mName="name-{{prefix}}" required>
+                <m-textarea *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.name" name="name-{{prefix}}" required></m-textarea>
+                <label *ngIf="p.definedEntityPropertyId">{{p.name}}</label>
+              </m-form-item>
+              <m-form-item *mFormCol mLabel="entities.entity-property.uri" mName="uri-{{prefix}}">
+                <m-textarea *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.uri" name="uri-{{prefix}}"></m-textarea>
+                <label *ngIf="p.definedEntityPropertyId">{{p.uri}}</label>
+              </m-form-item>
+            </m-form-row>
+            <m-form-item mLabel="entities.entity-property.description" mName="description-{{prefix}}">
+              <m-multi-language-input *ngIf="!p.definedEntityPropertyId" [(ngModel)]="p.description" name="description-{{prefix}}" mInputType="textarea"/>
+              <label *ngIf="p.definedEntityPropertyId">{{p.description | localName}}</label>
+            </m-form-item>
+            <m-form-row>
+              <div class="m-items-middle">
+                <m-form-item mLabel="entities.entity-property.order-number" mName="order-number-{{prefix}}">
+                  <m-number-input [(ngModel)]="p.orderNumber" name="order-number-{{prefix}}"></m-number-input>
+                </m-form-item>
+                <m-form-item mLabel="entities.entity-property.required" mName="required-{{prefix}}">
+                  <m-checkbox [(ngModel)]="p.required" name="required-{{prefix}}"></m-checkbox>
+                </m-form-item>
+                <m-form-item mLabel="entities.entity-property.preferred" mName="preferred-{{prefix}}">
+                  <m-checkbox [(ngModel)]="p.preferred" name="preferred-{{prefix}}"></m-checkbox>
+                </m-form-item>
+                <m-form-item mLabel="entities.entity-property.show-in-list" mName="showInList-{{prefix}}">
+                  <m-checkbox [(ngModel)]="p.showInList" name="showInList-{{prefix}}"></m-checkbox>
+                </m-form-item>
+              </div>
+            </m-form-row>
+          </td>
+        </tr>
+      </ng-template>
     </m-editable-table>
   </form>
 </m-card>
