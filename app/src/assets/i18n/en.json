@@ -684,12 +684,13 @@
 			"url": "URL",
 			"version": "Version",
 			"view": "View",
-			"exportAs": "Export As",
-			"hide_removed_objects": "Hide removed objects",
-			"show_constraints": "Show constraints",
-			"show_bindings": "Show bindings",
-			"reduce_slice_classes": "Reduce slice classes",
-			"hide_legend": "Hide legend"
+			"export-as": "Export As",
+			"hide-removed-objects": "Hide removed objects",
+			"show-constraints": "Show constraints",
+			"show-bindings": "Show bindings",
+			"reduce-slice-classes": "Reduce slice classes",
+			"hide-legend": "Hide legend",
+			"attachment-filename": "Attachment filename"
 		},
 		"task": {
 			"assignee": "Assignee",

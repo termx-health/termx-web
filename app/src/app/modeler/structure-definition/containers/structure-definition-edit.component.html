@@ -220,7 +220,7 @@
             </m-select>
           </m-form-item>
 
-          <m-form-item mName="exportAs" mLabel="entities.structure-definition.exportAs">
+          <m-form-item mName="exportAs" mLabel="entities.structure-definition.export-as">
             <m-select name="exportAs" [(ngModel)]="fhirUmlRequest.exportAs" style="width:100%;margin-top:.5rem">
               <m-option [mValue]="'SVG'" mLabel="SVG"></m-option>
               <m-option [mValue]="'PNG'" mLabel="PNG"></m-option>
@@ -228,24 +228,24 @@
             </m-select>
           </m-form-item>
 
-          <m-form-item mLabel="entities.structure-definition.attachment_filename">
+          <m-form-item mLabel="entities.structure-definition.attachment-filename">
             <m-input name="fixedCodingDisplay" placeholder="web.structure-definition.form.display" [(ngModel)]="fhirUmlRequest.attachmentFilename"></m-input>
           </m-form-item> 
 
           <m-form-item>
-            <m-checkbox [(ngModel)]="fhirUmlRequest.hideRemovedObjects">{{'entities.structure-definition.hide_removed_objects' | translate}}</m-checkbox>
+            <m-checkbox [(ngModel)]="fhirUmlRequest.hideRemovedObjects">{{'entities.structure-definition.hide-removed-objects' | translate}}</m-checkbox>
           </m-form-item>
           <m-form-item>
-            <m-checkbox [(ngModel)]="fhirUmlRequest.showConstraints">{{'entities.structure-definition.show_constraints' | translate}}</m-checkbox>
+            <m-checkbox [(ngModel)]="fhirUmlRequest.showConstraints">{{'entities.structure-definition.show-constraints' | translate}}</m-checkbox>
           </m-form-item>
           <m-form-item>
-            <m-checkbox [(ngModel)]="fhirUmlRequest.showBindings">{{'entities.structure-definition.show_bindings' | translate}}</m-checkbox>
+            <m-checkbox [(ngModel)]="fhirUmlRequest.showBindings">{{'entities.structure-definition.show-bindings' | translate}}</m-checkbox>
           </m-form-item>
           <m-form-item>
-            <m-checkbox [(ngModel)]="fhirUmlRequest.reduceSliceClasses">{{'entities.structure-definition.reduce_slice_classes' | translate}}</m-checkbox>
+            <m-checkbox [(ngModel)]="fhirUmlRequest.reduceSliceClasses">{{'entities.structure-definition.reduce-slice-classes' | translate}}</m-checkbox>
           </m-form-item>
           <m-form-item>
-            <m-checkbox [(ngModel)]="fhirUmlRequest.hideLegend">{{'entities.structure-definition.hide_legend' | translate}}</m-checkbox>
+            <m-checkbox [(ngModel)]="fhirUmlRequest.hideLegend">{{'entities.structure-definition.hide-legend' | translate}}</m-checkbox>
           </m-form-item> 
 
           <m-form-item>
