@@ -12,8 +12,8 @@ export const environment: Environment = {
   contentLanguages: [...UI_LANGS],
   extraLanguages: {},
 
-  termxApi: 'https://demo.termx.org/api',
-  // termxApi: 'http://localhost:8200',
+  // termxApi: 'https://demo.termx.org/api',
+  termxApi: 'http://localhost:8200',
 
   oauthIssuer: 'https://auth.termx.org/realms/termx',
   oauthClientId: 'term-client',
@@ -23,6 +23,9 @@ export const environment: Environment = {
   chefUrl: 'https://demo.termx.org/chef',
   plantUmlUrl: 'https://demo.termx.org/plantuml',
   fmlEditor: 'https://demo.termx.org/fml-editor',
+
+  fhirUmlConverterApi: 'https://fhir-uml-converter.online/api/',
+  // fhirUmlConverterApi: 'http://localhost:8080/api/'
 
   snowstormUrl: 'https://snowstorm.termx.org/',
   snomedBrowserUrl: 'https://snomed.termx.org/',

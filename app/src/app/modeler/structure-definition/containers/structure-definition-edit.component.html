@@ -101,6 +101,13 @@
           </div>
         </ng-template>
       </nz-tab>
+
+      <nz-tab [nzTitle]="'web.structure-definition.form.uml-header' | translate" [nzDisabled]="!structureDefinition?.id">
+        <ng-template nz-tab>
+          <ng-container [ngTemplateOutlet]="umlTemplate"></ng-container>
+        </ng-template>
+      </nz-tab>
+      
     </nz-tabset>
   </div>
 </div>
@@ -201,6 +208,73 @@
   </m-spinner>
 </ng-template>
 
+<ng-template #umlTemplate>
+  <m-spinner [mLoading]="loader.isLoading">
+    <m-card class="uml-gen-card">
+      <div nz-row nzGutter="16" class="m-row">
+        <!-- ① controls (2 cols) -->
+        <div nz-col [nzMd]="4" [nzXs]="24">
+          <!-- selects -->
+          <m-form-item mName="view" mLabel="entities.structure-definition.view">
+            <m-select name="view" style="width:100%;margin-top:.5rem" [(ngModel)]="view">
+              <m-option [mValue]="'Snapshot'" mLabel="Snapshot"></m-option>
+              <m-option [mValue]="'Differential'" mLabel="Differential"></m-option>
+            </m-select>
+          </m-form-item>
+
+          <m-form-item mName="exportAs" mLabel="entities.structure-definition.exportAs">
+            <m-select name="exportAs" [(ngModel)]="exportAs" style="width:100%;margin-top:.5rem">
+              <m-option [mValue]="'SVG'" mLabel="SVG"></m-option>
+              <m-option [mValue]="'PNG'" mLabel="PNG"></m-option>
+              <m-option [mValue]="'Text file'" mLabel="Text file"></m-option>
+            </m-select>
+          </m-form-item>
+
+          <!-- check‑boxes -->
+          <m-form-item>
+            <m-checkbox [(ngModel)]="hideRemovedObjects">{{'entities.structure-definition.hide_removed_objects' | translate}}</m-checkbox>
+          </m-form-item>
+          <m-form-item>
+            <m-checkbox [(ngModel)]="showConstraints">{{'entities.structure-definition.show_constraints' | translate}}</m-checkbox>
+          </m-form-item>
+          <m-form-item>
+            <m-checkbox [(ngModel)]="showBindings">{{'entities.structure-definition.show_bindings' | translate}}</m-checkbox>
+          </m-form-item>
+          <m-form-item>
+            <m-checkbox [(ngModel)]="reduceSliceClasses">{{'entities.structure-definition.reduce_slice_classes' | translate}}</m-checkbox>
+          </m-form-item>
+          <m-form-item>
+            <m-checkbox [(ngModel)]="hideLegend">{{'entities.structure-definition.hide_legend' | translate}}</m-checkbox>
+          </m-form-item>
+        </div>
+
+        <!-- ③ right pane (5 cols) -->
+        <div nz-col [nzMd]="20" [nzXs]="48">
+
+          <div *ngIf="isImageResponse"
+               class="image-wrapper">
+            <img [src]="imageUrl" alt="UML diagram"/>
+          </div>
+
+          <!-- text response -->
+          <m-textarea *ngIf="!isImageResponse"
+                      [(ngModel)]="rightText"
+                      [rows]="15"
+                      mReadonly
+                      autosize></m-textarea>
+        </div>
+      </div>
+
+      <ng-container *ngIf="structureDefinition?.contentFormat === 'json'">
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loader.state['generate']" [disabled]="loader.isLoading" (click)="onGenerate()">
+            {{'core.btn.generate' | translate}}
+          </m-button>
+        </ng-container>
+      </ng-container>
+    </m-card>
+  </m-spinner>
+</ng-template>
 
 <m-modal [(mVisible)]="modalData.visible" (mClose)="modalData.visible = false">
   <ng-container *m-modal-content>

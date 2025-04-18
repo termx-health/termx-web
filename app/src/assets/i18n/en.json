@@ -19,7 +19,8 @@
 			"save": "Save",
 			"search": "Search",
 			"select": "Select",
-			"send": "Send"
+			"send": "Send",
+			"generate": "Generate"
 		},
 		"confirm": "Are you sure?",
 		"data-lost-warning": "Your changes wouldn't be saved!",
@@ -681,7 +682,14 @@
 			"parent": "Parent",
 			"plural": "Structure Definitions",
 			"url": "URL",
-			"version": "Version"
+			"version": "Version",
+			"view": "View",
+			"exportAs": "Export As",
+			"hide_removed_objects": "Hide removed objects",
+			"show_constraints": "Show constraints",
+			"show_bindings": "Show bindings",
+			"reduce_slice_classes": "Reduce slice classes",
+			"hide_legend": "Hide legend"
 		},
 		"task": {
 			"assignee": "Assignee",
@@ -2078,6 +2086,7 @@
 				"fixed-coding": "Fixed coding",
 				"fixed-uri": "Fixed URI",
 				"fsh-header": "FSH",
+				"uml-header": "UML",
 				"json-header": "JSON",
 				"modal": {
 					"content": "You have unsaved changes!",

@@ -5,7 +5,7 @@ import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {Fhir} from 'fhir/fhir';
 import {map, Observable, of} from 'rxjs';
-import {ChefService} from 'term-web/integration/_lib';
+import {ChefService, FhirUmlConverterService, FhirToUmlRequest, UmlView, UmlExport} from 'term-web/integration/_lib';
 import {StructureDefinition, StructureDefinitionEditableTreeComponent, StructureDefinitionUtil} from 'term-web/modeler/_lib';
 import {Element} from 'term-web/modeler/_lib/structure-definition/structure-definition-editable-tree.component';
 import {StructureDefinitionType} from '../components/structure-definition-type-list.component';
@@ -24,6 +24,18 @@ export class StructureDefinitionEditComponent implements OnInit {
   public prevTabIndex: number = 0;
   public pendingTabIndex?: number;
   public tabIndexMap = {fsh: 1, json: 2, element: 3};
+
+  public view: 'Snapshot' | 'Differential' = 'Snapshot';
+  public exportAs: 'SVG' | 'PNG' | 'Text file' = 'SVG';
+
+  public hideRemovedObjects = true;
+  public showConstraints   = false;
+  public showBindings      = false;
+  public reduceSliceClasses = false;
+  public hideLegend        = false;
+  public isImageResponse = false;
+  public imageUrl?: string | null;  
+  public rightText = '';
 
   public element?: Element;
   public formElement?: FormElement;
@@ -44,7 +56,8 @@ export class StructureDefinitionEditComponent implements OnInit {
     private notificationService: MuiNotificationService,
     private route: ActivatedRoute,
     private router: Router,
-    private chefService: ChefService
+    private chefService: ChefService,
+    private fhirUmlConverterService: FhirUmlConverterService,
   ) {}
 
   public ngOnInit(): void {
@@ -340,6 +353,32 @@ export class StructureDefinitionEditComponent implements OnInit {
 
     this.sdTree.changeElementId(el.id, el.path);
   }
+
+  public onGenerate(): void {
+    const req: FhirToUmlRequest = {
+      payload            : this.structureDefinition.content,
+      view               : this.view       as UmlView,
+      exportAs           : this.exportAs   as UmlExport,
+      hideRemovedObjects : this.hideRemovedObjects,
+      showConstraints    : this.showConstraints,
+      showBindings       : this.showBindings,
+      reduceSliceClasses : this.reduceSliceClasses,
+      hideLegend         : this.hideLegend
+    };
+
+    this.fhirUmlConverterService.fhirToUml(req).subscribe(resp => {
+      if (resp.contentType.includes('text')) {
+        this.isImageResponse = false;
+        const body = resp.body as Blob;
+        body.text().then(t => {
+          this.rightText = t;
+        });
+      } else {
+        this.imageUrl = URL.createObjectURL(resp.body);
+        this.isImageResponse = true;
+      }
+    });    
+  }
 }
 
 export class FormElement {
@@ -355,3 +394,4 @@ export class FormElement {
   public binding?: {valueSet?: string, strength?: string};
   public constraint?: any[];
 }
+

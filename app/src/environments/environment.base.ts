@@ -31,7 +31,7 @@ export interface Environment {
   chefUrl?: string,
   plantUmlUrl?: string,
   fmlEditor?: string,
-
+  fhirUmlConverterApi?: string,
   snowstormUrl?: string,
   snomedBrowserUrl?: string,
   snowstormDailyBuildUrl?: string,
