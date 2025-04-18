@@ -3,9 +3,10 @@ export type UmlExport    = 'SVG' | 'PNG' | 'Text file';
 
 export class FhirToUmlRequest {
     public payload: string;
-    public view: UmlView = 'Snapshot';
+    public view: UmlView = 'Differential';
     public exportAs: UmlExport = 'SVG';
-    public hideRemovedObjects = false;
+    public attachmentFilename = 'output';
+    public hideRemovedObjects = true;
     public showConstraints   = false;
     public showBindings      = false;
     public reduceSliceClasses = false;

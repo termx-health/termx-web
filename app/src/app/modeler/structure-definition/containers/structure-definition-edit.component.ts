@@ -23,22 +23,18 @@ export class StructureDefinitionEditComponent implements OnInit {
   public selectedTabIndex: number = 0;
   public prevTabIndex: number = 0;
   public pendingTabIndex?: number;
-  public tabIndexMap = {fsh: 1, json: 2, element: 3};
+  public tabIndexMap = {fsh: 1, json: 2, element: 3, uml: 4};
 
-  public view: 'Snapshot' | 'Differential' = 'Snapshot';
-  public exportAs: 'SVG' | 'PNG' | 'Text file' = 'SVG';
-
-  public hideRemovedObjects = true;
-  public showConstraints   = false;
-  public showBindings      = false;
-  public reduceSliceClasses = false;
-  public hideLegend        = false;
+  public umlTabGenerated = false;
+  public fhirUmlRequest: FhirToUmlRequest = new FhirToUmlRequest();
   public isImageResponse = false;
-  public imageUrl?: string | null;  
-  public rightText = '';
+  public imageUrl?: string | null;
+  public umlTextResponse?: string;
 
   public element?: Element;
   public formElement?: FormElement;
+
+  public currentExportAs?: UmlExport;
 
   protected loader = new LoadingManager();
   public modalData: {visible?: boolean, action?: 'openJson' | 'openFsh'} = {};
@@ -187,21 +183,36 @@ export class StructureDefinitionEditComponent implements OnInit {
 
   public handleTabChange(index?: number): void {
     this.pendingTabIndex = index = (index || this.pendingTabIndex || 0);
-
+  
     if (!isDefined(this.selectedTabIndex) || this.tabIndexMap['element'] !== this.prevTabIndex) {
       this.selectedTabIndex = index;
       this.prevTabIndex = index;
+  
+      this.triggerUmlIfNeeded(index);
       return;
     }
-
+  
     this.isChanged().subscribe(changed => {
       if (!changed) {
         this.selectedTabIndex = index;
         this.prevTabIndex = index;
+  
+        this.triggerUmlIfNeeded(index);
         return;
       }
-      this.modalData = {visible: true, action: this.pendingTabIndex === this.tabIndexMap['fsh'] ? 'openFsh' : 'openJson'};
+  
+      this.modalData = {
+        visible: true,
+        action: this.pendingTabIndex === this.tabIndexMap['fsh'] ? 'openFsh' : 'openJson'
+      };
     });
+  }
+
+  private triggerUmlIfNeeded(index: number): void {
+    if (index === this.tabIndexMap.uml && !this.umlTabGenerated) {
+      this.umlTabGenerated = true;
+      this.onGenerate();
+    }
   }
 
   public proceedAfterError(index: number): void {
@@ -355,30 +366,82 @@ export class StructureDefinitionEditComponent implements OnInit {
   }
 
   public onGenerate(): void {
-    const req: FhirToUmlRequest = {
-      payload            : this.structureDefinition.content,
-      view               : this.view       as UmlView,
-      exportAs           : this.exportAs   as UmlExport,
-      hideRemovedObjects : this.hideRemovedObjects,
-      showConstraints    : this.showConstraints,
-      showBindings       : this.showBindings,
-      reduceSliceClasses : this.reduceSliceClasses,
-      hideLegend         : this.hideLegend
-    };
+    this.fhirUmlRequest.payload = this.structureDefinition.content;
+  
+    this.loader.wrap('generate', this.fhirUmlConverterService.fhirToUml(this.fhirUmlRequest))
+      .subscribe({
+        next: resp => {
+          this.currentExportAs = this.fhirUmlRequest.exportAs;
 
-    this.fhirUmlConverterService.fhirToUml(req).subscribe(resp => {
-      if (resp.contentType.includes('text')) {
-        this.isImageResponse = false;
-        const body = resp.body as Blob;
-        body.text().then(t => {
-          this.rightText = t;
-        });
-      } else {
-        this.imageUrl = URL.createObjectURL(resp.body);
-        this.isImageResponse = true;
-      }
-    });    
+          if (resp.contentType.includes('text')) {
+            this.isImageResponse = false;
+            const body = resp.body as Blob;
+            body.text().then(t => {
+              this.umlTextResponse = t;
+            });
+          } else {
+            this.imageUrl = URL.createObjectURL(resp.body);
+            this.isImageResponse = true;
+          }
+        },
+        error: err => {
+          if (err?.error instanceof Blob && err.error.type === 'application/json') {
+            err.error.text().then(text => {
+              this.notificationService.error('Generation failed', text);
+            });
+          } else {
+            this.notificationService.error('Generation failed', 'An error occurred while generating UML.');
+          }
+        }        
+      });
   }
+
+  public saveUml(): void {
+    if (!this.fhirUmlRequest || !this.fhirUmlRequest.exportAs || !this.fhirUmlRequest.attachmentFilename) {
+      this.notificationService.error('Save failed', 'Missing export information.');
+      return;
+    }
+  
+    let blob: Blob;
+    let fileExtension: string;
+  
+    if (this.isImageResponse && this.imageUrl) {
+      fetch(this.imageUrl)
+        .then(response => response.blob())
+        .then(downloadBlob => {
+          blob = downloadBlob;
+          fileExtension = this.getExtensionFromExportType(this.currentExportAs);
+          this.triggerDownload(blob, `${this.fhirUmlRequest.attachmentFilename}.${fileExtension}`);
+        })
+        .catch(() => {
+          this.notificationService.error('Save failed', 'Could not fetch image blob for download.');
+        });
+    } else if (!this.isImageResponse && this.umlTextResponse) {
+      blob = new Blob([this.umlTextResponse], { type: 'text/plain' });
+      fileExtension = this.getExtensionFromExportType(this.currentExportAs);
+      this.triggerDownload(blob, `${this.fhirUmlRequest.attachmentFilename}.${fileExtension}`);
+    } else {
+      this.notificationService.error('Save failed', 'No content to download.');
+    }
+  }
+
+  private getExtensionFromExportType(type: UmlExport): string {
+    switch (type) {
+      case 'SVG': return 'svg';
+      case 'PNG': return 'png';
+      case 'Text file': return 'txt';
+      default: return 'dat';
+    }
+  }
+
+  private triggerDownload(blob: Blob, filename: string): void {
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+    URL.revokeObjectURL(url);
+  }  
 }
 
 export class FormElement {

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpBackend, HttpClient, HttpHeaders } from '@angular/common/http';
 import { FhirToUmlRequest } from '../model/fhir-to-uml-request';
 import { FhirToUmlResponse } from '../model/fhir-to-uml-response';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, throwError } from 'rxjs';
 import { environment } from 'environments/environment';
 
 
@@ -31,14 +31,17 @@ export class FhirUmlConverterService {
     });
 
     return this.http.post(`${environment.fhirUmlConverterApi}/fhir2uml`, req.payload, {
-      headers: headers,
-      observe      : 'response',
-      responseType : 'blob'
+      headers,
+      observe: 'response',
+      responseType: 'blob'
     }).pipe(
       map(r => ({
-        body        : r.body!,
-        contentType : r.headers.get('Content-Type') ?? ''
+        body: r.body!,
+        contentType: r.headers.get('Content-Type') ?? ''
       } as FhirToUmlResponse)),
-      catchError(err => of(err.error)));
+      catchError(err => {
+        return throwError(() => err);
+      })
+    );    
   }
 }
