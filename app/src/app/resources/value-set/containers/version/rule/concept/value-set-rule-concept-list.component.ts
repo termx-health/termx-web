@@ -50,6 +50,7 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
 
   protected addConcepts(): void {
     const rows = this.modalData.content.split('\n').slice(1, this.modalData.content.split('\n').length);
+    const displayLang = this.modalData.content.split('\n')[0].split(';')[1].split("#")[1];
     const langs = this.modalData.content.split('\n')[0].split(';').splice(2, this.modalData.content.split('\n')[0].split(';').length).map(l => l.split("#")[1]);
     this.rule.concepts = [...rows
       .map(r => this.parseRow(r))
@@ -57,7 +58,7 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
       .map(cols => {
         const concept = new ValueSetVersionConcept();
         concept.concept = {code: cols?.[0]};
-        concept.display = {name: cols?.[1]};
+        concept.display = {name: cols?.[1], language: displayLang};
         const additionalDesignations = cols.slice(2, cols.length);
         concept.additionalDesignations = additionalDesignations.flatMap((ad, i) => ad.split("#").map(ads => ({name: ads, language: langs[i]})));
         concept.additionalDesignations = concept.additionalDesignations.filter(ad => isDefined(ad.name) && ad.name !== '');
@@ -67,12 +68,16 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
   }
 
   public openModal(): void {
-    let langs = this.rule.concepts?.flatMap(c => c.additionalDesignations?.map(d => d.language));
-    langs = langs.filter((l, i) => langs.indexOf(l) === i).filter(l => isDefined(l));
-    this.modalData.content = ['code', 'display', ...(langs || []).map(l => 'additionalDesignation#' + l)].join(';') + '\n';
+    let displayLangs = this.rule.concepts?.map(c => c.display?.language);
+    displayLangs = displayLangs?.filter((l, i) => displayLangs.indexOf(l) === i).filter(l => isDefined(l));
+    let adLangs = this.rule.concepts?.flatMap(c => c.additionalDesignations?.map(d => d.language));
+    adLangs = adLangs?.filter((l, i) => adLangs.indexOf(l) === i).filter(l => isDefined(l));
+    this.modalData.content = ['code',
+      ...(displayLangs?.length ? [displayLangs[0]] : [undefined]).map(l => 'display' + (l ? '#' + l : '')),
+      ...(adLangs || []).map(l => 'additionalDesignation#' + l)].join(';') + '\n';
     this.rule.concepts?.forEach(c => this.modalData.content +=
       [(c.concept.code || ''), (c.display?.name || ''),
-        ...langs.map(l => c.additionalDesignations?.filter(ad => ad.language === l)?.map(ad => ad.name).join("#"))]
+        ...adLangs.map(l => c.additionalDesignations?.filter(ad => ad.language === l)?.map(ad => ad.name).join("#"))]
         .filter(c => isDefined(c))
         .map(c => this.addBracesIfSemicolon(c))
         .join(";") + '\n');
