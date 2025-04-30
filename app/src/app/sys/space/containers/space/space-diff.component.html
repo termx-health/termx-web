@@ -65,8 +65,8 @@
           </m-button>
         </div>
 
-        <span *ngIf="current?.length > 1000000">{{'web.space.diff.not-render' | translate}}</span>
-        <pre *ngIf="current?.length > 10000 && current?.length <= 1000000">{{current | apply: normalize}}</pre>
+        <span *ngIf="current?.length > 15000000">{{'web.space.diff.not-render' | translate}}</span>
+        <pre *ngIf="current?.length > 10000 && current?.length <= 15000000">{{current | apply: normalize}}</pre>
         <tw-diff-view *ngIf="current?.length <= 10000" [value]="current | apply: normalize"/>
       </m-card>
 
