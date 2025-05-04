@@ -15,6 +15,7 @@ import {FHIR_ROUTES} from './fhir/fhir.module';
 import {GLOBAL_SEARCH_ROUTES} from './global-search/global-search.module';
 import {INTEGRATION_ROUTES} from './integration/integration.module';
 import {MEASUREMENT_UNIT_ROUTES} from './measurement-unit/measurement-unit.module';
+import {UCUM_ROUTES} from './ucum/ucum.module';
 import {PRIVILEGES_ROUTES} from './privileges/privileges.module';
 import {RESOURCES_ROUTES} from './resources/resources.module';
 import {SPACE_CTX_ROUTES, SPACE_ROUTES, TERMINOLOGY_SERVER_ROUTES} from './sys/space/space.module';
@@ -34,6 +35,7 @@ const APP_ROUTES: Routes = [
   {path: 'wiki-management', children: WIKI_MANAGEMENT_ROUTES, data: {privilege: ['*.Wiki.view']}},
   {path: 'modeler', children: MODELER_ROUTES, data: {privilege: ['*.StructureDefinition.view', '*.TransformationDefinition.view']}},
   {path: 'measurement-units', children: MEASUREMENT_UNIT_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
+  {path: 'ucum', children: UCUM_ROUTES, data: {privilege: ['ucum.CodeSystem.view']}},
   {path: 'terminology-servers', children: TERMINOLOGY_SERVER_ROUTES, data: {privilege: ['*.Space.view']}},
   {path: 'observation-definitions', children: OBSERVATION_DEFINITION_ROUTES, data: {privilege: ['*.ObservationDefinition.view']}},
   {path: 'tasks', children: TASK_ROUTES, data: {privilege: ['*.Task.view']}},
