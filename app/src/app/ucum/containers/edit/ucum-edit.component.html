@@ -1,0 +1,59 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading['save']">
+      <m-card [mTitle]="mode === 'edit' ? 'web.ucum.form.edit-header' : 'web.ucum.form.add-header'" [mShowSkeleton]="loading['init']">
+        <form #form="ngForm" *ngIf="ucum">
+          <m-form-item mName="code" mLabel="entities.ucum.code" required>
+            <m-input name="code" [(ngModel)]="ucum.code" required></m-input>
+          </m-form-item>
+
+          <m-form-item mName="name" mLabel="entities.ucum.name" required>
+            <m-multi-language-input name="name" [(ngModel)]="ucum.names" required></m-multi-language-input>
+          </m-form-item>
+
+          <m-form-item mName="alias" mLabel="entities.ucum.alias" required>
+            <m-multi-language-input name="alias" [(ngModel)]="ucum.alias" required></m-multi-language-input>
+          </m-form-item>
+
+          <m-form-item mName="periodLower" mLabel="web.ucum.form.from" required>
+            <m-date-picker name="periodLower" [(ngModel)]="ucum.period.lower" required></m-date-picker>
+          </m-form-item>
+
+          <m-form-item mName="periodUpper" mLabel="web.ucum.form.to">
+            <m-date-picker name="periodUpper" [(ngModel)]="ucum.period.upper"></m-date-picker>
+          </m-form-item>
+
+          <m-form-item mName="rounding" mLabel="entities.ucum.rounding">
+            <m-number-input name="rounding" [(ngModel)]="ucum.rounding"></m-number-input>
+          </m-form-item>
+
+          <m-form-item mName="kind" mLabel="entities.ucum.kind" required>
+            <m-select *ngIf="!newKind" [(ngModel)]="ucum.kind" name="kind" required>
+              <m-option *ngFor="let kind of kinds " [mValue]="kind" [mLabel]="kind"></m-option>
+            </m-select>
+            <m-input *ngIf="newKind" [(ngModel)]="ucum.kind" name="kind" required></m-input>
+          </m-form-item>
+          <m-button (click)="newKind? ucum.kind = undefined: ''; newKind = !newKind">
+            {{(newKind ? 'web.ucum.form.select-kind' : 'web.ucum.form.add-kind') | translate}}
+          </m-button>
+
+          <m-form-item mName="definitionUnit" mLabel="entities.ucum.definitionUnit">
+            <m-input name="definitionUnit" [(ngModel)]="ucum.definitionUnit"></m-input>
+          </m-form-item>
+
+          <m-form-item mName="definitionValue" mLabel="entities.ucum.definitionValue">
+            <m-input name="definitionValue" [(ngModel)]="ucum.definitionValue"></m-input>
+          </m-form-item>
+        </form>
+
+        <tw-ucum-mapping-list *ngIf="ucum" [(mappings)]="ucum.mappings"></tw-ucum-mapping-list>
+
+        <ng-container *m-card-footer>
+          <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['save'] || loading['init']" (click)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

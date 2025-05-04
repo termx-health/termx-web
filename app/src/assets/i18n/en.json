@@ -332,6 +332,23 @@
 			"system-unit": "System unit",
 			"system-value": "System value"
 		},
+		"ucum": {
+			"alias": "Alias",
+			"code": "Code",
+			"definitionUnit": "Base unit",
+			"definitionValue": "Base value",
+			"id": "ID",
+			"kind": "Kind",
+			"mappings": "Mappings",
+			"name": "Name",
+			"period": "Period",
+			"rounding": "Rounding"
+		},
+		"ucum-mapping": {
+			"system": "System",
+			"system-unit": "System unit",
+			"system-value": "System value"
+		},
 		"naming-system": {
 			"code-system": "CodeSystem",
 			"description": "Description",
@@ -1207,6 +1224,7 @@
 				"header": "Search",
 				"map-sets": "MapSets",
 				"measurement-unit": "Measurement unit",
+				"ucum": "UCUM",
 				"snomed": "SNOMED",
 				"value-sets": "ValueSets",
 				"filter": {
@@ -1714,6 +1732,29 @@
 			}
 		},
 		"measurement-unit": {
+			"form": {
+				"add-header": "Add measurement unit",
+				"add-kind": "Add kind",
+				"edit-header": "Edit measurement unit",
+				"from": "Period from",
+				"select-kind": "Select kind",
+				"to": "Period to",
+				"view-header": "View measurement unit"
+			},
+			"list": {
+				"title": "Measurement units"
+			},
+			"mapping": {
+				"list": {
+					"add-mapping": "Add mapping"
+				},
+				"modal": {
+					"add-header": "Add mapping",
+					"edit-header": "Edit mapping"
+				}
+			}
+		},
+		"ucum": {
 			"form": {
 				"add-header": "Add measurement unit",
 				"add-kind": "Add kind",

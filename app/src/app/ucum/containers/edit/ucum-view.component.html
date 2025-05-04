@@ -1,0 +1,59 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading['save']">
+      <m-card [mTitle]="'web.ucum.form.view-header'" [mShowSkeleton]="loading['init']">
+        <form #form="ngForm" *ngIf="ucum">
+          <m-form-item mLabel="entities.ucum.code">
+            {{ucum.code}}
+          </m-form-item>
+          <m-form-item mLabel="entities.ucum.name">
+            <div *ngFor="let language of ucum.names | keys">
+              {{language}} - {{ucum.names[language]}}
+            </div>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.alias">
+            <div *ngFor="let language of ucum.alias | keys">
+              {{language}} - {{ucum.alias[language]}}
+            </div>
+          </m-form-item>
+
+          <m-form-item mName="periodLower" mLabel="web.ucum.form.from">
+            {{ucum.period.lower | localDate}}
+          </m-form-item>
+
+          <m-form-item mName="periodUpper" mLabel="web.ucum.form.to">
+            <div *ngIf="'ucum.CodeSystem.edit' | twHasAnyPrivilege; else view">
+              <m-date-picker name="periodUpper" [(ngModel)]="ucum.period.upper"></m-date-picker>
+            </div>
+            <ng-template #view>{{ucum.period.upper | localDate}}</ng-template>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.rounding">
+            {{ucum.rounding}}
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.kind">
+            {{ucum.kind}}
+          </m-form-item>
+          <m-form-item mLabel="entities.ucum.definitionUnit">
+            {{ucum.definitionUnit}}
+          </m-form-item>
+          <m-form-item mLabel="entities.ucum.definitionValue">
+            {{ucum.definitionValue}}
+          </m-form-item>
+        </form>
+
+        <tw-ucum-mapping-list *ngIf="ucum" [(mappings)]="ucum.mappings" viewMode></tw-ucum-mapping-list>
+
+        <ng-container *twPrivileged="'ucum.CodeSystem.edit'">
+          <ng-container *m-card-footer>
+            <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="!ucum?.period?.upper" (click)="save()">
+              {{'core.btn.save' | translate}}
+            </m-button>
+          </ng-container>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

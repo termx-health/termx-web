@@ -247,6 +247,21 @@
             },
             {
                 "label": {
+                    "en": "UCUM",
+                    "et": "UCUM",
+                    "lt": "UCUM",
+                    "de": "UCUM",
+                    "fr": "UCUM",
+                    "nl": "UCUM",
+                    "cs": "UCUM"
+                },
+                "link": "ucum",
+                "privileges": [
+                    "ucum.CodeSystem.view"
+                ]
+            },
+            {
+                "label": {
                     "en": "Observation definition",
                     "et": "Näitajate definitsioonid",
                     "lt": "Stebėjimų apibrėžimai",
