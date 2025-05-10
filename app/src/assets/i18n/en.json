@@ -333,16 +333,18 @@
 			"system-value": "System value"
 		},
 		"ucum": {
-			"alias": "Alias",
-			"code": "Code",
-			"definitionUnit": "Base unit",
-			"definitionValue": "Base value",
-			"id": "ID",
-			"kind": "Kind",
-			"mappings": "Mappings",
-			"name": "Name",
-			"period": "Period",
-			"rounding": "Rounding"
+			"definedUnit": {
+				"code": "Code",
+				"codeUC": "Code (Uppercase)",
+				"kind": "Kind",
+				"printSymbol": "Print Symbol",
+				"names": "Names",
+				"property": "Property",
+				"metric": "Metric",
+				"class_": "Class",
+				"description": "Description",
+				"special": "Special"
+			}
 		},
 		"ucum-mapping": {
 			"system": "System",
