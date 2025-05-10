@@ -2,38 +2,36 @@
   <div *m-card-header class="m-justify-between">
     <span>{{'web.ucum.list.title' | translate}}</span>
 
-    <div class="m-items-middle">
-      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>
+<!--    <div class="m-items-middle">-->
+<!--      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>-->
 
-      <tw-add-button *twPrivileged="'ucum.CodeSystem.edit'" [routerLink]="['add']">
-        {{'web.ucum.form.add-header' | translate}}
-      </tw-add-button>
-    </div>
+<!--      <tw-add-button *twPrivileged="'ucum.CodeSystem.edit'" [routerLink]="['add']">-->
+<!--        {{'web.ucum.form.add-header' | translate}}-->
+<!--      </tw-add-button>-->
+<!--    </div>-->
   </div>
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
-      <th mColumnKey="code">{{'entities.ucum.code' | translate}}</th>
-      <th mColumnKey="name">{{'entities.ucum.name' | translate}}</th>
-      <th mColumnKey="alias">{{'entities.ucum.alias' | translate}}</th>
-      <th mColumnKey="rounding">{{'entities.ucum.rounding' | translate}}</th>
-      <th mColumnKey="kind">{{'entities.ucum.kind' | translate}}</th>
-      <th mColumnKey="definitionUnit">{{'entities.ucum.definitionUnit' | translate}}</th>
-      <th mColumnKey="definitionValue">{{'entities.ucum.definitionValue' | translate}}</th>
-      <th mColumnKey="period">{{'entities.ucum.period' | translate}}</th>
+      <th mColumnKey="code">{{'entities.ucum.definedUnit.code' | translate}}</th>
+      <th mColumnKey="names">{{'entities.ucum.definedUnit.names' | translate}}</th>
+      <th mColumnKey="printSymbol">{{'entities.ucum.definedUnit.printSymbol' | translate}}</th>
+      <th mColumnKey="kind">{{'entities.ucum.definedUnit.kind' | translate}}</th>
+      <th mColumnKey="property">{{'entities.ucum.definedUnit.property' | translate}}</th>
+      <th mColumnKey="class">{{'entities.ucum.definedUnit.class_' | translate}}</th>
+      <th mColumnKey="description">{{'entities.ucum.definedUnit.description' | translate}}</th>
     </tr>
 
-    <tr *mTableRow="let mu">
-      <td><a [routerLink]="[mu.id, ('ucum.CodeSystem.edit' | twHasAnyPrivilege)? 'edit': 'view']">{{mu.code}}</a>
-      </td>
-      <td>{{mu.names | localName}}</td>
-      <td>{{mu.alias | localName}}</td>
-      <td>{{mu.rounding}}</td>
-      <td>{{mu.kind | localName}}</td>
-      <td>{{mu.definitionUnit}}</td>
-      <td>{{mu.definitionValue}}</td>
-      <td>{{mu.period.lower}}-{{mu.period.upper}}</td>
-    </tr>
+      <tr *mTableRow="let mu">
+<!--        <td><a [routerLink]="[mu.id, ('ucum.CodeSystem.edit' | twHasAnyPrivilege)? 'edit': 'view']">{{mu.code}}</a></td>-->
+        <td>{{mu.code}}</td>
+        <td>{{mu.names}}</td>
+        <td>{{mu.printSymbol}}</td>
+        <td>{{mu.kind}}</td>
+        <td>{{mu.property}}</td>
+        <td>{{mu.class_}}</td>
+        <td>{{mu.description}}</td>
+      </tr>
 
 
     <tr *mTableNoData>

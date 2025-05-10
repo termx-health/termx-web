@@ -16,8 +16,3 @@ export class Ucum {
 
   public mappings?: UcumMapping[];
 }
-
-// export class Ucum {
-//   public id?: number;
-//   public code?: string;
-// }
