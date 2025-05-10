@@ -1767,7 +1767,9 @@
 				"view-header": "View measurement unit"
 			},
 			"list": {
-				"title": "Measurement units"
+				"definedUnit": {
+					"title": "UCUM defined units"
+				}
 			},
 			"mapping": {
 				"list": {
