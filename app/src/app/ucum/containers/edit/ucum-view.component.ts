@@ -1,44 +1,36 @@
-import {Location} from '@angular/common';
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ActivatedRoute} from '@angular/router';
-import {isDefined, validateForm} from '@kodality-web/core-util';
-import {Ucum} from 'term-web/ucum/_lib';
-import {UcumService} from '../../services/ucum.service';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+import { ComponentStateStore } from '@kodality-web/core-util';
+import { DefinedUnit } from 'term-web/ucum/_lib';
+import {NgForm} from "@angular/forms";
 
 @Component({
   templateUrl: './ucum-view.component.html',
 })
 export class UcumViewComponent implements OnInit {
-  public ucum?: Ucum;
-
-  public loading: {[k: string]: boolean} = {};
+  public unit: DefinedUnit | undefined;
+  private readonly STORE_KEY = 'ucum-list';
+  public loading = false;
 
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
-    private ucumService: UcumService,
     private route: ActivatedRoute,
-    private location: Location
+    private stateStore: ComponentStateStore,
+    private location: Location,
   ) {}
 
   public ngOnInit(): void {
-    const ucumId = Number(this.route.snapshot.paramMap.get('id'));
-    this.loading['init'] = true;
-    this.ucumService.load(ucumId).subscribe(mu => this.ucum = mu).add(() => this.loading['init'] = false);
+    this.loading = true;
+    const key = this.route.snapshot.paramMap.get('key');
+    const state = this.stateStore.pop(this.STORE_KEY);
+    const all: DefinedUnit[] = state?.allUnits || [];
+    this.unit = all.find(u => `${u.kind}${u.code}` === key);
+    this.loading = false;
   }
 
-  public save(): void {
-    if (!this.validate()) {
-      return;
-    }
-    this.loading['save'] = true;
-    this.ucumService.save(this.ucum!)
-      .subscribe(() => this.location.back())
-      .add(() => this.loading['save'] = false);
-  }
-
-  public validate(): boolean {
-    return isDefined(this.form) && validateForm(this.form);
+  public goBack(): void {
+    this.location.back();
   }
 }
