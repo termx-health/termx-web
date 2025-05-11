@@ -1,6 +1,6 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
-    <span>{{'web.ucum.list.definedUnit.title' | translate}}</span>
+    <span>{{'web.ucum.definedUnit.list.title' | translate}}</span>
 
 <!--    <div class="m-items-middle">-->
 <!--      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus/>-->
@@ -23,9 +23,8 @@
     </tr>
 
       <tr *mTableRow="let mu">
-<!--        <td><a [routerLink]="[mu.id, ('ucum.CodeSystem.edit' | twHasAnyPrivilege)? 'edit': 'view']">{{mu.code}}</a></td>-->
-        <td>{{mu.code}}</td>
-        <td>{{mu.names}}</td>
+        <td><a [routerLink]="[mu.kind+mu.code, 'view']">{{mu.code}}</a></td>
+        <td>{{mu.names.join(', ')}}</td>
         <td>{{mu.printSymbol}}</td>
         <td>{{mu.kind}}</td>
         <td>{{mu.property}}</td>

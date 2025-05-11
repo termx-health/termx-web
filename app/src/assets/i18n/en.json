@@ -1757,6 +1757,17 @@
 			}
 		},
 		"ucum": {
+			"definedUnit": {
+				"list": {
+					"title": "UCUM defined units"
+				},
+				"view": {
+					"title": "Unit details",
+					"actions": {
+						"back": "Return"
+					}
+				}
+			},
 			"form": {
 				"add-header": "Add measurement unit",
 				"add-kind": "Add kind",
@@ -1765,11 +1776,6 @@
 				"select-kind": "Select kind",
 				"to": "Period to",
 				"view-header": "View measurement unit"
-			},
-			"list": {
-				"definedUnit": {
-					"title": "UCUM defined units"
-				}
 			},
 			"mapping": {
 				"list": {
