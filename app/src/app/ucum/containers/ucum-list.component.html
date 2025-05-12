@@ -23,7 +23,7 @@
     </tr>
 
       <tr *mTableRow="let mu">
-        <td><a [routerLink]="[mu.kind+mu.code, 'view']">{{mu.code}}</a></td>
+        <td><a [routerLink]="[mu.code, 'view']">{{mu.code}}</a></td>
         <td>{{mu.names.join(', ')}}</td>
         <td>{{mu.printSymbol}}</td>
         <td>{{mu.kind}}</td>

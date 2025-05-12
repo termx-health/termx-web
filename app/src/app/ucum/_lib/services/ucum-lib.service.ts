@@ -22,7 +22,15 @@ export class UcumLibService {
 
   public loadDefinedUnits(): Observable<DefinedUnit[]> {
     return this.http
-      .get<{ result: DefinedUnit[] }>(`${this.baseUrl}/defined-units`)
+      .get<{ result: DefinedUnit[] }>(`${this.baseUrl}/concepts?kind=UNIT`)
+      .pipe(
+        map(res => res.result)
+      );
+  }
+
+  public loadUnitByCode(code: string): Observable<DefinedUnit> {
+    return this.http
+      .get<{ result: DefinedUnit }>(`${this.baseUrl}/units/${encodeURIComponent(code)}`)
       .pipe(
         map(res => res.result)
       );

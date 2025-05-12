@@ -10,7 +10,7 @@ import {UcumService} from './services/ucum.service';
 
 export const UCUM_ROUTES: Routes = [
   {path: '', component: UcumListComponent},
-  {path: ':key/view', component: UcumViewComponent},
+  {path: ':code/view', component: UcumViewComponent},
 ];
 
 @NgModule({
