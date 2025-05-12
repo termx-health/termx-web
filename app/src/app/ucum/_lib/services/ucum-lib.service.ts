@@ -5,6 +5,8 @@ import {environment} from 'environments/environment';
 import {map, Observable} from 'rxjs';
 import {Ucum} from '../model/ucum';
 import {DefinedUnit, DefinedUnitSearchParams, UcumSearchParams} from 'term-web/ucum/_lib';
+import {Prefix} from "../model/prefix";
+import {BaseUnit} from "../model/base-unit";
 
 @Injectable()
 export class UcumLibService {
@@ -22,18 +24,38 @@ export class UcumLibService {
 
   public loadDefinedUnits(): Observable<DefinedUnit[]> {
     return this.http
-      .get<{ result: DefinedUnit[] }>(`${this.baseUrl}/concepts?kind=UNIT`)
+      .get<{ data: DefinedUnit[] }>(`${this.baseUrl}/components/UNIT`)
       .pipe(
-        map(res => res.result)
+        map(res => res.data)
       );
   }
 
   public loadUnitByCode(code: string): Observable<DefinedUnit> {
+    return this.http.get<DefinedUnit>(`${this.baseUrl}/units/${encodeURIComponent(code)}`);
+  }
+
+  public loadPrefixes(): Observable<Prefix[]> {
     return this.http
-      .get<{ result: DefinedUnit }>(`${this.baseUrl}/units/${encodeURIComponent(code)}`)
+      .get<{ data: Prefix[] }>(`${this.baseUrl}/components/PREFIX`)
       .pipe(
-        map(res => res.result)
+        map(res => res.data)
       );
+  }
+
+  public loadPrefixByCode(code: string): Observable<Prefix> {
+    return this.http.get<Prefix>(`${this.baseUrl}/prefixes/${encodeURIComponent(code)}`);
+  }
+
+  public loadBaseUnits(): Observable<BaseUnit[]> {
+    return this.http
+      .get<{ data: BaseUnit[] }>(`${this.baseUrl}/components/BASEUNIT`)
+      .pipe(
+        map(res => res.data)
+      );
+  }
+
+  public loadBaseUnitByCode(code: string): Observable<BaseUnit> {
+    return this.http.get<BaseUnit>(`${this.baseUrl}/base-units/${encodeURIComponent(code)}`);
   }
 
   public searchDefinedUnit(params: DefinedUnitSearchParams = {kind: 'UNIT', textContains: 'a'}): Observable<SearchResult<DefinedUnit>> {

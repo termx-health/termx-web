@@ -2,17 +2,15 @@ import {Component, OnInit, ViewChild} from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ComponentStateStore } from '@kodality-web/core-util';
-import { DefinedUnit } from 'term-web/ucum/_lib';
-import {NgForm} from "@angular/forms";
-import { finalize } from 'rxjs/operators';
-import { UcumLibService } from 'term-web/ucum/_lib';
+import { NgForm } from "@angular/forms";
+import { UcumLibService, BaseUnit } from 'term-web/ucum/_lib';
 
 @Component({
-  templateUrl: './ucum-view.component.html',
+  templateUrl: './base-unit-view.component.html',
 })
-export class UcumViewComponent implements OnInit {
-  public unit: DefinedUnit | undefined;
-  private readonly STORE_KEY = 'ucum-list';
+export class BaseUnitViewComponent implements OnInit {
+  public baseUnit: BaseUnit | undefined;
+  private readonly STORE_KEY = 'base-unit-list';
   public loading = false;
 
   @ViewChild("form") public form?: NgForm;
@@ -28,12 +26,12 @@ export class UcumViewComponent implements OnInit {
     this.loading = true;
     const code = this.route.snapshot.paramMap.get('code');
     const state = this.stateStore.pop(this.STORE_KEY);
-    const all: DefinedUnit[] = state?.allUnits || [];
-    this.unit = all.find(u => `${u.code}` === code);
+    const all: BaseUnit[] = state?.allBaseUnits || [];
+    this.baseUnit = all.find(p => `${p.code}` === code);
 
-    if (!this.unit) {
-      this.ucumSvc.loadUnitByCode(code)
-        .subscribe(unit => this.unit = unit);
+    if (!this.baseUnit) {
+      this.ucumSvc.loadBaseUnitByCode(code)
+        .subscribe(bUnit => this.baseUnit = bUnit);
     }
     this.loading = false;
   }

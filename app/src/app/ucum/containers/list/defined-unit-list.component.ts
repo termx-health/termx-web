@@ -4,14 +4,14 @@ import { finalize } from 'rxjs/operators';
 import { ComponentStateStore, QueryParams, SearchResult } from '@kodality-web/core-util';
 
 @Component({
-  templateUrl: './ucum-list.component.html',
+  templateUrl: './defined-unit-list.component.html',
 })
-export class UcumListComponent implements OnInit {
+export class DefinedUnitListComponent implements OnInit {
   public query = new QueryParams();
   public searchResult: SearchResult<DefinedUnit> = SearchResult.empty();
   public loading = false;
 
-  private readonly STORE_KEY = 'ucum-list';
+  private readonly STORE_KEY = 'defined-unit-list';
   private allUnits: DefinedUnit[] = [];
 
   public constructor(

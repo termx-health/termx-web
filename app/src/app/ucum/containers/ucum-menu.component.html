@@ -1,0 +1,24 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-card [mTitle]="''" style="max-width: 400px; margin: 0 auto;">
+      <div *m-card-header class="m-justify-center">
+        <span>{{ 'web.ucum.menu.title' | translate }}</span>
+      </div>
+      <div *m-card-content style="display:flex; flex-direction:row; gap:var(--gap-default)">
+        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:var(--gap-default)">
+          <h4>Components</h4>
+          <m-button style="width:100%" [routerLink]="['defined-units']">{{ 'web.ucum.defined-unit.list.title' | translate }}</m-button>
+          <m-button style="width:100%" [routerLink]="['prefixes']">{{ 'web.ucum.prefix.list.title' | translate }}</m-button>
+          <m-button style="width:100%" [routerLink]="['base-units']">{{ 'web.ucum.base-unit.list.title' | translate }}</m-button>
+        </div>
+        <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:var(--gap-default)">
+          <h4>Actions</h4>
+          <m-button style="width:100%">Validate</m-button>
+          <m-button style="width:100%">Convert</m-button>
+          <m-button style="width:100%">Analyse</m-button>
+          <m-button style="width:100%">Canonicalize</m-button>
+        </div>
+      </div>
+    </m-card>
+  </div>
+</m-form-row>

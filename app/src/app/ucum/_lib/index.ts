@@ -6,3 +6,5 @@ export * from './model/ucum-search-params';
 export * from './services/ucum-lib.service';
 export * from './model/defined-unit';
 export * from './model/defined-unit-search-params';
+export * from './model/prefix';
+export * from './model/base-unit';

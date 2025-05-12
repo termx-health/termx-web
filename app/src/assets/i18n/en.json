@@ -333,7 +333,7 @@
 			"system-value": "System value"
 		},
 		"ucum": {
-			"definedUnit": {
+			"defined-unit": {
 				"code": "Code",
 				"codeUC": "Code (Uppercase)",
 				"kind": "Kind",
@@ -344,6 +344,24 @@
 				"class_": "Class",
 				"description": "Description",
 				"special": "Special"
+			},
+			"prefix": {
+				"code": "Code",
+				"codeUC": "Code (Uppercase)",
+				"kind": "Kind",
+				"printSymbol": "Print Symbol",
+				"names": "Names",
+				"description": "Description"
+			},
+			"base-unit": {
+				"code": "Code",
+				"codeUC": "Code (Uppercase)",
+				"kind": "Kind",
+				"printSymbol": "Print Symbol",
+				"names": "Names",
+				"property": "Property",
+				"dim": "Dimension",
+				"description": "Description"
 			}
 		},
 		"ucum-mapping": {
@@ -1757,16 +1775,35 @@
 			}
 		},
 		"ucum": {
-			"definedUnit": {
+			"defined-unit": {
 				"list": {
-					"title": "UCUM defined units"
+					"title": "Defined units"
 				},
 				"view": {
-					"title": "Unit details",
-					"actions": {
-						"back": "Return"
-					}
+					"title": "Unit details"
 				}
+			},
+			"prefix": {
+				"list": {
+					"title": "Prefixes"
+				},
+				"view": {
+					"title": "Prefix details"
+				}
+			},
+			"base-unit": {
+				"list": {
+					"title": "Base units"
+				},
+				"view": {
+					"title": "Base unit details"
+				}
+			},
+			"actions": {
+				"back": "Return"
+			},
+			"menu": {
+				"title": "UCUM"
 			},
 			"form": {
 				"add-header": "Add measurement unit",
