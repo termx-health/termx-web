@@ -55,6 +55,7 @@ export class UcumListComponent implements OnInit {
       pages: limit > 0 ? Math.ceil(this.allUnits.length / limit) : 1,
       offset: offset
     };
+
     this.searchResult = sr;
   }
 }
