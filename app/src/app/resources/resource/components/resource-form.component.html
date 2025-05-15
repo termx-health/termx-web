@@ -46,7 +46,7 @@
     </m-form-item>
     <m-form-item *mFormCol mLabel="entities.resource.uri" mName="uri" required>
       <div class="m-items-middle">
-        <m-input style="width: 100%" name="uri" [(ngModel)]="resource.uri" required></m-input>
+        <m-textarea style="width: 100%" name="uri" [(ngModel)]="resource.uri" required/>
         <a *ngIf="resource.uri | validateUrl" [href]="resource.uri" target="_blank">
           <m-button m-tooltip mTitle="web.resource-form.open-uri">
             <m-icon mCode="link"></m-icon>
@@ -94,7 +94,7 @@
 
   <m-form-row>
     <m-form-item *mFormCol mLabel="entities.resource.source-reference" mName="sourceReference">
-      <m-input name="sourceReference" [(ngModel)]="resource.sourceReference"></m-input>
+      <m-textarea name="sourceReference" [(ngModel)]="resource.sourceReference"/>
     </m-form-item>
     <div *mFormCol>
       <m-form-item *ngIf="['CodeSystem', 'ValueSet', 'MapSet'] | includes:resourceType" mLabel="entities.resource.replaces" mName="replaces">
