@@ -67,7 +67,7 @@
             </m-select>
 
             <div *ngIf="item['_newProp']" class="m-items-middle">
-              <m-input [(ngModel)]="item.propertyName"/>
+              <m-textarea [(ngModel)]="item.propertyName"/>
               <m-icon-button mIcon="close" (click)="item['_newProp'] = false" />
             </div>
           </td>
