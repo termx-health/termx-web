@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { UcumLibService, BaseUnit } from 'term-web/ucum/_lib';
+import { UcumComponentsLibService, BaseUnit } from 'term-web/ucum/_lib';
 import { finalize } from 'rxjs/operators';
 import { ComponentStateStore, QueryParams, SearchResult } from '@kodality-web/core-util';
-import {} from "../../_lib/model/base-unit";
 
 @Component({
   templateUrl: './base-unit-list.component.html',
@@ -16,7 +15,7 @@ export class BaseUnitListComponent implements OnInit {
   private allBaseUnits: BaseUnit[] = [];
 
   public constructor(
-    private ucumSvc: UcumLibService,
+    private ucumCmpSvc: UcumComponentsLibService,
     private stateStore: ComponentStateStore
   ) {}
 
@@ -30,7 +29,7 @@ export class BaseUnitListComponent implements OnInit {
       this.applyQuery();
     } else {
       this.loading = true;
-      this.ucumSvc.loadBaseUnits().pipe(finalize(() => this.loading = false))
+      this.ucumCmpSvc.loadBaseUnits().pipe(finalize(() => this.loading = false))
         .subscribe(baseUnits => {
           this.allBaseUnits = baseUnits;
           this.stateStore.put(this.STORE_KEY, { allBaseUnits: baseUnits, query: this.query });

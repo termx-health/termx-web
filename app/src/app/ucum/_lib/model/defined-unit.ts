@@ -6,7 +6,7 @@ export class DefinedUnit {
     public names?: string[];
     public property?: string;
     public metric?: boolean;
-    public class_?: string;
+    public class?: string;
     public description?: string;
     public special?: boolean;
 }

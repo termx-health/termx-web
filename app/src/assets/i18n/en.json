@@ -364,11 +364,6 @@
 				"description": "Description"
 			}
 		},
-		"ucum-mapping": {
-			"system": "System",
-			"system-unit": "System unit",
-			"system-value": "System value"
-		},
 		"naming-system": {
 			"code-system": "CodeSystem",
 			"description": "Description",
@@ -1799,8 +1794,36 @@
 					"title": "Base unit details"
 				}
 			},
-			"actions": {
-				"back": "Return"
+			"operations": {
+				"analyse": {
+					"title": "Analyse UCUM code",
+					"code": "Code",
+					"btn": "Analyse",
+					"result": "Result",
+					"error": "Error"
+				},
+				"validate": {
+					"title": "Validate UCUM code",
+					"code": "Code",
+					"btn": "Validate",
+					"result": "Result"
+				},
+				"convert": {
+					"title": "Convert UCUM code",
+					"value": "Value",
+					"sourceCode": "Source code",
+					"targetCode": "Target code",
+					"btn": "Convert",
+					"result": "Result",
+					"error": "Error"
+				},
+				"canonicalise": {
+					"title": "Canonicalise UCUM code",
+					"code": "Code",
+					"btn": "Canonicalise",
+					"result": "Result",
+					"error": "Error"
+				}
 			},
 			"menu": {
 				"title": "UCUM"

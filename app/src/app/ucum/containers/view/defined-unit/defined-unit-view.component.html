@@ -33,7 +33,7 @@
           </m-form-item>
 
           <m-form-item mLabel="entities.ucum.defined-unit.class_">
-            <m-input [ngModel]="unit.class_" [ngModelOptions]="{standalone: true}" disabled></m-input>
+            <m-input [ngModel]="unit.class" [ngModelOptions]="{standalone: true}" disabled></m-input>
           </m-form-item>
 
           <m-form-item mLabel="entities.ucum.defined-unit.special">
@@ -47,7 +47,7 @@
 
         <ng-container *m-card-footer>
           <m-button (click)="goBack()">
-            {{ 'web.ucum.actions.back' | translate }}
+            {{ 'core.back' | translate }}
           </m-button>
         </ng-container>
       </m-card>

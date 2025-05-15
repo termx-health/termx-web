@@ -9,8 +9,8 @@ import {Prefix} from "../model/prefix";
 import {BaseUnit} from "../model/base-unit";
 
 @Injectable()
-export class UcumLibService {
-  protected baseUrl = `${environment.termxApi}/ucum`;
+export class UcumComponentsLibService {
+  protected baseUrl = `${environment.termxApi}/api/v1/ucum`;
 
   public constructor(protected http: HttpClient) {}
 
@@ -23,23 +23,15 @@ export class UcumLibService {
   }
 
   public loadDefinedUnits(): Observable<DefinedUnit[]> {
-    return this.http
-      .get<{ data: DefinedUnit[] }>(`${this.baseUrl}/components/UNIT`)
-      .pipe(
-        map(res => res.data)
-      );
+    return this.http.get<DefinedUnit[]>(`${this.baseUrl}/defined-units`);
   }
 
   public loadUnitByCode(code: string): Observable<DefinedUnit> {
-    return this.http.get<DefinedUnit>(`${this.baseUrl}/units/${encodeURIComponent(code)}`);
+    return this.http.get<DefinedUnit>(`${this.baseUrl}/defined-units/${encodeURIComponent(code)}`);
   }
 
   public loadPrefixes(): Observable<Prefix[]> {
-    return this.http
-      .get<{ data: Prefix[] }>(`${this.baseUrl}/components/PREFIX`)
-      .pipe(
-        map(res => res.data)
-      );
+    return this.http.get<Prefix[]>(`${this.baseUrl}/prefixes`);
   }
 
   public loadPrefixByCode(code: string): Observable<Prefix> {
@@ -47,11 +39,7 @@ export class UcumLibService {
   }
 
   public loadBaseUnits(): Observable<BaseUnit[]> {
-    return this.http
-      .get<{ data: BaseUnit[] }>(`${this.baseUrl}/components/BASEUNIT`)
-      .pipe(
-        map(res => res.data)
-      );
+    return this.http.get<BaseUnit[]>(`${this.baseUrl}/base-units`);
   }
 
   public loadBaseUnitByCode(code: string): Observable<BaseUnit> {

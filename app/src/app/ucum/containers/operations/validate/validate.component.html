@@ -1,0 +1,28 @@
+<m-form-row>
+  <div *m-form-col>
+    <m-card [mTitle]="'web.ucum.operations.validate.title'" autofocus>
+      <form #form="ngForm">
+        <m-form-item mName="code" mLabel="web.ucum.operations.validate.code" required>
+          <m-input name="code" [(ngModel)]="code" required/>
+        </m-form-item>
+
+        <m-button
+                *m-card-footer
+                mDisplay="primary"
+                [disabled]="!code"
+                (mClick)="validate()"
+        >
+          {{'web.ucum.operations.validate.btn' | translate}}
+        </m-button>
+      </form>
+
+      <div *ngIf="response">
+        <m-card [mTitle]="'web.ucum.operations.validate.result'" [ngStyle]="{'background-color': response.valid ? '#c6ecc6' : '#ffcccc'}">
+          <div *m-card-content>
+            <pre>{{ response.valid ? "Code is valid" : response.errorMessage }}</pre>
+          </div>
+        </m-card>
+      </div>
+    </m-card>
+  </div>
+</m-form-row>
