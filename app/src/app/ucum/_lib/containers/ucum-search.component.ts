@@ -5,7 +5,7 @@ import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxj
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {Ucum} from '../model/ucum';
 import {UcumSearchParams} from 'term-web/ucum/_lib';
-import {UcumLibService} from 'term-web/ucum/_lib';
+import {UcumComponentsLibService} from 'term-web/ucum/_lib';
 
 @Component({
   selector: 'tw-ucum-search',
@@ -25,7 +25,7 @@ export class UcumSearchComponent implements OnInit {
   public onTouched = (x: any) => x;
 
   public constructor(
-    private ucumService: UcumLibService,
+    private ucumService: UcumComponentsLibService,
     private destroy$: DestroyService
   ) {}
 

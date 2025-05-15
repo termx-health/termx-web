@@ -2,14 +2,18 @@ import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {UcumLibModule} from 'term-web/ucum/_lib';
 import {CoreUiModule} from '../core/ui/core-ui.module';
-import {DefinedUnitViewComponent} from './containers/view/defined-unit-view.component';
-import {DefinedUnitListComponent} from './containers/list/defined-unit-list.component';
+import {DefinedUnitViewComponent} from './containers/view/defined-unit/defined-unit-view.component';
+import {DefinedUnitListComponent} from './containers/list/defined-unit/defined-unit-list.component';
 import {UcumService} from './services/ucum.service';
 import {UcumMenuComponent} from "./containers/ucum-menu.component";
-import {PrefixListComponent} from "./containers/list/prefix-list.component";
-import {PrefixViewComponent} from "./containers/view/prefix-view.component";
-import {BaseUnitListComponent} from "./containers/list/base-unit-list.component";
-import {BaseUnitViewComponent} from "./containers/view/base-unit-view.component";
+import {PrefixListComponent} from "./containers/list/prefix/prefix-list.component";
+import {PrefixViewComponent} from "./containers/view/prefix/prefix-view.component";
+import {BaseUnitListComponent} from "./containers/list/base-unit/base-unit-list.component";
+import {BaseUnitViewComponent} from "./containers/view/base-unit/base-unit-view.component";
+import {AnalyseComponent} from "./containers/operations/analyse/analyse.component";
+import {CanonicaliseComponent} from "./containers/operations/canonicalise/canonicalise.component";
+import {ValidateComponent} from "./containers/operations/validate/validate.component";
+import {ConvertComponent} from "./containers/operations/convert/convert.component";
 
 
 export const UCUM_ROUTES: Routes = [
@@ -19,7 +23,11 @@ export const UCUM_ROUTES: Routes = [
   { path: 'defined-units', component: DefinedUnitListComponent },
   { path: 'defined-units/:code/view', component: DefinedUnitViewComponent },
   { path: 'base-units', component: BaseUnitListComponent },
-  { path: 'base-units/:code/view', component: BaseUnitViewComponent }
+  { path: 'base-units/:code/view', component: BaseUnitViewComponent },
+  { path: 'analyse', component: AnalyseComponent },
+  { path: 'canonicalise', component: CanonicaliseComponent },
+  { path: 'validate', component: ValidateComponent },
+  { path: 'convert', component: ConvertComponent }
 ];
 
 @NgModule({
@@ -30,7 +38,11 @@ export const UCUM_ROUTES: Routes = [
     DefinedUnitListComponent,
     DefinedUnitViewComponent,
     BaseUnitListComponent,
-    BaseUnitViewComponent
+    BaseUnitViewComponent,
+    AnalyseComponent,
+    CanonicaliseComponent,
+    ValidateComponent,
+    ConvertComponent
   ],
   imports: [
     CoreUiModule,

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UcumLibService, DefinedUnit } from 'term-web/ucum/_lib';
+import { UcumComponentsLibService, DefinedUnit } from 'term-web/ucum/_lib';
 import { finalize } from 'rxjs/operators';
 import { ComponentStateStore, QueryParams, SearchResult } from '@kodality-web/core-util';
 
@@ -15,7 +15,7 @@ export class DefinedUnitListComponent implements OnInit {
   private allUnits: DefinedUnit[] = [];
 
   public constructor(
-    private ucumSvc: UcumLibService,
+    private ucumCmpSvc: UcumComponentsLibService,
     private stateStore: ComponentStateStore
   ) {}
 
@@ -29,7 +29,7 @@ export class DefinedUnitListComponent implements OnInit {
       this.applyQuery();
     } else {
       this.loading = true;
-      this.ucumSvc.loadDefinedUnits().pipe(finalize(() => this.loading = false))
+      this.ucumCmpSvc.loadDefinedUnits().pipe(finalize(() => this.loading = false))
         .subscribe(units => {
           this.allUnits = units;
           this.stateStore.put(this.STORE_KEY, { allUnits: units, query: this.query });

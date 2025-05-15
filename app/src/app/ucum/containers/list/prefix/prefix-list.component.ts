@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UcumLibService, Prefix} from 'term-web/ucum/_lib';
+import { UcumComponentsLibService, Prefix} from 'term-web/ucum/_lib';
 import { finalize } from 'rxjs/operators';
 import { ComponentStateStore, QueryParams, SearchResult } from '@kodality-web/core-util';
 
@@ -15,7 +15,7 @@ export class PrefixListComponent implements OnInit {
   private allPrefixes: Prefix[] = [];
 
   public constructor(
-    private ucumSvc: UcumLibService,
+    private ucumCmpSvc: UcumComponentsLibService,
     private stateStore: ComponentStateStore
   ) {}
 
@@ -29,7 +29,7 @@ export class PrefixListComponent implements OnInit {
       this.applyQuery();
     } else {
       this.loading = true;
-      this.ucumSvc.loadPrefixes().pipe(finalize(() => this.loading = false))
+      this.ucumCmpSvc.loadPrefixes().pipe(finalize(() => this.loading = false))
         .subscribe(prefixes => {
           this.allPrefixes = prefixes;
           this.stateStore.put(this.STORE_KEY, { allPrefixes: prefixes, query: this.query });

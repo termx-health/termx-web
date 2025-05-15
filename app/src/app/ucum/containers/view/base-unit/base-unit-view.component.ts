@@ -3,14 +3,14 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ComponentStateStore } from '@kodality-web/core-util';
 import { NgForm } from "@angular/forms";
-import { UcumLibService, Prefix } from 'term-web/ucum/_lib';
+import { UcumComponentsLibService, BaseUnit } from 'term-web/ucum/_lib';
 
 @Component({
-  templateUrl: './prefix-view.component.html',
+  templateUrl: './base-unit-view.component.html',
 })
-export class PrefixViewComponent implements OnInit {
-  public prefix: Prefix | undefined;
-  private readonly STORE_KEY = 'prefix-list';
+export class BaseUnitViewComponent implements OnInit {
+  public baseUnit: BaseUnit | undefined;
+  private readonly STORE_KEY = 'base-unit-list';
   public loading = false;
 
   @ViewChild("form") public form?: NgForm;
@@ -19,19 +19,19 @@ export class PrefixViewComponent implements OnInit {
     private route: ActivatedRoute,
     private stateStore: ComponentStateStore,
     private location: Location,
-    private ucumSvc: UcumLibService
+    private ucumCmpSvc: UcumComponentsLibService
   ) {}
 
   public ngOnInit(): void {
     this.loading = true;
     const code = this.route.snapshot.paramMap.get('code');
     const state = this.stateStore.pop(this.STORE_KEY);
-    const all: Prefix[] = state?.allPrefixes || [];
-    this.prefix = all.find(p => `${p.code}` === code);
+    const all: BaseUnit[] = state?.allBaseUnits || [];
+    this.baseUnit = all.find(p => `${p.code}` === code);
 
-    if (!this.prefix) {
-      this.ucumSvc.loadPrefixByCode(code)
-        .subscribe(unit => this.prefix = unit);
+    if (!this.baseUnit) {
+      this.ucumCmpSvc.loadBaseUnitByCode(code)
+        .subscribe(bUnit => this.baseUnit = bUnit);
     }
     this.loading = false;
   }

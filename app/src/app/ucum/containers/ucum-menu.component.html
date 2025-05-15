@@ -12,11 +12,11 @@
           <m-button style="width:100%" [routerLink]="['base-units']">{{ 'web.ucum.base-unit.list.title' | translate }}</m-button>
         </div>
         <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:var(--gap-default)">
-          <h4>Actions</h4>
-          <m-button style="width:100%">Validate</m-button>
-          <m-button style="width:100%">Convert</m-button>
-          <m-button style="width:100%">Analyse</m-button>
-          <m-button style="width:100%">Canonicalize</m-button>
+          <h4>Operations</h4>
+          <m-button style="width:100%" [routerLink]="['validate']">Validate</m-button>
+          <m-button style="width:100%" [routerLink]="['convert']">Convert</m-button>
+          <m-button style="width:100%" [routerLink]="['analyse']">Analyse</m-button>
+          <m-button style="width:100%" [routerLink]="['canonicalise']">Canonicalise</m-button>
         </div>
       </div>
     </m-card>
