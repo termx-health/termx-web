@@ -26,8 +26,8 @@ export class DefinedUnitViewComponent implements OnInit {
   public ngOnInit(): void {
     this.loading = true;
     const code = this.route.snapshot.paramMap.get('code');
-    const state = this.stateStore.pop(this.STORE_KEY);
-    const all: DefinedUnit[] = state?.allUnits || [];
+    const units = this.stateStore.pop(this.STORE_KEY);
+    const all: DefinedUnit[] = units || [];
     this.unit = all.find(u => `${u.code}` === code);
 
     if (!this.unit) {
