@@ -360,7 +360,7 @@
 				"printSymbol": "Print Symbol",
 				"names": "Names",
 				"property": "Property",
-				"dim": "Dimension",
+				"dimension": "Dimension",
 				"description": "Description"
 			}
 		},
@@ -1826,25 +1826,16 @@
 				}
 			},
 			"menu": {
-				"title": "UCUM"
-			},
-			"form": {
-				"add-header": "Add measurement unit",
-				"add-kind": "Add kind",
-				"edit-header": "Edit measurement unit",
-				"from": "Period from",
-				"select-kind": "Select kind",
-				"to": "Period to",
-				"view-header": "View measurement unit"
-			},
-			"mapping": {
-				"list": {
-					"add-mapping": "Add mapping"
-				},
-				"modal": {
-					"add-header": "Add mapping",
-					"edit-header": "Edit mapping"
-				}
+				"title": "UCUM",
+				"prefixes": "Prefixes",
+				"base-units": "Base units",
+				"defined-units": "Defined units",
+				"analyse": "Analyse",
+				"validate": "Validate",
+				"convert": "Convert",
+				"canonicalise": "Canonicalise",
+				"operations": "Operations",
+				"components": "Components"
 			}
 		},
 		"naming-system": {

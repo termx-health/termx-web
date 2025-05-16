@@ -7,7 +7,6 @@
               name="search"
               [(ngModel)]="searchTerm"
               (ngModelChange)="onSearchTermChange()"
-              twDebounce
               placeholder="marina.ui.inputs.search.placeholder"
               autofocus
       ></m-input>
@@ -23,7 +22,7 @@
     </tr>
 
       <tr *mTableRow="let p">
-        <td><a [routerLink]="[p.code, 'view']">{{p.code}}</a></td>
+        <td><a [routerLink]="[p.code]">{{p.code}}</a></td>
         <td>{{p.names.join(', ')}}</td>
         <td>{{p.printSymbol}}</td>
         <td>{{p.description}}</td>

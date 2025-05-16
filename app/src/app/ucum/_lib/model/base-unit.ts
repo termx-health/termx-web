@@ -5,6 +5,6 @@ export class BaseUnit {
     public printSymbol?: string;
     public names?: string[];
     public property?: string;
-    public dim?: string;
+    public dimension?: string;
     public description?: string;
 }

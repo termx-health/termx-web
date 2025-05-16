@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
-import { UcumOperationsLibService } from 'term-web/ucum/_lib';
+import { UcumLibService } from 'term-web/ucum/_lib';
 import {NgForm} from "@angular/forms";
-import {CanonicaliseResponse} from "../../../_lib/model/canonicalise-response";
+import {CanonicaliseResponse} from "term-web/ucum/_lib/model/canonicalise-response";
 import {finalize} from "rxjs/operators";
 
 
@@ -17,7 +17,7 @@ export class CanonicaliseComponent {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
-    private ucumOpsSvc: UcumOperationsLibService,
+    private ucumOpsSvc: UcumLibService,
   ) {}
 
   public canonicalise(): void {

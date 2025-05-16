@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 import { ComponentStateStore } from '@kodality-web/core-util';
 import { NgForm } from "@angular/forms";
-import { UcumComponentsLibService, Prefix } from 'term-web/ucum/_lib';
+import { UcumLibService, Prefix } from 'term-web/ucum/_lib';
 
 @Component({
   templateUrl: './prefix-view.component.html',
@@ -19,7 +19,7 @@ export class PrefixViewComponent implements OnInit {
     private route: ActivatedRoute,
     private stateStore: ComponentStateStore,
     private location: Location,
-    private ucumCmpSvc: UcumComponentsLibService
+    private ucumCmpSvc: UcumLibService
   ) {}
 
   public ngOnInit(): void {

@@ -1,7 +1,7 @@
 import {Component, ViewChild} from '@angular/core';
-import { UcumOperationsLibService } from 'term-web/ucum/_lib';
+import { UcumLibService } from 'term-web/ucum/_lib';
 import {NgForm} from "@angular/forms";
-import {ValidateResponse} from "../../../_lib/model/validate-response";
+import {ValidateResponse} from "term-web/ucum/_lib/model/validate-response";
 import {finalize} from "rxjs/operators";
 
 
@@ -16,7 +16,7 @@ export class ValidateComponent {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
-    private ucumOpsSvc: UcumOperationsLibService,
+    private ucumOpsSvc: UcumLibService,
   ) {}
 
   public validate(): void {

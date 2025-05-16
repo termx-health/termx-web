@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UcumComponentsLibService, BaseUnit } from 'term-web/ucum/_lib';
+import { UcumLibService, BaseUnit, SearchParams } from 'term-web/ucum/_lib';
 import { finalize } from 'rxjs/operators';
-import { ComponentStateStore, QueryParams, SearchResult } from '@kodality-web/core-util';
-import {SearchParams} from "../../../_lib";
+import { ComponentStateStore, SearchResult } from '@kodality-web/core-util';
+import {applyPagination, applySort} from "term-web/ucum/utils/table-util";
 
 @Component({
   templateUrl: './base-unit-list.component.html',
@@ -17,7 +17,7 @@ export class BaseUnitListComponent implements OnInit {
   private readonly STORE_KEY = 'base-unit-list';
 
   public constructor(
-    private ucumCmpSvc: UcumComponentsLibService,
+    private ucumCmpSvc: UcumLibService,
     private stateStore: ComponentStateStore
   ) {}
 
@@ -39,7 +39,7 @@ export class BaseUnitListComponent implements OnInit {
   }
 
   public loadData(): void {
-    let filtered = this.allBaseUnits;
+    let filtered = [...this.allBaseUnits];
     if (this.searchTerm) {
       const term = this.searchTerm.toLowerCase();
       filtered = filtered.filter(bu =>
@@ -47,17 +47,10 @@ export class BaseUnitListComponent implements OnInit {
         bu.names?.some(n => n.toLowerCase().includes(term))
       );
     }
-    const offset = this.query.offset ?? 0;
-    const limit = this.query.limit > 0 ? this.query.limit : filtered.length;
-    const page = filtered.slice(offset, offset + limit);
-    this.searchResult = {
-      data: page,
-      meta: {
-        total: filtered.length,
-        pages: limit > 0 ? Math.ceil(filtered.length / limit) : 1,
-        offset,
-      },
-    } as SearchResult<BaseUnit>;
+    filtered = applySort(filtered, this.query.sort);
+
+    const { data: page, meta } = applyPagination(filtered, this.query);
+    this.searchResult = { data: page, meta} as SearchResult<BaseUnit>;
   }
 
   public onSearchTermChange(): void {
