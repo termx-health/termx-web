@@ -5,23 +5,23 @@
 
         <form #form="ngForm" *ngIf="baseUnit">
           <m-form-item mLabel="entities.ucum.base-unit.code">
-            <m-input [ngModel]="baseUnit.code" [ngModelOptions]="{standalone: true}" disabled></m-input>
+            <m-input [ngModel]="baseUnit.code" name="code" [readOnly]="true"></m-input>
           </m-form-item>
 
           <m-form-item mLabel="entities.ucum.base-unit.names">
-            <m-input [ngModel]="baseUnit.names.join(', ')" [ngModelOptions]="{standalone: true}" disabled></m-input>
+            <m-input [ngModel]="baseUnit.names.join(', ')" name="names" [readOnly]="true"></m-input>
           </m-form-item>
 
           <m-form-item mLabel="entities.ucum.base-unit.printSymbol">
-            <m-input [ngModel]="baseUnit.printSymbol" [ngModelOptions]="{standalone: true}" disabled></m-input>
+            <m-input [ngModel]="baseUnit.printSymbol" name="printSymbol" [readOnly]="true"></m-input>
           </m-form-item>
 
           <m-form-item mLabel="entities.ucum.base-unit.kind">
-            <m-input [ngModel]="baseUnit.kind" [ngModelOptions]="{standalone: true}" disabled></m-input>
+            <m-input [ngModel]="baseUnit.kind" name="kind" [readOnly]="true"></m-input>
           </m-form-item>
 
           <m-form-item mLabel="entities.ucum.base-unit.description">
-            <m-input [ngModel]="baseUnit.description" [ngModelOptions]="{standalone: true}" disabled></m-input>
+            <m-input [ngModel]="baseUnit.description" name="description" [readOnly]="true"></m-input>
           </m-form-item>
         </form>
 

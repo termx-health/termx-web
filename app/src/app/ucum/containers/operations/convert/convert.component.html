@@ -1,6 +1,6 @@
 <m-form-row>
   <div *m-form-col>
-    <m-card [mTitle]="'web.ucum.operations.convert.title'" autofocus>
+    <m-card [mTitle]="'web.ucum.operations.convert.title'">
       <form #form="ngForm">
         <m-form-item mName="sourceCode" mLabel="web.ucum.operations.convert.sourceCode" required>
           <m-input name="sourceCode" [(ngModel)]="sourceCode" required/>
@@ -32,7 +32,7 @@
       <div *ngIf="error">
         <m-card [mTitle]="'web.ucum.operations.convert.error'" style="background-color: #ffcccc">
           <div *m-card-content>
-            <pre>{{ error }}</pre>
+            <pre style="white-space: pre-wrap; word-wrap: break-word;">{{ error }}</pre>
           </div>
         </m-card>
       </div>
