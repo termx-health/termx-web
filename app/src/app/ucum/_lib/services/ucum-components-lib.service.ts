@@ -45,12 +45,4 @@ export class UcumComponentsLibService {
   public loadBaseUnitByCode(code: string): Observable<BaseUnit> {
     return this.http.get<BaseUnit>(`${this.baseUrl}/base-units/${encodeURIComponent(code)}`);
   }
-
-  public searchDefinedUnit(params: DefinedUnitSearchParams = {kind: 'UNIT', textContains: 'a'}): Observable<SearchResult<DefinedUnit>> {
-    return this.http.get<SearchResult<DefinedUnit>>(`${this.baseUrl}/search`, {params: SearchHttpParams.build(params)});
-  }
-
-  public search(params: UcumSearchParams = {}): Observable<SearchResult<Ucum>> {
-    return this.http.get<SearchResult<Ucum>>(this.baseUrl, {params: SearchHttpParams.build(params)});
-  }
 }
