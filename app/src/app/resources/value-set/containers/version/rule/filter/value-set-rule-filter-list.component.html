@@ -74,7 +74,7 @@
               [ngModel]="f.value"
               [property]="f.property"
               [codeSystem]="codeSystem"></tw-property-value-input>
-          <m-checkbox *ngIf="f.operator === 'exists'" readOnly  [name]="ngModelName" [ngModel]="f.value" ></m-checkbox>
+          <label *ngIf="f.operator === 'exists'">{{f.value}}</label>
         </ng-template>
         <ng-template #editTemplate let-f let-ngModelName="ngModelName">
           <tw-property-value-input *ngIf="f.operator !== 'exists'"
