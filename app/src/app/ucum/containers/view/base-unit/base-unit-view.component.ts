@@ -25,8 +25,8 @@ export class BaseUnitViewComponent implements OnInit {
   public ngOnInit(): void {
     this.loading = true;
     const code = this.route.snapshot.paramMap.get('code');
-    const state = this.stateStore.pop(this.STORE_KEY);
-    const all: BaseUnit[] = state?.allBaseUnits || [];
+    const baseUnits = this.stateStore.pop(this.STORE_KEY);
+    const all: BaseUnit[] = baseUnits || [];
     this.baseUnit = all.find(p => `${p.code}` === code);
 
     if (!this.baseUnit) {

@@ -1,10 +1,9 @@
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
-import {map, Observable} from 'rxjs';
+import {Observable} from 'rxjs';
 import {Ucum} from '../model/ucum';
-import {DefinedUnit, DefinedUnitSearchParams, UcumSearchParams} from 'term-web/ucum/_lib';
+import {DefinedUnit} from 'term-web/ucum/_lib';
 import {Prefix} from "../model/prefix";
 import {BaseUnit} from "../model/base-unit";
 

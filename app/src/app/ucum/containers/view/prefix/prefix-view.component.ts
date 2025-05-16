@@ -25,8 +25,8 @@ export class PrefixViewComponent implements OnInit {
   public ngOnInit(): void {
     this.loading = true;
     const code = this.route.snapshot.paramMap.get('code');
-    const state = this.stateStore.pop(this.STORE_KEY);
-    const all: Prefix[] = state?.allPrefixes || [];
+    const prefixes = this.stateStore.pop(this.STORE_KEY);
+    const all: Prefix[] = prefixes || [];
     this.prefix = all.find(p => `${p.code}` === code);
 
     if (!this.prefix) {

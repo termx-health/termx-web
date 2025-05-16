@@ -1,6 +1,16 @@
 <m-card>
   <div *m-card-header class="m-justify-between">
     <span>{{'web.ucum.base-unit.list.title' | translate}}</span>
+
+    <div class="m-items-middle">
+      <m-input
+              name="search"
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onSearchTermChange()"
+              placeholder="marina.ui.inputs.search.placeholder"
+              autofocus
+      ></m-input>
+    </div>
   </div>
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
