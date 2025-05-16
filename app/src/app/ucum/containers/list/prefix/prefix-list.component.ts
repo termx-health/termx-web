@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { UcumComponentsLibService, Prefix} from 'term-web/ucum/_lib';
+import { UcumLibService, Prefix, SearchParams} from 'term-web/ucum/_lib';
 import { finalize } from 'rxjs/operators';
 import { ComponentStateStore, SearchResult } from '@kodality-web/core-util';
-import {SearchParams} from "../../../_lib";
+import {applyPagination, applySort} from "term-web/ucum/utils/table-util";
 
 @Component({
   templateUrl: './prefix-list.component.html',
@@ -17,7 +17,7 @@ export class PrefixListComponent implements OnInit {
   private readonly STORE_KEY = 'prefix-list';
 
   public constructor(
-    private ucumCmpSvc: UcumComponentsLibService,
+    private ucumCmpSvc: UcumLibService,
     private stateStore: ComponentStateStore
   ) {}
 
@@ -40,7 +40,7 @@ export class PrefixListComponent implements OnInit {
   }
 
   public loadData(): void {
-    let filtered = this.allPrefixes;
+    let filtered = [...this.allPrefixes];
     if (this.searchTerm) {
       const term = this.searchTerm.toLowerCase();
       filtered = filtered.filter(p =>
@@ -48,17 +48,10 @@ export class PrefixListComponent implements OnInit {
         p.names?.some(n => n.toLowerCase().includes(term))
       );
     }
-    const offset = this.query.offset ?? 0;
-    const limit = this.query.limit > 0 ? this.query.limit : filtered.length;
-    const page = filtered.slice(offset, offset + limit);
-    this.searchResult = {
-      data: page,
-      meta: {
-        total: filtered.length,
-        pages: limit > 0 ? Math.ceil(filtered.length / limit) : 1,
-        offset,
-      },
-    } as SearchResult<Prefix>;
+    filtered = applySort(filtered, this.query.sort);
+
+    const { data: page, meta } = applyPagination(filtered, this.query);
+    this.searchResult = { data: page, meta} as SearchResult<Prefix>;
   }
 
   public onSearchTermChange(): void {

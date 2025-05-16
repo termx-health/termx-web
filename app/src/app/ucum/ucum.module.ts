@@ -4,7 +4,6 @@ import {UcumLibModule} from 'term-web/ucum/_lib';
 import {CoreUiModule} from '../core/ui/core-ui.module';
 import {DefinedUnitViewComponent} from './containers/view/defined-unit/defined-unit-view.component';
 import {DefinedUnitListComponent} from './containers/list/defined-unit/defined-unit-list.component';
-import {UcumService} from './services/ucum.service';
 import {UcumMenuComponent} from "./containers/ucum-menu.component";
 import {PrefixListComponent} from "./containers/list/prefix/prefix-list.component";
 import {PrefixViewComponent} from "./containers/view/prefix/prefix-view.component";
@@ -19,11 +18,11 @@ import {ConvertComponent} from "./containers/operations/convert/convert.componen
 export const UCUM_ROUTES: Routes = [
   { path: '', component: UcumMenuComponent },
   { path: 'prefixes', component: PrefixListComponent },
-  { path: 'prefixes/:code/view', component: PrefixViewComponent },
+  { path: 'prefixes/:code', component: PrefixViewComponent },
   { path: 'defined-units', component: DefinedUnitListComponent },
-  { path: 'defined-units/:code/view', component: DefinedUnitViewComponent },
+  { path: 'defined-units/:code', component: DefinedUnitViewComponent },
   { path: 'base-units', component: BaseUnitListComponent },
-  { path: 'base-units/:code/view', component: BaseUnitViewComponent },
+  { path: 'base-units/:code', component: BaseUnitViewComponent },
   { path: 'analyse', component: AnalyseComponent },
   { path: 'canonicalise', component: CanonicaliseComponent },
   { path: 'validate', component: ValidateComponent },
@@ -47,9 +46,6 @@ export const UCUM_ROUTES: Routes = [
   imports: [
     CoreUiModule,
     UcumLibModule,
-  ],
-  providers: [
-    UcumService
   ]
 })
 export class UcumModule {}

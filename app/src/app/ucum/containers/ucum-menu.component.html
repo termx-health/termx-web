@@ -6,17 +6,17 @@
       </div>
       <div *m-card-content style="display:flex; flex-direction:row; gap:var(--gap-default)">
         <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:var(--gap-default)">
-          <h4>Components</h4>
-          <m-button style="width:100%" [routerLink]="['defined-units']">{{ 'web.ucum.defined-unit.list.title' | translate }}</m-button>
-          <m-button style="width:100%" [routerLink]="['prefixes']">{{ 'web.ucum.prefix.list.title' | translate }}</m-button>
-          <m-button style="width:100%" [routerLink]="['base-units']">{{ 'web.ucum.base-unit.list.title' | translate }}</m-button>
+          <h4>{{ 'web.ucum.menu.components' | translate }}</h4>
+          <m-button style="width:100%" [routerLink]="['defined-units']">{{ 'web.ucum.menu.defined-units' | translate }}</m-button>
+          <m-button style="width:100%" [routerLink]="['prefixes']">{{ 'web.ucum.menu.prefixes' | translate }}</m-button>
+          <m-button style="width:100%" [routerLink]="['base-units']">{{ 'web.ucum.menu.base-units' | translate }}</m-button>
         </div>
         <div style="flex:1; display:flex; flex-direction:column; align-items:center; gap:var(--gap-default)">
-          <h4>Operations</h4>
-          <m-button style="width:100%" [routerLink]="['validate']">Validate</m-button>
-          <m-button style="width:100%" [routerLink]="['convert']">Convert</m-button>
-          <m-button style="width:100%" [routerLink]="['analyse']">Analyse</m-button>
-          <m-button style="width:100%" [routerLink]="['canonicalise']">Canonicalise</m-button>
+          <h4>{{ 'web.ucum.menu.operations' | translate }}</h4>
+          <m-button style="width:100%" [routerLink]="['validate']">{{ 'web.ucum.menu.validate' | translate }}</m-button>
+          <m-button style="width:100%" [routerLink]="['convert']">{{ 'web.ucum.menu.convert' | translate }}</m-button>
+          <m-button style="width:100%" [routerLink]="['analyse']">{{ 'web.ucum.menu.analyse' | translate }}</m-button>
+          <m-button style="width:100%" [routerLink]="['canonicalise']">{{ 'web.ucum.menu.canonicalise' | translate }}</m-button>
         </div>
       </div>
     </m-card>

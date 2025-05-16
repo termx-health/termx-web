@@ -1,6 +1,6 @@
 import {Component, ViewChild} from '@angular/core';
-import { UcumOperationsLibService } from 'term-web/ucum/_lib';
-import {AnalyseResponse} from "../../../_lib/model/analyse-response";
+import { UcumLibService } from 'term-web/ucum/_lib';
+import {AnalyseResponse} from "term-web/ucum/_lib/model/analyse-response";
 import {NgForm} from "@angular/forms";
 import { finalize } from 'rxjs/operators';
 
@@ -17,7 +17,7 @@ export class AnalyseComponent {
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
-    private ucumOpsSvc: UcumOperationsLibService,
+    private ucumOpsSvc: UcumLibService,
   ) {}
 
   public analyse(): void {

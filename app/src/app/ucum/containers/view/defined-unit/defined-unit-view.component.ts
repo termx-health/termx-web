@@ -4,7 +4,7 @@ import { Location } from '@angular/common';
 import { ComponentStateStore } from '@kodality-web/core-util';
 import { DefinedUnit } from 'term-web/ucum/_lib';
 import { NgForm } from "@angular/forms";
-import { UcumComponentsLibService } from 'term-web/ucum/_lib';
+import { UcumLibService } from 'term-web/ucum/_lib';
 
 @Component({
   templateUrl: './defined-unit-view.component.html',
@@ -20,7 +20,7 @@ export class DefinedUnitViewComponent implements OnInit {
     private route: ActivatedRoute,
     private stateStore: ComponentStateStore,
     private location: Location,
-    private ucumCmpSvc: UcumComponentsLibService
+    private ucumCmpSvc: UcumLibService
   ) {}
 
   public ngOnInit(): void {

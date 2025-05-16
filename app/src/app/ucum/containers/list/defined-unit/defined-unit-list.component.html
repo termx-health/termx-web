@@ -7,7 +7,6 @@
         name="search"
         [(ngModel)]="searchTerm"
         (ngModelChange)="onSearchTermChange()"
-        twDebounce
         placeholder="marina.ui.inputs.search.placeholder"
         autofocus
       ></m-input>
@@ -19,7 +18,6 @@
       <th mColumnKey="code">{{'entities.ucum.defined-unit.code' | translate}}</th>
       <th mColumnKey="names">{{'entities.ucum.defined-unit.names' | translate}}</th>
       <th mColumnKey="printSymbol">{{'entities.ucum.defined-unit.printSymbol' | translate}}</th>
-      <th mColumnKey="kind">{{'entities.ucum.defined-unit.kind' | translate}}</th>
       <th mColumnKey="property">{{'entities.ucum.defined-unit.property' | translate}}</th>
       <th mColumnKey="metric">{{'entities.ucum.defined-unit.metric' | translate}}</th>
       <th mColumnKey="class">{{'entities.ucum.defined-unit.class' | translate}}</th>
@@ -27,10 +25,9 @@
     </tr>
 
       <tr *mTableRow="let mu">
-        <td><a [routerLink]="[mu.code, 'view']">{{mu.code}}</a></td>
+        <td><a [routerLink]="[mu.code]">{{mu.code}}</a></td>
         <td>{{mu.names.join(', ')}}</td>
         <td>{{mu.printSymbol}}</td>
-        <td>{{mu.kind}}</td>
         <td>{{mu.property}}</td>
         <td>{{mu.metric}}</td>
         <td>{{mu.class}}</td>

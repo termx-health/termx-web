@@ -18,17 +18,17 @@
       <th mColumnKey="code">{{'entities.ucum.base-unit.code' | translate}}</th>
       <th mColumnKey="names">{{'entities.ucum.base-unit.names' | translate}}</th>
       <th mColumnKey="printSymbol">{{'entities.ucum.base-unit.printSymbol' | translate}}</th>
-      <th mColumnKey="description">{{'entities.ucum.base-unit.property' | translate}}</th>
-      <th mColumnKey="printSymbol">{{'entities.ucum.base-unit.dim' | translate}}</th>
+      <th mColumnKey="property">{{'entities.ucum.base-unit.property' | translate}}</th>
+      <th mColumnKey="dimension">{{'entities.ucum.base-unit.dimension' | translate}}</th>
       <th mColumnKey="description">{{'entities.ucum.base-unit.description' | translate}}</th>
     </tr>
 
       <tr *mTableRow="let p">
-        <td><a [routerLink]="[p.code, 'view']">{{p.code}}</a></td>
+        <td><a [routerLink]="[p.code]">{{p.code}}</a></td>
         <td>{{p.names.join(', ')}}</td>
         <td>{{p.printSymbol}}</td>
         <td>{{p.property}}</td>
-        <td>{{p.dim}}</td>
+        <td>{{p.dimension}}</td>
         <td>{{p.description}}</td>
       </tr>
 
