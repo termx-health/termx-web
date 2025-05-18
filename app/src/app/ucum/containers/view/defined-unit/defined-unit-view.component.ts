@@ -20,7 +20,7 @@ export class DefinedUnitViewComponent implements OnInit {
     private route: ActivatedRoute,
     private stateStore: ComponentStateStore,
     private location: Location,
-    private ucumCmpSvc: UcumLibService
+    private ucumSvc: UcumLibService
   ) {}
 
   public ngOnInit(): void {
@@ -31,7 +31,7 @@ export class DefinedUnitViewComponent implements OnInit {
     this.unit = all.find(u => `${u.code}` === code);
 
     if (!this.unit) {
-      this.ucumCmpSvc.loadUnitByCode(code)
+      this.ucumSvc.loadUnitByCode(code)
         .subscribe(unit => this.unit = unit);
     }
     this.loading = false;

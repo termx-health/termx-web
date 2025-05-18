@@ -18,7 +18,7 @@ export class DefinedUnitListComponent implements OnInit {
   private readonly STORE_KEY = 'defined-unit-list';
 
   public constructor(
-    private ucumCmpSvc: UcumLibService,
+    private ucumSvc: UcumLibService,
     private stateStore: ComponentStateStore
   ) {}
 
@@ -30,7 +30,7 @@ export class DefinedUnitListComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.ucumCmpSvc.loadDefinedUnits()
+    this.ucumSvc.loadDefinedUnits()
       .pipe(finalize(() => this.loading = false))
       .subscribe(units => {
         this.allUnits = units;

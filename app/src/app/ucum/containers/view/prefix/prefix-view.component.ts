@@ -19,7 +19,7 @@ export class PrefixViewComponent implements OnInit {
     private route: ActivatedRoute,
     private stateStore: ComponentStateStore,
     private location: Location,
-    private ucumCmpSvc: UcumLibService
+    private ucumSvc: UcumLibService
   ) {}
 
   public ngOnInit(): void {
@@ -30,7 +30,7 @@ export class PrefixViewComponent implements OnInit {
     this.prefix = all.find(p => `${p.code}` === code);
 
     if (!this.prefix) {
-      this.ucumCmpSvc.loadPrefixByCode(code)
+      this.ucumSvc.loadPrefixByCode(code)
         .subscribe(unit => this.prefix = unit);
     }
     this.loading = false;

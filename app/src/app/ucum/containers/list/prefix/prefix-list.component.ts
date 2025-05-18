@@ -17,7 +17,7 @@ export class PrefixListComponent implements OnInit {
   private readonly STORE_KEY = 'prefix-list';
 
   public constructor(
-    private ucumCmpSvc: UcumLibService,
+    private ucumSvc: UcumLibService,
     private stateStore: ComponentStateStore
   ) {}
 
@@ -30,7 +30,7 @@ export class PrefixListComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.ucumCmpSvc.loadPrefixes()
+    this.ucumSvc.loadPrefixes()
       .pipe(finalize(() => this.loading = false))
       .subscribe(prefixes => {
         this.allPrefixes = prefixes;
