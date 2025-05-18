@@ -17,7 +17,7 @@ export class BaseUnitListComponent implements OnInit {
   private readonly STORE_KEY = 'base-unit-list';
 
   public constructor(
-    private ucumCmpSvc: UcumLibService,
+    private ucumSvc: UcumLibService,
     private stateStore: ComponentStateStore
   ) {}
 
@@ -29,7 +29,7 @@ export class BaseUnitListComponent implements OnInit {
       return;
     }
     this.loading = true;
-    this.ucumCmpSvc.loadBaseUnits()
+    this.ucumSvc.loadBaseUnits()
       .pipe(finalize(() => this.loading = false))
       .subscribe(baseUnits => {
         this.allBaseUnits = baseUnits;
