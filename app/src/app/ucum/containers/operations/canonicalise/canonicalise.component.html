@@ -1,0 +1,35 @@
+<m-form-row>
+  <div *m-form-col>
+    <m-card [mTitle]="'web.ucum.operations.canonicalise.title'">
+      <form #form="ngForm">
+        <m-form-item mName="code" mLabel="web.ucum.operations.canonicalise.code" required>
+          <m-input name="code" [(ngModel)]="code" required/>
+        </m-form-item>
+
+        <m-button
+                *m-card-footer
+                mDisplay="primary"
+                [disabled]="!code"
+                (mClick)="canonicalise()"
+        >
+          {{'web.ucum.operations.canonicalise.btn' | translate}}
+        </m-button>
+      </form>
+
+      <div *ngIf="response">
+        <m-card [mTitle]="'web.ucum.operations.canonicalise.result'" style="background-color: #c6ecc6">
+          <div *m-card-content>
+            <pre>{{ response.result}}</pre>
+          </div>
+        </m-card>
+      </div>
+      <div *ngIf="error">
+        <m-card [mTitle]="'web.ucum.operations.canonicalise.error'" style="background-color: #ffcccc">
+          <div *m-card-content>
+            <pre>{{ error }}</pre>
+          </div>
+        </m-card>
+      </div>
+    </m-card>
+  </div>
+</m-form-row>

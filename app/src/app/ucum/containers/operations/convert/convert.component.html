@@ -1,0 +1,41 @@
+<m-form-row>
+  <div *m-form-col>
+    <m-card [mTitle]="'web.ucum.operations.convert.title'">
+      <form #form="ngForm">
+        <m-form-item mName="sourceCode" mLabel="web.ucum.operations.convert.sourceCode" required>
+          <m-input name="sourceCode" [(ngModel)]="sourceCode" required/>
+        </m-form-item>
+        <m-form-item mName="targetCode" mLabel="web.ucum.operations.convert.targetCode" required>
+          <m-input name="targetCode" [(ngModel)]="targetCode" required/>
+        </m-form-item>
+        <m-form-item mName="value" mLabel="web.ucum.operations.convert.value" required>
+          <m-input name="value" [(ngModel)]="value" required/>
+        </m-form-item>
+
+        <m-button
+                *m-card-footer
+                mDisplay="primary"
+                [disabled]="!sourceCode || !targetCode || !value"
+                (mClick)="convert()"
+        >
+          {{'web.ucum.operations.convert.btn' | translate}}
+        </m-button>
+      </form>
+
+      <div *ngIf="response">
+        <m-card [mTitle]="'web.ucum.operations.convert.result'" style="background-color: #c6ecc6">
+          <div *m-card-content>
+            <pre>{{ response.result + " " + displayedTargetCode }}</pre>
+          </div>
+        </m-card>
+      </div>
+      <div *ngIf="error">
+        <m-card [mTitle]="'web.ucum.operations.convert.error'" style="background-color: #ffcccc">
+          <div *m-card-content>
+            <pre style="white-space: pre-wrap; word-wrap: break-word;">{{ error }}</pre>
+          </div>
+        </m-card>
+      </div>
+    </m-card>
+  </div>
+</m-form-row>
