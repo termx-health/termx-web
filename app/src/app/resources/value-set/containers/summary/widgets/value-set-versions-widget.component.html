@@ -42,7 +42,7 @@
       <div *ngIf="rule.concepts?.length > 0">(<m-abbreviate [mValue]="rule.concepts | map: 'concept.code' | join: ' #'" [mLength]="400"/>)</div>
       <div *ngIf="rule.filters?.length > 0" class="m-items-middle">(<span *ngFor="let f of rule.filters" class="m-items-middle">#{{f.property?.name}} {{f.operator || '='}}
         <tw-property-value-input *ngIf="f.operator !== 'exists'" viewMode [ngModel]="f.value" [property]="f.property" [codeSystem]="rule.codeSystem"></tw-property-value-input>
-        <m-checkbox *ngIf="f.operator === 'exists'" readOnly [ngModel]="f.value" ></m-checkbox></span>)
+        <label *ngIf="f.operator === 'exists'">{{f.value}}</label></span>)
       </div>
     </div>
     <div class="m-items-middle" *twPrivileged="'*.Release.view'">
