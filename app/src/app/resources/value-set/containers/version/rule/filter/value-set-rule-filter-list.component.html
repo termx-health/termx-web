@@ -39,7 +39,7 @@
                 <m-option [mLabel]="'regex'" [mValue]="'regex'"></m-option>
                 <m-option [mLabel]="'in'" [mValue]="'in'"></m-option>
                 <m-option [mLabel]="'not-in'" [mValue]="'not-in'"></m-option>
-                <m-option *ngIf="f.property?.name !== 'code'" [mLabel]="'exits'" [mValue]="'exists'"></m-option>
+                <m-option *ngIf="f.property?.name !== 'code'" [mLabel]="'exists'" [mValue]="'exists'"></m-option>
               </m-select>
               <m-select *ngIf="f.property?.name === 'concept'" [name]="ngModelName" [(ngModel)]="f.operator">
                 <m-option [mLabel]="'is-a'" [mValue]="'is-a'"></m-option>
