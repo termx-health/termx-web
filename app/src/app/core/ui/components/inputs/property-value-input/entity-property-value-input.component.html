@@ -34,7 +34,8 @@
                 [required]="required"></tw-term-concept-search>
           </ng-container>
           <ng-container *ngSwitchCase="'code-system'">
-            <m-select *ngIf="!value.codeSystem || property.rule.codeSystems?.length > 1" style="flex: 1"
+            <m-select *ngIf="!value.codeSystem || property.rule.codeSystems?.length > 1"
+                style="flex: 1"
                 name="system"
                 autoSelect
                 placeholder="Code system"
@@ -66,13 +67,15 @@
     </ng-container>
 
     <ng-container *ngIf="viewMode">
-      <label *ngIf="['string', 'decimal', 'integer', undefined, null] | includes:property?.type">{{value}}</label>
-      <m-checkbox *ngIf="'boolean' === property?.type" [ngModel]="value" name="value" readOnly></m-checkbox>
-      <label *ngIf="'dateTime' === property?.type">{{value | localDate}}</label>
-      <label *ngIf="'code' === property?.type">{{value | localizedConceptName: {codeSystem: codeSystem} | async}}</label>
-      <ng-container *ngIf="'Coding' === property?.type" [ngSwitch]="property | apply:codingType">
-        <label m-tooltip [mTitle]="value?.code" >{{value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async}}</label>
-      </ng-container>
+      <div style="word-break: break-word">
+        <label *ngIf="['string', 'decimal', 'integer', undefined, null] | includes:property?.type">{{ value }}</label>
+        <m-checkbox *ngIf="'boolean' === property?.type" [ngModel]="value" name="value" readOnly></m-checkbox>
+        <label *ngIf="'dateTime' === property?.type">{{ value | localDate }}</label>
+        <label *ngIf="'code' === property?.type">{{ value | localizedConceptName: {codeSystem: codeSystem} | async }}</label>
+        <ng-container *ngIf="'Coding' === property?.type" [ngSwitch]="property | apply:codingType">
+          <label m-tooltip [mTitle]="value?.code">{{ value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async }}</label>
+        </ng-container>
+      </div>
     </ng-container>
   </m-form-control>
 </form>
