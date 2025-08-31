@@ -6,7 +6,7 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {EventTypes, OidcSecurityService, PublicEventsService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import Cookies from 'js-cookie';
-import {catchError, filter, map, mergeMap, Observable, of, tap} from 'rxjs';
+import {catchError, filter, map, mergeMap, Observable, of, switchMap, tap} from 'rxjs';
 
 const COOKIE_OAUTH_TOKEN_KEY = 'termx-oauth-token';
 const REDIRECT_ORIGIN_URL = '__termx-redirect_origin_url';
@@ -167,14 +167,19 @@ export class AuthService {
 
   private processAuthFinishEvents(eventService: PublicEventsService): void {
     eventService.registerForEvents()
-      .pipe(filter(e => e.type === EventTypes.CheckingAuthFinished))
-      .subscribe(() => {
-        const redirectOriginUrl = sessionStorage.getItem(REDIRECT_ORIGIN_URL);
-        if (redirectOriginUrl) {
-          sessionStorage.removeItem(REDIRECT_ORIGIN_URL);
-          window.location.replace(redirectOriginUrl);
-        }
-      });
+      .pipe(
+        filter(e => e.type === EventTypes.CheckingAuthFinished),
+        switchMap(() => this.isAuthenticated$),
+        filter(isAuthenticated => isAuthenticated),
+        tap(() => {
+          const redirectOriginUrl = sessionStorage.getItem(REDIRECT_ORIGIN_URL);
+          if (redirectOriginUrl) {
+            sessionStorage.removeItem(REDIRECT_ORIGIN_URL);
+            window.location.replace(redirectOriginUrl);
+          }
+        })
+      )
+      .subscribe();
   }
 
   private processNewAuthenticationEvents(eventService: PublicEventsService): void {
