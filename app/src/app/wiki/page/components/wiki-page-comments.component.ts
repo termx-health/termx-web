@@ -16,7 +16,8 @@ import {ExtendedPageComment} from 'term-web/wiki/page/components/wiki-page-comme
     .container {
       display: flex;
       flex-direction: column;
-      gap: var(--gap-default)
+      gap: var(--gap-default);
+      position: relative;
     }
   `]
 })
