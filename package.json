@@ -1,6 +1,6 @@
 {
   "name": "termx",
-  "version": "2.5-snapshot",
+  "version": "3.0-snapshot",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -57,7 +57,7 @@
     "@angular-eslint/template-parser": "^16.3.1",
     "@angular/cli": "~16.2.10",
     "@angular/compiler-cli": "^16.2.12",
-    "@types/cytoscape": "^3.21.8",
+    "@types/cytoscape": "^3.21.9",
     "@types/diff": "^5.0.7",
     "@types/file-saver": "^2.0.5",
     "@types/jasmine": "~4.0.0",
