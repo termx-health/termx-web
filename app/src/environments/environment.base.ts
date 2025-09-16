@@ -29,6 +29,7 @@ export interface Environment {
   termxApi: string,
   swaggerUrl?: string,
   chefUrl?: string,
+  chefFhirVersion?: string,
   plantUmlUrl?: string,
   fmlEditor?: string,
 

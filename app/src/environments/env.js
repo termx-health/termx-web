@@ -6,6 +6,7 @@ twConfig = {
   "termxApi": "${TERMX_API}",
   "swaggerUrl": "${SWAGGER_URL}",
   "chefUrl": "${CHEF_URL}",
+  "chefFhirVersion": "${CHEF_FHIR_VERSION}",
   "plantUmlUrl": "${PLANT_UML_URL}",
   "fmlEditor": "${FML_EDITOR}",
   "snowstormUrl": "${SNOWSTORM_URL}",

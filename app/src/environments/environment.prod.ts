@@ -20,6 +20,7 @@ export const environment: Environment = {
   termxApi: dynamicEnv.termxApi || '/api',
   swaggerUrl: dynamicEnv.swaggerUrl || '/swagger/',
   chefUrl: dynamicEnv.chefUrl || '/chef',
+  chefFhirVersion: dynamicEnv.chefFhirVersion || '5.0.0',
   plantUmlUrl: dynamicEnv.plantUmlUrl || '/plantuml',
   fmlEditor: dynamicEnv.fmlEditor || '/fml-editor',
 

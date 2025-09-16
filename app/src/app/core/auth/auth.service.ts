@@ -169,7 +169,7 @@ export class AuthService {
     eventService.registerForEvents()
       .pipe(
         filter(e => e.type === EventTypes.CheckingAuthFinished),
-        switchMap(() => this.isAuthenticated$),
+        switchMap(() => this.isAuthenticated),
         filter(isAuthenticated => isAuthenticated),
         tap(() => {
           const redirectOriginUrl = sessionStorage.getItem(REDIRECT_ORIGIN_URL);

@@ -21,6 +21,7 @@ export const environment: Environment = {
 
   swaggerUrl: 'https://demo.termx.org/swagger/',
   chefUrl: 'https://demo.termx.org/chef',
+  chefFhirVersion: '5.0.0',
   plantUmlUrl: 'https://demo.termx.org/plantuml',
   fmlEditor: 'https://demo.termx.org/fml-editor',
 

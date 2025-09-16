@@ -69,6 +69,11 @@ import {InfoService} from './info.service';
                           <a class="m-text-secondary small" [href]="env.chefUrl">{{ env.chefUrl }}</a>
                       </div>
 
+                      <div class="cardy m-rounded" *ngIf="env.chefFhirVersion">
+                          <div class="small">Chef FHIR Version</div>
+                          <div class="m-text-secondary small">{{ env.chefFhirVersion }}</div>
+                      </div>
+
                       <div class="cardy m-rounded" *ngIf="env.fmlEditor">
                           <div class="small">FML</div>
                           <a class="m-text-secondary small" [href]="env.fmlEditor">{{ env.fmlEditor }}</a>

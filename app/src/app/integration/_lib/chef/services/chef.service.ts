@@ -17,8 +17,9 @@ export class ChefService {
   }
 
   public fshToFhir(req: FshToFhirRequest): Observable<FshToFhirResponse> {
+    const chefFhirVersion = `${environment.chefFhirVersion}`;
     req.options ??= {};
-    req.options.fhirVersion ??= '5.0.0';
+    req.options.fhirVersion ??= chefFhirVersion || '5.0.0';
     return this.http.post(`${environment.chefUrl}/fsh2fhir`, req).pipe(catchError(err => of(err.error)));
   }
 
