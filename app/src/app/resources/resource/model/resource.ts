@@ -12,7 +12,7 @@ export class Resource {
   public topic?: {text?: string, tags?: string[]};
   public useContext?: {type?: string, value?: string}[];
   public experimental?: boolean;
-  public externalWebSource?: boolean;
+  public externalWebSource?: string;
   public sourceReference?: string;
   public replaces?: string;
 }
