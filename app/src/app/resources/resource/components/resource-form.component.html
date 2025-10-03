@@ -21,7 +21,7 @@
 
   <m-form-row>
     <m-form-item *mFormCol mLabel="entities.resource.id" mName="id" [required]="mode === 'add'">
-      <m-input *ngIf="mode === 'add'" name="id" [(ngModel)]="resource.id" required></m-input>
+      <m-input *ngIf="mode === 'add'" name="id" [(ngModel)]="resource.id" required [pattern]="idPattern"></m-input>
       <div class="m-items-middle" *ngIf="mode !== 'add'">
         <span>{{resource.id}}</span>
         <m-button m-tooltip mTitle="core.btn.edit" (mClick)="idChangeModalData.visible = true">
