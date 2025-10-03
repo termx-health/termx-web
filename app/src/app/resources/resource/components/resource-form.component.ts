@@ -22,6 +22,8 @@ export class ResourceFormComponent implements OnChanges {
   @Input() public resource?: Resource;
   @Input() public mode?: 'add' | 'edit';
 
+  public readonly idPattern: string = '[A-Za-z0-9\\-.]{1,64}';
+
   protected loader = new LoadingManager();
   protected customPublisher: boolean = false;
   protected publishers: ValueSetVersionConcept[];
