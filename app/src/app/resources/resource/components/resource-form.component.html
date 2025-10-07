@@ -124,7 +124,7 @@
   <ng-container *mModalContent>
     <form #idChangeModalForm="ngForm">
       <m-form-item mName="id" mLabel="web.resource-form.id-change-modal.id" required>
-        <m-input name="id" [(ngModel)]="idChangeModalData.id" required></m-input>
+        <m-input name="id" [(ngModel)]="idChangeModalData.id" required [pattern]="idPattern"></m-input>
       </m-form-item>
     </form>
   </ng-container>
