@@ -11,7 +11,8 @@
         <tw-semantic-version-select name="version"
             [(ngModel)]="version.version"
             [versions]="valueSetId | apply: versions | async"
-            required></tw-semantic-version-select>
+            required
+            [pattern]="versionPattern"></tw-semantic-version-select>
       </m-form-item>
 
 

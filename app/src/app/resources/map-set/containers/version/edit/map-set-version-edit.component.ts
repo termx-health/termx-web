@@ -17,6 +17,8 @@ export class MapSetVersionEditComponent implements OnInit {
   protected loader = new LoadingManager();
   protected mode: 'add' | 'edit' = 'add';
 
+  public readonly versionPattern: string = '[A-Za-z0-9\\-\\.]{1,64}';
+
   @ViewChild("form") public form?: NgForm;
 
   public constructor(

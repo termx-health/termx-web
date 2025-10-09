@@ -20,6 +20,7 @@ export class ValueSetVersionEditComponent implements OnInit {
   public mode: 'add' | 'edit' = 'add';
   public loader = new LoadingManager();
 
+  public readonly versionPattern: string = '[A-Za-z0-9\\-\\.]{1,64}';
 
   @ViewChild("form") public form?: NgForm;
 
