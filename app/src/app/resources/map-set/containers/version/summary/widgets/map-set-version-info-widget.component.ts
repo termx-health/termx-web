@@ -60,14 +60,22 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
       const xml = new Fhir().jsonToXml(json);
       saveAs(new Blob([xml], {type: 'application/xml'}), `MS-${fhirMs.id}.xml`);
     }
-    if (format === 'fsh') {
-      this.chefService.fhirToFsh({fhir: [json]}).subscribe(r => {
-        r.warnings?.forEach(w => this.notificationService.warning('JSON to FSH conversion warning', w.message!, {duration: 0, closable: true}));
-        r.errors?.forEach(e => this.notificationService.error('JSON to FSH conversion failed!', e.message!, {duration: 0, closable: true}));
-        const fsh = typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
-        saveAs(new Blob([fsh], {type: 'application/fsh'}), `MS-${fhirMs.id}.fsh`);
-      });
+    if (format === 'fsh r4') {
+      this.fhirToFsh(fhirMs.id, json, '4.3.0');
     }
+    if (format === 'fsh r5') {
+      this.fhirToFsh(fhirMs.id, json, '5.0.0');
+    }
+
+  }
+
+  private fhirToFsh(mapSetId: string, json: string, version: string): void {
+    this.chefService.fhirToFsh({fhir: [json]}, version).subscribe(r => {
+      r.warnings?.forEach(w => this.notificationService.warning('JSON to FSH conversion warning', w.message!, {duration: 0, closable: true}));
+      r.errors?.forEach(e => this.notificationService.error('JSON to FSH conversion failed!', e.message!, {duration: 0, closable: true}));
+      const fsh = typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
+      saveAs(new Blob([fsh], {type: 'application/fsh'}), `CS-${mapSetId}.fsh`);
+    });    
   }
 
   protected changeVersionStatus(status: 'draft' | 'active' | 'retired'): void {
