@@ -28,7 +28,7 @@
   <div class="m-items-middle">
     <m-icon mCode="download"></m-icon>
     <span>{{'web.code-system-version.summary.info.download' | translate}}
-      (<span *ngFor="let format of ['json', 'xml', 'fsh', 'csv', 'xlsx']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 4 ? '|' : ''}}</span>)</span>
+      (<span *ngFor="let format of ['json', 'xml', 'fsh r4', 'fsh r5', 'csv', 'xlsx']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 4 ? '|' : ''}}</span>)</span>
     <m-divider mVertical></m-divider>
     <span>{{'web.code-system-version.summary.info.definition' | translate}} <a (mClick)="openJson()">FHIR</a></span>
   </div>
