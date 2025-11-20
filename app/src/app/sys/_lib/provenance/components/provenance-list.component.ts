@@ -1,6 +1,8 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
 import {LoadingManager} from '@kodality-web/core-util';
 import {Provenance, ProvenanceLibService} from 'term-web/sys/_lib';
+import { AuthService } from 'term-web/core/auth';
+import {map} from "rxjs";
 
 @Component({
   selector: 'tw-provenance-list',
@@ -16,7 +18,7 @@ import {Provenance, ProvenanceLibService} from 'term-web/sys/_lib';
       background-color: #f7f7f7;
     }
     .diff-icon{
-      margin: 5px; 
+      margin: 5px;
     }
   `]
 })
@@ -25,9 +27,14 @@ export class ProvenanceListComponent implements OnChanges {
   @Input() public targetId?: string;
   @Input() public provenances?: Provenance[];
 
+  protected isAuthenticated = this.authService.isAuthenticated.pipe(
+    map(isAuth => isAuth)
+  );
+
   protected loader = new LoadingManager();
 
-  public constructor(private provenanceService: ProvenanceLibService) {}
+  public constructor(private provenanceService: ProvenanceLibService,
+                     private authService: AuthService,) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['targetType'] || changes['targetId']) && this.targetType && this.targetId) {

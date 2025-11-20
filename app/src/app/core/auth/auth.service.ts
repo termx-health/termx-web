@@ -21,7 +21,10 @@ export class AuthService {
   private readonly baseUrl = `${environment.termxApi}/auth`;
 
   public user?: UserInfo;
-  public isAuthenticated = this.oidcSecurityService.isAuthenticated$.pipe(map(r => r.isAuthenticated));
+  public isAuthenticated = this.oidcSecurityService.isAuthenticated$.pipe(
+    map(result => result.isAuthenticated)
+  );
+
   public notificationShown?: boolean = false;
 
   public get token(): Observable<string> {
