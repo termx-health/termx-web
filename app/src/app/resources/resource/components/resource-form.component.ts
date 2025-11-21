@@ -53,7 +53,8 @@ export class ResourceFormComponent implements OnChanges {
     const lang = this.translateService.currentLang;
     const t = title[lang] ? title[lang].toLowerCase() : Object.values(title)?.[0]?.toLowerCase();
     if (t) {
-      this.resource.id = slugify(t);
+      const correctedText = t.replace(/ü/g, 'y');
+      this.resource.id = slugify(correctedText);
     }
   }
 
