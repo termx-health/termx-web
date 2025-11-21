@@ -65,7 +65,8 @@ export class ResourceFormComponent implements OnChanges {
       const version = ConceptUtil.getLastVersion(concept);
       if (version) {
         const uri = version.propertyValues?.find(pv => pv.entityProperty === 'uri')?.value;
-        this.resource.uri = uri && this.resourceType && this.resource.id ? [uri, this.resourceType, this.resource.id].join('/') : this.resource.uri;
+        const fhirResourceType = this.resourceType === 'MapSet' ? 'ConceptMap' : this.resourceType;
+        this.resource.uri = uri && this.resourceType && this.resource.id ? [uri, fhirResourceType, this.resource.id].join('/') : this.resource.uri;
       }
     });
   }
