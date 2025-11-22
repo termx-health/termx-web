@@ -312,6 +312,58 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
     return concept.versions?.flatMap(v => v.designations).filter(d => isDefined(d));
   };
 
+  protected sortDesignations = (designations: Designation[], preferredLanguage?: string): Designation[] => {
+    if (!designations?.length) {
+      return [];
+    }
+
+    const getDesignationTypeOrder = (designation: Designation): number => {
+      const type = designation.designationType?.toLowerCase();
+      if (designation.preferred) {
+        return 0; // Preferred display first
+      }
+      if (type === 'display') {
+        return 1;
+      }
+      if (type === 'synonym') {
+        return 2;
+      }
+      if (type === 'definition') {
+        return 3;
+      }
+      return 4; // Other types
+    };
+
+    const getLanguageOrder = (designation: Designation): number => {
+      return designation.language === preferredLanguage ? 0 : 1;
+    };
+
+    return [...designations].sort((a, b) => {
+      // First, sort by language priority (preferred first)
+      const langPriorityCompare = getLanguageOrder(a) - getLanguageOrder(b);
+      if (langPriorityCompare !== 0) {
+        return langPriorityCompare;
+      }
+
+      // If both are in preferred language, sort by type only
+      if (a.language === preferredLanguage && b.language === preferredLanguage) {
+        return getDesignationTypeOrder(a) - getDesignationTypeOrder(b);
+      }
+
+      // If both are in non-preferred languages, sort by language code first
+      if (a.language !== preferredLanguage && b.language !== preferredLanguage) {
+        const langCodeCompare = (a.language || '').localeCompare(b.language || '');
+        if (langCodeCompare !== 0) {
+          return langCodeCompare;
+        }
+        // Within same language, sort by type
+        return getDesignationTypeOrder(a) - getDesignationTypeOrder(b);
+      }
+
+      return 0;
+    });
+  };
+
   protected getPropertyValues = (concept: CodeSystemConcept): EntityPropertyValue[] => {
     return concept.versions?.flatMap(v => v.propertyValues).filter(pv => isDefined(pv));
   };
