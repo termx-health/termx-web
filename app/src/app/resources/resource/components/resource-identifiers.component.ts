@@ -16,4 +16,21 @@ export class ResourceIdentifiersComponent {
   public valid(): boolean {
     return isDefined(this.form) && validateForm(this.form);
   }
+
+  protected addOidIdentifier(): void {
+    if (!this.identifiers) {
+      return;
+    }
+    const oidIdentifier: Identifier = {
+      system: 'urn:ietf:rfc:3986',
+      value: 'urn:oid:'
+    };
+    this.identifiers = [...this.identifiers, oidIdentifier];
+  }
+
+  protected trimWhitespace(identifier: Identifier, field: 'system' | 'value'): void {
+    if (identifier[field]) {
+      identifier[field] = identifier[field]!.trim();
+    }
+  }
 }

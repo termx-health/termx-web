@@ -511,6 +511,11 @@
 				"language": "Keel",
 				"value": "Väärtus"
 			},
+			"form": {
+				"identifiers": {
+					"often-used-identifiers": "Tihti kasutatavad..."
+				}
+			},
 			"replaces": "Asendab",
 			"topic": "Teema",
 			"other-title": "Täiendav nimetus",
