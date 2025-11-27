@@ -54,7 +54,9 @@
           <div class="m-items-middle" *ngFor="let d of c.additionalDesignations; let i = index" style="margin-bottom: 0.5rem">
             <tw-value-set-concept-select style="flex: 1" valueSet="languages" [(ngModel)]="d.language" name="{{i}}-lang"></tw-value-set-concept-select>
             <m-textarea style="flex: 1" [(ngModel)]="d.name" name="{{i}}-name"></m-textarea>
-            <m-icon style="flex: 1" class="m-clickable" mCode="delete" (click)="removeDesignation(c, i)"></m-icon>
+            <span style="flex: 1;">
+              <m-icon style="pointer-events: auto" class="m-clickable" mCode="delete" (click)="removeDesignation(c, i)"></m-icon>
+            </span>
           </div>
           <tw-add-button (click)="addDesignation(c)">{{'web.value-set-version.form.rule-set.rule.add-designation' | translate}}</tw-add-button>
         </ng-template>
