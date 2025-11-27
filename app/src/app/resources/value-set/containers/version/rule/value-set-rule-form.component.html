@@ -21,11 +21,11 @@
           <m-form-item *mFormCol mName="codeSystem" mLabel="entities.value-set-rule-set.rule.code-system" required>
             <tw-code-system-search name="codeSystem" [(ngModel)]="rule.codeSystem" required valuePrimitive></tw-code-system-search>
           </m-form-item>
-          <m-form-item *mFormCol mName="codeSystemVersion" mLabel="entities.value-set-rule-set.rule.code-system-version" [required]="!lockedDate">
+          <m-form-item *mFormCol mName="codeSystemVersion" mLabel="entities.value-set-rule-set.rule.code-system-version" [required]="!lockedDate && conceptsBase !== 'filter'">
             <tw-code-system-version-select name="codeSystemVersion"
                 [(ngModel)]="rule.codeSystemVersion"
                 [codeSystemId]="rule.codeSystem"
-                [required]="!lockedDate"></tw-code-system-version-select>
+                [required]="!lockedDate && conceptsBase !== 'filter'"></tw-code-system-version-select>
           </m-form-item>
         </m-form-row>
 
