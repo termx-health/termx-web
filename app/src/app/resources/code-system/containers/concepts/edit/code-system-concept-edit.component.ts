@@ -97,7 +97,9 @@ export class CodeSystemConceptEditComponent implements OnInit {
     request.entityVersion.propertyValues = this.propertyValueEdit?.getPropertyValues();
     request.entityVersion.associations = this.associationEdit?.getAssociations();
     this.loader.wrap('save', this.codeSystemService.saveConcept(this.codeSystemId, this.versionCode, request))
-      .subscribe(() => this.location.back());
+      .subscribe(() => {
+        this.loadConcept(this.concept.code, this.conceptVersion.id);
+      });
   }
 
   private loadConcept(conceptCode: string, conceptVersionId?: number): void {
