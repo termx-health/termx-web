@@ -199,7 +199,7 @@
     </td>
     <td>
       <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
-        <ng-container *ngFor="let designation of (node.concept | apply: getDesignations) | sort: 'language'">
+        <ng-container *ngFor="let designation of (node.concept | apply: getDesignations) | apply: sortDesignations: version?.preferredLanguage">
           <ng-container *ngIf="(!tableSummary.langs?.length || (tableSummary.langs | includes: designation.language)) &&
           (!tableSummary.properties?.length || (tableSummary.properties | includes: designation.designationType))"
           >
