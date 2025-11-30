@@ -19,6 +19,7 @@ import {GlobalSearchModule} from 'term-web/global-search/global-search.module';
 import {ImplementationGuideModule} from 'term-web/implementation-guide/implementation-guide.module';
 import {IntegrationModule} from 'term-web/integration/integration.module';
 import {MeasurementUnitModule} from 'term-web/measurement-unit/measurement-unit.module';
+import {UcumModule} from 'term-web/ucum/ucum.module';
 import {ModelerModule} from 'term-web/modeler/modeler.module';
 import {ObservationDefinitionModule} from 'term-web/observation-definition/observation-definition.module';
 import {PrivilegesModule} from 'term-web/privileges/privileges.module';
@@ -93,6 +94,7 @@ export function initAuth(authService: AuthService): () => Observable<any> {
     ObservationDefinitionModule,
     TerminologyServiceApiModule,
     MeasurementUnitModule,
+    UcumModule,
     SysModule,
     UserModule,
     SequenceModule,

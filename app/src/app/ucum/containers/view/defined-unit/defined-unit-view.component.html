@@ -1,0 +1,56 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading">
+      <m-card [mTitle]="'web.ucum.defined-unit.view.title'" [mShowSkeleton]="loading">
+
+        <form #form="ngForm" *ngIf="unit">
+          <m-form-item mLabel="entities.ucum.defined-unit.code">
+            <m-input [ngModel]="unit.code" name="code" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.defined-unit.codeUC">
+            <m-input [ngModel]="unit.codeUC" name="codeUC" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.defined-unit.names">
+            <m-input [ngModel]="unit.names.join(', ')" name="names" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.defined-unit.printSymbol">
+            <m-input [ngModel]="unit.printSymbol" name="printSymbol" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.defined-unit.kind">
+            <m-input [ngModel]="unit.kind" name="kind" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.defined-unit.property">
+            <m-input [ngModel]="unit.property" name="property" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.defined-unit.metric">
+            <m-input [ngModel]="unit.metric | json" name="metric" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.defined-unit.class">
+            <m-input [ngModel]="unit.class" name="class" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.defined-unit.special">
+            <m-input [ngModel]="unit.special | json" name="special" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.defined-unit.description">
+            <m-input [ngModel]="unit.description" name="description" [readOnly]="true"></m-input>
+          </m-form-item>
+        </form>
+
+        <ng-container *m-card-footer>
+          <m-button (click)="goBack()">
+            {{ 'core.back' | translate }}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>

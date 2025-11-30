@@ -1,0 +1,39 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <span>{{'web.ucum.prefix.list.title' | translate}}</span>
+
+    <div class="m-items-middle">
+      <m-input
+              name="search"
+              [(ngModel)]="searchTerm"
+              (ngModelChange)="onSearchTermChange()"
+              placeholder="marina.ui.inputs.search.placeholder"
+              autofocus
+      ></m-input>
+    </div>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+    <tr *mTableHead>
+      <th mColumnKey="code">{{'entities.ucum.prefix.code' | translate}}</th>
+      <th mColumnKey="names">{{'entities.ucum.prefix.names' | translate}}</th>
+      <th mColumnKey="printSymbol">{{'entities.ucum.prefix.printSymbol' | translate}}</th>
+      <th mColumnKey="description">{{'entities.ucum.prefix.description' | translate}}</th>
+    </tr>
+
+      <tr *mTableRow="let p">
+        <td><a [routerLink]="[p.code]">{{p.code}}</a></td>
+        <td>{{p.names.join(', ')}}</td>
+        <td>{{p.printSymbol}}</td>
+        <td>{{p.description}}</td>
+      </tr>
+
+
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>
+

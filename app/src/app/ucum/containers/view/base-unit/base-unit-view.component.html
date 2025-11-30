@@ -1,0 +1,40 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading">
+      <m-card [mTitle]="'web.ucum.base-unit.view.title'" [mShowSkeleton]="loading">
+
+        <form #form="ngForm" *ngIf="baseUnit">
+          <m-form-item mLabel="entities.ucum.base-unit.code">
+            <m-input [ngModel]="baseUnit.code" name="code" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.base-unit.names">
+            <m-input [ngModel]="baseUnit.names.join(', ')" name="names" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.base-unit.printSymbol">
+            <m-input [ngModel]="baseUnit.printSymbol" name="printSymbol" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.base-unit.kind">
+            <m-input [ngModel]="baseUnit.kind" name="kind" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.base-unit.dimension">
+            <m-input [ngModel]="baseUnit.dimension" name="dimension" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.base-unit.description">
+            <m-input [ngModel]="baseUnit.description" name="description" [readOnly]="true"></m-input>
+          </m-form-item>
+        </form>
+
+        <ng-container *m-card-footer>
+          <m-button (click)="goBack()">
+            {{ 'core.back' | translate }}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>
