@@ -23,10 +23,10 @@ export class ChefService {
     return this.http.post(`${environment.chefUrl}/fsh2fhir`, req).pipe(catchError(err => of(err.error)));
   }
 
-  public fhirToFsh(req: FhirToFshRequest): Observable<FhirToFshResponse> {
+  public fhirToFsh(req: FhirToFshRequest, version: string = '5.0.0'): Observable<FhirToFshResponse> {
     const igResource = {
       resourceType: 'ImplementationGuide',
-      fhirVersion: ['5.0.0'],
+      fhirVersion: [version],
       id: '1',
       url: `${environment.termxApi}/fhir/ImplementationGuide/1` ,
       version: '1.0.0'

@@ -45,7 +45,7 @@
   <div class="m-items-middle">
     <m-icon mCode="download"></m-icon>
     <span>{{'web.map-set-version.summary.info.download' | translate}}
-      (<span *ngFor="let format of ['json', 'xml', 'fsh']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
+      (<span *ngFor="let format of ['json', 'xml', 'fsh r4', 'fsh r5']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
     <m-divider mVertical></m-divider>
     <span>{{'web.map-set-version.summary.info.definition' | translate}} <a (mClick)="openJson()">FHIR</a></span>
   </div>
