@@ -4,7 +4,7 @@
       <m-card [mTitle]="'web.implementation-guide.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
         <div *mCardContent="!loader.isLoading">
           <tw-resource-form resourceType="ImplementationGuide" [resource]="ig" [mode]="mode"></tw-resource-form>
-          <tw-resource-identifiers [identifiers]="ig.identifiers"></tw-resource-identifiers>
+          <tw-resource-identifiers [(identifiers)]="ig.identifiers"></tw-resource-identifiers>
           <tw-resource-contacts [(contacts)]="ig.contacts"></tw-resource-contacts>
 
           <ng-container *ngIf="mode === 'add'">

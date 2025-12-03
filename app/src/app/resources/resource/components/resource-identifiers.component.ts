@@ -1,4 +1,4 @@
-import {Component, Input, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {BooleanInput, Identifier, isDefined, validateForm} from '@kodality-web/core-util';
 
@@ -8,6 +8,7 @@ import {BooleanInput, Identifier, isDefined, validateForm} from '@kodality-web/c
 })
 export class ResourceIdentifiersComponent {
   @Input() public identifiers?: Identifier[];
+  @Output() public identifiersChange: EventEmitter<Identifier[]> = new EventEmitter<Identifier[]>();
   @Input() @BooleanInput() public version: boolean | string;
   @ViewChild("form") public form?: NgForm;
 
@@ -26,6 +27,7 @@ export class ResourceIdentifiersComponent {
       value: 'urn:oid:'
     };
     this.identifiers = [...this.identifiers, oidIdentifier];
+    this.identifiersChange.emit(this.identifiers);
   }
 
   protected trimWhitespace(identifier: Identifier, field: 'system' | 'value'): void {

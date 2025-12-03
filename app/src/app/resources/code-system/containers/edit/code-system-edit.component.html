@@ -45,7 +45,7 @@
           </m-form-row>
 
 
-          <tw-resource-identifiers [identifiers]="codeSystem.identifiers"></tw-resource-identifiers>
+          <tw-resource-identifiers [(identifiers)]="codeSystem.identifiers"></tw-resource-identifiers>
           <tw-resource-configuration-attributes [attributes]="codeSystem.configurationAttributes"></tw-resource-configuration-attributes>
           <tw-cs-properties [properties]="codeSystem.properties" [codeSystemId]="codeSystem.id"></tw-cs-properties>
           <tw-resource-contacts [(contacts)]="codeSystem.contacts"></tw-resource-contacts>

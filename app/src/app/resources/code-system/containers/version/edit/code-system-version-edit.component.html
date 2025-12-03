@@ -57,7 +57,7 @@
             <tw-code-system-version-select name="baseVersion" [codeSystemId]="version.baseCodeSystem" [(ngModel)]="version.baseCodeSystemVersion" [autoSelect]="false"/>
           </m-form-item>
 
-          <tw-resource-identifiers [identifiers]="version.identifiers" version></tw-resource-identifiers>
+          <tw-resource-identifiers [(identifiers)]="version.identifiers" version></tw-resource-identifiers>
         </form>
 
         <ng-container *m-card-footer>
