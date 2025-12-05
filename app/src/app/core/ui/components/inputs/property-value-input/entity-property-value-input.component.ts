@@ -73,5 +73,13 @@ export class EntityPropertyValueInputComponent implements OnChanges, ControlValu
     if (property?.type === 'Coding') {
       this.value ??= {};
     }
+    if (property?.type === 'dateTime' && typeof this.value === 'string' && this.value) {
+      // Convert ISO date string to Date object for date picker
+      try {
+        this.value = new Date(this.value);
+      } catch (e) {
+        console.warn('Failed to parse date value:', this.value, e);
+      }
+    }
   }
 }
