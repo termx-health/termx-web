@@ -25,7 +25,8 @@
             <tw-code-system-version-select name="codeSystemVersion"
                 [(ngModel)]="rule.codeSystemVersion"
                 [codeSystemId]="rule.codeSystem"
-                [required]="!lockedDate && conceptsBase !== 'filter'"></tw-code-system-version-select>
+                [required]="!lockedDate && conceptsBase !== 'filter'"
+                [autoSelectOnlyWhenSingle]="conceptsBase === 'filter'"></tw-code-system-version-select>
           </m-form-item>
         </m-form-row>
 
