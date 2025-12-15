@@ -3,7 +3,7 @@
     [(ngModel)]="value"
     (mChange)="fireOnChange()"
     [loading]="isLoading"
-    [autoSelect]="autoSelect | toBoolean"
+    [autoSelect]="effectiveAutoSelect"
     [autoUnselect]="true"
     [disabled]="!!disabled">
   <m-option *ngFor="let key of data | keys"

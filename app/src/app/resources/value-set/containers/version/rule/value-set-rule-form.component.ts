@@ -45,6 +45,9 @@ export class ValueSetRuleFormComponent implements OnChanges{
   protected conceptsBaseChanged(): void {
     this.rule.concepts = [];
     this.rule.filters = [];
+    if (this.conceptsBase === 'filter') {
+      this.rule.codeSystemVersion = {};
+    }
   }
 
   public ruleBaseChanged(base: 'code-system' | 'value-set'): void {

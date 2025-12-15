@@ -16,9 +16,11 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
   @Input() public valueType: 'id' | 'version' | 'full' = 'full';
   @Input() @BooleanInput() public disabled: string | boolean;
   @Input() @BooleanInput() public autoSelect: string | boolean = true;
+  @Input() @BooleanInput() public autoSelectOnlyWhenSingle: string | boolean = false;
 
   public data: {[version: string]: CodeSystemVersion} = {};
   public value?: number | string;
+  public effectiveAutoSelect: boolean = true;
   private loading: {[key: string]: boolean} = {};
 
   public onChange = (x: any): void => x;
@@ -45,6 +47,7 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
     this.loading['select'] = true;
     this.codeSystemService.searchVersions(this.codeSystemId, {limit: -1}).pipe(takeUntil(this.destroy$)).subscribe(versions => {
       this.data = group(versions.data, v => this.valueType === 'id' ? v.id : v.version);
+      this.effectiveAutoSelect = this.autoSelectOnlyWhenSingle ? false : !!this.autoSelect;
     }).add(() => this.loading['select'] = false);
   }
 
