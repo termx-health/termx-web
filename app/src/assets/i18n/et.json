@@ -1523,6 +1523,10 @@
 			"summary": {
 				"add-version": "Lisa versioon",
 				"all-tasks": "Kõik ülesanded",
+				"duplicate-version-modal": {
+					"header": "Tee vastendustabeli versioonist koopia",
+					"version": "Uus versioon"
+				},
 				"map-set": "Vastendustabel",
 				"opened-tasks": "Avatud ülesanded",
 				"related-artifacts": "Seotud artefaktid",

@@ -1554,6 +1554,10 @@
 				"add-task": "Add task",
 				"add-version": "Add version",
 				"all-tasks": "All tasks",
+				"duplicate-version-modal": {
+					"header": "Duplicate map set version",
+					"version": "New version"
+				},
 				"map-set": "Map set",
 				"opened-tasks": "Opened tasks",
 				"related-artifacts": "Related artifacts",
