@@ -6,7 +6,8 @@ import {ValueSet, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule, 
 import {ValueSetRuleFormComponent} from 'app/src/app/resources/value-set/containers/version/rule/value-set-rule-form.component';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
 import {JobLibService} from 'app/src/app/sys/_lib';
-import {forkJoin} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
+import {forkJoin, map} from 'rxjs';
 
 @Component({
   templateUrl: 'value-set-version-summary.component.html',
@@ -19,6 +20,10 @@ export class ValueSetVersionSummaryComponent implements OnInit {
   protected ruleSetChanged?: boolean;
   protected loader = new LoadingManager();
 
+  protected isAuthenticated = this.authService.isAuthenticated.pipe(
+    map(isAuth => isAuth)
+  );
+
   @ViewChild(ValueSetRuleFormComponent) public ruleFormComponent?: ValueSetRuleFormComponent;
 
   public constructor(
@@ -26,7 +31,8 @@ export class ValueSetVersionSummaryComponent implements OnInit {
     private valueSetService: ValueSetService,
     private notificationService: MuiNotificationService,
     private jobService: JobLibService,
-    private destroy$: DestroyService
+    private destroy$: DestroyService,
+    private authService: AuthService
   ) {}
 
   public ngOnInit(): void {

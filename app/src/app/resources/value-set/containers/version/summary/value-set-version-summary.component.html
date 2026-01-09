@@ -48,9 +48,11 @@
           <div class="m-items-middle" *ngIf="valueSetVersion?.snapshot">
             <m-icon mCode="clock-circle"></m-icon>
             <span>{{valueSetVersion.snapshot.createdAt | localDate}}</span>
-            <m-divider mVertical></m-divider>
-            <m-icon mCode="user"></m-icon>
-            <span>{{valueSetVersion.snapshot.createdBy || '-'}}</span>
+            <ng-container *ngIf="isAuthenticated | async">
+              <m-divider mVertical></m-divider>
+              <m-icon mCode="user"></m-icon>
+              <span>{{valueSetVersion.snapshot.createdBy || '-'}}</span>
+            </ng-container>
           </div>
         </div>
         <m-no-data *ngIf="!valueSetVersion?.snapshot"></m-no-data>
