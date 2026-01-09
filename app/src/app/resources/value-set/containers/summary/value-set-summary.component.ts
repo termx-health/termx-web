@@ -3,7 +3,8 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {ValueSet, ValueSetSnapshot, ValueSetVersion} from 'app/src/app/resources/_lib';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
-import {forkJoin} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
+import {forkJoin, map} from 'rxjs';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 
 @Component({
@@ -15,12 +16,17 @@ export class ValueSetSummaryComponent implements OnInit {
   protected loader = new LoadingManager();
   protected showOnlyOpenedTasks?: boolean = true;
 
+  protected isAuthenticated = this.authService.isAuthenticated.pipe(
+    map(isAuth => isAuth)
+  );
+
   @ViewChild(ResourceTasksWidgetComponent) public tasksWidgetComponent?: ResourceTasksWidgetComponent;
 
   public constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private valueSetService: ValueSetService
+    private valueSetService: ValueSetService,
+    private authService: AuthService
   ) {}
 
   public ngOnInit(): void {
