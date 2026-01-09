@@ -17,11 +17,13 @@
     <td>{{ p.target.type }} {{ p.target?.display || p.target?.id }}</td>
     <td>
       <div *ngFor="let k of (p.detail?.changes | keys)" class="diff">
-        <span>{{ k }}: </span>
-        <span class="diff-value">{{ (p.detail.changes[k].left | json) || "&nbsp;&nbsp;&nbsp;" }}</span>
-        >>
-        <!--        <m-icon class="diff-icon" mCode="double-right"/>-->
-        <span class="diff-value">{{ (p.detail.changes[k].right | json) || "&nbsp;&nbsp;&nbsp;" }}</span>
+        <ng-container *ngIf="!(k.endsWith('By')) || (isAuthenticated | async)">
+          <span>{{ k }}: </span>
+          <span class="diff-value">{{ (p.detail.changes[k].left | json) || "&nbsp;&nbsp;&nbsp;" }}</span>
+          >>
+          <!--        <m-icon class="diff-icon" mCode="double-right"/>-->
+          <span class="diff-value">{{ (p.detail.changes[k].right | json) || "&nbsp;&nbsp;&nbsp;" }}</span>
+        </ng-container>
       </div>
       <div *ngFor="let k of (p.detail?.messages | keys)" class="diff">
         <span>{{ k }}: </span>
