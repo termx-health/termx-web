@@ -11,6 +11,7 @@ import {saveAs} from 'file-saver';
 import {AuthService} from 'term-web/core/auth';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {Provenance, Release, ReleaseLibService} from 'term-web/sys/_lib';
+import * as ExcelJS from 'exceljs';
 
 @Component({
   selector: 'tw-map-set-version-info-widget',
@@ -67,6 +68,52 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
         const fsh = typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
         saveAs(new Blob([fsh], {type: 'application/fsh'}), `MS-${fhirMs.id}.fsh`);
       });
+    }
+    if (format === 'csv' || format === 'xlsx') {
+      const rows: string[][] = [];
+      const headers = ['sourceCode', 'sourceDisplay', 'sourceCodeSystem', 'targetCode', 'targetDisplay', 'targetCodeSystem', 'relationship'];
+      rows.push(headers);
+
+      (fhirMs.group || []).forEach((group: any) => {
+        const sourceSystem = group.source || '';
+        const targetSystem = group.target || '';
+
+        (group.element || []).forEach((element: any) => {
+          const sourceCode = element.code || '';
+          const sourceDisplay = element.display || '';
+
+          if (element.target && element.target.length > 0) {
+            element.target.forEach((target: any) => {
+              rows.push([
+                sourceCode,
+                sourceDisplay,
+                sourceSystem,
+                target.code || '',
+                target.display || '',
+                targetSystem,
+                target.equivalence || target.relationship || ''
+              ]);
+            });
+          } else {
+            rows.push([sourceCode, sourceDisplay, sourceSystem, '', '', '', 'no-map']);
+          }
+        });
+      });
+
+      if (format === 'csv') {
+        const csv = rows.map(row => row.map(cell => `"${cell.replace(/"/g, '""')}"`).join(';')).join('\n');
+        saveAs(new Blob([csv], {type: 'text/csv'}), `MS-${fhirMs.id}.csv`);
+      }
+      if (format === 'xlsx') {
+        const workbook = new ExcelJS.Workbook();
+        const worksheet = workbook.addWorksheet('Associations');
+
+        worksheet.addRows(rows);
+
+        workbook.xlsx.writeBuffer().then((buffer) => {
+          saveAs(new Blob([buffer], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}), `MS-${fhirMs.id}.xlsx`);
+        });
+      }
     }
   }
 
