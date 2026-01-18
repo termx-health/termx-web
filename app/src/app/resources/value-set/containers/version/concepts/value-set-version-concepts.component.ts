@@ -5,7 +5,8 @@ import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {ValueSet, ValueSetVersion, ValueSetVersionConcept} from 'app/src/app/resources/_lib';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
 import {JobLibService} from 'app/src/app/sys/_lib';
-import {forkJoin} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
+import {forkJoin, map} from 'rxjs';
 
 @Component({
   templateUrl: 'value-set-version-concepts.component.html',
@@ -18,12 +19,17 @@ export class ValueSetVersionConceptsComponent implements OnInit {
 
   protected searchInput: string;
 
+  protected isAuthenticated = this.authService.isAuthenticated.pipe(
+    map(isAuth => isAuth)
+  );
+
   public constructor(
     private route: ActivatedRoute,
     private valueSetService: ValueSetService,
     private notificationService: MuiNotificationService,
     private jobService: JobLibService,
-    private destroy$: DestroyService
+    private destroy$: DestroyService,
+    private authService: AuthService
   ) {}
 
   public ngOnInit(): void {

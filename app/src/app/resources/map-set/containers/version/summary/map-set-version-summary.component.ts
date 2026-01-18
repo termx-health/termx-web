@@ -3,9 +3,10 @@ import {ActivatedRoute} from '@angular/router';
 import {DestroyService, LoadingManager} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {AssociationType, AssociationTypeLibService, MapSet, MapSetAutomapRequest, MapSetVersion} from 'app/src/app/resources/_lib';
-import {forkJoin} from 'rxjs';
+import {forkJoin, map} from 'rxjs';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {JobLibService} from 'term-web/sys/_lib';
+import {AuthService} from 'term-web/core/auth';
 
 @Component({
   templateUrl: 'map-set-version-summary.component.html',
@@ -19,13 +20,18 @@ export class MapSetVersionSummaryComponent implements OnInit {
   protected selectedStatistics: string = 'source-concepts';
   protected associationTypes: AssociationType[];
 
+  protected isAuthenticated = this.authService.isAuthenticated.pipe(
+    map(isAuth => isAuth)
+  );
+
   public constructor(
     private route: ActivatedRoute,
     private notificationService: MuiNotificationService,
     private mapSetService: MapSetService,
     private jobService: JobLibService,
     private associationTypeService: AssociationTypeLibService,
-    private destroy$: DestroyService
+    private destroy$: DestroyService,
+    private authService: AuthService
   ) {}
 
   public ngOnInit(): void {
