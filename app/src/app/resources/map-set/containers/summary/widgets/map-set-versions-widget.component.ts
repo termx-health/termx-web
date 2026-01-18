@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, Output, ViewChild, SimpleChanges, OnChanges} from '@angular/core';
+import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
-import {LoadingManager, collect} from '@kodality-web/core-util';
+import {LoadingManager, validateForm, collect} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {MapSetVersion} from 'app/src/app/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
@@ -21,6 +22,12 @@ export class MapSetVersionsWidgetComponent implements OnChanges{
   protected loader = new LoadingManager();
   protected releases: {[key: string]: Release[]};
 
+  protected duplicateModalData: {
+    visible?: boolean,
+    version?: string,
+    targetVersion?: string
+  } = {};
+  @ViewChild("duplicateModalForm") public duplicateModalForm?: NgForm;
   @ViewChild("releaseModal") public releaseModal?: ResourceReleaseModalComponent;
 
   public constructor(
@@ -43,12 +50,26 @@ export class MapSetVersionsWidgetComponent implements OnChanges{
     this.router.navigate(['/resources/map-sets', this.mapSet, 'versions', version, 'summary']);
   }
 
+  protected duplicateVersion(): void {
+    if (!validateForm(this.duplicateModalForm)) {
+      return;
+    }
+    const version = this.duplicateModalData.version;
+    const request = {mapSet: this.mapSet, version: this.duplicateModalData.targetVersion};
+    this.loader.wrap('duplicate', this.mapSetService.duplicateMapSetVersion(this.mapSet, version, request)).subscribe(() => {
+      this.duplicateModalData = {};
+      this.versionsChanged.emit();
+    });
+  }
+
   protected deleteVersion(version: string): void {
     if (!version) {
       return;
     }
     this.mapSetService.deleteMapSetVersion(this.mapSet, version).subscribe(() => this.versionsChanged.emit());
   }
+
+  protected getVersions = (versions: MapSetVersion[]): string[] => versions.map(v => v.version);
 
   public openRelease(id: number): void {
     this.router.navigate(['/releases', id, 'summary']);

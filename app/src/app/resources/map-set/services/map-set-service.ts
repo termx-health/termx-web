@@ -45,6 +45,10 @@ export class MapSetService extends MapSetLibService {
     return of();
   }
 
+  public duplicateMapSetVersion(mapSetId: string, version: string, duplicateRequest: {mapSet: string, version: string}): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${mapSetId}/versions/${version}/duplicate`, duplicateRequest);
+  }
+
   public deleteMapSetVersion(mapSetId: string, version: string): Observable<void> {
     return this.http.delete<void>(`${this.baseUrl}/${mapSetId}/versions/${version}`);
   }
