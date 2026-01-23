@@ -80,7 +80,7 @@ export class HttpErrorHandler implements HttpInterceptor {
     if (error.status === 405 && isDelete && isTermxTsEndpoint) {
       this.showError(
         'Kustutamine ebaõnnestus',
-        'Eemalda koodisüsteemi tähisest erimärgid (nt ?) ja proovi uuesti.'
+        'Mõiste koodis ei ole lubatud kasutada erimärke.'
       );
       return;
     }
