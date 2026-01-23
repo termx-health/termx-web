@@ -67,21 +67,24 @@ export class HttpErrorHandler implements HttpInterceptor {
     }
     return throwError(() => error);
   }
-    
+  
   private showMessage(error: HttpErrorResponse, req?: HttpRequest<any>): void {
-    const isCodeSystemDelete =
-      req?.method === 'DELETE' &&
-      !!req.url &&
-      /\/ts\/code-systems\/[^/]+$/.test(req.url);
+    // Generic UX message for DELETE + 405 in TermX classifier endpoints.
+    // Reason: some IDs may contain special characters (e.g. ?, #, /, %, space) which can break URL path if not encoded.
+    const method = req?.method || '';
+    const url = req?.urlWithParams || req?.url || '';
 
-    if (error.status === 405 && isCodeSystemDelete) {
+    const isDelete = method === 'DELETE';
+    const isTermxTsEndpoint = url.includes('/ts/code-systems/'); // covers code-systems, concepts, etc.
+
+    if (error.status === 405 && isDelete && isTermxTsEndpoint) {
       this.showError(
         'Kustutamine ebaõnnestus',
         'Eemalda koodisüsteemi tähisest erimärgid (nt ?) ja proovi uuesti.'
       );
       return;
     }
-    
+
     if (Array.isArray(error.error)) {
       error.error.forEach((e: Issue) => {
         const translationKey = e.code ? `${this.config.translationPrefix}${e.code}` : undefined;
@@ -102,7 +105,6 @@ export class HttpErrorHandler implements HttpInterceptor {
       }
     }
   }
-
   
   private showError(title: string, message: string, details?: string): void {
     const {duration, placement} = this.config;
