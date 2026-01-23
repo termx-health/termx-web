@@ -57,20 +57,31 @@ export class HttpErrorHandler implements HttpInterceptor {
     }
 
     return next.handle(req).pipe(
-      catchError((error: HttpErrorResponse) => this.handleError(error))
+      catchError((error: HttpErrorResponse) => this.handleError(error, req))
     );
   }
-
-  private handleError(error: HttpErrorResponse): Observable<HttpEvent<any>> {
+  
+  private handleError(error: HttpErrorResponse, req?: HttpRequest<any>): Observable<HttpEvent<any>> {
     if (this.isErrorStatus(error)) {
-      this.showMessage(error);
-      return throwError(() => error);
+      this.showMessage(error, req);
     }
     return throwError(() => error);
   }
+    
+  private showMessage(error: HttpErrorResponse, req?: HttpRequest<any>): void {
+    const isCodeSystemDelete =
+      req?.method === 'DELETE' &&
+      !!req.url &&
+      /\/ts\/code-systems\/[^/]+$/.test(req.url);
 
-
-  private showMessage(error: HttpErrorResponse): void {
+    if (error.status === 405 && isCodeSystemDelete) {
+      this.showError(
+        'Kustutamine ebaõnnestus',
+        'Eemalda koodisüsteemi tähisest erimärgid (nt ?) ja proovi uuesti.'
+      );
+      return;
+    }
+    
     if (Array.isArray(error.error)) {
       error.error.forEach((e: Issue) => {
         const translationKey = e.code ? `${this.config.translationPrefix}${e.code}` : undefined;
@@ -80,7 +91,10 @@ export class HttpErrorHandler implements HttpInterceptor {
     } else {
       switch (error.status) {
         case 403:
-          this.showError(this.i18nService.instant('core.error.403.title'), this.i18nService.instant('core.error.403.message'));
+          this.showError(
+            this.i18nService.instant('core.error.403.title'),
+            this.i18nService.instant('core.error.403.message')
+          );
           break;
         default:
           this.showError(this.i18nService.instant('marina.ui.http.systemError'), error.message);
@@ -89,6 +103,7 @@ export class HttpErrorHandler implements HttpInterceptor {
     }
   }
 
+  
   private showError(title: string, message: string, details?: string): void {
     const {duration, placement} = this.config;
     this.httpNotificationService.showError(title, message, {duration, placement, data: {details}});
