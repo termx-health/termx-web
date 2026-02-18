@@ -37,51 +37,66 @@
     </m-form-item>
 
     <m-form-item mLabel="entities.code-system.narrative">
-      <ng-container *ngIf="codeSystem?.narrative">
-        <m-quill *ngIf="narrativeVisible" [ngModel]="codeSystem.narrative" mViewMode></m-quill>
+      @if (codeSystem?.narrative) {
+        @if (narrativeVisible) {
+          <m-quill [ngModel]="codeSystem.narrative" mViewMode></m-quill>
+        }
         <m-button mDisplay="text" style="width: 100%" (click)="narrativeVisible = !narrativeVisible">
           {{narrativeVisible ? 'Hide narrative' : 'Show narrative'}}
         </m-button>
-      </ng-container>
-      <ng-container *ngIf="!codeSystem?.narrative">-</ng-container>
+      }
+      @if (!codeSystem?.narrative) {
+        -
+      }
     </m-form-item>
   </div>
 
   <tw-finder-menu title="entities.code-system.properties" [length]="codeSystem?.properties?.length ">
-    <tw-finder-menu-item *ngFor="let p of codeSystem?.properties">
-      {{p.name}} - {{p.type}}
-    </tw-finder-menu-item>
+    @for (p of codeSystem?.properties; track p) {
+      <tw-finder-menu-item>
+        {{p.name}} - {{p.type}}
+      </tw-finder-menu-item>
+    }
   </tw-finder-menu>
 
 
   <!-- Versions -->
   <tw-finder-menu title="entities.code-system.versions"  [length]="versions.length">
-    <tw-finder-menu-item *ngFor="let v of versions" [navigate]="['versions', v.version]">
-      {{v.version}}
-    </tw-finder-menu-item>
+    @for (v of versions; track v) {
+      <tw-finder-menu-item [navigate]="['versions', v.version]">
+        {{v.version}}
+      </tw-finder-menu-item>
+    }
   </tw-finder-menu>
 
   <!-- Concepts -->
   <tw-finder-menu title="entities.code-system.concepts" [loading]="loading['concepts']" [length]="conceptResult.data.length">
-    <tw-finder-menu-item *ngFor="let c of conceptResult.data" [navigate]="['concepts', c.code]">
-      {{c.code}}
-    </tw-finder-menu-item>
+    @for (c of conceptResult.data; track c) {
+      <tw-finder-menu-item [navigate]="['concepts', c.code]">
+        {{c.code}}
+      </tw-finder-menu-item>
+    }
 
-    <tw-finder-load-more-item
-        *ngIf="conceptResult.data.length < conceptResult.meta.total"
+    @if (conceptResult.data.length < conceptResult.meta.total) {
+      <tw-finder-load-more-item
         (twClick)="loadConcepts(codeSystem.id, conceptResult.data.length + DEFAULT_CONCEPT_LIMIT)">
-    </tw-finder-load-more-item>
+      </tw-finder-load-more-item>
+    }
   </tw-finder-menu>
 
 
   <tw-finder-menu title="entities.code-system.contacts" [length]="codeSystem?.contacts?.length">
-    <tw-finder-menu-item *ngFor="let c of codeSystem?.contacts">
-      <tw-finder-menu [title]="c.name || 'Unknown'" [open]="false" [length]="c?.telecoms?.length">
-        <tw-finder-menu-item *ngFor="let t of c.telecoms">
-          {{t.system}} {{t.use ? '(' + t.use + ')' : ''}} - {{t.value}}
-        </tw-finder-menu-item>
-      </tw-finder-menu>
-    </tw-finder-menu-item>
+    @for (c of codeSystem?.contacts; track c) {
+      <tw-finder-menu-item>
+        <tw-finder-menu [title]="c.name || 'Unknown'" [open]="false" [length]="c?.telecoms?.length">
+          @for (t of c.telecoms; track t) {
+            <tw-finder-menu-item>
+              {{t.system}} {{t.use ? '(' + t.use + ')' : ''}} - {{t.value}}
+            </tw-finder-menu-item>
+          }
+        </tw-finder-menu>
+      </tw-finder-menu-item>
+    }
   </tw-finder-menu>
 
 </tw-finder-wrapper>

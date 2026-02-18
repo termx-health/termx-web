@@ -1,20 +1,35 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {ValueSet, ValueSetTransactionRequest} from 'app/src/app/resources/_lib';
-import {ResourceFormComponent} from 'app/src/app/resources/resource/components/resource-form.component';
-import {ResourceIdentifiersComponent} from 'app/src/app/resources/resource/components/resource-identifiers.component';
-import {ResourceVersionFormComponent} from 'app/src/app/resources/resource/components/resource-version-form.component';
-import {ResourceUtil} from 'app/src/app/resources/resource/util/resource-util';
-import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
+import {ValueSet, ValueSetTransactionRequest} from 'term-web/resources/_lib';
+import {ResourceFormComponent} from 'term-web/resources/resource/components/resource-form.component';
+import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
+import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
+import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {ResourceConfigurationAttributesComponent} from 'term-web/resources/resource/components/resource-configuration-attributes.component';
+import { MuiSpinnerModule, MuiCardModule, MuiButtonModule } from '@kodality-web/marina-ui';
+
+import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
+import { ResourceFormComponent as ResourceFormComponent_1 } from 'term-web/resources/resource/components/resource-form.component';
+import { ResourceIdentifiersComponent as ResourceIdentifiersComponent_1 } from 'term-web/resources/resource/components/resource-identifiers.component';
+import { ResourceConfigurationAttributesComponent as ResourceConfigurationAttributesComponent_1 } from 'term-web/resources/resource/components/resource-configuration-attributes.component';
+import { ResourceContactsComponent } from 'term-web/resources/resource/components/resource-contacts.component';
+import { ResourceVersionFormComponent as ResourceVersionFormComponent_1 } from 'term-web/resources/resource/components/resource-version-form.component';
+import { ResourceSideInfoComponent } from 'term-web/resources/resource/components/resource-side-info.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: 'value-set-edit.component.html'
+    templateUrl: 'value-set-edit.component.html',
+    imports: [MuiSpinnerModule, FormsModule, NzRowDirective, NzColDirective, MuiCardModule, ResourceFormComponent_1, ResourceIdentifiersComponent_1, ResourceConfigurationAttributesComponent_1, ResourceContactsComponent, ResourceVersionFormComponent_1, MuiButtonModule, ResourceSideInfoComponent, TranslatePipe]
 })
 export class ValueSetEditComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private valueSetService = inject(ValueSetService);
+
   protected valueSet?: ValueSet;
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
@@ -24,12 +39,6 @@ export class ValueSetEditComponent implements OnInit {
   @ViewChild(ResourceIdentifiersComponent) public resourceIdentifiersComponent?: ResourceIdentifiersComponent;
   @ViewChild(ResourceVersionFormComponent) public resourceVersionFormComponent?: ResourceVersionFormComponent;
   @ViewChild(ResourceConfigurationAttributesComponent) public resourceConfigurationAttributesComponent?: ResourceConfigurationAttributesComponent;
-
-  public constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private valueSetService: ValueSetService
-  ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {

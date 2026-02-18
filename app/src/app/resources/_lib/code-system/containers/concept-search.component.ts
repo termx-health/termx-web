@@ -1,17 +1,24 @@
-import {Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
+import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, DestroyService, group, isDefined, ApplyPipe, KeysPipe, ToBooleanPipe } from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams, ConceptUtil} from '../../code-system';
+import {CodeSystemConcept, CodeSystemConceptLibService, ConceptSearchParams, ConceptUtil} from 'term-web/resources/_lib/code-system';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 @Component({
-  selector: 'tw-concept-search',
-  templateUrl: './concept-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true}, DestroyService]
+    selector: 'tw-concept-search',
+    templateUrl: './concept-search.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ConceptSearchComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, ApplyPipe, KeysPipe, ToBooleanPipe]
 })
 export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
+  private conceptService = inject(CodeSystemConceptLibService);
+  private translateService = inject(TranslateService);
+  private destroy$ = inject(DestroyService);
+
   private static complex_code_systems = ['loinc', 'loinc-answer-list', 'loinc-part'];
 
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
@@ -32,14 +39,8 @@ export class ConceptSearchComponent implements OnInit, OnChanges, ControlValueAc
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(
-    private conceptService: CodeSystemConceptLibService,
-    private translateService: TranslateService,
-    private destroy$: DestroyService
-  ) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(

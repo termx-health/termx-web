@@ -1,17 +1,44 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
-import {CodeSystemLibService, ValueSetLibService, ValueSetVersionConcept, ValueSetVersionRule} from 'app/src/app/resources/_lib';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { BooleanInput, isDefined, validateForm, AutofocusDirective } from '@kodality-web/core-util';
+import {CodeSystemLibService, ValueSetLibService, ValueSetVersionConcept, ValueSetVersionRule} from 'term-web/resources/_lib';
+import { MuiCardModule, MarinPageLayoutModule, MuiCoreModule, MuiEditableTableModule, MuiNumberInputModule, MuiInputModule, MuiTextareaModule, MuiIconModule, MuiModalModule, MuiFormModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-value-set-rule-concept-list',
-  templateUrl: 'value-set-rule-concept-list.component.html',
+    selector: 'tw-value-set-rule-concept-list',
+    templateUrl: 'value-set-rule-concept-list.component.html',
+    imports: [
+        MuiCardModule,
+        MarinPageLayoutModule,
+        MuiCoreModule,
+        FormsModule,
+        MuiEditableTableModule,
+        MuiNumberInputModule,
+        TerminologyConceptSearchComponent,
+        AutofocusDirective,
+        MuiInputModule,
+        ValueSetConceptSelectComponent,
+        MuiTextareaModule,
+        MuiIconModule,
+        AddButtonComponent,
+        MuiModalModule,
+        MuiFormModule,
+        MuiButtonModule,
+        TranslatePipe,
+    ],
 })
 export class ValueSetRuleConceptListComponent implements OnChanges {
+  private valueSetService = inject(ValueSetLibService);
+  private codeSystemService = inject(CodeSystemLibService);
+
   @Input() public valueSet?: string;
   @Input() public valueSetVersion?: string;
   @Input() public lockedDate?: Date;
-  @Input() public inactiveConcepts?: Boolean;
+  @Input() public inactiveConcepts?: boolean;
   @Input() public rule?: ValueSetVersionRule;
   @Input() @BooleanInput() public viewMode: string | boolean = false;
 
@@ -21,8 +48,6 @@ export class ValueSetRuleConceptListComponent implements OnChanges {
   protected modalData: {visible?: boolean, content?: string} = {};
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(private valueSetService: ValueSetLibService, private codeSystemService: CodeSystemLibService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['rule'] && this.rule?.codeSystem) {

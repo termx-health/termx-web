@@ -1,16 +1,26 @@
-import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {DestroyService, isNil, LoadingManager, validateForm} from '@kodality-web/core-util';
+import { Component, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { DestroyService, isNil, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
 import {ResourceVersion} from 'term-web/resources/resource/model/resource-version';
 import {Task, TaskContextItem} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
+import { MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiTextareaModule, MuiButtonModule } from '@kodality-web/marina-ui';
+
+import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
+import { ValueSetVersionSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-version-select.component';
+import { MapSetVersionSelectComponent } from 'term-web/resources/_lib/map-set/containers/map-set-version-select.component';
+import { UserSelectComponent } from 'term-web/user/_lib/components/user-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-resource-task-modal',
-  templateUrl: './resource-task-modal-component.html',
-  providers: [DestroyService]
+    selector: 'tw-resource-task-modal',
+    templateUrl: './resource-task-modal-component.html',
+    providers: [DestroyService],
+    imports: [MuiModalModule, MarinPageLayoutModule, FormsModule, MuiFormModule, CodeSystemVersionSelectComponent, ValueSetVersionSelectComponent, MapSetVersionSelectComponent, UserSelectComponent, MuiTextareaModule, MuiButtonModule, TranslatePipe, ApplyPipe]
 })
 export class ResourceTaskModalComponent {
+  private taskService = inject(TaskService);
+
   @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet';
   @Output() public taskCreated: EventEmitter<boolean> = new EventEmitter();
 
@@ -32,8 +42,6 @@ export class ResourceTaskModalComponent {
 
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(private taskService: TaskService) { }
 
   public toggleModal(params?: TaskModalParams): void {
     this.modalVisible = !!params;

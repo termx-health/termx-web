@@ -1,4 +1,4 @@
-import {Component, ElementRef, EnvironmentInjector, EventEmitter, Input, OnChanges, Output} from '@angular/core';
+import { Component, ElementRef, EnvironmentInjector, EventEmitter, Input, OnChanges, Output, inject } from '@angular/core';
 import {createCustomElement} from '@angular/elements';
 import {group, isDefined} from '@kodality-web/core-util';
 import {NgChanges} from '@kodality-web/marina-ui';
@@ -6,19 +6,26 @@ import {debounceTime, filter, fromEvent, map} from 'rxjs';
 import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib';
 import {CodeSystemConceptMatrixComponent} from 'term-web/resources/_lib/code-system/containers/code-system-concept-matrix.component';
 import {ValueSetConceptMatrixComponent} from 'term-web/resources/_lib/value-set/containers/value-set-concept-matrix.component';
-import {WikiComment} from '../texteditor/comments/wiki-comment';
-import {WikiCommentPopoverComponent} from '../texteditor/comments/wiki-comment-popover.component';
+import {WikiComment} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment';
+import {WikiCommentPopoverComponent} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment-popover.component';
+
+import { WikiMarkdownViewComponent } from 'term-web/wiki/_lib/texteditor/editors/markdown/wiki-markdown-view.component';
+import { MarinaQuillModule } from '@kodality-web/marina-quill';
+import { FormsModule } from '@angular/forms';
 
 @Component({
-  selector: 'tw-smart-text-editor-view',
-  templateUrl: 'wiki-smart-text-editor-view.component.html',
-  styles: [`
+    selector: 'tw-smart-text-editor-view',
+    templateUrl: 'wiki-smart-text-editor-view.component.html',
+    styles: [`
     ::ng-deep tw-smart-text-editor-view .ql-editor {
       padding: 0;
     }
-  `]
+  `],
+    imports: [WikiMarkdownViewComponent, MarinaQuillModule, FormsModule]
 })
 export class WikiSmartTextEditorViewComponent implements OnChanges {
+  private el = inject<ElementRef<HTMLElement>>(ElementRef);
+
   @Input() public value?: string;
   @Input() public valueType?: 'html' | 'markdown' | string;
   @Input() public prerender?: boolean; // markdown option
@@ -26,10 +33,10 @@ export class WikiSmartTextEditorViewComponent implements OnChanges {
   @Input() public comments: WikiComment[];
   @Output() public commentCreated = new EventEmitter<WikiComment>();
 
-  public constructor(
-    private el: ElementRef<HTMLElement>,
-    injector: EnvironmentInjector,
-  ) {
+  public constructor() {
+    const el = this.el;
+    const injector = inject(EnvironmentInjector);
+
     const components = {
       'ce-structure-definition': StructureDefinitionTreeComponent,
       'ce-wiki-comment-popover': WikiCommentPopoverComponent,
@@ -53,7 +60,7 @@ export class WikiSmartTextEditorViewComponent implements OnChanges {
 
   private displayCommentIndications(): void {
     const sourceLineEls = this.el.nativeElement.querySelectorAll<HTMLElement>('[data-source-line]');
-    const comments = group(this.comments ?? [], c => c.line)
+    const comments = group(this.comments ?? [], c => c.line);
 
     sourceLineEls.forEach(el => {
       const ln = el.getAttribute('data-source-line');

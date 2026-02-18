@@ -1,17 +1,29 @@
-import {Component, EventEmitter, Input, Output, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, Output, SimpleChanges, inject, OnChanges } from '@angular/core';
 import {Router} from '@angular/router';
-import {collect, isDefined, LoadingManager, DestroyService} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { collect, isDefined, LoadingManager, DestroyService, ApplyPipe, FilterPipe, KeysPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiSpinnerModule, MuiAlertModule, MuiButtonModule, MuiCoreModule, MuiIconModule, MuiListModule, MuiTagModule, MuiDividerModule } from '@kodality-web/marina-ui';
 import {AuthService} from 'term-web/core/auth';
 import {Checklist, LorqueLibService} from 'term-web/sys/_lib';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
 
+import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+
 @Component({
-  selector: 'tw-cs-checklist-validation',
-  templateUrl: './code-system-checklist-validation.component.html',
-  providers: [DestroyService]
+    selector: 'tw-cs-checklist-validation',
+    templateUrl: './code-system-checklist-validation.component.html',
+    providers: [DestroyService],
+    imports: [MuiSpinnerModule, MuiAlertModule, MuiButtonModule, MuiCoreModule, MuiIconModule, MuiListModule, NzCollapseComponent, NzCollapsePanelComponent, MuiTagModule, MuiDividerModule, TranslatePipe, MarinaUtilModule, ApplyPipe, FilterPipe, KeysPipe, LocalDatePipe]
 })
-export class CodeSystemChecklistValidationComponent {
+export class CodeSystemChecklistValidationComponent implements OnChanges {
+  private checklistService = inject(ChecklistService);
+  private lorqueService = inject(LorqueLibService);
+  protected router = inject(Router);
+  protected notificationService = inject(MuiNotificationService);
+  protected authService = inject(AuthService);
+  private destroy$ = inject(DestroyService);
+
   @Input() public codeSystemId: string;
   @Input() public codeSystemVersion: string;
   @Input() public showUnaccomplished: boolean;
@@ -27,15 +39,6 @@ export class CodeSystemChecklistValidationComponent {
     'exclamation-circle': 'orange',
     'close-circle': 'red'
   };
-
-  public constructor(
-    private checklistService: ChecklistService,
-    private lorqueService: LorqueLibService,
-    protected router: Router,
-    protected notificationService: MuiNotificationService,
-    protected authService: AuthService,
-    private destroy$: DestroyService
-  ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['codeSystemId'] || changes['codeSystemVersion']) && this.codeSystemId && this.codeSystemVersion) {

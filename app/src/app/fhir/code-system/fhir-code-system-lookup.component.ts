@@ -1,9 +1,13 @@
 import {Component, Input} from '@angular/core';
 import {ParamMap} from '@angular/router';
+import { JsonPipe } from '@angular/common';
+import { MuiTableModule } from '@kodality-web/marina-ui';
+import { ApplyPipe } from '@kodality-web/core-util';
 
 @Component({
-  selector: 'tw-fhir-code-system-lookup',
-  templateUrl: './fhir-code-system-lookup.component.html'
+    selector: 'tw-fhir-code-system-lookup',
+    templateUrl: './fhir-code-system-lookup.component.html',
+    imports: [MuiTableModule, JsonPipe, ApplyPipe]
 })
 export class FhirCodeSystemLookupComponent {
   @Input() public params?: ParamMap;

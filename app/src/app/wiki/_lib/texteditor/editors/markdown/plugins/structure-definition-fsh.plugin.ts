@@ -1,9 +1,9 @@
 import {matchSection} from '@kodality-web/marina-markdown-parser';
-import {tokenAttrValue} from './plugin.util';
+import {tokenAttrValue} from 'term-web/wiki/_lib/texteditor/editors/markdown/plugins/plugin.util';
 
 
 export function structureDefinitionFshPlugin(md): void {
-  md.renderer.rules.structure_definition_fsh = (tokens, idx, /* options, env, self */) => {
+  md.renderer.rules.structure_definition_fsh = (tokens, idx/* , options, env, self */): string => {
     const [fsh] = tokenAttrValue(tokens[idx], 'fsh');
     return `<ce-structure-definition content="${encodeURIComponent(fsh)}"></ce-structure-definition>`;
   };

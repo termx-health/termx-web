@@ -38,26 +38,34 @@
         </m-button>
       </div>
     </m-form-item>
-    <div style="display:flex" *ngFor="let concept of data.concepts; let index = index">
-      <p>{{concept.system}} {{concept.code}}</p>&nbsp;
-      <m-button mSize="small" (click)="removeConcept(index)">
-        <m-icon [mCode]="'delete'"></m-icon>
-      </m-button>
-    </div>
-
-    <m-card *ngIf="response || error" class="m-card-inside">
-      <div *m-card-header class="m-items-middle">
-        <div class="m-card__title">{{'web.integration.response' | translate}}</div>
-        <m-button (click)="copyResult()">
-          <m-icon mCode="copy"></m-icon>
+    @for (concept of data.concepts; track concept; let index = $index) {
+      <div style="display:flex">
+        <p>{{concept.system}} {{concept.code}}</p>&nbsp;
+        <m-button mSize="small" (click)="removeConcept(index)">
+          <m-icon [mCode]="'delete'"></m-icon>
         </m-button>
       </div>
-      <pre *ngIf="response">{{response | json}}</pre>
-      <div *ngFor="let issue of error?.issue">
-        <m-alert [mType]="issue.severity" mShowIcon>
-          {{issue?.details?.text}}
-        </m-alert>
-      </div>
-    </m-card>
+    }
+
+    @if (response || error) {
+      <m-card class="m-card-inside">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{'web.integration.response' | translate}}</div>
+          <m-button (click)="copyResult()">
+            <m-icon mCode="copy"></m-icon>
+          </m-button>
+        </div>
+        @if (response) {
+          <pre>{{response | json}}</pre>
+        }
+        @for (issue of error?.issue; track issue) {
+          <div>
+            <m-alert [mType]="issue.severity" mShowIcon>
+              {{issue?.details?.text}}
+            </m-alert>
+          </div>
+        }
+      </m-card>
+    }
   </m-spinner>
 </m-card>

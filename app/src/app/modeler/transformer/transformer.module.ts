@@ -7,8 +7,8 @@ import {TransformationDefinitionEditComponent} from 'term-web/modeler/transforme
 import {TransformationDefinitionListComponent} from 'term-web/modeler/transformer/containers/transformation-definition-list.component';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 import {ResourcesLibModule} from 'term-web/resources/_lib';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
-import {ModelerLibModule} from '../_lib';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {ModelerLibModule} from 'term-web/modeler/_lib';
 
 export const TRANSFORMATION_DEFINITION_ROUTES: Routes = [
   {path: 'transformation-definitions', component: TransformationDefinitionListComponent},
@@ -17,22 +17,19 @@ export const TRANSFORMATION_DEFINITION_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CoreUiModule,
-    ModelerLibModule,
-    ResourcesLibModule
-  ],
-  declarations: [
-    TransformationDefinitionResourcesComponent,
-    TransformationDefinitionResourceFormComponent,
-    TransformationDefinitionExecutionComponent,
-
-    TransformationDefinitionEditComponent,
-    TransformationDefinitionListComponent
-  ],
-  providers: [
-    TransformationDefinitionService
-  ]
+    imports: [
+        CoreUiModule,
+        ModelerLibModule,
+        ResourcesLibModule,
+        TransformationDefinitionResourcesComponent,
+        TransformationDefinitionResourceFormComponent,
+        TransformationDefinitionExecutionComponent,
+        TransformationDefinitionEditComponent,
+        TransformationDefinitionListComponent
+    ],
+    providers: [
+        TransformationDefinitionService
+    ]
 })
 export class TransformerModule {
 }

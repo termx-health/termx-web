@@ -1,29 +1,36 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, LoadingManager} from '@kodality-web/core-util';
-import {PageTreeItem} from '../models/page-tree.item';
-import {PageLibService} from '../services/page-lib.service';
+import { Component, forwardRef, Input, OnInit, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, LoadingManager, ApplyPipe, ToBooleanPipe } from '@kodality-web/core-util';
+import {PageTreeItem} from 'term-web/wiki/_lib/page/models/page-tree.item';
+import {PageLibService} from 'term-web/wiki/_lib/page/services/page-lib.service';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 
 @Component({
-  selector: 'tw-page-content-tree-select',
-  template: `
+    selector: 'tw-page-content-tree-select',
+    template: `
     <m-select icon="search"
-        [placeholder]="placeholder"
-        [multiple]="multiple | toBoolean"
-        [(ngModel)]="value"
-        (ngModelChange)="fireOnChange()"
-        [loading]="loader.isLoading">
-      <m-option *ngFor="let o of data | apply:flat" [mValue]="o.id" [mLabel]="o.name" [mLabelTemplate]="lbl">
-        <ng-template #lbl>
-          <label style="padding-left: 0{{o.level * 10}}px">{{o.name}}</label>
-        </ng-template>
-      </m-option>
+      [placeholder]="placeholder"
+      [multiple]="multiple | toBoolean"
+      [(ngModel)]="value"
+      (ngModelChange)="fireOnChange()"
+      [loading]="loader.isLoading">
+      @for (o of data | apply:flat; track o) {
+        <m-option [mValue]="o.id" [mLabel]="o.name" [mLabelTemplate]="lbl">
+          <ng-template #lbl>
+            <label style="padding-left: 0{{o.level * 10}}px">{{o.name}}</label>
+          </ng-template>
+        </m-option>
+      }
     </m-select>
-  `,
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => PageContentTreeSelectComponent), multi: true}]
+    `,
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => PageContentTreeSelectComponent), multi: true }],
+    imports: [MuiSelectModule, FormsModule, ApplyPipe, ToBooleanPipe]
 })
 export class PageContentTreeSelectComponent implements OnInit, ControlValueAccessor {
+  private pageService = inject(PageLibService);
+
   @Input() @BooleanInput() public multiple: string | boolean;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
   @Input() public spaceId: number;
@@ -32,12 +39,8 @@ export class PageContentTreeSelectComponent implements OnInit, ControlValueAcces
   protected value?: number | number[];
   protected loader = new LoadingManager();
 
-  private onChange = (x: any) => x;
-  private onTouched = (x: any) => x;
-
-  public constructor(
-    private pageService: PageLibService
-  ) {}
+  private onChange = (x: any): any => x;
+  private onTouched = (x: any): any => x;
 
 
   public ngOnInit(): void {

@@ -1,10 +1,10 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import {compareDates, isDefined, LoadingManager} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {FhirConceptMapLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
-import {ChefService} from 'app/src/app/integration/_lib';
-import {MapSet, MapSetVersion} from 'app/src/app/resources/_lib';
+import { compareDates, isDefined, LoadingManager, ApplyPipe, JoinPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiNoDataModule, MuiDividerModule, MuiIconModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import {FhirConceptMapLibService, SEPARATOR} from 'term-web/fhir/_lib';
+import {ChefService} from 'term-web/integration/_lib';
+import {MapSet, MapSetVersion} from 'term-web/resources/_lib';
 import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
@@ -12,12 +12,29 @@ import {AuthService} from 'term-web/core/auth';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {Provenance, Release, ReleaseLibService} from 'term-web/sys/_lib';
 import * as ExcelJS from 'exceljs';
+import { UpperCasePipe } from '@angular/common';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { ResourceTaskModalComponent } from 'term-web/resources/resource/components/resource-task-modal-component';
+import { ResourceReleaseModalComponent } from 'term-web/resources/resource/components/resource-release-modal-component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
-  selector: 'tw-map-set-version-info-widget',
-  templateUrl: 'map-set-version-info-widget.component.html'
+    selector: 'tw-map-set-version-info-widget',
+    templateUrl: 'map-set-version-info-widget.component.html',
+    imports: [MuiNoDataModule, MuiDividerModule, StatusTagComponent, MuiIconModule, MuiCoreModule, PrivilegedDirective, ResourceTaskModalComponent, ResourceReleaseModalComponent, UpperCasePipe, TranslatePipe, MarinaUtilModule, ApplyPipe, JoinPipe, LocalDatePipe, PrivilegedPipe]
 })
 export class MapSetVersionInfoWidgetComponent implements OnChanges {
+  private mapSetService = inject(MapSetService);
+  private fhirConceptMapService = inject(FhirConceptMapLibService);
+  private chefService = inject(ChefService);
+  private notificationService = inject(MuiNotificationService);
+  private authService = inject(AuthService);
+  private releaseService = inject(ReleaseLibService);
+  private router = inject(Router);
+
   @Input() public mapSet: MapSet;
   @Input() public version: MapSetVersion;
   @Output() public taskCreated: EventEmitter<void> = new EventEmitter();
@@ -26,16 +43,6 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
   protected releases: Release[];
 
   protected loader = new LoadingManager();
-
-  public constructor(
-    private mapSetService: MapSetService,
-    private fhirConceptMapService: FhirConceptMapLibService,
-    private chefService: ChefService,
-    private notificationService: MuiNotificationService,
-    private authService: AuthService,
-    private releaseService: ReleaseLibService,
-    private router: Router
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['version'] && this.version) {

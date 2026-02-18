@@ -1,17 +1,25 @@
-import {Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
-import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe, LocalDatePipe } from '@kodality-web/core-util';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService, CodeSystemEntityVersionSearchParams, CodeSystemLibService} from '../../code-system';
+import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService, CodeSystemEntityVersionSearchParams, CodeSystemLibService} from 'term-web/resources/_lib/code-system';
+import { AsyncPipe } from '@angular/common';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({
-  selector: 'tw-code-system-entity-version-search',
-  templateUrl: './code-system-entity-version-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemEntityVersionSearchComponent), multi: true}, DestroyService]
+    selector: 'tw-code-system-entity-version-search',
+    templateUrl: './code-system-entity-version-search.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemEntityVersionSearchComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, AsyncPipe, KeysPipe, LocalDatePipe, LocalizedConceptNamePipe]
 })
 export class CodeSystemEntityVersionSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
+  private codeSystemEntityVersionLibService = inject(CodeSystemEntityVersionLibService);
+  private codeSystemService = inject(CodeSystemLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
   @Input() public entityCode?: string;
@@ -23,14 +31,8 @@ export class CodeSystemEntityVersionSearchComponent implements OnInit, OnChanges
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(
-    private codeSystemEntityVersionLibService: CodeSystemEntityVersionLibService,
-    private codeSystemService: CodeSystemLibService,
-    private destroy$: DestroyService
-  ) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(

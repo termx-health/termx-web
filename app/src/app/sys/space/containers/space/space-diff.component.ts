@@ -1,13 +1,21 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {DestroyService, group, isNil} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { DestroyService, group, isNil, ApplyPipe, KeysPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiSelectModule, MuiButtonModule, MuiIconModule, MuiTooltipModule } from '@kodality-web/marina-ui';
 import {combineLatest, forkJoin, map, Observable, of, takeUntil} from 'rxjs';
-import {SpaceContextComponent} from 'app/src/app/core/context/space-context.component';
+import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
 import {PackageResource, TerminologyServer, TerminologyServerLibService} from 'term-web/sys/_lib/space';
-import {JobLibService} from 'app/src/app/sys/_lib';
-import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirValueSetLibService} from '../../../../fhir/_lib';
-import {PackageResourceService} from '../../services/package-resource.service';
+import {JobLibService} from 'term-web/sys/_lib';
+import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirValueSetLibService} from 'term-web/fhir/_lib';
+import {PackageResourceService} from 'term-web/sys/space/services/package-resource.service';
+import { FormsModule } from '@angular/forms';
+
+import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
+import { ValueSetVersionSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-version-select.component';
+import { MapSetVersionSelectComponent } from 'term-web/resources/_lib/map-set/containers/map-set-version-select.component';
+import { DiffViewComponent } from 'term-web/core/ui/components/diff/diff-view.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 export class SpaceDiffItem {
   public resource?: PackageResource;
@@ -15,10 +23,22 @@ export class SpaceDiffItem {
 }
 
 @Component({
-  templateUrl: './space-diff.component.html',
-  providers: [DestroyService]
+    templateUrl: './space-diff.component.html',
+    providers: [DestroyService],
+    imports: [MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiSelectModule, FormsModule, CodeSystemVersionSelectComponent, ValueSetVersionSelectComponent, MapSetVersionSelectComponent, MuiButtonModule, MuiIconModule, RouterLink, MuiTooltipModule, DiffViewComponent, TranslatePipe, MarinaUtilModule, ApplyPipe, KeysPipe]
 })
 export class SpaceDiffComponent implements OnInit {
+  private fhirCSService = inject(FhirCodeSystemLibService);
+  private fhirVSService = inject(FhirValueSetLibService);
+  private fhirCMService = inject(FhirConceptMapLibService);
+  private terminologyServerService = inject(TerminologyServerLibService);
+  private packageResourceService = inject(PackageResourceService);
+  private jobService = inject(JobLibService);
+  private notificationService = inject(MuiNotificationService);
+  protected ctx = inject(SpaceContextComponent);
+  private destroy$ = inject(DestroyService);
+  private route = inject(ActivatedRoute);
+
   public loading: boolean;
   public current: string;
   public comparable: string;
@@ -26,18 +46,6 @@ export class SpaceDiffComponent implements OnInit {
   public terminologyServers: {[key: string]: TerminologyServer};
   public serverEditable: boolean;
   public resources: PackageResource[];
-
-  public constructor(
-    private fhirCSService: FhirCodeSystemLibService,
-    private fhirVSService: FhirValueSetLibService,
-    private fhirCMService: FhirConceptMapLibService,
-    private terminologyServerService: TerminologyServerLibService,
-    private packageResourceService: PackageResourceService,
-    private jobService: JobLibService,
-    private notificationService: MuiNotificationService,
-    public ctx: SpaceContextComponent,
-    private destroy$: DestroyService,
-    private route: ActivatedRoute) {}
 
   public ngOnInit(): void {
     this.loadData();
@@ -146,7 +154,7 @@ export class SpaceDiffComponent implements OnInit {
     }
     try {
       return JSON.stringify(JSON.parse(json), null, 2);
-    } catch (e) {
+    } catch {
       return json;
     }
   }

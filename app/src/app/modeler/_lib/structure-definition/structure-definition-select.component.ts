@@ -1,19 +1,25 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DestroyService, group, isDefined, LoadingManager, BooleanInput} from '@kodality-web/core-util';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { DestroyService, group, isDefined, LoadingManager, BooleanInput, KeysPipe } from '@kodality-web/core-util';
 import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {StructureDefinition} from './structure-definition';
-import {StructureDefinitionLibService} from './structure-definition-lib.service';
-import {StructureDefinitionSearchParams} from './structure-definition-search-params';
+import {StructureDefinition} from 'term-web/modeler/_lib/structure-definition/structure-definition';
+import {StructureDefinitionLibService} from 'term-web/modeler/_lib/structure-definition/structure-definition-lib.service';
+import {StructureDefinitionSearchParams} from 'term-web/modeler/_lib/structure-definition/structure-definition-search-params';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 
 @Component({
-  selector: 'tw-structure-definition-select',
-  templateUrl: 'structure-definition-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => StructureDefinitionSelectComponent), multi: true}, DestroyService]
+    selector: 'tw-structure-definition-select',
+    templateUrl: 'structure-definition-select.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => StructureDefinitionSelectComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, KeysPipe]
 })
 export class StructureDefinitionSelectComponent implements OnInit, ControlValueAccessor {
+  private structureDefinitionService = inject(StructureDefinitionLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
   @Input() public placeholder = 'marina.ui.inputs.search.placeholder';
   @Input() @BooleanInput() public disabled: string | boolean;
@@ -25,13 +31,8 @@ export class StructureDefinitionSelectComponent implements OnInit, ControlValueA
   protected searchUpdate = new Subject<string>();
   protected loader = new LoadingManager();
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(
-    private structureDefinitionService: StructureDefinitionLibService,
-    private destroy$: DestroyService
-  ) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(

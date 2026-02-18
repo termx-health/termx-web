@@ -1,20 +1,26 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
-import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import { Component, forwardRef, Input, OnInit, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe } from '@kodality-web/core-util';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {NamingSystem} from '../model/naming-system';
-import {NamingSystemSearchParams} from '../model/naming-system-search-params';
-import {NamingSystemLibService} from '../services/naming-system-lib.service';
+import {NamingSystem} from 'term-web/resources/_lib/naming-system/model/naming-system';
+import {NamingSystemSearchParams} from 'term-web/resources/_lib/naming-system/model/naming-system-search-params';
+import {NamingSystemLibService} from 'term-web/resources/_lib/naming-system/services/naming-system-lib.service';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 
 @Component({
-  selector: 'tw-naming-system-search',
-  templateUrl: './naming-system-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NamingSystemSearchComponent), multi: true}, DestroyService]
+    selector: 'tw-naming-system-search',
+    templateUrl: './naming-system-search.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => NamingSystemSearchComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, KeysPipe]
 })
 export class NamingSystemSearchComponent implements OnInit, ControlValueAccessor {
+  private namingSystemLibService = inject(NamingSystemLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() public filter?: (resource: NamingSystem) => boolean;
 
@@ -23,13 +29,8 @@ export class NamingSystemSearchComponent implements OnInit, ControlValueAccessor
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(
-    private namingSystemLibService: NamingSystemLibService,
-    private destroy$: DestroyService
-  ) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(

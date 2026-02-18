@@ -1,18 +1,30 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import {BooleanInput, isDefined, LoadingManager} from '@kodality-web/core-util';
+import { BooleanInput, isDefined, LoadingManager, FilterPipe } from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {map, Observable} from 'rxjs';
 import {SnomedTranslationLibService} from 'term-web/integration/_lib';
 import {ReleaseLibService} from 'term-web/sys/_lib';
 import {Task, TaskLibService} from 'term-web/task/_lib';
 import {AuthService} from 'term-web/core/auth';
+import { MuiSpinnerModule, MuiNoDataModule, MuiListModule, MuiDividerModule, MuiIconModule } from '@kodality-web/marina-ui';
+
+import { TaskStatusComponent } from 'term-web/task/_lib/components/task-status.component';
+import { WikiSmartTextEditorViewComponent } from 'term-web/wiki/_lib/texteditor/wiki-smart-text-editor-view.component';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
-  selector: 'tw-resource-tasks-widget',
-  templateUrl: 'resource-tasks-widget.component.html'
+    selector: 'tw-resource-tasks-widget',
+    templateUrl: 'resource-tasks-widget.component.html',
+    imports: [MuiSpinnerModule, MuiNoDataModule, MuiListModule, MuiDividerModule, TaskStatusComponent, MuiIconModule, WikiSmartTextEditorViewComponent, FilterPipe, PrivilegedPipe]
 })
 export class ResourceTasksWidgetComponent implements OnChanges {
+  private taskLibService = inject(TaskLibService);
+  private router = inject(Router);
+  private snomedService = inject(SnomedTranslationLibService);
+  private authService = inject(AuthService);
+  private releaseService = inject(ReleaseLibService);
+
   @Input() public resourceId: string;
   @Input() public taskFilters: {statuses?: string[]};
   @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'CodeSystemVersion' | 'ValueSetVersion' | 'MapSetVersion' | 'CodeSystemEntityVersion' |
@@ -33,14 +45,6 @@ export class ResourceTasksWidgetComponent implements OnChanges {
     'MapSetVersion': 'map-set-version',
     'CodeSystemEntityVersion': 'concept-version'
   };
-
-  public constructor(
-    private taskLibService: TaskLibService,
-    private router: Router,
-    private snomedService: SnomedTranslationLibService,
-    private authService: AuthService,
-    private releaseService: ReleaseLibService
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['resourceId'] || changes['resourceType']) && isDefined(this.resourceId) && isDefined(this.resourceType)) {

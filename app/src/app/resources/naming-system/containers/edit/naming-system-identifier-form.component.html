@@ -5,7 +5,9 @@
         <th class="tw-table-min-width"></th>
         <th>{{'entities.naming-system-identifier.type' | translate}}</th>
         <th>{{'entities.naming-system-identifier.value' | translate}}</th>
-        <th class="tw-table-actions" *ngIf="identifiers.length > 1"></th>
+        @if (identifiers.length > 1) {
+          <th class="tw-table-actions"></th>
+        }
       </tr>
 
       <tr *mTableRow="let identifier, let index = index">
@@ -17,9 +19,9 @@
         <td>
           <m-form-control mName="type-{{index}}" [mShowExplain]="false">
             <tw-value-set-concept-select name="type-{{index}}"
-                [(ngModel)]="identifier.type"
-                valueSet="namingsystem-identifier-type"
-                required
+              [(ngModel)]="identifier.type"
+              valueSet="namingsystem-identifier-type"
+              required
             ></tw-value-set-concept-select>
           </m-form-control>
         </td>
@@ -28,11 +30,13 @@
             <m-input name="value-{{index}}" [(ngModel)]="identifier.value" required></m-input>
           </m-form-control>
         </td>
-        <td class="tw-table-actions" *ngIf="identifiers.length > 1">
-          <m-button (click)="removeIdentifier(index)">
-            <m-icon [mCode]="'delete'"></m-icon>
-          </m-button>
-        </td>
+        @if (identifiers.length > 1) {
+          <td class="tw-table-actions">
+            <m-button (click)="removeIdentifier(index)">
+              <m-icon [mCode]="'delete'"></m-icon>
+            </m-button>
+          </td>
+        }
       </tr>
 
       <tr>

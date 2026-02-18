@@ -1,14 +1,16 @@
 import {HttpClient} from '@angular/common/http';
-import {Component} from '@angular/core';
-import {ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Params, Router} from '@angular/router';
-import {group} from '@kodality-web/core-util';
-import {MuiPageMenuItem} from '@kodality-web/marina-ui';
+import { Component, inject } from '@angular/core';
+import { ActivatedRoute, ActivatedRouteSnapshot, NavigationEnd, NavigationStart, Params, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { group, ApplyPipe } from '@kodality-web/core-util';
+import { MuiPageMenuItem, MarinPageLayoutModule, MuiCoreModule, MuiFormModule } from '@kodality-web/marina-ui';
 import {LocalizedName} from '@kodality-web/marina-util';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {environment} from 'environments/environment';
 import {delay, filter, map, pairwise, startWith, switchMap} from 'rxjs';
-import {AuthService} from 'term-web/core/auth';
-import {InfoService} from 'term-web/core/info/info.service';
+import {AuthService, HasAnyPrivilegePipe} from 'term-web/core/auth';
+import {InfoService} from 'term-web/core/info';
+import { AsyncPipe, KeyValuePipe } from '@angular/common';
+import { NoPrivilegeComponent } from 'term-web/core/components/no-privilege';
 
 
 interface FileMenu {
@@ -23,10 +25,17 @@ const getRouteLastChild = (snap: ActivatedRouteSnapshot): ActivatedRouteSnapshot
 
 
 @Component({
-  templateUrl: 'app.component.html',
-  styleUrls: ['app.component.less']
+    templateUrl: 'app.component.html',
+    styleUrls: ['app.component.less'],
+    imports: [MarinPageLayoutModule, MuiCoreModule, RouterLink, MuiFormModule, RouterOutlet, NoPrivilegeComponent, AsyncPipe, KeyValuePipe, TranslatePipe, HasAnyPrivilegePipe, ApplyPipe]
 })
 export class AppComponent {
+  protected auth = inject(AuthService);
+  protected router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private http = inject(HttpClient);
+  private translateService = inject(TranslateService);
+
   protected menu$ = this.translateService.onLangChange.pipe(
     startWith({lang: this.translateService.currentLang}),
     switchMap(() => this.http.get<FileMenu[]>("./assets/menu.json")),
@@ -48,14 +57,11 @@ export class AppComponent {
     service: ''
   };
 
-  public constructor(
-    protected auth: AuthService,
-    protected router: Router,
-    private route: ActivatedRoute,
-    private http: HttpClient,
-    private translateService: TranslateService,
-    info: InfoService,
-  ) {
+  public constructor() {
+    const auth = this.auth;
+    const router = this.router;
+    const info = inject(InfoService);
+
     router.events.pipe(
       filter(e => e instanceof NavigationStart),
       startWith({url: this.router.url}),

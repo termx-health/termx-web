@@ -1,4 +1,4 @@
-import {CodeSystemEntity} from './code-system-entity';
+import {CodeSystemEntity} from 'term-web/resources/_lib/code-system/model/code-system-entity';
 
 export class CodeSystemAssociation extends CodeSystemEntity{
   public associationType?: string;

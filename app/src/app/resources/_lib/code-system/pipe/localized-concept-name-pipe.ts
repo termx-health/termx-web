@@ -1,4 +1,4 @@
-import {Injectable, Pipe, PipeTransform} from '@angular/core';
+import { Injectable, Pipe, PipeTransform, inject } from '@angular/core';
 import {isDefined, sortFn, unique} from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {environment} from 'environments/environment';
@@ -8,7 +8,7 @@ import {QueuedCacheService} from 'term-web/core/ui/services/queued-cache.service
 import {SnomedLibService} from 'term-web/integration/_lib';
 import {MeasurementUnitLibService} from 'term-web/measurement-unit/_lib';
 import {Designation, ValueSetLibService} from 'term-web/resources/_lib';
-import {CodeSystemConcept, CodeSystemConceptLibService} from '../../code-system';
+import {CodeSystemConcept, CodeSystemConceptLibService} from 'term-web/resources/_lib/code-system';
 
 
 type ResourceParams = CodeSystemResourceParams & ValueSetResourceParams;
@@ -26,16 +26,13 @@ type OptimizedResponse = {id: string | number, name?: string}
 
 @Injectable({providedIn: 'root'})
 class LocalizedConceptNameService {
-  private cacheService = new QueuedCacheService();
+  private conceptService = inject(CodeSystemConceptLibService);
+  private translateService = inject(TranslateService);
+  private valueSetService = inject(ValueSetLibService);
+  private snomedService = inject(SnomedLibService);
+  private measurementUnitService = inject(MeasurementUnitLibService);
 
-  public constructor(
-    private conceptService: CodeSystemConceptLibService,
-    private translateService: TranslateService,
-    // TODO: Service below do not belong to this module! Move pipe out of this module, somehow!
-    private valueSetService: ValueSetLibService,
-    private snomedService: SnomedLibService,
-    private measurementUnitService: MeasurementUnitLibService,
-  ) { }
+  private cacheService = new QueuedCacheService();
 
 
   public transform(resource: ResourceParams, identifier: string | number): Observable<string> {
@@ -148,9 +145,10 @@ class LocalizedConceptNameService {
 }
 
 
-@Pipe({name: 'localizedConceptName'})
+@Pipe({ name: 'localizedConceptName' })
 export class LocalizedConceptNamePipe implements PipeTransform {
-  public constructor(private conceptNameService: LocalizedConceptNameService) {}
+  private conceptNameService = inject(LocalizedConceptNameService);
+
 
   public transform(identifier: string | number, resource: ResourceParams): Observable<string> {
     if (!identifier || !resource || (!resource.codeSystem && !resource.valueSet)) {

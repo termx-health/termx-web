@@ -1,14 +1,28 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {BooleanInput, validateForm} from '@kodality-web/core-util';
-import {CodeSystemLibService, EntityProperty, EntityPropertySearchParams, ValueSetRuleFilter} from 'app/src/app/resources/_lib';
+import {CodeSystemLibService, EntityProperty, EntityPropertySearchParams, ValueSetRuleFilter} from 'term-web/resources/_lib';
+import { MuiCardModule, MarinPageLayoutModule, MuiEditableTableModule, MuiSelectModule } from '@kodality-web/marina-ui';
+import { EntityPropertyValueInputComponent } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'tw-value-set-rule-filter-list',
-  templateUrl: 'value-set-rule-filter-list.component.html',
+    selector: 'tw-value-set-rule-filter-list',
+    templateUrl: 'value-set-rule-filter-list.component.html',
+    imports: [
+        MuiCardModule,
+        MarinPageLayoutModule,
+        FormsModule,
+        MuiEditableTableModule,
+        MuiSelectModule,
+        EntityPropertyValueInputComponent,
+        TranslatePipe,
+    ],
 })
 export class ValueSetRuleFilterListComponent implements OnChanges {
+  private codeSystemService = inject(CodeSystemLibService);
+
   @Input() public codeSystem?: string;
   @Input() public filters: ValueSetRuleFilter[] = [];
   @Input() @BooleanInput() public viewMode: string | boolean = false;
@@ -21,8 +35,6 @@ export class ValueSetRuleFilterListComponent implements OnChanges {
   public properties: EntityProperty[] = [];
 
   public rowInstance: ValueSetRuleFilter = {property: {}};
-
-  public constructor(private codeSystemService: CodeSystemLibService) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["codeSystem"] && this.codeSystem) {

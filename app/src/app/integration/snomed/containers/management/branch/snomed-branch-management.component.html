@@ -3,128 +3,147 @@
     <div *m-card-header class="m-justify-between">
       <m-title>{{'web.snomed.branch.management.header' | translate: {path: snomedBranch?.path} }}</m-title>
       <m-dropdown>
-        <ng-container *ngIf="type === 'working' && ('snomed-ct.CodeSystem.edit' | twPrivileged)">
+        @if (type === 'working' && ('snomed-ct.CodeSystem.edit' | twPrivileged)) {
           <a *m-dropdown-item [routerLink]="['/integration','snomed', 'branches', snomedBranch?.path | apply: encodeUriComponent, 'edit']">
             {{'core.btn.edit' | translate}}
           </a>
           <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()" mPosition="leftTop">
             {{'core.btn.delete' | translate}}
           </a>
-        </ng-container>
+        }
         <!--        <a *m-dropdown-item (mClick)="executeIntegrityCheck()">-->
         <!--          {{'web.snomed.branch.management.integrity-check' | translate}}-->
-        <!--        </a>-->
-        <ng-container *ngIf="snomedBranch && !snomedBranch.locked && ('snomed-ct.CodeSystem.edit' | twHasAnyPrivilege)">
-          <a *m-dropdown-item (mClick)="lockModalData.visible = true">
-            {{'web.snomed.branch.management.lock' | translate}}
-          </a>
-        </ng-container>
-        <ng-container *ngIf="snomedBranch && snomedBranch.locked && ('snomed-ct.CodeSystem.edit' | twHasAnyPrivilege)">
-          <a *m-dropdown-item (mClick)="unlock()">
-            {{'web.snomed.branch.management.unlock' | translate}}
-          </a>
-        </ng-container>
-        <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
-          <a *m-dropdown-item (mClick)="importModalData.visible = true">
-            {{'web.snomed.branch.management.import-from-rf2' | translate}}
-          </a>
-        </ng-container>
-        <a *m-dropdown-item (mClick)="exportModalData.visible = true">
-          {{'web.snomed.branch.management.export-to-rf2' | translate}}
+      <!--        </a>-->
+      @if (snomedBranch && !snomedBranch.locked && ('snomed-ct.CodeSystem.edit' | twHasAnyPrivilege)) {
+        <a *m-dropdown-item (mClick)="lockModalData.visible = true">
+          {{'web.snomed.branch.management.lock' | translate}}
         </a>
-      </m-dropdown>
-    </div>
-    <div *mCardContent="!loader.isLoading">
-      <m-form-row>
-        <m-form-item *mFormCol mLabel="entities.snomed-branch.creation">
-          {{snomedBranch?.creation | localDate}}
-        </m-form-item>
-        <m-form-item *mFormCol mLabel="entities.snomed-branch.head">
-          {{snomedBranch?.head | localDate}}
-        </m-form-item>
-      </m-form-row>
-      <m-form-row>
-        <m-form-item *mFormCol mLabel="entities.snomed-branch.base">
-          {{snomedBranch?.base | localDate}}
-        </m-form-item>
-        <m-form-item *mFormCol mLabel="entities.snomed-branch.metadata">
-          {{snomedBranch?.metadata | json}}
-        </m-form-item>
-      </m-form-row>
-      <m-form-row>
-        <m-form-item *mFormCol mName="state" mLabel="entities.snomed-branch.state">
-          {{snomedBranch?.state}}
-        </m-form-item>
-        <m-form-item *mFormCol mName="locked" mLabel="entities.snomed-branch.locked">
-          <m-checkbox name="locked" [ngModel]="snomedBranch?.locked" readOnly></m-checkbox>
-        </m-form-item>
-      </m-form-row>
+      }
+      @if (snomedBranch && snomedBranch.locked && ('snomed-ct.CodeSystem.edit' | twHasAnyPrivilege)) {
+        <a *m-dropdown-item (mClick)="unlock()">
+          {{'web.snomed.branch.management.unlock' | translate}}
+        </a>
+      }
+      <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+        <a *m-dropdown-item (mClick)="importModalData.visible = true">
+          {{'web.snomed.branch.management.import-from-rf2' | translate}}
+        </a>
+      </ng-container>
+      <a *m-dropdown-item (mClick)="exportModalData.visible = true">
+        {{'web.snomed.branch.management.export-to-rf2' | translate}}
+      </a>
+    </m-dropdown>
+  </div>
+  <div *mCardContent="!loader.isLoading">
+    <m-form-row>
+      <m-form-item *mFormCol mLabel="entities.snomed-branch.creation">
+        {{snomedBranch?.creation | localDate}}
+      </m-form-item>
+      <m-form-item *mFormCol mLabel="entities.snomed-branch.head">
+        {{snomedBranch?.head | localDate}}
+      </m-form-item>
+    </m-form-row>
+    <m-form-row>
+      <m-form-item *mFormCol mLabel="entities.snomed-branch.base">
+        {{snomedBranch?.base | localDate}}
+      </m-form-item>
+      <m-form-item *mFormCol mLabel="entities.snomed-branch.metadata">
+        {{snomedBranch?.metadata | json}}
+      </m-form-item>
+    </m-form-row>
+    <m-form-row>
+      <m-form-item *mFormCol mName="state" mLabel="entities.snomed-branch.state">
+        {{snomedBranch?.state}}
+      </m-form-item>
+      <m-form-item *mFormCol mName="locked" mLabel="entities.snomed-branch.locked">
+        <m-checkbox name="locked" [ngModel]="snomedBranch?.locked" readOnly></m-checkbox>
+      </m-form-item>
+    </m-form-row>
 
-      <m-divider>
-        <div class="m-items-middle">
-          <label>{{'web.snomed.branch.management.authoring-stats' | translate}}</label>
-          <ng-container *ngIf="('snomed-ct.CodeSystem.edit' | twPrivileged) && type === 'daily-build'">
-            <m-divider mVertical></m-divider>
-            <m-icon mCode="upload"></m-icon>
-            <a (mClick)="openCsVersionModal()">{{'web.snomed.branch.management.create-cs-version' | translate}}</a>
-          </ng-container>
-        </div>
-      </m-divider>
-      <nz-tabset *ngIf="!loader.isLoading">
-        <nz-tab *ngFor="let t of ['new-descriptions', 'changed-fsn', 'new-synonyms', 'inactivated-synonyms', 'reactivated-synonyms']">
-          <ng-container *nzTabLink>
-            <label>{{'web.snomed.branch.management.' + t | translate}}</label>&nbsp;
-            <m-tag mColor="blue">{{(t | apply: getAuthoringStatsData)?.length || 0}}</m-tag>&nbsp;
-            <ng-container *ngIf="('snomed-ct.CodeSystem.edit' | twPrivileged)">
-              <m-dropdown *ngIf="t === 'inactivated-synonyms'">
-                <a *m-dropdown-item (mClick)="synonymDeactivationModalData.visible = true">{{'web.snomed.branch.management.inactivate-synonym' | translate}}</a>
-              </m-dropdown>
-              <m-dropdown *ngIf="t === 'reactivated-synonyms'">
-                <a *m-dropdown-item (mClick)="synonymReactivationModalData.visible = true">{{'web.snomed.branch.management.reactivate-synonym' | translate}}</a>
-              </m-dropdown>
-            </ng-container>
-          </ng-container>
-          <m-table #authoringStatsTable *ngIf="!loader.isLoading" [mData]="t | apply: getAuthoringStatsData">
-            <tr *mTableHead>
-              <th *ngIf="t === 'new-descriptions'">{{'id'}}</th>
-              <th>{{'term'}}</th>
-              <th>{{'concept id'}}</th>
-              <th *ngIf="t === 'new-descriptions'"></th>
-            </tr>
-            <ng-container *ngFor="let item of authoringStatsTable.mData">
-              <tr>
-                <td *ngIf="t === 'new-descriptions'">{{item.id}}</td>
-                <td>{{item.term}}</td>
-                <td><a [routerLink]="['/integration/snomed/dashboard', item.conceptId || item.id]">{{item.conceptId || item.id}}</a></td>
-                <td *ngIf="t === 'new-descriptions'">
+    <m-divider>
+      <div class="m-items-middle">
+        <label>{{'web.snomed.branch.management.authoring-stats' | translate}}</label>
+        @if (('snomed-ct.CodeSystem.edit' | twPrivileged) && type === 'daily-build') {
+          <m-divider mVertical></m-divider>
+          <m-icon mCode="upload"></m-icon>
+          <a (mClick)="openCsVersionModal()">{{'web.snomed.branch.management.create-cs-version' | translate}}</a>
+        }
+      </div>
+    </m-divider>
+    @if (!loader.isLoading) {
+      <nz-tabset>
+        @for (t of ['new-descriptions', 'changed-fsn', 'new-synonyms', 'inactivated-synonyms', 'reactivated-synonyms']; track t) {
+          <nz-tab>
+            <ng-container *nzTabLink>
+              <label>{{'web.snomed.branch.management.' + t | translate}}</label>&nbsp;
+              <m-tag mColor="blue">{{(t | apply: getAuthoringStatsData)?.length || 0}}</m-tag>&nbsp;
+              @if (('snomed-ct.CodeSystem.edit' | twPrivileged)) {
+                @if (t === 'inactivated-synonyms') {
                   <m-dropdown>
-                    <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
-                      <a *m-dropdown-item (mClick)="deleteDescription(item.id)">
-                        {{'core.btn.delete' | translate}}
-                      </a>
-                    </ng-container>
+                    <a *m-dropdown-item (mClick)="synonymDeactivationModalData.visible = true">{{'web.snomed.branch.management.inactivate-synonym' | translate}}</a>
                   </m-dropdown>
-                </td>
-              </tr>
+                }
+                @if (t === 'reactivated-synonyms') {
+                  <m-dropdown>
+                    <a *m-dropdown-item (mClick)="synonymReactivationModalData.visible = true">{{'web.snomed.branch.management.reactivate-synonym' | translate}}</a>
+                  </m-dropdown>
+                }
+              }
             </ng-container>
-            <tr *mTableNoData>
-              <td colspan="100%">
-                <m-no-data></m-no-data>
-              </td>
-            </tr>
-          </m-table>
-        </nz-tab>
+            @if (!loader.isLoading) {
+              <m-table #authoringStatsTable [mData]="t | apply: getAuthoringStatsData">
+                <tr *mTableHead>
+                  @if (t === 'new-descriptions') {
+                    <th>{{'id'}}</th>
+                  }
+                  <th>{{'term'}}</th>
+                  <th>{{'concept id'}}</th>
+                  @if (t === 'new-descriptions') {
+                    <th></th>
+                  }
+                </tr>
+                @for (item of authoringStatsTable.mData; track item) {
+                  <tr>
+                    @if (t === 'new-descriptions') {
+                      <td>{{item.id}}</td>
+                    }
+                    <td>{{item.term}}</td>
+                    <td><a [routerLink]="['/integration/snomed/dashboard', item.conceptId || item.id]">{{item.conceptId || item.id}}</a></td>
+                    @if (t === 'new-descriptions') {
+                      <td>
+                        <m-dropdown>
+                          <ng-container *twPrivileged="'snomed-ct.CodeSystem.edit'">
+                            <a *m-dropdown-item (mClick)="deleteDescription(item.id)">
+                              {{'core.btn.delete' | translate}}
+                            </a>
+                          </ng-container>
+                        </m-dropdown>
+                      </td>
+                    }
+                  </tr>
+                }
+                <tr *mTableNoData>
+                  <td colspan="100%">
+                    <m-no-data></m-no-data>
+                  </td>
+                </tr>
+              </m-table>
+            }
+          </nz-tab>
+        }
       </nz-tabset>
+    }
 
-      <m-divider [mText]="'web.snomed.branch.management.unlinked-translations' | translate: {count: unlinkedTranslations?.length}"></m-divider>
-      <m-table #unlinkedTranslationsTable *ngIf="!loader.isLoading" [mData]="unlinkedTranslations">
+    <m-divider [mText]="'web.snomed.branch.management.unlinked-translations' | translate: {count: unlinkedTranslations?.length}"></m-divider>
+    @if (!loader.isLoading) {
+      <m-table #unlinkedTranslationsTable [mData]="unlinkedTranslations">
         <tr *mTableHead>
           <th>{{'id'}}</th>
           <th>{{'term'}}</th>
           <th>{{'concept id'}}</th>
           <th *twPrivileged="'snomed-ct.CodeSystem.edit'"></th>
         </tr>
-        <ng-container *ngFor="let translation of unlinkedTranslationsTable.mData">
+        @for (translation of unlinkedTranslationsTable.mData; track translation) {
           <tr>
             <td>{{translation.descriptionId}}</td>
             <td>{{translation.term}}</td>
@@ -137,15 +156,16 @@
               </m-dropdown>
             </td>
           </tr>
-        </ng-container>
+        }
         <tr *mTableNoData>
           <td colspan="100%">
             <m-no-data></m-no-data>
           </td>
         </tr>
       </m-table>
-    </div>
-  </m-card>
+    }
+  </div>
+</m-card>
 </m-spinner>
 
 
@@ -216,9 +236,11 @@
       <m-form-item mName="file" mLabel="web.snomed.branch.management.import-modal.file" required>
         <input #fileInput type="file" name="file" [(ngModel)]="importModalData.file" required>
       </m-form-item>
-      <m-form-item *ngIf="importModalData.progress">
-        <nz-progress [nzPercent]="importModalData.progress"></nz-progress>
-      </m-form-item>
+      @if (importModalData.progress) {
+        <m-form-item>
+          <nz-progress [nzPercent]="importModalData.progress"></nz-progress>
+        </m-form-item>
+      }
     </form>
     <m-alert mType="warning" mShowIcon>{{'web.snomed.branch.management.import-warning' | translate}}</m-alert>
   </ng-container>

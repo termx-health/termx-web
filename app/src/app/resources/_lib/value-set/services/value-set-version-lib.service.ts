@@ -1,14 +1,14 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {ValueSetVersion} from '../model/value-set-version';
+import {ValueSetVersion} from 'term-web/resources/_lib/value-set/model/value-set-version';
 
 @Injectable()
 export class ValueSetVersionLibService {
-  protected baseUrl = `${environment.termxApi}/ts/value-set-versions`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/ts/value-set-versions`;
 
   public load(id: number): Observable<ValueSetVersion> {
     return this.http.get<ValueSetVersion>(`${this.baseUrl}/${id}`);

@@ -12,5 +12,5 @@ export class CodeSystemEntityVersionSearchParams extends QueryParams {
   public codeSystemVersionId?: number;
   public codeSystemVersion?: string;
   public codeSystemUri?: string;
-  public unlinked?: Boolean;
+  public unlinked?: boolean;
 }

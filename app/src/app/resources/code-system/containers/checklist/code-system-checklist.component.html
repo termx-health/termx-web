@@ -6,22 +6,38 @@
         <label m-radio-button [mValue]="'validation'" [disabled]="emptyConfiguration">{{'web.code-system-checklist.mode.validation' | translate}}</label>
         <label m-radio-button [mValue]="'configuration'">{{'web.code-system-checklist.mode.configuration' | translate}}</label>
       </m-radio-group>
-      <div *ngIf="mode === 'validation'" class="m-items-middle">
-        <label *ngIf="validationShowAll">{{'web.code-system-checklist.show-all' | translate}}</label>
-        <a *ngIf="!validationShowAll" (mClick)="validationShowAll = true">{{'web.code-system-checklist.show-all' | translate}}</a>
-        <m-divider mVertical/>
-        <label *ngIf="!validationShowAll">{{'web.code-system-checklist.show-unaccomplished' | translate}}</label>
-        <a *ngIf="validationShowAll" (mClick)="validationShowAll = false">{{'web.code-system-checklist.show-unaccomplished' | translate}}</a>
-      </div>
-      <m-button *ngIf="mode === 'configuration'" (mClick)="saveConfiguration()">{{'core.btn.save' | translate}}</m-button>
+      @if (mode === 'validation') {
+        <div class="m-items-middle">
+          @if (validationShowAll) {
+            <label>{{'web.code-system-checklist.show-all' | translate}}</label>
+          }
+          @if (!validationShowAll) {
+            <a (mClick)="validationShowAll = true">{{'web.code-system-checklist.show-all' | translate}}</a>
+          }
+          <m-divider mVertical/>
+          @if (!validationShowAll) {
+            <label>{{'web.code-system-checklist.show-unaccomplished' | translate}}</label>
+          }
+          @if (validationShowAll) {
+            <a (mClick)="validationShowAll = false">{{'web.code-system-checklist.show-unaccomplished' | translate}}</a>
+          }
+        </div>
+      }
+      @if (mode === 'configuration') {
+        <m-button (mClick)="saveConfiguration()">{{'core.btn.save' | translate}}</m-button>
+      }
     </div>
     <div>
-      <tw-cs-checklist-validation *ngIf="mode === 'validation'"
+      @if (mode === 'validation') {
+        <tw-cs-checklist-validation
           [codeSystemId]="codeSystem?.id"
           [codeSystemVersion]="version?.version"
           [showUnaccomplished]="!validationShowAll"
           (emptyConfiguration)="mode = 'configuration'; emptyConfiguration = true"/>
-      <tw-cs-checklist-configuration *ngIf="mode === 'configuration'" resourceType="CodeSystem" [resourceId]="codeSystem?.id"/>
+      }
+      @if (mode === 'configuration') {
+        <tw-cs-checklist-configuration resourceType="CodeSystem" [resourceId]="codeSystem?.id"/>
+      }
     </div>
   </div>
 </m-page>

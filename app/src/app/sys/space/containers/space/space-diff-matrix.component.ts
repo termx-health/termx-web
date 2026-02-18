@@ -1,32 +1,34 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import {DestroyService, isDefined} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { DestroyService, isDefined, ApplyPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiTableModule, MuiCheckboxModule, MuiButtonModule, MuiPopoverModule, MuiIconModule, MuiDividerModule, MuiPopconfirmModule, MuiNoDataModule } from '@kodality-web/marina-ui';
 import {combineLatest, takeUntil} from 'rxjs';
-import {SpaceContextComponent} from 'app/src/app/core/context/space-context.component';
+import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
 import {SpaceDiffItem} from 'term-web/sys/_lib/space';
-import {PackageResourceService} from 'app/src/app/sys/space/services/package-resource.service';
-import {SpaceService} from 'app/src/app/sys/space/services/space.service';
+import {PackageResourceService} from 'term-web/sys/space/services/package-resource.service';
+import {SpaceService} from 'term-web/sys/space/services/space.service';
+import { FormsModule } from '@angular/forms';
+
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: './space-diff-matrix.component.html',
-  providers: [DestroyService]
+    templateUrl: './space-diff-matrix.component.html',
+    providers: [DestroyService],
+    imports: [MuiTableModule, MuiCheckboxModule, FormsModule, MuiButtonModule, MuiPopoverModule, MuiIconModule, MuiDividerModule, MuiPopconfirmModule, MuiNoDataModule, TranslatePipe, ApplyPipe]
 })
 export class SpaceDiffMatrixComponent implements OnInit {
+  private spaceService = inject(SpaceService);
+  private packageResourceService = inject(PackageResourceService);
+  private notificationService = inject(MuiNotificationService);
+  private router = inject(Router);
+  private ctx = inject(SpaceContextComponent);
+  private destroy$ = inject(DestroyService);
+
   public loading: boolean;
   public allChecked: boolean;
   public diffItems: SpaceDiffItem[];
 
   protected filter: {upToDate: boolean, notUpToDate: boolean} = {upToDate: true, notUpToDate: true};
-
-  public constructor(
-    public spaceService: SpaceService,
-    public packageResourceService: PackageResourceService,
-    public notificationService: MuiNotificationService,
-    public router: Router,
-    public ctx: SpaceContextComponent,
-    private destroy$: DestroyService,
-  ) {}
 
   public ngOnInit(): void {
     this.loadDiff();

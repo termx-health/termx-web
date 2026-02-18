@@ -3,28 +3,26 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {MarinaUiModule} from '@kodality-web/marina-ui';
-import {SequenceSelectComponent} from './components/sequence-select.component';
-import {SequenceValueGeneratorComponent} from './components/sequence-value-generator.component';
-import {SequenceLibService} from './services/sequence-lib.service';
+import {SequenceSelectComponent} from 'term-web/sequence/_lib/components/sequence-select.component';
+import {SequenceValueGeneratorComponent} from 'term-web/sequence/_lib/components/sequence-value-generator.component';
+import {SequenceLibService} from 'term-web/sequence/_lib/services/sequence-lib.service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    MarinaUiModule,
-    CoreUtilModule
-  ],
-  declarations: [
-    SequenceSelectComponent,
-    SequenceValueGeneratorComponent
-  ],
-  exports: [
-    SequenceSelectComponent,
-    SequenceValueGeneratorComponent
-  ],
-  providers: [
-    SequenceLibService
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        MarinaUiModule,
+        CoreUtilModule,
+        SequenceSelectComponent,
+        SequenceValueGeneratorComponent
+    ],
+    exports: [
+        SequenceSelectComponent,
+        SequenceValueGeneratorComponent
+    ],
+    providers: [
+        SequenceLibService
+    ]
 })
 export class SequenceLibModule {
 }

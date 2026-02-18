@@ -8,28 +8,24 @@ import {TranslateModule} from '@ngx-translate/core';
 import {AuthModule} from 'term-web/core/auth';
 import {SpaceLibModule} from 'term-web/sys/_lib/space';
 import {SpaceModule} from 'term-web/sys/space/space.module';
-import {SpaceContextComponent} from './space-context.component';
+import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    TranslateModule,
-
-    MarinaUiModule,
-    MarinaUtilModule,
-    CoreUtilModule,
-
-    SpaceModule,
-    SpaceLibModule,
-    AuthModule
-  ],
-  declarations: [
-    SpaceContextComponent
-  ],
-  exports: [
-    SpaceContextComponent
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        TranslateModule,
+        MarinaUiModule,
+        MarinaUtilModule,
+        CoreUtilModule,
+        SpaceModule,
+        SpaceLibModule,
+        AuthModule,
+        SpaceContextComponent
+    ],
+    exports: [
+        SpaceContextComponent
+    ]
 })
 export class SpaceContextModule {
 }

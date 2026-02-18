@@ -1,17 +1,33 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { isDefined, LoadingManager, validateForm, ApplyPipe, IncludesPipe, ToStringPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MarinPageLayoutModule, MuiIconModule, MuiCoreModule, MuiDividerModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiTableModule, MuiTagModule, MuiDropdownModule, MuiPopconfirmModule, MuiNoDataModule, MuiListModule, MuiModalModule, MuiSelectModule, MuiMultiLanguageInputModule } from '@kodality-web/marina-ui';
 import {saveAs} from 'file-saver';
 import {forkJoin} from 'rxjs';
 import {Checklist, Release, ReleaseResource, JobLog} from 'term-web/sys/_lib';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
+import { KeyValuePipe } from '@angular/common';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
+import { ResourceTasksWidgetComponent } from 'term-web/resources/resource/components/resource-tasks-widget.component';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { MapSetSearchComponent } from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
+import { StructureDefinitionSelectComponent } from 'term-web/modeler/_lib/structure-definition/structure-definition-select.component';
+import { TransformationDefinitionSelectComponent } from 'term-web/modeler/_lib/transformer/transformation-definition-select.component';
+import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
+import { ValueSetVersionSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-version-select.component';
+import { MapSetVersionSelectComponent } from 'term-web/resources/_lib/map-set/containers/map-set-version-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
-  templateUrl: 'release-summary.component.html',
-  styles: [`
+    templateUrl: 'release-summary.component.html',
+    styles: [`
     @import "../../../../styles/variables";
 
     @space-context-bg: var(--color-action-bar-background);
@@ -30,9 +46,16 @@ import {ReleaseService} from 'term-web/sys/release/services/release.service';
       border-bottom: @mui-border;
       white-space: nowrap;
     }
-  `]
+  `],
+    imports: [MarinPageLayoutModule, MuiIconModule, PrivilegedDirective, RouterLink, MuiCoreModule, StatusTagComponent, MuiDividerModule, PrivilegeContextDirective, MuiFormModule, MuiCardModule, MuiButtonModule, MuiTableModule, MuiTagModule, MuiDropdownModule, MuiPopconfirmModule, MuiNoDataModule, MuiListModule, ResourceTasksWidgetComponent, MuiModalModule, FormsModule, MuiSelectModule, CodeSystemSearchComponent, ValueSetSearchComponent, MapSetSearchComponent, StructureDefinitionSelectComponent, TransformationDefinitionSelectComponent, CodeSystemVersionSelectComponent, ValueSetVersionSelectComponent, MapSetVersionSelectComponent, MuiMultiLanguageInputModule, KeyValuePipe, TranslatePipe, MarinaUtilModule, ApplyPipe, IncludesPipe, ToStringPipe, PrivilegedPipe]
 })
 export class ReleaseSummaryComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private releaseService = inject(ReleaseService);
+  private checklistService = inject(ChecklistService);
+  private notificationService = inject(MuiNotificationService);
+
   protected release?: Release;
   protected resources?: ReleaseResource[];
   protected checklists?: {[key: string]: Checklist[]} = {};
@@ -50,14 +73,6 @@ export class ReleaseSummaryComponent implements OnInit {
     'exclamation-circle': 'orange',
     'close-circle': 'red'
   };
-
-  public constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private releaseService: ReleaseService,
-    private checklistService: ChecklistService,
-    private notificationService: MuiNotificationService
-  ) {}
 
   @ViewChild("form") public form?: NgForm;
 

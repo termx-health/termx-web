@@ -2,46 +2,46 @@
   <div *m-form-col>
     <m-spinner [mLoading]="loader.state['save']">
       <m-card [mTitle]="mode === 'edit' ? 'web.template.form.edit-header' : 'web.template.form.add-header'" [mShowSkeleton]="loader.state['init']" autofocus>
-        <form #form="ngForm" *ngIf="template">
-          <m-form-item mName="code" mLabel="entities.template.code" required>
-            <m-input name="code" [(ngModel)]="template.code" required/>
-          </m-form-item>
-
-          <m-form-item mName="names" mLabel="entities.template.names" required>
-            <m-multi-language-input name="names" [(ngModel)]="template.names" required/>
-          </m-form-item>
-
-          <m-form-item mName="contentType" mLabel="entities.template.content-type">
-            {{template.contentType}}
-          </m-form-item>
-
-          <m-form-item
-              *ngFor="let content of template.contents; let index = index"
-              mName="content-{{index}}"
-              [mLabel]="'language.' + content.lang"
-          >
-            <m-textarea name="content-{{index}}" [(ngModel)]="content.content" [autosize]="{minRows: 3}"/>
-          </m-form-item>
-
-          <ng-container *ngIf="template.contents | apply: availableLangs as availableLangs">
-            <m-dropdown *ngIf="availableLangs.length">
-              <m-button *m-dropdown-container>{{'web.template.form.add-content' | translate}}</m-button>
-
-              <ng-container *ngFor="let lang of availableLangs">
-                <a *m-dropdown-item (mClick)="addLanguageContent(lang)" translate>language.{{lang}}</a>
-              </ng-container>
-            </m-dropdown>
-          </ng-container>
-        </form>
+        @if (template) {
+          <form #form="ngForm">
+            <m-form-item mName="code" mLabel="entities.template.code" required>
+              <m-input name="code" [(ngModel)]="template.code" required/>
+            </m-form-item>
+            <m-form-item mName="names" mLabel="entities.template.names" required>
+              <m-multi-language-input name="names" [(ngModel)]="template.names" required/>
+            </m-form-item>
+            <m-form-item mName="contentType" mLabel="entities.template.content-type">
+              {{template.contentType}}
+            </m-form-item>
+            @for (content of template.contents; track content; let index = $index) {
+              <m-form-item
+                mName="content-{{index}}"
+                [mLabel]="'language.' + content.lang"
+                >
+                <m-textarea name="content-{{index}}" [(ngModel)]="content.content" [autosize]="{minRows: 3}"/>
+              </m-form-item>
+            }
+            @if (template.contents | apply: availableLangs; as availableLangs) {
+              @if (availableLangs.length) {
+                <m-dropdown>
+                  <m-button *m-dropdown-container>{{'web.template.form.add-content' | translate}}</m-button>
+                  @for (lang of availableLangs; track lang) {
+                    <a *m-dropdown-item (mClick)="addLanguageContent(lang)" translate>language.{{lang}}</a>
+                  }
+                </m-dropdown>
+              }
+            }
+          </form>
+        }
 
 
         <m-button
-            *m-card-footer
-            mDisplay="primary"
-            [mLoading]="loader.state['save']"
-            [disabled]="loader.isLoading"
-            (mClick)="save()"
-        >
+          *m-card-footer
+          mDisplay="primary"
+          [mLoading]="loader.state['save']"
+          [disabled]="loader.isLoading"
+          (mClick)="save()"
+          >
           {{'core.btn.save' | translate}}
         </m-button>
       </m-card>

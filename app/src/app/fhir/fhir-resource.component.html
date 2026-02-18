@@ -3,19 +3,30 @@
     <h1>{{meta.type}} {{meta.id}} {{meta.operation}}</h1>
     <m-divider style="margin-top: 0"></m-divider>
 
-    <ng-container *ngIf="result">
+    @if (result) {
       <nz-tabset>
-        <nz-tab nzTitle="Narrative" *ngIf="(meta | apply:narrativeType) && !error">
-          <ng-template nz-tab>
-            <ng-container [ngSwitch]="meta | apply:narrativeType">
-              <ng-container *ngSwitchDefault></ng-container>
-              <tw-fhir-code-system *ngSwitchCase="'CodeSystem'" [codeSystem]="result"></tw-fhir-code-system>
-              <tw-fhir-code-system-lookup *ngSwitchCase="'CodeSystem|lookup'" [result]="result" [params]="meta.params"></tw-fhir-code-system-lookup>
-              <tw-fhir-value-set *ngSwitchCase="'ValueSet'" [valueSet]="result"></tw-fhir-value-set>
-              <tw-fhir-concept-map *ngSwitchCase="'ConceptMap'" [conceptMap]="result"></tw-fhir-concept-map>
-            </ng-container>
-          </ng-template>
-        </nz-tab>
+        @if ((meta | apply:narrativeType) && !error) {
+          <nz-tab nzTitle="Narrative">
+            <ng-template nz-tab>
+              @switch (meta | apply:narrativeType) {
+                @default {
+                }
+                @case ('CodeSystem') {
+                  <tw-fhir-code-system [codeSystem]="result"></tw-fhir-code-system>
+                }
+                @case ('CodeSystem|lookup') {
+                  <tw-fhir-code-system-lookup [result]="result" [params]="meta.params"></tw-fhir-code-system-lookup>
+                }
+                @case ('ValueSet') {
+                  <tw-fhir-value-set [valueSet]="result"></tw-fhir-value-set>
+                }
+                @case ('ConceptMap') {
+                  <tw-fhir-concept-map [conceptMap]="result"></tw-fhir-concept-map>
+                }
+              }
+            </ng-template>
+          </nz-tab>
+        }
         <nz-tab nzTitle="JSON">
           <ng-template nz-tab>
             <ng-container *ngTemplateOutlet="resultCard, context: {result: result, format: 'json'}"/>
@@ -27,7 +38,7 @@
           </ng-template>
         </nz-tab>
       </nz-tabset>
-    </ng-container>
+    }
   </div>
 </div>
 
@@ -46,7 +57,11 @@
         </m-button>
       </div>
     </div>
-    <pre *ngIf="format === 'json'">{{result | json}}</pre>
-    <pre *ngIf="format === 'xml'">{{result | apply:toXML}}</pre>
+    @if (format === 'json') {
+      <pre>{{result | json}}</pre>
+    }
+    @if (format === 'xml') {
+      <pre>{{result | apply:toXML}}</pre>
+    }
   </m-card>
 </ng-template>

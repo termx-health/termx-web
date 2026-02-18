@@ -1,68 +1,90 @@
 <m-spinner [mLoading]="loader.isLoading">
-  <ng-container *ngIf="!codeSystemVersion">
+  @if (!codeSystemVersion) {
     <m-alert mType="warning">Version is not selected</m-alert>
-  </ng-container>
-  <div *ngIf="checklist | apply:hasErrors" class="m-justify-between" style="margin-bottom: 1rem">
-    <div></div>
-    <m-button (mClick)="downloadErrorCsv()">Download error CSV</m-button>
-  </div>
-  <ng-container *ngIf="(checklist | filter: filterCheckList:showUnaccomplished | apply:collectChecklists) as groups">
-    <div *ngFor="let target of groups | keys" style="margin-bottom: 1.5rem">
-      <div class="m-justify-between" style="margin-bottom: 0.5rem">
-        <label class="m-subtitle">{{target}}</label>
-        <a (mClick)="runChecks(target)">
-          <m-icon mCode="sync"/>
-          {{'web.code-system-checklist.run-checks' | translate}}</a>
-      </div>
-      <m-list>
-        <m-list-item *ngFor="let check of groups[target]">
-          <div class="m-justify-between">
-            <div>
-              <div class="m-title--bold">{{check.rule.code}} {{check.rule.title | localName}}</div>
-              <div>{{check.rule.description | localName}}</div>
-              <nz-collapse *ngIf="check.assertions?.[0]?.errors" nzGhost>
-                <nz-collapse-panel [nzHeader]="error">
-                  <ng-template #error>
-                    <label>{{'web.code-system-checklist.errors' | translate}}</label>&nbsp;
-                    <m-tag mColor="error">{{check.assertions[0].errors.length}}</m-tag>
-                  </ng-template>
-                  <div *ngFor="let error of check.assertions[0].errors" class="m-items-middle">
-                    <label>{{error.error}}</label>
-                    <a *ngFor="let r of error.resources" (mClick)="openResource(r.resourceType, r.resourceId)">{{r.resourceId}}</a>
-                  </div>
-                </nz-collapse-panel>
-              </nz-collapse>
-            </div>
-            <div>
-              <div class="m-items-middle">
-                <ng-container *ngIf="check.rule.verification === 'human'">
-                  <ng-container *ngIf="check.assertions?.[0]?.passed">
-                    <label>{{'web.code-system-checklist.passed' | translate}}</label>
-                    <m-icon *ngIf="check | apply:getCheckCode as code" [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
-                    <m-divider mVertical/>
-                    <a (mClick)="createAssertion(check.id, false)">{{'web.code-system-checklist.failed' | translate}}</a>
-                  </ng-container>
-                  <ng-container *ngIf="!check.assertions?.[0]?.passed">
-                    <a (mClick)="createAssertion(check.id, true)">{{'web.code-system-checklist.passed' | translate}}</a>
-                    <m-divider mVertical/>
-                    <a *ngIf="!check.assertions?.[0]" (mClick)="createAssertion(check.id, false)">{{'web.code-system-checklist.failed' | translate}}</a>
-                    <label *ngIf="check.assertions?.[0]">{{'web.code-system-checklist.failed' | translate}}</label>
-                    <m-icon *ngIf="check | apply:getCheckCode as code" [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
-                  </ng-container>
-                </ng-container>
-                <ng-container *ngIf="check.rule.verification === 'software'">
-                  <a (mClick)="runCheck(check.id)">{{'web.code-system-checklist.run-check' | translate}}</a>
-                  <m-icon *ngIf="check | apply:getCheckCode as code" [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
-                </ng-container>
-              </div>
-              <ng-container *ngIf="check.assertions?.[0] as lastAssertion">
-                <div>{{lastAssertion.executor}}</div>
-                <div>{{lastAssertion.executionDate | localDate}}</div>
-              </ng-container>
-            </div>
-          </div>
-        </m-list-item>
-      </m-list>
+  }
+  @if (checklist | apply:hasErrors) {
+    <div class="m-justify-between" style="margin-bottom: 1rem">
+      <div></div>
+      <m-button (mClick)="downloadErrorCsv()">Download error CSV</m-button>
     </div>
-  </ng-container>
+  }
+  @if ((checklist | filter: filterCheckList:showUnaccomplished | apply:collectChecklists); as groups) {
+    @for (target of groups | keys; track target) {
+      <div style="margin-bottom: 1.5rem">
+        <div class="m-justify-between" style="margin-bottom: 0.5rem">
+          <label class="m-subtitle">{{target}}</label>
+          <a (mClick)="runChecks(target)">
+            <m-icon mCode="sync"/>
+          {{'web.code-system-checklist.run-checks' | translate}}</a>
+        </div>
+        <m-list>
+          @for (check of groups[target]; track check) {
+            <m-list-item>
+              <div class="m-justify-between">
+                <div>
+                  <div class="m-title--bold">{{check.rule.code}} {{check.rule.title | localName}}</div>
+                  <div>{{check.rule.description | localName}}</div>
+                  @if (check.assertions?.[0]?.errors) {
+                    <nz-collapse nzGhost>
+                      <nz-collapse-panel [nzHeader]="error">
+                        <ng-template #error>
+                          <label>{{'web.code-system-checklist.errors' | translate}}</label>&nbsp;
+                          <m-tag mColor="error">{{check.assertions[0].errors.length}}</m-tag>
+                        </ng-template>
+                        @for (error of check.assertions[0].errors; track error) {
+                          <div class="m-items-middle">
+                            <label>{{error.error}}</label>
+                            @for (r of error.resources; track r) {
+                              <a (mClick)="openResource(r.resourceType, r.resourceId)">{{r.resourceId}}</a>
+                            }
+                          </div>
+                        }
+                      </nz-collapse-panel>
+                    </nz-collapse>
+                  }
+                </div>
+                <div>
+                  <div class="m-items-middle">
+                    @if (check.rule.verification === 'human') {
+                      @if (check.assertions?.[0]?.passed) {
+                        <label>{{'web.code-system-checklist.passed' | translate}}</label>
+                        @if (check | apply:getCheckCode; as code) {
+                          <m-icon [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
+                        }
+                        <m-divider mVertical/>
+                        <a (mClick)="createAssertion(check.id, false)">{{'web.code-system-checklist.failed' | translate}}</a>
+                      }
+                      @if (!check.assertions?.[0]?.passed) {
+                        <a (mClick)="createAssertion(check.id, true)">{{'web.code-system-checklist.passed' | translate}}</a>
+                        <m-divider mVertical/>
+                        @if (!check.assertions?.[0]) {
+                          <a (mClick)="createAssertion(check.id, false)">{{'web.code-system-checklist.failed' | translate}}</a>
+                        }
+                        @if (check.assertions?.[0]) {
+                          <label>{{'web.code-system-checklist.failed' | translate}}</label>
+                        }
+                        @if (check | apply:getCheckCode; as code) {
+                          <m-icon [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
+                        }
+                      }
+                    }
+                    @if (check.rule.verification === 'software') {
+                      <a (mClick)="runCheck(check.id)">{{'web.code-system-checklist.run-check' | translate}}</a>
+                      @if (check | apply:getCheckCode; as code) {
+                        <m-icon [mCode]="code" [style]="'color:' + (code | apply:getCheckColor)"></m-icon>
+                      }
+                    }
+                  </div>
+                  @if (check.assertions?.[0]; as lastAssertion) {
+                    <div>{{lastAssertion.executor}}</div>
+                    <div>{{lastAssertion.executionDate | localDate}}</div>
+                  }
+                </div>
+              </div>
+            </m-list-item>
+          }
+        </m-list>
+      </div>
+    }
+  }
 </m-spinner>

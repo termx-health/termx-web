@@ -6,15 +6,15 @@ import {OutputFormatType} from 'diff2html/lib/types';
 
 
 @Component({
-  selector: 'tw-diff-view',
-  template: `
+    selector: 'tw-diff-view',
+    template: `
     <div
         #el
         [class.tw-diff-view--single]="value"
         style="background-color: var(--d2h-bg-color)"
     ></div>
   `,
-  styles: [`
+    styles: [`
     ::ng-deep .tw-diff-view--single {
       .d2h-diff-tbody tr:first-child {
         display: none;

@@ -1,14 +1,14 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {CodeSystemVersion} from '../model/code-system-version';
+import {CodeSystemVersion} from 'term-web/resources/_lib/code-system/model/code-system-version';
 
 @Injectable()
 export class CodeSystemVersionLibService {
-  protected baseUrl = `${environment.termxApi}/ts/code-system-versions`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/ts/code-system-versions`;
 
   public load(id: number): Observable<CodeSystemVersion> {
     return this.http.get<CodeSystemVersion>(`${this.baseUrl}/${id}`);

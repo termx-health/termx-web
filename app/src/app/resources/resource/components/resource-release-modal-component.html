@@ -7,9 +7,11 @@
     <form #form="ngForm">
       <m-form-item mName="release" mLabel="web.resource-release-modal.release" required>
         <m-select name="release" [(ngModel)]="params.releaseId" [filterOption]="filterOption" required>
-          <m-option *ngFor="let release of releases"
+          @for (release of releases; track release) {
+            <m-option
               mLabel="{{release.code}} | {{release.names | localName}} | {{(release.releaseDate || release.planned) | localDate}}"
               [mValue]="release.id"/>
+          }
         </m-select>
       </m-form-item>
     </form>

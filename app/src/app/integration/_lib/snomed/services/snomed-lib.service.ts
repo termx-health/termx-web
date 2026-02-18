@@ -1,5 +1,5 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {saveAs} from 'file-saver';
@@ -7,20 +7,20 @@ import {merge, Observable, Subject, switchMap, take, takeUntil, timer} from 'rxj
 import {map} from 'rxjs/operators';
 import {SnomedAuthoringStatsItem, SnomedBranch, SnomedCodeSystem} from 'term-web/integration/_lib';
 import {LorqueProcess} from 'term-web/sys/_lib';
-import {SnomedConcept} from '../model/concept/snomed-concept';
-import {SnomedConceptSearchParams} from '../model/concept/snomed-concept-search-params';
-import {SnomedDescriptionItemSearchParams} from '../model/description/snomed-description-item-search-params';
-import {SnomedDescriptionItemSearchResult} from '../model/description/snomed-description-item-search-result';
-import {SnomedRefsetMemberSearchResult} from '../model/refset/snomed-refset-member-search-result';
-import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-params';
-import {SnomedRefsetSearchResult} from '../model/refset/snomed-refset-search-result';
-import {SnomedSearchResult} from '../model/snomed-search-result';
+import {SnomedConcept} from 'term-web/integration/_lib/snomed/model/concept/snomed-concept';
+import {SnomedConceptSearchParams} from 'term-web/integration/_lib/snomed/model/concept/snomed-concept-search-params';
+import {SnomedDescriptionItemSearchParams} from 'term-web/integration/_lib/snomed/model/description/snomed-description-item-search-params';
+import {SnomedDescriptionItemSearchResult} from 'term-web/integration/_lib/snomed/model/description/snomed-description-item-search-result';
+import {SnomedRefsetMemberSearchResult} from 'term-web/integration/_lib/snomed/model/refset/snomed-refset-member-search-result';
+import {SnomedRefsetSearchParams} from 'term-web/integration/_lib/snomed/model/refset/snomed-refset-search-params';
+import {SnomedRefsetSearchResult} from 'term-web/integration/_lib/snomed/model/refset/snomed-refset-search-result';
+import {SnomedSearchResult} from 'term-web/integration/_lib/snomed/model/snomed-search-result';
 
 @Injectable()
 export class SnomedLibService {
-  protected baseUrl = `${environment.termxApi}/snomed`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/snomed`;
 
   public loadCodeSystems(): Observable<SnomedCodeSystem[]> {
     return this.http.get(`${this.baseUrl}/codesystems`).pipe(map(c => c as SnomedCodeSystem[]));

@@ -1,15 +1,16 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {environment} from 'environments/environment';
 import {mergeMap, Observable, timer} from 'rxjs';
 import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
-import {IntegrationImportConfiguration} from '../../model/integration-import-configuration';
+import {IntegrationImportConfiguration} from 'term-web/integration/_lib/model/integration-import-configuration';
 
 @Injectable()
 export class IntegrationOrphanetLibService {
-  protected baseUrl = `${environment.termxApi}/orphanet`;
+  protected http = inject(HttpClient);
+  private jobService = inject(JobLibService);
 
-  public constructor(protected http: HttpClient, private jobService: JobLibService) { }
+  protected baseUrl = `${environment.termxApi}/orphanet`;
 
   public import(req: IntegrationImportConfiguration, file: Blob, destroy$: Observable<any> = timer(60_000)): Observable<JobLog> {
     const fd = new FormData();

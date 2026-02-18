@@ -1,8 +1,8 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import { copyDeep, isDefined, LoadingManager, validateForm, AutofocusDirective, FilterPipe, LocalDatePipe, LocalDateTimePipe, ToStringPipe } from '@kodality-web/core-util';
 import {
   CodeSystem,
   CodeSystemConcept,
@@ -11,21 +11,34 @@ import {
   CodeSystemVersionReference,
   ConceptUtil,
   EntityProperty
-} from 'app/src/app/resources/_lib';
+} from 'term-web/resources/_lib';
 import {environment} from 'environments/environment';
 import {forkJoin, of} from 'rxjs';
 import {ResourceContextComponent} from 'term-web/resources/resource/components/resource-context.component';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
-import {CodeSystemService} from '../../../services/code-system.service';
-import {CodeSystemAssociationEditComponent} from './association/code-system-association-edit.component';
-import {CodeSystemDesignationEditComponent} from './designation/code-system-designation-edit.component';
-import {CodeSystemPropertyValueEditComponent} from './propertyvalue/code-system-property-value-edit.component';
+import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
+import {CodeSystemAssociationEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/association/code-system-association-edit.component';
+import {CodeSystemDesignationEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/designation/code-system-designation-edit.component';
+import {CodeSystemPropertyValueEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/propertyvalue/code-system-property-value-edit.component';
+import { ResourceContextComponent as ResourceContextComponent_1 } from 'term-web/resources/resource/components/resource-context.component';
+import { MarinPageLayoutModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiFormModule, MuiInputModule, MuiTextareaModule, MuiListModule, MuiDividerModule, MuiIconModule, MuiTooltipModule, MuiButtonModule, MuiTagModule, MuiModalModule } from '@kodality-web/marina-ui';
+import { SequenceValueGeneratorComponent } from 'term-web/sequence/_lib/components/sequence-value-generator.component';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { ResourceRelatedArtifactWidgetComponent } from 'term-web/resources/resource/components/resource-related-artifact-widget.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { ResourceTasksWidgetComponent as ResourceTasksWidgetComponent_1 } from 'term-web/resources/resource/components/resource-tasks-widget.component';
+import { CodeSystemConceptReferenceComponent } from 'term-web/resources/code-system/containers/concepts/edit/reference/code-system-concept-reference.component';
+import { UserSelectComponent } from 'term-web/user/_lib/components/user-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
-  templateUrl: './code-system-concept-edit.component.html',
-  styles: [`
+    templateUrl: './code-system-concept-edit.component.html',
+    styles: [`
     .version-sidebar {
       height: min-content;
       margin-bottom: 1rem
@@ -35,9 +48,15 @@ import {CodeSystemPropertyValueEditComponent} from './propertyvalue/code-system-
       display: block;
       margin-top: 1rem
     }
-  `]
+  `],
+    imports: [ResourceContextComponent_1, MarinPageLayoutModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, FormsModule, MuiFormModule, MuiInputModule, AutofocusDirective, SequenceValueGeneratorComponent, MuiTextareaModule, AddButtonComponent, MuiListModule, MuiDividerModule, StatusTagComponent, MuiIconModule, MuiTooltipModule, ResourceRelatedArtifactWidgetComponent, PrivilegedDirective, MuiButtonModule, ResourceTasksWidgetComponent_1, MuiTagModule, CodeSystemDesignationEditComponent, CodeSystemPropertyValueEditComponent, CodeSystemAssociationEditComponent, CodeSystemConceptReferenceComponent, MuiModalModule, UserSelectComponent, TranslatePipe, MarinaUtilModule, FilterPipe, LocalDatePipe, LocalDateTimePipe, ToStringPipe, PrivilegedPipe]
 })
 export class CodeSystemConceptEditComponent implements OnInit {
+  private codeSystemService = inject(CodeSystemService);
+  private route = inject(ActivatedRoute);
+  private taskService = inject(TaskService);
+  private location = inject(Location);
+
   public codeSystemId?: string | null;
   public versionCode?: string | null;
   public parent?: string | null;
@@ -60,13 +79,6 @@ export class CodeSystemConceptEditComponent implements OnInit {
   @ViewChild("associationEdit") public associationEdit?: CodeSystemAssociationEditComponent;
   @ViewChild(ResourceContextComponent) public resourceContextComponent?: ResourceContextComponent;
   @ViewChild(ResourceTasksWidgetComponent) public resourceTasksWidgetComponent?: ResourceTasksWidgetComponent;
-
-  public constructor(
-    public codeSystemService: CodeSystemService,
-    private route: ActivatedRoute,
-    private taskService: TaskService,
-    private location: Location
-  ) {}
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');

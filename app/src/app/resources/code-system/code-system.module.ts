@@ -30,26 +30,26 @@ import {ValueSetModule} from 'term-web/resources/value-set/value-set.module';
 import {SequenceLibModule} from 'term-web/sequence/_lib/sequence-lib.module';
 import {SysLibModule} from 'term-web/sys/_lib';
 import {UserLibModule} from 'term-web/user/_lib';
-import {FinderModule} from '../../core/components/finder/finder.module';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
-import {FinderCodeSystemListComponent} from './containers-finder/code-system-list.component';
-import {FinderCodeSystemViewComponent} from './containers-finder/code-system-view.component';
-import {FinderCodeSystemConceptVersionViewComponent} from './containers-finder/concept/code-system-concept-version-view.component';
-import {FinderCodeSystemConceptViewComponent} from './containers-finder/concept/code-system-concept-view.component';
-import {FinderCodeSystemVersionViewComponent} from './containers-finder/version/code-system-version-view.component';
-import {CodeSystemAssociationEditComponent} from './containers/concepts/edit/association/code-system-association-edit.component';
-import {CodeSystemConceptEditComponent} from './containers/concepts/edit/code-system-concept-edit.component';
-import {CodeSystemConceptViewComponent} from './containers/concepts/edit/code-system-concept-view.component';
-import {CodeSystemDesignationEditComponent} from './containers/concepts/edit/designation/code-system-designation-edit.component';
-import {CodeSystemPropertyValueEditComponent} from './containers/concepts/edit/propertyvalue/code-system-property-value-edit.component';
-import {CodeSystemConceptsListComponent} from './containers/concepts/list/code-system-concepts-list.component';
-import {CodeSystemDuplicateModalComponent} from './containers/edit/code-system-duplicate-modal.component';
-import {CodeSystemEditComponent} from './containers/edit/code-system-edit.component';
-import {CodeSystemPropertiesComponent} from './containers/edit/property/code-system-properties.component';
-import {CodeSystemListComponent} from './containers/list/code-system-list.component';
-import {CodeSystemVersionDuplicateModalComponent} from './containers/version/edit/code-system-version-duplicate-modal.component';
-import {CodeSystemVersionEditComponent} from './containers/version/edit/code-system-version-edit.component';
-import {CodeSystemService} from './services/code-system.service';
+import {FinderModule} from 'term-web/core/components/finder/finder.module';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {FinderCodeSystemListComponent} from 'term-web/resources/code-system/containers-finder/code-system-list.component';
+import {FinderCodeSystemViewComponent} from 'term-web/resources/code-system/containers-finder/code-system-view.component';
+import {FinderCodeSystemConceptVersionViewComponent} from 'term-web/resources/code-system/containers-finder/concept/code-system-concept-version-view.component';
+import {FinderCodeSystemConceptViewComponent} from 'term-web/resources/code-system/containers-finder/concept/code-system-concept-view.component';
+import {FinderCodeSystemVersionViewComponent} from 'term-web/resources/code-system/containers-finder/version/code-system-version-view.component';
+import {CodeSystemAssociationEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/association/code-system-association-edit.component';
+import {CodeSystemConceptEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/code-system-concept-edit.component';
+import {CodeSystemConceptViewComponent} from 'term-web/resources/code-system/containers/concepts/edit/code-system-concept-view.component';
+import {CodeSystemDesignationEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/designation/code-system-designation-edit.component';
+import {CodeSystemPropertyValueEditComponent} from 'term-web/resources/code-system/containers/concepts/edit/propertyvalue/code-system-property-value-edit.component';
+import {CodeSystemConceptsListComponent} from 'term-web/resources/code-system/containers/concepts/list/code-system-concepts-list.component';
+import {CodeSystemDuplicateModalComponent} from 'term-web/resources/code-system/containers/edit/code-system-duplicate-modal.component';
+import {CodeSystemEditComponent} from 'term-web/resources/code-system/containers/edit/code-system-edit.component';
+import {CodeSystemPropertiesComponent} from 'term-web/resources/code-system/containers/edit/property/code-system-properties.component';
+import {CodeSystemListComponent} from 'term-web/resources/code-system/containers/list/code-system-list.component';
+import {CodeSystemVersionDuplicateModalComponent} from 'term-web/resources/code-system/containers/version/edit/code-system-version-duplicate-modal.component';
+import {CodeSystemVersionEditComponent} from 'term-web/resources/code-system/containers/version/edit/code-system-version-edit.component';
+import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 
 const EDIT = {privilege: ['{id}.CodeSystem.edit']};
 const VIEW = {privilege: ['{id}.CodeSystem.view']};
@@ -92,68 +92,61 @@ export const CODE_SYSTEM_FINDER_ROUTES: Routes = [{
 }];
 
 @NgModule({
-  imports: [
-    CoreUiModule,
-    FinderModule,
-    ResourcesLibModule,
-    MarinaQuillModule,
-    SequenceLibModule,
-    ResourceModule,
-    UserLibModule,
-    SysLibModule,
-    ValueSetModule,
-  ],
-  declarations: [
-    CodeSystemListComponent,
-    CodeSystemEditComponent,
-    CodeSystemDuplicateModalComponent,
-    CodeSystemSupplementModalComponent,
-
-    CodeSystemVersionEditComponent,
-    CodeSystemVersionDuplicateModalComponent,
-
-    CodeSystemConceptsListComponent,
-    CodeSystemConceptsPropertyViewComponent,
-    CodeSystemConceptsListConceptPreviewComponent,
-    CodeSystemConceptViewComponent,
-    CodeSystemConceptEditComponent,
-    CodeSystemDesignationEditComponent,
-    CodeSystemPropertyValueEditComponent,
-    CodeSystemAssociationEditComponent,
-    CodeSystemConceptReferenceComponent,
-    CodeSystemCompareComponent,
-    CodeSystemValidatorComponent,
-    CodeSystemPropertiesComponent,
-
-    FinderCodeSystemListComponent,
-    FinderCodeSystemViewComponent,
-    FinderCodeSystemVersionViewComponent,
-    FinderCodeSystemConceptViewComponent,
-    FinderCodeSystemConceptVersionViewComponent,
-
-    CodeSystemSummaryComponent,
-    CodeSystemInfoWidgetComponent,
-    CodeSystemVersionsWidgetComponent,
-    CodeSystemValueSetAddComponent,
-    CodeSystemConceptsComponent,
-    CodeSystemProvenancesComponent,
-    CodeSystemChecklistComponent,
-    CodeSystemChecklistConfigurationComponent,
-    CodeSystemChecklistValidationComponent,
-    CodeSystemUnlinkedConceptsComponent,
-
-    CodeSystemVersionSummaryComponent,
-    CodeSystemVersionInfoWidgetComponent,
-    CodeSystemVersionConceptsComponent
-  ],
-  exports: [
-    CodeSystemListComponent,
-    CodeSystemConceptsListComponent,
-    CodeSystemPropertiesComponent,
-  ],
-  providers: [
-    CodeSystemService
-  ]
+    imports: [
+        CoreUiModule,
+        FinderModule,
+        ResourcesLibModule,
+        MarinaQuillModule,
+        SequenceLibModule,
+        ResourceModule,
+        UserLibModule,
+        SysLibModule,
+        ValueSetModule,
+        CodeSystemListComponent,
+        CodeSystemEditComponent,
+        CodeSystemDuplicateModalComponent,
+        CodeSystemSupplementModalComponent,
+        CodeSystemVersionEditComponent,
+        CodeSystemVersionDuplicateModalComponent,
+        CodeSystemConceptsListComponent,
+        CodeSystemConceptsPropertyViewComponent,
+        CodeSystemConceptsListConceptPreviewComponent,
+        CodeSystemConceptViewComponent,
+        CodeSystemConceptEditComponent,
+        CodeSystemDesignationEditComponent,
+        CodeSystemPropertyValueEditComponent,
+        CodeSystemAssociationEditComponent,
+        CodeSystemConceptReferenceComponent,
+        CodeSystemCompareComponent,
+        CodeSystemValidatorComponent,
+        CodeSystemPropertiesComponent,
+        FinderCodeSystemListComponent,
+        FinderCodeSystemViewComponent,
+        FinderCodeSystemVersionViewComponent,
+        FinderCodeSystemConceptViewComponent,
+        FinderCodeSystemConceptVersionViewComponent,
+        CodeSystemSummaryComponent,
+        CodeSystemInfoWidgetComponent,
+        CodeSystemVersionsWidgetComponent,
+        CodeSystemValueSetAddComponent,
+        CodeSystemConceptsComponent,
+        CodeSystemProvenancesComponent,
+        CodeSystemChecklistComponent,
+        CodeSystemChecklistConfigurationComponent,
+        CodeSystemChecklistValidationComponent,
+        CodeSystemUnlinkedConceptsComponent,
+        CodeSystemVersionSummaryComponent,
+        CodeSystemVersionInfoWidgetComponent,
+        CodeSystemVersionConceptsComponent,
+    ],
+    exports: [
+        CodeSystemListComponent,
+        CodeSystemConceptsListComponent,
+        CodeSystemPropertiesComponent,
+    ],
+    providers: [
+        CodeSystemService
+    ]
 })
 export class CodeSystemModule {
 }

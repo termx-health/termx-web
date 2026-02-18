@@ -1,17 +1,41 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {validateForm} from '@kodality-web/core-util';
 import {NamingSystem, NamingSystemIdentifier} from 'term-web/resources/_lib';
-import {NamingSystemService} from '../../services/naming-system-service';
-import {NamingSystemIdentifierFormComponent} from './naming-system-identifier-form.component';
+import {NamingSystemService} from 'term-web/resources/naming-system/services/naming-system-service';
+import {NamingSystemIdentifierFormComponent} from 'term-web/resources/naming-system/containers/edit/naming-system-identifier-form.component';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiInputModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: './naming-system-edit.component.html',
+    templateUrl: './naming-system-edit.component.html',
+    imports: [
+    MuiFormModule,
+    MuiSpinnerModule,
+    MuiCardModule,
+    StatusTagComponent,
+    FormsModule,
+    MuiTextareaModule,
+    MuiMultiLanguageInputModule,
+    ValueSetConceptSelectComponent,
+    CodeSystemSearchComponent,
+    MuiInputModule,
+    NamingSystemIdentifierFormComponent,
+    MuiButtonModule,
+    TranslatePipe
+],
 })
 export class NamingSystemEditComponent implements OnInit {
+  private namingSystemService = inject(NamingSystemService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   public namingSystem?: NamingSystem;
 
   public loading: {[k: string]: boolean} = {};
@@ -19,12 +43,6 @@ export class NamingSystemEditComponent implements OnInit {
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("identifiers") public identifiers?: NamingSystemIdentifierFormComponent;
-
-  public constructor(
-    private namingSystemService: NamingSystemService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) {}
 
   public ngOnInit(): void {
     const namingSystemId = this.route.snapshot.paramMap.get('id');

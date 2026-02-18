@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {MarinaComponentsModule} from '@kodality-web/marina-ui';
-import {DefinedPropertyLibService} from './services/defined-property-lib.service';
+import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 
 @NgModule({
   imports: [

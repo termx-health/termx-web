@@ -9,10 +9,14 @@
           <label m-radio-button [mValue]="'file'">{{'web.integration.file-import.code-system.source.file' | translate}}</label>
         </m-radio-group>
 
-        <ng-container [ngSwitch]="data.source.type">
-          <m-input *ngSwitchCase="'link'" name="sourceImportFile" [(ngModel)]="data.source.file" style="flex: 1" required/>
-          <input *ngSwitchCase="'file'" #fileInput name="sourceImportFile" type="file" [(ngModel)]="data.source.file" required>
-        </ng-container>
+        @switch (data.source.type) {
+          @case ('link') {
+            <m-input name="sourceImportFile" [(ngModel)]="data.source.file" style="flex: 1" required/>
+          }
+          @case ('file') {
+            <input #fileInput name="sourceImportFile" type="file" [(ngModel)]="data.source.file" required>
+          }
+        }
       </div>
     </m-form-item>
 
@@ -41,7 +45,9 @@
         <tr *mTableHead>
           <th>{{'web.integration.file-import.code-system.properties.type-column' | translate: ({type: ('web.integration.file-import.code-system.source.types.' + analyzeResponse.origin.type) | translate})}}</th>
           <th>{{'web.integration.file-import.code-system.properties.kts-property' | translate}}</th>
-          <th *ngIf="hasDuplicateIdentifiers">{{'web.integration.file-import.code-system.properties.preferred' | translate}}</th>
+          @if (hasDuplicateIdentifiers) {
+            <th>{{'web.integration.file-import.code-system.properties.preferred' | translate}}</th>
+          }
           <th>{{'web.integration.file-import.code-system.properties.type' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.properties.format' | translate}}</th>
           <th>{{'web.integration.file-import.code-system.properties.delimiter' | translate}}</th>
@@ -54,59 +60,81 @@
 
           <td>
             <!-- Mapped KTS property -->
-            <m-select *ngIf="!item['_newProp']" [(ngModel)]="item.propertyName" (ngModelChange)="onPropertyNameChange(item)" style="flex: 1">
-              <m-option *ngFor="let prop of form?.sourceCodeSystem?.properties | apply: combineWithDefaults"
-                  [mValue]="prop.name"
-                  [mLabel]="prop.name  + (prop.description ? ' (' + (prop.description | localName) + ')' : '')"
-                  [mLabelTemplate]="propLabel">
-                <ng-template #propLabel>
-                  <label [class]="prop.id ? 'm-bold' : ''">{{prop.name  + (prop.description ? ' (' + (prop.description | localName) + ')' : '')}}</label>
-                 </ng-template>
-              </m-option>
-              <m-select-button mLabel="ADD NEW" (mClick)="item['_newProp'] = true"/>
-            </m-select>
+            @if (!item['_newProp']) {
+              <m-select [(ngModel)]="item.propertyName" (ngModelChange)="onPropertyNameChange(item)" style="flex: 1">
+                @for (prop of form?.sourceCodeSystem?.properties | apply: combineWithDefaults; track prop) {
+                  <m-option
+                    [mValue]="prop.name"
+                    [mLabel]="prop.name  + (prop.description ? ' (' + (prop.description | localName) + ')' : '')"
+                    [mLabelTemplate]="propLabel">
+                    <ng-template #propLabel>
+                      <label [class]="prop.id ? 'm-bold' : ''">{{prop.name  + (prop.description ? ' (' + (prop.description | localName) + ')' : '')}}</label>
+                    </ng-template>
+                  </m-option>
+                }
+                <m-select-button mLabel="ADD NEW" (mClick)="item['_newProp'] = true"/>
+              </m-select>
+            }
 
-            <div *ngIf="item['_newProp']" class="m-items-middle">
-              <m-textarea [(ngModel)]="item.propertyName"/>
-              <m-icon-button mIcon="close" (click)="item['_newProp'] = false" />
-            </div>
+            @if (item['_newProp']) {
+              <div class="m-items-middle">
+                <m-textarea [(ngModel)]="item.propertyName"/>
+                <m-icon-button mIcon="close" (click)="item['_newProp'] = false" />
+              </div>
+            }
           </td>
 
-          <td *ngIf="hasDuplicateIdentifiers">
-            <m-checkbox *ngIf="['concept-code', 'hierarchical-concept'] | includes:item.propertyName" [(ngModel)]="item.preferred" (ngModelChange)="onPropertyPreferredChange(item)"/>
-          </td>
+          @if (hasDuplicateIdentifiers) {
+            <td>
+              @if (['concept-code', 'hierarchical-concept'] | includes:item.propertyName) {
+                <m-checkbox [(ngModel)]="item.preferred" (ngModelChange)="onPropertyPreferredChange(item)"/>
+              }
+            </td>
+          }
 
           <td>
-            <ng-container *ngIf="!item['_newProp'] && item.propertyName">
+            @if (!item['_newProp'] && item.propertyName) {
               {{item.propertyType}}
-            </ng-container>
+            }
 
             <div class="m-items-middle">
-              <m-select style="width: 100%" *ngIf="item['_newProp'] || !item.propertyName" [(ngModel)]="item.propertyType" (ngModelChange)="onPropertyTypeChange(item)">
-                <m-option *ngFor="let t of dataTypes" [mLabel]="t" [mValue]="t"/>
-              </m-select>
-              <tw-code-system-search style="width: 100%" *ngIf="item.propertyType === 'Coding'" valuePrimitive [(ngModel)]="item.propertyCodeSystem"/>
+              @if (item['_newProp'] || !item.propertyName) {
+                <m-select style="width: 100%" [(ngModel)]="item.propertyType" (ngModelChange)="onPropertyTypeChange(item)">
+                  @for (t of dataTypes; track t) {
+                    <m-option [mLabel]="t" [mValue]="t"/>
+                  }
+                </m-select>
+              }
+              @if (item.propertyType === 'Coding') {
+                <tw-code-system-search style="width: 100%" valuePrimitive [(ngModel)]="item.propertyCodeSystem"/>
+              }
             </div>
           </td>
 
           <td>
-            <m-select [(ngModel)]="item.propertyTypeFormat" *ngIf="item.propertyType === 'dateTime'">
-              <m-option [mValue]="'yyyy-MM-dd'" [mLabel]="'yyyy-MM-dd'"/>
-              <m-option [mValue]="'dd.MM.yy'" [mLabel]="'dd.MM.yy'"/>
-              <m-option [mValue]="'dd.MM.yyyy'" [mLabel]="'dd.MM.yyyy'"/>
-              <m-option [mValue]="'dd/MM/yyyy'" [mLabel]="'dd/MM/yyyy'"/>
-              <m-option [mValue]="'MM/dd/yyyy'" [mLabel]="'MM/dd/yyyy'"/>
-            </m-select>
+            @if (item.propertyType === 'dateTime') {
+              <m-select [(ngModel)]="item.propertyTypeFormat">
+                <m-option [mValue]="'yyyy-MM-dd'" [mLabel]="'yyyy-MM-dd'"/>
+                <m-option [mValue]="'dd.MM.yy'" [mLabel]="'dd.MM.yy'"/>
+                <m-option [mValue]="'dd.MM.yyyy'" [mLabel]="'dd.MM.yyyy'"/>
+                <m-option [mValue]="'dd/MM/yyyy'" [mLabel]="'dd/MM/yyyy'"/>
+                <m-option [mValue]="'MM/dd/yyyy'" [mLabel]="'MM/dd/yyyy'"/>
+              </m-select>
+            }
           </td>
 
           <td>
-            <m-input [(ngModel)]="item.propertyDelimiter" *ngIf="(['designation', 'string', 'Coding'] | includes:item.propertyType) && !(['concept-code', 'hierarchical-concept'] | includes:item.propertyName)"></m-input>
+            @if ((['designation', 'string', 'Coding'] | includes:item.propertyType) && !(['concept-code', 'hierarchical-concept'] | includes:item.propertyName)) {
+              <m-input [(ngModel)]="item.propertyDelimiter"></m-input>
+            }
           </td>
 
           <td>
-            <tw-value-set-concept-select *ngIf="item.propertyType === 'designation' && !(['concept-code', 'hierarchical-concept'] | includes:item.propertyName)"
+            @if (item.propertyType === 'designation' && !(['concept-code', 'hierarchical-concept'] | includes:item.propertyName)) {
+              <tw-value-set-concept-select
                 [(ngModel)]="item.language"
                 valueSet="languages"/>
+            }
           </td>
 
           <td>
@@ -121,28 +149,37 @@
         </tr>
       </m-table>
 
-      <m-alert *ngIf="validations?.length" class="tw-alert--vertical" mTitle="Validations" mType="error">
-        <ul style="margin-block: 0; padding-left: 1.5rem">
-          <li *ngFor="let msg of validations">{{msg}}</li>
-        </ul>
-      </m-alert>
-
-      <ng-container *ngIf="jobLog">
-        <m-alert *ngIf="!jobLog.errors?.length" class="tw-alert--vertical" mType="success" mTitle="No errors found">
-          <a *ngIf="jobLog.warnings?.length" (mClick)="downloadLog()">
-            {{'web.integration.file-import.code-system.properties.download-diff' | translate}}
-          </a>
+      @if (validations?.length) {
+        <m-alert class="tw-alert--vertical" mTitle="Validations" mType="error">
+          <ul style="margin-block: 0; padding-left: 1.5rem">
+            @for (msg of validations; track msg) {
+              <li>{{msg}}</li>
+            }
+          </ul>
         </m-alert>
+      }
 
-        <m-alert *ngIf="jobLog.errors?.length"
+      @if (jobLog) {
+        @if (!jobLog.errors?.length) {
+          <m-alert class="tw-alert--vertical" mType="success" mTitle="No errors found">
+            @if (jobLog.warnings?.length) {
+              <a (mClick)="downloadLog()">
+                {{'web.integration.file-import.code-system.properties.download-diff' | translate}}
+              </a>
+            }
+          </m-alert>
+        }
+        @if (jobLog.errors?.length) {
+          <m-alert
             class="tw-alert--vertical"
             mType="error"
             mTitle="Found {{jobLog.errors?.length}} errors during the file processing">
-          <a (mClick)="downloadLog()">
-            {{'web.integration.file-import.code-system.properties.download-log' | translate}}
-          </a>
-        </m-alert>
-      </ng-container>
+            <a (mClick)="downloadLog()">
+              {{'web.integration.file-import.code-system.properties.download-log' | translate}}
+            </a>
+          </m-alert>
+        }
+      }
 
     </div>
 
@@ -153,9 +190,9 @@
       </m-radio-group>
 
       <m-button style="flex: 1"
-          [mLoading]="loader.state['process']"
-          [disabled]="!form.valid || !analyzeResponse?.parsedProperties?.length"
-          (click)="process()">
+        [mLoading]="loader.state['process']"
+        [disabled]="!form.valid || !analyzeResponse?.parsedProperties?.length"
+        (click)="process()">
         {{'web.integration.file-import.process' | translate}}
       </m-button>
     </div>

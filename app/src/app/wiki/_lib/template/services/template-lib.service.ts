@@ -1,16 +1,16 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {Template} from '../models/template';
-import {TemplateSearchParams} from '../models/template-search-params';
+import {Template} from 'term-web/wiki/_lib/template/models/template';
+import {TemplateSearchParams} from 'term-web/wiki/_lib/template/models/template-search-params';
 
 @Injectable()
 export class TemplateLibService {
-  protected baseUrl = environment.termxApi;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = environment.termxApi;
 
   public loadTemplate(id: number): Observable<Template> {
     return this.http.get<Template>(`${this.baseUrl}/templates/${id}`);

@@ -1,15 +1,16 @@
 <m-select
-    icon="search"
-    [placeholder]="placeholder"
-    [(ngModel)]="value"
-    (mInputChange)="onSearch($event)"
-    (mChange)="fireOnChange()"
-    [loading]="loader.isLoading"
-    [autoUnselect]="false"
->
-  <m-option
-      *ngFor="let key of data | keys"
+  icon="search"
+  [placeholder]="placeholder"
+  [(ngModel)]="value"
+  (mInputChange)="onSearch($event)"
+  (mChange)="fireOnChange()"
+  [loading]="loader.isLoading"
+  [autoUnselect]="false"
+  >
+  @for (key of data | keys; track key) {
+    <m-option
       [mValue]="valueType === 'id' ? data[key]?.id : data[key]?.name"
       [mLabel]="data[key].name"
-  ></m-option>
+    ></m-option>
+  }
 </m-select>

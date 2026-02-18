@@ -1,10 +1,11 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {DefinedProperty} from 'term-web/resources/_lib';
 
-@Pipe({name: 'entityPropertyName'})
+@Pipe({ name: 'entityPropertyName' })
 export class EntityPropertyNamePipe implements PipeTransform {
-  public constructor(private translateService: TranslateService) {}
+  private translateService = inject(TranslateService);
+
 
   public transform(prop: DefinedProperty): string {
     const lang = this.translateService.currentLang;

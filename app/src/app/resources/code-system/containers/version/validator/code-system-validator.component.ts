@@ -1,12 +1,18 @@
 import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {DestroyService, isDefined, LoadingManager} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { DestroyService, isDefined, LoadingManager, AutofocusDirective, ApplyPipe, KeysPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiFormModule, MuiCardModule, MuiCheckboxModule, MuiButtonModule, MuiListModule, MuiTagModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {environment} from 'environments/environment';
 import {CodeSystemConcept, ConceptUtil} from 'term-web/resources/_lib';
 import {LorqueLibService, LorqueProcess} from 'term-web/sys/_lib';
+import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { FormsModule } from '@angular/forms';
+import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
+
+import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
 
 class CodeSystemUniquenessResult {
   public duplicates: {[key: string]: CodeSystemConcept[]};
@@ -19,24 +25,23 @@ class CodeSystemUniquenessRequest {
 }
 
 @Component({
-  templateUrl: './code-system-validator.component.html',
-  providers: [DestroyService]
+    templateUrl: './code-system-validator.component.html',
+    providers: [DestroyService],
+    imports: [NzRowDirective, NzColDirective, MuiFormModule, CodeSystemSearchComponent, AutofocusDirective, FormsModule, CodeSystemVersionSelectComponent, MuiCardModule, MuiCheckboxModule, MuiButtonModule, MuiListModule, MuiTagModule, MuiCoreModule, RouterLink, TranslatePipe, ApplyPipe, KeysPipe, HasAnyPrivilegePipe]
 })
 export class CodeSystemValidatorComponent implements OnInit {
+  private lorqueService = inject(LorqueLibService);
+  private notificationService = inject(MuiNotificationService);
+  private translateService = inject(TranslateService);
+  private http = inject(HttpClient);
+  private route = inject(ActivatedRoute);
+  private destroy$ = inject(DestroyService);
+
   protected codeSystem: string;
   protected version: number;
   protected uniquenessRequest: CodeSystemUniquenessRequest = {designations: true, properties: true};
   protected uniquenessResult: CodeSystemUniquenessResult;
   protected loader = new LoadingManager();
-
-  public constructor(
-    public lorqueService: LorqueLibService,
-    public notificationService: MuiNotificationService,
-    public translateService: TranslateService,
-    public http: HttpClient,
-    private route: ActivatedRoute,
-    private destroy$: DestroyService
-  ) { }
 
   public ngOnInit(): void {
     this.codeSystem = this.route.snapshot.paramMap.get('code-system');

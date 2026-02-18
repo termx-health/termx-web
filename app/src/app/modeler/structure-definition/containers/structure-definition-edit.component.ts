@@ -1,20 +1,36 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { MuiNotificationService, MuiCardModule, MuiButtonModule, MuiFormModule, MuiRadioModule, MuiInputModule, MuiTextareaModule, MuiSelectModule, MuiIconModule, MuiSpinnerModule, MuiModalModule } from '@kodality-web/marina-ui';
 import {Fhir} from 'fhir/fhir';
 import {map, Observable, of} from 'rxjs';
 import {ChefService} from 'term-web/integration/_lib';
 import {StructureDefinition, StructureDefinitionEditableTreeComponent, StructureDefinitionUtil} from 'term-web/modeler/_lib';
 import {Element} from 'term-web/modeler/_lib/structure-definition/structure-definition-editable-tree.component';
-import {StructureDefinitionType} from '../components/structure-definition-type-list.component';
-import {StructureDefinitionService} from '../services/structure-definition.service';
+import { StructureDefinitionType, StructureDefinitionTypeListComponent } from 'term-web/modeler/structure-definition/components/structure-definition-type-list.component';
+import {StructureDefinitionService} from 'term-web/modeler/structure-definition/services/structure-definition.service';
+import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
+import { NzTabsComponent, NzTabComponent, NzTabDirective } from 'ng-zorro-antd/tabs';
+import { NgTemplateOutlet } from '@angular/common';
+import { StructureDefinitionEditableTreeComponent as StructureDefinitionEditableTreeComponent_1 } from 'term-web/modeler/_lib/structure-definition/structure-definition-editable-tree.component';
+import { ɵNzTransitionPatchDirective } from 'ng-zorro-antd/core/transition-patch';
+import { NzSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { NzInputGroupComponent, NzInputDirective } from 'ng-zorro-antd/input';
+import { StructureDefinitionConstraintListComponent } from 'term-web/modeler/structure-definition/components/structure-definition-constraint-list.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: 'structure-definition-edit.component.html'
+    templateUrl: 'structure-definition-edit.component.html',
+    imports: [NzRowDirective, NzColDirective, NzTabsComponent, NzTabComponent, NzTabDirective, NgTemplateOutlet, MuiCardModule, StructureDefinitionEditableTreeComponent_1, MuiButtonModule, FormsModule, MuiFormModule, ɵNzTransitionPatchDirective, NzSpaceCompactItemDirective, NzInputGroupComponent, NzInputDirective, MuiRadioModule, StructureDefinitionTypeListComponent, MuiInputModule, MuiTextareaModule, MuiSelectModule, MuiIconModule, StructureDefinitionConstraintListComponent, MuiSpinnerModule, MuiModalModule, TranslatePipe]
 })
 export class StructureDefinitionEditComponent implements OnInit {
+  private structureDefinitionService = inject(StructureDefinitionService);
+  private notificationService = inject(MuiNotificationService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private chefService = inject(ChefService);
+
   public id?: number | null;
   public structureDefinition: StructureDefinition;
   public contentFsh: string;
@@ -38,14 +54,6 @@ export class StructureDefinitionEditComponent implements OnInit {
   @ViewChild("jsonForm") public jsonForm?: NgForm;
   @ViewChild("elementForm") public elementForm?: NgForm;
   @ViewChild("sdTree") public sdTree?: StructureDefinitionEditableTreeComponent;
-
-  public constructor(
-    private structureDefinitionService: StructureDefinitionService,
-    private notificationService: MuiNotificationService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private chefService: ChefService
-  ) {}
 
   public ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.has('id') ? Number(this.route.snapshot.paramMap.get('id')) : null;

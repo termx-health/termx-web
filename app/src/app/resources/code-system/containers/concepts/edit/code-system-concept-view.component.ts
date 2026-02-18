@@ -1,13 +1,24 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
-import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'app/src/app/resources/_lib';
+import { LoadingManager, LocalDatePipe, LocalDateTimePipe, ToStringPipe } from '@kodality-web/core-util';
+import {CodeSystem, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemVersion} from 'term-web/resources/_lib';
 import {forkJoin, of} from 'rxjs';
-import {CodeSystemService} from '../../../services/code-system.service';
+import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
+import { MarinPageLayoutModule, MuiCardModule, MuiListModule, MuiDividerModule } from '@kodality-web/marina-ui';
+
+import { FormsModule } from '@angular/forms';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { ResourceRelatedArtifactWidgetComponent } from 'term-web/resources/resource/components/resource-related-artifact-widget.component';
+import { CodeSystemDesignationEditComponent } from 'term-web/resources/code-system/containers/concepts/edit/designation/code-system-designation-edit.component';
+import { CodeSystemPropertyValueEditComponent } from 'term-web/resources/code-system/containers/concepts/edit/propertyvalue/code-system-property-value-edit.component';
+import { CodeSystemAssociationEditComponent } from 'term-web/resources/code-system/containers/concepts/edit/association/code-system-association-edit.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  templateUrl: './code-system-concept-view.component.html',
-  styles: [`
+    templateUrl: './code-system-concept-view.component.html',
+    styles: [`
     .version-sidebar {
       height: min-content;
       margin-bottom: 1rem
@@ -17,9 +28,13 @@ import {CodeSystemService} from '../../../services/code-system.service';
       display: block;
       margin-top: 1rem
     }
-  `]
+  `],
+    imports: [ResourceContextComponent, MarinPageLayoutModule, MuiCardModule, MuiListModule, FormsModule, MuiDividerModule, StatusTagComponent, ResourceRelatedArtifactWidgetComponent, CodeSystemDesignationEditComponent, CodeSystemPropertyValueEditComponent, CodeSystemAssociationEditComponent, TranslatePipe, MarinaUtilModule, LocalDatePipe, LocalDateTimePipe, ToStringPipe]
 })
 export class CodeSystemConceptViewComponent implements OnInit {
+  private codeSystemService = inject(CodeSystemService);
+  private route = inject(ActivatedRoute);
+
   public codeSystemId?: string | null;
   public versionCode?: string | null;
   public parent?: string | null;
@@ -30,12 +45,6 @@ export class CodeSystemConceptViewComponent implements OnInit {
   public conceptVersion?: CodeSystemEntityVersion;
 
   protected loader = new LoadingManager();
-
-
-  public constructor(
-    public codeSystemService: CodeSystemService,
-    private route: ActivatedRoute
-  ) {}
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');

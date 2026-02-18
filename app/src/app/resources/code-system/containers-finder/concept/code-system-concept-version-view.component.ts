@@ -1,11 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DestroyService, isNil} from '@kodality-web/core-util';
 import {takeUntil} from 'rxjs';
 import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from 'term-web/resources/_lib';
+import { FinderWrapperComponent, FinderMenuComponent, FinderMenuItemComponent } from 'term-web/core/components/finder/finder.component';
+import { MuiFormModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+
 
 @Component({
-  template: `
+    template: `
     <tw-finder-wrapper [loading]="loading" title="CODE SYSTEM CONCEPT VERSION">
       <div class="tw-finder-view-form">
         <m-form-item mLabel="entities.code-system-entity-version.status">
@@ -15,34 +19,37 @@ import {CodeSystemEntityVersion, CodeSystemEntityVersionLibService} from 'term-w
           {{conceptVersion?.description || '-'}}
         </m-form-item>
       </div>
-
+    
       <tw-finder-menu title="entities.code-system-entity-version.designations" [length]="conceptVersion?.designations?.length">
-        <tw-finder-menu-item *ngFor="let d of conceptVersion?.designations">
-          <div class="m-items-middle">
-            <m-icon mCode="star" [mOptions]="{nzTheme: d.preferred ? 'fill' : 'outline'}"></m-icon>
-            <div>{{d.name}}</div>
-          </div>
-        </tw-finder-menu-item>
+        @for (d of conceptVersion?.designations; track d) {
+          <tw-finder-menu-item>
+            <div class="m-items-middle">
+              <m-icon mCode="star" [mOptions]="{nzTheme: d.preferred ? 'fill' : 'outline'}"></m-icon>
+              <div>{{d.name}}</div>
+            </div>
+          </tw-finder-menu-item>
+        }
       </tw-finder-menu>
-
+    
       <tw-finder-menu title="entities.code-system-entity-version.property-values" [length]="conceptVersion?.propertyValues?.length">
-        <tw-finder-menu-item *ngFor="let pv of conceptVersion?.propertyValues">
-          {{pv.entityPropertyId}} - {{pv.value}}
-        </tw-finder-menu-item>
+        @for (pv of conceptVersion?.propertyValues; track pv) {
+          <tw-finder-menu-item>
+            {{pv.entityPropertyId}} - {{pv.value}}
+          </tw-finder-menu-item>
+        }
       </tw-finder-menu>
     </tw-finder-wrapper>
-  `,
-  providers: [DestroyService]
+    `,
+    providers: [DestroyService],
+    imports: [FinderWrapperComponent, MuiFormModule, StatusTagComponent, FinderMenuComponent, FinderMenuItemComponent, MuiIconModule]
 })
 export class FinderCodeSystemConceptVersionViewComponent implements OnInit {
+  private codeSystemEntityVersionService = inject(CodeSystemEntityVersionLibService);
+  private route = inject(ActivatedRoute);
+  private destroy$ = inject(DestroyService);
+
   public conceptVersion?: CodeSystemEntityVersion;
   public loading = false;
-
-  public constructor(
-    public codeSystemEntityVersionService: CodeSystemEntityVersionLibService,
-    private route: ActivatedRoute,
-    private destroy$: DestroyService
-  ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {

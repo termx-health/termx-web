@@ -10,17 +10,17 @@
         </div>
       </div>
 
-      <ng-container *ngFor="let s of spaces; let idx = index">
+      @for (s of spaces; track s; let idx = $index) {
         <ng-container>
           <span *m-dropdown-item
-              [class.m-bold]="s.id === space?.id"
-              [style.border-top]="!s.active && spaces[idx - 1]?.active ? '1px solid var(--color-borders)' : ''"
-              (click)="preferences.setSpace(s.id)"
-          >
+            [class.m-bold]="s.id === space?.id"
+            [style.border-top]="!s.active && spaces[idx - 1]?.active ? '1px solid var(--color-borders)' : ''"
+            (click)="preferences.setSpace(s.id)"
+            >
             {{s.names | localName: s.code}}
           </span>
         </ng-container>
-      </ng-container>
+      }
     </m-dropdown>
   </ng-template>
 
@@ -30,25 +30,28 @@
     <div class="page__sidebar">
       <m-collapse-panel mResizable [mCollapsed]="mobileQuery.matches">
         <m-skeleton [mLoading]="loader.state['spaces']">
-          <tw-wiki-page-tree-sidebar *ngIf="space" [space]="space" [path]="path" [viewRootRoute]="viewRootRoute" [viewPageRoute]="viewPageRoute"/>
+          @if (space) {
+            <tw-wiki-page-tree-sidebar [space]="space" [path]="path" [viewRootRoute]="viewRootRoute" [viewPageRoute]="viewPageRoute"/>
+          }
         </m-skeleton>
       </m-collapse-panel>
     </div>
 
 
     <!-- Main container -->
-    <ng-container *ngIf="loader.state['spaces'] || space; else noSpace">
+    @if (loader.state['spaces'] || space) {
       <!-- Space view -->
-      <tw-wiki-space-overview
-          *ngIf="isOverviewSelected" class="page__wrapper"
+      @if (isOverviewSelected) {
+        <tw-wiki-space-overview
+          class="page__wrapper"
           [space]="space"
           [lang]="translateService.currentLang"
           [viewPageRoute]="viewPageRoute"
-      ></tw-wiki-space-overview>
-
+        ></tw-wiki-space-overview>
+      }
       <!-- Page view -->
-      <tw-wiki-page-details
-          *ngIf="!isOverviewSelected"
+      @if (!isOverviewSelected) {
+        <tw-wiki-page-details
           [space]="space"
           [slug]="slug"
           [page]="page"
@@ -57,18 +60,18 @@
           [viewHistoryRoute]="viewHistoryRoute"
           (editPage)="router.navigate(editPageRoute($event))"
           (pageDeleted)="router.navigate(viewRootRoute())"
-      ></tw-wiki-page-details>
-    </ng-container>
-
-
-    <!-- "Space not selected" -->
-    <ng-template #noSpace>
+        ></tw-wiki-page-details>
+      }
+    } @else {
       <div class="page__wrapper">
         <m-alert mType="error" mShowIcon class="tw-alert--no-line m-rounded" mTitle="web.wiki-page.no-space.title">
           {{'web.wiki-page.no-space.desc' | translate}}
         </m-alert>
       </div>
-    </ng-template>
+    }
+
+
+    <!-- "Space not selected" -->
   </div>
 </m-page>
 

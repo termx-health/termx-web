@@ -1,18 +1,21 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {Meta, Title} from '@angular/platform-browser';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter, tap} from 'rxjs';
 
 @Injectable({providedIn: 'root'})
 export class SeoService {
+  private titleSvc = inject(Title);
+  private metaSvc = inject(Meta);
+
   private _title: string;
   private _description: string;
 
-  public constructor(
-    router: Router,
-    private titleSvc: Title,
-    private metaSvc: Meta
-  ) {
+  public constructor() {
+    const router = inject(Router);
+    const titleSvc = this.titleSvc;
+    const metaSvc = this.metaSvc;
+
     this._title = titleSvc.getTitle();
     this._description = metaSvc.getTag('name="description"').content;
 

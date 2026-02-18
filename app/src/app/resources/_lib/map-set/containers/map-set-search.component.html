@@ -1,14 +1,16 @@
 <m-select
-    icon="search"
-    placeholder="marina.ui.inputs.search.placeholder"
-    [(ngModel)]="value"
-    (mInputChange)="onSearch($event)"
-    (mChange)="fireOnChange()"
-    [loading]="isLoading"
-    [autoUnselect]="autoUnselect | toBoolean"
-    [autoSelect]="true"
-    [filterOption]="filterOption"
-    [multiple]="multiple | toBoolean"
->
-  <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.id" [mLabel]="data[key]?.id"></m-option>
+  icon="search"
+  placeholder="marina.ui.inputs.search.placeholder"
+  [(ngModel)]="value"
+  (mInputChange)="onSearch($event)"
+  (mChange)="fireOnChange()"
+  [loading]="isLoading"
+  [autoUnselect]="autoUnselect | toBoolean"
+  [autoSelect]="true"
+  [filterOption]="filterOption"
+  [multiple]="multiple | toBoolean"
+  >
+  @for (key of data | keys; track key) {
+    <m-option [mValue]="data[key]?.id" [mLabel]="data[key]?.id"></m-option>
+  }
 </m-select>

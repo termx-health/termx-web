@@ -1,16 +1,16 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {TerminologyServer} from '../model/terminology-server';
-import {TerminologyServerSearchParams} from '../model/terminology-server-search-params';
+import {TerminologyServer} from 'term-web/sys/_lib/space/model/terminology-server';
+import {TerminologyServerSearchParams} from 'term-web/sys/_lib/space/model/terminology-server-search-params';
 
 @Injectable()
 export class TerminologyServerLibService {
-  protected baseUrl = `${environment.termxApi}/terminology-servers`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/terminology-servers`;
 
   public loadKinds(): Observable<string[]> {
     return this.http.get<string[]>(`${this.baseUrl}/kinds`);

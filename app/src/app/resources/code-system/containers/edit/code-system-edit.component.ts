@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {CodeSystem, CodeSystemTransactionRequest} from 'term-web/resources/_lib';
@@ -10,13 +10,34 @@ import {ResourceFormComponent} from 'term-web/resources/resource/components/reso
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
 import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
 import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
-import {CodeSystemService} from '../../services/code-system.service';
+import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
+import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiRadioModule, MuiCheckboxModule, MuiButtonModule } from '@kodality-web/marina-ui';
+
+import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
+import { ResourceFormComponent as ResourceFormComponent_1 } from 'term-web/resources/resource/components/resource-form.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { AssociationTypeSearchComponent } from 'term-web/resources/_lib/association/containers/association-type-search.component';
+import { SequenceSelectComponent } from 'term-web/sequence/_lib/components/sequence-select.component';
+import { ResourceIdentifiersComponent as ResourceIdentifiersComponent_1 } from 'term-web/resources/resource/components/resource-identifiers.component';
+import { ResourceConfigurationAttributesComponent as ResourceConfigurationAttributesComponent_1 } from 'term-web/resources/resource/components/resource-configuration-attributes.component';
+import { CodeSystemPropertiesComponent as CodeSystemPropertiesComponent_1 } from 'term-web/resources/code-system/containers/edit/property/code-system-properties.component';
+import { ResourceContactsComponent } from 'term-web/resources/resource/components/resource-contacts.component';
+import { ResourceVersionFormComponent as ResourceVersionFormComponent_1 } from 'term-web/resources/resource/components/resource-version-form.component';
+import { CodeSystemValueSetAddComponent as CodeSystemValueSetAddComponent_1 } from 'term-web/resources/code-system/containers/edit/valueset/code-system-value-set-add.component';
+import { ResourceSideInfoComponent } from 'term-web/resources/resource/components/resource-side-info.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: 'code-system-edit.component.html'
+    templateUrl: 'code-system-edit.component.html',
+    imports: [MuiSpinnerModule, FormsModule, NzRowDirective, NzColDirective, MuiCardModule, ResourceFormComponent_1, MuiFormModule, ValueSetConceptSelectComponent, CodeSystemSearchComponent, MuiRadioModule, AssociationTypeSearchComponent, SequenceSelectComponent, MuiCheckboxModule, ResourceIdentifiersComponent_1, ResourceConfigurationAttributesComponent_1, CodeSystemPropertiesComponent_1, ResourceContactsComponent, ResourceVersionFormComponent_1, CodeSystemValueSetAddComponent_1, MuiButtonModule, ResourceSideInfoComponent, TranslatePipe]
 })
 export class CodeSystemEditComponent implements OnInit {
+  private codeSystemService = inject(CodeSystemService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   protected codeSystem?: CodeSystem;
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
@@ -29,12 +50,6 @@ export class CodeSystemEditComponent implements OnInit {
   @ViewChild(CodeSystemPropertiesComponent) public codeSystemPropertiesComponent?: CodeSystemPropertiesComponent;
   @ViewChild(CodeSystemValueSetAddComponent) public codeSystemRelationsComponent?: CodeSystemValueSetAddComponent;
   @ViewChild(ResourceConfigurationAttributesComponent) public resourceConfigurationAttributesComponent?: ResourceConfigurationAttributesComponent;
-
-  public constructor(
-    private codeSystemService: CodeSystemService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
 
   public ngOnInit(): void {
    this.route.paramMap.subscribe(paramMap => {

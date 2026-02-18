@@ -1,15 +1,19 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
-import {MuiTreeSelectNodeOptions} from '@kodality-web/marina-ui';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { BooleanInput, copyDeep, isDefined, validateForm, AutofocusDirective, IncludesPipe } from '@kodality-web/core-util';
+import { MuiTreeSelectNodeOptions, MuiCardModule, MuiNoDataModule, MuiButtonModule, MuiIconModule, MuiTableModule, MuiModalModule, MuiFormModule, MuiRadioModule, MuiTreeSelectModule, MuiSelectModule, MuiInputModule, MuiDividerModule } from '@kodality-web/marina-ui';
 import {StructureDefinition, StructureDefinitionLibService} from 'term-web/modeler/_lib';
 import {CodeSystemEntityVersion, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
+import { NgTemplateOutlet } from '@angular/common';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'tw-sd-type-list',
-  templateUrl: './structure-definition-type-list.component.html',
-  styles: [`
+    selector: 'tw-sd-type-list',
+    templateUrl: './structure-definition-type-list.component.html',
+    styles: [`
     .tw-sd-type-collapse ::ng-deep {
 
       .ant-collapse-header {
@@ -24,9 +28,13 @@ import {CodeSystemEntityVersion, CodeSystemLibService, ConceptUtil} from 'term-w
         border-radius: 0 0 4px 4px;
       }
     }
-  `]
+  `],
+    imports: [MuiCardModule, AddButtonComponent, MuiNoDataModule, NzCollapseComponent, NzCollapsePanelComponent, MuiButtonModule, MuiIconModule, MuiTableModule, MuiModalModule, FormsModule, MuiFormModule, MuiRadioModule, MuiTreeSelectModule, NgTemplateOutlet, MuiSelectModule, MuiInputModule, AutofocusDirective, MuiDividerModule, TranslatePipe, IncludesPipe]
 })
 export class StructureDefinitionTypeListComponent implements OnInit{
+  private codeSystemService = inject(CodeSystemLibService);
+  private sdService = inject(StructureDefinitionLibService);
+
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public types!: StructureDefinitionType[];
   @Output() public typesChange: EventEmitter<StructureDefinitionType[]> = new EventEmitter<StructureDefinitionType[]>();
@@ -46,8 +54,6 @@ export class StructureDefinitionTypeListComponent implements OnInit{
   protected referenceTypes: string[] = ['Reference', 'CodeableReference', 'canonical'];
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(private codeSystemService: CodeSystemLibService, private sdService: StructureDefinitionLibService) {}
 
   public ngOnInit(): void {
     this.codeSystemService.searchConcepts('fhir-types', {limit: -1}).subscribe(r => {

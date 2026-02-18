@@ -1,18 +1,35 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {DestroyService, LoadingManager} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {AssociationType, AssociationTypeLibService, MapSet, MapSetAutomapRequest, MapSetVersion} from 'app/src/app/resources/_lib';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { DestroyService, LoadingManager, LocalDatePipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiNoDataModule, MuiDropdownModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import {AssociationType, AssociationTypeLibService, MapSet, MapSetAutomapRequest, MapSetVersion} from 'term-web/resources/_lib';
 import {forkJoin, map} from 'rxjs';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {JobLibService} from 'term-web/sys/_lib';
 import {AuthService} from 'term-web/core/auth';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
+import { NgClass, AsyncPipe } from '@angular/common';
+import { MapSetVersionInfoWidgetComponent } from 'term-web/resources/map-set/containers/version/summary/widgets/map-set-version-info-widget.component';
+import { MapSetSourceConceptListComponent } from 'term-web/resources/map-set/containers/version/summary/concepts/map-set-source-concept-list.component';
+import { MapSetExternalSourceConceptListComponent } from 'term-web/resources/map-set/containers/version/summary/concepts/map-set-external-source-concept-list.component';
+import { MapSetAssociationListComponent } from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-list.component';
+import { MapSetUnmappedConceptListComponent } from 'term-web/resources/map-set/containers/version/summary/concepts/map-set-unmapped-concept-list.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: 'map-set-version-summary.component.html',
-  providers: [DestroyService]
+    templateUrl: 'map-set-version-summary.component.html',
+    providers: [DestroyService],
+    imports: [ResourceContextComponent, MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, RouterLink, MuiIconModule, MapSetVersionInfoWidgetComponent, MuiDividerModule, MuiNoDataModule, NgClass, MuiDropdownModule, MuiCoreModule, MapSetSourceConceptListComponent, MapSetExternalSourceConceptListComponent, MapSetAssociationListComponent, MapSetUnmappedConceptListComponent, AsyncPipe, TranslatePipe, LocalDatePipe]
 })
 export class MapSetVersionSummaryComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private notificationService = inject(MuiNotificationService);
+  private mapSetService = inject(MapSetService);
+  private jobService = inject(JobLibService);
+  private associationTypeService = inject(AssociationTypeLibService);
+  private destroy$ = inject(DestroyService);
+  private authService = inject(AuthService);
+
   protected mapSet?: MapSet;
   protected mapSetVersion?: MapSetVersion;
   protected loader = new LoadingManager();
@@ -23,16 +40,6 @@ export class MapSetVersionSummaryComponent implements OnInit {
   protected isAuthenticated = this.authService.isAuthenticated.pipe(
     map(isAuth => isAuth)
   );
-
-  public constructor(
-    private route: ActivatedRoute,
-    private notificationService: MuiNotificationService,
-    private mapSetService: MapSetService,
-    private jobService: JobLibService,
-    private associationTypeService: AssociationTypeLibService,
-    private destroy$: DestroyService,
-    private authService: AuthService
-  ) {}
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -63,7 +70,7 @@ export class MapSetVersionSummaryComponent implements OnInit {
   }
 
   private pollJobStatus(jobId: number): void {
-    this.loader.wrap('reload-statistics', this.jobService.pollFinishedJobLog(jobId, this.destroy$)).subscribe(jobResp => {
+    this.loader.wrap('reload-statistics', this.jobService.pollFinishedJobLog(jobId, this.destroy$)).subscribe(() => {
       this.loadData(this.mapSet.id, this.mapSetVersion.version);
     });
   }

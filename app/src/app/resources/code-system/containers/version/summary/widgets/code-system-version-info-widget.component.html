@@ -1,107 +1,140 @@
-<m-no-data *ngIf="!version"></m-no-data>
+@if (!version) {
+  <m-no-data></m-no-data>
+}
 
-<div *ngIf="version">
-  <div class="m-justify-between">
-    <div class="m-items-middle">
-      <span class="m-bold">{{version.version}}</span>
-      <m-divider mVertical></m-divider>
-      <span>{{(version.releaseDate | localDate) || '...'}} -
+@if (version) {
+  <div>
+    <div class="m-justify-between">
+      <div class="m-items-middle">
+        <span class="m-bold">{{version.version}}</span>
+        <m-divider mVertical></m-divider>
+        <span>{{(version.releaseDate | localDate) || '...'}} -
         {{(version.expirationDate | localDate) || '...'}}</span>
-      <m-divider mVertical></m-divider>
-      <a (mClick)="openVersionConcepts()">{{version.conceptsTotal}} {{'web.code-system.summary.concepts' | translate}}</a>
-    </div>
-
-    <tw-status-tag [status]="version.status"></tw-status-tag>
-  </div>
-  <span>{{version.description | localName}}</span>
-  <div class="m-items-middle" *ngIf="version.uri">
-    <m-icon mCode="link"></m-icon>
-    <tw-copy-container [text]="version.uri">{{version.uri}}</tw-copy-container>
-  </div>
-  <div class="m-items-middle" *ngIf="version.supportedLanguages">
-    <m-icon mCode="global"></m-icon>
-    <ng-container *ngFor="let lang of version.supportedLanguages; let i = index">
-      <span>{{lang}}</span>
-      <m-divider mVertical *ngIf="i !== (version.supportedLanguages?.length - 1)"></m-divider>
-    </ng-container>
-  </div>
-  <div class="m-items-middle">
-    <m-icon mCode="download"></m-icon>
-    <span>{{'web.code-system-version.summary.info.download' | translate}}
-      (<span *ngFor="let format of ['json', 'xml', 'fsh', 'csv', 'xlsx']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 4 ? '|' : ''}}</span>)</span>
-    <m-divider mVertical></m-divider>
-    <span>{{'web.code-system-version.summary.info.definition' | translate}} <a (mClick)="openJson()">FHIR</a></span>
-  </div>
-  <div class="m-items-middle">
-    <m-icon mCode="calendar"></m-icon>
-    <span>{{'web.code-system-version.summary.info.last-modified' | translate}}:
-      {{((provenances | apply:getLastProvenance)?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
-    <a [routerLink]="['/resources/code-systems/compare', {'code-system': version?.codeSystem, 'version': version?.id}]">{{'web.code-system-version.summary.info.show-changes' | translate}}</a>
-  </div>
-  <div class="m-items-middle" *ngIf="codeSystem?.settings?.reviewRequired">
-    <m-icon mCode="calendar"></m-icon>
-    <span>{{'web.code-system-version.summary.info.last-reviewed' | translate}}:
-      {{((provenances | apply:getLastProvenance: 'reviewed')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
-    <a *twPrivileged="['*.CodeSystem.edit', '*.Task.edit']"
-        (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version', context: {resourceId: codeSystem?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})">
-      {{'web.code-system-version.summary.info.create-review' | translate}}</a>
-  </div>
-  <div class="m-items-middle" *ngIf="codeSystem?.settings?.approvalRequired">
-    <m-icon mCode="calendar"></m-icon>
-    <span>{{'web.code-system-version.summary.info.last-approved' | translate}}:
-      {{((provenances | apply:getLastProvenance: 'approved')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
-    <a *twPrivileged="['*.CodeSystem.edit', '*.Task.edit']"
-        (mClick)="taskModal.toggleModal({type: 'approval', workflowPrefix: 'version', context: {resourceId: codeSystem?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})">
-      {{'web.code-system-version.summary.info.create-approve' | translate}}</a>
-  </div>
-  <div class="m-items-middle" *twPrivileged="'publish'">
-    <m-icon mCode="tool"></m-icon>
-    <a *ngIf="version.status !== 'draft'" (mClick)="changeVersionStatus('draft')">{{'web.code-system-version.summary.info.make-draft' | translate}}</a>
-    <a *ngIf="version.status !== 'active' && version.status !== 'retired'"
-        (mClick)="changeVersionStatus('active')">{{'web.code-system-version.summary.info.activate' | translate}}</a>
-    <ng-container *ngIf="version.status !== 'retired'">
-      <m-divider mVertical></m-divider>
-      <a (mClick)="changeVersionStatus('retired')">{{'web.code-system-version.summary.info.retire' | translate}}</a>
-    </ng-container>
-  </div>
-  <div class="m-items-middle" *twPrivileged="'*.Release.view'">
-    <m-icon mCode="rocket"/>
-    <div *ngIf="releases?.length > 0">
-      <div *ngFor="let release of releases">
-        <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
+        <m-divider mVertical></m-divider>
+        <a (mClick)="openVersionConcepts()">{{version.conceptsTotal}} {{'web.code-system.summary.concepts' | translate}}</a>
       </div>
+      <tw-status-tag [status]="version.status"></tw-status-tag>
     </div>
-    <a (mClick)="releaseModal.toggleModal({resourceId: codeSystem?.id, resourceVersion: version?.version, resourceTitle: codeSystem?.title})"
-        *ngIf="!(releases?.length > 0) && ('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.add-to-release' | translate}}</a>
-    <span *ngIf="!(releases?.length > 0) && !('*.Release.edit' | twPrivileged)">{{'web.code-system-version.summary.info.release-unspecified' | translate}}</span>
-  </div>
-  <div class="m-items-middle" *ngIf="version.valueSet || codeSystem?.valueSet">
-    <m-icon mCode="tag"></m-icon>
-    <span *ngIf="version.valueSet">VS | <a [routerLink]="['/resources/value-sets', version.valueSet.valueSet, 'versions', version.valueSet.version, 'summary']">{{version.valueSet.valueSet}}
-      |{{version.valueSet.version}}</a></span>
-    <ng-container *ngIf="!version.valueSet">
-      <a *twPrivileged="'*.CodeSystem.edit'" (mClick)="valueSetModal.toggleModal({valueSet: codeSystem?.valueSet, codeSystem: codeSystem?.id, codeSystemVersion: version})">
-        {{'web.code-system-version.summary.info.create-related-vs-version' | translate}}
-      </a>
-      <m-icon mCode="warning" style="color: orange"/>
-    </ng-container>
-  </div>
-  <div class="m-items-middle" *ngIf="githubSpaces?.length && 'edit' | twPrivileged">
-    <m-icon mCode="github"></m-icon>
-    <m-dropdown [mHideIfEmpty]="false">
-      <a *m-dropdown-container>
-        {{'web.code-system-version.summary.info.sync-with-github' | translate}}
-      </a>
-      <ng-container *ngFor="let s of githubSpaces">
+    <span>{{version.description | localName}}</span>
+    @if (version.uri) {
+      <div class="m-items-middle">
+        <m-icon mCode="link"></m-icon>
+        <tw-copy-container [text]="version.uri">{{version.uri}}</tw-copy-container>
+      </div>
+    }
+    @if (version.supportedLanguages) {
+      <div class="m-items-middle">
+        <m-icon mCode="global"></m-icon>
+        @for (lang of version.supportedLanguages; track lang; let i = $index) {
+          <span>{{lang}}</span>
+          @if (i !== (version.supportedLanguages?.length - 1)) {
+            <m-divider mVertical></m-divider>
+          }
+        }
+      </div>
+    }
+    <div class="m-items-middle">
+      <m-icon mCode="download"></m-icon>
+      <span>{{'web.code-system-version.summary.info.download' | translate}}
+        (@for (format of ['json', 'xml', 'fsh', 'csv', 'xlsx']; track format; let i = $index) {
+        <span><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 4 ? '|' : ''}}</span>
+      })</span>
+      <m-divider mVertical></m-divider>
+      <span>{{'web.code-system-version.summary.info.definition' | translate}} <a (mClick)="openJson()">FHIR</a></span>
+    </div>
+    <div class="m-items-middle">
+      <m-icon mCode="calendar"></m-icon>
+      <span>{{'web.code-system-version.summary.info.last-modified' | translate}}:
+      {{((provenances | apply:getLastProvenance)?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
+      <a [routerLink]="['/resources/code-systems/compare', {'code-system': version?.codeSystem, 'version': version?.id}]">{{'web.code-system-version.summary.info.show-changes' | translate}}</a>
+    </div>
+    @if (codeSystem?.settings?.reviewRequired) {
+      <div class="m-items-middle">
+        <m-icon mCode="calendar"></m-icon>
+        <span>{{'web.code-system-version.summary.info.last-reviewed' | translate}}:
+        {{((provenances | apply:getLastProvenance: 'reviewed')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
+        <a *twPrivileged="['*.CodeSystem.edit', '*.Task.edit']"
+          (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version', context: {resourceId: codeSystem?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})">
+        {{'web.code-system-version.summary.info.create-review' | translate}}</a>
+      </div>
+    }
+    @if (codeSystem?.settings?.approvalRequired) {
+      <div class="m-items-middle">
+        <m-icon mCode="calendar"></m-icon>
+        <span>{{'web.code-system-version.summary.info.last-approved' | translate}}:
+        {{((provenances | apply:getLastProvenance: 'approved')?.date | localDate) || ('web.code-system-version.summary.info.none' | translate)}} </span>
+        <a *twPrivileged="['*.CodeSystem.edit', '*.Task.edit']"
+          (mClick)="taskModal.toggleModal({type: 'approval', workflowPrefix: 'version', context: {resourceId: codeSystem?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})">
+        {{'web.code-system-version.summary.info.create-approve' | translate}}</a>
+      </div>
+    }
+    <div class="m-items-middle" *twPrivileged="'publish'">
+      <m-icon mCode="tool"></m-icon>
+      @if (version.status !== 'draft') {
+        <a (mClick)="changeVersionStatus('draft')">{{'web.code-system-version.summary.info.make-draft' | translate}}</a>
+      }
+      @if (version.status !== 'active' && version.status !== 'retired') {
+        <a
+        (mClick)="changeVersionStatus('active')">{{'web.code-system-version.summary.info.activate' | translate}}</a>
+      }
+      @if (version.status !== 'retired') {
+        <m-divider mVertical></m-divider>
+        <a (mClick)="changeVersionStatus('retired')">{{'web.code-system-version.summary.info.retire' | translate}}</a>
+      }
+    </div>
+    <div class="m-items-middle" *twPrivileged="'*.Release.view'">
+      <m-icon mCode="rocket"/>
+      @if (releases?.length > 0) {
+        <div>
+          @for (release of releases; track release) {
+            <div>
+              <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
+            </div>
+          }
+        </div>
+      }
+      @if (!(releases?.length > 0) && ('*.Release.edit' | twPrivileged)) {
+        <a (mClick)="releaseModal.toggleModal({resourceId: codeSystem?.id, resourceVersion: version?.version, resourceTitle: codeSystem?.title})"
+        >{{'web.code-system-version.summary.info.add-to-release' | translate}}</a>
+      }
+      @if (!(releases?.length > 0) && !('*.Release.edit' | twPrivileged)) {
+        <span>{{'web.code-system-version.summary.info.release-unspecified' | translate}}</span>
+      }
+    </div>
+    @if (version.valueSet || codeSystem?.valueSet) {
+      <div class="m-items-middle">
+        <m-icon mCode="tag"></m-icon>
+        @if (version.valueSet) {
+          <span>VS | <a [routerLink]="['/resources/value-sets', version.valueSet.valueSet, 'versions', version.valueSet.version, 'summary']">{{version.valueSet.valueSet}}
+          |{{version.valueSet.version}}</a></span>
+        }
+        @if (!version.valueSet) {
+          <a *twPrivileged="'*.CodeSystem.edit'" (mClick)="valueSetModal.toggleModal({valueSet: codeSystem?.valueSet, codeSystem: codeSystem?.id, codeSystemVersion: version})">
+            {{'web.code-system-version.summary.info.create-related-vs-version' | translate}}
+          </a>
+          <m-icon mCode="warning" style="color: orange"/>
+        }
+      </div>
+    }
+    @if (githubSpaces?.length && 'edit' | twPrivileged) {
+      <div class="m-items-middle">
+        <m-icon mCode="github"></m-icon>
+        <m-dropdown [mHideIfEmpty]="false">
+          <a *m-dropdown-container>
+            {{'web.code-system-version.summary.info.sync-with-github' | translate}}
+          </a>
+          @for (s of githubSpaces; track s) {
         <a *m-dropdown-item [routerLink]="['/spaces', s.id, 'github', {files: [
         'codesystem-fhir-json|' + version.codeSystem + SEPARATOR + version.version,
         'codesystem-fhir-fsh|' + version.codeSystem + SEPARATOR + version.version]}]">
-          {{s.names | localName}}
-        </a>
-      </ng-container>
-    </m-dropdown>
+              {{s.names | localName}}
+            </a>
+          }
+        </m-dropdown>
+      </div>
+    }
   </div>
-</div>
+}
 
 <tw-resource-task-modal #taskModal (taskCreated)="taskCreated.emit()" resourceType="CodeSystem"/>
 <tw-resource-release-modal #releaseModal (connectedToRelease)="loadRelease()" resourceType="CodeSystem"/>

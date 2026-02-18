@@ -1,17 +1,30 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DestroyService} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { MuiNotificationService, MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiCoreModule, MuiTextareaModule, MuiAlertModule } from '@kodality-web/marina-ui';
 import {Observable} from 'rxjs';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
-import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from '../../fhir/_lib';
+import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from 'term-web/fhir/_lib';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+
+import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: './integration-fhir-sync.component.html',
-  providers: [DestroyService]
+    templateUrl: './integration-fhir-sync.component.html',
+    providers: [DestroyService],
+    imports: [MuiCardModule, MuiSpinnerModule, NzBreadCrumbComponent, NzBreadCrumbItemComponent, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiCoreModule, MuiTextareaModule, FormsModule, MuiAlertModule, TranslatePipe]
 })
 export class IntegrationFhirSyncComponent implements OnInit {
+  private fhirCodeSystemService = inject(FhirCodeSystemLibService);
+  private fhirValueSetLibService = inject(FhirValueSetLibService);
+  private fhirConceptMapLibService = inject(FhirConceptMapLibService);
+  private notificationService = inject(MuiNotificationService);
+  private jobService = inject(JobLibService);
+  private route = inject(ActivatedRoute);
+  private destroy$ = inject(DestroyService);
+
   public source?: string | null;
 
   public input: string = "";
@@ -19,16 +32,6 @@ export class IntegrationFhirSyncComponent implements OnInit {
   public jobResponse?: JobLog;
   public resources: {url?: string, id?: string}[] = [];
   public loading: {[k: string]: boolean} = {};
-
-  public constructor(
-    private fhirCodeSystemService: FhirCodeSystemLibService,
-    private fhirValueSetLibService: FhirValueSetLibService,
-    private fhirConceptMapLibService: FhirConceptMapLibService,
-    private notificationService: MuiNotificationService,
-    private jobService: JobLibService,
-    private route: ActivatedRoute,
-    private destroy$: DestroyService
-  ) {}
 
   public ngOnInit(): void {
     this.route.queryParamMap.subscribe(queryParamMap => {

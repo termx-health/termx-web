@@ -1,46 +1,45 @@
 <m-page-bar mPosition="top">
   <div class="resource-context">
     <div class="resource-context__container">
-      <span class="resource-context__item" style="width: 100%; grid-column: 3 span" *ngIf="!resource">...</span>
+      @if (!resource) {
+        <span class="resource-context__item" style="width: 100%; grid-column: 3 span">...</span>
+      }
 
-      <ng-container *ngIf="resource">
+      @if (resource) {
         <!-- Left -->
         <div class="resource-context__item resource-context__info">
           <div class="m-subtitle" style="padding-bottom: 1rem">
             {{resourceType | apply: capitalz}}
           </div>
-
           <div>
             <div class="m-title">
               {{resource.title | localName: resource.name ?? resource.id}}
             </div>
-
             <div class="submenu">
               <a class="submenu__item" [routerLink]="navigate('summary')" routerLinkActive="active">
                 <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.summary', icon: 'appstore'}"/>
               </a>
-
               <a class="submenu__item" *twPrivileged="resource.id + '.' + resourceType + '.edit'" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']" routerLinkActive="active">
                 <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'core.btn.edit', icon: 'form'}"/>
               </a>
-
-              <a class="submenu__item" *ngIf="['CodeSystem' , 'ValueSet'] | includes: resourceType" [routerLink]="navigate('concepts')" routerLinkActive="active">
-                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.concepts', icon: 'database'}"/>
-              </a>
-
-              <a class="submenu__item" *ngIf="resourceType === 'CodeSystem' && resource | apply:hasExternalReference" [routerLink]="navigate('properties')" routerLinkActive="active">
-                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.properties', icon: 'unordered-list'}"/>
-              </a>
-
+              @if (['CodeSystem' , 'ValueSet'] | includes: resourceType) {
+                <a class="submenu__item" [routerLink]="navigate('concepts')" routerLinkActive="active">
+                  <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.concepts', icon: 'database'}"/>
+                </a>
+              }
+              @if (resourceType === 'CodeSystem' && resource | apply:hasExternalReference) {
+                <a class="submenu__item" [routerLink]="navigate('properties')" routerLinkActive="active">
+                  <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.properties', icon: 'unordered-list'}"/>
+                </a>
+              }
               <a class="submenu__item" [routerLink]="navigate('provenances')" routerLinkActive="active">
                 <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.provenance', icon: 'history'}"/>
               </a>
-
-              <a class="submenu__item" *ngIf="resourceType === 'CodeSystem' && '*.Checklist.view' | twPrivileged" [routerLink]="navigate('checklists')" routerLinkActive="active">
-                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.checklist', icon: 'check-square'}"/>
-              </a>
-
-
+              @if (resourceType === 'CodeSystem' && '*.Checklist.view' | twPrivileged) {
+                <a class="submenu__item" [routerLink]="navigate('checklists')" routerLinkActive="active">
+                  <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.checklist', icon: 'check-square'}"/>
+                </a>
+              }
               <ng-template #tabTpl let-title="title" let-icon="icon">
                 <div class="m-items-middle">
                   {{title | translate}}
@@ -50,37 +49,35 @@
             </div>
           </div>
         </div>
-
         <!-- Filler -->
         <div class="resource-context__item"></div>
-
         <!-- Right -->
         <div class="resource-context__item ">
-          <ng-container *ngIf="!version">
+          @if (!version) {
             <m-dropdown>
               <a *m-dropdown-container>{{'web.resource-context.all-versions' | translate}}</a>
-              <ng-container *ngFor="let ver of versions">
+              @for (ver of versions; track ver) {
                 <a *m-dropdown-item (mClick)="selectVersion(ver.version)">{{ver.version}}</a>
-              </ng-container>
+              }
             </m-dropdown>
-          </ng-container>
-
+          }
           <!-- Version-->
-          <div *ngIf="version">
-            <!-- Title -->
-            <div class="m-subtitle">{{'entities.resource.version.single' | translate}}</div>
-            <!-- Code -->
-            <div class="m-items-middle">
-              <label class="m-bold">{{version.version}}</label>
-              <span class="tw-circled" [style.color]="version.status === 'draft' ? 'var(--color-amber-7)' : 'initial'">{{version.status[0] | uppercase}}</span>
+          @if (version) {
+            <div>
+              <!-- Title -->
+              <div class="m-subtitle">{{'entities.resource.version.single' | translate}}</div>
+              <!-- Code -->
+              <div class="m-items-middle">
+                <label class="m-bold">{{version.version}}</label>
+                <span class="tw-circled" [style.color]="version.status === 'draft' ? 'var(--color-amber-7)' : 'initial'">{{version.status[0] | uppercase}}</span>
+              </div>
             </div>
-          </div>
+          }
         </div>
-
         <div class="resource-context__item  selectable" (click)="unselectResourceOrVersion()">
           <m-icon mCode="close"/>
         </div>
-      </ng-container>
+      }
     </div>
   </div>
 </m-page-bar>

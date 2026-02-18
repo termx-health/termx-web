@@ -1,11 +1,20 @@
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { NgForm, FormsModule } from '@angular/forms';
 import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {ImplementationGuideVersionGroup} from 'term-web/implementation-guide/_lib';
+import { MuiEditableTableModule, MuiInputModule, MuiMultiLanguageInputModule } from '@kodality-web/marina-ui';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  selector: 'tw-implementation-guide-group-list',
-  templateUrl: './implementation-guide-group-list.component.html',
+    selector: 'tw-implementation-guide-group-list',
+    templateUrl: './implementation-guide-group-list.component.html',
+    imports: [
+        FormsModule,
+        MuiEditableTableModule,
+        MuiInputModule,
+        MuiMultiLanguageInputModule,
+        MarinaUtilModule,
+    ],
 })
 export class ImplementationGuideGroupListComponent implements OnChanges {
   @Input() public ig: string;

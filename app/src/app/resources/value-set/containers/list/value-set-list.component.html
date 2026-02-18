@@ -5,13 +5,14 @@
 
     <div class="m-items-middle">
       <!-- Quick Search -->
-      <m-input
-          *ngIf="!filter.open"
+      @if (!filter.open) {
+        <m-input
           [(ngModel)]="filter.searchInput"
           twDebounce [debounced]="onDebounced"
           placeholder="marina.ui.inputs.search.placeholder"
           autofocus
-      ></m-input>
+        ></m-input>
+      }
 
       <!-- Add/Edit actions -->
       <m-dropdown *twPrivileged="'*.ValueSet.edit'">
@@ -32,9 +33,11 @@
       </m-button>
 
       <!-- Filter toggle -->
-      <m-button *ngIf="!filter.open" [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
-        <m-icon mCode="filter"/>
-      </m-button>
+      @if (!filter.open) {
+        <m-button [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+          <m-icon mCode="filter"/>
+        </m-button>
+      }
     </div>
   </div>
 
@@ -42,13 +45,15 @@
   <!-- Filter -->
   <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
     <m-form-item>
-      <m-form-item *ngIf="filter.open">
-        <m-input
+      @if (filter.open) {
+        <m-form-item>
+          <m-input
             [(ngModel)]="_filter.searchInput"
             placeholder="marina.ui.inputs.search.placeholder"
             autofocus
-        ></m-input>
-      </m-form-item>
+          ></m-input>
+        </m-form-item>
+      }
       <m-form-item mLabel="entities.code-system.publisher">
         <tw-value-set-concept-select [(ngModel)]="_filter.publisher" valueSet="publisher" valuePrimitive/>
       </m-form-item>
@@ -76,17 +81,17 @@
       <td m-table-expand [mItem]="vs"></td>
       <td><a [routerLink]="[vs.id, 'summary']">{{vs.id}}</a></td>
       <td>
-        <ng-container *ngIf="(vs.versions | apply:findLastVersion)?.version as version">
+        @if ((vs.versions | apply:findLastVersion)?.version; as version) {
           <a [routerLink]="[vs.id, 'versions', version, 'summary']">{{version}}</a>
-        </ng-container>
+        }
       </td>
       <td>{{vs.title | localName}}</td>
       <td>{{vs.publisher | localizedConceptName: {codeSystem: 'publisher'} | async}}</td>
       <td><tw-status-tag [status]="(vs.versions | apply:findLastVersion)?.status"/></td>
       <td>
-        <ng-container *ngIf="(vs.versions | apply:findLastVersion) as v">
+        @if ((vs.versions | apply:findLastVersion); as v) {
           <a [routerLink]="[vs.id, 'versions', v?.version, 'concepts']">{{v?.snapshot?.conceptsTotal}}</a>
-        </ng-container>
+        }
       </td>
       <td class="tw-table-actions">
         <m-dropdown>
@@ -113,13 +118,13 @@
             </m-form-item>
             <m-form-item mLabel="entities.value-set.versions">
               <div style="display: grid; grid-template-columns: repeat(5, auto); width: max-content; column-gap: 0.5rem; row-gap: 0.2rem">
-                <ng-container *ngFor="let version of vs.versions">
+                @for (version of vs.versions; track version) {
                   <b>{{version.version}}</b>
                   <m-divider mVertical/>
                   <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
                   <m-divider mVertical/>
                   <tw-status-tag [status]="version.status"/>
-                </ng-container>
+                }
               </div>
             </m-form-item>
           </div>

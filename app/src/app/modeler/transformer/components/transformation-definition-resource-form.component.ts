@@ -1,7 +1,7 @@
 import {HttpErrorResponse} from '@angular/common/http';
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {group, HttpCacheService, isNil, LoadingManager, BooleanInput} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { group, HttpCacheService, isNil, LoadingManager, BooleanInput, ApplyPipe, ToBooleanPipe, ToNumberPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiFormModule, MuiRadioModule, MuiSelectModule, MuiInputModule, MuiButtonModule, MuiAlertModule, MuiCoreModule, MuiIconModule, MuiTooltipModule, MuiPopconfirmModule, MuiDropdownModule, MuiTextareaModule } from '@kodality-web/marina-ui';
 import {Fhir} from 'fhir/fhir';
 import {Bundle} from 'fhir/model/bundle';
 import {StructureDefinition as FhirStructureDefinition} from 'fhir/model/structure-definition';
@@ -12,14 +12,51 @@ import {launchFMLEditor} from 'term-web/modeler/transformer/components/fml.edito
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
 import {MapSet} from 'term-web/resources/_lib';
 import {TerminologyServerLibService} from 'term-web/sys/_lib/space';
-import {TransformationDefinition, TransformationDefinitionResource} from '../../_lib/transformer/transformation-definition';
+import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
+import { AsyncPipe } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { StructureDefinitionSelectComponent } from 'term-web/modeler/_lib/structure-definition/structure-definition-select.component';
+import { StructureDefinitionTreeComponent } from 'term-web/modeler/_lib/structure-definition/structure-definition-tree.component';
+import { MapSetSearchComponent } from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
+import { TransformationDefinitionSelectComponent } from 'term-web/modeler/_lib/transformer/transformation-definition-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 
 @Component({
-  selector: 'tw-transformation-definition-resource-form',
-  templateUrl: './transformation-definition-resource-form.component.html',
+    selector: 'tw-transformation-definition-resource-form',
+    templateUrl: './transformation-definition-resource-form.component.html',
+    imports: [
+    FormsModule,
+    MuiFormModule,
+    MuiRadioModule,
+    StructureDefinitionSelectComponent,
+    StructureDefinitionTreeComponent,
+    MapSetSearchComponent,
+    TransformationDefinitionSelectComponent,
+    MuiSelectModule,
+    MuiInputModule,
+    MuiButtonModule,
+    MuiAlertModule,
+    MuiCoreModule,
+    MuiIconModule,
+    MuiTooltipModule,
+    MuiPopconfirmModule,
+    MuiDropdownModule,
+    MuiTextareaModule,
+    AsyncPipe,
+    TranslatePipe,
+    MarinaUtilModule,
+    ApplyPipe,
+    ToBooleanPipe,
+    ToNumberPipe
+],
 })
 export class TransformationDefinitionResourceFormComponent implements OnChanges {
+  private transformationDefinitionService = inject(TransformationDefinitionService);
+  private serviceService = inject(TerminologyServerLibService);
+  private notificationService = inject(MuiNotificationService);
+
   @Input() public resource: TransformationDefinitionResource;
   @Input() public definition: TransformationDefinition;
   @Input() @BooleanInput() public disabled: boolean | string;
@@ -33,12 +70,6 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
     conceptmap: '/ConceptMap/',
     mapping: '/'
   };
-
-  public constructor(
-    private transformationDefinitionService: TransformationDefinitionService,
-    private serviceService: TerminologyServerLibService,
-    private notificationService: MuiNotificationService
-  ) { }
 
 
   public ngOnChanges(changes: SimpleChanges): void {
@@ -191,7 +222,7 @@ export class TransformationDefinitionResourceFormComponent implements OnChanges 
       map(servers => servers.find(s => s.id === Number(serverId))),
       map(s => normalize(s?.rootUrl))
     );
-  }
+  };
 
   protected isFml(txt: string): boolean {
     return txt?.startsWith('///');

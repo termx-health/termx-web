@@ -1,49 +1,58 @@
 import {BreakpointState} from '@angular/cdk/layout';
-import {Location} from '@angular/common';
-import {AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, TemplateRef} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {BooleanInput, NumberInput} from '@kodality-web/core-util';
-import {MuiBreakpointService} from '@kodality-web/marina-ui';
+import { Location, NgTemplateOutlet } from '@angular/common';
+import { AfterViewInit, Component, ElementRef, EventEmitter, Input, Output, TemplateRef, forwardRef, inject } from '@angular/core';
+import { ActivatedRoute, RouterOutlet, RouterLinkActive, RouterLink } from '@angular/router';
+import { BooleanInput, NumberInput, StringTemplateOutletDirective, ToStringPipe } from '@kodality-web/core-util';
+import { MuiBreakpointService, MuiCardModule, MuiCoreModule, MuiIconModule, MuiSpinnerModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'tw-finder-load-more-item',
-  template: `
+    selector: 'tw-finder-load-more-item',
+    template: `
     <tw-finder-menu-item>
       <a class="tw-finder-load-more" (click)="twClick.emit()">
         Load more
       </a>
     </tw-finder-menu-item>
-  `
+  `,
+    imports: [forwardRef(() => FinderMenuItemComponent), MuiCoreModule]
 })
 export class FinderLoadMoreItemComponent {
   @Output() public twClick = new EventEmitter<void>();
 }
 
 @Component({
-  selector: 'tw-finder-menu-item',
-  template: `
-    <div *ngIf="!navigate">
-      <ng-container *ngTemplateOutlet="contentTpl"></ng-container>
-    </div>
-
-
-    <div *ngIf="navigate" class="m-justify-between">
-      <a [routerLink]="navigate" routerLinkActive="tw-finder-menu-item-active">
+    selector: 'tw-finder-menu-item',
+    template: `
+    @if (!navigate) {
+      <div>
         <ng-container *ngTemplateOutlet="contentTpl"></ng-container>
-      </a>
-      <m-button *ngIf="view.observed" mSize="small" mDisplay="text" mShape="circle" (click)="view.emit()">
-        <m-icon mCode="eye"></m-icon>
-      </m-button>
-    </div>
-
+      </div>
+    }
+    
+    
+    @if (navigate) {
+      <div class="m-justify-between">
+        <a [routerLink]="navigate" routerLinkActive="tw-finder-menu-item-active">
+          <ng-container *ngTemplateOutlet="contentTpl"></ng-container>
+        </a>
+        @if (view.observed) {
+          <m-button mSize="small" mDisplay="text" mShape="circle" (click)="view.emit()">
+            <m-icon mCode="eye"></m-icon>
+          </m-button>
+        }
+      </div>
+    }
+    
     <ng-template #contentTpl>
       <ng-content></ng-content>
     </ng-template>
-  `,
-  host: {
-    '[class.tw-finder-menu-item]': 'true'
-  }
+    `,
+    host: {
+        '[class.tw-finder-menu-item]': 'true'
+    },
+    imports: [NgTemplateOutlet, MuiCoreModule, RouterLinkActive, RouterLink, MuiButtonModule, MuiIconModule]
 })
 export class FinderMenuItemComponent {
   @Input() public navigate?: any[] | string | null;
@@ -52,8 +61,8 @@ export class FinderMenuItemComponent {
 
 
 @Component({
-  selector: 'tw-finder-menu',
-  template: `
+    selector: 'tw-finder-menu',
+    template: `
     <m-spinner [mLoading]="loading">
       <div *stringTemplateOutlet="title" class="tw-finder-title">
         <m-button (click)="toggleOpen()" mSize="small" mDisplay="text" mShape="circle">
@@ -61,15 +70,20 @@ export class FinderMenuItemComponent {
         </m-button>
         {{title | toString | translate}}
       </div>
-
-      <div *ngIf="open">
-        <ng-content></ng-content>
-        <div *ngIf="length === 0" class="tw-finder-menu-item">
-          {{'core.no-data' | translate}}
+    
+      @if (open) {
+        <div>
+          <ng-content></ng-content>
+          @if (length === 0) {
+            <div class="tw-finder-menu-item">
+              {{'core.no-data' | translate}}
+            </div>
+          }
         </div>
-      </div>
+      }
     </m-spinner>
-  `
+    `,
+    imports: [MuiSpinnerModule, StringTemplateOutletDirective, MuiButtonModule, MuiIconModule, ToStringPipe, TranslatePipe]
 })
 export class FinderMenuComponent {
   @Input() public title?: string | TemplateRef<void>;
@@ -87,46 +101,53 @@ export class FinderMenuComponent {
 
 
 @Component({
-  selector: 'tw-finder-wrapper',
-  styleUrls: ['finder.component.less'],
-  template: `
-    <m-card class="tw-finder-wrapper-inner" style="height: min-content" m-scrollable *ngIf="isDisplayed">
-      <ng-container *ngIf="title || isMobile">
-        <ng-container *m-card-header>
-          <a *ngIf="isMobile" (click)="location.back()" class="tw-finder-wrapper-header-navigation tw-finder-title">
-            <m-icon mCode="left"></m-icon>&nbsp; {{'core.back' | translate}}
-          </a>
-          <div *ngIf="title" class="tw-finder-wrapper-header-title">
-            {{title | translate}}
+    selector: 'tw-finder-wrapper',
+    styleUrls: ['finder.component.less'],
+    template: `
+    @if (isDisplayed) {
+      <m-card class="tw-finder-wrapper-inner" style="height: min-content" m-scrollable>
+        @if (title || isMobile) {
+          <ng-container *m-card-header>
+            @if (isMobile) {
+              <a (click)="location.back()" class="tw-finder-wrapper-header-navigation tw-finder-title">
+                <m-icon mCode="left"></m-icon>&nbsp; {{'core.back' | translate}}
+              </a>
+            }
+            @if (title) {
+              <div class="tw-finder-wrapper-header-title">
+                {{title | translate}}
+              </div>
+            }
+          </ng-container>
+        }
+        <m-card [mShowSkeleton]="loading" class="m-card-inside">
+          <div class="tw-finder-outlet">
+            <ng-content></ng-content>
           </div>
-        </ng-container>
-      </ng-container>
-
-      <m-card [mShowSkeleton]="loading" class="m-card-inside">
-        <div class="tw-finder-outlet">
-          <ng-content></ng-content>
-        </div>
+        </m-card>
       </m-card>
-    </m-card>
-
+    }
+    
     <router-outlet></router-outlet>
-  `,
-  host: {
-    class: 'tw-finder-wrapper'
-  }
+    `,
+    host: {
+        class: 'tw-finder-wrapper'
+    },
+    imports: [MuiCardModule, MuiCoreModule, MuiIconModule, RouterOutlet, TranslatePipe]
 })
 export class FinderWrapperComponent implements AfterViewInit {
+  protected location = inject(Location);
+  private route = inject(ActivatedRoute);
+  private elRef = inject(ElementRef);
+
   @Input() public title?: string;
   @Input() @BooleanInput() public loading: string | boolean = false;
 
   public isMobile: boolean = false;
 
-  public constructor(
-    public location: Location,
-    private route: ActivatedRoute,
-    private elRef: ElementRef,
-    breakpointService: MuiBreakpointService
-  ) {
+  public constructor() {
+    const breakpointService = inject(MuiBreakpointService);
+
     breakpointService.observe().subscribe((state: BreakpointState) => this.isMobile = state.matches);
   }
 

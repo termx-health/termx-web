@@ -8,22 +8,22 @@ import {Compartment, EditorState} from '@codemirror/state';
 import {keymap} from '@codemirror/view';
 import {BooleanInput} from '@kodality-web/core-util';
 import {basicSetup, EditorView} from 'codemirror';
-import {WikiAbstractEditor} from '../abstract-text-editor';
+import {WikiAbstractEditor} from 'term-web/wiki/_lib/texteditor/editors/abstract-text-editor';
 
 
 @Component({
-  selector: 'tw-wiki-markdown-editor',
-  template: `
+    selector: 'tw-wiki-markdown-editor',
+    template: `
     <div #el [hidden]="!_styled" [class.cm-wrapper]="_styled"></div>
   `,
-  styles: [`
+    styles: [`
     ::ng-deep {
       .cm-wrapper, .cm-editor {
         height: 100%;
       }
     }
   `],
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WikiMarkdownEditorComponent), multi: true}]
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WikiMarkdownEditorComponent), multi: true }]
 })
 export class WikiMarkdownEditorComponent implements OnChanges, AfterViewInit, ControlValueAccessor, WikiAbstractEditor {
   @Input() @BooleanInput() public lineWrapping: boolean | string;
@@ -39,7 +39,7 @@ export class WikiMarkdownEditorComponent implements OnChanges, AfterViewInit, Co
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['lineWrapping']) {
-      this.reconfigureExtensions()
+      this.reconfigureExtensions();
     }
   }
 
@@ -114,7 +114,7 @@ export class WikiMarkdownEditorComponent implements OnChanges, AfterViewInit, Co
     this.onTouched = fn;
   }
 
-  public setDisabledState(isDisabled: boolean): void {
+  public setDisabledState(_isDisabled: boolean): void {
     // fixme: I have no freaking idea, how to set CM to readonly mode EASILY
   }
 

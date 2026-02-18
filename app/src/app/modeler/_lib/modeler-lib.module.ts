@@ -9,39 +9,37 @@ import {StructureDefinitionEditableTreeComponent} from 'term-web/modeler/_lib/st
 import {StructureDefinitionSelectComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-select.component';
 import {TransformationDefinitionLibService} from 'term-web/modeler/_lib/transformer/transformation-definition-lib.service';
 import {TransformationDefinitionSelectComponent} from 'term-web/modeler/_lib/transformer/transformation-definition-select.component';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
-import {StructureDefinitionLibService} from './structure-definition/structure-definition-lib.service';
-import {StructureDefinitionTreeComponent} from './structure-definition/structure-definition-tree.component';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {StructureDefinitionLibService} from 'term-web/modeler/_lib/structure-definition/structure-definition-lib.service';
+import {StructureDefinitionTreeComponent} from 'term-web/modeler/_lib/structure-definition/structure-definition-tree.component';
 
 @NgModule({
-  imports: [
-    FormsModule,
-    MarinaComponentsModule,
-    CoreUtilModule,
-    PortalModule,
-    NzListModule,
-    CoreUiModule,
-    MarinaQuillModule,
-  ],
-  providers: [
-    StructureDefinitionLibService,
-    TransformationDefinitionLibService
-  ],
-  declarations: [
-    StructureDefinitionTreeComponent,
-    StructureDefinitionEditableTreeComponent,
-    StructureDefinitionSelectComponent,
-    TransformationDefinitionSelectComponent
-  ],
-  exports: [
-    StructureDefinitionTreeComponent,
-    StructureDefinitionEditableTreeComponent,
-    StructureDefinitionSelectComponent,
-    TransformationDefinitionSelectComponent
-  ],
-  schemas: [
-    CUSTOM_ELEMENTS_SCHEMA
-  ]
+    imports: [
+        FormsModule,
+        MarinaComponentsModule,
+        CoreUtilModule,
+        PortalModule,
+        NzListModule,
+        CoreUiModule,
+        MarinaQuillModule,
+        StructureDefinitionTreeComponent,
+        StructureDefinitionEditableTreeComponent,
+        StructureDefinitionSelectComponent,
+        TransformationDefinitionSelectComponent,
+    ],
+    providers: [
+        StructureDefinitionLibService,
+        TransformationDefinitionLibService
+    ],
+    exports: [
+        StructureDefinitionTreeComponent,
+        StructureDefinitionEditableTreeComponent,
+        StructureDefinitionSelectComponent,
+        TransformationDefinitionSelectComponent
+    ],
+    schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
+    ]
 })
 export class ModelerLibModule {
 }

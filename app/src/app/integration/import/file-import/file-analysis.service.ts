@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
 
@@ -24,9 +24,9 @@ export interface FileAnalysisResponseColumn {
 
 @Injectable()
 export class FileAnalysisService {
-  protected baseUrl = `${environment.termxApi}/file-importer`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/file-importer`;
 
   public analyze(req: FileAnalysisRequest, file?: Blob): Observable<FileAnalysisResponse> {
     const fd = new FormData();

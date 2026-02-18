@@ -1,13 +1,20 @@
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import {LoadingManager} from '@kodality-web/core-util';
 import {forkJoin} from 'rxjs';
 import {Provenance, Release} from 'term-web/sys/_lib';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
+import { MarinPageLayoutModule, MuiCoreModule, MuiIconModule } from '@kodality-web/marina-ui';
+
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { ProvenanceListComponent } from 'term-web/sys/_lib/provenance/components/provenance-list.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  templateUrl: 'release-provenances.component.html',
-  styles: [`
+    templateUrl: 'release-provenances.component.html',
+    styles: [`
     @import "../../../../styles/variables";
     @space-context-bg: var(--color-action-bar-background);
     .context-container {
@@ -24,17 +31,16 @@ import {ReleaseService} from 'term-web/sys/release/services/release.service';
       border-bottom: @mui-border;
       white-space: nowrap;
     }
-  `]
+  `],
+    imports: [MarinPageLayoutModule, MuiCoreModule, RouterLink, MuiIconModule, PrivilegedDirective, StatusTagComponent, ProvenanceListComponent, TranslatePipe, MarinaUtilModule]
 })
 export class ReleaseProvenancesComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private releaseService = inject(ReleaseService);
+
   protected release?: Release;
   protected provenances?: Provenance[];
   protected loader = new LoadingManager();
-
-  public constructor(
-    private route: ActivatedRoute,
-    private releaseService: ReleaseService
-  ) {}
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

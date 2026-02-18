@@ -15,45 +15,43 @@ import {ResourceVersionFormComponent} from 'term-web/resources/resource/componen
 import {TaskLibModule} from 'term-web/task/_lib';
 import {UserLibModule} from 'term-web/user/_lib';
 import {WikiLibModule} from 'term-web/wiki/_lib';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 
 
 @NgModule({
-  imports: [
-    CoreUiModule,
-    ResourcesLibModule,
-    TaskLibModule,
-    WikiLibModule,
-    UserLibModule
-  ],
-  exports: [
-    ResourceContactsComponent,
-    ResourceContextComponent,
-    ResourceFormComponent,
-    ResourceIdentifiersComponent,
-    ResourceConfigurationAttributesComponent,
-    ResourceSideInfoComponent,
-    ResourceVersionFormComponent,
-    ResourceTasksWidgetComponent,
-    ResourceRelatedArtifactWidgetComponent,
-    ResourceFhirImportModalComponent,
-    ResourceTaskModalComponent,
-    ResourceReleaseModalComponent
-  ],
-  declarations: [
-    ResourceContactsComponent,
-    ResourceContextComponent,
-    ResourceFormComponent,
-    ResourceIdentifiersComponent,
-    ResourceConfigurationAttributesComponent,
-    ResourceSideInfoComponent,
-    ResourceVersionFormComponent,
-    ResourceTasksWidgetComponent,
-    ResourceRelatedArtifactWidgetComponent,
-    ResourceFhirImportModalComponent,
-    ResourceTaskModalComponent,
-    ResourceReleaseModalComponent
-  ]
+    imports: [
+        CoreUiModule,
+        ResourcesLibModule,
+        TaskLibModule,
+        WikiLibModule,
+        UserLibModule,
+        ResourceContactsComponent,
+        ResourceContextComponent,
+        ResourceFormComponent,
+        ResourceIdentifiersComponent,
+        ResourceConfigurationAttributesComponent,
+        ResourceSideInfoComponent,
+        ResourceVersionFormComponent,
+        ResourceTasksWidgetComponent,
+        ResourceRelatedArtifactWidgetComponent,
+        ResourceFhirImportModalComponent,
+        ResourceTaskModalComponent,
+        ResourceReleaseModalComponent
+    ],
+    exports: [
+        ResourceContactsComponent,
+        ResourceContextComponent,
+        ResourceFormComponent,
+        ResourceIdentifiersComponent,
+        ResourceConfigurationAttributesComponent,
+        ResourceSideInfoComponent,
+        ResourceVersionFormComponent,
+        ResourceTasksWidgetComponent,
+        ResourceRelatedArtifactWidgetComponent,
+        ResourceFhirImportModalComponent,
+        ResourceTaskModalComponent,
+        ResourceReleaseModalComponent
+    ]
 })
 export class ResourceModule {
 }

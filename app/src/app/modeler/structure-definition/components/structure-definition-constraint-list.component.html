@@ -1,28 +1,34 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-justify-between">
     <div><b>{{'web.structure-definition-constraint.list.header' | translate}}</b></div>
-    <tw-add-button *ngIf="!viewMode" (click)="addConstraint()">
-      {{'web.structure-definition-constraint.list.add-constraint' | translate}}
-    </tw-add-button>
+    @if (!viewMode) {
+      <tw-add-button (click)="addConstraint()">
+        {{'web.structure-definition-constraint.list.add-constraint' | translate}}
+      </tw-add-button>
+    }
   </div>
 
-  <m-no-data *ngIf="!constraints?.length"></m-no-data>
-  <m-table *ngIf="constraints?.length" [mData]="constraints" mSize="small">
-    <tr *mTableHead>
-      <th>{{'web.structure-definition-constraint.modal.key' | translate}}</th>
-      <th class="tw-table-actions"></th>
-    </tr>
-    <tr *mTableRow="let constraint; let index = index">
-      <td>
-        <a (click)="toggleModal(constraint, index)">{{constraint.key}}</a>
-      </td>
-      <td class="tw-table-actions">
-        <m-button (click)="removeConstraint(index)">
-          <m-icon [mCode]="'delete'"></m-icon>
-        </m-button>
-      </td>
-    </tr>
-  </m-table>
+  @if (!constraints?.length) {
+    <m-no-data></m-no-data>
+  }
+  @if (constraints?.length) {
+    <m-table [mData]="constraints" mSize="small">
+      <tr *mTableHead>
+        <th>{{'web.structure-definition-constraint.modal.key' | translate}}</th>
+        <th class="tw-table-actions"></th>
+      </tr>
+      <tr *mTableRow="let constraint; let index = index">
+        <td>
+          <a (click)="toggleModal(constraint, index)">{{constraint.key}}</a>
+        </td>
+        <td class="tw-table-actions">
+          <m-button (click)="removeConstraint(index)">
+            <m-icon [mCode]="'delete'"></m-icon>
+          </m-button>
+        </td>
+      </tr>
+    </m-table>
+  }
 
   <m-modal #modal [(mVisible)]="modalData.visible" (mClose)="toggleModal()">
     <ng-container *m-modal-header>
@@ -30,29 +36,31 @@
     </ng-container>
 
     <ng-container *m-modal-content>
-      <form #form="ngForm" *ngIf="modalData.constraint">
-        <m-form-item mName="key" mLabel="web.structure-definition-constraint.modal.key" required>
-          <m-input name="key" [(ngModel)]="modalData.constraint.key" autofocus required></m-input>
-        </m-form-item>
-        <m-form-item mName="requirements" mLabel="web.structure-definition-constraint.modal.requirements">
-          <m-input name="requirements" [(ngModel)]="modalData.constraint.requirements"></m-input>
-        </m-form-item>
-        <m-form-item mName="severity" mLabel="web.structure-definition-constraint.modal.severity" required>
-          <m-radio-group name="type" [(ngModel)]="modalData.constraint.severity">
-            <label m-radio-button mValue="error">{{'web.structure-definition-constraint.modal.error' | translate}}</label>
-            <label m-radio-button mValue="warning">{{'web.structure-definition-constraint.modal.warning' | translate}}</label>
-          </m-radio-group>
-        </m-form-item>
-        <m-form-item mName="human" mLabel="web.structure-definition-constraint.modal.human" required>
-          <m-input name="human" [(ngModel)]="modalData.constraint.human" required></m-input>
-        </m-form-item>
-        <m-form-item mName="expression" mLabel="web.structure-definition-constraint.modal.expression">
-          <m-input name="expression" [(ngModel)]="modalData.constraint.expression"></m-input>
-        </m-form-item>
-        <m-form-item mName="source" mLabel="web.structure-definition-constraint.modal.source">
-          <m-input name="source" [(ngModel)]="modalData.constraint.source"></m-input>
-        </m-form-item>
-      </form>
+      @if (modalData.constraint) {
+        <form #form="ngForm">
+          <m-form-item mName="key" mLabel="web.structure-definition-constraint.modal.key" required>
+            <m-input name="key" [(ngModel)]="modalData.constraint.key" autofocus required></m-input>
+          </m-form-item>
+          <m-form-item mName="requirements" mLabel="web.structure-definition-constraint.modal.requirements">
+            <m-input name="requirements" [(ngModel)]="modalData.constraint.requirements"></m-input>
+          </m-form-item>
+          <m-form-item mName="severity" mLabel="web.structure-definition-constraint.modal.severity" required>
+            <m-radio-group name="type" [(ngModel)]="modalData.constraint.severity">
+              <label m-radio-button mValue="error">{{'web.structure-definition-constraint.modal.error' | translate}}</label>
+              <label m-radio-button mValue="warning">{{'web.structure-definition-constraint.modal.warning' | translate}}</label>
+            </m-radio-group>
+          </m-form-item>
+          <m-form-item mName="human" mLabel="web.structure-definition-constraint.modal.human" required>
+            <m-input name="human" [(ngModel)]="modalData.constraint.human" required></m-input>
+          </m-form-item>
+          <m-form-item mName="expression" mLabel="web.structure-definition-constraint.modal.expression">
+            <m-input name="expression" [(ngModel)]="modalData.constraint.expression"></m-input>
+          </m-form-item>
+          <m-form-item mName="source" mLabel="web.structure-definition-constraint.modal.source">
+            <m-input name="source" [(ngModel)]="modalData.constraint.source"></m-input>
+          </m-form-item>
+        </form>
+      }
     </ng-container>
 
     <div *m-modal-footer class="m-items-middle">

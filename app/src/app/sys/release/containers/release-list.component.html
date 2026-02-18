@@ -29,7 +29,9 @@
       <td>{{r.planned | localDate}}</td>
       <td>{{r.releaseDate | localDate}}</td>
       <td>
-        <div *ngFor="let author of r.authors">{{author}}</div>
+        @for (author of r.authors; track author) {
+          <div>{{author}}</div>
+        }
       </td>
     </tr>
     <tr *mTableNoData>

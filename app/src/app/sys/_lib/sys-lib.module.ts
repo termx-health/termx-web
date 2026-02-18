@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {ChecklistLibModule} from 'term-web/sys/_lib/checklist';
 import {SpaceLibModule} from 'term-web/sys/_lib/space';
-import {JobLibModule} from './job';
-import {LorqueLibModule} from './lorque';
-import {ProvenanceLibModule} from './provenance';
-import {ReleaseLibModule} from './release';
+import {JobLibModule} from 'term-web/sys/_lib/job';
+import {LorqueLibModule} from 'term-web/sys/_lib/lorque';
+import {ProvenanceLibModule} from 'term-web/sys/_lib/provenance';
+import {ReleaseLibModule} from 'term-web/sys/_lib/release';
 
 @NgModule({
   imports: [

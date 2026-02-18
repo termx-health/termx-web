@@ -1,14 +1,18 @@
 import {Clipboard} from '@angular/cdk/clipboard';
-import {Component, Input} from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
+import { MuiPopconfirmModule, MuiPopoverModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-copy-container',
-  templateUrl: 'copy-container.component.html'
+    selector: 'tw-copy-container',
+    templateUrl: 'copy-container.component.html',
+    imports: [MuiPopconfirmModule, MuiPopoverModule, MuiButtonModule, MuiIconModule, TranslatePipe]
 })
 export class CopyContainerComponent {
-  @Input() public text: string;
+  private clipboard = inject(Clipboard);
 
-  public constructor(private clipboard: Clipboard) {}
+  @Input() public text: string;
 
   protected copy(cb): void {
     this.clipboard.copy(this.text);

@@ -1,17 +1,19 @@
 import {HttpBackend, HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {environment} from 'environments/environment';
 import {catchError, Observable, of} from 'rxjs';
-import {FhirToFshRequest} from '../model/fhir-to-fsh-request';
-import {FhirToFshResponse} from '../model/fhir-to-fsh-response';
-import {FshToFhirRequest} from '../model/fsh-to-fhir-request';
-import {FshToFhirResponse} from '../model/fsh-to-fhir-response';
+import {FhirToFshRequest} from 'term-web/integration/_lib/chef/model/fhir-to-fsh-request';
+import {FhirToFshResponse} from 'term-web/integration/_lib/chef/model/fhir-to-fsh-response';
+import {FshToFhirRequest} from 'term-web/integration/_lib/chef/model/fsh-to-fhir-request';
+import {FshToFhirResponse} from 'term-web/integration/_lib/chef/model/fsh-to-fhir-response';
 
 @Injectable()
 export class ChefService {
   private http: HttpClient;
 
-  public constructor(httpBackend: HttpBackend) {
+  public constructor() {
+    const httpBackend = inject(HttpBackend);
+
     // we don't need auth tokens, so creating new http client
     this.http = new HttpClient(httpBackend);
   }

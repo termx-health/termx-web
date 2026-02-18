@@ -1,48 +1,47 @@
 <tw-table [(filterOpen)]="filter.open">
   <!-- Header -->
-  <div header class="tw-flex-container tw-flex-container--default" *ngIf="!filter.open">
-    <div class="m-justify-between">
-      <div class="m-items-middle" style="white-space: nowrap">
-        <m-input
+  @if (!filter.open) {
+    <div header class="tw-flex-container tw-flex-container--default">
+      <div class="m-justify-between">
+        <div class="m-items-middle" style="white-space: nowrap">
+          <m-input
             [(ngModel)]="filter.searchInput"
             twDebounce [debounced]="onDebounced"
             placeholder="marina.ui.inputs.search.placeholder"
             autofocus
-        ></m-input>
-
-        <m-radio-group [(ngModel)]="filter.type" (ngModelChange)="onDebounced().subscribe()">
-          <label m-radio-button mValue="contains">{{'web.loinc.loinc.filter.contains' | translate}}</label>
-          <label m-radio-button mValue="eq">{{'web.loinc.loinc.filter.eq' | translate}}</label>
-        </m-radio-group>
+          ></m-input>
+          <m-radio-group [(ngModel)]="filter.type" (ngModelChange)="onDebounced().subscribe()">
+            <label m-radio-button mValue="contains">{{'web.loinc.loinc.filter.contains' | translate}}</label>
+            <label m-radio-button mValue="eq">{{'web.loinc.loinc.filter.eq' | translate}}</label>
+          </m-radio-group>
+        </div>
+        <m-button [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+          <m-icon mCode="filter"/>
+        </m-button>
       </div>
-
-      <m-button [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
-        <m-icon mCode="filter"/>
-      </m-button>
+      <ng-container *ngTemplateOutlet="recentSrchs"/>
     </div>
-
-    <ng-container *ngTemplateOutlet="recentSrchs"/>
-  </div>
+  }
 
 
   <!-- Filter -->
   <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
-    <m-form-item *ngIf="filter.open">
-      <div class="tw-flex-container tw-flex-container--default">
-        <m-input
+    @if (filter.open) {
+      <m-form-item>
+        <div class="tw-flex-container tw-flex-container--default">
+          <m-input
             [(ngModel)]="_filter.searchInput"
             placeholder="marina.ui.inputs.search.placeholder"
             autofocus
-        ></m-input>
-
-        <m-radio-group [(ngModel)]="_filter.type">
-          <label m-radio-button mValue="contains">{{'web.loinc.loinc.filter.contains' | translate}}</label>
-          <label m-radio-button mValue="eq">{{'web.loinc.loinc.filter.eq' | translate}}</label>
-        </m-radio-group>
-
-        <ng-container *ngTemplateOutlet="recentSrchs"/>
-      </div>
-    </m-form-item>
+          ></m-input>
+          <m-radio-group [(ngModel)]="_filter.type">
+            <label m-radio-button mValue="contains">{{'web.loinc.loinc.filter.contains' | translate}}</label>
+            <label m-radio-button mValue="eq">{{'web.loinc.loinc.filter.eq' | translate}}</label>
+          </m-radio-group>
+          <ng-container *ngTemplateOutlet="recentSrchs"/>
+        </div>
+      </m-form-item>
+    }
 
     <m-form-item mLabel="web.loinc.loinc.filter.type">
       <m-checkbox [(ngModel)]="_filter.clinicalType">{{'web.loinc.loinc.filter.clinical' | translate}}</m-checkbox>
@@ -105,79 +104,107 @@
       <td><a (mClick)="openConcept(c.code)" style="white-space: nowrap;">{{c.code}}</a></td>
       <td>{{c | apply:getName}}</td>
       <td>
-        <div *ngFor="let name of (c | apply:getPartName:'COMPONENT':parts)">{{name}}</div>
-      <td>
-        <div *ngFor="let name of (c | apply:getPartName:'PROPERTY':parts)">{{name}}</div>
-      </td>
-      <td>
-        <div *ngFor="let name of (c | apply:getPartName:'TIME':parts)">{{name}}</div>
-      </td>
-      <td>
-        <div *ngFor="let name of (c | apply:getPartName:'SYSTEM':parts)">{{name}}</div>
-      </td>
-      <td>
-        <div *ngFor="let name of (c | apply:getPartName:'SCALE':parts)">{{name}}</div>
-      </td>
-      <td>
-        <div *ngFor="let name of (c | apply:getPartName:'METHOD':parts)">{{name}}</div>
-      </td>
-      <td>
-        <div *ngFor="let name of (c | apply:getPartName:'CLASS':parts)">{{name}}</div>
-      </td>
-      <td>
-        <div *ngFor="let name of (c | apply:getPartName:'TYPE':parts)">
-          <m-icon [mCode]="name | apply:getIconCode" m-popover [mContent]="name"></m-icon>
+        @for (name of (c | apply:getPartName:'COMPONENT':parts); track name) {
+          <div>{{name}}</div>
+        }
+        <td>
+          @for (name of (c | apply:getPartName:'PROPERTY':parts); track name) {
+            <div>{{name}}</div>
+          }
+        </td>
+        <td>
+          @for (name of (c | apply:getPartName:'TIME':parts); track name) {
+            <div>{{name}}</div>
+          }
+        </td>
+        <td>
+          @for (name of (c | apply:getPartName:'SYSTEM':parts); track name) {
+            <div>{{name}}</div>
+          }
+        </td>
+        <td>
+          @for (name of (c | apply:getPartName:'SCALE':parts); track name) {
+            <div>{{name}}</div>
+          }
+        </td>
+        <td>
+          @for (name of (c | apply:getPartName:'METHOD':parts); track name) {
+            <div>{{name}}</div>
+          }
+        </td>
+        <td>
+          @for (name of (c | apply:getPartName:'CLASS':parts); track name) {
+            <div>{{name}}</div>
+          }
+        </td>
+        <td>
+          @for (name of (c | apply:getPartName:'TYPE':parts); track name) {
+            <div>
+              <m-icon [mCode]="name | apply:getIconCode" m-popover [mContent]="name"></m-icon>
+            </div>
+          }
+        </td>
+        <td>
+          @if ((c | apply: getAssociations)) {
+            <m-tag class="m-clickable"
+              mColor="blue"
+              (click)="showAssociations(c, i)"
+            >{{(c | apply: getAssociations)?.length}}</m-tag>
+          }
+        </td>
+        <td>
+          @for (name of (c | apply:getPropName:'ORDER_OBS'); track name) {
+            <div>{{name}}</div>
+          }
+        </td>
+      </tr>
+      <tr *mTableRowExpand="let c" class="m-table-expanded-row">
+        <td>
+          @for (a of (c | apply: getAssociations); track a) {
+            <div><a>{{a.targetCode}}</a></div>
+          }
+        </td>
+        <td>
+          @for (a of (c | apply: getAssociations); track a) {
+            <div>{{a.targetCode | localizedConceptName: {codeSystem: a.codeSystem} | async}}</div>
+          }
+        </td>
+        <td colspan="10"></td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="100%">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-backend-table>
+  </tw-table>
+
+
+  <ng-template #recentSrchs>
+    @if (recent?.length) {
+      <div class="hide-context">
+        <div class="m-items-middle m-text-small">
+          <span>{{'web.loinc.loinc.filter.recent-searches' | translate}}</span>
+          <m-icon class="m-clickable needle" mCode="delete" (click)="clearRecentSearches()"></m-icon>
         </div>
-      </td>
-      <td>
-        <m-tag class="m-clickable"
-            mColor="blue"
-            (click)="showAssociations(c, i)"
-            *ngIf="(c | apply: getAssociations)"
-        >{{(c | apply: getAssociations)?.length}}</m-tag>
-      </td>
-      <td>
-        <div *ngFor="let name of (c | apply:getPropName:'ORDER_OBS')">{{name}}</div>
-      </td>
-    </tr>
-    <tr *mTableRowExpand="let c" class="m-table-expanded-row">
-      <td>
-        <div *ngFor="let a of (c | apply: getAssociations)"><a>{{a.targetCode}}</a></div>
-      </td>
-      <td>
-        <div *ngFor="let a of (c | apply: getAssociations)">{{a.targetCode | localizedConceptName: {codeSystem: a.codeSystem} | async}}</div>
-      </td>
-      <td colspan="10"></td>
-    </tr>
-    <tr *mTableNoData>
-      <td colspan="100%">
-        <m-no-data></m-no-data>
-      </td>
-    </tr>
-  </m-backend-table>
-</tw-table>
-
-
-<ng-template #recentSrchs>
-  <div class="hide-context" *ngIf="recent?.length">
-    <div class="m-items-middle m-text-small">
-      <span>{{'web.loinc.loinc.filter.recent-searches' | translate}}</span>
-      <m-icon class="m-clickable needle" mCode="delete" (click)="clearRecentSearches()"></m-icon>
-    </div>
-
-    <div class="m-items-middle" style="flex-wrap: wrap" *ngIf="{limit: 10} as d">
-      <m-tag
-          *ngFor="let opt of recent | slice: d.limit"
-          (click)="filter.open ? _filter.searchInput  = opt : filter.searchInput = opt"
-          [class.m-text-secondary]="loader.state['search']"
-          class="m-clickable"
-      >
-        <m-abbreviate [mValue]="opt" [mLength]="30" [mThreshold]="10"/>
-      </m-tag>
-
-      <m-tag *ngIf="recent.length > d.limit" class="m-clickable" (click)="d.limit = d.limit + 10">
-        {{'core.load-more' | translate}}
-      </m-tag>
-    </div>
-  </div>
-</ng-template>
+        @if ({limit: 10}; as d) {
+          <div class="m-items-middle" style="flex-wrap: wrap">
+            @for (opt of recent | slice: d.limit; track opt) {
+              <m-tag
+                (click)="filter.open ? _filter.searchInput  = opt : filter.searchInput = opt"
+                [class.m-text-secondary]="loader.state['search']"
+                class="m-clickable"
+                >
+                <m-abbreviate [mValue]="opt" [mLength]="30" [mThreshold]="10"/>
+              </m-tag>
+            }
+            @if (recent.length > d.limit) {
+              <m-tag class="m-clickable" (click)="d.limit = d.limit + 10">
+                {{'core.load-more' | translate}}
+              </m-tag>
+            }
+          </div>
+        }
+      </div>
+    }
+  </ng-template>

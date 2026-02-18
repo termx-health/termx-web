@@ -1,5 +1,5 @@
-import {SnomedConcept} from '../concept/snomed-concept';
-import {SnomedRefsetItem} from './snomed-refset-item';
+import {SnomedConcept} from 'term-web/integration/_lib/snomed/model/concept/snomed-concept';
+import {SnomedRefsetItem} from 'term-web/integration/_lib/snomed/model/refset/snomed-refset-item';
 
 export class SnomedRefsetSearchResult {
   public memberCountsByReferenceSet?: { [key: string]: number };

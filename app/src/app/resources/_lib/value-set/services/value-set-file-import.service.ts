@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {serializeDate} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {environment} from 'environments/environment';
@@ -20,9 +20,10 @@ export interface FileProcessingRequest {
 
 @Injectable()
 export class ValueSetFileImportService {
-  public readonly baseUrl = `${environment.termxApi}/file-importer/value-set`;
+  private http = inject(HttpClient);
+  private jobService = inject(JobLibService);
 
-  public constructor(private http: HttpClient, private jobService: JobLibService) {}
+  public readonly baseUrl = `${environment.termxApi}/file-importer/value-set`;
 
   public processRequest(req: FileProcessingRequest, file: Blob, destroy$: Observable<any> = timer(60_000)): Observable<JobLog> {
     if (req.version?.releaseDate) {

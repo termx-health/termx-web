@@ -1,16 +1,21 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import {Router} from '@angular/router';
 import {environment} from 'environments/environment';
 import {FhirValueSetLibService} from 'term-web/fhir/_lib';
+import { MuiTableModule, MuiTagModule, MuiCoreModule, MuiDividerModule } from '@kodality-web/marina-ui';
+
+import { LocalDatePipe } from '@kodality-web/core-util';
 
 @Component({
-  selector: 'tw-fhir-value-set',
-  templateUrl: './fhir-value-set.component.html'
+    selector: 'tw-fhir-value-set',
+    templateUrl: './fhir-value-set.component.html',
+    imports: [MuiTableModule, MuiTagModule, MuiCoreModule, MuiDividerModule, LocalDatePipe]
 })
 export class FhirValueSetComponent implements OnChanges {
-  @Input() public valueSet?: any;
+  private router = inject(Router);
+  private valueSetService = inject(FhirValueSetLibService);
 
-  public constructor(private router: Router, private valueSetService: FhirValueSetLibService) {}
+  @Input() public valueSet?: any;
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['valueSet'] && this.valueSet && this.valueSet.id) {

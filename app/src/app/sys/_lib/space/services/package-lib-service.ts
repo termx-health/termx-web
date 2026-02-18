@@ -1,14 +1,14 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {Package, PackageVersion} from '../model/package';
+import {Package, PackageVersion} from 'term-web/sys/_lib/space/model/package';
 
 @Injectable()
 export class PackageLibService {
-  protected baseUrl = `${environment.termxApi}/spaces`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/spaces`;
 
   public load(spaceId: number, id: number): Observable<Package> {
     return this.http.get<Package>(`${this.baseUrl}/${spaceId}/packages/${id}`);

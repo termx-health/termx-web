@@ -1,23 +1,23 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
 import {MapSetConcept, MapSetConceptSearchParams} from 'term-web/resources/_lib';
 import {JobLogResponse, Provenance} from 'term-web/sys/_lib';
-import {MapSet} from '../model/map-set';
-import {MapSetAssociation} from '../model/map-set-association';
-import {MapSetAssociationSearchParams} from '../model/map-set-association-search-params';
-import {MapSetSearchParams} from '../model/map-set-search-params';
-import {MapSetVersion} from '../model/map-set-version';
-import {MapSetVersionSearchParams} from '../model/map-set-version-search-params';
+import {MapSet} from 'term-web/resources/_lib/map-set/model/map-set';
+import {MapSetAssociation} from 'term-web/resources/_lib/map-set/model/map-set-association';
+import {MapSetAssociationSearchParams} from 'term-web/resources/_lib/map-set/model/map-set-association-search-params';
+import {MapSetSearchParams} from 'term-web/resources/_lib/map-set/model/map-set-search-params';
+import {MapSetVersion} from 'term-web/resources/_lib/map-set/model/map-set-version';
+import {MapSetVersionSearchParams} from 'term-web/resources/_lib/map-set/model/map-set-version-search-params';
 
 
 @Injectable()
 export class MapSetLibService {
-  protected baseUrl = `${environment.termxApi}/ts/map-sets`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/ts/map-sets`;
 
   public load(mapSetId: string, decorate?: boolean): Observable<MapSet> {
     return this.http.get<MapSet>(`${this.baseUrl}/${mapSetId}?decorate=${decorate}`);

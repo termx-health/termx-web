@@ -21,6 +21,7 @@
         "@typescript-eslint/explicit-function-return-type": "warn",
         "@typescript-eslint/explicit-member-accessibility": "error",
         "@typescript-eslint/no-explicit-any": ["warn", {"ignoreRestArgs": false}],
+        "@typescript-eslint/no-unused-vars": ["error", {"argsIgnorePattern": "^_", "destructuredArrayIgnorePattern": "^_"}],
         "@angular-eslint/no-host-metadata-property": "off"
       }
     },

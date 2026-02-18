@@ -1,58 +1,73 @@
 <m-page [mLoading]="loader.isLoading">
-  <div style="display: flex; flex-direction: column; gap: 1rem" *ngIf="release">
-    <m-card>
-      <div class="m-justify-between">
-        <div style="display: flex; gap: 1rem">
-          <m-form-item mName="resource" mLabel="Resource">
-            <m-select name="resource" [(ngModel)]="resource" compareWith="id" (ngModelChange)="loadFhirResources()">
-              <m-option *ngFor="let r of release.resources" [mValue]="r" mLabel="{{r.resourceType}} - {{r.resourceId}} - {{r.resourceVersion}}"/>
-            </m-select>
-          </m-form-item>
+  @if (release) {
+    <div style="display: flex; flex-direction: column; gap: 1rem">
+      <m-card>
+        <div class="m-justify-between">
+          <div style="display: flex; gap: 1rem">
+            <m-form-item mName="resource" mLabel="Resource">
+              <m-select name="resource" [(ngModel)]="resource" compareWith="id" (ngModelChange)="loadFhirResources()">
+                @for (r of release.resources; track r) {
+                  <m-option [mValue]="r" mLabel="{{r.resourceType}} - {{r.resourceId}} - {{r.resourceVersion}}"/>
+                }
+              </m-select>
+            </m-form-item>
+          </div>
         </div>
-      </div>
-    </m-card>
-    <div style="display: flex; gap: 1rem">
-      <m-card style="max-width: 33%">
-        <div *m-card-header class="m-justify-between">
-          <label>{{'entities.terminology-server.current-installation' | translate}}</label>
-        </div>
-
-        <span *ngIf="current?.length > 15000000">{{'web.space.diff.not-render' | translate}}</span>
-        <pre *ngIf="current?.length > 10000 && current?.length <= 15000000">{{current | apply: normalize}}</pre>
-        <tw-diff-view *ngIf="current?.length <= 10000" [value]="current | apply: normalize"/>
       </m-card>
-
-      <m-card style="max-width: 33%">
-        <div *m-card-header class="m-justify-between">
-          <label>{{terminologyServers?.[release.terminologyServer]?.names | localName: '...'}}</label>
+      <div style="display: flex; gap: 1rem">
+        <m-card style="max-width: 33%">
+          <div *m-card-header class="m-justify-between">
+            <label>{{'entities.terminology-server.current-installation' | translate}}</label>
+          </div>
+          @if (current?.length > 15000000) {
+            <span>{{'web.space.diff.not-render' | translate}}</span>
+          }
+          @if (current?.length > 10000 && current?.length <= 15000000) {
+            <pre>{{current | apply: normalize}}</pre>
+          }
+          @if (current?.length <= 10000) {
+            <tw-diff-view [value]="current | apply: normalize"/>
+          }
+        </m-card>
+        <m-card style="max-width: 33%">
+          <div *m-card-header class="m-justify-between">
+            <label>{{terminologyServers?.[release.terminologyServer]?.names | localName: '...'}}</label>
           <m-button *twPrivileged="release.id + '.Release.publish'" m-tooltip [mTitle]="'web.space.diff.sync-tooltip' | translate: {
               source: ('entities.terminology-server.current-installation' | translate),
               target: (terminologyServers?.[release.terminologyServer]?.names | localName: '...')}" mDisplay="primary" (mClick)="sync()">
-            <div class="m-items-middle"><label>{{'Sync'}}</label>
+              <div class="m-items-middle"><label>{{'Sync'}}</label>
               <m-icon mCode="sync"></m-icon>
             </div>
           </m-button>
         </div>
-
-        <span *ngIf="comparable?.length > 15000000">{{'web.space.diff.not-render' | translate}}</span>
-        <pre *ngIf="comparable?.length > 10000 && comparable?.length <= 15000000">{{comparable | apply: normalize}}</pre>
-        <tw-diff-view *ngIf="comparable?.length <= 10000" [value]="comparable | apply: normalize"/>
+        @if (comparable?.length > 15000000) {
+          <span>{{'web.space.diff.not-render' | translate}}</span>
+        }
+        @if (comparable?.length > 10000 && comparable?.length <= 15000000) {
+          <pre>{{comparable | apply: normalize}}</pre>
+        }
+        @if (comparable?.length <= 10000) {
+          <tw-diff-view [value]="comparable | apply: normalize"/>
+        }
       </m-card>
-
-      <m-card style="max-width: 33%" *ngIf="{mode: 'line-by-line'} as d">
-        <div *m-card-header class="m-justify-between">
-          <label>{{'Diff'}}</label>
-          <m-button (mClick)="d.mode = d.mode === 'line-by-line' ? 'side-by-side' : 'line-by-line'">
-            <m-icon [mCode]="d.mode === 'line-by-line' ? 'read' : 'pic-center' "/>
-          </m-button>
-        </div>
-
-        <tw-diff-view *ngIf="current && comparable"
-            [src]="current | apply: normalize"
-            [tgt]="comparable | apply: normalize"
-            [full]="current.length < 15000000 && comparable.length < 15000000"
-            [display]="d.mode"/>
-      </m-card>
+      @if ({mode: 'line-by-line'}; as d) {
+        <m-card style="max-width: 33%">
+          <div *m-card-header class="m-justify-between">
+            <label>{{'Diff'}}</label>
+            <m-button (mClick)="d.mode = d.mode === 'line-by-line' ? 'side-by-side' : 'line-by-line'">
+              <m-icon [mCode]="d.mode === 'line-by-line' ? 'read' : 'pic-center' "/>
+            </m-button>
+          </div>
+          @if (current && comparable) {
+            <tw-diff-view
+              [src]="current | apply: normalize"
+              [tgt]="comparable | apply: normalize"
+              [full]="current.length < 15000000 && comparable.length < 15000000"
+              [display]="d.mode"/>
+          }
+        </m-card>
+      }
     </div>
   </div>
+}
 </m-page>

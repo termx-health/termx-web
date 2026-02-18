@@ -23,8 +23,8 @@
     <m-form-item [mLabel]="conceptMapVersion">
       <ng-template #conceptMapVersion>
         <div>{{'web.integration.fhir.concept-map.translate.concept-map-version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="conceptMapVersion"></m-icon>
-        <ng-template #conceptMapVersion>
+        <m-icon mCode="info-circle" m-popover [mContent]="conceptMapVersionContent"></m-icon>
+        <ng-template #conceptMapVersionContent>
           The identifier that is used to identify a specific version of the concept map to be used for the translation.<br>
           This is an arbitrary value managed by the concept map author and is not expected to be globally unique.<br>
           For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available.
@@ -66,20 +66,26 @@
       <m-textarea [(ngModel)]="data.targetSystem"></m-textarea>
     </m-form-item>
 
-    <m-card *ngIf="response || error" class="m-card-inside">
-      <div *m-card-header class="m-items-middle">
-        <div class="m-card__title">{{'web.integration.response' | translate}}</div>
-        <m-button (click)="copyResult()">
-          <m-icon mCode="copy"></m-icon>
-        </m-button>
-      </div>
-      <pre *ngIf="response">{{response | json}}</pre>
-      <div *ngFor="let issue of error?.issue">
-        <m-alert [mType]="issue.severity" mShowIcon>
-          {{issue?.details?.text}}
-        </m-alert>
-      </div>
-    </m-card>
+    @if (response || error) {
+      <m-card class="m-card-inside">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{'web.integration.response' | translate}}</div>
+          <m-button (click)="copyResult()">
+            <m-icon mCode="copy"></m-icon>
+          </m-button>
+        </div>
+        @if (response) {
+          <pre>{{response | json}}</pre>
+        }
+        @for (issue of error?.issue; track $index) {
+          <div>
+            <m-alert [mType]="issue.severity" mShowIcon>
+              {{issue?.details?.text}}
+            </m-alert>
+          </div>
+        }
+      </m-card>
+    }
 
   </m-spinner>
 </m-card>

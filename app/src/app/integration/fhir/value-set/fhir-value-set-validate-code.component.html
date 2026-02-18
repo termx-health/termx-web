@@ -23,8 +23,8 @@
     <m-form-item [mLabel]="conceptMapVersion" required>
       <ng-template #conceptMapVersion>
         <div>{{'web.integration.fhir.value-set.validate-code.value-set-version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="conceptMapVersion"></m-icon>
-        <ng-template #conceptMapVersion>
+        <m-icon mCode="info-circle" m-popover [mContent]="conceptMapVersionContent"></m-icon>
+        <ng-template #conceptMapVersionContent>
           The identifier that is used to identify a specific version of the value set to be used when validating the code. This is an arbitrary value managed
           by the value set author and is not expected to be globally unique. For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is
           not available.
@@ -36,8 +36,8 @@
     <m-form-item [mLabel]="code" required>
       <ng-template #code>
         <div>{{'web.integration.fhir.value-set.validate-code.code' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="code"></m-icon>
-        <ng-template #code>
+        <m-icon mCode="info-circle" m-popover [mContent]="codeContent"></m-icon>
+        <ng-template #codeContent>
           The code that is to be validated. If a code is provided, a system or a context must be provided (if a context is provided, then the server SHALL
           ensure that the code is not ambiguous without a system)
         </ng-template>
@@ -64,28 +64,34 @@
     <m-form-item [mLabel]="display">
       <ng-template #display>
         <div>{{'web.integration.fhir.value-set.validate-code.display' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="display"></m-icon>
-        <ng-template #display>The display associated with the code, if provided. If a display is provided a code must be provided. If no display is provided,
+        <m-icon mCode="info-circle" m-popover [mContent]="displayContent"></m-icon>
+        <ng-template #displayContent>The display associated with the code, if provided. If a display is provided a code must be provided. If no display is provided,
           the server cannot validate the display value, but may choose to return a recommended display name using the display parameter in the outcome.
           Whether displays are case sensitive is code system dependent</ng-template>
       </ng-template>
       <m-textarea [(ngModel)]="data.display"></m-textarea>
     </m-form-item>
 
-    <m-card *ngIf="response || error" class="m-card-inside">
-      <div *m-card-header class="m-items-middle">
-        <div class="m-card__title">{{'web.integration.response' | translate}}</div>
-        <m-button (click)="copyResult()">
-          <m-icon mCode="copy"></m-icon>
-        </m-button>
-      </div>
-      <pre *ngIf="response">{{response | json}}</pre>
-      <div *ngFor="let issue of error?.issue">
-        <m-alert [mType]="issue.severity" mShowIcon>
-          {{issue?.details?.text}}
-        </m-alert>
-      </div>
-    </m-card>
+    @if (response || error) {
+      <m-card class="m-card-inside">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{'web.integration.response' | translate}}</div>
+          <m-button (click)="copyResult()">
+            <m-icon mCode="copy"></m-icon>
+          </m-button>
+        </div>
+        @if (response) {
+          <pre>{{response | json}}</pre>
+        }
+        @for (issue of error?.issue; track $index) {
+          <div>
+            <m-alert [mType]="issue.severity" mShowIcon>
+              {{issue?.details?.text}}
+            </m-alert>
+          </div>
+        }
+      </m-card>
+    }
 
   </m-spinner>
 </m-card>

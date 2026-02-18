@@ -1,14 +1,25 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {LoadingManager} from '@kodality-web/core-util';
 import {forkJoin, of} from 'rxjs';
 import {CodeSystem, CodeSystemLibService, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemChecklistConfigurationComponent} from 'term-web/resources/code-system/containers/checklist/code-system-checklist-configuration.component';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
+import { MarinPageLayoutModule, MuiRadioModule, MuiCoreModule, MuiDividerModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { FormsModule } from '@angular/forms';
+
+import { CodeSystemChecklistValidationComponent } from 'term-web/resources/code-system/containers/checklist/code-system-checklist-validation.component';
+import { CodeSystemChecklistConfigurationComponent as CodeSystemChecklistConfigurationComponent_1 } from 'term-web/resources/code-system/containers/checklist/code-system-checklist-configuration.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: 'code-system-checklist.component.html'
+    templateUrl: 'code-system-checklist.component.html',
+    imports: [ResourceContextComponent, MarinPageLayoutModule, MuiRadioModule, FormsModule, MuiCoreModule, MuiDividerModule, MuiButtonModule, CodeSystemChecklistValidationComponent, CodeSystemChecklistConfigurationComponent_1, TranslatePipe]
 })
 export class CodeSystemChecklistComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private codeSystemService = inject(CodeSystemLibService);
+
   protected codeSystem?: CodeSystem;
   protected version?: CodeSystemVersion;
   protected versions?: CodeSystemVersion[];
@@ -19,11 +30,6 @@ export class CodeSystemChecklistComponent implements OnInit {
   protected validationShowAll: boolean = true;
 
   @ViewChild(CodeSystemChecklistConfigurationComponent) public configurationComponent?: CodeSystemChecklistConfigurationComponent;
-
-  public constructor(
-    private route: ActivatedRoute,
-    private codeSystemService: CodeSystemLibService
-  ) {}
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

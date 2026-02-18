@@ -1,26 +1,37 @@
-import {Component} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { Component, inject } from '@angular/core';
+import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiInputModule, MuiDatePickerModule, MuiMultiLanguageInputModule } from '@kodality-web/marina-ui';
 import {Observable} from 'rxjs';
 import {IntegrationAtcLibService, IntegrationImportConfiguration} from 'term-web/integration/_lib';
-import {JobLibService, JobLogResponse} from 'term-web/sys/_lib';
-import {IntegrationImportComponent} from '../integration-import.component';
+import {JobLogResponse} from 'term-web/sys/_lib';
+import {IntegrationImportComponent} from 'term-web/integration/import/integration-import.component';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+
+import { FormsModule } from '@angular/forms';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: '../integration-import.component.html',
+    templateUrl: '../integration-import.component.html',
+    imports: [
+    MuiCardModule,
+    MuiSpinnerModule,
+    NzBreadCrumbComponent,
+    NzBreadCrumbItemComponent,
+    MuiButtonModule,
+    MuiFormModule,
+    MuiInputModule,
+    FormsModule,
+    MuiDatePickerModule,
+    CodeSystemSearchComponent,
+    MuiMultiLanguageInputModule,
+    TranslatePipe
+],
 })
 export class IntegrationAtcImportComponent extends IntegrationImportComponent {
-  public breadcrumbs = ['web.integration.systems.atc', 'web.integration.import.atc'];
+  private integrationAtcLibService = inject(IntegrationAtcLibService);
 
-  public constructor(
-    private integrationAtcLibService: IntegrationAtcLibService,
-    route: ActivatedRoute,
-    jobService: JobLibService,
-    notificationService: MuiNotificationService
-  ) {
-    super(route, jobService, notificationService);
-  };
+  public breadcrumbs = ['web.integration.systems.atc', 'web.integration.import.atc'];
 
   public composeImportRequest(): Observable<JobLogResponse> {
     return this.integrationAtcLibService.import(this.data, this.edition!, this.data.sourceUrl);

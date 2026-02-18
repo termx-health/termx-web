@@ -1,18 +1,31 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DestroyService, LoadingManager} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {ValueSet, ValueSetVersion, ValueSetVersionConcept} from 'app/src/app/resources/_lib';
-import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
-import {JobLibService} from 'app/src/app/sys/_lib';
+import { DestroyService, LoadingManager, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiCardModule, MuiInputModule, MuiIconModule, MuiDividerModule, MuiButtonModule, MuiTableModule, MuiPopoverModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import {ValueSet, ValueSetVersion, ValueSetVersionConcept} from 'term-web/resources/_lib';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
+import {JobLibService} from 'term-web/sys/_lib';
 import {AuthService} from 'term-web/core/auth';
 import {forkJoin, map} from 'rxjs';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
+import { FormsModule } from '@angular/forms';
+import { AsyncPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({
-  templateUrl: 'value-set-version-concepts.component.html',
-  providers: [DestroyService]
+    templateUrl: 'value-set-version-concepts.component.html',
+    providers: [DestroyService],
+    imports: [ResourceContextComponent, MuiCardModule, MuiInputModule, FormsModule, MuiIconModule, MuiDividerModule, MuiButtonModule, MuiTableModule, MuiPopoverModule, MuiNoDataModule, AsyncPipe, TranslatePipe, ApplyPipe, LocalDatePipe, LocalizedConceptNamePipe]
 })
 export class ValueSetVersionConceptsComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private valueSetService = inject(ValueSetService);
+  private notificationService = inject(MuiNotificationService);
+  private jobService = inject(JobLibService);
+  private destroy$ = inject(DestroyService);
+  private authService = inject(AuthService);
+
   protected valueSet?: ValueSet;
   protected valueSetVersion?: ValueSetVersion;
   protected loader = new LoadingManager();
@@ -22,15 +35,6 @@ export class ValueSetVersionConceptsComponent implements OnInit {
   protected isAuthenticated = this.authService.isAuthenticated.pipe(
     map(isAuth => isAuth)
   );
-
-  public constructor(
-    private route: ActivatedRoute,
-    private valueSetService: ValueSetService,
-    private notificationService: MuiNotificationService,
-    private jobService: JobLibService,
-    private destroy$: DestroyService,
-    private authService: AuthService
-  ) {}
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -60,7 +64,7 @@ export class ValueSetVersionConceptsComponent implements OnInit {
   }
 
   private pollJobStatus(jobId: number): void {
-    this.loader.wrap('expand', this.jobService.pollFinishedJobLog(jobId, this.destroy$)).subscribe(jobResp => {
+    this.loader.wrap('expand', this.jobService.pollFinishedJobLog(jobId, this.destroy$)).subscribe(() => {
       this.loadData(this.valueSet.id, this.valueSetVersion.version);
     });
   }

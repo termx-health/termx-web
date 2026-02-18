@@ -1,26 +1,43 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {isDefined, validateForm} from '@kodality-web/core-util';
+import { isDefined, validateForm, KeysPipe, LocalDatePipe } from '@kodality-web/core-util';
 import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
-import {MeasurementUnitService} from '../../services/measurement-unit.service';
+import {MeasurementUnitService} from 'term-web/measurement-unit/services/measurement-unit.service';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiDatePickerModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MeasurementUnitMappingListComponent } from 'term-web/measurement-unit/containers/mapping/measurement-unit-mapping-list.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
 
 @Component({
-  templateUrl: './measurement-unit-view.component.html',
+    templateUrl: './measurement-unit-view.component.html',
+    imports: [
+    MuiFormModule,
+    MuiSpinnerModule,
+    MuiCardModule,
+    FormsModule,
+    MuiDatePickerModule,
+    MeasurementUnitMappingListComponent,
+    PrivilegedDirective,
+    MuiButtonModule,
+    TranslatePipe,
+    KeysPipe,
+    LocalDatePipe,
+    HasAnyPrivilegePipe
+],
 })
 export class MeasurementUnitViewComponent implements OnInit {
+  private measurementUnitService = inject(MeasurementUnitService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   public measurementUnit?: MeasurementUnit;
 
   public loading: {[k: string]: boolean} = {};
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private measurementUnitService: MeasurementUnitService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) {}
 
   public ngOnInit(): void {
     const measurementUnitId = Number(this.route.snapshot.paramMap.get('id'));

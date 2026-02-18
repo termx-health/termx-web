@@ -1,20 +1,24 @@
 <m-select icon="select"
-    placeholder="marina.ui.inputs.select.placeholder"
-    [(ngModel)]="value"
-    (mChange)="fireOnChange()"
-    [loading]="isLoading"
-    [autoSelect]="effectiveAutoSelect"
-    [autoUnselect]="true"
-    [disabled]="!!disabled">
-  <m-option *ngFor="let key of data | keys"
+  placeholder="marina.ui.inputs.select.placeholder"
+  [(ngModel)]="value"
+  (mChange)="fireOnChange()"
+  [loading]="isLoading"
+  [autoSelect]="effectiveAutoSelect"
+  [autoUnselect]="true"
+  [disabled]="!!disabled">
+  @for (key of data | keys; track key) {
+    <m-option
       [mValue]="valueType === 'id' ? data[key]?.id : data[key]?.version"
       [mLabel]="data[key]?.version"
       [mLabelTemplate]="label">
-    <ng-template #label>
-      <div class="m-items-middle">
-        <span>{{data[key]?.version}}</span>
-        <m-abbreviate [mLength]="40" [mThreshold]="10" *ngIf="(data[key]?.description | localName) as description" mValue="({{description}})"/>
-      </div>
-    </ng-template>
-  </m-option>
+      <ng-template #label>
+        <div class="m-items-middle">
+          <span>{{data[key]?.version}}</span>
+          @if ((data[key]?.description | localName); as description) {
+            <m-abbreviate [mLength]="40" [mThreshold]="10" mValue="({{description}})"/>
+          }
+        </div>
+      </ng-template>
+    </m-option>
+  }
 </m-select>

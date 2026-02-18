@@ -1,10 +1,23 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { NgForm, FormsModule } from '@angular/forms';
 import {BooleanInput, Identifier, isDefined, validateForm} from '@kodality-web/core-util';
+import { MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiEditableTableModule, MuiInputModule } from '@kodality-web/marina-ui';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-resource-identifiers',
-  templateUrl: './resource-identifiers.component.html',
+    selector: 'tw-resource-identifiers',
+    templateUrl: './resource-identifiers.component.html',
+    imports: [
+        MuiCardModule,
+        MuiDropdownModule,
+        AddButtonComponent,
+        MuiCoreModule,
+        FormsModule,
+        MuiEditableTableModule,
+        MuiInputModule,
+        TranslatePipe,
+    ],
 })
 export class ResourceIdentifiersComponent {
   @Input() public identifiers?: Identifier[];

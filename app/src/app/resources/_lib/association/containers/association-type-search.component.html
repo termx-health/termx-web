@@ -1,9 +1,11 @@
 <m-select icon="search"
-    [placeholder]="placeholder"
-    [(ngModel)]="value"
-    (mChange)="fireOnChange()"
-    [loading]="isLoading"
-    [autoUnselect]="false"
->
-  <m-option *ngFor="let code of data | keys" [mValue]="code" [mLabel]="code"></m-option>
+  [placeholder]="placeholder"
+  [(ngModel)]="value"
+  (mChange)="fireOnChange()"
+  [loading]="isLoading"
+  [autoUnselect]="false"
+  >
+  @for (code of data | keys; track code) {
+    <m-option [mValue]="code" [mLabel]="code"></m-option>
+  }
 </m-select>

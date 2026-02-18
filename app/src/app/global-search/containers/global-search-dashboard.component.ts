@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import {ComponentStateStore, HttpCacheService, LoadingManager, SearchResult} from '@kodality-web/core-util';
+import { ComponentStateStore, HttpCacheService, LoadingManager, SearchResult, ApplyPipe } from '@kodality-web/core-util';
 import {catchError, forkJoin, map, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {SnomedConcept, SnomedConceptSearchParams, SnomedLibService} from 'term-web/integration/_lib';
@@ -19,11 +19,32 @@ import {
   ValueSetLibService,
   ValueSetSearchParams
 } from 'term-web/resources/_lib';
+import { MuiCardModule, MuiNoDataModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { ɵNzTransitionPatchDirective } from 'ng-zorro-antd/core/transition-patch';
+import { NzSpaceCompactItemDirective } from 'ng-zorro-antd/space';
+import { NzInputGroupComponent, NzInputGroupWhitSuffixOrPrefixDirective, NzInputDirective } from 'ng-zorro-antd/input';
+import { FormsModule } from '@angular/forms';
+import { NzIconDirective } from 'ng-zorro-antd/icon';
+
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  templateUrl: './global-search-dashboard.component.html'
+    templateUrl: './global-search-dashboard.component.html',
+    imports: [MuiCardModule, ɵNzTransitionPatchDirective, NzSpaceCompactItemDirective, NzInputGroupComponent, NzInputGroupWhitSuffixOrPrefixDirective, NzInputDirective, FormsModule, NzIconDirective, MuiNoDataModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, TranslatePipe, MarinaUtilModule, ApplyPipe]
 })
 export class GlobalSearchDashboardComponent implements OnInit {
+  private router = inject(Router);
+  private snomedService = inject(SnomedLibService);
+  private mapSetService = inject(MapSetLibService);
+  private valueSetService = inject(ValueSetLibService);
+  private codeSystemService = inject(CodeSystemLibService);
+  private measurementUnitService = inject(MeasurementUnitLibService);
+  private codeSystemConceptService = inject(CodeSystemConceptLibService);
+  private stateStore = inject(ComponentStateStore);
+  private cacheService = inject(HttpCacheService);
+  private authService = inject(AuthService);
+
   public searchText?: string;
 
   public conceptParams: ConceptSearchParams;
@@ -37,19 +58,6 @@ export class GlobalSearchDashboardComponent implements OnInit {
   protected readonly STORE_KEY = 'global-search';
 
   protected loader = new LoadingManager();
-
-  public constructor(
-    private router: Router,
-    private snomedService: SnomedLibService,
-    private mapSetService: MapSetLibService,
-    private valueSetService: ValueSetLibService,
-    private codeSystemService: CodeSystemLibService,
-    private measurementUnitService: MeasurementUnitLibService,
-    private codeSystemConceptService: CodeSystemConceptLibService,
-    private stateStore: ComponentStateStore,
-    private cacheService: HttpCacheService,
-    private authService: AuthService
-  ) {}
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);

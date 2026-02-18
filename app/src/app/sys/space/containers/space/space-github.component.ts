@@ -1,16 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
+import { LoadingManager, ApplyPipe, FilterPipe } from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {delay, forkJoin, mergeMap, Observable, tap} from 'rxjs';
-import {GithubDiff} from 'app/src/app/integration/_lib/github/github';
-import {SpaceGithubService} from 'app/src/app/sys/space/services/space-github.service';
-import {Space} from '../../../_lib/space';
-import {SpaceService} from '../../services/space.service';
+import {GithubDiff} from 'term-web/integration/_lib/github/github';
+import {SpaceGithubService} from 'term-web/sys/space/services/space-github.service';
+import {Space} from 'term-web/sys/_lib/space';
+import {SpaceService} from 'term-web/sys/space/services/space.service';
+import { MuiFormModule, MuiCardModule, MuiIconModule, MuiCheckboxModule, MuiCoreModule, MuiAlertModule, MuiButtonModule, MuiPopconfirmModule, MuiModalModule, MuiInputModule, MuiSkeletonModule } from '@kodality-web/marina-ui';
+import { NgTemplateOutlet } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { DiffViewComponent } from 'term-web/core/ui/components/diff/diff-view.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: './space-github.component.html',
-  styles: [`
+    templateUrl: './space-github.component.html',
+    styles: [`
     .status-row {
       display: flex;
 
@@ -35,9 +40,14 @@ import {SpaceService} from '../../services/space.service';
     ::ng-deep .modal--wide {
       width: 80vw;
     }
-  `]
+  `],
+    imports: [MuiFormModule, MuiCardModule, MuiIconModule, MuiCheckboxModule, MuiCoreModule, MuiAlertModule, MuiButtonModule, MuiPopconfirmModule, NgTemplateOutlet, MuiModalModule, MuiInputModule, FormsModule, MuiSkeletonModule, DiffViewComponent, TranslatePipe, ApplyPipe, FilterPipe]
 })
 export class SpaceGithubComponent implements OnInit {
+  private spaceService = inject(SpaceService);
+  private spaceGithubService = inject(SpaceGithubService);
+  private route = inject(ActivatedRoute);
+
   protected space?: Space;
   protected loading = false;
   protected pushModalVisible = false;
@@ -50,12 +60,6 @@ export class SpaceGithubComponent implements OnInit {
   protected selection: {[key: string]: boolean} = {};
 
   protected loader = new LoadingManager();
-
-  public constructor(
-    private spaceService: SpaceService,
-    private spaceGithubService: SpaceGithubService,
-    private route: ActivatedRoute
-  ) { }
 
   public ngOnInit(): void {
     const id = Number(this.route.snapshot.paramMap.get('id'));

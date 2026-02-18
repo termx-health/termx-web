@@ -1,16 +1,23 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
-import {SearchResult} from '@kodality-web/core-util';
-import {LocalizedName} from '@kodality-web/marina-util';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, inject } from '@angular/core';
+import { SearchResult, ApplyPipe } from '@kodality-web/core-util';
+import { LocalizedName, MarinaUtilModule } from '@kodality-web/marina-util';
 import {Subscription} from 'rxjs';
-import {MapSet} from '../model/map-set';
-import {MapSetSearchParams} from '../model/map-set-search-params';
-import {MapSetLibService} from '../services/map-set-lib.service';
+import {MapSet} from 'term-web/resources/_lib/map-set/model/map-set';
+import {MapSetSearchParams} from 'term-web/resources/_lib/map-set/model/map-set-search-params';
+import {MapSetLibService} from 'term-web/resources/_lib/map-set/services/map-set-lib.service';
+import { MuiSkeletonModule, MuiListModule, MuiDividerModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { NgTemplateOutlet } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-map-set-widget',
-  templateUrl: 'map-set-widget.component.html'
+    selector: 'tw-map-set-widget',
+    templateUrl: 'map-set-widget.component.html',
+    imports: [MuiSkeletonModule, MuiListModule, RouterLink, MuiDividerModule, NgTemplateOutlet, MuiIconModule, ApplyPipe, MarinaUtilModule, TranslatePipe]
 })
 export class MapSetWidgetComponent implements OnChanges {
+  private mapSetService = inject(MapSetLibService);
+
   @Input() public spaceId: number;
   @Input() public packageId: number;
   @Input() public packageVersionId: number;
@@ -24,7 +31,7 @@ export class MapSetWidgetComponent implements OnChanges {
   protected query = new MapSetSearchParams();
   protected loading = false;
 
-  public constructor(private mapSetService: MapSetLibService) {
+  public constructor() {
     this.query.limit = 50;
   }
 

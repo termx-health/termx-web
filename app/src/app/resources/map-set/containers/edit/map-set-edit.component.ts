@@ -1,5 +1,5 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {MapSet, MapSetProperty, MapSetScope, MapSetVersion} from 'term-web/resources/_lib';
@@ -10,12 +10,45 @@ import {ResourceFormComponent} from 'term-web/resources/resource/components/reso
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
 import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
 import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
-import {MapSetService} from '../../services/map-set-service';
+import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import { MuiSpinnerModule, MuiCardModule, MuiButtonModule } from '@kodality-web/marina-ui';
+
+import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
+import { ResourceFormComponent as ResourceFormComponent_1 } from 'term-web/resources/resource/components/resource-form.component';
+import { MapSetPropertiesComponent as MapSetPropertiesComponent_1 } from 'term-web/resources/map-set/containers/edit/property/map-set-properties.component';
+import { ResourceIdentifiersComponent as ResourceIdentifiersComponent_1 } from 'term-web/resources/resource/components/resource-identifiers.component';
+import { ResourceConfigurationAttributesComponent as ResourceConfigurationAttributesComponent_1 } from 'term-web/resources/resource/components/resource-configuration-attributes.component';
+import { ResourceContactsComponent } from 'term-web/resources/resource/components/resource-contacts.component';
+import { ResourceVersionFormComponent as ResourceVersionFormComponent_1 } from 'term-web/resources/resource/components/resource-version-form.component';
+import { MapSetScopeFormComponent as MapSetScopeFormComponent_1 } from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
+import { ResourceSideInfoComponent } from 'term-web/resources/resource/components/resource-side-info.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: './map-set-edit.component.html',
+    templateUrl: './map-set-edit.component.html',
+    imports: [
+    MuiSpinnerModule,
+    FormsModule,
+    NzRowDirective,
+    NzColDirective,
+    MuiCardModule,
+    ResourceFormComponent_1,
+    MapSetPropertiesComponent_1,
+    ResourceIdentifiersComponent_1,
+    ResourceConfigurationAttributesComponent_1,
+    ResourceContactsComponent,
+    ResourceVersionFormComponent_1,
+    MapSetScopeFormComponent_1,
+    MuiButtonModule,
+    ResourceSideInfoComponent,
+    TranslatePipe
+],
 })
 export class MapSetEditComponent implements OnInit {
+  private mapSetService = inject(MapSetService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   protected mapSet?: MapSet;
   protected scope: MapSetScope = {
     sourceType: 'code-system', sourceCodeSystems: [],
@@ -32,12 +65,6 @@ export class MapSetEditComponent implements OnInit {
   @ViewChild(ResourceVersionFormComponent) public resourceVersionFormComponent?: ResourceVersionFormComponent;
   @ViewChild(MapSetScopeFormComponent) public mapSetScopeFormComponent?: MapSetScopeFormComponent;
   @ViewChild(ResourceConfigurationAttributesComponent) public resourceConfigurationAttributesComponent?: ResourceConfigurationAttributesComponent;
-
-  public constructor(
-    private mapSetService: MapSetService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {

@@ -1,12 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {remove, unique, uniqueBy, group, LoadingManager} from '@kodality-web/core-util';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { remove, unique, uniqueBy, group, LoadingManager, ApplyPipe, FilterPipe, SortPipe } from '@kodality-web/core-util';
 import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
+import { MuiCardModule, MuiCollapsePanelModule, MuiIconModule, MuiIconButtonModule, MuiButtonModule, MuiPopconfirmModule, MuiAlertModule } from '@kodality-web/marina-ui';
+
+import { TransformationDefinitionResourceFormComponent } from 'term-web/modeler/transformer/components/transformation-definition-resource-form.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-transformation-definition-resources',
-  templateUrl: './transformation-definition-resources.component.html',
-  styles: [`
+    selector: 'tw-transformation-definition-resources',
+    templateUrl: './transformation-definition-resources.component.html',
+    styles: [`
     @import "../../../../styles/variables";
 
     .tw-transformation-definition-collapse-panel {
@@ -70,18 +74,17 @@ import {TransformationDefinitionService} from 'term-web/modeler/transformer/serv
     .resource-add {
       padding: 0 0.5rem 0 1rem;
     }
-  `]
+  `],
+    imports: [MuiCardModule, MuiCollapsePanelModule, MuiIconModule, MuiIconButtonModule, MuiButtonModule, MuiPopconfirmModule, MuiAlertModule, TransformationDefinitionResourceFormComponent, TranslatePipe, ApplyPipe, FilterPipe, SortPipe]
 })
 export class TransformationDefinitionResourcesComponent implements OnInit {
+  private service = inject(TransformationDefinitionService);
+
   @Input() public definition: TransformationDefinition;
 
   protected readonly types: TransformationDefinitionResource['type'][] = ['definition', 'conceptmap', 'mapping'];
   protected selectedResource: TransformationDefinitionResource;
   protected loader = new LoadingManager<'import'>();
-
-  public constructor(
-    private service: TransformationDefinitionService
-  ) { }
 
   public ngOnInit(): void {
     this.onResourceSelect(this.definition.mapping);
@@ -143,5 +146,5 @@ export class TransformationDefinitionResourcesComponent implements OnInit {
       return name?.includes("/") ? name.substring(name.lastIndexOf('/') + 1) : name;
     }
     return name;
-  }
+  };
 }

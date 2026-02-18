@@ -1,3 +1,3 @@
-export * from './oauth.http-interceptor';
-export * from './oauth-config.module';
-export * from './oauth-storage.service';
+export * from 'term-web/core/auth/oidc/oauth.http-interceptor';
+export * from 'term-web/core/auth/oidc/oauth-config.module';
+export * from 'term-web/core/auth/oidc/oauth-storage.service';

@@ -4,7 +4,9 @@
       <m-card [mShowSkeleton]="loader.isLoading">
         <div *m-card-header class="m-items-middle">
           <div class="m-card__title">{{(mode === 'edit' ? 'web.implementation-guide-version.form.edit-header' : 'web.implementation-guide-version.form.add-header') | translate}}</div>
-          <tw-status-tag *ngIf="version?.status" [status]="version.status"></tw-status-tag>
+          @if (version?.status) {
+            <tw-status-tag [status]="version.status"></tw-status-tag>
+          }
         </div>
 
         <tw-implementation-guide-version-form [version]="version" [versions]="versions"></tw-implementation-guide-version-form>

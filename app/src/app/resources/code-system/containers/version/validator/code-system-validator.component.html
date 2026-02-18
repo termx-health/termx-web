@@ -8,10 +8,10 @@
           <div nz-col nzSpan="12">
             <m-form-item mName="codeSystem" required>
               <tw-code-system-search name="codeSystem"
-                  [(ngModel)]="codeSystem"
-                  valuePrimitive
-                  autofocus
-                  [placeholder]="'web.code-system-validator.code-system' | translate"></tw-code-system-search>
+                [(ngModel)]="codeSystem"
+                valuePrimitive
+                autofocus
+              [placeholder]="'web.code-system-validator.code-system' | translate"></tw-code-system-search>
             </m-form-item>
           </div>
           <div nz-col nzSpan="12">
@@ -31,40 +31,48 @@
         <m-form-item [mLabel]="'web.code-system-validator.uniqueness-validator.properties'">
           <m-checkbox [(ngModel)]="uniquenessRequest.properties"></m-checkbox>
         </m-form-item>
-        <m-form-item *ngIf="uniquenessRequest.properties" [mLabel]="'web.code-system-validator.uniqueness-validator.ignore-empty-properties'">
-          <m-checkbox [(ngModel)]="uniquenessRequest.ignoreEmptyProperties"></m-checkbox>
-        </m-form-item>
+        @if (uniquenessRequest.properties) {
+          <m-form-item [mLabel]="'web.code-system-validator.uniqueness-validator.ignore-empty-properties'">
+            <m-checkbox [(ngModel)]="uniquenessRequest.ignoreEmptyProperties"></m-checkbox>
+          </m-form-item>
+        }
         <m-button *m-card-footer
-            mDisplay="primary"
-            (click)="validateUniqueness()"
-            [disabled]="!codeSystem"
-            [mLoading]="loader.state['validate']">{{'web.code-system-validator.uniqueness-validator.validate' | translate}}</m-button>
+          mDisplay="primary"
+          (click)="validateUniqueness()"
+          [disabled]="!codeSystem"
+        [mLoading]="loader.state['validate']">{{'web.code-system-validator.uniqueness-validator.validate' | translate}}</m-button>
       </m-card>
 
       <m-card [mTitle]="'web.code-system-validator.circular-dependencies-detector.title'">
         <m-button *m-card-footer
-            mDisplay="primary"
-            (click)="detectCircularDependencies()"
-            [disabled]="!codeSystem || true"
-            [mLoading]="loader.state['detect']">{{'web.code-system-validator.circular-dependencies-detector.detect' | translate}}</m-button>
+          mDisplay="primary"
+          (click)="detectCircularDependencies()"
+          [disabled]="!codeSystem || true"
+        [mLoading]="loader.state['detect']">{{'web.code-system-validator.circular-dependencies-detector.detect' | translate}}</m-button>
       </m-card>
     </div>
 
 
-    <m-card *ngIf="!!uniquenessResult" style="margin-top: 0.5rem" [mTitle]="'web.code-system-validator.result.title' | translate">
-      <m-list>
-        <m-list-item *ngFor="let key of uniquenessResult.duplicates | keys">
-          <div class="m-items-middle">
-            <span class="m-bold">{{key || 'web.code-system-validator.uniqueness-validator.empty-properties' | translate}}</span>
-            <m-tag mColor="blue">{{uniquenessResult.duplicates[key]?.length}}</m-tag>
-          </div>
-          <div *ngFor="let concept of uniquenessResult.duplicates[key]" class="m-items-middle">
-            <a [routerLink]="['/resources/code-systems', codeSystem, 'concepts', concept.code, (codeSystem + '.CodeSystem.edit' | twHasAnyPrivilege) ? 'edit' : 'view']">{{concept.code}}</a>
-            <label>{{concept | apply:getDisplay}}</label>
-          </div>
-        </m-list-item>
-      </m-list>
-    </m-card>
+    @if (!!uniquenessResult) {
+      <m-card style="margin-top: 0.5rem" [mTitle]="'web.code-system-validator.result.title' | translate">
+        <m-list>
+          @for (key of uniquenessResult.duplicates | keys; track key) {
+            <m-list-item>
+              <div class="m-items-middle">
+                <span class="m-bold">{{key || 'web.code-system-validator.uniqueness-validator.empty-properties' | translate}}</span>
+                <m-tag mColor="blue">{{uniquenessResult.duplicates[key]?.length}}</m-tag>
+              </div>
+              @for (concept of uniquenessResult.duplicates[key]; track concept) {
+                <div class="m-items-middle">
+                  <a [routerLink]="['/resources/code-systems', codeSystem, 'concepts', concept.code, (codeSystem + '.CodeSystem.edit' | twHasAnyPrivilege) ? 'edit' : 'view']">{{concept.code}}</a>
+                  <label>{{concept | apply:getDisplay}}</label>
+                </div>
+              }
+            </m-list-item>
+          }
+        </m-list>
+      </m-card>
+    }
 
   </div>
 </div>

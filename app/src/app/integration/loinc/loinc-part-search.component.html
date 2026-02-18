@@ -1,4 +1,5 @@
-<m-select *ngIf="mode === 'search'"
+@if (mode === 'search') {
+  <m-select
     icon="search"
     [placeholder]="placeholder"
     [(ngModel)]="value"
@@ -7,16 +8,25 @@
     [loading]="loader.isLoading"
     [autoUnselect]="false"
     [multiple]="multiple | toBoolean">
-  <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.code" [mLabel]="data[key] | apply:getCodeName"></m-option>
-  <m-option *ngIf="!(data | keys | first)" disabled mLabel="Start typing for value"></m-option>
-</m-select>
+    @for (key of data | keys; track key) {
+      <m-option [mValue]="data[key]?.code" [mLabel]="data[key] | apply:getCodeName"></m-option>
+    }
+    @if (!(data | keys | first)) {
+      <m-option disabled mLabel="Start typing for value"></m-option>
+    }
+  </m-select>
+}
 
-<m-select *ngIf="mode === 'select'"
+@if (mode === 'select') {
+  <m-select
     [placeholder]="placeholder"
     [(ngModel)]="value"
     (mChange)="fireOnChange()"
     [loading]="loader.isLoading"
     [autoUnselect]="false"
     [multiple]="multiple | toBoolean">
-  <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.code" [mLabel]="data[key] | apply:getCodeName"></m-option>
-</m-select>
+    @for (key of data | keys; track key) {
+      <m-option [mValue]="data[key]?.code" [mLabel]="data[key] | apply:getCodeName"></m-option>
+    }
+  </m-select>
+}

@@ -1,21 +1,48 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {BooleanInput, validateForm} from '@kodality-web/core-util';
-import {CodeSystemLibService, EntityProperty, ValueSetVersionRule} from 'app/src/app/resources/_lib';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { BooleanInput, validateForm, ApplyPipe, JoinPipe } from '@kodality-web/core-util';
+import {CodeSystemLibService, EntityProperty, ValueSetVersionRule} from 'term-web/resources/_lib';
 import {map, Observable} from 'rxjs';
 import {ValueSetRuleConceptListComponent} from 'term-web/resources/value-set/containers/version/rule/concept/value-set-rule-concept-list.component';
 import {ValueSetRuleFilterListComponent} from 'term-web/resources/value-set/containers/version/rule/filter/value-set-rule-filter-list.component';
+import { AsyncPipe } from '@angular/common';
+import { MuiFormModule, MuiRadioModule, MuiSelectModule } from '@kodality-web/marina-ui';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
+import { ValueSetRuleConceptListComponent as ValueSetRuleConceptListComponent_1 } from 'term-web/resources/value-set/containers/version/rule/concept/value-set-rule-concept-list.component';
+import { ValueSetRuleFilterListComponent as ValueSetRuleFilterListComponent_1 } from 'term-web/resources/value-set/containers/version/rule/filter/value-set-rule-filter-list.component';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { ValueSetVersionSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-version-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-value-set-rule-form',
-  templateUrl: 'value-set-rule-form.component.html',
+    selector: 'tw-value-set-rule-form',
+    templateUrl: 'value-set-rule-form.component.html',
+    imports: [
+    FormsModule,
+    MuiFormModule,
+    MuiRadioModule,
+    CodeSystemSearchComponent,
+    CodeSystemVersionSelectComponent,
+    MuiSelectModule,
+    ValueSetRuleConceptListComponent_1,
+    ValueSetRuleFilterListComponent_1,
+    ValueSetSearchComponent,
+    ValueSetVersionSelectComponent,
+    AsyncPipe,
+    TranslatePipe,
+    ApplyPipe,
+    JoinPipe
+],
 })
 export class ValueSetRuleFormComponent implements OnChanges{
+  private codeSystemService = inject(CodeSystemLibService);
+
   @Input() public rule?: ValueSetVersionRule;
   @Input() public valueSet?: string;
   @Input() public valueSetVersion?: string;
   @Input() public lockedDate?: Date;
-  @Input() public inactiveConcepts?: Boolean;
+  @Input() public inactiveConcepts?: boolean;
   @Input() @BooleanInput() public viewMode: string | boolean = false;
 
   @ViewChild("form") public form?: NgForm;
@@ -24,8 +51,6 @@ export class ValueSetRuleFormComponent implements OnChanges{
 
   protected ruleBase: 'code-system' | 'value-set';
   protected conceptsBase: 'all' | 'exact' | 'filter';
-
-  public constructor(private codeSystemService: CodeSystemLibService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['rule'] && this.rule) {

@@ -1,8 +1,13 @@
 import {Component, EventEmitter, Output} from '@angular/core';
+import { FormsModule } from '@angular/forms';
+
+import { MuiButtonModule } from '@kodality-web/marina-ui';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-table-filter',
-  templateUrl: 'table-filter.component.html'
+    selector: 'tw-table-filter',
+    templateUrl: 'table-filter.component.html',
+    imports: [FormsModule, MuiButtonModule, TranslatePipe]
 })
 export class TableFilterComponent {
   @Output() public twSearch = new EventEmitter<void>();

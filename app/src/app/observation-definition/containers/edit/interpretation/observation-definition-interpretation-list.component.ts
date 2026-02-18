@@ -1,7 +1,7 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {BooleanInput, copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { BooleanInput, copyDeep, isDefined, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {
   ObservationDefinition,
   ObservationDefinitionComponent,
@@ -11,12 +11,40 @@ import {
   ObservationDefinitionInterpretationTarget,
   ObservationDefinitionLibService
 } from 'term-web/observation-definition/_lib';
+import { MuiEditableTableModule, MuiTableModule, MuiFormModule, MuiSelectModule, MuiNumberInputModule, MuiCoreModule, MuiTextareaModule, MuiModalModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { SnomedDrawerSearchComponent } from 'term-web/integration/_lib/snomed/containers/snomed-drawer-search.component';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
 
 @Component({
-  selector: 'tw-obs-def-interpretation-list',
-  templateUrl: './observation-definition-interpretation-list.component.html',
+    selector: 'tw-obs-def-interpretation-list',
+    templateUrl: './observation-definition-interpretation-list.component.html',
+    imports: [
+        FormsModule,
+        MuiEditableTableModule,
+        MuiTableModule,
+        MuiFormModule,
+        MuiSelectModule,
+        MuiNumberInputModule,
+        MuiCoreModule,
+        MuiTextareaModule,
+        ValueSetConceptSelectComponent,
+        SnomedDrawerSearchComponent,
+        MuiModalModule,
+        MuiButtonModule,
+        ValueSetSearchComponent,
+        CodeSystemSearchComponent,
+        TerminologyConceptSearchComponent,
+        TranslatePipe,
+        ApplyPipe,
+    ],
 })
 export class ObservationDefinitionInterpretationListComponent implements OnInit, OnChanges {
+  private observationDefinitionService = inject(ObservationDefinitionLibService);
+  private translateService = inject(TranslateService);
+
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() public interpretations!: ObservationDefinitionInterpretation[];
 
@@ -31,8 +59,6 @@ export class ObservationDefinitionInterpretationListComponent implements OnInit,
 
   protected stateModalData: {visible?: boolean, state?: ObservationDefinitionInterpretationState, source?: ObservationDefinitionInterpretationState} = {};
   protected rangeModalData: {visible?: boolean, range?: ObservationDefinitionInterpretationRange, source?: ObservationDefinitionInterpretationRange, target?: ObservationDefinitionInterpretationTarget} = {};
-
-  public constructor(private observationDefinitionService: ObservationDefinitionLibService, private translateService: TranslateService) {}
 
   public ngOnInit(): void {
     this.loader.wrap('def', this.observationDefinitionService.search({types: 'Quantity,integer,CodeableConcept', decoratedValue: true, limit: -1}))

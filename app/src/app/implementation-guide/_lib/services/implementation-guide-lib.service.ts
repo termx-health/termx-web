@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
@@ -11,13 +11,13 @@ import {
   ImplementationGuideVersionPage
 } from 'term-web/implementation-guide/_lib';
 import {Provenance} from 'term-web/sys/_lib';
-import {ImplementationGuide} from '../model/implementation-guide';
+import {ImplementationGuide} from 'term-web/implementation-guide/_lib/model/implementation-guide';
 
 @Injectable()
 export class ImplementationGuideLibService {
-  protected baseUrl = `${environment.termxApi}/implementation-guides`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) {}
+  protected baseUrl = `${environment.termxApi}/implementation-guides`;
 
   public load(id: string): Observable<ImplementationGuide> {
     return this.http.get<ImplementationGuide>(`${this.baseUrl}/${id}`);

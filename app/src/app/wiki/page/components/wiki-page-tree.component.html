@@ -1,54 +1,51 @@
 <div class="tw-flex-container">
-  <ng-template #noSpace>
-    <m-no-data/>
-  </ng-template>
 
 
-  <ng-container *ngIf="space; else noSpace">
+  @if (space) {
     <div class="m-justify-between">
       <m-icon-button mIcon="sync" (mClick)="reload()"/>
       <m-input style="flex: 1" twDebounce [debounced]="search" [(ngModel)]="searchText" placeholder="marina.ui.inputs.search.placeholder"/>
     </div>
-
     <m-skeleton [mLoading]="loader.isLoading">
       <a class="initial space-item m-justify-between" [class.space-item--selected]="!selectedKey" [routerLink]="'' | apply: viewRootRoute">
         <div class="m-items-middle">
           <m-icon mCode="database"/>
           {{'web.wiki-page.sidebar.pages' | translate}}
         </div>
-
         <m-button mSize="small" (mClick)="onChildAdd($event,modal)" *twPrivileged>
           <m-icon mCode="plus"/>
         </m-button>
       </a>
-
       <tw-drop-list
-          style="display: block; margin-left: 1.5rem; border-left: 1px dashed var(--color-borders);"
-          [nodes]="nodes"
-          [nodeRenderer]="nodeDisplay"
-          [nodeActions]="nodeActions"
-          [selectedKey]="selectedKey | apply: findLinkId: nodes | toString"
-          [disableDrag]="!!searchText?.length || !('edit' | twPrivileged)"
-          (twExpand)="onExpand($event)"
-          (twSelect)="onSelect($event)"
-          (twMove)="onMove($event)"
-      >
+        style="display: block; margin-left: 1.5rem; border-left: 1px dashed var(--color-borders);"
+        [nodes]="nodes"
+        [nodeRenderer]="nodeDisplay"
+        [nodeActions]="nodeActions"
+        [selectedKey]="selectedKey | apply: findLinkId: nodes | toString"
+        [disableDrag]="!!searchText?.length || !('edit' | twPrivileged)"
+        (twExpand)="onExpand($event)"
+        (twSelect)="onSelect($event)"
+        (twMove)="onMove($event)"
+        >
         <ng-template #nodeDisplay let-node>
-          <div class="m-justify-between" *ngIf="node.obj.page | apply: localizedContent as lc">
-            <a class="initial" [routerLink]="lc.slug | apply: viewPageRoute">{{lc.name}}</a>
-            <m-icon *ngIf="node.obj.page.status === 'active'" mCode="check-circle"/>
-          </div>
+          @if (node.obj.page | apply: localizedContent; as lc) {
+            <div class="m-justify-between">
+              <a class="initial" [routerLink]="lc.slug | apply: viewPageRoute">{{lc.name}}</a>
+              @if (node.obj.page.status === 'active') {
+                <m-icon mCode="check-circle"/>
+              }
+            </div>
+          }
         </ng-template>
-
         <ng-template #nodeActions let-node>
           <div class="m-items-middle" style="gap: 0.25rem" (click)="$event.preventDefault(); $event.stopPropagation()">
             <m-button
-                mSize="small"
-                m-popconfirm
-                [mPopconfirmTitle]="node.obj.leaf ? 'core.delete-confirm' : 'web.wiki-page.sidebar.delete-confirm'"
-                (mOnConfirm)="onPageDelete(node)"
-                *twPrivileged
-            >
+              mSize="small"
+              m-popconfirm
+              [mPopconfirmTitle]="node.obj.leaf ? 'core.delete-confirm' : 'web.wiki-page.sidebar.delete-confirm'"
+              (mOnConfirm)="onPageDelete(node)"
+              *twPrivileged
+              >
               <m-icon mCode="delete"/>
             </m-button>
             <m-button mSize="small" (mClick)="onChildAdd($event,modal,node)" *twPrivileged>
@@ -58,14 +55,17 @@
         </ng-template>
       </tw-drop-list>
     </m-skeleton>
-
-    <m-no-data *ngIf="data.length === 0 && searchText"/>
-  </ng-container>
+    @if (data.length === 0 && searchText) {
+      <m-no-data/>
+    }
+  } @else {
+    <m-no-data/>
+  }
 </div>
 
 
 <tw-wiki-page-setup #modal
-    (saved)="openPageAfterSave($event.page, modal)"
-    (closed)="modal.close()"
-/>
+  (saved)="openPageAfterSave($event.page, modal)"
+  (closed)="modal.close()"
+  />
 

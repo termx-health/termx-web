@@ -1,18 +1,25 @@
-import {Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, compareValues, DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
+import { Component, forwardRef, Input, OnChanges, OnInit, SimpleChanges, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, compareValues, DestroyService, group, isDefined, LoadingManager, ApplyPipe, FirstPipe, KeysPipe, ToBooleanPipe } from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
 import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
 
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 @Component({
-  selector: 'tw-loinc-part-search',
-  templateUrl: './loinc-part-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => LoincPartSearchComponent), multi: true}, DestroyService]
+    selector: 'tw-loinc-part-search',
+    templateUrl: './loinc-part-search.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => LoincPartSearchComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, ApplyPipe, FirstPipe, KeysPipe, ToBooleanPipe]
 })
 export class LoincPartSearchComponent implements OnInit, OnChanges, ControlValueAccessor {
+  private codeSystemService = inject(CodeSystemLibService);
+  private translateService = inject(TranslateService);
+  private destroy$ = inject(DestroyService);
+
   @Input() public type: string;
 
   @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
@@ -26,14 +33,8 @@ export class LoincPartSearchComponent implements OnInit, OnChanges, ControlValue
   protected value?: string | string[];
   protected searchUpdate = new Subject<string>();
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(
-    private codeSystemService: CodeSystemLibService,
-    private translateService: TranslateService,
-    private destroy$: DestroyService
-  ) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(

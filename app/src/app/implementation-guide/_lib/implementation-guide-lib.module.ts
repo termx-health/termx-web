@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
-import {ImplementationGuideLibService} from './services/implementation-guide-lib.service';
+import {ImplementationGuideLibService} from 'term-web/implementation-guide/_lib/services/implementation-guide-lib.service';
 
 @NgModule({
   imports: [

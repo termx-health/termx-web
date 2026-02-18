@@ -1,8 +1,8 @@
 import {Clipboard} from '@angular/cdk/clipboard';
-import {Component, HostListener, OnInit, ViewChild} from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isNil, LoadingManager, remove, sort} from '@kodality-web/core-util';
-import {MuiModalContainerComponent} from '@kodality-web/marina-ui';
+import { isNil, LoadingManager, remove, sort, AutofocusDirective, ApplyPipe, LocalDateTimePipe } from '@kodality-web/core-util';
+import { MuiModalContainerComponent, MarinPageLayoutModule, MuiDividerModule, MuiButtonModule, MuiIconModule, MuiIconButtonModule, MuiMenuModule, MuiTooltipModule, MuiCollapsePanelModule, MuiModalModule, MuiListModule } from '@kodality-web/marina-ui';
 import {combineLatest, mergeMap} from 'rxjs';
 import {UnsavedChangesGuardComponent} from 'term-web/core/ui/guard/unsaved-changes.guard';
 import {SeoService} from 'term-web/core/ui/services/seo.service';
@@ -10,13 +10,50 @@ import {StructureDefinition, StructureDefinitionLibService} from 'term-web/model
 import {SpaceService} from 'term-web/sys/space/services/space.service';
 import {Page, PageAttachment, PageComment, PageContent, WikiSmartTextEditorComponent} from 'term-web/wiki/_lib';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
-import {PageService} from '../services/page.service';
+import {PageService} from 'term-web/wiki/page/services/page.service';
+
+import { WikiSmartTextEditorComponent as WikiSmartTextEditorComponent_1 } from 'term-web/wiki/_lib/texteditor/wiki-smart-text-editor.component';
+import { FormsModule } from '@angular/forms';
+import { WikiPageCommentsComponent } from 'term-web/wiki/page/components/wiki-page-comments.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { WikiPageSetupModalComponent } from 'term-web/wiki/page/components/wiki-page-setup-modal.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: 'wiki-page-edit.component.html',
-  styleUrls: ['../styles/wiki-page.styles.less', 'wiki-page-edit.component.less'],
+    templateUrl: 'wiki-page-edit.component.html',
+    styleUrls: ['../styles/wiki-page.styles.less', 'wiki-page-edit.component.less'],
+    imports: [
+    MarinPageLayoutModule,
+    MuiDividerModule,
+    MuiButtonModule,
+    MuiIconModule,
+    MuiIconButtonModule,
+    MuiMenuModule,
+    MuiTooltipModule,
+    WikiSmartTextEditorComponent_1,
+    FormsModule,
+    MuiCollapsePanelModule,
+    WikiPageCommentsComponent,
+    MuiModalModule,
+    AutofocusDirective,
+    MuiListModule,
+    PrivilegedDirective,
+    WikiPageSetupModalComponent,
+    TranslatePipe,
+    ApplyPipe,
+    LocalDateTimePipe
+],
 })
 export class WikiPageEditComponent implements OnInit, UnsavedChangesGuardComponent {
+  private spaceService = inject(SpaceService);
+  private pageService = inject(PageService);
+  private pageCommentService = inject(PageCommentService);
+  private structureDefinitionService = inject(StructureDefinitionLibService);
+  private clipboard = inject(Clipboard);
+  private seoService = inject(SeoService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   public page?: Page;
   public pageContent?: PageContent;
   public _pageContent?: PageContent; // for change detection
@@ -44,18 +81,6 @@ export class WikiPageEditComponent implements OnInit, UnsavedChangesGuardCompone
     }
     return isSaved || confirm("Changes you made may not be saved.");
   }
-
-
-  public constructor(
-    private spaceService: SpaceService,
-    private pageService: PageService,
-    private pageCommentService: PageCommentService,
-    private structureDefinitionService: StructureDefinitionLibService,
-    private clipboard: Clipboard,
-    private seoService: SeoService,
-    private router: Router,
-    private route: ActivatedRoute,
-  ) {}
 
 
   public ngOnInit(): void {
@@ -221,7 +246,7 @@ export class WikiPageEditComponent implements OnInit, UnsavedChangesGuardCompone
       return;
     }
     att['_deleting'] = true;
-    this.pageService.deleteAttachment(this.page.id, att.fileName).subscribe(resp => {
+    this.pageService.deleteAttachment(this.page.id, att.fileName).subscribe(() => {
       this.pageAttachments = remove(this.pageAttachments, att);
     }).add(() => att['_deleting'] = false);
   }

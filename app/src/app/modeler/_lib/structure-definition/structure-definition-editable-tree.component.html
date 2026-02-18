@@ -1,8 +1,10 @@
 <m-skeleton [mLoading]="!content"/>
 
-<m-no-data *ngIf="content && !(nodes.length > 0)"></m-no-data>
+@if (content && !(nodes.length > 0)) {
+  <m-no-data></m-no-data>
+}
 
-<ng-container *ngIf="content && (nodes.length > 0)">
+@if (content && (nodes.length > 0)) {
   <div style="display: grid">
     <m-radio-group name="type" [(ngModel)]="type" mSize="small" style="margin-bottom: 0.5rem; margin-left: auto" (ngModelChange)="onTypeChange($event)">
       <label m-radio-button [mValue]="'diff'">diff</label>
@@ -10,14 +12,13 @@
       <label m-radio-button [mValue]="'snap'">snap</label>
     </m-radio-group>
   </div>
-
   <tw-drop-list style="display: block; margin-left: 1.5rem; border-left: 1px dashed var(--color-borders);"
-      [nodes]="nodes"
-      [selectedKey]="selectedKey"
-      [nodeRenderer]="nodeDisplay"
-      [nodeActions]="nodeActions"
-      (twSelect)="onSelect($event)"
-      (twMove)="onMove($event)">
+    [nodes]="nodes"
+    [selectedKey]="selectedKey"
+    [nodeRenderer]="nodeDisplay"
+    [nodeActions]="nodeActions"
+    (twSelect)="onSelect($event)"
+    (twMove)="onMove($event)">
     <ng-template #nodeDisplay let-node>
       <div class="m-justify-between">
         {{node.title}}
@@ -34,4 +35,4 @@
       </div>
     </ng-template>
   </tw-drop-list>
-</ng-container>
+}
