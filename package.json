@@ -77,10 +77,10 @@
     "ng-packagr": "^21.0.0",
     "typescript": "~5.9.3"
   },
+  "//overrides-todo": "Remove marina-* overrides once @kodality-web/marina-ui, marina-util, marina-markdown, and marina-quill publish versions with peer dependency on @kodality-web/core-util@^20. Current marina@16.x packages peer on core-util@^16, which conflicts with the upgraded core-util@^20.0.2.",
   "overrides": {
     "@angular/cdk": "$@angular/cdk",
     "ng-zorro-antd": "$ng-zorro-antd",
-    "//TODO": "Remove marina-* overrides once @kodality-web/marina-ui, marina-util, marina-markdown, and marina-quill publish versions with peer dependency on @kodality-web/core-util@^20. Current marina@16.x packages peer on core-util@^16, which conflicts with the upgraded core-util@^20.0.2.",
     "@kodality-web/marina-ui": { "@kodality-web/core-util": "$@kodality-web/core-util" },
     "@kodality-web/marina-util": { "@kodality-web/core-util": "$@kodality-web/core-util" },
     "@kodality-web/marina-markdown": { "@kodality-web/core-util": "$@kodality-web/core-util" },
