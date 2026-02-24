@@ -10,6 +10,7 @@ import {ResourceFormComponent} from 'term-web/resources/resource/components/reso
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
 import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
 import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
+import {AuthService} from 'term-web/core/auth';
 import {CodeSystemService} from '../../services/code-system.service';
 
 
@@ -20,6 +21,8 @@ export class CodeSystemEditComponent implements OnInit {
   protected codeSystem?: CodeSystem;
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
+  protected viewMode = false;
+  protected canEdit = false;
 
   @ViewChild("form") public form?: NgForm;
 
@@ -32,6 +35,7 @@ export class CodeSystemEditComponent implements OnInit {
 
   public constructor(
     private codeSystemService: CodeSystemService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -42,6 +46,8 @@ export class CodeSystemEditComponent implements OnInit {
 
      if (isDefined(id)) {
        this.mode = 'edit';
+       this.viewMode = true;
+       this.canEdit = this.authService.hasPrivilege(id + '.CodeSystem.edit');
        this.loader.wrap('load', this.codeSystemService.load(id)).subscribe(vs => this.codeSystem = this.writeCS(vs));
      }
      this.codeSystem = this.writeCS(new CodeSystem());

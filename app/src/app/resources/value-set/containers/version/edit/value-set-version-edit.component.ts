@@ -8,6 +8,7 @@ import {ValueSetService} from 'app/src/app/resources/value-set/services/value-se
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import {map, Observable} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
 
 @Component({
   templateUrl: 'value-set-version-edit.component.html',
@@ -19,6 +20,8 @@ export class ValueSetVersionEditComponent implements OnInit {
 
   public mode: 'add' | 'edit' = 'add';
   public loader = new LoadingManager();
+  protected viewMode = false;
+  protected canEdit = false;
 
 
   @ViewChild("form") public form?: NgForm;
@@ -26,6 +29,7 @@ export class ValueSetVersionEditComponent implements OnInit {
   public constructor(
     private valueSetService: ValueSetService,
     private fhirValueSetService: FhirValueSetLibService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -34,6 +38,10 @@ export class ValueSetVersionEditComponent implements OnInit {
     this.valueSetId = this.route.snapshot.paramMap.get('id');
     this.valueSetVersion = this.route.snapshot.paramMap.get('versionCode');
     this.mode = this.valueSetId && this.valueSetVersion ? 'edit' : 'add';
+    this.viewMode = (this.mode === 'edit');
+    if (this.viewMode) {
+      this.canEdit = this.authService.hasPrivilege(this.valueSetId + '.ValueSet.edit');
+    }
 
     if (this.mode === 'edit') {
       this.loadVersion(this.valueSetId!, this.valueSetVersion!);

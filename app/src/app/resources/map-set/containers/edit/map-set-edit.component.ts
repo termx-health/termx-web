@@ -10,6 +10,7 @@ import {ResourceFormComponent} from 'term-web/resources/resource/components/reso
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
 import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
 import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
+import {AuthService} from 'term-web/core/auth';
 import {MapSetService} from '../../services/map-set-service';
 
 @Component({
@@ -23,6 +24,8 @@ export class MapSetEditComponent implements OnInit {
   };
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
+  protected viewMode = false;
+  protected canEdit = false;
 
   @ViewChild("form") public form!: NgForm;
 
@@ -35,6 +38,7 @@ export class MapSetEditComponent implements OnInit {
 
   public constructor(
     private mapSetService: MapSetService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -45,6 +49,8 @@ export class MapSetEditComponent implements OnInit {
 
       if (isDefined(id)) {
         this.mode = 'edit';
+        this.viewMode = true;
+        this.canEdit = this.authService.hasPrivilege(id + '.MapSet.edit');
         this.loader.wrap('load', this.mapSetService.load(id)).subscribe(vs => this.mapSet = this.writeMS(vs));
       }
       this.mapSet = this.writeMS(new MapSet());

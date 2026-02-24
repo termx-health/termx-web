@@ -5,11 +5,11 @@
       <!-- ValueSetVersion info -->
       <m-card>
         <m-title *m-card-header mTitle="web.value-set-version.summary.value-set-version">
-          <m-button *ngIf="valueSetVersion?.status === 'draft' && ('edit' | twPrivileged)"
+          <m-button
               mControls
               mDisplay="text"
               [routerLink]="['/resources/value-sets', valueSet?.id, 'versions', valueSetVersion?.version, 'edit']">
-            {{'web.value-set-version.summary.edit-version' | translate}}&nbsp;
+            {{'web.value-set-version.summary.version-metadata' | translate}}&nbsp;
             <m-icon mCode="form"></m-icon>
           </m-button>
         </m-title>

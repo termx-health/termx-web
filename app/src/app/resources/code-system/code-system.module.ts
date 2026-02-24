@@ -56,7 +56,7 @@ const VIEW = {privilege: ['{id}.CodeSystem.view']};
 export const CODE_SYSTEM_ROUTES: Routes = [
   {path: '', component: CodeSystemListComponent},
   {path: 'add', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
-  {path: ':id/edit', component: CodeSystemEditComponent, data: EDIT},
+  {path: ':id/edit', component: CodeSystemEditComponent, data: VIEW},
   {path: ':id/summary', component: CodeSystemSummaryComponent, data: VIEW},
   {path: ':id/concepts', component: CodeSystemConceptsComponent, data: VIEW},
   {path: ':id/properties', component: CodeSystemConceptsPropertyViewComponent, data: VIEW},
@@ -71,7 +71,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: ':id/versions/:versionCode/properties', component: CodeSystemConceptsPropertyViewComponent, data: VIEW},
   {path: ':id/versions/:versionCode/provenances', component: CodeSystemProvenancesComponent, data: VIEW},
   {path: ':id/versions/:versionCode/checklists', component: CodeSystemChecklistComponent, data: VIEW},
-  {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: EDIT},
+  {path: ':id/versions/:versionCode/edit', component: CodeSystemVersionEditComponent, data: VIEW},
   {path: ':id/versions/:versionCode/concepts/add', component: CodeSystemConceptEditComponent, data: EDIT},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/edit', component: CodeSystemConceptEditComponent, data: EDIT},
   {path: ':id/versions/:versionCode/concepts/:conceptCode/view', component: CodeSystemConceptViewComponent, data: VIEW},

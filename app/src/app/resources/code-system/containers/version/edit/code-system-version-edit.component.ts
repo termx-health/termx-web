@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {compareValues, isDefined, LoadingManager, validateForm, copyDeep, serializeDate} from '@kodality-web/core-util';
 import {CodeSystemVersion} from 'app/src/app/resources/_lib';
 import {map, Observable} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
 import {CodeSystemService} from '../../../services/code-system.service';
 
 
@@ -15,11 +16,14 @@ export class CodeSystemVersionEditComponent implements OnInit {
   protected version?: CodeSystemVersion;
   protected loader = new LoadingManager();
   protected mode: 'add' | 'edit' = 'add';
+  protected viewMode = false;
+  protected canEdit = false;
 
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private codeSystemService: CodeSystemService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private router: Router
   ) {}
@@ -30,6 +34,8 @@ export class CodeSystemVersionEditComponent implements OnInit {
 
     if (isDefined(versionCode)) {
       this.mode = 'edit';
+      this.viewMode = true;
+      this.canEdit = this.authService.hasPrivilege(this.codeSystemId + '.CodeSystem.edit');
       this.loader.wrap('load', this.codeSystemService.loadVersion(this.codeSystemId, versionCode)).subscribe(v => this.version = this.writeVersion(v));
     } else {
       this.codeSystemService.searchVersions(this.codeSystemId).subscribe(r => {

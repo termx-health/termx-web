@@ -1,8 +1,15 @@
 <m-spinner [mLoading]="loader.state['save']">
   <form nz-row [nzGutter]="12" #form="ngForm" *ngIf="codeSystem">
     <div nz-col [nzMd]="18" [nzXs]="24" style="margin-bottom: 1rem">
-      <m-card [mTitle]="'web.code-system.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+      <m-card [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+        <div *m-card-header class="m-justify-between">
+          <div class="m-card__title">{{'web.code-system.form.' + mode + '-header' | translate}}</div>
+          <m-button *ngIf="viewMode && canEdit" mDisplay="text" (mClick)="viewMode = false">
+            {{'core.btn.edit' | translate}}&nbsp;<m-icon mCode="form"></m-icon>
+          </m-button>
+        </div>
         <div *mCardContent="!loader.isLoading">
+          <fieldset [attr.disabled]="viewMode ? '' : null" [style.pointer-events]="viewMode ? 'none' : null" style="border:none;padding:0;margin:0">
           <tw-resource-form resourceType="CodeSystem" [resource]="codeSystem" [mode]="mode"></tw-resource-form>
 
           <m-form-row>
@@ -51,18 +58,23 @@
           <tw-resource-contacts [(contacts)]="codeSystem.contacts"></tw-resource-contacts>
           <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
           <tw-cs-value-set [codeSystem]="codeSystem" [hasRelatedValueSet]="!!codeSystem.valueSet"></tw-cs-value-set>
+          </fieldset>
         </div>
 
-        <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
-          {{'core.btn.save' | translate}}
-        </m-button>
+        <ng-container *m-card-footer>
+          <m-button *ngIf="!viewMode" mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+            {{'core.btn.save' | translate}}
+          </m-button>
+        </ng-container>
       </m-card>
     </div>
 
     <div nz-col [nzMd]="6" [nzXs]="24">
-      <m-card [mShowSkeleton]="loader.isLoading">
-        <tw-resource-side-info [copyright]="codeSystem.copyright" [permissions]="codeSystem.permissions" [settings]="codeSystem.settings"/>
-      </m-card>
+      <fieldset [attr.disabled]="viewMode ? '' : null" [style.pointer-events]="viewMode ? 'none' : null" style="border:none;padding:0;margin:0">
+        <m-card [mShowSkeleton]="loader.isLoading">
+          <tw-resource-side-info [copyright]="codeSystem.copyright" [permissions]="codeSystem.permissions" [settings]="codeSystem.settings"/>
+        </m-card>
+      </fieldset>
     </div>
   </form>
 </m-spinner>

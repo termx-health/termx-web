@@ -33,14 +33,14 @@ import {MapSetService} from './services/map-set-service';
 export const MAP_SET_ROUTES: Routes = [
   {path: '', component: MapSetListComponent},
   {path: 'add', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['{id}.MapSet.edit']}},
+  {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['{id}.MapSet.view']}},
   {path: ':id/summary', component: MapSetSummaryComponent, data: {privilege: ['{id}.MapSet.view']}},
   {path: ':id/provenances', component: MapSetProvenancesComponent, data: {privilege: ['{id}.MapSet.view']}},
 
   {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['{id}.MapSet.edit']}},
   {path: ':id/versions/:versionCode/summary', component: MapSetVersionSummaryComponent, data: {privilege: ['{id}.MapSet.view']}},
   {path: ':id/versions/:versionCode/provenances', component: MapSetProvenancesComponent, data: {privilege: ['{id}.MapSet.view']}},
-  {path: ':id/versions/:versionCode/edit', component: MapSetVersionEditComponent, data: {privilege: ['{id}.MapSet.edit']}},
+  {path: ':id/versions/:versionCode/edit', component: MapSetVersionEditComponent, data: {privilege: ['{id}.MapSet.view']}},
 
 ];
 
