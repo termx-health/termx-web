@@ -14,7 +14,7 @@ export class ResourceContextComponent {
   @Input() public conceptCode: string;
   @Input() public version: ResourceVersion;
   @Input() public versions: ResourceVersion[];
-  @Input() public mode: 'summary' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties' | 'checklist' = 'summary';
+  @Input() public mode: 'summary' | 'details' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties' | 'checklist' = 'summary';
 
   public constructor(private router: Router) {}
 
@@ -24,6 +24,7 @@ export class ResourceContextComponent {
     if (this.version) {
       const commands = {
         'summary': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'summary'],
+        'details': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'details'],
         'concept-list': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts'],
         'concept-edit': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts', this.conceptCode, 'edit'],
         'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'concepts', this.conceptCode, 'view'],
@@ -40,6 +41,7 @@ export class ResourceContextComponent {
   public selectVersion(version: string): void {
     const commands = {
       'summary': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'summary'],
+      'details': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'details'],
       'concept-list': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts'],
       'concept-edit': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts', this.conceptCode, 'edit'],
       'concept-view': ['/resources', this.typeMap[this.resourceType], this.resource.id, 'versions', version, 'concepts', this.conceptCode, 'view'],

@@ -4,7 +4,7 @@
   </div>
 
   <form #form="ngForm" *ngIf="identifiers">
-    <m-editable-table #rowsTable [mData]="identifiers" [mRowInstance]="rowInstance" required>
+    <m-editable-table #rowsTable [mData]="identifiers" [mRowInstance]="rowInstance" [mAddAllowed]="!viewMode" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode" required>
       <m-editable-column [mTitle]="'entities.resource.identifiers.system'" mName="system">
         <ng-template #viewTemplate let-i>{{i.system}}</ng-template>
         <ng-template #editTemplate let-i let-ngModelName="ngModelName">

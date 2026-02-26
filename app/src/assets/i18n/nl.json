@@ -7,5 +7,10 @@
     "fr": "Frans",
     "nl": "Nederlands",
     "cs": "Czech"
+  },
+  "web": {
+    "resource-context": {
+      "details": "Details"
+    }
   }
 }

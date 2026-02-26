@@ -18,6 +18,7 @@ export class ValueSetEditComponent implements OnInit {
   protected valueSet?: ValueSet;
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
+  protected viewMode: boolean = false;
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild(ResourceFormComponent) public resourceFormComponent?: ResourceFormComponent;
@@ -32,6 +33,7 @@ export class ValueSetEditComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.viewMode = this.route.snapshot.routeConfig?.path === ':id/details';
     this.route.paramMap.subscribe(paramMap => {
       const id = paramMap.get('id');
 

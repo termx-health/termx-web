@@ -57,6 +57,7 @@ export const CODE_SYSTEM_ROUTES: Routes = [
   {path: '', component: CodeSystemListComponent},
   {path: 'add', component: CodeSystemEditComponent, data: {privilege: ['*.CodeSystem.edit']}},
   {path: ':id/edit', component: CodeSystemEditComponent, data: EDIT},
+  {path: ':id/details', component: CodeSystemEditComponent, data: VIEW},
   {path: ':id/summary', component: CodeSystemSummaryComponent, data: VIEW},
   {path: ':id/concepts', component: CodeSystemConceptsComponent, data: VIEW},
   {path: ':id/properties', component: CodeSystemConceptsPropertyViewComponent, data: VIEW},
