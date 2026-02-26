@@ -1,0 +1,45 @@
+<m-card>
+  <div *m-card-header class="m-justify-between">
+    <span>{{'web.ucum.defined-unit.list.title' | translate}}</span>
+
+    <div class="m-items-middle">
+      <m-input
+        name="search"
+        [(ngModel)]="searchTerm"
+        (ngModelChange)="onSearchTermChange()"
+        placeholder="marina.ui.inputs.search.placeholder"
+        autofocus
+      ></m-input>
+    </div>
+  </div>
+
+  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
+    <tr *mTableHead>
+      <th mColumnKey="code">{{'entities.ucum.defined-unit.code' | translate}}</th>
+      <th mColumnKey="names">{{'entities.ucum.defined-unit.names' | translate}}</th>
+      <th mColumnKey="printSymbol">{{'entities.ucum.defined-unit.printSymbol' | translate}}</th>
+      <th mColumnKey="property">{{'entities.ucum.defined-unit.property' | translate}}</th>
+      <th mColumnKey="metric">{{'entities.ucum.defined-unit.metric' | translate}}</th>
+      <th mColumnKey="class">{{'entities.ucum.defined-unit.class' | translate}}</th>
+      <th mColumnKey="description">{{'entities.ucum.defined-unit.description' | translate}}</th>
+    </tr>
+
+      <tr *mTableRow="let mu">
+        <td><a [routerLink]="[mu.code]">{{mu.code}}</a></td>
+        <td>{{mu.names.join(', ')}}</td>
+        <td>{{mu.printSymbol}}</td>
+        <td>{{mu.property}}</td>
+        <td>{{mu.metric}}</td>
+        <td>{{mu.class}}</td>
+        <td>{{mu.description}}</td>
+      </tr>
+
+
+    <tr *mTableNoData>
+      <td colspan="100%">
+        <m-no-data></m-no-data>
+      </td>
+    </tr>
+  </m-backend-table>
+</m-card>
+

@@ -1,0 +1,36 @@
+<m-form-row>
+  <div *mFormCol>
+    <m-spinner [mLoading]="loading">
+      <m-card [mTitle]="'web.ucum.prefix.view.title'" [mShowSkeleton]="loading">
+
+        <form #form="ngForm" *ngIf="prefix">
+          <m-form-item mLabel="entities.ucum.prefix.code">
+            <m-input name="code" [ngModel]="prefix.code" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.prefix.names">
+            <m-input name="names" [ngModel]="prefix.names.join(', ')" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.prefix.printSymbol">
+            <m-input name="printSymbol" [ngModel]="prefix.printSymbol" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.prefix.kind">
+            <m-input name="kind" [ngModel]="prefix.kind" [readOnly]="true"></m-input>
+          </m-form-item>
+
+          <m-form-item mLabel="entities.ucum.prefix.description">
+            <m-input name="description" [ngModel]="prefix.description" [readOnly]="true"></m-input>
+          </m-form-item>
+        </form>
+
+        <ng-container *m-card-footer>
+          <m-button (click)="goBack()">
+            {{ 'core.back' | translate }}
+          </m-button>
+        </ng-container>
+      </m-card>
+    </m-spinner>
+  </div>
+</m-form-row>
