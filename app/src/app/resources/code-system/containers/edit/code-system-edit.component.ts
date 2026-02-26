@@ -20,6 +20,7 @@ export class CodeSystemEditComponent implements OnInit {
   protected codeSystem?: CodeSystem;
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
+  protected viewMode: boolean = false;
 
   @ViewChild("form") public form?: NgForm;
 
@@ -37,7 +38,8 @@ export class CodeSystemEditComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-   this.route.paramMap.subscribe(paramMap => {
+    this.viewMode = this.route.snapshot.routeConfig?.path === ':id/details';
+    this.route.paramMap.subscribe(paramMap => {
       const id = paramMap.get('id');
 
      if (isDefined(id)) {

@@ -1,6 +1,6 @@
 import {Component, Input, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {LoadingManager, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {forkJoin} from 'rxjs';
 import {CodeSystemLibService, ValueSet, ValueSetTransactionRequest, CodeSystem} from 'term-web/resources/_lib';
 
@@ -11,6 +11,7 @@ import {CodeSystemLibService, ValueSet, ValueSetTransactionRequest, CodeSystem} 
 export class CodeSystemValueSetAddComponent {
   @Input() public codeSystem?: CodeSystem;
   @Input() public hasRelatedValueSet: boolean;
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @ViewChild("form") public form?: NgForm;
 
   protected loader = new LoadingManager();

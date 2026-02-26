@@ -23,6 +23,7 @@ export class MapSetEditComponent implements OnInit {
   };
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
+  protected viewMode: boolean = false;
 
   @ViewChild("form") public form!: NgForm;
 
@@ -40,6 +41,7 @@ export class MapSetEditComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
+    this.viewMode = this.route.snapshot.routeConfig?.path === ':id/details';
     this.route.paramMap.subscribe(paramMap => {
       const id = paramMap.get('id');
 

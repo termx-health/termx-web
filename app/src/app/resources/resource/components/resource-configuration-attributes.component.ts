@@ -1,6 +1,6 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {NgForm} from '@angular/forms';
-import {isDefined, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {MuiEditableTableComponent} from '@kodality-web/marina-ui';
 import {TranslateService} from '@ngx-translate/core';
 import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
@@ -22,6 +22,7 @@ import {ChecklistRule} from 'term-web/sys/_lib';
 })
 export class ResourceConfigurationAttributesComponent implements OnInit {
   @Input() public attributes?: any[];
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @ViewChild("form") public form?: NgForm;
   @ViewChild(MuiEditableTableComponent) public table?: MuiEditableTableComponent<ChecklistRule>;
 

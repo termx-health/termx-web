@@ -1949,6 +1949,7 @@
         "resource-context": {
             "all-versions": "Všechny verze",
             "concepts": "Koncepty",
+            "details": "Podrobnosti",
             "properties": "Vlastnosti",
             "provenance": "Původ",
             "summary": "Shrnutí",

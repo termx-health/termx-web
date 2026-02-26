@@ -1785,6 +1785,7 @@
 		"resource-context": {
 			"all-versions": "Kõik versioonid",
 			"concepts": "Mõisted",
+			"details": "Detailid",
 			"properties": "Tunnused",
 			"provenance": "Ajalugu",
 			"summary": "Kokkuvõte",

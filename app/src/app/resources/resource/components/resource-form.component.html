@@ -1,7 +1,9 @@
 <form #form="ngForm" *ngIf="resource">
-  <m-form-row>
-    <m-form-item *mFormCol mLabel="entities.resource.title" mName="title" required>
-      <m-multi-language-input name="title" [(ngModel)]="resource.title" (ngModelChange)="titleChanged($event)" required></m-multi-language-input>
+  <fieldset style="border: 0; margin: 0; padding: 0" [disabled]="viewMode">
+    <m-form-row>
+    <m-form-item *mFormCol mLabel="entities.resource.title" mName="title" [required]="!viewMode">
+      <m-multi-language-input *ngIf="!viewMode" name="title" [(ngModel)]="resource.title" (ngModelChange)="titleChanged($event)" [required]="!viewMode"></m-multi-language-input>
+      <tw-resource-multi-language-view *ngIf="viewMode" [value]="resource.title"></tw-resource-multi-language-view>
     </m-form-item>
     <m-form-item *mFormCol mLabel="entities.resource.other-title" mName="otherTitle">
       <div style="display: flex; flex-direction: column; gap: 0.5rem">
@@ -9,22 +11,22 @@
           <m-form-control style="width: 100%" mName="otherTitle-name-{{i}}">
             <m-input name="otherTitle-name-{{i}}" [(ngModel)]="n.name"></m-input>
           </m-form-control>
-          <m-button (mClick)="n.preferred = !n.preferred">
+          <m-button *ngIf="!viewMode" (mClick)="n.preferred = !n.preferred">
             <m-icon [mOptions]="{nzTheme : n.preferred ? 'fill' : 'outline'}" [mCode]="'star'"></m-icon>
           </m-button>
-          <m-icon class="m-clickable" [mCode]="'close'" (click)="deleteOtherTitle(n)"></m-icon>
+          <m-icon *ngIf="!viewMode" class="m-clickable" [mCode]="'close'" (click)="deleteOtherTitle(n)"></m-icon>
         </div>
-        <m-button (mClick)="addOtherTitle()"><m-icon mCode="plus"/>&nbsp; {{'web.resource-form.add-other-title' | translate}}</m-button>
+        <m-button *ngIf="!viewMode" (mClick)="addOtherTitle()"><m-icon mCode="plus"/>&nbsp; {{'web.resource-form.add-other-title' | translate}}</m-button>
       </div>
     </m-form-item>
-  </m-form-row>
+    </m-form-row>
 
   <m-form-row>
     <m-form-item *mFormCol mLabel="entities.resource.id" mName="id" [required]="mode === 'add'">
       <m-input *ngIf="mode === 'add'" name="id" [(ngModel)]="resource.id" required [pattern]="idPattern"></m-input>
       <div class="m-items-middle" *ngIf="mode !== 'add'">
         <span>{{resource.id}}</span>
-        <m-button m-tooltip mTitle="core.btn.edit" (mClick)="idChangeModalData.visible = true">
+        <m-button *ngIf="!viewMode" m-tooltip mTitle="core.btn.edit" (mClick)="idChangeModalData.visible = true">
           <m-icon mCode="edit"></m-icon>
         </m-button>
       </div>
@@ -36,17 +38,18 @@
 
   <m-form-row>
     <m-form-item *mFormCol mLabel="entities.resource.publisher" mName="publisher">
-      <div class="m-items-middle" *ngIf="!customPublisher">
+      <div class="m-items-middle" *ngIf="!customPublisher && !viewMode">
         <m-select style="width: 100%" name="publisher" [(ngModel)]="resource.publisher" (ngModelChange)="publisherChanged($event)">
           <m-option *ngFor="let p of publishers" [mValue]="p.concept.code" [mLabel]="p | apply:getDisplay"></m-option>
         </m-select>
         <m-button (mClick)="customPublisher = true">{{'core.btn.custom' | translate}}</m-button>
       </div>
-      <m-input *ngIf="customPublisher" name="publisher" [(ngModel)]="resource.publisher" required></m-input>
+      <m-input *ngIf="customPublisher && !viewMode" name="publisher" [(ngModel)]="resource.publisher" required></m-input>
+      <tw-resource-readonly-concept *ngIf="viewMode" [value]="resource.publisher" codeSystem="publisher"></tw-resource-readonly-concept>
     </m-form-item>
-    <m-form-item *mFormCol mLabel="entities.resource.uri" mName="uri" required>
+    <m-form-item *mFormCol mLabel="entities.resource.uri" mName="uri" [required]="!viewMode">
       <div class="m-items-middle">
-        <m-input style="width: 100%" name="uri" [(ngModel)]="resource.uri" required></m-input>
+        <m-input style="width: 100%" name="uri" [(ngModel)]="resource.uri" [required]="!viewMode"></m-input>
         <a *ngIf="resource.uri | validateUrl" [href]="resource.uri" target="_blank">
           <m-button m-tooltip mTitle="web.resource-form.open-uri">
             <m-icon mCode="link"></m-icon>
@@ -58,10 +61,12 @@
 
   <m-form-row>
     <m-form-item *mFormCol mLabel="entities.resource.description" mName="description">
-      <m-multi-language-input name="description" [(ngModel)]="resource.description" mInputType="textarea"></m-multi-language-input>
+      <m-multi-language-input *ngIf="!viewMode" name="description" [(ngModel)]="resource.description" mInputType="textarea"></m-multi-language-input>
+      <tw-resource-multi-language-view *ngIf="viewMode" [value]="resource.description"></tw-resource-multi-language-view>
     </m-form-item>
     <m-form-item *mFormCol mLabel="entities.resource.purpose" mName="purpose">
-      <m-multi-language-input name="purpose" [(ngModel)]="resource.purpose" mInputType="textarea"></m-multi-language-input>
+      <m-multi-language-input *ngIf="!viewMode" name="purpose" [(ngModel)]="resource.purpose" mInputType="textarea"></m-multi-language-input>
+      <tw-resource-multi-language-view *ngIf="viewMode" [value]="resource.purpose"></tw-resource-multi-language-view>
     </m-form-item>
   </m-form-row>
 
@@ -72,7 +77,12 @@
           <m-input name="topic-text" [(ngModel)]="resource.topic.text"></m-input>
         </m-form-control>
         <m-form-control style="width: 100%" mName="topic-tags">
-          <tw-value-set-concept-select name="topic-tags" [(ngModel)]="resource.topic.tags" valueSet="definition-topic" valuePrimitive multiple/>
+          <tw-value-set-concept-select *ngIf="!viewMode"name="topic-tags" [(ngModel)]="resource.topic.tags" valueSet="definition-topic" valuePrimitive multiple/>
+          <div *ngIf="viewMode">
+            <span *ngFor="let tag of resource.topic.tags; let last = last">
+              <tw-resource-readonly-concept [value]="tag" valueSet="definition-topic"></tw-resource-readonly-concept><span *ngIf="!last">, </span>
+            </span>
+          </div>
         </m-form-control>
       </div>
     </m-form-item>
@@ -80,14 +90,15 @@
       <div style="display: flex; flex-direction: column; gap: 0.5rem">
         <div class="m-items-middle" *ngFor="let c of resource.useContext; let i = index">
           <m-form-control style="width: 100%" mName="useContext-type-{{i}}">
-            <tw-value-set-concept-select name="useContext-type-{{i}}" [(ngModel)]="c.type" valueSet="usage-context-type" valuePrimitive/>
+            <tw-value-set-concept-select *ngIf="!viewMode" name="useContext-type-{{i}}" [(ngModel)]="c.type" valueSet="usage-context-type" valuePrimitive/>
+            <tw-resource-readonly-concept *ngIf="viewMode" [value]="c.type" valueSet="usage-context-type"></tw-resource-readonly-concept>
           </m-form-control>
           <m-form-control style="width: 100%" mName="useContext-value-{{i}}">
             <m-input name="useContext-value-{{i}}" [(ngModel)]="c.value"></m-input>
           </m-form-control>
-          <m-icon class="m-clickable" [mCode]="'close'" (click)="deleteContext(c)"></m-icon>
+          <m-icon *ngIf="!viewMode" class="m-clickable" [mCode]="'close'" (click)="deleteContext(c)"></m-icon>
         </div>
-        <m-button (mClick)="addContext()"><m-icon mCode="plus"/>&nbsp; {{'web.resource-form.add-use-context' | translate}}</m-button>
+        <m-button *ngIf="!viewMode" (mClick)="addContext()"><m-icon mCode="plus"/>&nbsp; {{'web.resource-form.add-use-context' | translate}}</m-button>
       </div>
     </m-form-item>
   </m-form-row>
@@ -98,21 +109,25 @@
     </m-form-item>
     <div *mFormCol>
       <m-form-item *ngIf="['CodeSystem', 'ValueSet', 'MapSet'] | includes:resourceType" mLabel="entities.resource.replaces" mName="replaces">
-        <tw-code-system-search *ngIf="resourceType === 'CodeSystem'" name="replaces" [(ngModel)]="resource.replaces" valuePrimitive/>
-        <tw-value-set-search *ngIf="resourceType === 'ValueSet'" name="replaces" [(ngModel)]="resource.replaces" valuePrimitive/>
-        <tw-map-set-search *ngIf="resourceType === 'MapSet'" name="replaces" [(ngModel)]="resource.replaces" valuePrimitive/>
+        <ng-container *ngIf="viewMode; else editReplaces">{{resource.replaces}}</ng-container>
+        <ng-template #editReplaces>
+          <tw-code-system-search *ngIf="resourceType === 'CodeSystem'" name="replaces" [(ngModel)]="resource.replaces" valuePrimitive/>
+          <tw-value-set-search *ngIf="resourceType === 'ValueSet'" name="replaces" [(ngModel)]="resource.replaces" valuePrimitive/>
+          <tw-map-set-search *ngIf="resourceType === 'MapSet'" name="replaces" [(ngModel)]="resource.replaces" valuePrimitive/>
+        </ng-template>
       </m-form-item>
     </div>
   </m-form-row>
 
   <m-form-row>
     <m-form-item *mFormCol mLabel="entities.resource.experimental" mName="experimental">
-      <m-checkbox name="experimental" [(ngModel)]="resource.experimental"></m-checkbox>
+      <m-checkbox name="experimental" [(ngModel)]="resource.experimental" [readOnly]="viewMode"></m-checkbox>
     </m-form-item>
     <m-form-item *mFormCol mLabel="entities.resource.external-web-source" mName="externalWebSource">
-      <m-input name="externalWebSource" [(ngModel)]="resource.externalWebSource"></m-input>
+      <m-input name="externalWebSource" [(ngModel)]="resource.externalWebSource" [readOnly]="viewMode"></m-input>
     </m-form-item>
   </m-form-row>
+  </fieldset>
 </form>
 
 

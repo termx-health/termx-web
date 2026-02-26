@@ -1,0 +1,7 @@
+<ng-container *ngIf="valueSet || codeSystem; else plainValue">
+  <span>{{value | localizedConceptName: {valueSet: valueSet, codeSystem: codeSystem} | async}}</span>
+</ng-container>
+
+<ng-template #plainValue>
+  <span>{{value}}</span>
+</ng-template>

@@ -914,6 +914,7 @@
 		"code-system": {
 			"form": {
 				"add-header": "Create a new code system",
+				"details-header": "Code system details",
 				"concepts": {
 					"properties": "Properties",
 					"designation-languages": "Designation languages",
@@ -1589,6 +1590,7 @@
 		"map-set": {
 			"form": {
 				"add-header": "Create a new map set",
+				"details-header": "Map set details",
 				"edit-header": "Edit map set",
 				"header": "Map set",
 				"properties": {
@@ -1972,6 +1974,7 @@
 		"resource-context": {
 			"all-versions": "All versions",
 			"concepts": "Concepts",
+			"details": "Details",
 			"properties": "Properties",
 			"provenance": "Provenance",
 			"summary": "Summary",
@@ -2364,6 +2367,7 @@
 			},
 			"form": {
 				"add-header": "Create a new value set",
+				"details-header": "Value set details",
 				"edit-header": "Edit value set",
 				"versions": {
 					"add-version": "Add version",

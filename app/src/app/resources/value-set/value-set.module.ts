@@ -36,6 +36,7 @@ export const VALUE_SET_ROUTES: Routes = [
   {path: '', component: ValueSetListComponent},
   {path: 'add', component: ValueSetEditComponent, data: {privilege: ['*.ValueSet.edit']}},
   {path: ':id/edit', component: ValueSetEditComponent, data: EDIT},
+  {path: ':id/details', component: ValueSetEditComponent, data: VIEW},
   {path: ':id/summary', component: ValueSetSummaryComponent, data: VIEW},
   {path: ':id/concepts', component: ValueSetConceptsComponent, data: VIEW},
   {path: ':id/provenances', component: ValueSetProvenancesComponent, data: VIEW},

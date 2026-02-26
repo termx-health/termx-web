@@ -11,7 +11,7 @@
     </m-dropdown>
   </div>
   <form #form="ngForm">
-    <m-editable-table #rowsTable [mData]="properties" [mLoading]="loader.isLoading" [mRowInstance]="propertyRowInstance">
+    <m-editable-table #rowsTable [mData]="properties" [mLoading]="loader.isLoading" [mRowInstance]="propertyRowInstance" [mAddAllowed]="!viewMode" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
       <m-editable-column [mTitle]="'entities.entity-property.name'">
         <ng-template #viewTemplate let-p>{{p.name}}</ng-template>
       </m-editable-column>
@@ -35,7 +35,7 @@
       <m-editable-column>
         <ng-template #viewTemplate let-p>
           <div class="m-justify-right">
-            <m-dropdown *ngIf="p.id">
+            <m-dropdown *ngIf="p.id && !viewMode">
               <a *m-dropdown-item (mClick)="deletePropertyUsages(p.id)">{{'web.map-set.form.properties.delete-property-usages' | translate}}</a>
             </m-dropdown>
           </div>

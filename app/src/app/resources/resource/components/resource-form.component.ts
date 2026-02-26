@@ -1,7 +1,7 @@
 import {Component, Input, OnChanges, SimpleChanges, ViewChild, Optional} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {Router} from '@angular/router';
-import {isDefined, LoadingManager, remove, validateForm} from '@kodality-web/core-util';
+import {BooleanInput, isDefined, LoadingManager, remove, validateForm} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {TranslateService} from '@ngx-translate/core';
 import {ConceptUtil, ValueSetVersionConcept, VsConceptUtil} from 'app/src/app/resources/_lib';
@@ -21,6 +21,7 @@ export class ResourceFormComponent implements OnChanges {
   @Input() public resourceType?: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'ImplementationGuide';
   @Input() public resource?: Resource;
   @Input() public mode?: 'add' | 'edit';
+  @Input() @BooleanInput() public viewMode: boolean = false;
 
   public readonly idPattern: string = '[A-Za-z0-9\\-\\.]{1,64}';
 

@@ -9,6 +9,7 @@ import {BooleanInput, Identifier, isDefined, validateForm} from '@kodality-web/c
 export class ResourceIdentifiersComponent {
   @Input() public identifiers?: Identifier[];
   @Input() @BooleanInput() public version: boolean | string;
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @ViewChild("form") public form?: NgForm;
 
   protected rowInstance: Identifier = {};

@@ -1674,6 +1674,7 @@
 		"resource-context": {
 			"all-versions": "Visos versijos",
 			"concepts": "Terminai",
+			"details": "Išsami informacija",
 			"properties": "Savybės",
 			"provenance": "Auditas",
 			"summary": "Santrauka"

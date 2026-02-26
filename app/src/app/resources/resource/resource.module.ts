@@ -6,8 +6,10 @@ import {ResourceContextComponent} from 'term-web/resources/resource/components/r
 import {ResourceFhirImportModalComponent} from 'term-web/resources/resource/components/resource-fhir-import-modal-component';
 import {ResourceFormComponent} from 'term-web/resources/resource/components/resource-form.component';
 import {ResourceIdentifiersComponent} from 'term-web/resources/resource/components/resource-identifiers.component';
+import {ResourceMultiLanguageViewComponent} from 'term-web/resources/resource/components/resource-multi-language-view.component';
 import {ResourceRelatedArtifactWidgetComponent} from 'term-web/resources/resource/components/resource-related-artifact-widget.component';
 import {ResourceReleaseModalComponent} from 'term-web/resources/resource/components/resource-release-modal-component';
+import {ResourceReadonlyConceptComponent} from 'term-web/resources/resource/components/resource-readonly-concept.component';
 import {ResourceSideInfoComponent} from 'term-web/resources/resource/components/resource-side-info.component';
 import {ResourceTaskModalComponent} from 'term-web/resources/resource/components/resource-task-modal-component';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
@@ -30,6 +32,7 @@ import {CoreUiModule} from '../../core/ui/core-ui.module';
     ResourceContactsComponent,
     ResourceContextComponent,
     ResourceFormComponent,
+    ResourceMultiLanguageViewComponent,
     ResourceIdentifiersComponent,
     ResourceConfigurationAttributesComponent,
     ResourceSideInfoComponent,
@@ -38,12 +41,14 @@ import {CoreUiModule} from '../../core/ui/core-ui.module';
     ResourceRelatedArtifactWidgetComponent,
     ResourceFhirImportModalComponent,
     ResourceTaskModalComponent,
-    ResourceReleaseModalComponent
+    ResourceReleaseModalComponent,
+    ResourceReadonlyConceptComponent
   ],
   declarations: [
     ResourceContactsComponent,
     ResourceContextComponent,
     ResourceFormComponent,
+    ResourceMultiLanguageViewComponent,
     ResourceIdentifiersComponent,
     ResourceConfigurationAttributesComponent,
     ResourceSideInfoComponent,
@@ -52,7 +57,8 @@ import {CoreUiModule} from '../../core/ui/core-ui.module';
     ResourceRelatedArtifactWidgetComponent,
     ResourceFhirImportModalComponent,
     ResourceTaskModalComponent,
-    ResourceReleaseModalComponent
+    ResourceReleaseModalComponent,
+    ResourceReadonlyConceptComponent
   ]
 })
 export class ResourceModule {
