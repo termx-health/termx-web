@@ -7,12 +7,12 @@
       <!-- ValueSetVersion info -->
       <m-card>
         <m-title *m-card-header mTitle="web.map-set-version.summary.map-set-version">
-          <m-button *ngIf="mapSetVersion?.status === 'draft'"
+          <m-button
               mControls
               mDisplay="text"
               mShape="circle"
               [routerLink]="['/resources/map-sets', mapSet?.id, 'versions', mapSetVersion?.version, 'edit']">
-            {{'web.map-set-version.summary.edit-version' | translate}}&nbsp;
+            {{'web.map-set-version.summary.version-metadata' | translate}}&nbsp;
             <m-icon mCode="form"></m-icon>
           </m-button>
         </m-title>

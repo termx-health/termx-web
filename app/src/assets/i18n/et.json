@@ -548,7 +548,7 @@
 			"supported-languages": "Toetatud keeled",
 			"title": "Pealkiri",
 			"uri": "URI",
-			"use-context": "Kastuskontekst",
+			"use-context": "Kasutuskontekst",
 			"version": {
 				"algorithm": "Algoritm",
 				"description": "Kirjeldus",
@@ -1108,7 +1108,7 @@
 			"summary": {
 				"all-tasks": "Kõik ülesanded",
 				"code-system-version": "Koodisüsteemi versioon",
-				"edit-version": "Muuda versiooni",
+				"version-metadata": "Versiooni metaandmed",
 				"info": {
 					"add-to-release": "Lisa väljalaskesse",
 					"release-unspecified": "Väljalase on määramata",
@@ -1212,7 +1212,7 @@
 			},
 			"summary": {
 				"activate": "Aktiveeri",
-				"edit-version": "Muuda versioon",
+				"version-metadata": "Versiooni metaandmed",
 				"last-modified": "Viimane muudatus",
 				"make-draft": "Tee mustandiks",
 				"none": "Puudub",
@@ -1601,7 +1601,7 @@
 					"unverified": "Kontrollimata",
 					"verify": "Kontrolli"
 				},
-				"edit-version": "Muuda versiooni",
+				"version-metadata": "Versiooni metaandmed",
 				"info": {
 					"add-to-release": "Lisa väljalaskesse",
 					"release-unspecified": "Väljalase on määramata",
@@ -1803,11 +1803,12 @@
 			"properties": "Tunnused",
 			"provenance": "Ajalugu",
 			"summary": "Kokkuvõte",
-			"checklist": "Kontrollide nimekiri"
+			"checklist": "Kontrollide nimekiri",
+			"metadata": "Metaandmed"
 		},
 		"resource-form": {
 			"add-other-title": "Lisa muu pealkiri",
-			"add-use-context": "Lisa kastuskontekst",
+			"add-use-context": "Lisa kasutuskontekst",
 			"id-change-modal": {
 				"header": "Muuda ID",
 				"id": "Uus ID"
@@ -2237,7 +2238,7 @@
 				"view-header": "Vaata versiooni"
 			},
 			"summary": {
-				"edit-version": "Muuda versiooni",
+				"version-metadata": "Versiooni metaandmed",
 				"expansion": "Mõistete hetketõmmis",
 				"expansion-limit-info": "Näidatakse 20 mõistet.  {{count}} mõistet on veel serveris.",
 				"expansion-see-all": "Vaata kõiki mõisteid.",

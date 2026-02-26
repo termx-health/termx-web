@@ -35,7 +35,7 @@ const VIEW = {privilege: ['{id}.ValueSet.view']};
 export const VALUE_SET_ROUTES: Routes = [
   {path: '', component: ValueSetListComponent},
   {path: 'add', component: ValueSetEditComponent, data: {privilege: ['*.ValueSet.edit']}},
-  {path: ':id/edit', component: ValueSetEditComponent, data: EDIT},
+  {path: ':id/edit', component: ValueSetEditComponent, data: VIEW},
   {path: ':id/summary', component: ValueSetSummaryComponent, data: VIEW},
   {path: ':id/concepts', component: ValueSetConceptsComponent, data: VIEW},
   {path: ':id/provenances', component: ValueSetProvenancesComponent, data: VIEW},
@@ -43,7 +43,7 @@ export const VALUE_SET_ROUTES: Routes = [
   {path: ':id/versions/:versionCode/summary', component: ValueSetVersionSummaryComponent, data: VIEW},
   {path: ':id/versions/:versionCode/concepts', component: ValueSetVersionConceptsComponent, data: VIEW},
   {path: ':id/versions/:versionCode/provenances', component: ValueSetProvenancesComponent, data: VIEW},
-  {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent, data: EDIT}
+  {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent, data: VIEW}
 ];
 
 export const VALUE_SET_FINDER_ROUTES: Routes = [{

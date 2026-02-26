@@ -5,6 +5,7 @@ import {ActivatedRoute} from '@angular/router';
 import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {MapSetScope, MapSetVersion} from 'app/src/app/resources/_lib';
 import {map, Observable} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
 import {MapSetService} from '../../../services/map-set-service';
 
 
@@ -16,11 +17,14 @@ export class MapSetVersionEditComponent implements OnInit {
   protected version?: MapSetVersion;
   protected loader = new LoadingManager();
   protected mode: 'add' | 'edit' = 'add';
+  protected viewMode = false;
+  protected canEdit = false;
 
   @ViewChild("form") public form?: NgForm;
 
   public constructor(
     private mapSetService: MapSetService,
+    private authService: AuthService,
     private route: ActivatedRoute,
     private location: Location
   ) {}
@@ -31,6 +35,8 @@ export class MapSetVersionEditComponent implements OnInit {
 
     if (isDefined(versionCode)) {
       this.mode = 'edit';
+      this.viewMode = true;
+      this.canEdit = this.authService.hasPrivilege(this.mapSetId + '.MapSet.edit');
       this.loader.wrap('load', this.mapSetService.loadVersion(this.mapSetId, versionCode)).subscribe(v => this.version = this.writeVersion(v));
     } else {
       this.mapSetService.searchVersions(this.mapSetId).subscribe(r => {

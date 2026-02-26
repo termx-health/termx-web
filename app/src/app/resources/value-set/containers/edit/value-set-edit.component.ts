@@ -9,6 +9,7 @@ import {ResourceVersionFormComponent} from 'app/src/app/resources/resource/compo
 import {ResourceUtil} from 'app/src/app/resources/resource/util/resource-util';
 import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
 import {ResourceConfigurationAttributesComponent} from 'term-web/resources/resource/components/resource-configuration-attributes.component';
+import {AuthService} from 'term-web/core/auth';
 
 
 @Component({
@@ -18,6 +19,8 @@ export class ValueSetEditComponent implements OnInit {
   protected valueSet?: ValueSet;
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
+  protected viewMode = false;
+  protected canEdit = false;
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild(ResourceFormComponent) public resourceFormComponent?: ResourceFormComponent;
@@ -28,7 +31,8 @@ export class ValueSetEditComponent implements OnInit {
   public constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private valueSetService: ValueSetService
+    private valueSetService: ValueSetService,
+    private authService: AuthService
   ) {}
 
   public ngOnInit(): void {
@@ -37,6 +41,8 @@ export class ValueSetEditComponent implements OnInit {
 
       if (isDefined(id)) {
         this.mode = 'edit';
+        this.viewMode = true;
+        this.canEdit = this.authService.hasPrivilege(id + '.ValueSet.edit');
         this.loader.wrap('load', this.valueSetService.load(id)).subscribe(vs => this.valueSet = this.writeVS(vs));
       }
       this.valueSet = this.writeVS(new ValueSet());
