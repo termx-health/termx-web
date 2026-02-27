@@ -7,16 +7,14 @@
       <!-- ValueSetVersion info -->
       <m-card>
         <m-title *m-card-header mTitle="web.map-set-version.summary.map-set-version">
-          @if (mapSetVersion?.status === 'draft') {
-            <m-button
+          <m-button
               mControls
               mDisplay="text"
               mShape="circle"
               [routerLink]="['/resources/map-sets', mapSet?.id, 'versions', mapSetVersion?.version, 'edit']">
-              {{'web.map-set-version.summary.edit-version' | translate}}&nbsp;
-              <m-icon mCode="form"></m-icon>
-            </m-button>
-          }
+            {{'web.map-set-version.summary.version-metadata' | translate}}&nbsp;
+            <m-icon mCode="form"></m-icon>
+          </m-button>
         </m-title>
         <tw-map-set-version-info-widget [mapSet]="mapSet" [version]="mapSetVersion"></tw-map-set-version-info-widget>
       </m-card>

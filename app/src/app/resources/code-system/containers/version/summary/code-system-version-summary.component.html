@@ -7,15 +7,13 @@
       <!-- ValueSetVersion info -->
       <m-card>
         <m-title *m-card-header mTitle="web.code-system-version.summary.code-system-version">
-          @if (codeSystemVersion?.status === 'draft' && ('edit' | twPrivileged)) {
-            <m-button
+          <m-button
               mControls
               mDisplay="text"
               [routerLink]="['/resources/code-systems', codeSystem?.id, 'versions', codeSystemVersion?.version, 'edit']">
-              {{'web.code-system-version.summary.edit-version' | translate}}&nbsp;
-              <m-icon mCode="form"></m-icon>
-            </m-button>
-          }
+            {{'web.code-system-version.summary.version-metadata' | translate}}&nbsp;
+            <m-icon mCode="form"></m-icon>
+          </m-button>
         </m-title>
         <tw-code-system-version-info-widget [codeSystem]="codeSystem"
           [version]="codeSystemVersion"

@@ -2,8 +2,17 @@
   @if (codeSystem) {
     <form nz-row [nzGutter]="12" #form="ngForm">
       <div nz-col [nzMd]="18" [nzXs]="24" style="margin-bottom: 1rem">
-        <m-card [mTitle]="'web.code-system.form.' + mode + '-header'" [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+        <m-card [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+          <div *m-card-header class="m-justify-between">
+            <div class="m-card__title">{{'web.code-system.form.' + mode + '-header' | translate}}</div>
+            @if (viewMode && canEdit) {
+              <m-button mDisplay="text" (mClick)="viewMode = false">
+                {{'core.btn.edit' | translate}}&nbsp;<m-icon mCode="form"></m-icon>
+              </m-button>
+            }
+          </div>
           <div *mCardContent="!loader.isLoading">
+            <fieldset [attr.disabled]="viewMode ? '' : null" [style.pointer-events]="viewMode ? 'none' : null" style="border:none;padding:0;margin:0">
             <tw-resource-form resourceType="CodeSystem" [resource]="codeSystem" [mode]="mode"></tw-resource-form>
             <m-form-row>
               <m-form-item *mFormCol mName="content" mLabel="entities.code-system.content" required>
@@ -53,17 +62,26 @@
                 <tw-resource-version-form></tw-resource-version-form>
               }
               <tw-cs-value-set [codeSystem]="codeSystem" [hasRelatedValueSet]="!!codeSystem.valueSet"></tw-cs-value-set>
-            </div>
-            <m-button *m-card-footer mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
-              {{'core.btn.save' | translate}}
-            </m-button>
-          </m-card>
-        </div>
-        <div nz-col [nzMd]="6" [nzXs]="24">
+            </fieldset>
+          </div>
+
+          <ng-container *m-card-footer>
+            @if (!viewMode) {
+              <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+                {{'core.btn.save' | translate}}
+              </m-button>
+            }
+          </ng-container>
+        </m-card>
+      </div>
+
+      <div nz-col [nzMd]="6" [nzXs]="24">
+        <fieldset [attr.disabled]="viewMode ? '' : null" [style.pointer-events]="viewMode ? 'none' : null" style="border:none;padding:0;margin:0">
           <m-card [mShowSkeleton]="loader.isLoading">
             <tw-resource-side-info [copyright]="codeSystem.copyright" [permissions]="codeSystem.permissions" [settings]="codeSystem.settings"/>
           </m-card>
-        </div>
-      </form>
-    }
-  </m-spinner>
+        </fieldset>
+      </div>
+    </form>
+  }
+</m-spinner>

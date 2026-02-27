@@ -9,7 +9,8 @@ import {ResourceVersionFormComponent} from 'term-web/resources/resource/componen
 import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {ResourceConfigurationAttributesComponent} from 'term-web/resources/resource/components/resource-configuration-attributes.component';
-import { MuiSpinnerModule, MuiCardModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import {AuthService} from 'term-web/core/auth';
+import { MuiSpinnerModule, MuiCardModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
 
 import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
 import { ResourceFormComponent as ResourceFormComponent_1 } from 'term-web/resources/resource/components/resource-form.component';
@@ -23,16 +24,19 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     templateUrl: 'value-set-edit.component.html',
-    imports: [MuiSpinnerModule, FormsModule, NzRowDirective, NzColDirective, MuiCardModule, ResourceFormComponent_1, ResourceIdentifiersComponent_1, ResourceConfigurationAttributesComponent_1, ResourceContactsComponent, ResourceVersionFormComponent_1, MuiButtonModule, ResourceSideInfoComponent, TranslatePipe]
+    imports: [MuiSpinnerModule, FormsModule, NzRowDirective, NzColDirective, MuiCardModule, ResourceFormComponent_1, ResourceIdentifiersComponent_1, ResourceConfigurationAttributesComponent_1, ResourceContactsComponent, ResourceVersionFormComponent_1, MuiButtonModule, MuiIconModule, ResourceSideInfoComponent, TranslatePipe]
 })
 export class ValueSetEditComponent implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
   private valueSetService = inject(ValueSetService);
+  private authService = inject(AuthService);
 
   protected valueSet?: ValueSet;
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
+  protected viewMode = false;
+  protected canEdit = false;
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild(ResourceFormComponent) public resourceFormComponent?: ResourceFormComponent;
@@ -46,6 +50,8 @@ export class ValueSetEditComponent implements OnInit {
 
       if (isDefined(id)) {
         this.mode = 'edit';
+        this.viewMode = true;
+        this.canEdit = this.authService.hasPrivilege(id + '.ValueSet.edit');
         this.loader.wrap('load', this.valueSetService.load(id)).subscribe(vs => this.valueSet = this.writeVS(vs));
       }
       this.valueSet = this.writeVS(new ValueSet());

@@ -19,8 +19,9 @@
               <a class="submenu__item" [routerLink]="navigate('summary')" routerLinkActive="active">
                 <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.summary', icon: 'appstore'}"/>
               </a>
-              <a class="submenu__item" *twPrivileged="resource.id + '.' + resourceType + '.edit'" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']" routerLinkActive="active">
-                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'core.btn.edit', icon: 'form'}"/>
+
+              <a class="submenu__item" [routerLink]="['/resources', typeMap[resourceType], resource.id, 'edit']" routerLinkActive="active">
+                <ng-container *ngTemplateOutlet="tabTpl; context: {title: 'web.resource-context.metadata', icon: 'form'}"/>
               </a>
               @if (['CodeSystem' , 'ValueSet'] | includes: resourceType) {
                 <a class="submenu__item" [routerLink]="navigate('concepts')" routerLinkActive="active">

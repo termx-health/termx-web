@@ -62,18 +62,18 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
     const json = JSON.stringify(fhirMs, null, 2);
 
     if (format === 'json') {
-      saveAs(new Blob([json], {type: 'application/json'}), `MS-${fhirMs.id}.json`);
+      saveAs(new Blob([json], {type: 'application/json'}), `CM-${fhirMs.id}.json`);
     }
     if (format === 'xml') {
       const xml = new Fhir().jsonToXml(json);
-      saveAs(new Blob([xml], {type: 'application/xml'}), `MS-${fhirMs.id}.xml`);
+      saveAs(new Blob([xml], {type: 'application/xml'}), `CM-${fhirMs.id}.xml`);
     }
     if (format === 'fsh') {
       this.chefService.fhirToFsh({fhir: [json]}).subscribe(r => {
         r.warnings?.forEach(w => this.notificationService.warning('JSON to FSH conversion warning', w.message!, {duration: 0, closable: true}));
         r.errors?.forEach(e => this.notificationService.error('JSON to FSH conversion failed!', e.message!, {duration: 0, closable: true}));
         const fsh = typeof r.fsh === 'string' ? r.fsh : JSON.stringify(r.fsh, null, 2);
-        saveAs(new Blob([fsh], {type: 'application/fsh'}), `MS-${fhirMs.id}.fsh`);
+        saveAs(new Blob([fsh], {type: 'application/fsh'}), `CM-${fhirMs.id}.fsh`);
       });
     }
     if (format === 'csv' || format === 'xlsx') {
@@ -109,7 +109,7 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
 
       if (format === 'csv') {
         const csv = rows.map(row => row.map(cell => `"${cell.replace(/"/g, '""')}"`).join(';')).join('\n');
-        saveAs(new Blob([csv], {type: 'text/csv'}), `MS-${fhirMs.id}.csv`);
+        saveAs(new Blob([csv], {type: 'text/csv'}), `CM-${fhirMs.id}.csv`);
       }
       if (format === 'xlsx') {
         const workbook = new ExcelJS.Workbook();
@@ -118,7 +118,7 @@ export class MapSetVersionInfoWidgetComponent implements OnChanges {
         worksheet.addRows(rows);
 
         workbook.xlsx.writeBuffer().then((buffer) => {
-          saveAs(new Blob([buffer], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}), `MS-${fhirMs.id}.xlsx`);
+          saveAs(new Blob([buffer], {type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'}), `CM-${fhirMs.id}.xlsx`);
         });
       }
     }

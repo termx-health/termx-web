@@ -11,7 +11,8 @@ import {ResourceIdentifiersComponent} from 'term-web/resources/resource/componen
 import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
 import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
-import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiRadioModule, MuiCheckboxModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import {AuthService} from 'term-web/core/auth';
+import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiRadioModule, MuiCheckboxModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
 
 import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
 import { ResourceFormComponent as ResourceFormComponent_1 } from 'term-web/resources/resource/components/resource-form.component';
@@ -31,16 +32,19 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
     templateUrl: 'code-system-edit.component.html',
-    imports: [MuiSpinnerModule, FormsModule, NzRowDirective, NzColDirective, MuiCardModule, ResourceFormComponent_1, MuiFormModule, ValueSetConceptSelectComponent, CodeSystemSearchComponent, MuiRadioModule, AssociationTypeSearchComponent, SequenceSelectComponent, MuiCheckboxModule, ResourceIdentifiersComponent_1, ResourceConfigurationAttributesComponent_1, CodeSystemPropertiesComponent_1, ResourceContactsComponent, ResourceVersionFormComponent_1, CodeSystemValueSetAddComponent_1, MuiButtonModule, ResourceSideInfoComponent, TranslatePipe]
+    imports: [MuiSpinnerModule, FormsModule, NzRowDirective, NzColDirective, MuiCardModule, ResourceFormComponent_1, MuiFormModule, ValueSetConceptSelectComponent, CodeSystemSearchComponent, MuiRadioModule, AssociationTypeSearchComponent, SequenceSelectComponent, MuiCheckboxModule, ResourceIdentifiersComponent_1, ResourceConfigurationAttributesComponent_1, CodeSystemPropertiesComponent_1, ResourceContactsComponent, ResourceVersionFormComponent_1, CodeSystemValueSetAddComponent_1, MuiButtonModule, MuiIconModule, ResourceSideInfoComponent, TranslatePipe]
 })
 export class CodeSystemEditComponent implements OnInit {
   private codeSystemService = inject(CodeSystemService);
+  private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
   protected codeSystem?: CodeSystem;
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
+  protected viewMode = false;
+  protected canEdit = false;
 
   @ViewChild("form") public form?: NgForm;
 
@@ -57,6 +61,8 @@ export class CodeSystemEditComponent implements OnInit {
 
      if (isDefined(id)) {
        this.mode = 'edit';
+       this.viewMode = true;
+       this.canEdit = this.authService.hasPrivilege(id + '.CodeSystem.edit');
        this.loader.wrap('load', this.codeSystemService.load(id)).subscribe(vs => this.codeSystem = this.writeCS(vs));
      }
      this.codeSystem = this.writeCS(new CodeSystem());

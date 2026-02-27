@@ -4,7 +4,6 @@ import {Resource} from 'term-web/resources/resource/model/resource';
 import {ResourceVersion} from 'term-web/resources/resource/model/resource-version';
 import { MarinPageLayoutModule, MuiCoreModule, MuiIconModule, MuiDropdownModule } from '@kodality-web/marina-ui';
 import { NgTemplateOutlet, UpperCasePipe } from '@angular/common';
-import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
 import { TranslatePipe } from '@ngx-translate/core';
 import { MarinaUtilModule } from '@kodality-web/marina-util';
 import { ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
@@ -20,7 +19,6 @@ import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
     RouterLinkActive,
     RouterLink,
     NgTemplateOutlet,
-    PrivilegedDirective,
     MuiIconModule,
     MuiDropdownModule,
     UpperCasePipe,

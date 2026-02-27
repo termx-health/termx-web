@@ -14,11 +14,10 @@ import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.di
 import { ResourceTasksWidgetComponent as ResourceTasksWidgetComponent_1 } from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import { ResourceTaskModalComponent } from 'term-web/resources/resource/components/resource-task-modal-component';
 import { TranslatePipe } from '@ngx-translate/core';
-import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
     templateUrl: 'code-system-version-summary.component.html',
-    imports: [ResourceContextComponent, MarinPageLayoutModule, PrivilegeContextDirective, MuiFormModule, MuiCardModule, MuiButtonModule, RouterLink, MuiIconModule, CodeSystemVersionInfoWidgetComponent, PrivilegedDirective, MuiCoreModule, ResourceTasksWidgetComponent_1, ResourceTaskModalComponent, TranslatePipe, ToStringPipe, PrivilegedPipe]
+    imports: [ResourceContextComponent, MarinPageLayoutModule, PrivilegeContextDirective, MuiFormModule, MuiCardModule, MuiButtonModule, RouterLink, MuiIconModule, CodeSystemVersionInfoWidgetComponent, PrivilegedDirective, MuiCoreModule, ResourceTasksWidgetComponent_1, ResourceTaskModalComponent, TranslatePipe, ToStringPipe]
 })
 export class CodeSystemVersionSummaryComponent implements OnInit {
   private route = inject(ActivatedRoute);

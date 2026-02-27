@@ -11,7 +11,8 @@ import {ResourceIdentifiersComponent} from 'term-web/resources/resource/componen
 import {ResourceVersionFormComponent} from 'term-web/resources/resource/components/resource-version-form.component';
 import {ResourceUtil} from 'term-web/resources/resource/util/resource-util';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
-import { MuiSpinnerModule, MuiCardModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import {AuthService} from 'term-web/core/auth';
+import { MuiSpinnerModule, MuiCardModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
 
 import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
 import { ResourceFormComponent as ResourceFormComponent_1 } from 'term-web/resources/resource/components/resource-form.component';
@@ -40,12 +41,14 @@ import { TranslatePipe } from '@ngx-translate/core';
     ResourceVersionFormComponent_1,
     MapSetScopeFormComponent_1,
     MuiButtonModule,
+    MuiIconModule,
     ResourceSideInfoComponent,
     TranslatePipe
 ],
 })
 export class MapSetEditComponent implements OnInit {
   private mapSetService = inject(MapSetService);
+  private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -56,6 +59,8 @@ export class MapSetEditComponent implements OnInit {
   };
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
+  protected viewMode = false;
+  protected canEdit = false;
 
   @ViewChild("form") public form!: NgForm;
 
@@ -72,6 +77,8 @@ export class MapSetEditComponent implements OnInit {
 
       if (isDefined(id)) {
         this.mode = 'edit';
+        this.viewMode = true;
+        this.canEdit = this.authService.hasPrivilege(id + '.MapSet.edit');
         this.loader.wrap('load', this.mapSetService.load(id)).subscribe(vs => this.mapSet = this.writeMS(vs));
       }
       this.mapSet = this.writeMS(new MapSet());

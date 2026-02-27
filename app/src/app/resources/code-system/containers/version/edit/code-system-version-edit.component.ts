@@ -5,7 +5,8 @@ import { compareValues, isDefined, LoadingManager, validateForm, ApplyPipe } fro
 import {CodeSystemVersion} from 'term-web/resources/_lib';
 import {map, Observable} from 'rxjs';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
-import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiDatePickerModule, MuiMultiLanguageInputModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import {AuthService} from 'term-web/core/auth';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiDatePickerModule, MuiMultiLanguageInputModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
 import { AsyncPipe } from '@angular/common';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
@@ -31,6 +32,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     CodeSystemVersionSelectComponent,
     ResourceIdentifiersComponent,
     MuiButtonModule,
+    MuiIconModule,
     AsyncPipe,
     TranslatePipe,
     ApplyPipe
@@ -38,6 +40,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class CodeSystemVersionEditComponent implements OnInit {
   private codeSystemService = inject(CodeSystemService);
+  private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -45,6 +48,8 @@ export class CodeSystemVersionEditComponent implements OnInit {
   protected version?: CodeSystemVersion;
   protected loader = new LoadingManager();
   protected mode: 'add' | 'edit' = 'add';
+  protected viewMode = false;
+  protected canEdit = false;
 
   @ViewChild("form") public form?: NgForm;
 
@@ -54,6 +59,8 @@ export class CodeSystemVersionEditComponent implements OnInit {
 
     if (isDefined(versionCode)) {
       this.mode = 'edit';
+      this.viewMode = true;
+      this.canEdit = this.authService.hasPrivilege(this.codeSystemId + '.CodeSystem.edit');
       this.loader.wrap('load', this.codeSystemService.loadVersion(this.codeSystemId, versionCode)).subscribe(v => this.version = this.writeVersion(v));
     } else {
       this.codeSystemService.searchVersions(this.codeSystemId).subscribe(r => {

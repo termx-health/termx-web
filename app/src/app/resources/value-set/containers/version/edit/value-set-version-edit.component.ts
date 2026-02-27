@@ -2,11 +2,11 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import { compareValues, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
-import {FhirValueSetLibService} from 'term-web/fhir/_lib';
 import {ValueSetVersion, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {map, Observable} from 'rxjs';
-import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiDatePickerModule, MuiMultiLanguageInputModule, MuiDividerModule, MuiCheckboxModule, MarinPageLayoutModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import {AuthService} from 'term-web/core/auth';
+import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiDatePickerModule, MuiMultiLanguageInputModule, MuiDividerModule, MuiCheckboxModule, MarinPageLayoutModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { AsyncPipe } from '@angular/common';
 import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
@@ -33,6 +33,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     ValueSetVersionRuleSetWidgetComponent,
     MarinPageLayoutModule,
     MuiButtonModule,
+    MuiIconModule,
     AsyncPipe,
     TranslatePipe,
     ApplyPipe
@@ -40,7 +41,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 })
 export class ValueSetVersionEditComponent implements OnInit {
   private valueSetService = inject(ValueSetService);
-  private fhirValueSetService = inject(FhirValueSetLibService);
+  private authService = inject(AuthService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
 
@@ -50,6 +51,8 @@ export class ValueSetVersionEditComponent implements OnInit {
 
   public mode: 'add' | 'edit' = 'add';
   public loader = new LoadingManager();
+  protected viewMode = false;
+  protected canEdit = false;
 
 
   @ViewChild("form") public form?: NgForm;
@@ -58,6 +61,10 @@ export class ValueSetVersionEditComponent implements OnInit {
     this.valueSetId = this.route.snapshot.paramMap.get('id');
     this.valueSetVersion = this.route.snapshot.paramMap.get('versionCode');
     this.mode = this.valueSetId && this.valueSetVersion ? 'edit' : 'add';
+    this.viewMode = (this.mode === 'edit');
+    if (this.viewMode) {
+      this.canEdit = this.authService.hasPrivilege(this.valueSetId + '.ValueSet.edit');
+    }
 
     if (this.mode === 'edit') {
       this.loadVersion(this.valueSetId!, this.valueSetVersion!);
