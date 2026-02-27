@@ -1215,7 +1215,8 @@
 						"link": "Nuoroda",
 						"types": {
 							"csv": "CSV",
-							"tsv": "TSV"
+							"tsv": "TSV",
+							"xlsx": "XLSX"
 						}
 					}
 				},
