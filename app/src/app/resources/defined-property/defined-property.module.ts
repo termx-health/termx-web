@@ -4,7 +4,7 @@ import {ValueSetLibModule} from 'term-web/resources/_lib';
 import {DefinedPropertyEditComponent} from 'term-web/resources/defined-property/edit/defined-property-edit.component';
 import {DefinedPropertyListComponent} from 'term-web/resources/defined-property/list/defined-property-list.component';
 import {DefinedPropertyService} from 'term-web/resources/defined-property/services/defined-property.service';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 
 export const DEFINED_PROPERTY_ROUTES: Routes = [
   {path: '', component: DefinedPropertyListComponent},
@@ -13,17 +13,15 @@ export const DEFINED_PROPERTY_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CoreUiModule,
-    ValueSetLibModule
-  ],
-  declarations: [
-    DefinedPropertyListComponent,
-    DefinedPropertyEditComponent
-  ],
-  providers: [
-    DefinedPropertyService
-  ]
+    imports: [
+        CoreUiModule,
+        ValueSetLibModule,
+        DefinedPropertyListComponent,
+        DefinedPropertyEditComponent
+    ],
+    providers: [
+        DefinedPropertyService
+    ]
 })
 export class DefinedPropertyModule {
 }

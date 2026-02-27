@@ -1,222 +1,267 @@
 <tw-resource-context resourceType="CodeSystem"
-    [resource]="codeSystem"
-    [conceptCode]="concept?.code"
-    [version]="codeSystemVersion"
-    [versions]="codeSystemVersions"
-    mode="concept-edit"></tw-resource-context>
+  [resource]="codeSystem"
+  [conceptCode]="concept?.code"
+  [version]="codeSystemVersion"
+  [versions]="codeSystemVersions"
+mode="concept-edit"></tw-resource-context>
 <m-page [mLoading]="loader.isLoading">
 
   <div style="display: flex; gap: 1rem">
     <div style="display: flex; gap: 1rem; flex-direction: column; flex: 1">
 
       <!-- Concept info -->
-      <m-card *ngIf="concept">
-        <div *m-card-header class="m-justify-between">
-          <m-title [mTitle]="mode === 'edit' ? concept.code : 'web.code-system-concept.form.add-header'" class="m-bold"></m-title>
-          <m-dropdown>
-            <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteConcept(concept.code)">
-              {{'core.btn.delete' | translate}}
-            </a>
-          </m-dropdown>
-        </div>
-        <form #form="ngForm">
-          <ng-container *ngIf="!concept.immutable">
-            <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>
-              <div class="m-items-middle">
-                <m-input style="width: 100%" name="code" [(ngModel)]="concept.code" autofocus required></m-input>
-                <tw-sequence-value-generator *ngIf="codeSystem?.sequence" [code]="codeSystem?.sequence" (valueGenerated)="concept.code = $event"/>
-              </div>
-            </m-form-item>
-            <m-form-item mName="description" mLabel="entities.code-system-concept.description">
-              <m-textarea name="description" [(ngModel)]="concept.description"></m-textarea>
-            </m-form-item>
-          </ng-container>
-          <ng-container *ngIf="concept.immutable">
-            <span>{{concept.description}}</span>
-          </ng-container>
-        </form>
-      </m-card>
+      @if (concept) {
+        <m-card>
+          <div *m-card-header class="m-justify-between">
+            <m-title [mTitle]="mode === 'edit' ? concept.code : 'web.code-system-concept.form.add-header'" class="m-bold"></m-title>
+            <m-dropdown>
+              <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteConcept(concept.code)">
+                {{'core.btn.delete' | translate}}
+              </a>
+            </m-dropdown>
+          </div>
+          <form #form="ngForm">
+            @if (!concept.immutable) {
+              <m-form-item mName="code" mLabel="entities.code-system-concept.code" required>
+                <div class="m-items-middle">
+                  <m-input style="width: 100%" name="code" [(ngModel)]="concept.code" autofocus required></m-input>
+                  @if (codeSystem?.sequence) {
+                    <tw-sequence-value-generator [code]="codeSystem?.sequence" (valueGenerated)="concept.code = $event"/>
+                  }
+                </div>
+              </m-form-item>
+              <m-form-item mName="description" mLabel="entities.code-system-concept.description">
+                <m-textarea name="description" [(ngModel)]="concept.description"></m-textarea>
+              </m-form-item>
+            }
+            @if (concept.immutable) {
+              <span>{{concept.description}}</span>
+            }
+          </form>
+        </m-card>
+      }
 
       <!-- Concept Versions -->
-      <m-card *ngIf="concept?.versions">
-        <div *m-card-header class="m-justify-between">
-          <m-title mTitle="entities.code-system-concept.versions"></m-title>
-          <tw-add-button *ngIf="!newVersionExists && (!codeSystemVersion || codeSystemVersion.status === 'draft')" (click)="addVersion()">
-            {{'web.code-system-concept-version.add-version' | translate}}
-          </tw-add-button>
-        </div>
-        <m-list mSeparated [ngModel]="conceptVersion">
-          <m-list-item *ngFor="let version of concept.versions" mClickable [mValue]="version" (mClick)="selectVersion(version)">
-            <div class="m-justify-between">
-              <div class="m-items-middle">
-                <span class="m-bold">{{version.created ? (version.created | localDate) : ('web.code-system-concept.form.version.new' | translate)}}</span>
-                <m-divider mVertical></m-divider>
-                <tw-status-tag [status]="version.status"></tw-status-tag>
-              </div>
-              <div class="m-items-middle">
-                <m-icon (click)="duplicateVersion(version)" *ngIf="version.id" mCode="copy" m-tooltip mTitle="core.btn.duplicate" class="m-clickable"></m-icon>
-                <m-icon m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteVersion(version.id)"
-                    *ngIf="version.status === 'draft' && concept.versions?.length > 1"
-                    mCode="delete"
-                    class="m-clickable"></m-icon>
-              </div>
-            </div>
-            <div>{{version.description | localName}}</div>
-          </m-list-item>
-        </m-list>
-      </m-card>
+      @if (concept?.versions) {
+        <m-card>
+          <div *m-card-header class="m-justify-between">
+            <m-title mTitle="entities.code-system-concept.versions"></m-title>
+            @if (!newVersionExists && (!codeSystemVersion || codeSystemVersion.status === 'draft')) {
+              <tw-add-button (click)="addVersion()">
+                {{'web.code-system-concept-version.add-version' | translate}}
+              </tw-add-button>
+            }
+          </div>
+          <m-list mSeparated [ngModel]="conceptVersion">
+            @for (version of concept.versions; track version) {
+              <m-list-item mClickable [mValue]="version" (mClick)="selectVersion(version)">
+                <div class="m-justify-between">
+                  <div class="m-items-middle">
+                    <span class="m-bold">{{version.created ? (version.created | localDate) : ('web.code-system-concept.form.version.new' | translate)}}</span>
+                    <m-divider mVertical></m-divider>
+                    <tw-status-tag [status]="version.status"></tw-status-tag>
+                  </div>
+                  <div class="m-items-middle">
+                    @if (version.id) {
+                      <m-icon (click)="duplicateVersion(version)" mCode="copy" m-tooltip mTitle="core.btn.duplicate" class="m-clickable"></m-icon>
+                    }
+                    @if (version.status === 'draft' && concept.versions?.length > 1) {
+                      <m-icon m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteVersion(version.id)"
+                        mCode="delete"
+                      class="m-clickable"></m-icon>
+                    }
+                  </div>
+                </div>
+                <div>{{version.description | localName}}</div>
+              </m-list-item>
+            }
+          </m-list>
+        </m-card>
+      }
 
       <!-- Related artifacts -->
-      <m-card *ngIf="concept?.id">
-        <m-title *m-card-header mTitle="web.code-system-concept.form.related-artifacts"></m-title>
-        <tw-resource-related-artifact-widget resourceType="Concept" [resourceId]="concept.id | toString"></tw-resource-related-artifact-widget>
-      </m-card>
+      @if (concept?.id) {
+        <m-card>
+          <m-title *m-card-header mTitle="web.code-system-concept.form.related-artifacts"></m-title>
+          <tw-resource-related-artifact-widget resourceType="Concept" [resourceId]="concept.id | toString"></tw-resource-related-artifact-widget>
+        </m-card>
+      }
 
       <!-- Opened tasks -->
-      <m-card *ngIf="conceptVersion?.id && ('*.Task.view' | twPrivileged)">
-        <div *m-card-header class="m-justify-between">
-          <div class="m-items-middle">
-            <a *ngIf="!showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
-              <m-title mTitle="web.code-system-concept.form.opened-tasks"></m-title>
-            </a>
-            <m-title *ngIf="showOnlyOpenedTasks" mTitle="web.code-system-concept.form.opened-tasks"></m-title>
-            <span>|</span>
-            <a *ngIf="showOnlyOpenedTasks" (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
-              <m-title mTitle="web.code-system-concept.form.all-tasks"></m-title>
-            </a>
-            <m-title *ngIf="!showOnlyOpenedTasks" mTitle="web.code-system-concept.form.all-tasks"></m-title>
+      @if (conceptVersion?.id && ('*.Task.view' | twPrivileged)) {
+        <m-card>
+          <div *m-card-header class="m-justify-between">
+            <div class="m-items-middle">
+              @if (!showOnlyOpenedTasks) {
+                <a (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+                  <m-title mTitle="web.code-system-concept.form.opened-tasks"></m-title>
+                </a>
+              }
+              @if (showOnlyOpenedTasks) {
+                <m-title mTitle="web.code-system-concept.form.opened-tasks"></m-title>
+              }
+              <span>|</span>
+              @if (showOnlyOpenedTasks) {
+                <a (mClick)="showOnlyOpenedTasks = !showOnlyOpenedTasks">
+                  <m-title mTitle="web.code-system-concept.form.all-tasks"></m-title>
+                </a>
+              }
+              @if (!showOnlyOpenedTasks) {
+                <m-title mTitle="web.code-system-concept.form.all-tasks"></m-title>
+              }
+            </div>
+            <m-button mDisplay="text" (mClick)="taskModalData = {visible: true}" *twPrivileged="'*.Task.edit'">
+              <m-icon mCode="plus"/>&nbsp; {{'web.code-system-concept.form.add-task' | translate}}
+            </m-button>
           </div>
-          <m-button mDisplay="text" (mClick)="taskModalData = {visible: true}" *twPrivileged="'*.Task.edit'">
-            <m-icon mCode="plus"/>&nbsp; {{'web.code-system-concept.form.add-task' | translate}}
-          </m-button>
-        </div>
-        <tw-resource-tasks-widget resourceType="CodeSystemEntityVersion"
+          <tw-resource-tasks-widget resourceType="CodeSystemEntityVersion"
             [resourceId]="conceptVersion.id | toString"
-            [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined"></tw-resource-tasks-widget>
-      </m-card>
+          [taskFilters]="showOnlyOpenedTasks ? {statuses: ['requested']} : undefined"></tw-resource-tasks-widget>
+        </m-card>
+      }
     </div>
 
     <div style="display: flex; gap: 1rem; flex-direction: column; flex: 2; min-width: 0">
       <!-- Version info -->
-      <m-card *ngIf="conceptVersion">
-        <div *m-card-header class="m-justify-between">
-          <div class="m-items-middle">
-            <m-title [mTitle]="conceptVersion.created ? ('web.code-system-concept.form.version.header' | translate: {created: conceptVersion.created | localDateTime}) : 'web.code-system-concept.form.version.new'"></m-title>
-            <m-divider mVertical></m-divider>
-            <tw-status-tag [status]="conceptVersion.status"></tw-status-tag>
-          </div>
-          <div class="m-items-middle">
-            <m-button *ngIf="conceptVersion.id && conceptVersion.status === 'draft'" (click)="changeVersionStatus(conceptVersion, 'active')">
-              {{'web.publication-status.operations.activate' | translate}}
-            </m-button>
-            <m-button *ngIf="conceptVersion.id && conceptVersion.status !== 'retired'" (click)="changeVersionStatus(conceptVersion, 'retired')">
-              {{'web.publication-status.operations.retire' | translate}}
-            </m-button>
-            <m-button *ngIf="conceptVersion.id && conceptVersion.status !== 'draft'" (click)="changeVersionStatus(conceptVersion, 'draft')">
-              {{'web.publication-status.operations.save-as-draft' | translate}}
-            </m-button>
-            <m-button *ngIf="conceptVersion.status === 'draft'"
-                mDisplay="primary"
-                [mLoading]="loader.state['save']"
-                [disabled]="loader.isLoading"
-                (click)="save()">
-              {{'core.btn.save' | translate}}
-            </m-button>
-            <m-dropdown>
-              <a *m-dropdown-item (mClick)="openFhir(concept.code)">
-                {{'web.code-system-concept.list.open-fhir' | translate}}
-              </a>
-            </m-dropdown>
-          </div>
-        </div>
-        <m-form-item *ngIf="conceptVersion.status === 'draft'" mName="versionDescription" mLabel="entities.code-system-entity-version.description">
-          <m-textarea name="versionDescription" [(ngModel)]="conceptVersion.description"></m-textarea>
-        </m-form-item>
-        <label *ngIf="conceptVersion.status !== 'draft'">{{conceptVersion.description}}</label>
-        <m-form-item mLabel="web.code-system-concept.form.linked-with-code-systems">
-          <div class="m-items-middle">
-            <m-tag *ngFor="let csv of conceptVersion.versions" mShowIcon>
-              <span>{{csv.version}}</span>&nbsp;
-              <m-icon *ngIf="csv.status === 'draft'" class="m-clickable" mCode="close" (click)="unlink(conceptVersion.id, csv.version)"></m-icon>
-            </m-tag>
-            <ng-container *ngIf="codeSystemVersions | filter: filterDraftVersions:conceptVersion.versions as draftVersions">
-              <m-dropdown *ngIf="draftVersions?.length" [mHideIfEmpty]="false" >
-                <m-button *m-dropdown-container mDisplay="link">
-                  {{'web.code-system.summary.unlinked-concepts.link-to' | translate:{version: '...'} }}
+      @if (conceptVersion) {
+        <m-card>
+          <div *m-card-header class="m-justify-between">
+            <div class="m-items-middle">
+              <m-title [mTitle]="conceptVersion.created ? ('web.code-system-concept.form.version.header' | translate: {created: conceptVersion.created | localDateTime}) : 'web.code-system-concept.form.version.new'"></m-title>
+              <m-divider mVertical></m-divider>
+              <tw-status-tag [status]="conceptVersion.status"></tw-status-tag>
+            </div>
+            <div class="m-items-middle">
+              @if (conceptVersion.id && conceptVersion.status === 'draft') {
+                <m-button (click)="changeVersionStatus(conceptVersion, 'active')">
+                  {{'web.publication-status.operations.activate' | translate}}
                 </m-button>
-                <ng-container *ngFor="let v of draftVersions">
-                  <a *m-dropdown-item (mClick)="link(conceptVersion.id, v.version)">{{v.version}}</a>
-                </ng-container>
+              }
+              @if (conceptVersion.id && conceptVersion.status !== 'retired') {
+                <m-button (click)="changeVersionStatus(conceptVersion, 'retired')">
+                  {{'web.publication-status.operations.retire' | translate}}
+                </m-button>
+              }
+              @if (conceptVersion.id && conceptVersion.status !== 'draft') {
+                <m-button (click)="changeVersionStatus(conceptVersion, 'draft')">
+                  {{'web.publication-status.operations.save-as-draft' | translate}}
+                </m-button>
+              }
+              @if (conceptVersion.status === 'draft') {
+                <m-button
+                  mDisplay="primary"
+                  [mLoading]="loader.state['save']"
+                  [disabled]="loader.isLoading"
+                  (click)="save()">
+                  {{'core.btn.save' | translate}}
+                </m-button>
+              }
+              <m-dropdown>
+                <a *m-dropdown-item (mClick)="openFhir(concept.code)">
+                  {{'web.code-system-concept.list.open-fhir' | translate}}
+                </a>
               </m-dropdown>
-            </ng-container>
+            </div>
           </div>
-        </m-form-item>
-
-        <!-- Designations -->
-        <m-divider></m-divider>
-        <m-card class="m-card-inside">
-          <m-title *m-card-header mTitle="entities.code-system-entity-version.designations">
-            <m-dropdown mControls *ngIf="codeSystem && conceptVersion?.status === 'draft'">
-              <tw-add-button *m-dropdown-container>
-                {{ 'web.code-system-concept-version.designation.add-designation' | translate }}
-              </tw-add-button>
-              <ng-container *ngFor="let prop of codeSystem.properties | filter: filterProperties: 'designation' ">
-                <a *m-dropdown-item (mClick)="addDesignation(prop)">{{ prop.name }}</a>
-              </ng-container>
-            </m-dropdown>
-          </m-title>
-
-          <tw-code-system-designation-edit #designationEdit
+          @if (conceptVersion.status === 'draft') {
+            <m-form-item mName="versionDescription" mLabel="entities.code-system-entity-version.description">
+              <m-textarea name="versionDescription" [(ngModel)]="conceptVersion.description"></m-textarea>
+            </m-form-item>
+          }
+          @if (conceptVersion.status !== 'draft') {
+            <label>{{conceptVersion.description}}</label>
+          }
+          <m-form-item mLabel="web.code-system-concept.form.linked-with-code-systems">
+            <div class="m-items-middle">
+              @for (csv of conceptVersion.versions; track csv) {
+                <m-tag mShowIcon>
+                  <span>{{csv.version}}</span>&nbsp;
+                  @if (csv.status === 'draft') {
+                    <m-icon class="m-clickable" mCode="close" (click)="unlink(conceptVersion.id, csv.version)"></m-icon>
+                  }
+                </m-tag>
+              }
+              @if (codeSystemVersions | filter: filterDraftVersions:conceptVersion.versions; as draftVersions) {
+                @if (draftVersions?.length) {
+                  <m-dropdown [mHideIfEmpty]="false" >
+                    <m-button *m-dropdown-container mDisplay="link">
+                      {{'web.code-system.summary.unlinked-concepts.link-to' | translate:{version: '...'} }}
+                    </m-button>
+                    @for (v of draftVersions; track v) {
+                      <a *m-dropdown-item (mClick)="link(conceptVersion.id, v.version)">{{v.version}}</a>
+                    }
+                  </m-dropdown>
+                }
+              }
+            </div>
+          </m-form-item>
+          <!-- Designations -->
+          <m-divider></m-divider>
+          <m-card class="m-card-inside">
+            <m-title *m-card-header mTitle="entities.code-system-entity-version.designations">
+              @if (codeSystem && conceptVersion?.status === 'draft') {
+                <m-dropdown mControls>
+                  <tw-add-button *m-dropdown-container>
+                    {{ 'web.code-system-concept-version.designation.add-designation' | translate }}
+                  </tw-add-button>
+                  @for (prop of codeSystem.properties | filter: filterProperties: 'designation' ; track prop) {
+                    <a *m-dropdown-item (mClick)="addDesignation(prop)">{{ prop.name }}</a>
+                  }
+                </m-dropdown>
+              }
+            </m-title>
+            <tw-code-system-designation-edit #designationEdit
               [properties]="codeSystem?.properties"
               [designations]="conceptVersion?.designations"
               [supportedLangs]="codeSystemVersion?.supportedLanguages || []"
-              [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-designation-edit>
-        </m-card>
-
-        <!-- Property values -->
-        <m-divider></m-divider>
-        <m-card class="m-card-inside">
-          <m-title *m-card-header mTitle="entities.code-system-entity-version.property-values">
-            <m-dropdown mControls *ngIf="codeSystem && conceptVersion?.status === 'draft'">
-              <tw-add-button *m-dropdown-container>
-                {{ 'web.code-system-concept-version.property-value.add-property-value' | translate }}
-              </tw-add-button>
-              <ng-container *ngFor="let prop of codeSystem.properties | filter: filterProperties: 'property'">
-                <a *m-dropdown-item (mClick)="addPropertyValue(prop)">{{ prop.name }}</a>
-              </ng-container>
-            </m-dropdown>
-          </m-title>
-
-          <tw-code-system-property-value-edit #propertyValueEdit
+            [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-designation-edit>
+          </m-card>
+          <!-- Property values -->
+          <m-divider></m-divider>
+          <m-card class="m-card-inside">
+            <m-title *m-card-header mTitle="entities.code-system-entity-version.property-values">
+              @if (codeSystem && conceptVersion?.status === 'draft') {
+                <m-dropdown mControls>
+                  <tw-add-button *m-dropdown-container>
+                    {{ 'web.code-system-concept-version.property-value.add-property-value' | translate }}
+                  </tw-add-button>
+                  @for (prop of codeSystem.properties | filter: filterProperties: 'property'; track prop) {
+                    <a *m-dropdown-item (mClick)="addPropertyValue(prop)">{{ prop.name }}</a>
+                  }
+                </m-dropdown>
+              }
+            </m-title>
+            <tw-code-system-property-value-edit #propertyValueEdit
               [codeSystemId]="codeSystem?.id"
               [properties]="codeSystem?.properties"
               [propertyValues]="conceptVersion?.propertyValues"
-              [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-property-value-edit>
-        </m-card>
-
-        <!-- Associations -->
-        <m-divider></m-divider>
-        <m-card class="m-card-inside">
-          <div *m-card-header class="m-justify-between">
-            <m-title mTitle="entities.code-system-entity-version.associations"></m-title>
-            <tw-add-button *ngIf="conceptVersion?.status === 'draft'" (click)="addAssociation()">
-              {{'web.code-system-concept-version.association.add-association' | translate}}
-            </tw-add-button>
-          </div>
-          <tw-code-system-association-edit #associationEdit
+            [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-property-value-edit>
+          </m-card>
+          <!-- Associations -->
+          <m-divider></m-divider>
+          <m-card class="m-card-inside">
+            <div *m-card-header class="m-justify-between">
+              <m-title mTitle="entities.code-system-entity-version.associations"></m-title>
+              @if (conceptVersion?.status === 'draft') {
+                <tw-add-button (click)="addAssociation()">
+                  {{'web.code-system-concept-version.association.add-association' | translate}}
+                </tw-add-button>
+              }
+            </div>
+            <tw-code-system-association-edit #associationEdit
               [codeSystemId]="codeSystemId"
               [code]="conceptVersion?.code"
               [associations]="conceptVersion?.associations"
-              [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-association-edit>
+            [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-association-edit>
+          </m-card>
+          <!-- References -->
+          <m-divider></m-divider>
+          <m-card class="m-card-inside">
+            <m-title *m-card-header mTitle="entities.code-system-entity-version.references"></m-title>
+            <tw-cs-concept-reference-list [codeSystem]="codeSystemId" [entityVersionId]="conceptVersion?.id"/>
+          </m-card>
         </m-card>
-
-        <!-- References -->
-        <m-divider></m-divider>
-        <m-card class="m-card-inside">
-          <m-title *m-card-header mTitle="entities.code-system-entity-version.references"></m-title>
-          <tw-cs-concept-reference-list [codeSystem]="codeSystemId" [entityVersionId]="conceptVersion?.id"/>
-        </m-card>
-      </m-card>
+      }
     </div>
   </div>
 </m-page>
@@ -231,10 +276,10 @@
     <form #taskModalForm="ngForm">
       <m-form-item mName="assignee" mLabel="entities.task.assignee" required>
         <tw-user-select
-            name="assignee"
-            [(ngModel)]="taskModalData.assignee"
-            [anyRole]="[codeSystem.id + '.CodeSystem.edit', codeSystem.id + '.CodeSystem.publish']"
-            required></tw-user-select>
+          name="assignee"
+          [(ngModel)]="taskModalData.assignee"
+          [anyRole]="[codeSystem.id + '.CodeSystem.edit', codeSystem.id + '.CodeSystem.publish']"
+        required></tw-user-select>
       </m-form-item>
       <m-form-item mName="comment" mLabel="web.code-system-concept.form.task-modal.comment">
         <m-textarea name="comment" [(ngModel)]="taskModalData.comment"></m-textarea>

@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
-import {Component, ElementRef, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, TemplateRef, ViewChild, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import {compareNumbers, copyDeep, DestroyService, group, LoadingManager, sort, serializeDate} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { compareNumbers, copyDeep, DestroyService, group, LoadingManager, sort, serializeDate, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiRadioModule, MuiInputModule, MuiButtonModule, MuiSelectModule, MuiTableModule, MuiTextareaModule, MuiIconButtonModule, MuiCheckboxModule, MuiNoDataModule, MuiAlertModule, MuiCoreModule } from '@kodality-web/marina-ui';
 import {of} from 'rxjs';
 import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
 import {
@@ -12,8 +12,15 @@ import {
 } from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 import {JobLog} from 'term-web/sys/_lib';
-import {CodeSystem, EntityProperty, ValueSetLibService} from '../../../../../resources/_lib';
-import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../../file-analysis.service';
+import {CodeSystem, EntityProperty, ValueSetLibService} from 'term-web/resources/_lib';
+import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from 'term-web/integration/import/file-import/file-analysis.service';
+import { CodeSystemFileImportFormComponent as CodeSystemFileImportFormComponent_1 } from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
+import { FormsModule } from '@angular/forms';
+
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 
 const DEF_PROP_WEIGHT = {
@@ -26,10 +33,20 @@ const DEF_PROP_WEIGHT = {
 
 
 @Component({
-  templateUrl: 'code-system-file-import.component.html',
-  providers: [DestroyService, CodeSystemFileImportService]
+    templateUrl: 'code-system-file-import.component.html',
+    providers: [DestroyService, CodeSystemFileImportService],
+    imports: [CodeSystemFileImportFormComponent_1, MuiCardModule, MuiFormModule, MuiRadioModule, FormsModule, MuiInputModule, MuiButtonModule, MuiSelectModule, MuiTableModule, MuiTextareaModule, MuiIconButtonModule, MuiCheckboxModule, CodeSystemSearchComponent, ValueSetConceptSelectComponent, MuiNoDataModule, MuiAlertModule, MuiCoreModule, TranslatePipe, MarinaUtilModule, ApplyPipe, IncludesPipe]
 })
 export class CodeSystemFileImportComponent implements OnInit {
+  private http = inject(HttpClient);
+  private notificationService = inject(MuiNotificationService);
+  private valueSetLibService = inject(ValueSetLibService);
+  private importService = inject(CodeSystemFileImportService);
+  private fileAnalysisService = inject(FileAnalysisService);
+  private definedPropertyService = inject(DefinedPropertyLibService);
+  private destroy$ = inject(DestroyService);
+  private router = inject(Router);
+
   public breadcrumbs = ['web.integration.file-import.title', 'web.integration.file-import.code-system.import'];
 
   public data: {
@@ -87,17 +104,6 @@ export class CodeSystemFileImportComponent implements OnInit {
   @ViewChild('successNotificationContent') public successNotificationContent?: TemplateRef<any>;
   @ViewChild(CodeSystemFileImportFormComponent) public formComponent?: CodeSystemFileImportFormComponent;
 
-  public constructor(
-    private http: HttpClient,
-    private notificationService: MuiNotificationService,
-    private valueSetLibService: ValueSetLibService,
-    private importService: CodeSystemFileImportService,
-    private fileAnalysisService: FileAnalysisService,
-    private definedPropertyService: DefinedPropertyLibService,
-    private destroy$: DestroyService,
-    private router: Router
-  ) {}
-
 
   public ngOnInit(): void {
     this.valueSetLibService.expand({valueSet: 'concept-property-type'})
@@ -150,8 +156,8 @@ export class CodeSystemFileImportComponent implements OnInit {
 
     const req: FileProcessingRequest = {
       // request
-      link: this.analyzeResponse.origin?.link!,
-      type: this.analyzeResponse.origin?.type!,
+      link: this.analyzeResponse.origin!.link,
+      type: this.analyzeResponse.origin!.type,
       properties: this.analyzeResponse.parsedProperties?.filter(p => p.import),
       generateValueSet: this.data.generateValueSet,
       dryRun: this.data.dryRun,

@@ -1,4 +1,4 @@
-import {Tag} from '../../tag/models/tag';
+import {Tag} from 'term-web/wiki/_lib/tag/models/tag';
 
 export class PageTag {
   public id?: number;

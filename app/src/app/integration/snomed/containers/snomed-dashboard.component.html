@@ -3,14 +3,14 @@
     <div class="context-container">
       <span class="context-item" style="width: 100%; grid-column: 3 span">SNOMED CT</span>
       <div class="context-item">
-        <ng-container *ngIf="branches">
+        @if (branches) {
           <m-dropdown>
             <a *m-dropdown-container>{{branch}}</a>
-            <ng-container *ngFor="let b of branches">
+            @for (b of branches; track b) {
               <a *m-dropdown-item (mClick)="changeBranch(b.path)">{{b.path}}</a>
-            </ng-container>
+            }
           </m-dropdown>
-        </ng-container>
+        }
       </div>
     </div>
   </div>
@@ -22,6 +22,8 @@
     <tw-snomed-search #searchComponent (conceptSelected)="conceptSelected($event)" [conceptId]="conceptId" [branch]="branch"/>
   </div>
   <div nz-col [nzMd]="16" [nzXs]="24">
-    <tw-snomed-concept-info *ngIf="conceptId" (conceptSelected)="conceptSelected($event)" [conceptId]="conceptId" [branch]="branch"/>
+    @if (conceptId) {
+      <tw-snomed-concept-info (conceptSelected)="conceptSelected($event)" [conceptId]="conceptId" [branch]="branch"/>
+    }
   </div>
 </div>

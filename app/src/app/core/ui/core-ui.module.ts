@@ -8,22 +8,22 @@ import {MarinaUiModule} from '@kodality-web/marina-ui';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {TranslateModule} from '@ngx-translate/core';
 import {AuthModule} from 'term-web/core/auth';
-import {IntegrationLibModule} from '../../integration/_lib';
-import {MeasurementUnitLibModule} from '../../measurement-unit/_lib';
-import {CodeSystemLibModule, ValueSetLibModule} from '../../resources/_lib';
-import {AddButtonComponent} from './components/add-button/add-button.component';
-import {CopyContainerComponent} from './components/copy-container/copy-container.component';
-import {DiffViewComponent} from './components/diff/diff-view.component';
-import {DropListComponent} from './components/drop-list/drop-list.component';
-import {EntityPropertyValueInputComponent} from './components/inputs/property-value-input/entity-property-value-input.component';
-import {TerminologyConceptSearchComponent} from './components/inputs/terminology-concept-select/terminology-concept-search.component';
-import {SemanticVersionSelectComponent} from './components/inputs/version-select/semantic-version-select.component';
-import {StatusTagComponent} from './components/publication-status-tag/status-tag.component';
-import {TableFilterComponent} from './components/table-container/table-filter.component';
-import {TableComponent} from './components/table-container/table.component';
-import {InputDebounceDirective} from './directives/input-debounce.directive';
-import {ValidateUrlPipe} from './pipes/validate-url.pipe';
-import {SeoService} from './services/seo.service';
+import {IntegrationLibModule} from 'term-web/integration/_lib';
+import {MeasurementUnitLibModule} from 'term-web/measurement-unit/_lib';
+import {CodeSystemLibModule, ValueSetLibModule} from 'term-web/resources/_lib';
+import {AddButtonComponent} from 'term-web/core/ui/components/add-button/add-button.component';
+import {CopyContainerComponent} from 'term-web/core/ui/components/copy-container/copy-container.component';
+import {DiffViewComponent} from 'term-web/core/ui/components/diff/diff-view.component';
+import {DropListComponent} from 'term-web/core/ui/components/drop-list/drop-list.component';
+import {EntityPropertyValueInputComponent} from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
+import {TerminologyConceptSearchComponent} from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
+import {SemanticVersionSelectComponent} from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
+import {StatusTagComponent} from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import {TableFilterComponent} from 'term-web/core/ui/components/table-container/table-filter.component';
+import {TableComponent} from 'term-web/core/ui/components/table-container/table.component';
+import {InputDebounceDirective} from 'term-web/core/ui/directives/input-debounce.directive';
+import {ValidateUrlPipe} from 'term-web/core/ui/pipes/validate-url.pipe';
+import {SeoService} from 'term-web/core/ui/services/seo.service';
 
 
 const commonModules = [
@@ -62,29 +62,26 @@ const pipes = [
 
 
 @NgModule({
-  imports: [
-    ...commonModules,
-    DragDropModule,
-
-    CodeSystemLibModule,
-    ValueSetLibModule,
-    MeasurementUnitLibModule,
-    IntegrationLibModule,
-  ],
-  declarations: [
-    ...components,
-    ...pipes,
-    ...directives
-  ],
-  exports: [
-    ...commonModules,
-    ...components,
-    ...pipes,
-    ...directives
-  ],
-  providers: [
-    SeoService,
-  ]
+    imports: [
+        ...commonModules,
+        DragDropModule,
+        CodeSystemLibModule,
+        ValueSetLibModule,
+        MeasurementUnitLibModule,
+        IntegrationLibModule,
+        ...components,
+        ...pipes,
+        ...directives,
+    ],
+    exports: [
+        ...commonModules,
+        ...components,
+        ...pipes,
+        ...directives
+    ],
+    providers: [
+        SeoService,
+    ]
 })
 export class CoreUiModule {
 }

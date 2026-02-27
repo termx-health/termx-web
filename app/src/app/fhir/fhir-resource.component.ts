@@ -1,35 +1,43 @@
 import {Clipboard} from '@angular/cdk/clipboard';
 import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, ParamMap} from '@angular/router';
-import {isDefined} from '@kodality-web/core-util';
+import { isDefined, ApplyPipe } from '@kodality-web/core-util';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import formatXml from 'xml-formatter';
+import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
+import { MuiDividerModule, MuiCardModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { NgTemplateOutlet, JsonPipe } from '@angular/common';
+import { NzTabsComponent, NzTabComponent, NzTabDirective } from 'ng-zorro-antd/tabs';
+import { FhirCodeSystemComponent } from 'term-web/fhir/code-system/fhir-code-system.component';
+import { FhirCodeSystemLookupComponent } from 'term-web/fhir/code-system/fhir-code-system-lookup.component';
+import { FhirValueSetComponent } from 'term-web/fhir/value-set/fhir-value-set.component';
+import { FhirConceptMapComponent } from 'term-web/fhir/concept-map/fhir-concept-map.component';
+import { WikiSmartTextEditorViewComponent } from 'term-web/wiki/_lib/texteditor/wiki-smart-text-editor-view.component';
 
 @Component({
-  templateUrl: './fhir-resource.component.html',
-  styles: [`
+    templateUrl: './fhir-resource.component.html',
+    styles: [`
     table, td, tr {
       border: 1px solid #d2d2d2;
     }
-  `]
+  `],
+    imports: [NzRowDirective, NzColDirective, MuiDividerModule, NzTabsComponent, NzTabComponent, NzTabDirective, FhirCodeSystemComponent, FhirCodeSystemLookupComponent, FhirValueSetComponent, FhirConceptMapComponent, NgTemplateOutlet, WikiSmartTextEditorViewComponent, MuiCardModule, MuiButtonModule, MuiIconModule, JsonPipe, ApplyPipe]
 })
 export class FhirResourceComponent implements OnInit {
+  protected http = inject(HttpClient);
+  private route = inject(ActivatedRoute);
+  private clipboardService = inject(Clipboard);
+  private oidcSecurityService = inject(OidcSecurityService);
+
   public meta?: {type?: string, id?: string, operation?: string, params?: ParamMap} = {};
   public error?: boolean;
   public result?: any;
 
   protected curl?: string;
-
-  public constructor(
-    protected http: HttpClient,
-    private route: ActivatedRoute,
-    private clipboardService: Clipboard,
-    private oidcSecurityService: OidcSecurityService
-  ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {

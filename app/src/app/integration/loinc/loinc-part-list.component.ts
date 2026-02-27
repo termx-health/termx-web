@@ -1,16 +1,45 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {compareStrings, compareValues, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
+import { compareStrings, compareValues, isDefined, LoadingManager, SearchResult, ApplyPipe } from '@kodality-web/core-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Observable, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams, EntityProperty} from 'term-web/resources/_lib';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+import { NgClass, AsyncPipe } from '@angular/common';
+import { MuiListModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { FormsModule } from '@angular/forms';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({
-  selector: 'tw-loinc-part-list',
-  templateUrl: './loinc-part-list.component.html',
+    selector: 'tw-loinc-part-list',
+    templateUrl: './loinc-part-list.component.html',
+    imports: [
+    NzBreadCrumbComponent,
+    NzBreadCrumbItemComponent,
+    NgClass,
+    MuiListModule,
+    MuiInputModule,
+    InputDebounceDirective,
+    FormsModule,
+    MuiBackendTableModule,
+    MuiTableModule,
+    MuiCoreModule,
+    MuiNoDataModule,
+    AsyncPipe,
+    TranslatePipe,
+    ApplyPipe,
+    LocalizedConceptNamePipe
+],
 })
 export class LoincPartListComponent implements OnInit {
+  private codeSystemService = inject(CodeSystemLibService);
+  private translateService = inject(TranslateService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
   protected breadcrumb: string[];
 
   protected properties: EntityProperty[];
@@ -24,14 +53,6 @@ export class LoincPartListComponent implements OnInit {
   protected loincConcepts: CodeSystemConcept[];
 
   protected loader = new LoadingManager();
-
-  public constructor(
-    private codeSystemService: CodeSystemLibService,
-    private translateService: TranslateService,
-    private authService: AuthService,
-    private router: Router,
-    private route: ActivatedRoute
-  ) {}
 
   public ngOnInit(): void {
     this.codeSystemService.load('loinc', true).subscribe(cs => {
@@ -78,7 +99,7 @@ export class LoincPartListComponent implements OnInit {
   protected getName = (c: CodeSystemConcept, type = 'display'): string => {
     const lang = this.translateService.currentLang;
     const version = this.getLastVersion(c?.versions);
-    const displays = version?.designations?.filter(d => d.designationType === type).sort((d1, d2) => d1.language === lang ? 0 : 1);
+    const displays = version?.designations?.filter(d => d.designationType === type).sort(d1 => d1.language === lang ? 0 : 1);
     return displays?.length > 0 ? displays[0]?.name : '';
   };
 

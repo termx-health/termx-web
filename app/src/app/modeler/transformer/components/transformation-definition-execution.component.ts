@@ -1,21 +1,31 @@
-import {Component, Input} from '@angular/core';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { Component, Input, inject } from '@angular/core';
+import { MuiNotificationService, MuiButtonModule, MuiFormModule, MuiCoreModule, MuiTextareaModule, MuiAlertModule } from '@kodality-web/marina-ui';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
-import {TransformationDefinition} from '../../_lib/transformer/transformation-definition';
+import {TransformationDefinition} from 'term-web/modeler/_lib/transformer/transformation-definition';
+import { FormsModule } from '@angular/forms';
+
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-transformation-definition-execution',
-  templateUrl: './transformation-definition-execution.component.html',
+    selector: 'tw-transformation-definition-execution',
+    templateUrl: './transformation-definition-execution.component.html',
+    imports: [
+    MuiButtonModule,
+    MuiFormModule,
+    MuiCoreModule,
+    MuiTextareaModule,
+    FormsModule,
+    MuiAlertModule,
+    TranslatePipe
+],
 })
 export class TransformationDefinitionExecutionComponent {
+  private transformationDefinitionService = inject(TransformationDefinitionService);
+  private notificationService = inject(MuiNotificationService);
+
   @Input() public definition: TransformationDefinition;
   public result: {result?: string, error?: string};
   public loading: boolean;
-
-  public constructor(
-    private transformationDefinitionService: TransformationDefinitionService,
-    private notificationService: MuiNotificationService
-  ) {}
 
   public generate(): void {
     this.transformationDefinitionService.generateInput(this.definition.resources[0]).subscribe(r => {

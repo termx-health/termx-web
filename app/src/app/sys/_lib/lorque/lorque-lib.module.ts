@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {MarinaComponentsModule} from '@kodality-web/marina-ui';
-import {LorqueLibService} from './services/lorque-lib.service';
+import {LorqueLibService} from 'term-web/sys/_lib/lorque/services/lorque-lib.service';
 
 @NgModule({
   imports: [

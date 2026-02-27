@@ -1,10 +1,10 @@
 import {LocalizedName} from '@kodality-web/marina-util';
-import {ObservationDefinitionComponent} from './observation-definition-component';
-import {ObservationDefinitionInterpretation} from './observation-definition-interpretation';
-import {ObservationDefinitionMapping} from './observation-definition-mapping';
-import {ObservationDefinitionMember} from './observation-definition-member';
-import {ObservationDefinitionProtocol} from './observation-definition-protocol';
-import {ObservationDefinitionValue} from './observation-definition-value';
+import {ObservationDefinitionComponent} from 'term-web/observation-definition/_lib/models/observation-definition-component';
+import {ObservationDefinitionInterpretation} from 'term-web/observation-definition/_lib/models/observation-definition-interpretation';
+import {ObservationDefinitionMapping} from 'term-web/observation-definition/_lib/models/observation-definition-mapping';
+import {ObservationDefinitionMember} from 'term-web/observation-definition/_lib/models/observation-definition-member';
+import {ObservationDefinitionProtocol} from 'term-web/observation-definition/_lib/models/observation-definition-protocol';
+import {ObservationDefinitionValue} from 'term-web/observation-definition/_lib/models/observation-definition-value';
 
 export class ObservationDefinition {
   public id?: number;

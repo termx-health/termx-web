@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {mergeMap, Observable, timer} from 'rxjs';
 import {Package, PackageVersion, Space, SpaceLibService} from 'term-web/sys/_lib/space';
-import {JobLog, JobLogResponse} from 'app/src/app/sys/_lib';
+import {JobLog, JobLogResponse} from 'term-web/sys/_lib';
 
 @Injectable()
 export class SpaceService extends SpaceLibService {

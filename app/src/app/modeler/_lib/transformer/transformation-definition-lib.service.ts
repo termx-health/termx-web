@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Bundle} from 'fhir/model/bundle';
@@ -9,9 +9,9 @@ import {TransformationDefinitionQueryParams} from 'term-web/modeler/_lib/transfo
 
 @Injectable()
 export class TransformationDefinitionLibService {
-  protected baseUrl = `${environment.termxApi}/transformation-definitions`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) {}
+  protected baseUrl = `${environment.termxApi}/transformation-definitions`;
 
   public load(id: number): Observable<TransformationDefinition> {
     return this.http.get<TransformationDefinition>(`${this.baseUrl}/${id}`);

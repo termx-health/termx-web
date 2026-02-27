@@ -1,5 +1,5 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {environment} from 'environments/environment';
 import {saveAs} from 'file-saver';
@@ -29,9 +29,10 @@ export interface FileProcessingRequest {
 
 @Injectable()
 export class MapSetFileImportService {
-  public readonly baseUrl = `${environment.termxApi}/file-importer/map-set`;
+  private http = inject(HttpClient);
+  private jobService = inject(JobLibService);
 
-  public constructor(private http: HttpClient, private jobService: JobLibService) {}
+  public readonly baseUrl = `${environment.termxApi}/file-importer/map-set`;
 
   public getTemplate(): void {
     this.http.get(`${this.baseUrl}/csv-template`, {

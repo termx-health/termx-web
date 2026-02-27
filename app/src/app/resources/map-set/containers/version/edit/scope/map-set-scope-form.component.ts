@@ -1,23 +1,27 @@
-import {Component, Input, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {isDefined, validateForm} from '@kodality-web/core-util';
-import {CodeSystemLibService, CodeSystemVersion, MapSetResourceReference, MapSetScope, ValueSetLibService, ValueSetVersion} from 'app/src/app/resources/_lib';
+import { Component, Input, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import {CodeSystemLibService, CodeSystemVersion, MapSetResourceReference, MapSetScope, ValueSetLibService, ValueSetVersion} from 'term-web/resources/_lib';
 import {map, Observable, of} from 'rxjs';
+import { MuiCardModule, MuiFormModule, MuiRadioModule, MuiEditableTableModule, MuiSelectModule, MuiInputModule } from '@kodality-web/marina-ui';
+import { AsyncPipe } from '@angular/common';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-ms-scope-form',
-  templateUrl: 'map-set-scope-form.component.html'
+    selector: 'tw-ms-scope-form',
+    templateUrl: 'map-set-scope-form.component.html',
+    imports: [MuiCardModule, FormsModule, MuiFormModule, MuiRadioModule, MuiEditableTableModule, CodeSystemSearchComponent, MuiSelectModule, ValueSetSearchComponent, MuiInputModule, AsyncPipe, TranslatePipe, ApplyPipe]
 })
 export class MapSetScopeFormComponent {
+  private valueSetService = inject(ValueSetLibService);
+  private codeSystemService = inject(CodeSystemLibService);
+
   @Input() public scope?: MapSetScope;
   @ViewChild("form") public form?: NgForm;
 
   protected rowInstance: MapSetResourceReference = {};
-
-  public constructor(
-    private valueSetService: ValueSetLibService,
-    private codeSystemService: CodeSystemLibService,
-  ) {}
 
   public valid(): boolean {
     return validateForm(this.form);

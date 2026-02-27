@@ -1,43 +1,45 @@
-<tw-smart-text-editor-view *ngIf="viewMode; else edit" [value]="value" [valueType]="valueType"/>
-
-
-<ng-template #edit>
+@if (viewMode) {
+  <tw-smart-text-editor-view [value]="value" [valueType]="valueType"/>
+} @else {
   <tw-dropdown-menu
     #optionMenu
-      [containerRef]="containerRef"
-      [lang]="lang"
-      (composed)="insertAtCursor($event.result, $event.cursorOffset)"
-  />
-
-  <div class="editor-wrapper">
-    <div #containerRef class="editor__editor" [ngSwitch]="valueType">
-      <tw-wiki-markdown-editor
-        #editor
-          *ngSwitchCase="'markdown'"
-          [(ngModel)]="value"
-          (ngModelChange)="fireOnChange($event)"
-          (keydown)="optionMenu.proxyKeyDown($event)"
-          (keyup)="optionMenu.proxyKeyUp($event)"
-          (blur)="onTouched()"
-          style="font-family: monospace"
-
-          [lineWrapping]="lineWrapping"
-      />
-
-      <tw-wiki-quill-editor
-        #editor
-          *ngSwitchCase="'html'"
-          [(ngModel)]="value"
-          (ngModelChange)="fireOnChange($event)"
-          (keydown)="optionMenu.proxyKeyDown($event)"
-          (keyup)="optionMenu.proxyKeyUp($event)"
-          (blur)="onTouched()"
-      />
+    [containerRef]="containerRef"
+    [lang]="lang"
+    (composed)="insertAtCursor($event.result, $event.cursorOffset)"
+    />
+    <div class="editor-wrapper">
+      <div #containerRef class="editor__editor">
+        @switch (valueType) {
+          @case ('markdown') {
+            <tw-wiki-markdown-editor
+              #editor
+              [(ngModel)]="value"
+              (ngModelChange)="fireOnChange($event)"
+              (keydown)="optionMenu.proxyKeyDown($event)"
+              (keyup)="optionMenu.proxyKeyUp($event)"
+              (blur)="onTouched()"
+              style="font-family: monospace"
+              [lineWrapping]="lineWrapping"
+              />
+          }
+          @case ('html') {
+            <tw-wiki-quill-editor
+              #editor
+              [(ngModel)]="value"
+              (ngModelChange)="fireOnChange($event)"
+              (keydown)="optionMenu.proxyKeyDown($event)"
+              (keyup)="optionMenu.proxyKeyUp($event)"
+              (blur)="onTouched()"
+              />
+          }
+        }
+      </div>
+      @if (showPreview) {
+        <div class="editor__preview">
+          <tw-smart-text-editor-view [value]="valueView$ | async" [valueType]="valueType" [prerender]="true"/>
+        </div>
+      }
     </div>
+  }
 
 
-    <div *ngIf="showPreview" class="editor__preview">
-      <tw-smart-text-editor-view [value]="valueView$ | async" [valueType]="valueType" [prerender]="true"/>
-    </div>
-  </div>
-</ng-template>

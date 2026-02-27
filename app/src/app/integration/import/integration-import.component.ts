@@ -1,9 +1,9 @@
-import {Directive, OnInit} from '@angular/core';
+import {Directive, inject, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {filter, Observable} from 'rxjs';
 import {IntegrationImportConfiguration} from 'term-web/integration/_lib';
-import {JobLibService, JobLogResponse} from '../../sys/_lib';
+import {JobLibService, JobLogResponse} from 'term-web/sys/_lib';
 
 @Directive()
 export abstract class IntegrationImportComponent implements OnInit {
@@ -13,11 +13,9 @@ export abstract class IntegrationImportComponent implements OnInit {
 
   public loading = false;
 
-  protected constructor(
-    private route: ActivatedRoute,
-    private jobService: JobLibService,
-    private notificationService: MuiNotificationService,
-  ) { }
+  private route = inject(ActivatedRoute);
+  private jobService = inject(JobLibService);
+  private notificationService = inject(MuiNotificationService);
 
   public ngOnInit(): void {
     this.route.queryParamMap.subscribe(queryParamMap => {

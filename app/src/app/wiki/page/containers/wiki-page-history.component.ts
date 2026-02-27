@@ -1,11 +1,11 @@
 import {Clipboard} from '@angular/cdk/clipboard';
-import {Location} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {isDefined, isNil, LoadingManager} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
+import { Location } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { isDefined, isNil, LoadingManager, ApplyPipe, LocalDateTimePipe } from '@kodality-web/core-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {OutputFormatType} from 'diff2html/lib/types';
-import {NzTimelineItemColor} from 'ng-zorro-antd/timeline/typings';
+import { NzTimelineItemColor, NzTimelineComponent, NzTimelineItemComponent } from 'ng-zorro-antd/timeline';
 import {map, Observable, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {SeoService} from 'term-web/core/ui/services/seo.service';
@@ -13,13 +13,50 @@ import {Space} from 'term-web/sys/_lib/space';
 import {Page, PageContent} from 'term-web/wiki/_lib';
 import {PageContentHistoryItem} from 'term-web/wiki/_lib/page/models/page-content-history-item';
 import {WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
-import {PageService} from '../services/page.service';
+import {PageService} from 'term-web/wiki/page/services/page.service';
+import { MarinPageLayoutModule, MuiCollapsePanelModule, MuiIconButtonModule, MuiIconModule, MuiButtonModule, MuiTooltipModule, MuiDividerModule, MuiCardModule } from '@kodality-web/marina-ui';
+import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
+import { WikiPageHeaderComponent } from 'term-web/wiki/page/components/wiki-page-header.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { DiffViewComponent } from 'term-web/core/ui/components/diff/diff-view.component';
+import { WikiSmartTextEditorViewComponent } from 'term-web/wiki/_lib/texteditor/wiki-smart-text-editor-view.component';
 
 @Component({
-  templateUrl: 'wiki-page-history.component.html',
-  styleUrls: ['../styles/wiki-page.styles.less'],
+    templateUrl: 'wiki-page-history.component.html',
+    styleUrls: ['../styles/wiki-page.styles.less'],
+    imports: [
+    MarinPageLayoutModule,
+    PrivilegeContextDirective,
+    MuiCollapsePanelModule,
+    MuiIconButtonModule,
+    NzTimelineComponent,
+    NzTimelineItemComponent,
+    MuiIconModule,
+    MuiButtonModule,
+    WikiPageHeaderComponent,
+    PrivilegedDirective,
+    MuiTooltipModule,
+    RouterLink,
+    MuiDividerModule,
+    DiffViewComponent,
+    MuiCardModule,
+    WikiSmartTextEditorViewComponent,
+    TranslatePipe,
+    ApplyPipe,
+    LocalDateTimePipe
+],
 })
 export class WikiPageHistoryComponent implements OnInit {
+  private auth = inject(AuthService);
+  private location = inject(Location);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private clipboard = inject(Clipboard);
+  private pageService = inject(PageService);
+  private translate = inject(TranslateService);
+  private spaceService = inject(WikiSpaceService);
+  private seo = inject(SeoService);
+
   protected space?: Space;
   protected slug?: string;
   protected pageContent?: PageContent;
@@ -34,18 +71,6 @@ export class WikiPageHistoryComponent implements OnInit {
   protected viewSource: boolean;
 
   protected loader = new LoadingManager();
-
-  public constructor(
-    public auth: AuthService,
-    private location: Location,
-    private route: ActivatedRoute,
-    private router: Router,
-    private clipboard: Clipboard,
-    private pageService: PageService,
-    private translate: TranslateService,
-    private spaceService: WikiSpaceService,
-    private seo: SeoService,
-  ) { }
 
 
   public ngOnInit(): void {

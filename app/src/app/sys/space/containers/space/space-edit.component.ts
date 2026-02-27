@@ -1,17 +1,20 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {validateForm} from '@kodality-web/core-util';
+import { validateForm, ApplyPipe, KeysPipe } from '@kodality-web/core-util';
 import {forkJoin} from 'rxjs';
 import {Package, Space, TerminologyServer, TerminologyServerLibService} from 'term-web/sys/_lib/space';
-import {SpaceGithubService} from 'app/src/app/sys/space/services/space-github.service';
-import {PackageService} from '../../services/package.service';
-import {SpaceService} from '../../services/space.service';
+import {SpaceGithubService} from 'term-web/sys/space/services/space-github.service';
+import {PackageService} from 'term-web/sys/space/services/package.service';
+import {SpaceService} from 'term-web/sys/space/services/space.service';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiDividerModule, MuiListModule, MuiCoreModule, MuiPopconfirmModule, MuiIconModule, MuiInputModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  templateUrl: './space-edit.component.html',
-  styles: [`
+    templateUrl: './space-edit.component.html',
+    styles: [`
     ::ng-deep .github-dirs {
       padding-left: 40px;
       & .ant-input-group-addon {
@@ -19,9 +22,18 @@ import {SpaceService} from '../../services/space.service';
         min-width: 160px;
       }
     }
-  `]
+  `],
+    imports: [MuiFormModule, MuiSpinnerModule, MuiCardModule, FormsModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiDividerModule, MuiListModule, MuiCoreModule, MuiPopconfirmModule, MuiIconModule, MuiInputModule, MuiButtonModule, TranslatePipe, MarinaUtilModule, ApplyPipe, KeysPipe]
 })
 export class SpaceEditComponent implements OnInit {
+  private spaceService = inject(SpaceService);
+  private spaceGithubService = inject(SpaceGithubService);
+  private packageService = inject(PackageService);
+  private terminologyServerService = inject(TerminologyServerLibService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private location = inject(Location);
+
   public space?: Space;
   public packages?: Package[];
   public terminologyServers?: TerminologyServer[];
@@ -32,16 +44,6 @@ export class SpaceEditComponent implements OnInit {
   public mode: 'add' | 'edit' = 'add';
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private spaceService: SpaceService,
-    private spaceGithubService: SpaceGithubService,
-    private packageService: PackageService,
-    private terminologyServerService: TerminologyServerLibService,
-    private route: ActivatedRoute,
-    private router: Router,
-    private location: Location
-  ) { }
 
   public ngOnInit(): void {
     this.loadTerminologyServers();

@@ -49,6 +49,7 @@ const prepareEditor = (state: EditorState, editorFacade: EditorFacade): void => 
       initialized: true
     });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     _dispose(state);
   }
@@ -79,6 +80,7 @@ const saveStructureMap = (editorState: EditorState, editorFacade: EditorFacade):
     editorFacade.updateStructureMap(structureMap);
     setTimeout(() => _dispose(editorState), 10);
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
   }
 };
@@ -144,6 +146,7 @@ const createIFrame = (editorState: EditorState): void => {
   const IFRAME_TIMEOUT = 6000;
   setTimeout(() => {
     if (editorState.initialized === false) {
+      // eslint-disable-next-line no-console
       console.error('The FML editor could not be loaded.');
       _dispose(editorState);
     }

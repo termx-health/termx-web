@@ -1,18 +1,14 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
 import {EMPTY, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {ChefService} from '../services/chef.service';
+import {ChefService} from 'term-web/integration/_lib/chef/services/chef.service';
 
-@Pipe({
-  name: 'fhirToFsh'
-})
+@Pipe({ name: 'fhirToFsh' })
 export class FhirToFshPipe implements PipeTransform {
+  private chefService = inject(ChefService);
+  private notificationService = inject(MuiNotificationService);
 
-  public constructor(
-    private chefService: ChefService,
-    private notificationService: MuiNotificationService
-  ) {}
 
   public transform(content: string): Observable<string> {
     if (!content) {

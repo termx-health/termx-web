@@ -5,13 +5,14 @@
 
     <div class="m-items-middle">
       <!-- Quick Search -->
-      <m-input
-          *ngIf="!filter.open"
+      @if (!filter.open) {
+        <m-input
           [(ngModel)]="filter.searchInput"
           twDebounce [debounced]="onDebounced"
           placeholder="marina.ui.inputs.search.placeholder"
           autofocus
-      ></m-input>
+        ></m-input>
+      }
 
       <!-- Add/Edit actions -->
       <m-dropdown *twPrivileged="'*.MapSet.edit'">
@@ -27,9 +28,11 @@
       </m-dropdown>
 
       <!-- Filter toggle -->
-      <m-button *ngIf="!filter.open" [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
-        <m-icon mCode="filter"/>
-      </m-button>
+      @if (!filter.open) {
+        <m-button [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+          <m-icon mCode="filter"/>
+        </m-button>
+      }
     </div>
   </div>
 
@@ -37,13 +40,15 @@
   <!-- Filter -->
   <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
     <m-form-item>
-      <m-form-item *ngIf="filter.open">
-        <m-input
+      @if (filter.open) {
+        <m-form-item>
+          <m-input
             [(ngModel)]="_filter.searchInput"
             placeholder="marina.ui.inputs.search.placeholder"
             autofocus
-        ></m-input>
-      </m-form-item>
+          ></m-input>
+        </m-form-item>
+      }
       <m-form-item mLabel="entities.code-system.publisher">
         <tw-value-set-concept-select [(ngModel)]="_filter.publisher" valueSet="publisher" valuePrimitive/>
       </m-form-item>
@@ -71,9 +76,9 @@
       <td m-table-expand [mItem]="ms"></td>
       <td><a [routerLink]="[ms.id, 'summary']">{{ms.id}}</a></td>
       <td>
-        <ng-container *ngIf="(ms.versions | apply:findLastVersion)?.version as version">
+        @if ((ms.versions | apply:findLastVersion)?.version; as version) {
           <a [routerLink]="[ms.id, 'versions', version, 'summary']">{{version}}</a>
-        </ng-container>
+        }
       </td>
       <td>{{ms.title | localName}}</td>
       <td>{{ms.publisher | localizedConceptName: {codeSystem: 'publisher'} | async}}</td>
@@ -95,18 +100,20 @@
       <td colspan="100%">
         <div style="display: grid">
           <div><b>{{'entities.map-set.uri' | translate}}:</b> {{ms.uri}}</div>
-          <div *ngIf="ms.versions.length > 0">
-            <b>{{'entities.map-set.versions' | translate}}:</b>
-            <div style="display: grid ;grid-template-columns: repeat(5, auto); width: max-content; column-gap: 0.5rem; row-gap: 0.2rem">
-              <ng-container *ngFor="let version of ms.versions">
-                <b>{{version.version}}</b>
-                <m-divider mVertical/>
-                <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
-                <m-divider mVertical/>
-                <tw-status-tag [status]="version.status"/>
-              </ng-container>
+          @if (ms.versions.length > 0) {
+            <div>
+              <b>{{'entities.map-set.versions' | translate}}:</b>
+              <div style="display: grid ;grid-template-columns: repeat(5, auto); width: max-content; column-gap: 0.5rem; row-gap: 0.2rem">
+                @for (version of ms.versions; track version) {
+                  <b>{{version.version}}</b>
+                  <m-divider mVertical/>
+                  <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
+                  <m-divider mVertical/>
+                  <tw-status-tag [status]="version.status"/>
+                }
+              </div>
             </div>
-          </div>
+          }
         </div>
       </td>
     </tr>

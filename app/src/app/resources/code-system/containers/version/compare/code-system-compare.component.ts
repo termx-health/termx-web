@@ -1,8 +1,17 @@
 import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {environment} from 'environments/environment';
 import {CodeSystemVersion} from 'term-web/resources/_lib';
+import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
+import { MuiFormModule, MuiButtonModule, MuiCardModule, MuiNoDataModule, MuiTableModule } from '@kodality-web/marina-ui';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { AutofocusDirective, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
+import { FormsModule } from '@angular/forms';
+import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
+
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 class CodeSystemCompareResult {
   public added: string[];
@@ -17,28 +26,27 @@ class CodeSystemCompareResult {
 }
 
 @Component({
-  templateUrl: './code-system-compare.component.html',
-  styles: [`
+    templateUrl: './code-system-compare.component.html',
+    styles: [`
     .red {
       background-color: #fbe9eb;
     }
     .green {
       background-color: #ecfdf0;
     }
-  `]
+  `],
+    imports: [NzRowDirective, NzColDirective, MuiFormModule, CodeSystemSearchComponent, AutofocusDirective, FormsModule, CodeSystemVersionSelectComponent, MuiButtonModule, MuiCardModule, MuiNoDataModule, MuiTableModule, StatusTagComponent, TranslatePipe, ApplyPipe, IncludesPipe]
 })
 export class CodeSystemCompareComponent implements OnInit {
+  private http = inject(HttpClient);
+  private route = inject(ActivatedRoute);
+
   public sourceCodeSystem: string;
   public sourceVersion: CodeSystemVersion;
   public targetCodeSystem: string;
   public targetVersion: CodeSystemVersion;
   public result: CodeSystemCompareResult;
   public loading: boolean;
-
-  public constructor(
-    public http: HttpClient,
-    private route: ActivatedRoute
-  ) { }
 
   public ngOnInit(): void {
     this.sourceCodeSystem = this.route.snapshot.paramMap.get('code-system');

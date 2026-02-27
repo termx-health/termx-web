@@ -1,16 +1,25 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import {copyDeep, SearchResult} from '@kodality-web/core-util';
-import {AssociationType, MapSet, MapSetAssociation, MapSetConcept, MapSetConceptSearchParams} from 'app/src/app/resources/_lib';
+import {AssociationType, MapSet, MapSetAssociation, MapSetConcept, MapSetConceptSearchParams} from 'term-web/resources/_lib';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import { MuiCardModule, MarinPageLayoutModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiDropdownModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { FormsModule } from '@angular/forms';
+
+import { MapSetAssociationDrawerComponent as MapSetAssociationDrawerComponent_1 } from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'tw-map-set-unmapped-concept-list',
-  templateUrl: 'map-set-unmapped-concept-list.component.html'
+    selector: 'tw-map-set-unmapped-concept-list',
+    templateUrl: 'map-set-unmapped-concept-list.component.html',
+    imports: [MuiCardModule, MarinPageLayoutModule, MuiInputModule, InputDebounceDirective, FormsModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiDropdownModule, MuiNoDataModule, MapSetAssociationDrawerComponent_1, TranslatePipe]
 })
 export class MapSetUnmappedConceptListComponent implements OnChanges {
+  private mapSetService = inject(MapSetService);
+
   @Input() public mapSet: MapSet;
   @Input() public mapSetVersion: string;
   @Input() public targetExternal: boolean;
@@ -27,7 +36,7 @@ export class MapSetUnmappedConceptListComponent implements OnChanges {
   public loading: boolean;
 
 
-  public constructor(private mapSetService: MapSetService) {
+  public constructor() {
     this.query.limit = 100;
   }
 

@@ -1,23 +1,23 @@
 import {Overlay, OverlayConfig, OverlayRef} from '@angular/cdk/overlay';
 import {CdkPortal} from '@angular/cdk/portal';
-import {Component, HostListener, Input, ViewChild} from '@angular/core';
-
+import { Component, HostListener, Input, ViewChild, inject } from '@angular/core';
 @Component({
-  selector: "tw-wiki-quick-actions-dropdown",
-  template: `
+    selector: "tw-wiki-quick-actions-dropdown",
+    template: `
     <ng-template cdk-portal>
       <ng-content></ng-content>
-    </ng-template>`
+    </ng-template>`,
+    imports: []
 })
 export class WikiQuickActionsDropdownComponent {
+  protected overlay = inject(Overlay);
+
 
   @Input() public reference?: HTMLElement;
   @ViewChild(CdkPortal) public contentTemplate?: CdkPortal;
 
   protected overlayRef?: OverlayRef;
   public showing = false;
-
-  public constructor(protected overlay: Overlay) {}
 
   public show(): void {
     this.overlayRef = this.overlay.create(this.getOverlayConfig());

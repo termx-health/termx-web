@@ -1,19 +1,35 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
-import {DestroyService, format, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {SnomedAuthoringStatsItem, SnomedBranch, SnomedTranslation} from 'app/src/app/integration/_lib';
-import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { DestroyService, format, isDefined, LoadingManager, validateForm, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiSpinnerModule, MuiCardModule, MarinPageLayoutModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiFormModule, MuiCheckboxModule, MuiDividerModule, MuiIconModule, MuiTagModule, MuiTableModule, MuiNoDataModule, MuiModalModule, MuiTextareaModule, MuiButtonModule, MuiSelectModule, MuiAlertModule, MuiNumberInputModule } from '@kodality-web/marina-ui';
+import {SnomedAuthoringStatsItem, SnomedBranch, SnomedTranslation} from 'term-web/integration/_lib';
+import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
 import {filter, forkJoin} from 'rxjs';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {LorqueLibService} from 'term-web/sys/_lib';
+import { JsonPipe } from '@angular/common';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { NzTabsComponent, NzTabComponent, NzTabLinkTemplateDirective } from 'ng-zorro-antd/tabs';
+import { NzProgressComponent } from 'ng-zorro-antd/progress';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
-  templateUrl: 'snomed-branch-management.component.html',
-  providers: [DestroyService]
+    templateUrl: 'snomed-branch-management.component.html',
+    providers: [DestroyService],
+    imports: [MuiSpinnerModule, MuiCardModule, MarinPageLayoutModule, MuiDropdownModule, MuiCoreModule, RouterLink, MuiPopconfirmModule, PrivilegedDirective, MuiFormModule, MuiCheckboxModule, FormsModule, MuiDividerModule, MuiIconModule, NzTabsComponent, NzTabComponent, NzTabLinkTemplateDirective, MuiTagModule, MuiTableModule, MuiNoDataModule, MuiModalModule, MuiTextareaModule, MuiButtonModule, MuiSelectModule, NzProgressComponent, MuiAlertModule, MuiNumberInputModule, JsonPipe, TranslatePipe, ApplyPipe, LocalDatePipe, HasAnyPrivilegePipe, PrivilegedPipe]
 })
 export class SnomedBranchManagementComponent implements OnInit {
+  private snomedService = inject(SnomedService);
+  private lorqueService = inject(LorqueLibService);
+  private snomedTranslationService = inject(SnomedTranslationService);
+  private notificationService = inject(MuiNotificationService);
+  private route = inject(ActivatedRoute);
+  private destroy$ = inject(DestroyService);
+  private router = inject(Router);
+
   protected snomedBranch?: SnomedBranch;
   protected type: 'daily-build' | 'working' | any = 'working';
 
@@ -41,16 +57,6 @@ export class SnomedBranchManagementComponent implements OnInit {
   @ViewChild("synonymDeactivationModalForm") public synonymDeactivationModalForm?: NgForm;
   @ViewChild("synonymReactivationModalForm") public synonymReactivationModalForm?: NgForm;
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
-
-  public constructor(
-    private snomedService: SnomedService,
-    private lorqueService: LorqueLibService,
-    private snomedTranslationService: SnomedTranslationService,
-    private notificationService: MuiNotificationService,
-    private route: ActivatedRoute,
-    private destroy$: DestroyService,
-    private router: Router
-  ) {}
 
   public ngOnInit(): void {
     const path = this.route.snapshot.paramMap.get('path');
@@ -84,7 +90,7 @@ export class SnomedBranchManagementComponent implements OnInit {
   }
 
   protected executeIntegrityCheck(): void {
-    this.loader.wrap('interity-check', this.snomedService.branchIntegrityCheck(this.snomedBranch.path)).subscribe(res => console.log(res));
+    this.loader.wrap('interity-check', this.snomedService.branchIntegrityCheck(this.snomedBranch.path)).subscribe();
   }
 
   protected lock(): void {

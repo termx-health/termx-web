@@ -1,18 +1,29 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {Router} from '@angular/router';
-import {BooleanInput, copyDeep, isDefined, LoadingManager, SearchResult, validateForm} from '@kodality-web/core-util';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { BooleanInput, copyDeep, isDefined, LoadingManager, SearchResult, validateForm, ApplyPipe, FilterPipe, LocalDatePipe } from '@kodality-web/core-util';
 import {debounceTime, distinctUntilChanged, map, Observable, Subject, switchMap} from 'rxjs';
 import {CodeSystemEntityVersion, CodeSystemEntityVersionSearchParams, CodeSystemVersion} from 'term-web/resources/_lib';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
 
+import { MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCheckboxModule, MuiCoreModule, MuiDropdownModule, MuiNoDataModule, MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiSelectModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { UserSelectComponent } from 'term-web/user/_lib/components/user-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
+
 @Component({
-  selector: 'tw-code-system-unlinked-concepts',
-  templateUrl: 'code-system-unlinked-concepts.component.html'
+    selector: 'tw-code-system-unlinked-concepts',
+    templateUrl: 'code-system-unlinked-concepts.component.html',
+    imports: [MuiInputModule, FormsModule, MuiBackendTableModule, MuiTableModule, MuiCheckboxModule, MuiCoreModule, RouterLink, StatusTagComponent, MuiDropdownModule, MuiNoDataModule, MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiSelectModule, UserSelectComponent, MuiButtonModule, TranslatePipe, ApplyPipe, FilterPipe, LocalDatePipe, HasAnyPrivilegePipe]
 })
 export class CodeSystemUnlinkedConceptsComponent implements OnInit, OnChanges {
+  private codeSystemService = inject(CodeSystemService);
+  private taskService = inject(TaskService);
+  private router = inject(Router);
+
   @Input() public codeSystem: string;
   @Input() public approvalRequired: boolean;
   @Input() public versions: CodeSystemVersion[];
@@ -29,8 +40,6 @@ export class CodeSystemUnlinkedConceptsComponent implements OnInit, OnChanges {
   @ViewChild("taskModalForm") public taskModalForm?: NgForm;
 
   protected loader = new LoadingManager();
-
-  public constructor(private codeSystemService: CodeSystemService, private taskService: TaskService, private router: Router) {}
 
   public ngOnInit(): void {
     this.loadUnlinkedConcepts();

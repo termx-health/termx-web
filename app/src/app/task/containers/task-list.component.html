@@ -5,13 +5,14 @@
 
     <div class="m-items-middle">
       <!-- Quick Search -->
-      <m-input
-          *ngIf="!filter.open"
+      @if (!filter.open) {
+        <m-input
           [(ngModel)]="filter.searchInput"
           twDebounce [debounced]="onDebounced"
           placeholder="marina.ui.inputs.search.placeholder"
           autofocus
-      ></m-input>
+        ></m-input>
+      }
 
       <!-- Add actions -->
       <tw-add-button *twPrivileged="'*.Task.edit'" [routerLink]="['./add']">
@@ -19,21 +20,25 @@
       </tw-add-button>
 
       <!-- Finder -->
-      <m-button *ngIf="!filter.open" [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
-        <m-icon mCode="filter"/>
-      </m-button>
+      @if (!filter.open) {
+        <m-button [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+          <m-icon mCode="filter"/>
+        </m-button>
+      }
     </div>
   </div>
 
   <!-- Filter -->
   <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
-    <m-form-item *ngIf="filter.open">
-      <m-input
+    @if (filter.open) {
+      <m-form-item>
+        <m-input
           [(ngModel)]="_filter.searchInput"
           placeholder="marina.ui.inputs.search.placeholder"
           autofocus
-      ></m-input>
-    </m-form-item>
+        ></m-input>
+      </m-form-item>
+    }
 
     <m-form-item mLabel="web.task.filter.presets.header">
       <div style="display: flex; flex-direction: column">
@@ -44,7 +49,9 @@
 
     <m-form-item mLabel="web.task.filter.project">
       <m-select [(ngModel)]="_filter.project" multiple>
-        <m-option *ngFor="let p of projects" [mLabel]="p.names | localName" [mValue]="p.code"/>
+        @for (p of projects; track p) {
+          <m-option [mLabel]="p.names | localName" [mValue]="p.code"/>
+        }
       </m-select>
     </m-form-item>
 
@@ -56,18 +63,21 @@
           <m-option mLabel="Close" mValue="close"/>
           <m-option mLabel="Is not" mValue="is-not"/>
         </m-select>
-        <tw-value-set-concept-select style="flex: 1"
-            *ngIf="['is', 'is-not'] | includes: _filter.statusOption"
+        @if (['is', 'is-not'] | includes: _filter.statusOption) {
+          <tw-value-set-concept-select style="flex: 1"
             [(ngModel)]="_filter.status"
             valueSet="task-status"
             multiple
-        ></tw-value-set-concept-select>
+          ></tw-value-set-concept-select>
+        }
       </div>
     </m-form-item>
 
     <m-form-item mLabel="web.task.filter.assignee">
       <m-select [(ngModel)]="_filter.assignee">
-        <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"/>
+        @for (user of users; track user) {
+          <m-option [mLabel]="user.name" [mValue]="user.sub"/>
+        }
       </m-select>
     </m-form-item>
 
@@ -89,7 +99,9 @@
 
     <m-form-item mLabel="web.task.filter.author">
       <m-select [(ngModel)]="_filter.author">
-        <m-option *ngFor="let user of users" [mLabel]="user.name" [mValue]="user.sub"/>
+        @for (user of users; track user) {
+          <m-option [mLabel]="user.name" [mValue]="user.sub"/>
+        }
       </m-select>
     </m-form-item>
 
@@ -124,24 +136,31 @@
 
     <tr *mTableRow="let task">
       <td>
-        <a *ngIf="'*.Task.edit' | twHasAnyPrivilege; else view" [routerLink]="[task.number, 'edit']">{{task.number}}</a>
-        <ng-template #view>{{task.number}}</ng-template>
+        @if ('*.Task.edit' | twHasAnyPrivilege) {
+          <a [routerLink]="[task.number, 'edit']">{{task.number}}</a>
+        } @else {
+          {{task.number}}
+        }
       </td>
       <td>{{task.title}}</td>
       <td><tw-task-type [ngModel]="task.type" readonly/></td>
       <td><tw-task-status [status]="task.status"/></td>
       <td>
-        <label *ngIf="task.assignee">{{task.assignee}}</label>
-        <m-icon *ngIf="!task.assignee" mCode="question"/>
-      <td>{{task.createdBy}}</td>
-      <td>{{task.createdAt | localDate}}</td>
-      <td>{{task.updatedAt | localDate}}</td>
-    </tr>
-    <tr *mTableNoData>
-      <td colspan="5">
-        <m-no-data/>
-      </td>
-    </tr>
-  </m-backend-table>
-</tw-table>
+        @if (task.assignee) {
+          <label>{{task.assignee}}</label>
+        }
+        @if (!task.assignee) {
+          <m-icon mCode="question"/>
+        }
+        <td>{{task.createdBy}}</td>
+        <td>{{task.createdAt | localDate}}</td>
+        <td>{{task.updatedAt | localDate}}</td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="5">
+          <m-no-data/>
+        </td>
+      </tr>
+    </m-backend-table>
+  </tw-table>
 

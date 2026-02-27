@@ -47,13 +47,16 @@
 
   <!-- Entity versions -->
   <tw-finder-menu title="entities.code-system-version.entities" [loading]="loading['entities']" [length]="entityVersionResult.data.length">
-    <tw-finder-menu-item *ngFor="let e of entityVersionResult.data">
-      {{e.code}}
-    </tw-finder-menu-item>
+    @for (e of entityVersionResult.data; track e) {
+      <tw-finder-menu-item>
+        {{e.code}}
+      </tw-finder-menu-item>
+    }
 
-    <tw-finder-load-more-item
-        *ngIf="entityVersionResult.data.length < entityVersionResult.meta.total"
+    @if (entityVersionResult.data.length < entityVersionResult.meta.total) {
+      <tw-finder-load-more-item
         (twClick)="loadEntities(version.codeSystem, version.version,entityVersionResult.data.length + DEFAULT_ENTITY_VERSION_LIMIT)"
-    ></tw-finder-load-more-item>
+      ></tw-finder-load-more-item>
+    }
   </tw-finder-menu>
 </tw-finder-wrapper>

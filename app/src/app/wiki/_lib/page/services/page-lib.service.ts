@@ -5,12 +5,12 @@ import {environment} from 'environments/environment';
 import {map, Observable} from 'rxjs';
 import {PageContentHistoryItem} from 'term-web/wiki/_lib/page/models/page-content-history-item';
 import {PageTreeItem} from 'term-web/wiki/_lib/page/models/page-tree.item';
-import {Page, PageAttachment} from '../models/page';
-import {PageContent} from '../models/page-content';
-import {PageContentSearchParams} from '../models/page-content-search-params';
-import {PageRelation} from '../models/page-relation';
-import {PageRelationSearchParams} from '../models/page-relation-search-params';
-import {PageSearchParams} from '../models/page-search-params';
+import {Page, PageAttachment} from 'term-web/wiki/_lib/page/models/page';
+import {PageContent} from 'term-web/wiki/_lib/page/models/page-content';
+import {PageContentSearchParams} from 'term-web/wiki/_lib/page/models/page-content-search-params';
+import {PageRelation} from 'term-web/wiki/_lib/page/models/page-relation';
+import {PageRelationSearchParams} from 'term-web/wiki/_lib/page/models/page-relation-search-params';
+import {PageSearchParams} from 'term-web/wiki/_lib/page/models/page-search-params';
 
 @Injectable()
 export class PageLibService {

@@ -1,12 +1,15 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DestroyService, isNil} from '@kodality-web/core-util';
+import { DestroyService, isNil, LocalDateTimePipe } from '@kodality-web/core-util';
 import {takeUntil} from 'rxjs';
 import {CodeSystemConcept, CodeSystemLibService} from 'term-web/resources/_lib';
+import { FinderWrapperComponent, FinderMenuComponent, FinderMenuItemComponent } from 'term-web/core/components/finder/finder.component';
+import { MuiFormModule } from '@kodality-web/marina-ui';
+
 
 
 @Component({
-  template: `
+    template: `
     <tw-finder-wrapper [loading]="loading" title="CODE SYSTEM CONCEPT">
       <div class="tw-finder-view-form">
         <m-form-item mLabel="entities.code-system-concept.code">
@@ -16,25 +19,26 @@ import {CodeSystemConcept, CodeSystemLibService} from 'term-web/resources/_lib';
           {{concept?.description || '-'}}
         </m-form-item>
       </div>
-
+    
       <tw-finder-menu title="entities.code-system-concept.versions" [length]="concept?.versions?.length">
-        <tw-finder-menu-item *ngFor="let v of concept?.versions" [navigate]="['versions', v.id]">
-          {{v.id}} - {{v.created | localDateTime}}
-        </tw-finder-menu-item>
+        @for (v of concept?.versions; track v) {
+          <tw-finder-menu-item [navigate]="['versions', v.id]">
+            {{v.id}} - {{v.created | localDateTime}}
+          </tw-finder-menu-item>
+        }
       </tw-finder-menu>
     </tw-finder-wrapper>
-  `,
-  providers: [DestroyService]
+    `,
+    providers: [DestroyService],
+    imports: [FinderWrapperComponent, MuiFormModule, FinderMenuComponent, FinderMenuItemComponent, LocalDateTimePipe]
 })
 export class FinderCodeSystemConceptViewComponent implements OnInit {
+  private codeSystemService = inject(CodeSystemLibService);
+  private route = inject(ActivatedRoute);
+  private destroy$ = inject(DestroyService);
+
   public concept?: CodeSystemConcept;
   public loading = false;
-
-  public constructor(
-    private codeSystemService: CodeSystemLibService,
-    private route: ActivatedRoute,
-    private destroy$: DestroyService
-  ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {

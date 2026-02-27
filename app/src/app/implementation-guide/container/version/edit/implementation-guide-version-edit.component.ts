@@ -1,16 +1,33 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ImplementationGuideVersion} from 'term-web/implementation-guide/_lib';
 import {ImplementationGuideVersionFormComponent} from 'term-web/implementation-guide/container/version/edit/implementation-guide-version-form.component';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { ImplementationGuideVersionFormComponent as ImplementationGuideVersionFormComponent_1 } from 'term-web/implementation-guide/container/version/edit/implementation-guide-version-form.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: 'implementation-guide-version-edit.component.html',
+    templateUrl: 'implementation-guide-version-edit.component.html',
+    imports: [
+    MuiFormModule,
+    MuiSpinnerModule,
+    MuiCardModule,
+    StatusTagComponent,
+    ImplementationGuideVersionFormComponent_1,
+    MuiButtonModule,
+    TranslatePipe
+],
 })
 export class ImplementationGuideVersionEditComponent implements OnInit {
+  private igService = inject(ImplementationGuideService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   protected ig?: string | null;
   protected version?: ImplementationGuideVersion;
   protected versions?: ImplementationGuideVersion[];
@@ -18,12 +35,6 @@ export class ImplementationGuideVersionEditComponent implements OnInit {
   protected mode: 'add' | 'edit' = 'add';
 
   @ViewChild(ImplementationGuideVersionFormComponent) public versionFormComponent?: ImplementationGuideVersionFormComponent;
-
-  public constructor(
-    private igService: ImplementationGuideService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) {}
 
   public ngOnInit(): void {
     this.ig = this.route.snapshot.paramMap.get('id');

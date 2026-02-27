@@ -1,5 +1,5 @@
 import {ValueSetVersionConcept, ValueSetVersionReference} from 'term-web/resources/_lib';
-import {CodeSystemVersionReference, EntityProperty} from '../../code-system';
+import {CodeSystemVersionReference, EntityProperty} from 'term-web/resources/_lib/code-system';
 
 export class ValueSetVersionRule {
   public id?: number;

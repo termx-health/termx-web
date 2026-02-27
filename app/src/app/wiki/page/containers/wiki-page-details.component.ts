@@ -1,9 +1,9 @@
 import {Clipboard} from '@angular/cdk/clipboard';
 import {MediaMatcher} from '@angular/cdk/layout';
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {Router} from '@angular/router';
-import {collect, group, LoadingManager, validateForm} from '@kodality-web/core-util';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { collect, group, LoadingManager, validateForm, AutofocusDirective, ApplyPipe, KeysPipe, SortPipe } from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {AuthService} from 'term-web/core/auth';
 import {Space} from 'term-web/sys/_lib/space';
@@ -11,13 +11,31 @@ import {Page, PageComment, PageContent, PageRelation, parsePageRelationLink} fro
 import {WikiComment} from 'term-web/wiki/_lib/texteditor/comments/wiki-comment';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
 import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
-import {PageService} from '../services/page.service';
+import {PageService} from 'term-web/wiki/page/services/page.service';
+import { MuiSpinnerModule, MuiSkeletonModule, MuiButtonModule, MuiIconModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiCardModule, MuiTagModule, MuiModalModule, MuiFormModule, MuiInputModule, MuiSelectModule } from '@kodality-web/marina-ui';
+import { UpperCasePipe } from '@angular/common';
+import { WikiPageHeaderComponent } from 'term-web/wiki/page/components/wiki-page-header.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
+import { WikiSmartTextEditorViewComponent } from 'term-web/wiki/_lib/texteditor/wiki-smart-text-editor-view.component';
+import { WikiPageCommentsComponent } from 'term-web/wiki/page/components/wiki-page-comments.component';
+import { WikiPageSetupModalComponent } from 'term-web/wiki/page/components/wiki-page-setup-modal.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
-  selector: 'tw-wiki-page-details',
-  templateUrl: 'wiki-page-details.component.html'
+    selector: 'tw-wiki-page-details',
+    templateUrl: 'wiki-page-details.component.html',
+    imports: [MuiSpinnerModule, MuiSkeletonModule, WikiPageHeaderComponent, PrivilegedDirective, MuiButtonModule, MuiIconModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, NzRowDirective, NzColDirective, MuiCardModule, WikiSmartTextEditorViewComponent, RouterLink, MuiTagModule, WikiPageCommentsComponent, MuiModalModule, FormsModule, MuiFormModule, MuiInputModule, AutofocusDirective, MuiSelectModule, WikiPageSetupModalComponent, UpperCasePipe, TranslatePipe, ApplyPipe, KeysPipe, SortPipe, PrivilegedPipe]
 })
 export class WikiPageDetailsComponent implements OnChanges, OnInit {
+  private authService = inject(AuthService);
+  private pageService = inject(PageService);
+  private pageCommentService = inject(PageCommentService);
+  private clipboard = inject(Clipboard);
+  private spaceService = inject(WikiSpaceService);
+  private router = inject(Router);
+
   @Input() public space: Space;
   @Input() public slug: string;
   @Input() public page: Page;
@@ -46,15 +64,9 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
     content?: PageContent
   } = {};
 
-  public constructor(
-    private authService: AuthService,
-    private pageService: PageService,
-    private pageCommentService: PageCommentService,
-    private clipboard: Clipboard,
-    private spaceService: WikiSpaceService,
-    private router: Router,
-    media: MediaMatcher
-  ) {
+  public constructor() {
+    const media = inject(MediaMatcher);
+
     this.mobileQuery = media.matchMedia('(max-width: 992px)');
   }
 
@@ -142,7 +154,7 @@ export class WikiPageDetailsComponent implements OnChanges, OnInit {
   };
 
   protected openHistory(): void {
-    this.router.navigate(this.viewHistoryRoute(this.slug))
+    this.router.navigate(this.viewHistoryRoute(this.slug));
   }
 
   /* WikiComments */

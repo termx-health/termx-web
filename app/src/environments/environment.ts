@@ -1,8 +1,9 @@
 import {Environment, UI_LANGS} from './environment.base';
+import packageJson from '../../../package.json';
 
 
 export const environment: Environment = {
-  appVersion: require('../../../package.json').version,
+  appVersion: packageJson.version,
   production: false,
   yupiEnabled: false,
   baseHref: '/',

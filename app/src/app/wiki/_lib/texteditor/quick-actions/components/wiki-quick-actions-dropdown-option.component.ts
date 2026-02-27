@@ -1,18 +1,23 @@
 import {Highlightable} from '@angular/cdk/a11y';
 import {Component, HostBinding, Input} from '@angular/core';
+import { NzListItemMetaComponent, NzListItemMetaAvatarComponent, NzListItemMetaTitleComponent, NzListItemMetaDescriptionComponent } from 'ng-zorro-antd/list';
+import { MuiIconModule } from '@kodality-web/marina-ui';
+
 
 @Component({
-  selector: 'tw-wiki-quick-actions-dropdown-option',
-  template: `
+    selector: 'tw-wiki-quick-actions-dropdown-option',
+    template: `
     <nz-list-item-meta [id]="item.id">
       <nz-list-item-meta-avatar>
         <m-icon [mCode]="item.icon"></m-icon>
       </nz-list-item-meta-avatar>
       <nz-list-item-meta-title>{{item.name}}</nz-list-item-meta-title>
-      <nz-list-item-meta-description *ngIf="item.description">{{ item.description }}</nz-list-item-meta-description>
+      @if (item.description) {
+        <nz-list-item-meta-description>{{ item.description }}</nz-list-item-meta-description>
+      }
     </nz-list-item-meta>
-  `,
-  styles: [`
+    `,
+    styles: [`
     :host {
       display: block;
       padding: 0.875rem;
@@ -30,7 +35,8 @@ import {Component, HostBinding, Input} from '@angular/core';
           background-color: #eee;
         }
       }
-    }`]
+    }`],
+    imports: [NzListItemMetaComponent, NzListItemMetaAvatarComponent, MuiIconModule, NzListItemMetaTitleComponent, NzListItemMetaDescriptionComponent]
 })
 export class WikiQuickActionsDropdownOptionComponent implements Highlightable {
   @Input() public item?: WikiDropdownOptionItem;

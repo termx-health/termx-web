@@ -1,10 +1,26 @@
-import {Component, OnInit} from '@angular/core';
-import {ComponentStateStore, copyDeep, DestroyService, isDefined, QueryParams, SearchResult, sortFn} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { ComponentStateStore, copyDeep, DestroyService, isDefined, QueryParams, SearchResult, sortFn, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {environment} from 'environments/environment';
 import {finalize, Observable, tap} from 'rxjs';
 import {CodeSystem, CodeSystemSearchParams, CodeSystemVersion} from 'term-web/resources/_lib';
-import {CodeSystemService} from '../../services/code-system.service';
+import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
+import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
+import { AsyncPipe } from '@angular/common';
+import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiDividerModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { FormsModule } from '@angular/forms';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { RouterLink } from '@angular/router';
+import { TableFilterComponent } from 'term-web/core/ui/components/table-container/table-filter.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { CodeSystemDuplicateModalComponent } from 'term-web/resources/code-system/containers/edit/code-system-duplicate-modal.component';
+import { CodeSystemSupplementModalComponent } from 'term-web/resources/code-system/containers/edit/code-system-supplement-modal.component';
+import { ResourceFhirImportModalComponent } from 'term-web/resources/resource/components/resource-fhir-import-modal-component';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 
 interface Filter {
@@ -15,10 +31,15 @@ interface Filter {
 }
 
 @Component({
-  templateUrl: 'code-system-list.component.html',
-  providers: [DestroyService]
+    templateUrl: 'code-system-list.component.html',
+    providers: [DestroyService],
+    imports: [TableComponent, MuiInputModule, InputDebounceDirective, AutofocusDirective, FormsModule, PrivilegedDirective, MuiDropdownModule, AddButtonComponent, MuiCoreModule, RouterLink, MuiButtonModule, MuiIconModule, TableFilterComponent, MuiFormModule, ValueSetConceptSelectComponent, MuiBackendTableModule, MuiTableModule, StatusTagComponent, MuiPopconfirmModule, MuiDividerModule, MuiNoDataModule, CodeSystemDuplicateModalComponent, CodeSystemSupplementModalComponent, ResourceFhirImportModalComponent, AsyncPipe, TranslatePipe, MarinaUtilModule, ApplyPipe, LocalDatePipe, LocalizedConceptNamePipe]
 })
 export class CodeSystemListComponent implements OnInit {
+  private codeSystemService = inject(CodeSystemService);
+  private translateService = inject(TranslateService);
+  private stateStore = inject(ComponentStateStore);
+
   protected readonly STORE_KEY = 'code-system-list';
 
   protected query = new CodeSystemSearchParams();
@@ -26,12 +47,6 @@ export class CodeSystemListComponent implements OnInit {
   protected filter: Filter = {open: false};
   protected _filter: Omit<Filter, 'open'> = this.filter; // temp, use only in tw-table-filter
   protected loading: boolean;
-
-  public constructor(
-    private codeSystemService: CodeSystemService,
-    private translateService: TranslateService,
-    private stateStore: ComponentStateStore,
-  ) {}
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);

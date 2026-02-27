@@ -1,37 +1,45 @@
 <m-spinner [mLoading]="loader.state['save']">
-  <form nz-row [nzGutter]="12" #form="ngForm" *ngIf="valueSet">
-    <div nz-col [nzMd]="18" [nzXs]="24" style="margin-bottom: 1rem">
-      <m-card [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
-        <div *m-card-header class="m-justify-between">
-          <div class="m-card__title">{{'web.value-set.form.' + mode + '-header' | translate}}</div>
-          <m-button *ngIf="viewMode && canEdit" mDisplay="text" (mClick)="viewMode = false">
-            {{'core.btn.edit' | translate}}&nbsp;<m-icon mCode="form"></m-icon>
-          </m-button>
-        </div>
-        <div *mCardContent="!loader.isLoading">
-          <fieldset [attr.disabled]="viewMode ? '' : null" [style.pointer-events]="viewMode ? 'none' : null" style="border:none;padding:0;margin:0">
-          <tw-resource-form resourceType="ValueSet" [resource]="valueSet" [mode]="mode"></tw-resource-form>
-          <tw-resource-identifiers [(identifiers)]="valueSet.identifiers"></tw-resource-identifiers>
-          <tw-resource-configuration-attributes [attributes]="valueSet.configurationAttributes"></tw-resource-configuration-attributes>
-          <tw-resource-contacts [(contacts)]="valueSet.contacts"></tw-resource-contacts>
-          <tw-resource-version-form *ngIf="mode === 'add'"></tw-resource-version-form>
-          </fieldset>
-        </div>
+  @if (valueSet) {
+    <form nz-row [nzGutter]="12" #form="ngForm">
+      <div nz-col [nzMd]="18" [nzXs]="24" style="margin-bottom: 1rem">
+        <m-card [mShowSkeleton]="loader.isLoading" class="tw-card__sticky-footer">
+          <div *m-card-header class="m-justify-between">
+            <div class="m-card__title">{{'web.value-set.form.' + mode + '-header' | translate}}</div>
+            @if (viewMode && canEdit) {
+              <m-button mDisplay="text" (mClick)="viewMode = false">
+                {{'core.btn.edit' | translate}}&nbsp;<m-icon mCode="form"></m-icon>
+              </m-button>
+            }
+          </div>
+          <div *mCardContent="!loader.isLoading">
+            <fieldset [attr.disabled]="viewMode ? '' : null" [style.pointer-events]="viewMode ? 'none' : null" style="border:none;padding:0;margin:0">
+            <tw-resource-form resourceType="ValueSet" [resource]="valueSet" [mode]="mode"></tw-resource-form>
+            <tw-resource-identifiers [(identifiers)]="valueSet.identifiers"></tw-resource-identifiers>
+            <tw-resource-configuration-attributes [attributes]="valueSet.configurationAttributes"></tw-resource-configuration-attributes>
+            <tw-resource-contacts [(contacts)]="valueSet.contacts"></tw-resource-contacts>
+            @if (mode === 'add') {
+              <tw-resource-version-form></tw-resource-version-form>
+            }
+            </fieldset>
+          </div>
 
-        <ng-container *m-card-footer>
-          <m-button *ngIf="!viewMode" mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
-            {{'core.btn.save' | translate}}
-          </m-button>
-        </ng-container>
-      </m-card>
-    </div>
-
-    <div nz-col [nzMd]="6" [nzXs]="24">
-      <fieldset [attr.disabled]="viewMode ? '' : null" [style.pointer-events]="viewMode ? 'none' : null" style="border:none;padding:0;margin:0">
-        <m-card [mShowSkeleton]="loader.isLoading">
-          <tw-resource-side-info [copyright]="valueSet.copyright" [permissions]="valueSet.permissions" [settings]="valueSet.settings"></tw-resource-side-info>
+          <ng-container *m-card-footer>
+            @if (!viewMode) {
+              <m-button mDisplay="primary" [mLoading]="loader.state['save']" [disabled]="loader.isLoading" (mClick)="save()">
+                {{'core.btn.save' | translate}}
+              </m-button>
+            }
+          </ng-container>
         </m-card>
-      </fieldset>
-    </div>
-  </form>
+      </div>
+
+      <div nz-col [nzMd]="6" [nzXs]="24">
+        <fieldset [attr.disabled]="viewMode ? '' : null" [style.pointer-events]="viewMode ? 'none' : null" style="border:none;padding:0;margin:0">
+          <m-card [mShowSkeleton]="loader.isLoading">
+            <tw-resource-side-info [copyright]="valueSet.copyright" [permissions]="valueSet.permissions" [settings]="valueSet.settings"></tw-resource-side-info>
+          </m-card>
+        </fieldset>
+      </div>
+    </form>
+  }
 </m-spinner>

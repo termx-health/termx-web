@@ -1,4 +1,5 @@
-<m-select *ngIf="!entityCode"
+@if (!entityCode) {
+  <m-select
     icon="search"
     [placeholder]="placeholder"
     [(ngModel)]="value"
@@ -7,13 +8,17 @@
     [loading]="isLoading"
     [filterOption]="filterOption"
     [autoUnselect]="false">
-  <m-option *ngFor="let key of data | keys"
-      [mValue]="data[key]?.id"
+    @for (key of data | keys; track key) {
+      <m-option
+        [mValue]="data[key]?.id"
       [mLabel]="data[key]?.code + ' ' + (data[key]?.id | localizedConceptName: {codeSystem: codeSystem} | async) + ' ' + (data[key]?.created | localDate) + ' ' + (data[key]?.status | localizedConceptName: {valueSet: 'publication-status'} | async) "></m-option>
-</m-select>
+    }
+  </m-select>
+}
 
 
-<m-select *ngIf="entityCode"
+@if (entityCode) {
+  <m-select
     icon="search"
     [placeholder]="placeholder"
     [(ngModel)]="value"
@@ -22,7 +27,10 @@
     [filterOption]="filterOption"
     [autoUnselect]="true"
     [autoSelect]="false">
-  <m-option *ngFor="let key of data | keys"
-      [mValue]="data[key]?.id"
+    @for (key of data | keys; track key) {
+      <m-option
+        [mValue]="data[key]?.id"
       [mLabel]="(data[key]?.created | localDate) + ' ' + (data[key]?.status | localizedConceptName: {valueSet: 'publication-status'} | async) "></m-option>
-</m-select>
+    }
+  </m-select>
+}

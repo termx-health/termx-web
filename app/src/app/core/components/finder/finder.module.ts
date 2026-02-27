@@ -4,7 +4,7 @@ import {RouterModule} from '@angular/router';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {MarinaUiModule} from '@kodality-web/marina-ui';
 import {TranslateModule} from '@ngx-translate/core';
-import {FinderLoadMoreItemComponent, FinderMenuComponent, FinderMenuItemComponent, FinderWrapperComponent} from './finder.component';
+import {FinderLoadMoreItemComponent, FinderMenuComponent, FinderMenuItemComponent, FinderWrapperComponent} from 'term-web/core/components/finder/finder.component';
 
 
 const components = [
@@ -15,19 +15,17 @@ const components = [
 ];
 
 @NgModule({
-  imports: [
-    CommonModule,
-    RouterModule,
-    MarinaUiModule,
-    CoreUtilModule,
-    TranslateModule
-  ],
-  declarations: [
-    ...components
-  ],
-  exports: [
-    ...components
-  ]
+    imports: [
+        CommonModule,
+        RouterModule,
+        MarinaUiModule,
+        CoreUtilModule,
+        TranslateModule,
+        ...components
+    ],
+    exports: [
+        ...components
+    ]
 })
 export class FinderModule {
 }

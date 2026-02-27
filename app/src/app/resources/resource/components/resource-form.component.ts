@@ -1,23 +1,38 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild, Optional} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import {isDefined, LoadingManager, remove, validateForm} from '@kodality-web/core-util';
+import { isDefined, LoadingManager, remove, validateForm, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
-import {TranslateService} from '@ngx-translate/core';
-import {ConceptUtil, ValueSetVersionConcept, VsConceptUtil} from 'app/src/app/resources/_lib';
-import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import {ConceptUtil, ValueSetVersionConcept, VsConceptUtil} from 'term-web/resources/_lib';
+import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import slugify from 'slugify';
 import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {Resource} from 'term-web/resources/resource/model/resource';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 
+import { MuiFormModule, MuiMultiLanguageInputModule, MuiTextareaModule, MuiButtonModule, MuiIconModule, MuiInputModule, MuiTooltipModule, MuiSelectModule, MuiCoreModule, MuiCheckboxModule, MuiModalModule, MarinPageLayoutModule } from '@kodality-web/marina-ui';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { MapSetSearchComponent } from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
+import { ValidateUrlPipe } from 'term-web/core/ui/pipes/validate-url.pipe';
+
 
 @Component({
-  selector: 'tw-resource-form',
-  templateUrl: 'resource-form.component.html'
+    selector: 'tw-resource-form',
+    templateUrl: 'resource-form.component.html',
+    imports: [FormsModule, MuiFormModule, MuiMultiLanguageInputModule, MuiTextareaModule, MuiButtonModule, MuiIconModule, MuiInputModule, MuiTooltipModule, MuiSelectModule, MuiCoreModule, ValueSetConceptSelectComponent, CodeSystemSearchComponent, ValueSetSearchComponent, MapSetSearchComponent, MuiCheckboxModule, MuiModalModule, MarinPageLayoutModule, TranslatePipe, ApplyPipe, IncludesPipe, ValidateUrlPipe]
 })
 export class ResourceFormComponent implements OnChanges {
+  private router = inject(Router);
+  private translateService = inject(TranslateService);
+  private codeSystemService = inject(CodeSystemService);
+  private valueSetService = inject(ValueSetService);
+  private mapSetService = inject(MapSetService);
+  private implementationGuideService = inject(ImplementationGuideService, { optional: true });
+
   @Input() public resourceType?: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'ImplementationGuide';
   @Input() public resource?: Resource;
   @Input() public mode?: 'add' | 'edit';
@@ -30,15 +45,6 @@ export class ResourceFormComponent implements OnChanges {
   @ViewChild("idChangeModalForm") public idChangeModalForm?: NgForm;
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private router: Router,
-    private translateService: TranslateService,
-    private codeSystemService: CodeSystemService,
-    private valueSetService: ValueSetService,
-    private mapSetService: MapSetService,
-    @Optional() private implementationGuideService: ImplementationGuideService
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['resource'] && isDefined(this.resource)) {

@@ -1,20 +1,35 @@
 import {HttpClient} from '@angular/common/http';
-import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
+import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
 import {Router} from '@angular/router';
 import {DestroyService, LoadingManager} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiRadioModule, MuiInputModule, MuiButtonModule, MuiCoreModule } from '@kodality-web/marina-ui';
 import {IntegrationImportConfiguration, IntegrationOrphanetLibService} from 'term-web/integration/_lib';
 import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
-import {CodeSystem, CodeSystemLibService, ValueSetLibService} from '../../../../../resources/_lib';
-import {FileAnalysisService} from '../../file-analysis.service';
+import {CodeSystem, CodeSystemLibService, ValueSetLibService} from 'term-web/resources/_lib';
+import {FileAnalysisService} from 'term-web/integration/import/file-import/file-analysis.service';
+import { CodeSystemFileImportFormComponent } from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
+import { FormsModule } from '@angular/forms';
+
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: 'orphanet-import.component.html',
-  providers: [DestroyService, CodeSystemFileImportService]
+    templateUrl: 'orphanet-import.component.html',
+    providers: [DestroyService, CodeSystemFileImportService],
+    imports: [CodeSystemFileImportFormComponent, MuiCardModule, MuiFormModule, MuiRadioModule, FormsModule, MuiInputModule, MuiButtonModule, MuiCoreModule, TranslatePipe]
 })
 export class OrphanetImportComponent {
+  private http = inject(HttpClient);
+  private notificationService = inject(MuiNotificationService);
+  private codeSystemLibService = inject(CodeSystemLibService);
+  private valueSetLibService = inject(ValueSetLibService);
+  private importService = inject(IntegrationOrphanetLibService);
+  private fileAnalysisService = inject(FileAnalysisService);
+  private jobService = inject(JobLibService);
+  private destroy$ = inject(DestroyService);
+  private router = inject(Router);
+
   public breadcrumbs = ['web.integration.systems.orphanet', 'web.integration.import.orphanet'];
 
   public sourceCodeSystem: CodeSystem;
@@ -53,18 +68,6 @@ export class OrphanetImportComponent {
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('successNotificationContent') public successNotificationContent?: TemplateRef<any>;
 
-  public constructor(
-    private http: HttpClient,
-    private notificationService: MuiNotificationService,
-    private codeSystemLibService: CodeSystemLibService,
-    private valueSetLibService: ValueSetLibService,
-    private importService: IntegrationOrphanetLibService,
-    private fileAnalysisService: FileAnalysisService,
-    private jobService: JobLibService,
-    private destroy$: DestroyService,
-    private router: Router
-  ) {}
-
   protected process(): void {
     const req: IntegrationImportConfiguration = {
       // request
@@ -83,7 +86,7 @@ export class OrphanetImportComponent {
       validFrom: this.data.codeSystemVersion.releaseDate,
     };
 
-    let file: Blob = this.fileInput?.nativeElement?.files?.[0];
+    const file: Blob = this.fileInput?.nativeElement?.files?.[0];
     this.processRequest(req, file);
   }
 

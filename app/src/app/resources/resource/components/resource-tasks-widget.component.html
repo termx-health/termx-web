@@ -1,31 +1,34 @@
 <m-spinner [mLoading]="loader.isLoading">
-  <m-no-data *ngIf="!(tasks?.length > 0)"></m-no-data>
+  @if (!(tasks?.length > 0)) {
+    <m-no-data></m-no-data>
+  }
 </m-spinner>
-<m-list *ngIf="tasks?.length > 0 && !loader.isLoading" mSeparated>
-  <m-list-item *ngFor="let task of tasks| filter:filterTask:taskFilters" [mClickable]="'*.Task.edit' | twPrivileged" (mClick)="openTask(task.number)">
-
-    <ng-container [ngSwitch]="displayType">
-      <ng-container *ngSwitchCase="'full'">
-        <div class="m-justify-between">
-          <div class="m-items-middle">
+@if (tasks?.length > 0 && !loader.isLoading) {
+  <m-list mSeparated>
+    @for (task of tasks| filter:filterTask:taskFilters; track task) {
+      <m-list-item [mClickable]="'*.Task.edit' | twPrivileged" (mClick)="openTask(task.number)">
+        @switch (displayType) {
+          @case ('full') {
+            <div class="m-justify-between">
+              <div class="m-items-middle">
+                <span class="m-bold">{{task.number}}</span>
+                <m-divider mVertical/>
+                <span>{{task.workflow || '...'}}</span>
+              </div>
+              <tw-task-status [status]="task.status"></tw-task-status>
+            </div>
+            <div>{{task.title}}</div>
+            <div class="m-items-middle">
+              <m-icon mCode="user"></m-icon>
+              <span>{{task.assignee}}</span>
+            </div>
+          }
+          @case ('content') {
             <span class="m-bold">{{task.number}}</span>
-            <m-divider mVertical/>
-            <span>{{task.workflow || '...'}}</span>
-          </div>
-
-          <tw-task-status [status]="task.status"></tw-task-status>
-        </div>
-        <div>{{task.title}}</div>
-        <div class="m-items-middle">
-          <m-icon mCode="user"></m-icon>
-          <span>{{task.assignee}}</span>
-        </div>
-      </ng-container>
-
-      <ng-container *ngSwitchCase="'content'">
-        <span class="m-bold">{{task.number}}</span>
-        <tw-smart-text-editor-view [value]="task.content" valueType="markdown"/>
-      </ng-container>
-    </ng-container>
-  </m-list-item>
-</m-list>
+            <tw-smart-text-editor-view [value]="task.content" valueType="markdown"/>
+          }
+        }
+      </m-list-item>
+    }
+  </m-list>
+}

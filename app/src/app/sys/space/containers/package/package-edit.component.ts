@@ -1,18 +1,49 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {collect, copyDeep, group, isDefined, validateForm} from '@kodality-web/core-util';
+import { collect, copyDeep, group, isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
 import {saveAs} from 'file-saver';
 import {forkJoin} from 'rxjs';
 import {Package, PackageResource, PackageVersion, TerminologyServerLibService} from 'term-web/sys/_lib/space';
-import {PackageService} from 'app/src/app/sys/space/services/package.service';
-import {SpaceService} from '../../services/space.service';
+import {PackageService} from 'term-web/sys/space/services/package.service';
+import {SpaceService} from 'term-web/sys/space/services/space.service';
+import { MuiFormModule, MuiCardModule, MuiButtonModule, MuiCoreModule, MuiIconModule, MuiTooltipModule, MuiPopconfirmModule, MuiInputModule, MuiDividerModule } from '@kodality-web/marina-ui';
+import { NzTimelineComponent, NzTimelineItemComponent } from 'ng-zorro-antd/timeline';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { MapSetSearchComponent } from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: './package-edit.component.html',
+    templateUrl: './package-edit.component.html',
+    imports: [
+    MuiFormModule,
+    MuiCardModule,
+    MuiButtonModule,
+    NzTimelineComponent,
+    NzTimelineItemComponent,
+    MuiCoreModule,
+    MuiIconModule,
+    MuiTooltipModule,
+    MuiPopconfirmModule,
+    FormsModule,
+    MuiInputModule,
+    MuiDividerModule,
+    CodeSystemSearchComponent,
+    ValueSetSearchComponent,
+    MapSetSearchComponent,
+    TranslatePipe,
+    ApplyPipe
+],
 })
 export class PackageEditComponent implements OnInit {
+  private spaceService = inject(SpaceService);
+  private packageService = inject(PackageService);
+  private terminologyServerService = inject(TerminologyServerLibService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   public package?: Package;
   public version?: PackageVersion;
   public versions?: PackageVersion[];
@@ -22,14 +53,6 @@ export class PackageEditComponent implements OnInit {
   public mode: 'add' | 'edit' = 'add';
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private spaceService: SpaceService,
-    private packageService: PackageService,
-    private terminologyServerService: TerminologyServerLibService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) { }
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -111,7 +134,7 @@ export class PackageEditComponent implements OnInit {
     return  resources && collect(resources, r => r.resourceType, r => r.resourceId) || {};
   };
 
-  public addResource = (resources: string[], type: string) => {
+  public addResource = (resources: string[], type: string): void => {
     const current: {[key: string]: PackageResource} = group((this.version.resources || []).filter(r => r.resourceType === type), r => r.resourceId);
     this.version.resources = [
       ...(this.version.resources || []).filter(r => r.resourceType !== type),

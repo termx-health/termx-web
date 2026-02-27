@@ -1,17 +1,29 @@
-import {Component, ElementRef, Input, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {DestroyService, LoadingManager} from '@kodality-web/core-util';
+import { Component, ElementRef, Input, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { DestroyService, LoadingManager, AutofocusDirective, ApplyPipe, FilterPipe } from '@kodality-web/core-util';
 import {of} from 'rxjs';
 import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
-import {CodeSystem, CodeSystemLibService, CodeSystemVersion} from '../../../../resources/_lib';
+import {CodeSystem, CodeSystemLibService, CodeSystemVersion} from 'term-web/resources/_lib';
+import { MuiCardModule, MuiFormModule, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiSelectModule, MuiRadioModule, MuiDatePickerModule } from '@kodality-web/marina-ui';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
+import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 
 @Component({
-  selector: 'tw-cs-file-import-form',
-  templateUrl: 'code-system-file-import-form.component.html',
-  providers: [DestroyService, CodeSystemFileImportService]
+    selector: 'tw-cs-file-import-form',
+    templateUrl: 'code-system-file-import-form.component.html',
+    providers: [DestroyService, CodeSystemFileImportService],
+    imports: [MuiCardModule, NzBreadCrumbComponent, NzBreadCrumbItemComponent, FormsModule, MuiFormModule, CodeSystemSearchComponent, AutofocusDirective, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiCheckboxModule, CodeSystemVersionSelectComponent, MuiSelectModule, MuiRadioModule, SemanticVersionSelectComponent, ValueSetConceptSelectComponent, MuiDatePickerModule, TranslatePipe, MarinaUtilModule, ApplyPipe, FilterPipe]
 })
 export class CodeSystemFileImportFormComponent {
+  private codeSystemLibService = inject(CodeSystemLibService);
+
   public sourceCodeSystem: CodeSystem;
 
   @Input() public data: {
@@ -56,10 +68,6 @@ export class CodeSystemFileImportFormComponent {
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('jsonFileInput') public jsonFileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('form') public form?: NgForm;
-
-  public constructor(
-    private codeSystemLibService: CodeSystemLibService
-  ) {}
 
   public createCodeSystem(): void {
     this.sourceCodeSystem = undefined;

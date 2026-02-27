@@ -41,19 +41,25 @@
       <m-textarea [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
 
-    <m-card *ngIf="response || error" class="m-card-inside">
-      <div *m-card-header class="m-items-middle">
-        <div class="m-card__title">{{'web.integration.response' | translate}}</div>
-        <m-button (click)="copyResult()">
-          <m-icon mCode="copy"></m-icon>
-        </m-button>
-      </div>
-      <pre *ngIf="response">{{response | json}}</pre>
-      <div *ngFor="let issue of error?.issue">
-        <m-alert [mType]="issue.severity" mShowIcon>
-          {{issue?.details?.text}}
-        </m-alert>
-      </div>
-    </m-card>
+    @if (response || error) {
+      <m-card class="m-card-inside">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{'web.integration.response' | translate}}</div>
+          <m-button (click)="copyResult()">
+            <m-icon mCode="copy"></m-icon>
+          </m-button>
+        </div>
+        @if (response) {
+          <pre>{{response | json}}</pre>
+        }
+        @for (issue of error?.issue; track issue) {
+          <div>
+            <m-alert [mType]="issue.severity" mShowIcon>
+              {{issue?.details?.text}}
+            </m-alert>
+          </div>
+        }
+      </m-card>
+    }
   </m-spinner>
 </m-card>

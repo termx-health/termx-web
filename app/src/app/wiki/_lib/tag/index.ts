@@ -1,2 +1,2 @@
-export * from './models/tag';
-export * from './services/tag-lib.service';
+export * from 'term-web/wiki/_lib/tag/models/tag';
+export * from 'term-web/wiki/_lib/tag/services/tag-lib.service';

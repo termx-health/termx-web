@@ -1,12 +1,12 @@
 import {registerLocaleData} from '@angular/common';
 import {HTTP_INTERCEPTORS, HttpBackend, HttpClient} from '@angular/common/http';
-import {ModuleWithProviders, NgModule} from '@angular/core';
+import { ModuleWithProviders, NgModule, inject } from '@angular/core';
 import {CoreI18nService, CoreI18nTranslationHandler, group, isDefined, TRANSLATION_HANDLER} from '@kodality-web/core-util';
 import {MarinaMarkdownModule} from '@kodality-web/marina-markdown';
 import {MarinaUiModule, MUI_CONFIG, MuiConfig, MuiConfigService} from '@kodality-web/marina-ui';
 import {TranslateService} from '@ngx-translate/core';
 import {environment as env} from 'environments/environment';
-import {HttpErrorHandler} from './http-error-handler';
+import {HttpErrorHandler} from 'term-web/core/marina/http-error-handler';
 
 export function TranslationHandlerFactory(translateService: TranslateService): CoreI18nTranslationHandler {
   return (key, params) => translateService.instant(key, params);
@@ -43,12 +43,12 @@ export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
   ]
 })
 export class MarinaUiConfigModule {
-  public constructor(
-    http: HttpBackend,
-    translate: TranslateService,
-    i18nService: CoreI18nService,
-    muiConfig: MuiConfigService
-  ) {
+  public constructor() {
+    const http = inject(HttpBackend);
+    const translate = inject(TranslateService);
+    const i18nService = inject(CoreI18nService);
+    const muiConfig = inject(MuiConfigService);
+
     translate.onLangChange.subscribe(({lang}) => {
       import(/* webpackInclude: /\/(de|en|et|fr|lt|nl).mjs$/ */ `node_modules/@angular/common/locales/${lang}.mjs`)
         .then(locale => registerLocaleData(locale.default))
@@ -56,7 +56,7 @@ export class MarinaUiConfigModule {
           i18nService.use(lang);
 
           // 'lang' translations in other locales
-          const translations = translate.store.translations?.[lang]?.['language'];
+          const translations = (translate as any).store?.translations?.[lang]?.['language'];
           // update content languages in multi language input
           muiConfig.set('multiLanguageInput', {
             requiredLanguages: [env.defaultLanguage],

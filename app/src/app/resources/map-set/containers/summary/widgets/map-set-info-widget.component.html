@@ -1,19 +1,31 @@
-<m-no-data *ngIf="!mapSet"></m-no-data>
+@if (!mapSet) {
+  <m-no-data></m-no-data>
+}
 
-<div *ngIf="mapSet as ms">
-  <div class="m-items-middle m-bold">
-    <m-icon mCode="key"></m-icon>
-    <tw-copy-container [text]="ms.id">
-      {{ms.id}}
-    </tw-copy-container>
+@if (mapSet; as ms) {
+  <div>
+    <div class="m-items-middle m-bold">
+      <m-icon mCode="key"></m-icon>
+      <tw-copy-container [text]="ms.id">
+        {{ms.id}}
+      </tw-copy-container>
+    </div>
+    <span>{{ms.description | localName}}</span>
+    @if ((ms | apply:getTelecoms); as telecoms) {
+      <div class="m-items-middle">
+        <m-icon mCode="contacts"></m-icon>
+        @for (t of telecoms; track t; let i = $index) {
+          <span class="m-items-middle">{{t?.system}}: {{t?.value}} @if (i !== (telecoms.length - 1)) {
+            <m-divider mVertical></m-divider>
+          }</span>
+        }
+      </div>
+    }
+    @if (ms.publisher) {
+      <div class="m-items-middle">
+        <m-icon mCode="environment"></m-icon>
+        <span>{{ms.publisher | localizedConceptName:{codeSystem: 'publisher'} | async}}</span>
+      </div>
+    }
   </div>
-  <span>{{ms.description | localName}}</span>
-  <div class="m-items-middle" *ngIf="(ms | apply:getTelecoms) as telecoms">
-    <m-icon mCode="contacts"></m-icon>
-    <span *ngFor="let t of telecoms;let i = index" class="m-items-middle">{{t?.system}}: {{t?.value}} <m-divider mVertical *ngIf="i !== (telecoms.length - 1)"></m-divider></span>
-  </div>
-  <div class="m-items-middle" *ngIf="ms.publisher">
-    <m-icon mCode="environment"></m-icon>
-    <span>{{ms.publisher | localizedConceptName:{codeSystem: 'publisher'} | async}}</span>
-  </div>
-</div>
+}

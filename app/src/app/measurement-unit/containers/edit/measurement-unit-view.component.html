@@ -2,49 +2,55 @@
   <div *mFormCol>
     <m-spinner [mLoading]="loading['save']">
       <m-card [mTitle]="'web.measurement-unit.form.view-header'" [mShowSkeleton]="loading['init']">
-        <form #form="ngForm" *ngIf="measurementUnit">
-          <m-form-item mLabel="entities.measurement-unit.code">
-            {{measurementUnit.code}}
-          </m-form-item>
-          <m-form-item mLabel="entities.measurement-unit.name">
-            <div *ngFor="let language of measurementUnit.names | keys">
-              {{language}} - {{measurementUnit.names[language]}}
-            </div>
-          </m-form-item>
+        @if (measurementUnit) {
+          <form #form="ngForm">
+            <m-form-item mLabel="entities.measurement-unit.code">
+              {{measurementUnit.code}}
+            </m-form-item>
+            <m-form-item mLabel="entities.measurement-unit.name">
+              @for (language of measurementUnit.names | keys; track language) {
+                <div>
+                  {{language}} - {{measurementUnit.names[language]}}
+                </div>
+              }
+            </m-form-item>
+            <m-form-item mLabel="entities.measurement-unit.alias">
+              @for (language of measurementUnit.alias | keys; track language) {
+                <div>
+                  {{language}} - {{measurementUnit.alias[language]}}
+                </div>
+              }
+            </m-form-item>
+            <m-form-item mName="periodLower" mLabel="web.measurement-unit.form.from">
+              {{measurementUnit.period.lower | localDate}}
+            </m-form-item>
+            <m-form-item mName="periodUpper" mLabel="web.measurement-unit.form.to">
+              @if ('ucum.CodeSystem.edit' | twHasAnyPrivilege) {
+                <div>
+                  <m-date-picker name="periodUpper" [(ngModel)]="measurementUnit.period.upper"></m-date-picker>
+                </div>
+              } @else {
+                {{measurementUnit.period.upper | localDate}}
+              }
+            </m-form-item>
+            <m-form-item mLabel="entities.measurement-unit.rounding">
+              {{measurementUnit.rounding}}
+            </m-form-item>
+            <m-form-item mLabel="entities.measurement-unit.kind">
+              {{measurementUnit.kind}}
+            </m-form-item>
+            <m-form-item mLabel="entities.measurement-unit.definitionUnit">
+              {{measurementUnit.definitionUnit}}
+            </m-form-item>
+            <m-form-item mLabel="entities.measurement-unit.definitionValue">
+              {{measurementUnit.definitionValue}}
+            </m-form-item>
+          </form>
+        }
 
-          <m-form-item mLabel="entities.measurement-unit.alias">
-            <div *ngFor="let language of measurementUnit.alias | keys">
-              {{language}} - {{measurementUnit.alias[language]}}
-            </div>
-          </m-form-item>
-
-          <m-form-item mName="periodLower" mLabel="web.measurement-unit.form.from">
-            {{measurementUnit.period.lower | localDate}}
-          </m-form-item>
-
-          <m-form-item mName="periodUpper" mLabel="web.measurement-unit.form.to">
-            <div *ngIf="'ucum.CodeSystem.edit' | twHasAnyPrivilege; else view">
-              <m-date-picker name="periodUpper" [(ngModel)]="measurementUnit.period.upper"></m-date-picker>
-            </div>
-            <ng-template #view>{{measurementUnit.period.upper | localDate}}</ng-template>
-          </m-form-item>
-
-          <m-form-item mLabel="entities.measurement-unit.rounding">
-            {{measurementUnit.rounding}}
-          </m-form-item>
-
-          <m-form-item mLabel="entities.measurement-unit.kind">
-            {{measurementUnit.kind}}
-          </m-form-item>
-          <m-form-item mLabel="entities.measurement-unit.definitionUnit">
-            {{measurementUnit.definitionUnit}}
-          </m-form-item>
-          <m-form-item mLabel="entities.measurement-unit.definitionValue">
-            {{measurementUnit.definitionValue}}
-          </m-form-item>
-        </form>
-
-        <tw-measurement-unit-mapping-list *ngIf="measurementUnit" [(mappings)]="measurementUnit.mappings" viewMode></tw-measurement-unit-mapping-list>
+        @if (measurementUnit) {
+          <tw-measurement-unit-mapping-list [(mappings)]="measurementUnit.mappings" viewMode></tw-measurement-unit-mapping-list>
+        }
 
         <ng-container *twPrivileged="'ucum.CodeSystem.edit'">
           <ng-container *m-card-footer>

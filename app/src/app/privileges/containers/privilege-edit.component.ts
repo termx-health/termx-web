@@ -1,15 +1,57 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {collect, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
+import { collect, copyDeep, isDefined, validateForm, ApplyPipe, KeysPipe } from '@kodality-web/core-util';
 import {Privilege, PrivilegeResource, PrivilegeResourceActions} from 'term-web/privileges/_lib';
-import {PrivilegeService} from '../services/privilege.service';
+import {PrivilegeService} from 'term-web/privileges/services/privilege.service';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiButtonModule, MuiPopconfirmModule, MuiIconModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiTableModule, MuiCoreModule, MuiAbbreviateModule, MuiDropdownModule, MuiNoDataModule, MuiModalModule, MuiSelectModule, MuiCheckboxModule } from '@kodality-web/marina-ui';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { MapSetSearchComponent } from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
+import { NamingSystemSearchComponent } from 'term-web/resources/_lib/naming-system/containers/naming-system-search.component';
+import { AssociationTypeSearchComponent } from 'term-web/resources/_lib/association/containers/association-type-search.component';
+import { SpaceSelectComponent } from 'term-web/sys/_lib/space/containers/space-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: './privilege-edit.component.html',
+    templateUrl: './privilege-edit.component.html',
+    imports: [
+    MuiFormModule,
+    MuiSpinnerModule,
+    MuiCardModule,
+    MuiButtonModule,
+    MuiPopconfirmModule,
+    MuiIconModule,
+    FormsModule,
+    MuiTextareaModule,
+    MuiMultiLanguageInputModule,
+    AddButtonComponent,
+    MuiTableModule,
+    MuiCoreModule,
+    MuiAbbreviateModule,
+    MuiDropdownModule,
+    MuiNoDataModule,
+    MuiModalModule,
+    MuiSelectModule,
+    CodeSystemSearchComponent,
+    ValueSetSearchComponent,
+    MapSetSearchComponent,
+    NamingSystemSearchComponent,
+    AssociationTypeSearchComponent,
+    SpaceSelectComponent,
+    MuiCheckboxModule,
+    TranslatePipe,
+    ApplyPipe,
+    KeysPipe
+],
 })
 export class PrivilegeEditComponent implements OnInit {
+  private privilegeService = inject(PrivilegeService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   public privilege?: Privilege;
   public resourceMap?: {[type: string]: PrivilegeResource[]} = {};
 
@@ -25,12 +67,6 @@ export class PrivilegeEditComponent implements OnInit {
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("resourceForm") public resourceForm?: NgForm;
-
-  public constructor(
-    private privilegeService: PrivilegeService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) { }
 
   public ngOnInit(): void {
     const privilegeId = this.route.snapshot.paramMap.get('id');
@@ -97,7 +133,7 @@ export class PrivilegeEditComponent implements OnInit {
 
   public openResourceModal(options: {key?: string, index?: number} = {}): void {
     const {key, index} = options;
-    let resource = (key && isDefined(index)) ? copyDeep(this.resourceMap![key][index]) : new PrivilegeResource();
+    const resource = (key && isDefined(index)) ? copyDeep(this.resourceMap![key][index]) : new PrivilegeResource();
     if (!resource.actions) {
       resource.actions = new PrivilegeResourceActions();
     }

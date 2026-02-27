@@ -1,18 +1,33 @@
-import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import {DestroyService, LoadingManager} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { DestroyService, LoadingManager, AutofocusDirective, ApplyPipe, FilterPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiRadioModule, MuiDatePickerModule, MuiIconModule, MuiButtonModule } from '@kodality-web/marina-ui';
 import {of} from 'rxjs';
 import {FileProcessingRequest} from 'term-web/resources/_lib/map-set/services/map-set-file-import.service';
 import {JobLog} from 'term-web/sys/_lib';
-import {MapSet, MapSetFileImportService, MapSetLibService, MapSetVersion} from '../../../../resources/_lib';
+import {MapSet, MapSetFileImportService, MapSetLibService, MapSetVersion} from 'term-web/resources/_lib';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+
+import { MapSetSearchComponent } from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
+import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { MapSetScopeFormComponent } from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
+import { ImportJobLogComponent } from 'term-web/integration/import-job-log.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  templateUrl: 'concept-map-file-import.component.html',
-  providers: [DestroyService]
+    templateUrl: 'concept-map-file-import.component.html',
+    providers: [DestroyService],
+    imports: [FormsModule, MuiCardModule, NzBreadCrumbComponent, NzBreadCrumbItemComponent, MuiFormModule, MapSetSearchComponent, AutofocusDirective, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiRadioModule, SemanticVersionSelectComponent, ValueSetConceptSelectComponent, MuiDatePickerModule, MapSetScopeFormComponent, MuiIconModule, ImportJobLogComponent, MuiButtonModule, TranslatePipe, MarinaUtilModule, ApplyPipe, FilterPipe]
 })
 export class ConceptMapFileImportComponent {
+  private notificationService = inject(MuiNotificationService);
+  private mapSetService = inject(MapSetLibService);
+  private mapSetFileImportService = inject(MapSetFileImportService);
+  private router = inject(Router);
+
   public data: FileProcessingRequest & {file?: string, fileType?: string, loadedMapSet?: MapSet} = {
     fileType: 'csv',
     mapSet: {},
@@ -24,14 +39,6 @@ export class ConceptMapFileImportComponent {
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('form') public form?: NgForm;
   @ViewChild('successNotificationContent') public successNotificationContent?: TemplateRef<any>;
-
-
-  public constructor(
-    private notificationService: MuiNotificationService,
-    private mapSetService: MapSetLibService,
-    private mapSetFileImportService: MapSetFileImportService,
-    private router: Router
-  ) {}
 
   public createMapSet(): void {
     this.data.loadedMapSet = undefined;

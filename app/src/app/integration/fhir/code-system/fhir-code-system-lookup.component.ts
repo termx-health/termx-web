@@ -1,13 +1,37 @@
 import {Clipboard} from '@angular/cdk/clipboard';
-import {Component} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {serializeDate} from '@kodality-web/core-util';
-import {FhirCodeSystemLibService, FhirCodeSystemLookupParams} from '../../../fhir/_lib';
+import {FhirCodeSystemLibService, FhirCodeSystemLookupParams} from 'term-web/fhir/_lib';
+import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiTextareaModule, MuiDatePickerModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+import { FormsModule } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: './fhir-code-system-lookup.component.html',
+    templateUrl: './fhir-code-system-lookup.component.html',
+    imports: [
+    MuiCardModule,
+    MuiSpinnerModule,
+    NzBreadCrumbComponent,
+    NzBreadCrumbItemComponent,
+    MuiButtonModule,
+    MuiFormModule,
+    MuiIconModule,
+    MuiPopoverModule,
+    MuiTextareaModule,
+    FormsModule,
+    MuiDatePickerModule,
+    MuiAlertModule,
+    JsonPipe,
+    TranslatePipe
+],
 })
 export class FhirCodeSystemLookupComponent {
+  private fhirCodeSystemLibService = inject(FhirCodeSystemLibService);
+  private clipboardService = inject(Clipboard);
+
   public response?: any;
   public error?: any;
 
@@ -21,11 +45,6 @@ export class FhirCodeSystemLookupComponent {
   } = {};
 
   public loading: boolean = false;
-
-  public constructor(
-    private fhirCodeSystemLibService: FhirCodeSystemLibService,
-    private clipboardService: Clipboard,
-  ) {}
 
   public lookUp(): void {
     const sp = new FhirCodeSystemLookupParams();
@@ -55,7 +74,7 @@ export class FhirCodeSystemLookupComponent {
   public removeProperty(index: number): void {
     this.data.properties?.splice(index, 1);
     this.data.properties = [...this.data.properties!];
-    this.data.properties.length === 0 ? this.data.properties = undefined : '';
+    if (this.data.properties.length === 0) { this.data.properties = undefined; }
   }
 
   public copyResult(): void {

@@ -1,15 +1,22 @@
-import {Component, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {isDefined, isNil, LoadingManager} from '@kodality-web/core-util';
-import {MuiEditableTableComponent} from '@kodality-web/marina-ui';
+import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { isDefined, isNil, LoadingManager, ApplyPipe } from '@kodality-web/core-util';
+import { MuiEditableTableComponent, MuiEditableTableModule, MuiCheckboxModule, MuiTableModule, MuiFormModule, MuiIconModule } from '@kodality-web/marina-ui';
 import {Checklist, ChecklistRule} from 'term-web/sys/_lib';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
+import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  selector: 'tw-cs-checklist-configuration',
-  templateUrl: './code-system-checklist-configuration.component.html'
+    selector: 'tw-cs-checklist-configuration',
+    templateUrl: './code-system-checklist-configuration.component.html',
+    imports: [FormsModule, MuiEditableTableModule, MuiCheckboxModule, MuiTableModule, MuiFormModule, TerminologyConceptSearchComponent, MuiIconModule, AddButtonComponent, TranslatePipe, MarinaUtilModule, ApplyPipe]
 })
 export class CodeSystemChecklistConfigurationComponent implements OnChanges {
+  private checklistService = inject(ChecklistService);
+
   @Input() public resourceType: string;
   @Input() public resourceId: string;
 
@@ -20,8 +27,6 @@ export class CodeSystemChecklistConfigurationComponent implements OnChanges {
 
   protected checklist: Checklist[];
   protected rules: ChecklistRule[];
-
-  public constructor(private checklistService: ChecklistService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['resourceType'] || changes['resourceId']) && this.resourceType && this.resourceId) {

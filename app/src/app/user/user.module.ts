@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {UserLibModule} from './_lib';
+import {UserLibModule} from 'term-web/user/_lib';
 
 
 @NgModule({

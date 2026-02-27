@@ -1,8 +1,8 @@
 import {HttpClient} from '@angular/common/http';
-import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {copyDeep, isDefined, LoadingManager, SearchResult} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { copyDeep, isDefined, LoadingManager, SearchResult, ApplyPipe, IncludesPipe, SortPipe } from '@kodality-web/core-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {
   CodeSystem,
   CodeSystemConcept,
@@ -12,10 +12,17 @@ import {
   Designation,
   EntityProperty,
   EntityPropertyValue
-} from 'app/src/app/resources/_lib';
+} from 'term-web/resources/_lib';
 import {environment} from 'environments/environment';
 import {forkJoin, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
+import { MarinPageLayoutModule, MuiTagModule, MuiIconModule, MuiListModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { AsyncPipe } from '@angular/common';
+import { EntityPropertyValueInputComponent } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
+import { FormsModule } from '@angular/forms';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
+import { EntityPropertyNamePipe } from 'term-web/resources/_lib/code-system/pipe/entity-propertye-name-pipe';
 
 class CodeSystemEntityPropertySummary {
   public items: CodeSystemEntityPropertySummaryItem[];
@@ -40,9 +47,17 @@ class CodeSystemEntityPropertySummaryConceptItem {
 }
 
 @Component({
-  templateUrl: './code-system-concepts-property-view.component.html'
+    templateUrl: './code-system-concepts-property-view.component.html',
+    imports: [ResourceContextComponent, MarinPageLayoutModule, MuiTagModule, MuiIconModule, MuiListModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, RouterLink, EntityPropertyValueInputComponent, FormsModule, MuiNoDataModule, AsyncPipe, TranslatePipe, ApplyPipe, IncludesPipe, SortPipe, LocalizedConceptNamePipe, EntityPropertyNamePipe]
 })
 export class CodeSystemConceptsPropertyViewComponent implements OnInit {
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private codeSystemService = inject(CodeSystemLibService);
+  protected translateService = inject(TranslateService);
+  private http = inject(HttpClient);
+  private auth = inject(AuthService);
+
   protected codeSystem?: CodeSystem;
   protected versions?: CodeSystemVersion[];
   protected version?: CodeSystemVersion;
@@ -62,14 +77,7 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
   protected propertyConceptSummary: CodeSystemEntityPropertyConceptSummary;
 
 
-  public constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private codeSystemService: CodeSystemLibService,
-    protected translateService: TranslateService,
-    public http: HttpClient,
-    private auth: AuthService
-  ) {
+  public constructor() {
     this.query.sort = 'code';
   }
 
@@ -137,11 +145,11 @@ export class CodeSystemConceptsPropertyViewComponent implements OnInit {
   protected selectPropertyValue(p: {code: string, codeSystem: string}, propertyName?: string): void {
     propertyName = propertyName || this.selectedProperty.propertyName;
     if (this.valueSelected(p.code, this.selectedPropertyValues, propertyName)) {
-      let pv = this.selectedPropertyValues.find(p => p.propertyName === propertyName);
+      const pv = this.selectedPropertyValues.find(p => p.propertyName === propertyName);
       pv.values = [...pv.values.filter(v => v.code !== p.code)];
       this.selectedPropertyValues = [...this.selectedPropertyValues.filter(p => p.propertyName !== pv.propertyName), pv];
     } else {
-      let pv = this.selectedPropertyValues?.find(pv => pv.propertyName === propertyName);
+      const pv = this.selectedPropertyValues?.find(pv => pv.propertyName === propertyName);
       if (pv) {
         pv.values = [...pv.values, {...p}];
         this.selectedPropertyValues = [...this.selectedPropertyValues.filter(p => p.propertyName !== pv.propertyName), pv];

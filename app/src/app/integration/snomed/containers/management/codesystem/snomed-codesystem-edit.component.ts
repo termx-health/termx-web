@@ -1,19 +1,31 @@
-import {Location} from '@angular/common';
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, ElementRef, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {compareStrings, DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {SnomedCodeSystem, SnomedCodeSystemVersion} from 'app/src/app/integration/_lib';
-import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
+import { compareStrings, DestroyService, isDefined, LoadingManager, validateForm, FilterPipe, JoinPipe, LocalDateTimePipe, ToStringPipe, ValuesPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiFormModule, MuiSpinnerModule, MuiCardModule, MarinPageLayoutModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiTextareaModule, MuiCheckboxModule, MuiButtonModule, MuiModalModule, MuiSelectModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import {SnomedCodeSystem, SnomedCodeSystemVersion} from 'term-web/integration/_lib';
+import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
 import {LorqueLibService} from 'term-web/sys/_lib';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { NzProgressComponent } from 'ng-zorro-antd/progress';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: 'snomed-codesystem-edit.component.html',
-  providers: [DestroyService]
+    templateUrl: 'snomed-codesystem-edit.component.html',
+    providers: [DestroyService],
+    imports: [MuiFormModule, MuiSpinnerModule, FormsModule, MuiCardModule, MarinPageLayoutModule, MuiDropdownModule, PrivilegedDirective, MuiCoreModule, MuiPopconfirmModule, MuiTextareaModule, MuiCheckboxModule, MuiButtonModule, MuiModalModule, MuiSelectModule, NzProgressComponent, MuiAlertModule, TranslatePipe, FilterPipe, JoinPipe, LocalDateTimePipe, ToStringPipe, ValuesPipe]
 })
 export class SnomedCodesystemEditComponent implements OnInit {
+  private snomedService = inject(SnomedService);
+  private lorqueService = inject(LorqueLibService);
+  private notificationService = inject(MuiNotificationService);
+  private router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private destroy$ = inject(DestroyService);
+  private location = inject(Location);
+
   protected snomedCodeSystem?: SnomedCodeSystem;
   protected dependantVersions?: SnomedCodeSystemVersion[];
   protected loader = new LoadingManager();
@@ -28,16 +40,6 @@ export class SnomedCodesystemEditComponent implements OnInit {
   @ViewChild("importModalForm") public importModalForm?: NgForm;
   @ViewChild("upgradeModalForm") public upgradeModalForm?: NgForm;
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
-
-  public constructor(
-    private snomedService: SnomedService,
-    private lorqueService: LorqueLibService,
-    private notificationService: MuiNotificationService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private destroy$: DestroyService,
-    private location: Location
-  ) {}
 
   public ngOnInit(): void {
     const shortName = this.route.snapshot.paramMap.get('shortName');

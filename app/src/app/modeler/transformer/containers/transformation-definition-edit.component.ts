@@ -1,26 +1,32 @@
-import {Location} from '@angular/common';
-import {Component, OnInit} from '@angular/core';
+import { Location } from '@angular/common';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {copyDeep} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { copyDeep, LocalDateTimePipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiSpinnerModule, MuiFormModule, MuiInputModule, MuiIconModule, MuiButtonModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiCardModule } from '@kodality-web/marina-ui';
 import {Observable, of} from 'rxjs';
 import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
+import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
+import { FormsModule } from '@angular/forms';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { TransformationDefinitionResourcesComponent } from 'term-web/modeler/transformer/components/transformation-definition-resources.component';
+import { TransformationDefinitionExecutionComponent } from 'term-web/modeler/transformer/components/transformation-definition-execution.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
-  templateUrl: './transformation-definition-edit.component.html'
+    templateUrl: './transformation-definition-edit.component.html',
+    imports: [MuiSpinnerModule, PrivilegeContextDirective, MuiFormModule, MuiInputModule, FormsModule, MuiIconModule, PrivilegedDirective, MuiButtonModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, TransformationDefinitionResourcesComponent, MuiCardModule, TransformationDefinitionExecutionComponent, TranslatePipe, LocalDateTimePipe, PrivilegedPipe]
 })
 export class TransformationDefinitionEditComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private transformationDefinitionService = inject(TransformationDefinitionService);
+  private location = inject(Location);
+  private router = inject(Router);
+  private notificationService = inject(MuiNotificationService);
+
   public definition: TransformationDefinition;
   public loading = false;
-
-  public constructor(
-    private route: ActivatedRoute,
-    private transformationDefinitionService: TransformationDefinitionService,
-    private location: Location,
-    private router: Router,
-    private notificationService: MuiNotificationService
-  ) { }
 
   public ngOnInit(): void {
     this.loading = true;
@@ -67,7 +73,7 @@ export class TransformationDefinitionEditComponent implements OnInit {
   public delete(): void {
     this.loading = true;
     this.transformationDefinitionService.delete(this.definition.id)
-      .subscribe(r => this.location.back())
+      .subscribe(() => this.location.back())
       .add(() => this.loading = false);
   }
 

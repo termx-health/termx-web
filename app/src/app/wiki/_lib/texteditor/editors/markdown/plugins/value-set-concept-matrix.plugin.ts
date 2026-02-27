@@ -2,11 +2,11 @@ import {matchSection} from '@kodality-web/marina-markdown-parser';
 
 
 export function valueSetConceptMatrixPlugin(md): void {
-  md.renderer.rules.value_set_concept_matrix = (tokens, idx, /* options, env, self */) => {
+  md.renderer.rules.value_set_concept_matrix = (tokens, idx/* , options, env, self */): string => {
     return `<ce-value-set-concept-matrix ${tokens[idx].attrs.filter(([_, v]) => v).filter(v=> v[1]).map(([k, v]) => `${k}="${encodeURIComponent(v)}"`).join(' ')}></ce-value-set-concept-matrix>`;
   };
 
-  md.block.ruler.before('fence', 'value_set_concept_matrix', (state, startl, endl, silent, ...rest) => {
+  md.block.ruler.before('fence', 'value_set_concept_matrix', (state, startl, endl, silent) => {
     const {failed, end, autoClosed, content} = matchSection('{{vsc:', '}}', state, startl, endl, silent);
     if (failed) {
       return false;

@@ -1,24 +1,44 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {Router} from '@angular/router';
-import {compareDates, isDefined, LoadingManager, DestroyService} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {FhirValueSetLibService, SEPARATOR} from 'app/src/app/fhir/_lib';
-import {ChefService} from 'app/src/app/integration/_lib';
-import {ValueSet, ValueSetVersion} from 'app/src/app/resources/_lib';
-import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { compareDates, isDefined, LoadingManager, DestroyService, ApplyPipe, JoinPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiNoDataModule, MuiDividerModule, MuiIconModule, MuiCoreModule, MuiDropdownModule } from '@kodality-web/marina-ui';
+import {FhirValueSetLibService, SEPARATOR} from 'term-web/fhir/_lib';
+import {ChefService} from 'term-web/integration/_lib';
+import {ValueSet, ValueSetVersion} from 'term-web/resources/_lib';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {environment} from 'environments/environment';
 import {Fhir} from 'fhir/fhir';
 import {saveAs} from 'file-saver';
 import {AuthService} from 'term-web/core/auth';
 import {Space, SpaceLibService} from 'term-web/sys/_lib/space';
 import {Provenance, Release, ReleaseLibService, LorqueLibService} from 'term-web/sys/_lib';
+import { UpperCasePipe } from '@angular/common';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { ResourceTaskModalComponent } from 'term-web/resources/resource/components/resource-task-modal-component';
+import { ResourceReleaseModalComponent } from 'term-web/resources/resource/components/resource-release-modal-component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
-  selector: 'tw-value-set-version-info-widget',
-  templateUrl: 'value-set-version-info-widget.component.html',
-  providers: [DestroyService]
+    selector: 'tw-value-set-version-info-widget',
+    templateUrl: 'value-set-version-info-widget.component.html',
+    providers: [DestroyService],
+    imports: [MuiNoDataModule, MuiDividerModule, StatusTagComponent, MuiIconModule, MuiCoreModule, PrivilegedDirective, MuiDropdownModule, RouterLink, ResourceTaskModalComponent, ResourceReleaseModalComponent, UpperCasePipe, TranslatePipe, MarinaUtilModule, ApplyPipe, JoinPipe, LocalDatePipe, PrivilegedPipe]
 })
 export class ValueSetVersionInfoWidgetComponent implements OnChanges {
+  private destroy$ = inject(DestroyService);
+  private valueSetService = inject(ValueSetService);
+  private fhirValueSetService = inject(FhirValueSetLibService);
+  private chefService = inject(ChefService);
+  private notificationService = inject(MuiNotificationService);
+  private spaceService = inject(SpaceLibService);
+  private authService = inject(AuthService);
+  private releaseService = inject(ReleaseLibService);
+  private lorqueService = inject(LorqueLibService);
+  private router = inject(Router);
+
   protected SEPARATOR = SEPARATOR;
   @Input() public valueSet: ValueSet;
   @Input() public version: ValueSetVersion;
@@ -29,19 +49,6 @@ export class ValueSetVersionInfoWidgetComponent implements OnChanges {
   protected releases: Release[];
 
   protected loader = new LoadingManager();
-
-  public constructor(
-    private destroy$: DestroyService,
-    private valueSetService: ValueSetService,
-    private fhirValueSetService: FhirValueSetLibService,
-    private chefService: ChefService,
-    private notificationService: MuiNotificationService,
-    private spaceService: SpaceLibService,
-    private authService: AuthService,
-    private releaseService: ReleaseLibService,
-    private lorqueService: LorqueLibService,
-    private router: Router
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['version'] && this.version) {

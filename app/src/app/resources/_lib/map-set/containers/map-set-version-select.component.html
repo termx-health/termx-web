@@ -1,11 +1,13 @@
 <m-select icon="search"
-    placeholder="marina.ui.inputs.search.placeholder"
-    [(ngModel)]="value"
-    (mChange)="fireOnChange()"
-    [autoUnselect]="false"
-    [autoSelect]="true"
-    [loading]="isLoading">
-  <m-option *ngFor="let key of data | keys"
+  placeholder="marina.ui.inputs.search.placeholder"
+  [(ngModel)]="value"
+  (mChange)="fireOnChange()"
+  [autoUnselect]="false"
+  [autoSelect]="true"
+  [loading]="isLoading">
+  @for (key of data | keys; track key) {
+    <m-option
       [mValue]="valueType === 'id' ? data[key]?.id : data[key]?.version"
-      [mLabel]="data[key]?.version + ((data[key]?.description | localName) ? (' (' + (data[key]?.description | localName)+ ')') : '' )"></m-option>
+    [mLabel]="data[key]?.version + ((data[key]?.description | localName) ? (' (' + (data[key]?.description | localName)+ ')') : '' )"></m-option>
+  }
 </m-select>

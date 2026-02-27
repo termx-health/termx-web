@@ -1,4 +1,4 @@
-import {ChefMessage} from './chef-message';
+import {ChefMessage} from 'term-web/integration/_lib/chef/model/chef-message';
 
 export class FhirToFshResponse {
   public fsh?: string | fshMap;

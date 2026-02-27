@@ -1,10 +1,12 @@
-import {Optional, Pipe, PipeTransform} from '@angular/core';
-import {AuthService} from '../auth.service';
-import {PrivilegeContextDirective} from './privilege-context.directive';
+import { Pipe, PipeTransform, inject } from '@angular/core';
+import {AuthService} from 'term-web/core/auth/auth.service';
+import {PrivilegeContextDirective} from 'term-web/core/auth/privileges/privilege-context.directive';
 
-@Pipe({name: 'twPrivileged'})
+@Pipe({ name: 'twPrivileged' })
 export class PrivilegedPipe implements PipeTransform {
-  public constructor(private authService: AuthService, @Optional() private ctx?: PrivilegeContextDirective) {}
+  private authService = inject(AuthService);
+  private ctx = inject(PrivilegeContextDirective, { optional: true });
+
 
   public transform(privileges: string[] | string): boolean {
     return this.authService.hasAnyPrivilege(PrivilegedPipe.getPrivileges(privileges, this.ctx));

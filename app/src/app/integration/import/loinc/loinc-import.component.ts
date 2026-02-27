@@ -1,18 +1,30 @@
 import {HttpClient} from '@angular/common/http';
-import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
 import {DestroyService} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiInputModule, MuiButtonModule, MuiAlertModule, MuiCoreModule, MuiModalModule, MarinPageLayoutModule } from '@kodality-web/marina-ui';
 import {environment} from 'environments/environment';
 import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+
+import { TranslatePipe } from '@ngx-translate/core';
+import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
 
 
 @Component({
-  templateUrl: 'loinc-import.component.html',
-  providers: [DestroyService]
+    templateUrl: 'loinc-import.component.html',
+    providers: [DestroyService],
+    imports: [MuiCardModule, NzBreadCrumbComponent, NzBreadCrumbItemComponent, FormsModule, MuiFormModule, MuiInputModule, ValueSetConceptSelectComponent, MuiButtonModule, MuiAlertModule, MuiCoreModule, MuiModalModule, MarinPageLayoutModule, TranslatePipe, HasAnyPrivilegePipe]
 })
 export class LoincImportComponent {
+  private http = inject(HttpClient);
+  private notificationService = inject(MuiNotificationService);
+  private jobService = inject(JobLibService);
+  private destroy$ = inject(DestroyService);
+  private router = inject(Router);
+
 
   public data: {
     version?: string,
@@ -34,14 +46,6 @@ export class LoincImportComponent {
 
   public jobResponse: JobLog | null = null;
   protected modalData: {visible?: boolean} = {};
-
-  public constructor(
-    private http: HttpClient,
-    private notificationService: MuiNotificationService,
-    private jobService: JobLibService,
-    private destroy$: DestroyService,
-    private router: Router
-  ) {}
 
   protected importLoinc(): void {
     const formData = new FormData();

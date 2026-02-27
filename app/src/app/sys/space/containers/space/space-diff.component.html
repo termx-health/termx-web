@@ -5,102 +5,137 @@
         <div style="display: flex; gap: 1rem">
           <m-form-item mName="resource" mLabel="Resource">
             <m-select name="resource" [(ngModel)]="diffItem.resource" (ngModelChange)="diffItem.resourceVersion = undefined; loadFhirResources()" compareWith="id">
-              <m-option *ngFor="let r of resources" mLabel="{{r.resourceType}} - {{r.resourceId}}" [mValue]="r"></m-option>
+              @for (r of resources; track r) {
+                <m-option mLabel="{{r.resourceType}} - {{r.resourceId}}" [mValue]="r"></m-option>
+              }
             </m-select>
           </m-form-item>
-          <m-form-item mName="resource-version" mLabel="Resource version" *ngIf="diffItem.resource?.resourceId as id">
-            <ng-container [ngSwitch]="diffItem.resource.resourceType">
-              <tw-code-system-version-select *ngSwitchCase="'code-system'"
-                  valueType="version"
-                  name="resource-version"
-                  [(ngModel)]="diffItem.resourceVersion"
-                  (ngModelChange)="loadFhirResources()"
-                  [codeSystemId]="id"/>
-              <tw-value-set-version-select *ngSwitchCase="'value-set'"
-                  valueType="version"
-                  name="resource-version"
-                  [(ngModel)]="diffItem.resourceVersion"
-                  (ngModelChange)="loadFhirResources()"
-                  [valueSetId]="id"/>
-              <tw-map-set-version-select *ngSwitchCase="'map-set'"
-                  valueType="version"
-                  name="resource-version"
-                  [(ngModel)]="diffItem.resourceVersion"
-                  (ngModelChange)="loadFhirResources()"
-                  [mapSetId]="id"/>
-            </ng-container>
-          </m-form-item>
-          <m-form-item mName="server" mLabel="Comparable server" *ngIf="diffItem.resource?.id">
-            <div class="m-items-middle" *ngIf="!serverEditable">
-              <label *ngIf="!diffItem?.resource?.terminologyServer">{{'entities.terminology-server.current-installation' | translate}}</label>
-              <label>{{terminologyServers[diffItem?.resource?.terminologyServer]?.names | localName}}</label>
-              <m-button mDisplay="text" mShape="circle" (mClick)="serverEditable = true">
-                <span class="m-items-middle"><m-icon mCode="edit"></m-icon></span>
-              </m-button>
-            </div>
-            <m-select *ngIf="serverEditable" [(ngModel)]="diffItem.resource.terminologyServer" (ngModelChange)="serverSelected($event)">
-              <m-option *ngFor="let server of terminologyServers | keys" [mLabel]="terminologyServers[server]?.names | localName" [mValue]="server"></m-option>
-            </m-select>
-          </m-form-item>
+          @if (diffItem.resource?.resourceId; as id) {
+            <m-form-item mName="resource-version" mLabel="Resource version">
+              @switch (diffItem.resource.resourceType) {
+                @case ('code-system') {
+                  <tw-code-system-version-select
+                    valueType="version"
+                    name="resource-version"
+                    [(ngModel)]="diffItem.resourceVersion"
+                    (ngModelChange)="loadFhirResources()"
+                    [codeSystemId]="id"/>
+                }
+                @case ('value-set') {
+                  <tw-value-set-version-select
+                    valueType="version"
+                    name="resource-version"
+                    [(ngModel)]="diffItem.resourceVersion"
+                    (ngModelChange)="loadFhirResources()"
+                    [valueSetId]="id"/>
+                }
+                @case ('map-set') {
+                  <tw-map-set-version-select
+                    valueType="version"
+                    name="resource-version"
+                    [(ngModel)]="diffItem.resourceVersion"
+                    (ngModelChange)="loadFhirResources()"
+                    [mapSetId]="id"/>
+                }
+              }
+            </m-form-item>
+          }
+          @if (diffItem.resource?.id) {
+            <m-form-item mName="server" mLabel="Comparable server">
+              @if (!serverEditable) {
+                <div class="m-items-middle">
+                  @if (!diffItem?.resource?.terminologyServer) {
+                    <label>{{'entities.terminology-server.current-installation' | translate}}</label>
+                  }
+                  <label>{{terminologyServers[diffItem?.resource?.terminologyServer]?.names | localName}}</label>
+                  <m-button mDisplay="text" mShape="circle" (mClick)="serverEditable = true">
+                    <span class="m-items-middle"><m-icon mCode="edit"></m-icon></span>
+                  </m-button>
+                </div>
+              }
+              @if (serverEditable) {
+                <m-select [(ngModel)]="diffItem.resource.terminologyServer" (ngModelChange)="serverSelected($event)">
+                  @for (server of terminologyServers | keys; track server) {
+                    <m-option [mLabel]="terminologyServers[server]?.names | localName" [mValue]="server"></m-option>
+                  }
+                </m-select>
+              }
+            </m-form-item>
+          }
         </div>
         <div class="m-items-middle">
           <m-button [routerLink]="['/spaces/context', ctx.params, 'diff-matrix']">
             <div class="m-items-middle"><label>{{'Diff matrix'}}</label>
-              <m-icon mCode="table"></m-icon>
-            </div>
-          </m-button>
-        </div>
+            <m-icon mCode="table"></m-icon>
+          </div>
+        </m-button>
       </div>
-    </m-card>
-    <div style="display: flex; gap: 1rem">
-      <m-card style="max-width: 33%">
-        <div *m-card-header class="m-justify-between">
-          <label>{{'entities.terminology-server.current-installation' | translate}}</label>
+    </div>
+  </m-card>
+  <div style="display: flex; gap: 1rem">
+    <m-card style="max-width: 33%">
+      <div *m-card-header class="m-justify-between">
+        <label>{{'entities.terminology-server.current-installation' | translate}}</label>
           <m-button m-tooltip [mTitle]="'web.space.diff.sync-tooltip' | translate: {
               source: (terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName: '...'),
               target: ('entities.terminology-server.current-installation' | translate)}" mDisplay="primary" (mClick)="sync('local')">
-            <div class="m-items-middle"><label>{{'Sync'}}</label>
-              <m-icon mCode="sync"></m-icon>
-            </div>
-          </m-button>
+          <div class="m-items-middle"><label>{{'Sync'}}</label>
+          <m-icon mCode="sync"></m-icon>
         </div>
+      </m-button>
+    </div>
 
-        <span *ngIf="current?.length > 15000000">{{'web.space.diff.not-render' | translate}}</span>
-        <pre *ngIf="current?.length > 10000 && current?.length <= 15000000">{{current | apply: normalize}}</pre>
-        <tw-diff-view *ngIf="current?.length <= 10000" [value]="current | apply: normalize"/>
-      </m-card>
+    @if (current?.length > 15000000) {
+      <span>{{'web.space.diff.not-render' | translate}}</span>
+    }
+    @if (current?.length > 10000 && current?.length <= 15000000) {
+      <pre>{{current | apply: normalize}}</pre>
+    }
+    @if (current?.length <= 10000) {
+      <tw-diff-view [value]="current | apply: normalize"/>
+    }
+  </m-card>
 
-      <m-card style="max-width: 33%">
-        <div *m-card-header class="m-justify-between">
-          <label>{{terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName: '...'}}</label>
+  <m-card style="max-width: 33%">
+    <div *m-card-header class="m-justify-between">
+      <label>{{terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName: '...'}}</label>
           <m-button m-tooltip [mTitle]="'web.space.diff.sync-tooltip' | translate: {
               source: ('entities.terminology-server.current-installation' | translate),
               target: (terminologyServers?.[diffItem?.resource?.terminologyServer]?.names | localName: '...')}" mDisplay="primary" (mClick)="sync('external')">
-            <div class="m-items-middle"><label>{{'Sync'}}</label>
-              <m-icon mCode="sync"></m-icon>
-            </div>
-          </m-button>
-        </div>
-
-        <span *ngIf="comparable?.length > 5000000">{{'web.space.diff.not-render' | translate}}</span>
-        <pre *ngIf="comparable?.length > 10000 && comparable?.length <= 5000000">{{comparable | apply: normalize}}</pre>
-        <tw-diff-view *ngIf="comparable?.length <= 10000" [value]="comparable | apply: normalize"/>
-      </m-card>
-
-      <m-card style="max-width: 33%" *ngIf="{mode: 'line-by-line'} as d">
-        <div *m-card-header class="m-justify-between">
-          <label>{{'Diff'}}</label>
-          <m-button (mClick)="d.mode = d.mode === 'line-by-line' ? 'side-by-side' : 'line-by-line'">
-            <m-icon [mCode]="d.mode === 'line-by-line' ? 'read' : 'pic-center' "/>
-          </m-button>
-        </div>
-
-        <tw-diff-view *ngIf="current && comparable"
-            [src]="current | apply: normalize"
-            [tgt]="comparable | apply: normalize"
-            [full]="current.length < 15000000 && comparable.length < 15000000"
-            [display]="d.mode"/>
-      </m-card>
-    </div>
+        <div class="m-items-middle"><label>{{'Sync'}}</label>
+        <m-icon mCode="sync"></m-icon>
+      </div>
+    </m-button>
   </div>
+
+  @if (comparable?.length > 5000000) {
+    <span>{{'web.space.diff.not-render' | translate}}</span>
+  }
+  @if (comparable?.length > 10000 && comparable?.length <= 5000000) {
+    <pre>{{comparable | apply: normalize}}</pre>
+  }
+  @if (comparable?.length <= 10000) {
+    <tw-diff-view [value]="comparable | apply: normalize"/>
+  }
+</m-card>
+
+@if ({mode: 'line-by-line'}; as d) {
+  <m-card style="max-width: 33%">
+    <div *m-card-header class="m-justify-between">
+      <label>{{'Diff'}}</label>
+      <m-button (mClick)="d.mode = d.mode === 'line-by-line' ? 'side-by-side' : 'line-by-line'">
+        <m-icon [mCode]="d.mode === 'line-by-line' ? 'read' : 'pic-center' "/>
+      </m-button>
+    </div>
+    @if (current && comparable) {
+      <tw-diff-view
+        [src]="current | apply: normalize"
+        [tgt]="comparable | apply: normalize"
+        [full]="current.length < 15000000 && comparable.length < 15000000"
+        [display]="d.mode"/>
+    }
+  </m-card>
+}
+</div>
+</div>
 </m-page>

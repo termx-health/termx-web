@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
@@ -7,9 +7,10 @@ import {Provenance, Release, ReleaseResource, ReleaseSearchParams, JobLibService
 
 @Injectable()
 export class ReleaseLibService {
-  protected baseUrl = `${environment.termxApi}/releases`;
+  protected http = inject(HttpClient);
+  protected jobService = inject(JobLibService);
 
-  public constructor(protected http: HttpClient, public jobService: JobLibService) { }
+  protected baseUrl = `${environment.termxApi}/releases`;
 
   public load(id: number): Observable<Release> {
     return this.http.get<Release>(`${this.baseUrl}/${id}`);

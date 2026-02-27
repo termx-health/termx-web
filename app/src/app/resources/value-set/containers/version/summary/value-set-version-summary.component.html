@@ -20,18 +20,22 @@
       <m-card>
         <m-title *m-card-header mTitle="web.value-set-version.summary.rule-set">
           <div class="m-items-middle" mControls>
-            <m-button *ngIf="ruleSetChanged && ('edit' | twPrivileged)" mDisplay="text" mShape="circle" (mClick)="saveRuleSet()">
-              <m-icon mCode="check"></m-icon>
-            </m-button>
-            <m-button *ngIf="valueSetVersion?.status === 'draft' && ('edit' | twPrivileged)" mDisplay="text" mShape="circle" (mClick)="addRule()">
-              <m-icon mCode="plus"></m-icon>
-            </m-button>
+            @if (ruleSetChanged && ('edit' | twPrivileged)) {
+              <m-button mDisplay="text" mShape="circle" (mClick)="saveRuleSet()">
+                <m-icon mCode="check"></m-icon>
+              </m-button>
+            }
+            @if (valueSetVersion?.status === 'draft' && ('edit' | twPrivileged)) {
+              <m-button mDisplay="text" mShape="circle" (mClick)="addRule()">
+                <m-icon mCode="plus"></m-icon>
+              </m-button>
+            }
           </div>
         </m-title>
         <tw-value-set-version-rule-set-widget [ruleSet]="valueSetVersion?.ruleSet"
-            (ruleSelected)="rule = $event"
-            (ruleSetChanged)="ruleSetChanged = true"
-            clickable></tw-value-set-version-rule-set-widget>
+          (ruleSelected)="rule = $event"
+          (ruleSetChanged)="ruleSetChanged = true"
+        clickable></tw-value-set-version-rule-set-widget>
       </m-card>
     </div>
     <div *mFormCol style="display: flex; gap: 1rem; flex-direction: column">
@@ -41,35 +45,47 @@
         <div class="m-justify-between">
           <m-title class="m-title" mTitle="web.value-set-version.summary.expansion">
             <m-button mControls mDisplay="text" mShape="circle" [disabled]="loader.state['expand']" (mClick)="reloadExpansion()">
-              <m-icon *ngIf="!loader.state['expand']" mCode="reload"></m-icon>
-              <m-icon *ngIf="loader.state['expand']" mCode="loading"></m-icon>
+              @if (!loader.state['expand']) {
+                <m-icon mCode="reload"></m-icon>
+              }
+              @if (loader.state['expand']) {
+                <m-icon mCode="loading"></m-icon>
+              }
             </m-button>
           </m-title>
-          <div class="m-items-middle" *ngIf="valueSetVersion?.snapshot">
-            <m-icon mCode="clock-circle"></m-icon>
-            <span>{{valueSetVersion.snapshot.createdAt | localDate}}</span>
-            <ng-container *ngIf="isAuthenticated | async">
-              <m-divider mVertical></m-divider>
-              <m-icon mCode="user"></m-icon>
-              <span>{{valueSetVersion.snapshot.createdBy || '-'}}</span>
-            </ng-container>
-          </div>
+          @if (valueSetVersion?.snapshot) {
+            <div class="m-items-middle">
+              <m-icon mCode="clock-circle"></m-icon>
+              <span>{{valueSetVersion.snapshot.createdAt | localDate}}</span>
+              @if (isAuthenticated | async) {
+                <m-divider mVertical></m-divider>
+                <m-icon mCode="user"></m-icon>
+                <span>{{valueSetVersion.snapshot.createdBy || '-'}}</span>
+              }
+            </div>
+          }
         </div>
-        <m-no-data *ngIf="!valueSetVersion?.snapshot"></m-no-data>
+        @if (!valueSetVersion?.snapshot) {
+          <m-no-data></m-no-data>
+        }
 
-        <div *ngIf="valueSetVersion?.snapshot">
-          <a [routerLink]="['/resources/value-sets', valueSet.id, 'versions', valueSetVersion.version, 'concepts']">Total
+        @if (valueSetVersion?.snapshot) {
+          <div>
+            <a [routerLink]="['/resources/value-sets', valueSet.id, 'versions', valueSetVersion.version, 'concepts']">Total
             concepts: {{valueSetVersion.snapshot.conceptsTotal}}</a>
-          <div *ngFor="let e of (valueSetVersion.snapshot.expansion | apply:getFirstRows)" style="display: flex; gap: 1rem">
-            <span style="flex: 1">{{e.concept.code}}</span>
-            <span style="flex: 4">{{e.display?.name}}</span>
+            @for (e of (valueSetVersion.snapshot.expansion | apply:getFirstRows); track e) {
+              <div style="display: flex; gap: 1rem">
+                <span style="flex: 1">{{e.concept.code}}</span>
+                <span style="flex: 4">{{e.display?.name}}</span>
+              </div>
+            }
+            @if (valueSetVersion.snapshot.expansion?.length > 20) {
+              <span class="m-subtitle">{{'web.value-set-version.summary.expansion-limit-info' | translate:({count: valueSetVersion.snapshot.expansion.length - 20})}}
+                <a [routerLink]="['/resources/value-sets', valueSet.id, 'versions', valueSetVersion.version, 'concepts']">{{'web.value-set-version.summary.expansion-see-all' | translate}}</a>
+              </span>
+            }
           </div>
-          <ng-container *ngIf="valueSetVersion.snapshot.expansion?.length > 20">
-            <span class="m-subtitle">{{'web.value-set-version.summary.expansion-limit-info' | translate:({count: valueSetVersion.snapshot.expansion.length - 20})}}
-              <a [routerLink]="['/resources/value-sets', valueSet.id, 'versions', valueSetVersion.version, 'concepts']">{{'web.value-set-version.summary.expansion-see-all' | translate}}</a>
-            </span>
-          </ng-container>
-        </div>
+        }
 
       </m-card>
     </div>
@@ -78,28 +94,34 @@
   <!-- Rule -->
   <m-form-row>
     <div style="margin-top: 1rem">
-      <m-card *ngIf="rule">
-        <m-title *m-card-header mTitle="web.value-set-version.summary.rule">
-          <div mControls>
-            <m-button *ngIf="valueSetVersion?.status === 'draft' && (valueSet.id + '.ValueSet.edit' | twHasAnyPrivilege)"
-                mDisplay="text"
-                mShape="circle"
-                (mClick)="saveRule()">
-              <m-icon mCode="check"></m-icon>
-            </m-button>
-            <m-button *ngIf="valueSetVersion?.status === 'draft' && (valueSet.id + '.ValueSet.edit' | twHasAnyPrivilege)"
-                mDisplay="text"
-                mShape="circle"
-                m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteRule()">
-              <m-icon mCode="delete"></m-icon>
-            </m-button>
-          </div>
-        </m-title>
-        <tw-value-set-rule-form [rule]="rule.rule"
+      @if (rule) {
+        <m-card>
+          <m-title *m-card-header mTitle="web.value-set-version.summary.rule">
+            <div mControls>
+              @if (valueSetVersion?.status === 'draft' && (valueSet.id + '.ValueSet.edit' | twHasAnyPrivilege)) {
+                <m-button
+                  mDisplay="text"
+                  mShape="circle"
+                  (mClick)="saveRule()">
+                  <m-icon mCode="check"></m-icon>
+                </m-button>
+              }
+              @if (valueSetVersion?.status === 'draft' && (valueSet.id + '.ValueSet.edit' | twHasAnyPrivilege)) {
+                <m-button
+                  mDisplay="text"
+                  mShape="circle"
+                  m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteRule()">
+                  <m-icon mCode="delete"></m-icon>
+                </m-button>
+              }
+            </div>
+          </m-title>
+          <tw-value-set-rule-form [rule]="rule.rule"
             [valueSet]="valueSet?.id"
             [valueSetVersion]="valueSetVersion?.version"
-            [viewMode]="valueSetVersion?.status !== 'draft' || !('edit' | twPrivileged)"></tw-value-set-rule-form>
-      </m-card>
+          [viewMode]="valueSetVersion?.status !== 'draft' || !('edit' | twPrivileged)"></tw-value-set-rule-form>
+        </m-card>
+      }
     </div>
   </m-form-row>
 </m-page>

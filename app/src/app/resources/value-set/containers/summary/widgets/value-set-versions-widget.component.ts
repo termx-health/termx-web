@@ -1,19 +1,34 @@
-import {Component, EventEmitter, Input, Output, ViewChild, SimpleChanges, OnChanges} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, EventEmitter, Input, Output, ViewChild, SimpleChanges, OnChanges, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import {LoadingManager, validateForm, collect} from '@kodality-web/core-util';
-import {LocalizedName} from '@kodality-web/marina-util';
-import {CodeSystemVersion, ValueSetVersion} from 'app/src/app/resources/_lib';
+import { LoadingManager, validateForm, collect, ApplyPipe, JoinPipe, LocalDatePipe, MapPipe, SortPipe } from '@kodality-web/core-util';
+import { LocalizedName, MarinaUtilModule } from '@kodality-web/marina-util';
+import {ValueSetVersion} from 'term-web/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
 import {ResourceReleaseModalComponent} from 'term-web/resources/resource/components/resource-release-modal-component';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {ReleaseLibService, Release} from 'term-web/sys/_lib';
 
+import { MuiNoDataModule, MuiListModule, MuiDividerModule, MuiDropdownModule, MuiCoreModule, MuiIconModule, MuiPopconfirmModule, MuiAbbreviateModule, MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { EntityPropertyValueInputComponent } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
+import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
+import { ResourceReleaseModalComponent as ResourceReleaseModalComponent_1 } from 'term-web/resources/resource/components/resource-release-modal-component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
+
 @Component({
-  selector: 'tw-value-set-versions-widget',
-  templateUrl: 'value-set-versions-widget.component.html'
+    selector: 'tw-value-set-versions-widget',
+    templateUrl: 'value-set-versions-widget.component.html',
+    imports: [MuiNoDataModule, MuiListModule, MuiDividerModule, StatusTagComponent, PrivilegedDirective, MuiDropdownModule, MuiCoreModule, MuiIconModule, MuiPopconfirmModule, MuiAbbreviateModule, EntityPropertyValueInputComponent, FormsModule, MuiModalModule, MarinPageLayoutModule, MuiFormModule, SemanticVersionSelectComponent, MuiButtonModule, ResourceReleaseModalComponent_1, TranslatePipe, MarinaUtilModule, ApplyPipe, JoinPipe, LocalDatePipe, MapPipe, SortPipe, PrivilegedPipe]
 })
 export class ValueSetVersionsWidgetComponent implements OnChanges{
+  private router = inject(Router);
+  private valueSetService = inject(ValueSetService);
+  private releaseService = inject(ReleaseLibService);
+  private authService = inject(AuthService);
+
   @Input() public valueSet: string;
   @Input() public valueSetTitle: LocalizedName;
   @Input() public versions: ValueSetVersion[];
@@ -29,13 +44,6 @@ export class ValueSetVersionsWidgetComponent implements OnChanges{
   } = {};
   @ViewChild("duplicateModalForm") public duplicateModalForm?: NgForm;
   @ViewChild("releaseModal") public releaseModal?: ResourceReleaseModalComponent;
-
-  public constructor(
-    private router: Router,
-    private valueSetService: ValueSetService,
-    private releaseService: ReleaseLibService,
-    private authService: AuthService
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['valueSet'] && this.valueSet) {

@@ -1,27 +1,30 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {ChecklistRule} from 'term-web/sys/_lib';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
+import { MuiSpinnerModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiFormModule, MuiTextareaModule, MuiSelectModule, MuiMultiLanguageInputModule, MuiCheckboxModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 
 @Component({
-  templateUrl: 'checklist-rule-edit.component.html'
+    templateUrl: 'checklist-rule-edit.component.html',
+    imports: [MuiSpinnerModule, FormsModule, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiPopconfirmModule, MuiFormModule, MuiTextareaModule, MuiSelectModule, MuiMultiLanguageInputModule, ValueSetConceptSelectComponent, MuiCheckboxModule, MuiButtonModule, TranslatePipe, PrivilegedPipe]
 })
 export class ChecklistRuleEditComponent implements OnInit {
+  private checklistService = inject(ChecklistService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   protected rule?: ChecklistRule;
   protected loader = new LoadingManager();
   protected mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private checklistService: ChecklistService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.subscribe(paramMap => {

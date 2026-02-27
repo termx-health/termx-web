@@ -1,6 +1,9 @@
 import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {compareNumbers} from '@kodality-web/core-util';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { compareNumbers, AutofocusDirective, ApplyPipe } from '@kodality-web/core-util';
+
+import { MuiSpinnerModule, MuiRadioModule, MuiButtonModule, MuiInputModule } from '@kodality-web/marina-ui';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface Semver {
   src: string,
@@ -14,9 +17,10 @@ interface Semver {
 const REGEX = /^(0|[1-9]\d*)\.?(0|[1-9]\d*)?\.?(0|[1-9]\d*)?(?:-((?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*)(?:\.(?:0|[1-9]\d*|\d*[a-zA-Z-][0-9a-zA-Z-]*))*))?(?:\+([0-9a-zA-Z-]+(?:\.[0-9a-zA-Z-]+)*))?$/;
 
 @Component({
-  selector: 'tw-semantic-version-select',
-  templateUrl: 'semantic-version-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SemanticVersionSelectComponent), multi: true}]
+    selector: 'tw-semantic-version-select',
+    templateUrl: 'semantic-version-select.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SemanticVersionSelectComponent), multi: true }],
+    imports: [MuiSpinnerModule, MuiRadioModule, FormsModule, MuiButtonModule, MuiInputModule, AutofocusDirective, TranslatePipe, ApplyPipe]
 })
 export class SemanticVersionSelectComponent implements OnChanges, ControlValueAccessor {
   @Input() public versions: string[];
@@ -25,8 +29,8 @@ export class SemanticVersionSelectComponent implements OnChanges, ControlValueAc
   protected customVersion = true;
 
   protected version: string;
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['versions']) {
@@ -54,7 +58,7 @@ export class SemanticVersionSelectComponent implements OnChanges, ControlValueAc
 
   protected setCustom(): void {
     this.semver = undefined;
-    this.customVersion = true
+    this.customVersion = true;
   }
 
 

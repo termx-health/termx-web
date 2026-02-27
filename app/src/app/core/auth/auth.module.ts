@@ -4,30 +4,28 @@ import {HasAllPrivilegesPipe} from 'term-web/core/auth/privileges/has-all-privil
 import {PrivilegeContextDirective} from 'term-web/core/auth/privileges/privilege-context.directive';
 import {PrivilegedDirective} from 'term-web/core/auth/privileges/privileged.directive';
 import {PrivilegedPipe} from 'term-web/core/auth/privileges/privileged.pipe';
-import {OauthConfigModule, OauthHttpInterceptor} from './oidc';
-import {HasAnyPrivilegePipe} from './privileges/has-any-privilege.pipe';
-import {YupiHttpInterceptor} from './yupi/yupi.http-interceptor';
+import {OauthConfigModule, OauthHttpInterceptor} from 'term-web/core/auth/oidc';
+import {HasAnyPrivilegePipe} from 'term-web/core/auth/privileges/has-any-privilege.pipe';
+import {YupiHttpInterceptor} from 'term-web/core/auth/yupi/yupi.http-interceptor';
 
 
 @NgModule({
-  imports: [
-    OauthConfigModule,
-  ],
-  declarations: [
-    PrivilegedDirective,
-    PrivilegeContextDirective,
-    HasAnyPrivilegePipe,
-    HasAllPrivilegesPipe,
-    PrivilegedPipe,
-  ],
-  exports: [
-    OauthConfigModule,
-    PrivilegedDirective,
-    PrivilegeContextDirective,
-    HasAnyPrivilegePipe,
-    HasAllPrivilegesPipe,
-    PrivilegedPipe
-  ]
+    imports: [
+        OauthConfigModule,
+        PrivilegedDirective,
+        PrivilegeContextDirective,
+        HasAnyPrivilegePipe,
+        HasAllPrivilegesPipe,
+        PrivilegedPipe,
+    ],
+    exports: [
+        OauthConfigModule,
+        PrivilegedDirective,
+        PrivilegeContextDirective,
+        HasAnyPrivilegePipe,
+        HasAllPrivilegesPipe,
+        PrivilegedPipe
+    ]
 })
 export class AuthModule {
   public static init(): ModuleWithProviders<AuthModule> {

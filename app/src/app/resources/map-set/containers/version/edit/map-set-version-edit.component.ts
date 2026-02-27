@@ -1,18 +1,48 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location, AsyncPipe } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {compareValues, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MapSetScope, MapSetVersion} from 'app/src/app/resources/_lib';
+import { compareValues, isDefined, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import {MapSetScope, MapSetVersion} from 'term-web/resources/_lib';
 import {map, Observable} from 'rxjs';
+import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 import {AuthService} from 'term-web/core/auth';
-import {MapSetService} from '../../../services/map-set-service';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiDatePickerModule, MuiMultiLanguageInputModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { ResourceIdentifiersComponent } from 'term-web/resources/resource/components/resource-identifiers.component';
+import { MapSetScopeFormComponent } from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: './map-set-version-edit.component.html',
+    templateUrl: './map-set-version-edit.component.html',
+    imports: [
+    MuiFormModule,
+    MuiSpinnerModule,
+    MuiCardModule,
+    StatusTagComponent,
+    FormsModule,
+    SemanticVersionSelectComponent,
+    ValueSetConceptSelectComponent,
+    MuiDatePickerModule,
+    MuiMultiLanguageInputModule,
+    ResourceIdentifiersComponent,
+    MapSetScopeFormComponent,
+    MuiButtonModule,
+    MuiIconModule,
+    AsyncPipe,
+    TranslatePipe,
+    ApplyPipe
+],
 })
 export class MapSetVersionEditComponent implements OnInit {
+  private mapSetService = inject(MapSetService);
+  private authService = inject(AuthService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   protected mapSetId?: string | null;
   protected version?: MapSetVersion;
   protected loader = new LoadingManager();
@@ -21,13 +51,6 @@ export class MapSetVersionEditComponent implements OnInit {
   protected canEdit = false;
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private mapSetService: MapSetService,
-    private authService: AuthService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) {}
 
   public ngOnInit(): void {
     this.mapSetId = this.route.snapshot.paramMap.get('id');

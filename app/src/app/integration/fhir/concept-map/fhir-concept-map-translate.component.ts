@@ -1,23 +1,41 @@
 import {Clipboard} from '@angular/cdk/clipboard';
-import {Component} from '@angular/core';
-import {FhirConceptMapLibService, FhirConceptMapTranslateParams} from '../../../fhir/_lib';
+import { Component, inject } from '@angular/core';
+import {FhirConceptMapLibService, FhirConceptMapTranslateParams} from 'term-web/fhir/_lib';
+import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiTextareaModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+import { FormsModule } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: './fhir-concept-map-translate.component.html',
+    templateUrl: './fhir-concept-map-translate.component.html',
+    imports: [
+        MuiCardModule,
+        MuiSpinnerModule,
+        NzBreadCrumbComponent,
+        NzBreadCrumbItemComponent,
+        MuiButtonModule,
+        MuiFormModule,
+        MuiIconModule,
+        MuiPopoverModule,
+        MuiTextareaModule,
+        FormsModule,
+        MuiAlertModule,
+        JsonPipe,
+        TranslatePipe,
+    ],
 })
 export class FhirConceptMapTranslateComponent {
+  private fhirConceptMapLibService = inject(FhirConceptMapLibService);
+  private clipboardService = inject(Clipboard);
+
   public response?: any;
   public error?: any;
 
   public data = new FhirConceptMapTranslateParams();
 
   public loading: boolean = false;
-
-  public constructor(
-    private fhirConceptMapLibService: FhirConceptMapLibService,
-    private clipboardService: Clipboard,
-  ) {}
 
   public translate(): void {
     this.data.uri = this.data.uri || undefined;

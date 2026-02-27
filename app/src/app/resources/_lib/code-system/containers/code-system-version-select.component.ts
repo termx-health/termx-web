@@ -1,17 +1,24 @@
-import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
+import { Component, forwardRef, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe } from '@kodality-web/core-util';
 import {takeUntil} from 'rxjs';
-import {CodeSystemLibService, CodeSystemVersion, CodeSystemVersionSearchParams} from '../../code-system';
+import {CodeSystemLibService, CodeSystemVersion, CodeSystemVersionSearchParams} from 'term-web/resources/_lib/code-system';
+import { MuiSelectModule, MuiAbbreviateModule } from '@kodality-web/marina-ui';
+
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 
 @Component({
-  selector: 'tw-code-system-version-select',
-  templateUrl: './code-system-version-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemVersionSelectComponent), multi: true}, DestroyService]
+    selector: 'tw-code-system-version-select',
+    templateUrl: './code-system-version-select.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => CodeSystemVersionSelectComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, MuiAbbreviateModule, KeysPipe, MarinaUtilModule]
 })
 
 export class CodeSystemVersionSelectComponent implements OnChanges, ControlValueAccessor {
+  private codeSystemService = inject(CodeSystemLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() public codeSystemId?: string;
   @Input() public valueType: 'id' | 'version' | 'full' = 'full';
   @Input() @BooleanInput() public disabled: string | boolean;
@@ -25,11 +32,6 @@ export class CodeSystemVersionSelectComponent implements OnChanges, ControlValue
 
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
-
-  public constructor(
-    private codeSystemService: CodeSystemLibService,
-    private destroy$: DestroyService
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["codeSystemId"]) {

@@ -1,8 +1,18 @@
 import {Component} from '@angular/core';
 import {environment} from 'environments/environment';
+import { MuiFormModule, MuiCardModule, MuiButtonModule, MuiAlertModule } from '@kodality-web/marina-ui';
+
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: 'terminology-service-api.component.html',
+    templateUrl: 'terminology-service-api.component.html',
+    imports: [
+    MuiFormModule,
+    MuiCardModule,
+    MuiButtonModule,
+    MuiAlertModule,
+    TranslatePipe
+],
 })
 export class TerminologyServiceApiComponent {
   protected env = environment;

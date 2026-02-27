@@ -1,16 +1,16 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
 import {JobLogResponse} from 'term-web/sys/_lib';
-import {IntegrationImportConfiguration} from '../../model/integration-import-configuration';
+import {IntegrationImportConfiguration} from 'term-web/integration/_lib/model/integration-import-configuration';
 
 @Injectable()
 export class IntegrationIcdLibService {
-  protected baseUrl = `${environment.termxApi}/icd10`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/icd10`;
 
   public import(params: IntegrationImportConfiguration, edition: string, url: string): Observable<JobLogResponse> {
     const postUrl = this.getEditionBaseUrl(edition);

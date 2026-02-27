@@ -11,14 +11,14 @@ import {SEQUENCE_ROUTES} from 'term-web/sequence/sequence.module';
 import {SYS_ROUTES} from 'term-web/sys/sys.module';
 import {TASK_ROUTES} from 'term-web/task/task.module';
 import {TERMINOLOGY_SERVICE_API_ROUTES} from 'term-web/terminology-service-api/terminology-service-api.module';
-import {FHIR_ROUTES} from './fhir/fhir.module';
-import {GLOBAL_SEARCH_ROUTES} from './global-search/global-search.module';
-import {INTEGRATION_ROUTES} from './integration/integration.module';
-import {MEASUREMENT_UNIT_ROUTES} from './measurement-unit/measurement-unit.module';
-import {PRIVILEGES_ROUTES} from './privileges/privileges.module';
-import {RESOURCES_ROUTES} from './resources/resources.module';
-import {SPACE_CTX_ROUTES, SPACE_ROUTES, TERMINOLOGY_SERVER_ROUTES} from './sys/space/space.module';
-import {WIKI_MANAGEMENT_ROUTES, WIKI_ROUTES} from './wiki/wiki.module';
+import {FHIR_ROUTES} from 'term-web/fhir/fhir.module';
+import {GLOBAL_SEARCH_ROUTES} from 'term-web/global-search/global-search.module';
+import {INTEGRATION_ROUTES} from 'term-web/integration/integration.module';
+import {MEASUREMENT_UNIT_ROUTES} from 'term-web/measurement-unit/measurement-unit.module';
+import {PRIVILEGES_ROUTES} from 'term-web/privileges/privileges.module';
+import {RESOURCES_ROUTES} from 'term-web/resources/resources.module';
+import {SPACE_CTX_ROUTES, SPACE_ROUTES, TERMINOLOGY_SERVER_ROUTES} from 'term-web/sys/space/space.module';
+import {WIKI_MANAGEMENT_ROUTES, WIKI_ROUTES} from 'term-web/wiki/wiki.module';
 
 
 const APP_ROUTES: Routes = [

@@ -1,17 +1,25 @@
-import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, isDefined} from '@kodality-web/core-util';
+import { Component, forwardRef, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, isDefined, ApplyPipe } from '@kodality-web/core-util';
 import {Observable, map} from 'rxjs';
 import {SnomedLibService} from 'term-web/integration/_lib';
 import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
 import {CodeSystemConcept, CodeSystemLibService, SnomedUtil} from 'term-web/resources/_lib';
 
+import { MeasurementUnitSearchComponent } from 'term-web/measurement-unit/_lib/containers/measurement-unit-search.component';
+import { SnomedDrawerSearchComponent } from 'term-web/integration/_lib/snomed/containers/snomed-drawer-search.component';
+import { ConceptSearchComponent } from 'term-web/resources/_lib/code-system/containers/concept-search.component';
+
 @Component({
-  selector: 'tw-term-concept-search',
-  templateUrl: './terminology-concept-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TerminologyConceptSearchComponent), multi: true}]
+    selector: 'tw-term-concept-search',
+    templateUrl: './terminology-concept-search.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TerminologyConceptSearchComponent), multi: true }],
+    imports: [MeasurementUnitSearchComponent, FormsModule, SnomedDrawerSearchComponent, ConceptSearchComponent, ApplyPipe]
 })
 export class TerminologyConceptSearchComponent implements OnChanges {
+  private snomedService = inject(SnomedLibService);
+  private codeSystemService = inject(CodeSystemLibService);
+
   @Input() public valueType: 'id' | 'code' | 'full' = 'full';
   @Input() public displayType: 'code' | 'name' | 'codeName' = 'codeName';
   @Input() @BooleanInput() public multiple: string | boolean;
@@ -29,10 +37,8 @@ export class TerminologyConceptSearchComponent implements OnChanges {
   public value?: CodeSystemConcept | number | string;
   public snomedBranch?: string;
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(private snomedService: SnomedLibService, private codeSystemService: CodeSystemLibService) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['codeSystem'] || changes['codeSystemVersionUri']) && this.codeSystem === 'snomed-ct' && isDefined(this.codeSystemVersionUri)) {

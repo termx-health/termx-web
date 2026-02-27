@@ -13,23 +13,31 @@
       <tr style="background-color: #e6ffe6">
         <td>Flags: {{codeSystem.caseSensitive ? 'CaseSensitive' : 'CaseInsensitive'}}, {{codeSystem.content}}</td>
         <td>
-          <div *ngFor="let i of codeSystem.identifier">{{i.system}} {{i.value}}</div>
+          @for (i of codeSystem.identifier; track i) {
+            <div>{{i.system}} {{i.value}}</div>
+          }
         </td>
       </tr>
     </m-table>
   </div>
 
-  <div *ngIf="valueSets?.length > 0">
-    <p>This Code system is used in the following value sets:</p>
-    <ul>
-      <li *ngFor="let u of valueSets">ValueSet: <a (click)="openValueSet(u.resource.id)">{{u.resource.id}}</a></li>
-    </ul>
-  </div>
+  @if (valueSets?.length > 0) {
+    <div>
+      <p>This Code system is used in the following value sets:</p>
+      <ul>
+        @for (u of valueSets; track u) {
+          <li>ValueSet: <a (click)="openValueSet(u.resource.id)">{{u.resource.id}}</a></li>
+        }
+      </ul>
+    </div>
+  }
 
-  <div *ngIf="codeSystem.description">
-    <h2>Definition</h2>
-    <p>{{codeSystem.description}}</p>
-  </div>
+  @if (codeSystem.description) {
+    <div>
+      <h2>Definition</h2>
+      <p>{{codeSystem.description}}</p>
+    </div>
+  }
 
   <div>
     <h2>Content</h2>

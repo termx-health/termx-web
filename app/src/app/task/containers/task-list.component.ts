@@ -1,10 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {ComponentStateStore, copyDeep, DestroyService, isDefined, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {CodeName} from '@kodality-web/marina-util';
+import { Component, OnInit, inject } from '@angular/core';
+import { ComponentStateStore, copyDeep, DestroyService, isDefined, LoadingManager, QueryParams, SearchResult, AutofocusDirective, ApplyPipe, IncludesPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { CodeName, MarinaUtilModule } from '@kodality-web/marina-util';
 import {Observable, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {Task, TaskLibService, TaskSearchParams} from 'term-web/task/_lib';
 import {User, UserLibService} from 'term-web/user/_lib';
+import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
+
+import { MuiInputModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiCoreModule, MuiSelectModule, MuiDatePickerModule, MuiBackendTableModule, MuiTableModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { FormsModule } from '@angular/forms';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { RouterLink } from '@angular/router';
+import { TableFilterComponent } from 'term-web/core/ui/components/table-container/table-filter.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { TaskTypeComponent } from 'term-web/task/_lib/components/task-type.component';
+import { TaskStatusComponent } from 'term-web/task/_lib/components/task-status.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
 
 interface Filter {
   open: boolean,
@@ -24,10 +38,16 @@ interface Filter {
 }
 
 @Component({
-  templateUrl: './task-list.component.html',
-  providers: [DestroyService]
+    templateUrl: './task-list.component.html',
+    providers: [DestroyService],
+    imports: [TableComponent, MuiInputModule, InputDebounceDirective, AutofocusDirective, FormsModule, PrivilegedDirective, AddButtonComponent, RouterLink, MuiButtonModule, MuiIconModule, TableFilterComponent, MuiFormModule, MuiCoreModule, MuiSelectModule, ValueSetConceptSelectComponent, MuiDatePickerModule, MuiBackendTableModule, MuiTableModule, TaskTypeComponent, TaskStatusComponent, MuiNoDataModule, TranslatePipe, MarinaUtilModule, ApplyPipe, IncludesPipe, LocalDatePipe, HasAnyPrivilegePipe]
 })
 export class TaskListComponent implements OnInit {
+  private taskService = inject(TaskLibService);
+  private userService = inject(UserLibService);
+  private stateStore = inject(ComponentStateStore);
+  private auth = inject(AuthService);
+
   protected readonly STORE_KEY = 'task-list';
 
   protected query = new TaskSearchParams();
@@ -38,14 +58,6 @@ export class TaskListComponent implements OnInit {
 
   protected projects: CodeName[];
   protected users: User[];
-
-
-  public constructor(
-    private taskService: TaskLibService,
-    private userService: UserLibService,
-    private stateStore: ComponentStateStore,
-    private auth: AuthService,
-  ) {}
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);

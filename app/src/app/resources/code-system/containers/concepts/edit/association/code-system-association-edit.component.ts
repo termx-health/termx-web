@@ -1,11 +1,18 @@
 import {Component, Input} from '@angular/core';
 import {BooleanInput, isDefined} from '@kodality-web/core-util';
-import {CodeSystemAssociation} from 'app/src/app/resources/_lib';
+import {CodeSystemAssociation} from 'term-web/resources/_lib';
+import { AsyncPipe, UpperCasePipe } from '@angular/common';
+import { MuiNoDataModule, MuiNumberInputModule, MuiIconModule, MuiPopconfirmModule } from '@kodality-web/marina-ui';
+import { AssociationTypeSearchComponent } from 'term-web/resources/_lib/association/containers/association-type-search.component';
+import { FormsModule } from '@angular/forms';
+import { CodeSystemEntityVersionSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-entity-version-search.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({
-  selector: 'tw-code-system-association-edit',
-  templateUrl: './code-system-association-edit.component.html',
-  styles: [`
+    selector: 'tw-code-system-association-edit',
+    templateUrl: './code-system-association-edit.component.html',
+    styles: [`
     .association-col {
       display: flex;
       flex-direction: column;
@@ -20,7 +27,8 @@ import {CodeSystemAssociation} from 'app/src/app/resources/_lib';
     .m-subtitle {
       white-space: nowrap;
     }
-  `]
+  `],
+    imports: [MuiNoDataModule, AssociationTypeSearchComponent, FormsModule, CodeSystemEntityVersionSearchComponent, ValueSetConceptSelectComponent, MuiNumberInputModule, MuiIconModule, MuiPopconfirmModule, AsyncPipe, UpperCasePipe, LocalizedConceptNamePipe]
 })
 export class CodeSystemAssociationEditComponent {
   @Input() @BooleanInput() public viewMode: boolean | string = false;

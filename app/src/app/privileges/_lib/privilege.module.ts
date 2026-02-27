@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {PrivilegeService} from './services/privilege.service';
+import {PrivilegeService} from 'term-web/privileges/_lib/services/privilege.service';
 
 @NgModule({
   providers: [

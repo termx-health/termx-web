@@ -1,5 +1,5 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {saveAs} from 'file-saver';
@@ -10,9 +10,9 @@ import {LorqueProcess} from 'term-web/sys/_lib';
 
 @Injectable()
 export class SnomedTranslationLibService {
-  protected baseUrl = `${environment.termxApi}/snomed`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/snomed`;
 
   public loadTranslations(params: {active?: boolean, unlinked?: boolean, branch?: string}): Observable<SnomedTranslation[]> {
     return this.http.get(`${this.baseUrl}/translations`, {params: SearchHttpParams.build(params)}).pipe(map(resp => resp as SnomedTranslation[]));

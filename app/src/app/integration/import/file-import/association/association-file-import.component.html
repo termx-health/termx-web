@@ -10,78 +10,88 @@
     <m-form-row>
       <m-form-item *mFormCol mName="codeSystem" mLabel="web.integration.file-import.association.code-system" required>
         <tw-code-system-search name="codeSystem"
-            [(ngModel)]="data.codeSystem"
-            (ngModelChange)="data.codeSystemVersion = undefined"
-            valuePrimitive
-            autofocus
-            required/>
-      </m-form-item>
-      <m-form-item *mFormCol mName="codeSystemVersion" mLabel="web.integration.file-import.association.code-system-version" required>
-        <tw-code-system-version-select name="codeSystemVersion"
+          [(ngModel)]="data.codeSystem"
+          (ngModelChange)="data.codeSystemVersion = undefined"
+          valuePrimitive
+          autofocus
+          required/>
+        </m-form-item>
+        <m-form-item *mFormCol mName="codeSystemVersion" mLabel="web.integration.file-import.association.code-system-version" required>
+          <tw-code-system-version-select name="codeSystemVersion"
             [(ngModel)]="data.codeSystemVersion"
             [codeSystemId]="data.codeSystem"
             valueType="id"
             [disabled]="!data.codeSystem"
             required/>
-      </m-form-item>
-    </m-form-row>
+          </m-form-item>
+        </m-form-row>
 
-    <m-form-row>
-      <m-form-item *mFormCol mName="associationType" mLabel="web.integration.file-import.association.association-type" required>
-        <tw-association-type-search name="associationType"
-            [(ngModel)]="data.associationType"
-            associationKind="codesystem-hierarchy-meaning"
-            valuePrimitive
-            required/>
-      </m-form-item>
-      <div *mFormCol></div>
-    </m-form-row>
+        <m-form-row>
+          <m-form-item *mFormCol mName="associationType" mLabel="web.integration.file-import.association.association-type" required>
+            <tw-association-type-search name="associationType"
+              [(ngModel)]="data.associationType"
+              associationKind="codesystem-hierarchy-meaning"
+              valuePrimitive
+              required/>
+            </m-form-item>
+            <div *mFormCol></div>
+          </m-form-row>
 
-    <m-form-item mName="file" [mLabel]="fileLabel" required>
-      <ng-template #fileLabel>
-        <div class="m-items-middle">
-          <label>{{'web.integration.file-import.association.file' | translate}}</label>
-          <a (mClick)="downloadTemplate()" m-tooltip [mTitle]="'web.integration.file-import.association.download-template'"><m-icon mCode="download"/></a>
-        </div>
-      </ng-template>
-      <div class="tw-flex-container">
-        <input #fileInput type="file" name="file" [(ngModel)]="data.file" (ngModelChange)="analyze()" required>
+          <m-form-item mName="file" [mLabel]="fileLabel" required>
+            <ng-template #fileLabel>
+              <div class="m-items-middle">
+                <label>{{'web.integration.file-import.association.file' | translate}}</label>
+                <a (mClick)="downloadTemplate()" m-tooltip [mTitle]="'web.integration.file-import.association.download-template'"><m-icon mCode="download"/></a>
+              </div>
+            </ng-template>
+            <div class="tw-flex-container">
+              <input #fileInput type="file" name="file" [(ngModel)]="data.file" (ngModelChange)="analyze()" required>
 
-        <m-table *ngIf="analyzeResponse?.columns" [mData]="analyzeResponse.columns || []">
-          <tr *mTableHead>
-            <th>{{'web.integration.file-import.association.file-column' | translate}}</th>
-            <th>{{'web.integration.file-import.association.mapped-column' | translate}}</th>
-            <th *ngIf="isSourceSelected" style="width: 0">{{'web.integration.file-import.association.column-value-separator' | translate}}</th>
-          </tr>
+              @if (analyzeResponse?.columns) {
+                <m-table [mData]="analyzeResponse.columns || []">
+                  <tr *mTableHead>
+                    <th>{{'web.integration.file-import.association.file-column' | translate}}</th>
+                    <th>{{'web.integration.file-import.association.mapped-column' | translate}}</th>
+                    @if (isSourceSelected) {
+                      <th style="width: 0">{{'web.integration.file-import.association.column-value-separator' | translate}}</th>
+                    }
+                  </tr>
+                  <tr *mTableRow="let item; let i = index">
+                    <td>{{item.columnName}}</td>
+                    <td>
+                      <m-select [name]="i + item.columnName" [(ngModel)]="item.mappedColumn" (ngModelChange)="item.columnSeparator = ','">
+                        @for (v of filterUnused(['target', 'source', 'order'], item.mappedColumn); track v) {
+                          <m-option
+                            [mLabel]="'web.integration.file-import.association.' + v"
+                          [mValue]="v"></m-option>
+                        }
+                      </m-select>
+                    </td>
+                    @if (isSourceSelected) {
+                      <td>
+                        @if (item.mappedColumn === 'source') {
+                          <m-input [name]="i + item.columnName + '-sep'" [(ngModel)]="item.columnSeparator"></m-input>
+                        }
+                      </td>
+                    }
+                  </tr>
+                  <tr *mTableNoData>
+                    <td colspan="100%">
+                      <m-no-data></m-no-data>
+                    </td>
+                  </tr>
+                </m-table>
+              }
+            </div>
+          </m-form-item>
 
-          <tr *mTableRow="let item; let i = index">
-            <td>{{item.columnName}}</td>
-            <td>
-              <m-select [name]="i + item.columnName" [(ngModel)]="item.mappedColumn" (ngModelChange)="item.columnSeparator = ','">
-                <m-option *ngFor="let v of filterUnused(['target', 'source', 'order'], item.mappedColumn)"
-                    [mLabel]="'web.integration.file-import.association.' + v"
-                    [mValue]="v"></m-option>
-              </m-select>
-            </td>
-            <td *ngIf="isSourceSelected">
-              <m-input *ngIf="item.mappedColumn === 'source'" [name]="i + item.columnName + '-sep'" [(ngModel)]="item.columnSeparator"></m-input>
-            </td>
-          </tr>
+          @if (jobLog) {
+            <tw-import-job-log [jobLog]="jobLog"/>
+          }
+        </form>
 
-          <tr *mTableNoData>
-            <td colspan="100%">
-              <m-no-data></m-no-data>
-            </td>
-          </tr>
-        </m-table>
-      </div>
-    </m-form-item>
-
-    <tw-import-job-log *ngIf="jobLog" [jobLog]="jobLog"/>
-  </form>
-
-  <m-button *m-card-footer [mLoading]="loader.state['process']" [disabled]="form.invalid || !analyzeResponse?.columns?.length" (click)="process()">
-    {{'web.integration.file-import.process' | translate}}
-  </m-button>
-</m-card>
+        <m-button *m-card-footer [mLoading]="loader.state['process']" [disabled]="form.invalid || !analyzeResponse?.columns?.length" (click)="process()">
+          {{'web.integration.file-import.process' | translate}}
+        </m-button>
+      </m-card>
 

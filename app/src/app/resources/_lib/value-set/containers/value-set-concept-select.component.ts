@@ -1,20 +1,28 @@
-import {Component, EventEmitter, forwardRef, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group, isNil} from '@kodality-web/core-util';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, DestroyService, group, isNil, ApplyPipe, KeysPipe, ToBooleanPipe } from '@kodality-web/core-util';
 import {TranslateService} from '@ngx-translate/core';
-import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {takeUntil} from 'rxjs';
 import {VsConceptUtil} from 'term-web/resources/_lib';
-import {CodeSystemConcept, CodeSystemConceptLibService} from '../../code-system';
-import {ValueSetVersionConcept} from '../model/value-set-version-concept';
-import {ValueSetLibService} from '../services/value-set-lib.service';
+import {CodeSystemConcept, CodeSystemConceptLibService} from 'term-web/resources/_lib/code-system';
+import {ValueSetVersionConcept} from 'term-web/resources/_lib/value-set/model/value-set-version-concept';
+import {ValueSetLibService} from 'term-web/resources/_lib/value-set/services/value-set-lib.service';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 @Component({
-  selector: 'tw-value-set-concept-select',
-  templateUrl: './value-set-concept-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetConceptSelectComponent), multi: true}, DestroyService]
+    selector: 'tw-value-set-concept-select',
+    templateUrl: './value-set-concept-select.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetConceptSelectComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, ApplyPipe, KeysPipe, ToBooleanPipe]
 })
 export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAccessor {
+  private valueSetService = inject(ValueSetLibService);
+  private conceptService = inject(CodeSystemConceptLibService);
+  protected translateService = inject(TranslateService);
+  private destroy$ = inject(DestroyService);
+
   @Input() public valueSet!: string;
   @Input() public valueSetVersion!: string;
   @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
@@ -30,13 +38,6 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
 
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
-
-  public constructor(
-    private valueSetService: ValueSetLibService,
-    private conceptService: CodeSystemConceptLibService,
-    public translateService: TranslateService,
-    private destroy$: DestroyService
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["valueSet"] || changes["valueSetVersion"]) {
@@ -76,10 +77,10 @@ export class ValueSetConceptSelectComponent implements OnChanges, ControlValueAc
     }
 
     if (Array.isArray(obj)) {
-      this.value = obj.map(o => typeof o === 'object' ? o?.code! : o);
+      this.value = obj.map(o => typeof o === 'object' ? o.code! : o);
       this.loadConcept(this.value);
     } else {
-      this.value = typeof obj === 'object' ? obj?.code! : obj;
+      this.value = typeof obj === 'object' ? obj.code! : obj;
       this.loadConcept([this.value]);
     }
   }

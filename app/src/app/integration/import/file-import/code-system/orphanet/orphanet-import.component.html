@@ -9,10 +9,14 @@
           <label m-radio-button [mValue]="'file'">{{'web.integration.file-import.code-system.source.file' | translate}}</label>
         </m-radio-group>
 
-        <ng-container [ngSwitch]="data.source.type">
-          <m-input *ngSwitchCase="'link'" name="sourceImportFile" [(ngModel)]="data.source.file" style="flex: 1" required/>
-          <input *ngSwitchCase="'file'" #fileInput name="sourceImportFile" type="file" [(ngModel)]="data.source.file" required>
-        </ng-container>
+        @switch (data.source.type) {
+          @case ('link') {
+            <m-input name="sourceImportFile" [(ngModel)]="data.source.file" style="flex: 1" required/>
+          }
+          @case ('file') {
+            <input #fileInput name="sourceImportFile" type="file" [(ngModel)]="data.source.file" required>
+          }
+        }
       </div>
     </m-form-item>
 

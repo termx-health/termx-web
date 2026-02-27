@@ -1,4 +1,4 @@
-import {ValueSetVersionRule} from './value-set-version-rule';
+import {ValueSetVersionRule} from 'term-web/resources/_lib/value-set/model/value-set-version-rule';
 
 export class ValueSetVersionRuleSet {
   public id?: number;

@@ -1,12 +1,12 @@
 import {Component, forwardRef, ViewChild} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {MuiQuillComponent} from '@kodality-web/marina-quill';
-import {WikiAbstractEditor} from '../abstract-text-editor';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { MuiQuillComponent, MarinaQuillModule } from '@kodality-web/marina-quill';
+import {WikiAbstractEditor} from 'term-web/wiki/_lib/texteditor/editors/abstract-text-editor';
 
 
 @Component({
-  selector: 'tw-wiki-quill-editor',
-  template: `
+    selector: 'tw-wiki-quill-editor',
+    template: `
     <m-quill
         #quill
         [(ngModel)]="value"
@@ -14,7 +14,8 @@ import {WikiAbstractEditor} from '../abstract-text-editor';
         [disabled]="disabled"
     />
   `,
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WikiQuillEditorComponent), multi: true}]
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WikiQuillEditorComponent), multi: true }],
+    imports: [MarinaQuillModule, FormsModule]
 })
 export class WikiQuillEditorComponent implements ControlValueAccessor, WikiAbstractEditor {
   protected disabled: boolean;

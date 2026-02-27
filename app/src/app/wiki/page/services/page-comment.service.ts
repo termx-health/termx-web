@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {isDefined} from '@kodality-web/core-util';
 import {Observable} from 'rxjs';
 import {PageComment} from 'term-web/wiki/_lib';
-import {PageCommentLibService} from '../../_lib';
+import {PageCommentLibService} from 'term-web/wiki/_lib';
 
 @Injectable()
 export class PageCommentService extends PageCommentLibService {

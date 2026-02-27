@@ -1,4 +1,4 @@
-import {Injectable, TemplateRef} from '@angular/core';
+import { Injectable, TemplateRef, inject } from '@angular/core';
 import {HttpContextToken, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
 import {
   MuiNotificationEntityOptions,
@@ -23,11 +23,9 @@ type ShowErrorFun = (title: string | TemplateRef<any>, content?: string | Templa
 
 @Injectable({providedIn: 'root'})
 export class HttpErrorNotificationService {
-  private hook: ShowErrorFun;
+  private notificationService = inject(MuiNotificationService);
 
-  public constructor(
-    private notificationService: MuiNotificationService,
-  ) { }
+  private hook: ShowErrorFun;
 
   public registerHook(clb: ShowErrorFun): () => void {
     this.hook = clb;
@@ -45,11 +43,10 @@ export class HttpErrorNotificationService {
 
 @Injectable()
 export class HttpErrorHandler implements HttpInterceptor {
-  public constructor(
-    private httpNotificationService: HttpErrorNotificationService,
-    private configService: MuiConfigService,
-    private i18nService: CoreI18nService
-  ) { }
+  private httpNotificationService = inject(HttpErrorNotificationService);
+  private configService = inject(MuiConfigService);
+  private i18nService = inject(CoreI18nService);
+
 
   public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     if (req.context.get(MuiSkipErrorHandler)?.valueOf()) {

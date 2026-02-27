@@ -1,14 +1,14 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from 'environments/environment';
-import {GithubDiff, GithubStatus} from '../../integration/_lib/github/github';
+import {GithubDiff, GithubStatus} from 'term-web/integration/_lib/github/github';
 
 @Injectable()
 export class ImplementationGuideGithubService {
-  protected baseUrl = `${environment.termxApi}/implementation-guides`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/implementation-guides`;
 
   public authenticate(igId: string, version: string, returnUrl: string): Observable<{isAuthenticated: boolean, redirectUrl: string}> {
     return this.http.post<any>(`${this.baseUrl}/${igId}/versions/${version}/github/authenticate`, {returnUrl});

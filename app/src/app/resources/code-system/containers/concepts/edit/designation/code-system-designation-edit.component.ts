@@ -1,15 +1,20 @@
 import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {BooleanInput, collect, isDefined, remove} from '@kodality-web/core-util';
-import {Designation, EntityProperty} from 'app/src/app/resources/_lib';
+import { BooleanInput, collect, isDefined, remove, ApplyPipe, KeysPipe, SortPipe } from '@kodality-web/core-util';
+import {Designation, EntityProperty} from 'term-web/resources/_lib';
 import {environment} from 'environments/environment';
 import {v4 as uuid} from "uuid";
+import { UpperCasePipe } from '@angular/common';
+import { MuiNoDataModule, MuiTextareaModule, MuiSelectModule, MuiTooltipModule, MuiButtonModule, MuiIconModule, MuiPopconfirmModule } from '@kodality-web/marina-ui';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 type ExtendedDesignation = Designation & {_key?: string};
 
 @Component({
-  selector: 'tw-code-system-designation-edit',
-  templateUrl: 'code-system-designation-edit.component.html',
-  styles: [`
+    selector: 'tw-code-system-designation-edit',
+    templateUrl: 'code-system-designation-edit.component.html',
+    styles: [`
     .italic {
       font-style: italic;
       white-space: nowrap;
@@ -35,7 +40,8 @@ type ExtendedDesignation = Designation & {_key?: string};
         margin-top: 0;
       }
     }
-  `]
+  `],
+    imports: [MuiNoDataModule, ValueSetConceptSelectComponent, FormsModule, MuiTextareaModule, MuiSelectModule, MuiTooltipModule, MuiButtonModule, MuiIconModule, MuiPopconfirmModule, UpperCasePipe, TranslatePipe, ApplyPipe, KeysPipe, SortPipe]
 })
 export class CodeSystemDesignationEditComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;

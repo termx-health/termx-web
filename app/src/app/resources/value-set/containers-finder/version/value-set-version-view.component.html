@@ -43,9 +43,11 @@
 
     <tw-finder-menu-item>
       <tw-finder-menu title="entities.value-set-rule-set.include" [length]="version?.ruleSet?.rules?.length">
-        <tw-finder-menu-item *ngFor="let r of version?.ruleSet?.rules">
-          {{r.codeSystem}} {{r.type}}
-        </tw-finder-menu-item>
+        @for (r of version?.ruleSet?.rules; track r) {
+          <tw-finder-menu-item>
+            {{r.codeSystem}} {{r.type}}
+          </tw-finder-menu-item>
+        }
       </tw-finder-menu>
     </tw-finder-menu-item>
   </tw-finder-menu>

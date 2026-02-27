@@ -1,19 +1,32 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
 import {DestroyService, isDefined, SearchResult} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { MuiNotificationService, MuiCardModule, MuiCoreModule, MuiSpinnerModule, MuiTextareaModule, MuiIconModule, MuiSelectModule, MuiBackendTableModule, MuiTableModule, MuiNoDataModule } from '@kodality-web/marina-ui';
 import {debounceTime, distinctUntilChanged, EMPTY, finalize, forkJoin, Observable, Subject, switchMap, tap} from 'rxjs';
 import {LorqueLibService} from 'term-web/sys/_lib';
-import {SnomedConcept} from '../model/concept/snomed-concept';
-import {SnomedConceptSearchParams} from '../model/concept/snomed-concept-search-params';
-import {SnomedRefsetSearchParams} from '../model/refset/snomed-refset-search-params';
-import {SnomedLibService} from '../services/snomed-lib.service';
+import {SnomedConcept} from 'term-web/integration/_lib/snomed/model/concept/snomed-concept';
+import {SnomedConceptSearchParams} from 'term-web/integration/_lib/snomed/model/concept/snomed-concept-search-params';
+import {SnomedRefsetSearchParams} from 'term-web/integration/_lib/snomed/model/refset/snomed-refset-search-params';
+import {SnomedLibService} from 'term-web/integration/_lib/snomed/services/snomed-lib.service';
+import { NzTabsComponent, NzTabComponent, NzTabLinkTemplateDirective, NzTabLinkDirective, NzTabDirective } from 'ng-zorro-antd/tabs';
+import { AsyncPipe } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { FormsModule } from '@angular/forms';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+import { TranslatePipe } from '@ngx-translate/core';
+import { SnomedConceptNamePipe } from 'term-web/integration/_lib/snomed/pipe/snomed-concept-name-pipe';
 
 @Component({
-  selector: 'tw-snomed-search',
-  templateUrl: './snomed-search.component.html',
-  providers: [DestroyService]
+    selector: 'tw-snomed-search',
+    templateUrl: './snomed-search.component.html',
+    providers: [DestroyService],
+    imports: [MuiCardModule, NzTabsComponent, NzTabComponent, NzTabLinkTemplateDirective, MuiCoreModule, NzTabLinkDirective, RouterLink, NzTabDirective, MuiSpinnerModule, MuiTextareaModule, FormsModule, NzBreadCrumbComponent, NzBreadCrumbItemComponent, MuiIconModule, MuiSelectModule, MuiBackendTableModule, MuiTableModule, MuiNoDataModule, AsyncPipe, TranslatePipe, SnomedConceptNamePipe]
 })
 export class SnomedSearchComponent implements OnInit, OnChanges {
+  private snomedService = inject(SnomedLibService);
+  private lorqueService = inject(LorqueLibService);
+  private notificationService = inject(MuiNotificationService);
+  private destroy$ = inject(DestroyService);
+
   private static snomed_root = '138875005';
 
   @Input() public ecl: string;
@@ -37,13 +50,6 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
   public searchUpdate = new Subject<string>();
 
   @Output() public conceptSelected: EventEmitter<string> = new EventEmitter<string>();
-
-  public constructor(
-    private snomedService: SnomedLibService,
-    private lorqueService: LorqueLibService,
-    private notificationService: MuiNotificationService,
-    private destroy$: DestroyService,
-  ) {}
 
   public ngOnInit(): void {
     this.initData();
@@ -159,7 +165,7 @@ export class SnomedSearchComponent implements OnInit, OnChanges {
   }
 
   protected exportConceptCsv(type: 'refset' | 'ecl'): void {
-    let params:SnomedConceptSearchParams = {};
+    const params:SnomedConceptSearchParams = {};
     if (type === 'refset') {
       params.ecl = '^' + this.refsetParams?.referenceSet;
     }

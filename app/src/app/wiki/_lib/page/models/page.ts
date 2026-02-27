@@ -1,7 +1,7 @@
-import {PageContent} from './page-content';
-import {PageLink} from './page-link';
-import {PageRelation} from './page-relation';
-import {PageTag} from './page-tag';
+import {PageContent} from 'term-web/wiki/_lib/page/models/page-content';
+import {PageLink} from 'term-web/wiki/_lib/page/models/page-link';
+import {PageRelation} from 'term-web/wiki/_lib/page/models/page-relation';
+import {PageTag} from 'term-web/wiki/_lib/page/models/page-tag';
 
 export class Page {
   public id?: number;

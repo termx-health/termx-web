@@ -1,16 +1,16 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {map, Observable} from 'rxjs';
-import {Sequence} from '../models/sequence';
-import {SequenceSearchParams} from '../models/sequence-search-params';
+import {Sequence} from 'term-web/sequence/_lib/models/sequence';
+import {SequenceSearchParams} from 'term-web/sequence/_lib/models/sequence-search-params';
 
 @Injectable()
 export class SequenceLibService {
-  protected baseUrl = `${environment.termxApi}/sequences`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/sequences`;
 
   public nextValue(code: string): Observable<string> {
     return this.http.get<{value: string}>(`${this.baseUrl}/${encodeURIComponent(code)}/next`).pipe(map(r => r.value));

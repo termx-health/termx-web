@@ -1,27 +1,31 @@
 <m-table [mData]="concepts" mSize="small">
   <tr *mTableHead>
-    <th *ngFor="let ep of entityProperties | apply: displayedProperties: _properties">
-      <ng-container *ngIf="ep.name === 'code'">
-        {{'entities.code-system-concept.code' | translate}} {{concepts?.length < conceptsTotal ? (concepts.length + '/' + conceptsTotal) : ''}}
-      </ng-container>
-
-      <ng-container *ngIf="ep.name !== 'code'">
-        {{ep.description | localName: ep.name}}
-      </ng-container>
-    </th>
+    @for (ep of entityProperties | apply: displayedProperties: _properties; track ep) {
+      <th>
+        @if (ep.name === 'code') {
+          {{'entities.code-system-concept.code' | translate}} {{concepts?.length < conceptsTotal ? (concepts.length + '/' + conceptsTotal) : ''}}
+        }
+        @if (ep.name !== 'code') {
+          {{ep.description | localName: ep.name}}
+        }
+      </th>
+    }
   </tr>
 
   <tr *mTableRow="let c">
-    <td *ngFor="let ep of entityProperties | apply: displayedProperties: _properties; let first = first">
-      <ng-container *ngFor="let prop of c[ep.name]">
-        <div
-            *ngIf="!prop.lang || !_langs?.length  || (_langs | includes: prop.lang)"
-            [style.padding-left.px]="first ? (c['level'][0].value - 1) * 10 : undefined"
-        >
-          {{prop.value}}
-        </div>
-      </ng-container>
-    </td>
+    @for (ep of entityProperties | apply: displayedProperties: _properties; track ep; let first = $first) {
+      <td>
+        @for (prop of c[ep.name]; track prop) {
+          @if (!prop.lang || !_langs?.length  || (_langs | includes: prop.lang)) {
+            <div
+              [style.padding-left.px]="first ? (c['level'][0].value - 1) * 10 : undefined"
+              >
+              {{prop.value}}
+            </div>
+          }
+        }
+      </td>
+    }
   </tr>
 
   <tr *mTableNoData>

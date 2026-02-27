@@ -1,16 +1,12 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import {EMPTY, Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {ValueSetVersionLibService} from '../../value-set';
+import {ValueSetVersionLibService} from 'term-web/resources/_lib/value-set';
 
-@Pipe({
-  name: 'valueSetVersionCode'
-})
+@Pipe({ name: 'valueSetVersionCode' })
 export class ValueSetVersionCodePipe implements PipeTransform {
+  private valueSetVersionService = inject(ValueSetVersionLibService);
 
-  public constructor(
-    private valueSetVersionService: ValueSetVersionLibService
-  ) {}
 
   public transform(id: number): Observable<string> {
     if (!id) {

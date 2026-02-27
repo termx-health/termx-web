@@ -1,8 +1,6 @@
 import {Directive, Input} from '@angular/core';
 
-@Directive({
-  selector: '[twPrivilegeContext]'
-})
+@Directive({ selector: '[twPrivilegeContext]' })
 export class PrivilegeContextDirective {
   public privilegeContext: string;
 

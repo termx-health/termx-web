@@ -1,17 +1,46 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {SnomedBranch, SnomedLibService, SnomedTranslation, SnomedTranslationLibService} from 'app/src/app/integration/_lib';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { copyDeep, isDefined, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import {SnomedBranch, SnomedLibService, SnomedTranslation, SnomedTranslationLibService} from 'term-web/integration/_lib';
 import {forkJoin} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
 import {Task, TaskLibService} from 'term-web/task/_lib';
+import { MuiEditableTableModule, MuiSelectModule, MuiTextareaModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { AsyncPipe } from '@angular/common';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({
-  selector: 'tw-snomed-translations',
-  templateUrl: './snomed-translation-list.component.html',
+    selector: 'tw-snomed-translations',
+    templateUrl: './snomed-translation-list.component.html',
+    imports: [
+        FormsModule,
+        MuiEditableTableModule,
+        MuiSelectModule,
+        ValueSetConceptSelectComponent,
+        MuiTextareaModule,
+        PrivilegedDirective,
+        MuiCoreModule,
+        RouterLink,
+        AsyncPipe,
+        TranslatePipe,
+        ApplyPipe,
+        PrivilegedPipe,
+        LocalizedConceptNamePipe,
+    ],
 })
 export class SnomedTranslationListComponent implements OnInit, OnChanges {
+  private codeSystemService = inject(CodeSystemLibService);
+  private authService = inject(AuthService);
+  private snomedService = inject(SnomedLibService);
+  private snomedTranslationService = inject(SnomedTranslationLibService);
+  private taskService = inject(TaskLibService);
+
   public translations: SnomedTranslation[];
   protected tasks: Task[];
   protected modules: CodeSystemConcept[];
@@ -23,14 +52,6 @@ export class SnomedTranslationListComponent implements OnInit, OnChanges {
   @Output() public translationsChanged: EventEmitter<void> = new EventEmitter<void>();
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private codeSystemService: CodeSystemLibService,
-    private authService: AuthService,
-    private snomedService: SnomedLibService,
-    private snomedTranslationService: SnomedTranslationLibService,
-    private taskService: TaskLibService
-  ) {}
 
   public ngOnInit(): void {
 

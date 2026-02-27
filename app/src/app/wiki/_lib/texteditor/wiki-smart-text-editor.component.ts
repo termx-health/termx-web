@@ -1,16 +1,21 @@
 import {Component, forwardRef, Input, ViewChild} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import {BooleanInput, isDefined, isNil} from '@kodality-web/core-util';
 import {BehaviorSubject, concat, debounceTime, take} from 'rxjs';
-import {launchDrawioEditor} from './editor-external/drawio.editor';
-import {WikiAbstractEditor} from './editors/abstract-text-editor';
-import {contentFromSelection} from './utils/selection.utils';
+import {launchDrawioEditor} from 'term-web/wiki/_lib/texteditor/editor-external/drawio.editor';
+import {WikiAbstractEditor} from 'term-web/wiki/_lib/texteditor/editors/abstract-text-editor';
+import {contentFromSelection} from 'term-web/wiki/_lib/texteditor/utils/selection.utils';
+import { AsyncPipe } from '@angular/common';
+import { WikiSmartTextEditorViewComponent } from 'term-web/wiki/_lib/texteditor/wiki-smart-text-editor-view.component';
+import { WikiQuickActionsMenuComponent } from 'term-web/wiki/_lib/texteditor/quick-actions/wiki-quick-actions-menu.component';
+import { WikiMarkdownEditorComponent } from 'term-web/wiki/_lib/texteditor/editors/markdown/wiki-markdown-editor.component';
+import { WikiQuillEditorComponent } from 'term-web/wiki/_lib/texteditor/editors/quill/wiki-quill-editor.component';
 
 
 @Component({
-  selector: 'tw-smart-text-editor',
-  templateUrl: 'wiki-smart-text-editor.component.html',
-  styles: [`
+    selector: 'tw-smart-text-editor',
+    templateUrl: 'wiki-smart-text-editor.component.html',
+    styles: [`
     :host {
       position: relative;
     }
@@ -59,9 +64,10 @@ import {contentFromSelection} from './utils/selection.utils';
       }
     }
   `],
-  providers: [
-    {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WikiSmartTextEditorComponent), multi: true}
-  ]
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => WikiSmartTextEditorComponent), multi: true }
+    ],
+    imports: [WikiSmartTextEditorViewComponent, WikiQuickActionsMenuComponent, WikiMarkdownEditorComponent, FormsModule, WikiQuillEditorComponent, AsyncPipe]
 })
 export class WikiSmartTextEditorComponent implements ControlValueAccessor {
   @Input() public lang?: string;

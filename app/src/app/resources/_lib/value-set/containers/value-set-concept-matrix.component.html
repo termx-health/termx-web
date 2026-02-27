@@ -1,19 +1,27 @@
 <m-table [mData]="concepts" mSize="small">
   <tr *mTableHead>
-    <th *ngFor="let pk of ['code', 'display', 'designations'] | apply: displayedProperties: _properties">
-      {{pk | apply: translateKey | translate}}
-    </th>
+    @for (pk of ['code', 'display', 'designations'] | apply: displayedProperties: _properties; track pk) {
+      <th>
+        {{pk | apply: translateKey | translate}}
+      </th>
+    }
   </tr>
 
-  <tr *ngFor="let c of concepts | apply: slice: limit">
-    <td *ngFor="let pk of ['code', 'display', 'designations'] | apply: displayedProperties: _properties">
-      <ng-container *ngFor="let prop of c[pk]">
-        <div *ngIf="!prop.lang || !_langs?.length  || (_langs | includes: prop.lang)">
-          {{prop.value}}
-        </div>
-      </ng-container>
-    </td>
-  </tr>
+  @for (c of concepts | apply: slice: limit; track c) {
+    <tr>
+      @for (pk of ['code', 'display', 'designations'] | apply: displayedProperties: _properties; track pk) {
+        <td>
+          @for (prop of c[pk]; track prop) {
+            @if (!prop.lang || !_langs?.length  || (_langs | includes: prop.lang)) {
+              <div>
+                {{prop.value}}
+              </div>
+            }
+          }
+        </td>
+      }
+    </tr>
+  }
 
   <tr *mTableNoData>
     <td>

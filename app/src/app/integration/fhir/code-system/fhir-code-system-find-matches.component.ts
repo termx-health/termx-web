@@ -1,12 +1,36 @@
 import {Clipboard} from '@angular/cdk/clipboard';
-import {Component} from '@angular/core';
-import {FhirCodeSystemLibService, FhirParameters} from '../../../fhir/_lib';
+import { Component, inject } from '@angular/core';
+import {FhirCodeSystemLibService, FhirParameters} from 'term-web/fhir/_lib';
+import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiTextareaModule, MuiCheckboxModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+import { FormsModule } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: './fhir-code-system-find-matches.component.html',
+    templateUrl: './fhir-code-system-find-matches.component.html',
+    imports: [
+    MuiCardModule,
+    MuiSpinnerModule,
+    NzBreadCrumbComponent,
+    NzBreadCrumbItemComponent,
+    MuiButtonModule,
+    MuiFormModule,
+    MuiIconModule,
+    MuiPopoverModule,
+    MuiTextareaModule,
+    FormsModule,
+    MuiCheckboxModule,
+    MuiAlertModule,
+    JsonPipe,
+    TranslatePipe
+],
 })
 export class FhirCodeSystemFindMatchesComponent {
+  private fhirCodeSystemLibService = inject(FhirCodeSystemLibService);
+  private clipboardService = inject(Clipboard);
+
   public response?: any;
   public error?: any;
 
@@ -20,11 +44,6 @@ export class FhirCodeSystemFindMatchesComponent {
   public propertyInput: {propertyName?: string, propertyValue?: string} = {};
 
   public loading: boolean = false;
-
-  public constructor(
-    private fhirCodeSystemLibService: FhirCodeSystemLibService,
-    private clipboardService: Clipboard,
-  ) {}
 
   public findMatches(): void {
     const sp = new FhirParameters();
@@ -40,7 +59,7 @@ export class FhirCodeSystemFindMatchesComponent {
     }
     if (this.data.properties) {
       this.data.properties.forEach(p => {
-        let parts = [];
+        const parts = [];
         if (p.propertyName) {
           parts.push({name: 'code', valueCode: p.propertyName});
         }
@@ -72,7 +91,7 @@ export class FhirCodeSystemFindMatchesComponent {
   public removeProperty(index: number): void {
     this.data.properties?.splice(index, 1);
     this.data.properties = [...this.data.properties!];
-    this.data.properties.length === 0 ? this.data.properties = undefined : '';
+    if (this.data.properties.length === 0) { this.data.properties = undefined; }
   }
 
 

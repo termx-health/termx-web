@@ -1,5 +1,5 @@
-import {SnomedDescription} from '../description/snomed-description';
-import {SnomedRelationship} from '../relationship/snomed-relationship';
+import {SnomedDescription} from 'term-web/integration/_lib/snomed/model/description/snomed-description';
+import {SnomedRelationship} from 'term-web/integration/_lib/snomed/model/relationship/snomed-relationship';
 
 export class SnomedConcept {
   public id?: string;

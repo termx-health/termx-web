@@ -1,13 +1,16 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {LoadingManager} from '@kodality-web/core-util';
+import { Component, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { LoadingManager, KeysPipe, LocalDateTimePipe } from '@kodality-web/core-util';
 import {Provenance, ProvenanceLibService} from 'term-web/sys/_lib';
 import { AuthService } from 'term-web/core/auth';
 import {map} from "rxjs";
+import { MuiTableModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { AsyncPipe, JsonPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-provenance-list',
-  templateUrl: './provenance-list.component.html',
-  styles:  [`
+    selector: 'tw-provenance-list',
+    templateUrl: './provenance-list.component.html',
+    styles: [`
     .diff {
       line-height: 27px;
     }
@@ -20,9 +23,13 @@ import {map} from "rxjs";
     .diff-icon{
       margin: 5px;
     }
-  `]
+  `],
+    imports: [MuiTableModule, MuiNoDataModule, AsyncPipe, JsonPipe, KeysPipe, LocalDateTimePipe, TranslatePipe]
 })
 export class ProvenanceListComponent implements OnChanges {
+  private provenanceService = inject(ProvenanceLibService);
+  private authService = inject(AuthService);
+
   @Input() public targetType?: string;
   @Input() public targetId?: string;
   @Input() public provenances?: Provenance[];
@@ -32,9 +39,6 @@ export class ProvenanceListComponent implements OnChanges {
   );
 
   protected loader = new LoadingManager();
-
-  public constructor(private provenanceService: ProvenanceLibService,
-                     private authService: AuthService,) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['targetType'] || changes['targetId']) && this.targetType && this.targetId) {

@@ -3,6 +3,10 @@ import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import {DropListComponent, DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
 import {StructureDefinitionUtil} from 'term-web/modeler/_lib';
 import {StructureDefinitionFhirMapperUtil} from 'term-web/modeler/structure-definition/services/structure-definition-fhir-mapper.util';
+import { MuiSkeletonModule, MuiNoDataModule, MuiRadioModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+
+import { FormsModule } from '@angular/forms';
+import { DropListComponent as DropListComponent_1 } from 'term-web/core/ui/components/drop-list/drop-list.component';
 
 export class Element {
   public id?: string;
@@ -43,7 +47,7 @@ export class ElementConstraint {
 }
 
 function findInTree<Node, Key>(nodesToSearch: Node[], key: Key, getKey: (n: Node) => Key, getChildren: (n: Node) => Node[]): Node {
-  for (let node of nodesToSearch) {
+  for (const node of nodesToSearch) {
     if (getKey(node) == key) {
       return node;
     }
@@ -55,8 +59,9 @@ function findInTree<Node, Key>(nodesToSearch: Node[], key: Key, getKey: (n: Node
 }
 
 @Component({
-  selector: 'tw-structure-definition-editable-tree',
-  templateUrl: './structure-definition-editable-tree.component.html'
+    selector: 'tw-structure-definition-editable-tree',
+    templateUrl: './structure-definition-editable-tree.component.html',
+    imports: [MuiSkeletonModule, MuiNoDataModule, MuiRadioModule, FormsModule, DropListComponent_1, MuiButtonModule, MuiIconModule]
 })
 export class StructureDefinitionEditableTreeComponent implements OnChanges {
   @Input() public content?: string; //fhir json structure definition
@@ -88,6 +93,7 @@ export class StructureDefinitionEditableTreeComponent implements OnChanges {
       this.structureDefinition = JSON.parse(fhirSD);
       this.initData(this.structureDefinition);
     } catch (e) {
+      // eslint-disable-next-line no-console
       console.error("Failed to init structure definition from JSON", e);
     }
   }

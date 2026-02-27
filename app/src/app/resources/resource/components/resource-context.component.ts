@@ -1,22 +1,43 @@
-import {Component, Input} from '@angular/core';
-import {Router} from '@angular/router';
+import { Component, Input, inject } from '@angular/core';
+import { Router, RouterLinkActive, RouterLink } from '@angular/router';
 import {Resource} from 'term-web/resources/resource/model/resource';
 import {ResourceVersion} from 'term-web/resources/resource/model/resource-version';
+import { MarinPageLayoutModule, MuiCoreModule, MuiIconModule, MuiDropdownModule } from '@kodality-web/marina-ui';
+import { NgTemplateOutlet, UpperCasePipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
-  selector: 'tw-resource-context',
-  templateUrl: 'resource-context.component.html',
-  styleUrls: ['resource-context.component.less'],
+    selector: 'tw-resource-context',
+    templateUrl: 'resource-context.component.html',
+    styleUrls: ['resource-context.component.less'],
+    imports: [
+    MarinPageLayoutModule,
+    MuiCoreModule,
+    RouterLinkActive,
+    RouterLink,
+    NgTemplateOutlet,
+    MuiIconModule,
+    MuiDropdownModule,
+    UpperCasePipe,
+    TranslatePipe,
+    MarinaUtilModule,
+    ApplyPipe,
+    IncludesPipe,
+    PrivilegedPipe
+],
 })
 export class ResourceContextComponent {
+  private router = inject(Router);
+
   @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'ImplementationGuide';
   @Input() public resource: Resource;
   @Input() public conceptCode: string;
   @Input() public version: ResourceVersion;
   @Input() public versions: ResourceVersion[];
   @Input() public mode: 'summary' | 'concept-list' | 'concept-edit' | 'concept-view' | 'provenance' | 'properties' | 'checklist' = 'summary';
-
-  public constructor(private router: Router) {}
 
   protected typeMap = {'CodeSystem': 'code-systems', 'ValueSet': 'value-sets', 'MapSet': 'map-sets', 'ImplementationGuide': 'implementation-guides'};
 
@@ -64,7 +85,7 @@ export class ResourceContextComponent {
 
 
   protected capitalz = (n: string): string => {
-    return n.split('').filter(l => l === l.toUpperCase()).join('')
-  }
+    return n.split('').filter(l => l === l.toUpperCase()).join('');
+  };
 
 }
