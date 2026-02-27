@@ -177,7 +177,7 @@ export class CodeSystemFileImportComponent implements OnInit {
     };
 
     let file: Blob;
-    if (['csv', 'tsv', 'json'].includes(req.type)) {
+    if (['csv', 'tsv', 'xlsx', 'json'].includes(req.type)) {
       const fileInput = 'json' === req.type
         ? this.jsonFileInput
         : this.fileInput;
