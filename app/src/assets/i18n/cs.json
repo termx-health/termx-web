@@ -1479,7 +1479,8 @@
                         "link": "Odkaz",
                         "types": {
                             "csv": "CSV",
-                            "tsv": "TSV"
+                            "tsv": "TSV",
+							"xlsx": "XLSX"
                         }
                     }
                 },
