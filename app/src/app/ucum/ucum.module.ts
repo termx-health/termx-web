@@ -1,7 +1,9 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
+import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {UcumLibModule} from 'term-web/ucum/_lib';
 import {CoreUiModule} from '../core/ui/core-ui.module';
+import {UcumExportModalComponent} from './containers/export/ucum-export-modal.component';
 import {DefinedUnitViewComponent} from './containers/view/defined-unit/defined-unit-view.component';
 import {DefinedUnitListComponent} from './containers/list/defined-unit/defined-unit-list.component';
 import {UcumMenuComponent} from "./containers/ucum-menu.component";
@@ -41,11 +43,13 @@ export const UCUM_ROUTES: Routes = [
     AnalyseComponent,
     CanonicaliseComponent,
     ValidateComponent,
-    ConvertComponent
+    ConvertComponent,
+    UcumExportModalComponent
   ],
   imports: [
     CoreUiModule,
     UcumLibModule,
+    ResourcesLibModule,
   ]
 })
 export class UcumModule {}

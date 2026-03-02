@@ -79,9 +79,18 @@
       <div style="display: grid" *twPrivileged="'*.CodeSystem.edit'">
         <m-button mDisplay="link" [routerLink]="'./orphanet/import'">{{'web.integration.import.orphanet' | translate}}</m-button>
       </div>
+
+      <m-divider [mText]="'web.integration.systems.ucum' | translate" *twPrivileged="'ucum.CodeSystem.edit'"></m-divider>
+      <div style="display: grid" *twPrivileged="'ucum.CodeSystem.edit'">
+        <m-button mDisplay="link" (click)="ucumImportModal.toggleModal(true)">
+          {{'web.integration.import.ucum' | translate}}
+        </m-button>
+      </div>
     </m-card>
   </div>
   <div nz-col [nzMd]="18" [nzXs]="24">
     <router-outlet></router-outlet>
   </div>
 </div>
+
+<tw-integration-ucum-import-modal #ucumImportModal/>

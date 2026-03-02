@@ -18,12 +18,16 @@
         <tw-add-button *m-dropdown-container icon="down" placement="right">
           {{'web.code-system.list.add-code-system' | translate}}
         </tw-add-button>
-        <a *m-dropdown-item [routerLink]="'add'">
-          {{'web.code-system.list.manual' | translate}}
-        </a>
-        <a *m-dropdown-item (mClick)="importModal.toggleModal(true)">
-          {{'web.code-system.list.import-fhir' | translate}}
-        </a>
+        <ng-container *twPrivileged="'*.CodeSystem.edit'">
+          <a *m-dropdown-item [routerLink]="'add'">
+            {{'web.code-system.list.manual' | translate}}
+          </a>
+        </ng-container>
+        <ng-container *twPrivileged="'*.CodeSystem.edit'">
+          <a *m-dropdown-item (mClick)="importModal.toggleModal(true)">
+            {{'web.code-system.list.import-fhir' | translate}}
+          </a>
+        </ng-container>
       </m-dropdown>
 
       <!-- Finder -->

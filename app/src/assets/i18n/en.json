@@ -13,6 +13,7 @@
 			"delete": "Delete",
 			"duplicate": "Duplicate",
 			"edit": "Edit",
+			"export": "Export",
 			"import": "Import",
 			"proceed": "Proceed",
 			"query": "Query",
@@ -976,6 +977,7 @@
 					"create-supplement": "Create supplement"
 				},
 				"import-fhir": "Import external FHIR definition",
+				"import-ucum": "Import UCUM essence XML",
 				"last-version": "Last version",
 				"manual": "Manual",
 				"open-fhir": "Open FHIR URL",
@@ -1482,6 +1484,7 @@
 				"publisher": "Publisher",
 				"source-url": "Source URL",
 				"uri": "URI",
+				"ucum": "UCUM essence XML import",
 				"valid-from": "Valid from",
 				"valid-to": "Valid to",
 				"version": "Version"
@@ -1514,7 +1517,8 @@
 				"icd-10": "ICD-10",
 				"ichi": "ICHI",
 				"loinc": "LOINC",
-				"orphanet": "Orphanet"
+				"orphanet": "Orphanet",
+				"ucum": "UCUM"
 			}
 		},
 		"landing": {
@@ -1773,6 +1777,15 @@
 			}
 		},
 		"ucum": {
+			"export-modal": {
+				"header": "Export UCUM units",
+				"hint": "Leave supplements empty to export all UCUM supplements.",
+				"supplements": "Supplements"
+			},
+			"import-modal": {
+				"file": "File",
+				"header": "Import UCUM essence XML"
+			},
 			"defined-unit": {
 				"list": {
 					"title": "Defined units"
@@ -1837,6 +1850,7 @@
 				"validate": "Validate",
 				"convert": "Convert",
 				"canonicalise": "Canonicalise",
+				"export": "Export",
 				"operations": "Operations",
 				"components": "Components"
 			}

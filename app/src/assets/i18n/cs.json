@@ -13,6 +13,7 @@
             "delete": "Smazat",
             "duplicate": "Duplikovat",
             "edit": "Upravit",
+            "export": "Exportovat",
             "import": "Importovat",
             "proceed": "Pokračovat",
             "query": "Dotaz",
@@ -1025,6 +1026,7 @@
                     "create-supplement": "Vytvořit doplněk"
                 },
                 "import-fhir": "Importovat externí FHIR definici",
+                "import-ucum": "Importovat UCUM essence XML",
                 "last-version": "Poslední verze",
                 "manual": "Manuální",
                 "open-fhir": "Otevřít FHIR URL",
@@ -1527,6 +1529,7 @@
                 "publisher": "Vydavatel",
                 "source-url": "Zdrojová URL",
                 "uri": "URI",
+                "ucum": "Import UCUM essence XML",
                 "valid-from": "Platné od",
                 "valid-to": "Platné do",
                 "version": "Verze"
@@ -1559,7 +1562,8 @@
                 "icd-10": "ICD-10",
                 "ichi": "ICHI",
                 "loinc": "LOINC",
-                "orphanet": "Orphanet"
+                "orphanet": "Orphanet",
+                "ucum": "UCUM"
             }
         },
         "landing": {
@@ -2601,6 +2605,20 @@
                         "template": "Šablona"
                     }
                 }
+            }
+        },
+        "ucum": {
+            "menu": {
+                "export": "Exportovat"
+            },
+            "export-modal": {
+                "header": "Exportovat jednotky UCUM",
+                "hint": "Pokud nevyberete žádné doplňky, exportují se všechny doplňky UCUM.",
+                "supplements": "Doplňky"
+            },
+            "import-modal": {
+                "file": "Soubor",
+                "header": "Importovat UCUM essence XML"
             }
         }
     }

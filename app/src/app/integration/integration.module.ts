@@ -26,6 +26,7 @@ import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {MapSetModule} from 'term-web/resources/map-set/map-set.module';
 import {ResourceModule} from 'term-web/resources/resource/resource.module';
 import {SysLibModule} from 'term-web/sys/_lib';
+import {UcumLibModule} from 'term-web/ucum/_lib';
 import {UserLibModule} from 'term-web/user/_lib';
 import {CoreUiModule} from '../core/ui/core-ui.module';
 import {IntegrationDashboardComponent} from './dashboard/integration-dashboard.component';
@@ -43,6 +44,7 @@ import {CodeSystemFileImportFormComponent} from './import/file-import/code-syste
 import {ConceptMapFileImportComponent} from './import/file-import/concept-map/concept-map-file-import.component';
 import {IntegrationIcdImportComponent} from './import/icd-10/integration-icd-import.component';
 import {IntegrationIchiImportComponent} from './import/ichi/integration-ichi-import.component';
+import {IntegrationUcumImportModalComponent} from './import/ucum/integration-ucum-import-modal.component';
 import {SnomedConceptInfoComponent} from './snomed/containers/snomed-concept-info.component';
 import {SnomedDashboardComponent} from './snomed/containers/snomed-dashboard.component';
 
@@ -89,7 +91,8 @@ export const INTEGRATION_ROUTES: Routes = [
     SysLibModule,
     ResourceModule,
     UserLibModule,
-    NzProgressModule
+    NzProgressModule,
+    UcumLibModule
   ],
   exports: [
     LoincListComponent,
@@ -129,6 +132,7 @@ export const INTEGRATION_ROUTES: Routes = [
     LoincAnswerListListComponent,
     LoincPartSearchComponent,
     LoincImportComponent,
+    IntegrationUcumImportModalComponent,
 
     CodeSystemFileImportFormComponent,
     CodeSystemFileImportComponent,
