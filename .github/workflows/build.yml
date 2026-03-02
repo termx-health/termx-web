@@ -1,6 +1,7 @@
 name: Build
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "main" ]
     tags:
@@ -65,7 +66,15 @@ jobs:
           registry: ${{ env.REGISTRY }}
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}        
-        
+
+      - name: Set latest tag
+        if: github.ref == 'refs/heads/main'
+        run: echo "LATEST_TAG=latest" >> $GITHUB_ENV
+
+      - name: Set latest-ucum tag
+        if: github.ref == 'refs/heads/switch-to-ucum'
+        run: echo "LATEST_TAG=latest-ucum" >> $GITHUB_ENV
+
       - name: Docker meta
         id: meta
         uses: docker/metadata-action@v5
@@ -74,7 +83,7 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
             type=semver,pattern={{major}}.{{minor}}         
-            type=raw,value=latest,enable={{is_default_branch}}
+            type=raw,value=${{ env.LATEST_TAG }}
           flavor: |
             latest=false
 
