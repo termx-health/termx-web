@@ -1,4 +1,4 @@
-import { enableProdMode, LOCALE_ID, APP_INITIALIZER, importProvidersFrom } from '@angular/core';
+import { enableProdMode, LOCALE_ID, APP_INITIALIZER, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 
 import { initAuth, HttpLoaderFactory } from './app/root.module';
 import {environment} from './environments/environment';
@@ -38,6 +38,7 @@ if (environment.production) {
 
 bootstrapApplication(RootComponent, {
     providers: [
+        provideZoneChangeDetection({eventCoalescing: true}),
         importProvidersFrom(BrowserModule, BrowserAnimationsModule, RootRoutingModule, HttpClientModule, TranslateModule.forRoot({
             loader: {
                 provide: TranslateLoader,
