@@ -50,22 +50,29 @@ export class MarinaUiConfigModule {
     const muiConfig = inject(MuiConfigService);
 
     translate.onLangChange.subscribe(({lang}) => {
-      import(/* webpackInclude: /\/(de|en|et|fr|lt|nl).mjs$/ */ `node_modules/@angular/common/locales/${lang}.mjs`)
+      const localeImports: Record<string, () => Promise<any>> = {
+        de: () => import('@angular/common/locales/de'),
+        en: () => import('@angular/common/locales/en'),
+        et: () => import('@angular/common/locales/et'),
+        fr: () => import('@angular/common/locales/fr'),
+        lt: () => import('@angular/common/locales/lt'),
+        nl: () => import('@angular/common/locales/nl'),
+      };
+      (localeImports[lang]?.() ?? Promise.reject(`No locale data for '${lang}'`))
         .then(locale => registerLocaleData(locale.default))
-        .then(() => {
-          i18nService.use(lang);
+        .catch(e => console.warn(`Failed to register locale data for '${lang}'`, e));
+      i18nService.use(lang);
 
-          // 'lang' translations in other locales
-          const translations = (translate as any).store?.translations?.[lang]?.['language'];
-          // update content languages in multi language input
-          muiConfig.set('multiLanguageInput', {
-            requiredLanguages: [env.defaultLanguage],
-            languages: env.contentLanguages.map(k => ({
-              code: k,
-              names: {[lang]: translations[k] ?? k}
-            }))
-          });
-        });
+      // 'lang' translations in other locales
+      const translations = (translate as any).store?.translations?.[lang]?.['language'];
+      // update content languages in multi language input
+      muiConfig.set('multiLanguageInput', {
+        requiredLanguages: [env.defaultLanguage],
+        languages: env.contentLanguages.map(k => ({
+          code: k,
+          names: {[lang]: translations[k] ?? k}
+        }))
+      });
     });
 
 
