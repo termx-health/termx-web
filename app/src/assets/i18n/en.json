@@ -893,7 +893,7 @@
 					"filter-disabled": "Switch to the flattened list mode to enable the filter functionality"
 				},
 				"delete-property-usages": "Delete property usages",
-				"edit-header": "Edit code system",
+				"edit-header": "Metadata",
 				"header": "Code system",
 				"properties": {
 					"add-property": "Add property",
@@ -1112,7 +1112,7 @@
 		"code-system-version": {
 			"form": {
 				"add-header": "Add version",
-				"edit-header": "Edit version",
+				"edit-header": "Version metadata",
 				"entities": {
 					"add-entity": "",
 					"entity-version": "",
@@ -1512,7 +1512,7 @@
 		"map-set": {
 			"form": {
 				"add-header": "Create a new map set",
-				"edit-header": "Edit map set",
+				"edit-header": "Metadata",
 				"header": "Map set",
 				"properties": {
 					"delete-property-usages": "Remove associations with the given property",
@@ -1601,7 +1601,7 @@
 		"map-set-version": {
 			"form": {
 				"add-header": "Add version",
-				"edit-header": "Edit version",
+				"edit-header": "Version metadata",
 				"view-header": ""
 			},
 			"summary": {
@@ -2225,7 +2225,7 @@
 			},
 			"form": {
 				"add-header": "Create a new value set",
-				"edit-header": "Edit value set",
+				"edit-header": "Metadata",
 				"versions": {
 					"add-version": "Add version",
 					"export-fhir-expansion": "Export FHIR JSON with expansion",
@@ -2272,7 +2272,7 @@
 					"warning": "Concept has no active version"
 				},
 				"download": "",
-				"edit-header": "Edit version",
+				"edit-header": "Version metadata",
 				"rule-set": {
 					"rule": {
 						"add-designation": "Add designation",
