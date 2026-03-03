@@ -2,6 +2,7 @@ import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@
 import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
 import { isDefined, LoadingManager, remove, validateForm, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
+import {catchError, of, throwError} from 'rxjs';
 import {LocalizedName} from '@kodality-web/marina-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {ConceptUtil, ValueSetVersionConcept, VsConceptUtil} from 'term-web/resources/_lib';
@@ -87,7 +88,9 @@ export class ResourceFormComponent implements OnChanges {
   }
 
   private handlePublisher(): void {
-    this.valueSetService.expand({valueSet: 'publisher'}).subscribe(exp => {
+    this.valueSetService.expand({valueSet: 'publisher'}).pipe(
+      catchError((err) => err?.status === 403 ? of([]) : throwError(() => err))
+    ).subscribe(exp => {
       this.publishers = exp;
       if (this.resource.publisher && !exp.find(e => e.concept?.code === this.resource.publisher)) {
         const customPublisher = {concept: {code: this.resource.publisher}};

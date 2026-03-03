@@ -883,7 +883,7 @@
 					"validate": "Valideeri koodisüsteemi"
 				},
 				"delete-property-usages": "Eemalda tunnus mõistetelt",
-				"edit-header": "Muuda koodisüsteemi",
+				"edit-header": "Metaandmed",
 				"header": "Koodisüsteem",
 				"properties": {
 					"add-property": "Lisa tunnus",
@@ -1094,7 +1094,7 @@
 		"code-system-version": {
 			"form": {
 				"add-header": "Lisa versioon",
-				"edit-header": "Muuda versiooni",
+				"edit-header": "Versiooni metaandmed",
 				"entities": {
 					"add-entity": "Lisa mõiste",
 					"entity-version": "Mõiste versioon",
@@ -1482,7 +1482,7 @@
 		"map-set": {
 			"form": {
 				"add-header": "Loo uus",
-				"edit-header": "Muuda",
+				"edit-header": "Metaandmed",
 				"header": "Vastendustabel",
 				"properties": {
 					"delete-property-usages": "Eemalda seosed antud tunnusega",
@@ -1570,7 +1570,7 @@
 		"map-set-version": {
 			"form": {
 				"add-header": "Lisa versioon",
-				"edit-header": "Muuda versiooni",
+				"edit-header": "Versiooni metaandmed",
 				"view-header": "Vaata versiooni"
 			},
 			"summary": {
@@ -2174,7 +2174,7 @@
 			},
 			"form": {
 				"add-header": "Lisa uus loend",
-				"edit-header": "Muuda loendit",
+				"edit-header": "Metaandmed",
 				"versions": {
 					"add-version": "Lisa versioon",
 					"export-fhir-expansion": "Ekspordi FHIR JSON mõistetega",
@@ -2220,7 +2220,7 @@
 					"warning": "Mõistel puudub aktiivne versioon!"
 				},
 				"download": "Laadi alla",
-				"edit-header": "Muuda versiooni",
+				"edit-header": "Versiooni metaandmed",
 				"rule-set": {
 					"rule": {
 						"add-designation": "Lisa nimetus",
