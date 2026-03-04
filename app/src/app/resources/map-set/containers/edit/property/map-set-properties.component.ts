@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
+import {HttpContext} from '@angular/common/http';
 import { BooleanInput, copyDeep, LoadingManager, validateForm, FilterPipe } from '@kodality-web/core-util';
 import {catchError, of, throwError} from 'rxjs';
+import {MuiSkipErrorHandler} from 'term-web/core/marina/http-error-handler';
 import {DefinedProperty, PropertyRule, MapSetProperty} from 'term-web/resources/_lib';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
@@ -58,7 +60,7 @@ export class MapSetPropertiesComponent implements OnInit, OnChanges {
   protected definedEntityProperties: DefinedProperty[];
 
   public ngOnInit(): void {
-    this.definedEntityPropertyService.search({limit: -1}).pipe(catchError((err) => err?.status === 403 ? of({data: []}) : throwError(() => err))).subscribe(r => this.definedEntityProperties = r.data);
+    this.definedEntityPropertyService.search({limit: -1}, new HttpContext().set(MuiSkipErrorHandler, true)).pipe(catchError((err) => err?.status === 403 ? of({data: []}) : throwError(() => err))).subscribe(r => this.definedEntityProperties = r.data);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

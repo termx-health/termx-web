@@ -1,4 +1,4 @@
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpContext} from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
@@ -16,7 +16,7 @@ export class DefinedPropertyLibService {
     return this.http.get<DefinedProperty>(`${this.baseUrl}/${id}`);
   }
 
-  public search(params: DefinedPropertySearchParams = {}): Observable<SearchResult<DefinedProperty>> {
-    return this.http.get<SearchResult<DefinedProperty>>(`${this.baseUrl}`, {params: SearchHttpParams.build(params)});
+  public search(params: DefinedPropertySearchParams = {}, context?: HttpContext): Observable<SearchResult<DefinedProperty>> {
+    return this.http.get<SearchResult<DefinedProperty>>(`${this.baseUrl}`, {params: SearchHttpParams.build(params), context});
   }
 }
