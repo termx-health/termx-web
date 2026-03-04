@@ -1,7 +1,9 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
+import {HttpContext} from '@angular/common/http';
 import { BooleanInput, copyDeep, isDefined, LoadingManager, validateForm, AutofocusDirective, ApplyPipe, FilterPipe, IncludesPipe } from '@kodality-web/core-util';
 import {catchError, of, throwError} from 'rxjs';
+import {MuiSkipErrorHandler} from 'term-web/core/marina/http-error-handler';
 import {DefinedProperty, EntityProperty, PropertyRule, PropertyRuleFilter} from 'term-web/resources/_lib';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
@@ -74,7 +76,7 @@ export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
   protected definedEntityProperties: DefinedProperty[];
 
   public ngOnInit(): void {
-    this.definedEntityPropertyService.search({limit: -1}).pipe(catchError((err) => err?.status === 403 ? of({data: []}) : throwError(() => err))).subscribe(r => this.definedEntityProperties = r.data);
+    this.definedEntityPropertyService.search({limit: -1}, new HttpContext().set(MuiSkipErrorHandler, true)).pipe(catchError((err) => err?.status === 403 ? of({data: []}) : throwError(() => err))).subscribe(r => this.definedEntityProperties = r.data);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {
