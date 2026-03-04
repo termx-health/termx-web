@@ -216,6 +216,14 @@ m-markdown {
   display: none !important;
 }
 
+// Workaround: Hide multi-select count indicator after ng-zorro upgrade.
+// marina-ui sets nzMaxMultipleCount to 123456789 as an "unlimited" fallback,
+// and the new ng-zorro version shows a "selected / max" counter in the select
+// arrow area. The proper fix belongs in marina-ui. Hide the counter via CSS.
+.ant-select-multiple .ant-select-arrow > span:not(.anticon) {
+  display: none;
+}
+
 .ant-tabs-tabpane {
   // allows card to have a box shadow inside of zorro's tab
   padding: 2px;
