@@ -17,6 +17,14 @@ export function MarinaUiConfigFactory(external: MuiConfig): MuiConfig {
     notifications: {
       top: '4em'
     },
+    // Workaround: Disable modal animations after Angular 21 upgrade.
+    // MuiModalComponent uses OnPush + animation to close. Angular 21's change detection
+    // no longer triggers the animation state update, so modals never close.
+    // Setting animate: false makes close() call afterClose.next() directly.
+    // Remove this once marina-ui adds markForCheck() to MuiModalComponent.close().
+    modal: {
+      animate: false
+    },
     table: {
       showPageSizeChanger: true,
       pageSizeOptions: [10, 20, 50, 100]

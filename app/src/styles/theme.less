@@ -206,6 +206,24 @@ m-markdown {
 
 // NG-zorro overrides
 
+// Workaround: Hide duplicate required field asterisk after Angular 21 upgrade.
+// ng-zorro's new version added :not(.ant-form-item-required-mark-hidden) to its
+// ::before selector, making it more specific than marina-ui's `all: initial` reset
+// in form.style.less. This causes both ::before (ng-zorro) and ::after (marina-ui)
+// asterisks to render. The proper fix belongs in marina-ui (matching ng-zorro's
+// selector specificity), but we don't have access to that package.
+.ant-form-item-label > label.ant-form-item-required:not(.ant-form-item-required-mark-optional):not(.ant-form-item-required-mark-hidden)::before {
+  display: none !important;
+}
+
+// Workaround: Hide multi-select count indicator after ng-zorro upgrade.
+// marina-ui sets nzMaxMultipleCount to 123456789 as an "unlimited" fallback,
+// and the new ng-zorro version shows a "selected / max" counter in the select
+// arrow area. The proper fix belongs in marina-ui. Hide the counter via CSS.
+.ant-select-multiple .ant-select-arrow > span:not(.anticon) {
+  display: none;
+}
+
 .ant-tabs-tabpane {
   // allows card to have a box shadow inside of zorro's tab
   padding: 2px;

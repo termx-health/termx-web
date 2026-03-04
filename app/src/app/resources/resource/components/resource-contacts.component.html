@@ -56,58 +56,60 @@
   }
 
 
-  <m-modal #modal [(mVisible)]="modalData.visible" (mClose)="toggleModal()">
-    <ng-container *m-modal-header>
-      {{(modalData.contactIndex > -1 ? 'web.contacts.modal.edit-header' : 'web.contacts.modal.add-header') | translate}}
-    </ng-container>
+  @if (modalData.visible) {
+    <m-modal [mVisible]="true" (mClose)="toggleModal()">
+      <ng-container *m-modal-header>
+        {{(modalData.contactIndex > -1 ? 'web.contacts.modal.edit-header' : 'web.contacts.modal.add-header') | translate}}
+      </ng-container>
 
-    <ng-container *m-modal-content>
-      @if (modalData.contact) {
-        <form #form="ngForm">
-          <m-form-item mName="contactName" mLabel="entities.contact-detail.name">
-            <m-textarea name="contactName" [(ngModel)]="modalData.contact.name" autofocus></m-textarea>
-          </m-form-item>
-          <m-table [mData]="modalData.contact.telecoms" mSize="small">
-            <tr *mTableHead>
-              <th>{{'entities.contact-detail.telecom.system' | translate}}</th>
-              <th>{{'entities.contact-detail.telecom.value' | translate}}</th>
-              <th>{{'entities.contact-detail.telecom.use' | translate}}</th>
-              <th class="tw-table-actions"></th>
-            </tr>
-            <tr *mTableRow="let telecom; let index = index">
-              <td>
-                <tw-value-set-concept-select name="system-{{index}}"
-                  [(ngModel)]="telecom.system"
-                  valueSet="contact-point-system"
-                autofocus></tw-value-set-concept-select>
-              </td>
-              <td>
-                <m-textarea name="value-{{index}}" [(ngModel)]="telecom.value"></m-textarea>
-              </td>
-              <td>
-                <tw-value-set-concept-select name="use-{{index}}" [(ngModel)]="telecom.use" valueSet="contact-point-use"></tw-value-set-concept-select>
-              </td>
-              <td class="tw-table-actions">
-                <m-button (click)="removeModalTelecom(index)">
-                  <m-icon [mCode]="'delete'"></m-icon>
-                </m-button>
-              </td>
-            </tr>
-            <tr>
-              <td colspan="4" style="padding: 0">
-                <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addModalTelecom()">
-                  <m-icon [mCode]="'plus'"></m-icon>
-                </m-button>
-              </td>
-            </tr>
-          </m-table>
-        </form>
-      }
-    </ng-container>
+      <ng-container *m-modal-content>
+        @if (modalData.contact) {
+          <form #form="ngForm">
+            <m-form-item mName="contactName" mLabel="entities.contact-detail.name">
+              <m-textarea name="contactName" [(ngModel)]="modalData.contact.name" autofocus></m-textarea>
+            </m-form-item>
+            <m-table [mData]="modalData.contact.telecoms" mSize="small">
+              <tr *mTableHead>
+                <th>{{'entities.contact-detail.telecom.system' | translate}}</th>
+                <th>{{'entities.contact-detail.telecom.value' | translate}}</th>
+                <th>{{'entities.contact-detail.telecom.use' | translate}}</th>
+                <th class="tw-table-actions"></th>
+              </tr>
+              <tr *mTableRow="let telecom; let index = index">
+                <td>
+                  <tw-value-set-concept-select name="system-{{index}}"
+                    [(ngModel)]="telecom.system"
+                    valueSet="contact-point-system"
+                  autofocus></tw-value-set-concept-select>
+                </td>
+                <td>
+                  <m-textarea name="value-{{index}}" [(ngModel)]="telecom.value"></m-textarea>
+                </td>
+                <td>
+                  <tw-value-set-concept-select name="use-{{index}}" [(ngModel)]="telecom.use" valueSet="contact-point-use"></tw-value-set-concept-select>
+                </td>
+                <td class="tw-table-actions">
+                  <m-button (click)="removeModalTelecom(index)">
+                    <m-icon [mCode]="'delete'"></m-icon>
+                  </m-button>
+                </td>
+              </tr>
+              <tr>
+                <td colspan="4" style="padding: 0">
+                  <m-button mDisplay="text" mSize="small" style="width: 100%" (click)="addModalTelecom()">
+                    <m-icon [mCode]="'plus'"></m-icon>
+                  </m-button>
+                </td>
+              </tr>
+            </m-table>
+          </form>
+        }
+      </ng-container>
 
-    <div *m-modal-footer class="m-items-middle">
-      <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.cancel' | translate}}</m-button>
-      <m-button mDisplay="primary" (click)="confirmModalContact()">{{'core.btn.confirm' | translate}}</m-button>
-    </div>
-  </m-modal>
+      <div *m-modal-footer class="m-items-middle">
+        <m-button mDisplay="text" (click)="toggleModal()">{{'core.btn.cancel' | translate}}</m-button>
+        <m-button mDisplay="primary" (click)="confirmModalContact()">{{'core.btn.confirm' | translate}}</m-button>
+      </div>
+    </m-modal>
+  }
 </m-card>
