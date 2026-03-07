@@ -13,6 +13,7 @@
 			"delete": "Kustuta",
 			"duplicate": "Duplitseeri",
 			"edit": "Muuda",
+			"export": "Ekspordi",
 			"import": "Import",
 			"proceed": "Jätka",
 			"query": "Päri",
@@ -914,6 +915,7 @@
 					"target-uri": "Siht URI:"
 				},
 				"import-fhir": "Impordi välist FHIR definitsiooni",
+				"import-ucum": "Impordi UCUM essence XML",
 				"last-version": "Viimane versioon",
 				"manual": "Manuaalne",
 				"open-fhir": "Ava FHIR URL",
@@ -1368,6 +1370,7 @@
 				"publisher": "Kirjastaja",
 				"source-url": "Lähte URL",
 				"uri": "URI",
+				"ucum": "UCUM essence XML import",
 				"valid-from": "Kehtib alates",
 				"valid-to": "Kehtib kuni",
 				"version": "Versioon"
@@ -1396,7 +1399,8 @@
 				"icd-10": "ICD-10",
 				"ichi": "ICHI",
 				"loinc": "LOINC",
-				"orphanet": "Orphanet"
+				"orphanet": "Orphanet",
+				"ucum": "UCUM"
 			}
 		},
 		"landing": {
@@ -1627,6 +1631,20 @@
 					"header": "Loo {{type}} ülesanne",
 					"success-msg": "Ülesanne loodud"
 				}
+			}
+		},
+		"ucum": {
+			"menu": {
+				"export": "Ekspordi"
+			},
+			"export-modal": {
+				"header": "Ekspordi UCUM ühikud",
+				"hint": "Kui lisakoodisüsteeme ei vali, eksporditakse kõik UCUM lisad.",
+				"supplements": "Lisad"
+			},
+			"import-modal": {
+				"file": "Fail",
+				"header": "Impordi UCUM essence XML"
 			}
 		},
 		"measurement-unit": {

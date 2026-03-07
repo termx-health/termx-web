@@ -1,0 +1,20 @@
+<m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal()" [mMaskClosable]="false">
+  <ng-container *m-modal-header>
+    {{'web.ucum.export-modal.header' | translate}}
+  </ng-container>
+
+  <ng-container *m-modal-content>
+    <m-form-item mName="supplements" mLabel="web.ucum.export-modal.supplements">
+      <m-select name="supplements" [(ngModel)]="selectedSupplements" multiple [loading]="loader.isLoading">
+        <m-option *ngFor="let supplement of supplements" [mValue]="supplement.id" [mLabel]="supplement.id"></m-option>
+      </m-select>
+    </m-form-item>
+
+    <div class="m-muted">{{'web.ucum.export-modal.hint' | translate}}</div>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="modal.close()" [disabled]="loader.isLoading">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="export()" [mLoading]="loader.isLoading">{{'core.btn.export' | translate}}</m-button>
+  </div>
+</m-modal>

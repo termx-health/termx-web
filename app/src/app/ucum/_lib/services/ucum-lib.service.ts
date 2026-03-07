@@ -9,6 +9,9 @@ import {AnalyseResponse} from "term-web/ucum/_lib/model/analyse-response";
 import {CanonicaliseResponse} from "term-web/ucum/_lib/model/canonicalise-response";
 import {ValidateResponse} from "term-web/ucum/_lib/model/validate-response";
 import {ConvertResponse} from "term-web/ucum/_lib/model/convert-response";
+import {JobLogResponse} from 'term-web/sys/_lib';
+import {UcumExportRequest} from 'term-web/ucum/_lib/model/export-request';
+import {UcumExportResponse} from 'term-web/ucum/_lib/model/export-response';
 
 @Injectable()
 export class UcumLibService {
@@ -54,5 +57,15 @@ export class UcumLibService {
 
   public convert(value: number, sourceCode: string, targetCode: string): Observable<ConvertResponse> {
     return this.http.get<ConvertResponse>(`${this.baseUrl}/convert?value=${encodeURIComponent(value)}&sourceCode=${encodeURIComponent(sourceCode)}&targetCode=${encodeURIComponent(targetCode)}`);
+  }
+
+  public importEssence(file: File): Observable<JobLogResponse> {
+    const fd = new FormData();
+    fd.append('file', file);
+    return this.http.post<JobLogResponse>(`${this.baseUrl}/essence/import`, fd);
+  }
+
+  public export(request?: UcumExportRequest): Observable<UcumExportResponse> {
+    return this.http.post<UcumExportResponse>(`${this.baseUrl}/export`, request ?? null);
   }
 }

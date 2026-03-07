@@ -13,6 +13,7 @@
 			"delete": "Šalinti",
 			"duplicate": "Dubliuoti",
 			"edit": "Redaguoti",
+			"export": "Eksportuoti",
 			"import": "Importuoti",
 			"proceed": "Tęsti",
 			"query": "Užklausa",
@@ -813,6 +814,7 @@
 					"target-uri": "Paskirties URI:"
 				},
 				"import-fhir": "Importuoti išorinę FHIR struktūrą",
+				"import-ucum": "Importuoti UCUM essence XML",
 				"last-version": "Naujausia versija",
 				"manual": "Rankiniu būdu",
 				"open-fhir": "Atidaryti FHIR URL",
@@ -1263,6 +1265,7 @@
 				"publisher": "Leidėjas",
 				"source-url": "Pirminis URL",
 				"uri": "URI",
+				"ucum": "UCUM essence XML importavimas",
 				"valid-from": "Galioja nuo",
 				"valid-to": "Galioja iki",
 				"version": "Versija"
@@ -1291,7 +1294,8 @@
 				"icd-10": "ICD-10",
 				"ichi": "ICHI",
 				"loinc": "LOINC",
-				"orphanet": "Orphanet"
+				"orphanet": "Orphanet",
+				"ucum": "UCUM"
 			}
 		},
 		"landing": {
@@ -2286,6 +2290,20 @@
 						"template": "Šablonas"
 					}
 				}
+			}
+		},
+		"ucum": {
+			"menu": {
+				"export": "Eksportuoti"
+			},
+			"export-modal": {
+				"header": "Eksportuoti UCUM vienetus",
+				"hint": "Jei papildiniai nepasirinkti, bus eksportuoti visi UCUM papildiniai.",
+				"supplements": "Papildiniai"
+			},
+			"import-modal": {
+				"file": "Failas",
+				"header": "Importuoti UCUM essence XML"
 			}
 		}
 	}

@@ -17,8 +17,11 @@
           <m-button style="width:100%" [routerLink]="['convert']">{{ 'web.ucum.menu.convert' | translate }}</m-button>
           <m-button style="width:100%" [routerLink]="['analyse']">{{ 'web.ucum.menu.analyse' | translate }}</m-button>
           <m-button style="width:100%" [routerLink]="['canonicalise']">{{ 'web.ucum.menu.canonicalise' | translate }}</m-button>
+          <m-button style="width:100%" (click)="ucumExportModal.toggleModal(true)">{{ 'web.ucum.menu.export' | translate }}</m-button>
         </div>
       </div>
     </m-card>
   </div>
 </m-form-row>
+
+<tw-ucum-export-modal #ucumExportModal/>

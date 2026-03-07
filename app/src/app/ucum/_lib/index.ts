@@ -4,3 +4,5 @@ export * from './model/defined-unit';
 export * from './model/search-params';
 export * from './model/prefix';
 export * from './model/base-unit';
+export * from './model/export-request';
+export * from './model/export-response';

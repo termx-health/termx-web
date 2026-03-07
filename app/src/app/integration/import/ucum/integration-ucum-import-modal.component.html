@@ -1,0 +1,18 @@
+<m-modal #modal [(mVisible)]="modalVisible" (mClose)="toggleModal()" [mMaskClosable]="false">
+  <ng-container *m-modal-header>
+    {{'web.ucum.import-modal.header' | translate}}
+  </ng-container>
+
+  <ng-container *m-modal-content>
+    <form #form="ngForm">
+      <m-form-item mName="file" mLabel="web.ucum.import-modal.file" required>
+        <input #fileInput type="file" name="file" [(ngModel)]="file" required accept=".xml,text/xml,application/xml">
+      </m-form-item>
+    </form>
+  </ng-container>
+
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (click)="modal.close()" [disabled]="loader.isLoading">{{'core.btn.close' | translate}}</m-button>
+    <m-button mDisplay="primary" (click)="import()" [mLoading]="loader.isLoading">{{'core.btn.import' | translate}}</m-button>
+  </div>
+</m-modal>
