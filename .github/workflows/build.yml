@@ -71,9 +71,10 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: echo "LATEST_TAG=latest" >> $GITHUB_ENV
 
-      - name: Set latest-ucum tag
-        if: github.ref == 'refs/heads/switch-to-ucum'
-        run: echo "LATEST_TAG=latest-ucum" >> $GITHUB_ENV
+      # Uncomment and edit the following to publish from a certain branch with a custom tag
+      # - name: Set latest-ucum tag
+      #   if: github.ref == 'refs/heads/switch-to-ucum'
+      #   run: echo "LATEST_TAG=latest-ucum" >> $GITHUB_ENV
 
       - name: Docker meta
         id: meta
