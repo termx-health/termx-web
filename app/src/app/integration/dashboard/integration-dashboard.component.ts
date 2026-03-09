@@ -5,6 +5,7 @@ import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.di
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { NzCollapseComponent, NzCollapsePanelComponent } from 'ng-zorro-antd/collapse';
 import { TranslatePipe } from '@ngx-translate/core';
+import { IntegrationUcumImportModalComponent } from 'term-web/integration/import/ucum/integration-ucum-import-modal.component';
 
 @Component({
     templateUrl: './integration-dashboard.component.html',
@@ -20,6 +21,7 @@ import { TranslatePipe } from '@ngx-translate/core';
         NzCollapsePanelComponent,
         RouterOutlet,
         TranslatePipe,
+        IntegrationUcumImportModalComponent,
     ],
 })
 export class IntegrationDashboardComponent {

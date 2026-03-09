@@ -1,11 +1,11 @@
 import { Component, EventEmitter, forwardRef, Input, OnInit, Output } from '@angular/core';
-import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BooleanInput, DestroyService, group, isDefined } from '@kodality-web/core-util';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe, ToBooleanPipe, ToStringPipe } from '@kodality-web/core-util';
 import { StructureDefinition, StructureDefinitionLibService, StructureDefinitionSearchParams } from 'term-web/modeler/_lib';
 import { catchError, finalize, forkJoin, map, Observable, of, Subject, takeUntil } from 'rxjs';
-import { NzSelectItemInterface } from 'ng-zorro-antd/select/select.types';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
 import { ArrayUtil } from 'term-web/core/utils/array-util';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
 
 @Component({
 	selector: 'tw-structure-definition-search',
@@ -14,7 +14,8 @@ import { ArrayUtil } from 'term-web/core/utils/array-util';
 	providers: [
 		{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => StructureDefinitionSearchComponent), multi: true },
 		DestroyService
-	]
+	],
+	imports: [MuiSelectModule, FormsModule, KeysPipe, ToBooleanPipe, ToStringPipe]
 })
 export class StructureDefinitionSearchComponent implements OnInit, ControlValueAccessor {
 
@@ -81,8 +82,8 @@ export class StructureDefinitionSearchComponent implements OnInit, ControlValueA
 		}
 	}
 
-	public filterOption = (_input: string, { nzValue }: NzSelectItemInterface): boolean => {
-		return !this.filter || this.filter(this.data[nzValue]);
+	public filterOption = (_input: string, option: any): boolean => {
+		return !this.filter || this.filter(this.data[option.nzValue || option.mValue]);
 	};
 
 	public get isLoading(): boolean {

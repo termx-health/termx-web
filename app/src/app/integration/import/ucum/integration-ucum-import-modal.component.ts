@@ -1,16 +1,23 @@
-import {Component, ElementRef, EventEmitter, Output, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import {Component, ElementRef, EventEmitter, Output, ViewChild, inject} from '@angular/core';
+import {NgForm, FormsModule} from '@angular/forms';
 import {DestroyService, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {MuiNotificationService, MuiModalModule, MuiFormModule, MuiButtonModule} from '@kodality-web/marina-ui';
 import {UcumLibService} from 'term-web/ucum/_lib';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
   selector: 'tw-integration-ucum-import-modal',
   templateUrl: './integration-ucum-import-modal.component.html',
-  providers: [DestroyService]
+  providers: [DestroyService],
+  imports: [MuiModalModule, MuiFormModule, MuiButtonModule, FormsModule, TranslatePipe]
 })
 export class IntegrationUcumImportModalComponent {
+  private ucumService = inject(UcumLibService);
+  private jobService = inject(JobLibService);
+  private notificationService = inject(MuiNotificationService);
+  private destroy$ = inject(DestroyService);
+
   @Output() public imported = new EventEmitter<boolean>();
 
   protected loader = new LoadingManager();
@@ -19,13 +26,6 @@ export class IntegrationUcumImportModalComponent {
 
   @ViewChild('form') public form?: NgForm;
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
-
-  public constructor(
-    private ucumService: UcumLibService,
-    private jobService: JobLibService,
-    private notificationService: MuiNotificationService,
-    private destroy$: DestroyService
-  ) {}
 
   public toggleModal(visible: boolean = false): void {
     this.modalVisible = visible;

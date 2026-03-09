@@ -29,12 +29,12 @@ export class TerminologyServiceApiComponent {
     window.open(this.env.snowstormUrl + '/swagger-ui/index.html', '_blank');
   }
 
-  protected openSnomedBrowser(): void {
-    window.open(this.env.snomedBrowserUrl, '_blank');
+  protected openSnowstormBrowser(): void {
+    window.open(this.env.snowstormUrl + 'snomed-browser', '_blank');
   }
 
-  protected openSnomedBrowserDailyBuild(): void {
-    window.open(this.env.snomedBrowserDailyBuildUrl, '_blank');
+  protected openSnowstormDailyBuildBrowser(): void {
+    window.open(this.env.snowstormDailyBuildUrl + 'snomed-browser', '_blank');
   }
 
 }

@@ -7,6 +7,7 @@ import {ConvertResponse} from "term-web/ucum/_lib/model/convert-response";
 
 @Component({
   templateUrl: './convert.component.html',
+  standalone: false
 })
 export class ConvertComponent {
   public loading = false;

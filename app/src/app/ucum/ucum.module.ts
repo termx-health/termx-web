@@ -49,7 +49,7 @@ export const UCUM_ROUTES: Routes = [
   imports: [
     CoreUiModule,
     UcumLibModule,
-    ResourcesLibModule,
+    ResourcesLibModule
   ]
 })
 export class UcumModule {}

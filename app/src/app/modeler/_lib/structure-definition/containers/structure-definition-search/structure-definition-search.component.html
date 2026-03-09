@@ -10,5 +10,7 @@
         [disabled]="disabled | toBoolean"
         [filterOption]="filterOption"
 >
-    <m-option *ngFor="let key of data | keys" [mValue]="data[key]?.id | toString" [mLabel]="data[key]?.code"></m-option>
+    @for (key of data | keys; track key) {
+      <m-option [mValue]="data[key]?.id | toString" [mLabel]="data[key]?.code"></m-option>
+    }
 </m-select>

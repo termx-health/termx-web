@@ -7,6 +7,7 @@ import { UcumLibService, Prefix } from 'term-web/ucum/_lib';
 
 @Component({
   templateUrl: './prefix-view.component.html',
+  standalone: false
 })
 export class PrefixViewComponent implements OnInit {
   public prefix: Prefix | undefined;

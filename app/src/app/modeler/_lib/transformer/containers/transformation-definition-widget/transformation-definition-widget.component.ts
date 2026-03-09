@@ -14,11 +14,16 @@ import {
     TransformationDefinitionQueryParams
 } from "term-web/modeler/_lib";
 import {Subscription} from "rxjs";
+import { MuiListModule, MuiSkeletonModule, MuiIconModule, MuiDividerModule } from '@kodality-web/marina-ui';
+import { RouterLink } from '@angular/router';
+import { NgTemplateOutlet } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
     selector: 'tw-transformation-definition-widget',
-    templateUrl: 'transformation-definition-widget.component.html'
+    templateUrl: 'transformation-definition-widget.component.html',
+    imports: [MuiListModule, MuiSkeletonModule, MuiIconModule, MuiDividerModule, RouterLink, TranslatePipe, NgTemplateOutlet]
 })
 export class TransformationDefinitionWidgetComponent implements OnChanges, OnDestroy {
 

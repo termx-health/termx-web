@@ -122,4 +122,8 @@ export class LandingPageComponent {
   protected intersects(arr1: Modules[], arr2: Modules[]): boolean {
     return [...arr1, ...arr2].filter(duplicate)?.length > 0;
   }
+
+  protected taskRoute = (task: Task): any[] => {
+    return this.authService.hasPrivilege('*.Task.edit') ? ['/tasks', task.number, 'edit'] : [];
+  };
 }

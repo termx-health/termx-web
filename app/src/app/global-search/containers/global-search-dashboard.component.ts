@@ -72,12 +72,12 @@ export class GlobalSearchDashboardComponent implements OnInit {
     if (state) {
       this.searchText = state.text;
       this.filter = state.filter;
-      this.search();
+      this.search(state.text);
     }
   }
 
-  public search(): void {
-    const text = this.searchText;
+  public search(text?: string): void {
+    text = text || this.searchText;
     if (!text || text.length < 1) {
       this.concepts = SearchResult.empty();
       this.codeSystems = [];

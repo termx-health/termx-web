@@ -8,6 +8,7 @@ import { UcumLibService } from 'term-web/ucum/_lib';
 
 @Component({
   templateUrl: './defined-unit-view.component.html',
+  standalone: false
 })
 export class DefinedUnitViewComponent implements OnInit {
   public unit: DefinedUnit | undefined;

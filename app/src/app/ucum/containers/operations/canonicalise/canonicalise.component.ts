@@ -7,6 +7,7 @@ import {finalize} from "rxjs/operators";
 
 @Component({
   templateUrl: './canonicalise.component.html',
+  standalone: false
 })
 export class CanonicaliseComponent {
   public loading = false;

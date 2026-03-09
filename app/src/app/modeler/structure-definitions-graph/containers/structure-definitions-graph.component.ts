@@ -7,7 +7,8 @@ import { StructureDefinitionService } from 'term-web/modeler/structure-definitio
 import { StructureDefinition } from 'term-web/modeler/_lib';
 
 @Component({
-  templateUrl: './structure-definitions-graph.component.html'
+  templateUrl: './structure-definitions-graph.component.html',
+  standalone: false
 })
 export class StructureDefinitionsGraphComponent implements OnInit {
   public loading: boolean;

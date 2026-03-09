@@ -8,6 +8,7 @@ import {UcumExportRequest, UcumLibService} from 'term-web/ucum/_lib';
 @Component({
   selector: 'tw-ucum-export-modal',
   templateUrl: './ucum-export-modal.component.html',
+  standalone: false
 })
 export class UcumExportModalComponent {
   public modalVisible = false;
