@@ -1,15 +1,17 @@
-<div *ngIf="pageComments?.length" class="container">
-  <ng-container *ngIf="pageComments | apply: sorted: trigger  as comms">
-    <tw-wiki-page-comment
-        *ngFor="let com of comms; let idx = index" [pageContent]="pageContent"
-        [style]="com | apply: getCommentStyle: idx : trigger"
-
-        [(pageComment)]="comms[idx]"
-        (pageCommentChange)="fireOnChange(); recalcPositions()"
-        (commentDeleted)="onCommentDelete($event)"
-        (commentResolved)="onCommentResolve($event)"
-
-        (click)="recalcPositions()"
-    ></tw-wiki-page-comment>
-  </ng-container>
-</div>
+@if (pageComments?.length) {
+  <div class="container">
+    @if (pageComments | apply: sorted: trigger ; as comms) {
+      @for (com of comms; track com; let idx = $index) {
+        <tw-wiki-page-comment
+          [pageContent]="pageContent"
+          [style]="com | apply: getCommentStyle: idx : trigger"
+          [(pageComment)]="comms[idx]"
+          (pageCommentChange)="fireOnChange(); recalcPositions()"
+          (commentDeleted)="onCommentDelete($event)"
+          (commentResolved)="onCommentResolve($event)"
+          (click)="recalcPositions()"
+        ></tw-wiki-page-comment>
+      }
+    }
+  </div>
+}

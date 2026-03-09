@@ -1,17 +1,39 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {LoadingManager, validateForm} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { LoadingManager, validateForm, AutofocusDirective } from '@kodality-web/core-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {environment} from 'environments/environment';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
 import {Page, PageContent, PageLink, Tag, TagLibService, Template, TemplateLibService} from 'term-web/wiki/_lib';
-import {PageService} from '../services/page.service';
+import {PageService} from 'term-web/wiki/page/services/page.service';
+import { MuiModalModule, MuiFormModule, MuiInputModule, MuiSelectModule, MuiIconModule, MuiTooltipModule, MuiButtonModule } from '@kodality-web/marina-ui';
+
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  selector: 'tw-wiki-page-setup',
-  templateUrl: 'wiki-page-setup-modal.component.html',
+    selector: 'tw-wiki-page-setup',
+    templateUrl: 'wiki-page-setup-modal.component.html',
+    imports: [
+    MuiModalModule,
+    FormsModule,
+    MuiFormModule,
+    MuiInputModule,
+    AutofocusDirective,
+    MuiSelectModule,
+    MuiIconModule,
+    MuiTooltipModule,
+    MuiButtonModule,
+    TranslatePipe,
+    MarinaUtilModule
+],
 })
 export class WikiPageSetupModalComponent implements OnInit, OnChanges {
+  private pageService = inject(PageService);
+  private tagService = inject(TagLibService);
+  private translateService = inject(TranslateService);
+  private templateLibService = inject(TemplateLibService);
+  private preferences = inject(PreferencesService);
+
   @Input() public pageId: number | undefined;
   @Input() public contentId: number | undefined;
 
@@ -31,14 +53,6 @@ export class WikiPageSetupModalComponent implements OnInit, OnChanges {
   protected loader = new LoadingManager();
   protected modalVisible: boolean;
   protected mode: 'add' | 'edit' = 'add';
-
-  public constructor(
-    private pageService: PageService,
-    private tagService: TagLibService,
-    private translateService: TranslateService,
-    private templateLibService: TemplateLibService,
-    private preferences: PreferencesService
-  ) {}
 
 
   public ngOnInit(): void {

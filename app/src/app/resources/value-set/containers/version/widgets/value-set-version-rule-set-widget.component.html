@@ -1,24 +1,51 @@
-<m-no-data *ngIf="!ruleSet"></m-no-data>
+@if (!ruleSet) {
+  <m-no-data></m-no-data>
+}
 
-<m-form-item mName="inactive" *ngIf="ruleSet && ('edit' | twPrivileged)">
-  <m-checkbox name="inactive" [(ngModel)]="ruleSet.inactive" (ngModelChange)="ruleSetChanged.emit()">{{'entities.value-set-rule-set.inactive' | translate}}</m-checkbox>
-</m-form-item>
+@if (ruleSet && ('edit' | twPrivileged)) {
+  <m-form-item mName="inactive">
+    <m-checkbox name="inactive" [(ngModel)]="ruleSet.inactive" (ngModelChange)="ruleSetChanged.emit()">{{'entities.value-set-rule-set.inactive' | translate}}</m-checkbox>
+  </m-form-item>
+}
 
-<m-list *ngIf="ruleSet?.rules?.length > 0" mSeparated>
-  <m-list-item *ngFor="let rule of ruleSet.rules; let i = index" [mClickable]="clickable | toBoolean" (mClick)="ruleSelected.emit({index: i, rule:rule})">
-    <div class="m-items-middle">
-      <m-icon *ngIf="rule.type === 'include'" mCode="plus-square" style="color:green"></m-icon>
-      <m-icon *ngIf="rule.type === 'exclude'" mCode="minus-square" style="color: red"></m-icon>
-      <span *ngIf="rule.codeSystem" class="m-items-middle">CS: {{rule.codeSystem}}
-        <m-divider mVertical></m-divider>
-        {{rule.codeSystemVersion?.version}}</span>
-      <span *ngIf="rule.valueSet" class="m-items-middle">VS: {{rule.valueSet}}
-        <m-divider mVertical></m-divider>
-        {{rule.valueSetVersion?.version}}</span>
-    </div>
-    <div *ngIf="rule.concepts?.length > 0">(<m-abbreviate [mValue]="rule.concepts | map: 'concept.code' | join: ' #'" [mLength]="400"/>)</div>
-    <div *ngIf="rule.filters?.length > 0" class="m-items-middle">(<span *ngFor="let f of rule.filters" class="m-items-middle">#{{f.property?.name}} {{f.operator || '='}}
-      <tw-property-value-input viewMode [ngModel]="f.value" [property]="f.property" [codeSystem]="rule.codeSystem"></tw-property-value-input></span>)
-    </div>
-  </m-list-item>
-</m-list>
+@if (ruleSet?.rules?.length > 0) {
+  <m-list mSeparated>
+    @for (rule of ruleSet.rules; track rule; let i = $index) {
+      <m-list-item [mClickable]="clickable | toBoolean" (mClick)="ruleSelected.emit({index: i, rule:rule})">
+        <div class="m-items-middle">
+          @if (rule.type === 'include') {
+            <m-icon mCode="plus-square" style="color:green"></m-icon>
+          }
+          @if (rule.type === 'exclude') {
+            <m-icon mCode="minus-square" style="color: red"></m-icon>
+          }
+          @if (rule.codeSystem) {
+            <span class="m-items-middle">CS: {{rule.codeSystem}}
+              <m-divider mVertical></m-divider>
+            {{rule.codeSystemVersion?.version}}</span>
+          }
+          @if (rule.valueSet) {
+            <span class="m-items-middle">VS: {{rule.valueSet}}
+              <m-divider mVertical></m-divider>
+            {{rule.valueSetVersion?.version}}</span>
+          }
+        </div>
+        @if (rule.concepts?.length > 0) {
+          <div>(<m-abbreviate [mValue]="rule.concepts | map: 'concept.code' | join: ' #'" [mLength]="400"/>)</div>
+        }
+        @if (rule.filters?.length > 0) {
+          <div class="m-items-middle">(@for (f of rule.filters; track f) {
+<span class="m-items-middle">#{{f.property?.name}} {{f.operator || '='}}
+      @if (f.operator !== 'exists') {
+                <tw-property-value-input  viewMode [ngModel]="f.value" [property]="f.property" [codeSystem]="rule.codeSystem"></tw-property-value-input>
+              }
+              @if (f.operator === 'exists') {
+                <label>{{f.value}}</label>
+              }</span>
+              })
+            </div>
+          }
+        </m-list-item>
+      }
+    </m-list>
+  }

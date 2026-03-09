@@ -1,31 +1,38 @@
-import {Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
-import {NgChanges} from '@kodality-web/marina-ui';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, OnInit, Output, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { DestroyService, group, isDefined, LoadingManager, KeysPipe } from '@kodality-web/core-util';
+import { NgChanges, MuiSelectModule } from '@kodality-web/marina-ui';
 import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {PageContent} from '../models/page-content';
-import {PageContentSearchParams} from '../models/page-content-search-params';
-import {PageLibService} from '../services/page-lib.service';
+import {PageContent} from 'term-web/wiki/_lib/page/models/page-content';
+import {PageContentSearchParams} from 'term-web/wiki/_lib/page/models/page-content-search-params';
+import {PageLibService} from 'term-web/wiki/_lib/page/services/page-lib.service';
+
 
 
 @Component({
-  selector: 'tw-page-content-select',
-  template: `
+    selector: 'tw-page-content-select',
+    template: `
     <m-select
-        icon="search"
-        [placeholder]="placeholder"
-        [(ngModel)]="value"
-        (mInputChange)="onSearch($event)"
-        (mChange)="fireOnChange()"
-        [loading]="loader.isLoading"
-        [autoUnselect]="false">
-      <m-option *ngFor="let key of data | keys" [mValue]="valueType === 'id' ? data[key]?.id : data[key]?.slug" [mLabel]="data[key].name"/>
+      icon="search"
+      [placeholder]="placeholder"
+      [(ngModel)]="value"
+      (mInputChange)="onSearch($event)"
+      (mChange)="fireOnChange()"
+      [loading]="loader.isLoading"
+      [autoUnselect]="false">
+      @for (key of data | keys; track key) {
+        <m-option [mValue]="valueType === 'id' ? data[key]?.id : data[key]?.slug" [mLabel]="data[key].name"/>
+      }
     </m-select>
-  `,
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => PageContentSelectComponent), multi: true}, DestroyService]
+    `,
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => PageContentSelectComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, KeysPipe]
 })
 export class PageContentSelectComponent implements OnInit, OnChanges, ControlValueAccessor {
+  private pageService = inject(PageLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() public valueType: 'id' | 'slug' | 'full' = 'full';
   @Input() public spaceId?: number;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
@@ -37,13 +44,8 @@ export class PageContentSelectComponent implements OnInit, OnChanges, ControlVal
   protected searchUpdate = new Subject<string>();
   protected loader = new LoadingManager();
 
-  private onChange = (x: any) => x;
-  private onTouched = (x: any) => x;
-
-  public constructor(
-    private pageService: PageLibService,
-    private destroy$: DestroyService
-  ) {}
+  private onChange = (x: any): any => x;
+  private onTouched = (x: any): any => x;
 
 
   public ngOnInit(): void {

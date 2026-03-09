@@ -7,6 +7,7 @@ import {finalize} from "rxjs/operators";
 
 @Component({
   templateUrl: './validate.component.html',
+  standalone: false
 })
 export class ValidateComponent {
   public loading = false;

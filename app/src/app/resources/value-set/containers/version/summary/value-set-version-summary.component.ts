@@ -1,33 +1,47 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {DestroyService, LoadingManager} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {ValueSet, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule, ValueSetVersionRuleSet} from 'app/src/app/resources/_lib';
-import {ValueSetRuleFormComponent} from 'app/src/app/resources/value-set/containers/version/rule/value-set-rule-form.component';
-import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
-import {JobLibService} from 'app/src/app/sys/_lib';
-import {forkJoin} from 'rxjs';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { ActivatedRoute, RouterLink } from '@angular/router';
+import { DestroyService, LoadingManager, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MarinPageLayoutModule, MuiFormModule, MuiCardModule, MuiButtonModule, MuiIconModule, MuiDividerModule, MuiNoDataModule, MuiCoreModule, MuiPopconfirmModule } from '@kodality-web/marina-ui';
+import {ValueSet, ValueSetVersion, ValueSetVersionConcept, ValueSetVersionRule, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
+import {ValueSetRuleFormComponent} from 'term-web/resources/value-set/containers/version/rule/value-set-rule-form.component';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
+import {JobLibService} from 'term-web/sys/_lib';
+import {AuthService} from 'term-web/core/auth';
+import {forkJoin, map} from 'rxjs';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
+import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
+import { AsyncPipe } from '@angular/common';
+import { ValueSetVersionInfoWidgetComponent } from 'term-web/resources/value-set/containers/version/widgets/value-set-version-info-widget.component';
+import { ValueSetVersionRuleSetWidgetComponent } from 'term-web/resources/value-set/containers/version/widgets/value-set-version-rule-set-widget.component';
+import { ValueSetRuleFormComponent as ValueSetRuleFormComponent_1 } from 'term-web/resources/value-set/containers/version/rule/value-set-rule-form.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
-  templateUrl: 'value-set-version-summary.component.html',
-  providers: [DestroyService]
+    templateUrl: 'value-set-version-summary.component.html',
+    providers: [DestroyService],
+    imports: [ResourceContextComponent, MarinPageLayoutModule, PrivilegeContextDirective, MuiFormModule, MuiCardModule, MuiButtonModule, RouterLink, MuiIconModule, ValueSetVersionInfoWidgetComponent, ValueSetVersionRuleSetWidgetComponent, MuiDividerModule, MuiNoDataModule, MuiCoreModule, MuiPopconfirmModule, ValueSetRuleFormComponent_1, AsyncPipe, TranslatePipe, ApplyPipe, LocalDatePipe, HasAnyPrivilegePipe, PrivilegedPipe]
 })
 export class ValueSetVersionSummaryComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private valueSetService = inject(ValueSetService);
+  private notificationService = inject(MuiNotificationService);
+  private jobService = inject(JobLibService);
+  private destroy$ = inject(DestroyService);
+  private authService = inject(AuthService);
+
   protected valueSet?: ValueSet;
   protected valueSetVersion?: ValueSetVersion;
   protected rule?: {index: number, rule: ValueSetVersionRule};
   protected ruleSetChanged?: boolean;
   protected loader = new LoadingManager();
 
-  @ViewChild(ValueSetRuleFormComponent) public ruleFormComponent?: ValueSetRuleFormComponent;
+  protected isAuthenticated = this.authService.isAuthenticated.pipe(
+    map(isAuth => isAuth)
+  );
 
-  public constructor(
-    private route: ActivatedRoute,
-    private valueSetService: ValueSetService,
-    private notificationService: MuiNotificationService,
-    private jobService: JobLibService,
-    private destroy$: DestroyService
-  ) {}
+  @ViewChild(ValueSetRuleFormComponent) public ruleFormComponent?: ValueSetRuleFormComponent;
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -84,7 +98,7 @@ export class ValueSetVersionSummaryComponent implements OnInit {
   }
 
   private pollJobStatus(jobId: number): void {
-    this.loader.wrap('expand', this.jobService.pollFinishedJobLog(jobId, this.destroy$)).subscribe(jobResp => {
+    this.loader.wrap('expand', this.jobService.pollFinishedJobLog(jobId, this.destroy$)).subscribe(() => {
       this.loadData(this.valueSet.id, this.valueSetVersion.version);
     });
   }

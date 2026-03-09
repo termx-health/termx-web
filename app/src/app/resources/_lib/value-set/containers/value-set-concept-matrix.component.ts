@@ -1,9 +1,12 @@
-import {Component, Injectable, Input, OnChanges} from '@angular/core';
+import { Component, Injectable, Input, OnChanges, inject } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {HttpCacheService} from '@kodality-web/core-util';
+import { HttpCacheService, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
 import {interval, map, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
-import {ValueSetLibService} from '../services/value-set-lib.service';
+import {ValueSetLibService} from 'term-web/resources/_lib/value-set/services/value-set-lib.service';
+import { MuiTableModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+
+import { TranslatePipe } from '@ngx-translate/core';
 
 type ConceptView = {
   [type in 'code' | 'display' | 'designations']: {
@@ -14,12 +17,12 @@ type ConceptView = {
 
 @Injectable({providedIn: 'root'})
 class ValueSetConceptMatrixService {
+  private authService = inject(AuthService);
+  private valueSetService = inject(ValueSetLibService);
+
   private cache = new HttpCacheService();
 
-  public constructor(
-    private authService: AuthService,
-    private valueSetService: ValueSetLibService,
-  ) {
+  public constructor() {
     interval(10_000).pipe(takeUntilDestroyed()).subscribe(() => this.cache.clear());
   }
 
@@ -43,10 +46,13 @@ class ValueSetConceptMatrixService {
 }
 
 @Component({
-  selector: 'tw-value-set-concept-matrix',
-  templateUrl: 'value-set-concept-matrix.component.html'
+    selector: 'tw-value-set-concept-matrix',
+    templateUrl: 'value-set-concept-matrix.component.html',
+    imports: [MuiTableModule, MuiNoDataModule, ApplyPipe, IncludesPipe, TranslatePipe]
 })
 export class ValueSetConceptMatrixComponent implements OnChanges {
+  private service = inject(ValueSetConceptMatrixService);
+
   public static ngAcceptInputType_properties: string[];
   public static ngAcceptInputType_langs: string[];
 
@@ -67,10 +73,6 @@ export class ValueSetConceptMatrixComponent implements OnChanges {
   }
 
   protected concepts: ConceptView[];
-
-  public constructor(
-    private service: ValueSetConceptMatrixService,
-  ) { }
 
   public ngOnChanges(): void {
     this.service.load(this.id, this.version).subscribe(resp => {

@@ -6,6 +6,7 @@ import {applyPagination, applySort} from "term-web/ucum/utils/table-util";
 
 @Component({
   templateUrl: './prefix-list.component.html',
+  standalone: false
 })
 export class PrefixListComponent implements OnInit {
   public query = new SearchParams();

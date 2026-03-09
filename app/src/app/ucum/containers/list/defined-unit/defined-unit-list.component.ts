@@ -7,6 +7,7 @@ import {applyPagination, applySort} from "term-web/ucum/utils/table-util";
 
 @Component({
   templateUrl: './defined-unit-list.component.html',
+  standalone: false
 })
 export class DefinedUnitListComponent implements OnInit {
   public query = new SearchParams();

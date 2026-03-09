@@ -1,5 +1,5 @@
 import {LocalizedName} from '@kodality-web/marina-util';
-import {ReleaseResource} from 'term-web/sys/_lib';
+import {ReleaseResource} from 'term-web/sys/_lib/release/model/release-resource';
 
 export class Release {
   public id?: number;

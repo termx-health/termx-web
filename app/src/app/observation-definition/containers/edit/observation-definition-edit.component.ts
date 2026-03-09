@@ -1,8 +1,8 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import { DestroyService, isDefined, LoadingManager, validateForm, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
 import {forkJoin, takeUntil} from 'rxjs';
 import {
   ObservationDefinition,
@@ -24,12 +24,29 @@ import {ObservationDefinitionProtocolComponent} from 'term-web/observation-defin
 import {ObservationDefinitionValueComponent} from 'term-web/observation-definition/containers/edit/value/observation-definition-value.component';
 import {ObservationDefinitionService} from 'term-web/observation-definition/services/observation-definition.service';
 import {CodeSystemLibService} from 'term-web/resources/_lib';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiDividerModule, MuiInputModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiAlertModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { ObservationDefinitionValueSelectComponent } from 'term-web/observation-definition/_lib/components/observation-definition-value-select.component';
+import { ObservationDefinitionValueComponent as ObservationDefinitionValueComponent_1 } from 'term-web/observation-definition/containers/edit/value/observation-definition-value.component';
+import { ObservationDefinitionMemberListComponent as ObservationDefinitionMemberListComponent_1 } from 'term-web/observation-definition/containers/edit/member/observation-definition-member-list.component';
+import { ObservationDefinitionComponentListComponent as ObservationDefinitionComponentListComponent_1 } from 'term-web/observation-definition/containers/edit/component/observation-definition-component-list.component';
+import { ObservationDefinitionProtocolComponent as ObservationDefinitionProtocolComponent_1 } from 'term-web/observation-definition/containers/edit/protocol/observation-definition-protocol.component';
+import { ObservationDefinitionInterpretationListComponent as ObservationDefinitionInterpretationListComponent_1 } from 'term-web/observation-definition/containers/edit/interpretation/observation-definition-interpretation-list.component';
+import { ObservationDefinitionMappingListComponent as ObservationDefinitionMappingListComponent_1 } from 'term-web/observation-definition/containers/edit/mapping/observation-definition-mapping-list.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: './observation-definition-edit.component.html',
-  providers: [DestroyService]
+    templateUrl: './observation-definition-edit.component.html',
+    providers: [DestroyService],
+    imports: [MuiFormModule, MuiSpinnerModule, MuiCardModule, FormsModule, MuiDividerModule, MuiInputModule, ValueSetConceptSelectComponent, MuiMultiLanguageInputModule, ObservationDefinitionValueSelectComponent, MuiSelectModule, MuiAlertModule, ObservationDefinitionValueComponent_1, ObservationDefinitionMemberListComponent_1, ObservationDefinitionComponentListComponent_1, ObservationDefinitionProtocolComponent_1, ObservationDefinitionInterpretationListComponent_1, ObservationDefinitionMappingListComponent_1, MuiButtonModule, TranslatePipe, ApplyPipe, IncludesPipe]
 })
 export class ObservationDefinitionEditComponent implements OnInit {
+  private observationDefinitionService = inject(ObservationDefinitionService);
+  private codeSystemService = inject(CodeSystemLibService);
+  private route = inject(ActivatedRoute);
+  private destroy$ = inject(DestroyService);
+  private location = inject(Location);
+
   protected observationDefinition?: ObservationDefinition;
   protected loader = new LoadingManager();
   protected category: {codeSystem?: string, code?: string} = {codeSystem: 'observation-category'};
@@ -41,14 +58,6 @@ export class ObservationDefinitionEditComponent implements OnInit {
   @ViewChild(ObservationDefinitionProtocolComponent) public protocolComponent?: ObservationDefinitionProtocolComponent;
   @ViewChild(ObservationDefinitionInterpretationListComponent) public interpretationListComponent?: ObservationDefinitionInterpretationListComponent;
   @ViewChild(ObservationDefinitionMappingListComponent) public mappingListComponent?: ObservationDefinitionMappingListComponent;
-
-  public constructor(
-    private observationDefinitionService: ObservationDefinitionService,
-    private codeSystemService: CodeSystemLibService,
-    private route: ActivatedRoute,
-    private destroy$: DestroyService,
-    private location: Location
-  ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {

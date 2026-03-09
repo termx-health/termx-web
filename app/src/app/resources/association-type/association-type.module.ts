@@ -1,10 +1,10 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
-import {AssociationTypeEditComponent} from './containers/edit/association-type-edit.component';
-import {AssociationTypeListComponent} from './containers/list/association-type-list.component';
-import {AssociationTypeViewComponent} from './containers/view/association-type-view.component';
-import {AssociationTypeService} from './services/association-type.service';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {AssociationTypeEditComponent} from 'term-web/resources/association-type/containers/edit/association-type-edit.component';
+import {AssociationTypeListComponent} from 'term-web/resources/association-type/containers/list/association-type-list.component';
+import {AssociationTypeViewComponent} from 'term-web/resources/association-type/containers/view/association-type-view.component';
+import {AssociationTypeService} from 'term-web/resources/association-type/services/association-type.service';
 
 export const ASSOCIATION_TYPE_ROUTES: Routes = [
   {path: '', component: AssociationTypeListComponent},
@@ -14,20 +14,18 @@ export const ASSOCIATION_TYPE_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CoreUiModule
-  ],
-  declarations: [
-    AssociationTypeListComponent,
-    AssociationTypeEditComponent,
-    AssociationTypeViewComponent
-  ],
-  providers: [
-    AssociationTypeService
-  ],
-  exports: [
-    AssociationTypeListComponent
-  ]
+    imports: [
+        CoreUiModule,
+        AssociationTypeListComponent,
+        AssociationTypeEditComponent,
+        AssociationTypeViewComponent
+    ],
+    providers: [
+        AssociationTypeService
+    ],
+    exports: [
+        AssociationTypeListComponent
+    ]
 })
 export class AssociationTypeModule {
 }

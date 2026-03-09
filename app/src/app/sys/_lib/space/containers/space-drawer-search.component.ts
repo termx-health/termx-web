@@ -1,10 +1,14 @@
-import {Component, EventEmitter, forwardRef, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
-import {PackageLibService, SpaceLibService} from 'app/src/app/sys/_lib/space/index';
-import {Package, PackageVersion} from '../model/package';
-import {Space} from '../model/space';
+import { Component, EventEmitter, forwardRef, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, ApplyPipe } from '@kodality-web/core-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import {PackageLibService} from 'term-web/sys/_lib/space/services/package-lib-service';
+import {SpaceLibService} from 'term-web/sys/_lib/space/services/space-lib-service';
+import {Package, PackageVersion} from 'term-web/sys/_lib/space/model/package';
+import {Space} from 'term-web/sys/_lib/space/model/space';
+import { MuiCoreModule, MuiDrawerModule, MuiCardModule, MuiSpinnerModule, MuiFormModule, MuiSelectModule, MuiButtonModule } from '@kodality-web/marina-ui';
+
+import { SpaceSelectComponent } from 'term-web/sys/_lib/space/containers/space-select.component';
 
 export class SpaceItem {
   public space: Space;
@@ -13,11 +17,17 @@ export class SpaceItem {
 }
 
 @Component({
-  selector: 'tw-space-drawer-search',
-  templateUrl: 'space-drawer-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SpaceDrawerSearchComponent), multi: true}]
+    selector: 'tw-space-drawer-search',
+    templateUrl: 'space-drawer-search.component.html',
+    standalone: true,
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SpaceDrawerSearchComponent), multi: true }],
+    imports: [MuiCoreModule, MuiDrawerModule, MuiCardModule, MuiSpinnerModule, FormsModule, MuiFormModule, SpaceSelectComponent, MuiSelectModule, MuiButtonModule, ApplyPipe, TranslatePipe]
 })
 export class SpaceDrawerSearchComponent implements ControlValueAccessor, OnChanges {
+  private spaceLibService = inject(SpaceLibService);
+  private packageService = inject(PackageLibService);
+  private translateService = inject(TranslateService);
+
   @Input() public space: Space;
   @Input() public package: Package;
   @Input() public version: PackageVersion;
@@ -32,14 +42,8 @@ export class SpaceDrawerSearchComponent implements ControlValueAccessor, OnChang
   protected drawerOpened: boolean;
 
   public val: SpaceItem = new SpaceItem(); // val
-  private onChange = (x: any) => x;
+  private onChange = (x: any): any => x;
   private onTouched = (): void => undefined;
-
-  public constructor(
-    private spaceLibService: SpaceLibService,
-    private packageService: PackageLibService,
-    private translateService: TranslateService
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['space']) {

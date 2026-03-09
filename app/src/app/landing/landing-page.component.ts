@@ -1,25 +1,32 @@
-import {Component} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {ComponentStateStore, duplicate, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {catchError, forkJoin, Observable, of} from 'rxjs';
 import {InfoService} from 'term-web/core/info/info.service';
-import {LandingTaskComponent} from 'term-web/landing/components/landing-task.component';
 import {CodeSystemLibService, MapSetLibService, ValueSetLibService} from 'term-web/resources/_lib';
 import {SysLibModule} from 'term-web/sys/_lib';
 import {SpaceLibService} from 'term-web/sys/_lib/space';
 import {Task, TaskLibModule, TaskLibService} from 'term-web/task/_lib';
 import {PageLibService, WikiLibModule} from 'term-web/wiki/_lib';
-import {AuthService} from '../core/auth';
-import {CoreUiModule} from '../core/ui/core-ui.module';
+import {AuthService} from 'term-web/core/auth';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 
 type Modules = 'terminology' | 'core' | 'task' | 'wiki';
 
 @Component({
   standalone: true,
-  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SysLibModule, LandingTaskComponent],
+  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SysLibModule],
   templateUrl: 'landing-page.component.html',
   styleUrls: ['landing-page.component.less']
 })
 export class LandingPageComponent {
+  private authService = inject(AuthService);
+  private codeSystemService = inject(CodeSystemLibService);
+  private valueSetService = inject(ValueSetLibService);
+  private mapSetService = inject(MapSetLibService);
+  private spaceService = inject(SpaceLibService);
+  private pageService = inject(PageLibService);
+  private taskService = inject(TaskLibService);
+
   protected data: {
     codeSystemCount?: number,
     valueSetCount?: number,
@@ -38,17 +45,10 @@ export class LandingPageComponent {
   protected loader = new LoadingManager<'info' | 'resources' | 'summary' | 'task'>();
 
 
-  public constructor(
-    public authService: AuthService,
-    private codeSystemService: CodeSystemLibService,
-    private valueSetService: ValueSetLibService,
-    private mapSetService: MapSetLibService,
-    private spaceService: SpaceLibService,
-    private pageService: PageLibService,
-    private taskService: TaskLibService,
-    stateStore: ComponentStateStore,
-    info: InfoService,
-  ) {
+  public constructor() {
+    const stateStore = inject(ComponentStateStore);
+    const info = inject(InfoService);
+
     stateStore.clear();
     this.loader.wrap('info', info.modules()).subscribe(resp => {
       this.modules = resp as Modules[];
@@ -121,4 +121,8 @@ export class LandingPageComponent {
   protected intersects(arr1: Modules[], arr2: Modules[]): boolean {
     return [...arr1, ...arr2].filter(duplicate)?.length > 0;
   }
+
+  protected taskRoute = (task: Task): any[] => {
+    return this.authService.hasPrivilege('*.Task.edit') ? ['/tasks', task.number, 'edit'] : [];
+  };
 }

@@ -14,67 +14,78 @@
         <div>{{'web.integration.fhir.concept-map.translate.uri' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover [mContent]="urlContent"></m-icon>
         <ng-template #urlContent>
-          <span [innerHTML]="('web.integration.fhir.concept-map.translate.uri' | translate)"></span>
+          A canonical URL for a concept map. The server must know the concept map (e.g. it is defined explicitly in the server's concept maps,<br>
+          or it is defined implicitly by some code system known to the server.
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.uri"></m-input>
+      <m-textarea [(ngModel)]="data.uri"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="conceptMapVersion">
       <ng-template #conceptMapVersion>
         <div>{{'web.integration.fhir.concept-map.translate.concept-map-version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover [mContent]="conceptMapVersion"></m-icon>
-        <ng-template #conceptMapVersion>
-          <span [innerHTML]="('web.integration.fhir.concept-map.translate.concept-map-version-tooltip' | translate)"></span>
+        <m-icon mCode="info-circle" m-popover [mContent]="conceptMapVersionContent"></m-icon>
+        <ng-template #conceptMapVersionContent>
+          The identifier that is used to identify a specific version of the concept map to be used for the translation.<br>
+          This is an arbitrary value managed by the concept map author and is not expected to be globally unique.<br>
+          For example, it might be a timestamp (e.g. yyyymmdd) if a managed version is not available.
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.conceptMapVersion"></m-input>
+      <m-textarea [(ngModel)]="data.conceptMapVersion"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="code" required>
       <ng-template #code>
         <div>{{'web.integration.fhir.concept-map.translate.code' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.concept-map.translate.code-tooltip' | translate}}"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="The code that is to be translated. If a code is provided, a system must be provided"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.code"></m-input>
+      <m-textarea [(ngModel)]="data.code"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="system" required>
       <ng-template #system>
         <div>{{'web.integration.fhir.concept-map.translate.system' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.concept-map.translate.system-tooltip' | translate}}"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="The system for the code that is to be translated"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.system"></m-input>
+      <m-textarea [(ngModel)]="data.system"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="version">
       <ng-template #version>
         <div>{{'web.integration.fhir.concept-map.translate.version' | translate}}&nbsp;</div>
-        <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.concept-map.translate.version-tooltip' | translate}}"></m-icon>
+        <m-icon mCode="info-circle" m-popover mContent="The version of the system, if one was provided in the source data"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.version"></m-input>
+      <m-textarea [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="targetSystem">
       <ng-template #targetSystem>
         <div>{{'web.integration.fhir.concept-map.translate.target-system' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover [mContent]="targetSystemContent"></m-icon>
         <ng-template #targetSystemContent>
-          <span [innerHTML]="('web.integration.fhir.concept-map.translate.target-system-tooltip' | translate)"></span>
+          identifies a target code system in which a mapping is sought. This parameter is an alternative to the target parameter - only one is required.<br>
+          Searching for any translation to a target code system irrespective of the context (e.g. target valueset) may lead to unsafe results,<br>
+          and it is at the discretion of the server to decide when to support this
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.targetSystem"></m-input>
+      <m-textarea [(ngModel)]="data.targetSystem"></m-textarea>
     </m-form-item>
 
-    <m-card *ngIf="response || error" class="m-card-inside">
-      <div *m-card-header class="m-items-middle">
-        <div class="m-card__title">{{'web.integration.response' | translate}}</div>
-        <m-button (click)="copyResult()">
-          <m-icon mCode="copy"></m-icon>
-        </m-button>
-      </div>
-      <pre *ngIf="response">{{response | json}}</pre>
-      <div *ngFor="let issue of error?.issue">
-        <m-alert [mType]="issue.severity" mShowIcon>
-          {{issue?.details?.text}}
-        </m-alert>
-      </div>
-    </m-card>
+    @if (response || error) {
+      <m-card class="m-card-inside">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{'web.integration.response' | translate}}</div>
+          <m-button (click)="copyResult()">
+            <m-icon mCode="copy"></m-icon>
+          </m-button>
+        </div>
+        @if (response) {
+          <pre>{{response | json}}</pre>
+        }
+        @for (issue of error?.issue; track $index) {
+          <div>
+            <m-alert [mType]="issue.severity" mShowIcon>
+              {{issue?.details?.text}}
+            </m-alert>
+          </div>
+        }
+      </m-card>
+    }
 
   </m-spinner>
 </m-card>

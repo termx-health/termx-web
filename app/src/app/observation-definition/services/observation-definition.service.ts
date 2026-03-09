@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {ObservationDefinition, ObservationDefinitionImportRequest, ObservationDefinitionLibService} from 'app/src/app/observation-definition/_lib';
+import {ObservationDefinition, ObservationDefinitionImportRequest, ObservationDefinitionLibService} from 'term-web/observation-definition/_lib';
 import {Observable} from 'rxjs';
 import {JobLogResponse} from 'term-web/sys/_lib';
 

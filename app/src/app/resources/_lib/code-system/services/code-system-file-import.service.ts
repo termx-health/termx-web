@@ -1,10 +1,10 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {collect, isNil} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
 import {mergeMap, Observable, timer} from 'rxjs';
 import {environment} from 'environments/environment';
-import {JobLibService, JobLog, JobLogResponse} from '../../../../sys/_lib';
+import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
 
 
 export interface FileProcessingRequestProperty {
@@ -32,7 +32,7 @@ export interface FileProcessingRequest {
   version?: {
     number?: string;
     status?: string;
-    releaseDate?: Date;
+    releaseDate?: Date | string;
     supplementVersion?: string;
   };
 
@@ -50,9 +50,10 @@ export type FileImportPropertyRow = FileProcessingRequestProperty & {
 
 @Injectable()
 export class CodeSystemFileImportService {
-  public readonly baseUrl = `${environment.termxApi}/file-importer/code-system`;
+  private http = inject(HttpClient);
+  private jobService = inject(JobLibService);
 
-  public constructor(private http: HttpClient, private jobService: JobLibService) { }
+  public readonly baseUrl = `${environment.termxApi}/file-importer/code-system`;
 
   public validate(_props: FileImportPropertyRow[]): string[] {
     const props = _props.filter(p => p.import).filter(p => p.propertyName);

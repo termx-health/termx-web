@@ -1,4 +1,4 @@
-import {DefinedProperty} from '../../defined-property';
+import {DefinedProperty} from 'term-web/resources/_lib/defined-property';
 
 export class MapSetProperty extends DefinedProperty {
   public status?: string;

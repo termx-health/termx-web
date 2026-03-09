@@ -1,11 +1,16 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {ComponentStateStore} from '@kodality-web/core-util';
 import {SnomedBranch, SnomedLibService, SnomedSearchComponent} from 'term-web/integration/_lib';
+import { MarinPageLayoutModule, MuiDropdownModule, MuiCoreModule } from '@kodality-web/marina-ui';
+
+import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
+import { SnomedSearchComponent as SnomedSearchComponent_1 } from 'term-web/integration/_lib/snomed/containers/snomed-search.component';
+import { SnomedConceptInfoComponent } from 'term-web/integration/snomed/containers/snomed-concept-info.component';
 
 @Component({
-  templateUrl: './snomed-dashboard.component.html',
-  styles: [`
+    templateUrl: './snomed-dashboard.component.html',
+    styles: [`
     @import "../../../../styles/variables";
     @space-context-bg: var(--color-action-bar-background);
     .context-container {
@@ -22,9 +27,15 @@ import {SnomedBranch, SnomedLibService, SnomedSearchComponent} from 'term-web/in
       border-bottom: @mui-border;
       white-space: nowrap;
     }
-  `]
+  `],
+    imports: [MarinPageLayoutModule, MuiDropdownModule, MuiCoreModule, NzRowDirective, NzColDirective, SnomedSearchComponent_1, SnomedConceptInfoComponent]
 })
 export class SnomedDashboardComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private stateStore = inject(ComponentStateStore);
+  private snomedService = inject(SnomedLibService);
+
   public conceptId?: string;
   @ViewChild("searchComponent") public searchComponent?: SnomedSearchComponent;
 
@@ -32,8 +43,6 @@ export class SnomedDashboardComponent implements OnInit {
   protected branches?: SnomedBranch[];
 
   protected readonly STORE_KEY = 'snomed-management-branch';
-
-  public constructor(private route: ActivatedRoute, private router: Router, private stateStore: ComponentStateStore, private snomedService: SnomedLibService) {}
 
   public ngOnInit(): void {
     const branch = this.stateStore.pop(this.STORE_KEY);

@@ -28,7 +28,8 @@ interface Filter {
 }
 
 @Component({
-  templateUrl: './global-search-dashboard.component.html'
+  templateUrl: './global-search-dashboard.component.html',
+  standalone: false
 })
 export class GlobalSearchDashboardComponent implements OnInit {
   public searchText?: string;

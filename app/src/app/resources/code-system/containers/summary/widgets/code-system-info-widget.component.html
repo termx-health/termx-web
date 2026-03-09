@@ -1,43 +1,57 @@
-<m-no-data *ngIf="!codeSystem"></m-no-data>
+@if (!codeSystem) {
+  <m-no-data></m-no-data>
+}
 
-<div *ngIf="codeSystem as cs">
-  <div class="m-items-middle m-bold">
-    <m-icon mCode="key"></m-icon>
-    <tw-copy-container [text]="cs.id">{{cs.id}}</tw-copy-container>
-  </div>
-  <span>{{cs.description | localName}}</span>
-  <div class="m-items-middle">
-    <m-icon mCode="link"></m-icon>
-    <tw-copy-container [text]="cs.uri">{{cs.uri}}</tw-copy-container>
-  </div>
-  <div class="m-items-middle" *ngIf="cs.properties as properties">
-    <m-icon mCode="bars"></m-icon>
-    <span>{{properties | map: 'name' | join: ', '}}</span>
-  </div>
-  <div class="m-items-middle">
-    <m-icon mCode="setting"></m-icon>
-    <span>{{'web.case-sensitive.code-is.' + cs.caseSensitive | translate}}</span>
-    <m-divider mVertical></m-divider>
-    <span>{{cs.content | localizedConceptName: {valueSet: 'codesystem-content-mode'} | async}}</span>
-    <ng-container *ngIf="cs.experimental">
-      <m-divider mVertical></m-divider>
-      <span>{{'entities.resource.experimental' | translate}}</span>
-    </ng-container>
-  </div>
-  <div class="m-items-middle" *ngIf="(cs | apply:getTelecoms) as telecoms">
-    <m-icon mCode="contacts"></m-icon>
-    <div>
-      <div *ngFor="let t of telecoms | keyvalue">
-        {{t.key}}: {{t.value | map: 'value' | join: ', '}}
-      </div>
+@if (codeSystem; as cs) {
+  <div>
+    <div class="m-items-middle m-bold">
+      <m-icon mCode="key"></m-icon>
+      <tw-copy-container [text]="cs.id">{{cs.id}}</tw-copy-container>
     </div>
+    <span>{{cs.description | localName}}</span>
+    <div class="m-items-middle">
+      <m-icon mCode="link"></m-icon>
+      <tw-copy-container [text]="cs.uri">{{cs.uri}}</tw-copy-container>
+    </div>
+    @if (cs.properties; as properties) {
+      <div class="m-items-middle">
+        <m-icon mCode="bars"></m-icon>
+        <span>{{properties | map: 'name' | join: ', '}}</span>
+      </div>
+    }
+    <div class="m-items-middle">
+      <m-icon mCode="setting"></m-icon>
+      <span>{{'web.case-sensitive.code-is.' + cs.caseSensitive | translate}}</span>
+      <m-divider mVertical></m-divider>
+      <span>{{cs.content | localizedConceptName: {valueSet: 'codesystem-content-mode'} | async}}</span>
+      @if (cs.experimental) {
+        <m-divider mVertical></m-divider>
+        <span>{{'entities.resource.experimental' | translate}}</span>
+      }
+    </div>
+    @if ((cs | apply:getTelecoms); as telecoms) {
+      <div class="m-items-middle">
+        <m-icon mCode="contacts"></m-icon>
+        <div>
+          @for (t of telecoms | keyvalue; track t) {
+            <div>
+              {{t.key}}: {{t.value | map: 'value' | join: ', '}}
+            </div>
+          }
+        </div>
+      </div>
+    }
+    @if (cs.publisher) {
+      <div class="m-items-middle">
+        <m-icon mCode="environment"></m-icon>
+        <span>{{cs.publisher | localizedConceptName:{codeSystem: 'publisher'} | async}}</span>
+      </div>
+    }
+    @if (cs.valueSet) {
+      <div class="m-items-middle">
+        <m-icon mCode="tag"></m-icon>
+        <span>VS | <a [routerLink]="['/resources/value-sets', cs.valueSet, 'summary']">{{cs.valueSet}}</a></span>
+      </div>
+    }
   </div>
-  <div class="m-items-middle" *ngIf="cs.publisher">
-    <m-icon mCode="environment"></m-icon>
-    <span>{{cs.publisher | localizedConceptName:{codeSystem: 'publisher'} | async}}</span>
-  </div>
-  <div class="m-items-middle" *ngIf="cs.valueSet">
-    <m-icon mCode="tag"></m-icon>
-    <span>VS | <a [routerLink]="['/resources/value-sets', cs.valueSet, 'summary']">{{cs.valueSet}}</a></span>
-  </div>
-</div>
+}

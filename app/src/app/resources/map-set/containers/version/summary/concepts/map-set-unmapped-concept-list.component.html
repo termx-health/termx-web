@@ -8,18 +8,22 @@
     <tr *mTableHead>
       <th>{{'web.map-set-version.summary.associations.code' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.display' | translate}}</th>
-      <th class="tw-table-min-width" *ngIf="editMode"></th>
+      @if (editMode) {
+        <th class="tw-table-min-width"></th>
+      }
     </tr>
 
     <tr *mTableRow="let c">
       <td><a>{{c.code}}</a></td>
       <td>{{c.display?.name}}</td>
-      <td *ngIf="editMode">
-        <m-dropdown>
-          <a *m-dropdown-item (mClick)="drawerComponent.openDrawer(c)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
-          <a *m-dropdown-item (mClick)="createNoMap(c)">{{'web.map-set-version.summary.associations.set-as-no-map' | translate}}</a>
-        </m-dropdown>
-      </td>
+      @if (editMode) {
+        <td>
+          <m-dropdown>
+            <a *m-dropdown-item (mClick)="drawerComponent.openDrawer(c)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
+            <a *m-dropdown-item (mClick)="createNoMap(c)">{{'web.map-set-version.summary.associations.set-as-no-map' | translate}}</a>
+          </m-dropdown>
+        </td>
+      }
     </tr>
     <tr *mTableNoData>
       <td colspan="100%">
@@ -30,7 +34,7 @@
 </m-card>
 
 <tw-map-set-association-drawer [mapSet]="mapSet"
-    [mapSetVersion]="mapSetVersion"
-    [associationTypes]="associationTypes"
-    [targetExternal]="targetExternal"
-    (twSaved)="loadData();associationsChanged.emit()"></tw-map-set-association-drawer>
+  [mapSetVersion]="mapSetVersion"
+  [associationTypes]="associationTypes"
+  [targetExternal]="targetExternal"
+(twSaved)="loadData();associationsChanged.emit()"></tw-map-set-association-drawer>

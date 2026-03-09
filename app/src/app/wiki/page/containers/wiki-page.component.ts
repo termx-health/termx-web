@@ -1,8 +1,8 @@
 import {MediaMatcher} from '@angular/cdk/layout';
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {compareStrings, DestroyService, LoadingManager} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {map, takeUntil} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {PreferencesService} from 'term-web/core/preferences/preferences.service';
@@ -10,14 +10,32 @@ import {SeoService} from 'term-web/core/ui/services/seo.service';
 import {Space} from 'term-web/sys/_lib/space';
 import {Page} from 'term-web/wiki/_lib';
 import {WikiSpace, WikiSpaceService} from 'term-web/wiki/page/services/wiki-space.service';
-import {PageService} from '../services/page.service';
+import {PageService} from 'term-web/wiki/page/services/page.service';
+import { MarinPageLayoutModule, MuiDropdownModule, MuiIconModule, MuiCollapsePanelModule, MuiSkeletonModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { PrivilegeContextDirective } from 'term-web/core/auth/privileges/privilege-context.directive';
+
+import { WikiPageTreeComponent } from 'term-web/wiki/page/components/wiki-page-tree.component';
+import { WikiSpaceOverviewComponent } from 'term-web/wiki/page/components/wiki-space-overview.component';
+import { WikiPageDetailsComponent } from 'term-web/wiki/page/containers/wiki-page-details.component';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  templateUrl: './wiki-page.component.html',
-  styleUrls: ['../styles/wiki-page.styles.less'],
-  providers: [DestroyService]
+    templateUrl: './wiki-page.component.html',
+    styleUrls: ['../styles/wiki-page.styles.less'],
+    providers: [DestroyService],
+    imports: [MarinPageLayoutModule, PrivilegeContextDirective, MuiDropdownModule, MuiIconModule, MuiCollapsePanelModule, MuiSkeletonModule, WikiPageTreeComponent, WikiSpaceOverviewComponent, WikiPageDetailsComponent, MuiAlertModule, TranslatePipe, MarinaUtilModule]
 })
 export class WikiPageComponent implements OnInit {
+  protected auth = inject(AuthService);
+  protected translateService = inject(TranslateService);
+  protected preferences = inject(PreferencesService);
+  private spaceService = inject(WikiSpaceService);
+  private pageService = inject(PageService);
+  protected router = inject(Router);
+  private route = inject(ActivatedRoute);
+  private destroy$ = inject(DestroyService);
+  private seo = inject(SeoService);
+
   public space?: Space;
   public slug?: string;
   public page?: Page;
@@ -27,18 +45,9 @@ export class WikiPageComponent implements OnInit {
   protected loader = new LoadingManager();
   protected mobileQuery: MediaQueryList;
 
-  public constructor(
-    protected auth: AuthService,
-    protected translateService: TranslateService,
-    protected preferences: PreferencesService,
-    private spaceService: WikiSpaceService,
-    private pageService: PageService,
-    protected router: Router,
-    private route: ActivatedRoute,
-    private destroy$: DestroyService,
-    private seo: SeoService,
-    media: MediaMatcher
-  ) {
+  public constructor() {
+    const media = inject(MediaMatcher);
+
     this.mobileQuery = media.matchMedia('(max-width: 992px)');
   }
 
@@ -104,7 +113,7 @@ export class WikiPageComponent implements OnInit {
       this.seo.description(content?.content?.slice(0, 1000));
     } else {
       this.seo.reset();
-      this.seo.title(this.translateService.instant('web.wiki-page.overview.pages') + ' - ' + this.space?.code ?? '');
+      this.seo.title(this.translateService.instant('web.wiki-page.overview.pages') + ' - ' + (this.space?.code ?? ''));
     }
   }
 
@@ -121,13 +130,13 @@ export class WikiPageComponent implements OnInit {
 
   public viewResourceRoute = ({type, id, options}: {type: string, id: string, options: {space?: string}}): any[] => {
     const handlers = {
-      'page': () => (['/wiki', options['space'] ?? this.activeSpace, id]),
-      'cs': () => (['/resources/code-systems/', id, 'summary']),
-      'csc': () => (['/resources/code-systems/', id, 'concepts']),
-      'vs': () => (['/resources/value-sets/', id, 'summary']),
-      'vsc': () => (['/resources/value-sets/', id.split('|')[0], 'versions', id.split('|')[1], 'concepts']),
-      'ms': () => ['/resources/map-sets/', id, 'view'],
-      'concept': () => {
+      'page': (): any[] => (['/wiki', options['space'] ?? this.activeSpace, id]),
+      'cs': (): any[] => (['/resources/code-systems/', id, 'summary']),
+      'csc': (): any[] => (['/resources/code-systems/', id, 'concepts']),
+      'vs': (): any[] => (['/resources/value-sets/', id, 'summary']),
+      'vsc': (): any[] => (['/resources/value-sets/', id.split('|')[0], 'versions', id.split('|')[1], 'concepts']),
+      'ms': (): any[] => ['/resources/map-sets/', id, 'view'],
+      'concept': (): any[] => {
         const [cs, concept] = id.split('|');
         if (cs === 'snomed-ct') {
           return ['/integration/snomed/dashboard/', concept];

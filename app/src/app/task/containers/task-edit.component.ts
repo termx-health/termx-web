@@ -1,8 +1,8 @@
-import {Component, Injectable, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, Injectable, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {copyDeep, isDefined, isNil, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {CodeName} from '@kodality-web/marina-util';
+import { copyDeep, isDefined, isNil, LoadingManager, validateForm, ApplyPipe, LocalDatePipe, LocalDateTimePipe } from '@kodality-web/core-util';
+import { CodeName, MarinaUtilModule } from '@kodality-web/marina-util';
 import {forkJoin, map, mergeMap, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
@@ -11,9 +11,33 @@ import {CodeSystemVersionLibService} from 'term-web/resources/_lib/code-system/s
 import {Task, TaskActivity, TaskContextItem, Workflow} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
 import {PageCommentLibService, PageLibService} from 'term-web/wiki/_lib';
+import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiTextareaModule, MuiButtonModule, MuiSelectModule, MuiIconModule, MuiDividerModule, MuiListModule, MuiPopconfirmModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { NgTemplateOutlet, AsyncPipe } from '@angular/common';
+import { TaskTypeComponent } from 'term-web/task/_lib/components/task-type.component';
+import { TaskStatusComponent } from 'term-web/task/_lib/components/task-status.component';
+import { WikiSmartTextEditorViewComponent } from 'term-web/wiki/_lib/texteditor/wiki-smart-text-editor-view.component';
+import { WikiSmartTextEditorComponent } from 'term-web/wiki/_lib/texteditor/wiki-smart-text-editor.component';
+import { UserSelectComponent } from 'term-web/user/_lib/components/user-select.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { MapSetSearchComponent } from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
+import { SpaceSelectComponent } from 'term-web/sys/_lib/space/containers/space-select.component';
 
 @Injectable({providedIn: 'root'})
 class TaskContextLinkService {
+  private router = inject(Router);
+  private auth = inject(AuthService);
+  private codeSystemEntityVersionService = inject(CodeSystemEntityVersionLibService);
+  private codeSystemVersionService = inject(CodeSystemVersionLibService);
+  private mapSetVersionService = inject(MapSetVersionLibService);
+  private pageCommentService = inject(PageCommentLibService);
+  private pageService = inject(PageLibService);
+  private snomedTranslationService = inject(SnomedTranslationService);
+  private valueSetVersionService = inject(ValueSetVersionLibService);
+
   private handlers = {
     'snomed-translation': (ctx: TaskContextItem): void => {
       this.snomedTranslationService.load(ctx.id).subscribe(t => {
@@ -74,18 +98,6 @@ class TaskContextLinkService {
     }
   };
 
-  public constructor(
-    private router: Router,
-    private auth: AuthService,
-    private codeSystemEntityVersionService: CodeSystemEntityVersionLibService,
-    private codeSystemVersionService: CodeSystemVersionLibService,
-    private mapSetVersionService: MapSetVersionLibService,
-    private pageCommentService: PageCommentLibService,
-    private pageService: PageLibService,
-    private snomedTranslationService: SnomedTranslationService,
-    private valueSetVersionService: ValueSetVersionLibService,
-  ) { }
-
   public open(ctx: TaskContextItem): void {
     this.handlers[ctx.type]?.(ctx);
   }
@@ -132,8 +144,8 @@ class TaskContextLinkService {
 }
 
 @Component({
-  templateUrl: './task-edit.component.html',
-  styles: [`
+    templateUrl: './task-edit.component.html',
+    styles: [`
     @import "../../../styles/variables";
 
     .text-editor-wrapper {
@@ -151,9 +163,16 @@ class TaskContextLinkService {
         background: @mui-border-color-light;
       }
     }
-  `]
+  `],
+    imports: [MuiSpinnerModule, MuiCardModule, FormsModule, TaskTypeComponent, MuiFormModule, MuiTextareaModule, MuiButtonModule, TaskStatusComponent, MuiSelectModule, WikiSmartTextEditorViewComponent, WikiSmartTextEditorComponent, MuiIconModule, MuiDividerModule, MuiListModule, MuiPopconfirmModule, NgTemplateOutlet, UserSelectComponent, ValueSetConceptSelectComponent, MuiCoreModule, AsyncPipe, TranslatePipe, MarinaUtilModule, ApplyPipe, LocalDatePipe, LocalDateTimePipe, LocalizedConceptNamePipe, CodeSystemSearchComponent, ValueSetSearchComponent, MapSetSearchComponent, SpaceSelectComponent]
 })
 export class TaskEditComponent implements OnInit {
+  private taskService = inject(TaskService);
+  protected authService = inject(AuthService);
+  protected contextLinkService = inject(TaskContextLinkService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   protected task?: Task;
   protected newStatus?: string;
   protected newActivity?: {visible?: boolean, note?: string} = {};
@@ -189,14 +208,6 @@ export class TaskEditComponent implements OnInit {
   };
 
   @ViewChild(NgForm) public form: NgForm;
-
-  public constructor(
-    private taskService: TaskService,
-    protected authService: AuthService,
-    protected contextLinkService: TaskContextLinkService,
-    private route: ActivatedRoute,
-    private router: Router,
-  ) { }
 
   public ngOnInit(): void {
     const number = this.route.snapshot.paramMap.get('number');

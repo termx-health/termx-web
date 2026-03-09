@@ -1,143 +1,162 @@
 <m-spinner class="page page__wrapper" [mLoading]="isLoading">
-  <m-skeleton *ngIf="!page" mLoading/>
+  @if (!page) {
+    <m-skeleton mLoading/>
+  }
 
-  <tw-wiki-page-header *ngIf="page?.id" [pageContent]="pageContent" [slug]="slug" (viewHistory)="openHistory()">
-    <m-button (mClick)="editPage.emit(pageContent.slug)" *twPrivileged>
-      <div class="m-items-middle">
-        <m-icon mCode="edit"></m-icon>
-        {{'core.btn.edit' | translate}}
-      </div>
-    </m-button>
-
-    <m-dropdown>
-      <m-button *m-dropdown-container mDisplay="text">
-        <m-icon mCode="ellipsis"></m-icon>
+  @if (page?.id) {
+    <tw-wiki-page-header [pageContent]="pageContent" [slug]="slug" (viewHistory)="openHistory()">
+      <m-button (mClick)="editPage.emit(pageContent.slug)" *twPrivileged>
+        <div class="m-items-middle">
+          <m-icon mCode="edit"></m-icon>
+          {{'core.btn.edit' | translate}}
+        </div>
       </m-button>
-
-      <a *m-dropdown-item class="m-items-middle" (click)="copy()">
-        <m-icon mCode="copy"/>
-        {{'web.wiki-page.header.copy-raw' | translate}}
-      </a>
-      <a *mDropdownItemIf="'edit' | twPrivileged" class="m-items-middle" (click)="pageModal.open({links:[{sourceId: page?.id, orderNumber: 1}]})">
-        <m-icon mCode="file-add"/>
-        {{'web.wiki-page.header.add-subpage' | translate}}
-      </a>
-      <ng-container *twPrivileged>
-        <a *m-dropdown-item class="m-items-middle" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()" mPosition="topRight">
-          <m-icon mCode="delete"/>
-          {{'core.btn.delete' | translate}}
+      <m-dropdown>
+        <m-button *m-dropdown-container mDisplay="text">
+          <m-icon mCode="ellipsis"></m-icon>
+        </m-button>
+        <a *m-dropdown-item class="m-items-middle" (click)="copy()">
+          <m-icon mCode="copy"/>
+          {{'web.wiki-page.header.copy-raw' | translate}}
         </a>
-      </ng-container>
-    </m-dropdown>
-  </tw-wiki-page-header>
+        <a *mDropdownItemIf="'edit' | twPrivileged" class="m-items-middle" (click)="pageModal.open({links:[{sourceId: page?.id, orderNumber: 1}]})">
+          <m-icon mCode="file-add"/>
+          {{'web.wiki-page.header.add-subpage' | translate}}
+        </a>
+        <ng-container *twPrivileged>
+          <a *m-dropdown-item class="m-items-middle" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="delete()" mPosition="topRight">
+            <m-icon mCode="delete"/>
+            {{'core.btn.delete' | translate}}
+          </a>
+        </ng-container>
+      </m-dropdown>
+    </tw-wiki-page-header>
+  }
 
 
-  <div *ngIf="page?.id">
-    <div nz-row nzGutter="12">
-      <!-- Main page container -->
-      <div nz-col [nzLg]="18" [nzXs]="24" class="page__content">
-        <m-card>
-          <tw-smart-text-editor-view
-              *ngIf="pageContent"
-              [value]="pageContent.content"
-              [valueType]="pageContent.contentType"
-              [comments]="pageComments | apply: toWikiComments"
-              (commentCreated)="onPageCommentCreated($event)"
-          ></tw-smart-text-editor-view>
-        </m-card>
-      </div>
-
-      <!-- Actions/Metadata container -->
-      <div nz-col [nzLg]="6" [nzXs]="24">
-        <div class="tw-flex-container">
+  @if (page?.id) {
+    <div>
+      <div nz-row nzGutter="12">
+        <!-- Main page container -->
+        <div nz-col [nzLg]="18" [nzXs]="24" class="page__content">
           <m-card>
-            <div class="page__actions">
-              <!-- Content -->
-              <div>
-                <b>{{'web.wiki-page.details.contents' | translate}}</b>
-                <div>
-                  <div *ngFor="let content of page?.contents | sort: 'lang'">
-                    <a [routerLink]="content.slug | apply: viewPageRoute" [class.m-bold]="content.id === pageContent?.id">
-                      {{content.lang | uppercase}} | {{content.name}}
-                    </a>
-                  </div>
-                  <ng-container *ngFor="let lang of environment.contentLanguages | apply: filterLanguages: pageContent?.lang: page?.contents">
-                    <div *twPrivileged>
-                      <a (click)="createPageContent(lang)" class="m-text-secondary">
-                        {{lang | uppercase}}
-                      </a>
-                    </div>
-                  </ng-container>
-                </div>
-              </div>
-
-              <!-- Links/Relations -->
-              <div>
-                <b>{{'web.wiki-page.details.relations' | translate}}</b>
-                <div *ngIf="!(pageRelations | keys)?.length" class="m-text-secondary">
-                  {{'web.wiki-page.details.none' | translate}}
-                </div>
-                <dl *ngFor="let key of pageRelations | keys">
-                  <dt>{{('web.wiki-page.details.' + key) | translate}}</dt>
-                  <dd>
-                    <li style="margin-left: 1rem" *ngFor="let relation of pageRelations[key];">
-                      <a [routerLink]="relation.type | apply: relationRoute: relation.target">
-                        {{relation.target}}
-                      </a>
-                    </li>
-                  </dd>
-                </dl>
-              </div>
-
-              <!-- Usages -->
-              <div>
-                <b>{{'web.wiki-page.details.usages' | translate}}</b>
-                <div *ngIf="!pageUsages?.length" class="m-text-secondary">
-                  {{'web.wiki-page.details.none' | translate}}
-                </div>
-                <div>
-                  <div *ngFor="let usage of pageUsages">
-                    <a
-                        *ngIf="usage.spaceId !== space?.id ? spaces[usage.spaceId]?.code + '/' + usage.content.code : usage.content.code as target"
-                        [routerLink]="usage.type | apply: relationRoute: target"
-                    >
-                      <m-icon mCode="link"/>
-                      {{target}}
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <!-- Tags -->
-              <div>
-                <b>{{'web.wiki-page.details.tags' | translate}}</b>
-                <div *ngIf="!page?.tags?.length" class="m-text-secondary">
-                  {{'web.wiki-page.details.none' | translate}}
-                </div>
-                <div class="m-items-middle">
-                  <m-tag *ngFor="let tag of page?.tags">
-                    {{tag.tag.text}}
-                  </m-tag>
-                </div>
-              </div>
-            </div>
+            @if (pageContent) {
+              <tw-smart-text-editor-view
+                [value]="pageContent.content"
+                [valueType]="pageContent.contentType"
+                [comments]="pageComments | apply: toWikiComments"
+                (commentCreated)="onPageCommentCreated($event)"
+              ></tw-smart-text-editor-view>
+            }
           </m-card>
-
-          <!-- Comments -->
-          <div *ngIf="pageComments?.length">
-            <tw-wiki-page-comments
-                id="comments-container"
-                [mode]="mobileQuery.matches ? 'feed' : 'bubbles'"
-                [pageContent]="pageContent"
-                [(pageComments)]="pageComments"
-                [lineOffset]="calcLineOffset"
-                [containerOffset]="'' | apply: getCommentsContainerOffset"
-            ></tw-wiki-page-comments>
+        </div>
+        <!-- Actions/Metadata container -->
+        <div nz-col [nzLg]="6" [nzXs]="24">
+          <div class="tw-flex-container">
+            <m-card>
+              <div class="page__actions">
+                <!-- Content -->
+                <div>
+                  <b>{{'web.wiki-page.details.contents' | translate}}</b>
+                  <div>
+                    @for (content of page?.contents | sort: 'lang'; track content) {
+                      <div>
+                        <a [routerLink]="content.slug | apply: viewPageRoute" [class.m-bold]="content.id === pageContent?.id">
+                          {{content.lang | uppercase}} | {{content.name}}
+                        </a>
+                      </div>
+                    }
+                    @for (lang of environment.contentLanguages | apply: filterLanguages: pageContent?.lang: page?.contents; track lang) {
+                      <div *twPrivileged>
+                        <a (click)="createPageContent(lang)" class="m-text-secondary">
+                          {{lang | uppercase}}
+                        </a>
+                      </div>
+                    }
+                  </div>
+                </div>
+                <!-- Links/Relations -->
+                <div>
+                  <b>{{'web.wiki-page.details.relations' | translate}}</b>
+                  @if (!(pageRelations | keys)?.length) {
+                    <div class="m-text-secondary">
+                      {{'web.wiki-page.details.none' | translate}}
+                    </div>
+                  }
+                  @for (key of pageRelations | keys; track key) {
+                    <dl>
+                      <dt>{{('web.wiki-page.details.' + key) | translate}}</dt>
+                      <dd>
+                        @for (relation of pageRelations[key]; track relation) {
+                          <li style="margin-left: 1rem">
+                            <a [routerLink]="relation.type | apply: relationRoute: relation.target">
+                              {{relation.target}}
+                            </a>
+                          </li>
+                        }
+                      </dd>
+                    </dl>
+                  }
+                </div>
+                <!-- Usages -->
+                <div>
+                  <b>{{'web.wiki-page.details.usages' | translate}}</b>
+                  @if (!pageUsages?.length) {
+                    <div class="m-text-secondary">
+                      {{'web.wiki-page.details.none' | translate}}
+                    </div>
+                  }
+                  <div>
+                    @for (usage of pageUsages; track usage) {
+                      <div>
+                        @if (usage.spaceId !== space?.id ? spaces[usage.spaceId]?.code + '/' + usage.content.code : usage.content.code; as target) {
+                          <a
+                            [routerLink]="usage.type | apply: relationRoute: target"
+                            >
+                            <m-icon mCode="link"/>
+                            {{target}}
+                          </a>
+                        }
+                      </div>
+                    }
+                  </div>
+                </div>
+                <!-- Tags -->
+                <div>
+                  <b>{{'web.wiki-page.details.tags' | translate}}</b>
+                  @if (!page?.tags?.length) {
+                    <div class="m-text-secondary">
+                      {{'web.wiki-page.details.none' | translate}}
+                    </div>
+                  }
+                  <div class="m-items-middle">
+                    @for (tag of page?.tags; track tag) {
+                      <m-tag>
+                        {{tag.tag.text}}
+                      </m-tag>
+                    }
+                  </div>
+                </div>
+              </div>
+            </m-card>
+            <!-- Comments -->
+            @if (pageComments?.length) {
+              <div>
+                <tw-wiki-page-comments
+                  id="comments-container"
+                  [mode]="mobileQuery.matches ? 'feed' : 'bubbles'"
+                  [pageContent]="pageContent"
+                  [(pageComments)]="pageComments"
+                  [lineOffset]="calcLineOffset"
+                  [containerOffset]="'' | apply: getCommentsContainerOffset"
+                ></tw-wiki-page-comments>
+              </div>
+            }
           </div>
         </div>
       </div>
     </div>
-  </div>
+  }
 </m-spinner>
 
 
@@ -147,18 +166,19 @@
   </ng-container>
 
   <ng-container *m-modal-content>
-    <form #contentForm="ngForm" *ngIf="contentModalData.content">
-      <m-form-item mName="name" mLabel="entities.page-content.name" required>
-        <m-input name="name" [(ngModel)]="contentModalData.content.name" autofocus required></m-input>
-      </m-form-item>
-
-      <m-form-item mName="type" mLabel="entities.page-content.content-type" required>
-        <m-select name="type" [(ngModel)]="contentModalData.content.contentType" required>
-          <m-option mLabel="WYSIWYG" [mValue]="'html'"></m-option>
-          <m-option mLabel="Markdown" [mValue]="'markdown'"></m-option>
-        </m-select>
-      </m-form-item>
-    </form>
+    @if (contentModalData.content) {
+      <form #contentForm="ngForm">
+        <m-form-item mName="name" mLabel="entities.page-content.name" required>
+          <m-input name="name" [(ngModel)]="contentModalData.content.name" autofocus required></m-input>
+        </m-form-item>
+        <m-form-item mName="type" mLabel="entities.page-content.content-type" required>
+          <m-select name="type" [(ngModel)]="contentModalData.content.contentType" required>
+            <m-option mLabel="WYSIWYG" [mValue]="'html'"></m-option>
+            <m-option mLabel="Markdown" [mValue]="'markdown'"></m-option>
+          </m-select>
+        </m-form-item>
+      </form>
+    }
   </ng-container>
 
   <div *m-modal-footer class="m-items-middle">
@@ -167,10 +187,10 @@
     </m-button>
 
     <m-button mDisplay="primary"
-        [mLoading]="loader.state['save']"
-        [disabled]="loader.state['spaces'] || isLoading"
-        (mClick)="savePageContent()"
-    >
+      [mLoading]="loader.state['save']"
+      [disabled]="loader.state['spaces'] || isLoading"
+      (mClick)="savePageContent()"
+      >
       {{'core.btn.save' | translate}}
     </m-button>
   </div>
@@ -178,6 +198,6 @@
 
 <tw-wiki-page-setup
   #pageModal
-    (saved)="editPage.emit($event.pageContent.slug)"
-    (closed)="pageModal.close()"
+  (saved)="editPage.emit($event.pageContent.slug)"
+  (closed)="pageModal.close()"
 ></tw-wiki-page-setup>

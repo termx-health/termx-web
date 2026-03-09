@@ -3,7 +3,7 @@ import {NgModule} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {CoreUtilModule} from '@kodality-web/core-util';
 import {MarinaComponentsModule} from '@kodality-web/marina-ui';
-import {JobLibService} from './services/job-lib.service';
+import {JobLibService} from 'term-web/sys/_lib/job/services/job-lib.service';
 
 @NgModule({
   imports: [

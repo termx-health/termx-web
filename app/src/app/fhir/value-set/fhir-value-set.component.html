@@ -15,42 +15,50 @@
       <tr style="background-color: #e6ffe6">
         <td>Flags: {{valueSet.immutable ? 'Immutable' : 'Mutable'}}</td>
         <td>
-          <div *ngFor="let i of valueSet.identifier">{{i.system}} {{i.value}}</div>
+          @for (i of valueSet.identifier; track i) {
+            <div>{{i.system}} {{i.value}}</div>
+          }
         </td>
       </tr>
     </m-table>
   </div>
 
-  <div *ngIf="valueSet.description">
-    <h2>Definition</h2>
-    <p>{{valueSet.description}}</p>
-  </div>
+  @if (valueSet.description) {
+    <div>
+      <h2>Definition</h2>
+      <p>{{valueSet.description}}</p>
+    </div>
+  }
 
   <div>
     <h2>Content Logical Definition</h2>
     <ul>
-      <li *ngFor="let i of valueSet.compose.include">Include {{i.concept?.length ? i.concept.length : i.filter?.length ? '' : 'all'}} codes defined in <a (click)="openCodeSystem(i.system)">{{i.system}}</a></li>
+      @for (i of valueSet.compose.include; track i) {
+        <li>Include {{i.concept?.length ? i.concept.length : i.filter?.length ? '' : 'all'}} codes defined in <a (click)="openCodeSystem(i.system)">{{i.system}}</a></li>
+      }
     </ul>
   </div>
 
-  <div *ngIf="valueSet.expansion">
-    <div class="m-items-middle">
-      <h2>Expansion</h2>
-      <m-divider mVertical></m-divider>
-      <a (mClick)="openValueSetExpand()">FHIR definition</a>
+  @if (valueSet.expansion) {
+    <div>
+      <div class="m-items-middle">
+        <h2>Expansion</h2>
+        <m-divider mVertical></m-divider>
+        <a (mClick)="openValueSetExpand()">FHIR definition</a>
+      </div>
+      <p>This value set contains {{valueSet.expansion.total}} {{(valueSet.expansion.total % 10) === 1 ? 'concept' : 'concepts'}}</p>
+      <m-table [mData]="valueSet.expansion.contains" class="grid">
+        <tr *mTableHead>
+          <th>Code</th>
+          <th>Display</th>
+          <th>Definition</th>
+        </tr>
+        <tr *mTableRow="let c">
+          <td>{{c.code}}</td>
+          <td>{{c.display}}</td>
+          <td>{{c.definition}}</td>
+        </tr>
+      </m-table>
     </div>
-    <p>This value set contains {{valueSet.expansion.total}} {{(valueSet.expansion.total % 10) === 1 ? 'concept' : 'concepts'}}</p>
-    <m-table [mData]="valueSet.expansion.contains" class="grid">
-      <tr *mTableHead>
-        <th>Code</th>
-        <th>Display</th>
-        <th>Definition</th>
-      </tr>
-      <tr *mTableRow="let c">
-        <td>{{c.code}}</td>
-        <td>{{c.display}}</td>
-        <td>{{c.definition}}</td>
-      </tr>
-    </m-table>
-  </div>
+  }
 </div>

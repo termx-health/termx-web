@@ -7,6 +7,7 @@ import { UcumLibService, BaseUnit } from 'term-web/ucum/_lib';
 
 @Component({
   templateUrl: './base-unit-view.component.html',
+  standalone: false
 })
 export class BaseUnitViewComponent implements OnInit {
   public baseUnit: BaseUnit | undefined;

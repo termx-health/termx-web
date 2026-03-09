@@ -1,56 +1,70 @@
-<m-input *ngIf="!searchResult || searchResult.meta.total > 0"
+@if (!searchResult || searchResult.meta.total > 0) {
+  <m-input
     [(ngModel)]="searchInput"
     (mChange)="searchUpdate.next($event)"
-    placeholder="marina.ui.inputs.search.placeholder"></m-input>
+  placeholder="marina.ui.inputs.search.placeholder"></m-input>
+}
 
 <m-backend-table [mResult]="searchResult"
-    [(mQuery)]="query"
-    (mQueryChange)="loadUnlinkedConcepts()"
-    [mLoading]="loader.isLoading"
-    style="margin-top: 1rem; display: block">
+  [(mQuery)]="query"
+  (mQueryChange)="loadUnlinkedConcepts()"
+  [mLoading]="loader.isLoading"
+  style="margin-top: 1rem; display: block">
   <tr *mTableHead>
-    <th *ngIf="!viewMode"></th>
+    @if (!viewMode) {
+      <th></th>
+    }
     <th>{{'web.code-system.summary.unlinked-concepts.concept' | translate}}</th>
     <th>{{'web.code-system.summary.unlinked-concepts.version' | translate}}</th>
     <th>{{'web.code-system.summary.unlinked-concepts.designation' | translate}}</th>
     <th>{{'web.code-system.summary.unlinked-concepts.author' | translate}}</th>
     <th>{{'web.code-system.summary.unlinked-concepts.task' | translate}}</th>
     <th>{{'web.code-system.summary.unlinked-concepts.status' | translate}}</th>
-    <th *ngIf="!viewMode" class="tw-table-actions"></th>
+    @if (!viewMode) {
+      <th class="tw-table-actions"></th>
+    }
   </tr>
 
   <tr *mTableRow="let entityVersion; let i = index">
-    <td *ngIf="!viewMode">
-      <m-checkbox [(ngModel)]="entityVersion['checked']" name="{{i}}-checked"></m-checkbox>
-    </td>
+    @if (!viewMode) {
+      <td>
+        <m-checkbox [(ngModel)]="entityVersion['checked']" name="{{i}}-checked"></m-checkbox>
+      </td>
+    }
     <td><a (click)="openConcept(entityVersion)">{{entityVersion.code}}</a></td>
     <td>{{entityVersion.created | localDate}}</td>
     <td>
       <div class="m-items-middle">
-        <span *ngFor="let d of entityVersion.designations; let i = index">{{d.name}}{{i !== (entityVersion.designations?.length - 1) ? ', ' : ''}}</span></div>
-    </td>
-    <ng-container *ngIf="(tasks | apply: findTask:entityVersion.id) as task">
-      <td>{{task.createdBy}}</td>
-      <td><a [routerLink]="['/tasks', task?.number,'edit']">{{task.number}}</a></td>
-    </ng-container>
-    <ng-container *ngIf="!(tasks | apply: findTask:entityVersion.id)">
-      <td></td>
-      <td><a *ngIf="approvalRequired && ('*.Task.edit' | twHasAnyPrivilege)"
-          (mClick)="taskModalData.entityVersionId = entityVersion.id;taskModalData.visible = true">{{'web.code-system.summary.unlinked-concepts.create-task' | translate}}</a>
+        @for (d of entityVersion.designations; track d; let i = $index) {
+          <span>{{d.name}}{{i !== (entityVersion.designations?.length - 1) ? ', ' : ''}}</span>
+        }</div>
       </td>
-    </ng-container>
+      @if ((tasks | apply: findTask:entityVersion.id); as task) {
+        <td>{{task.createdBy}}</td>
+        <td><a [routerLink]="['/tasks', task?.number,'edit']">{{task.number}}</a></td>
+      }
+      @if (!(tasks | apply: findTask:entityVersion.id)) {
+        <td></td>
+        <td>@if (approvalRequired && ('*.Task.edit' | twHasAnyPrivilege)) {
+          <a
+          (mClick)="taskModalData.entityVersionId = entityVersion.id;taskModalData.visible = true">{{'web.code-system.summary.unlinked-concepts.create-task' | translate}}</a>
+        }
+      </td>
+    }
     <td>
       <tw-status-tag [status]="entityVersion.status"></tw-status-tag>
     </td>
-    <td *ngIf="!viewMode">
-      <m-dropdown>
-        <ng-container *ngFor="let v of versions | filter: filterDraftVersions">
-          <a *m-dropdown-item (mClick)="link(v.version, entityVersion.id)">
-            {{'web.code-system.summary.unlinked-concepts.link-to' | translate: {version: v.version} }}
-          </a>
-        </ng-container>
-      </m-dropdown>
-    </td>
+    @if (!viewMode) {
+      <td>
+        <m-dropdown>
+          @for (v of versions | filter: filterDraftVersions; track v) {
+            <a *m-dropdown-item (mClick)="link(v.version, entityVersion.id)">
+              {{'web.code-system.summary.unlinked-concepts.link-to' | translate: {version: v.version} }}
+            </a>
+          }
+        </m-dropdown>
+      </td>
+    }
   </tr>
 
   <tr *mTableNoData>
@@ -69,14 +83,16 @@
     <form #taskModalForm="ngForm">
       <m-form-item mName="version" mLabel="web.code-system.summary.unlinked-concepts.task-modal.cs-version">
         <m-select name="version" [(ngModel)]="taskModalData.codeSystemVersionId">
-          <m-option *ngFor="let v of versions | filter: filterDraftVersions" [mValue]="v.id" [mLabel]="v.version"></m-option>
+          @for (v of versions | filter: filterDraftVersions; track v) {
+            <m-option [mValue]="v.id" [mLabel]="v.version"></m-option>
+          }
         </m-select>
       </m-form-item>
       <m-form-item mName="assignee" mLabel="web.code-system.summary.unlinked-concepts.task-modal.assignee" required>
         <tw-user-select name="assignee"
-            [(ngModel)]="taskModalData.assignee"
-            [anyRole]="[codeSystem + '.CodeSystem.edit', codeSystem + '.CodeSystem.publish']"
-            required></tw-user-select>
+          [(ngModel)]="taskModalData.assignee"
+          [anyRole]="[codeSystem + '.CodeSystem.edit', codeSystem + '.CodeSystem.publish']"
+        required></tw-user-select>
       </m-form-item>
     </form>
   </ng-container>

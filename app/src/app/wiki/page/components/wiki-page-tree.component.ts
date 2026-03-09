@@ -1,14 +1,21 @@
-import {Component, Injectable, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {Router} from '@angular/router';
-import {compareValues, copyDeep, isNil, LoadingManager, remove, SearchResult, unique} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, Injectable, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { Router, RouterLink } from '@angular/router';
+import { compareValues, copyDeep, isNil, LoadingManager, remove, SearchResult, unique, ApplyPipe, ToStringPipe } from '@kodality-web/core-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {EMPTY, forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {DropListMoveEvent, DropListNode} from 'term-web/core/ui/components/drop-list/drop-list.component';
 import {Space} from 'term-web/sys/_lib/space';
 import {Page, PageContent, PageLink} from 'term-web/wiki/_lib';
-import {PageLinkService} from '../services/page-link.service';
-import {PageService} from '../services/page.service';
-import {WikiPageSetupModalComponent} from './wiki-page-setup-modal.component';
+import {PageLinkService} from 'term-web/wiki/page/services/page-link.service';
+import {PageService} from 'term-web/wiki/page/services/page.service';
+import {WikiPageSetupModalComponent} from 'term-web/wiki/page/components/wiki-page-setup-modal.component';
+import { MuiNoDataModule, MuiIconButtonModule, MuiInputModule, MuiSkeletonModule, MuiCoreModule, MuiIconModule, MuiButtonModule, MuiPopconfirmModule } from '@kodality-web/marina-ui';
+
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { FormsModule } from '@angular/forms';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { DropListComponent } from 'term-web/core/ui/components/drop-list/drop-list.component';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 function findInTree<Node, Key>(nodesToSearch: Node[], key: Key, getKey: (n: Node) => Key, getChildren: (n: Node) => Node[]): Node {
   for (const node of nodesToSearch) {
@@ -41,6 +48,9 @@ interface DragNode {
 
 @Injectable()
 class WikiSidebarService {
+  private pageService = inject(PageService);
+  private pageLinkService = inject(PageLinkService);
+
   public readonly DEFAULT_CONCEPT_LIMIT = 100;
 
   public compareOrder = (a, b): number => compareValues(Number(a.link.orderNumber), Number(b.link.orderNumber));
@@ -51,11 +61,6 @@ class WikiSidebarService {
     leaf: page.leaf,
     children: []
   });
-
-  public constructor(
-    private pageService: PageService,
-    private pageLinkService: PageLinkService,
-  ) { }
 
   public search(spaceId: number, text: string): Observable<DragNode[]> {
     if (isNil(spaceId)) {
@@ -125,9 +130,9 @@ class WikiSidebarService {
 const NODE_OBJECT_KEY = 'obj';
 
 @Component({
-  selector: 'tw-wiki-page-tree-sidebar',
-  templateUrl: 'wiki-page-tree.component.html',
-  styles: [`
+    selector: 'tw-wiki-page-tree-sidebar',
+    templateUrl: 'wiki-page-tree.component.html',
+    styles: [`
     @import "../../../../styles/variables";
 
     .space-item {
@@ -143,9 +148,16 @@ const NODE_OBJECT_KEY = 'obj';
       color: @mui-primary-color-6;
     }
   `],
-  providers: [WikiSidebarService]
+    providers: [WikiSidebarService],
+    imports: [MuiNoDataModule, MuiIconButtonModule, MuiInputModule, InputDebounceDirective, FormsModule, MuiSkeletonModule, MuiCoreModule, RouterLink, MuiIconModule, PrivilegedDirective, MuiButtonModule, DropListComponent, MuiPopconfirmModule, WikiPageSetupModalComponent, TranslatePipe, ApplyPipe, ToStringPipe, PrivilegedPipe]
 })
 export class WikiPageTreeComponent implements OnChanges {
+  private translateService = inject(TranslateService);
+  private pageService = inject(PageService);
+  private pageLinkService = inject(PageLinkService);
+  private sidebarService = inject(WikiSidebarService);
+  private router = inject(Router);
+
   @Input() public path?: number[];
   @Input() public space?: Space;
 
@@ -159,14 +171,6 @@ export class WikiPageTreeComponent implements OnChanges {
   protected nodes: DropListNode[] = [];
 
   protected loader = new LoadingManager();
-
-  public constructor(
-    private translateService: TranslateService,
-    private pageService: PageService,
-    private pageLinkService: PageLinkService,
-    private sidebarService: WikiSidebarService,
-    private router: Router,
-  ) { }
 
 
   public ngOnChanges(changes: SimpleChanges): void {

@@ -1,4 +1,4 @@
-import {SnomedConcept} from '../model/concept/snomed-concept';
+import {SnomedConcept} from 'term-web/integration/_lib/snomed/model/concept/snomed-concept';
 
 export class SnomedUtil {
 

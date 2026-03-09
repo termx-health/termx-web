@@ -1,17 +1,24 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import { copyDeep, isDefined, LoadingManager, validateForm, AutofocusDirective, ApplyPipe } from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Template, TemplateContent} from 'term-web/wiki/_lib';
-import {TemplateService} from './template.service';
+import {TemplateService} from 'term-web/wiki/template/template.service';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiMultiLanguageInputModule, MuiTextareaModule, MuiDropdownModule, MuiButtonModule, MuiCoreModule } from '@kodality-web/marina-ui';
+import { TranslateDirective, TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: 'template-edit.component.html'
+    templateUrl: 'template-edit.component.html',
+    imports: [MuiFormModule, MuiSpinnerModule, MuiCardModule, AutofocusDirective, FormsModule, MuiInputModule, MuiMultiLanguageInputModule, MuiTextareaModule, MuiDropdownModule, MuiButtonModule, MuiCoreModule, TranslateDirective, TranslatePipe, ApplyPipe]
 })
 export class TemplateEditComponent implements OnInit {
+  private templateService = inject(TemplateService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   protected id?: number;
   protected template?: Template;
 
@@ -19,12 +26,6 @@ export class TemplateEditComponent implements OnInit {
   protected mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private templateService: TemplateService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) {}
 
   public ngOnInit(): void {
     this.id = this.route.snapshot.paramMap.has('id') ? Number(this.route.snapshot.paramMap.get('id')) : null;

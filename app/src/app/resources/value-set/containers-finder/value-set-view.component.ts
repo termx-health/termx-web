@@ -1,26 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {DestroyService, isNil} from '@kodality-web/core-util';
 import {forkJoin, takeUntil} from 'rxjs';
 import {ValueSet, ValueSetVersion} from 'term-web/resources/_lib';
-import {ValueSetService} from '../services/value-set.service';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
+import { FinderWrapperComponent, FinderMenuComponent, FinderMenuItemComponent } from 'term-web/core/components/finder/finder.component';
+import { MuiFormModule } from '@kodality-web/marina-ui';
+
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 
 @Component({
-  templateUrl: 'value-set-view.component.html',
-  providers: [DestroyService]
+    templateUrl: 'value-set-view.component.html',
+    providers: [DestroyService],
+    imports: [FinderWrapperComponent, MuiFormModule, FinderMenuComponent, FinderMenuItemComponent, MarinaUtilModule]
 })
 export class FinderValueSetViewComponent implements OnInit {
+  private valueSetService = inject(ValueSetService);
+  private route = inject(ActivatedRoute);
+  private destroy$ = inject(DestroyService);
+
   public valueSet?: ValueSet;
   public versions: ValueSetVersion[] = [];
 
   public loading = false;
-
-  public constructor(
-    private valueSetService: ValueSetService,
-    private route: ActivatedRoute,
-    private destroy$: DestroyService
-  ) {}
 
   public ngOnInit(): void {
     this.route.paramMap.pipe(takeUntil(this.destroy$)).subscribe(params => {

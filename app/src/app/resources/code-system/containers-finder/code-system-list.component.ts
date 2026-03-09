@@ -1,38 +1,45 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {Router} from '@angular/router';
 import {SearchResult} from '@kodality-web/core-util';
 import {AuthService} from 'term-web/core/auth';
 import {CodeSystem} from 'term-web/resources/_lib';
-import {CodeSystemService} from '../services/code-system.service';
+import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
+import { MarinPageLayoutModule } from '@kodality-web/marina-ui';
+import { FinderWrapperComponent, FinderMenuComponent, FinderMenuItemComponent, FinderLoadMoreItemComponent } from 'term-web/core/components/finder/finder.component';
+
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  template: `
+    template: `
     <m-page mFull>
       <tw-finder-wrapper [loading]="loading" style="overflow: auto; height: 100%; padding: 1rem">
         <tw-finder-menu title="CODE SYSTEMS" [length]="searchResult.data.length">
-          <tw-finder-menu-item *ngFor="let cs of searchResult.data" [navigate]="[cs.id]" (view)="openResource(cs)">
-            {{(cs.title | localName) || cs.id}}
-          </tw-finder-menu-item>
-
-          <tw-finder-load-more-item *ngIf="searchResult.data.length < searchResult.meta.total"
+          @for (cs of searchResult.data; track cs) {
+            <tw-finder-menu-item [navigate]="[cs.id]" (view)="openResource(cs)">
+              {{(cs.title | localName) || cs.id}}
+            </tw-finder-menu-item>
+          }
+    
+          @if (searchResult.data.length < searchResult.meta.total) {
+            <tw-finder-load-more-item
               (twClick)="loadCodeSystems(searchResult.data.length + DEFAULT_LIMIT)"
-          ></tw-finder-load-more-item>
+            ></tw-finder-load-more-item>
+          }
         </tw-finder-menu>
       </tw-finder-wrapper>
     </m-page>
-  `
+    `,
+    imports: [MarinPageLayoutModule, FinderWrapperComponent, FinderMenuComponent, FinderMenuItemComponent, FinderLoadMoreItemComponent, MarinaUtilModule]
 })
 export class FinderCodeSystemListComponent implements OnInit {
+  private codeSystemService = inject(CodeSystemService);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+
   public readonly DEFAULT_LIMIT = 50;
 
   public searchResult: SearchResult<CodeSystem> = SearchResult.empty();
   public loading = false;
-
-  public constructor(
-    private codeSystemService: CodeSystemService,
-    private router: Router,
-    private authService: AuthService
-  ) {}
 
   public ngOnInit(): void {
     this.loadCodeSystems();

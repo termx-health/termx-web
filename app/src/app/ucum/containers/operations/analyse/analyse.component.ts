@@ -7,6 +7,7 @@ import { finalize } from 'rxjs/operators';
 
 @Component({
   templateUrl: './analyse.component.html',
+  standalone: false
 })
 export class AnalyseComponent {
   public loading = false;

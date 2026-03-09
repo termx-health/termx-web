@@ -1,14 +1,16 @@
 import {Component, EventEmitter, Input, OnChanges, Output} from '@angular/core';
-import {collect, compareDates, isNil, sort} from '@kodality-web/core-util';
+import { collect, compareDates, isNil, sort, ApplyPipe } from '@kodality-web/core-util';
 import {NgChanges} from '@kodality-web/marina-ui';
 import {PageComment, PageContent} from 'term-web/wiki/_lib';
 import {ExtendedPageComment} from 'term-web/wiki/page/components/wiki-page-comment.component';
 
+import { WikiPageCommentComponent } from 'term-web/wiki/page/components/wiki-page-comment.component';
+
 
 @Component({
-  selector: 'tw-wiki-page-comments',
-  templateUrl: 'wiki-page-comments.component.html',
-  styles: [`
+    selector: 'tw-wiki-page-comments',
+    templateUrl: 'wiki-page-comments.component.html',
+    styles: [`
     :host {
       position: relative;
     }
@@ -19,7 +21,8 @@ import {ExtendedPageComment} from 'term-web/wiki/page/components/wiki-page-comme
       gap: var(--gap-default);
       position: relative;
     }
-  `]
+  `],
+    imports: [WikiPageCommentComponent, ApplyPipe]
 })
 export class WikiPageCommentsComponent implements OnChanges {
   @Input() public mode: 'feed' | 'bubbles' = 'feed';
@@ -89,7 +92,7 @@ export class WikiPageCommentsComponent implements OnChanges {
       prevOffsetBottom = prevEl.offsetTop + prevEl.offsetHeight;
     }
 
-    return `position: absolute; left: 0; right: 0; top: ${Math.max(0, lineOffset - this.containerOffset ?? 0, prevOffsetBottom + 7)}px;`;
+    return `position: absolute; left: 0; right: 0; top: ${Math.max(0, lineOffset - (this.containerOffset ?? 0), prevOffsetBottom + 7)}px;`;
   };
 
 

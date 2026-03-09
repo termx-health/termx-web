@@ -28,9 +28,9 @@ import {CodeSystemLibModule, MapSetLibModule, ValueSetLibModule} from 'term-web/
 import {ResourceModule} from 'term-web/resources/resource/resource.module';
 import {SysLibModule} from 'term-web/sys/_lib';
 import {WikiLibModule} from 'term-web/wiki/_lib';
-import {CoreUiModule} from '../core/ui/core-ui.module';
-import {ImplementationGuideLibModule} from './_lib';
-import {ImplementationGuideService} from './services/implementation-guide.service';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {ImplementationGuideLibModule} from 'term-web/implementation-guide/_lib';
+import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 
 const EDIT = {privilege: ['{id}.ImplementationGuide.edit']};
 const VIEW = {privilege: ['{id}.ImplementationGuide.view']};
@@ -50,37 +50,35 @@ export const IG_ROUTES: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    ImplementationGuideListComponent,
-    ImplementationGuideEditComponent,
-    ImplementationGuideVersionFormComponent,
-    ImplementationGuideProvenancesComponent,
-    ImplementationGuideSummaryComponent,
-    ImplementationGuideVersionsWidgetComponent,
-    ImplementationGuideInfoWidgetComponent,
-    ImplementationGuideVersionEditComponent,
-    ImplementationGuideVersionSummaryComponent,
-    ImplementationGuideVersionInfoWidgetComponent,
-    ImplementationGuideGroupListComponent,
-    ImplementationGuideResourceListComponent,
-    ImplementationGuidePageListComponent,
-    ImplementationguideGithubComponent
-  ],
-  imports: [
-    CoreUiModule,
-    ImplementationGuideLibModule,
-    ResourceModule,
-    ValueSetLibModule,
-    CodeSystemLibModule,
-    SysLibModule,
-    MapSetLibModule,
-    ModelerLibModule,
-    WikiLibModule
-  ],
-  providers: [
-    ImplementationGuideService,
-    ImplementationGuideGithubService
-  ]
+    imports: [
+        CoreUiModule,
+        ImplementationGuideLibModule,
+        ResourceModule,
+        ValueSetLibModule,
+        CodeSystemLibModule,
+        SysLibModule,
+        MapSetLibModule,
+        ModelerLibModule,
+        WikiLibModule,
+        ImplementationGuideListComponent,
+        ImplementationGuideEditComponent,
+        ImplementationGuideVersionFormComponent,
+        ImplementationGuideProvenancesComponent,
+        ImplementationGuideSummaryComponent,
+        ImplementationGuideVersionsWidgetComponent,
+        ImplementationGuideInfoWidgetComponent,
+        ImplementationGuideVersionEditComponent,
+        ImplementationGuideVersionSummaryComponent,
+        ImplementationGuideVersionInfoWidgetComponent,
+        ImplementationGuideGroupListComponent,
+        ImplementationGuideResourceListComponent,
+        ImplementationGuidePageListComponent,
+        ImplementationguideGithubComponent
+    ],
+    providers: [
+        ImplementationGuideService,
+        ImplementationGuideGithubService
+    ]
 })
 export class ImplementationGuideModule {
 }

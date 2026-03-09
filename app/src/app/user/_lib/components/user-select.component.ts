@@ -1,16 +1,23 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, group, LoadingManager} from '@kodality-web/core-util';
-import {User} from '../model/user';
-import {UserLibService} from '../services/user-lib.service';
+import { Component, forwardRef, Input, OnInit, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, group, LoadingManager, KeysPipe } from '@kodality-web/core-util';
+import {AuthService} from 'term-web/core/auth';
+import {User} from 'term-web/user/_lib/model/user';
+import {UserLibService} from 'term-web/user/_lib/services/user-lib.service';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 
 @Component({
-  selector: 'tw-user-select',
-  templateUrl: './user-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => UserSelectComponent), multi: true}]
+    selector: 'tw-user-select',
+    templateUrl: './user-select.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => UserSelectComponent), multi: true }],
+    imports: [MuiSelectModule, FormsModule, KeysPipe]
 })
 export class UserSelectComponent implements OnInit, ControlValueAccessor {
+  private userService = inject(UserLibService);
+  private auth = inject(AuthService);
+
   @Input() @BooleanInput() public valuePrimitive: string | boolean = true;
   @Input() public placeholder = 'marina.ui.inputs.search.placeholder';
   @Input() public anyRole: string[];
@@ -20,16 +27,17 @@ export class UserSelectComponent implements OnInit, ControlValueAccessor {
   public value?: string;
   protected loader = new LoadingManager();
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(private userService: UserLibService) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnInit(): void {
     this.loadUsers();
   }
 
   private loadUsers(): void {
+    if (!this.auth.hasPrivilege('*.Users.view')) {
+      return;
+    }
     const req$ = this.userService.loadAll({
       roles: this.anyRole?.join(',') || undefined
     });

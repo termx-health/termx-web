@@ -1,18 +1,26 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
-import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import { Component, forwardRef, Input, OnInit, inject } from '@angular/core';
+import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, DestroyService, group, isDefined, LoadingManager, KeysPipe } from '@kodality-web/core-util';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {catchError, map, Observable, of, takeUntil} from 'rxjs';
-import {Space} from '../model/space';
-import {SpaceSearchParams} from '../model/space-search-params';
-import {SpaceLibService} from '../services/space-lib-service';
+import {Space} from 'term-web/sys/_lib/space/model/space';
+import {SpaceSearchParams} from 'term-web/sys/_lib/space/model/space-search-params';
+import {SpaceLibService} from 'term-web/sys/_lib/space/services/space-lib-service';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  selector: 'tw-space-select',
-  templateUrl: './space-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SpaceSelectComponent), multi: true}, DestroyService]
+    selector: 'tw-space-select',
+    templateUrl: './space-select.component.html',
+    standalone: true,
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SpaceSelectComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, MarinaUtilModule, KeysPipe]
 })
 export class SpaceSelectComponent implements OnInit {
+  private spaceService = inject(SpaceLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() public filter?: (resource: Space) => boolean;
 
@@ -20,13 +28,8 @@ export class SpaceSelectComponent implements OnInit {
   protected value?: number;
   protected loader = new LoadingManager();
 
-  private onChange = (x: any) => x;
-  private onTouched = (x: any) => x;
-
-  public constructor(
-    private spaceService: SpaceLibService,
-    private destroy$: DestroyService
-  ) {}
+  private onChange = (x: any): any => x;
+  private onTouched = (x: any): any => x;
 
 
   public ngOnInit(): void {

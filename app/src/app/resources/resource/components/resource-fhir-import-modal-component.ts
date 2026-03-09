@@ -1,7 +1,7 @@
-import {Component, ElementRef, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, ElementRef, EventEmitter, Input, Output, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {DestroyService, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { MuiNotificationService, MuiModalModule, MuiFormModule, MuiInputModule, MuiRadioModule, MuiButtonModule } from '@kodality-web/marina-ui';
 import {Observable} from 'rxjs';
 import {FhirCodeSystemLibService, FhirConceptMapLibService, FhirParameters, FhirValueSetLibService} from 'term-web/fhir/_lib';
 import {MapSetFileImportService} from 'term-web/resources/_lib';
@@ -9,13 +9,26 @@ import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/s
 import {ValueSetFileImportService} from 'term-web/resources/_lib/value-set/services/value-set-file-import.service';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
 
+import { TranslatePipe } from '@ngx-translate/core';
+
 
 @Component({
-  selector: 'tw-resource-fhir-import-modal',
-  templateUrl: './resource-fhir-import-modal-component.html',
-  providers: [DestroyService]
+    selector: 'tw-resource-fhir-import-modal',
+    templateUrl: './resource-fhir-import-modal-component.html',
+    providers: [DestroyService],
+    imports: [MuiModalModule, FormsModule, MuiFormModule, MuiInputModule, MuiRadioModule, MuiButtonModule, TranslatePipe]
 })
 export class ResourceFhirImportModalComponent {
+  private jobService = inject(JobLibService);
+  private notificationService = inject(MuiNotificationService);
+  private fhirCodeSystemService = inject(FhirCodeSystemLibService);
+  private fhirValueSetService = inject(FhirValueSetLibService);
+  private fhirConceptMapService = inject(FhirConceptMapLibService);
+  private codeSystemFileImportService = inject(CodeSystemFileImportService);
+  private valueSetFileImportService = inject(ValueSetFileImportService);
+  private mapSetFileImportService = inject(MapSetFileImportService);
+  private destroy$ = inject(DestroyService);
+
   @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'ConceptMap';
   @Output() public imported: EventEmitter<boolean> = new EventEmitter();
 
@@ -27,18 +40,6 @@ export class ResourceFhirImportModalComponent {
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild("fileInput") public fileInput?: ElementRef<HTMLInputElement>;
-
-  public constructor(
-    private jobService: JobLibService,
-    private notificationService: MuiNotificationService,
-    private fhirCodeSystemService: FhirCodeSystemLibService,
-    private fhirValueSetService: FhirValueSetLibService,
-    private fhirConceptMapService: FhirConceptMapLibService,
-    private codeSystemFileImportService: CodeSystemFileImportService,
-    private valueSetFileImportService: ValueSetFileImportService,
-    private mapSetFileImportService: MapSetFileImportService,
-    private destroy$: DestroyService
-  ) { }
 
   public toggleModal(visible: boolean = false): void {
 

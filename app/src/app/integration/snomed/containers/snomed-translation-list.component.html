@@ -13,7 +13,9 @@
       <ng-template #viewTemplate let-t>{{t.branch}}</ng-template>
       <ng-template #editTemplate let-t let-ngModelName="ngModelName">
         <m-select [name]="ngModelName" [(ngModel)]="t.branch" autoSelect required>
-          <m-option *ngFor="let b of branches" [mValue]="b.path" [mLabel]="b.path"/>
+          @for (b of branches; track b.path) {
+            <m-option [mValue]="b.path" [mLabel]="b.path"/>
+          }
         </m-select>
       </ng-template>
     </m-editable-column>
@@ -21,27 +23,35 @@
       <ng-template #viewTemplate let-t>{{t.module}}</ng-template>
       <ng-template #editTemplate let-t let-ngModelName="ngModelName">
         <m-select [name]="ngModelName" [(ngModel)]="t.module" autoSelect required>
-          <m-option *ngFor="let m of modules" [mLabel]="m.code" [mValue]="m.code"></m-option>
+          @for (m of modules; track m.code) {
+            <m-option [mLabel]="m.code" [mValue]="m.code"></m-option>
+          }
         </m-select>
       </ng-template>
     </m-editable-column>
     <m-editable-column [mTitle]="'entities.snomed-translation.language'" mName="language">
       <ng-template #viewTemplate let-t>{{t.language}}</ng-template>
       <ng-template #editTemplate let-t let-ngModelName="ngModelName">
-        <m-select *ngIf="(t.module | apply:langsDefined)" [name]="ngModelName" [(ngModel)]="t.language" autoSelect>
-          <m-option *ngFor="let lang of (t.module | apply:getLangs)" [mLabel]="lang.code" [mValue]="lang.code"></m-option>
-        </m-select>
-        <tw-value-set-concept-select *ngIf="!(t.module | apply:langsDefined)"
-            [name]="ngModelName"
-            [(ngModel)]="t.language"
-            valueSet="languages"
-            required></tw-value-set-concept-select>
+        @if ((t.module | apply:langsDefined)) {
+          <m-select [name]="ngModelName" [(ngModel)]="t.language" autoSelect>
+            @for (lang of (t.module | apply:getLangs); track lang.code) {
+              <m-option [mLabel]="lang.code" [mValue]="lang.code"></m-option>
+            }
+          </m-select>
+        }
+        @if (!(t.module | apply:langsDefined)) {
+          <tw-value-set-concept-select
+              [name]="ngModelName"
+              [(ngModel)]="t.language"
+              valueSet="languages"
+              required></tw-value-set-concept-select>
+        }
       </ng-template>
     </m-editable-column>
     <m-editable-column [mTitle]="'entities.snomed-translation.term'" mName="term">
       <ng-template #viewTemplate let-t>{{t.term}}</ng-template>
       <ng-template #editTemplate let-t let-ngModelName="ngModelName">
-        <m-input [name]="ngModelName" [(ngModel)]="t.term" required></m-input>
+        <m-textarea [name]="ngModelName" [(ngModel)]="t.term" required></m-textarea>
       </ng-template>
     </m-editable-column>
     <m-editable-column [mTitle]="'entities.snomed-translation.type'" mName="type">
@@ -65,7 +75,9 @@
     </m-editable-column>
     <m-editable-column *twPrivileged="'*.Task.view'" [mTitle]="'entities.snomed-translation.task'">
       <ng-template #viewTemplate let-t>
-        <a *ngIf="(tasks | apply:findTask:t.id) as task" [routerLink]="['/tasks', task?.number,'edit']">{{task?.number}}</a>
+        @if ((tasks | apply:findTask:t.id); as task) {
+          <a [routerLink]="['/tasks', task?.number,'edit']">{{task?.number}}</a>
+        }
       </ng-template>
     </m-editable-column>
     <m-editable-column [mTitle]="'entities.snomed-translation.status'">

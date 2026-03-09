@@ -22,12 +22,13 @@
 
     <tr *mTableRow="let cr">
       <td>
-        <a *ngIf="'*.Checklist.edit' | twHasAnyPrivilege; else view" [routerLink]="[cr.id, 'edit']">
+        @if ('*.Checklist.edit' | twHasAnyPrivilege) {
+          <a [routerLink]="[cr.id, 'edit']">
+            {{cr.code}}
+          </a>
+        } @else {
           {{cr.code}}
-        </a>
-        <ng-template #view>
-          {{cr.code}}
-        </ng-template>
+        }
       </td>
       <td>{{cr.target}}</td>
       <td>

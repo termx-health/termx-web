@@ -1,17 +1,23 @@
-import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group, isNil} from '@kodality-web/core-util';
+import { Component, forwardRef, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, DestroyService, group, isNil, KeysPipe } from '@kodality-web/core-util';
 import {takeUntil} from 'rxjs';
-import {Designation} from '../../model/designation';
-import {DesignationSearchParams} from '../../model/designation-search-params';
-import {DesignationLibService} from '../../services/designation-lib.service';
+import {Designation} from 'term-web/resources/_lib/designation/model/designation';
+import {DesignationSearchParams} from 'term-web/resources/_lib/designation/model/designation-search-params';
+import {DesignationLibService} from 'term-web/resources/_lib/designation/services/designation-lib.service';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 @Component({
-  selector: 'tw-designation-select',
-  templateUrl: './designation-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => DesignationSelectComponent), multi: true}, DestroyService]
+    selector: 'tw-designation-select',
+    templateUrl: './designation-select.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => DesignationSelectComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, KeysPipe]
 })
 export class DesignationSelectComponent implements OnChanges, ControlValueAccessor {
+  private designationService = inject(DesignationLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() public conceptId?: number;
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() @BooleanInput() public multiple: string | boolean = false;
@@ -22,11 +28,6 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
 
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
-
-  public constructor(
-    private designationService: DesignationLibService,
-    private destroy$: DestroyService
-  ) { }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["conceptId"]) {
@@ -75,7 +76,7 @@ export class DesignationSelectComponent implements OnChanges, ControlValueAccess
       this.value = obj.map(o => typeof o === 'object' ? o?.id as number : o);
       this.loadDesignations(this.value);
     } else {
-      this.value = typeof obj === 'object' ? obj?.id! : obj;
+      this.value = typeof obj === 'object' ? obj.id! : obj;
       this.loadDesignations([this.value]);
     }
   }

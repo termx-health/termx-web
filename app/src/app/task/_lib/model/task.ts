@@ -1,5 +1,5 @@
 import {CodeName} from '@kodality-web/marina-util';
-import {TaskActivity} from './task-activity';
+import {TaskActivity} from 'term-web/task/_lib/model/task-activity';
 
 export class Task {
   public id?: number;

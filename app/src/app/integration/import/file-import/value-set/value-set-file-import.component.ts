@@ -1,19 +1,36 @@
-import {Component, ElementRef, TemplateRef, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, ElementRef, TemplateRef, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import {DestroyService, LoadingManager} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { DestroyService, LoadingManager, AutofocusDirective, ApplyPipe, FilterPipe, JoinPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiDatePickerModule, MuiDividerModule, MuiRadioModule, MuiInputModule, MuiButtonModule } from '@kodality-web/marina-ui';
 import {of} from 'rxjs';
 import {FileAnalysisRequest, FileAnalysisResponse, FileAnalysisService} from 'term-web/integration/import/file-import/file-analysis.service';
 import {ValueSetFileImportService, FileProcessingRequest} from 'term-web/resources/_lib/value-set/services/value-set-file-import.service';
 import {JobLog} from 'term-web/sys/_lib';
-import {ValueSet, ValueSetLibService, ValueSetVersion} from '../../../../resources/_lib';
+import {ValueSet, ValueSetLibService, ValueSetVersion} from 'term-web/resources/_lib';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
+import { ImportJobLogComponent } from 'term-web/integration/import-job-log.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  templateUrl: 'value-set-file-import.component.html',
-  providers: [DestroyService]
+    templateUrl: 'value-set-file-import.component.html',
+    providers: [DestroyService],
+    imports: [FormsModule, MuiCardModule, NzBreadCrumbComponent, NzBreadCrumbItemComponent, MuiFormModule, ValueSetSearchComponent, AutofocusDirective, MuiCoreModule, MuiAlertModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, SemanticVersionSelectComponent, ValueSetConceptSelectComponent, MuiDatePickerModule, MuiDividerModule, CodeSystemSearchComponent, CodeSystemVersionSelectComponent, MuiRadioModule, MuiInputModule, MuiButtonModule, ImportJobLogComponent, TranslatePipe, MarinaUtilModule, ApplyPipe, FilterPipe, JoinPipe]
 })
 export class ValueSetFileImportComponent {
+  private notificationService = inject(MuiNotificationService);
+  private valueSetService = inject(ValueSetLibService);
+  private valueSetFileImportService = inject(ValueSetFileImportService);
+  private fileAnalysisService = inject(FileAnalysisService);
+  private router = inject(Router);
+
   public data: FileProcessingRequest & {file?: string, loadedValueSet?: ValueSet, concepts?: string, sourceType?: 'link' | 'file'} = {
     type: 'csv',
     sourceType: 'file',
@@ -30,15 +47,6 @@ export class ValueSetFileImportComponent {
   @ViewChild('fileInput') public fileInput?: ElementRef<HTMLInputElement>;
   @ViewChild('form') public form?: NgForm;
   @ViewChild('successNotificationContent') public successNotificationContent?: TemplateRef<any>;
-
-
-  public constructor(
-    private notificationService: MuiNotificationService,
-    private valueSetService: ValueSetLibService,
-    private valueSetFileImportService: ValueSetFileImportService,
-    private fileAnalysisService: FileAnalysisService,
-    private router: Router
-  ) {}
 
   public createValueSet(): void {
     this.data.loadedValueSet = undefined;

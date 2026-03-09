@@ -1,20 +1,26 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {HttpCacheService, SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {map, mergeMap, Observable, timer} from 'rxjs';
-import {SpaceSearchParams} from 'app/src/app/sys/_lib/space/index';
-import {JobLibService, LorqueLibService, LorqueProcess} from 'app/src/app/sys/_lib/index';
-import {Package} from '../model/package';
-import {Space} from '../model/space';
-import {SpaceDiff} from '../model/space-diff';
+import {SpaceSearchParams} from 'term-web/sys/_lib/space/model/space-search-params';
+import {JobLibService} from 'term-web/sys/_lib/job/services/job-lib.service';
+import {LorqueLibService} from 'term-web/sys/_lib/lorque/services/lorque-lib.service';
+import {LorqueProcess} from 'term-web/sys/_lib/lorque/model/lorque-process';
+import {Package} from 'term-web/sys/_lib/space/model/package';
+import {Space} from 'term-web/sys/_lib/space/model/space';
+import {SpaceDiff} from 'term-web/sys/_lib/space/model/space-diff';
 
 @Injectable()
 export class SpaceLibService {
+  protected http = inject(HttpClient);
+  private lorqueService = inject(LorqueLibService);
+  protected jobService = inject(JobLibService);
+
   private cacheService: HttpCacheService;
   protected baseUrl = `${environment.termxApi}/spaces`;
 
-  public constructor(protected http: HttpClient, private lorqueService: LorqueLibService, public jobService: JobLibService) {
+  public constructor() {
     this.cacheService = new HttpCacheService();
   }
 

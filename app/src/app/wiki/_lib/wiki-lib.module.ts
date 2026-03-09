@@ -17,76 +17,68 @@ import {WikiMarkdownViewComponent} from 'term-web/wiki/_lib/texteditor/editors/m
 import {WikiQuillEditorComponent} from 'term-web/wiki/_lib/texteditor/editors/quill/wiki-quill-editor.component';
 import {WikiQuickActionsDropdownOptionComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/components/wiki-quick-actions-dropdown-option.component';
 import {WikiQuickActionsDropdownComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/components/wiki-quick-actions-dropdown.component';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
-import {PageSelectComponent} from './page/components/page-select.component';
-import {PageLibService} from './page/services/page-lib.service';
-import {TagLibService} from './tag/services/tag-lib.service';
-import {TemplateLibService} from './template/services/template-lib.service';
-import {WikiMarkdownEditorComponent} from './texteditor/editors/markdown/wiki-markdown-editor.component';
-import {WikiQuickActionsLinkComponent} from './texteditor/quick-actions/actions/wiki-quick-actions-link.component';
-import {WikiQuickActionsStructureDefinitionComponent} from './texteditor/quick-actions/actions/wiki-quick-actions-structure-definition.component';
-import {WikiQuickActionsTemplateComponent} from './texteditor/quick-actions/actions/wiki-quick-actions-template.component';
-import {WikiQuickActionsMenuComponent} from './texteditor/quick-actions/wiki-quick-actions-menu.component';
-import {WikiSmartTextEditorViewComponent} from './texteditor/wiki-smart-text-editor-view.component';
-import {WikiSmartTextEditorComponent} from './texteditor/wiki-smart-text-editor.component';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {PageSelectComponent} from 'term-web/wiki/_lib/page/components/page-select.component';
+import {PageLibService} from 'term-web/wiki/_lib/page/services/page-lib.service';
+import {TagLibService} from 'term-web/wiki/_lib/tag/services/tag-lib.service';
+import {TemplateLibService} from 'term-web/wiki/_lib/template/services/template-lib.service';
+import {WikiMarkdownEditorComponent} from 'term-web/wiki/_lib/texteditor/editors/markdown/wiki-markdown-editor.component';
+import {WikiQuickActionsLinkComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/actions/wiki-quick-actions-link.component';
+import {WikiQuickActionsStructureDefinitionComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/actions/wiki-quick-actions-structure-definition.component';
+import {WikiQuickActionsTemplateComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/actions/wiki-quick-actions-template.component';
+import {WikiQuickActionsMenuComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/wiki-quick-actions-menu.component';
+import {WikiSmartTextEditorViewComponent} from 'term-web/wiki/_lib/texteditor/wiki-smart-text-editor-view.component';
+import {WikiSmartTextEditorComponent} from 'term-web/wiki/_lib/texteditor/wiki-smart-text-editor.component';
 
 @NgModule({
-  imports: [
-    FormsModule,
-    PortalModule,
-
-    MarinaComponentsModule,
-    MarinaMarkdownModule,
-    MarinaQuillModule,
-    CoreUtilModule,
-    NzListModule,
-
-    CoreUiModule,
-    ResourcesLibModule,
-    ModelerLibModule,
-    SpaceLibModule,
-  ],
-  providers: [
-    TagLibService,
-    PageLibService,
-    PageCommentLibService,
-    TemplateLibService,
-  ],
-  declarations: [
-    // page
-    PageSelectComponent,
-    PageContentSelectComponent,
-    PageContentTreeSelectComponent,
-
-    // text editor
-    WikiSmartTextEditorComponent,
-    WikiSmartTextEditorViewComponent,
-    // markdown
-    WikiMarkdownEditorComponent,
-    WikiMarkdownViewComponent,
-    // quill
-    WikiQuillEditorComponent,
-    WikiCommentPopoverComponent,
-
-    // quick actions
-    WikiQuickActionsDropdownComponent,
-    WikiQuickActionsDropdownOptionComponent,
-    WikiQuickActionsMenuComponent,
-    WikiQuickActionsLinkComponent,
-    WikiQuickActionsStructureDefinitionComponent,
-    WikiQuickActionsTemplateComponent,
-  ],
-  exports: [
-    PageSelectComponent,
-    PageContentSelectComponent,
-    PageContentTreeSelectComponent,
-
-    WikiSmartTextEditorComponent,
-    WikiSmartTextEditorViewComponent,
-
-    WikiMarkdownEditorComponent,
-    WikiMarkdownViewComponent,
-  ]
+    imports: [
+        FormsModule,
+        PortalModule,
+        MarinaComponentsModule,
+        MarinaMarkdownModule,
+        MarinaQuillModule,
+        CoreUtilModule,
+        NzListModule,
+        CoreUiModule,
+        ResourcesLibModule,
+        ModelerLibModule,
+        SpaceLibModule,
+        // page
+        PageSelectComponent,
+        PageContentSelectComponent,
+        PageContentTreeSelectComponent,
+        // text editor
+        WikiSmartTextEditorComponent,
+        WikiSmartTextEditorViewComponent,
+        // markdown
+        WikiMarkdownEditorComponent,
+        WikiMarkdownViewComponent,
+        // quill
+        WikiQuillEditorComponent,
+        WikiCommentPopoverComponent,
+        // quick actions
+        WikiQuickActionsDropdownComponent,
+        WikiQuickActionsDropdownOptionComponent,
+        WikiQuickActionsMenuComponent,
+        WikiQuickActionsLinkComponent,
+        WikiQuickActionsStructureDefinitionComponent,
+        WikiQuickActionsTemplateComponent,
+    ],
+    providers: [
+        TagLibService,
+        PageLibService,
+        PageCommentLibService,
+        TemplateLibService,
+    ],
+    exports: [
+        PageSelectComponent,
+        PageContentSelectComponent,
+        PageContentTreeSelectComponent,
+        WikiSmartTextEditorComponent,
+        WikiSmartTextEditorViewComponent,
+        WikiMarkdownEditorComponent,
+        WikiMarkdownViewComponent,
+    ]
 })
 export class WikiLibModule {
 }

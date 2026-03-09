@@ -1,16 +1,23 @@
-import {Component, EventEmitter, Output, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {DestroyService, LoadingManager, isDefined} from '@kodality-web/core-util';
+import { Component, EventEmitter, Output, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { DestroyService, LoadingManager, isDefined, ApplyPipe } from '@kodality-web/core-util';
 import {Observable, map, switchMap} from 'rxjs';
-import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {ValueSetVersion, ValueSetVersionRule, CodeSystemVersion} from 'term-web/resources/_lib';
+import { MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiDatePickerModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { AsyncPipe } from '@angular/common';
+import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-value-set-version-save-modal',
-  templateUrl: './value-set-version-save-modal-component.html',
-  providers: [DestroyService]
+    selector: 'tw-value-set-version-save-modal',
+    templateUrl: './value-set-version-save-modal-component.html',
+    providers: [DestroyService],
+    imports: [MuiModalModule, MarinPageLayoutModule, FormsModule, MuiFormModule, SemanticVersionSelectComponent, MuiDatePickerModule, MuiButtonModule, AsyncPipe, TranslatePipe, ApplyPipe]
 })
 export class ValueSetVersionSaveModalComponent {
+  private valueSetService = inject(ValueSetService);
+
   @Output() public created: EventEmitter<boolean> = new EventEmitter();
 
   public modalVisible = false;
@@ -18,8 +25,6 @@ export class ValueSetVersionSaveModalComponent {
   protected loader = new LoadingManager();
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(private valueSetService: ValueSetService) {}
 
   public toggleModal(params?: any): void {
     this.modalVisible = !!params;

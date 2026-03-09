@@ -5,9 +5,9 @@ import {FhirCodeSystemLookupComponent} from 'term-web/fhir/code-system/fhir-code
 import {FhirConceptMapComponent} from 'term-web/fhir/concept-map/fhir-concept-map.component';
 import {FhirResourceComponent} from 'term-web/fhir/fhir-resource.component';
 import {WikiLibModule} from 'term-web/wiki/_lib';
-import {CoreUiModule} from '../core/ui/core-ui.module';
-import {FhirCodeSystemComponent} from './code-system/fhir-code-system.component';
-import {FhirValueSetComponent} from './value-set/fhir-value-set.component';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {FhirCodeSystemComponent} from 'term-web/fhir/code-system/fhir-code-system.component';
+import {FhirValueSetComponent} from 'term-web/fhir/value-set/fhir-value-set.component';
 
 export const FHIR_ROUTES: Routes = [
   {path: ':type', component: FhirResourceComponent},
@@ -16,18 +16,16 @@ export const FHIR_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CoreUiModule,
-    FhirLibModule,
-    WikiLibModule
-  ],
-  declarations: [
-    FhirResourceComponent,
-    FhirCodeSystemComponent,
-    FhirCodeSystemLookupComponent,
-    FhirValueSetComponent,
-    FhirConceptMapComponent
-  ],
+    imports: [
+        CoreUiModule,
+        FhirLibModule,
+        WikiLibModule,
+        FhirResourceComponent,
+        FhirCodeSystemComponent,
+        FhirCodeSystemLookupComponent,
+        FhirValueSetComponent,
+        FhirConceptMapComponent
+    ],
 })
 export class FhirModule {
 }

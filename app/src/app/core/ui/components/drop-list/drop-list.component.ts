@@ -1,6 +1,8 @@
-import {CdkDragDrop, CdkDragMove} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, CdkDragMove, CdkDropList, CdkDrag, CdkDragPreview, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, TrackByFunction} from '@angular/core';
 import {BooleanInput} from '@kodality-web/core-util';
+import { NgTemplateOutlet } from '@angular/common';
+import { MuiCoreModule, MuiIconModule } from '@kodality-web/marina-ui';
 
 
 export interface DropListNode {
@@ -24,9 +26,10 @@ export interface DropListMoveEvent {
 }
 
 @Component({
-  selector: 'tw-drop-list',
-  templateUrl: 'drop-list.component.html',
-  styleUrls: ['drop-list.component.less']
+    selector: 'tw-drop-list',
+    templateUrl: 'drop-list.component.html',
+    styleUrls: ['drop-list.component.less'],
+    imports: [MuiCoreModule, MuiIconModule, NgTemplateOutlet, CdkDropList, CdkDrag, CdkDragPreview, CdkDropListGroup]
 })
 export class DropListComponent implements OnChanges {
   @Input() public nodes: DropListNode[] = [];
@@ -79,7 +82,7 @@ export class DropListComponent implements OnChanges {
         ? targetParentNode.children
         : this.nodes;
 
-    let i = sourceContainer.findIndex((c) => c.key === draggedItem.key);
+    const i = sourceContainer.findIndex((c) => c.key === draggedItem.key);
     sourceContainer.splice(i, 1);
 
 
@@ -208,7 +211,7 @@ export class DropListComponent implements OnChanges {
     this.twExpand.emit(node);
   }
 
-  protected onSelect(node: DropListNode, event?: MouseEvent): void {
+  protected onSelect(node: DropListNode, _event?: MouseEvent): void {
     this.selectedKey = node?.key;
     this.selectedKeyChange.emit(this.selectedKey);
     this.twSelect.emit(node);
@@ -218,7 +221,7 @@ export class DropListComponent implements OnChanges {
   /* Utils */
 
   private getParentNode(nodesToSearch: DropListNode[], parent: DropListNode, key: string): DropListNode {
-    for (let node of nodesToSearch) {
+    for (const node of nodesToSearch) {
       if (node.key == key) {
         return parent;
       }
@@ -230,7 +233,7 @@ export class DropListComponent implements OnChanges {
   }
 
   private findNode(nodesToSearch: DropListNode[], key: string): DropListNode {
-    for (let node of nodesToSearch) {
+    for (const node of nodesToSearch) {
       if (node.key == key) {
         return node;
       }

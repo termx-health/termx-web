@@ -1,20 +1,7 @@
-import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {
-  BooleanInput,
-  collect,
-  ComponentStateStore,
-  copyDeep,
-  group,
-  isDefined,
-  LoadingManager,
-  remove,
-  SearchResult,
-  serializeDate,
-  unique,
-  validateForm
-} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
+import { AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { BooleanInput, collect, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, remove, SearchResult, serializeDate, unique, validateForm, AutofocusDirective, ApplyPipe, FilterPipe, IncludesPipe, ToStringPipe } from '@kodality-web/core-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {
   CodeSystem,
   CodeSystemConcept,
@@ -24,14 +11,31 @@ import {
   Designation,
   EntityProperty,
   EntityPropertyValue
-} from 'app/src/app/resources/_lib';
+} from 'term-web/resources/_lib';
 import {environment} from 'environments/environment';
+import {debounceTime, forkJoin, fromEvent, map, mergeMap, Observable, of, Subject, takeUntil, tap} from 'rxjs';
 import {debounceTime, forkJoin, fromEvent, map, mergeMap, Observable, of, Subject, takeUntil, tap} from 'rxjs';
 import {ConceptDrawerSearchComponent} from 'term-web/resources/_lib/code-system/containers/concept-drawer-search.component';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
-import {CodeSystemService} from '../../../services/code-system.service';
+import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
+import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
+import { NgTemplateOutlet } from '@angular/common';
+import { MuiButtonModule, MuiIconModule, MuiSelectModule, MuiPopconfirmModule, MuiTooltipModule, MuiFormModule, MuiTextareaModule, MuiRadioModule, MuiBackendTableModule, MuiTableModule, MuiNoDataModule, MuiCardModule, MuiIconButtonModule, MuiCoreModule, MuiDropdownModule, MuiModalModule, MarinPageLayoutModule } from '@kodality-web/marina-ui';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { RouterLink } from '@angular/router';
+import { TableFilterComponent } from 'term-web/core/ui/components/table-container/table-filter.component';
+import { EntityPropertyValueInputComponent } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
+import { CodeSystemConceptsListConceptPreviewComponent } from 'term-web/resources/code-system/containers/concepts/list/code-system-concepts-list-concept-preview.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { ResourceTasksWidgetComponent as ResourceTasksWidgetComponent_1 } from 'term-web/resources/resource/components/resource-tasks-widget.component';
+import { UserSelectComponent } from 'term-web/user/_lib/components/user-select.component';
+import { ConceptDrawerSearchComponent as ConceptDrawerSearchComponent_1 } from 'term-web/resources/_lib/code-system/containers/concept-drawer-search.component';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { HasAllPrivilegesPipe } from 'term-web/core/auth/privileges/has-all-privileges.pipe';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
+import { EntityPropertyNamePipe } from 'term-web/resources/_lib/code-system/pipe/entity-propertye-name-pipe';
 
 interface ConceptNode {
   code: string;
@@ -40,6 +44,7 @@ interface ConceptNode {
   expandable?: boolean;
   expanded?: boolean;
   loading?: boolean;
+  detailsExpanded?: boolean;
   detailsExpanded?: boolean;
 
   concept: CodeSystemConcept
@@ -60,10 +65,11 @@ interface FilterProperty {
 
 const INITIAL_FULL_LOAD = 20;
 const PREVIEW_LOADING_MINIMUM = 200;
+
 @Component({
-  selector: 'tw-code-system-concepts-list',
-  templateUrl: './code-system-concepts-list.component.html',
-  styles: [`
+    selector: 'tw-code-system-concepts-list',
+    templateUrl: './code-system-concepts-list.component.html',
+    styles: [`
     @import "@kodality-web/marina-ui/src/components/card/style/card.style.less";
 
     ::ng-deep .initial:not(:last-of-type) .ant-form-item {
@@ -88,9 +94,15 @@ const PREVIEW_LOADING_MINIMUM = 200;
       position: sticky;
       top: calc(var(--page-header-height) + var(--gap-default) + 5rem); // fixme: magic number 6rem, approximate height of context header (OP-5276)
     }
-  `]
+  `],
+    imports: [TableComponent, MuiButtonModule, MuiIconModule, MuiSelectModule, FormsModule, AddButtonComponent, RouterLink, MuiPopconfirmModule, MuiTooltipModule, TableFilterComponent, MuiFormModule, MuiTextareaModule, MuiRadioModule, EntityPropertyValueInputComponent, AutofocusDirective, MuiBackendTableModule, MuiTableModule, NgTemplateOutlet, MuiNoDataModule, CodeSystemConceptsListConceptPreviewComponent, PrivilegedDirective, MuiCardModule, ResourceTasksWidgetComponent_1, MuiIconButtonModule, MuiCoreModule, MuiDropdownModule, MuiModalModule, MarinPageLayoutModule, UserSelectComponent, ConceptDrawerSearchComponent_1, TranslatePipe, MarinaUtilModule, ApplyPipe, FilterPipe, IncludesPipe, ToStringPipe, HasAllPrivilegesPipe, PrivilegedPipe, EntityPropertyNamePipe]
 })
 export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, OnDestroy {
+  private codeSystemService = inject(CodeSystemService);
+  protected translateService = inject(TranslateService);
+  protected taskService = inject(TaskService);
+  private stateStore = inject(ComponentStateStore);
+
   protected readonly STORE_KEY = 'code-system-concept-list';
 
   @Input() public codeSystem?: CodeSystem;
@@ -119,16 +131,10 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   @ViewChildren('treeRow', {read: ElementRef}) public treeRows?: QueryList<ElementRef<HTMLTableRowElement>>;
 
   private destroy$ = new Subject<void>();
-
   private codeToNodeMap = new Map<string, ConceptNode>();
   protected needsPreview = false;
 
-  public constructor(
-    private codeSystemService: CodeSystemService,
-    protected translateService: TranslateService,
-    protected taskService: TaskService,
-    private stateStore: ComponentStateStore,
-  ) {
+  public constructor() {
     this.query.sort = 'code';
   }
 
@@ -140,6 +146,12 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
     }
 
     this.initConcepts();
+  }
+
+  public ngAfterViewInit(): void {
+    this.treeRows?.changes.pipe(debounceTime(50), takeUntil(this.destroy$)).subscribe(() => this.scheduleAutoOpen());
+    fromEvent(window, 'scroll').pipe(debounceTime(1000), takeUntil(this.destroy$)).subscribe(() => this.refreshAutoOpenedRows());
+    setTimeout(() => this.refreshAutoOpenedRows(), 1000);
   }
 
   public ngAfterViewInit(): void {
@@ -160,6 +172,8 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   public ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
     this.saveState();
   }
 
@@ -176,6 +190,10 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   protected groupConcepts(groupParam: string): void {
     this.loadRootConcepts(groupParam).subscribe(resp => {
       this.rootConcepts = resp.map(c => this.mapToNode(c));
+      if (this.rootConcepts.length > PREVIEW_LOADING_MINIMUM) {
+        this.needsPreview = true;
+        this.rootConcepts.slice(0, INITIAL_FULL_LOAD).forEach(node => node.detailsExpanded = true);
+      }
       if (this.rootConcepts.length > PREVIEW_LOADING_MINIMUM) {
         this.needsPreview = true;
         this.rootConcepts.slice(0, INITIAL_FULL_LOAD).forEach(node => node.detailsExpanded = true);
@@ -282,6 +300,9 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
         if (this.needsPreview) {
           node.children.slice(0, INITIAL_FULL_LOAD).forEach(child => child.detailsExpanded = true);
         }
+        if (this.needsPreview) {
+          node.children.slice(0, INITIAL_FULL_LOAD).forEach(child => child.detailsExpanded = true);
+        }
         node.expanded = true;
       }).add(() => node.loading = false);
     }
@@ -298,10 +319,13 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
 
   private mapToNode(c: CodeSystemConcept): ConceptNode {
     const node = {
+    const node = {
       code: c.code,
       expandable: !c.leaf,
       concept: c
     };
+    this.codeToNodeMap.set(node.code, node);
+    return node;
     this.codeToNodeMap.set(node.code, node);
     return node;
   }
@@ -327,7 +351,7 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
 
   protected availableProps = (eps: EntityProperty[], filterEps: FilterProperty[]): EntityProperty[] => {
     const applied = filterEps?.map(fep => fep.property.name) ?? [];
-    return eps.filter(ep => !applied.includes(ep.name))
+    return eps.filter(ep => !applied.includes(ep.name));
   };
 
   protected propertyKind = (ep: EntityProperty): boolean => {
@@ -336,6 +360,58 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
 
   protected getDesignations = (concept: CodeSystemConcept): Designation[] => {
     return concept.versions?.flatMap(v => v.designations).filter(d => isDefined(d));
+  };
+
+  protected sortDesignations = (designations: Designation[], preferredLanguage?: string): Designation[] => {
+    if (!designations?.length) {
+      return [];
+    }
+
+    const getDesignationTypeOrder = (designation: Designation): number => {
+      const type = designation.designationType?.toLowerCase();
+      if (designation.preferred) {
+        return 0; // Preferred display first
+      }
+      if (type === 'display') {
+        return 1;
+      }
+      if (type === 'synonym') {
+        return 2;
+      }
+      if (type === 'definition') {
+        return 3;
+      }
+      return 4; // Other types
+    };
+
+    const getLanguageOrder = (designation: Designation): number => {
+      return designation.language === preferredLanguage ? 0 : 1;
+    };
+
+    return [...designations].sort((a, b) => {
+      // First, sort by language priority (preferred first)
+      const langPriorityCompare = getLanguageOrder(a) - getLanguageOrder(b);
+      if (langPriorityCompare !== 0) {
+        return langPriorityCompare;
+      }
+
+      // If both are in preferred language, sort by type only
+      if (a.language === preferredLanguage && b.language === preferredLanguage) {
+        return getDesignationTypeOrder(a) - getDesignationTypeOrder(b);
+      }
+
+      // If both are in non-preferred languages, sort by language code first
+      if (a.language !== preferredLanguage && b.language !== preferredLanguage) {
+        const langCodeCompare = (a.language || '').localeCompare(b.language || '');
+        if (langCodeCompare !== 0) {
+          return langCodeCompare;
+        }
+        // Within same language, sort by type
+        return getDesignationTypeOrder(a) - getDesignationTypeOrder(b);
+      }
+
+      return 0;
+    });
   };
 
   protected getPropertyValues = (concept: CodeSystemConcept): EntityPropertyValue[] => {
@@ -362,6 +438,34 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   protected getProperty = (id: number, properties: EntityProperty[]): EntityProperty => {
     return properties?.find(p => p.id === id);
   };
+
+  private scheduleAutoOpen(): void {
+    if (!this.groupOpened) {
+      return;
+    }
+    setTimeout(() => this.refreshAutoOpenedRows(), 0);
+  }
+
+  private refreshAutoOpenedRows(): void {
+    if (!this.groupOpened || !this.treeRows || !this.needsPreview) {
+      return;
+    }
+
+    const rows = this.treeRows.toArray();
+    const visibleCodes = rows
+      .filter(r => {
+        const rect = r.nativeElement.getBoundingClientRect();
+        return rect.bottom >= 0 && rect.top <= window.innerHeight;
+      })
+      .map(r => r.nativeElement.getAttribute('data-code'))
+      .filter((code): code is string => !!code);
+
+    console.log("Visible code length: ", visibleCodes.length);
+    visibleCodes.forEach(code => {
+      const node = this.codeToNodeMap.get(code);
+      node.detailsExpanded = true;
+    });
+  }
 
   private scheduleAutoOpen(): void {
     if (!this.groupOpened) {
@@ -451,7 +555,7 @@ export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, O
   // state
 
   private saveState(): void {
-    const collectExpandedCodes = (nodes: ConceptNode[], res: string[]) => {
+    const collectExpandedCodes = (nodes: ConceptNode[], res: string[]): void => {
       nodes?.filter(n => n.expanded).forEach(n => {
         res.push(n.code);
         collectExpandedCodes(n.children, res);

@@ -5,13 +5,14 @@
 
     <div class="m-items-middle">
       <!-- Quick Search -->
-      <m-input
-          *ngIf="!filter.open"
+      @if (!filter.open) {
+        <m-input
           [(ngModel)]="filter.searchInput"
           twDebounce [debounced]="onDebounced"
           placeholder="marina.ui.inputs.search.placeholder"
           autofocus
-      ></m-input>
+        ></m-input>
+      }
 
       <!-- Add/Edit actions -->
       <m-dropdown *twPrivileged="'*.CodeSystem.edit'">
@@ -36,9 +37,11 @@
       </m-button>
 
       <!-- Filter toggle -->
-      <m-button *ngIf="!filter.open" [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
-        <m-icon mCode="filter"/>
-      </m-button>
+      @if (!filter.open) {
+        <m-button [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+          <m-icon mCode="filter"/>
+        </m-button>
+      }
     </div>
   </div>
 
@@ -46,13 +49,15 @@
   <!-- Filter -->
   <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
     <m-form-item>
-      <m-form-item *ngIf="filter.open">
-        <m-input
+      @if (filter.open) {
+        <m-form-item>
+          <m-input
             [(ngModel)]="_filter.searchInput"
             placeholder="marina.ui.inputs.search.placeholder"
             autofocus
-        ></m-input>
-      </m-form-item>
+          ></m-input>
+        </m-form-item>
+      }
       <m-form-item mLabel="entities.code-system.publisher">
         <tw-value-set-concept-select [(ngModel)]="_filter.publisher" valueSet="publisher" valuePrimitive/>
       </m-form-item>
@@ -83,17 +88,17 @@
       <td m-table-expand [mItem]="cs"></td>
       <td><a [routerLink]="[cs.id, 'summary']">{{cs.id}}</a></td>
       <td>
-        <ng-container *ngIf="(cs.versions | apply:findLastVersion)?.version as version">
+        @if ((cs.versions | apply:findLastVersion)?.version; as version) {
           <a [routerLink]="[cs.id, 'versions', version, 'summary']">{{version}}</a>
-        </ng-container>
+        }
       </td>
       <td>{{cs.title | localName}}</td>
       <td>{{cs.publisher | localizedConceptName: {codeSystem: 'publisher'} | async}}</td>
       <td><tw-status-tag [status]="(cs.versions | apply:findLastVersion)?.status"/></td>
       <td>
-        <ng-container *ngIf="(cs.versions | apply:findLastVersion) as v">
+        @if ((cs.versions | apply:findLastVersion); as v) {
           <a [routerLink]="[cs.id, 'versions', v?.version, 'concepts']">{{v?.conceptsTotal}}</a>
-        </ng-container>
+        }
       </td>
       <td class="tw-table-actions">
         <m-dropdown>
@@ -123,19 +128,23 @@
         <div style="display: grid">
           <div><b>{{'web.code-system.list.uri' | translate}}:</b> {{cs.uri}}</div>
           <div><b>{{'entities.code-system.content' | translate}}:</b> {{cs.content | localizedConceptName: {valueSet: 'codesystem-content-mode'} | async}}</div>
-          <div *ngIf="cs.caseSensitive"><b>{{'entities.code-system.case-sensitivity' | translate}}:</b> {{'web.case-sensitive.options.' + cs.caseSensitive | translate}}</div>
-          <div *ngIf="cs.versions.length > 0">
-            <b>{{'entities.code-system.versions' | translate}}:</b>
-            <div style="display: grid ;grid-template-columns: repeat(5, auto); width: max-content; column-gap: 0.5rem; row-gap: 0.2rem">
-              <ng-container *ngFor="let version of cs.versions">
-                <b>{{version.version}}</b>
-                <m-divider mVertical/>
-                <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
-                <m-divider mVertical/>
-                <tw-status-tag [status]="version.status"/>
-              </ng-container>
+          @if (cs.caseSensitive) {
+            <div><b>{{'entities.code-system.case-sensitivity' | translate}}:</b> {{'web.case-sensitive.options.' + cs.caseSensitive | translate}}</div>
+          }
+          @if (cs.versions.length > 0) {
+            <div>
+              <b>{{'entities.code-system.versions' | translate}}:</b>
+              <div style="display: grid ;grid-template-columns: repeat(5, auto); width: max-content; column-gap: 0.5rem; row-gap: 0.2rem">
+                @for (version of cs.versions; track version) {
+                  <b>{{version.version}}</b>
+                  <m-divider mVertical/>
+                  <i>{{version.releaseDate ? (version.releaseDate | localDate) : '...'}} - {{version.expirationDate ? (version.expirationDate | localDate) : '...'}}</i>
+                  <m-divider mVertical/>
+                  <tw-status-tag [status]="version.status"/>
+                }
+              </div>
             </div>
-          </div>
+          }
         </div>
       </td>
     </tr>

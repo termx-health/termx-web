@@ -1,9 +1,10 @@
 <m-skeleton [mLoading]="loader.isLoading"/>
-<tx-sd-view
-    *ngIf="fhirJson && !loader.isLoading"
+@if (fhirJson) {
+  <tx-sd-view
     style="--color-primary: var(--color-primary-6);"
     [attr.data]="encodeURIComponent(fhirJson | json)"
     [attr.mode]="type"
     inline="true"
-></tx-sd-view>
+  ></tx-sd-view>
+}
 

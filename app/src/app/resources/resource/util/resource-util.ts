@@ -1,5 +1,5 @@
-import {CodeSystem, MapSet, ValueSet} from '../../_lib';
-import {Resource} from '../model/resource';
+import {CodeSystem, MapSet, ValueSet} from 'term-web/resources/_lib';
+import {Resource} from 'term-web/resources/resource/model/resource';
 
 export class ResourceUtil {
   public static merge(res: ValueSet | CodeSystem | MapSet, r: Resource): void {

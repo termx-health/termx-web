@@ -1,16 +1,16 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {PageComment} from '../models/page-comment';
-import {PageCommentSearchParams} from '../models/page-comment-search-params';
+import {PageComment} from 'term-web/wiki/_lib/page/models/page-comment';
+import {PageCommentSearchParams} from 'term-web/wiki/_lib/page/models/page-comment-search-params';
 
 @Injectable()
 export class PageCommentLibService {
-  protected baseUrl = `${environment.termxApi}/page-comments`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/page-comments`;
 
   public search(params: PageCommentSearchParams = {}): Observable<SearchResult<PageComment>> {
     return this.http.get<SearchResult<PageComment>>(`${this.baseUrl}`, {params: SearchHttpParams.build(params)});

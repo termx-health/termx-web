@@ -1,6 +1,6 @@
 import {isNil} from '@kodality-web/core-util';
-import {CodeSystemConcept} from '../model/code-system-concept';
-import {ConceptUtil} from './concept-util';
+import {CodeSystemConcept} from 'term-web/resources/_lib/code-system/model/code-system-concept';
+import {ConceptUtil} from 'term-web/resources/_lib/code-system/util/concept-util';
 
 export class SnomedUtil {
   public static getBranch(uri: string, modules: CodeSystemConcept[]): string {

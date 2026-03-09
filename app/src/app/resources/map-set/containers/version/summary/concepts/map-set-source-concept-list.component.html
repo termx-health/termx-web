@@ -13,39 +13,51 @@
       <th>{{'web.map-set-version.summary.associations.display' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.properties' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.mappings' | translate}}</th>
-      <th class="tw-table-min-width" *ngIf="editMode"></th>
+      @if (editMode) {
+        <th class="tw-table-min-width"></th>
+      }
     </tr>
 
     <tr *mTableRow="let c">
       <td><a>{{c.code}}</a></td>
       <td>{{c.display?.name}}</td>
       <td>
-        <ng-container *ngFor="let a of c.associations">
-          <div *ngFor="let p of a.propertyValues" class="m-items-middle">
-            <label class="m-subtitle">{{p.mapSetPropertyName}}</label>
-            <tw-map-set-property-value-input [(ngModel)]="p.value" [property]="p.mapSetPropertyId | apply:findProperty:mapSet?.properties" viewMode/>
-          </div>
-        </ng-container>
+        @for (a of c.associations; track a) {
+          @for (p of a.propertyValues; track p) {
+            <div class="m-items-middle">
+              <label class="m-subtitle">{{p.mapSetPropertyName}}</label>
+              <tw-map-set-property-value-input [(ngModel)]="p.value" [property]="p.mapSetPropertyId | apply:findProperty:mapSet?.properties" viewMode/>
+            </div>
+          }
+        }
       </td>
       <td>
-        <ng-container *ngIf="c.associations | apply: collectAssociations as groups">
-          <div *ngFor="let relationship of groups | keys" class="m-items-middle">
-            <label class="m-bold">{{relationship | apply:getRelationName:associationTypes}}</label>
-            <m-icon mCode="arrow-right"></m-icon>
-            <label>{{groups[relationship] | map: 'target.code' | join: ','}}</label>
-          </div>
-        </ng-container>
-        <label *ngIf="c.associations | apply: hasNoMap">{{'web.map-set-version.summary.statistics.no-map' | translate}}</label>
-        <a *ngIf="!(c.associations?.length > 0) && editMode" (mClick)="drawerComponent.openDrawer(c)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
+        @if (c.associations | apply: collectAssociations; as groups) {
+          @for (relationship of groups | keys; track relationship) {
+            <div class="m-items-middle">
+              <label class="m-bold">{{relationship | apply:getRelationName:associationTypes}}</label>
+              <m-icon mCode="arrow-right"></m-icon>
+              <label>{{groups[relationship] | map: 'target.code' | join: ','}}</label>
+            </div>
+          }
+        }
+        @if (c.associations | apply: hasNoMap) {
+          <label>{{'web.map-set-version.summary.statistics.no-map' | translate}}</label>
+        }
+        @if (!(c.associations?.length > 0) && editMode) {
+          <a (mClick)="drawerComponent.openDrawer(c)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
+        }
       </td>
-      <td *ngIf="editMode">
-        <m-dropdown>
-          <a *m-dropdown-item (mClick)="drawerComponent.openDrawer(c)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
-          <a *m-dropdown-item (mClick)="createNoMap(c)">{{'web.map-set-version.summary.associations.set-as-no-map' | translate}}</a>
-          <a *m-dropdown-item (mClick)="unmap(c)">{{'web.map-set-version.summary.associations.unmap' | translate}}</a>
-          <a *m-dropdown-item (mClick)="verify(c)">{{'web.map-set-version.summary.associations.mark-as-verified' | translate}}</a>
-        </m-dropdown>
-      </td>
+      @if (editMode) {
+        <td>
+          <m-dropdown>
+            <a *m-dropdown-item (mClick)="drawerComponent.openDrawer(c)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
+            <a *m-dropdown-item (mClick)="createNoMap(c)">{{'web.map-set-version.summary.associations.set-as-no-map' | translate}}</a>
+            <a *m-dropdown-item (mClick)="unmap(c)">{{'web.map-set-version.summary.associations.unmap' | translate}}</a>
+            <a *m-dropdown-item (mClick)="verify(c)">{{'web.map-set-version.summary.associations.mark-as-verified' | translate}}</a>
+          </m-dropdown>
+        </td>
+      }
     </tr>
     <tr *mTableNoData>
       <td colspan="100%">
@@ -56,7 +68,7 @@
 </m-card>
 
 <tw-map-set-association-drawer [mapSet]="mapSet"
-    [mapSetVersion]="mapSetVersion"
-    [associationTypes]="associationTypes"
-    [targetExternal]="targetExternal"
-    (twSaved)="loadData();associationsChanged.emit()"></tw-map-set-association-drawer>
+  [mapSetVersion]="mapSetVersion"
+  [associationTypes]="associationTypes"
+  [targetExternal]="targetExternal"
+(twSaved)="loadData();associationsChanged.emit()"></tw-map-set-association-drawer>

@@ -1,14 +1,14 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {Observable} from 'rxjs';
 import {environment} from 'environments/environment';
-import {GithubDiff, GithubStatus} from '../../../integration/_lib/github/github';
+import {GithubDiff, GithubStatus} from 'term-web/integration/_lib/github/github';
 
 @Injectable()
 export class SpaceGithubService {
-  protected baseUrl = `${environment.termxApi}/spaces`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/spaces`;
 
   public getProviders(): Observable<{[k: string]: string}> {
     return this.http.get<{[k: string]: string}>(`${this.baseUrl}/github/providers`);

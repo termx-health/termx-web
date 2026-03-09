@@ -1,12 +1,35 @@
 import {Clipboard} from '@angular/cdk/clipboard';
-import {Component} from '@angular/core';
-import {FhirConceptMapLibService, FhirParameters} from '../../../fhir/_lib';
+import { Component, inject } from '@angular/core';
+import {FhirConceptMapLibService, FhirParameters} from 'term-web/fhir/_lib';
+import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiTextareaModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+import { FormsModule } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: './fhir-concept-map-closure.component.html',
+    templateUrl: './fhir-concept-map-closure.component.html',
+    imports: [
+    MuiCardModule,
+    MuiSpinnerModule,
+    NzBreadCrumbComponent,
+    NzBreadCrumbItemComponent,
+    MuiButtonModule,
+    MuiFormModule,
+    MuiIconModule,
+    MuiPopoverModule,
+    MuiTextareaModule,
+    FormsModule,
+    MuiAlertModule,
+    JsonPipe,
+    TranslatePipe
+],
 })
 export class FhirConceptMapClosureComponent {
+  private fhirConceptMapService = inject(FhirConceptMapLibService);
+  private clipboardService = inject(Clipboard);
+
   public response?: any;
   public error?: any;
 
@@ -23,11 +46,6 @@ export class FhirConceptMapClosureComponent {
 
 
   public loading: boolean = false;
-
-  public constructor(
-    private fhirConceptMapService: FhirConceptMapLibService,
-    private clipboardService: Clipboard,
-  ) {}
 
   public closure(): void {
     const p = new FhirParameters();
@@ -62,7 +80,7 @@ export class FhirConceptMapClosureComponent {
   public removeConcept(index: number): void {
     this.data.concepts?.splice(index, 1);
     this.data.concepts = [...this.data.concepts!];
-    this.data.concepts.length === 0 ? this.data.concepts = undefined : '';
+    if (this.data.concepts.length === 0) { this.data.concepts = undefined; }
   }
 
 

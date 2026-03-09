@@ -1,4 +1,4 @@
-import {RelatedArtifact} from 'app/src/app/resources/_lib/related-artifacts';
+import {RelatedArtifact} from 'term-web/resources/_lib/related-artifacts';
 
 export class RelatedArtifactUtil {
 

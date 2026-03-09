@@ -28,7 +28,7 @@
             "outputPath": "dist/app",
             "index": "app/src/index.html",
             "main": "app/src/main.ts",
-            "polyfills": "app/src/polyfills.ts",
+            "polyfills": ["zone.js"],
             "tsConfig": "app/tsconfig.app.json",
             "allowedCommonJsDependencies": [
               "slugify",
@@ -70,6 +70,11 @@
                 "glob": "**/*",
                 "input": "./node_modules/@kodality-web/marina-ui/src/icons",
                 "output": "/assets/"
+              },
+              {
+                "glob": "quill.snow.css.map",
+                "input": "./node_modules/quill/dist",
+                "output": "/"
               }
             ],
             "styles": [
@@ -125,10 +130,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "app:build:production"
+              "buildTarget": "app:build:production"
             },
             "development": {
-              "browserTarget": "app:build:development"
+              "buildTarget": "app:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -136,7 +141,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "app:build"
+            "buildTarget": "app:build"
           }
         },
         "lint": {

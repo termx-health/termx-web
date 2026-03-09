@@ -14,7 +14,7 @@
         <div>{{'web.integration.fhir.code-system.subsumes.code-a' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.code-a-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.codeA"></m-input>
+      <m-textarea [(ngModel)]="data.codeA"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="codeB" required>
@@ -22,7 +22,7 @@
         <div>{{'web.integration.fhir.code-system.subsumes.code-b' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.code-b-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.codeB"></m-input>
+      <m-textarea [(ngModel)]="data.codeB"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="system" required>
@@ -30,7 +30,7 @@
         <div>{{'web.integration.fhir.code-system.subsumes.system' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.system-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.system"></m-input>
+      <m-textarea [(ngModel)]="data.system"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="version">
@@ -38,22 +38,28 @@
         <div>{{'web.integration.fhir.code-system.subsumes.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.subsumes.version-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.version"></m-input>
+      <m-textarea [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
 
-    <m-card *ngIf="response || error" class="m-card-inside">
-      <div *m-card-header class="m-items-middle">
-        <div class="m-card__title">{{'web.integration.response' | translate}}</div>
-        <m-button (click)="copyResult()">
-          <m-icon mCode="copy"></m-icon>
-        </m-button>
-      </div>
-      <pre *ngIf="response">{{response | json}}</pre>
-      <div *ngFor="let issue of error?.issue">
-        <m-alert [mType]="issue.severity" mShowIcon>
-          {{issue?.details?.text}}
-        </m-alert>
-      </div>
-    </m-card>
+    @if (response || error) {
+      <m-card class="m-card-inside">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{'web.integration.response' | translate}}</div>
+          <m-button (click)="copyResult()">
+            <m-icon mCode="copy"></m-icon>
+          </m-button>
+        </div>
+        @if (response) {
+          <pre>{{response | json}}</pre>
+        }
+        @for (issue of error?.issue; track issue) {
+          <div>
+            <m-alert [mType]="issue.severity" mShowIcon>
+              {{issue?.details?.text}}
+            </m-alert>
+          </div>
+        }
+      </m-card>
+    }
   </m-spinner>
 </m-card>

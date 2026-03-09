@@ -1,14 +1,29 @@
 import {Component, Input, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { NgForm, FormsModule } from '@angular/forms';
 import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
 import {ObservationDefinitionProtocol, ObservationDefinitionProtocolValue} from 'term-web/observation-definition/_lib';
 import {
   ObservationDefinitionComponentListComponent
 } from 'term-web/observation-definition/containers/edit/component/observation-definition-component-list.component';
 
+import { MuiFormModule, MuiSelectModule } from '@kodality-web/marina-ui';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { ObservationDefinitionValueSelectComponent } from 'term-web/observation-definition/_lib/components/observation-definition-value-select.component';
+import { ObservationDefinitionComponentListComponent as ObservationDefinitionComponentListComponent_1 } from 'term-web/observation-definition/containers/edit/component/observation-definition-component-list.component';
+import { TranslatePipe } from '@ngx-translate/core';
+
 @Component({
-  selector: 'tw-obs-def-protocol',
-  templateUrl: './observation-definition-protocol.component.html',
+    selector: 'tw-obs-def-protocol',
+    templateUrl: './observation-definition-protocol.component.html',
+    imports: [
+    FormsModule,
+    MuiFormModule,
+    MuiSelectModule,
+    ValueSetSearchComponent,
+    ObservationDefinitionValueSelectComponent,
+    ObservationDefinitionComponentListComponent_1,
+    TranslatePipe
+],
 })
 export class ObservationDefinitionProtocolComponent {
   @Input() @BooleanInput() public viewMode: boolean | string = false;

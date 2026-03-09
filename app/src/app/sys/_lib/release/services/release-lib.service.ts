@@ -1,15 +1,20 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {Provenance, Release, ReleaseResource, ReleaseSearchParams, JobLibService} from 'term-web/sys/_lib';
+import {Provenance} from 'term-web/sys/_lib/provenance/model/provenance';
+import {Release} from 'term-web/sys/_lib/release/model/release';
+import {ReleaseResource} from 'term-web/sys/_lib/release/model/release-resource';
+import {ReleaseSearchParams} from 'term-web/sys/_lib/release/model/release-search-params';
+import {JobLibService} from 'term-web/sys/_lib/job/services/job-lib.service';
 
 @Injectable()
 export class ReleaseLibService {
-  protected baseUrl = `${environment.termxApi}/releases`;
+  protected http = inject(HttpClient);
+  protected jobService = inject(JobLibService);
 
-  public constructor(protected http: HttpClient, public jobService: JobLibService) { }
+  protected baseUrl = `${environment.termxApi}/releases`;
 
   public load(id: number): Observable<Release> {
     return this.http.get<Release>(`${this.baseUrl}/${id}`);

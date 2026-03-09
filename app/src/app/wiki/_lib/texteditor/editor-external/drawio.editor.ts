@@ -54,6 +54,7 @@ const prepareEditor = (drawIOEditorState: EditorState, editorFacade: EditorFacad
       initialized: true
     });
   } catch (e) {
+    // eslint-disable-next-line no-console
     console.error(e);
     _dispose(drawIOEditorState);
   }
@@ -92,7 +93,7 @@ const saveDiagram = (drawIOEditorState: EditorState, editorFacade: EditorFacade)
       editorFacade.updateDiagram({diagramMarkdown, diagramSvg});
     }
     setTimeout(() => _dispose(drawIOEditorState), 10);
-  } catch (e) {
+  } catch {
     _postMessage(drawIOEditorState, {
       action: 'dialog',
       titleKey: 'error',
@@ -161,6 +162,7 @@ const createEditorIFrame = (drawIOEditorState: EditorState): void => {
   const DRAWIO_IFRAME_TIMEOUT = 6000;
   setTimeout(() => {
     if (drawIOEditorState.initialized === false) {
+      // eslint-disable-next-line no-console
       console.error('The diagrams.net editor could not be loaded.');
       _dispose(drawIOEditorState);
     }
@@ -200,7 +202,7 @@ const DRAWIO_PARAMS = {
   toSvg: 1,
 };
 
-export function launchDrawioEditor({editorFacade, drawioUrl = DRAWIO_URL}: {editorFacade: EditorFacade, drawioUrl?: string}) {
+export function launchDrawioEditor({editorFacade, drawioUrl = DRAWIO_URL}: {editorFacade: EditorFacade, drawioUrl?: string}): void {
   const url = new URL(drawioUrl);
 
   for (const [key, value] of Object.entries(DRAWIO_PARAMS)) {

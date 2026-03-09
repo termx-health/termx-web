@@ -1,9 +1,10 @@
+import packageJson from '../../../package.json';
 import {dynamicEnv} from './dynamic-env';
 import {Environment, UI_LANGS} from './environment.base';
 
 
 export const environment: Environment = {
-  appVersion: require('../../../package.json').version,
+  appVersion: packageJson.version,
   production: true,
   yupiEnabled: false,
   baseHref: dynamicEnv.baseHref || '/',

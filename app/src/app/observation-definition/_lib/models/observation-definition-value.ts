@@ -1,4 +1,4 @@
-import {ObservationDefinitionUnit} from './observation-definition-unit';
+import {ObservationDefinitionUnit} from 'term-web/observation-definition/_lib/models/observation-definition-unit';
 
 export class ObservationDefinitionValue {
   public id?: number;

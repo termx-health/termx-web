@@ -15,12 +15,13 @@
 
     <tr *mTableRow="let td">
       <td>
-        <a *ngIf="(td.id + '.TransformationDefinition.view') | twPrivileged; else view" [routerLink]="[td.id, 'edit']">
+        @if ((td.id + '.TransformationDefinition.view') | twPrivileged) {
+          <a [routerLink]="[td.id, 'edit']">
+            {{td.name}}
+          </a>
+        } @else {
           {{td.name}}
-        </a>
-        <ng-template #view>
-          {{td.name}}
-        </ng-template>
+        }
       </td>
 
       <td>

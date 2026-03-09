@@ -28,6 +28,7 @@ export class CodeSystemService extends CodeSystemLibService {
   }
 
   public deleteCodeSystem(codeSystemId: string): Observable<void> {
+    codeSystemId = UriUtil.encodeUriAll(UriUtil.encodeUriAll(codeSystemId));
     return this.http.delete<void>(`${this.baseUrl}/${codeSystemId}`);
   }
 

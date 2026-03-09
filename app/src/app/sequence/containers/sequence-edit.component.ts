@@ -1,16 +1,18 @@
-import {Location} from '@angular/common';
-import {Component, Directive, OnInit, ViewChild} from '@angular/core';
-import {AbstractControl, NG_VALIDATORS, NgForm, ValidationErrors, Validator} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, Directive, OnInit, ViewChild, inject } from '@angular/core';
+import { AbstractControl, NG_VALIDATORS, NgForm, ValidationErrors, Validator, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
-import {LoadingManager, unique, validateForm} from '@kodality-web/core-util';
-import {Sequence} from '../_lib/models/sequence';
-import {SequenceService} from '../services/sequence.service';
+import { LoadingManager, unique, validateForm, AutofocusDirective } from '@kodality-web/core-util';
+import {Sequence} from 'term-web/sequence/_lib/models/sequence';
+import {SequenceService} from 'term-web/sequence/services/sequence.service';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiSelectModule, MuiNumberInputModule, MuiTableModule, MuiNoDataModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { TranslatePipe } from '@ngx-translate/core';
 
 const getInvalidCodeChars = (v: string): string[] => v?.match(/[^\w-]/gm)?.filter(unique) || [];
 
 @Directive({
-  selector: '[twInvalidSequenceCode]',
-  providers: [{provide: NG_VALIDATORS, useExisting: InvalidSequenceCodeValidatorDirective, multi: true}]
+    selector: '[twInvalidSequenceCode]',
+    providers: [{ provide: NG_VALIDATORS, useExisting: InvalidSequenceCodeValidatorDirective, multi: true }]
 })
 export class InvalidSequenceCodeValidatorDirective implements Validator {
   public validate(control: AbstractControl): ValidationErrors | null {
@@ -20,19 +22,32 @@ export class InvalidSequenceCodeValidatorDirective implements Validator {
 }
 
 @Component({
-  templateUrl: 'sequence-edit.component.html',
+    templateUrl: 'sequence-edit.component.html',
+    imports: [
+    MuiFormModule,
+    MuiSpinnerModule,
+    MuiCardModule,
+    FormsModule,
+    MuiInputModule,
+    AutofocusDirective,
+    InvalidSequenceCodeValidatorDirective,
+    MuiSelectModule,
+    MuiNumberInputModule,
+    MuiTableModule,
+    MuiNoDataModule,
+    MuiButtonModule,
+    TranslatePipe
+],
 })
 export class SequenceEditComponent implements OnInit {
+  private sequenceService = inject(SequenceService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   protected sequence?: Sequence;
   protected loader = new LoadingManager();
 
   @ViewChild(NgForm) public form?: NgForm;
-
-  public constructor(
-    private sequenceService: SequenceService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) {}
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

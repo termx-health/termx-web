@@ -1,44 +1,54 @@
 <tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [version]="version" [versions]="versions" mode="properties"></tw-resource-context>
 <m-page>
   <div class="m-items-middle">
-    <ng-container *ngFor="let pv of selectedPropertyValues">
-      <label *ngIf="pv.values?.length > 0">{{pv.propertyName}}: </label>
-      <m-tag *ngFor="let v of pv.values" mShowIcon>
-        <label>{{v.code | localizedConceptName: {codeSystem: v.codeSystem} | async}}</label>
-        <m-icon class="m-clickable" mCode="close" (click)="selectPropertyValue(v, pv.propertyName)"></m-icon>
-      </m-tag>
-    </ng-container>
+    @for (pv of selectedPropertyValues; track pv) {
+      @if (pv.values?.length > 0) {
+        <label>{{pv.propertyName}}: </label>
+      }
+      @for (v of pv.values; track v) {
+        <m-tag mShowIcon>
+          <label>{{v.code | localizedConceptName: {codeSystem: v.codeSystem} | async}}</label>
+          <m-icon class="m-clickable" mCode="close" (click)="selectPropertyValue(v, pv.propertyName)"></m-icon>
+        </m-tag>
+      }
+    }
   </div>
 
   <div class="m-items-top">
     <div>
       <h2>{{'web.code-system-concept.property-list.properties' | translate}}</h2>
       <m-list [mLoading]="loader.state['prop']">
-        <m-list-item style="cursor: pointer" (click)="selectProperty(p)" [mValue]="p" *ngFor="let p of (propertySummary?.items | apply:decorate:codeSystem?.properties) | sort: '_property.orderNumber'">
-          <div class="m-justify-between">
-            <label style="cursor: pointer">{{p['_property'] | entityPropertyName}}</label>
-            <m-tag mColor="blue">{{p.propCnt}}</m-tag>
-          </div>
-        </m-list-item>
+        @for (p of (propertySummary?.items | apply:decorate:codeSystem?.properties) | sort: '_property.orderNumber'; track p) {
+          <m-list-item style="cursor: pointer" (click)="selectProperty(p)" [mValue]="p">
+            <div class="m-justify-between">
+              <label style="cursor: pointer">{{p['_property'] | entityPropertyName}}</label>
+              <m-tag mColor="blue">{{p.propCnt}}</m-tag>
+            </div>
+          </m-list-item>
+        }
       </m-list>
     </div>
 
-    <div *ngIf="selectedProperty">
-      <h2>{{selectedProperty.propertyName}}</h2>
-      <m-list [mLoading]="loader.state['pv']">
-        <ng-container *ngFor="let p of selectedProperty.propList">
-          <m-list-item style="cursor: pointer" (click)="selectPropertyValue(p)">
-            <div class="m-justify-between">
-              <label style="cursor: pointer">{{p.code | localizedConceptName: {codeSystem: p.codeSystem} | async}}</label>
-              <div class="m-items-middle">
-                <m-icon mCode="pushpin" *ngIf="p.code | apply:valueSelected:selectedPropertyValues"></m-icon>
-                <m-tag mColor="blue">{{p.code | apply:getConceptCnt:propertyConceptSummary}}</m-tag>
+    @if (selectedProperty) {
+      <div>
+        <h2>{{selectedProperty.propertyName}}</h2>
+        <m-list [mLoading]="loader.state['pv']">
+          @for (p of selectedProperty.propList; track p) {
+            <m-list-item style="cursor: pointer" (click)="selectPropertyValue(p)">
+              <div class="m-justify-between">
+                <label style="cursor: pointer">{{p.code | localizedConceptName: {codeSystem: p.codeSystem} | async}}</label>
+                <div class="m-items-middle">
+                  @if (p.code | apply:valueSelected:selectedPropertyValues) {
+                    <m-icon mCode="pushpin"></m-icon>
+                  }
+                  <m-tag mColor="blue">{{p.code | apply:getConceptCnt:propertyConceptSummary}}</m-tag>
+                </div>
               </div>
-            </div>
-          </m-list-item>
-        </ng-container>
-      </m-list>
-    </div>
+            </m-list-item>
+          }
+        </m-list>
+      </div>
+    }
 
 
     <div>
@@ -52,31 +62,35 @@
         <tr *mTableRow="let concept">
           <td>
             <div class="m-items-middle m-bold">
-              <a *ngIf="concept.code | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">{{concept.code}}</a>
+              @if (concept.code | apply: getConceptEditRoute; as route) {
+                <a [routerLink]="route.path" [queryParams]="route.query">{{concept.code}}</a>
+              }
             </div>
           </td>
           <td>
             <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
-              <ng-container *ngFor="let designation of (concept | apply: getDesignations) | sort: 'language'">
-                <ng-container *ngIf="(!tableView.langs?.length || (tableView.langs | includes: designation.language)) &&
-          (!tableView.properties?.length || (tableView.properties | includes: designation.designationType))">
+              @for (designation of (concept | apply: getDesignations) | sort: 'language'; track designation) {
+                @if ((!tableView.langs?.length || (tableView.langs | includes: designation.language)) &&
+                  (!tableView.properties?.length || (tableView.properties | includes: designation.designationType))) {
                   <span class="m-bold">{{designation.language}}</span>
                   {{designation.name}}
-                </ng-container>
-              </ng-container>
+                }
+              }
             </div>
           </td>
           <td>
-            <div style="display: flex"  *ngFor="let property of (concept | apply:getPropertyValues)">
-                <ng-container *ngIf="!tableView.properties?.length || (tableView.properties | includes: property.entityProperty)">
+            @for (property of (concept | apply:getPropertyValues); track property) {
+              <div style="display: flex" >
+                @if (!tableView.properties?.length || (tableView.properties | includes: property.entityProperty)) {
                   <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
                   <tw-property-value-input style="flex: 1; text-align: right"
-                      viewMode
-                      [ngModel]="property.value"
-                      [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
-                      [codeSystem]="codeSystem.id"></tw-property-value-input>
-              </ng-container>
-            </div>
+                    viewMode
+                    [ngModel]="property.value"
+                    [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
+                  [codeSystem]="codeSystem.id"></tw-property-value-input>
+                }
+              </div>
+            }
           </td>
         </tr>
         <tr *mTableNoData>

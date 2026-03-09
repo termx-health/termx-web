@@ -1,17 +1,24 @@
-import {Component, Input, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
 import {LoadingManager} from '@kodality-web/core-util';
 import {initializeWebComponent} from '@kodality-web/structure-definition-viewer';
 import {Fhir} from 'fhir/fhir';
 import {map, Observable, tap} from 'rxjs';
 import {ChefService} from 'term-web/integration/_lib';
 import {StructureDefinition} from 'term-web/modeler/_lib';
-import {StructureDefinitionLibService} from './structure-definition-lib.service';
+import {StructureDefinitionLibService} from 'term-web/modeler/_lib/structure-definition/structure-definition-lib.service';
+import { MuiSkeletonModule } from '@kodality-web/marina-ui';
+import { JsonPipe } from '@angular/common';
 
 @Component({
-  selector: 'tw-structure-definition-tree',
-  templateUrl: './structure-definition-tree.component.html'
+    selector: 'tw-structure-definition-tree',
+    templateUrl: './structure-definition-tree.component.html',
+    schemas: [CUSTOM_ELEMENTS_SCHEMA],
+    imports: [MuiSkeletonModule, JsonPipe]
 })
 export class StructureDefinitionTreeComponent implements OnChanges {
+  private chefService = inject(ChefService);
+  private structureDefinitionService = inject(StructureDefinitionLibService);
+
   @Input() public defId?: number;
   @Input() public defCode?: string;
   @Input() public content?: string;
@@ -20,10 +27,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   protected fhirJson: string;
   protected loader = new LoadingManager();
 
-  public constructor(
-    private chefService: ChefService,
-    private structureDefinitionService: StructureDefinitionLibService
-  ) {
+  public constructor() {
     initializeWebComponent('tx-sd-view');
   }
 
@@ -81,7 +85,7 @@ export class StructureDefinitionTreeComponent implements OnChanges {
   private decode(v: string): string {
     try {
       return decodeURIComponent(v);
-    } catch (ignored) {
+    } catch {
       return v;
     }
   }

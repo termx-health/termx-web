@@ -1,20 +1,28 @@
-import {Component, EventEmitter, Input, Output, ViewChild, OnInit} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, EventEmitter, Input, Output, ViewChild, OnInit, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import {DestroyService, LoadingManager, validateForm, format, getDateFormat} from '@kodality-web/core-util';
-import {LocalizedName} from '@kodality-web/marina-util';
-import {TranslateService} from '@ngx-translate/core';
-import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
-import {AuthService} from 'term-web/core/auth';
+import { DestroyService, LoadingManager, validateForm, format, getDateFormat, JoinPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { LocalizedName, MarinaUtilModule } from '@kodality-web/marina-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {Release} from 'term-web/sys/_lib';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
+import {AuthService} from 'term-web/core/auth';
+import { MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiSelectModule, MuiCoreModule, MuiButtonModule } from '@kodality-web/marina-ui';
+
 
 @Component({
-  selector: 'tw-resource-release-modal',
-  templateUrl: './resource-release-modal-component.html',
-  providers: [DestroyService]
+    selector: 'tw-resource-release-modal',
+    templateUrl: './resource-release-modal-component.html',
+    providers: [DestroyService],
+    imports: [MuiModalModule, MarinPageLayoutModule, FormsModule, MuiFormModule, MuiSelectModule, MuiCoreModule, MuiButtonModule, TranslatePipe, MarinaUtilModule, JoinPipe, LocalDatePipe]
 })
 export class ResourceReleaseModalComponent implements OnInit {
+  private releaseService = inject(ReleaseService);
+  private translateService = inject(TranslateService);
+  private router = inject(Router);
+  private authService = inject(AuthService);
+
   @Input() public resourceType: 'CodeSystem' | 'ValueSet' | 'MapSet';
   @Output() public connectedToRelease: EventEmitter<boolean> = new EventEmitter();
 
@@ -24,13 +32,6 @@ export class ResourceReleaseModalComponent implements OnInit {
   protected loader = new LoadingManager();
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private releaseService: ReleaseService,
-    private translateService: TranslateService,
-    private authService: AuthService,
-    private router: Router
-  ) {}
 
   public ngOnInit(): void {
     if (this.authService.hasPrivilege('*.Release.view')) {

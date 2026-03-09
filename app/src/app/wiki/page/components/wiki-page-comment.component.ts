@@ -1,8 +1,13 @@
-import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {compareDates, isDefined, isNil} from '@kodality-web/core-util';
+import { Component, EventEmitter, Input, Output, inject } from '@angular/core';
+import { compareDates, isDefined, isNil, AutofocusDirective, AbbreviatePipe, ApplyPipe, LocalDateTimePipe } from '@kodality-web/core-util';
 import {AuthService} from 'term-web/core/auth';
 import {PageComment, PageContent} from 'term-web/wiki/_lib';
 import {PageCommentService} from 'term-web/wiki/page/services/page-comment.service';
+import { MuiTooltipModule, MuiCoreModule, MuiTextareaModule, MuiButtonModule, MuiIconButtonModule, MuiIconModule, MuiDropdownModule, MuiListModule } from '@kodality-web/marina-ui';
+import { NgTemplateOutlet } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 export interface ExtendedPageComment extends PageComment {
   children?: PageComment[]
@@ -16,9 +21,9 @@ interface CommentPrivileges {
 
 
 @Component({
-  selector: 'tw-wiki-page-comment',
-  templateUrl: 'wiki-page-comment.component.html',
-  styles: [`
+    selector: 'tw-wiki-page-comment',
+    templateUrl: 'wiki-page-comment.component.html',
+    styles: [`
     .container {
       display: flex;
       flex-direction: column;
@@ -58,12 +63,16 @@ interface CommentPrivileges {
       }
     }
   `],
-  host: {
-    '[attr.page-comment-id]': `pageComment?.id`,
-    '[attr.line-number]': `pageComment?.options?.lineNumber`,
-  }
+    host: {
+        '[attr.page-comment-id]': `pageComment?.id`,
+        '[attr.line-number]': `pageComment?.options?.lineNumber`,
+    },
+    imports: [MuiTooltipModule, MuiCoreModule, MuiTextareaModule, AutofocusDirective, FormsModule, MuiButtonModule, NgTemplateOutlet, MuiIconButtonModule, MuiIconModule, MuiDropdownModule, MuiListModule, TranslatePipe, AbbreviatePipe, ApplyPipe, LocalDateTimePipe, PrivilegedPipe]
 })
 export class WikiPageCommentComponent {
+  private pageCommentService = inject(PageCommentService);
+  private authService = inject(AuthService);
+
   @Input() public pageContent: PageContent;
 
   @Input() public pageComment: ExtendedPageComment;
@@ -73,11 +82,6 @@ export class WikiPageCommentComponent {
   @Output() public commentResolved = new EventEmitter<PageComment>();
 
   protected _editState: {[id: number]: string} = {};
-
-  public constructor(
-    private pageCommentService: PageCommentService,
-    private authService: AuthService
-  ) { }
 
 
   /* Edit */

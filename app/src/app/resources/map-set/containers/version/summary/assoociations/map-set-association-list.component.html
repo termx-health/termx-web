@@ -2,7 +2,9 @@
   <div *m-card-header class="m-justify-between">
     <div class="m-items-middle">
       <m-title>{{relationships | apply: getTitle:associationTypes | translate}}</m-title>
-      <m-button *ngIf="editMode" (mClick)="verifyChecked()">{{'web.map-set-version.summary.associations.verify' | translate}}</m-button>
+      @if (editMode) {
+        <m-button (mClick)="verifyChecked()">{{'web.map-set-version.summary.associations.verify' | translate}}</m-button>
+      }
     </div>
     <div class="m-items-middle">
       <m-checkbox [(ngModel)]="unverified" (ngModelChange)="loadData()">{{'web.map-set-version.summary.associations.unverified' | translate}}</m-checkbox>
@@ -13,14 +15,20 @@
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
       <th class="tw-table-min-width">
-        <m-checkbox *ngIf="editMode" [(ngModel)]="searchResult['_checked']" (ngModelChange)="checkAll($event)"></m-checkbox>
+        @if (editMode) {
+          <m-checkbox [(ngModel)]="searchResult['_checked']" (ngModelChange)="checkAll($event)"></m-checkbox>
+        }
       </th>
       <th>{{'web.map-set-version.summary.associations.source-code' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.source-display' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.target-code' | translate}}</th>
       <th>{{'web.map-set-version.summary.associations.target-display' | translate}}</th>
-      <th *ngIf="!noMap">{{'web.map-set-version.summary.associations.properties' | translate}}</th>
-      <th class="tw-table-min-width" *ngIf="editMode"></th>
+      @if (!noMap) {
+        <th>{{'web.map-set-version.summary.associations.properties' | translate}}</th>
+      }
+      @if (editMode) {
+        <th class="tw-table-min-width"></th>
+      }
     </tr>
 
     <tr *mTableRow="let a">
@@ -31,26 +39,32 @@
       <td>{{a.source.display}}</td>
       <td>{{a.target.code}}</td>
       <td>{{a.target.display}}</td>
-      <td *ngIf="!noMap">
-        <div *ngFor="let p of a.propertyValues" class="m-items-middle">
-          <label class="m-subtitle">{{p.mapSetPropertyName}}</label>
-          <tw-map-set-property-value-input [(ngModel)]="p.value" [property]="p.mapSetPropertyId | apply:findProperty:mapSet?.properties" viewMode/>
-        </div>
-      </td>
-      <td *ngIf="editMode">
-        <m-dropdown>
-          <ng-container *ngIf="noMap">
-            <a *m-dropdown-item (mClick)="drawerComponent.openDrawerFromAssociation(a.source)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
-          </ng-container>
-          <ng-container *ngIf="!noMap">
-            <a *m-dropdown-item (mClick)="createNoMap(a)">{{'web.map-set-version.summary.associations.set-as-no-map' | translate}}</a>
-          </ng-container>
-          <a *m-dropdown-item (mClick)="unmap(a.id)">{{'web.map-set-version.summary.associations.unmap' | translate}}</a>
-          <ng-container *ngIf="!a.verified">
-            <a *m-dropdown-item (mClick)="verify(a.id)">{{'web.map-set-version.summary.associations.mark-as-verified' | translate}}</a>
-          </ng-container>
-        </m-dropdown>
-      </td>
+      @if (!noMap) {
+        <td>
+          @for (p of a.propertyValues; track p) {
+            <div class="m-items-middle">
+              <label class="m-subtitle">{{p.mapSetPropertyName}}</label>
+              <tw-map-set-property-value-input [(ngModel)]="p.value" [property]="p.mapSetPropertyId | apply:findProperty:mapSet?.properties" viewMode/>
+            </div>
+          }
+        </td>
+      }
+      @if (editMode) {
+        <td>
+          <m-dropdown>
+            @if (noMap) {
+              <a *m-dropdown-item (mClick)="drawerComponent.openDrawerFromAssociation(a.source)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
+            }
+            @if (!noMap) {
+              <a *m-dropdown-item (mClick)="createNoMap(a)">{{'web.map-set-version.summary.associations.set-as-no-map' | translate}}</a>
+            }
+            <a *m-dropdown-item (mClick)="unmap(a.id)">{{'web.map-set-version.summary.associations.unmap' | translate}}</a>
+            @if (!a.verified) {
+              <a *m-dropdown-item (mClick)="verify(a.id)">{{'web.map-set-version.summary.associations.mark-as-verified' | translate}}</a>
+            }
+          </m-dropdown>
+        </td>
+      }
     </tr>
     <tr *mTableNoData>
       <td colspan="100%">
@@ -61,7 +75,7 @@
 </m-card>
 
 <tw-map-set-association-drawer [mapSet]="mapSet"
-    [mapSetVersion]="mapSetVersion"
-    [associationTypes]="associationTypes"
-    [targetExternal]="targetExternal"
-    (twSaved)="loadData();associationsChanged.emit()"></tw-map-set-association-drawer>
+  [mapSetVersion]="mapSetVersion"
+  [associationTypes]="associationTypes"
+  [targetExternal]="targetExternal"
+(twSaved)="loadData();associationsChanged.emit()"></tw-map-set-association-drawer>

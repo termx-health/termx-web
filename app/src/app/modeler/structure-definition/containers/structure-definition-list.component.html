@@ -19,10 +19,11 @@
 
     <tr *mTableRow="let def">
       <td>
-        <a *ngIf="'*.StructureDefinition.edit' | twHasAnyPrivilege; else view" [routerLink]="['../structure-definitions',def.id,'edit']">{{def.code}}</a>
-        <ng-template #view>
+        @if ('*.StructureDefinition.edit' | twHasAnyPrivilege) {
+          <a [routerLink]="['../structure-definitions',def.id,'edit']">{{def.code}}</a>
+        } @else {
           <a [routerLink]="['../structure-definitions',def.id,'view']" [queryParams]="{tab: def.contentFormat}">{{def.code}}</a>
-        </ng-template>
+        }
       </td>
       <td>{{def.url}}</td>
       <td>{{def.contentType}}</td>

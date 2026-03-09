@@ -1,25 +1,27 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {LoadingManager} from '@kodality-web/core-util';
 import {forkJoin, of} from 'rxjs';
 import {ValueSet, ValueSetLibService, ValueSetVersion} from 'term-web/resources/_lib';
 import {Provenance} from 'term-web/sys/_lib';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
+import { MarinPageLayoutModule } from '@kodality-web/marina-ui';
+import { ProvenanceListComponent } from 'term-web/sys/_lib/provenance/components/provenance-list.component';
 
 @Component({
-  templateUrl: 'value-set-provenances.component.html'
+    templateUrl: 'value-set-provenances.component.html',
+    imports: [ResourceContextComponent, MarinPageLayoutModule, ProvenanceListComponent]
 })
 export class ValueSetProvenancesComponent implements OnInit {
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  private valueSetService = inject(ValueSetLibService);
+
   protected valueSet?: ValueSet;
   protected version: ValueSetVersion;
   protected versions?: ValueSetVersion[];
   protected provenances?: Provenance[];
   protected loader = new LoadingManager();
-
-  public constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private valueSetService: ValueSetLibService
-  ) {}
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

@@ -1,10 +1,11 @@
 import {Component, Input} from '@angular/core';
-import {CoreI18nService} from '@kodality-web/core-util';
+import {CoreI18nService, ApplyPipe} from '@kodality-web/core-util';
 import {MuiConfigService} from '@kodality-web/marina-ui';
 
 @Component({
   selector: 'tw-resource-multi-language-view',
-  templateUrl: 'resource-multi-language-view.component.html'
+  templateUrl: 'resource-multi-language-view.component.html',
+  imports: [ApplyPipe]
 })
 export class ResourceMultiLanguageViewComponent {
   @Input() public value?: {[lang: string]: string};

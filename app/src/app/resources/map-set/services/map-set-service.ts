@@ -3,6 +3,7 @@ import {serializeDate} from '@kodality-web/core-util';
 import {Observable, of} from 'rxjs';
 import {MapSetAssociation, MapSetAutomapRequest, MapSetLibService, MapSetTransactionRequest, MapSetVersion} from 'term-web/resources/_lib';
 import {JobLogResponse} from 'term-web/sys/_lib';
+import {UriUtil} from 'term-web/core/utils/uri-util';
 
 
 @Injectable()
@@ -17,6 +18,7 @@ export class MapSetService extends MapSetLibService {
   }
 
   public delete(mapSetId: string): Observable<void> {
+    mapSetId = UriUtil.encodeUriAll(UriUtil.encodeUriAll(mapSetId));
     return this.http.delete<void>(`${this.baseUrl}/${mapSetId}`);
   }
 
@@ -41,6 +43,10 @@ export class MapSetService extends MapSetLibService {
       return this.http.post<void>(`${this.baseUrl}/${mapSetId}/versions/${version}/retire`, {});
     }
     return of();
+  }
+
+  public duplicateMapSetVersion(mapSetId: string, version: string, duplicateRequest: {mapSet: string, version: string}): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/${mapSetId}/versions/${version}/duplicate`, duplicateRequest);
   }
 
   public deleteMapSetVersion(mapSetId: string, version: string): Observable<void> {

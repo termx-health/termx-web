@@ -1,28 +1,50 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
+import { Component, OnDestroy, OnInit, inject } from '@angular/core';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {ComponentStateStore} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {EMPTY, Observable} from 'rxjs';
-import {SpaceContextComponent} from 'app/src/app/core/context/space-context.component';
+import {SpaceContextComponent} from 'term-web/core/context/space-context.component';
+import { MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiInputModule, MuiIconButtonModule, MuiListModule, MuiTooltipModule } from '@kodality-web/marina-ui';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { FormsModule } from '@angular/forms';
+
+import { CodeSystemWidgetComponent } from 'term-web/resources/_lib/code-system/containers/code-system-widget.component';
+import { ValueSetWidgetComponent } from 'term-web/resources/_lib/value-set/containers/value-set-widget.component';
+import { MapSetWidgetComponent } from 'term-web/resources/_lib/map-set/containers/map-set-widget.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 type ResourceType = 'code-system' | 'value-set' | 'map-set' | 'structure-definition' | 'transformation-definition';
 
 @Component({
-  templateUrl: './space-dashboard.component.html',
+    templateUrl: './space-dashboard.component.html',
+    imports: [
+    MarinPageLayoutModule,
+    MuiCardModule,
+    MuiFormModule,
+    MuiInputModule,
+    InputDebounceDirective,
+    FormsModule,
+    MuiIconButtonModule,
+    MuiListModule,
+    CodeSystemWidgetComponent,
+    MuiTooltipModule,
+    RouterLink,
+    ValueSetWidgetComponent,
+    MapSetWidgetComponent,
+    TranslatePipe
+],
 })
 export class SpaceDashboardComponent implements OnInit, OnDestroy {
+  protected spaceContext = inject(SpaceContextComponent);
+  private stateStore = inject(ComponentStateStore);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   protected readonly STORE_KEY = 'space-dashboard';
 
   protected selectedResourceType: ResourceType;
   protected searchText: string;
-
-  public constructor(
-    protected spaceContext: SpaceContextComponent,
-    private stateStore: ComponentStateStore,
-    private route: ActivatedRoute,
-    private router: Router,
-  ) {}
 
   public ngOnInit(): void {
     this.route.queryParamMap.subscribe(p => {

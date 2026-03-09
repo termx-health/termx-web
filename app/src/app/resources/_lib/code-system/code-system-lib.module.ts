@@ -10,60 +10,56 @@ import {IntegrationLibModule} from 'term-web/integration/_lib';
 import {CodeSystemConceptMatrixComponent} from 'term-web/resources/_lib/code-system/containers/code-system-concept-matrix.component';
 import {ConceptDrawerSearchComponent} from 'term-web/resources/_lib/code-system/containers/concept-drawer-search.component';
 import {CodeSystemFileImportService} from 'term-web/resources/_lib/code-system/services/code-system-file-import.service';
-import {CodeSystemEntityVersionSearchComponent} from './containers/code-system-entity-version-search.component';
-import {CodeSystemSearchComponent} from './containers/code-system-search.component';
-import {CodeSystemVersionSelectComponent} from './containers/code-system-version-select.component';
-import {CodeSystemWidgetComponent} from './containers/code-system-widget.component';
-import {ConceptSearchComponent} from './containers/concept-search.component';
-import {EntityPropertyNamePipe} from './pipe/entity-propertye-name-pipe';
-import {LocalizedConceptNamePipe} from './pipe/localized-concept-name-pipe';
-import {CodeSystemConceptLibService} from './services/code-system-concept-lib.service';
-import {CodeSystemEntityVersionLibService} from './services/code-system-entity-version-lib.service';
-import {CodeSystemLibService} from './services/code-system-lib.service';
-import {CodeSystemVersionLibService} from './services/code-system-version-lib.service';
+import {CodeSystemEntityVersionSearchComponent} from 'term-web/resources/_lib/code-system/containers/code-system-entity-version-search.component';
+import {CodeSystemSearchComponent} from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import {CodeSystemVersionSelectComponent} from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
+import {CodeSystemWidgetComponent} from 'term-web/resources/_lib/code-system/containers/code-system-widget.component';
+import {ConceptSearchComponent} from 'term-web/resources/_lib/code-system/containers/concept-search.component';
+import {EntityPropertyNamePipe} from 'term-web/resources/_lib/code-system/pipe/entity-propertye-name-pipe';
+import {LocalizedConceptNamePipe} from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
+import {CodeSystemConceptLibService} from 'term-web/resources/_lib/code-system/services/code-system-concept-lib.service';
+import {CodeSystemEntityVersionLibService} from 'term-web/resources/_lib/code-system/services/code-system-entity-version-lib.service';
+import {CodeSystemLibService} from 'term-web/resources/_lib/code-system/services/code-system-lib.service';
+import {CodeSystemVersionLibService} from 'term-web/resources/_lib/code-system/services/code-system-version-lib.service';
 
 @NgModule({
-  imports: [
-    RouterModule,
-    CommonModule,
-    MarinaUiModule,
-    FormsModule,
-    CoreUtilModule,
-    TranslateModule,
-    MarinaUtilModule,
-    IntegrationLibModule
-  ],
-  providers: [
-    CodeSystemLibService,
-    CodeSystemEntityVersionLibService,
-    CodeSystemFileImportService,
-    CodeSystemConceptLibService,
-    CodeSystemVersionLibService
-  ],
-  declarations: [
-    CodeSystemSearchComponent,
-    ConceptSearchComponent,
-    ConceptDrawerSearchComponent,
-    CodeSystemVersionSelectComponent,
-    CodeSystemEntityVersionSearchComponent,
-    CodeSystemWidgetComponent,
-    CodeSystemConceptMatrixComponent,
-
-    LocalizedConceptNamePipe,
-    EntityPropertyNamePipe,
-  ],
-  exports: [
-    CodeSystemSearchComponent,
-    ConceptSearchComponent,
-    ConceptDrawerSearchComponent,
-    CodeSystemVersionSelectComponent,
-    CodeSystemEntityVersionSearchComponent,
-    CodeSystemWidgetComponent,
-    CodeSystemConceptMatrixComponent,
-
-    LocalizedConceptNamePipe,
-    EntityPropertyNamePipe,
-  ]
+    imports: [
+        RouterModule,
+        CommonModule,
+        MarinaUiModule,
+        FormsModule,
+        CoreUtilModule,
+        TranslateModule,
+        MarinaUtilModule,
+        IntegrationLibModule,
+        CodeSystemSearchComponent,
+        ConceptSearchComponent,
+        ConceptDrawerSearchComponent,
+        CodeSystemVersionSelectComponent,
+        CodeSystemEntityVersionSearchComponent,
+        CodeSystemWidgetComponent,
+        CodeSystemConceptMatrixComponent,
+        LocalizedConceptNamePipe,
+        EntityPropertyNamePipe
+    ],
+    providers: [
+        CodeSystemLibService,
+        CodeSystemEntityVersionLibService,
+        CodeSystemFileImportService,
+        CodeSystemConceptLibService,
+        CodeSystemVersionLibService
+    ],
+    exports: [
+        CodeSystemSearchComponent,
+        ConceptSearchComponent,
+        ConceptDrawerSearchComponent,
+        CodeSystemVersionSelectComponent,
+        CodeSystemEntityVersionSearchComponent,
+        CodeSystemWidgetComponent,
+        CodeSystemConceptMatrixComponent,
+        LocalizedConceptNamePipe,
+        EntityPropertyNamePipe,
+    ]
 })
 export class CodeSystemLibModule {
 }

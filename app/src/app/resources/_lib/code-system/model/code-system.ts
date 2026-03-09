@@ -1,9 +1,9 @@
 import {Identifier} from '@kodality-web/core-util';
 import {LocalizedName} from '@kodality-web/marina-util';
-import {ContactDetail} from '../../contact/model/contact-detail';
-import {CodeSystemConcept} from './code-system-concept';
-import {CodeSystemVersion} from './code-system-version';
-import {EntityProperty} from './entity-property';
+import {ContactDetail} from 'term-web/resources/_lib/contact/model/contact-detail';
+import {CodeSystemConcept} from 'term-web/resources/_lib/code-system/model/code-system-concept';
+import {CodeSystemVersion} from 'term-web/resources/_lib/code-system/model/code-system-version';
+import {EntityProperty} from 'term-web/resources/_lib/code-system/model/entity-property';
 
 export class CodeSystem {
   public id?: string;

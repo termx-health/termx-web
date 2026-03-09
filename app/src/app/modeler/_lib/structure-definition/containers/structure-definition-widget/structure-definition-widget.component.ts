@@ -6,11 +6,16 @@ import {
     StructureDefinitionSearchParams
 } from "term-web/modeler/_lib";
 import {Subscription} from "rxjs";
+import { MuiListModule, MuiSkeletonModule, MuiIconModule, MuiDividerModule } from '@kodality-web/marina-ui';
+import { RouterLink } from '@angular/router';
+import { NgTemplateOutlet } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
     selector: 'tw-structure-definition-widget',
-    templateUrl: 'structure-definition-widget.component.html'
+    templateUrl: 'structure-definition-widget.component.html',
+    imports: [MuiListModule, MuiSkeletonModule, MuiIconModule, MuiDividerModule, RouterLink, NgTemplateOutlet, TranslatePipe]
 })
 export class StructureDefinitionWidgetComponent implements OnChanges, OnDestroy {
     @Input() public spaceId: number;

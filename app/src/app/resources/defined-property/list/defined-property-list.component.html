@@ -21,13 +21,18 @@
 
     <tr *mTableRow="let ep">
       <td>
-        <a *ngIf="('*.DefinedProperty.edit' | twPrivileged); else view" [routerLink]="[ep.id, 'edit']">{{ep.name}}
-          <m-icon *ngIf="ep.used" mCode="info-circle" m-tooltip mTitle="web.defined-entity-property.list.property-used"></m-icon>
-        </a>
-        <ng-template #view>
+        @if (('*.DefinedProperty.edit' | twPrivileged)) {
+          <a [routerLink]="[ep.id, 'edit']">{{ep.name}}
+            @if (ep.used) {
+              <m-icon mCode="info-circle" m-tooltip mTitle="web.defined-entity-property.list.property-used"></m-icon>
+            }
+          </a>
+        } @else {
           {{ep.name}}
-          <m-icon *ngIf="ep.used" mCode="info-circle" m-tooltip mTitle="web.defined-entity-property.list.property-used"></m-icon>
-        </ng-template>
+          @if (ep.used) {
+            <m-icon mCode="info-circle" m-tooltip mTitle="web.defined-entity-property.list.property-used"></m-icon>
+          }
+        }
       </td>
       <td>{{ep.description | localName}}</td>
       <td>{{ep.uri}}</td>

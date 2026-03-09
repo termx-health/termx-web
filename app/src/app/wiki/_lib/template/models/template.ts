@@ -1,5 +1,5 @@
 import {LocalizedName} from '@kodality-web/marina-util';
-import {TemplateContent} from './template-content';
+import {TemplateContent} from 'term-web/wiki/_lib/template/models/template-content';
 
 export class Template {
   public id?: number;

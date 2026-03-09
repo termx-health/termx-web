@@ -8,7 +8,7 @@ import {TaskService} from 'term-web/task/services/task-service';
 import {UserLibModule} from 'term-web/user/_lib';
 import {WikiLibModule} from 'term-web/wiki/_lib';
 import {SysLibModule} from 'term-web/sys/_lib';
-import {CoreUiModule} from '../core/ui/core-ui.module';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 
 export const TASK_ROUTES: Routes = [
   {path: '', component: TaskListComponent},
@@ -17,19 +17,18 @@ export const TASK_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CoreUiModule,
-
-    TaskLibModule,
-    ResourcesLibModule,
-    WikiLibModule,
-    UserLibModule,
-    SysLibModule
-  ],
-  declarations: [TaskListComponent, TaskEditComponent],
-  providers: [
-    TaskService
-  ]
+    imports: [
+        CoreUiModule,
+        TaskLibModule,
+        ResourcesLibModule,
+        WikiLibModule,
+        UserLibModule,
+        SysLibModule,
+        TaskListComponent, TaskEditComponent
+    ],
+    providers: [
+        TaskService
+    ]
 })
 export class TaskModule {
 }

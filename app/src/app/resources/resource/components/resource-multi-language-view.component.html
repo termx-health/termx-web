@@ -1,5 +1,7 @@
-<ng-container *ngIf="value | apply: hasValue">
-  <div *ngFor="let entry of (value | apply: entries)">
-    <b>{{entry[0] | apply: langName}}:</b> {{entry[1]}}
-  </div>
-</ng-container>
+@if (value | apply: hasValue) {
+  @for (entry of (value | apply: entries); track entry[0]) {
+    <div>
+      <b>{{entry[0] | apply: langName}}:</b> {{entry[1]}}
+    </div>
+  }
+}

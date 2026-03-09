@@ -1,12 +1,23 @@
 import {Component, Input, OnChanges, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {BooleanInput, isDefined, validateForm} from '@kodality-web/core-util';
-import {MapSetProperty, MapSetPropertyValue} from 'app/src/app/resources/_lib';
+import { NgForm, FormsModule } from '@angular/forms';
+import { BooleanInput, isDefined, validateForm, ApplyPipe, SortPipe } from '@kodality-web/core-util';
+import {MapSetProperty, MapSetPropertyValue} from 'term-web/resources/_lib';
 import {MapSetPropertyValueInputComponent} from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-value-input.component';
 
+import { MuiNoDataModule, MuiFormModule } from '@kodality-web/marina-ui';
+import { MapSetPropertyValueInputComponent as MapSetPropertyValueInputComponent_1 } from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-value-input.component';
+
 @Component({
-  selector: 'tw-map-set-property-values',
-  templateUrl: 'map-set-property-values.component.html',
+    selector: 'tw-map-set-property-values',
+    templateUrl: 'map-set-property-values.component.html',
+    imports: [
+    MuiNoDataModule,
+    MapSetPropertyValueInputComponent_1,
+    FormsModule,
+    MuiFormModule,
+    ApplyPipe,
+    SortPipe
+],
 })
 export class MapSetPropertyValuesComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;

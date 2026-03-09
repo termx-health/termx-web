@@ -13,34 +13,38 @@
       <h3>{{(result.parameter | apply:findParameter:'name')?.valueString}}</h3>
     </div>
   </div>
-  <div *ngIf="(result.parameter | apply:findParameters:'designation') | apply:toDesignationRows as rows">
-    <h2>Designations</h2>
-    <m-table [mData]="rows">
-      <tr *mTableHead>
-        <th mSort="use">Use</th>
-        <th mSort="lang">Language</th>
-        <th mSort="value">Value</th>
-      </tr>
-      <tr *mTableRow="let d">
-        <td>{{d?.use}}</td>
-        <td>{{d?.lang}}</td>
-        <td>{{d?.value}}</td>
-      </tr>
-    </m-table>
-  </div>
-  <div *ngIf="(result.parameter | apply:findParameters:'property') | apply:toPropertyRows as rows">
-    <h2>Properties</h2>
-    <m-table [mData]="rows">
-      <tr *mTableHead>
-        <th mSort="code">Code</th>
-        <th mSort="description">Description</th>
-        <th>Value</th>
-      </tr>
-      <tr *mTableRow="let p">
-        <td>{{p?.code}}</td>
-        <td>{{p?.description}}</td>
-        <td><pre>{{p?.value | json}}</pre></td>
-      </tr>
-    </m-table>
-  </div>
+  @if ((result.parameter | apply:findParameters:'designation') | apply:toDesignationRows; as rows) {
+    <div>
+      <h2>Designations</h2>
+      <m-table [mData]="rows">
+        <tr *mTableHead>
+          <th mSort="use">Use</th>
+          <th mSort="lang">Language</th>
+          <th mSort="value">Value</th>
+        </tr>
+        <tr *mTableRow="let d">
+          <td>{{d?.use}}</td>
+          <td>{{d?.lang}}</td>
+          <td>{{d?.value}}</td>
+        </tr>
+      </m-table>
+    </div>
+  }
+  @if ((result.parameter | apply:findParameters:'property') | apply:toPropertyRows; as rows) {
+    <div>
+      <h2>Properties</h2>
+      <m-table [mData]="rows">
+        <tr *mTableHead>
+          <th mSort="code">Code</th>
+          <th mSort="description">Description</th>
+          <th>Value</th>
+        </tr>
+        <tr *mTableRow="let p">
+          <td>{{p?.code}}</td>
+          <td>{{p?.description}}</td>
+          <td><pre>{{p?.value | json}}</pre></td>
+        </tr>
+      </m-table>
+    </div>
+  }
 </div>

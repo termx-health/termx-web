@@ -1,18 +1,25 @@
-import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DestroyService, group, isDefined} from '@kodality-web/core-util';
+import { Component, forwardRef, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { DestroyService, group, isDefined, KeysPipe } from '@kodality-web/core-util';
 import {takeUntil} from 'rxjs';
 import {ValueSetVersionSearchParams} from 'term-web/resources/_lib';
-import {ValueSetVersion} from '../model/value-set-version';
-import {ValueSetLibService} from '../services/value-set-lib.service';
+import {ValueSetVersion} from 'term-web/resources/_lib/value-set/model/value-set-version';
+import {ValueSetLibService} from 'term-web/resources/_lib/value-set/services/value-set-lib.service';
+import { MuiSelectModule, MuiAbbreviateModule } from '@kodality-web/marina-ui';
+
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 
 @Component({
-  selector: 'tw-value-set-version-select',
-  templateUrl: './value-set-version-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetVersionSelectComponent), multi: true}, DestroyService]
+    selector: 'tw-value-set-version-select',
+    templateUrl: './value-set-version-select.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ValueSetVersionSelectComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, MuiAbbreviateModule, KeysPipe, MarinaUtilModule]
 })
 export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAccessor {
+  private valueSetService = inject(ValueSetLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() public valueSetId!: string;
   @Input() public valueType: 'id' | 'version' | 'full' = 'full';
 
@@ -22,11 +29,6 @@ export class ValueSetVersionSelectComponent implements OnChanges, ControlValueAc
 
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
-
-  public constructor(
-    private valueSetService: ValueSetLibService,
-    private destroy$: DestroyService
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["valueSetId"]) {

@@ -1,19 +1,30 @@
-import {Component, OnInit} from '@angular/core';
-import {copyDeep, SearchResult} from '@kodality-web/core-util';
+import { Component, OnInit, inject } from '@angular/core';
+import { copyDeep, SearchResult, AutofocusDirective } from '@kodality-web/core-util';
 import {finalize, Observable, tap} from 'rxjs';
 import {Template, TemplateSearchParams} from 'term-web/wiki/_lib';
-import {TemplateService} from './template.service';
+import {TemplateService} from 'term-web/wiki/template/template.service';
+import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiDropdownModule, MuiIconModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { FormsModule } from '@angular/forms';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { RouterLink } from '@angular/router';
+
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
 
 @Component({
-  templateUrl: 'template-list.component.html'
+    templateUrl: 'template-list.component.html',
+    imports: [MuiCardModule, MuiInputModule, InputDebounceDirective, AutofocusDirective, FormsModule, PrivilegedDirective, AddButtonComponent, RouterLink, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiDropdownModule, MuiIconModule, MuiNoDataModule, TranslatePipe, MarinaUtilModule, HasAnyPrivilegePipe]
 })
 export class TemplateListComponent implements OnInit {
+  private templateService = inject(TemplateService);
+
   public query = new TemplateSearchParams();
   public searchResult: SearchResult<Template> = SearchResult.empty();
   public searchInput: string;
   public loading: boolean;
-
-  public constructor(private templateService: TemplateService) {}
 
   public ngOnInit(): void {
     this.loadData();

@@ -1,12 +1,12 @@
 export class SnomedDescriptionItemSearchParams {
   public term?: string;
-  public active?: Boolean;
+  public active?: boolean;
   public module?: string[];
   public language?: string;
   public semanticTag?: string;
   public semanticTags?: string[];
-  public conceptActive?: Boolean;
-  public groupByConcept?: Boolean;
+  public conceptActive?: boolean;
+  public groupByConcept?: boolean;
 
   public rootId?: string;
 

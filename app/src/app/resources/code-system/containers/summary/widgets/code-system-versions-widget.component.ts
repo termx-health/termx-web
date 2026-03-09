@@ -1,20 +1,36 @@
-import {Component, EventEmitter, Input, Output, ViewChild, OnInit, OnChanges, SimpleChanges} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {Router} from '@angular/router';
-import {LoadingManager, validateForm, collect} from '@kodality-web/core-util';
-import {LocalizedName} from '@kodality-web/marina-util';
-import {CodeSystemVersion} from 'app/src/app/resources/_lib';
+import { Component, EventEmitter, Input, Output, ViewChild, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
+import { LoadingManager, validateForm, collect, ApplyPipe, JoinPipe, LocalDatePipe, SortPipe } from '@kodality-web/core-util';
+import { LocalizedName, MarinaUtilModule } from '@kodality-web/marina-util';
+import {CodeSystemVersion} from 'term-web/resources/_lib';
 import {AuthService} from 'term-web/core/auth';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {ResourceReleaseModalComponent} from 'term-web/resources/resource/components/resource-release-modal-component';
 import {ValueSetVersionSaveModalComponent} from 'term-web/resources/value-set/components/value-set-version-save-modal-component';
 import {Release, ReleaseLibService} from 'term-web/sys/_lib';
 
+import { MuiNoDataModule, MuiListModule, MuiDividerModule, MuiCoreModule, MuiDropdownModule, MuiIconModule, MuiPopconfirmModule, MuiModalModule, MarinPageLayoutModule, MuiFormModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
+import { ResourceReleaseModalComponent as ResourceReleaseModalComponent_1 } from 'term-web/resources/resource/components/resource-release-modal-component';
+import { ValueSetVersionSaveModalComponent as ValueSetVersionSaveModalComponent_1 } from 'term-web/resources/value-set/components/value-set-version-save-modal-component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
+
 @Component({
-  selector: 'tw-code-system-versions-widget',
-  templateUrl: 'code-system-versions-widget.component.html'
+    selector: 'tw-code-system-versions-widget',
+    templateUrl: 'code-system-versions-widget.component.html',
+    imports: [MuiNoDataModule, MuiListModule, MuiDividerModule, MuiCoreModule, StatusTagComponent, PrivilegedDirective, MuiDropdownModule, MuiIconModule, MuiPopconfirmModule, RouterLink, MuiModalModule, MarinPageLayoutModule, FormsModule, MuiFormModule, SemanticVersionSelectComponent, MuiButtonModule, ResourceReleaseModalComponent_1, ValueSetVersionSaveModalComponent_1, TranslatePipe, MarinaUtilModule, ApplyPipe, JoinPipe, LocalDatePipe, SortPipe, HasAnyPrivilegePipe, PrivilegedPipe]
 })
 export class CodeSystemVersionsWidgetComponent implements OnChanges {
+  private router = inject(Router);
+  private codeSystemService = inject(CodeSystemService);
+  private releaseService = inject(ReleaseLibService);
+  private authService = inject(AuthService);
+
   @Input() public codeSystem: string;
   @Input() public codeSystemTitle: LocalizedName;
   @Input() public codeSystemValueSet: string;
@@ -33,13 +49,6 @@ export class CodeSystemVersionsWidgetComponent implements OnChanges {
   @ViewChild("duplicateModalForm") public duplicateModalForm?: NgForm;
   @ViewChild("releaseModal") public releaseModal?: ResourceReleaseModalComponent;
   @ViewChild("valueSetModal") public valueSetModal?: ValueSetVersionSaveModalComponent;
-
-  public constructor(
-    private router: Router,
-    private codeSystemService: CodeSystemService,
-    private releaseService: ReleaseLibService,
-    private authService: AuthService
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['codeSystem'] && this.codeSystem) {

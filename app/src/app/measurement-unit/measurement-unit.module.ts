@@ -1,12 +1,12 @@
 import {NgModule} from '@angular/core';
 import {Routes} from '@angular/router';
 import {MeasurementUnitLibModule} from 'term-web/measurement-unit/_lib';
-import {CoreUiModule} from '../core/ui/core-ui.module';
-import {MeasurementUnitEditComponent} from './containers/edit/measurement-unit-edit.component';
-import {MeasurementUnitViewComponent} from './containers/edit/measurement-unit-view.component';
-import {MeasurementUnitMappingListComponent} from './containers/mapping/measurement-unit-mapping-list.component';
-import {MeasurementUnitListComponent} from './containers/measurement-unit-list.component';
-import {MeasurementUnitService} from './services/measurement-unit.service';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {MeasurementUnitEditComponent} from 'term-web/measurement-unit/containers/edit/measurement-unit-edit.component';
+import {MeasurementUnitViewComponent} from 'term-web/measurement-unit/containers/edit/measurement-unit-view.component';
+import {MeasurementUnitMappingListComponent} from 'term-web/measurement-unit/containers/mapping/measurement-unit-mapping-list.component';
+import {MeasurementUnitListComponent} from 'term-web/measurement-unit/containers/measurement-unit-list.component';
+import {MeasurementUnitService} from 'term-web/measurement-unit/services/measurement-unit.service';
 
 
 export const MEASUREMENT_UNIT_ROUTES: Routes = [
@@ -17,19 +17,17 @@ export const MEASUREMENT_UNIT_ROUTES: Routes = [
 ];
 
 @NgModule({
-  declarations: [
-    MeasurementUnitListComponent,
-    MeasurementUnitEditComponent,
-    MeasurementUnitViewComponent,
-    MeasurementUnitMappingListComponent,
-  ],
-  imports: [
-    CoreUiModule,
-    MeasurementUnitLibModule
-  ],
-  providers: [
-    MeasurementUnitService
-  ]
+    imports: [
+        CoreUiModule,
+        MeasurementUnitLibModule,
+        MeasurementUnitListComponent,
+        MeasurementUnitEditComponent,
+        MeasurementUnitViewComponent,
+        MeasurementUnitMappingListComponent
+    ],
+    providers: [
+        MeasurementUnitService
+    ]
 })
 export class MeasurementUnitModule {
 }

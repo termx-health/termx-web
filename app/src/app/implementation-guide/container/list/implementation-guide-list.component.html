@@ -30,19 +30,23 @@
     <tr *mTableRow="let ig">
       <td><a [routerLink]="[ig.id, 'summary']">{{ig.id}}</a></td>
       <td>
-        <ng-container *ngIf="(ig.versions | apply:findLastVersion)?.version as version">
+        @if ((ig.versions | apply:findLastVersion)?.version; as version) {
           <a [routerLink]="[ig.id, 'versions', version, 'summary']">{{version}}</a>
-        </ng-container>
+        }
       </td>
       <td>
-        <ng-container *ngIf="(ig.versions | apply:findLastVersion) as version">{{version.fhirVersion}}</ng-container>
+        @if ((ig.versions | apply:findLastVersion); as version) {
+          {{version.fhirVersion}}
+        }
       </td>
       <td>
         <div>{{ig.title | localName}}</div>
         <div>{{ig.packageId | localName}}</div>
       </td>
       <td>
-        <ng-container *ngIf="(ig.versions | apply:findLastVersion) as version">{{version.date | localDate}}</ng-container>
+        @if ((ig.versions | apply:findLastVersion); as version) {
+          {{version.date | localDate}}
+        }
       </td>
       <td class="tw-table-actions">
         <m-dropdown>

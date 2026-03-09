@@ -13,28 +13,26 @@ import {SpaceLibService} from './services/space-lib-service';
 import {TerminologyServerLibService} from './services/terminology-server-lib-service';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    MarinaComponentsModule,
-    MarinaUtilModule,
-    CoreUtilModule,
-    TranslateModule
-  ],
-  declarations: [
-    SpaceDrawerSearchComponent,
-    SpaceSelectComponent
-  ],
-  exports: [
-    SpaceDrawerSearchComponent,
-    SpaceSelectComponent
-  ],
-  providers: [
-    SpaceLibService,
-    PackageLibService,
-    PackageResourceLibService,
-    TerminologyServerLibService
-  ]
+    imports: [
+        CommonModule,
+        FormsModule,
+        MarinaComponentsModule,
+        MarinaUtilModule,
+        CoreUtilModule,
+        TranslateModule,
+        SpaceDrawerSearchComponent,
+        SpaceSelectComponent
+    ],
+    exports: [
+        SpaceDrawerSearchComponent,
+        SpaceSelectComponent
+    ],
+    providers: [
+        SpaceLibService,
+        PackageLibService,
+        PackageResourceLibService,
+        TerminologyServerLibService
+    ]
 })
 export class SpaceLibModule {
 }

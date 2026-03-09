@@ -15,44 +15,56 @@
         <th>{{'entities.snomed-codesystem.languages' | translate}}</th>
         <th>{{'entities.snomed-codesystem.latest-version' | translate}}</th>
       </tr>
-      <ng-container *ngFor="let cs of codeSystems">
+      @for (cs of codeSystems; track cs) {
         <tr>
           <td>
             <div class="m-items-middle">
-              <m-icon-button *ngIf="cs.versions?.length"
+              @if (cs.versions?.length) {
+                <m-icon-button
                   [mIcon]="cs['expanded'] ? 'folder-open' : 'folder'"
-                  (mClick)="cs['expanded'] = !cs['expanded']"></m-icon-button>
+                (mClick)="cs['expanded'] = !cs['expanded']"></m-icon-button>
+              }
               <div>
                 <div>
                   <a class="m-bold" [routerLink]="['/integration', 'snomed', 'codesystems', cs.shortName, 'edit']">{{cs.shortName}}</a> {{cs.name ? '(' + cs.name + ')' : ''}}
                 </div>
-                <ng-container *ngFor="let module of cs.modules">
-                  <div *ngIf="module.conceptId === module.moduleId">{{module?.pt?.term}}</div>
-                </ng-container>
+                @for (module of cs.modules; track module) {
+                  @if (module.conceptId === module.moduleId) {
+                    <div>{{module?.pt?.term}}</div>
+                  }
+                }
               </div>
             </div>
           </td>
           <td>{{cs.branchPath}}</td>
           <td>
-            <div *ngFor="let lang of cs.languages | values">{{lang}}</div>
+            @for (lang of cs.languages | values; track lang) {
+              <div>{{lang}}</div>
+            }
           </td>
           <td>
-            <a *ngIf="!cs.latestVersion?.importDate" [routerLink]="['/integration', 'snomed', 'codesystems', cs.shortName, 'edit']" [queryParams]="{import: ''}">
-              {{'web.snomed.codesystem.form.import-from-rf2' | translate}}
-            </a>
-            <div *ngIf="!!cs.latestVersion?.importDate">{{'web.snomed.branch.list.codesystem.imported' | translate}}: {{cs.latestVersion?.importDate | localDateTime}}</div>
+            @if (!cs.latestVersion?.importDate) {
+              <a [routerLink]="['/integration', 'snomed', 'codesystems', cs.shortName, 'edit']" [queryParams]="{import: ''}">
+                {{'web.snomed.codesystem.form.import-from-rf2' | translate}}
+              </a>
+            }
+            @if (!!cs.latestVersion?.importDate) {
+              <div>{{'web.snomed.branch.list.codesystem.imported' | translate}}: {{cs.latestVersion?.importDate | localDateTime}}</div>
+            }
             <div>{{cs.latestVersion?.branchPath}}</div>
           </td>
         </tr>
-        <ng-container *ngIf="cs['expanded']">
-          <tr *ngFor="let version of cs.versions">
-            <td style="padding-left: 5rem">{{version.version}}</td>
-            <td>{{version.branchPath}}</td>
-            <td></td>
-            <td>{{version.importDate | localDateTime}}</td>
-          </tr>
-        </ng-container>
-      </ng-container>
+        @if (cs['expanded']) {
+          @for (version of cs.versions; track version) {
+            <tr>
+              <td style="padding-left: 5rem">{{version.version}}</td>
+              <td>{{version.branchPath}}</td>
+              <td></td>
+              <td>{{version.importDate | localDateTime}}</td>
+            </tr>
+          }
+        }
+      }
       <tr *mTableNoData>
         <td colspan="100%">
           <m-no-data></m-no-data>
@@ -68,11 +80,13 @@
     <m-card>
       <div *m-card-header class="m-justify-between">
         <m-title>{{'web.snomed.branch.list.' + type | translate}}</m-title>
-        <div class="m-items-middle" *ngIf="type === 'working' && ('snomed-ct.CodeSystem.edit' | twPrivileged)">
-          <tw-add-button [routerLink]="['/integration', 'snomed', 'branches', 'add']">
-            {{'web.snomed.branch.list.add-branch' | translate}}
-          </tw-add-button>
-        </div>
+        @if (type === 'working' && ('snomed-ct.CodeSystem.edit' | twPrivileged)) {
+          <div class="m-items-middle">
+            <tw-add-button [routerLink]="['/integration', 'snomed', 'branches', 'add']">
+              {{'web.snomed.branch.list.add-branch' | translate}}
+            </tw-add-button>
+          </div>
+        }
       </div>
       <m-table [mData]="branches" [mLoading]="loader.isLoading" mEnablePagination>
         <tr *mTableHead>
@@ -110,10 +124,10 @@
   <ng-container *mModalContent>
     <form #form="ngForm">
       <m-form-item mName="countryCode" mLabel="web.snomed.branch.list.edition-modal.country-code" required>
-        <m-input name="countryCode" [(ngModel)]="editionModalData.countryCode" required/>
+        <m-textarea name="countryCode" [(ngModel)]="editionModalData.countryCode" required/>
       </m-form-item>
       <m-form-item mName="name" mLabel="web.snomed.branch.list.edition-modal.name">
-        <m-input name="name" [(ngModel)]="editionModalData.name"/>
+        <m-textarea name="name" [(ngModel)]="editionModalData.name"/>
       </m-form-item>
     </form>
   </ng-container>

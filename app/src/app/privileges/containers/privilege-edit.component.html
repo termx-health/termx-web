@@ -6,24 +6,28 @@
           <div class="m-card__title">
             {{(mode === 'edit' ? 'web.privileges.edit-header' : 'web.privileges.add-header') | translate}}
           </div>
-          <m-button *ngIf="mode === 'edit' && privilege?.code !== 'guest'"
+          @if (mode === 'edit' && privilege?.code !== 'guest') {
+            <m-button
               mDisplay="text"
               mShape="circle"
               m-popconfirm
               mPopconfirmTitle="core.delete-confirm"
               (mOnConfirm)="deletePrivilege(privilege.id)"
               mPosition="leftTop">
-            <m-icon mCode="delete"></m-icon>
-          </m-button>
+              <m-icon mCode="delete"></m-icon>
+            </m-button>
+          }
         </div>
-        <form #form="ngForm" *ngIf="privilege">
-          <m-form-item mName="code" mLabel="entities.privilege.code" required>
-            <m-input name="code" [(ngModel)]="privilege.code" required></m-input>
-          </m-form-item>
-          <m-form-item mName="name" mLabel="entities.privilege.name">
-            <m-multi-language-input name="name" [(ngModel)]="privilege.names"></m-multi-language-input>
-          </m-form-item>
-        </form>
+        @if (privilege) {
+          <form #form="ngForm">
+            <m-form-item mName="code" mLabel="entities.privilege.code" required>
+              <m-textarea name="code" [(ngModel)]="privilege.code" required></m-textarea>
+            </m-form-item>
+            <m-form-item mName="name" mLabel="entities.privilege.name">
+              <m-multi-language-input name="name" [(ngModel)]="privilege.names" mInputType="textarea"/>
+            </m-form-item>
+          </form>
+        }
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" (click)="save()" [mLoading]="loading" [disabled]="loading">
             {{'core.btn.save' | translate}}
@@ -49,32 +53,40 @@
               <th class="tw-table-actions"></th>
             </tr>
             <ng-container *mTableRow="let key;">
-              <tr *ngFor="let resource of resourceMap[key]; let index = index">
-                <td class="tw-table-min-width">
-                  <a (click)="openResourceModal({key, index})">
-                    {{resource.resourceType}}
-                  </a>
-                </td>
-                <td>
-                  <m-abbreviate [mValue]="resource.resourceName || resource.resourceId" [mLength]="35"></m-abbreviate>
-                </td>
-                <td>
-                  <m-icon *ngIf="resource.actions?.view" mCode="check"></m-icon>
-                </td>
-                <td>
-                  <m-icon *ngIf="resource.actions?.edit" mCode="check"></m-icon>
-                </td>
-                <td>
-                  <m-icon *ngIf="resource.actions?.publish" mCode="check"></m-icon>
-                </td>
-                <td class="tw-table-actions">
-                  <m-dropdown>
-                    <a *m-dropdown-item (click)="removeResource(key, index)">
-                      {{'web.privileges.resources.table.delete-resource' | translate}}
+              @for (resource of resourceMap[key]; track resource; let index = $index) {
+                <tr>
+                  <td class="tw-table-min-width">
+                    <a (click)="openResourceModal({key, index})">
+                      {{resource.resourceType}}
                     </a>
-                  </m-dropdown>
-                </td>
-              </tr>
+                  </td>
+                  <td>
+                    <m-abbreviate [mValue]="resource.resourceName || resource.resourceId" [mLength]="35"></m-abbreviate>
+                  </td>
+                  <td>
+                    @if (resource.actions?.view) {
+                      <m-icon mCode="check"></m-icon>
+                    }
+                  </td>
+                  <td>
+                    @if (resource.actions?.edit) {
+                      <m-icon mCode="check"></m-icon>
+                    }
+                  </td>
+                  <td>
+                    @if (resource.actions?.publish) {
+                      <m-icon mCode="check"></m-icon>
+                    }
+                  </td>
+                  <td class="tw-table-actions">
+                    <m-dropdown>
+                      <a *m-dropdown-item (click)="removeResource(key, index)">
+                        {{'web.privileges.resources.table.delete-resource' | translate}}
+                      </a>
+                    </m-dropdown>
+                  </td>
+                </tr>
+              }
             </ng-container>
 
             <tr *mTableNoData>
@@ -98,62 +110,72 @@
     <form #resourceForm="ngForm">
       <m-form-item mName="resourceType" mLabel="web.privileges.resources.modal.resource-type" required>
         <m-select name="resourceType" [(ngModel)]="modalData.resource.resourceType" required>
-          <m-option
-              *ngFor="let t of [
-                'Any', 'Admin',
-                'CodeSystem', 'ValueSet', 'MapSet', 'NamingSystem', 'AssociationType', 'DefinedProperty',
-                'Space', 'Wiki',
-                'ObservationDefinition',
-                'StructureDefinition',
-                'TransformationDefinition',
-                'Task',
-                'Privilege',
-                'TerminologyServer',
-                'Release', 'ChecklistRule',
-                'Sequence'
-              ]"
+          @for (t of [
+            'Any', 'Admin',
+            'CodeSystem', 'ValueSet', 'MapSet', 'NamingSystem', 'AssociationType', 'DefinedProperty',
+            'Space', 'Wiki',
+            'ObservationDefinition',
+            'StructureDefinition',
+            'TransformationDefinition',
+            'Task',
+            'Privilege',
+            'TerminologyServer',
+            'Release', 'ChecklistRule',
+            'Sequence',
+            'Users'
+            ]; track t) {
+            <m-option
               mLabel="web.privileges.resources.modal.type.{{t}}"
               [mValue]="t"
-          ></m-option>
+            ></m-option>
+          }
         </m-select>
       </m-form-item>
-      <m-form-item *ngIf="modalData.resource.resourceType
-                          && ['CodeSystem', 'ValueSet', 'MapSet', 'NamingSystem', 'AssociationType', 'Wiki', 'Space'].includes(modalData.resource.resourceType)"
+      @if (modalData.resource.resourceType
+        && ['CodeSystem', 'ValueSet', 'MapSet', 'NamingSystem', 'AssociationType', 'Wiki', 'Space'].includes(modalData.resource.resourceType)) {
+        <m-form-item
           mName="resourceId"
           mLabel="web.privileges.resources.modal.resource-id">
-        <tw-code-system-search name="resourceId"
-            *ngIf="modalData.resource.resourceType === 'CodeSystem'"
-            [(ngModel)]="modalData.resource.resourceId"
-            [filter]="filter"
+          @if (modalData.resource.resourceType === 'CodeSystem') {
+            <tw-code-system-search name="resourceId"
+              [(ngModel)]="modalData.resource.resourceId"
+              [filter]="filter"
             valuePrimitive></tw-code-system-search>
-        <tw-value-set-search name="resourceId"
-            *ngIf="modalData.resource.resourceType === 'ValueSet'"
-            [(ngModel)]="modalData.resource.resourceId"
-            [filter]="filter"
+          }
+          @if (modalData.resource.resourceType === 'ValueSet') {
+            <tw-value-set-search name="resourceId"
+              [(ngModel)]="modalData.resource.resourceId"
+              [filter]="filter"
             valuePrimitive></tw-value-set-search>
-        <tw-map-set-search name="resourceId"
-            *ngIf="modalData.resource.resourceType === 'MapSet'"
-            [(ngModel)]="modalData.resource.resourceId"
-            [filter]="filter"
+          }
+          @if (modalData.resource.resourceType === 'MapSet') {
+            <tw-map-set-search name="resourceId"
+              [(ngModel)]="modalData.resource.resourceId"
+              [filter]="filter"
             valuePrimitive></tw-map-set-search>
-        <tw-naming-system-search name="resourceId"
-            *ngIf="modalData.resource.resourceType === 'NamingSystem'"
-            [(ngModel)]="modalData.resource.resourceId"
-            [filter]="filter"
+          }
+          @if (modalData.resource.resourceType === 'NamingSystem') {
+            <tw-naming-system-search name="resourceId"
+              [(ngModel)]="modalData.resource.resourceId"
+              [filter]="filter"
             valuePrimitive></tw-naming-system-search>
-        <tw-association-type-search name="resourceId"
-            *ngIf="modalData.resource.resourceType === 'AssociationType'"
-            [(ngModel)]="modalData.resource.resourceId"
-            [filter]="filterCode"
+          }
+          @if (modalData.resource.resourceType === 'AssociationType') {
+            <tw-association-type-search name="resourceId"
+              [(ngModel)]="modalData.resource.resourceId"
+              [filter]="filterCode"
             valuePrimitive></tw-association-type-search>
-        <tw-space-select name="resourceId"
-            *ngIf="modalData.resource.resourceType === 'Wiki' || modalData.resource.resourceType === 'Space'"
-            [ngModel]="modalData.resource.resourceId | apply:asNumber"
-            (ngModelChange)="modalData.resource.resourceId = $event.toString()"
-            [filter]="filterId"
+          }
+          @if (modalData.resource.resourceType === 'Wiki' || modalData.resource.resourceType === 'Space') {
+            <tw-space-select name="resourceId"
+              [ngModel]="modalData.resource.resourceId | apply:asNumber"
+              (ngModelChange)="modalData.resource.resourceId = $event.toString()"
+              [filter]="filterId"
             valuePrimitive></tw-space-select>
-      </m-form-item>
-      <ng-container *ngIf="modalData.resource.resourceType !== 'Admin'">
+          }
+        </m-form-item>
+      }
+      @if (modalData.resource.resourceType !== 'Admin') {
         <m-form-item [mLabel]="view"></m-form-item>
         <ng-template #view>
           <m-checkbox name="action-view" [(ngModel)]="modalData.resource.actions.view">
@@ -172,7 +194,7 @@
             {{'web.privileges.resources.modal.actions.publish' | translate}}
           </m-checkbox>
         </ng-template>
-      </ng-container>
+      }
     </form>
   </ng-container>
 

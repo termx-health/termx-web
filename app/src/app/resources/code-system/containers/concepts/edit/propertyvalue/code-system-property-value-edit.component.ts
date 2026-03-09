@@ -1,16 +1,19 @@
 import {Component, Input, OnChanges, QueryList, SimpleChanges, ViewChild, ViewChildren} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {BooleanInput, isDefined, remove, validateForm} from '@kodality-web/core-util';
-import {EntityPropertyValueInputComponent} from 'app/src/app/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
-import {EntityProperty, EntityPropertyValue} from 'app/src/app/resources/_lib';
+import { NgForm, FormsModule } from '@angular/forms';
+import { BooleanInput, isDefined, remove, validateForm, ApplyPipe, FilterPipe, SortPipe } from '@kodality-web/core-util';
+import {EntityPropertyValueInputComponent} from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
+import {EntityProperty, EntityPropertyValue} from 'term-web/resources/_lib';
 import {v4 as uuid} from "uuid";
+
+import { MuiNoDataModule, MuiFormModule, MuiIconModule, MuiPopconfirmModule } from '@kodality-web/marina-ui';
+import { EntityPropertyValueInputComponent as EntityPropertyValueInputComponent_1 } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
 
 type ExtendedEntityPropertyValue = EntityPropertyValue & {_key?: string};
 
 @Component({
-  selector: 'tw-code-system-property-value-edit',
-  templateUrl: 'code-system-property-value-edit.component.html',
-  styles: [`
+    selector: 'tw-code-system-property-value-edit',
+    templateUrl: 'code-system-property-value-edit.component.html',
+    styles: [`
     .prop-col {
       display: flex;
       flex-direction: column;
@@ -23,7 +26,8 @@ type ExtendedEntityPropertyValue = EntityPropertyValue & {_key?: string};
       display: flex;
       align-items: center;
     }
-  `]
+  `],
+    imports: [MuiNoDataModule, FormsModule, MuiFormModule, EntityPropertyValueInputComponent_1, MuiIconModule, MuiPopconfirmModule, ApplyPipe, FilterPipe, SortPipe]
 })
 export class CodeSystemPropertyValueEditComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;

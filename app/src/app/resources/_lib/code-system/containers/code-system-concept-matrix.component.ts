@@ -1,9 +1,13 @@
-import {Component, Injectable, Input, OnChanges} from '@angular/core';
+import { Component, Injectable, Input, OnChanges, inject } from '@angular/core';
 import {takeUntilDestroyed} from '@angular/core/rxjs-interop';
-import {collect, group, HttpCacheService, isNil} from '@kodality-web/core-util';
+import { collect, group, HttpCacheService, isNil, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
 import {interval, map, mergeMap, Observable, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, EntityProperty} from 'term-web/resources/_lib';
+import { MuiTableModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 type ConceptView = {
   [propertyCode: string]: {
@@ -14,12 +18,12 @@ type ConceptView = {
 
 @Injectable({providedIn: 'root'})
 class CodeSystemConceptMatrixService {
+  private authService = inject(AuthService);
+  private codeSystemService = inject(CodeSystemLibService);
+
   private cache = new HttpCacheService();
 
-  public constructor(
-    private authService: AuthService,
-    private codeSystemService: CodeSystemLibService,
-  ) {
+  public constructor() {
     interval(10_000).pipe(takeUntilDestroyed()).subscribe(() => this.cache.clear());
   }
 
@@ -68,6 +72,7 @@ class CodeSystemConceptMatrixService {
       parent: c.versions[c.versions.length - 1]?.associations?.find(a => a.associationType === hierarchyMeaning)?.targetCode
     }));
 
+    // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
     const buildTree = (parents: typeof _concepts, level = 1) => {
       return parents?.flatMap(p => {
         const children = _concepts.filter(n => n.parent === p.concept.code);
@@ -80,10 +85,13 @@ class CodeSystemConceptMatrixService {
 }
 
 @Component({
-  selector: 'tw-code-system-concept-matrix',
-  templateUrl: 'code-system-concept-matrix.component.html'
+    selector: 'tw-code-system-concept-matrix',
+    templateUrl: 'code-system-concept-matrix.component.html',
+    imports: [MuiTableModule, MuiNoDataModule, ApplyPipe, IncludesPipe, TranslatePipe, MarinaUtilModule]
 })
 export class CodeSystemConceptMatrixComponent implements OnChanges {
+  private service = inject(CodeSystemConceptMatrixService);
+
   public static ngAcceptInputType_properties: string[];
   public static ngAcceptInputType_langs: string[];
 
@@ -106,10 +114,6 @@ export class CodeSystemConceptMatrixComponent implements OnChanges {
   protected entityProperties: EntityProperty[];
   protected concepts: ConceptView[];
   protected conceptsTotal: number;
-
-  public constructor(
-    private service: CodeSystemConceptMatrixService,
-  ) { }
 
   public ngOnChanges(): void {
     this.service.load(this.id, this.version, !this.limit || isNaN(this.limit) ? 101 : this.limit).subscribe(r => {

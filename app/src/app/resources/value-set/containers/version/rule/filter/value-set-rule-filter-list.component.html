@@ -1,75 +1,119 @@
 <m-card class="m-card-inside">
   <m-title *m-card-header class="m-card__title" mTitle="entities.value-set-rule-set.rule.filters"></m-title>
 
-  <form #form="ngForm" *ngIf="filters">
-    <m-editable-table #rowsTable
-        [mData]="filters"
-        [mRowInstance]="rowInstance"
-        [mEditAllowed]="!viewMode"
-        [mDeleteAllowed]="!viewMode"
-        [mLoading]="loading">
-      <m-editable-column mTitle="entities.value-set-rule-filter.property.label" mName="property">
-        <ng-template #viewTemplate let-f>{{f.property?.name}}</ng-template>
-        <ng-template #editTemplate let-f let-ngModelName="ngModelName">
-          <ng-container [ngSwitch]="codeSystem">
-            <ng-container *ngSwitchDefault>
-              <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'name'">
-                <m-option *ngFor="let property of properties" [mLabel]="property.name" [mValue]="property"></m-option>
-                <m-option [mLabel]="'concept'" [mValue]="{name: 'concept'}"></m-option>
-                <m-option [mLabel]="'code'" [mValue]="{name: 'code'}"></m-option>
-              </m-select>
-            </ng-container>
-            <ng-container *ngSwitchCase="'snomed-ct'">
-              <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'name'">
-                <m-option [mLabel]="'entities.value-set-rule-filter.property.concept' | translate" [mValue]="{name: 'concept'}"></m-option>
-                <m-option [mLabel]="'entities.value-set-rule-filter.property.constraint' | translate" [mValue]="{name: 'constraint'}"></m-option>
-              </m-select>
-            </ng-container>
-            <ng-container *ngSwitchCase="'ucum'">
-              <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'name'">
-                <m-option [mLabel]="'entities.value-set-rule-filter.property.kind' | translate" [mValue]="{name: 'kind'}"></m-option>
-              </m-select>
-            </ng-container>
-          </ng-container>
-        </ng-template>
-      </m-editable-column>
+  @if (filters) {
+    <form #form="ngForm">
+      <m-editable-table #rowsTable [mData]="filters" [mRowInstance]="rowInstance" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode" [mLoading]="loading">
+        <m-editable-column mTitle="entities.value-set-rule-filter.property.label" mName="property">
+          <ng-template #viewTemplate let-f>{{ f.property?.name }}</ng-template>
+          <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+            @switch (codeSystem) {
+              @case ('snomed-ct') {
+                <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'name'">
+                  <m-option [mLabel]="'entities.value-set-rule-filter.property.concept' | translate" [mValue]="{name: 'concept'}"></m-option>
+                  <m-option [mLabel]="'entities.value-set-rule-filter.property.constraint' | translate" [mValue]="{name: 'constraint'}"></m-option>
+                </m-select>
+              }
+              @case ('ucum') {
+                <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'name'">
+                  <m-option [mLabel]="'entities.value-set-rule-filter.property.kind' | translate" [mValue]="{name: 'kind'}"></m-option>
+                </m-select>
+              }
+              @default {
+                <m-select [name]="ngModelName" [(ngModel)]="f.property" [compareWith]="'name'">
+                  <m-option [mLabel]="'concept'" [mValue]="{name: 'concept'}"></m-option>
+                  <m-option [mLabel]="'code'" [mValue]="{name: 'code'}"></m-option>
+                  @for (property of properties; track property.name) {
+                    <m-option [mLabel]="property.name" [mValue]="property"></m-option>
+                  }
+                </m-select>
+              }
+            }
+          </ng-template>
+        </m-editable-column>
 
-      <m-editable-column mTitle="entities.value-set-rule-filter.operator.label" mName="operator">
-        <ng-template #viewTemplate let-f>{{f.operator || '='}}</ng-template>
-        <ng-template #editTemplate let-f let-ngModelName="ngModelName">
-          <ng-container [ngSwitch]="codeSystem">
-            <ng-container *ngSwitchDefault>
-              <!--m-select *ngIf="f.property?.name === 'code'" [name]="ngModelName" [(ngModel)]="f.operator"-->
-              <m-select [name]="ngModelName" [(ngModel)]="f.operator">
-                <m-option [mLabel]="'='" [mValue]="'='"></m-option>
-                <m-option [mLabel]="'regex'" [mValue]="'regex'"></m-option>
-              </m-select>
-              <tw-association-type-search *ngIf="f.property?.name === 'concept'" [name]="ngModelName" [(ngModel)]="f.operator" associationKind="codesystem-hierarchy-meaning" valuePrimitive></tw-association-type-search>
-            </ng-container>
-            <ng-container *ngSwitchCase="'snomed-ct'">
-              <m-select [name]="ngModelName" [(ngModel)]="f.operator">
-                <m-option *ngIf="f.property?.name === 'concept'" [mLabel]="'entities.value-set-rule-filter.operator.is-a' | translate" mValue="is-a"></m-option>
-                <m-option *ngIf="f.property?.name === 'concept'" [mLabel]="'entities.value-set-rule-filter.operator.in' | translate" mValue="in"></m-option>
-                <m-option *ngIf="f.property?.name === 'concept'" [mLabel]="'entities.value-set-rule-filter.operator.descendent-of' | translate" mValue="descendent-of"></m-option>
-                <m-option *ngIf="f.property?.name === 'constraint'" [mLabel]="'entities.value-set-rule-filter.operator.equal' | translate" mValue="="></m-option>
-              </m-select>
-            </ng-container>
-          </ng-container>
-        </ng-template>
-      </m-editable-column>
+        <m-editable-column mTitle="entities.value-set-rule-filter.operator.label" mName="operator">
+          <ng-template #viewTemplate let-f>{{ f.operator || '=' }}</ng-template>
+          <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+            @switch (codeSystem) {
+              @case ('snomed-ct') {
+                <m-select [name]="ngModelName" [(ngModel)]="f.operator">
+                  @if (f.property?.name === 'concept') {
+                    <m-option [mLabel]="'entities.value-set-rule-filter.operator.is-a' | translate" mValue="is-a"></m-option>
+                  }
+                  @if (f.property?.name === 'concept') {
+                    <m-option [mLabel]="'entities.value-set-rule-filter.operator.in' | translate" mValue="in"></m-option>
+                  }
+                  @if (f.property?.name === 'concept') {
+                    <m-option
+                        [mLabel]="'entities.value-set-rule-filter.operator.descendent-of' | translate"
+                        mValue="descendent-of"></m-option>
+                  }
+                  @if (f.property?.name === 'constraint') {
+                    <m-option
+                        [mLabel]="'entities.value-set-rule-filter.operator.equal' | translate"
+                        mValue="="></m-option>
+                  }
+                </m-select>
+              }
+              @default {
+                @if (f.property?.name !== 'concept') {
+                  <m-select [name]="ngModelName" [(ngModel)]="f.operator">
+                    <m-option [mLabel]="'='" [mValue]="'='"></m-option>
+                    <m-option [mLabel]="'regex'" [mValue]="'regex'"></m-option>
+                    <m-option [mLabel]="'in'" [mValue]="'in'"></m-option>
+                    <m-option [mLabel]="'not-in'" [mValue]="'not-in'"></m-option>
+                    @if (f.property?.name !== 'code') {
+                      <m-option [mLabel]="'exists'" [mValue]="'exists'"></m-option>
+                    }
+                  </m-select>
+                }
+                @if (f.property?.name === 'concept') {
+                  <m-select [name]="ngModelName" [(ngModel)]="f.operator">
+                    <m-option [mLabel]="'is-a'" [mValue]="'is-a'"></m-option>
+                    <m-option [mLabel]="'descendent-of'" [mValue]="'descendent-of'"></m-option>
+                    <m-option [mLabel]="'is-not-a'" [mValue]="'is-not-a'"></m-option>
+                    <m-option [mLabel]="'generalizes'" [mValue]="'generalizes'"></m-option>
+                    <m-option [mLabel]="'child-of'" [mValue]="'child-of'"></m-option>
+                    <m-option [mLabel]="'descendent-leaf'" [mValue]="'descendent-leaf'"></m-option>
+                  </m-select>
+                }
+              }
+            }
+          </ng-template>
+        </m-editable-column>
 
-      <m-editable-column mTitle="entities.value-set-rule-filter.value" mName="value">
-        <ng-template #viewTemplate let-f let-ngModelName="ngModelName">
-          <tw-property-value-input viewMode
-              [name]="ngModelName"
-              [ngModel]="f.value"
-              [property]="f.property"
-              [codeSystem]="codeSystem"></tw-property-value-input>
-        </ng-template>
-        <ng-template #editTemplate let-f let-ngModelName="ngModelName">
-          <tw-property-value-input [name]="ngModelName" [(ngModel)]="f.value" [property]="f.property" [codeSystem]="codeSystem"></tw-property-value-input>
-        </ng-template>
-      </m-editable-column>
-    </m-editable-table>
-  </form>
+        <m-editable-column mTitle="entities.value-set-rule-filter.value" mName="value">
+          <ng-template #viewTemplate let-f let-ngModelName="ngModelName">
+            @if (f.operator !== 'exists') {
+              <tw-property-value-input
+                  viewMode
+                  [name]="ngModelName"
+                  [ngModel]="f.value"
+                  [property]="f.property"
+                  [codeSystem]="codeSystem"></tw-property-value-input>
+            }
+            @if (f.operator === 'exists') {
+              <label>{{f.value}}</label>
+            }
+          </ng-template>
+          <ng-template #editTemplate let-f let-ngModelName="ngModelName">
+            @if (f.operator !== 'exists') {
+              <tw-property-value-input
+                  [name]="ngModelName"
+                  [(ngModel)]="f.value"
+                  [property]="f.property"
+                  [codeSystem]="codeSystem"></tw-property-value-input>
+            }
+            @if (f.operator === 'exists') {
+              <m-select [name]="ngModelName" [(ngModel)]="f.value">
+                <m-option [mLabel]="'true'" [mValue]="true"></m-option>
+                <m-option [mLabel]="'false'" [mValue]="false"></m-option>
+              </m-select>
+            }
+          </ng-template>
+        </m-editable-column>
+      </m-editable-table>
+    </form>
+  }
 </m-card>

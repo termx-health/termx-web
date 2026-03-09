@@ -1,15 +1,17 @@
 <m-select
-    icon="select"
-    [placeholder]="placeholder"
-    [(ngModel)]="value"
-    (mChange)="fireOnChange()"
-    [loading]="isLoading"
-    [autoUnselect]="false"
-    [multiple]="multiple | toBoolean"
-    [allowClear]="allowClear | toBoolean"
-    [disabled]="disabled"
-    [filterOption]="filterOption">
-  <m-option *ngFor="let key of data | keys"
+  icon="select"
+  [placeholder]="placeholder"
+  [(ngModel)]="value"
+  (mChange)="fireOnChange()"
+  [loading]="isLoading"
+  [autoUnselect]="false"
+  [multiple]="multiple | toBoolean"
+  [allowClear]="allowClear | toBoolean"
+  [disabled]="disabled"
+  [filterOption]="filterOption">
+  @for (key of data | keys; track key) {
+    <m-option
       [mValue]="key"
-      [mLabel]="data[key] | apply: getDisplay: translateService.currentLang"></m-option>
+    [mLabel]="data[key] | apply: getDisplay: translateService.currentLang"></m-option>
+  }
 </m-select>

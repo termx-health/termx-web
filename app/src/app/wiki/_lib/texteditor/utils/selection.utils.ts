@@ -1,4 +1,4 @@
-export function contentFromSelection(text: string, pos: number, startToken: string, endToken: string) {
+export function contentFromSelection(text: string, pos: number, startToken: string, endToken: string): {selection?: string, startPos?: number, endPos?: number} {
   const startPos = text.lastIndexOf(startToken, pos);
   const endPos = text.indexOf(endToken, pos);
   if (

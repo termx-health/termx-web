@@ -1,18 +1,25 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
+import { Component, forwardRef, Input, OnInit, inject } from '@angular/core';
+import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe, ToBooleanPipe } from '@kodality-web/core-util';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {MeasurementUnit} from '../model/measurement-unit';
-import {MeasurementUnitSearchParams} from '../model/measurement-unit-search-params';
-import {MeasurementUnitLibService} from '../services/measurement-unit-lib.service';
+import {MeasurementUnit} from 'term-web/measurement-unit/_lib/model/measurement-unit';
+import {MeasurementUnitSearchParams} from 'term-web/measurement-unit/_lib/model/measurement-unit-search-params';
+import {MeasurementUnitLibService} from 'term-web/measurement-unit/_lib/services/measurement-unit-lib.service';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 @Component({
-  selector: 'tw-measurement-unit-search',
-  templateUrl: './measurement-unit-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MeasurementUnitSearchComponent), multi: true}, DestroyService]
+    selector: 'tw-measurement-unit-search',
+    templateUrl: './measurement-unit-search.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MeasurementUnitSearchComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, MarinaUtilModule, KeysPipe, ToBooleanPipe]
 })
 export class MeasurementUnitSearchComponent implements OnInit {
+  private measurementUnitService = inject(MeasurementUnitLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() @BooleanInput() public multiple: string | boolean;
 
@@ -21,13 +28,8 @@ export class MeasurementUnitSearchComponent implements OnInit {
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(
-    private measurementUnitService: MeasurementUnitLibService,
-    private destroy$: DestroyService
-  ) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(

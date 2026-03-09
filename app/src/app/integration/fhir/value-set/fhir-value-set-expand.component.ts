@@ -1,23 +1,41 @@
 import {Clipboard} from '@angular/cdk/clipboard';
-import {Component} from '@angular/core';
-import {FhirValueSetExpandParams, FhirValueSetLibService} from '../../../fhir/_lib';
+import { Component, inject } from '@angular/core';
+import {FhirValueSetExpandParams, FhirValueSetLibService} from 'term-web/fhir/_lib';
+import { MuiCardModule, MuiSpinnerModule, MuiButtonModule, MuiFormModule, MuiIconModule, MuiPopoverModule, MuiTextareaModule, MuiAlertModule } from '@kodality-web/marina-ui';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+import { FormsModule } from '@angular/forms';
+import { JsonPipe } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: './fhir-value-set-expand.component.html',
+    templateUrl: './fhir-value-set-expand.component.html',
+    imports: [
+        MuiCardModule,
+        MuiSpinnerModule,
+        NzBreadCrumbComponent,
+        NzBreadCrumbItemComponent,
+        MuiButtonModule,
+        MuiFormModule,
+        MuiIconModule,
+        MuiPopoverModule,
+        MuiTextareaModule,
+        FormsModule,
+        MuiAlertModule,
+        JsonPipe,
+        TranslatePipe,
+    ],
 })
 export class FhirValueSetExpandComponent {
+  private fhirValueSetService = inject(FhirValueSetLibService);
+  private clipboardService = inject(Clipboard);
+
   public response?: any;
   public error?: any;
 
   public data = new FhirValueSetExpandParams();
 
   public loading: boolean = false;
-
-  public constructor(
-    private fhirValueSetService: FhirValueSetLibService,
-    private clipboardService: Clipboard,
-  ) {}
 
   public expand(): void {
     this.data.url = this.data.url || undefined;

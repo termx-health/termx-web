@@ -1,26 +1,53 @@
-import {Component, OnInit} from '@angular/core';
-import {ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult} from '@kodality-web/core-util';
-import {ImplementationGuide, ImplementationGuideSearchParams, ImplementationGuideVersion} from 'app/src/app/implementation-guide/_lib';
-import {ImplementationGuideService} from 'app/src/app/implementation-guide/services/implementation-guide.service';
+import { Component, OnInit, inject } from '@angular/core';
+import { ComponentStateStore, copyDeep, LoadingManager, QueryParams, SearchResult, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import {ImplementationGuide, ImplementationGuideSearchParams, ImplementationGuideVersion} from 'term-web/implementation-guide/_lib';
+import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
 import {environment} from 'environments/environment';
 import {Observable, tap} from 'rxjs';
+import { MuiCardModule, MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiBackendTableModule, MuiTableModule, MuiIconModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { FormsModule } from '@angular/forms';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { RouterLink } from '@angular/router';
+
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 
 @Component({
-  templateUrl: 'implementation-guide-list.component.html',
+    templateUrl: 'implementation-guide-list.component.html',
+    imports: [
+    MuiCardModule,
+    MuiInputModule,
+    InputDebounceDirective,
+    AutofocusDirective,
+    FormsModule,
+    PrivilegedDirective,
+    MuiDropdownModule,
+    AddButtonComponent,
+    MuiCoreModule,
+    RouterLink,
+    MuiBackendTableModule,
+    MuiTableModule,
+    MuiIconModule,
+    MuiNoDataModule,
+    TranslatePipe,
+    MarinaUtilModule,
+    ApplyPipe,
+    LocalDatePipe
+],
 })
 export class ImplementationGuideListComponent implements OnInit {
+  private igService = inject(ImplementationGuideService);
+  private stateStore = inject(ComponentStateStore);
+
   protected readonly STORE_KEY = 'ig-list';
 
   public query = new ImplementationGuideSearchParams();
   public searchResult: SearchResult<ImplementationGuide> = SearchResult.empty();
   public searchInput: string;
   public loader = new LoadingManager();
-
-  public constructor(
-    private igService: ImplementationGuideService,
-    private stateStore: ComponentStateStore
-  ) {}
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
@@ -50,8 +77,7 @@ export class ImplementationGuideListComponent implements OnInit {
   };
 
   protected findLastVersion = (versions: ImplementationGuideVersion[]): ImplementationGuideVersion => {
-    return  versions?.filter(v => ['draft', 'active'].includes(v.status!))
-      .sort((a, b) => new Date(a.date!) > new Date(b.date!) ? -1 : new Date(a.date!) > new Date(b.date!) ? 1 : 0)?.[0];
+    return  versions?.sort((a, b) => new Date(a.date!) > new Date(b.date!) ? -1 : new Date(a.date!) > new Date(b.date!) ? 1 : 0)?.[0];
   };
 
   public delete(id: string): void {

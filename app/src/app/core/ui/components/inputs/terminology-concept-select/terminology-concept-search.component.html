@@ -1,31 +1,35 @@
-<ng-container *ngIf="codeSystem" [ngSwitch]="codeSystem">
-
-  <tw-measurement-unit-search *ngSwitchCase="'ucum'"
-      [(ngModel)]="value"
-      (ngModelChange)="fromUcum($event)"
-      [valuePrimitive]="valueType | apply:valuePrimitive"
+@if (codeSystem) {
+  @switch (codeSystem) {
+    @case ('ucum') {
+      <tw-measurement-unit-search
+        [(ngModel)]="value"
+        (ngModelChange)="fromUcum($event)"
+        [valuePrimitive]="valueType | apply:valuePrimitive"
       [multiple]="multiple"></tw-measurement-unit-search>
-
-  <tw-snomed-drawer-search *ngSwitchCase="'snomed-ct'"
-      [value]="value | apply:getCode"
-      (twChange)="fromSnomed($event)"
-      [multiple]="multiple"
-      [displayType]="displayType"
+    }
+    @case ('snomed-ct') {
+      <tw-snomed-drawer-search
+        [value]="value | apply:getCode"
+        (twChange)="fromSnomed($event)"
+        [multiple]="multiple"
+        [displayType]="displayType"
       [branch]="snomedBranch"></tw-snomed-drawer-search>
-
-  <tw-concept-search *ngSwitchDefault
-      [(ngModel)]="value"
-      (ngModelChange)="onChange($event)"
-      [valueType]="valueType"
-      [displayType]="displayType"
-      [codeSystem]="codeSystem"
-      [codeSystemVersion]="codeSystemVersion"
-      [codeSystemVersionId]="codeSystemVersionId"
-      [codeSystemVersionReleaseDateLe]="codeSystemVersionReleaseDateLe"
-      [codeSystemVersionExpirationDateGe]="codeSystemVersionExpirationDateGe"
-      [codeSystemEntityVersionStatus]="codeSystemEntityVersionStatus"
-      [propertyValues]="propertyValues"
-      [multiple]="multiple"
+    }
+    @default {
+      <tw-concept-search
+        [(ngModel)]="value"
+        (ngModelChange)="onChange($event)"
+        [valueType]="valueType"
+        [displayType]="displayType"
+        [codeSystem]="codeSystem"
+        [codeSystemVersion]="codeSystemVersion"
+        [codeSystemVersionId]="codeSystemVersionId"
+        [codeSystemVersionReleaseDateLe]="codeSystemVersionReleaseDateLe"
+        [codeSystemVersionExpirationDateGe]="codeSystemVersionExpirationDateGe"
+        [codeSystemEntityVersionStatus]="codeSystemEntityVersionStatus"
+        [propertyValues]="propertyValues"
+        [multiple]="multiple"
       [placeholder]="placeholder"></tw-concept-search>
-
-</ng-container>
+    }
+  }
+}
