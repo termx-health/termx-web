@@ -13,6 +13,7 @@ import { MarinaUtilModule } from '@kodality-web/marina-util';
 @Component({
     selector: 'tw-space-select',
     templateUrl: './space-select.component.html',
+    standalone: true,
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SpaceSelectComponent), multi: true }, DestroyService],
     imports: [MuiSelectModule, FormsModule, MarinaUtilModule, KeysPipe]
 })

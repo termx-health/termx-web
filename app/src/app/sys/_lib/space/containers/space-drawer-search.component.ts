@@ -18,6 +18,7 @@ export class SpaceItem {
 @Component({
     selector: 'tw-space-drawer-search',
     templateUrl: 'space-drawer-search.component.html',
+    standalone: true,
     providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SpaceDrawerSearchComponent), multi: true }],
     imports: [MuiCoreModule, MuiDrawerModule, MuiCardModule, MuiSpinnerModule, FormsModule, MuiFormModule, SpaceSelectComponent, MuiSelectModule, MuiButtonModule, ApplyPipe, TranslatePipe]
 })
