@@ -21,7 +21,7 @@
     <!-- Add action -->
     @if (!viewMode) {
       @if (null | apply: getConceptEditRoute; as route) {
-        @if (!codeSystem.baseCodeSystem) {
+        @if (!codeSystem.baseCodeSystem || codeSystem.baseCodeSystem == 'ucum') {
           <tw-add-button [routerLink]="route.path" [queryParams]="route.query">
             {{'web.code-system.form.concepts.add-concept' | translate}}
           </tw-add-button>
