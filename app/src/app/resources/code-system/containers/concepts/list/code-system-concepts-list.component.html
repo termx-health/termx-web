@@ -15,7 +15,7 @@
     <!-- Add action -->
     <ng-container *ngIf="!viewMode">
       <ng-container *ngIf="null | apply: getConceptEditRoute as route">
-        <tw-add-button *ngIf="!codeSystem.baseCodeSystem" [routerLink]="route.path" [queryParams]="route.query">
+        <tw-add-button *ngIf="!codeSystem.baseCodeSystem || codeSystem.baseCodeSystem == 'ucum'" [routerLink]="route.path" [queryParams]="route.query">
           {{'web.code-system.form.concepts.add-concept' | translate}}
         </tw-add-button>
       </ng-container>
