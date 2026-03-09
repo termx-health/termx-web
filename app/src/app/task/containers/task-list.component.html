@@ -154,9 +154,9 @@
         }
       </td>
       <td>
-        <ng-container *ngIf="task.context | apply: contextDisplay as ctx">
+        @if (task.context | apply: contextDisplay; as ctx) {
           <span class="m-subtitle" style="font-size: 0.75rem">{{ctx.type | apply: contextTypeLabel}}</span>&nbsp;<span>{{ctx.id}}</span>
-        </ng-container>
+        }
       </td>
       <td>{{task.title}}</td>
       <td><tw-task-type [ngModel]="task.type" readonly/></td>

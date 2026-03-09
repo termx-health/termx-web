@@ -2,7 +2,6 @@ import { Component, inject } from '@angular/core';
 import {ComponentStateStore, duplicate, LoadingManager, SearchResult} from '@kodality-web/core-util';
 import {catchError, forkJoin, Observable, of} from 'rxjs';
 import {InfoService} from 'term-web/core/info/info.service';
-import {LandingTaskComponent} from 'term-web/landing/components/landing-task.component';
 import {CodeSystemLibService, MapSetLibService, ValueSetLibService} from 'term-web/resources/_lib';
 import {SysLibModule} from 'term-web/sys/_lib';
 import {SpaceLibService} from 'term-web/sys/_lib/space';
@@ -15,7 +14,7 @@ type Modules = 'terminology' | 'core' | 'task' | 'wiki';
 
 @Component({
   standalone: true,
-  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SysLibModule, LandingTaskComponent],
+  imports: [CoreUiModule, TaskLibModule, WikiLibModule, SysLibModule],
   templateUrl: 'landing-page.component.html',
   styleUrls: ['landing-page.component.less']
 })
