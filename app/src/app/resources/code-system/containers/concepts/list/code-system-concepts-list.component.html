@@ -168,7 +168,8 @@
 
 
   <ng-template #treeView let-node="node" let-level="level">
-    <tr class="m-clickable"
+    <tr #treeRow class="m-clickable"
+        [attr.data-code]="node.code"
         [style.background]="selectedConcept?.code === node.code ? 'var(--color-table-background--expanded)' :
             node.concept.versions?.[node.concept.versions?.length - 1]?.status === 'draft' ? 'var(--color-amber-0)' :
             node.concept.versions?.[node.concept.versions?.length - 1]?.status === 'retired' ? 'var(--color-red-0)' : 'initial'"
@@ -184,7 +185,7 @@
 
   <ng-template #rowContent let-node="node" let-level="level">
     <td>
-      <div class="m-items-middle m-bold">
+      <div *ngIf="!groupOpened || !needsPreview || node.detailsExpanded; else previewCode" class="m-items-middle m-bold">
         <m-icon-button *ngIf="groupOpened"
             [style.padding-left.rem]="level"
             [style.opacity]="node.expandable ? '1' : '0'"
@@ -196,36 +197,51 @@
           {{node.code}}
         </a>
       </div>
-    </td>
-    <td>
-      <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
-        <ng-container *ngFor="let designation of (node.concept | apply: getDesignations) | sort: 'language'">
-          <ng-container *ngIf="(!tableSummary.langs?.length || (tableSummary.langs | includes: designation.language)) &&
-          (!tableSummary.properties?.length || (tableSummary.properties | includes: designation.designationType))"
-          >
-            <span class="m-bold">{{designation.language}}</span>
-            {{designation.name}}
-          </ng-container>
-        </ng-container>
-      </div>
-    </td>
-    <td>
-      <div>
-        <div style="display: flex"
-            *ngFor="let property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableSummary.properties:codeSystem.properties)"
-        >
-          <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
-          <tw-property-value-input style="flex: 1; text-align: right"
-              viewMode
-              [ngModel]="property.value"
-              [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
-              [codeSystem]="codeSystem.id"
-          ></tw-property-value-input>
+      <ng-template #previewCode>
+        <div class="m-items-middle m-bold">
+                  <m-icon-button *ngIf="groupOpened"
+            [style.padding-left.rem]="level"
+            [style.opacity]="'1'"
+            [mIcon]="'file'"
+        ></m-icon-button>
+          {{node.code}}
         </div>
-      </div>
+      </ng-template>
     </td>
     <td>
-      <m-dropdown>
+        <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
+          <ng-container *ngFor="let designation of (node.concept | apply: getDesignations) | sort: 'language'">
+            <ng-container *ngIf="(!tableSummary.langs?.length || (tableSummary.langs | includes: designation.language)) &&
+            (!tableSummary.properties?.length || (tableSummary.properties | includes: designation.designationType))"
+            >
+              <span class="m-bold">{{designation.language}}</span>
+              {{designation.name}}
+            </ng-container>
+          </ng-container>
+        </div>
+    </td>
+    <td>
+      <ng-container *ngIf="!groupOpened || !needsPreview || node.detailsExpanded; else propertySummary">
+        <div>
+          <div style="display: flex"
+              *ngFor="let property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableSummary.properties:codeSystem.properties)"
+          >
+            <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
+            <tw-property-value-input style="flex: 1; text-align: right"
+                viewMode
+                [ngModel]="property.value"
+                [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
+                [codeSystem]="codeSystem.id"
+            ></tw-property-value-input>
+          </div>
+        </div>
+      </ng-container>
+      <ng-template #propertySummary>
+        <span class="m-muted">{{((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableSummary.properties:codeSystem.properties)?.length || 0}}</span>
+      </ng-template>
+    </td>
+    <td>
+      <m-dropdown *ngIf="!groupOpened || !needsPreview || node.detailsExpanded">
         <a *m-dropdown-item (mClick)="openFhir(node.code)">
           {{'web.code-system-concept.list.open-fhir' | translate}}
         </a>
