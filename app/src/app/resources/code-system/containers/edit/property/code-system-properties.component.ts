@@ -16,6 +16,7 @@ export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
 
   protected designationProperties: EntityProperty[] = [];
   protected basicProperties: EntityProperty[];
+  protected expandedBasicPropertyKey?: string;
 
   protected designationRowInstance: EntityProperty = {kind: 'designation', type: 'string', showInList: true, rule: {filters: []}, status: 'active'};
   protected propertyRowInstance: EntityProperty = {kind: 'property', showInList: true, rule: {filters: []}, status: 'active'};
@@ -88,5 +89,16 @@ export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
     if (dp.kind === 'property' && !this.basicProperties.find(d => d.name === dp.name)) {
       this.basicProperties = [...this.basicProperties, p];
     }
+  }
+
+  protected getBasicPropertyKey = (p: EntityProperty): string => {
+    return p?.id ? `id:${p.id}` : `name:${p?.name || ''}`;
+  };
+
+  protected toggleBasicPropertyExpand(p: EntityProperty, event?: any): void {
+    event?.preventDefault?.();
+    event?.stopPropagation?.();
+    const key = this.getBasicPropertyKey(p);
+    this.expandedBasicPropertyKey = this.expandedBasicPropertyKey === key ? undefined : key;
   }
 }
