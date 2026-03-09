@@ -108,6 +108,6 @@ export class SpaceEditComponent implements OnInit {
   }
 
   protected sort(arr: any[]): any[] {
-    return arr.sort();
+    return arr.sort((a, b) => String(a).localeCompare(String(b)));
   }
 }
