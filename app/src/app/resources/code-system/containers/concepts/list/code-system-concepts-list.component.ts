@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnDestroy, OnInit, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {NgForm} from '@angular/forms';
 import {
   BooleanInput,
@@ -26,7 +26,7 @@ import {
   EntityPropertyValue
 } from 'app/src/app/resources/_lib';
 import {environment} from 'environments/environment';
-import {forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
+import {debounceTime, forkJoin, fromEvent, map, mergeMap, Observable, of, Subject, takeUntil, tap} from 'rxjs';
 import {ConceptDrawerSearchComponent} from 'term-web/resources/_lib/code-system/containers/concept-drawer-search.component';
 import {ResourceTasksWidgetComponent} from 'term-web/resources/resource/components/resource-tasks-widget.component';
 import {Task} from 'term-web/task/_lib';
@@ -40,6 +40,7 @@ interface ConceptNode {
   expandable?: boolean;
   expanded?: boolean;
   loading?: boolean;
+  detailsExpanded?: boolean;
 
   concept: CodeSystemConcept
 }
@@ -57,6 +58,8 @@ interface FilterProperty {
   value: string | Date | {code: string};
 }
 
+const INITIAL_FULL_LOAD = 20;
+const PREVIEW_LOADING_MINIMUM = 200;
 @Component({
   selector: 'tw-code-system-concepts-list',
   templateUrl: './code-system-concepts-list.component.html',
@@ -87,7 +90,7 @@ interface FilterProperty {
     }
   `]
 })
-export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
+export class CodeSystemConceptsListComponent implements OnInit, AfterViewInit, OnDestroy {
   protected readonly STORE_KEY = 'code-system-concept-list';
 
   @Input() public codeSystem?: CodeSystem;
@@ -113,6 +116,12 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   @ViewChild("taskModalForm") public taskModalForm?: NgForm;
   @ViewChild(ResourceTasksWidgetComponent) public resourceTasksWidgetComponent?: ResourceTasksWidgetComponent;
   @ViewChild(ConceptDrawerSearchComponent) public conceptDrawerSearchComponent?: ConceptDrawerSearchComponent;
+  @ViewChildren('treeRow', {read: ElementRef}) public treeRows?: QueryList<ElementRef<HTMLTableRowElement>>;
+
+  private destroy$ = new Subject<void>();
+
+  private codeToNodeMap = new Map<string, ConceptNode>();
+  protected needsPreview = false;
 
   public constructor(
     private codeSystemService: CodeSystemService,
@@ -133,6 +142,12 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
     this.initConcepts();
   }
 
+  public ngAfterViewInit(): void {
+    this.treeRows?.changes.pipe(debounceTime(50), takeUntil(this.destroy$)).subscribe(() => this.scheduleAutoOpen());
+    fromEvent(window, 'scroll').pipe(debounceTime(1000), takeUntil(this.destroy$)).subscribe(() => this.refreshAutoOpenedRows());
+    setTimeout(() => this.refreshAutoOpenedRows(), 1000);
+  }
+
   private initConcepts(): void {
     if (this.codeSystem.hierarchyMeaning && !this.codeSystem.settings?.disableHierarchyGrouping) {
       this.groupOpened = true;
@@ -143,6 +158,8 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   }
 
   public ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     this.saveState();
   }
 
@@ -159,6 +176,10 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   protected groupConcepts(groupParam: string): void {
     this.loadRootConcepts(groupParam).subscribe(resp => {
       this.rootConcepts = resp.map(c => this.mapToNode(c));
+      if (this.rootConcepts.length > PREVIEW_LOADING_MINIMUM) {
+        this.needsPreview = true;
+        this.rootConcepts.slice(0, INITIAL_FULL_LOAD).forEach(node => node.detailsExpanded = true);
+      }
     });
   }
 
@@ -258,6 +279,9 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
 
       this.loadChildren(node.code).subscribe(concepts => {
         node.children = concepts.data.map(c => this.mapToNode(c));
+        if (this.needsPreview) {
+          node.children.slice(0, INITIAL_FULL_LOAD).forEach(child => child.detailsExpanded = true);
+        }
         node.expanded = true;
       }).add(() => node.loading = false);
     }
@@ -273,11 +297,13 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   }
 
   private mapToNode(c: CodeSystemConcept): ConceptNode {
-    return {
+    const node = {
       code: c.code,
       expandable: !c.leaf,
       concept: c
     };
+    this.codeToNodeMap.set(node.code, node);
+    return node;
   }
 
 
@@ -336,6 +362,34 @@ export class CodeSystemConceptsListComponent implements OnInit, OnDestroy {
   protected getProperty = (id: number, properties: EntityProperty[]): EntityProperty => {
     return properties?.find(p => p.id === id);
   };
+
+  private scheduleAutoOpen(): void {
+    if (!this.groupOpened) {
+      return;
+    }
+    setTimeout(() => this.refreshAutoOpenedRows(), 0);
+  }
+
+  private refreshAutoOpenedRows(): void {
+    if (!this.groupOpened || !this.treeRows || !this.needsPreview) {
+      return;
+    }
+
+    const rows = this.treeRows.toArray();
+    const visibleCodes = rows
+      .filter(r => {
+        const rect = r.nativeElement.getBoundingClientRect();
+        return rect.bottom >= 0 && rect.top <= window.innerHeight;
+      })
+      .map(r => r.nativeElement.getAttribute('data-code'))
+      .filter((code): code is string => !!code);
+
+    console.log("Visible code length: ", visibleCodes.length);
+    visibleCodes.forEach(code => {
+      const node = this.codeToNodeMap.get(code);
+      node.detailsExpanded = true;
+    });
+  }
 
 
   // events
