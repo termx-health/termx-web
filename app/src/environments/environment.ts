@@ -12,8 +12,8 @@ export const environment: Environment = {
   contentLanguages: [...UI_LANGS],
   extraLanguages: {},
 
-  termxApi: 'https://demo.termx.org/api',
-  // termxApi: 'http://localhost:8200',
+  //termxApi: 'https://demo.termx.org/api',
+  termxApi: 'http://localhost:8200',
 
   oauthIssuer: 'https://auth.termx.org/realms/termx',
   oauthClientId: 'term-client',

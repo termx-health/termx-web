@@ -1918,6 +1918,8 @@
 			"add-btn": "Pridėti užduotį",
 			"add-comment": "Pridėti naują komentarą",
 			"context": "Kontekstas",
+			"context-type": "Resource type",
+			"context-resource": "Resource",
 			"filter": {
 				"assignee": "Priskirtas naudotojas",
 				"author": "Autorius",

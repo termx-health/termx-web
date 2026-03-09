@@ -20,6 +20,7 @@ export class Task {
   public content?: string;
   public context?: TaskContextItem[];
   public activities?: TaskActivity[];
+  public lastOpenedTime?: Date;
 }
 
 export class TaskContextItem {

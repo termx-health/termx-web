@@ -7,6 +7,7 @@ import {TaskListComponent} from 'term-web/task/containers/task-list.component';
 import {TaskService} from 'term-web/task/services/task-service';
 import {UserLibModule} from 'term-web/user/_lib';
 import {WikiLibModule} from 'term-web/wiki/_lib';
+import {SysLibModule} from 'term-web/sys/_lib';
 import {CoreUiModule} from '../core/ui/core-ui.module';
 
 export const TASK_ROUTES: Routes = [
@@ -22,7 +23,8 @@ export const TASK_ROUTES: Routes = [
     TaskLibModule,
     ResourcesLibModule,
     WikiLibModule,
-    UserLibModule
+    UserLibModule,
+    SysLibModule
   ],
   declarations: [TaskListComponent, TaskEditComponent],
   providers: [

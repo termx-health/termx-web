@@ -2257,6 +2257,8 @@
 			"add-btn": "Add task",
 			"add-comment": "Add new comment",
 			"context": "Context",
+			"context-type": "Resource type",
+			"context-resource": "Resource",
 			"filter": {
 				"assignee": "Assignee",
 				"author": "Author",
@@ -2271,8 +2273,11 @@
 				"project": "Project",
 				"requested-performer": "",
 				"status": "Status",
-				"type": "Type"
+				"type": "Type",
+				"unseen-changes": "Updates",
+				"unseen-changes-only": "Show only tasks with unseen changes"
 			},
+			"unseen-changes": "Unseen changes",
 			"select-project": ""
 		},
 		"template": {

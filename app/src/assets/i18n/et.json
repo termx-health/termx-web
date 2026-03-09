@@ -2060,6 +2060,8 @@
 			"add-btn": "Lisa ülesanne",
 			"add-comment": "Lisa uus kommentaar",
 			"context": "Kontekst",
+			"context-type": "Ressursi tüüp",
+			"context-resource": "Ressurss",
 			"filter": {
 				"assignee": "Teostaja",
 				"author": "Autor",
@@ -2074,8 +2076,11 @@
 				"project": "Projekt",
 				"requested-performer": "Soovitud teostaja",
 				"status": "Staatus",
-				"type": "Tüüp"
+				"type": "Tüüp",
+				"unseen-changes": "Uuendused",
+				"unseen-changes-only": "Näita ainult nägemata muudatustega ülesandeid"
 			},
+			"unseen-changes": "Nägemata muudatused",
 			"select-project": "Vali projekt"
 		},
 		"template": {
