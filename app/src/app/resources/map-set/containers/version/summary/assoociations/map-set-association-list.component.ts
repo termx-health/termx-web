@@ -1,19 +1,29 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {copyDeep, isDefined, SearchResult} from '@kodality-web/core-util';
-import {AssociationType, MapSet, MapSetAssociation, MapSetAssociationSearchParams, MapSetProperty} from 'app/src/app/resources/_lib';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { copyDeep, isDefined, SearchResult, ApplyPipe } from '@kodality-web/core-util';
+import {AssociationType, MapSet, MapSetAssociation, MapSetAssociationSearchParams, MapSetProperty} from 'term-web/resources/_lib';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import { MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiCheckboxModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiDropdownModule, MuiCoreModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+
+import { FormsModule } from '@angular/forms';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { MapSetPropertyValueInputComponent } from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-value-input.component';
+import { MapSetAssociationDrawerComponent as MapSetAssociationDrawerComponent_1 } from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'tw-map-set-association-list',
-  templateUrl: 'map-set-association-list.component.html'
+    selector: 'tw-map-set-association-list',
+    templateUrl: 'map-set-association-list.component.html',
+    imports: [MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiCheckboxModule, FormsModule, MuiInputModule, InputDebounceDirective, MuiBackendTableModule, MuiTableModule, MapSetPropertyValueInputComponent, MuiDropdownModule, MuiCoreModule, MuiNoDataModule, MapSetAssociationDrawerComponent_1, TranslatePipe, ApplyPipe]
 })
 export class MapSetAssociationListComponent implements OnChanges {
+  private mapSetService = inject(MapSetService);
+
   @Input() public relationships: string;
   @Input() public associationTypes: AssociationType[];
-  @Input() public noMap: Boolean;
+  @Input() public noMap: boolean;
   @Input() public mapSet: MapSet;
   @Input() public mapSetVersion: string;
   @Input() public targetExternal: boolean;
@@ -28,7 +38,7 @@ export class MapSetAssociationListComponent implements OnChanges {
 
   @ViewChild(MapSetAssociationDrawerComponent) public drawerComponent?: MapSetAssociationDrawerComponent;
 
-  public constructor(private mapSetService: MapSetService) {
+  public constructor() {
     this.query.limit = 100;
   }
 

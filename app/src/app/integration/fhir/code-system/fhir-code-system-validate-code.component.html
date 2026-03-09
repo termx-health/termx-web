@@ -14,14 +14,14 @@
         <div>{{'web.integration.fhir.code-system.validate-code.code' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.validate-code.code-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.code"></m-input>
+      <m-textarea [(ngModel)]="data.code"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="version">
       <ng-template #version>
         <div>{{'web.integration.fhir.code-system.validate-code.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.code-system.validate-code.version-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.version"></m-input>
+      <m-textarea [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="url" required>
       <ng-template #url>
@@ -31,7 +31,7 @@
           {{'web.integration.fhir.code-system.validate-code.url-tooltip' | translate}}
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.url"></m-input>
+      <m-textarea [(ngModel)]="data.url"></m-textarea>
     </m-form-item>
     <m-form-item [mLabel]="display">
       <ng-template #display>
@@ -41,23 +41,29 @@
           <span [innerHTML]="('web.integration.fhir.code-system.validate-code.display-tooltip' | translate)"></span>
         </ng-template>
       </ng-template>
-      <m-input [(ngModel)]="data.display"></m-input>
+      <m-textarea [(ngModel)]="data.display"></m-textarea>
     </m-form-item>
 
-    <m-card *ngIf="response || error" class="m-card-inside">
-      <div *m-card-header class="m-items-middle">
-        <div class="m-card__title">{{'web.integration.response' | translate}}</div>
-        <m-button (click)="copyResult()">
-          <m-icon mCode="copy"></m-icon>
-        </m-button>
-      </div>
-      <pre *ngIf="response">{{response | json}}</pre>
-      <div *ngFor="let issue of error?.issue">
-        <m-alert [mType]="issue.severity" mShowIcon>
-          {{issue?.details?.text}}
-        </m-alert>
-      </div>
-    </m-card>
+    @if (response || error) {
+      <m-card class="m-card-inside">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{'web.integration.response' | translate}}</div>
+          <m-button (click)="copyResult()">
+            <m-icon mCode="copy"></m-icon>
+          </m-button>
+        </div>
+        @if (response) {
+          <pre>{{response | json}}</pre>
+        }
+        @for (issue of error?.issue; track issue) {
+          <div>
+            <m-alert [mType]="issue.severity" mShowIcon>
+              {{issue?.details?.text}}
+            </m-alert>
+          </div>
+        }
+      </m-card>
+    }
 
   </m-spinner>
 </m-card>

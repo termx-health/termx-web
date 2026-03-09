@@ -1,7 +1,7 @@
 import {CodeSystemVersionReference} from 'term-web/resources/_lib';
-import {Designation} from '../../designation';
-import {CodeSystemAssociation} from './code-system-association';
-import {EntityPropertyValue} from './entity-property';
+import {Designation} from 'term-web/resources/_lib/designation';
+import {CodeSystemAssociation} from 'term-web/resources/_lib/code-system/model/code-system-association';
+import {EntityPropertyValue} from 'term-web/resources/_lib/code-system/model/entity-property';
 
 export abstract class CodeSystemEntity {
   public id?: number;

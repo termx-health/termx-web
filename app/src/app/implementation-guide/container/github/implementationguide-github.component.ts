@@ -1,16 +1,21 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {LoadingManager} from '@kodality-web/core-util';
+import { LoadingManager, ApplyPipe, FilterPipe } from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {delay, forkJoin, map, mergeMap, Observable, of, tap} from 'rxjs';
 import {GithubDiff} from 'term-web/integration/_lib/github/github';
-import {ImplementationGuideVersion} from '../../_lib';
-import {ImplementationGuideGithubService} from '../../services/implementation-guide-github.service';
-import {ImplementationGuideService} from '../../services/implementation-guide.service';
+import {ImplementationGuideVersion} from 'term-web/implementation-guide/_lib';
+import {ImplementationGuideGithubService} from 'term-web/implementation-guide/services/implementation-guide-github.service';
+import {ImplementationGuideService} from 'term-web/implementation-guide/services/implementation-guide.service';
+import { MuiFormModule, MuiCardModule, MuiIconModule, MuiAlertModule, MuiSelectModule, MuiButtonModule, MuiCheckboxModule, MuiCoreModule, MuiModalModule, MuiInputModule, MuiSkeletonModule } from '@kodality-web/marina-ui';
+
+import { FormsModule } from '@angular/forms';
+import { DiffViewComponent } from 'term-web/core/ui/components/diff/diff-view.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: './implementationguide-github.component.html',
-  styles: [`
+    templateUrl: './implementationguide-github.component.html',
+    styles: [`
     .status-row {
       display: flex;
 
@@ -35,9 +40,14 @@ import {ImplementationGuideService} from '../../services/implementation-guide.se
     ::ng-deep .modal--wide {
       width: 80vw;
     }
-  `]
+  `],
+    imports: [MuiFormModule, MuiCardModule, MuiIconModule, MuiAlertModule, MuiSelectModule, FormsModule, MuiButtonModule, MuiCheckboxModule, MuiCoreModule, MuiModalModule, MuiInputModule, MuiSkeletonModule, DiffViewComponent, TranslatePipe, ApplyPipe, FilterPipe]
 })
 export class ImplementationguideGithubComponent implements OnInit {
+  private igService = inject(ImplementationGuideService);
+  private githubService = inject(ImplementationGuideGithubService);
+  private route = inject(ActivatedRoute);
+
   protected igVersion?: ImplementationGuideVersion;
   protected loading = false;
   protected pushModalVisible = false;
@@ -55,12 +65,6 @@ export class ImplementationguideGithubComponent implements OnInit {
   protected branches: string[];
 
   protected loader = new LoadingManager();
-
-  public constructor(
-    private igService: ImplementationGuideService,
-    private githubService: ImplementationGuideGithubService,
-    private route: ActivatedRoute
-  ) { }
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

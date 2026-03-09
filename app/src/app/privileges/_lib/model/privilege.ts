@@ -1,5 +1,5 @@
 import {LocalizedName} from '@kodality-web/marina-util';
-import {PrivilegeResource} from './privilege-resource';
+import {PrivilegeResource} from 'term-web/privileges/_lib/model/privilege-resource';
 
 export class Privilege {
   public id?: number;

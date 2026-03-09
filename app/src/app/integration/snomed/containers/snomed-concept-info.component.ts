@@ -1,13 +1,13 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import {DestroyService, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
-import {TranslateService} from '@ngx-translate/core';
-import {AuthService} from 'app/src/app/core/auth';
-import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'app/src/app/integration/_lib';
-import {MapSetLibService, ValueSetLibService} from 'app/src/app/resources/_lib';
-import {PageLibService} from 'app/src/app/wiki/_lib';
+import { DestroyService, isDefined, LoadingManager, validateForm, KeysPipe, SortPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiDropdownModule, MuiCoreModule, MuiTableModule, MuiNoDataModule, MuiCheckboxModule, MuiIconModule, MuiModalModule, MuiFormModule, MuiTextareaModule } from '@kodality-web/marina-ui';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import {AuthService} from 'term-web/core/auth';
+import {SnomedConcept, SnomedDescription, SnomedLibService, SnomedRelationship} from 'term-web/integration/_lib';
+import {MapSetLibService, ValueSetLibService} from 'term-web/resources/_lib';
+import {PageLibService} from 'term-web/wiki/_lib';
 import {forkJoin, of} from 'rxjs';
 import {InfoService} from 'term-web/core/info/info.service';
 import {SnomedTranslationListComponent} from 'term-web/integration/snomed/containers/snomed-translation-list.component';
@@ -15,13 +15,36 @@ import {SnomedTranslationService} from 'term-web/integration/snomed/services/sno
 import {LorqueLibService, Provenance} from 'term-web/sys/_lib';
 import {Task} from 'term-web/task/_lib';
 import {TaskService} from 'term-web/task/services/task-service';
+import { AsyncPipe } from '@angular/common';
+import { SnomedTranslationListComponent as SnomedTranslationListComponent_1 } from 'term-web/integration/snomed/containers/snomed-translation-list.component';
+import { ProvenanceListComponent } from 'term-web/sys/_lib/provenance/components/provenance-list.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { ResourceTasksWidgetComponent } from 'term-web/resources/resource/components/resource-tasks-widget.component';
+import { UserSelectComponent } from 'term-web/user/_lib/components/user-select.component';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
+import { SnomedConceptNamePipe } from 'term-web/integration/_lib/snomed/pipe/snomed-concept-name-pipe';
 
 @Component({
-  selector: 'tw-snomed-concept-info',
-  templateUrl: './snomed-concept-info.component.html',
-  providers: [DestroyService]
+    selector: 'tw-snomed-concept-info',
+    templateUrl: './snomed-concept-info.component.html',
+    providers: [DestroyService],
+    imports: [MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiDropdownModule, MuiCoreModule, MuiTableModule, MuiNoDataModule, SnomedTranslationListComponent_1, MuiCheckboxModule, FormsModule, ProvenanceListComponent, PrivilegedDirective, MuiIconModule, ResourceTasksWidgetComponent, MuiModalModule, MuiFormModule, UserSelectComponent, MuiTextareaModule, AsyncPipe, TranslatePipe, KeysPipe, SortPipe, PrivilegedPipe, SnomedConceptNamePipe]
 })
 export class SnomedConceptInfoComponent implements OnChanges {
+  private snomedService = inject(SnomedLibService);
+  private snomedTranslationService = inject(SnomedTranslationService);
+  private valueSetService = inject(ValueSetLibService);
+  private mapSetService = inject(MapSetLibService);
+  private pageService = inject(PageLibService);
+  private translateService = inject(TranslateService);
+  private lorqueService = inject(LorqueLibService);
+  private authService = inject(AuthService);
+  private destroy$ = inject(DestroyService);
+  private notificationService = inject(MuiNotificationService);
+  private taskService = inject(TaskService);
+  private info = inject(InfoService);
+  private router = inject(Router);
+
 
   public loader = new LoadingManager();
   public concept?: SnomedConcept;
@@ -40,22 +63,6 @@ export class SnomedConceptInfoComponent implements OnChanges {
   @Input() public branch?: string;
   @Output() public conceptSelected: EventEmitter<string> = new EventEmitter<string>();
   @ViewChild(SnomedTranslationListComponent) public translationListComponent?: SnomedTranslationListComponent;
-
-  public constructor(
-    private snomedService: SnomedLibService,
-    private snomedTranslationService: SnomedTranslationService,
-    private valueSetService: ValueSetLibService,
-    private mapSetService: MapSetLibService,
-    private pageService: PageLibService,
-    private translateService: TranslateService,
-    private lorqueService: LorqueLibService,
-    private authService: AuthService,
-    private destroy$: DestroyService,
-    private notificationService: MuiNotificationService,
-    private taskService: TaskService,
-    private info: InfoService,
-    private router: Router
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['conceptId'] || changes['branch']) && isDefined(this.conceptId)) {

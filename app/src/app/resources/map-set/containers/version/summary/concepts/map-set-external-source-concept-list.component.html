@@ -2,65 +2,85 @@
   <div *m-card-header class="m-justify-between">
     <div class="m-items-middle">
       <m-title>{{'web.map-set-version.summary.associations.external-mapping' | translate}}</m-title>
-      <ng-container *ngIf="editMode">
+      @if (editMode) {
         <m-divider mVertical></m-divider>
         <a (mClick)="openModal()">{{'web.map-set-version.summary.associations.bulk-copy' | translate}}</a>
         <m-divider mVertical></m-divider>
         <m-button (mClick)="verifyChecked()">{{'web.map-set-version.summary.associations.verify' | translate}}</m-button>
-      </ng-container>
+      }
     </div>
     <div>
-      <m-button *ngIf="editMode" mDisplay="primary" [mLoading]="loading" (mClick)="saveAssociations()">{{'core.btn.save' | translate}}</m-button>
+      @if (editMode) {
+        <m-button mDisplay="primary" [mLoading]="loading" (mClick)="saveAssociations()">{{'core.btn.save' | translate}}</m-button>
+      }
     </div>
   </div>
-  <form #form="ngForm" *ngIf="associations">
-    <m-editable-table #rowsTable [mData]="associations" [mLoading]="loading" [mRowInstance]="rowInstance" [mEditAllowed]="editMode" [mDeleteAllowed]="editMode">
-      <m-editable-column mName="verified">
-        <ng-template #viewTemplate let-a let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="a.verified" [name]="ngModelName" [readOnly]="!editMode"></m-checkbox>
-        </ng-template>
-        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-          <m-checkbox [(ngModel)]="a.verified" [name]="ngModelName" [readOnly]="!editMode"></m-checkbox>
-        </ng-template>
-      </m-editable-column>
-      <m-editable-column [mTitle]="'web.map-set-version.summary.associations.source-code'" mName="sCode">
-        <ng-template #viewTemplate let-a>{{a.source.code}}</ng-template>
-        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-          <m-input [(ngModel)]="a.source.code" [name]="ngModelName" required></m-input>
-        </ng-template>
-      </m-editable-column>
-      <m-editable-column [mTitle]="'web.map-set-version.summary.associations.source-display'" mName="sDisplay">
-        <ng-template #viewTemplate let-a>{{a.source.display}}</ng-template>
-        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-          <m-input [(ngModel)]="a.source.display" [name]="ngModelName"></m-input>
-        </ng-template>
-      </m-editable-column>
-      <m-editable-column [mTitle]="'web.map-set-version.summary.associations.target-code'" mName="tCode">
-        <ng-template #viewTemplate let-a>{{a.target.code}}</ng-template>
-        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-          <m-input *ngIf="targetExternal" [(ngModel)]="a.target.code" [name]="ngModelName"></m-input>
-          <a *ngIf="!targetExternal && a.source.code && !a.target.code" (mClick)="drawerComponent.openDrawerFromAssociation(a.source)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
-          <label *ngIf="!targetExternal && a.target.code" >{{a.target.code}}</label>
-        </ng-template>
-      </m-editable-column>
-      <m-editable-column [mTitle]="'web.map-set-version.summary.associations.target-display'" mName="sDisplay">
-        <ng-template #viewTemplate let-a>{{a.target.display}}</ng-template>
-        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-          <m-input *ngIf="targetExternal" [(ngModel)]="a.target.display" [name]="ngModelName"></m-input>
-          <label *ngIf="!targetExternal && a.target.code" >{{a.target.display}}</label>
-        </ng-template>
-      </m-editable-column>
-      <m-editable-column [mTitle]="'web.map-set-version.summary.associations.relationship'" mName="relationship">
-        <ng-template #viewTemplate let-a>{{a.relationship | apply: getRelationName: associationTypes}}</ng-template>
-        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-          <m-select *ngIf="targetExternal" [(ngModel)]="a.relationship" [name]="ngModelName" [required]="!!a.target?.code">
-            <m-option *ngFor="let r of associationTypes" [mLabel]="r.forwardName" [mValue]="r.code"></m-option>
-          </m-select>
-          <label *ngIf="!targetExternal && a.target.code" >{{a.relationship}}</label>
-        </ng-template>
-      </m-editable-column>
-    </m-editable-table>
-  </form>
+  @if (associations) {
+    <form #form="ngForm">
+      <m-editable-table #rowsTable [mData]="associations" [mLoading]="loading" [mRowInstance]="rowInstance" [mEditAllowed]="editMode" [mDeleteAllowed]="editMode">
+        <m-editable-column mName="verified">
+          <ng-template #viewTemplate let-a let-ngModelName="ngModelName">
+            <m-checkbox [(ngModel)]="a.verified" [name]="ngModelName" [readOnly]="!editMode"></m-checkbox>
+          </ng-template>
+          <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+            <m-checkbox [(ngModel)]="a.verified" [name]="ngModelName" [readOnly]="!editMode"></m-checkbox>
+          </ng-template>
+        </m-editable-column>
+        <m-editable-column [mTitle]="'web.map-set-version.summary.associations.source-code'" mName="sCode">
+          <ng-template #viewTemplate let-a>{{a.source.code}}</ng-template>
+          <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+            <m-input [(ngModel)]="a.source.code" [name]="ngModelName" required></m-input>
+          </ng-template>
+        </m-editable-column>
+        <m-editable-column [mTitle]="'web.map-set-version.summary.associations.source-display'" mName="sDisplay">
+          <ng-template #viewTemplate let-a>{{a.source.display}}</ng-template>
+          <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+            <m-input [(ngModel)]="a.source.display" [name]="ngModelName"></m-input>
+          </ng-template>
+        </m-editable-column>
+        <m-editable-column [mTitle]="'web.map-set-version.summary.associations.target-code'" mName="tCode">
+          <ng-template #viewTemplate let-a>{{a.target.code}}</ng-template>
+          <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+            @if (targetExternal) {
+              <m-input [(ngModel)]="a.target.code" [name]="ngModelName"></m-input>
+            }
+            @if (!targetExternal && a.source.code && !a.target.code) {
+              <a (mClick)="drawerComponent.openDrawerFromAssociation(a.source)">{{'web.map-set-version.summary.associations.add-target' | translate}}</a>
+            }
+            @if (!targetExternal && a.target.code) {
+              <label>{{a.target.code}}</label>
+            }
+          </ng-template>
+        </m-editable-column>
+        <m-editable-column [mTitle]="'web.map-set-version.summary.associations.target-display'" mName="sDisplay">
+          <ng-template #viewTemplate let-a>{{a.target.display}}</ng-template>
+          <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+            @if (targetExternal) {
+              <m-input [(ngModel)]="a.target.display" [name]="ngModelName"></m-input>
+            }
+            @if (!targetExternal && a.target.code) {
+              <label>{{a.target.display}}</label>
+            }
+          </ng-template>
+        </m-editable-column>
+        <m-editable-column [mTitle]="'web.map-set-version.summary.associations.relationship'" mName="relationship">
+          <ng-template #viewTemplate let-a>{{a.relationship | apply: getRelationName: associationTypes}}</ng-template>
+          <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+            @if (targetExternal) {
+              <m-select [(ngModel)]="a.relationship" [name]="ngModelName" [required]="!!a.target?.code">
+                @for (r of associationTypes; track r.code) {
+                  <m-option [mLabel]="r.forwardName" [mValue]="r.code"></m-option>
+                }
+              </m-select>
+            }
+            @if (!targetExternal && a.target.code) {
+              <label>{{a.relationship}}</label>
+            }
+          </ng-template>
+        </m-editable-column>
+      </m-editable-table>
+    </form>
+  }
 </m-card>
 
 <m-modal [(mVisible)]="modalData.visible" (mClose)="modalData = {visible: false}">

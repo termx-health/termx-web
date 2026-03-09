@@ -1,6 +1,6 @@
 import {Identifier} from '@kodality-web/core-util';
-import {ValueSet} from './value-set';
-import {ValueSetVersion} from './value-set-version';
+import {ValueSet} from 'term-web/resources/_lib/value-set/model/value-set';
+import {ValueSetVersion} from 'term-web/resources/_lib/value-set/model/value-set-version';
 
 
 export class ValueSetTransactionRequest {

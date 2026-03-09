@@ -1,16 +1,16 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {environment} from 'environments/environment';
 import {filter, merge, Observable, Subject, switchMap, takeUntil, tap, timer} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {LorqueProcess} from '../model/lorque-process';
+import {LorqueProcess} from 'term-web/sys/_lib/lorque/model/lorque-process';
 
 @Injectable()
 export class LorqueLibService {
+  protected http = inject(HttpClient);
+
 
   protected baseUrl = `${environment.termxApi}/lorque-processes`;
-
-  public constructor(protected http: HttpClient) { }
 
 
   public getStatus(id: number): Observable<string> {

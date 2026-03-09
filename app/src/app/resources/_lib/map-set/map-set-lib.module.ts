@@ -7,38 +7,36 @@ import {MarinaComponentsModule} from '@kodality-web/marina-ui';
 import {MarinaUtilModule} from '@kodality-web/marina-util';
 import {TranslateModule} from '@ngx-translate/core';
 import {MapSetFileImportService} from 'term-web/resources/_lib/map-set/services/map-set-file-import.service';
-import {MapSetSearchComponent} from './containers/map-set-search.component';
-import {MapSetVersionSelectComponent} from './containers/map-set-version-select.component';
-import {MapSetWidgetComponent} from './containers/map-set-widget.component';
-import {MapSetLibService} from './services/map-set-lib.service';
-import {MapSetVersionLibService} from './services/map-set-version-lib.service';
+import {MapSetSearchComponent} from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
+import {MapSetVersionSelectComponent} from 'term-web/resources/_lib/map-set/containers/map-set-version-select.component';
+import {MapSetWidgetComponent} from 'term-web/resources/_lib/map-set/containers/map-set-widget.component';
+import {MapSetLibService} from 'term-web/resources/_lib/map-set/services/map-set-lib.service';
+import {MapSetVersionLibService} from 'term-web/resources/_lib/map-set/services/map-set-version-lib.service';
 
 
 @NgModule({
-  imports: [
-    MarinaComponentsModule,
-    FormsModule,
-    CommonModule,
-    CoreUtilModule,
-    MarinaUtilModule,
-    RouterModule,
-    TranslateModule
-  ],
-  providers: [
-    MapSetLibService,
-    MapSetVersionLibService,
-    MapSetFileImportService
-  ],
-  declarations: [
-    MapSetSearchComponent,
-    MapSetWidgetComponent,
-    MapSetVersionSelectComponent
-  ],
-  exports: [
-    MapSetSearchComponent,
-    MapSetWidgetComponent,
-    MapSetVersionSelectComponent
-  ]
+    imports: [
+        MarinaComponentsModule,
+        FormsModule,
+        CommonModule,
+        CoreUtilModule,
+        MarinaUtilModule,
+        RouterModule,
+        TranslateModule,
+        MapSetSearchComponent,
+        MapSetWidgetComponent,
+        MapSetVersionSelectComponent
+    ],
+    providers: [
+        MapSetLibService,
+        MapSetVersionLibService,
+        MapSetFileImportService
+    ],
+    exports: [
+        MapSetSearchComponent,
+        MapSetWidgetComponent,
+        MapSetVersionSelectComponent
+    ]
 })
 export class MapSetLibModule {
 }

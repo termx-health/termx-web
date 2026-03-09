@@ -1,34 +1,42 @@
 import {ActiveDescendantKeyManager} from '@angular/cdk/a11y';
-import {AfterViewInit, Component, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren} from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, Input, Output, QueryList, ViewChild, ViewChildren, inject } from '@angular/core';
 import {DestroyService, isDefined} from '@kodality-web/core-util';
 import {delay, filter, fromEvent, map, startWith, takeUntil} from 'rxjs';
-import {WikiQuickActionsDropdownOptionComponent} from '../../texteditor/quick-actions/components/wiki-quick-actions-dropdown-option.component';
-import {WikiQuickActionsDropdownComponent} from '../../texteditor/quick-actions/components/wiki-quick-actions-dropdown.component';
-import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './actions/wiki-quick-actions.base';
+import {WikiQuickActionsDropdownOptionComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/components/wiki-quick-actions-dropdown-option.component';
+import {WikiQuickActionsDropdownComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/components/wiki-quick-actions-dropdown.component';
+import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from 'term-web/wiki/_lib/texteditor/quick-actions/actions/wiki-quick-actions.base';
+import { WikiQuickActionsDropdownComponent as WikiQuickActionsDropdownComponent_1 } from 'term-web/wiki/_lib/texteditor/quick-actions/components/wiki-quick-actions-dropdown.component';
+
+import { WikiQuickActionsDropdownOptionComponent as WikiQuickActionsDropdownOptionComponent_1 } from 'term-web/wiki/_lib/texteditor/quick-actions/components/wiki-quick-actions-dropdown-option.component';
+import { WikiQuickActionsLinkComponent } from 'term-web/wiki/_lib/texteditor/quick-actions/actions/wiki-quick-actions-link.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { WikiQuickActionsStructureDefinitionComponent } from 'term-web/wiki/_lib/texteditor/quick-actions/actions/wiki-quick-actions-structure-definition.component';
+import { WikiQuickActionsTemplateComponent } from 'term-web/wiki/_lib/texteditor/quick-actions/actions/wiki-quick-actions-template.component';
 
 
 @Component({
-  selector: "tw-dropdown-menu",
-  template: `
+    selector: "tw-dropdown-menu",
+    template: `
     <!-- WikiQuickActionsDropdownComponent -->
     <tw-wiki-quick-actions-dropdown [reference]="containerRef">
       <div class="dropdown-options-container" id="options-container">
         <!-- WikiDropdownOptionComponent -->
-        <tw-wiki-quick-actions-dropdown-option
-            *ngFor="let item of popupOptions"
+        @for (item of popupOptions; track item) {
+          <tw-wiki-quick-actions-dropdown-option
             [item]="item"
             (click)="onOptionSelect(item.id)"
-        ></tw-wiki-quick-actions-dropdown-option>
+          ></tw-wiki-quick-actions-dropdown-option>
+        }
       </div>
     </tw-wiki-quick-actions-dropdown>
-
-
+    
+    
     <!-- WikiQuickActionsBaseComponent -->
     <tw-wiki-link-action/>
-    <tw-wiki-structure-definition-action/>
-    <tw-wiki-template-action [lang]="lang"/>
-  `,
-  styles: [`
+    <tw-wiki-structure-definition-action *twPrivileged="'*.StructureDefinition.view'"/>
+    <tw-wiki-template-action *twPrivileged="'*.Wiki.view'" [lang]="lang"/>
+    `,
+    styles: [`
     .dropdown-options-container {
       width: 100%;
       border-radius: 3px;
@@ -37,11 +45,14 @@ import {WikiQuickActionDefinition, WikiQuickActionsBaseComponent} from './action
       scroll-behavior: smooth;
     }
   `],
-  providers: [
-    DestroyService
-  ]
+    providers: [
+        DestroyService
+    ],
+    imports: [WikiQuickActionsDropdownComponent_1, WikiQuickActionsDropdownOptionComponent_1, WikiQuickActionsLinkComponent, PrivilegedDirective, WikiQuickActionsStructureDefinitionComponent, WikiQuickActionsTemplateComponent]
 })
 export class WikiQuickActionsMenuComponent implements AfterViewInit {
+  private destroy$ = inject(DestroyService);
+
   @Input() public containerRef: HTMLElement;
   @Input() public lang: string;
   @Output() public composed = new EventEmitter<{result: any, cursorOffset: number}>();
@@ -70,10 +81,6 @@ export class WikiQuickActionsMenuComponent implements AfterViewInit {
   private keyManager: ActiveDescendantKeyManager<
     WikiQuickActionsDropdownOptionComponent
   >;
-
-  public constructor(
-    private destroy$: DestroyService
-  ) { }
 
 
   public ngAfterViewInit(): void {

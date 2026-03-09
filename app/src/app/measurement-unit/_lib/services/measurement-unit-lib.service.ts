@@ -1,16 +1,16 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {MeasurementUnit} from '../model/measurement-unit';
-import {MeasurementUnitSearchParams} from '../model/measurement-unit-search-params';
+import {MeasurementUnit} from 'term-web/measurement-unit/_lib/model/measurement-unit';
+import {MeasurementUnitSearchParams} from 'term-web/measurement-unit/_lib/model/measurement-unit-search-params';
 
 @Injectable()
 export class MeasurementUnitLibService {
-  protected baseUrl = `${environment.termxApi}/ts/measurement-units`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) {}
+  protected baseUrl = `${environment.termxApi}/ts/measurement-units`;
 
   public load(id: number): Observable<MeasurementUnit> {
     return this.http.get<MeasurementUnit>(`${this.baseUrl}/${id}`);

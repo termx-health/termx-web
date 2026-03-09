@@ -1,40 +1,71 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {compareValues, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {FhirValueSetLibService} from 'app/src/app/fhir/_lib';
-import {ValueSetVersion, ValueSetVersionRuleSet} from 'app/src/app/resources/_lib';
-import {ValueSetService} from 'app/src/app/resources/value-set/services/value-set.service';
-import {Fhir} from 'fhir/fhir';
-import {saveAs} from 'file-saver';
+import { compareValues, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import {ValueSetVersion, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {map, Observable} from 'rxjs';
+import {AuthService} from 'term-web/core/auth';
+import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiDatePickerModule, MuiMultiLanguageInputModule, MuiDividerModule, MuiCheckboxModule, MarinPageLayoutModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { AsyncPipe } from '@angular/common';
+import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { ResourceIdentifiersComponent } from 'term-web/resources/resource/components/resource-identifiers.component';
+import { ValueSetVersionRuleSetWidgetComponent } from 'term-web/resources/value-set/containers/version/widgets/value-set-version-rule-set-widget.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: 'value-set-version-edit.component.html',
+    templateUrl: 'value-set-version-edit.component.html',
+    imports: [
+    MuiSpinnerModule,
+    MuiCardModule,
+    StatusTagComponent,
+    FormsModule,
+    MuiFormModule,
+    SemanticVersionSelectComponent,
+    MuiDatePickerModule,
+    ValueSetConceptSelectComponent,
+    MuiMultiLanguageInputModule,
+    ResourceIdentifiersComponent,
+    MuiDividerModule,
+    MuiCheckboxModule,
+    ValueSetVersionRuleSetWidgetComponent,
+    MarinPageLayoutModule,
+    MuiButtonModule,
+    MuiIconModule,
+    AsyncPipe,
+    TranslatePipe,
+    ApplyPipe
+],
 })
 export class ValueSetVersionEditComponent implements OnInit {
+  private valueSetService = inject(ValueSetService);
+  private authService = inject(AuthService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   public valueSetId?: string | null;
   public valueSetVersion?: string | null;
   public version?: ValueSetVersion;
 
   public mode: 'add' | 'edit' = 'add';
   public loader = new LoadingManager();
+  protected viewMode = false;
+  protected canEdit = false;
 
   public readonly versionPattern: string = '[A-Za-z0-9\\-\\.]{1,64}';
 
   @ViewChild("form") public form?: NgForm;
 
-  public constructor(
-    private valueSetService: ValueSetService,
-    private fhirValueSetService: FhirValueSetLibService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
-
   public ngOnInit(): void {
     this.valueSetId = this.route.snapshot.paramMap.get('id');
     this.valueSetVersion = this.route.snapshot.paramMap.get('versionCode');
     this.mode = this.valueSetId && this.valueSetVersion ? 'edit' : 'add';
+    this.viewMode = (this.mode === 'edit');
+    if (this.viewMode) {
+      this.canEdit = this.authService.hasPrivilege(this.valueSetId + '.ValueSet.edit');
+    }
 
     if (this.mode === 'edit') {
       this.loadVersion(this.valueSetId!, this.valueSetVersion!);

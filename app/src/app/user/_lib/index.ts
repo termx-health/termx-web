@@ -1,7 +1,7 @@
-export * from './components/user-select.component';
+export * from 'term-web/user/_lib/components/user-select.component';
 
-export * from './model/user';
+export * from 'term-web/user/_lib/model/user';
 
-export * from './services/user-lib.service';
+export * from 'term-web/user/_lib/services/user-lib.service';
 
-export * from './user-lib.module';
+export * from 'term-web/user/_lib/user-lib.module';

@@ -1,285 +1,310 @@
 <tw-table [(filterOpen)]="filter.open">
   <div header class="m-items-middle" style="flex: 1">
-    <m-button *ngIf="codeSystem.hierarchyMeaning && !codeSystem.settings?.disableHierarchyGrouping" (mClick)="toggleView()" [mDisplay]="groupOpened ? 'primary' : 'default'">
-      <m-icon mCode="folder-open"/>
-    </m-button>
+    @if (codeSystem.hierarchyMeaning && !codeSystem.settings?.disableHierarchyGrouping) {
+      <m-button (mClick)="toggleView()" [mDisplay]="groupOpened ? 'primary' : 'default'">
+        <m-icon mCode="folder-open"/>
+      </m-button>
+    }
 
     <m-select [(ngModel)]="tableSummary.langs" multiple placeholder="web.code-system.form.concepts.designation-languages" style="flex: 1">
-      <m-option *ngFor="let lang of version | apply: getSupportedLangs: versions" [mValue]="lang" [mLabel]="lang"/>
+      @for (lang of version | apply: getSupportedLangs: versions; track lang) {
+        <m-option [mValue]="lang" [mLabel]="lang"/>
+      }
     </m-select>
 
     <m-select [(ngModel)]="tableSummary.properties" multiple placeholder="web.code-system.form.concepts.properties" style="flex: 1">
-      <m-option *ngFor="let prop of codeSystem?.properties" [mValue]="prop.name" [mLabel]="prop | entityPropertyName"/>
+      @for (prop of codeSystem?.properties; track prop) {
+        <m-option [mValue]="prop.name" [mLabel]="prop | entityPropertyName"/>
+      }
     </m-select>
 
     <!-- Add action -->
-    <ng-container *ngIf="!viewMode">
-      <ng-container *ngIf="null | apply: getConceptEditRoute as route">
-        <tw-add-button *ngIf="!codeSystem.baseCodeSystem" [routerLink]="route.path" [queryParams]="route.query">
-          {{'web.code-system.form.concepts.add-concept' | translate}}
+    @if (!viewMode) {
+      @if (null | apply: getConceptEditRoute; as route) {
+        @if (!codeSystem.baseCodeSystem) {
+          <tw-add-button [routerLink]="route.path" [queryParams]="route.query">
+            {{'web.code-system.form.concepts.add-concept' | translate}}
+          </tw-add-button>
+        }
+      }
+      @if (codeSystem.baseCodeSystem) {
+        <tw-add-button (click)="conceptDrawerSearchComponent.openDrawer()">
+          {{'web.code-system.form.concepts.add-supplement-concept' | translate}}
         </tw-add-button>
-      </ng-container>
-      <tw-add-button *ngIf="codeSystem.baseCodeSystem" (click)="conceptDrawerSearchComponent.openDrawer()">
-        {{'web.code-system.form.concepts.add-supplement-concept' | translate}}
-      </tw-add-button>
-      <m-button *ngIf="version?.status === 'draft'" m-popconfirm mPopconfirmTitle="core.confirm" (mOnConfirm)="activateConcepts()">
-        {{'web.code-system.form.concepts.activate-draft-concepts' | translate}}
-      </m-button>
-    </ng-container>
+      }
+      @if (version?.status === 'draft') {
+        <m-button m-popconfirm mPopconfirmTitle="core.confirm" (mOnConfirm)="activateConcepts()">
+          {{'web.code-system.form.concepts.activate-draft-concepts' | translate}}
+        </m-button>
+      }
+    }
 
     <!-- Validation -->
     <m-button
-        [routerLink]="['/resources/code-systems/validator', {'code-system': codeSystem?.id, 'version': version?.id || ''}]"
-        m-tooltip mTitle="web.code-system.form.concepts.validate"
-    >
+      [routerLink]="['/resources/code-systems/validator', {'code-system': codeSystem?.id, 'version': version?.id || ''}]"
+      m-tooltip mTitle="web.code-system.form.concepts.validate"
+      >
       <m-icon mCode="check-circle"/>
     </m-button>
 
     <!-- Filter toggle -->
-    <m-button
-        *ngIf="!filter.open"
+    @if (!filter.open) {
+      <m-button
         [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'"
         [disabled]="groupOpened"
         [mTooltip]="groupOpened" mTitle="web.code-system.form.concepts.filter-disabled"
         (mClick)="onFilterOpen()"
-    >
-      <m-icon mCode="filter"></m-icon>
-    </m-button>
+        >
+        <m-icon mCode="filter"></m-icon>
+      </m-button>
+    }
   </div>
 
 
   <!-- Filter -->
-  <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()" *ngIf="!groupOpened">
-    <m-form-item>
-      <m-input placeholder="marina.ui.inputs.search.placeholder" [(ngModel)]="_filter.searchInput"/>
-    </m-form-item>
-
-    <m-form-item>
-      <m-radio-group [(ngModel)]="_filter.inputType">
-        <label m-radio-button mValue="contains">{{'web.code-system.form.concepts.contains' | translate}}</label>
-        <label m-radio-button mValue="eq">{{'web.code-system.form.concepts.eq' | translate}}</label>
-      </m-radio-group>
-    </m-form-item>
-
-    <ng-container *ngIf="codeSystem?.properties | filter: propertyKind as properties">
-      <m-form-item mLabel="entities.code-system.properties" *ngIf="properties?.length">
-        <m-form-item class="initial" *ngFor="let pv of _filter.properties" [mLabel]="lbl">
-          <ng-template #lbl>
-            <span style="font-weight: initial">{{pv.property.description | localName: pv.property.name}}</span>
-          </ng-template>
-
-          <div class="m-items-middle">
-            <tw-property-value-input
-                style="flex: 1"
-                [(ngModel)]="pv.value"
-                [property]="pv.property"
-                [codeSystem]="codeSystem.id"
-                autofocus
-            ></tw-property-value-input>
-
-            <m-button [mDisplay]="!pv.value ? 'primary' : 'default'" (mClick)="onFilterPropertyRemove(pv)">
-              <m-icon mCode="delete"/>
-            </m-button>
-          </div>
-        </m-form-item>
-
-        <ng-container *ngIf="properties | apply: availableProps: _filter.properties as availableProps">
-          <m-select *ngIf="availableProps.length" (mChange)="onFilterPropertyAdd($event)" clearOnSelect>
-            <m-option
-                *ngFor="let prop of availableProps"
-                [mValue]="prop"
-                [mLabel]="prop.description | localName: prop.name"
-            ></m-option>
-          </m-select>
-        </ng-container>
+  @if (!groupOpened) {
+    <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
+      <m-form-item>
+        <m-textarea placeholder="marina.ui.inputs.search.placeholder" [(ngModel)]="_filter.searchInput"/>
       </m-form-item>
-    </ng-container>
-  </tw-table-filter>
+      <m-form-item>
+        <m-radio-group [(ngModel)]="_filter.inputType">
+          <label m-radio-button mValue="contains">{{'web.code-system.form.concepts.contains' | translate}}</label>
+          <label m-radio-button mValue="eq">{{'web.code-system.form.concepts.eq' | translate}}</label>
+        </m-radio-group>
+      </m-form-item>
+      @if (codeSystem?.properties | filter: propertyKind; as properties) {
+        @if (properties?.length) {
+          <m-form-item mLabel="entities.code-system.properties">
+            @for (pv of _filter.properties; track pv) {
+              <m-form-item class="initial" [mLabel]="lbl">
+                <ng-template #lbl>
+                  <span style="font-weight: initial">{{pv.property.description | localName: pv.property.name}}</span>
+                </ng-template>
+                <div class="m-items-middle">
+                  <tw-property-value-input
+                    style="flex: 1"
+                    [(ngModel)]="pv.value"
+                    [property]="pv.property"
+                    [codeSystem]="codeSystem.id"
+                    autofocus
+                  ></tw-property-value-input>
+                  <m-button [mDisplay]="!pv.value ? 'primary' : 'default'" (mClick)="onFilterPropertyRemove(pv)">
+                    <m-icon mCode="delete"/>
+                  </m-button>
+                </div>
+              </m-form-item>
+            }
+            @if (properties | apply: availableProps: _filter.properties; as availableProps) {
+              @if (availableProps.length) {
+                <m-select (mChange)="onFilterPropertyAdd($event)" clearOnSelect>
+                  @for (prop of availableProps; track prop) {
+                    <m-option
+                      [mValue]="prop"
+                      [mLabel]="prop.description | localName: prop.name"
+                    ></m-option>
+                  }
+                </m-select>
+              }
+            }
+          </m-form-item>
+        }
+      }
+    </tw-table-filter>
+  }
 
 
   <div class="m-justify-between m-items-top">
     <!-- Table views -->
     <div style="flex: 4; min-width: 0">
       <!-- Flat table -->
-      <m-backend-table *ngIf="!groupOpened" [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
-        <tr *mTableHead>
-          <th>{{'entities.code-system-concept.code' | translate}}</th>
-          <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
-          <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
-          <th class="tw-table-min-width"></th>
-        </tr>
-
+      @if (!groupOpened) {
+        <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
+          <tr *mTableHead>
+            <th>{{'entities.code-system-concept.code' | translate}}</th>
+            <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
+            <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
+            <th class="tw-table-min-width"></th>
+          </tr>
         <tr *mTableRow="let concept" class="m-clickable" [style.background]="selectedConcept?.code === concept.code ? 'var(--color-table-background--expanded)' :
             concept.versions?.[concept.versions?.length - 1]?.status === 'draft' ? 'var(--color-amber-0)' :
             concept.versions?.[concept.versions?.length - 1]?.status === 'retired' ? 'var(--color-red-0)' : 'initial'" (click)="selectConcept(concept)"
-        >
-          <ng-container *ngTemplateOutlet="rowContent; context: {node: {code: concept.code, concept}, level: 0}"/>
-        </tr>
-
-        <tr *mTableNoData>
-          <td colspan="100%">
-            <m-no-data></m-no-data>
-          </td>
-        </tr>
-      </m-backend-table>
+            >
+            <ng-container *ngTemplateOutlet="rowContent; context: {node: {code: concept.code, concept}, level: 0}"/>
+          </tr>
+          <tr *mTableNoData>
+            <td colspan="100%">
+              <m-no-data></m-no-data>
+            </td>
+          </tr>
+        </m-backend-table>
+      }
       <!-- //Flat table -->
 
       <!-- Tree table -->
-      <m-table *ngIf="groupOpened" [mData]="rootConcepts" [mLoading]="loader.state['group']" mSize="small">
-        <tr *mTableHead>
-          <th>{{'entities.code-system-concept.code' | translate}}</th>
-          <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
-          <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
-          <th class="tw-table-min-width"></th>
-        </tr>
-
-        <ng-container *ngFor="let root of rootConcepts">
-          <ng-container *ngTemplateOutlet="treeView; context: {node: root, level: 0}"/>
-        </ng-container>
-
-        <tr *mTableNoData>
-          <td colspan="100%">
-            <m-no-data></m-no-data>
-          </td>
-        </tr>
-      </m-table>
+      @if (groupOpened) {
+        <m-table [mData]="rootConcepts" [mLoading]="loader.state['group']" mSize="small">
+          <tr *mTableHead>
+            <th>{{'entities.code-system-concept.code' | translate}}</th>
+            <th>{{'entities.code-system-entity-version.designations' | translate}}</th>
+            <th>{{'entities.code-system-entity-version.property-values' | translate}}</th>
+            <th class="tw-table-min-width"></th>
+          </tr>
+          @for (root of rootConcepts; track root) {
+            <ng-container *ngTemplateOutlet="treeView; context: {node: root, level: 0}"/>
+          }
+          <tr *mTableNoData>
+            <td colspan="100%">
+              <m-no-data></m-no-data>
+            </td>
+          </tr>
+        </m-table>
+      }
       <!-- //Tree table -->
     </div>
 
     <!-- Concept preview -->
-    <div class="preview-container tw-flex-container tw-flex-container--default" style="flex: 2" *ngIf="selectedConcept?.version" >
-      <tw-code-system-concepts-list-concept-preview [codeSystemId]="codeSystem.id"
+    @if (selectedConcept?.version) {
+      <div class="preview-container tw-flex-container tw-flex-container--default" style="flex: 2" >
+        <tw-code-system-concepts-list-concept-preview [codeSystemId]="codeSystem.id"
           [version]="selectedConcept.version"
           [editRoute]="(selectedConcept.code | apply: getConceptEditRoute)?.path"/>
-      <m-card mDisplay="bordered" *twPrivileged="'*.Task.view'">
-        <div *m-card-header class="m-justify-between">
-          <label>{{'entities.task.plural' | translate}}</label>
-          <m-button *ngIf="[codeSystem.id + '.CodeSystem.edit', '*.Task.edit'] | twHasAllPrivileges" mDisplay="text" (mClick)="taskModalData = {visible: true, conceptVersion: selectedConcept.version}">
-            <m-icon mCode="plus"/>&nbsp; {{'web.code-system-concept.form.add-task' | translate}}</m-button>
-        </div>
-        <tw-resource-tasks-widget resourceType="CodeSystemEntityVersion"
-            openInNewTab
-            [displayType]="(codeSystem.id + '.CodeSystem.edit' | twPrivileged) ? 'content' : 'full'"
-            [taskFilters]="{statuses: ['requested']}"
-            [resourceId]="selectedConcept.version.id | toString"/>
-      </m-card>
-    </div>
-  </div>
+          <m-card mDisplay="bordered" *twPrivileged="'*.Task.view'">
+            <div *m-card-header class="m-justify-between">
+              <label>{{'entities.task.plural' | translate}}</label>
+              @if ([codeSystem.id + '.CodeSystem.edit', '*.Task.edit'] | twHasAllPrivileges) {
+                <m-button mDisplay="text" (mClick)="taskModalData = {visible: true, conceptVersion: selectedConcept.version}">
+                <m-icon mCode="plus"/>&nbsp; {{'web.code-system-concept.form.add-task' | translate}}</m-button>
+              }
+            </div>
+            <tw-resource-tasks-widget resourceType="CodeSystemEntityVersion"
+              openInNewTab
+              [displayType]="(codeSystem.id + '.CodeSystem.edit' | twPrivileged) ? 'content' : 'full'"
+              [taskFilters]="{statuses: ['requested']}"
+              [resourceId]="selectedConcept.version.id | toString"/>
+            </m-card>
+          </div>
+        }
+      </div>
 
 
-  <ng-template #treeView let-node="node" let-level="level">
-    <tr class="m-clickable"
+      <ng-template #treeView let-node="node" let-level="level">
+        <tr class="m-clickable"
         [style.background]="selectedConcept?.code === node.code ? 'var(--color-table-background--expanded)' :
             node.concept.versions?.[node.concept.versions?.length - 1]?.status === 'draft' ? 'var(--color-amber-0)' :
             node.concept.versions?.[node.concept.versions?.length - 1]?.status === 'retired' ? 'var(--color-red-0)' : 'initial'"
-        (click)="selectConcept(node.concept)"
-    >
-      <ng-container *ngTemplateOutlet="rowContent; context: {node: node, level: level}"/>
-    </tr>
-    <ng-container *ngFor="let child of node.children">
-      <ng-container *ngTemplateOutlet="treeView; context: {node: child, level: level + 1}"/>
-    </ng-container>
-  </ng-template>
-
-
-  <ng-template #rowContent let-node="node" let-level="level">
-    <td>
-      <div class="m-items-middle m-bold">
-        <m-icon-button *ngIf="groupOpened"
-            [style.padding-left.rem]="level"
-            [style.opacity]="node.expandable ? '1' : '0'"
-            [mIcon]="node.loading ? 'loading' : node.expandable ? node.expanded ? 'folder-open' : 'folder' : 'file'"
-            (mClick)="$event.preventDefault(); $event.stopImmediatePropagation(); expandNode(node);"
-        ></m-icon-button>
-
-        <a *ngIf="node.code | apply: getConceptEditRoute as route" [routerLink]="route.path" [queryParams]="route.query">
-          {{node.code}}
-        </a>
-      </div>
-    </td>
-    <td>
-      <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
-        <ng-container *ngFor="let designation of (node.concept | apply: getDesignations) | sort: 'language'">
-          <ng-container *ngIf="(!tableSummary.langs?.length || (tableSummary.langs | includes: designation.language)) &&
-          (!tableSummary.properties?.length || (tableSummary.properties | includes: designation.designationType))"
+          (click)="selectConcept(node.concept)"
           >
-            <span class="m-bold">{{designation.language}}</span>
-            {{designation.name}}
-          </ng-container>
-        </ng-container>
-      </div>
-    </td>
-    <td>
-      <div>
-        <div style="display: flex"
-            *ngFor="let property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableSummary.properties:codeSystem.properties)"
-        >
-          <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
-          <tw-property-value-input style="flex: 1; text-align: right"
-              viewMode
-              [ngModel]="property.value"
-              [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
-              [codeSystem]="codeSystem.id"
-          ></tw-property-value-input>
-        </div>
-      </div>
-    </td>
-    <td>
-      <m-dropdown>
-        <a *m-dropdown-item (mClick)="openFhir(node.code)">
-          {{'web.code-system-concept.list.open-fhir' | translate}}
-        </a>
-        <ng-container *ngIf="null | apply: getConceptEditRoute: node.code as route">
-          <a *m-dropdown-item [routerLink]="route?.path" [queryParams]="route?.query">
-            {{'web.code-system-concept.list.add-concept-child' | translate}}
-          </a>
-        </ng-container>
-        <ng-container *ngIf="version">
-          <a *m-dropdown-item (mClick)="unlink(node.concept)">
-            {{'web.code-system-concept.list.unlink-concept' | translate}}
-          </a>
-        </ng-container>
-        <ng-container *ngIf="node.expandable">
-          <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.confirm" (mOnConfirm)="propagateProperties(node.concept)">
-            {{'web.code-system-concept.list.propagate-properties' | translate}}
-          </a>
-        </ng-container>
-      </m-dropdown>
-    </td>
-  </ng-template>
-</tw-table>
+          <ng-container *ngTemplateOutlet="rowContent; context: {node: node, level: level}"/>
+        </tr>
+        @for (child of node.children; track child) {
+          <ng-container *ngTemplateOutlet="treeView; context: {node: child, level: level + 1}"/>
+        }
+      </ng-template>
 
-<m-modal [(mVisible)]="taskModalData.visible" (mClose)="taskModalData = {visible: false}">
-  <m-title *mModalHeader>
-    {{'web.code-system-concept.form.task-modal.header' | translate}}
-  </m-title>
 
-  <ng-container *mModalContent>
-    <form #taskModalForm="ngForm">
-      <m-form-item mName="assignee" mLabel="entities.task.assignee" required>
-        <tw-user-select
-            name="assignee"
-            [(ngModel)]="taskModalData.assignee"
-            [anyRole]="[codeSystem.id + '.CodeSystem.edit', codeSystem.id + '.CodeSystem.publish']"
+      <ng-template #rowContent let-node="node" let-level="level">
+        <td>
+          <div class="m-items-middle m-bold">
+            @if (groupOpened) {
+              <m-icon-button
+                [style.padding-left.rem]="level"
+                [style.opacity]="node.expandable ? '1' : '0'"
+                [mIcon]="node.loading ? 'loading' : node.expandable ? node.expanded ? 'folder-open' : 'folder' : 'file'"
+                (mClick)="$event.preventDefault(); $event.stopImmediatePropagation(); expandNode(node);"
+              ></m-icon-button>
+            }
+
+            @if (node.code | apply: getConceptEditRoute; as route) {
+              <a [routerLink]="route.path" [queryParams]="route.query">
+                {{node.code}}
+              </a>
+            }
+          </div>
+        </td>
+        <td>
+          <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
+            @for (designation of (node.concept | apply: getDesignations) | apply: sortDesignations: version?.preferredLanguage; track designation) {
+              @if ((!tableSummary.langs?.length || (tableSummary.langs | includes: designation.language)) &&
+                (!tableSummary.properties?.length || (tableSummary.properties | includes: designation.designationType))) {
+                <span class="m-bold">{{designation.language}}</span>
+                {{designation.name}}
+              }
+            }
+          </div>
+        </td>
+        <td>
+          <div>
+            @for (property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableSummary.properties:codeSystem.properties); track property) {
+              <div style="display: flex"
+                >
+                <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
+                <tw-property-value-input style="flex: 1; text-align: right"
+                  viewMode
+                  [ngModel]="property.value"
+                  [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
+                  [codeSystem]="codeSystem.id"
+                ></tw-property-value-input>
+              </div>
+            }
+          </div>
+        </td>
+        <td>
+          <m-dropdown>
+            <a *m-dropdown-item (mClick)="openFhir(node.code)">
+              {{'web.code-system-concept.list.open-fhir' | translate}}
+            </a>
+            @if (null | apply: getConceptEditRoute: node.code; as route) {
+              <a *m-dropdown-item [routerLink]="route?.path" [queryParams]="route?.query">
+                {{'web.code-system-concept.list.add-concept-child' | translate}}
+              </a>
+            }
+            @if (version) {
+              <a *m-dropdown-item (mClick)="unlink(node.concept)">
+                {{'web.code-system-concept.list.unlink-concept' | translate}}
+              </a>
+            }
+            @if (node.expandable) {
+              <a *m-dropdown-item m-popconfirm mPopconfirmTitle="core.confirm" (mOnConfirm)="propagateProperties(node.concept)">
+                {{'web.code-system-concept.list.propagate-properties' | translate}}
+              </a>
+            }
+          </m-dropdown>
+        </td>
+      </ng-template>
+    </tw-table>
+
+    <m-modal [(mVisible)]="taskModalData.visible" (mClose)="taskModalData = {visible: false}">
+      <m-title *mModalHeader>
+        {{'web.code-system-concept.form.task-modal.header' | translate}}
+      </m-title>
+
+      <ng-container *mModalContent>
+        <form #taskModalForm="ngForm">
+          <m-form-item mName="assignee" mLabel="entities.task.assignee" required>
+            <tw-user-select
+              name="assignee"
+              [(ngModel)]="taskModalData.assignee"
+              [anyRole]="[codeSystem.id + '.CodeSystem.edit', codeSystem.id + '.CodeSystem.publish']"
             required></tw-user-select>
-      </m-form-item>
-      <m-form-item mName="comment" mLabel="web.code-system-concept.form.task-modal.comment">
-        <m-textarea name="comment" [(ngModel)]="taskModalData.comment"></m-textarea>
-      </m-form-item>
-    </form>
-  </ng-container>
+          </m-form-item>
+          <m-form-item mName="comment" mLabel="web.code-system-concept.form.task-modal.comment">
+            <m-textarea name="comment" [(ngModel)]="taskModalData.comment"></m-textarea>
+          </m-form-item>
+        </form>
+      </ng-container>
 
-  <div *m-modal-footer class="m-items-middle">
-    <m-button mDisplay="text" (click)="taskModalData.visible = false">
-      {{'core.btn.cancel' | translate}}
-    </m-button>
-    <m-button mDisplay="primary" (click)="createTask()" [mLoading]="loader.isLoading" [disabled]="loader.state['create-task']">
-      {{'core.btn.confirm' | translate}}
-    </m-button>
-  </div>
-</m-modal>
+      <div *m-modal-footer class="m-items-middle">
+        <m-button mDisplay="text" (click)="taskModalData.visible = false">
+          {{'core.btn.cancel' | translate}}
+        </m-button>
+        <m-button mDisplay="primary" (click)="createTask()" [mLoading]="loader.isLoading" [disabled]="loader.state['create-task']">
+          {{'core.btn.confirm' | translate}}
+        </m-button>
+      </div>
+    </m-modal>
 
-<tw-concept-drawer-search [codeSystem]="codeSystem?.baseCodeSystem"
-    [codeSystemVersion]="version?.baseCodeSystemVersion?.version"
-    (conceptSelect)="createSupplement($event)"
-    (codeSelect)="createExternalSupplement($event)"/>
+    <tw-concept-drawer-search [codeSystem]="codeSystem?.baseCodeSystem"
+      [codeSystemVersion]="version?.baseCodeSystemVersion?.version"
+      (conceptSelect)="createSupplement($event)"
+      (codeSelect)="createExternalSupplement($event)"/>

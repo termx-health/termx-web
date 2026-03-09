@@ -9,7 +9,7 @@ import {ProvenanceLibModule} from 'term-web/sys/_lib';
 import {ChecklistRuleEditComponent} from 'term-web/sys/checklist/containers/checklist-rule-edit.component';
 import {ChecklistRuleListComponent} from 'term-web/sys/checklist/containers/checklist-rule-list.component';
 import {ChecklistService} from 'term-web/sys/checklist/services/checklist.service';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 
 export const CHECKLIST_ROUTES: Routes = [
   {path: '', data: {privilege: ['*.Checklist.view']}, component: ChecklistRuleListComponent},
@@ -18,25 +18,23 @@ export const CHECKLIST_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CoreUiModule,
-    AssociationLibModule,
-    CodeSystemLibModule,
-    CodeSystemModule,
-    ResourceModule,
-    SequenceLibModule,
-    ValueSetLibModule,
-    ProvenanceLibModule,
-    MapSetLibModule,
-    ModelerLibModule
-  ],
-  declarations: [
-    ChecklistRuleListComponent, ChecklistRuleEditComponent,
-  ],
-  providers: [
-    ChecklistService
-  ],
-  exports: []
+    imports: [
+        CoreUiModule,
+        AssociationLibModule,
+        CodeSystemLibModule,
+        CodeSystemModule,
+        ResourceModule,
+        SequenceLibModule,
+        ValueSetLibModule,
+        ProvenanceLibModule,
+        MapSetLibModule,
+        ModelerLibModule,
+        ChecklistRuleListComponent, ChecklistRuleEditComponent
+    ],
+    providers: [
+        ChecklistService
+    ],
+    exports: []
 })
 export class ChecklistModule {
 }

@@ -1,18 +1,33 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {DestroyService, group, isNil, LoadingManager} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { DestroyService, group, isNil, LoadingManager, ApplyPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiSelectModule, MuiButtonModule, MuiTooltipModule, MuiIconModule } from '@kodality-web/marina-ui';
 import {map, Observable, of, forkJoin} from 'rxjs';
 import {FhirCodeSystemLibService, FhirValueSetLibService} from 'term-web/fhir/_lib';
 import {TerminologyServer, TerminologyServerLibService} from 'term-web/sys/_lib/space';
-import {ReleaseResource, Release} from 'app/src/app/sys/_lib';
+import {ReleaseResource, Release} from 'term-web/sys/_lib';
 import {ReleaseService} from 'term-web/sys/release/services/release.service';
 
+import { FormsModule } from '@angular/forms';
+import { DiffViewComponent } from 'term-web/core/ui/components/diff/diff-view.component';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+
 @Component({
-  templateUrl: './release-resource-diff.component.html',
-  providers: [DestroyService]
+    templateUrl: './release-resource-diff.component.html',
+    providers: [DestroyService],
+    imports: [MarinPageLayoutModule, MuiCardModule, MuiFormModule, MuiSelectModule, FormsModule, DiffViewComponent, PrivilegedDirective, MuiButtonModule, MuiTooltipModule, MuiIconModule, TranslatePipe, MarinaUtilModule, ApplyPipe]
 })
 export class ReleaseResourceDiffComponent implements OnInit {
+  private fhirCSService = inject(FhirCodeSystemLibService);
+  private fhirVSService = inject(FhirValueSetLibService);
+  private terminologyServerService = inject(TerminologyServerLibService);
+  private releaseService = inject(ReleaseService);
+  private notificationService = inject(MuiNotificationService);
+  private destroy$ = inject(DestroyService);
+  private route = inject(ActivatedRoute);
+
   public current: string;
   public comparable: string;
 
@@ -22,16 +37,6 @@ export class ReleaseResourceDiffComponent implements OnInit {
   public terminologyServers: {[key: string]: TerminologyServer};
 
   public loader = new LoadingManager();
-
-  public constructor(
-    private fhirCSService: FhirCodeSystemLibService,
-    private fhirVSService: FhirValueSetLibService,
-    private terminologyServerService: TerminologyServerLibService,
-    private releaseService: ReleaseService,
-    private notificationService: MuiNotificationService,
-    private destroy$: DestroyService,
-    private route: ActivatedRoute,
-  ) {}
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
@@ -94,7 +99,7 @@ export class ReleaseResourceDiffComponent implements OnInit {
     }
     try {
       return JSON.stringify(JSON.parse(json), null, 2);
-    } catch (e) {
+    } catch {
       return json;
     }
   }

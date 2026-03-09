@@ -1,47 +1,22 @@
-<tw-table [(filterOpen)]="filter.open">
+<div class="tw-flex-container">
+  <m-card mTitle="web.global-search.dashboard.header">
+    <nz-input-group [nzSuffix]="suffixIconSearch">
+      <input nz-input name="searchText" [(ngModel)]="searchText" (keydown.enter)="search(searchText)"/>
+    </nz-input-group>
+    <ng-template #suffixIconSearch>
+      <i nz-icon nzType="search"></i>
+    </ng-template>
+  </m-card>
 
-  <div header>
-    <m-card mTitle="web.global-search.dashboard.header">
-      <nz-input-group [nzSuffix]="suffixIconSearch">
-        <input nz-input name="searchText" [(ngModel)]="searchText" (keydown.enter)="search()"/>
-      </nz-input-group>
-      <ng-template #suffixIconSearch>
-        <i nz-icon nzType="search"></i>
-        <i nz-icon *ngIf="!filter.open" nzType="filter" (click)="onFilterOpen()"></i>
-      </ng-template>
-    </m-card>
-  </div>
-
-  <!-- Filter -->
-  <tw-table-filter>
-    <!-- Filter -->
-    <form (ngSubmit)="search()">
-      <m-form-item mLabel="web.code-system.list.space">
-        <tw-space-select [(ngModel)]="filter.spaceId" name="spaceId" valuePrimitive/>
-      </m-form-item>
-      <m-form-item mLabel="entities.code-system.publisher">
-        <tw-value-set-concept-select [(ngModel)]="filter.publisher" name="publisher" valueSet="publisher" valuePrimitive/>
-      </m-form-item>
-      <m-form-item mName="cs" mLabel="entities.code-system.plural">
-        <tw-code-system-search name="cs" [(ngModel)]="filter.codeSystems" multiple valuePrimitive/>
-      </m-form-item>
-
-      <m-button type="submit" mDisplay="primary" style="margin-top: 1rem;">
-        {{'core.btn.search' | translate}}
-      </m-button>
-      <m-button mDisplay="text" (mClick)="reset()">
-        <span class="m-subtitle">{{'core.btn.clear-all' | translate}}</span>
-      </m-button>
-    </form>
-  </tw-table-filter>
-
-  <div class="tw-flex-container">
-    <m-card [mShowSkeleton]="loader.isLoading" *ngIf="loader.isLoading || isEmpty">
+  @if (loader.isLoading || isEmpty) {
+    <m-card [mShowSkeleton]="loader.isLoading">
       <m-no-data/>
     </m-card>
+  }
 
-    <ng-container *ngIf="!loader.isLoading">
-      <m-card mTitle="web.global-search.dashboard.concepts" *ngIf="concepts?.data?.length > 0">
+  @if (!loader.isLoading) {
+    @if (concepts?.data?.length > 0) {
+      <m-card mTitle="web.global-search.dashboard.concepts">
         <m-backend-table [mResult]="concepts" [(mQuery)]="conceptParams" (mQueryChange)="loadConcepts()" [mLoading]="loader.isLoading">
           <tr *mTableHead>
             <th mColumnKey="code">{{'entities.code-system-concept.code' | translate}}</th>
@@ -60,8 +35,9 @@
           </tr>
         </m-backend-table>
       </m-card>
-
-      <m-card mTitle="web.global-search.dashboard.code-systems" *ngIf="codeSystems?.length > 0">
+    }
+    @if (codeSystems?.length > 0) {
+      <m-card mTitle="web.global-search.dashboard.code-systems">
         <m-table [mData]="codeSystems">
           <tr *mTableHead>
             <th>{{'entities.code-system.id' | translate}}</th>
@@ -80,8 +56,9 @@
           </tr>
         </m-table>
       </m-card>
-
-      <m-card mTitle="web.global-search.dashboard.value-sets" *ngIf="valueSets?.length > 0">
+    }
+    @if (valueSets?.length > 0) {
+      <m-card mTitle="web.global-search.dashboard.value-sets">
         <m-table [mData]="valueSets">
           <tr *mTableHead>
             <th>{{'entities.value-set.id' | translate}}</th>
@@ -100,8 +77,9 @@
           </tr>
         </m-table>
       </m-card>
-
-      <m-card mTitle="web.global-search.dashboard.map-sets" *ngIf="mapSets?.length > 0">
+    }
+    @if (mapSets?.length > 0) {
+      <m-card mTitle="web.global-search.dashboard.map-sets">
         <m-table [mData]="mapSets">
           <tr *mTableHead>
             <th>{{'entities.map-set.id' | translate}}</th>
@@ -120,8 +98,9 @@
           </tr>
         </m-table>
       </m-card>
-
-      <m-card mTitle="web.global-search.dashboard.measurement-unit" *ngIf="measurementUnits?.length > 0">
+    }
+    @if (measurementUnits?.length > 0) {
+      <m-card mTitle="web.global-search.dashboard.measurement-unit">
         <m-table [mData]="measurementUnits">
           <tr *mTableHead>
             <th>{{'entities.measurement-unit.code' | translate}}</th>
@@ -138,8 +117,9 @@
           </tr>
         </m-table>
       </m-card>
-
-      <m-card mTitle="web.global-search.dashboard.snomed" *ngIf="snomedConcepts?.length > 0">
+    }
+    @if (snomedConcepts?.length > 0) {
+      <m-card mTitle="web.global-search.dashboard.snomed">
         <m-table [mData]="snomedConcepts">
           <tr *mTableHead>
             <th>{{'entities.snomed-concept.concept-id' | translate}}</th>
@@ -158,7 +138,6 @@
           </tr>
         </m-table>
       </m-card>
-    </ng-container>
-  </div>
-
-</tw-table>
+    }
+  }
+</div>

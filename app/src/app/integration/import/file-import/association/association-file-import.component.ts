@@ -1,13 +1,19 @@
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {Component, ElementRef, Injectable, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {copyDeep, DestroyService, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import {Component, ElementRef, Injectable, ViewChild, inject} from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { copyDeep, DestroyService, LoadingManager, validateForm, AutofocusDirective } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiCardModule, MuiFormModule, MuiCoreModule, MuiTooltipModule, MuiIconModule, MuiTableModule, MuiSelectModule, MuiInputModule, MuiNoDataModule, MuiButtonModule } from '@kodality-web/marina-ui';
 import {environment} from 'environments/environment';
 import {saveAs} from 'file-saver';
 import {mergeMap, Observable} from 'rxjs';
 import {JobLibService, JobLog, JobLogResponse} from 'term-web/sys/_lib';
-import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from '../file-analysis.service';
+import {FileAnalysisRequest, FileAnalysisResponseColumn, FileAnalysisService} from 'term-web/integration/import/file-import/file-analysis.service';
+import { NzBreadCrumbComponent, NzBreadCrumbItemComponent } from 'ng-zorro-antd/breadcrumb';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
+import { AssociationTypeSearchComponent } from 'term-web/resources/_lib/association/containers/association-type-search.component';
+import { ImportJobLogComponent } from 'term-web/integration/import-job-log.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 interface AssociationFileImportRequest {
   codeSystemId?: string;
@@ -29,13 +35,11 @@ type AssociationFileImportColumn = FileAnalysisResponseColumn & {
 
 @Injectable()
 class AssociationFileImportService {
-  public readonly baseUrl = `${environment.termxApi}/file-importer/association`;
+  private http = inject(HttpClient);
+  private jobService = inject(JobLibService);
+  private destroy$ = inject(DestroyService);
 
-  public constructor(
-    private http: HttpClient,
-    private jobService: JobLibService,
-    private destroy$: DestroyService
-  ) { }
+  public readonly baseUrl = `${environment.termxApi}/file-importer/association`;
 
 
   public processRequest(req: AssociationFileImportRequest, file: Blob): Observable<JobLog> {
@@ -59,8 +63,9 @@ class AssociationFileImportService {
 }
 
 @Component({
-  templateUrl: 'association-file-import.component.html',
-  providers: [DestroyService, AssociationFileImportService]
+    templateUrl: 'association-file-import.component.html',
+    providers: [DestroyService, AssociationFileImportService],
+    imports: [MuiCardModule, NzBreadCrumbComponent, NzBreadCrumbItemComponent, FormsModule, MuiFormModule, CodeSystemSearchComponent, AutofocusDirective, CodeSystemVersionSelectComponent, AssociationTypeSearchComponent, MuiCoreModule, MuiTooltipModule, MuiIconModule, MuiTableModule, MuiSelectModule, MuiInputModule, MuiNoDataModule, ImportJobLogComponent, MuiButtonModule, TranslatePipe]
 })
 export class AssociationFileImportComponent {
   protected data: {
@@ -81,11 +86,9 @@ export class AssociationFileImportComponent {
   @ViewChild(NgForm) protected form: NgForm;
   @ViewChild('fileInput') protected fileInput: ElementRef<HTMLInputElement>;
 
-  public constructor(
-    private notificationService: MuiNotificationService,
-    private importService: AssociationFileImportService,
-    private fileAnalysisService: FileAnalysisService
-  ) {}
+  private notificationService = inject(MuiNotificationService);
+  private importService = inject(AssociationFileImportService);
+  private fileAnalysisService = inject(FileAnalysisService);
 
   protected downloadTemplate(): void {
     this.importService.getTemplate();
@@ -157,7 +160,7 @@ export class AssociationFileImportComponent {
     return this.analyzeResponse.columns.find(c => c.mappedColumn === t);
   };
 
-  protected filterUnused = (els: string[], selected): string[] => {
+  protected filterUnused = (els: string[], selected: string): string[] => {
     return els.filter(e => e === selected || !this.column(e));
   };
 

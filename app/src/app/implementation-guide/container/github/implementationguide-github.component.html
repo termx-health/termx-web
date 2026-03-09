@@ -13,13 +13,15 @@
         </span>
       </div>
 
-      <ng-container *ngIf="!loading && !branchExists">
+      @if (!loading && !branchExists) {
         <m-alert mType="error">
           {{'web.implementation-guide-github.branch-not-exists' | translate}}
         </m-alert>
         <m-form-item name="baseBranch" required mLabel="web.implementation-guide-github.github-base-branch" style="padding-top: 5px">
           <m-select name="baseBranch" required [(ngModel)]="baseBranch">
-            <m-option *ngFor="let b of branches" [mLabel]="b" [mValue]="b"></m-option>
+            @for (b of branches; track b) {
+              <m-option [mLabel]="b" [mValue]="b"></m-option>
+            }
           </m-select>
         </m-form-item>
         <ng-container *m-card-footer>
@@ -31,9 +33,9 @@
             </span>
           </m-button>
         </ng-container>
-      </ng-container>
+      }
 
-      <ng-container *ngIf="!loading && branchExists && !igInitialized">
+      @if (!loading && branchExists && !igInitialized) {
         <m-alert mType="error">
           {{'web.implementation-guide-github.ig-not-initialized' | translate}}
         </m-alert>
@@ -46,98 +48,112 @@
             </span>
           </m-button>
         </ng-container>
-      </ng-container>
+      }
 
-      <ng-container *ngIf="branchExists && igInitialized && status">
-        <div class="status-row" style="margin-bottom: 4px" *ngIf="status.changed.length">
-          <div class="checkbox">
-            <m-checkbox [mChecked]="selection | apply:allSelected" (mCheckedChange)="selectAll($event)"></m-checkbox>
-          </div>
-          <div style="font-style: italic">Select all</div>
-        </div>
-        <div style="color: var(--color-error)">
-          <div class="status-row" *ngFor="let f of status.changed">
+      @if (branchExists && igInitialized && status) {
+        @if (status.changed.length) {
+          <div class="status-row" style="margin-bottom: 4px">
             <div class="checkbox">
-              <m-checkbox [(mChecked)]="selection[f.f]" (mCheckedChange)="onSelectionChange()"></m-checkbox>
+              <m-checkbox [mChecked]="selection | apply:allSelected" (mCheckedChange)="selectAll($event)"></m-checkbox>
             </div>
-            <div class="status">{{f.s}}</div>
-            <div>{{f.f}}</div>
-            <div *ngIf="f.s === 'M'" style="margin-left: 5px">
-              <a (click)="showDiff(f.f)">
-                <m-icon mCode="diff"></m-icon>
-              </a>
-            </div>
+            <div style="font-style: italic">Select all</div>
           </div>
+        }
+        <div style="color: var(--color-error)">
+          @for (f of status.changed; track f) {
+            <div class="status-row">
+              <div class="checkbox">
+                <m-checkbox [(mChecked)]="selection[f.f]" (mCheckedChange)="onSelectionChange()"></m-checkbox>
+              </div>
+              <div class="status">{{f.s}}</div>
+              <div>{{f.f}}</div>
+              @if (f.s === 'M') {
+                <div style="margin-left: 5px">
+                  <a (click)="showDiff(f.f)">
+                    <m-icon mCode="diff"></m-icon>
+                  </a>
+                </div>
+              }
+            </div>
+          }
         </div>
-
-        <m-alert *ngIf="status.changed.length === 0 && status.unchanged.length !== 0" mType="success">
-          <m-icon mCode="check-circle"></m-icon>
-          {{'web.implementation-guide-github.github-clean' | translate}}
-        </m-alert>
-        <m-alert *ngIf="status.changed.length === 0 && status.unchanged.length === 0" mType="info">
-          {{'web.implementation-guide-github.github-empty' | translate}}
-        </m-alert>
-
+        @if (status.changed.length === 0 && status.unchanged.length !== 0) {
+          <m-alert mType="success">
+            <m-icon mCode="check-circle"></m-icon>
+            {{'web.implementation-guide-github.github-clean' | translate}}
+          </m-alert>
+        }
+        @if (status.changed.length === 0 && status.unchanged.length === 0) {
+          <m-alert mType="info">
+            {{'web.implementation-guide-github.github-empty' | translate}}
+          </m-alert>
+        }
         <div style="margin-top: 14px; color: var(--color-text-secondary)">
-          <div class="status-row" *ngFor="let f of status.unchanged">
-            <div class="status">
-              <m-icon mCode="check"></m-icon>
+          @for (f of status.unchanged; track f) {
+            <div class="status-row">
+              <div class="status">
+                <m-icon mCode="check"></m-icon>
+              </div>
+              <div>{{f}}</div>
             </div>
-            <div>{{f}}</div>
-          </div>
+          }
         </div>
-
-        <ng-container *ngIf="status.changed.length > 0">
+        @if (status.changed.length > 0) {
           <ng-container *m-card-footer>
             <div style="display: flex; gap: 8px">
               <m-button mDisplay="primary"
-                  (click)="pushModalVisible = true"
-                  [mLoading]="loader.state['push']"
-                  [disabled]="loader.isLoading || (selection | apply:noneSelected)"
-                  style="width: 100%">
-                <m-icon *ngIf="!loader.state['push']" mCode="arrow-up"></m-icon>&nbsp;
-                <span>{{'web.implementation-guide-github.github-push' | translate}}</span>
-                <span class="github">
-                  <m-icon mCode="github" style="margin-right: 2px"></m-icon>
-                  {{igVersion?.github.repo}}:{{igVersion?.github.branch}}
-                </span>
-              </m-button>
-            </div>
-          </ng-container>
-        </ng-container>
-      </ng-container>
-    </m-card>
-  </div>
-</m-form-row>
-
-<m-modal #pushModal [(mVisible)]="pushModalVisible" (mClose)="pushModalVisible = false">
-  <ng-container *m-modal-content>
-
-    <div class="status-row" *ngFor="let f of status.changed | filter:selected">
-      <div class="status">{{f.s}}</div>
-      <div>{{f.f}}</div>
+                (click)="pushModalVisible = true"
+                [mLoading]="loader.state['push']"
+                [disabled]="loader.isLoading || (selection | apply:noneSelected)"
+                style="width: 100%">
+                @if (!loader.state['push']) {
+                  <m-icon mCode="arrow-up"></m-icon>
+                  }&nbsp;
+                  <span>{{'web.implementation-guide-github.github-push' | translate}}</span>
+                  <span class="github">
+                    <m-icon mCode="github" style="margin-right: 2px"></m-icon>
+                    {{igVersion?.github.repo}}:{{igVersion?.github.branch}}
+                  </span>
+                </m-button>
+              </div>
+            </ng-container>
+          }
+        }
+      </m-card>
     </div>
+  </m-form-row>
 
-    <m-form-item name="message" required mLabel="web.implementation-guide-github.github-commit-message" style="padding-top: 5px">
-      <m-input name="message" required [(ngModel)]="commit.message" [disabled]="loader.isLoading"></m-input>
-    </m-form-item>
+  <m-modal #pushModal [(mVisible)]="pushModalVisible" (mClose)="pushModalVisible = false">
+    <ng-container *m-modal-content>
 
-    <m-button mDisplay="primary" (click)="push(); pushModalVisible = false" [mLoading]="loader.isLoading" [disabled]="loader.isLoading" style="width: 100%">
-      <m-icon mCode="arrow-up"></m-icon>&nbsp; <span>{{'web.implementation-guide-github.github-push' | translate}}</span>
-      <span class="github">
-        <m-icon mCode="github" style="margin-right: 2px"></m-icon>
-        {{igVersion?.github.repo}}:{{igVersion?.github.branch}}
-      </span>
-    </m-button>
-  </ng-container>
-</m-modal>
+      @for (f of status.changed | filter:selected; track f) {
+        <div class="status-row">
+          <div class="status">{{f.s}}</div>
+          <div>{{f.f}}</div>
+        </div>
+      }
 
-<m-modal #diffModal [mVisible]="!!diff" (mClose)="diff = null" mClass="modal--wide">
-  <ng-container *m-modal-content>
-    <m-skeleton *ngIf="!diff.left && !diff.right; else difft" mLoading/>
+      <m-form-item name="message" required mLabel="web.implementation-guide-github.github-commit-message" style="padding-top: 5px">
+        <m-input name="message" required [(ngModel)]="commit.message" [disabled]="loader.isLoading"></m-input>
+      </m-form-item>
 
-    <ng-template #difft>
-      <tw-diff-view [src]="diff.left" [tgt]="diff.right" display="side-by-side"/>
-    </ng-template>
-  </ng-container>
-</m-modal>
+      <m-button mDisplay="primary" (click)="push(); pushModalVisible = false" [mLoading]="loader.isLoading" [disabled]="loader.isLoading" style="width: 100%">
+        <m-icon mCode="arrow-up"></m-icon>&nbsp; <span>{{'web.implementation-guide-github.github-push' | translate}}</span>
+        <span class="github">
+          <m-icon mCode="github" style="margin-right: 2px"></m-icon>
+          {{igVersion?.github.repo}}:{{igVersion?.github.branch}}
+        </span>
+      </m-button>
+    </ng-container>
+  </m-modal>
+
+  <m-modal #diffModal [mVisible]="!!diff" (mClose)="diff = null" mClass="modal--wide">
+    <ng-container *m-modal-content>
+      @if (!diff.left && !diff.right) {
+        <m-skeleton mLoading/>
+      } @else {
+        <tw-diff-view [src]="diff.left" [tgt]="diff.right" display="side-by-side"/>
+      }
+
+    </ng-container>
+  </m-modal>

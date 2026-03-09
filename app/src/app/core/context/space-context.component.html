@@ -1,69 +1,73 @@
 <m-page-bar mPosition="top">
   <div class="space-context">
     <div class="space-context__container">
-      <span class="space-context__item" style="width: 100%; grid-column: 3 span" *ngIf="loading">...</span>
+      @if (loading) {
+        <span class="space-context__item" style="width: 100%; grid-column: 3 span">...</span>
+      }
 
-      <ng-container *ngIf="!loading">
+      @if (!loading) {
         <!-- Left -->
         <div class="space-context__item space-context__info">
           <tw-space-drawer-search #spaceDrawer [space]="space" [package]="pack" [version]="version"
-              (twChange)="setContext({spaceId: $event?.space?.id, packageId: $event?.package?.id, versionId: $event.version?.id})"
+            (twChange)="setContext({spaceId: $event?.space?.id, packageId: $event?.package?.id, versionId: $event.version?.id})"
           ></tw-space-drawer-search>
           <div>
-            <m-button *ngIf="space && (space.id + '.Space.edit') | twPrivileged" mDisplay="text" mShape="circle" [routerLink]="['/spaces', space?.id, 'edit']">
-              <span class="m-items-middle"><m-icon mCode="form"></m-icon></span>
-            </m-button>
-            <m-button *ngIf="version" mDisplay="text" mShape="circle" (mClick)="downloadYaml()">
-              <span class="m-items-middle"><m-icon mCode="download"></m-icon></span>
-            </m-button>
+            @if (space && (space.id + '.Space.edit') | twPrivileged) {
+              <m-button mDisplay="text" mShape="circle" [routerLink]="['/spaces', space?.id, 'edit']">
+                <span class="m-items-middle"><m-icon mCode="form"></m-icon></span>
+              </m-button>
+            }
+            @if (version) {
+              <m-button mDisplay="text" mShape="circle" (mClick)="downloadYaml()">
+                <span class="m-items-middle"><m-icon mCode="download"></m-icon></span>
+              </m-button>
+            }
           </div>
         </div>
-
         <!-- Filler -->
         <div class="space-context__item"></div>
-
         <!-- Right -->
         <div class="space-context__item space-context__info">
-          <a *ngIf="!pack && !version" (click)="spaceDrawer.openDrawer()">{{'web.space.all-packages' | translate}}</a>
-
+          @if (!pack && !version) {
+            <a (click)="spaceDrawer.openDrawer()">{{'web.space.all-packages' | translate}}</a>
+          }
           <!-- Package-->
-          <ng-container *ngIf="pack">
+          @if (pack) {
             <m-icon-button mIcon="edit" [routerLink]="['/spaces', pack?.spaceId, 'packages', pack?.id, 'edit']"/>
-
             <div>
               <div class="m-subtitle m-items-middle">
                 {{'entities.package.singular' | translate}}
               </div>
-
               <div class="m-items-middle">
                 <div class="m-bold">{{pack.code}}</div>
               </div>
             </div>
-          </ng-container>
-
+          }
           <!-- Package version-->
-          <div *ngIf="version">
-            <!-- Title -->
-            <div class="m-subtitle">{{'entities.package.version.singular' | translate}}</div>
-            <!-- Code -->
-            <div class="m-bold">{{version.version}}</div>
-          </div>
+          @if (version) {
+            <div>
+              <!-- Title -->
+              <div class="m-subtitle">{{'entities.package.version.singular' | translate}}</div>
+              <!-- Code -->
+              <div class="m-bold">{{version.version}}</div>
+            </div>
+          }
           <div>
             <m-dropdown>
               <a *mDropdownItemIf="!!space?.integration?.github?.repo && ((space.id + '.Space.edit') | twPrivileged)"
-                  [routerLink]="['/spaces', space?.id, 'github']">
-              <m-icon mCode="github" style="margin-right: 0.5rem"></m-icon>
+                [routerLink]="['/spaces', space?.id, 'github']">
+                <m-icon mCode="github" style="margin-right: 0.5rem"></m-icon>
                 {{'web.space.github-sync' | translate}}
               </a>
             </m-dropdown>
           </div>
         </div>
-
-        <div *ngIf="pack || version" class="space-context__item selectable" (click)="unselectPackage()">
-          <m-icon mCode="close"></m-icon>
-        </div>
-
-      </ng-container>
+        @if (pack || version) {
+          <div class="space-context__item selectable" (click)="unselectPackage()">
+            <m-icon mCode="close"></m-icon>
+          </div>
+        }
+      }
     </div>
   </div>
 </m-page-bar>

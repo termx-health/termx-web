@@ -1,61 +1,75 @@
 <nz-breadcrumb style="margin-bottom: 1rem">
-  <nz-breadcrumb-item *ngFor="let crumb of breadcrumb; let i = index" [ngClass]="crumb === '...' ? 'm-clickable' : ''" (click)="breadcrumb = []">
-    <label *ngIf="i !== 1" [ngClass]="crumb === '...' ? 'm-clickable' : ''">{{crumb}}</label>
-    <label *ngIf="i === 1">{{crumb}} {{crumb | localizedConceptName: {codeSystem:'loinc-answer-list'} | async}}</label>
-  </nz-breadcrumb-item>
+  @for (crumb of breadcrumb; track crumb; let i = $index) {
+    <nz-breadcrumb-item [ngClass]="crumb === '...' ? 'm-clickable' : ''" (click)="breadcrumb = []">
+      @if (i !== 1) {
+        <label [ngClass]="crumb === '...' ? 'm-clickable' : ''">{{crumb}}</label>
+      }
+      @if (i === 1) {
+        <label>{{crumb}} {{crumb | localizedConceptName: {codeSystem:'loinc-answer-list'} | async}}</label>
+      }
+    </nz-breadcrumb-item>
+  }
 </nz-breadcrumb>
 
-<m-card *ngIf="!(breadcrumb?.length > 0)">
-  <div *m-card-header class="m-justify-between">
-    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+@if (!(breadcrumb?.length > 0)) {
+  <m-card>
+    <div *m-card-header class="m-justify-between">
+      <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+    </div>
+    <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
+      <tr *mTableHead>
+        <th mColumnKey="code">{{'web.loinc.answer-list.code' | translate}}</th>
+        <th mColumnKey="name">{{'web.loinc.answer-list.name' | translate}}</th>
+        <th>{{'web.loinc.answer-list.answers' | translate}}</th>
+        <th>{{'web.loinc.answer-list.oid' | translate}}</th>
+        <th></th>
+      </tr>
+      <tr *mTableRow="let c; let i = index">
+        <td style="white-space: nowrap;"><a (mClick)="openConcept(c.code)">{{c.code}}</a></td>
+        <td>{{c | apply:getName}}</td>
+        <td><m-tag class="m-clickable" mColor="blue" (click)="showAnswers(c, i)">{{c.childCount}}</m-tag></td>
+        <td>{{c | apply:getProperty:'oid'}}</td>
+        <td><a (mClick)="loadLoinc(c.code)">{{'web.loinc.answer-list.used-by' | translate}}</a></td>
+      </tr>
+      <tr *mTableRowExpand="let c" class="m-table-expanded-row">
+        <td>
+          <div style="display: grid">
+            @for (a of c['_children']; track a) {
+              <label><a (mClick)="openConcept(a.code)">{{a.code}}</a></label>
+            }
+          </div>
+        </td>
+        <td>
+          <div style="display: grid">
+            @for (a of c['_children']; track a) {
+              <label>{{a | apply:getName}}</label>
+            }
+          </div>
+        </td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="100%">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-backend-table>
+  </m-card>
+}
+
+@if (breadcrumb?.length === 2) {
+  <div>
+    <m-list [mLoading]="loader.isLoading">
+      @for (lc of loincConcepts; track lc) {
+        <m-list-item mClickable (mClick)="openConcept(lc.code, 'loinc')">
+          <div class="m-items-middle">
+            <label>{{lc.code}}</label>
+            <label>{{lc | apply:getName}}</label>
+          </div>
+        </m-list-item>
+      }
+    </m-list>
   </div>
-
-  <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading" mSize="small">
-    <tr *mTableHead>
-      <th mColumnKey="code">{{'web.loinc.answer-list.code' | translate}}</th>
-      <th mColumnKey="name">{{'web.loinc.answer-list.name' | translate}}</th>
-      <th>{{'web.loinc.answer-list.answers' | translate}}</th>
-      <th>{{'web.loinc.answer-list.oid' | translate}}</th>
-      <th></th>
-    </tr>
-
-    <tr *mTableRow="let c; let i = index">
-      <td style="white-space: nowrap;"><a (mClick)="openConcept(c.code)">{{c.code}}</a></td>
-      <td>{{c | apply:getName}}</td>
-      <td><m-tag class="m-clickable" mColor="blue" (click)="showAnswers(c, i)">{{c.childCount}}</m-tag></td>
-      <td>{{c | apply:getProperty:'oid'}}</td>
-      <td><a (mClick)="loadLoinc(c.code)">{{'web.loinc.answer-list.used-by' | translate}}</a></td>
-    </tr>
-    <tr *mTableRowExpand="let c" class="m-table-expanded-row">
-      <td>
-        <div style="display: grid">
-          <label *ngFor="let a of c['_children']"><a (mClick)="openConcept(a.code)">{{a.code}}</a></label>
-        </div>
-      </td>
-      <td>
-        <div style="display: grid">
-          <label *ngFor="let a of c['_children']">{{a | apply:getName}}</label>
-        </div>
-      </td>
-      <td></td>
-      <td></td>
-      <td></td>
-    </tr>
-    <tr *mTableNoData>
-      <td colspan="100%">
-        <m-no-data></m-no-data>
-      </td>
-    </tr>
-  </m-backend-table>
-</m-card>
-
-<div *ngIf="breadcrumb?.length === 2">
-  <m-list [mLoading]="loader.isLoading">
-    <m-list-item *ngFor="let lc of loincConcepts" mClickable (mClick)="openConcept(lc.code, 'loinc')">
-      <div class="m-items-middle">
-        <label>{{lc.code}}</label>
-        <label>{{lc | apply:getName}}</label>
-      </div>
-    </m-list-item>
-  </m-list>
-</div>
+}

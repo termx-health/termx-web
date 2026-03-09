@@ -1,33 +1,41 @@
-import {Component, forwardRef, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DestroyService, group, LoadingManager} from '@kodality-web/core-util';
+import { Component, forwardRef, OnInit, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { DestroyService, group, LoadingManager, KeysPipe } from '@kodality-web/core-util';
 import {catchError, EMPTY, map, Observable, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
 import {SequenceSearchParams} from 'term-web/sequence/_lib/models/sequence-search-params';
 import {SequenceLibService} from 'term-web/sequence/_lib/services/sequence-lib.service';
-import {Sequence} from '../models/sequence';
+import {Sequence} from 'term-web/sequence/_lib/models/sequence';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 @Component({
-  selector: 'tw-sequence-select',
-  template: `
+    selector: 'tw-sequence-select',
+    template: `
     <m-select
-        icon="search"
-        placeholder="marina.ui.inputs.select.placeholder"
-        [(ngModel)]="val"
-        (mInputChange)="searchUpdate.next($event)"
-        (mChange)="fireOnChange()"
-        [loading]="loader.isLoading"
-        [autoUnselect]="false"
-    >
-      <m-option *ngFor="let key of data | keys" [mValue]="data[key].code" [mLabel]="data[key].description || data[key].code"></m-option>
+      icon="search"
+      placeholder="marina.ui.inputs.select.placeholder"
+      [(ngModel)]="val"
+      (mInputChange)="searchUpdate.next($event)"
+      (mChange)="fireOnChange()"
+      [loading]="loader.isLoading"
+      [autoUnselect]="false"
+      >
+      @for (key of data | keys; track key) {
+        <m-option [mValue]="data[key].code" [mLabel]="data[key].description || data[key].code"></m-option>
+      }
     </m-select>
-  `,
-  providers: [
-    {provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SequenceSelectComponent), multi: true},
-    DestroyService,
-  ]
+    `,
+    providers: [
+        { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => SequenceSelectComponent), multi: true },
+        DestroyService,
+    ],
+    imports: [MuiSelectModule, FormsModule, KeysPipe]
 })
 export class SequenceSelectComponent implements OnInit, ControlValueAccessor {
+  private sequenceService = inject(SequenceLibService);
+  private destroy$ = inject(DestroyService);
+
   protected data: {[id: number]: Sequence} = {};
   protected loader = new LoadingManager();
   protected searchUpdate = new Subject<string>();
@@ -35,11 +43,6 @@ export class SequenceSelectComponent implements OnInit, ControlValueAccessor {
   protected val: string;
   private onChange = (x: any): void => x;
   private onTouched = (x: any): void => x;
-
-  public constructor(
-    private sequenceService: SequenceLibService,
-    private destroy$: DestroyService
-  ) { }
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(

@@ -13,8 +13,8 @@ import {ReleaseResourceDiffComponent} from 'term-web/sys/release/containers/rele
 import {ReleaseSummaryComponent} from 'term-web/sys/release/containers/release-summary.component';
 import {TaskLibModule} from 'term-web/task/_lib';
 import {WikiLibModule} from 'term-web/wiki/_lib';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
-import {ReleaseService} from './services/release.service';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {ReleaseService} from 'term-web/sys/release/services/release.service';
 
 export const RELEASE_ROUTES: Routes = [
   {path: '', data: {privilege: ['*.Release.view']}, component: ReleaseListComponent},
@@ -26,31 +26,29 @@ export const RELEASE_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CoreUiModule,
-    AssociationLibModule,
-    CodeSystemLibModule,
-    CodeSystemModule,
-    ResourceModule,
-    SequenceLibModule,
-    ValueSetLibModule,
-    ProvenanceLibModule,
-    MapSetLibModule,
-    ModelerLibModule,
-    TaskLibModule,
-    WikiLibModule
-  ],
-  declarations: [
-    ReleaseListComponent,
-    ReleaseEditComponent,
-    ReleaseSummaryComponent,
-    ReleaseProvenancesComponent,
-    ReleaseResourceDiffComponent
-  ],
-  providers: [
-    ReleaseService
-  ],
-  exports: []
+    imports: [
+        CoreUiModule,
+        AssociationLibModule,
+        CodeSystemLibModule,
+        CodeSystemModule,
+        ResourceModule,
+        SequenceLibModule,
+        ValueSetLibModule,
+        ProvenanceLibModule,
+        MapSetLibModule,
+        ModelerLibModule,
+        TaskLibModule,
+        WikiLibModule,
+        ReleaseListComponent,
+        ReleaseEditComponent,
+        ReleaseSummaryComponent,
+        ReleaseProvenancesComponent,
+        ReleaseResourceDiffComponent
+    ],
+    providers: [
+        ReleaseService
+    ],
+    exports: []
 })
 export class ReleaseModule {
 }

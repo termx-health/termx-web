@@ -1,17 +1,23 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {isDefined, validateForm} from '@kodality-web/core-util';
-import {AssociationType, MapSet, MapSetAssociation, MapSetAssociationSearchParams} from 'app/src/app/resources/_lib';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import {AssociationType, MapSet, MapSetAssociation, MapSetAssociationSearchParams} from 'term-web/resources/_lib';
 import {finalize, map, Observable, of} from 'rxjs';
 import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import { MuiCardModule, MarinPageLayoutModule, MuiDividerModule, MuiCoreModule, MuiButtonModule, MuiEditableTableModule, MuiCheckboxModule, MuiInputModule, MuiSelectModule, MuiModalModule, MuiFormModule, MuiTextareaModule } from '@kodality-web/marina-ui';
+import { MapSetAssociationDrawerComponent as MapSetAssociationDrawerComponent_1 } from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  selector: 'tw-map-set-external-source-concept-list',
-  templateUrl: 'map-set-external-source-concept-list.component.html'
+    selector: 'tw-map-set-external-source-concept-list',
+    templateUrl: 'map-set-external-source-concept-list.component.html',
+    imports: [MuiCardModule, MarinPageLayoutModule, MuiDividerModule, MuiCoreModule, MuiButtonModule, FormsModule, MuiEditableTableModule, MuiCheckboxModule, MuiInputModule, MuiSelectModule, MuiModalModule, MuiFormModule, MuiTextareaModule, MapSetAssociationDrawerComponent_1, TranslatePipe, ApplyPipe]
 })
 export class MapSetExternalSourceConceptListComponent implements OnChanges {
+  private mapSetService = inject(MapSetService);
+
   @Input() public mapSet: MapSet;
   @Input() public mapSetVersion: string;
   @Input() public targetExternal: boolean;
@@ -28,9 +34,6 @@ export class MapSetExternalSourceConceptListComponent implements OnChanges {
   public loading: boolean;
 
   protected modalData: {visible?: boolean, content?: string} = {};
-
-
-  public constructor(private mapSetService: MapSetService) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if ((changes['mapSet'] || changes['mapSetVersion']) && this.mapSet && this.mapSetVersion) {

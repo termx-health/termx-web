@@ -21,16 +21,19 @@
 
     <tr *mTableRow="let ts">
       <td>
-        <a *ngIf="'*.Space.edit' | twHasAnyPrivilege; else view" [routerLink]="[ts.id, 'edit']">
+        @if ('*.Space.edit' | twHasAnyPrivilege) {
+          <a [routerLink]="[ts.id, 'edit']">
+            {{ts.code}}
+          </a>
+        } @else {
           {{ts.code}}
-        </a>
-        <ng-template #view>
-          {{ts.code}}
-        </ng-template>
+        }
       </td>
       <td>{{ts.names | localName}}</td>
       <td>
-        <div *ngFor="let k of ts.kind">{{'web.terminology-server.kind.' + k | translate}}</div>
+        @for (k of ts.kind; track k) {
+          <div>{{'web.terminology-server.kind.' + k | translate}}</div>
+        }
       </td>
       <td><m-checkbox [(ngModel)]="ts.active" readOnly></m-checkbox></td>
       <td><m-checkbox [(ngModel)]="ts.currentInstallation" readOnly></m-checkbox></td>

@@ -1,0 +1,121 @@
+import { Injectable, TemplateRef, inject } from '@angular/core';
+import {HttpContextToken, HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest} from '@angular/common/http';
+import {
+  MuiNotificationEntityOptions,
+  MuiNotificationService,
+  MuiConfigService,
+  MuiHttpErrorHandlerConfig, DEFAULT_HTTP_ERROR_HANDLER_CONFIG
+} from '@kodality-web/marina-ui';
+import {catchError, Observable, throwError} from 'rxjs';
+import {CoreI18nService} from '@kodality-web/core-util';
+
+export const MuiSkipErrorHandler = new HttpContextToken<boolean>(() => false);
+
+interface Issue {
+  severity: string;
+  code: string;
+  message: string;
+  params: Record<string, any>
+}
+
+type ShowErrorFun = (title: string | TemplateRef<any>, content?: string | TemplateRef<any>, options?: MuiNotificationEntityOptions) => void;
+
+
+@Injectable({providedIn: 'root'})
+export class HttpErrorNotificationService {
+  private notificationService = inject(MuiNotificationService);
+
+  private hook: ShowErrorFun;
+
+  public registerHook(clb: ShowErrorFun): () => void {
+    this.hook = clb;
+    return () => this.hook = null;
+  }
+
+  public showError(title: string, message: string, options?: MuiNotificationEntityOptions): void {
+    if (this.hook) {
+      this.hook(title, message, options);
+    } else {
+      this.notificationService.error(title, message, options);
+    }
+  }
+}
+
+@Injectable()
+export class HttpErrorHandler implements HttpInterceptor {
+  private httpNotificationService = inject(HttpErrorNotificationService);
+  private configService = inject(MuiConfigService);
+  private i18nService = inject(CoreI18nService);
+
+
+  public intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+    if (req.context.get(MuiSkipErrorHandler)?.valueOf()) {
+      return next.handle(req);
+    }
+
+    return next.handle(req).pipe(
+      catchError((error: HttpErrorResponse) => this.handleError(error, req))
+    );
+  }
+  
+  private handleError(error: HttpErrorResponse, req?: HttpRequest<any>): Observable<HttpEvent<any>> {
+    if (this.isErrorStatus(error)) {
+      this.showMessage(error, req);
+    }
+    return throwError(() => error);
+  }
+  
+  private showMessage(error: HttpErrorResponse, req?: HttpRequest<any>): void {
+    // Generic UX message for DELETE + 405 in TermX classifier endpoints.
+    // Reason: some IDs may contain special characters (e.g. ?, #, /, %, space) which can break URL path if not encoded.
+    const method = req?.method || '';
+    const url = req?.urlWithParams || req?.url || '';
+
+    const isDelete = method === 'DELETE';
+    const isTermxTsEndpoint = url.includes('/ts/code-systems/'); // covers code-systems, concepts, etc.
+
+    if (error.status === 405 && isDelete && isTermxTsEndpoint) {
+      this.showError(
+        'Kustutamine ebaõnnestus',
+        'Mõiste koodis ei ole lubatud kasutada erimärke.'
+      );
+      return;
+    }
+
+    if (Array.isArray(error.error)) {
+      error.error.forEach((e: Issue) => {
+        const translationKey = e.code ? `${this.config.translationPrefix}${e.code}` : undefined;
+        const localMessage = e.code ? this.i18nService.instant(translationKey, e.params) : undefined;
+        this.showError(e.code, localMessage !== translationKey ? localMessage : e.message, e.params?.['details']);
+      });
+    } else {
+      switch (error.status) {
+        case 403:
+          this.showError(
+            this.i18nService.instant('core.error.403.title'),
+            this.i18nService.instant('core.error.403.message')
+          );
+          break;
+        default:
+          this.showError(this.i18nService.instant('marina.ui.http.systemError'), error.message);
+          break;
+      }
+    }
+  }
+  
+  private showError(title: string, message: string, details?: string): void {
+    const {duration, placement} = this.config;
+    this.httpNotificationService.showError(title, message, {duration, placement, data: {details}});
+  }
+
+  private isErrorStatus(error: HttpErrorResponse): boolean {
+    return error.status >= 400 && error.status < 600 || error.status === 0;
+  }
+
+  private get config(): MuiHttpErrorHandlerConfig {
+    return {
+      ...DEFAULT_HTTP_ERROR_HANDLER_CONFIG,
+      ...this.configService.getConfigFor('httpErrorHandler')
+    };
+  }
+}

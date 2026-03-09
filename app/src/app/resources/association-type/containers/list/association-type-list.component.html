@@ -13,7 +13,9 @@
 
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
-      <th *ngIf="searchResult | apply : haveDescriptions"></th>
+      @if (searchResult | apply : haveDescriptions) {
+        <th></th>
+      }
       <th mColumnKey="associationType">{{'entities.association-type.code' | translate}}</th>
       <th mColumnKey="associationKind">{{'entities.association-type.kind' | translate}}</th>
       <th mColumnKey="forwardName">{{'entities.association-type.forward-name' | translate}}</th>
@@ -23,19 +25,26 @@
     </tr>
 
     <tr *mTableRow="let at">
-      <td *ngIf="at.description" m-table-expand [mItem]="at"></td>
-      <td *ngIf="!at.description && (searchResult | apply : haveDescriptions)"></td>
+      @if (at.description) {
+        <td m-table-expand [mItem]="at"></td>
+      }
+      @if (!at.description && (searchResult | apply : haveDescriptions)) {
+        <td></td>
+      }
       <td>
-        <a *ngIf="'*.AssociationType.edit' | twHasAnyPrivilege; else view" [routerLink]="[at.code, 'edit']">{{at.code}}</a>
-        <ng-template #view>
+        @if ('*.AssociationType.edit' | twHasAnyPrivilege) {
+          <a [routerLink]="[at.code, 'edit']">{{at.code}}</a>
+        } @else {
           <a [routerLink]="[at.code, 'view']">{{at.code}}</a>
-        </ng-template>
+        }
       </td>
       <td>{{at.associationKind}}</td>
       <td>{{at.forwardName}}</td>
       <td>{{at.reverseName}}</td>
       <td>
-        <m-icon *ngIf="at.directed" mCode="check"></m-icon>
+        @if (at.directed) {
+          <m-icon mCode="check"></m-icon>
+        }
       </td>
       <td class="tw-table-actions" *twPrivileged="'*.AssociationType.edit'">
         <m-dropdown>

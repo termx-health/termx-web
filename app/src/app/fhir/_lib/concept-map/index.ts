@@ -1,2 +1,2 @@
-export * from './service/fhir-concept-map-lib.service';
-export * from './model/fhir-concept-map-translate.params';
+export * from 'term-web/fhir/_lib/concept-map/service/fhir-concept-map-lib.service';
+export * from 'term-web/fhir/_lib/concept-map/model/fhir-concept-map-translate.params';

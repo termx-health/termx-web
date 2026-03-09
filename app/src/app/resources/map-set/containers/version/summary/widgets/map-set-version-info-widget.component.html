@@ -1,95 +1,140 @@
-<m-no-data *ngIf="!version"></m-no-data>
+@if (!version) {
+  <m-no-data></m-no-data>
+}
 
-<div *ngIf="version">
-  <div class="m-justify-between">
-    <div class="m-items-middle">
-      <span class="m-bold">{{version.version}}</span>
-      <m-divider mVertical></m-divider>
-      <span>{{(version.releaseDate | localDate) || '...'}} -
+@if (version) {
+  <div>
+    <div class="m-justify-between">
+      <div class="m-items-middle">
+        <span class="m-bold">{{version.version}}</span>
+        <m-divider mVertical></m-divider>
+        <span>{{(version.releaseDate | localDate) || '...'}} -
         {{(version.expirationDate | localDate) || '...'}}</span>
-    </div>
-
-    <tw-status-tag [status]="version.status"></tw-status-tag>
-  </div>
-  <div class="m-items-top">
-    <m-icon mCode="arrow-right"></m-icon>
-    <div *ngIf="version.scope.sourceCodeSystems?.length > 0">
-      <div *ngFor="let cs of version.scope.sourceCodeSystems" class="m-items-middle">
-        <label>{{cs.uri}}</label>
-        <m-divider *ngIf="cs.version" mVertical></m-divider>
-        <label *ngIf="cs.version">{{cs.version}}</label>
       </div>
+      <tw-status-tag [status]="version.status"></tw-status-tag>
     </div>
-    <ng-container *ngIf="version.scope.sourceValueSet as vs">
-      <label>{{vs.uri}}</label>
-      <m-divider *ngIf="vs.version" mVertical></m-divider>
-      <label *ngIf="vs.version">{{vs.version}}</label>
-    </ng-container>
-  </div>
-  <div class="m-items-top">
-    <m-icon mCode="arrow-left"></m-icon>
-    <div *ngIf="version.scope.targetCodeSystems?.length > 0">
-      <div *ngFor="let cs of version.scope.targetCodeSystems" class="m-items-middle">
-        <label>{{cs.uri}}</label>
-        <m-divider *ngIf="cs.version" mVertical></m-divider>
-        <label *ngIf="cs.version">{{cs.version}}</label>
-      </div>
+    <div class="m-items-top">
+      <m-icon mCode="arrow-right"></m-icon>
+      @if (version.scope.sourceCodeSystems?.length > 0) {
+        <div>
+          @for (cs of version.scope.sourceCodeSystems; track cs) {
+            <div class="m-items-middle">
+              <label>{{cs.uri}}</label>
+              @if (cs.version) {
+                <m-divider mVertical></m-divider>
+              }
+              @if (cs.version) {
+                <label>{{cs.version}}</label>
+              }
+            </div>
+          }
+        </div>
+      }
+      @if (version.scope.sourceValueSet; as vs) {
+        <label>{{vs.uri}}</label>
+        @if (vs.version) {
+          <m-divider mVertical></m-divider>
+        }
+        @if (vs.version) {
+          <label>{{vs.version}}</label>
+        }
+      }
     </div>
-    <ng-container *ngIf="version.scope.targetValueSet as vs">
-      <label>{{vs.uri}}</label>
-      <m-divider *ngIf="vs.version" mVertical></m-divider>
-      <label *ngIf="vs.version">{{vs.version}}</label>
-    </ng-container>
-  </div>
-  <div>{{version.description | localName}}</div>
-  <div class="m-items-middle">
-    <m-icon mCode="download"></m-icon>
-    <span>{{'web.map-set-version.summary.info.download' | translate}}
-      (<span *ngFor="let format of ['json', 'xml', 'fsh r4', 'fsh r5']; let i = index"><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 2 ? '|' : ''}}</span>)</span>
-    <m-divider mVertical></m-divider>
-    <span>{{'web.map-set-version.summary.info.definition' | translate}} <a (mClick)="openJson()">FHIR</a></span>
-  </div>
-  <div class="m-items-middle">
-    <m-icon mCode="calendar"></m-icon>
-    <span>{{'web.map-set-version.summary.info.last-modified' | translate}}:
-      {{((provenances | apply:getLastProvenance)?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
-  </div>
-  <div class="m-items-middle" *ngIf="mapSet?.settings?.reviewRequired">
-    <m-icon mCode="calendar"></m-icon>
-    <span>{{'web.map-set-version.summary.info.last-reviewed' | translate}}:
-      {{((provenances | apply:getLastProvenance: 'reviewed')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
-    <a (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version', context: {resourceId: mapSet?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})"
-        *twPrivileged="'*.Task.edit'">{{'web.map-set-version.summary.info.create-review' | translate}}</a>
-  </div>
-  <div class="m-items-middle" *ngIf="mapSet?.settings?.approvalRequired">
-    <m-icon mCode="calendar"></m-icon>
-    <span>{{'web.map-set-version.summary.info.last-approved' | translate}}:
-      {{((provenances | apply:getLastProvenance: 'approved')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
-    <a (mClick)="taskModal.toggleModal({type: 'approval', workflowPrefix: 'version', context: {resourceId: mapSet?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})"
-        *twPrivileged="'*.Task.edit'">{{'web.map-set-version.summary.info.create-approve' | translate}}</a>
-  </div>
-  <div class="m-items-middle" *twPrivileged="version.mapSet + '.MapSet.publish'">
-    <m-icon mCode="tool"></m-icon>
-    <a *ngIf="version.status !== 'draft'" (mClick)="changeVersionStatus('draft')">{{'web.map-set-version.summary.info.make-draft' | translate}}</a>
-    <a *ngIf="version.status !== 'active' && version.status !== 'retired'"
-        (mClick)="changeVersionStatus('active')">{{'web.map-set-version.summary.info.activate' | translate}}</a>
-    <ng-container *ngIf="version.status !== 'retired'">
+    <div class="m-items-top">
+      <m-icon mCode="arrow-left"></m-icon>
+      @if (version.scope.targetCodeSystems?.length > 0) {
+        <div>
+          @for (cs of version.scope.targetCodeSystems; track cs) {
+            <div class="m-items-middle">
+              <label>{{cs.uri}}</label>
+              @if (cs.version) {
+                <m-divider mVertical></m-divider>
+              }
+              @if (cs.version) {
+                <label>{{cs.version}}</label>
+              }
+            </div>
+          }
+        </div>
+      }
+      @if (version.scope.targetValueSet; as vs) {
+        <label>{{vs.uri}}</label>
+        @if (vs.version) {
+          <m-divider mVertical></m-divider>
+        }
+        @if (vs.version) {
+          <label>{{vs.version}}</label>
+        }
+      }
+    </div>
+    <div>{{version.description | localName}}</div>
+    <div class="m-items-middle">
+      <m-icon mCode="download"></m-icon>
+      <span>{{'web.map-set-version.summary.info.download' | translate}}
+        (@for (format of ['json', 'xml', 'fsh', 'csv', 'xlsx']; track format; let i = $index) {
+        <span><a (mClick)="downloadDefinition(format)"> {{format | uppercase}} </a>{{i < 4 ? '|' : ''}}</span>
+      })</span>
       <m-divider mVertical></m-divider>
-      <a (mClick)="changeVersionStatus('retired')">{{'web.map-set-version.summary.info.retire' | translate}}</a>
-    </ng-container>
-  </div>
-  <div class="m-items-middle" *twPrivileged="'*.Release.view'">
-    <m-icon mCode="rocket"/>
-    <div *ngIf="releases?.length > 0">
-      <div *ngFor="let release of releases">
-        <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
-      </div>
+      <span>{{'web.map-set-version.summary.info.definition' | translate}} <a (mClick)="openJson()">FHIR</a></span>
     </div>
-    <a (mClick)="releaseModal.toggleModal({resourceId: mapSet?.id, resourceVersion: version?.version, resourceTitle: mapSet?.title})"
-        *ngIf="!(releases?.length > 0) && ('*.Release.edit' | twPrivileged)">{{'web.map-set-version.summary.info.add-to-release' | translate}}</a>
-    <span *ngIf="!(releases?.length > 0) && !('*.Release.edit' | twPrivileged)">{{'web.map-set-version.summary.info.release-unspecified' | translate}}</span>
+    <div class="m-items-middle">
+      <m-icon mCode="calendar"></m-icon>
+      <span>{{'web.map-set-version.summary.info.last-modified' | translate}}:
+      {{((provenances | apply:getLastProvenance)?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
+    </div>
+    @if (mapSet?.settings?.reviewRequired) {
+      <div class="m-items-middle">
+        <m-icon mCode="calendar"></m-icon>
+        <span>{{'web.map-set-version.summary.info.last-reviewed' | translate}}:
+        {{((provenances | apply:getLastProvenance: 'reviewed')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
+        <a (mClick)="taskModal.toggleModal({type: 'review', workflowPrefix: 'version', context: {resourceId: mapSet?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})"
+        *twPrivileged="'*.Task.edit'">{{'web.map-set-version.summary.info.create-review' | translate}}</a>
+      </div>
+    }
+    @if (mapSet?.settings?.approvalRequired) {
+      <div class="m-items-middle">
+        <m-icon mCode="calendar"></m-icon>
+        <span>{{'web.map-set-version.summary.info.last-approved' | translate}}:
+        {{((provenances | apply:getLastProvenance: 'approved')?.date | localDate) || ('web.map-set-version.summary.info.none' | translate)}} </span>
+        <a (mClick)="taskModal.toggleModal({type: 'approval', workflowPrefix: 'version', context: {resourceId: mapSet?.id, resourceVersionId: version?.id, resourceVersionVersion: version?.version}})"
+        *twPrivileged="'*.Task.edit'">{{'web.map-set-version.summary.info.create-approve' | translate}}</a>
+      </div>
+    }
+    <div class="m-items-middle" *twPrivileged="version.mapSet + '.MapSet.publish'">
+      <m-icon mCode="tool"></m-icon>
+      @if (version.status !== 'draft') {
+        <a (mClick)="changeVersionStatus('draft')">{{'web.map-set-version.summary.info.make-draft' | translate}}</a>
+      }
+      @if (version.status !== 'active' && version.status !== 'retired') {
+        <a
+        (mClick)="changeVersionStatus('active')">{{'web.map-set-version.summary.info.activate' | translate}}</a>
+      }
+      @if (version.status !== 'retired') {
+        <m-divider mVertical></m-divider>
+        <a (mClick)="changeVersionStatus('retired')">{{'web.map-set-version.summary.info.retire' | translate}}</a>
+      }
+    </div>
+    <div class="m-items-middle" *twPrivileged="'*.Release.view'">
+      <m-icon mCode="rocket"/>
+      @if (releases?.length > 0) {
+        <div>
+          @for (release of releases; track release) {
+            <div>
+              <a (mClick)="openRelease(release.id)">{{[release.code, (release.names | localName), ((release.releaseDate || release.planned) | localDate)] | join: ' | '}}</a>
+            </div>
+          }
+        </div>
+      }
+      @if (!(releases?.length > 0) && ('*.Release.edit' | twPrivileged)) {
+        <a (mClick)="releaseModal.toggleModal({resourceId: mapSet?.id, resourceVersion: version?.version, resourceTitle: mapSet?.title})"
+        >{{'web.map-set-version.summary.info.add-to-release' | translate}}</a>
+      }
+      @if (!(releases?.length > 0) && !('*.Release.edit' | twPrivileged)) {
+        <span>{{'web.map-set-version.summary.info.release-unspecified' | translate}}</span>
+      }
+    </div>
   </div>
-</div>
+}
 
 <tw-resource-task-modal #taskModal (taskCreated)="taskCreated.emit()" resourceType="MapSet"/>
 <tw-resource-release-modal #releaseModal (connectedToRelease)="loadRelease()" resourceType="MapSet"/>

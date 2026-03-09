@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {Router} from '@angular/router';
 import {isDefined, isNil} from '@kodality-web/core-util';
 import {MuiNotificationService} from '@kodality-web/marina-ui';
@@ -18,24 +18,29 @@ export interface UserInfo {
 
 @Injectable({providedIn: 'root'})
 export class AuthService {
+  protected http = inject(HttpClient);
+  protected router = inject(Router);
+  private oidcSecurityService = inject(OidcSecurityService);
+  private notificationService = inject(MuiNotificationService);
+
   private readonly baseUrl = `${environment.termxApi}/auth`;
 
   public user?: UserInfo;
-  public isAuthenticated = this.oidcSecurityService.isAuthenticated$.pipe(map(r => r.isAuthenticated));
+  public isAuthenticated = this.oidcSecurityService.isAuthenticated$.pipe(
+    map(result => result.isAuthenticated)
+  );
+
   public notificationShown?: boolean = false;
 
   public get token(): Observable<string> {
     return this.oidcSecurityService.getAccessToken();
   }
 
-  public constructor(
-    protected http: HttpClient,
-    protected router: Router,
-    private oidcSecurityService: OidcSecurityService,
-    private notificationService: MuiNotificationService,
-    eventService: PublicEventsService,
-  ) {
-    eventService.registerForEvents().subscribe(e => console.log(e));
+  public constructor() {
+    const oidcSecurityService = this.oidcSecurityService;
+    const eventService = inject(PublicEventsService);
+
+    eventService.registerForEvents().subscribe();
 
     this.updateAuthTokenCookie(oidcSecurityService);
     this.processAuthFinishEvents(eventService);

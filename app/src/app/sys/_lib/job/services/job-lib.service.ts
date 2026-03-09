@@ -1,14 +1,14 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {environment} from 'environments/environment';
 import {merge, Observable, Subject, switchMap, take, takeUntil, timer} from 'rxjs';
-import {JobLog} from '../model/job-log';
+import {JobLog} from 'term-web/sys/_lib/job/model/job-log';
 
 @Injectable()
 export class JobLibService {
-  protected baseUrl = `${environment.termxApi}/job-logs`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/job-logs`;
 
   public getLog(jobId: number): Observable<JobLog> {
     return this.http.get<JobLog>(`${this.baseUrl}/${jobId}`);

@@ -1,11 +1,14 @@
 import {Component, forwardRef, Input} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import {BooleanInput, DestroyService} from '@kodality-web/core-util';
+import { NgClass } from '@angular/common';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
 
 @Component({
-  selector: 'tw-task-type',
-  templateUrl: './task-type.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TaskTypeComponent), multi: true}, DestroyService]
+    selector: 'tw-task-type',
+    templateUrl: './task-type.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TaskTypeComponent), multi: true }, DestroyService],
+    imports: [NgClass, MuiSelectModule, FormsModule]
 })
 export class TaskTypeComponent implements ControlValueAccessor {
   @Input() @BooleanInput() public readonly: string | boolean = false;
@@ -22,8 +25,8 @@ export class TaskTypeComponent implements ControlValueAccessor {
 
   public value?: string;
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public constructor() {}
 

@@ -17,26 +17,25 @@ import {ValueSetVersionInfoWidgetComponent} from 'term-web/resources/value-set/c
 import {ValueSetVersionRuleSetWidgetComponent} from 'term-web/resources/value-set/containers/version/widgets/value-set-version-rule-set-widget.component';
 import {SysLibModule} from 'term-web/sys/_lib';
 import {UserLibModule} from 'term-web/user/_lib';
-import {FinderModule} from '../../core/components/finder/finder.module';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
-import {IntegrationLibModule} from '../../integration/_lib';
-import {MeasurementUnitLibModule} from '../../measurement-unit/_lib';
-import {FinderValueSetListComponent} from './containers-finder/value-set-list.component';
-import {FinderValueSetViewComponent} from './containers-finder/value-set-view.component';
-import {FinderValueSetVersionViewComponent} from './containers-finder/version/value-set-version-view.component';
-import {ValueSetListComponent} from './containers/list/value-set-list.component';
-import {ValueSetRuleConceptListComponent} from './containers/version/rule/concept/value-set-rule-concept-list.component';
-import {ValueSetRuleFilterListComponent} from './containers/version/rule/filter/value-set-rule-filter-list.component';
-import {ValueSetRuleFormComponent} from './containers/version/rule/value-set-rule-form.component';
-import {ValueSetService} from './services/value-set.service';
+import {FinderModule} from 'term-web/core/components/finder/finder.module';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {IntegrationLibModule} from 'term-web/integration/_lib';
+import {MeasurementUnitLibModule} from 'term-web/measurement-unit/_lib';
+import {FinderValueSetListComponent} from 'term-web/resources/value-set/containers-finder/value-set-list.component';
+import {FinderValueSetViewComponent} from 'term-web/resources/value-set/containers-finder/value-set-view.component';
+import {FinderValueSetVersionViewComponent} from 'term-web/resources/value-set/containers-finder/version/value-set-version-view.component';
+import {ValueSetListComponent} from 'term-web/resources/value-set/containers/list/value-set-list.component';
+import {ValueSetRuleConceptListComponent} from 'term-web/resources/value-set/containers/version/rule/concept/value-set-rule-concept-list.component';
+import {ValueSetRuleFilterListComponent} from 'term-web/resources/value-set/containers/version/rule/filter/value-set-rule-filter-list.component';
+import {ValueSetRuleFormComponent} from 'term-web/resources/value-set/containers/version/rule/value-set-rule-form.component';
+import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 
 const EDIT = {privilege: ['{id}.ValueSet.edit']};
 const VIEW = {privilege: ['{id}.ValueSet.view']};
 export const VALUE_SET_ROUTES: Routes = [
   {path: '', component: ValueSetListComponent},
   {path: 'add', component: ValueSetEditComponent, data: {privilege: ['*.ValueSet.edit']}},
-  {path: ':id/edit', component: ValueSetEditComponent, data: EDIT},
-  {path: ':id/details', component: ValueSetEditComponent, data: VIEW},
+  {path: ':id/edit', component: ValueSetEditComponent, data: VIEW},
   {path: ':id/summary', component: ValueSetSummaryComponent, data: VIEW},
   {path: ':id/concepts', component: ValueSetConceptsComponent, data: VIEW},
   {path: ':id/provenances', component: ValueSetProvenancesComponent, data: VIEW},
@@ -44,7 +43,7 @@ export const VALUE_SET_ROUTES: Routes = [
   {path: ':id/versions/:versionCode/summary', component: ValueSetVersionSummaryComponent, data: VIEW},
   {path: ':id/versions/:versionCode/concepts', component: ValueSetVersionConceptsComponent, data: VIEW},
   {path: ':id/versions/:versionCode/provenances', component: ValueSetProvenancesComponent, data: VIEW},
-  {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent, data: EDIT}
+  {path: ':id/versions/:versionCode/edit', component: ValueSetVersionEditComponent, data: VIEW}
 ];
 
 export const VALUE_SET_FINDER_ROUTES: Routes = [{
@@ -56,49 +55,43 @@ export const VALUE_SET_FINDER_ROUTES: Routes = [{
 }];
 
 @NgModule({
-  imports: [
-    CoreUiModule,
-    FinderModule,
-    ResourcesLibModule,
-    IntegrationLibModule,
-    MeasurementUnitLibModule,
-    MarinaQuillModule,
-    ResourceModule,
-    UserLibModule,
-    SysLibModule
-  ],
-  declarations: [
-    ValueSetListComponent,
-    ValueSetVersionEditComponent,
-    ValueSetRuleFormComponent,
-    ValueSetRuleFilterListComponent,
-    ValueSetRuleConceptListComponent,
-
-    FinderValueSetListComponent,
-    FinderValueSetViewComponent,
-    FinderValueSetVersionViewComponent,
-
-    ValueSetEditComponent,
-    ValueSetSummaryComponent,
-    ValueSetInfoWidgetComponent,
-    ValueSetVersionsWidgetComponent,
-    ValueSetConceptsComponent,
-    ValueSetProvenancesComponent,
-
-    ValueSetVersionSummaryComponent,
-    ValueSetVersionInfoWidgetComponent,
-    ValueSetVersionRuleSetWidgetComponent,
-    ValueSetVersionConceptsComponent,
-
-    ValueSetVersionSaveModalComponent,
-  ],
-  exports: [
-    ValueSetListComponent,
-    ValueSetVersionSaveModalComponent,
-  ],
-  providers: [
-    ValueSetService
-  ]
+    imports: [
+        CoreUiModule,
+        FinderModule,
+        ResourcesLibModule,
+        IntegrationLibModule,
+        MeasurementUnitLibModule,
+        MarinaQuillModule,
+        ResourceModule,
+        UserLibModule,
+        SysLibModule,
+        ValueSetListComponent,
+        ValueSetVersionEditComponent,
+        ValueSetRuleFormComponent,
+        ValueSetRuleFilterListComponent,
+        ValueSetRuleConceptListComponent,
+        FinderValueSetListComponent,
+        FinderValueSetViewComponent,
+        FinderValueSetVersionViewComponent,
+        ValueSetEditComponent,
+        ValueSetSummaryComponent,
+        ValueSetInfoWidgetComponent,
+        ValueSetVersionsWidgetComponent,
+        ValueSetConceptsComponent,
+        ValueSetProvenancesComponent,
+        ValueSetVersionSummaryComponent,
+        ValueSetVersionInfoWidgetComponent,
+        ValueSetVersionRuleSetWidgetComponent,
+        ValueSetVersionConceptsComponent,
+        ValueSetVersionSaveModalComponent
+    ],
+    exports: [
+        ValueSetListComponent,
+        ValueSetVersionSaveModalComponent,
+    ],
+    providers: [
+        ValueSetService
+    ]
 })
 export class ValueSetModule {
 }

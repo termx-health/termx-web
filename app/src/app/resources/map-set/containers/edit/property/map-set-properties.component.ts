@@ -1,15 +1,53 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {BooleanInput, copyDeep, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {DefinedProperty, PropertyRule, MapSetProperty} from 'app/src/app/resources/_lib';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import {HttpContext} from '@angular/common/http';
+import { BooleanInput, copyDeep, LoadingManager, validateForm, FilterPipe } from '@kodality-web/core-util';
+import {catchError, of, throwError} from 'rxjs';
+import {MuiSkipErrorHandler} from 'term-web/core/marina/http-error-handler';
+import {DefinedProperty, PropertyRule, MapSetProperty} from 'term-web/resources/_lib';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import { MuiCardModule, MuiDropdownModule, MuiEditableTableModule, MuiCheckboxModule, MuiCoreModule, MuiTableModule, MuiFormModule, MuiInputModule, MuiMultiLanguageInputModule, MuiNumberInputModule, MuiDividerModule } from '@kodality-web/marina-ui';
+import { AsyncPipe } from '@angular/common';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({
-  selector: 'tw-ms-properties',
-  templateUrl: './map-set-properties.component.html',
+    selector: 'tw-ms-properties',
+    templateUrl: './map-set-properties.component.html',
+    imports: [
+        MuiCardModule,
+        MuiDropdownModule,
+        AddButtonComponent,
+        FormsModule,
+        MuiEditableTableModule,
+        MuiCheckboxModule,
+        MuiCoreModule,
+        MuiTableModule,
+        MuiFormModule,
+        MuiInputModule,
+        MuiMultiLanguageInputModule,
+        ValueSetConceptSelectComponent,
+        MuiNumberInputModule,
+        MuiDividerModule,
+        CodeSystemSearchComponent,
+        ValueSetSearchComponent,
+        AsyncPipe,
+        TranslatePipe,
+        MarinaUtilModule,
+        FilterPipe,
+        LocalizedConceptNamePipe,
+    ],
 })
 export class MapSetPropertiesComponent implements OnInit, OnChanges {
+  private mapSetService = inject(MapSetService);
+  private definedEntityPropertyService = inject(DefinedPropertyLibService);
+
   @Input() public mapSetId?: string | null;
   @Input() public properties: MapSetProperty[] = [];
   @Input() @BooleanInput() public viewMode: boolean | string = false;
@@ -21,10 +59,8 @@ export class MapSetPropertiesComponent implements OnInit, OnChanges {
 
   protected definedEntityProperties: DefinedProperty[];
 
-  public constructor(private mapSetService: MapSetService, private definedEntityPropertyService: DefinedPropertyLibService) {}
-
   public ngOnInit(): void {
-    this.definedEntityPropertyService.search({limit: -1}).subscribe(r => this.definedEntityProperties = r.data);
+    this.definedEntityPropertyService.search({limit: -1}, new HttpContext().set(MuiSkipErrorHandler, true)).pipe(catchError((err) => err?.status === 403 ? of({data: []}) : throwError(() => err))).subscribe(r => this.definedEntityProperties = r.data);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

@@ -1,20 +1,16 @@
-import {Directive, Input, OnInit, Optional, TemplateRef, ViewContainerRef} from '@angular/core';
+import { Directive, Input, OnInit, TemplateRef, ViewContainerRef, inject } from '@angular/core';
 import {PrivilegedPipe} from 'term-web/core/auth/privileges/privileged.pipe';
-import {AuthService} from '../auth.service';
-import {PrivilegeContextDirective} from './privilege-context.directive';
+import {AuthService} from 'term-web/core/auth/auth.service';
+import {PrivilegeContextDirective} from 'term-web/core/auth/privileges/privilege-context.directive';
 
-@Directive({
-  selector: '[twPrivileged]',
-})
+@Directive({ selector: '[twPrivileged]', })
 export class PrivilegedDirective implements OnInit {
-  @Input() public twPrivileged?: string | string[];
+  private templateRef = inject<TemplateRef<void>>(TemplateRef);
+  private authService = inject(AuthService);
+  private vcr = inject(ViewContainerRef);
+  private ctx = inject(PrivilegeContextDirective, { optional: true });
 
-  public constructor(
-    private templateRef: TemplateRef<void>,
-    private authService: AuthService,
-    private vcr: ViewContainerRef,
-    @Optional() private ctx?: PrivilegeContextDirective
-  ) { }
+  @Input() public twPrivileged?: string | string[];
 
   public ngOnInit(): void {
     if (this.authService.hasAnyPrivilege(PrivilegedPipe.getPrivileges(this.twPrivileged, this.ctx))) {

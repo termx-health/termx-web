@@ -3,7 +3,7 @@ import {Component, inject} from '@angular/core';
 import {CorePipesModule} from '@kodality-web/core-util';
 import {MuiFormModule, MuiListModule} from '@kodality-web/marina-ui';
 import {environment} from 'environments/environment';
-import {InfoService} from './info.service';
+import {InfoService} from 'term-web/core/info/info.service';
 
 @Component({
   standalone: true,
@@ -15,84 +15,89 @@ import {InfoService} from './info.service';
   ],
   template: `
       <m-form-row>
-          <div *m-form-col class="tw-flex-container" style="gap: 2rem">
-              <h1 style="margin-top: 2.5rem">
-                  <div>{{ env.appVersion }}</div>
-                  <div class="m-subtitle small">{{ version | async }}</div>
-              </h1>
-
-              <section>
-                  <h4 class="small">
-                      Web
-                  </h4>
-
-                  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem ">
-                      <div class="cardy m-rounded">
-                          <div class="small">Default language</div>
-                          <div class="m-text-secondary small">{{ env.defaultLanguage }}</div>
-                      </div>
-
-                      <div class="cardy m-rounded">
-                          <div class="small">UI languages</div>
-                          <div class="m-text-secondary small">{{ env.uiLanguages | join: ', ' }}</div>
-                      </div>
-                  </div>
-              </section>
-
-              <section>
-                  <h4 class="small">
-                      Modules
-                  </h4>
-
-                  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem ">
-                      <ng-container *ngFor="let module of modules | async">
-                          <div class="cardy m-rounded">
-                              {{ module }}
-                          </div>
-                      </ng-container>
-                  </div>
-              </section>
-
-              <section>
-                  <h4 class="small">
-                      Configured
-                  </h4>
-
-                  <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem ">
-                      <div class="cardy m-rounded" *ngIf="env.swaggerUrl">
-                          <div class="small">Swagger</div>
-                          <a class="m-text-secondary small" [href]="env.swaggerUrl">{{ env.swaggerUrl }}</a>
-                      </div>
-
-                      <div class="cardy m-rounded" *ngIf="env.chefUrl">
-                          <div class="small">Chef</div>
-                          <a class="m-text-secondary small" [href]="env.chefUrl">{{ env.chefUrl }}</a>
-                      </div>
-
-                      <div class="cardy m-rounded" *ngIf="env.chefFhirVersion">
-                          <div class="small">Chef FHIR Version</div>
-                          <div class="m-text-secondary small">{{ env.chefFhirVersion }}</div>
-                      </div>
-
-                      <div class="cardy m-rounded" *ngIf="env.fmlEditor">
-                          <div class="small">FML</div>
-                          <a class="m-text-secondary small" [href]="env.fmlEditor">{{ env.fmlEditor }}</a>
-                      </div>
-
-                      <div class="cardy m-rounded" *ngIf="env.plantUmlUrl">
-                          <div class="small">PlantUML</div>
-                          <a class="m-text-secondary small" [href]="env.plantUmlUrl">{{ env.plantUmlUrl }}</a>
-                      </div>
-
-                      <div class="cardy m-rounded" *ngIf="env.snowstormUrl">
-                          <div class="small">Snowstorm</div>
-                          <a class="m-text-secondary small" [href]="env.snowstormUrl">{{ env.snowstormUrl }}</a>
-                      </div>
-                  </div>
-              </section>
-          </div>
+        <div *m-form-col class="tw-flex-container" style="gap: 2rem">
+          <h1 style="margin-top: 2.5rem">
+            <div>{{ env.appVersion }}</div>
+            <div class="m-subtitle small">{{ version | async }}</div>
+          </h1>
+      
+          <section>
+            <h4 class="small">
+              Web
+            </h4>
+      
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem ">
+              <div class="cardy m-rounded">
+                <div class="small">Default language</div>
+                <div class="m-text-secondary small">{{ env.defaultLanguage }}</div>
+              </div>
+      
+              <div class="cardy m-rounded">
+                <div class="small">UI languages</div>
+                <div class="m-text-secondary small">{{ env.uiLanguages | join: ', ' }}</div>
+              </div>
+            </div>
+          </section>
+      
+          <section>
+            <h4 class="small">
+              Modules
+            </h4>
+      
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem ">
+              @for (module of modules | async; track module) {
+                <div class="cardy m-rounded">
+                  {{ module }}
+                </div>
+              }
+            </div>
+          </section>
+      
+          <section>
+            <h4 class="small">
+              Configured
+            </h4>
+      
+            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr)); gap: 0.5rem ">
+              @if (env.swaggerUrl) {
+                <div class="cardy m-rounded">
+                  <div class="small">Swagger</div>
+                  <a class="m-text-secondary small" [href]="env.swaggerUrl">{{ env.swaggerUrl }}</a>
+                </div>
+              }
+      
+              @if (env.chefUrl) {
+                <div class="cardy m-rounded">
+                  <div class="small">Chef</div>
+                  <a class="m-text-secondary small" [href]="env.chefUrl">{{ env.chefUrl }}</a>
+                </div>
+              }
+      
+              @if (env.fmlEditor) {
+                <div class="cardy m-rounded">
+                  <div class="small">FML</div>
+                  <a class="m-text-secondary small" [href]="env.fmlEditor">{{ env.fmlEditor }}</a>
+                </div>
+              }
+      
+              @if (env.plantUmlUrl) {
+                <div class="cardy m-rounded">
+                  <div class="small">PlantUML</div>
+                  <a class="m-text-secondary small" [href]="env.plantUmlUrl">{{ env.plantUmlUrl }}</a>
+                </div>
+              }
+      
+              @if (env.snowstormUrl) {
+                <div class="cardy m-rounded">
+                  <div class="small">Snowstorm</div>
+                  <a class="m-text-secondary small" [href]="env.snowstormUrl">{{ env.snowstormUrl }}</a>
+                </div>
+              }
+            </div>
+          </section>
+        </div>
       </m-form-row>
-  `,
+      `,
   styles: [`
     .small {
       font-size: 0.9rem;

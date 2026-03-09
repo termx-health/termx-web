@@ -1,15 +1,63 @@
-import {Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {BooleanInput, copyDeep, isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {DefinedProperty, EntityProperty, PropertyRule, PropertyRuleFilter} from 'app/src/app/resources/_lib';
-import {CodeSystemService} from 'app/src/app/resources/code-system/services/code-system.service';
+import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import {HttpContext} from '@angular/common/http';
+import { BooleanInput, copyDeep, isDefined, LoadingManager, validateForm, AutofocusDirective, ApplyPipe, FilterPipe, IncludesPipe } from '@kodality-web/core-util';
+import {catchError, of, throwError} from 'rxjs';
+import {MuiSkipErrorHandler} from 'term-web/core/marina/http-error-handler';
+import {DefinedProperty, EntityProperty, PropertyRule, PropertyRuleFilter} from 'term-web/resources/_lib';
+import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
+import { MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiEditableTableModule, MuiCheckboxModule, MuiTableModule, MuiFormModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiNumberInputModule, MuiDividerModule, MuiSelectModule } from '@kodality-web/marina-ui';
+import { AsyncPipe } from '@angular/common';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { AssociationTypeSearchComponent } from 'term-web/resources/_lib/association/containers/association-type-search.component';
+import { EntityPropertyValueInputComponent } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
+import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/inputs/terminology-concept-select/terminology-concept-search.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 @Component({
-  selector: 'tw-cs-properties',
-  templateUrl: './code-system-properties.component.html',
+    selector: 'tw-cs-properties',
+    templateUrl: './code-system-properties.component.html',
+    imports: [
+        MuiCardModule,
+        MuiDropdownModule,
+        AddButtonComponent,
+        MuiCoreModule,
+        FormsModule,
+        MuiEditableTableModule,
+        MuiCheckboxModule,
+        MuiTableModule,
+        MuiFormModule,
+        MuiTextareaModule,
+        MuiMultiLanguageInputModule,
+        MuiNumberInputModule,
+        ValueSetConceptSelectComponent,
+        MuiDividerModule,
+        CodeSystemSearchComponent,
+        ValueSetSearchComponent,
+        MuiSelectModule,
+        AutofocusDirective,
+        AssociationTypeSearchComponent,
+        EntityPropertyValueInputComponent,
+        TerminologyConceptSearchComponent,
+        AsyncPipe,
+        TranslatePipe,
+        MarinaUtilModule,
+        ApplyPipe,
+        FilterPipe,
+        IncludesPipe,
+        LocalizedConceptNamePipe,
+    ],
 })
 export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
+  private codeSystemService = inject(CodeSystemService);
+  private definedEntityPropertyService = inject(DefinedPropertyLibService);
+
   @Input() public codeSystemId?: string | null;
   @Input() public properties: EntityProperty[] = [];
   @Input() @BooleanInput() public viewMode: boolean | string = false;
@@ -27,11 +75,8 @@ export class CodeSystemPropertiesComponent implements OnInit, OnChanges {
 
   protected definedEntityProperties: DefinedProperty[];
 
-
-  public constructor(private codeSystemService: CodeSystemService, private definedEntityPropertyService: DefinedPropertyLibService) {}
-
   public ngOnInit(): void {
-    this.definedEntityPropertyService.search({limit: -1}).subscribe(r => this.definedEntityProperties = r.data);
+    this.definedEntityPropertyService.search({limit: -1}, new HttpContext().set(MuiSkipErrorHandler, true)).pipe(catchError((err) => err?.status === 403 ? of({data: []}) : throwError(() => err))).subscribe(r => this.definedEntityProperties = r.data);
   }
 
   public ngOnChanges(changes: SimpleChanges): void {

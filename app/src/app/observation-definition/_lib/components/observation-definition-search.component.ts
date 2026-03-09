@@ -1,20 +1,27 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
-import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import { Component, forwardRef, Input, OnInit, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe, ToBooleanPipe } from '@kodality-web/core-util';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {ObservationDefinition} from '../models/observation-definition';
-import {ObservationDefinitionSearchParams} from '../models/observation-definition-search-params';
-import {ObservationDefinitionLibService} from '../services/observation-definition-lib.service';
+import {ObservationDefinition} from 'term-web/observation-definition/_lib/models/observation-definition';
+import {ObservationDefinitionSearchParams} from 'term-web/observation-definition/_lib/models/observation-definition-search-params';
+import {ObservationDefinitionLibService} from 'term-web/observation-definition/_lib/services/observation-definition-lib.service';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 
 @Component({
-  selector: 'tw-obs-def-search',
-  templateUrl: './observation-definition-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ObservationDefinitionSearchComponent), multi: true}, DestroyService]
+    selector: 'tw-obs-def-search',
+    templateUrl: './observation-definition-search.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => ObservationDefinitionSearchComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, MarinaUtilModule, KeysPipe, ToBooleanPipe]
 })
 export class ObservationDefinitionSearchComponent implements OnInit, ControlValueAccessor {
+  private observationDefinitionService = inject(ObservationDefinitionLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() public filter?: (resource: ObservationDefinition) => boolean;
   @Input() public placeholder: string = 'marina.ui.inputs.search.placeholder';
@@ -27,13 +34,8 @@ export class ObservationDefinitionSearchComponent implements OnInit, ControlValu
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(
-    private observationDefinitionService: ObservationDefinitionLibService,
-    private destroy$: DestroyService
-  ) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(

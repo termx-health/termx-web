@@ -9,14 +9,9 @@ image: registry.gitlab.com/kodality/gitlab-builders/ng
       - .npm/
       - node_modules
 
-before_script:
-  - echo "//kexus.kodality.com/repository/npm/:_authToken=$NEXUS_NPM_TOKEN" >> ~/.npmrc
-  - echo "@kodality-web:registry=https://kexus.kodality.com/repository/npm/" >> ~/.npmrc
-
 stages:
   - build
   - release
-
 
 build:
   stage: build
@@ -32,30 +27,4 @@ build:
   only:
     - branches
     - tags
-
-
-release latest:
-  stage: release
-  image: docker:latest
-  before_script:
-    - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
-    - docker buildx create --name mybuilder --bootstrap --use
-  script:
-    - docker buildx build --platform linux/amd64,linux/arm64 -t docker.kodality.com/termx-web:latest --push .
-  only:
-    - main
-
-release tag:
-  stage: release
-  image: docker:latest
-  before_script:
-    - docker login -u $KODALITY_NEXUS_USER -p $KODALITY_NEXUS_PASSWORD docker.kodality.com
-    - docker buildx create --name mybuilder --bootstrap --use
-  script:
-    - export APP_VERSION="$CI_COMMIT_REF_NAME"
-    - docker buildx build --platform linux/amd64,linux/arm64 -t docker.kodality.com/termx-web:$APP_VERSION --push .
-  only:
-    - /^\d*\.\d*\.\d*$/
-  except:
-    - branches
 

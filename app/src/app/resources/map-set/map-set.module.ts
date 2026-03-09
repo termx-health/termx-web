@@ -24,64 +24,59 @@ import {ResourceModule} from 'term-web/resources/resource/resource.module';
 import {SequenceLibModule} from 'term-web/sequence/_lib/sequence-lib.module';
 import {SysLibModule} from 'term-web/sys/_lib';
 import {UserLibModule} from 'term-web/user/_lib';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
-import {MapSetEditComponent} from './containers/edit/map-set-edit.component';
-import {MapSetListComponent} from './containers/list/map-set-list.component';
-import {MapSetVersionEditComponent} from './containers/version/edit/map-set-version-edit.component';
-import {MapSetService} from './services/map-set-service';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {MapSetEditComponent} from 'term-web/resources/map-set/containers/edit/map-set-edit.component';
+import {MapSetListComponent} from 'term-web/resources/map-set/containers/list/map-set-list.component';
+import {MapSetVersionEditComponent} from 'term-web/resources/map-set/containers/version/edit/map-set-version-edit.component';
+import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
 
 export const MAP_SET_ROUTES: Routes = [
   {path: '', component: MapSetListComponent},
   {path: 'add', component: MapSetEditComponent, data: {privilege: ['*.MapSet.edit']}},
-  {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['{id}.MapSet.edit']}},
-  {path: ':id/details', component: MapSetEditComponent, data: {privilege: ['{id}.MapSet.view']}},
+  {path: ':id/edit', component: MapSetEditComponent, data: {privilege: ['{id}.MapSet.view']}},
   {path: ':id/summary', component: MapSetSummaryComponent, data: {privilege: ['{id}.MapSet.view']}},
   {path: ':id/provenances', component: MapSetProvenancesComponent, data: {privilege: ['{id}.MapSet.view']}},
 
   {path: ':id/versions/add', component: MapSetVersionEditComponent, data: {privilege: ['{id}.MapSet.edit']}},
   {path: ':id/versions/:versionCode/summary', component: MapSetVersionSummaryComponent, data: {privilege: ['{id}.MapSet.view']}},
   {path: ':id/versions/:versionCode/provenances', component: MapSetProvenancesComponent, data: {privilege: ['{id}.MapSet.view']}},
-  {path: ':id/versions/:versionCode/edit', component: MapSetVersionEditComponent, data: {privilege: ['{id}.MapSet.edit']}},
+  {path: ':id/versions/:versionCode/edit', component: MapSetVersionEditComponent, data: {privilege: ['{id}.MapSet.view']}},
 
 ];
 
 @NgModule({
-  imports: [
-    CoreUiModule,
-    ResourcesLibModule,
-    CodeSystemModule,
-    ResourceModule,
-    SequenceLibModule,
-    SysLibModule,
-    UserLibModule,
-    ObservationDefinitionLibModule
-  ],
-  declarations: [
-    MapSetListComponent,
-
-    MapSetEditComponent,
-    MapSetPropertiesComponent,
-    MapSetScopeFormComponent,
-    MapSetSummaryComponent,
-    MapSetInfoWidgetComponent,
-    MapSetVersionsWidgetComponent,
-    MapSetProvenancesComponent,
-
-    MapSetVersionEditComponent,
-    MapSetVersionSummaryComponent,
-    MapSetVersionInfoWidgetComponent,
-    MapSetSourceConceptListComponent,
-    MapSetExternalSourceConceptListComponent,
-    MapSetUnmappedConceptListComponent,
-    MapSetAssociationListComponent,
-    MapSetAssociationDrawerComponent,
-    MapSetPropertyValuesComponent,
-    MapSetPropertyValueInputComponent
-  ],
-  exports: [MapSetScopeFormComponent],
-  providers: [
-    MapSetService
-  ]
+    imports: [
+        CoreUiModule,
+        ResourcesLibModule,
+        CodeSystemModule,
+        ResourceModule,
+        SequenceLibModule,
+        SysLibModule,
+        UserLibModule,
+        ObservationDefinitionLibModule,
+        MapSetListComponent,
+        MapSetEditComponent,
+        MapSetPropertiesComponent,
+        MapSetScopeFormComponent,
+        MapSetSummaryComponent,
+        MapSetInfoWidgetComponent,
+        MapSetVersionsWidgetComponent,
+        MapSetProvenancesComponent,
+        MapSetVersionEditComponent,
+        MapSetVersionSummaryComponent,
+        MapSetVersionInfoWidgetComponent,
+        MapSetSourceConceptListComponent,
+        MapSetExternalSourceConceptListComponent,
+        MapSetUnmappedConceptListComponent,
+        MapSetAssociationListComponent,
+        MapSetAssociationDrawerComponent,
+        MapSetPropertyValuesComponent,
+        MapSetPropertyValueInputComponent
+    ],
+    exports: [MapSetScopeFormComponent],
+    providers: [
+        MapSetService
+    ]
 })
 export class MapSetModule {
 }

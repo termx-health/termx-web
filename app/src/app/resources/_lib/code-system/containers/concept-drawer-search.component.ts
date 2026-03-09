@@ -1,16 +1,27 @@
-import {Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges} from '@angular/core';
-import {BooleanInput, isDefined, SearchResult, isNil} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, inject } from '@angular/core';
+import { BooleanInput, isDefined, SearchResult, isNil, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Observable, of, Subject} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {CodeSystemConcept, CodeSystemConceptLibService, ConceptUtil, CodeSystemVersion, CodeSystemLibService, SnomedUtil} from 'term-web/resources/_lib';
+import {CodeSystemConcept, CodeSystemConceptLibService, ConceptUtil, CodeSystemLibService, SnomedUtil} from 'term-web/resources/_lib';
+import { MuiDrawerModule, MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiAlertModule, MuiFormModule, MuiInputModule, MuiListModule, MuiCheckboxModule, MuiCoreModule } from '@kodality-web/marina-ui';
+
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { FormsModule } from '@angular/forms';
+import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
+import { SnomedSearchComponent } from 'term-web/integration/_lib/snomed/containers/snomed-search.component';
 
 
 @Component({
-  selector: 'tw-concept-drawer-search',
-  templateUrl: 'concept-drawer-search.component.html'
+    selector: 'tw-concept-drawer-search',
+    templateUrl: 'concept-drawer-search.component.html',
+    imports: [MuiDrawerModule, MuiCardModule, MarinPageLayoutModule, MuiButtonModule, MuiAlertModule, MuiFormModule, CodeSystemSearchComponent, FormsModule, CodeSystemVersionSelectComponent, SnomedSearchComponent, MuiInputModule, AutofocusDirective, MuiListModule, MuiCheckboxModule, MuiCoreModule, ApplyPipe, LocalDatePipe, TranslatePipe]
 })
 export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
+  private codeSystemService = inject(CodeSystemLibService);
+  private conceptService = inject(CodeSystemConceptLibService);
+  private translateService = inject(TranslateService);
+
   @Input() public codeSystem: string;
   @Input() public codeSystemVersion: string;
   @Input() @BooleanInput() public codeSystemModifiable: string | boolean;
@@ -24,12 +35,6 @@ export class ConceptDrawerSearchComponent implements OnInit, OnChanges {
   protected snomedBranch: string;
   protected searchInput: string;
   public searchUpdate = new Subject<string>();
-
-  public constructor(
-    private codeSystemService: CodeSystemLibService,
-    private conceptService: CodeSystemConceptLibService,
-    private translateService: TranslateService
-  ) {}
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(

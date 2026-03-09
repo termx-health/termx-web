@@ -1,29 +1,29 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, inject } from '@angular/core';
 import {LoadingManager} from '@kodality-web/core-util';
 import {map, of} from 'rxjs';
-import {SequenceLibService} from '../services/sequence-lib.service';
+import {SequenceLibService} from 'term-web/sequence/_lib/services/sequence-lib.service';
+import { MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
 
 @Component({
-  selector: 'tw-sequence-value-generator',
-  template: `
+    selector: 'tw-sequence-value-generator',
+    template: `
     <m-button (mClick)="generateValue()">
       <m-icon [mCode]="loader.isLoading ? 'loading' : 'reload'"></m-icon>
     </m-button>
   `,
-  host: {
-    '[style.display]': `sequenceExists ? 'initial' : 'none'`
-  }
+    host: {
+        '[style.display]': `sequenceExists ? 'initial' : 'none'`
+    },
+    imports: [MuiButtonModule, MuiIconModule]
 })
 export class SequenceValueGeneratorComponent implements OnChanges {
+  private sequenceService = inject(SequenceLibService);
+
   @Input() public code: string;
   @Output() public valueGenerated = new EventEmitter<string>();
 
   protected sequenceExists: boolean;
   protected loader = new LoadingManager();
-
-  public constructor(
-    private sequenceService: SequenceLibService
-  ) { }
 
 
   public ngOnChanges(changes: SimpleChanges): void {

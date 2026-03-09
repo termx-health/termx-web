@@ -1,20 +1,26 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group, isDefined} from '@kodality-web/core-util';
-import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, DestroyService, group, isDefined, KeysPipe, ToBooleanPipe } from '@kodality-web/core-util';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {catchError, finalize, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {MapSet} from '../model/map-set';
-import {MapSetSearchParams} from '../model/map-set-search-params';
-import {MapSetLibService} from '../services/map-set-lib.service';
+import {MapSet} from 'term-web/resources/_lib/map-set/model/map-set';
+import {MapSetSearchParams} from 'term-web/resources/_lib/map-set/model/map-set-search-params';
+import {MapSetLibService} from 'term-web/resources/_lib/map-set/services/map-set-lib.service';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 
 @Component({
-  selector: 'tw-map-set-search',
-  templateUrl: './map-set-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MapSetSearchComponent), multi: true}, DestroyService]
+    selector: 'tw-map-set-search',
+    templateUrl: './map-set-search.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MapSetSearchComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, KeysPipe, ToBooleanPipe]
 })
 export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
+  private mapSetLibService = inject(MapSetLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() @BooleanInput() public autoUnselect: string | boolean = false;
   @Input() @BooleanInput() public multiple: string | boolean;
@@ -27,13 +33,8 @@ export class MapSetSearchComponent implements OnInit, ControlValueAccessor {
   public searchUpdate = new Subject<string>();
   private loading: {[key: string]: boolean} = {};
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(
-    private mapSetLibService: MapSetLibService,
-    private destroy$: DestroyService
-  ) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(

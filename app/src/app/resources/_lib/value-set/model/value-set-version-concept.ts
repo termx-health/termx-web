@@ -1,5 +1,5 @@
-import {CodeSystemConcept} from '../../code-system';
-import {Designation} from '../../designation';
+import {CodeSystemConcept} from 'term-web/resources/_lib/code-system';
+import {Designation} from 'term-web/resources/_lib/designation';
 
 export class ValueSetVersionConcept {
   public id?: number;

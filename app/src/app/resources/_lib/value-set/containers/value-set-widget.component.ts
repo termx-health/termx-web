@@ -1,16 +1,23 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
-import {SearchResult} from '@kodality-web/core-util';
-import {LocalizedName} from '@kodality-web/marina-util';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, inject } from '@angular/core';
+import { SearchResult, ApplyPipe } from '@kodality-web/core-util';
+import { LocalizedName, MarinaUtilModule } from '@kodality-web/marina-util';
 import {Subscription} from 'rxjs';
-import {ValueSet} from '../model/value-set';
-import {ValueSetSearchParams} from '../model/value-set-search-params';
-import {ValueSetLibService} from '../services/value-set-lib.service';
+import {ValueSet} from 'term-web/resources/_lib/value-set/model/value-set';
+import {ValueSetSearchParams} from 'term-web/resources/_lib/value-set/model/value-set-search-params';
+import {ValueSetLibService} from 'term-web/resources/_lib/value-set/services/value-set-lib.service';
+import { MuiSkeletonModule, MuiListModule, MuiDividerModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { NgTemplateOutlet } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-value-set-widget',
-  templateUrl: 'value-set-widget.component.html'
+    selector: 'tw-value-set-widget',
+    templateUrl: 'value-set-widget.component.html',
+    imports: [MuiSkeletonModule, MuiListModule, RouterLink, MuiDividerModule, NgTemplateOutlet, MuiIconModule, ApplyPipe, MarinaUtilModule, TranslatePipe]
 })
 export class ValueSetWidgetComponent implements OnChanges {
+  private valueSetService = inject(ValueSetLibService);
+
   @Input() public spaceId: number;
   @Input() public packageId: number;
   @Input() public packageVersionId: number;
@@ -24,7 +31,7 @@ export class ValueSetWidgetComponent implements OnChanges {
   protected query = new ValueSetSearchParams();
   protected loading = false;
 
-  public constructor(private valueSetService: ValueSetLibService) {
+  public constructor() {
     this.query.limit = 50;
   }
 

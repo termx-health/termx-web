@@ -4,35 +4,35 @@
       <m-card [mShowSkeleton]="loading['init']">
         <div *m-card-header class="m-items-middle">
           <div class="m-card__title">{{(mode === 'edit' ? 'web.naming-system.form.edit-header' : 'web.naming-system.form.add-header') | translate}}</div>
-          <tw-status-tag *ngIf="namingSystem?.status" [status]="namingSystem.status"></tw-status-tag>
+          @if (namingSystem?.status) {
+            <tw-status-tag [status]="namingSystem.status"></tw-status-tag>
+          }
         </div>
-        <form #form="ngForm" *ngIf="namingSystem">
-          <m-form-item mName="id" mLabel="entities.naming-system.id" required>
-            <m-input name="id" [(ngModel)]="namingSystem.id" [disabled]="mode === 'edit'" required></m-input>
-          </m-form-item>
-
-          <m-form-item mLabel="entities.naming-system.name" required>
-            <m-multi-language-input name="names" [(ngModel)]="namingSystem.names" required></m-multi-language-input>
-          </m-form-item>
-
-          <m-form-item mName="kind" mLabel="entities.naming-system.kind" required>
-            <tw-value-set-concept-select name="kind" valueSet="namingsystem-type" [(ngModel)]="namingSystem.kind" required></tw-value-set-concept-select>
-          </m-form-item>
-
-          <m-form-item mName="codeSystem" *ngIf="namingSystem.kind === 'codesystem'" mLabel="entities.naming-system.code-system" required>
-            <tw-code-system-search name="codeSystem" [(ngModel)]="namingSystem.codeSystem" valuePrimitive required></tw-code-system-search>
-          </m-form-item>
-
-          <m-form-item mName="source" mLabel="entities.naming-system.source">
-            <m-input name="source" [(ngModel)]="namingSystem.source"></m-input>
-          </m-form-item>
-
-          <m-form-item mName="description" mLabel="entities.naming-system.description">
-            <m-textarea name="description" [(ngModel)]="namingSystem.description"></m-textarea>
-          </m-form-item>
-
-          <tw-naming-system-identifier-form #identifiers [(identifiers)]="namingSystem.identifiers"></tw-naming-system-identifier-form>
-        </form>
+        @if (namingSystem) {
+          <form #form="ngForm">
+            <m-form-item mName="id" mLabel="entities.naming-system.id" required>
+              <m-textarea name="id" [(ngModel)]="namingSystem.id" [disabled]="mode === 'edit'" required/>
+            </m-form-item>
+            <m-form-item mLabel="entities.naming-system.name" required>
+              <m-multi-language-input name="names" [(ngModel)]="namingSystem.names" required mInputType="textarea"/>
+            </m-form-item>
+            <m-form-item mName="kind" mLabel="entities.naming-system.kind" required>
+              <tw-value-set-concept-select name="kind" valueSet="namingsystem-type" [(ngModel)]="namingSystem.kind" required></tw-value-set-concept-select>
+            </m-form-item>
+            @if (namingSystem.kind === 'codesystem') {
+              <m-form-item mName="codeSystem" mLabel="entities.naming-system.code-system" required>
+                <tw-code-system-search name="codeSystem" [(ngModel)]="namingSystem.codeSystem" valuePrimitive required></tw-code-system-search>
+              </m-form-item>
+            }
+            <m-form-item mName="source" mLabel="entities.naming-system.source">
+              <m-input name="source" [(ngModel)]="namingSystem.source"></m-input>
+            </m-form-item>
+            <m-form-item mName="description" mLabel="entities.naming-system.description">
+              <m-textarea name="description" [(ngModel)]="namingSystem.description"></m-textarea>
+            </m-form-item>
+            <tw-naming-system-identifier-form #identifiers [(identifiers)]="namingSystem.identifiers"></tw-naming-system-identifier-form>
+          </form>
+        }
 
         <ng-container *m-card-footer>
           <m-button mDisplay="primary" [mLoading]="loading['save']" [disabled]="loading['init'] || isLoading" (click)="save()">

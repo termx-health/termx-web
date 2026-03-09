@@ -1,29 +1,31 @@
-<form #form="ngForm" *ngIf="members">
-  <m-editable-table #rowsTable [mData]="members" [mRowInstance]="rowInstance">
-    <m-editable-column [mTitle]="'entities.observation-definition.members.order-number'" mName="order">
-      <ng-template #viewTemplate let-m>{{m.orderNumber}}</ng-template>
-      <ng-template #editTemplate let-m let-ngModelName="ngModelName">
-        <m-number-input [name]="ngModelName" [(ngModel)]="m.orderNumber" [min]="1"></m-number-input>
-      </ng-template>
-    </m-editable-column>
-    <m-editable-column [mTitle]="'entities.observation-definition.members.code'" mName="code" required>
-      <ng-template #viewTemplate let-m>{{m.item?.code}}</ng-template>
-      <ng-template #editTemplate let-m let-ngModelName="ngModelName">
-        <tw-obs-def-search [name]="ngModelName" [(ngModel)]="m.item" [idsNe]="observationDefinitionId" required></tw-obs-def-search>
-      </ng-template>
-    </m-editable-column>
-    <m-editable-column [mTitle]="'entities.observation-definition.members.names'" mName="names">
-      <ng-template #viewTemplate let-m><a [routerLink]="['/observation-definitions', m.item?.id, 'edit']">{{m.item?.names | localName}}</a></ng-template>
-    </m-editable-column>
-    <m-editable-column [mTitle]="'entities.observation-definition.members.cardinality'" mName="cardinality">
-      <ng-template #viewTemplate let-m>{{(m.cardinality?.min || '...') + ' - ' + (m.cardinality?.max || '...')}}</ng-template>
-      <ng-template #editTemplate let-m>
-        <div class="m-items-middle">
-          <m-number-input name="min" [(ngModel)]="m.cardinality.min" placeholder="web.observation-definition.cardinality.min"></m-number-input>
-          <m-number-input name="max" [(ngModel)]="m.cardinality.max" placeholder="web.observation-definition.cardinality.max"></m-number-input>
-        </div>
-      </ng-template>
-    </m-editable-column>
-  </m-editable-table>
-</form>
+@if (members) {
+  <form #form="ngForm">
+    <m-editable-table #rowsTable [mData]="members" [mRowInstance]="rowInstance">
+      <m-editable-column [mTitle]="'entities.observation-definition.members.order-number'" mName="order">
+        <ng-template #viewTemplate let-m>{{m.orderNumber}}</ng-template>
+        <ng-template #editTemplate let-m let-ngModelName="ngModelName">
+          <m-number-input [name]="ngModelName" [(ngModel)]="m.orderNumber" [min]="1"></m-number-input>
+        </ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.observation-definition.members.code'" mName="code" required>
+        <ng-template #viewTemplate let-m>{{m.item?.code}}</ng-template>
+        <ng-template #editTemplate let-m let-ngModelName="ngModelName">
+          <tw-obs-def-search [name]="ngModelName" [(ngModel)]="m.item" [idsNe]="observationDefinitionId" required></tw-obs-def-search>
+        </ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.observation-definition.members.names'" mName="names">
+        <ng-template #viewTemplate let-m><a [routerLink]="['/observation-definitions', m.item?.id, 'edit']">{{m.item?.names | localName}}</a></ng-template>
+      </m-editable-column>
+      <m-editable-column [mTitle]="'entities.observation-definition.members.cardinality'" mName="cardinality">
+        <ng-template #viewTemplate let-m>{{(m.cardinality?.min || '...') + ' - ' + (m.cardinality?.max || '...')}}</ng-template>
+        <ng-template #editTemplate let-m>
+          <div class="m-items-middle">
+            <m-number-input name="min" [(ngModel)]="m.cardinality.min" placeholder="web.observation-definition.cardinality.min"></m-number-input>
+            <m-number-input name="max" [(ngModel)]="m.cardinality.max" placeholder="web.observation-definition.cardinality.max"></m-number-input>
+          </div>
+        </ng-template>
+      </m-editable-column>
+    </m-editable-table>
+  </form>
+}
 

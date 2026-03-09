@@ -1,17 +1,46 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
-import {unique, uniqueBy, group, LoadingManager} from '@kodality-web/core-util';
-import {
-  TransformationDefinition,
-  TransformationDefinitionResource,
-  TransformationDefinitionResourceType
-} from 'term-web/modeler/_lib/transformer/transformation-definition';
+import { Component, Input, OnInit, inject } from '@angular/core';
+import { remove, unique, uniqueBy, group, LoadingManager, ApplyPipe, FilterPipe, SortPipe } from '@kodality-web/core-util';
+import {TransformationDefinition, TransformationDefinitionResource} from 'term-web/modeler/_lib/transformer/transformation-definition';
 import {TransformationDefinitionService} from 'term-web/modeler/transformer/services/transformation-definition.service';
+import { MuiCardModule, MuiCollapsePanelModule, MuiIconModule, MuiIconButtonModule, MuiButtonModule, MuiPopconfirmModule, MuiAlertModule } from '@kodality-web/marina-ui';
+
+import { TransformationDefinitionResourceFormComponent } from 'term-web/modeler/transformer/components/transformation-definition-resource-form.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-transformation-definition-resource',
-  templateUrl: './transformation-definition-resource.component.html',
-  styles: [`
+    selector: 'tw-transformation-definition-resources',
+    templateUrl: './transformation-definition-resources.component.html',
+    styles: [`
     @import "../../../../styles/variables";
+
+    .tw-transformation-definition-collapse-panel {
+      z-index: 1;
+
+      ::ng-deep .m-collapse-panel_container--collapsed {
+        width: 0px !important;
+      }
+
+      ::ng-deep .m-collapse-panel_content__wrapper {
+        padding: 0 1rem 0 0;
+      }
+    }
+
+    .tw-transformation-definition-container {
+      flex: 1;
+      padding-left: 1rem;
+      border-left: 1px solid var(--color-borders);
+      position: relative
+    }
+
+    ::ng-deep .fml-editor {
+      z-index: 1000;
+      position: fixed;
+      inset: 0;
+      border: 0;
+      height: 100%;
+      width: 100%;
+      visibility: hidden;
+    }
 
     .resource {
       padding: 0 0.5rem 0 1rem;
@@ -45,33 +74,37 @@ import {TransformationDefinitionService} from 'term-web/modeler/transformer/serv
     .resource-add {
       padding: 0 0.5rem 0 1rem;
     }
-  `]
+  `],
+    imports: [MuiCardModule, MuiCollapsePanelModule, MuiIconModule, MuiIconButtonModule, MuiButtonModule, MuiPopconfirmModule, MuiAlertModule, TransformationDefinitionResourceFormComponent, TranslatePipe, ApplyPipe, FilterPipe, SortPipe]
 })
-export class TransformationDefinitionResourceComponent {
+export class TransformationDefinitionResourcesComponent implements OnInit {
+  private service = inject(TransformationDefinitionService);
+
   @Input() public definition: TransformationDefinition;
-  @Input() public type: TransformationDefinitionResourceType;
 
-  @Input() public selectedResource: TransformationDefinitionResource;
-  @Output() public selectedResourceChange = new EventEmitter<TransformationDefinitionResource>()
-
+  protected readonly types: TransformationDefinitionResource['type'][] = ['definition', 'conceptmap', 'mapping'];
+  protected selectedResource: TransformationDefinitionResource;
   protected loader = new LoadingManager<'import'>();
 
-  public constructor(private service: TransformationDefinitionService) { }
-
-
-  // Internal API
+  public ngOnInit(): void {
+    this.onResourceSelect(this.definition.mapping);
+  }
 
   protected onResourceSelect(r: TransformationDefinitionResource): void {
     this.selectedResource = r;
-    this.selectedResourceChange.emit(r);
   }
 
-  public onResourceAdd(type: TransformationDefinitionResourceType): void {
+  public onResourceAdd(type: TransformationDefinitionResource['type']): void {
     const resource = new TransformationDefinitionResource();
     resource.type = type;
     resource.reference = {};
     this.definition.resources = [...this.definition.resources, resource];
     this.onResourceSelect(resource);
+  }
+
+  protected onResourceDelete(r: TransformationDefinitionResource): void {
+    this.selectedResource = null;
+    this.definition.resources = remove(this.definition.resources, r);
   }
 
   protected importResourcesFromImportMaps(): void {

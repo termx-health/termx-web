@@ -1,19 +1,25 @@
-import {Component, EventEmitter, forwardRef, Input, OnInit, Output} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DestroyService, group, isDefined, LoadingManager} from '@kodality-web/core-util';
+import { Component, EventEmitter, forwardRef, Input, OnInit, Output, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { DestroyService, group, isDefined, LoadingManager, KeysPipe } from '@kodality-web/core-util';
 import {catchError, map, Observable, of, Subject, takeUntil} from 'rxjs';
 import {debounceTime, distinctUntilChanged, switchMap} from 'rxjs/operators';
-import {TransformationDefinition} from './transformation-definition';
-import {TransformationDefinitionLibService} from './transformation-definition-lib.service';
-import {TransformationDefinitionQueryParams} from './transformation-definition-query.params';
+import {TransformationDefinition} from 'term-web/modeler/_lib/transformer/transformation-definition';
+import {TransformationDefinitionLibService} from 'term-web/modeler/_lib/transformer/transformation-definition-lib.service';
+import {TransformationDefinitionQueryParams} from 'term-web/modeler/_lib/transformer/transformation-definition-query.params';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 
 @Component({
-  selector: 'tw-transformation-definition-select',
-  templateUrl: 'transformation-definition-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TransformationDefinitionSelectComponent), multi: true}, DestroyService]
+    selector: 'tw-transformation-definition-select',
+    templateUrl: 'transformation-definition-select.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => TransformationDefinitionSelectComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, KeysPipe]
 })
 export class TransformationDefinitionSelectComponent implements OnInit, ControlValueAccessor {
+  private transformationDefinitionService = inject(TransformationDefinitionLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() public valueType: 'id' | 'name' | 'full' = 'full';
   @Input() public placeholder = 'marina.ui.inputs.search.placeholder';
 
@@ -24,13 +30,8 @@ export class TransformationDefinitionSelectComponent implements OnInit, ControlV
   protected searchUpdate = new Subject<string>();
   protected loader = new LoadingManager();
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(
-    private transformationDefinitionService: TransformationDefinitionLibService,
-    private destroy$: DestroyService
-  ) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnInit(): void {
     this.searchUpdate.pipe(

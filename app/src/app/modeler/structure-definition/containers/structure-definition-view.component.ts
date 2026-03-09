@@ -1,17 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {isDefined, LoadingManager} from '@kodality-web/core-util';
-import {MuiNotificationService} from '@kodality-web/marina-ui';
+import { MuiNotificationService, MuiCardModule, MuiSpinnerModule, MuiFormModule } from '@kodality-web/marina-ui';
 import {Fhir} from 'fhir/fhir';
 import {map, Observable} from 'rxjs';
 import {ChefService} from 'term-web/integration/_lib';
 import {StructureDefinition} from 'term-web/modeler/_lib';
-import {StructureDefinitionService} from '../services/structure-definition.service';
+import {StructureDefinitionService} from 'term-web/modeler/structure-definition/services/structure-definition.service';
+import { NzRowDirective, NzColDirective } from 'ng-zorro-antd/grid';
+import { NzTabsComponent, NzTabComponent, NzTabDirective } from 'ng-zorro-antd/tabs';
+import { NgTemplateOutlet } from '@angular/common';
+import { StructureDefinitionTreeComponent } from 'term-web/modeler/_lib/structure-definition/structure-definition-tree.component';
+import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: 'structure-definition-view.component.html'
+    templateUrl: 'structure-definition-view.component.html',
+    imports: [NzRowDirective, NzColDirective, NzTabsComponent, NzTabComponent, NzTabDirective, NgTemplateOutlet, MuiCardModule, StructureDefinitionTreeComponent, MuiSpinnerModule, FormsModule, MuiFormModule, TranslatePipe]
 })
 export class StructureDefinitionViewComponent implements OnInit {
+  private structureDefinitionService = inject(StructureDefinitionService);
+  private notificationService = inject(MuiNotificationService);
+  private route = inject(ActivatedRoute);
+  private chefService = inject(ChefService);
+
   public id?: number | null;
   public structureDefinition: StructureDefinition;
   public contentFsh: string;
@@ -21,13 +33,6 @@ export class StructureDefinitionViewComponent implements OnInit {
   public tabIndexMap = {fsh: 1, json: 2, element: 3};
 
   protected loader = new LoadingManager();
-
-  public constructor(
-    private structureDefinitionService: StructureDefinitionService,
-    private notificationService: MuiNotificationService,
-    private route: ActivatedRoute,
-    private chefService: ChefService
-  ) {}
 
   public ngOnInit(): void {
     this.id = Number(this.route.snapshot.paramMap.get('id'));

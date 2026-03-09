@@ -6,21 +6,21 @@ import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {TaskStatusComponent} from 'term-web/task/_lib/components/task-status.component';
 import {TaskTypeComponent} from 'term-web/task/_lib/components/task-type.component';
 import {TaskLibService} from 'term-web/task/_lib/services/task-lib-service';
-import {CoreUiModule} from '../../core/ui/core-ui.module';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
 
 @NgModule({
-  imports: [
-    FormsModule,
-    MarinaComponentsModule,
-    CoreUtilModule,
-    CoreUiModule,
-    ResourcesLibModule,
-  ],
-  providers: [
-    TaskLibService,
-  ],
-  declarations: [TaskTypeComponent, TaskStatusComponent],
-  exports: [TaskTypeComponent, TaskStatusComponent]
+    imports: [
+        FormsModule,
+        MarinaComponentsModule,
+        CoreUtilModule,
+        CoreUiModule,
+        ResourcesLibModule,
+        TaskTypeComponent, TaskStatusComponent,
+    ],
+    providers: [
+        TaskLibService,
+    ],
+    exports: [TaskTypeComponent, TaskStatusComponent]
 })
 export class TaskLibModule {
 }

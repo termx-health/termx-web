@@ -21,9 +21,11 @@
 
       <nz-tab [nzTitle]="'web.structure-definition.form.element-header' | translate" [nzDisabled]="!structureDefinition?.id">
         <ng-template nz-tab>
-          <m-card *ngIf="structureDefinition?.code">
-            <tw-structure-definition-tree [content]="contentFhir"/>
-          </m-card>
+          @if (structureDefinition?.code) {
+            <m-card>
+              <tw-structure-definition-tree [content]="contentFhir"/>
+            </m-card>
+          }
         </ng-template>
       </nz-tab>
     </nz-tabset>
@@ -34,18 +36,24 @@
 <ng-template #formTemplate>
   <m-spinner [mLoading]="loader.isLoading">
     <m-card [mTitle]="'web.structure-definition.form.view-header'" [mShowSkeleton]="loader.isLoading">
-      <form *ngIf="structureDefinition">
-        <m-form-item mName="code" mLabel="entities.structure-definition.code">{{structureDefinition.code}}</m-form-item>
-        <m-form-item mName="url" mLabel="entities.structure-definition.url">{{structureDefinition.url}}</m-form-item>
-        <m-form-item mName="format" mLabel="web.structure-definition.form.primary-source">{{structureDefinition.contentFormat}}</m-form-item>
-        <m-form-item mName="contentType" mLabel="entities.structure-definition.content-type">{{structureDefinition.contentType}}</m-form-item>
-        <m-form-item *ngIf="structureDefinition.contentType === 'profile'"
-            mName="parent"
+      @if (structureDefinition) {
+        <form>
+          <m-form-item mName="code" mLabel="entities.structure-definition.code">{{structureDefinition.code}}</m-form-item>
+          <m-form-item mName="url" mLabel="entities.structure-definition.url">{{structureDefinition.url}}</m-form-item>
+          <m-form-item mName="format" mLabel="web.structure-definition.form.primary-source">{{structureDefinition.contentFormat}}</m-form-item>
+          <m-form-item mName="contentType" mLabel="entities.structure-definition.content-type">{{structureDefinition.contentType}}</m-form-item>
+          @if (structureDefinition.contentType === 'profile') {
+            <m-form-item
+              mName="parent"
             mLabel="entities.structure-definition.parent">{{structureDefinition.parent}}</m-form-item>
-        <m-form-item *ngIf="structureDefinition.contentType === 'profile'"
-            mName="version"
+          }
+          @if (structureDefinition.contentType === 'profile') {
+            <m-form-item
+              mName="version"
             mLabel="entities.structure-definition.version">{{structureDefinition.version}}</m-form-item>
-      </form>
+          }
+        </form>
+      }
     </m-card>
   </m-spinner>
 </ng-template>

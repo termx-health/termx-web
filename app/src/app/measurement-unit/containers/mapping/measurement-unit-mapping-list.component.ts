@@ -1,11 +1,30 @@
 import {Component, EventEmitter, Input, Output, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {BooleanInput, copyDeep, isDefined, validateForm} from '@kodality-web/core-util';
+import { NgForm, FormsModule } from '@angular/forms';
+import { BooleanInput, copyDeep, isDefined, validateForm, AutofocusDirective } from '@kodality-web/core-util';
 import {MeasurementUnitMapping} from 'term-web/measurement-unit/_lib';
+import { MuiCardModule, MuiTableModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiNoDataModule, MuiModalModule, MuiFormModule, MuiInputModule } from '@kodality-web/marina-ui';
+
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-measurement-unit-mapping-list',
-  templateUrl: './measurement-unit-mapping-list.component.html',
+    selector: 'tw-measurement-unit-mapping-list',
+    templateUrl: './measurement-unit-mapping-list.component.html',
+    imports: [
+    MuiCardModule,
+    AddButtonComponent,
+    MuiTableModule,
+    MuiCoreModule,
+    MuiButtonModule,
+    MuiIconModule,
+    MuiNoDataModule,
+    MuiModalModule,
+    FormsModule,
+    MuiFormModule,
+    MuiInputModule,
+    AutofocusDirective,
+    TranslatePipe
+],
 })
 export class MeasurementUnitMappingListComponent {
   @Input() @BooleanInput() public viewMode: boolean | string = false;

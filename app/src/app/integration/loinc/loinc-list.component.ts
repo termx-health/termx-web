@@ -1,11 +1,18 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import {Router} from '@angular/router';
-import {compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, QueryParams, SearchResult, unique} from '@kodality-web/core-util';
-import {MuiTableComponent} from '@kodality-web/marina-ui';
-import {TranslateService} from '@ngx-translate/core';
+import { compareValues, ComponentStateStore, copyDeep, group, isDefined, LoadingManager, QueryParams, SearchResult, unique, AutofocusDirective, ApplyPipe, SlicePipe as SlicePipe_1 } from '@kodality-web/core-util';
+import { MuiTableComponent, MuiInputModule, MuiRadioModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiCheckboxModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiPopoverModule, MuiTagModule, MuiNoDataModule, MuiAbbreviateModule } from '@kodality-web/marina-ui';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {Observable, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {CodeSystemAssociation, CodeSystemConcept, CodeSystemEntityVersion, CodeSystemLibService, ConceptSearchParams} from 'term-web/resources/_lib';
+import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
+import { NgTemplateOutlet, AsyncPipe, SlicePipe } from '@angular/common';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { FormsModule } from '@angular/forms';
+import { TableFilterComponent } from 'term-web/core/ui/components/table-container/table-filter.component';
+import { LoincPartSearchComponent } from 'term-web/integration/loinc/loinc-part-search.component';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 
 interface Filter {
@@ -26,9 +33,9 @@ interface Filter {
 }
 
 @Component({
-  selector: 'tw-loinc-list',
-  templateUrl: './loinc-list.component.html',
-  styles: [`
+    selector: 'tw-loinc-list',
+    templateUrl: './loinc-list.component.html',
+    styles: [`
     .hide-context .needle {
       transition: 0.2s ease-in;
       opacity: 1;
@@ -37,9 +44,16 @@ interface Filter {
     .hide-context:not(:hover) .needle {
       opacity: 0;
     }
-  `]
+  `],
+    imports: [TableComponent, MuiInputModule, InputDebounceDirective, AutofocusDirective, FormsModule, MuiRadioModule, MuiButtonModule, MuiIconModule, NgTemplateOutlet, TableFilterComponent, MuiFormModule, MuiCheckboxModule, LoincPartSearchComponent, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiPopoverModule, MuiTagModule, MuiNoDataModule, MuiAbbreviateModule, AsyncPipe, SlicePipe, TranslatePipe, ApplyPipe, SlicePipe_1, LocalizedConceptNamePipe]
 })
 export class LoincListComponent implements OnInit {
+  private codeSystemService = inject(CodeSystemLibService);
+  private translateService = inject(TranslateService);
+  private authService = inject(AuthService);
+  private router = inject(Router);
+  private stateStore = inject(ComponentStateStore);
+
   protected readonly STORE_KEY = 'loinc-list';
   protected readonly TYPES = ['CLIN', 'Lab', 'Survey'];
   protected readonly TYPE_ICONS = {'CLIN': 'medicine-box', 'Lab': 'experiment', 'Survey': 'file-text'};
@@ -57,13 +71,6 @@ export class LoincListComponent implements OnInit {
   protected parts: {[key: string]: CodeSystemConcept} = {};
 
   @ViewChild(MuiTableComponent) protected table?: MuiTableComponent<CodeSystemConcept>;
-
-  public constructor(
-    private codeSystemService: CodeSystemLibService,
-    private translateService: TranslateService,
-    private authService: AuthService,
-    private router: Router,
-    private stateStore: ComponentStateStore) {}
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
@@ -193,13 +200,13 @@ export class LoincListComponent implements OnInit {
     const exclude: (keyof Filter)[] = ['open', 'searchInput', 'type'];
     return Object.keys(filter)
       .filter((k: keyof Filter) => !exclude.includes(k))
-      .some(k => Array.isArray(filter[k]) ? !!filter[k].length : isDefined(filter[k]))
+      .some(k => Array.isArray(filter[k]) ? !!filter[k].length : isDefined(filter[k]));
   }
 
   protected getName = (c: CodeSystemConcept, type = 'display'): string => {
     const lang = this.translateService.currentLang;
     const version = this.getLastVersion(c?.versions);
-    const displays = version?.designations?.filter(d => d.designationType === type).sort((d1, d2) => d1.language === lang ? 0 : 1);
+    const displays = version?.designations?.filter(d => d.designationType === type).sort(d1 => d1.language === lang ? 0 : 1);
     return displays?.length > 0 ? displays[0]?.name : '';
   };
 
@@ -243,7 +250,7 @@ export class LoincListComponent implements OnInit {
   private recentSearches(): string[] {
     try {
       return JSON.parse(sessionStorage.getItem('__tw-loinc-list-search#' + this.authService.user.username) || '[]');
-    } catch (e) {
+    } catch {
       return [];
     }
   }

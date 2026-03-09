@@ -1,34 +1,40 @@
-<m-no-data *ngIf="!(versions?.length > 0)"></m-no-data>
+@if (!(versions?.length > 0)) {
+  <m-no-data></m-no-data>
+}
 
-<m-list *ngIf="versions?.length > 0" mSeparated>
-  <m-list-item *ngFor="let version of versions" mClickable (mClick)="openVersionSummary(version.version)">
-    <div class="m-justify-between">
-      <div class="m-items-middle">
-        <span class="m-bold">{{version.version}}</span>
-        <ng-container *ngIf="version.fhirVersion">
-          <m-divider mVertical></m-divider>
-          <m-icon mCode="fire"></m-icon>
-          <span>{{version.fhirVersion}}</span>
-        </ng-container>
-        <ng-container *ngIf="version.github?.repo">
-          <m-divider mVertical></m-divider>
-          <m-icon mCode="github"></m-icon>
-          <span>{{version.github.repo}}</span>
-        </ng-container>
-      </div>
-      <div class="m-items-middle">
-        <tw-status-tag [status]="version.status"></tw-status-tag>
-        <ng-container *ngIf="version.status === 'draft' && versions?.length > 1 && (ig  + '.ImplementationGuide.publish' | twHasAnyPrivilege)">
-          <m-divider mVertical></m-divider>
-          <m-dropdown>
-            <a *m-dropdown-item (click)="deleteVersion(version.version)">
-              <m-icon mCode="delete"></m-icon>&nbsp;{{'core.btn.delete' | translate}}
-            </a>
-          </m-dropdown>
-        </ng-container>
-      </div>
-    </div>
-    <div>{{version.packageId}}</div>
-    <div>{{version.dependsOn | map:mapDependsOn | join:', '}}</div>
-  </m-list-item>
-</m-list>
+@if (versions?.length > 0) {
+  <m-list mSeparated>
+    @for (version of versions; track version) {
+      <m-list-item mClickable (mClick)="openVersionSummary(version.version)">
+        <div class="m-justify-between">
+          <div class="m-items-middle">
+            <span class="m-bold">{{version.version}}</span>
+            @if (version.fhirVersion) {
+              <m-divider mVertical></m-divider>
+              <m-icon mCode="fire"></m-icon>
+              <span>{{version.fhirVersion}}</span>
+            }
+            @if (version.github?.repo) {
+              <m-divider mVertical></m-divider>
+              <m-icon mCode="github"></m-icon>
+              <span>{{version.github.repo}}</span>
+            }
+          </div>
+          <div class="m-items-middle">
+            <tw-status-tag [status]="version.status"></tw-status-tag>
+            @if (version.status === 'draft' && versions?.length > 1 && (ig  + '.ImplementationGuide.publish' | twHasAnyPrivilege)) {
+              <m-divider mVertical></m-divider>
+              <m-dropdown>
+                <a *m-dropdown-item (click)="deleteVersion(version.version)">
+                  <m-icon mCode="delete"></m-icon>&nbsp;{{'core.btn.delete' | translate}}
+                </a>
+              </m-dropdown>
+            }
+          </div>
+        </div>
+        <div>{{version.packageId}}</div>
+        <div>{{version.dependsOn | map:mapDependsOn | join:', '}}</div>
+      </m-list-item>
+    }
+  </m-list>
+}

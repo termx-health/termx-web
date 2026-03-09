@@ -1,13 +1,14 @@
-import {Component, Input} from '@angular/core';
+import { Component, Input, inject } from '@angular/core';
 import {BooleanInput} from '@kodality-web/core-util';
-import {MuiBreakpointService} from '@kodality-web/marina-ui';
+import { MuiBreakpointService, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
 
 @Component({
-  selector: 'tw-add-button',
-  templateUrl: 'add-button.component.html',
-  host: {
-    '[tabIndex]' : `-1`
-  }
+    selector: 'tw-add-button',
+    templateUrl: 'add-button.component.html',
+    host: {
+        '[tabIndex]': `-1`
+    },
+    imports: [MuiButtonModule, MuiIconModule]
 })
 export class AddButtonComponent {
   @Input() public icon: string = 'plus';
@@ -17,7 +18,9 @@ export class AddButtonComponent {
 
   public isDesktop = true;
 
-  public constructor(breakpointService: MuiBreakpointService) {
+  public constructor() {
+    const breakpointService = inject(MuiBreakpointService);
+
     breakpointService.observe().subscribe(v => this.isDesktop = !v.matches);
   }
 }

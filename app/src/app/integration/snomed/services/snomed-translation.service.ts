@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {SnomedTranslation, SnomedTranslationLibService} from 'app/src/app/integration/_lib';
+import {SnomedTranslation, SnomedTranslationLibService} from 'term-web/integration/_lib';
 import {Observable} from 'rxjs';
 import {Provenance} from 'term-web/sys/_lib';
 

@@ -1,13 +1,26 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {ComponentStateStore, copyDeep, DestroyService, isDefined, LoadingManager, QueryParams, SearchResult, validateForm} from '@kodality-web/core-util';
-import {MuiNotificationService, MuiTableComponent} from '@kodality-web/marina-ui';
-import {LocalizedName} from '@kodality-web/marina-util';
-import {ObservationDefinition, ObservationDefinitionImportRequest, ObservationDefinitionSearchParams} from 'app/src/app/observation-definition/_lib';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { ComponentStateStore, copyDeep, DestroyService, isDefined, LoadingManager, QueryParams, SearchResult, validateForm, AutofocusDirective, ApplyPipe } from '@kodality-web/core-util';
+import { MuiNotificationService, MuiTableComponent, MarinPageLayoutModule, MuiAlertModule, MuiInputModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiSelectModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiTooltipModule, MuiTagModule, MuiNoDataModule, MuiModalModule } from '@kodality-web/marina-ui';
+import { LocalizedName, MarinaUtilModule } from '@kodality-web/marina-util';
+import {ObservationDefinition, ObservationDefinitionImportRequest, ObservationDefinitionSearchParams} from 'term-web/observation-definition/_lib';
 import {Observable, tap} from 'rxjs';
 import {CodeSystemConcept} from 'term-web/resources/_lib';
 import {JobLibService, JobLog} from 'term-web/sys/_lib';
-import {ObservationDefinitionService} from '../services/observation-definition.service';
+import {ObservationDefinitionService} from 'term-web/observation-definition/services/observation-definition.service';
+import { AsyncPipe } from '@angular/common';
+import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { RouterLink } from '@angular/router';
+import { TableFilterComponent } from 'term-web/core/ui/components/table-container/table-filter.component';
+import { ObservationDefinitionValueSelectComponent } from 'term-web/observation-definition/_lib/components/observation-definition-value-select.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { ConceptSearchComponent } from 'term-web/resources/_lib/code-system/containers/concept-search.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 interface Filter {
   open: boolean,
@@ -19,10 +32,17 @@ interface Filter {
 }
 
 @Component({
-  templateUrl: 'observation-definition-list.component.html',
-  providers: [DestroyService]
+    templateUrl: 'observation-definition-list.component.html',
+    providers: [DestroyService],
+    imports: [MarinPageLayoutModule, MuiAlertModule, TableComponent, MuiInputModule, InputDebounceDirective, AutofocusDirective, FormsModule, PrivilegedDirective, AddButtonComponent, RouterLink, MuiButtonModule, MuiIconModule, TableFilterComponent, MuiFormModule, ObservationDefinitionValueSelectComponent, MuiSelectModule, ValueSetConceptSelectComponent, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiTooltipModule, MuiTagModule, MuiNoDataModule, MuiModalModule, ConceptSearchComponent, AsyncPipe, TranslatePipe, MarinaUtilModule, ApplyPipe, HasAnyPrivilegePipe, LocalizedConceptNamePipe]
 })
 export class ObservationDefinitionListComponent implements OnInit {
+  private observationDefinitionService = inject(ObservationDefinitionService);
+  private stateStore = inject(ComponentStateStore);
+  private jobService = inject(JobLibService);
+  private notificationService = inject(MuiNotificationService);
+  private destroy$ = inject(DestroyService);
+
   private readonly STORE_KEY = 'observation-definition-list';
 
   protected query = new ObservationDefinitionSearchParams();
@@ -39,14 +59,6 @@ export class ObservationDefinitionListComponent implements OnInit {
     visible?: boolean,
     loincCodes?: string[]
   } = {visible: false};
-
-  public constructor(
-    private observationDefinitionService: ObservationDefinitionService,
-    private stateStore: ComponentStateStore,
-    private jobService: JobLibService,
-    private notificationService: MuiNotificationService,
-    private destroy$: DestroyService,
-  ) { }
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);

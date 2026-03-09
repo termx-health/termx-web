@@ -1,4 +1,4 @@
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {NavigationEnd, Router} from '@angular/router';
 import {filter, forkJoin, Observable, of, ReplaySubject} from 'rxjs';
 import {map} from 'rxjs/operators';
@@ -19,15 +19,15 @@ export class SpaceContextParams {
 
 @Injectable({providedIn: 'root'})
 export class SpaceContextService {
+  private router = inject(Router);
+  private packageService = inject(PackageLibService);
+  private spaceService = inject(SpaceLibService);
+
   public context: SpaceContext;
   public params: SpaceContextParams;
   public context$ = new ReplaySubject<SpaceContext>(1);
 
-  public constructor(
-    private router: Router,
-    private packageService: PackageLibService,
-    private spaceService: SpaceLibService
-  ) {
+  public constructor() {
     this.router.events.pipe(
       filter((e) => e instanceof NavigationEnd),
       filter((e: NavigationEnd) => !/\/.+\/context/.test(e.url))

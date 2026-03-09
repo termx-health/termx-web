@@ -1,10 +1,24 @@
-import {Component, OnInit} from '@angular/core';
-import {ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, sortFn} from '@kodality-web/core-util';
-import {TranslateService} from '@ngx-translate/core';
-import {MapSet, MapSetSearchParams, MapSetVersion} from 'app/src/app/resources/_lib';
+import { Component, OnInit, inject } from '@angular/core';
+import { ComponentStateStore, copyDeep, isDefined, QueryParams, SearchResult, sortFn, AutofocusDirective, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
+import { TranslateService, TranslatePipe } from '@ngx-translate/core';
+import {MapSet, MapSetSearchParams, MapSetVersion} from 'term-web/resources/_lib';
 import {environment} from 'environments/environment';
 import {finalize, Observable, tap} from 'rxjs';
-import {MapSetService} from '../../services/map-set-service';
+import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
+import { TableComponent } from 'term-web/core/ui/components/table-container/table.component';
+import { AsyncPipe } from '@angular/common';
+import { MuiInputModule, MuiDropdownModule, MuiCoreModule, MuiButtonModule, MuiIconModule, MuiFormModule, MuiBackendTableModule, MuiTableModule, MuiPopconfirmModule, MuiDividerModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { FormsModule } from '@angular/forms';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { RouterLink } from '@angular/router';
+import { TableFilterComponent } from 'term-web/core/ui/components/table-container/table-filter.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { ResourceFhirImportModalComponent } from 'term-web/resources/resource/components/resource-fhir-import-modal-component';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 
 interface Filter {
   open: boolean,
@@ -15,9 +29,14 @@ interface Filter {
 }
 
 @Component({
-  templateUrl: 'map-set-list.component.html'
+    templateUrl: 'map-set-list.component.html',
+    imports: [TableComponent, MuiInputModule, InputDebounceDirective, AutofocusDirective, FormsModule, PrivilegedDirective, MuiDropdownModule, AddButtonComponent, MuiCoreModule, RouterLink, MuiButtonModule, MuiIconModule, TableFilterComponent, MuiFormModule, ValueSetConceptSelectComponent, MuiBackendTableModule, MuiTableModule, StatusTagComponent, MuiPopconfirmModule, MuiDividerModule, MuiNoDataModule, ResourceFhirImportModalComponent, AsyncPipe, TranslatePipe, MarinaUtilModule, ApplyPipe, LocalDatePipe, LocalizedConceptNamePipe]
 })
 export class MapSetListComponent implements OnInit {
+  private mapSetService = inject(MapSetService);
+  private translateService = inject(TranslateService);
+  private stateStore = inject(ComponentStateStore);
+
   protected readonly STORE_KEY = 'map-set-list';
 
   protected query = new MapSetSearchParams();
@@ -25,12 +44,6 @@ export class MapSetListComponent implements OnInit {
   protected filter: Filter = {open: false};
   protected _filter: Omit<Filter, 'open'> = this.filter; // temp, use only in tw-table-filter
   protected loading: boolean;
-
-  public constructor(
-    private mapSetService: MapSetService,
-    private translateService: TranslateService,
-    private stateStore: ComponentStateStore,
-  ) {}
 
   public ngOnInit(): void {
     const state = this.stateStore.pop(this.STORE_KEY);
@@ -107,8 +120,7 @@ export class MapSetListComponent implements OnInit {
 
   protected findLastVersion = (versions: MapSetVersion[]): MapSetVersion => {
     return versions
-      ?.filter(v => ['draft', 'active'].includes(v.status))
-      .map(v => ({...v, created: v.created ? new Date(v.created) : undefined}))
-      .sort(sortFn('created', false))?.[0];
+      ?.map(v => ({...v, created: v.created ? new Date(v.created) : undefined}))
+      ?.sort(sortFn('created', false))?.[0];
   };
 }

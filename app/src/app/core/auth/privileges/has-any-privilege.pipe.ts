@@ -1,9 +1,10 @@
-import {Pipe, PipeTransform} from '@angular/core';
-import {AuthService} from '../auth.service';
+import { Pipe, PipeTransform, inject } from '@angular/core';
+import {AuthService} from 'term-web/core/auth/auth.service';
 
-@Pipe({name: 'twHasAnyPrivilege'})
+@Pipe({ name: 'twHasAnyPrivilege' })
 export class HasAnyPrivilegePipe implements PipeTransform {
-  public constructor(private authService: AuthService) {}
+  private authService = inject(AuthService);
+
 
   public transform(privileges: string[] | string): boolean {
     return this.authService.hasAnyPrivilege(Array.isArray(privileges) ? privileges : [privileges]);

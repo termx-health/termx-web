@@ -1,14 +1,21 @@
-import {Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef} from '@angular/core';
-import {SearchResult} from '@kodality-web/core-util';
-import {LocalizedName} from '@kodality-web/marina-util';
+import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, TemplateRef, inject } from '@angular/core';
+import { SearchResult, ApplyPipe } from '@kodality-web/core-util';
+import { LocalizedName, MarinaUtilModule } from '@kodality-web/marina-util';
 import {Subscription} from 'rxjs';
-import {CodeSystem, CodeSystemLibService, CodeSystemSearchParams} from '../../code-system';
+import {CodeSystem, CodeSystemLibService, CodeSystemSearchParams} from 'term-web/resources/_lib/code-system';
+import { MuiSkeletonModule, MuiListModule, MuiDividerModule, MuiIconModule } from '@kodality-web/marina-ui';
+import { NgTemplateOutlet } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-code-system-widget',
-  templateUrl: 'code-system-widget.component.html'
+    selector: 'tw-code-system-widget',
+    templateUrl: 'code-system-widget.component.html',
+    imports: [MuiSkeletonModule, MuiListModule, RouterLink, MuiDividerModule, NgTemplateOutlet, MuiIconModule, ApplyPipe, TranslatePipe, MarinaUtilModule]
 })
 export class CodeSystemWidgetComponent implements OnChanges {
+  private codeSystemService = inject(CodeSystemLibService);
+
   @Input() public spaceId: number;
   @Input() public packageId: number;
   @Input() public packageVersionId: number;
@@ -22,7 +29,7 @@ export class CodeSystemWidgetComponent implements OnChanges {
   protected query = new CodeSystemSearchParams();
   protected loading = false;
 
-  public constructor(private codeSystemService: CodeSystemLibService) {
+  public constructor() {
     this.query.limit = 50;
   }
 

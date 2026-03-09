@@ -1,10 +1,14 @@
 import {Component, ContentChild, EventEmitter, Input, Output} from '@angular/core';
 import {TableFilterComponent} from 'term-web/core/ui/components/table-container/table-filter.component';
+import { MuiCardModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
+
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  selector: 'tw-table',
-  templateUrl: 'table.component.html',
-  styleUrls: ['table.component.less']
+    selector: 'tw-table',
+    templateUrl: 'table.component.html',
+    styleUrls: ['table.component.less'],
+    imports: [MuiCardModule, MuiButtonModule, MuiIconModule, TranslatePipe]
 })
 export class TableComponent {
   @Input() public filterOpen: boolean;

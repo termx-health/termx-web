@@ -2,11 +2,11 @@ import {matchSection} from '@kodality-web/marina-markdown-parser';
 
 
 export function codeSystemConceptMatrixPlugin(md): void {
-  md.renderer.rules.code_system_concept_matrix = (tokens, idx, /* options, env, self */) => {
+  md.renderer.rules.code_system_concept_matrix = (tokens, idx/* , options, env, self */): string => {
     return `<ce-code-system-concept-matrix ${tokens[idx].attrs.filter(([_, v]) => v).map(([k, v]) => `${k}="${encodeURIComponent(v)}"`).join(' ')}></ce-code-system-concept-matrix>`;
   };
 
-  md.block.ruler.before('fence', 'code_system_concept_matrix', (state, startl, endl, silent, ...rest) => {
+  md.block.ruler.before('fence', 'code_system_concept_matrix', (state, startl, endl, silent) => {
     const {failed, end, autoClosed, content} = matchSection('{{csc:', '}}', state, startl, endl, silent);
     if (failed) {
       return false;

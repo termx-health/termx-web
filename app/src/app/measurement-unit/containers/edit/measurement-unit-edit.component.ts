@@ -1,15 +1,36 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {DateRange, isDefined, validateForm} from '@kodality-web/core-util';
 import {MeasurementUnit} from 'term-web/measurement-unit/_lib';
-import {MeasurementUnitService} from '../../services/measurement-unit.service';
+import {MeasurementUnitService} from 'term-web/measurement-unit/services/measurement-unit.service';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MuiInputModule, MuiMultiLanguageInputModule, MuiDatePickerModule, MuiNumberInputModule, MuiSelectModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MeasurementUnitMappingListComponent } from 'term-web/measurement-unit/containers/mapping/measurement-unit-mapping-list.component';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: './measurement-unit-edit.component.html',
+    templateUrl: './measurement-unit-edit.component.html',
+    imports: [
+    MuiFormModule,
+    MuiSpinnerModule,
+    MuiCardModule,
+    FormsModule,
+    MuiInputModule,
+    MuiMultiLanguageInputModule,
+    MuiDatePickerModule,
+    MuiNumberInputModule,
+    MuiSelectModule,
+    MuiButtonModule,
+    MeasurementUnitMappingListComponent,
+    TranslatePipe
+],
 })
 export class MeasurementUnitEditComponent implements OnInit {
+  private measurementUnitService = inject(MeasurementUnitService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   public measurementUnitId?: number;
   public measurementUnit?: MeasurementUnit;
   public kinds?: string[];
@@ -19,12 +40,6 @@ export class MeasurementUnitEditComponent implements OnInit {
   public mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private measurementUnitService: MeasurementUnitService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) {}
 
   public ngOnInit(): void {
     this.measurementUnitId = Number(this.route.snapshot.paramMap.get('id'));

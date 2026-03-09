@@ -26,27 +26,25 @@ import {ResourcesLibModule} from 'term-web/resources/_lib';
 import {MapSetModule} from 'term-web/resources/map-set/map-set.module';
 import {ResourceModule} from 'term-web/resources/resource/resource.module';
 import {SysLibModule} from 'term-web/sys/_lib';
-import {UcumLibModule} from 'term-web/ucum/_lib';
 import {UserLibModule} from 'term-web/user/_lib';
-import {CoreUiModule} from '../core/ui/core-ui.module';
-import {IntegrationDashboardComponent} from './dashboard/integration-dashboard.component';
-import {FhirCodeSystemFindMatchesComponent} from './fhir/code-system/fhir-code-system-find-matches.component';
-import {FhirCodeSystemLookupComponent} from './fhir/code-system/fhir-code-system-lookup.component';
-import {FhirCodeSystemSubsumesComponent} from './fhir/code-system/fhir-code-system-subsumes.component';
-import {FhirCodeSystemValidateCodeComponent} from './fhir/code-system/fhir-code-system-validate-code.component';
-import {FhirConceptMapClosureComponent} from './fhir/concept-map/fhir-concept-map-closure.component';
-import {FhirConceptMapTranslateComponent} from './fhir/concept-map/fhir-concept-map-translate.component';
-import {IntegrationFhirSyncComponent} from './fhir/integration-fhir-sync.component';
-import {FhirValueSetExpandComponent} from './fhir/value-set/fhir-value-set-expand.component';
-import {FhirValueSetValidateCodeComponent} from './fhir/value-set/fhir-value-set-validate-code.component';
-import {IntegrationAtcImportComponent} from './import/atc/integration-atc-import.component';
-import {CodeSystemFileImportFormComponent} from './import/file-import/code-system/code-system-file-import-form.component';
-import {ConceptMapFileImportComponent} from './import/file-import/concept-map/concept-map-file-import.component';
-import {IntegrationIcdImportComponent} from './import/icd-10/integration-icd-import.component';
-import {IntegrationIchiImportComponent} from './import/ichi/integration-ichi-import.component';
-import {IntegrationUcumImportModalComponent} from './import/ucum/integration-ucum-import-modal.component';
-import {SnomedConceptInfoComponent} from './snomed/containers/snomed-concept-info.component';
-import {SnomedDashboardComponent} from './snomed/containers/snomed-dashboard.component';
+import {CoreUiModule} from 'term-web/core/ui/core-ui.module';
+import {IntegrationDashboardComponent} from 'term-web/integration/dashboard/integration-dashboard.component';
+import {FhirCodeSystemFindMatchesComponent} from 'term-web/integration/fhir/code-system/fhir-code-system-find-matches.component';
+import {FhirCodeSystemLookupComponent} from 'term-web/integration/fhir/code-system/fhir-code-system-lookup.component';
+import {FhirCodeSystemSubsumesComponent} from 'term-web/integration/fhir/code-system/fhir-code-system-subsumes.component';
+import {FhirCodeSystemValidateCodeComponent} from 'term-web/integration/fhir/code-system/fhir-code-system-validate-code.component';
+import {FhirConceptMapClosureComponent} from 'term-web/integration/fhir/concept-map/fhir-concept-map-closure.component';
+import {FhirConceptMapTranslateComponent} from 'term-web/integration/fhir/concept-map/fhir-concept-map-translate.component';
+import {IntegrationFhirSyncComponent} from 'term-web/integration/fhir/integration-fhir-sync.component';
+import {FhirValueSetExpandComponent} from 'term-web/integration/fhir/value-set/fhir-value-set-expand.component';
+import {FhirValueSetValidateCodeComponent} from 'term-web/integration/fhir/value-set/fhir-value-set-validate-code.component';
+import {IntegrationAtcImportComponent} from 'term-web/integration/import/atc/integration-atc-import.component';
+import {CodeSystemFileImportFormComponent} from 'term-web/integration/import/file-import/code-system/code-system-file-import-form.component';
+import {ConceptMapFileImportComponent} from 'term-web/integration/import/file-import/concept-map/concept-map-file-import.component';
+import {IntegrationIcdImportComponent} from 'term-web/integration/import/icd-10/integration-icd-import.component';
+import {IntegrationIchiImportComponent} from 'term-web/integration/import/ichi/integration-ichi-import.component';
+import {SnomedConceptInfoComponent} from 'term-web/integration/snomed/containers/snomed-concept-info.component';
+import {SnomedDashboardComponent} from 'term-web/integration/snomed/containers/snomed-dashboard.component';
 
 export const INTEGRATION_ROUTES: Routes = [
   {
@@ -82,70 +80,61 @@ export const INTEGRATION_ROUTES: Routes = [
 ];
 
 @NgModule({
-  imports: [
-    CoreUiModule,
-    ResourcesLibModule,
-    FhirLibModule,
-    IntegrationLibModule,
-    MapSetModule,
-    SysLibModule,
-    ResourceModule,
-    UserLibModule,
-    NzProgressModule,
-    UcumLibModule
-  ],
-  exports: [
-    LoincListComponent,
-    LoincPartListComponent,
-    LoincAnswerListListComponent,
-    SnomedTranslationListComponent,
-  ],
-  declarations: [
-    ImportJobLogComponent,
-
-    IntegrationDashboardComponent,
-    IntegrationFhirSyncComponent,
-    IntegrationAtcImportComponent,
-    IntegrationIcdImportComponent,
-    IntegrationIchiImportComponent,
-
-    FhirCodeSystemLookupComponent,
-    FhirCodeSystemSubsumesComponent,
-    FhirCodeSystemFindMatchesComponent,
-    FhirCodeSystemValidateCodeComponent,
-    FhirValueSetExpandComponent,
-    FhirValueSetValidateCodeComponent,
-    FhirConceptMapTranslateComponent,
-    FhirConceptMapClosureComponent,
-
-    SnomedDashboardComponent,
-    SnomedConceptInfoComponent,
-    SnomedTranslationListComponent,
-    SnomedManagementComponent,
-    SnomedBranchEditComponent,
-    SnomedBranchManagementComponent,
-    SnomedCodesystemEditComponent,
-
-    LoincDashboardComponent,
-    LoincListComponent,
-    LoincPartListComponent,
-    LoincAnswerListListComponent,
-    LoincPartSearchComponent,
-    LoincImportComponent,
-    IntegrationUcumImportModalComponent,
-
-    CodeSystemFileImportFormComponent,
-    CodeSystemFileImportComponent,
-    OrphanetImportComponent,
-    ConceptMapFileImportComponent,
-    ValueSetFileImportComponent,
-    AssociationFileImportComponent
-  ],
-  providers: [
-    SnomedService,
-    SnomedTranslationService,
-    FileAnalysisService
-  ]
+    imports: [
+        CoreUiModule,
+        ResourcesLibModule,
+        FhirLibModule,
+        IntegrationLibModule,
+        MapSetModule,
+        SysLibModule,
+        ResourceModule,
+        UserLibModule,
+        NzProgressModule,
+        ImportJobLogComponent,
+        IntegrationDashboardComponent,
+        IntegrationFhirSyncComponent,
+        IntegrationAtcImportComponent,
+        IntegrationIcdImportComponent,
+        IntegrationIchiImportComponent,
+        FhirCodeSystemLookupComponent,
+        FhirCodeSystemSubsumesComponent,
+        FhirCodeSystemFindMatchesComponent,
+        FhirCodeSystemValidateCodeComponent,
+        FhirValueSetExpandComponent,
+        FhirValueSetValidateCodeComponent,
+        FhirConceptMapTranslateComponent,
+        FhirConceptMapClosureComponent,
+        SnomedDashboardComponent,
+        SnomedConceptInfoComponent,
+        SnomedTranslationListComponent,
+        SnomedManagementComponent,
+        SnomedBranchEditComponent,
+        SnomedBranchManagementComponent,
+        SnomedCodesystemEditComponent,
+        LoincDashboardComponent,
+        LoincListComponent,
+        LoincPartListComponent,
+        LoincAnswerListListComponent,
+        LoincPartSearchComponent,
+        LoincImportComponent,
+        CodeSystemFileImportFormComponent,
+        CodeSystemFileImportComponent,
+        OrphanetImportComponent,
+        ConceptMapFileImportComponent,
+        ValueSetFileImportComponent,
+        AssociationFileImportComponent
+    ],
+    exports: [
+        LoincListComponent,
+        LoincPartListComponent,
+        LoincAnswerListListComponent,
+        SnomedTranslationListComponent,
+    ],
+    providers: [
+        SnomedService,
+        SnomedTranslationService,
+        FileAnalysisService
+    ]
 })
 export class IntegrationModule {
 }

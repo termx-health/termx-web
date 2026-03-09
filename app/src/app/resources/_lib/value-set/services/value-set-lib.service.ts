@@ -1,22 +1,24 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {HttpCacheService, SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
 import {JobLogResponse, Provenance} from 'term-web/sys/_lib';
-import {ValueSet} from '../model/value-set';
-import {ValueSetExpandRequest} from '../model/value-set-expand-request';
-import {ValueSetSearchParams} from '../model/value-set-search-params';
-import {ValueSetVersion} from '../model/value-set-version';
-import {ValueSetVersionConcept} from '../model/value-set-version-concept';
-import {ValueSetVersionSearchParams} from '../model/value-set-version-search-params';
+import {ValueSet} from 'term-web/resources/_lib/value-set/model/value-set';
+import {ValueSetExpandRequest} from 'term-web/resources/_lib/value-set/model/value-set-expand-request';
+import {ValueSetSearchParams} from 'term-web/resources/_lib/value-set/model/value-set-search-params';
+import {ValueSetVersion} from 'term-web/resources/_lib/value-set/model/value-set-version';
+import {ValueSetVersionConcept} from 'term-web/resources/_lib/value-set/model/value-set-version-concept';
+import {ValueSetVersionSearchParams} from 'term-web/resources/_lib/value-set/model/value-set-version-search-params';
 
 @Injectable()
 export class ValueSetLibService {
+  protected http = inject(HttpClient);
+
   private cacheService: HttpCacheService;
   protected baseUrl = `${environment.termxApi}/ts/value-sets`;
 
-  public constructor(protected http: HttpClient) {
+  public constructor() {
     this.cacheService = new HttpCacheService();
   }
 

@@ -1,20 +1,33 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {NamingSystem} from 'term-web/resources/_lib';
-import {NamingSystemService} from '../../services/naming-system-service';
+import {NamingSystemService} from 'term-web/resources/naming-system/services/naming-system-service';
+import { MuiFormModule, MuiCardModule, MuiMultiLanguageInputModule, MuiTableModule, MuiIconModule } from '@kodality-web/marina-ui';
+
+import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
+import { FormsModule } from '@angular/forms';
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: './naming-system-view.component.html',
+    templateUrl: './naming-system-view.component.html',
+    imports: [
+    MuiFormModule,
+    MuiCardModule,
+    StatusTagComponent,
+    MuiMultiLanguageInputModule,
+    FormsModule,
+    MuiTableModule,
+    MuiIconModule,
+    TranslatePipe
+],
 })
 export class NamingSystemViewComponent implements OnInit {
+  private namingSystemService = inject(NamingSystemService);
+  private route = inject(ActivatedRoute);
+
   public namingSystem?: NamingSystem;
   public loading = false;
-
-  public constructor(
-    private namingSystemService: NamingSystemService,
-    private route: ActivatedRoute,
-  ) {}
 
   public ngOnInit(): void {
     const namingSystemId = this.route.snapshot.paramMap.get('id');

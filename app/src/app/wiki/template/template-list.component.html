@@ -17,10 +17,11 @@
 
     <tr *mTableRow="let temp">
       <td>
-        <a *ngIf="'*.Wiki.edit' | twHasAnyPrivilege; else view" [routerLink]="['../templates',temp.id,'edit']">{{temp.code}}</a>
-        <ng-template #view>
+        @if ('*.Wiki.edit' | twHasAnyPrivilege) {
+          <a [routerLink]="['../templates',temp.id,'edit']">{{temp.code}}</a>
+        } @else {
           <a [routerLink]="['../templates',temp.id,'view']">{{temp.code}}</a>
-        </ng-template>
+        }
       </td>
       <td>{{temp.names | localName}}</td>
       <td *twPrivileged="'*.Wiki.edit'" class="tw-table-actions">

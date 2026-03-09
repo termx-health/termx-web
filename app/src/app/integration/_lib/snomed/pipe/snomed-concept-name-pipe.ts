@@ -1,16 +1,14 @@
-import {Pipe, PipeTransform} from '@angular/core';
+import { Pipe, PipeTransform, inject } from '@angular/core';
 import {EMPTY, Observable, of} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {SnomedConcept} from '../model/concept/snomed-concept';
-import {SnomedLibService} from '../services/snomed-lib.service';
-import {SnomedUtil} from '../util/snomed-util';
+import {SnomedConcept} from 'term-web/integration/_lib/snomed/model/concept/snomed-concept';
+import {SnomedLibService} from 'term-web/integration/_lib/snomed/services/snomed-lib.service';
+import {SnomedUtil} from 'term-web/integration/_lib/snomed/util/snomed-util';
 
-@Pipe({
-  name: 'snomedConceptName'
-})
+@Pipe({ name: 'snomedConceptName' })
 export class SnomedConceptNamePipe implements PipeTransform {
+  private snomedService = inject(SnomedLibService);
 
-  public constructor(private snomedService: SnomedLibService) {}
 
   public transform(concept: string | SnomedConcept, type: 'pt' | 'fsn' = 'pt', branch?: string): Observable<string> {
     if (!concept) {

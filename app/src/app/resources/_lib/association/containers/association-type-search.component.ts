@@ -1,16 +1,22 @@
-import {Component, forwardRef, Input, OnInit} from '@angular/core';
-import {NG_VALUE_ACCESSOR} from '@angular/forms';
-import {BooleanInput, DestroyService, group} from '@kodality-web/core-util';
-import {NzSelectItemInterface} from 'ng-zorro-antd/select/select.types';
+import { Component, forwardRef, Input, OnInit, inject } from '@angular/core';
+import { NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { BooleanInput, DestroyService, group, KeysPipe } from '@kodality-web/core-util';
+import {NzSelectItemInterface} from 'ng-zorro-antd/select';
 import {catchError, finalize, map, of, takeUntil} from 'rxjs';
-import {AssociationType, AssociationTypeLibService, AssociationTypeSearchParams} from '../../association';
+import {AssociationType, AssociationTypeLibService, AssociationTypeSearchParams} from 'term-web/resources/_lib/association';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
 
 @Component({
-  selector: 'tw-association-type-search',
-  templateUrl: './association-type-search.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AssociationTypeSearchComponent), multi: true}, DestroyService]
+    selector: 'tw-association-type-search',
+    templateUrl: './association-type-search.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => AssociationTypeSearchComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, KeysPipe]
 })
 export class AssociationTypeSearchComponent implements OnInit {
+  private associationTypeService = inject(AssociationTypeLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() @BooleanInput() public valuePrimitive: string | boolean = false;
   @Input() public associationKind: 'concept-map-equivalence' | 'codesystem-hierarchy-meaning';
   @Input() public placeholder: string = 'marina.ui.inputs.select.placeholder';
@@ -20,13 +26,8 @@ export class AssociationTypeSearchComponent implements OnInit {
   public value?: string;
   private loading: {[key: string]: boolean} = {};
 
-  public onChange = (x: any) => x;
-  public onTouched = (x: any) => x;
-
-  public constructor(
-    private associationTypeService: AssociationTypeLibService,
-    private destroy$: DestroyService
-  ) {}
+  public onChange = (x: any): any => x;
+  public onTouched = (x: any): any => x;
 
   public ngOnInit(): void {
     this.loadTypes();

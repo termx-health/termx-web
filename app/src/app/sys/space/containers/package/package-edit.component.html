@@ -19,31 +19,47 @@
     <div style="flex: 1">
       <m-card [mShowSkeleton]="loading" mTitle="entities.package.version.plural">
         <nz-timeline>
-          <nz-timeline-item *ngFor="let v of versions; let index = index" [nzLabel]="versionTemplate">
-            <div style="display: flex; gap: 1rem">
-              <a (click)="downloadYaml(v)" *ngIf="v.id">
-                <m-icon mCode="download"></m-icon>
-              </a>
-              <a (click)="duplicateVersion(v)" *ngIf="v.id" m-tooltip mTitle="core.btn.duplicate">
-                <m-icon mCode="copy"></m-icon>
-              </a>
-              <a m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="removeVersion(index)" *ngIf="!v.id && versions.length > 1">
-                <m-icon mCode="delete"></m-icon>
-              </a>
-              <a m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteVersion(v.id)" *ngIf="v.id && versions.length > 1">
-                <m-icon mCode="delete"></m-icon>
-              </a>
-            </div>
-            <ng-template #versionTemplate>
-              <label *ngIf="v.id === version?.id" style="font-weight: bold">
-                {{v.id ? v.version : 'web.space.new-version' | translate}}
-              </label>
-              <a *ngIf="v.id !== version?.id" (click)="selectVersion(v)">
-                {{v.id ? v.version : 'web.space.new-version' | translate}}
-              </a>
-            </ng-template>
-          </nz-timeline-item>
-          <nz-timeline-item *ngIf="!newVersionExists" [nzDot]="addVersionTemplate"></nz-timeline-item>
+          @for (v of versions; track v; let index = $index) {
+            <nz-timeline-item [nzLabel]="versionTemplate">
+              <div style="display: flex; gap: 1rem">
+                @if (v.id) {
+                  <a (click)="downloadYaml(v)">
+                    <m-icon mCode="download"></m-icon>
+                  </a>
+                }
+                @if (v.id) {
+                  <a (click)="duplicateVersion(v)" m-tooltip mTitle="core.btn.duplicate">
+                    <m-icon mCode="copy"></m-icon>
+                  </a>
+                }
+                @if (!v.id && versions.length > 1) {
+                  <a m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="removeVersion(index)">
+                    <m-icon mCode="delete"></m-icon>
+                  </a>
+                }
+                @if (v.id && versions.length > 1) {
+                  <a m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteVersion(v.id)">
+                    <m-icon mCode="delete"></m-icon>
+                  </a>
+                }
+              </div>
+              <ng-template #versionTemplate>
+                @if (v.id === version?.id) {
+                  <label style="font-weight: bold">
+                    {{v.id ? v.version : 'web.space.new-version' | translate}}
+                  </label>
+                }
+                @if (v.id !== version?.id) {
+                  <a (click)="selectVersion(v)">
+                    {{v.id ? v.version : 'web.space.new-version' | translate}}
+                  </a>
+                }
+              </ng-template>
+            </nz-timeline-item>
+          }
+          @if (!newVersionExists) {
+            <nz-timeline-item [nzDot]="addVersionTemplate"></nz-timeline-item>
+          }
           <ng-template #addVersionTemplate>
             <a (click)="addVersion()">
               <m-icon mCode="plus-circle"></m-icon>
@@ -55,35 +71,30 @@
 
     <div style="flex: 3;">
       <m-card [mShowSkeleton]="loading">
-        <form #form="ngForm" *ngIf="package">
-          <m-form-item mName="code" mLabel="entities.package.code" required>
-            <m-input name="code" [(ngModel)]="package.code" required></m-input>
-          </m-form-item>
-          <ng-container *ngIf="version">
-            <m-divider mText="entities.package.version.singular"></m-divider>
-            <m-form-item mName="version" mLabel="entities.package.version.version" required>
-              <m-input name="version" [(ngModel)]="version.version" required></m-input>
+        @if (package) {
+          <form #form="ngForm">
+            <m-form-item mName="code" mLabel="entities.package.code" required>
+              <m-input name="code" [(ngModel)]="package.code" required></m-input>
             </m-form-item>
-
-            <ng-container *ngIf="(version.resources | apply: groupResources) as resources">
-              <m-form-item mName="cs" mLabel="entities.code-system.plural">
-                <tw-code-system-search name="cs" [(ngModel)]="resources['code-system']" (ngModelChange)="addResource($event, 'code-system')" multiple valuePrimitive/>
+            @if (version) {
+              <m-divider mText="entities.package.version.singular"></m-divider>
+              <m-form-item mName="version" mLabel="entities.package.version.version" required>
+                <m-input name="version" [(ngModel)]="version.version" required></m-input>
               </m-form-item>
-              <m-form-item mName="vs" mLabel="entities.value-set.plural">
-                <tw-value-set-search name="vs" [(ngModel)]="resources['value-set']" (ngModelChange)="addResource($event, 'value-set')" multiple valuePrimitive/>
-              </m-form-item>
-              <m-form-item mName="mapSet" mLabel="entities.map-set.plural">
-                <tw-map-set-search name="mapSet" [(ngModel)]="resources['map-set']" (ngModelChange)="addResource($event, 'map-set')" multiple valuePrimitive/>
-              </m-form-item>
-              <m-form-item mName="structureDefinition" mLabel="entities.structure-definition.plural">
-                <tw-structure-definition-search name="structureDefinition" [(ngModel)]="resources['structure-definition']" (ngModelChange)="addResource($event, 'structure-definition')" multiple valuePrimitive/>
-              </m-form-item>
-              <m-form-item mName="transformationDefinition" mLabel="entities.transformation-definition.plural">
-                <tw-transformation-definition-search name="transformationDefinition" [(ngModel)]="resources['transformation-definition']" (ngModelChange)="addResource($event, 'transformation-definition')" multiple valuePrimitive/>
-              </m-form-item>
-            </ng-container>
-          </ng-container>
-        </form>
+              @if ((version.resources | apply: groupResources); as resources) {
+                <m-form-item mName="cs" mLabel="entities.code-system.plural">
+                  <tw-code-system-search name="cs" [(ngModel)]="resources['code-system']" (ngModelChange)="addResource($event, 'code-system')" multiple valuePrimitive/>
+                </m-form-item>
+                <m-form-item mName="vs" mLabel="entities.value-set.plural">
+                  <tw-value-set-search name="vs" [(ngModel)]="resources['value-set']" (ngModelChange)="addResource($event, 'value-set')" multiple valuePrimitive/>
+                </m-form-item>
+                <m-form-item mName="mapSet" mLabel="entities.map-set.plural">
+                  <tw-map-set-search name="mapSet" [(ngModel)]="resources['map-set']" (ngModelChange)="addResource($event, 'map-set')" multiple valuePrimitive/>
+                </m-form-item>
+              }
+            }
+          </form>
+        }
       </m-card>
     </div>
   </div>

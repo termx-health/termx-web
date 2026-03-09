@@ -1,50 +1,70 @@
 <nz-breadcrumb style="margin-bottom: 1rem">
-  <nz-breadcrumb-item *ngFor="let crumb of breadcrumb; let i = index" [ngClass]="crumb === '...' ? 'm-clickable' : ''" (click)="openProperties(crumb)">
-    <label *ngIf="i !== 2" [ngClass]="crumb === '...' ? 'm-clickable' : ''">{{crumb}}</label>
-    <label *ngIf="i === 2">{{crumb}} {{crumb | localizedConceptName: {codeSystem: 'loinc-part'} | async}}</label>
-  </nz-breadcrumb-item>
+  @for (crumb of breadcrumb; track crumb; let i = $index) {
+    <nz-breadcrumb-item [ngClass]="crumb === '...' ? 'm-clickable' : ''" (click)="openProperties(crumb)">
+      @if (i !== 2) {
+        <label [ngClass]="crumb === '...' ? 'm-clickable' : ''">{{crumb}}</label>
+      }
+      @if (i === 2) {
+        <label>{{crumb}} {{crumb | localizedConceptName: {codeSystem: 'loinc-part'} | async}}</label>
+      }
+    </nz-breadcrumb-item>
+  }
 </nz-breadcrumb>
 
-<div *ngIf="!(breadcrumb?.length > 0)" style="display: flex; gap: 1rem">
-  <m-list style="flex: 1">
-    <m-list-item mClickable *ngFor="let p of properties" (mClick)="loadParts(p.name)">{{p.name}}</m-list-item>
-  </m-list>
-  <m-list style="flex: 1">
-    <m-list-item mClickable *ngFor="let p of radProperties" (mClick)="loadParts(p.name)">{{p.name}}</m-list-item>
-  </m-list>
-  <m-list style="flex: 1">
-    <m-list-item mClickable *ngFor="let p of docProperties" (mClick)="loadParts(p.name)">{{p.name}}</m-list-item>
-  </m-list>
-</div>
+@if (!(breadcrumb?.length > 0)) {
+  <div style="display: flex; gap: 1rem">
+    <m-list style="flex: 1">
+      @for (p of properties; track p) {
+        <m-list-item mClickable (mClick)="loadParts(p.name)">{{p.name}}</m-list-item>
+      }
+    </m-list>
+    <m-list style="flex: 1">
+      @for (p of radProperties; track p) {
+        <m-list-item mClickable (mClick)="loadParts(p.name)">{{p.name}}</m-list-item>
+      }
+    </m-list>
+    <m-list style="flex: 1">
+      @for (p of docProperties; track p) {
+        <m-list-item mClickable (mClick)="loadParts(p.name)">{{p.name}}</m-list-item>
+      }
+    </m-list>
+  </div>
+}
 
-<div *ngIf="breadcrumb?.length === 2" style="display: flex; gap: 1rem; flex-direction: column">
-  <m-input [(ngModel)]="partsSearchInput" twDebounce [debounced]="onSearchParts" placeholder="marina.ui.inputs.search.placeholder"></m-input>
-  <m-backend-table [mResult]="parts" [(mQuery)]="partsQuery" (mQueryChange)="loadParts()" [mLoading]="loader.isLoading" mSize="small">
-    <tr *mTableHead>
-      <th mColumnKey="code">{{'web.loinc.part.code' | translate}}</th>
-      <th mColumnKey="name">{{'web.loinc.part.name' | translate}}</th>
-      <th></th>
-    </tr>
-    <tr *mTableRow="let p">
-      <td style="white-space: nowrap;"><a (mClick)="openConcept(p.code, 'loinc-part')">{{p.code}}</a></td>
-      <td>{{p | apply:getName}}</td>
-      <td><a (mClick)="loadLoinc(p.code)">{{'web.loinc.part.used-by' | translate}}</a></td>
-    </tr>
-    <tr *mTableNoData>
-      <td colspan="100%">
-        <m-no-data></m-no-data>
-      </td>
-    </tr>
-  </m-backend-table>
-</div>
+@if (breadcrumb?.length === 2) {
+  <div style="display: flex; gap: 1rem; flex-direction: column">
+    <m-input [(ngModel)]="partsSearchInput" twDebounce [debounced]="onSearchParts" placeholder="marina.ui.inputs.search.placeholder"></m-input>
+    <m-backend-table [mResult]="parts" [(mQuery)]="partsQuery" (mQueryChange)="loadParts()" [mLoading]="loader.isLoading" mSize="small">
+      <tr *mTableHead>
+        <th mColumnKey="code">{{'web.loinc.part.code' | translate}}</th>
+        <th mColumnKey="name">{{'web.loinc.part.name' | translate}}</th>
+        <th></th>
+      </tr>
+      <tr *mTableRow="let p">
+        <td style="white-space: nowrap;"><a (mClick)="openConcept(p.code, 'loinc-part')">{{p.code}}</a></td>
+        <td>{{p | apply:getName}}</td>
+        <td><a (mClick)="loadLoinc(p.code)">{{'web.loinc.part.used-by' | translate}}</a></td>
+      </tr>
+      <tr *mTableNoData>
+        <td colspan="100%">
+          <m-no-data></m-no-data>
+        </td>
+      </tr>
+    </m-backend-table>
+  </div>
+}
 
-<div *ngIf="breadcrumb?.length === 3">
-  <m-list [mLoading]="loader.isLoading">
-    <m-list-item *ngFor="let lc of loincConcepts" mClickable (mClick)="openConcept(lc.code, 'loinc')">
-      <div class="m-items-middle">
-        <label>{{lc.code}}</label>
-        <label>{{lc | apply:getName}}</label>
-      </div>
-    </m-list-item>
-  </m-list>
-</div>
+@if (breadcrumb?.length === 3) {
+  <div>
+    <m-list [mLoading]="loader.isLoading">
+      @for (lc of loincConcepts; track lc) {
+        <m-list-item mClickable (mClick)="openConcept(lc.code, 'loinc')">
+          <div class="m-items-middle">
+            <label>{{lc.code}}</label>
+            <label>{{lc | apply:getName}}</label>
+          </div>
+        </m-list-item>
+      }
+    </m-list>
+  </div>
+}

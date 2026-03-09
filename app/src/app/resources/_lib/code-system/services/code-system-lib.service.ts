@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 
 import {environment} from 'environments/environment';
@@ -7,22 +7,22 @@ import {Observable} from 'rxjs';
 import {UriUtil} from 'term-web/core/utils/uri-util';
 import {CodeSystemAssociation} from 'term-web/resources/_lib';
 import {Provenance} from 'term-web/sys/_lib';
-import {CodeSystem} from '../model/code-system';
-import {CodeSystemConcept} from '../model/code-system-concept';
-import {CodeSystemEntityVersion} from '../model/code-system-entity';
-import {CodeSystemEntityVersionSearchParams} from '../model/code-system-entity-version-search-params';
-import {CodeSystemSearchParams} from '../model/code-system-search-params';
-import {CodeSystemVersion} from '../model/code-system-version';
-import {CodeSystemVersionSearchParams} from '../model/code-system-version-search-params';
-import {ConceptSearchParams} from '../model/concept-search-params';
-import {EntityProperty} from '../model/entity-property';
-import {EntityPropertySearchParams} from '../model/entity-property-search-params';
+import {CodeSystem} from 'term-web/resources/_lib/code-system/model/code-system';
+import {CodeSystemConcept} from 'term-web/resources/_lib/code-system/model/code-system-concept';
+import {CodeSystemEntityVersion} from 'term-web/resources/_lib/code-system/model/code-system-entity';
+import {CodeSystemEntityVersionSearchParams} from 'term-web/resources/_lib/code-system/model/code-system-entity-version-search-params';
+import {CodeSystemSearchParams} from 'term-web/resources/_lib/code-system/model/code-system-search-params';
+import {CodeSystemVersion} from 'term-web/resources/_lib/code-system/model/code-system-version';
+import {CodeSystemVersionSearchParams} from 'term-web/resources/_lib/code-system/model/code-system-version-search-params';
+import {ConceptSearchParams} from 'term-web/resources/_lib/code-system/model/concept-search-params';
+import {EntityProperty} from 'term-web/resources/_lib/code-system/model/entity-property';
+import {EntityPropertySearchParams} from 'term-web/resources/_lib/code-system/model/entity-property-search-params';
 
 @Injectable()
 export class CodeSystemLibService {
-  protected baseUrl = `${environment.termxApi}/ts/code-systems`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/ts/code-systems`;
 
   public search(params: CodeSystemSearchParams = {}): Observable<SearchResult<CodeSystem>> {
     return this.http.get<SearchResult<CodeSystem>>(this.baseUrl, {params: SearchHttpParams.build(params)});

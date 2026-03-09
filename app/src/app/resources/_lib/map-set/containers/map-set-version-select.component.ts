@@ -1,18 +1,25 @@
-import {Component, forwardRef, Input, OnChanges, SimpleChanges} from '@angular/core';
-import {ControlValueAccessor, NG_VALUE_ACCESSOR} from '@angular/forms';
-import {DestroyService, group, isDefined} from '@kodality-web/core-util';
+import { Component, forwardRef, Input, OnChanges, SimpleChanges, inject } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
+import { DestroyService, group, isDefined, KeysPipe } from '@kodality-web/core-util';
 import {takeUntil} from 'rxjs';
-import {MapSetVersion} from '../model/map-set-version';
-import {MapSetVersionSearchParams} from '../model/map-set-version-search-params';
-import {MapSetLibService} from '../services/map-set-lib.service';
+import {MapSetVersion} from 'term-web/resources/_lib/map-set/model/map-set-version';
+import {MapSetVersionSearchParams} from 'term-web/resources/_lib/map-set/model/map-set-version-search-params';
+import {MapSetLibService} from 'term-web/resources/_lib/map-set/services/map-set-lib.service';
+import { MuiSelectModule } from '@kodality-web/marina-ui';
+
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 
 @Component({
-  selector: 'tw-map-set-version-select',
-  templateUrl: './map-set-version-select.component.html',
-  providers: [{provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MapSetVersionSelectComponent), multi: true}, DestroyService]
+    selector: 'tw-map-set-version-select',
+    templateUrl: './map-set-version-select.component.html',
+    providers: [{ provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => MapSetVersionSelectComponent), multi: true }, DestroyService],
+    imports: [MuiSelectModule, FormsModule, KeysPipe, MarinaUtilModule]
 })
 export class MapSetVersionSelectComponent implements OnChanges, ControlValueAccessor {
+  private mapSetService = inject(MapSetLibService);
+  private destroy$ = inject(DestroyService);
+
   @Input() public mapSetId!: string;
   @Input() public valueType: 'id' | 'version' | 'full' = 'full';
 
@@ -22,11 +29,6 @@ export class MapSetVersionSelectComponent implements OnChanges, ControlValueAcce
 
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
-
-  public constructor(
-    private mapSetService: MapSetLibService,
-    private destroy$: DestroyService
-  ) {}
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes["mapSetId"]) {

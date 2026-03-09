@@ -1,21 +1,50 @@
-import {Component, OnInit} from '@angular/core';
-import {copyDeep, SearchResult, collect, sortFn} from '@kodality-web/core-util';
+import { Component, OnInit, inject } from '@angular/core';
+import { copyDeep, SearchResult, collect, sortFn, AutofocusDirective, ApplyPipe, KeysPipe } from '@kodality-web/core-util';
 import {finalize, Observable, tap} from 'rxjs';
 import {Privilege, PrivilegeResourceActions, PrivilegeSearchParams, PrivilegeResource} from 'term-web/privileges/_lib';
-import {PrivilegeService} from '../services/privilege.service';
+import {PrivilegeService} from 'term-web/privileges/services/privilege.service';
+import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule, MuiAbbreviateModule } from '@kodality-web/marina-ui';
+import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
+import { FormsModule } from '@angular/forms';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { RouterLink } from '@angular/router';
+import { NgTemplateOutlet } from '@angular/common';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
+import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privilege.pipe';
 
 @Component({
-  templateUrl: './privileges-list.component.html',
+    templateUrl: './privileges-list.component.html',
+    imports: [
+    MuiCardModule,
+    MuiInputModule,
+    InputDebounceDirective,
+    AutofocusDirective,
+    FormsModule,
+    PrivilegedDirective,
+    AddButtonComponent,
+    RouterLink,
+    MuiBackendTableModule,
+    MuiTableModule,
+    MuiCoreModule,
+    NgTemplateOutlet,
+    MuiNoDataModule,
+    MuiAbbreviateModule,
+    TranslatePipe,
+    MarinaUtilModule,
+    ApplyPipe,
+    KeysPipe,
+    HasAnyPrivilegePipe
+],
 })
 export class PrivilegesListComponent implements OnInit {
+  private privilegeService = inject(PrivilegeService);
+
   public query = new PrivilegeSearchParams();
   public searchResult: SearchResult<Privilege> = SearchResult.empty();
   public searchInput: string;
   public loading: boolean;
-
-  public constructor(
-    private privilegeService: PrivilegeService
-  ) { }
 
   public ngOnInit(): void {
     this.loadData();

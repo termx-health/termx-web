@@ -1,15 +1,23 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {SnomedBranch} from 'app/src/app/integration/_lib';
-import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
+import { isDefined, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import {SnomedBranch} from 'term-web/integration/_lib';
+import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
+import { MuiFormModule, MuiSpinnerModule, MuiCardModule, MarinPageLayoutModule, MuiSelectModule, MuiTextareaModule, MuiCheckboxModule, MuiButtonModule } from '@kodality-web/marina-ui';
+
+import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
-  templateUrl: 'snomed-branch-edit.component.html'
+    templateUrl: 'snomed-branch-edit.component.html',
+    imports: [MuiFormModule, MuiSpinnerModule, FormsModule, MuiCardModule, MarinPageLayoutModule, MuiSelectModule, MuiTextareaModule, MuiCheckboxModule, MuiButtonModule, TranslatePipe, ApplyPipe]
 })
 export class SnomedBranchEditComponent implements OnInit {
+  private snomedService = inject(SnomedService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   protected snomedBranch?: SnomedBranch;
   protected branches?: SnomedBranch[];
   protected loader = new LoadingManager();
@@ -18,12 +26,6 @@ export class SnomedBranchEditComponent implements OnInit {
   protected formData: {parentBranch?: string, name?: string, metadata?: string} = {metadata: '{}'};
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private snomedService: SnomedService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
 
   public ngOnInit(): void {
     const path = this.route.snapshot.paramMap.get('path');
@@ -41,7 +43,7 @@ export class SnomedBranchEditComponent implements OnInit {
     this.loader.wrap('load', this.snomedService.loadBranch(path)).subscribe(b => {
       this.snomedBranch = this.writeBranch(b);
 
-      let pathParts = path.split('/');
+      const pathParts = path.split('/');
       this.formData.parentBranch = pathParts.slice(0, (pathParts.length - 1) > 0 ? (pathParts.length - 1) : 0).join('/');
       this.formData.metadata = JSON.stringify(b.metadata);
     });

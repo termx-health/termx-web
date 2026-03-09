@@ -1,60 +1,75 @@
 <m-card class="m-card-inside">
   <div *m-card-header class="m-justify-between">
     <div class="m-card__title">{{'entities.resource.conf-attribute.multiple' | translate}}</div>
-    <m-dropdown *ngIf="!viewMode && configurationAttributes">
-      <tw-add-button *m-dropdown-container icon="down" placement="right">
-        {{'entities.resource.conf-attribute.often-used-attributes' | translate}}
-      </tw-add-button>
-      <ng-container *ngFor="let attr of configurationAttributes">
-        <a *m-dropdown-item (click)="addAttribute(attr)">{{attr.code}}</a>
-      </ng-container>
-    </m-dropdown>
+    @if (configurationAttributes) {
+      <m-dropdown>
+        <tw-add-button *m-dropdown-container icon="down" placement="right">
+          {{'entities.resource.conf-attribute.often-used-attributes' | translate}}
+        </tw-add-button>
+        @for (attr of configurationAttributes; track $index) {
+          <a *m-dropdown-item (click)="addAttribute(attr)">{{attr.code}}</a>
+        }
+      </m-dropdown>
+    }
   </div>
 
-  <form #form="ngForm" *ngIf="attributes">
-    <m-editable-table #rowsTable [mData]="attributes" [mRowInstance]="rowInstance" [mAddAllowed]="false" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
-      <m-editable-column [mTitle]="'entities.resource.conf-attribute.attribute'" mName="attribute">
-        <ng-template #viewTemplate let-a>
-          <label m-tooltip [mTitle]="a.attribute | apply: attributeDesignation:configurationAttributes:'definition'">
-            {{a.attribute | apply: attributeDesignation:configurationAttributes:'display': true}}
-          </label>
-        </ng-template>
-        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-          <label m-tooltip [mTitle]="a.attribute | apply: attributeDesignation:configurationAttributes:'definition'">
-            {{a.attribute | apply: attributeDesignation:configurationAttributes:'display':true}}
-          </label>
-        </ng-template>
-      </m-editable-column>
-      <m-editable-column [mTitle]="'entities.resource.conf-attribute.language'" mName="language" mWidth="10%">
-        <ng-template #viewTemplate let-a>
-          <span *ngIf="a.language" class="m-subtitle">{{a.language}}</span>
-        </ng-template>
-        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-          <tw-value-set-concept-select style="width: 100%; flex: 1"
-              *ngIf="a.attribute | apply:languageRequired:configurationAttributes"
-              valueSet="languages"
-              [name]="ngModelName"
-              [(ngModel)]="a.language"/>
-        </ng-template>
-      </m-editable-column>
-      <m-editable-column [mTitle]="'entities.resource.conf-attribute.value'" mName="value" required>
-        <ng-template #viewTemplate let-a>
-          <div style="word-break: break-word">
-            <span *ngIf="!(a.attribute | apply:markdownInput:configurationAttributes)">{{a.value}}</span>
-            <tw-smart-text-editor-view *ngIf="(a.attribute | apply:markdownInput:configurationAttributes)" [value]="a.value" valueType="markdown"/>
-          </div>
-        </ng-template>
-        <ng-template #editTemplate let-a let-ngModelName="ngModelName">
-          <m-textarea *ngIf="!(a.attribute | apply:markdownInput:configurationAttributes)"
-              style="width: 100%; flex: 3"
-              [name]="ngModelName"
-              [(ngModel)]="a.value"
-              required/>
-          <div class="text-editor-wrapper" *ngIf="(a.attribute | apply:markdownInput:configurationAttributes)">
-            <tw-smart-text-editor style="width: 100%; flex: 3" [name]="ngModelName" [(ngModel)]="a.value" valueType="markdown" required/>
-          </div>
-        </ng-template>
-      </m-editable-column>
-    </m-editable-table>
-  </form>
+  @if (attributes) {
+    <form #form="ngForm">
+      <m-editable-table #rowsTable [mData]="attributes" [mRowInstance]="rowInstance" [mAddAllowed]="false">
+        <m-editable-column [mTitle]="'entities.resource.conf-attribute.attribute'" mName="attribute">
+          <ng-template #viewTemplate let-a>
+            <label m-tooltip [mTitle]="a.attribute | apply: attributeDesignation:configurationAttributes:'definition'">
+              {{a.attribute | apply: attributeDesignation:configurationAttributes:'display': true}}
+            </label>
+          </ng-template>
+          <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+            <label m-tooltip [mTitle]="a.attribute | apply: attributeDesignation:configurationAttributes:'definition'">
+              {{a.attribute | apply: attributeDesignation:configurationAttributes:'display':true}}
+            </label>
+          </ng-template>
+        </m-editable-column>
+        <m-editable-column [mTitle]="'entities.resource.conf-attribute.language'" mName="language" mWidth="10%">
+          <ng-template #viewTemplate let-a>
+            @if (a.language) {
+              <span class="m-subtitle">{{a.language}}</span>
+            }
+          </ng-template>
+          <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+            @if (a.attribute | apply:languageRequired:configurationAttributes) {
+              <tw-value-set-concept-select style="width: 100%; flex: 1"
+                  valueSet="languages"
+                  [name]="ngModelName"
+                  [(ngModel)]="a.language"/>
+            }
+          </ng-template>
+        </m-editable-column>
+        <m-editable-column [mTitle]="'entities.resource.conf-attribute.value'" mName="value" required>
+          <ng-template #viewTemplate let-a>
+            <div style="word-break: break-word">
+              @if (!(a.attribute | apply:markdownInput:configurationAttributes)) {
+                <span>{{a.value}}</span>
+              }
+              @if ((a.attribute | apply:markdownInput:configurationAttributes)) {
+                <tw-smart-text-editor-view [value]="a.value" valueType="markdown"/>
+              }
+            </div>
+          </ng-template>
+          <ng-template #editTemplate let-a let-ngModelName="ngModelName">
+            @if (!(a.attribute | apply:markdownInput:configurationAttributes)) {
+              <m-textarea
+                  style="width: 100%; flex: 3"
+                  [name]="ngModelName"
+                  [(ngModel)]="a.value"
+                  required/>
+            }
+            @if ((a.attribute | apply:markdownInput:configurationAttributes)) {
+              <div class="text-editor-wrapper">
+                <tw-smart-text-editor style="width: 100%; flex: 3" [name]="ngModelName" [(ngModel)]="a.value" valueType="markdown" required/>
+              </div>
+            }
+          </ng-template>
+        </m-editable-column>
+      </m-editable-table>
+    </form>
+  }
 </m-card>

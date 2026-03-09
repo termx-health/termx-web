@@ -1,15 +1,35 @@
-import {Location} from '@angular/common';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Location } from '@angular/common';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {copyDeep, isDefined, isNil, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {TerminologyServer, TerminologyServerHeader} from 'term-web/sys/_lib/space';
-import {TerminologyServerService} from '../../services/terminology-server.service';
+import {TerminologyServerService} from 'term-web/sys/space/services/terminology-server.service';
+import { MuiFormModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiCheckboxModule, MuiEditableTableModule, MuiInputModule, MuiIconModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { TranslatePipe } from '@ngx-translate/core';
 
 @Component({
-  templateUrl: 'terminology-server-edit.component.html',
+    templateUrl: 'terminology-server-edit.component.html',
+    imports: [
+        MuiFormModule,
+        MuiCardModule,
+        FormsModule,
+        MuiTextareaModule,
+        MuiMultiLanguageInputModule,
+        MuiSelectModule,
+        MuiCheckboxModule,
+        MuiEditableTableModule,
+        MuiInputModule,
+        MuiIconModule,
+        MuiButtonModule,
+        TranslatePipe,
+    ],
 })
 export class TerminologyServerEditComponent implements OnInit {
+  private terminologyServerService = inject(TerminologyServerService);
+  private route = inject(ActivatedRoute);
+  private location = inject(Location);
+
   protected server: TerminologyServer;
   protected serverKinds: string[];
 
@@ -17,12 +37,6 @@ export class TerminologyServerEditComponent implements OnInit {
   protected loader = new LoadingManager();
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private terminologyServerService: TerminologyServerService,
-    private route: ActivatedRoute,
-    private location: Location
-  ) { }
 
   public ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');

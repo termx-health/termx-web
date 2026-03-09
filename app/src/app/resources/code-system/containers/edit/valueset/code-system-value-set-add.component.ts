@@ -1,25 +1,29 @@
-import {Component, Input, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {BooleanInput, LoadingManager, validateForm} from '@kodality-web/core-util';
+import { Component, Input, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import {LoadingManager, validateForm} from '@kodality-web/core-util';
 import {forkJoin} from 'rxjs';
 import {CodeSystemLibService, ValueSet, ValueSetTransactionRequest, CodeSystem} from 'term-web/resources/_lib';
 
+import { MuiCardModule, MuiFormModule, MuiCheckboxModule, MuiInputModule } from '@kodality-web/marina-ui';
+import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
+import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
+import { TranslatePipe } from '@ngx-translate/core';
+
 @Component({
-  selector: 'tw-cs-value-set',
-  templateUrl: 'code-system-value-set-add.component.html'
+    selector: 'tw-cs-value-set',
+    templateUrl: 'code-system-value-set-add.component.html',
+    imports: [MuiCardModule, FormsModule, MuiFormModule, MuiCheckboxModule, MuiInputModule, SemanticVersionSelectComponent, ValueSetConceptSelectComponent, TranslatePipe]
 })
 export class CodeSystemValueSetAddComponent {
+  private codeSystemService = inject(CodeSystemLibService);
+
   @Input() public codeSystem?: CodeSystem;
   @Input() public hasRelatedValueSet: boolean;
-  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @ViewChild("form") public form?: NgForm;
 
   protected loader = new LoadingManager();
   protected generateValueSet: boolean;
   protected valueSet: ValueSet = {versions: [{status: 'draft'}]};
-
-
-  public constructor(private codeSystemService: CodeSystemLibService) {}
 
   public publisherChanged(publisher: string): void {
     if (!publisher) {

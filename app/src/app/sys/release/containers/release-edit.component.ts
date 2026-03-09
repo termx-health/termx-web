@@ -1,16 +1,27 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {isDefined, LoadingManager, validateForm} from '@kodality-web/core-util';
+import { isDefined, LoadingManager, validateForm, IncludesPipe } from '@kodality-web/core-util';
 import {TerminologyServerLibService, TerminologyServer} from 'term-web/sys/_lib/space';
 import {Release} from 'term-web/sys/_lib';
-import {ReleaseService} from '../../release/services/release.service';
+import {ReleaseService} from 'term-web/sys/release/services/release.service';
+import { MuiSpinnerModule, MuiCardModule, MuiFormModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiDatePickerModule, MuiSelectModule, MuiTagModule, MuiIconModule, MuiInputModule, MuiButtonModule } from '@kodality-web/marina-ui';
+
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { TranslatePipe } from '@ngx-translate/core';
+import { MarinaUtilModule } from '@kodality-web/marina-util';
 
 
 @Component({
-  templateUrl: 'release-edit.component.html'
+    templateUrl: 'release-edit.component.html',
+    imports: [MuiSpinnerModule, FormsModule, MuiCardModule, MuiFormModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiDatePickerModule, MuiSelectModule, MuiTagModule, MuiIconModule, MuiInputModule, AddButtonComponent, MuiButtonModule, TranslatePipe, MarinaUtilModule, IncludesPipe]
 })
 export class ReleaseEditComponent implements OnInit {
+  private releaseService = inject(ReleaseService);
+  private terminologyServerService = inject(TerminologyServerLibService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
   protected release?: Release;
   protected newAuthor?: string;
   protected terminologyServers?: TerminologyServer[];
@@ -18,13 +29,6 @@ export class ReleaseEditComponent implements OnInit {
   protected mode: 'edit' | 'add' = 'add';
 
   @ViewChild("form") public form?: NgForm;
-
-  public constructor(
-    private releaseService: ReleaseService,
-    private terminologyServerService: TerminologyServerLibService,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
 
   public ngOnInit(): void {
     this.loadData();

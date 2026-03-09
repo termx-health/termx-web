@@ -1,5 +1,5 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {CodeName} from '@kodality-web/marina-util';
 import {environment} from 'environments/environment';
@@ -8,9 +8,9 @@ import {Task, TaskSearchParams, Workflow} from 'term-web/task/_lib';
 
 @Injectable()
 export class TaskLibService {
-  protected baseUrl = `${environment.termxApi}/tm`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/tm`;
 
   public loadTask(number: string): Observable<Task> {
     return this.http.get<Task>(`${this.baseUrl}/tasks/${number}`);

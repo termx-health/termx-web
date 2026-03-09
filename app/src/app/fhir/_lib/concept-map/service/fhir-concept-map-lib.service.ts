@@ -1,16 +1,16 @@
 import {HttpClient} from '@angular/common/http';
-import {Injectable} from '@angular/core';
+import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {FhirParameters, SEPARATOR} from '../../model/fhir-parameters';
-import {FhirConceptMapTranslateParams} from '../model/fhir-concept-map-translate.params';
+import {FhirParameters, SEPARATOR} from 'term-web/fhir/_lib/model/fhir-parameters';
+import {FhirConceptMapTranslateParams} from 'term-web/fhir/_lib/concept-map/model/fhir-concept-map-translate.params';
 
 @Injectable()
 export class FhirConceptMapLibService {
-  protected baseUrl = `${environment.termxApi}/fhir/ConceptMap`;
+  protected http = inject(HttpClient);
 
-  public constructor(protected http: HttpClient) { }
+  protected baseUrl = `${environment.termxApi}/fhir/ConceptMap`;
 
   public loadConceptMap(id: string, version?: string): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}/${id}${version ? SEPARATOR + version : ''}`);

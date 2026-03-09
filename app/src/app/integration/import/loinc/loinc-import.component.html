@@ -49,25 +49,34 @@
   <m-button *m-card-footer (click)="modalData = {visible: true}" [mLoading]="loading['process']" [disabled]="form.invalid">
     {{'web.integration.loinc-import.import' | translate}}
   </m-button>
-  <div *ngIf="jobResponse">
-    <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
-      {{error}}
-    </m-alert>
-    <m-alert *ngFor="let warning of jobResponse.warnings" mType="warning" mShowIcon>
-      {{warning}}
-    </m-alert>
-    <m-alert *ngFor="let success of jobResponse.successes" mType="success" mShowIcon>
-      {{success}}
-    </m-alert>
-  </div>
+  @if (jobResponse) {
+    <div>
+      @for (error of jobResponse.errors; track error) {
+        <m-alert mType="error" mShowIcon>
+          {{error}}
+        </m-alert>
+      }
+      @for (warning of jobResponse.warnings; track warning) {
+        <m-alert mType="warning" mShowIcon>
+          {{warning}}
+        </m-alert>
+      }
+      @for (success of jobResponse.successes; track success) {
+        <m-alert mType="success" mShowIcon>
+          {{success}}
+        </m-alert>
+      }
+    </div>
+  }
 </m-card>
 
 
 <ng-template #successNotificationContent>
-  <a *ngIf="'*.CodeSystem.edit' | twHasAnyPrivilege; else view" (click)="openCodeSystem( 'edit')">{{'web.integration.loinc-import.loinc' | translate}}</a>
-  <ng-template #view>
+  @if ('*.CodeSystem.edit' | twHasAnyPrivilege) {
+    <a (click)="openCodeSystem( 'edit')">{{'web.integration.loinc-import.loinc' | translate}}</a>
+  } @else {
     <a (click)="openCodeSystem('view')">{{'web.integration.loinc-import.loinc' | translate}}</a>
-  </ng-template>
+  }
 </ng-template>
 
 

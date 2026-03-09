@@ -14,7 +14,7 @@
         <div>{{'web.integration.fhir.concept-map.closure.name' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.concept-map.closure.name-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.name"></m-input>
+      <m-textarea [(ngModel)]="data.name"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="version">
@@ -22,7 +22,7 @@
         <div>{{'web.integration.fhir.concept-map.closure.version' | translate}}&nbsp;</div>
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.concept-map.closure.version-tooltip' | translate}}"></m-icon>
       </ng-template>
-      <m-input [(ngModel)]="data.version"></m-input>
+      <m-textarea [(ngModel)]="data.version"></m-textarea>
     </m-form-item>
 
     <m-form-item [mLabel]="concepts">
@@ -31,33 +31,41 @@
         <m-icon mCode="info-circle" m-popover mContent="{{'web.integration.fhir.concept-map.closure.concepts-tooltip' | translate}}"></m-icon>
       </ng-template>
       <div class="m-items-middle">
-        <m-input [(ngModel)]="conceptInput.system" placeholder="web.integration.fhir.concept-map.closure.system"></m-input>
-        <m-input [(ngModel)]="conceptInput.code" placeholder="web.integration.fhir.concept-map.closure.code"></m-input>
+        <m-textarea [(ngModel)]="conceptInput.system" placeholder="web.integration.fhir.concept-map.closure.system"></m-textarea>
+        <m-textarea [(ngModel)]="conceptInput.code" placeholder="web.integration.fhir.concept-map.closure.code"></m-textarea>
         <m-button (click)="addConcept()">
           <m-icon [mCode]="'plus'"></m-icon>
         </m-button>
       </div>
     </m-form-item>
-    <div style="display:flex" *ngFor="let concept of data.concepts; let index = index">
-      <p>{{concept.system}} {{concept.code}}</p>&nbsp;
-      <m-button mSize="small" (click)="removeConcept(index)">
-        <m-icon [mCode]="'delete'"></m-icon>
-      </m-button>
-    </div>
-
-    <m-card *ngIf="response || error" class="m-card-inside">
-      <div *m-card-header class="m-items-middle">
-        <div class="m-card__title">{{'web.integration.response' | translate}}</div>
-        <m-button (click)="copyResult()">
-          <m-icon mCode="copy"></m-icon>
+    @for (concept of data.concepts; track concept; let index = $index) {
+      <div style="display:flex">
+        <p>{{concept.system}} {{concept.code}}</p>&nbsp;
+        <m-button mSize="small" (click)="removeConcept(index)">
+          <m-icon [mCode]="'delete'"></m-icon>
         </m-button>
       </div>
-      <pre *ngIf="response">{{response | json}}</pre>
-      <div *ngFor="let issue of error?.issue">
-        <m-alert [mType]="issue.severity" mShowIcon>
-          {{issue?.details?.text}}
-        </m-alert>
-      </div>
-    </m-card>
+    }
+
+    @if (response || error) {
+      <m-card class="m-card-inside">
+        <div *m-card-header class="m-items-middle">
+          <div class="m-card__title">{{'web.integration.response' | translate}}</div>
+          <m-button (click)="copyResult()">
+            <m-icon mCode="copy"></m-icon>
+          </m-button>
+        </div>
+        @if (response) {
+          <pre>{{response | json}}</pre>
+        }
+        @for (issue of error?.issue; track issue) {
+          <div>
+            <m-alert [mType]="issue.severity" mShowIcon>
+              {{issue?.details?.text}}
+            </m-alert>
+          </div>
+        }
+      </m-card>
+    }
   </m-spinner>
 </m-card>

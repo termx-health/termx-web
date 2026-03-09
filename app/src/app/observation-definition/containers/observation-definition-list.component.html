@@ -1,26 +1,34 @@
 <m-page>
-  <div *ngIf="jobResponse">
-    <m-alert *ngFor="let error of jobResponse.errors" mType="error" mShowIcon>
-      {{error}}
-    </m-alert>
-    <m-alert *ngFor="let warning of jobResponse.warnings" mType="warning" mShowIcon>
-      {{warning}}
-    </m-alert>
-    <m-alert *ngFor="let success of jobResponse.successes" mType="success" mShowIcon>
-      {{success}}
-    </m-alert>
-  </div>
+  @if (jobResponse) {
+    <div>
+      @for (error of jobResponse.errors; track error) {
+        <m-alert mType="error" mShowIcon>
+          {{error}}
+        </m-alert>
+      }
+      @for (warning of jobResponse.warnings; track warning) {
+        <m-alert mType="warning" mShowIcon>
+          {{warning}}
+        </m-alert>
+      }
+      @for (success of jobResponse.successes; track success) {
+        <m-alert mType="success" mShowIcon>
+          {{success}}
+        </m-alert>
+      }
+    </div>
+  }
 
 
   <tw-table [(filterOpen)]="filter.open">
     <div header class="m-justify-between">
       <!-- Quick Search -->
       <m-input
-          [(ngModel)]="filter.searchInput"
-          twDebounce [debounced]="onDebounced"
-          placeholder="marina.ui.inputs.search.placeholder"
-          autofocus
-          [disabled]="filter.open"
+        [(ngModel)]="filter.searchInput"
+        twDebounce [debounced]="onDebounced"
+        placeholder="marina.ui.inputs.search.placeholder"
+        autofocus
+        [disabled]="filter.open"
       ></m-input>
 
       <div class="m-items-middle">
@@ -32,22 +40,26 @@
         </m-button>
 
         <!-- Filter toggle -->
-        <m-button *ngIf="!filter.open" [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
-          <m-icon mCode="filter"/>
-        </m-button>
+        @if (!filter.open) {
+          <m-button [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+            <m-icon mCode="filter"/>
+          </m-button>
+        }
       </div>
     </div>
 
 
     <!-- Filter -->
     <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
-      <m-form-item *ngIf="filter.open">
-        <m-input
+      @if (filter.open) {
+        <m-form-item>
+          <m-input
             [(ngModel)]="_filter.searchInput"
             placeholder="marina.ui.inputs.search.placeholder"
             autofocus
-        ></m-input>
-      </m-form-item>
+          ></m-input>
+        </m-form-item>
+      }
       <m-form-item mLabel="web.observation-definition.filter.category">
         <tw-obs-def-value-select [(ngModel)]="_filter.categories"/>
       </m-form-item>
@@ -89,44 +101,68 @@
         </td>
         <td>
           <div style="display: grid">
-            <label *ngFor="let cat of obs.category" m-tooltip [mTitle]="cat.codeSystem">{{cat.code | localizedConceptName: {codeSystem: cat.codeSystem} | async}}</label>
+            @for (cat of obs.category; track cat) {
+              <label m-tooltip [mTitle]="cat.codeSystem">{{cat.code | localizedConceptName: {codeSystem: cat.codeSystem} | async}}</label>
+            }
           </div>
         </td>
         <td>
-          <div *ngFor="let structure of obs.structure" style="display: grid">
-            <label *ngIf="structure === 'value'">{{'web.observation-definition.structure.' + structure | translate}} ({{obs.value.type}})</label>
-            <label  *ngIf="structure !== 'value'">{{'web.observation-definition.structure.' + structure | translate}}</label>
-          </div>
+          @for (structure of obs.structure; track structure) {
+            <div style="display: grid">
+              @if (structure === 'value') {
+                <label>{{'web.observation-definition.structure.' + structure | translate}} ({{obs.value.type}})</label>
+              }
+              @if (structure !== 'value') {
+                <label >{{'web.observation-definition.structure.' + structure | translate}}</label>
+              }
+            </div>
+          }
         </td>
-        <td><m-tag class="m-clickable" mColor="blue" (click)="showExpandRow(obs, i, 'details')" *ngIf="(obs | apply: getDetails) as details">{{details?.length}}</m-tag></td>
+        <td>@if ((obs | apply: getDetails); as details) {
+          <m-tag class="m-clickable" mColor="blue" (click)="showExpandRow(obs, i, 'details')">{{details?.length}}</m-tag>
+        }</td>
         <td>
           <div>
-            <label *ngFor="let d of (obs | apply: getProtocol); let i = index" m-tooltip [mTitle]="d.tooltip | localName">
-              {{d.label}}{{i === ((obs | apply: getProtocol).length - 1) ? '' : ', '}}
-            </label>
+            @for (d of (obs | apply: getProtocol); track d; let i = $index) {
+              <label m-tooltip [mTitle]="d.tooltip | localName">
+                {{d.label}}{{i === ((obs | apply: getProtocol).length - 1) ? '' : ', '}}
+              </label>
+            }
           </div>
         </td>
         <td>
-          <label *ngFor="let s of obs.state; let i = index" m-tooltip [mTitle]="s.names | localName">{{s.code}}{{i === (obs.state?.length - 1) ? '' : ', '}}</label>
+          @for (s of obs.state; track s; let i = $index) {
+            <label m-tooltip [mTitle]="s.names | localName">{{s.code}}{{i === (obs.state?.length - 1) ? '' : ', '}}</label>
+          }
         </td>
-        <td><m-tag class="m-clickable" mColor="blue" (click)="showExpandRow(obs, i, 'mappings')" *ngIf="obs.mappings?.length > 0">{{obs.mappings.length}}</m-tag></td>
+        <td>@if (obs.mappings?.length > 0) {
+          <m-tag class="m-clickable" mColor="blue" (click)="showExpandRow(obs, i, 'mappings')">{{obs.mappings.length}}</m-tag>
+        }</td>
       </tr>
 
       <tr *mTableRowExpand="let obs" class="m-table-expanded-row">
         <td colspan="8">
-          <ng-container *ngIf="obs['_expandType'] === 'details'">
-            <div *ngFor="let d of (obs | apply: getDetails)" class="m-items-middle">
-              <label class="m-subtitle">{{d.code}}</label>
-              <label *ngIf="d.names">{{d.names | localName}}</label>
-              <label *ngIf="d.cs">{{d.code | localizedConceptName: {codeSystem: d.cs} | async}}</label>
-            </div>
-          </ng-container>
-          <ng-container *ngIf="obs['_expandType'] === 'mappings'">
-            <div *ngFor="let m of obs.mappings" class="m-items-middle">
-              <label class="m-subtitle">{{m.concept}}</label>
-              <label>{{m.concept | localizedConceptName: {codeSystem: m.codeSystem} | async }}</label>
-            </div>
-          </ng-container>
+          @if (obs['_expandType'] === 'details') {
+            @for (d of (obs | apply: getDetails); track d) {
+              <div class="m-items-middle">
+                <label class="m-subtitle">{{d.code}}</label>
+                @if (d.names) {
+                  <label>{{d.names | localName}}</label>
+                }
+                @if (d.cs) {
+                  <label>{{d.code | localizedConceptName: {codeSystem: d.cs} | async}}</label>
+                }
+              </div>
+            }
+          }
+          @if (obs['_expandType'] === 'mappings') {
+            @for (m of obs.mappings; track m) {
+              <div class="m-items-middle">
+                <label class="m-subtitle">{{m.concept}}</label>
+                <label>{{m.concept | localizedConceptName: {codeSystem: m.codeSystem} | async }}</label>
+              </div>
+            }
+          }
         </td>
       </tr>
       <tr *mTableNoData>
@@ -152,8 +188,8 @@
   <div *m-modal-footer class="m-items-middle">
     <m-button mDisplay="text" (click)="modal.close()">{{'core.btn.close' | translate}}</m-button>
     <m-button mDisplay="primary"
-        [mLoading]="loader.state['import']"
-        [disabled]="loader.isLoading"
-        (click)="startImport()">{{'web.observation-definition.import' | translate}}</m-button>
+      [mLoading]="loader.state['import']"
+      [disabled]="loader.isLoading"
+    (click)="startImport()">{{'web.observation-definition.import' | translate}}</m-button>
   </div>
 </m-modal>

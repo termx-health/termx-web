@@ -1,15 +1,47 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {NgForm} from '@angular/forms';
-import {LoadingManager, validateForm} from '@kodality-web/core-util';
-import {MuiTableComponent} from '@kodality-web/marina-ui';
-import {SnomedBranch, SnomedCodeSystem} from 'app/src/app/integration/_lib';
-import {SnomedService} from 'app/src/app/integration/snomed/services/snomed-service';
+import { Component, OnInit, ViewChild, inject } from '@angular/core';
+import { NgForm, FormsModule } from '@angular/forms';
+import { LoadingManager, validateForm, ApplyPipe, LocalDatePipe, LocalDateTimePipe, ValuesPipe } from '@kodality-web/core-util';
+import { MuiTableComponent, MuiCardModule, MarinPageLayoutModule, MuiTableModule, MuiIconButtonModule, MuiCoreModule, MuiNoDataModule, MuiCheckboxModule, MuiModalModule, MuiFormModule, MuiTextareaModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import {SnomedBranch, SnomedCodeSystem} from 'term-web/integration/_lib';
+import {SnomedService} from 'term-web/integration/snomed/services/snomed-service';
 import {forkJoin} from 'rxjs';
+import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
+import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
+import { NgTemplateOutlet } from '@angular/common';
+import { RouterLink } from '@angular/router';
+import { TranslatePipe } from '@ngx-translate/core';
+import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 
 @Component({
-  templateUrl: './snomed-management.component.html',
+    templateUrl: './snomed-management.component.html',
+    imports: [
+    MuiCardModule,
+    MarinPageLayoutModule,
+    PrivilegedDirective,
+    AddButtonComponent,
+    MuiTableModule,
+    MuiIconButtonModule,
+    MuiCoreModule,
+    RouterLink,
+    MuiNoDataModule,
+    NgTemplateOutlet,
+    MuiCheckboxModule,
+    FormsModule,
+    MuiModalModule,
+    MuiFormModule,
+    MuiTextareaModule,
+    MuiButtonModule,
+    TranslatePipe,
+    ApplyPipe,
+    LocalDatePipe,
+    LocalDateTimePipe,
+    ValuesPipe,
+    PrivilegedPipe
+],
 })
 export class SnomedManagementComponent implements OnInit {
+  private snomedService = inject(SnomedService);
+
   protected workingBranches: SnomedBranch[] = [];
   protected dailyBuildBranches: SnomedBranch[] = [];
   protected codeSystems: SnomedCodeSystem[] = [];
@@ -24,8 +56,6 @@ export class SnomedManagementComponent implements OnInit {
     countryCode?: string
     name?: string
   } = {};
-
-  public constructor(private snomedService: SnomedService) {}
 
   public ngOnInit(): void {
     this.loadData();
