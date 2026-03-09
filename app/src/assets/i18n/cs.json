@@ -2222,6 +2222,8 @@
             "add-btn": "Přidat úkol",
             "add-comment": "Přidat nový komentář",
             "context": "Kontext",
+            "context-type": "Resource type",
+            "context-resource": "Resource",
             "filter": {
                 "assignee": "Přiřazený",
                 "author": "Autor",

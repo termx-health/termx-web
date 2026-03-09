@@ -3,7 +3,7 @@ import {NgForm} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {copyDeep, isDefined, isNil, LoadingManager, validateForm} from '@kodality-web/core-util';
 import {CodeName} from '@kodality-web/marina-util';
-import {map, mergeMap} from 'rxjs';
+import {forkJoin, map, mergeMap, of} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
 import {SnomedTranslationService} from 'term-web/integration/snomed/services/snomed-translation.service';
 import {CodeSystemEntityVersionLibService, MapSetVersionLibService, ValueSetVersionLibService} from 'term-web/resources/_lib';
@@ -93,6 +93,42 @@ class TaskContextLinkService {
   public canOpen = (key: string): boolean => {
     return key in this.handlers;
   };
+
+  private readonly typeLabels: {[key: string]: string} = {
+    'code-system': 'CodeSystem',
+    'code-system-version': 'Version',
+    'concept-version': 'Concept',
+    'value-set': 'ValueSet',
+    'value-set-version': 'Version',
+    'map-set': 'MapSet',
+    'map-set-version': 'Version',
+    'wiki': 'Wiki',
+    'snomed-concept': 'SNOMED Concept',
+    'snomed-translation': 'SNOMED Translation',
+    'page-comment': 'Page Comment',
+  };
+
+  public resolveContextLabels(contextItems: TaskContextItem[]): void {
+    contextItems?.forEach(ctx => {
+      ctx['_label'] = `${this.typeLabels[ctx.type] ?? ctx.type}: ${ctx.id}`;
+      switch (ctx.type) {
+        case 'code-system-version':
+          this.codeSystemVersionService.load(ctx.id).subscribe(v => ctx['_label'] = `Version: ${v.version}`);
+          break;
+        case 'value-set-version':
+          this.valueSetVersionService.load(ctx.id).subscribe(v => ctx['_label'] = `Version: ${v.version}`);
+          break;
+        case 'map-set-version':
+          this.mapSetVersionService.load(ctx.id).subscribe(v => ctx['_label'] = `Version: ${v.version}`);
+          break;
+        case 'concept-version':
+          this.codeSystemEntityVersionService.load(ctx.id).subscribe(v => ctx['_label'] = `Concept: ${v.code}`);
+          break;
+        default:
+          ctx['_label'] = `${this.typeLabels[ctx.type] ?? ctx.type}: ${ctx.id}`;
+      }
+    });
+  }
 }
 
 @Component({
@@ -128,6 +164,23 @@ export class TaskEditComponent implements OnInit {
   protected projects: CodeName[];
   protected workflows: Workflow[];
 
+  protected contextResourceType?: string;
+  protected contextResourceId?: string;
+
+  protected readonly contextResourceTypes = [
+    {value: 'code-system', label: 'CodeSystem'},
+    {value: 'value-set', label: 'ValueSet'},
+    {value: 'map-set', label: 'MapSet'},
+    {value: 'wiki', label: 'Wiki'},
+  ];
+
+  private readonly contextWorkflowMap: {[key: string]: string} = {
+    'code-system': 'version-review',
+    'value-set': 'valueset-review',
+    'map-set': 'conceptmap-review',
+    'wiki': 'wiki-task',
+  };
+
   private taskContextResourceMap = {
     "code-system": "CodeSystem",
     "value-set": "ValueSet",
@@ -160,7 +213,9 @@ export class TaskEditComponent implements OnInit {
   private loadTask(number: string): void {
     this.loader.wrap('load', this.taskService.loadTask(number)).subscribe(task => {
       this.task = this.writeTask(task);
+      this.contextLinkService.resolveContextLabels(task.context);
       this.loadWorkflows(task.project.code);
+      this.taskService.logTaskOpened(number).subscribe();
     });
   }
 
@@ -181,6 +236,10 @@ export class TaskEditComponent implements OnInit {
   private loadData(): void {
     this.loader.wrap('load', this.taskService.loadProjects()).subscribe(projects => {
       this.projects = projects;
+      if (this.mode === 'add' && projects?.length > 0 && !this.task.project?.code) {
+        this.task.project.code = projects[0].code;
+        this.loadWorkflows(projects[0].code);
+      }
     });
   }
 
@@ -204,6 +263,9 @@ export class TaskEditComponent implements OnInit {
     }
     const t = copyDeep(this.task);
     t.status = this.newStatus || t.status;
+    if (this.mode === 'add' && this.contextResourceType && this.contextResourceId) {
+      t.context = [{type: this.contextResourceType, id: this.contextResourceId}];
+    }
     this.loader.wrap('save', this.taskService.save(t)).subscribe(t => {
       this.router.navigate(['/tasks/', t.number, 'edit'], {replaceUrl: true});
       this.loadTask(t.number);
@@ -308,6 +370,13 @@ export class TaskEditComponent implements OnInit {
     } else if (data.activity) {
       data.activity['new-note'] = data.activity.note;
       data.activity['edit-mode'] = true;
+    }
+  }
+
+  protected onContextResourceTypeChange(): void {
+    this.contextResourceId = undefined;
+    if (this.contextResourceType && this.contextWorkflowMap[this.contextResourceType]) {
+      this.task.workflow = this.contextWorkflowMap[this.contextResourceType];
     }
   }
 

@@ -15,4 +15,5 @@ export class TaskSearchParams extends QueryParams {
   public modifiedGe?: Date;
   public modifiedLe?: Date;
   public assignees?: string;
+  public unseenChanges?: boolean;
 }

@@ -106,13 +106,19 @@
         <m-date-picker style="flex: 1" [(ngModel)]="_filter.finishedTo"/>
       </div>
     </m-form-item>
+
+    <m-form-item mLabel="web.task.filter.unseen-changes">
+      <m-checkbox [(ngModel)]="_filter.unseenChanges">{{'web.task.filter.unseen-changes-only' | translate}}</m-checkbox>
+    </m-form-item>
   </tw-table-filter>
 
 
   <!-- Backend Table -->
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loader.isLoading">
     <tr *mTableHead>
+      <th style="width: 1rem"></th>
       <th mColumnKey="number">{{'entities.task.number' | translate}}</th>
+      <th>{{'web.task.context' | translate}}</th>
       <th mColumnKey="title">{{'entities.task.title' | translate}}</th>
       <th mColumnKey="type">{{'entities.task.type' | translate}}</th>
       <th mColumnKey="status">{{'entities.task.status' | translate}}</th>
@@ -124,8 +130,16 @@
 
     <tr *mTableRow="let task">
       <td>
+        <m-icon *ngIf="task | apply: hasUnseenChanges" mCode="eye" style="color: var(--color-primary)" mTooltip="web.task.unseen-changes"/>
+      </td>
+      <td>
         <a *ngIf="'*.Task.edit' | twHasAnyPrivilege; else view" [routerLink]="[task.number, 'edit']">{{task.number}}</a>
         <ng-template #view>{{task.number}}</ng-template>
+      </td>
+      <td>
+        <ng-container *ngIf="task.context | apply: contextDisplay as ctx">
+          <span class="m-subtitle" style="font-size: 0.75rem">{{ctx.type | apply: contextTypeLabel}}</span>&nbsp;<span>{{ctx.id}}</span>
+        </ng-container>
       </td>
       <td>{{task.title}}</td>
       <td><tw-task-type [ngModel]="task.type" readonly/></td>
@@ -138,7 +152,7 @@
       <td>{{task.updatedAt | localDate}}</td>
     </tr>
     <tr *mTableNoData>
-      <td colspan="5">
+      <td colspan="10">
         <m-no-data/>
       </td>
     </tr>

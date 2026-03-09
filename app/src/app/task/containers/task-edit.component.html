@@ -152,36 +152,42 @@
 
 
         <div style="border-left: 1px solid var(--color-borders-light); padding-left: 1rem">
-          <m-form-item mName="project" mLabel="entities.task.project" required>
-            <m-select
-                *ngIf="!task.number"
-                name="project"
-                [(ngModel)]="task.project.code"
-                (ngModelChange)="loadWorkflows($event)"
-                [allowClear]="false"
-                autoSelect
-                required
-            >
-              <m-option *ngFor="let p of projects" [mValue]="p.code" [mLabel]="p.names | localName"/>
-            </m-select>
+          <!-- Context: read-only when editing existing task -->
+          <ng-container *ngIf="task.context?.length > 0">
+            <m-form-item mLabel="web.task.context">
+              <div *ngFor="let ctx of task.context">
+                <a *ngIf="ctx.type | apply: contextLinkService.canOpen; else viewCtx" (mClick)="contextLinkService.open(ctx)">
+                  <ng-container *ngTemplateOutlet="viewCtx"/>
+                </a>
+                <ng-template #viewCtx>{{ctx['_label'] || (ctx.type + ' | ' + ctx.id)}}</ng-template>
+              </div>
+            </m-form-item>
+          </ng-container>
 
-            <span *ngIf="task.number">
-              {{task.project.names | localName}}
-            </span>
-          </m-form-item>
+          <!-- Context: editable when creating new task without pre-set context -->
+          <ng-container *ngIf="mode === 'add' && !(task.context?.length > 0)">
+            <m-form-item mName="contextType" mLabel="web.task.context-type" required>
+              <m-select style="width: 100%" name="contextType" [(ngModel)]="contextResourceType" (ngModelChange)="onContextResourceTypeChange()" required>
+                <m-option *ngFor="let t of contextResourceTypes" [mValue]="t.value" [mLabel]="t.label"/>
+              </m-select>
+            </m-form-item>
 
-          <m-form-item *ngIf="task.project.code" mName="workflow" mLabel="entities.task.workflow" required>
-            <m-select
-                name="workflow"
-                [(ngModel)]="task.workflow"
-                (ngModelChange)="patch({workflow: $event})"
-                [allowClear]="false"
-                autoSelect
-                required
-            >
-              <m-option *ngFor="let wf of workflows" [mLabel]="wf.code" [mValue]="wf.code"/>
-            </m-select>
-          </m-form-item>
+            <m-form-item *ngIf="contextResourceType === 'code-system'" mName="contextResource" mLabel="web.task.context-resource" required>
+              <tw-code-system-search name="contextResource" [(ngModel)]="contextResourceId" valuePrimitive required/>
+            </m-form-item>
+
+            <m-form-item *ngIf="contextResourceType === 'value-set'" mName="contextResource" mLabel="web.task.context-resource" required>
+              <tw-value-set-search name="contextResource" [(ngModel)]="contextResourceId" valuePrimitive required/>
+            </m-form-item>
+
+            <m-form-item *ngIf="contextResourceType === 'map-set'" mName="contextResource" mLabel="web.task.context-resource" required>
+              <tw-map-set-search name="contextResource" [(ngModel)]="contextResourceId" valuePrimitive required/>
+            </m-form-item>
+
+            <m-form-item *ngIf="contextResourceType === 'wiki'" mName="contextResource" mLabel="web.task.context-resource" required>
+              <tw-space-select name="contextResource" [(ngModel)]="contextResourceId" valuePrimitive required/>
+            </m-form-item>
+          </ng-container>
 
           <m-form-item mName="assignee" mLabel="entities.task.assignee">
             <tw-user-select
@@ -219,19 +225,6 @@
           <m-form-item mLabel="entities.task.modified-by">
             <label>{{task.updatedBy || '-'}}</label>
           </m-form-item>
-
-
-          <ng-container *ngIf="task.context?.length > 0">
-            <m-divider>{{'web.task.context' | translate}}</m-divider>
-            <div>
-              <div *ngFor="let ctx of task.context">
-                <a *ngIf="ctx.type | apply: contextLinkService.canOpen; else view" (mClick)="contextLinkService.open(ctx)">
-                  <ng-container *ngTemplateOutlet="view"/>
-                </a>
-                <ng-template #view>{{ctx.type}} | {{ctx.id}}</ng-template>
-              </div>
-            </div>
-          </ng-container>
         </div>
       </div>
     </form>

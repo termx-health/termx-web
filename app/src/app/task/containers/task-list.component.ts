@@ -3,7 +3,7 @@ import {ComponentStateStore, copyDeep, DestroyService, isDefined, LoadingManager
 import {CodeName} from '@kodality-web/marina-util';
 import {Observable, tap} from 'rxjs';
 import {AuthService} from 'term-web/core/auth';
-import {Task, TaskLibService, TaskSearchParams} from 'term-web/task/_lib';
+import {Task, TaskContextItem, TaskLibService, TaskSearchParams} from 'term-web/task/_lib';
 import {User, UserLibService} from 'term-web/user/_lib';
 
 interface Filter {
@@ -21,6 +21,7 @@ interface Filter {
   createdTo?: Date,
   finishedFrom?: Date,
   finishedTo?: Date,
+  unseenChanges?: boolean,
 }
 
 @Component({
@@ -115,6 +116,8 @@ export class TaskListComponent implements OnInit {
     q.assignees = this.filter.assignee;
     q.createdBy = this.filter.author;
 
+    q.unseenChanges = this.filter.unseenChanges || undefined;
+
     this.processStatusOption(q, this.filter);
     this.stateStore.put(this.STORE_KEY, {query: q, filter: this.filter});
 
@@ -138,6 +141,32 @@ export class TaskListComponent implements OnInit {
       q.statusesNe = filter.status?.join(',');
     }
   }
+
+  protected hasUnseenChanges = (task: Task): boolean => {
+    return !task.lastOpenedTime || new Date(task.lastOpenedTime) < new Date(task.updatedAt);
+  };
+
+  private readonly contextTypeLabels: {[key: string]: string} = {
+    'code-system': 'CS',
+    'value-set': 'VS',
+    'map-set': 'CM',
+    'wiki': 'WS',
+    'snomed-concept': 'SNOMED',
+    'snomed-translation': 'SNOMED',
+  };
+
+  private readonly primaryContextTypes = new Set([
+    'code-system', 'value-set', 'map-set', 'wiki', 'snomed-concept', 'snomed-translation'
+  ]);
+
+  protected contextDisplay = (ctx: Task['context']): TaskContextItem | undefined => {
+    if (!ctx?.length) return undefined;
+    return ctx.find(c => this.primaryContextTypes.has(c.type)) ?? ctx[0];
+  };
+
+  protected contextTypeLabel = (type: string): string => {
+    return this.contextTypeLabels[type] ?? type;
+  };
 
   protected isFilterSelected(filter: Filter): boolean {
     const exclude: (keyof Filter)[] = ['open', 'searchInput'];

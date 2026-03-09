@@ -32,4 +32,8 @@ export class TaskService extends TaskLibService {
   public deleteActivity(number: string, id: string): Observable<TaskActivity> {
     return this.http.delete<TaskActivity>(`${this.baseUrl}/tasks/${number}/activities/${id}`);
   }
+
+  public logTaskOpened(number: string): Observable<void> {
+    return this.http.post<void>(`${this.baseUrl}/tasks/${number}/opened`, {});
+  }
 }

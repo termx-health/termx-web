@@ -11,6 +11,11 @@
   "web": {
     "resource-context": {
       "details": "Details"
+    },
+    "task": {
+      "context": "Context",
+      "context-type": "Resource type",
+      "context-resource": "Resource"
     }
   }
 }
