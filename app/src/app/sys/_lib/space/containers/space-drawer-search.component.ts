@@ -2,7 +2,8 @@ import { Component, EventEmitter, forwardRef, Input, OnChanges, Output, SimpleCh
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, FormsModule } from '@angular/forms';
 import { BooleanInput, ApplyPipe } from '@kodality-web/core-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
-import {PackageLibService, SpaceLibService} from 'term-web/sys/_lib/space';
+import {PackageLibService} from 'term-web/sys/_lib/space/services/package-lib-service';
+import {SpaceLibService} from 'term-web/sys/_lib/space/services/space-lib-service';
 import {Package, PackageVersion} from 'term-web/sys/_lib/space/model/package';
 import {Space} from 'term-web/sys/_lib/space/model/space';
 import { MuiCoreModule, MuiDrawerModule, MuiCardModule, MuiSpinnerModule, MuiFormModule, MuiSelectModule, MuiButtonModule } from '@kodality-web/marina-ui';
