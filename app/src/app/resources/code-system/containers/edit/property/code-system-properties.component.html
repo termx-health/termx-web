@@ -90,6 +90,107 @@
     </m-dropdown>
   </div>
   <form #propertyForm="ngForm">
+    <ng-container *ngIf="viewMode; else editablePropertiesTable">
+      <m-table [mData]="basicProperties" [mLoading]="loader.isLoading" mSize="small">
+        <tr *mTableHead>
+          <th style="width: 4rem"></th>
+          <th>{{'entities.entity-property.name' | translate}}</th>
+          <th>{{'entities.entity-property.uri' | translate}}</th>
+          <th>{{'entities.entity-property.type' | translate}}</th>
+          <th>{{'entities.entity-property.required' | translate}}</th>
+          <th>{{'entities.entity-property.show-in-list' | translate}}</th>
+          <th>{{'entities.entity-property.description' | translate}}</th>
+          <th>{{'entities.entity-property.order-number' | translate}}</th>
+          <th></th>
+        </tr>
+
+        <ng-container *mTableRow="let p">
+          <tr>
+            <td>
+              <a class="m-clickable" (click)="toggleBasicPropertyExpand(p, $event)">
+                {{(p | apply:getBasicPropertyKey) === expandedBasicPropertyKey ? '-' : '+'}}
+              </a>
+            </td>
+            <td>{{p.name}}</td>
+            <td>{{p.uri}}</td>
+            <td>{{p.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}</td>
+            <td><m-checkbox [ngModel]="p.required" readOnly></m-checkbox></td>
+            <td><m-checkbox [ngModel]="p.showInList" readOnly></m-checkbox></td>
+            <td>{{p.description | localName}}</td>
+            <td>{{p.orderNumber}}</td>
+            <td></td>
+          </tr>
+          <tr *ngIf="(p | apply:getBasicPropertyKey) === expandedBasicPropertyKey">
+            <td colspan="9">
+              <m-form-row>
+                <m-form-item *mFormCol mLabel="entities.entity-property.name">
+                  {{p.name}}
+                </m-form-item>
+                <m-form-item *mFormCol mLabel="entities.entity-property.uri">
+                  {{p.uri}}
+                </m-form-item>
+              </m-form-row>
+              <m-form-item mLabel="entities.entity-property.description">
+                {{p.description | localName}}
+              </m-form-item>
+              <m-form-row>
+                <m-form-item *mFormCol mLabel="entities.entity-property.type">
+                  {{p.type | localizedConceptName: {valueSet: 'concept-property-type'} | async}}
+                </m-form-item>
+                <m-form-item *mFormCol mLabel="entities.entity-property.order-number">
+                  {{p.orderNumber}}
+                </m-form-item>
+                <m-form-item *mFormCol mLabel="entities.entity-property.required">
+                  <m-checkbox [ngModel]="p.required" readOnly></m-checkbox>
+                </m-form-item>
+                <m-form-item *mFormCol mLabel="entities.entity-property.preferred">
+                  <m-checkbox [ngModel]="p.preferred" readOnly></m-checkbox>
+                </m-form-item>
+                <m-form-item *mFormCol mLabel="entities.entity-property.show-in-list">
+                  <m-checkbox [ngModel]="p.showInList" readOnly></m-checkbox>
+                </m-form-item>
+              </m-form-row>
+
+              <ng-container *ngIf="['code', 'Coding'] | includes: p.type">
+                <m-divider>{{'entities.entity-property.rule.singular' | translate}}</m-divider>
+                <m-form-item *ngIf="'Coding' === p.type" mLabel="entities.entity-property.rule.code-systems">
+                  {{p.rule?.codeSystems?.join(', ')}}
+                </m-form-item>
+                <m-form-item *ngIf="'Coding' === p.type" mLabel="entities.entity-property.rule.value-set">
+                  {{p.rule?.valueSet}}
+                </m-form-item>
+                <m-form-item *ngIf="'code' === p.type" mLabel="entities.entity-property.rule.filters">
+                  <m-table [mData]="p.rule?.filters || []" mSize="small">
+                    <tr *mTableHead>
+                      <th>{{'entities.entity-property.rule.type' | translate}}</th>
+                      <th>{{'entities.entity-property.rule.property' | translate}}</th>
+                      <th>{{'entities.entity-property.rule.value' | translate}}</th>
+                    </tr>
+                    <tr *mTableRow="let f">
+                      <td>{{f.type}}</td>
+                      <td>{{f.association || f.property?.name}}</td>
+                      <td>
+                        <ng-container *ngIf="f.type === 'property'; else assocValue">
+                          <tw-property-value-input
+                              viewMode
+                              [ngModel]="f.value"
+                              [property]="f.property"
+                              [codeSystem]="codeSystemId"
+                          ></tw-property-value-input>
+                        </ng-container>
+                        <ng-template #assocValue>{{f.value}}</ng-template>
+                      </td>
+                    </tr>
+                  </m-table>
+                </m-form-item>
+              </ng-container>
+            </td>
+          </tr>
+        </ng-container>
+      </m-table>
+    </ng-container>
+
+    <ng-template #editablePropertiesTable>
     <m-editable-table #rowsTable [mData]="basicProperties" [mLoading]="loader.isLoading" [mRowInstance]="propertyRowInstance" [mAddAllowed]="!viewMode" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
       <m-editable-column [mTitle]="'entities.entity-property.name'">
         <ng-template #viewTemplate let-p>{{p.name}}</ng-template>
@@ -237,7 +338,9 @@
           </td>
         </tr>
       </ng-template>
+
     </m-editable-table>
+    </ng-template>
   </form>
 
 </m-card>
