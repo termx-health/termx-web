@@ -11,6 +11,7 @@ import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
+    selector: 'tw-integration-icd-import',
     templateUrl: '../integration-import.component.html',
     imports: [
         MuiCardModule,

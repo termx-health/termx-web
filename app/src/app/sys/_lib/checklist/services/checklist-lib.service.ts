@@ -5,7 +5,7 @@ import {environment} from 'environments/environment';
 import {saveAs} from 'file-saver';
 import {Observable} from 'rxjs';
 import {map} from 'rxjs/operators';
-import {LorqueProcess} from 'term-web/sys/_lib';
+import {LorqueProcess} from 'term-web/sys/_lib/lorque/model/lorque-process';
 import {Checklist} from 'term-web/sys/_lib/checklist/model/checklist';
 import {ChecklistRule} from 'term-web/sys/_lib/checklist/model/checklist-rule';
 import {ChecklistRuleSearchParams} from 'term-web/sys/_lib/checklist/model/checklist-rule-search-params';

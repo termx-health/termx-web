@@ -3,7 +3,11 @@ import { Injectable, inject } from '@angular/core';
 import {SearchHttpParams, SearchResult} from '@kodality-web/core-util';
 import {environment} from 'environments/environment';
 import {Observable} from 'rxjs';
-import {Provenance, Release, ReleaseResource, ReleaseSearchParams, JobLibService} from 'term-web/sys/_lib';
+import {Provenance} from 'term-web/sys/_lib/provenance/model/provenance';
+import {Release} from 'term-web/sys/_lib/release/model/release';
+import {ReleaseResource} from 'term-web/sys/_lib/release/model/release-resource';
+import {ReleaseSearchParams} from 'term-web/sys/_lib/release/model/release-search-params';
+import {JobLibService} from 'term-web/sys/_lib/job/services/job-lib.service';
 
 @Injectable()
 export class ReleaseLibService {

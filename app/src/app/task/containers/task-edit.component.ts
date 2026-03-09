@@ -21,6 +21,10 @@ import { UserSelectComponent } from 'term-web/user/_lib/components/user-select.c
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
+import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
+import { MapSetSearchComponent } from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
+import { SpaceSelectComponent } from 'term-web/sys/_lib/space/containers/space-select.component';
 
 @Injectable({providedIn: 'root'})
 class TaskContextLinkService {
@@ -160,7 +164,7 @@ class TaskContextLinkService {
       }
     }
   `],
-    imports: [MuiSpinnerModule, MuiCardModule, FormsModule, TaskTypeComponent, MuiFormModule, MuiTextareaModule, MuiButtonModule, TaskStatusComponent, MuiSelectModule, WikiSmartTextEditorViewComponent, WikiSmartTextEditorComponent, MuiIconModule, MuiDividerModule, MuiListModule, MuiPopconfirmModule, NgTemplateOutlet, UserSelectComponent, ValueSetConceptSelectComponent, MuiCoreModule, AsyncPipe, TranslatePipe, MarinaUtilModule, ApplyPipe, LocalDatePipe, LocalDateTimePipe, LocalizedConceptNamePipe]
+    imports: [MuiSpinnerModule, MuiCardModule, FormsModule, TaskTypeComponent, MuiFormModule, MuiTextareaModule, MuiButtonModule, TaskStatusComponent, MuiSelectModule, WikiSmartTextEditorViewComponent, WikiSmartTextEditorComponent, MuiIconModule, MuiDividerModule, MuiListModule, MuiPopconfirmModule, NgTemplateOutlet, UserSelectComponent, ValueSetConceptSelectComponent, MuiCoreModule, AsyncPipe, TranslatePipe, MarinaUtilModule, ApplyPipe, LocalDatePipe, LocalDateTimePipe, LocalizedConceptNamePipe, CodeSystemSearchComponent, ValueSetSearchComponent, MapSetSearchComponent, SpaceSelectComponent]
 })
 export class TaskEditComponent implements OnInit {
   private taskService = inject(TaskService);

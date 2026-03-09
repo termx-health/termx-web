@@ -189,7 +189,8 @@
 
 
       <ng-template #treeView let-node="node" let-level="level">
-        <tr class="m-clickable"
+        <tr #treeRow class="m-clickable"
+        [attr.data-code]="node.code"
         [style.background]="selectedConcept?.code === node.code ? 'var(--color-table-background--expanded)' :
             node.concept.versions?.[node.concept.versions?.length - 1]?.status === 'draft' ? 'var(--color-amber-0)' :
             node.concept.versions?.[node.concept.versions?.length - 1]?.status === 'retired' ? 'var(--color-red-0)' : 'initial'"
@@ -205,22 +206,35 @@
 
       <ng-template #rowContent let-node="node" let-level="level">
         <td>
-          <div class="m-items-middle m-bold">
-            @if (groupOpened) {
-              <m-icon-button
-                [style.padding-left.rem]="level"
-                [style.opacity]="node.expandable ? '1' : '0'"
-                [mIcon]="node.loading ? 'loading' : node.expandable ? node.expanded ? 'folder-open' : 'folder' : 'file'"
-                (mClick)="$event.preventDefault(); $event.stopImmediatePropagation(); expandNode(node);"
-              ></m-icon-button>
-            }
+          @if (!groupOpened || !needsPreview || node.detailsExpanded) {
+            <div class="m-items-middle m-bold">
+              @if (groupOpened) {
+                <m-icon-button
+                  [style.padding-left.rem]="level"
+                  [style.opacity]="node.expandable ? '1' : '0'"
+                  [mIcon]="node.loading ? 'loading' : node.expandable ? node.expanded ? 'folder-open' : 'folder' : 'file'"
+                  (mClick)="$event.preventDefault(); $event.stopImmediatePropagation(); expandNode(node);"
+                ></m-icon-button>
+              }
 
-            @if (node.code | apply: getConceptEditRoute; as route) {
-              <a [routerLink]="route.path" [queryParams]="route.query">
-                {{node.code}}
-              </a>
-            }
-          </div>
+              @if (node.code | apply: getConceptEditRoute; as route) {
+                <a [routerLink]="route.path" [queryParams]="route.query">
+                  {{node.code}}
+                </a>
+              }
+            </div>
+          } @else {
+            <div class="m-items-middle m-bold">
+              @if (groupOpened) {
+                <m-icon-button
+                  [style.padding-left.rem]="level"
+                  [style.opacity]="'1'"
+                  [mIcon]="'file'"
+                ></m-icon-button>
+              }
+              {{node.code}}
+            </div>
+          }
         </td>
         <td>
           <div style="display: grid; grid-template-columns: auto 1fr; column-gap: var(--gap-default)">
@@ -234,23 +248,28 @@
           </div>
         </td>
         <td>
-          <div>
-            @for (property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableSummary.properties:codeSystem.properties); track property) {
-              <div style="display: flex"
-                >
-                <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
-                <tw-property-value-input style="flex: 1; text-align: right"
-                  viewMode
-                  [ngModel]="property.value"
-                  [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
-                  [codeSystem]="codeSystem.id"
-                ></tw-property-value-input>
-              </div>
-            }
-          </div>
+          @if (!groupOpened || !needsPreview || node.detailsExpanded) {
+            <div>
+              @for (property of ((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableSummary.properties:codeSystem.properties); track property) {
+                <div style="display: flex"
+                  >
+                  <div style="flex: 1" class="m-bold">{{(property.entityPropertyId | apply:getProperty:codeSystem.properties) | entityPropertyName}}</div>
+                  <tw-property-value-input style="flex: 1; text-align: right"
+                    viewMode
+                    [ngModel]="property.value"
+                    [property]="property.entityPropertyId | apply:getProperty:codeSystem.properties"
+                    [codeSystem]="codeSystem.id"
+                  ></tw-property-value-input>
+                </div>
+              }
+            </div>
+          } @else {
+            <span class="m-muted">{{((node.concept | apply:getPropertyValues) | filter: filterPropertyValues:tableSummary.properties:codeSystem.properties)?.length || 0}}</span>
+          }
         </td>
         <td>
-          <m-dropdown>
+          @if (!groupOpened || !needsPreview || node.detailsExpanded) {
+            <m-dropdown>
             <a *m-dropdown-item (mClick)="openFhir(node.code)">
               {{'web.code-system-concept.list.open-fhir' | translate}}
             </a>
@@ -269,7 +288,8 @@
                 {{'web.code-system-concept.list.propagate-properties' | translate}}
               </a>
             }
-          </m-dropdown>
+            </m-dropdown>
+          }
         </td>
       </ng-template>
     </tw-table>

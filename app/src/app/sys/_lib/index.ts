@@ -16,4 +16,3 @@ export * from 'term-web/sys/_lib/job';
 export * from 'term-web/sys/_lib/lorque';
 export * from 'term-web/sys/_lib/provenance';
 export * from 'term-web/sys/_lib/release';
-export * from 'term-web/sys/_lib/space';

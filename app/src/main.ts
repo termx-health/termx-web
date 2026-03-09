@@ -1,6 +1,6 @@
 import { enableProdMode, LOCALE_ID, APP_INITIALIZER, importProvidersFrom, provideZoneChangeDetection } from '@angular/core';
 
-import { initAuth, HttpLoaderFactory } from './app/root.module';
+import { initAuth, HttpLoaderFactory, RootModule } from './app/root.module';
 import {environment} from './environments/environment';
 import { AuthService, AuthModule } from 'term-web/core/auth';
 import { HttpBackend, HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
@@ -24,6 +24,7 @@ import { FhirModule } from 'term-web/fhir/fhir.module';
 import { ObservationDefinitionModule } from 'term-web/observation-definition/observation-definition.module';
 import { TerminologyServiceApiModule } from 'term-web/terminology-service-api/terminology-service-api.module';
 import { MeasurementUnitModule } from 'term-web/measurement-unit/measurement-unit.module';
+import { UcumModule } from 'term-web/ucum/ucum.module';
 import { SysModule } from 'term-web/sys/sys.module';
 import { UserModule } from 'term-web/user/user.module';
 import { SequenceModule } from 'term-web/sequence/sequence.module';
@@ -44,8 +45,9 @@ bootstrapApplication(RootComponent, {
                 provide: TranslateLoader,
                 useFactory: HttpLoaderFactory,
                 deps: [HttpBackend]
-            }
-        }), AuthModule.init(), MarinaUiConfigModule.init(), CoreUtilModule, CoreUiModule, ResourcesModule, IntegrationModule, PrivilegesModule, GlobalSearchModule, WikiModule, ModelerModule, TaskModule, FhirModule, ObservationDefinitionModule, TerminologyServiceApiModule, MeasurementUnitModule, SysModule, UserModule, SequenceModule, ImplementationGuideModule),
+            },
+            fallbackLang: environment.defaultLanguage
+        }), RootModule, AuthModule.init(), MarinaUiConfigModule.init(), CoreUtilModule, CoreUiModule, ResourcesModule, IntegrationModule, PrivilegesModule, GlobalSearchModule, WikiModule, ModelerModule, TaskModule, FhirModule, ObservationDefinitionModule, TerminologyServiceApiModule, MeasurementUnitModule, UcumModule, SysModule, UserModule, SequenceModule, ImplementationGuideModule),
         { provide: LOCALE_ID, useValue: environment.defaultLanguage },
         { provide: APP_INITIALIZER, useFactory: initAuth, deps: [AuthService], multi: true },
         { provide: APP_BASE_HREF, useFactory: (): string => environment.baseHref },

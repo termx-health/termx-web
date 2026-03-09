@@ -9,3 +9,10 @@
 @primary-color: #1464C0;
 
 @import "theme";
+
+// Safari 26 (macOS Tahoe / iOS 26) renders `top: 100%` incorrectly on CDK overlays.
+// https://github.com/NG-ZORRO/ng-zorro-antd/issues/9401
+.ant-select-dropdown,
+.ant-dropdown {
+  top: 0 !important;
+}
