@@ -14,23 +14,45 @@ type ExtendedEntityPropertyValue = EntityPropertyValue & {_key?: string};
     selector: 'tw-code-system-property-value-edit',
     templateUrl: 'code-system-property-value-edit.component.html',
     styles: [`
-    .prop-col {
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      align-self: stretch;
+    .prop-grid {
+      display: grid;
+      gap: 0.5rem 1rem;
+      align-items: start;
     }
 
-    .prop-row {
-      flex: 1;
+    .prop-grid--edit {
+      grid-template-columns: max-content minmax(0, 1fr) auto;
+    }
+
+    .prop-grid--view {
+      grid-template-columns: max-content minmax(0, 1fr);
+    }
+
+    .prop-cell {
       display: flex;
+      align-items: flex-start;
+      min-width: 0;
+    }
+
+    .prop-cell--value {
+      align-items: stretch;
+    }
+
+    .prop-cell--action {
       align-items: center;
+    }
+
+    .prop-name {
+      white-space: nowrap;
+      margin-top: 0.35rem;
     }
   `],
     imports: [MuiNoDataModule, FormsModule, MuiFormModule, EntityPropertyValueInputComponent_1, MuiIconModule, MuiPopconfirmModule, ApplyPipe, FilterPipe, SortPipe]
 })
 export class CodeSystemPropertyValueEditComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
+  @Input() @BooleanInput() public showCodingReference: boolean | string = false;
+  @Input() @BooleanInput() public compact: boolean | string = false;
   @Input() public propertyValues?: ExtendedEntityPropertyValue[];
   @Input() public properties?: EntityProperty[];
   @Input() public codeSystemId?: string;

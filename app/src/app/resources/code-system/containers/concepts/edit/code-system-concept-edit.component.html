@@ -235,6 +235,7 @@ mode="concept-edit"></tw-resource-context>
               [codeSystemId]="codeSystem?.id"
               [properties]="codeSystem?.properties"
               [propertyValues]="conceptVersion?.propertyValues"
+              [showCodingReference]="true"
             [viewMode]="conceptVersion?.status !== 'draft'"></tw-code-system-property-value-edit>
           </m-card>
           <!-- Associations -->

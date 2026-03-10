@@ -7,11 +7,11 @@ import { AsyncPipe, UpperCasePipe } from '@angular/common';
 import { MuiCardModule, MuiDividerModule, MuiIconButtonModule, MuiFormModule, MuiIconModule } from '@kodality-web/marina-ui';
 import { StatusTagComponent } from 'term-web/core/ui/components/publication-status-tag/status-tag.component';
 import { RouterLink } from '@angular/router';
-import { EntityPropertyValueInputComponent } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
 import { FormsModule } from '@angular/forms';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
 import { EntityPropertyNamePipe } from 'term-web/resources/_lib/code-system/pipe/entity-propertye-name-pipe';
+import { CodeSystemPropertyValueEditComponent } from 'term-web/resources/code-system/containers/concepts/edit/propertyvalue/code-system-property-value-edit.component';
 
 @Component({
     selector: 'tw-code-system-concepts-list-concept-preview',
@@ -48,7 +48,7 @@ import { EntityPropertyNamePipe } from 'term-web/resources/_lib/code-system/pipe
       margin-block: 0.5rem;
     }
   `],
-    imports: [MuiCardModule, MuiDividerModule, StatusTagComponent, MuiIconButtonModule, RouterLink, MuiFormModule, MuiIconModule, EntityPropertyValueInputComponent, FormsModule, AsyncPipe, UpperCasePipe, TranslatePipe, ApplyPipe, KeysPipe, LocalDateTimePipe, SortPipe, LocalizedConceptNamePipe, EntityPropertyNamePipe]
+    imports: [MuiCardModule, MuiDividerModule, StatusTagComponent, MuiIconButtonModule, RouterLink, MuiFormModule, MuiIconModule, FormsModule, AsyncPipe, UpperCasePipe, TranslatePipe, ApplyPipe, KeysPipe, LocalDateTimePipe, SortPipe, LocalizedConceptNamePipe, EntityPropertyNamePipe, CodeSystemPropertyValueEditComponent]
 })
 export class CodeSystemConceptsListConceptPreviewComponent implements OnChanges {
   private codeSystemService = inject(CodeSystemService);
