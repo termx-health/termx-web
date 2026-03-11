@@ -3,7 +3,7 @@ import {ActivatedRoute} from '@angular/router';
 import {isDefined, LoadingManager} from '@kodality-web/core-util';
 import { MuiNotificationService, MuiCardModule, MuiSpinnerModule, MuiFormModule } from '@kodality-web/marina-ui';
 import {Fhir} from 'fhir/fhir';
-import {map, Observable} from 'rxjs';
+import {catchError, map, Observable, of} from 'rxjs';
 import {ChefService} from 'term-web/integration/_lib';
 import {StructureDefinition} from 'term-web/modeler/_lib';
 import {StructureDefinitionService} from 'term-web/modeler/structure-definition/services/structure-definition.service';
@@ -41,15 +41,30 @@ export class StructureDefinitionViewComponent implements OnInit {
     if (isDefined(params) && params.includes('element')) {
       this.selectedTabIndex = this.tabIndexMap['element'];
     }
-    this.loader.wrap('init', this.structureDefinitionService.load(this.id!)).subscribe(sd => {
+    this.loader.wrap('init', this.structureDefinitionService.load(this.id!).pipe(
+      catchError(err => {
+        this.notificationService.error('Failed to load structure definition', err?.error?.message || err?.message || 'Unknown error');
+        return of(null as any);
+      })
+    )).subscribe(sd => {
+      if (!sd) return;
       this.structureDefinition = sd;
-      this.loader.wrap('init', this.unmapContent(sd.content, sd.contentFormat)).subscribe();
-      this.selectedTabIndex = this.selectedTabIndex === this.tabIndexMap['element'] ? this.selectedTabIndex : this.tabIndexMap[sd.contentFormat!];
+      const contentObs = this.unmapContent(sd.content, sd.contentFormat);
+      if (contentObs) {
+        this.loader.wrap('init', contentObs).pipe(
+          catchError(err => {
+            this.notificationService.error('Failed to process content', err?.error?.message || err?.message || 'Unknown error');
+            return of(undefined);
+          })
+        ).subscribe();
+      }
+      this.selectedTabIndex = this.selectedTabIndex === this.tabIndexMap['element'] ? this.selectedTabIndex : this.tabIndexMap[sd.contentFormat!] ?? 0;
     });
 
   }
 
-  private unmapContent(content: string, format: 'fsh' | 'json'): Observable<void> {
+  private unmapContent(content: string | null | undefined, format: 'fsh' | 'json'): Observable<void> | undefined {
+    if (content == null || content === '') return undefined;
     if (format == 'json') {
       if (content.startsWith('<')) {
         content = String(new Fhir().xmlToObj(content));
@@ -69,6 +84,7 @@ export class StructureDefinitionViewComponent implements OnInit {
         this.contentFhir = JSON.stringify(r.fhir[0], null, 2);
       }));
     }
+    return undefined;
   }
 
   private showErrors(r: any): void {

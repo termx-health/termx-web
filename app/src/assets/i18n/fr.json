@@ -8,9 +8,26 @@
     "nl": "Néerlandais",
     "cs": "Czech"
   },
+  "entities": {
+    "structure-definition": {
+      "name": "Nom",
+      "publisher": "Éditeur",
+      "status": "Statut"
+    }
+  },
   "web": {
     "resource-context": {
       "details": "Détails"
+    },
+    "structure-definition": {
+      "list": {
+        "add-structure-definition": "Ajouter une définition de structure",
+        "import-fhir": "Importer depuis FHIR",
+        "import-url": "URL",
+        "manual": "Créer manuellement",
+        "open-fhir": "Ouvrir dans FHIR",
+        "title": "Définitions de structure"
+      }
     },
     "task": {
       "context": "Context",

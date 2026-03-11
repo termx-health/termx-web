@@ -3,10 +3,12 @@ import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute} from '@angular/router';
 import {copyDeep, isDefined, isNil, LoadingManager, validateForm} from '@kodality-web/core-util';
-import {TerminologyServer, TerminologyServerHeader} from 'term-web/sys/_lib/space';
+import {AuthoritativeResource, TerminologyServer, TerminologyServerHeader} from 'term-web/sys/_lib/space';
 import {TerminologyServerService} from 'term-web/sys/space/services/terminology-server.service';
-import { MuiFormModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiCheckboxModule, MuiEditableTableModule, MuiInputModule, MuiIconModule, MuiButtonModule } from '@kodality-web/marina-ui';
+import { MuiFormModule, MuiCardModule, MuiTextareaModule, MuiMultiLanguageInputModule, MuiSelectModule, MuiCheckboxModule, MuiEditableTableModule, MuiInputModule, MuiIconModule, MuiButtonModule, MuiIconButtonModule } from '@kodality-web/marina-ui';
 import { TranslatePipe } from '@ngx-translate/core';
+import {CodeSystemSearchComponent} from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
+import {ValueSetSearchComponent} from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
 
 @Component({
     templateUrl: 'terminology-server-edit.component.html',
@@ -22,7 +24,10 @@ import { TranslatePipe } from '@ngx-translate/core';
         MuiInputModule,
         MuiIconModule,
         MuiButtonModule,
+        MuiIconButtonModule,
         TranslatePipe,
+        CodeSystemSearchComponent,
+        ValueSetSearchComponent,
     ],
 })
 export class TerminologyServerEditComponent implements OnInit {
@@ -36,6 +41,13 @@ export class TerminologyServerEditComponent implements OnInit {
   protected mode: 'add' | 'edit' = 'add';
   protected loader = new LoadingManager();
 
+  protected manualAuthoritativeUrl: string;
+  protected manualAuthoritativeVsUrl: string;
+
+  protected readonly usageOptions = ['code-generation', 'validation', 'publication'];
+  protected readonly operationOptions = ['$expand', '$validate-code', '$lookup', '$translate', '$subsumes', '$closure'];
+  protected readonly fhirVersionOptions = ['R3', 'R4', 'R4B', 'R5', 'R6'];
+
   @ViewChild("form") public form?: NgForm;
 
   public ngOnInit(): void {
@@ -43,7 +55,7 @@ export class TerminologyServerEditComponent implements OnInit {
     this.mode = id ? 'edit' : 'add';
 
     if (this.mode === 'edit') {
-      this.loadServicer(Number(id));
+      this.loadServer(Number(id));
     } else {
       this.initServer(new TerminologyServer());
     }
@@ -53,7 +65,7 @@ export class TerminologyServerEditComponent implements OnInit {
     });
   }
 
-  private loadServicer(id: number): void {
+  private loadServer(id: number): void {
     this.loader.wrap('load', this.terminologyServerService.load(id)).subscribe(ts => {
       this.initServer(ts);
     });
@@ -85,4 +97,36 @@ export class TerminologyServerEditComponent implements OnInit {
   protected keyDefined = (h: TerminologyServerHeader): boolean => {
     return !!h.key?.trim().length;
   };
+
+  protected addAuthoritativeFromCodeSystem(cs: any): void {
+    if (!cs || !this.server.authoritative) return;
+    const ar = new AuthoritativeResource();
+    ar.url = cs.uri;
+    ar.name = cs.id;
+    this.server.authoritative = [...this.server.authoritative, ar];
+  }
+
+  protected addManualAuthoritative(): void {
+    if (!this.manualAuthoritativeUrl?.trim() || !this.server.authoritative) return;
+    const ar = new AuthoritativeResource();
+    ar.url = this.manualAuthoritativeUrl.trim();
+    this.server.authoritative = [...this.server.authoritative, ar];
+    this.manualAuthoritativeUrl = '';
+  }
+
+  protected addAuthoritativeFromValueSet(vs: any): void {
+    if (!vs || !this.server.authoritativeValuesets) return;
+    const ar = new AuthoritativeResource();
+    ar.url = vs.uri;
+    ar.name = vs.id;
+    this.server.authoritativeValuesets = [...this.server.authoritativeValuesets, ar];
+  }
+
+  protected addManualAuthoritativeVs(): void {
+    if (!this.manualAuthoritativeVsUrl?.trim() || !this.server.authoritativeValuesets) return;
+    const ar = new AuthoritativeResource();
+    ar.url = this.manualAuthoritativeVsUrl.trim();
+    this.server.authoritativeValuesets = [...this.server.authoritativeValuesets, ar];
+    this.manualAuthoritativeVsUrl = '';
+  }
 }

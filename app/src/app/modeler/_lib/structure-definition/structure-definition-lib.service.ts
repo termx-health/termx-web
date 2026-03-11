@@ -12,8 +12,13 @@ export class StructureDefinitionLibService {
 
   protected baseUrl = environment.termxApi;
 
-  public load(id: number): Observable<StructureDefinition> {
-    return this.http.get<StructureDefinition>(`${this.baseUrl}/structure-definitions/${id}`);
+  public load(id: number, version?: string): Observable<StructureDefinition> {
+    const params = version ? {version} : {};
+    return this.http.get<StructureDefinition>(`${this.baseUrl}/structure-definitions/${id}`, {params});
+  }
+
+  public import(request: { url?: string; content?: string; format?: string }): Observable<StructureDefinition> {
+    return this.http.post<StructureDefinition>(`${this.baseUrl}/structure-definitions/import`, request);
   }
 
   public search(params: StructureDefinitionSearchParams = {}): Observable<SearchResult<StructureDefinition>> {

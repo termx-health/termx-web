@@ -1,46 +1,137 @@
-<m-card>
-  <div *m-card-header class="m-justify-between">
-    <m-input [(ngModel)]="searchInput" twDebounce [debounced]="onSearch" placeholder="marina.ui.inputs.search.placeholder" autofocus></m-input>
+<tw-table [(filterOpen)]="filter.open">
+  <!-- Header -->
+  <div header class="m-justify-between">
+    <span>{{'web.structure-definition.list.title' | translate}}</span>
+
     <div class="m-items-middle">
-      <tw-add-button *twPrivileged="'*.StructureDefinition.edit'" [routerLink]="['../structure-definitions/add']">
-        {{'web.structure-definition.list.add-structure-definition' | translate}}
-      </tw-add-button>
+      @if (!filter.open) {
+        <m-input
+          [(ngModel)]="filter.searchInput"
+          twDebounce [debounced]="onDebounced"
+          placeholder="marina.ui.inputs.search.placeholder"
+          autofocus
+        ></m-input>
+      }
+
+      <m-dropdown *twPrivileged="'*.StructureDefinition.edit'">
+        <tw-add-button *m-dropdown-container icon="down" placement="right">
+          {{'web.structure-definition.list.add-structure-definition' | translate}}
+        </tw-add-button>
+        <a *m-dropdown-item [routerLink]="'add'">
+          {{'web.structure-definition.list.manual' | translate}}
+        </a>
+        <a *m-dropdown-item (mClick)="openImportModal()">
+          {{'web.structure-definition.list.import-fhir' | translate}}
+        </a>
+      </m-dropdown>
+
+      @if (!filter.open) {
+        <m-button [mDisplay]="(filter | apply: isFilterSelected) ? 'primary' : 'default'" (mClick)="onFilterOpen()">
+          <m-icon mCode="filter"/>
+        </m-button>
+      }
     </div>
   </div>
 
+  <!-- Filter -->
+  <tw-table-filter (twSearch)="onFilterSearch()" (twReset)="onFilterReset()">
+    <m-form-item>
+      @if (filter.open) {
+        <m-form-item>
+          <m-input
+            [(ngModel)]="_filter.searchInput"
+            placeholder="marina.ui.inputs.search.placeholder"
+            autofocus
+          ></m-input>
+        </m-form-item>
+      }
+      <m-form-item mLabel="entities.structure-definition.name">
+        <m-input [(ngModel)]="_filter.name" placeholder="entities.structure-definition.name"/>
+      </m-form-item>
+      <m-form-item mLabel="entities.structure-definition.url">
+        <m-input [(ngModel)]="_filter.url" placeholder="entities.structure-definition.url"/>
+      </m-form-item>
+      <m-form-item mLabel="entities.structure-definition.status">
+        <tw-value-set-concept-select [(ngModel)]="_filter.status" valueSet="publication-status" valuePrimitive/>
+      </m-form-item>
+      <m-form-item mLabel="entities.structure-definition.publisher">
+        <m-input [(ngModel)]="_filter.publisher" placeholder="entities.structure-definition.publisher"/>
+      </m-form-item>
+      <m-form-item mLabel="web.code-system.list.space">
+        <tw-space-select [(ngModel)]="_filter.spaceId" valuePrimitive/>
+      </m-form-item>
+    </m-form-item>
+  </tw-table-filter>
+
+  <!-- Backend Table -->
   <m-backend-table [mResult]="searchResult" [(mQuery)]="query" (mQueryChange)="loadData()" [mLoading]="loading">
     <tr *mTableHead>
+      <th></th>
       <th mColumnKey="code">{{'entities.structure-definition.code' | translate}}</th>
+      <th>{{'entities.structure-definition.name' | translate}}</th>
       <th>{{'entities.structure-definition.url' | translate}}</th>
       <th>{{'entities.structure-definition.content-type' | translate}}</th>
-      <th>{{'entities.structure-definition.content-format' | translate}}</th>
+      <th>{{'entities.structure-definition.status' | translate}}</th>
       <th *twPrivileged="'*.StructureDefinition.edit'" class="tw-table-actions"></th>
     </tr>
 
     <tr *mTableRow="let def">
+      <td m-table-expand [mItem]="def"></td>
       <td>
         @if ('*.StructureDefinition.edit' | twHasAnyPrivilege) {
-          <a [routerLink]="['../structure-definitions',def.id,'edit']">{{def.code}}</a>
+          <a [routerLink]="[def.id, 'edit']">{{def.code ?? def.id}}</a>
         } @else {
-          <a [routerLink]="['../structure-definitions',def.id,'view']" [queryParams]="{tab: def.contentFormat}">{{def.code}}</a>
+          <a [routerLink]="[def.id, 'view']">{{def.code ?? def.id}}</a>
         }
       </td>
+      <td>{{def.name}}</td>
       <td>{{def.url}}</td>
       <td>{{def.contentType}}</td>
-      <td>{{def.contentFormat}}</td>
+      <td><tw-status-tag [status]="def.status"/></td>
       <td *twPrivileged="'*.StructureDefinition.edit'" class="tw-table-actions">
         <m-dropdown>
-          <ng-container *twPrivileged="'*.StructureDefinition.edit'">
-            <a *m-dropdown-item m-popconfirm mPopconfirmTitle="web.structure-definition.list.delete-confirm" (mOnConfirm)="deleteStructureDefinition(def.id)"> <m-icon [mCode]="'delete'"></m-icon>&nbsp; {{'core.btn.delete' | translate}}</a>
-          </ng-container>
+          <a *m-dropdown-item [href]="fhirUrl(def.id)" target="_blank" rel="noopener">
+            <m-icon [mCode]="'link'"/>&nbsp; {{'web.structure-definition.list.open-fhir' | translate}}
+          </a>
+          <a *m-dropdown-item m-popconfirm mPopconfirmTitle="web.structure-definition.list.delete-confirm" (mOnConfirm)="deleteStructureDefinition(def.id)">
+            <m-icon [mCode]="'delete'"/>&nbsp; {{'core.btn.delete' | translate}}
+          </a>
         </m-dropdown>
       </td>
     </tr>
+
+    <tr *mTableRowExpand="let def" class="m-table-expanded-row">
+      <td></td>
+      <td colspan="100%">
+        <div style="display: grid; gap: 0.25rem">
+          <div><b>{{'entities.structure-definition.url' | translate}}:</b> {{def.url ?? '-'}}</div>
+          @if (def.parent) {
+            <div><b>{{'entities.structure-definition.parent' | translate}}:</b> {{def.parent}}</div>
+          }
+          @if (def.publisher) {
+            <div><b>{{'entities.structure-definition.publisher' | translate}}:</b> {{def.publisher}}</div>
+          }
+        </div>
+      </td>
+    </tr>
+
     <tr *mTableNoData>
       <td colspan="100%">
-        <m-no-data></m-no-data>
+        <m-no-data/>
       </td>
     </tr>
   </m-backend-table>
-</m-card>
+</tw-table>
 
+<m-modal [(mVisible)]="importModalVisible" (mClose)="importModalVisible = false">
+  <ng-container *m-modal-header>{{'web.structure-definition.list.import' | translate}}</ng-container>
+  <ng-container *m-modal-content>
+    <m-form-item mLabel="web.structure-definition.list.import-url">
+      <m-input [(ngModel)]="importUrl" placeholder="https://..."></m-input>
+    </m-form-item>
+  </ng-container>
+  <div *m-modal-footer class="m-items-middle">
+    <m-button mDisplay="text" (mClick)="importModalVisible = false">{{'core.btn.cancel' | translate}}</m-button>
+    <m-button mDisplay="primary" [mLoading]="importLoading" (mClick)="doImport()">{{'core.btn.import' | translate}}</m-button>
+  </div>
+</m-modal>

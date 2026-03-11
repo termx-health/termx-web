@@ -7,6 +7,21 @@
       <tw-add-button *twPrivileged="'*.TerminologyServer.edit'" [routerLink]="['./add']">
         {{'web.terminology-server.add-btn' | translate}}
       </tw-add-button>
+
+      <m-dropdown *twPrivileged="'*.TerminologyServer.view'">
+        <m-button *m-dropdown-container mDisplay="text">
+          <m-icon mCode="more"/>
+        </m-button>
+        <a *m-dropdown-item (mClick)="exportEcosystem()">
+          {{'web.terminology-server.export-ecosystem' | translate}}
+        </a>
+        <ng-container *twPrivileged="'*.TerminologyServer.edit'">
+          <a *m-dropdown-item (mClick)="fileInput.click()">
+            {{'web.terminology-server.import-ecosystem' | translate}}
+          </a>
+        </ng-container>
+      </m-dropdown>
+      <input #fileInput type="file" accept=".json" style="display: none" (change)="onImportFileSelected($event)"/>
     </div>
   </div>
 

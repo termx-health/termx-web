@@ -123,6 +123,191 @@
           <m-form-item mName="currentInstallation" mLabel="entities.terminology-server.current-installation">
             <m-checkbox name="currentInstallation" [(ngModel)]="server.currentInstallation"/>
           </m-form-item>
+
+          <!-- FHIR Ecosystem section -->
+          <div style="border: 1px solid var(--color-borders); border-radius: 4px; padding: 1rem; margin-top: 1rem;">
+            <h4 style="margin-top: 0">{{'web.terminology-server.fhir-ecosystem' | translate}}</h4>
+
+            <m-form-item mName="accessInfo" mLabel="entities.terminology-server.access-info">
+              <m-textarea name="accessInfo" [(ngModel)]="server.accessInfo"/>
+            </m-form-item>
+
+            <m-form-item mName="usage" mLabel="entities.terminology-server.usage">
+              <m-select name="usage" [(ngModel)]="server.usage" multiple>
+                @for (u of usageOptions; track u) {
+                  <m-option [mLabel]="u" [mValue]="u"/>
+                }
+              </m-select>
+            </m-form-item>
+
+            <m-form-item mName="supportedOperations" mLabel="entities.terminology-server.supported-operations">
+              <m-select name="supportedOperations" [(ngModel)]="server.supportedOperations" multiple>
+                @for (op of operationOptions; track op) {
+                  <m-option [mLabel]="op" [mValue]="op"/>
+                }
+              </m-select>
+            </m-form-item>
+
+            <!-- FHIR Versions -->
+            <m-form-item [mLabel]="fhirVersionsLabel">
+              <ng-template #fhirVersionsLabel>
+                <div class="m-items-middle">
+                  <span>{{'entities.terminology-server.fhir-versions' | translate}}</span>
+                  @if (!server.fhirVersions) {
+                    <m-icon-button mIcon="plus" mSize="small" (mClick)="server.fhirVersions = []"></m-icon-button>
+                  }
+                </div>
+              </ng-template>
+
+              @if (server.fhirVersions) {
+                <m-editable-table [mData]="server.fhirVersions">
+                  <m-editable-column mName="fv-version" mTitle="entities.terminology-server.fhir-version" mWidth="30%">
+                    <ng-template #editTemplate let-fv let-ngModelName="ngModelName">
+                      <m-select [name]="ngModelName" [(ngModel)]="fv.version">
+                        @for (v of fhirVersionOptions; track v) {
+                          <m-option [mLabel]="v" [mValue]="v"/>
+                        }
+                      </m-select>
+                    </ng-template>
+                    <ng-template #viewTemplate let-fv>
+                      {{fv.version}}
+                    </ng-template>
+                  </m-editable-column>
+                  <m-editable-column mName="fv-url" mTitle="entities.terminology-server.fhir-version-url" mWidth="70%">
+                    <ng-template #editTemplate let-fv let-ngModelName="ngModelName">
+                      <m-input [name]="ngModelName" [(ngModel)]="fv.url"/>
+                    </ng-template>
+                    <ng-template #viewTemplate let-fv>
+                      {{fv.url}}
+                    </ng-template>
+                  </m-editable-column>
+                </m-editable-table>
+              }
+            </m-form-item>
+
+            <!-- Authoritative CodeSystems -->
+            <m-form-item [mLabel]="authoritativeLabel">
+              <ng-template #authoritativeLabel>
+                <div class="m-items-middle">
+                  <span>{{'entities.terminology-server.authoritative' | translate}}</span>
+                  @if (!server.authoritative) {
+                    <m-icon-button mIcon="plus" mSize="small" (mClick)="server.authoritative = []"></m-icon-button>
+                  }
+                </div>
+              </ng-template>
+
+              @if (server.authoritative) {
+                <div class="m-items-middle" style="margin-bottom: 0.5rem; gap: 0.5rem">
+                  <tw-code-system-search style="flex: 1" (twSelect)="addAuthoritativeFromCodeSystem($event)"></tw-code-system-search>
+                  <m-input style="flex: 1" [(ngModel)]="manualAuthoritativeUrl" name="_manualAuthUrl" placeholder="http://..."/>
+                  <m-button mSize="small" (mClick)="addManualAuthoritative()">
+                    <m-icon mCode="plus"/>
+                  </m-button>
+                </div>
+                <m-editable-table [mData]="server.authoritative">
+                  <m-editable-column mName="auth-url" mTitle="entities.terminology-server.auth-url" mWidth="40%">
+                    <ng-template #editTemplate let-ar let-ngModelName="ngModelName">
+                      <m-input [name]="ngModelName" [(ngModel)]="ar.url"/>
+                    </ng-template>
+                    <ng-template #viewTemplate let-ar>
+                      {{ar.url}}
+                    </ng-template>
+                  </m-editable-column>
+                  <m-editable-column mName="auth-name" mTitle="entities.terminology-server.auth-name" mWidth="25%">
+                    <ng-template #editTemplate let-ar let-ngModelName="ngModelName">
+                      <m-input [name]="ngModelName" [(ngModel)]="ar.name"/>
+                    </ng-template>
+                    <ng-template #viewTemplate let-ar>
+                      {{ar.name}}
+                    </ng-template>
+                  </m-editable-column>
+                  <m-editable-column mName="auth-version" mTitle="entities.terminology-server.auth-version" mWidth="15%">
+                    <ng-template #editTemplate let-ar let-ngModelName="ngModelName">
+                      <m-input [name]="ngModelName" [(ngModel)]="ar.version"/>
+                    </ng-template>
+                    <ng-template #viewTemplate let-ar>
+                      {{ar.version}}
+                    </ng-template>
+                  </m-editable-column>
+                  <m-editable-column mName="auth-status" mTitle="entities.terminology-server.auth-status" mWidth="20%">
+                    <ng-template #editTemplate let-ar let-ngModelName="ngModelName">
+                      <m-select [name]="ngModelName" [(ngModel)]="ar.status" [autoUnselect]="true">
+                        <m-option mLabel="draft" mValue="draft"/>
+                        <m-option mLabel="active" mValue="active"/>
+                      </m-select>
+                    </ng-template>
+                    <ng-template #viewTemplate let-ar>
+                      {{ar.status}}
+                    </ng-template>
+                  </m-editable-column>
+                </m-editable-table>
+              }
+            </m-form-item>
+
+            <!-- Authoritative ValueSets -->
+            <m-form-item [mLabel]="authoritativeVsLabel">
+              <ng-template #authoritativeVsLabel>
+                <div class="m-items-middle">
+                  <span>{{'entities.terminology-server.authoritative-valuesets' | translate}}</span>
+                  @if (!server.authoritativeValuesets) {
+                    <m-icon-button mIcon="plus" mSize="small" (mClick)="server.authoritativeValuesets = []"></m-icon-button>
+                  }
+                </div>
+              </ng-template>
+
+              @if (server.authoritativeValuesets) {
+                <div class="m-items-middle" style="margin-bottom: 0.5rem; gap: 0.5rem">
+                  <tw-value-set-search style="flex: 1" (twSelect)="addAuthoritativeFromValueSet($event)"></tw-value-set-search>
+                  <m-input style="flex: 1" [(ngModel)]="manualAuthoritativeVsUrl" name="_manualAuthVsUrl" placeholder="http://..."/>
+                  <m-button mSize="small" (mClick)="addManualAuthoritativeVs()">
+                    <m-icon mCode="plus"/>
+                  </m-button>
+                </div>
+                <m-editable-table [mData]="server.authoritativeValuesets">
+                  <m-editable-column mName="authvs-url" mTitle="entities.terminology-server.auth-url" mWidth="40%">
+                    <ng-template #editTemplate let-ar let-ngModelName="ngModelName">
+                      <m-input [name]="ngModelName" [(ngModel)]="ar.url"/>
+                    </ng-template>
+                    <ng-template #viewTemplate let-ar>
+                      {{ar.url}}
+                    </ng-template>
+                  </m-editable-column>
+                  <m-editable-column mName="authvs-name" mTitle="entities.terminology-server.auth-name" mWidth="25%">
+                    <ng-template #editTemplate let-ar let-ngModelName="ngModelName">
+                      <m-input [name]="ngModelName" [(ngModel)]="ar.name"/>
+                    </ng-template>
+                    <ng-template #viewTemplate let-ar>
+                      {{ar.name}}
+                    </ng-template>
+                  </m-editable-column>
+                  <m-editable-column mName="authvs-version" mTitle="entities.terminology-server.auth-version" mWidth="15%">
+                    <ng-template #editTemplate let-ar let-ngModelName="ngModelName">
+                      <m-input [name]="ngModelName" [(ngModel)]="ar.version"/>
+                    </ng-template>
+                    <ng-template #viewTemplate let-ar>
+                      {{ar.version}}
+                    </ng-template>
+                  </m-editable-column>
+                  <m-editable-column mName="authvs-status" mTitle="entities.terminology-server.auth-status" mWidth="20%">
+                    <ng-template #editTemplate let-ar let-ngModelName="ngModelName">
+                      <m-select [name]="ngModelName" [(ngModel)]="ar.status" [autoUnselect]="true">
+                        <m-option mLabel="draft" mValue="draft"/>
+                        <m-option mLabel="active" mValue="active"/>
+                      </m-select>
+                    </ng-template>
+                    <ng-template #viewTemplate let-ar>
+                      {{ar.status}}
+                    </ng-template>
+                  </m-editable-column>
+                </m-editable-table>
+              }
+            </m-form-item>
+
+            <!-- Exclusions -->
+            <m-form-item mName="exclusions" mLabel="entities.terminology-server.exclusions">
+              <m-select name="exclusions" [(ngModel)]="server.exclusions" multiple mMode="tags" placeholder="http://..."/>
+            </m-form-item>
+          </div>
         </form>
       }
 

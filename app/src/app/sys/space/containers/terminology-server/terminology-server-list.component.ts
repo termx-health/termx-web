@@ -2,7 +2,7 @@ import { Component, OnInit, inject } from '@angular/core';
 import { ComponentStateStore, copyDeep, QueryParams, SearchResult, AutofocusDirective } from '@kodality-web/core-util';
 import {finalize, Observable, tap} from 'rxjs';
 import {TerminologyServer, TerminologyServerLibService, TerminologyServerSearchParams} from 'term-web/sys/_lib/space';
-import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiCheckboxModule, MuiNoDataModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiInputModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiCheckboxModule, MuiNoDataModule, MuiDropdownModule, MuiButtonModule, MuiIconModule } from '@kodality-web/marina-ui';
 import { InputDebounceDirective } from 'term-web/core/ui/directives/input-debounce.directive';
 import { FormsModule } from '@angular/forms';
 import { PrivilegedDirective } from 'term-web/core/auth/privileges/privileged.directive';
@@ -31,7 +31,10 @@ import { HasAnyPrivilegePipe } from 'term-web/core/auth/privileges/has-any-privi
     MuiNoDataModule,
     TranslatePipe,
     MarinaUtilModule,
-    HasAnyPrivilegePipe
+    HasAnyPrivilegePipe,
+    MuiDropdownModule,
+    MuiButtonModule,
+    MuiIconModule
 ],
 })
 export class TerminologyServerListComponent implements OnInit {
@@ -50,6 +53,13 @@ export class TerminologyServerListComponent implements OnInit {
     if (state) {
       this.query = Object.assign(new QueryParams(), state.query);
       this.searchInput = this.query.textContains;
+    }
+
+    if (!this.query.limit) {
+      this.query.limit = 20;
+    }
+    if (this.query.offset === undefined) {
+      this.query.offset = 0;
     }
 
     this.loadData();
@@ -72,4 +82,31 @@ export class TerminologyServerListComponent implements OnInit {
     this.query.offset = 0;
     return this.search().pipe(tap(resp => this.searchResult = resp));
   };
+
+  public exportEcosystem(): void {
+    this.terminologyServerService.exportEcosystem().subscribe(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = 'termx-servers.json';
+      link.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
+  public onImportFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (!input.files?.length) return;
+
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      const json = reader.result as string;
+      this.terminologyServerService.importEcosystem(json).subscribe(() => {
+        this.loadData();
+      });
+    };
+    reader.readAsText(file);
+    input.value = '';
+  }
 }

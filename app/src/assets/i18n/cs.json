@@ -697,8 +697,11 @@
             "content": "Obsah",
             "content-format": "Formát obsahu",
             "content-type": "Typ obsahu",
+            "name": "Název",
             "parent": "Rodič",
             "plural": "Definice struktur",
+            "publisher": "Vydavatel",
+            "status": "Stav",
             "url": "URL",
             "version": "Verze"
         },
@@ -2180,7 +2183,13 @@
             },
             "list": {
                 "add-structure-definition": "Přidat definici struktury",
-                "delete-confirm": "Opravdu chcete smazat? Zkontrolujte, prosím, další zdroje, které mohou na této definici záviset."
+                "delete-confirm": "Opravdu chcete smazat? Zkontrolujte, prosím, další zdroje, které mohou na této definici záviset.",
+                "import": "Import",
+                "import-fhir": "Importovat z FHIR",
+                "import-url": "URL",
+                "manual": "Vytvořit ručně",
+                "open-fhir": "Otevřít v FHIR",
+                "title": "Definice struktur"
             },
             "view": {
                 "binding": "Vazba",

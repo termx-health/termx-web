@@ -6,7 +6,7 @@ import { MuiPageMenuItem, MarinPageLayoutModule, MuiCoreModule, MuiFormModule } 
 import {LocalizedName} from '@kodality-web/marina-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {environment} from 'environments/environment';
-import {delay, filter, map, pairwise, startWith, switchMap} from 'rxjs';
+import {delay, distinctUntilChanged, filter, map, pairwise, startWith, switchMap} from 'rxjs';
 import {AuthService, HasAnyPrivilegePipe} from 'term-web/core/auth';
 import {InfoService} from 'term-web/core/info';
 import { AsyncPipe, KeyValuePipe } from '@angular/common';
@@ -49,7 +49,8 @@ export class AppComponent {
       return route?.data?.['privilege']?.map(p => {
         return p.replace(/{(\w+)}/g, (x, match) => route.params[match] || x);
       }) ?? [];
-    })
+    }),
+    distinctUntilChanged((prev, curr) => JSON.stringify(prev) === JSON.stringify(curr))
   );
   protected isEmbedded = (url: string): boolean => url?.startsWith('/embedded');
   protected versions = {

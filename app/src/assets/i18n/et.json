@@ -673,8 +673,11 @@
 			"content": "Sisu",
 			"content-format": "Sisu vorming",
 			"content-type": "Sisu tüüp",
+			"name": "Nimi",
 			"parent": "Vanem",
 			"plural": "Structure Definition-id",
+			"publisher": "Väljaandja",
+			"status": "Staatus",
 			"url": "URL",
 			"version": "Versioon"
 		},
@@ -2036,7 +2039,13 @@
 			},
 			"list": {
 				"add-structure-definition": "Lisa struktuuri definitsioon",
-				"delete-confirm": "Kas soovite kustutada ressurssi? Vaadake üle muud ressursid,  mis võivad sellest ressurssist sõltuda."
+				"delete-confirm": "Kas soovite kustutada ressurssi? Vaadake üle muud ressursid,  mis võivad sellest ressurssist sõltuda.",
+				"import": "Import",
+				"import-fhir": "Impordi FHIR-ist",
+				"import-url": "URL",
+				"manual": "Loo käsitsi",
+				"open-fhir": "Ava FHIR-is",
+				"title": "Struktuuri definitsioonid"
 			},
 			"view": {
 				"binding": "Seotud loendiga",

@@ -27,4 +27,14 @@ export class TerminologyServerLibService {
   public loadResource(request: {serverCode: string, resourceType: string, resourceId: string}): Observable<{resource: string}> {
     return this.http.post<{resource: string}>(`${this.baseUrl}/resource`, request);
   }
+
+  public exportEcosystem(): Observable<Blob> {
+    return this.http.get(`${this.baseUrl}/export/ecosystem?download=true`, {
+      responseType: 'blob'
+    });
+  }
+
+  public importEcosystem(json: string): Observable<TerminologyServer[]> {
+    return this.http.post<TerminologyServer[]>(`${this.baseUrl}/import/ecosystem`, json);
+  }
 }

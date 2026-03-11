@@ -722,8 +722,11 @@
 			"content": "Content",
 			"content-format": "Content format",
 			"content-type": "Content type",
+			"name": "Name",
 			"parent": "Parent",
 			"plural": "Structure Definitions",
+			"publisher": "Publisher",
+			"status": "Status",
 			"url": "URL",
 			"version": "Version"
 		},
@@ -758,7 +761,20 @@
 			"name": "Name",
 			"plural": "Servers",
 			"root-url": "Root URL",
-			"singular": "Server"
+			"singular": "Server",
+			"access-info": "Access info",
+			"usage": "Usage",
+			"supported-operations": "Supported operations",
+			"fhir-versions": "FHIR versions",
+			"fhir-version": "Version",
+			"fhir-version-url": "URL",
+			"authoritative": "Authoritative CodeSystems",
+			"authoritative-valuesets": "Authoritative ValueSets",
+			"exclusions": "Exclusions",
+			"auth-url": "URL",
+			"auth-name": "Name",
+			"auth-version": "Version",
+			"auth-status": "Status"
 		},
 		"transformation-definition": {
 			"name": "Name",
@@ -2233,7 +2249,13 @@
 			},
 			"list": {
 				"add-structure-definition": "Add structure definition",
-				"delete-confirm": "Are you sure you want to delete? Please review other resources that may depend on this definition."
+				"delete-confirm": "Are you sure you want to delete? Please review other resources that may depend on this definition.",
+				"import": "Import",
+				"import-fhir": "Import from FHIR",
+				"import-url": "URL",
+				"manual": "Create manually",
+				"open-fhir": "Open in FHIR",
+				"title": "Structure definitions"
 			},
 			"view": {
 				"binding": "Binding",
@@ -2317,6 +2339,9 @@
 				"client-secret": "Client Secret"
 			},
 			"edit-header": "Edit server",
+			"export-ecosystem": "Export to FHIR Ecosystem format",
+			"import-ecosystem": "Import from FHIR Ecosystem file",
+			"fhir-ecosystem": "FHIR Ecosystem",
 			"headers": {
 				"key": "Key",
 				"value": "Value"

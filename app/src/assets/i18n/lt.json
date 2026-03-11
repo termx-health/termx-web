@@ -605,8 +605,11 @@
 			"content": "Turinys",
 			"content-format": "Turinio formatas",
 			"content-type": "Turinio tipas",
+			"name": "Pavadinimas",
 			"parent": "Kilmė (parent)",
 			"plural": "Struktūros apibrėžtys",
+			"publisher": "Leidėjas",
+			"status": "Būsena",
 			"url": "URL",
 			"version": "Versija"
 		},
@@ -1876,7 +1879,13 @@
 			},
 			"list": {
 				"add-structure-definition": "Pridėti struktūros apibrėžimą",
-				"delete-confirm": "Ar tikrai norite šalinti duomenis? Peržiūrėkite išteklius, kurie gali naudoti šį apibrėžimą."
+				"delete-confirm": "Ar tikrai norite šalinti duomenis? Peržiūrėkite išteklius, kurie gali naudoti šį apibrėžimą.",
+				"import": "Importuoti",
+				"import-fhir": "Importuoti iš FHIR",
+				"import-url": "URL",
+				"manual": "Kurti rankiniu būdu",
+				"open-fhir": "Atidaryti FHIR",
+				"title": "Struktūros apibrėžtys"
 			},
 			"view": {
 				"binding": "Saitas",

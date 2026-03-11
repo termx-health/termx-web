@@ -10,6 +10,14 @@ export class TerminologyServer {
   public authConfig?: TerminologyServerAuthConfig;
   public active?: boolean;
   public currentInstallation?: boolean;
+
+  public accessInfo?: string;
+  public usage?: string[];
+  public authoritative?: AuthoritativeResource[];
+  public authoritativeValuesets?: AuthoritativeResource[];
+  public exclusions?: string[];
+  public fhirVersions?: TerminologyServerFhirVersion[];
+  public supportedOperations?: string[];
 }
 
 export class TerminologyServerHeader {
@@ -21,4 +29,16 @@ export class TerminologyServerAuthConfig {
   public accessTokenUrl?: string;
   public clientId?: string;
   public clientSecret?: string;
+}
+
+export class AuthoritativeResource {
+  public url?: string;
+  public status?: string;
+  public version?: string;
+  public name?: string;
+}
+
+export class TerminologyServerFhirVersion {
+  public version?: string;
+  public url?: string;
 }
