@@ -26,6 +26,14 @@
                 </m-form-item>
               }
             </div>
+            <div class="prop-cell">
+              @if (showCodingReference) {
+                <tw-code-system-coding-reference
+                  [property]="pv.entityPropertyId | apply:getProperty:properties"
+                  [value]="pv.value"
+                  [compact]="compact"/>
+              }
+            </div>
             <div class="prop-cell prop-cell--action">
               @if (!(pv._key | apply:isRequired:properties) && !pv.supplement) {
                 <m-icon [mCode]="'close'" class="m-clickable" m-popconfirm mPopconfirmTitle="core.delete-confirm" (mOnConfirm)="deleteProperty(pv)"/>
@@ -52,6 +60,14 @@
               [showCodingReference]="showCodingReference"
               [compact]="compact"
               viewMode/>
+          </div>
+          <div class="prop-cell">
+            @if (showCodingReference) {
+              <tw-code-system-coding-reference
+                [property]="pv.entityPropertyId | apply:getProperty:properties"
+                [value]="pv.value"
+                [compact]="compact"/>
+            }
           </div>
         }
       </div>

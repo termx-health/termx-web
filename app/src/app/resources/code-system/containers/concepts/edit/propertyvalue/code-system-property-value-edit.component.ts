@@ -7,6 +7,7 @@ import {v4 as uuid} from "uuid";
 
 import { MuiNoDataModule, MuiFormModule, MuiIconModule, MuiPopconfirmModule } from '@kodality-web/marina-ui';
 import { EntityPropertyValueInputComponent as EntityPropertyValueInputComponent_1 } from 'term-web/core/ui/components/inputs/property-value-input/entity-property-value-input.component';
+import { CodeSystemCodingReferenceComponent } from 'term-web/resources/code-system/components/code-system-coding-reference.component';
 
 type ExtendedEntityPropertyValue = EntityPropertyValue & {_key?: string};
 
@@ -21,11 +22,11 @@ type ExtendedEntityPropertyValue = EntityPropertyValue & {_key?: string};
     }
 
     .prop-grid--edit {
-      grid-template-columns: max-content minmax(0, 1fr) auto;
+      grid-template-columns: max-content minmax(0, 1fr) max-content auto;
     }
 
     .prop-grid--view {
-      grid-template-columns: max-content minmax(0, 1fr);
+      grid-template-columns: max-content minmax(0, 1fr) max-content;
     }
 
     .prop-cell {
@@ -47,7 +48,7 @@ type ExtendedEntityPropertyValue = EntityPropertyValue & {_key?: string};
       margin-top: 0.35rem;
     }
   `],
-    imports: [MuiNoDataModule, FormsModule, MuiFormModule, EntityPropertyValueInputComponent_1, MuiIconModule, MuiPopconfirmModule, ApplyPipe, FilterPipe, SortPipe]
+    imports: [MuiNoDataModule, FormsModule, MuiFormModule, EntityPropertyValueInputComponent_1, MuiIconModule, MuiPopconfirmModule, ApplyPipe, FilterPipe, SortPipe, CodeSystemCodingReferenceComponent]
 })
 export class CodeSystemPropertyValueEditComponent implements OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;

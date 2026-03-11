@@ -10,9 +10,8 @@ import { CodeSystemCodingReferenceService, CodingReferenceSummary } from 'term-w
   standalone: true,
   template: `
     @if (reference) {
-      <span class="coding-reference" [class.coding-reference--compact]="compact">
+      <span class="coding-reference">
         @if (reference.status) {
-          <m-divider mVertical />
           <tw-status-tag [status]="reference.status" compact />
         }
         @if (reference.version) {
@@ -28,16 +27,12 @@ import { CodeSystemCodingReferenceService, CodingReferenceSummary } from 'term-w
   `,
   styles: [`
     .coding-reference {
-      display: inline-flex;
+      display: flex;
       align-items: center;
       gap: .5rem;
       flex-wrap: wrap;
       font-size: 12px;
       color: var(--text-color-secondary);
-    }
-
-    .coding-reference--compact {
-      gap: .15rem;
     }
   `],
   imports: [MuiDividerModule, StatusTagComponent]

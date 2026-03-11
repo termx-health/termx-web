@@ -82,9 +82,6 @@
                   }
                 }
               </div>
-              @if (showCodingReference) {
-                <tw-code-system-coding-reference [property]="property" [value]="value"/>
-              }
             </div>
           }
         }
@@ -113,9 +110,6 @@
               </a>
             } @else {
               <label m-tooltip [mTitle]="value?.code">{{ value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async }}</label>
-            }
-            @if (showCodingReference) {
-              <tw-code-system-coding-reference [property]="property" [value]="value" [compact]="compact"/>
             }
           </span>
         }
