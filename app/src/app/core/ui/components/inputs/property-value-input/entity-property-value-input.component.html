@@ -28,57 +28,62 @@
         }
         @case ('Coding') {
           @if (value) {
-            <div class="m-items-middle">
-              @switch (property | apply:codingType) {
-                @default {
-                  <tw-code-system-search style="flex: 1"
-                      name="system"
-                      valuePrimitive
-                      placeholder="Code system"
-                      [(ngModel)]="value.codeSystem"
-                      (ngModelChange)="fireOnChange()"
-                      [required]="required"></tw-code-system-search>
-                  <tw-term-concept-search style="flex: 1"
-                      name="value"
-                      valueType="code"
-                      [(ngModel)]="value.code"
-                      (ngModelChange)="fireOnChange()"
-                      [codeSystem]="value.codeSystem"
-                      [required]="required"></tw-term-concept-search>
-                }
-                @case ('code-system') {
-                  @if (!value.codeSystem || property.rule.codeSystems?.length > 1) {
-                    <m-select
-                        style="flex: 1"
+            <div class="m-items-middle" style="gap: 0.5rem">
+              <div class="m-items-middle" style="flex: 1">
+                @switch (property | apply:codingType) {
+                  @default {
+                    <tw-code-system-search style="flex: 1"
                         name="system"
-                        autoSelect
+                        valuePrimitive
                         placeholder="Code system"
                         [(ngModel)]="value.codeSystem"
                         (ngModelChange)="fireOnChange()"
-                        [required]="required | toBoolean">
-                      @for (system of property.rule.codeSystems; track $index) {
-                        <m-option [mValue]="system" [mLabel]="system"></m-option>
-                      }
-                    </m-select>
+                        [required]="required"></tw-code-system-search>
+                    <tw-term-concept-search style="flex: 1"
+                        name="value"
+                        valueType="code"
+                        [(ngModel)]="value.code"
+                        (ngModelChange)="fireOnChange()"
+                        [codeSystem]="value.codeSystem"
+                        [required]="required"></tw-term-concept-search>
                   }
-                  <tw-term-concept-search style="flex: 1"
-                      name="value"
-                      valueType="code"
-                      [(ngModel)]="value.code"
-                      (ngModelChange)="fireOnChange()"
-                      [codeSystem]="value.codeSystem"
-                      [required]="required"></tw-term-concept-search>
+                  @case ('code-system') {
+                    @if (!value.codeSystem || property.rule.codeSystems?.length > 1) {
+                      <m-select
+                          style="flex: 1"
+                          name="system"
+                          autoSelect
+                          placeholder="Code system"
+                          [(ngModel)]="value.codeSystem"
+                          (ngModelChange)="fireOnChange()"
+                          [required]="required | toBoolean">
+                        @for (system of property.rule.codeSystems; track $index) {
+                          <m-option [mValue]="system" [mLabel]="system"></m-option>
+                        }
+                      </m-select>
+                    }
+                    <tw-term-concept-search style="flex: 1"
+                        name="value"
+                        valueType="code"
+                        [(ngModel)]="value.code"
+                        (ngModelChange)="fireOnChange()"
+                        [codeSystem]="value.codeSystem"
+                        [required]="required"></tw-term-concept-search>
+                  }
+                  @case ('value-set') {
+                    <tw-value-set-concept-select style="flex: 1"
+                        name="value"
+                        valuePrimitive
+                        [(ngModel)]="value.code"
+                        (ngModelChange)="fireOnChange()"
+                        (selected)="value.codeSystem = $event?.concept?.codeSystem; fireOnChange()"
+                        [valueSet]="property.rule.valueSet"
+                        [required]="required"></tw-value-set-concept-select>
+                  }
                 }
-                @case ('value-set') {
-                  <tw-value-set-concept-select style="flex: 1"
-                      name="value"
-                      valuePrimitive
-                      [(ngModel)]="value.code"
-                      (ngModelChange)="fireOnChange()"
-                      (selected)="value.codeSystem = $event?.concept?.codeSystem; fireOnChange()"
-                      [valueSet]="property.rule.valueSet"
-                      [required]="required"></tw-value-set-concept-select>
-                }
+              </div>
+              @if (showCodingReference) {
+                <tw-code-system-coding-reference [property]="property" [value]="value"/>
               }
             </div>
           }
@@ -101,7 +106,18 @@
           <label>{{ value | localizedConceptName: {codeSystem: codeSystem} | async }}</label>
         }
         @if ('Coding' === property?.type) {
-          <label m-tooltip [mTitle]="value?.code">{{ value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async }}</label>
+          <span [class.coding-compact-view]="compact" class="m-items-middle" [style.gap]="compact ? '0.15rem' : '0.5rem'">
+            @if (compact && codingReference?.href) {
+              <a m-tooltip [mTitle]="value?.code" [href]="codingReference.href" target="_blank" rel="noopener noreferrer">
+                {{ value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async }}
+              </a>
+            } @else {
+              <label m-tooltip [mTitle]="value?.code">{{ value?.code | localizedConceptName: {codeSystem: value?.codeSystem} | async }}</label>
+            }
+            @if (showCodingReference) {
+              <tw-code-system-coding-reference [property]="property" [value]="value" [compact]="compact"/>
+            }
+          </span>
         }
       </div>
     }

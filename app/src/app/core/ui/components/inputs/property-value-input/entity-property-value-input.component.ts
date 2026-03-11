@@ -1,4 +1,4 @@
-import {Component, forwardRef, Input, OnChanges, SimpleChanges, ViewChild} from '@angular/core';
+import {Component, DoCheck, forwardRef, Input, OnChanges, SimpleChanges, ViewChild, inject} from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR, NgForm, FormsModule } from '@angular/forms';
 import { BooleanInput, DestroyService, isDefined, validateForm, ApplyPipe, IncludesPipe, LocalDatePipe, ToBooleanPipe } from '@kodality-web/core-util';
 import {EntityProperty} from 'term-web/resources/_lib';
@@ -8,26 +8,43 @@ import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/i
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
+import { CodeSystemCodingReferenceComponent } from 'term-web/resources/code-system/components/code-system-coding-reference.component';
+import { CodeSystemCodingReferenceService, CodingReferenceSummary } from 'term-web/resources/code-system/services/code-system-coding-reference.service';
 
 
 @Component({
     selector: 'tw-property-value-input',
     templateUrl: './entity-property-value-input.component.html',
+    styles: [`
+      .coding-compact-view {
+        display: inline-flex;
+        align-items: baseline;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+        max-width: 100%;
+      }
+    `],
     providers: [
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EntityPropertyValueInputComponent), multi: true },
         DestroyService
     ],
-    imports: [FormsModule, MuiFormModule, MuiTextareaModule, MuiCheckboxModule, MuiDatePickerModule, MuiNumberInputModule, TerminologyConceptSearchComponent, CodeSystemSearchComponent, MuiSelectModule, ValueSetConceptSelectComponent, MuiTooltipModule, AsyncPipe, ApplyPipe, IncludesPipe, LocalDatePipe, ToBooleanPipe, LocalizedConceptNamePipe]
+    imports: [FormsModule, MuiFormModule, MuiTextareaModule, MuiCheckboxModule, MuiDatePickerModule, MuiNumberInputModule, TerminologyConceptSearchComponent, CodeSystemSearchComponent, MuiSelectModule, ValueSetConceptSelectComponent, MuiTooltipModule, AsyncPipe, ApplyPipe, IncludesPipe, LocalDatePipe, ToBooleanPipe, LocalizedConceptNamePipe, CodeSystemCodingReferenceComponent]
 })
-export class EntityPropertyValueInputComponent implements OnChanges, ControlValueAccessor {
+export class EntityPropertyValueInputComponent implements OnChanges, DoCheck, ControlValueAccessor {
+  private codingReferenceService = inject(CodeSystemCodingReferenceService);
+
   @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() @BooleanInput() public required: boolean | string = false;
+  @Input() @BooleanInput() public showCodingReference: boolean | string = false;
+  @Input() @BooleanInput() public compact: boolean | string = false;
   @Input() public codeSystem?: string;
   @Input() public property?: EntityProperty;
 
   @ViewChild("form") public form?: NgForm;
 
   public value?: any;
+  protected codingReference?: CodingReferenceSummary;
+  private lastReferenceKey?: string;
 
   public onChange = (x: any): void => x;
   public onTouched = (x: any): void => x;
@@ -36,6 +53,13 @@ export class EntityPropertyValueInputComponent implements OnChanges, ControlValu
     if (changes['property'] && this.property) {
       this.prepareValue(this.property);
     }
+    if (changes['property'] || changes['showCodingReference'] || changes['compact']) {
+      this.refreshCodingReference();
+    }
+  }
+
+  public ngDoCheck(): void {
+    this.refreshCodingReference();
   }
 
   public writeValue(obj: any): void {
@@ -88,5 +112,39 @@ export class EntityPropertyValueInputComponent implements OnChanges, ControlValu
         // ignore invalid date strings
       }
     }
+  }
+
+  private refreshCodingReference(): void {
+    const referenceKey = this.getReferenceKey();
+    if (referenceKey === this.lastReferenceKey) {
+      return;
+    }
+
+    this.lastReferenceKey = referenceKey;
+    this.codingReference = undefined;
+
+    if (!referenceKey) {
+      return;
+    }
+
+    this.codingReferenceService.load(this.property, this.value).subscribe(reference => {
+      if (referenceKey === this.lastReferenceKey) {
+        this.codingReference = reference;
+      }
+    });
+  }
+
+  private getReferenceKey(): string | undefined {
+    if (!this.showCodingReference || !this.property || this.property.type !== 'Coding') {
+      return undefined;
+    }
+
+    return [
+      this.property?.id ?? this.property?.name ?? '',
+      this.value?.codeSystem ?? '',
+      this.value?.code ?? '',
+      this.value?.codeSystemVersion ?? '',
+      this.compact ? 'compact' : 'default'
+    ].join('|');
   }
 }

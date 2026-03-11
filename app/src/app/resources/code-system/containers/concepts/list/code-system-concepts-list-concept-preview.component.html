@@ -47,20 +47,15 @@
             <div class="title">
               {{'entities.code-system-entity-version.property-values' | translate}}
             </div>
-            @for (pv of version.propertyValues; track pv) {
-              <div style="display: flex; gap: 1rem">
-                <div style="flex: 1; text-align: right">
-                  {{(pv.entityProperty | apply: getProperty: entityProperties) | entityPropertyName}}
-                </div>
-                <tw-property-value-input style="flex: 1"
-                  [ngModel]="pv.value"
-                  [property]="pv.entityProperty | apply: getProperty: entityProperties"
-                  [codeSystem]="codeSystemId"
-                  viewMode/>
-                </div>
-              }
-            </div>
-          }
+            <tw-code-system-property-value-edit
+              [codeSystemId]="codeSystemId"
+              [properties]="entityProperties"
+              [propertyValues]="version.propertyValues"
+              [showCodingReference]="true"
+              [compact]="true"
+              viewMode></tw-code-system-property-value-edit>
+          </div>
+        }
           <!-- Associations -->
           @if (version.associations?.length) {
             <div>
