@@ -8,7 +8,6 @@ import { TerminologyConceptSearchComponent } from 'term-web/core/ui/components/i
 import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/containers/code-system-search.component';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
-import { CodeSystemCodingReferenceComponent } from 'term-web/resources/code-system/components/code-system-coding-reference.component';
 import { CodeSystemCodingReferenceService, CodingReferenceSummary } from 'term-web/resources/code-system/services/code-system-coding-reference.service';
 
 
@@ -28,7 +27,7 @@ import { CodeSystemCodingReferenceService, CodingReferenceSummary } from 'term-w
         { provide: NG_VALUE_ACCESSOR, useExisting: forwardRef(() => EntityPropertyValueInputComponent), multi: true },
         DestroyService
     ],
-    imports: [FormsModule, MuiFormModule, MuiTextareaModule, MuiCheckboxModule, MuiDatePickerModule, MuiNumberInputModule, TerminologyConceptSearchComponent, CodeSystemSearchComponent, MuiSelectModule, ValueSetConceptSelectComponent, MuiTooltipModule, AsyncPipe, ApplyPipe, IncludesPipe, LocalDatePipe, ToBooleanPipe, LocalizedConceptNamePipe, CodeSystemCodingReferenceComponent]
+    imports: [FormsModule, MuiFormModule, MuiTextareaModule, MuiCheckboxModule, MuiDatePickerModule, MuiNumberInputModule, TerminologyConceptSearchComponent, CodeSystemSearchComponent, MuiSelectModule, ValueSetConceptSelectComponent, MuiTooltipModule, AsyncPipe, ApplyPipe, IncludesPipe, LocalDatePipe, ToBooleanPipe, LocalizedConceptNamePipe]
 })
 export class EntityPropertyValueInputComponent implements OnChanges, DoCheck, ControlValueAccessor {
   private codingReferenceService = inject(CodeSystemCodingReferenceService);
