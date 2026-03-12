@@ -53,7 +53,10 @@
                 }
                 @if (isFirst) {
                   <td [rowSpan]="item.additionalDesignations?.length">
-                    {{item.concept?.code}}
+                    <tw-code-system-coding-reference
+                      [property]="conceptReferenceProperty"
+                      [value]="item | apply:conceptReferenceValue">
+                    </tw-code-system-coding-reference>
                   </td>
                 }
                 @if (isFirst) {
@@ -77,7 +80,10 @@
                 }
               </td>
               <td>
-                {{item.concept?.code}}
+                <tw-code-system-coding-reference
+                  [property]="conceptReferenceProperty"
+                  [value]="item | apply:conceptReferenceValue">
+                </tw-code-system-coding-reference>
               </td>
               <td>
                 {{item.display?.name ? item.display.name : (item.concept.code | localizedConceptName : {codeSystem: item.concept?.codeSystem} | async)}}

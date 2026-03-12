@@ -12,11 +12,13 @@ import { FormsModule } from '@angular/forms';
 import { AsyncPipe } from '@angular/common';
 import { TranslatePipe } from '@ngx-translate/core';
 import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pipe/localized-concept-name-pipe';
+import { CodeSystemCodingReferenceComponent } from 'term-web/resources/code-system/components/code-system-coding-reference.component';
+import { EntityProperty } from 'term-web/resources/_lib';
 
 @Component({
     templateUrl: 'value-set-version-concepts.component.html',
     providers: [DestroyService],
-    imports: [ResourceContextComponent, MuiCardModule, MuiInputModule, FormsModule, MuiIconModule, MuiDividerModule, MuiButtonModule, MuiTableModule, MuiPopoverModule, MuiNoDataModule, AsyncPipe, TranslatePipe, ApplyPipe, LocalDatePipe, LocalizedConceptNamePipe]
+    imports: [ResourceContextComponent, MuiCardModule, MuiInputModule, FormsModule, MuiIconModule, MuiDividerModule, MuiButtonModule, MuiTableModule, MuiPopoverModule, MuiNoDataModule, AsyncPipe, TranslatePipe, ApplyPipe, LocalDatePipe, LocalizedConceptNamePipe, CodeSystemCodingReferenceComponent]
 })
 export class ValueSetVersionConceptsComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -31,6 +33,7 @@ export class ValueSetVersionConceptsComponent implements OnInit {
   protected loader = new LoadingManager();
 
   protected searchInput: string;
+  protected conceptReferenceProperty: EntityProperty = {type: 'Coding'};
 
   protected isAuthenticated = this.authService.isAuthenticated.pipe(
     map(isAuth => isAuth)
@@ -51,6 +54,13 @@ export class ValueSetVersionConceptsComponent implements OnInit {
       e.display?.name?.toLowerCase().includes(text.toLowerCase()) ||
       !!e.additionalDesignations?.find(d => d.name?.toLowerCase().includes(text.toLowerCase()))
     );
+  };
+
+  protected conceptReferenceValue = (item: ValueSetVersionConcept): {code?: string, codeSystem?: string} => {
+    return {
+      code: item?.concept?.code,
+      codeSystem: item?.concept?.codeSystem
+    };
   };
 
   protected reloadExpansion(): void {

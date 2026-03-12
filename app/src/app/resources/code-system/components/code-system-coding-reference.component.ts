@@ -9,18 +9,18 @@ import { CodeSystemCodingReferenceService, CodingReferenceSummary } from 'term-w
   selector: 'tw-code-system-coding-reference',
   standalone: true,
   template: `
-    @if (reference) {
+    @if (displayCode) {
       <span class="coding-reference">
-        @if (reference.status) {
-          <tw-status-tag [status]="reference.status" compact />
+        @if (!compact) {
+          @if (reference?.href) {
+            <a [href]="reference?.href" target="_blank" rel="noopener noreferrer">{{ displayCode }}</a>
+          } @else {
+            <a>{{ displayCode }}</a>
+          }
         }
-        @if (reference.version) {
+        @if (reference?.status) {
           <m-divider mVertical />
-          <span>{{ reference.version }}</span>
-        }
-        @if (!compact && reference.href) {
-          <m-divider mVertical />
-          <a [href]="reference.href" target="_blank" rel="noopener noreferrer">{{ reference.code }}</a>
+          <tw-status-tag [status]="reference?.status" [extraText]="reference?.version ? '| ' + reference?.version : undefined" compact />
         }
       </span>
     }
@@ -29,10 +29,14 @@ import { CodeSystemCodingReferenceService, CodingReferenceSummary } from 'term-w
     .coding-reference {
       display: flex;
       align-items: center;
-      gap: .5rem;
+      gap: .25rem;
       flex-wrap: wrap;
       font-size: 12px;
       color: var(--text-color-secondary);
+    }
+
+    .coding-reference a {
+      font-size: 14px;
     }
   `],
   imports: [MuiDividerModule, StatusTagComponent]
@@ -46,6 +50,10 @@ export class CodeSystemCodingReferenceComponent implements OnChanges, DoCheck {
 
   protected reference?: CodingReferenceSummary;
   private lastLookupKey?: string;
+
+  protected get displayCode(): string | undefined {
+    return this.reference?.code || this.value?.code;
+  }
 
   public ngOnChanges(changes: SimpleChanges): void {
     if (changes['property'] || changes['value']) {

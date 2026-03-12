@@ -1,4 +1,4 @@
 <m-tag
   [mColor]="statusMap[status]"
-  [mLabel]="compact ? (status?.[0] | uppercase) : (status | localizedConceptName: {valueSet: 'publication-status'} | async)">
+  [mLabel]="(compact ? (status?.[0] | uppercase) : (status | localizedConceptName: {valueSet: 'publication-status'} | async)) + (extraText ? ' ' + extraText : '')">
 </m-tag>

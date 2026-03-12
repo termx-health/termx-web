@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
-import { collect, copyDeep, isDefined, SearchResult, ApplyPipe, JoinPipe, KeysPipe, MapPipe } from '@kodality-web/core-util';
-import {AssociationType, MapSet, MapSetAssociation, MapSetConcept, MapSetConceptSearchParams, MapSetProperty} from 'term-web/resources/_lib';
+import { collect, copyDeep, isDefined, SearchResult, ApplyPipe, KeysPipe } from '@kodality-web/core-util';
+import {AssociationType, MapSet, MapSetAssociation, MapSetConcept, MapSetConceptSearchParams, MapSetProperty, MapSetVersion} from 'term-web/resources/_lib';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {MapSetAssociationDrawerComponent} from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
@@ -11,12 +11,13 @@ import { InputDebounceDirective } from 'term-web/core/ui/directives/input-deboun
 import { MapSetPropertyValueInputComponent } from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-value-input.component';
 import { MapSetAssociationDrawerComponent as MapSetAssociationDrawerComponent_1 } from 'term-web/resources/map-set/containers/version/summary/assoociations/map-set-association-drawer.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CodeSystemCodingReferenceComponent } from 'term-web/resources/code-system/components/code-system-coding-reference.component';
 
 
 @Component({
     selector: 'tw-map-set-source-concept-list',
     templateUrl: 'map-set-source-concept-list.component.html',
-    imports: [MuiCardModule, MarinPageLayoutModule, MuiCheckboxModule, FormsModule, MuiInputModule, InputDebounceDirective, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MapSetPropertyValueInputComponent, MuiIconModule, MuiDropdownModule, MuiNoDataModule, MapSetAssociationDrawerComponent_1, TranslatePipe, ApplyPipe, JoinPipe, KeysPipe, MapPipe]
+    imports: [MuiCardModule, MarinPageLayoutModule, MuiCheckboxModule, FormsModule, MuiInputModule, InputDebounceDirective, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MapSetPropertyValueInputComponent, MuiIconModule, MuiDropdownModule, MuiNoDataModule, MapSetAssociationDrawerComponent_1, TranslatePipe, ApplyPipe, KeysPipe, CodeSystemCodingReferenceComponent]
 })
 export class MapSetSourceConceptListComponent implements OnChanges {
   private mapSetService = inject(MapSetService);
@@ -114,4 +115,29 @@ export class MapSetSourceConceptListComponent implements OnChanges {
   protected findProperty = (id: number, properties: MapSetProperty[]): MapSetProperty => {
    return properties?.find(p => p.id === id);
   };
+
+  protected sourceConceptProperty: MapSetProperty = {type: 'Coding'};
+  protected targetConceptProperty: MapSetProperty = {type: 'Coding'};
+
+  protected sourceConceptValue = (concept: MapSetConcept): {code?: string, codeSystem?: string, codeSystemVersion?: string} => {
+    return {
+      code: concept?.code,
+      codeSystem: concept?.codeSystem,
+      codeSystemVersion: this.currentMapSetVersion?.scope?.sourceValueSet?.version
+        ?? this.currentMapSetVersion?.scope?.sourceCodeSystems?.find(cs => cs.id === concept?.codeSystem)?.version
+    };
+  };
+
+  protected targetConceptValue = (association: MapSetAssociation): {code?: string, codeSystem?: string, codeSystemVersion?: string} => {
+    return {
+      code: association?.target?.code,
+      codeSystem: association?.target?.codeSystem,
+      codeSystemVersion: this.currentMapSetVersion?.scope?.targetValueSet?.version
+        ?? this.currentMapSetVersion?.scope?.targetCodeSystems?.find(cs => cs.id === association?.target?.codeSystem)?.version
+    };
+  };
+
+  private get currentMapSetVersion(): MapSetVersion | undefined {
+    return this.mapSet?.versions?.find(v => v.version === this.mapSetVersion);
+  }
 }

@@ -1,5 +1,5 @@
 <m-drawer [mVisible]="drawerOpened" (mClose)="closeDrawer()">
-  @if (!targetConcept) {
+  @if (drawerOpened && !targetConcept) {
     <m-card mDisplay="flat">
       <div *m-card-header class="m-justify-between">
         <m-title>{{'web.map-set-version.summary.associations.target-concepts' | translate}}</m-title>
@@ -12,8 +12,13 @@
             <th>{{'web.map-set-version.summary.associations.display' | translate}}</th>
           </tr>
           <tr *mTableRow="let c">
-            <td><a (mClick)="targetConcept = c">{{c.code}}</a></td>
-            <td>{{c.display.name}}</td>
+            <td>
+              <tw-code-system-coding-reference
+                [property]="targetConceptProperty"
+                [value]="c | apply:targetConceptValue">
+              </tw-code-system-coding-reference>
+            </td>
+            <td><a (mClick)="targetConcept = c">{{c.display.name}}</a></td>
           </tr>
           <tr *mTableNoData>
             <td colspan="100%">
@@ -91,4 +96,3 @@
     </m-card>
   }
 </m-drawer>
-
