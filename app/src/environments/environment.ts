@@ -5,7 +5,7 @@ import packageJson from '../../../package.json';
 export const environment: Environment = {
   appVersion: packageJson.version,
   production: false,
-  yupiEnabled: false,
+  yupiEnabled: true,
   baseHref: '/',
 
   defaultLanguage: 'en',

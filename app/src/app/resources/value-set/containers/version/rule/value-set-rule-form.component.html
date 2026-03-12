@@ -25,7 +25,7 @@
               [(ngModel)]="rule.codeSystemVersion"
               [codeSystemId]="rule.codeSystem"
               [required]="!lockedDate && conceptsBase !== 'filter'"
-            [autoSelectOnlyWhenSingle]="conceptsBase === 'filter'"></tw-code-system-version-select>
+              [autoSelectOnlyWhenSingle]="conceptsBase === 'filter'"></tw-code-system-version-select>
           </m-form-item>
         </m-form-row>
         <m-form-row>
@@ -51,13 +51,13 @@
             [valueSetVersion]="valueSetVersion"
             [lockedDate]="lockedDate"
             [rule]="rule"
-          [inactiveConcepts]="inactiveConcepts"></tw-value-set-rule-concept-list>
+            [inactiveConcepts]="inactiveConcepts"></tw-value-set-rule-concept-list>
         }
         @if (conceptsBase === 'filter') {
           <tw-value-set-rule-filter-list
             [codeSystem]="rule.codeSystem"
             [filters]="rule.filters"
-          (filtersChange)="rule.filters = $event"></tw-value-set-rule-filter-list>
+            (filtersChange)="rule.filters = $event"></tw-value-set-rule-filter-list>
         }
       }
       @if (ruleBase === 'value-set') {
@@ -69,7 +69,7 @@
             <tw-value-set-version-select name="valueSetVersion"
               [(ngModel)]="rule.valueSetVersion"
               [valueSetId]="rule.valueSet"
-            [required]="!lockedDate"></tw-value-set-version-select>
+              [required]="!lockedDate"></tw-value-set-version-select>
           </m-form-item>
         </m-form-row>
       }
@@ -110,14 +110,14 @@
             [lockedDate]="lockedDate"
             [rule]="rule"
             [inactiveConcepts]="inactiveConcepts"
-          viewMode></tw-value-set-rule-concept-list>
+            viewMode></tw-value-set-rule-concept-list>
         }
         @if (conceptsBase === 'filter') {
           <tw-value-set-rule-filter-list
             [codeSystem]="rule.codeSystem"
             [filters]="rule.filters"
             (filtersChange)="rule.filters = $event"
-          viewMode></tw-value-set-rule-filter-list>
+            viewMode></tw-value-set-rule-filter-list>
         }
       }
       @if (ruleBase === 'value-set') {
@@ -128,6 +128,41 @@
           {{rule.valueSetVersion?.version || '-'}}
         </m-form-item>
       }
+    }
+    @if (rule.type === 'include') {
+      <m-card style="margin-top: 1rem;">
+        <m-title *m-card-header mTitle="web.value-set-version.summary.rule-expansion-preview">
+          <m-button
+            mControls
+            mDisplay="text"
+            mShape="circle"
+            [disabled]="loader.state['preview-expansion'] || !canPreviewExpansion()"
+            (mClick)="previewExpansion()">
+            @if (!loader.state['preview-expansion']) {
+              <m-icon mCode="reload"></m-icon>
+            }
+            @if (loader.state['preview-expansion']) {
+              <m-icon mCode="loading"></m-icon>
+            }
+          </m-button>
+        </m-title>
+        @if (!expansionPreviewLoaded) {
+          <span>{{'web.value-set-version.summary.rule-expansion-preview-info' | translate}}</span>
+        }
+        @if (expansionPreviewLoaded && !expansionPreview?.length) {
+          <m-no-data></m-no-data>
+        }
+        @if (expansionPreview?.length) {
+          <div>
+            @for (concept of expansionPreview; track concept) {
+              <div style="display: flex; gap: 1rem">
+                <span style="flex: 1">{{concept.concept.code}}</span>
+                <span style="flex: 4">{{concept.display?.name}}</span>
+              </div>
+            }
+          </div>
+        }
+      </m-card>
     }
   </form>
 }

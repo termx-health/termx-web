@@ -2269,6 +2269,7 @@
 				"expansion-limit-info": "Näidatakse 20 mõistet.  {{count}} mõistet on veel serveris.",
 				"expansion-see-all": "Vaata kõiki mõisteid.",
 				"expansion-warning": "Väljavõte ümberarvutamiseks versioon olema olekus „mustand/draft”.",
+				"preview-expansion": "Kuva väljavõte",
 				"info": {
 					"add-to-release": "Lisa väljalaskesse",
 					"release-unspecified": "Väljalase on määramata",
@@ -2289,6 +2290,8 @@
 				},
 				"rule": "Reegel",
 				"rule-set": "Reeglid",
+				"rule-expansion-preview": "Reegli väljavõtte eelvaade",
+				"rule-expansion-preview-info": "Käivita eelvaade, et näha selle include-reegli loodud mõisteid.",
 				"task-modal": {
 					"assignee": "Teostaja",
 					"header": "Loo {{type}} ülesanne",

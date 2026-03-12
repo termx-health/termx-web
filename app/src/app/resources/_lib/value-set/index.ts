@@ -4,6 +4,7 @@ export * from 'term-web/resources/_lib/value-set/containers/value-set-version-se
 export * from 'term-web/resources/_lib/value-set/containers/value-set-widget.component';
 export * from 'term-web/resources/_lib/value-set/model/value-set';
 export * from 'term-web/resources/_lib/value-set/model/value-set-expand-request';
+export * from 'term-web/resources/_lib/value-set/model/value-set-rule-expand-request';
 export * from 'term-web/resources/_lib/value-set/model/value-set-search-params';
 export * from 'term-web/resources/_lib/value-set/model/value-set-snapshot';
 export * from 'term-web/resources/_lib/value-set/model/value-set-transaction-request';
