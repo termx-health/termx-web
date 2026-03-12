@@ -1161,6 +1161,7 @@
 		"code-system-version": {
 			"form": {
 				"add-header": "Add version",
+				"details-header": "Version details",
 				"edit-header": "Version metadata",
 				"entities": {
 					"add-entity": "",

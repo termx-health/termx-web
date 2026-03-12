@@ -13,6 +13,8 @@ import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inpu
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
 import { ResourceIdentifiersComponent } from 'term-web/resources/resource/components/resource-identifiers.component';
+import { ResourceMultiLanguageViewComponent } from 'term-web/resources/resource/components/resource-multi-language-view.component';
+import { ResourceReadonlyConceptComponent } from 'term-web/resources/resource/components/resource-readonly-concept.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
 
@@ -31,6 +33,8 @@ import { TranslatePipe } from '@ngx-translate/core';
     MuiMultiLanguageInputModule,
     CodeSystemVersionSelectComponent,
     ResourceIdentifiersComponent,
+    ResourceMultiLanguageViewComponent,
+    ResourceReadonlyConceptComponent,
     MuiButtonModule,
     MuiIconModule,
     AsyncPipe,
@@ -57,11 +61,11 @@ export class CodeSystemVersionEditComponent implements OnInit {
 
   public ngOnInit(): void {
     this.codeSystemId = this.route.snapshot.paramMap.get('id');
+    this.viewMode = this.route.snapshot.routeConfig?.path === ':id/versions/:versionCode/details';
     const versionCode = this.route.snapshot.paramMap.get('versionCode');
 
     if (isDefined(versionCode)) {
       this.mode = 'edit';
-      this.viewMode = true;
       this.canEdit = this.authService.hasPrivilege(this.codeSystemId + '.CodeSystem.edit');
       this.loader.wrap('load', this.codeSystemService.loadVersion(this.codeSystemId, versionCode)).subscribe(v => this.version = this.writeVersion(v));
     } else {

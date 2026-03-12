@@ -4,7 +4,7 @@
       <m-card [mShowSkeleton]="loader.isLoading">
         <div *m-card-header class="m-justify-between">
           <div class="m-items-middle">
-            <div class="m-card__title">{{(mode === 'edit' ? 'web.code-system-version.form.edit-header' : 'web.code-system-version.form.add-header') | translate}}</div>
+            <div class="m-card__title">{{(viewMode ? 'web.code-system-version.form.details-header' : (mode === 'edit' ? 'web.code-system-version.form.edit-header' : 'web.code-system-version.form.add-header')) | translate}}</div>
             @if (version?.status) {
               <tw-status-tag [status]="version.status"></tw-status-tag>
             }
@@ -40,29 +40,58 @@
             </m-form-row>
             <m-form-row>
               <m-form-item *mFormCol mName="preferredLanguage" mLabel="entities.code-system-version.preferred-language">
-                <tw-value-set-concept-select name="preferredLanguage" [(ngModel)]="version.preferredLanguage" valueSet="languages"></tw-value-set-concept-select>
+                @if (!viewMode) {
+                  <tw-value-set-concept-select name="preferredLanguage" [(ngModel)]="version.preferredLanguage" valueSet="languages"></tw-value-set-concept-select>
+                }
+                @if (viewMode) {
+                  <tw-resource-readonly-concept [value]="version.preferredLanguage" valueSet="languages"></tw-resource-readonly-concept>
+                }
               </m-form-item>
               <m-form-item *mFormCol mName="supportedLanguages" mLabel="entities.code-system-version.supported-languages">
-                <tw-value-set-concept-select name="supportedLanguages"
-                  [(ngModel)]="version.supportedLanguages"
-                  valueSet="languages"
-                multiple></tw-value-set-concept-select>
+                @if (!viewMode) {
+                  <tw-value-set-concept-select name="supportedLanguages"
+                    [(ngModel)]="version.supportedLanguages"
+                    valueSet="languages"
+                  multiple></tw-value-set-concept-select>
+                }
+                @if (viewMode) {
+                  <span>
+                    @for (language of version.supportedLanguages; track language; let last = $last) {
+                      <tw-resource-readonly-concept [value]="language" valueSet="languages"></tw-resource-readonly-concept>@if (!last) {<span>, </span>}
+                    }
+                  </span>
+                }
               </m-form-item>
             </m-form-row>
             <m-form-row>
               <m-form-item  *mFormCol mName="description" mLabel="entities.code-system-version.description">
-                <m-multi-language-input name="description" [(ngModel)]="version.description" mInputType="textarea"/>
+                @if (!viewMode) {
+                  <m-multi-language-input name="description" [(ngModel)]="version.description" mInputType="textarea"/>
+                }
+                @if (viewMode) {
+                  <tw-resource-multi-language-view [value]="version.description"></tw-resource-multi-language-view>
+                }
               </m-form-item>
               <m-form-item *mFormCol mName="algorithm" mLabel="entities.resource.version.algorithm">
-                <tw-value-set-concept-select name="algorithm" [(ngModel)]="version.algorithm" valueSet="version-algorithm"></tw-value-set-concept-select>
+                @if (!viewMode) {
+                  <tw-value-set-concept-select name="algorithm" [(ngModel)]="version.algorithm" valueSet="version-algorithm"></tw-value-set-concept-select>
+                }
+                @if (viewMode) {
+                  <tw-resource-readonly-concept [value]="version.algorithm" valueSet="version-algorithm"></tw-resource-readonly-concept>
+                }
               </m-form-item>
             </m-form-row>
             @if (version.baseCodeSystem) {
               <m-form-item mName="baseVersion" mLabel="entities.code-system-version.base-version">
-                <tw-code-system-version-select name="baseVersion" [codeSystemId]="version.baseCodeSystem" [(ngModel)]="version.baseCodeSystemVersion" [autoSelect]="false"/>
+                @if (!viewMode) {
+                  <tw-code-system-version-select name="baseVersion" [codeSystemId]="version.baseCodeSystem" [(ngModel)]="version.baseCodeSystemVersion" [autoSelect]="false"/>
+                }
+                @if (viewMode) {
+                  <span>{{version.baseCodeSystemVersion}}</span>
+                }
               </m-form-item>
             }
-            <tw-resource-identifiers [(identifiers)]="version.identifiers" version></tw-resource-identifiers>
+            <tw-resource-identifiers [(identifiers)]="version.identifiers" version [viewMode]="viewMode"></tw-resource-identifiers>
             </fieldset>
           </form>
         }
