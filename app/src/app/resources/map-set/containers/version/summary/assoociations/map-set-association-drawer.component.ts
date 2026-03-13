@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnChanges, Output, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import {copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
+import {ApplyPipe, copyDeep, SearchResult, validateForm} from '@kodality-web/core-util';
 import {finalize, Observable, of, tap} from 'rxjs';
 import {
   AssociationType,
@@ -10,7 +10,8 @@ import {
   MapSetConcept,
   MapSetConceptSearchParams,
   MapSetProperty,
-  MapSetPropertyValue
+  MapSetPropertyValue,
+  MapSetVersion
 } from 'term-web/resources/_lib';
 import {MapSetPropertyValuesComponent} from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-values.component';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
@@ -20,11 +21,12 @@ import { InputDebounceDirective } from 'term-web/core/ui/directives/input-deboun
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { MapSetPropertyValuesComponent as MapSetPropertyValuesComponent_1 } from 'term-web/resources/map-set/containers/version/summary/property-values/map-set-property-values.component';
 import { TranslatePipe } from '@ngx-translate/core';
+import { CodeSystemCodingReferenceComponent } from 'term-web/resources/code-system/components/code-system-coding-reference.component';
 
 @Component({
     selector: 'tw-map-set-association-drawer',
     templateUrl: 'map-set-association-drawer.component.html',
-    imports: [MuiDrawerModule, MuiCardModule, MarinPageLayoutModule, MuiInputModule, InputDebounceDirective, FormsModule, MuiSpinnerModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule, MuiFormModule, MuiIconModule, MuiRadioModule, MuiDropdownModule, AddButtonComponent, MapSetPropertyValuesComponent_1, MuiButtonModule, TranslatePipe]
+    imports: [MuiDrawerModule, MuiCardModule, MarinPageLayoutModule, MuiInputModule, InputDebounceDirective, FormsModule, MuiSpinnerModule, MuiBackendTableModule, MuiTableModule, MuiCoreModule, MuiNoDataModule, MuiFormModule, MuiIconModule, MuiRadioModule, MuiDropdownModule, AddButtonComponent, MapSetPropertyValuesComponent_1, MuiButtonModule, TranslatePipe, CodeSystemCodingReferenceComponent, ApplyPipe]
 })
 export class MapSetAssociationDrawerComponent implements OnChanges {
   private mapSetService = inject(MapSetService);
@@ -48,6 +50,7 @@ export class MapSetAssociationDrawerComponent implements OnChanges {
   public query = new MapSetConceptSearchParams();
   public searchResult: SearchResult<MapSetConcept> = SearchResult.empty();
   public searchInput: string;
+  protected targetConceptProperty: MapSetProperty = {type: 'Coding'};
 
   @ViewChild(MapSetPropertyValuesComponent) public propertyValuesComponent?: MapSetPropertyValuesComponent;
 
@@ -113,5 +116,18 @@ export class MapSetAssociationDrawerComponent implements OnChanges {
 
   public addPropertyValue(prop: MapSetProperty): void {
     this.propertyValues = [...this.propertyValues || [], {mapSetPropertyId: prop.id, mapSetPropertyName: prop.name, value: prop.type === 'Coding' ? {} : undefined}];
+  }
+
+  protected targetConceptValue = (concept: MapSetConcept): {code?: string, codeSystem?: string, codeSystemVersion?: string} => {
+    return {
+      code: concept?.code,
+      codeSystem: concept?.codeSystem,
+      codeSystemVersion: this.currentMapSetVersion?.scope?.targetValueSet?.version
+        ?? this.currentMapSetVersion?.scope?.targetCodeSystems?.find(cs => cs.id === concept?.codeSystem)?.version
+    };
+  };
+
+  private get currentMapSetVersion(): MapSetVersion | undefined {
+    return this.mapSet?.versions?.find(v => v.version === this.mapSetVersion);
   }
 }

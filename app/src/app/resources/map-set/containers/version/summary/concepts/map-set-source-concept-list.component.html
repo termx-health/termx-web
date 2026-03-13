@@ -19,7 +19,12 @@
     </tr>
 
     <tr *mTableRow="let c">
-      <td><a>{{c.code}}</a></td>
+      <td>
+        <tw-code-system-coding-reference
+          [property]="sourceConceptProperty"
+          [value]="c | apply:sourceConceptValue">
+        </tw-code-system-coding-reference>
+      </td>
       <td>{{c.display?.name}}</td>
       <td>
         @for (a of c.associations; track a) {
@@ -27,6 +32,11 @@
             <div class="m-items-middle">
               <label class="m-subtitle">{{p.mapSetPropertyName}}</label>
               <tw-map-set-property-value-input [(ngModel)]="p.value" [property]="p.mapSetPropertyId | apply:findProperty:mapSet?.properties" viewMode/>
+              @if ({prop: p.mapSetPropertyId | apply:findProperty:mapSet?.properties}; as d) {
+                @if (d.prop?.type === 'Coding') {
+                  <tw-code-system-coding-reference [property]="d.prop" [value]="p.value"/>
+                }
+              }
             </div>
           }
         }
@@ -37,7 +47,14 @@
             <div class="m-items-middle">
               <label class="m-bold">{{relationship | apply:getRelationName:associationTypes}}</label>
               <m-icon mCode="arrow-right"></m-icon>
-              <label>{{groups[relationship] | map: 'target.code' | join: ','}}</label>
+              <div class="m-items-middle" style="flex-wrap: wrap; gap: 0.5rem">
+                @for (association of groups[relationship]; track association) {
+                  <tw-code-system-coding-reference
+                    [property]="targetConceptProperty"
+                    [value]="association | apply:targetConceptValue">
+                  </tw-code-system-coding-reference>
+                }
+              </div>
             </div>
           }
         }

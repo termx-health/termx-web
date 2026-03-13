@@ -6,6 +6,7 @@ import {Observable} from 'rxjs';
 import {JobLogResponse, Provenance} from 'term-web/sys/_lib';
 import {ValueSet} from 'term-web/resources/_lib/value-set/model/value-set';
 import {ValueSetExpandRequest} from 'term-web/resources/_lib/value-set/model/value-set-expand-request';
+import {ValueSetRuleExpandRequest} from 'term-web/resources/_lib/value-set/model/value-set-rule-expand-request';
 import {ValueSetSearchParams} from 'term-web/resources/_lib/value-set/model/value-set-search-params';
 import {ValueSetVersion} from 'term-web/resources/_lib/value-set/model/value-set-version';
 import {ValueSetVersionConcept} from 'term-web/resources/_lib/value-set/model/value-set-version-concept';
@@ -45,6 +46,10 @@ export class ValueSetLibService {
 
   public expandAsync(request: ValueSetExpandRequest): Observable<JobLogResponse> {
     return this.http.post<JobLogResponse>(`${this.baseUrl}/expand-async`, request);
+  }
+
+  public expandRule(request: ValueSetRuleExpandRequest): Observable<ValueSetVersionConcept[]> {
+    return this.http.post<ValueSetVersionConcept[]>(`${this.baseUrl}/expand-rule`, request);
   }
 
   public loadProvenances(valueSet: string, version: string): Observable<Provenance[]> {

@@ -13,6 +13,7 @@ import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pi
 export class StatusTagComponent {
   @Input() public status?: string;
   @Input() @BooleanInput() public compact: boolean | string = false;
+  @Input() public extraText?: string;
 
   public statusMap: {[status: string]: string} = {
     'active': 'success',
