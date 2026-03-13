@@ -18,13 +18,14 @@ import { ResourceIdentifiersComponent as ResourceIdentifiersComponent_1 } from '
 import { ResourceConfigurationAttributesComponent as ResourceConfigurationAttributesComponent_1 } from 'term-web/resources/resource/components/resource-configuration-attributes.component';
 import { ResourceContactsComponent } from 'term-web/resources/resource/components/resource-contacts.component';
 import { ResourceVersionFormComponent as ResourceVersionFormComponent_1 } from 'term-web/resources/resource/components/resource-version-form.component';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
 import { ResourceSideInfoComponent } from 'term-web/resources/resource/components/resource-side-info.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
 
 @Component({
     templateUrl: 'value-set-edit.component.html',
-    imports: [MuiSpinnerModule, FormsModule, NzRowDirective, NzColDirective, MuiCardModule, ResourceFormComponent_1, ResourceIdentifiersComponent_1, ResourceConfigurationAttributesComponent_1, ResourceContactsComponent, ResourceVersionFormComponent_1, MuiButtonModule, MuiIconModule, ResourceSideInfoComponent, TranslatePipe]
+    imports: [MuiSpinnerModule, FormsModule, NzRowDirective, NzColDirective, MuiCardModule, ResourceContextComponent, ResourceFormComponent_1, ResourceIdentifiersComponent_1, ResourceConfigurationAttributesComponent_1, ResourceContactsComponent, ResourceVersionFormComponent_1, MuiButtonModule, MuiIconModule, ResourceSideInfoComponent, TranslatePipe]
 })
 export class ValueSetEditComponent implements OnInit {
   private route = inject(ActivatedRoute);
@@ -37,6 +38,7 @@ export class ValueSetEditComponent implements OnInit {
   protected mode: 'edit' | 'add' = 'add';
   protected viewMode = false;
   protected canEdit = false;
+  protected versions: any[] = [];
 
   @ViewChild("form") public form?: NgForm;
   @ViewChild(ResourceFormComponent) public resourceFormComponent?: ResourceFormComponent;
@@ -45,14 +47,15 @@ export class ValueSetEditComponent implements OnInit {
   @ViewChild(ResourceConfigurationAttributesComponent) public resourceConfigurationAttributesComponent?: ResourceConfigurationAttributesComponent;
 
   public ngOnInit(): void {
+    this.viewMode = this.route.snapshot.routeConfig?.path === ':id/details';
     this.route.paramMap.subscribe(paramMap => {
       const id = paramMap.get('id');
 
       if (isDefined(id)) {
         this.mode = 'edit';
-        this.viewMode = true;
         this.canEdit = this.authService.hasPrivilege(id + '.ValueSet.edit');
         this.loader.wrap('load', this.valueSetService.load(id)).subscribe(vs => this.valueSet = this.writeVS(vs));
+        this.valueSetService.searchVersions(id, {limit: -1}).subscribe(r => this.versions = r.data);
       }
       this.valueSet = this.writeVS(new ValueSet());
     });
@@ -82,6 +85,12 @@ export class ValueSetEditComponent implements OnInit {
 
   protected validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
+  }
+
+  protected openEdit(): void {
+    if (this.valueSet?.id) {
+      this.router.navigate(['/resources/value-sets', this.valueSet.id, 'edit']);
+    }
   }
 
   private writeVS(vs: ValueSet): ValueSet {

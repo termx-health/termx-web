@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import { compareValues, isDefined, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { compareValues, isDefined, LoadingManager, validateForm, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
 import {CodeSystemVersion} from 'term-web/resources/_lib';
 import {map, Observable} from 'rxjs';
 import {CodeSystemService} from 'term-web/resources/code-system/services/code-system.service';
@@ -13,6 +13,7 @@ import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inpu
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { CodeSystemVersionSelectComponent } from 'term-web/resources/_lib/code-system/containers/code-system-version-select.component';
 import { ResourceIdentifiersComponent } from 'term-web/resources/resource/components/resource-identifiers.component';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
 import { ResourceMultiLanguageViewComponent } from 'term-web/resources/resource/components/resource-multi-language-view.component';
 import { ResourceReadonlyConceptComponent } from 'term-web/resources/resource/components/resource-readonly-concept.component';
 import { TranslatePipe } from '@ngx-translate/core';
@@ -32,6 +33,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     ValueSetConceptSelectComponent,
     MuiMultiLanguageInputModule,
     CodeSystemVersionSelectComponent,
+    ResourceContextComponent,
     ResourceIdentifiersComponent,
     ResourceMultiLanguageViewComponent,
     ResourceReadonlyConceptComponent,
@@ -39,6 +41,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     MuiIconModule,
     AsyncPipe,
     TranslatePipe,
+    LocalDatePipe,
     ApplyPipe
 ],
 })
@@ -49,6 +52,7 @@ export class CodeSystemVersionEditComponent implements OnInit {
   private router = inject(Router);
 
   protected codeSystemId?: string | null;
+  protected codeSystem?: any;
   protected version?: CodeSystemVersion;
   protected loader = new LoadingManager();
   protected mode: 'add' | 'edit' = 'add';
@@ -67,6 +71,7 @@ export class CodeSystemVersionEditComponent implements OnInit {
     if (isDefined(versionCode)) {
       this.mode = 'edit';
       this.canEdit = this.authService.hasPrivilege(this.codeSystemId + '.CodeSystem.edit');
+      this.codeSystemService.load(this.codeSystemId!).subscribe(cs => this.codeSystem = cs);
       this.loader.wrap('load', this.codeSystemService.loadVersion(this.codeSystemId, versionCode)).subscribe(v => this.version = this.writeVersion(v));
     } else {
       this.codeSystemService.searchVersions(this.codeSystemId).subscribe(r => {
@@ -90,6 +95,12 @@ export class CodeSystemVersionEditComponent implements OnInit {
   public versions = (id): Observable<string[]> => {
     return this.codeSystemService.searchVersions(id, {limit: -1}).pipe(map(r => r.data.map(d => d.version)));
   };
+
+  protected openEdit(): void {
+    if (this.codeSystemId && this.version?.version) {
+      this.router.navigate(['/resources/code-systems', this.codeSystemId, 'versions', this.version.version, 'edit']);
+    }
+  }
 
   private writeVersion(version: CodeSystemVersion): CodeSystemVersion {
     version.status ??= 'draft';

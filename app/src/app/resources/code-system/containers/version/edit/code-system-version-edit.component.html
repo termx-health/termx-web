@@ -1,3 +1,6 @@
+@if (codeSystem && version) {
+  <tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [version]="version" mode="details"></tw-resource-context>
+}
 <m-form-row>
   <div *mFormCol>
     <m-spinner [mLoading]="loader.isLoading">
@@ -10,7 +13,7 @@
             }
           </div>
           @if (viewMode && canEdit) {
-            <m-button mDisplay="text" (mClick)="viewMode = false">
+            <m-button mDisplay="text" (mClick)="openEdit()">
               {{'core.btn.edit' | translate}}&nbsp;<m-icon mCode="form"></m-icon>
             </m-button>
           }
@@ -18,24 +21,43 @@
 
         @if (version) {
           <form #form="ngForm">
-            <fieldset [attr.disabled]="viewMode ? '' : null" [style.pointer-events]="viewMode ? 'none' : null" style="border:none;padding:0;margin:0">
             <m-form-row>
               <m-form-item *mFormCol mName="version" mLabel="entities.code-system-version.version" required>
-                <tw-semantic-version-select name="version"
-                  [(ngModel)]="version.version"
-                  [versions]="codeSystemId | apply: versions | async"
-                required></tw-semantic-version-select>
+                @if (!viewMode) {
+                  <tw-semantic-version-select name="version"
+                    [(ngModel)]="version.version"
+                    [versions]="codeSystemId | apply: versions | async"
+                  required></tw-semantic-version-select>
+                }
+                @if (viewMode) {
+                  <span>{{version.version}}</span>
+                }
               </m-form-item>
               <m-form-item *mFormCol mName="uri" mLabel="entities.code-system-version.uri">
-                <m-input name="uri" [(ngModel)]="version.uri"/>
+                @if (!viewMode) {
+                  <m-input name="uri" [(ngModel)]="version.uri"/>
+                }
+                @if (viewMode) {
+                  <span>{{version.uri}}</span>
+                }
               </m-form-item>
             </m-form-row>
             <m-form-row>
               <m-form-item *mFormCol mName="releaseDate" mLabel="entities.code-system-version.release-date" required>
-                <m-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" [mMax]="version.expirationDate" required/>
+                @if (!viewMode) {
+                  <m-date-picker name="releaseDate" [(ngModel)]="version.releaseDate" [mMax]="version.expirationDate" required/>
+                }
+                @if (viewMode) {
+                  <span>{{version.releaseDate | localDate}}</span>
+                }
               </m-form-item>
               <m-form-item *mFormCol mName="expirationDate" mLabel="entities.code-system-version.expiration-date">
-                <m-date-picker name="expirationDate" [(ngModel)]="version.expirationDate" [mMin]="version.releaseDate"/>
+                @if (!viewMode) {
+                  <m-date-picker name="expirationDate" [(ngModel)]="version.expirationDate" [mMin]="version.releaseDate"/>
+                }
+                @if (viewMode) {
+                  <span>{{version.expirationDate ? (version.expirationDate | localDate) : ''}}</span>
+                }
               </m-form-item>
             </m-form-row>
             <m-form-row>
@@ -92,7 +114,6 @@
               </m-form-item>
             }
             <tw-resource-identifiers [(identifiers)]="version.identifiers" version [viewMode]="viewMode"></tw-resource-identifiers>
-            </fieldset>
           </form>
         }
 

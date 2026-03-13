@@ -1,3 +1,6 @@
+@if (mode === 'edit' && codeSystem?.id) {
+  <tw-resource-context resourceType="CodeSystem" [resource]="codeSystem" [versions]="versions" mode="details"></tw-resource-context>
+}
 <m-spinner [mLoading]="loader.state['save']">
   @if (codeSystem) {
     <form nz-row [nzGutter]="12" #form="ngForm">
@@ -6,7 +9,7 @@
           <div *m-card-header class="m-justify-between">
             <div class="m-card__title">{{(viewMode ? 'web.code-system.form.details-header' : 'web.code-system.form.' + mode + '-header') | translate}}</div>
             @if (viewMode && canEdit) {
-              <m-button mDisplay="text" (mClick)="viewMode = false">
+              <m-button mDisplay="text" (mClick)="openEdit()">
                 {{'core.btn.edit' | translate}}&nbsp;<m-icon mCode="form"></m-icon>
               </m-button>
             }

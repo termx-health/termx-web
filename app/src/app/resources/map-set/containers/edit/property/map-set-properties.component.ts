@@ -1,13 +1,13 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {HttpContext} from '@angular/common/http';
-import { BooleanInput, copyDeep, LoadingManager, validateForm, FilterPipe } from '@kodality-web/core-util';
+import { ApplyPipe, BooleanInput, copyDeep, LoadingManager, validateForm, FilterPipe } from '@kodality-web/core-util';
 import {catchError, of, throwError} from 'rxjs';
 import {MuiSkipErrorHandler} from 'term-web/core/marina/http-error-handler';
 import {DefinedProperty, PropertyRule, MapSetProperty} from 'term-web/resources/_lib';
 import {DefinedPropertyLibService} from 'term-web/resources/_lib/defined-property/services/defined-property-lib.service';
 import {MapSetService} from 'term-web/resources/map-set/services/map-set-service';
-import { MuiCardModule, MuiDropdownModule, MuiEditableTableModule, MuiCheckboxModule, MuiCoreModule, MuiTableModule, MuiFormModule, MuiInputModule, MuiMultiLanguageInputModule, MuiNumberInputModule, MuiDividerModule } from '@kodality-web/marina-ui';
+import { MuiCardModule, MuiDropdownModule, MuiEditableTableModule, MuiCheckboxModule, MuiCoreModule, MuiTableModule, MuiFormModule, MuiInputModule, MuiMultiLanguageInputModule, MuiNumberInputModule, MuiDividerModule, MuiIconModule } from '@kodality-web/marina-ui';
 import { AsyncPipe } from '@angular/common';
 import { AddButtonComponent } from 'term-web/core/ui/components/add-button/add-button.component';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
@@ -35,11 +35,13 @@ import { LocalizedConceptNamePipe } from 'term-web/resources/_lib/code-system/pi
         ValueSetConceptSelectComponent,
         MuiNumberInputModule,
         MuiDividerModule,
+        MuiIconModule,
         CodeSystemSearchComponent,
         ValueSetSearchComponent,
         AsyncPipe,
         TranslatePipe,
         MarinaUtilModule,
+        ApplyPipe,
         FilterPipe,
         LocalizedConceptNamePipe,
     ],
@@ -53,6 +55,7 @@ export class MapSetPropertiesComponent implements OnInit, OnChanges {
   @Input() @BooleanInput() public viewMode: boolean | string = false;
 
   protected propertyRowInstance: MapSetProperty = {rule: {filters: []}, status: 'active'};
+  protected expandedPropertyKey?: string;
   protected loader = new LoadingManager();
 
   @ViewChild("form") public form?: NgForm;
@@ -97,5 +100,16 @@ export class MapSetPropertiesComponent implements OnInit, OnChanges {
     if (!this.properties.find(d => d.name === dp.name)) {
       this.properties = [...this.properties, p];
     }
+  }
+
+  protected getPropertyKey = (p: MapSetProperty): string => {
+    return p?.id ? `id:${p.id}` : `name:${p?.name || ''}`;
+  };
+
+  protected togglePropertyExpand(p: MapSetProperty, event?: any): void {
+    event?.preventDefault?.();
+    event?.stopPropagation?.();
+    const key = this.getPropertyKey(p);
+    this.expandedPropertyKey = this.expandedPropertyKey === key ? undefined : key;
   }
 }

@@ -1697,6 +1697,7 @@
 		"map-set-version": {
 			"form": {
 				"add-header": "Add version",
+				"details-header": "Version details",
 				"edit-header": "Version metadata",
 				"view-header": ""
 			},
@@ -2454,6 +2455,7 @@
 					"warning": "Concept has no active version"
 				},
 				"download": "",
+				"details-header": "Version details",
 				"edit-header": "Version metadata",
 				"rule-set": {
 					"rule": {

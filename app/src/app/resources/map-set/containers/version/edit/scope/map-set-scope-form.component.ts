@@ -1,6 +1,6 @@
 import { Component, Input, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { BooleanInput, isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
 import {CodeSystemLibService, CodeSystemVersion, MapSetResourceReference, MapSetScope, ValueSetLibService, ValueSetVersion} from 'term-web/resources/_lib';
 import {map, Observable, of} from 'rxjs';
 import { MuiCardModule, MuiFormModule, MuiRadioModule, MuiEditableTableModule, MuiSelectModule, MuiInputModule } from '@kodality-web/marina-ui';
@@ -19,6 +19,7 @@ export class MapSetScopeFormComponent {
   private codeSystemService = inject(CodeSystemLibService);
 
   @Input() public scope?: MapSetScope;
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @ViewChild("form") public form?: NgForm;
 
   protected rowInstance: MapSetResourceReference = {};

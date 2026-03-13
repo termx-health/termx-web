@@ -22,6 +22,7 @@ import { ResourceConfigurationAttributesComponent as ResourceConfigurationAttrib
 import { ResourceContactsComponent } from 'term-web/resources/resource/components/resource-contacts.component';
 import { ResourceVersionFormComponent as ResourceVersionFormComponent_1 } from 'term-web/resources/resource/components/resource-version-form.component';
 import { MapSetScopeFormComponent as MapSetScopeFormComponent_1 } from 'term-web/resources/map-set/containers/version/edit/scope/map-set-scope-form.component';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
 import { ResourceSideInfoComponent } from 'term-web/resources/resource/components/resource-side-info.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -33,6 +34,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     NzRowDirective,
     NzColDirective,
     MuiCardModule,
+    ResourceContextComponent,
     ResourceFormComponent_1,
     MapSetPropertiesComponent_1,
     ResourceIdentifiersComponent_1,
@@ -61,6 +63,7 @@ export class MapSetEditComponent implements OnInit {
   protected mode: 'edit' | 'add' = 'add';
   protected viewMode = false;
   protected canEdit = false;
+  protected versions: any[] = [];
 
   @ViewChild("form") public form!: NgForm;
 
@@ -72,14 +75,15 @@ export class MapSetEditComponent implements OnInit {
   @ViewChild(ResourceConfigurationAttributesComponent) public resourceConfigurationAttributesComponent?: ResourceConfigurationAttributesComponent;
 
   public ngOnInit(): void {
+    this.viewMode = this.route.snapshot.routeConfig?.path === ':id/details';
     this.route.paramMap.subscribe(paramMap => {
       const id = paramMap.get('id');
 
       if (isDefined(id)) {
         this.mode = 'edit';
-        this.viewMode = true;
         this.canEdit = this.authService.hasPrivilege(id + '.MapSet.edit');
         this.loader.wrap('load', this.mapSetService.load(id)).subscribe(vs => this.mapSet = this.writeMS(vs));
+        this.mapSetService.searchVersions(id, {limit: -1}).subscribe(r => this.versions = r.data);
       }
       this.mapSet = this.writeMS(new MapSet());
     });
@@ -114,6 +118,12 @@ export class MapSetEditComponent implements OnInit {
 
   public validate(): boolean {
     return isDefined(this.form) && validateForm(this.form);
+  }
+
+  protected openEdit(): void {
+    if (this.mapSet?.id) {
+      this.router.navigate(['/resources/map-sets', this.mapSet.id, 'edit']);
+    }
   }
 
   private writeMS(ms: MapSet): MapSet {

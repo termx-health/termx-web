@@ -1456,6 +1456,7 @@
 		"map-set-version": {
 			"form": {
 				"add-header": "Pridėti versiją",
+				"details-header": "Versijos detalės",
 				"edit-header": "Redaguoti versiją",
 				"view-header": "Peržiūrėti versiją"
 			},
@@ -2083,6 +2084,7 @@
 					"warning": "Terminas neturi aktyvuotos versijos"
 				},
 				"download": "Atsisiuntimas",
+				"details-header": "Versijos detalės",
 				"edit-header": "Redaguoti versiją",
 				"rule-set": {
 					"rule": {
