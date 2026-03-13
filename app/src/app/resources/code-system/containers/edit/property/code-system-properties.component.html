@@ -13,7 +13,69 @@
     }
   </div>
   <form #designationForm="ngForm">
-    <m-editable-table #rowsTable [mData]="designationProperties" [mLoading]="loader.isLoading" [mRowInstance]="designationRowInstance">
+    @if (viewMode) {
+      <m-table [mData]="designationProperties" [mLoading]="loader.isLoading" mSize="small">
+        <tr *mTableHead>
+          <th style="width: 4rem"></th>
+          <th>{{'entities.entity-property.name' | translate}}</th>
+          <th>{{'entities.entity-property.uri' | translate}}</th>
+          <th>{{'entities.entity-property.required' | translate}}</th>
+          <th>{{'entities.entity-property.preferred' | translate}}</th>
+          <th>{{'entities.entity-property.show-in-list' | translate}}</th>
+          <th>{{'entities.entity-property.description' | translate}}</th>
+          <th>{{'entities.entity-property.order-number' | translate}}</th>
+        </tr>
+
+        <ng-container *mTableRow="let p">
+          <tr>
+            <td>
+              <a class="m-clickable" (click)="toggleDesignationPropertyExpand(p, $event)">
+                <m-icon [mCode]="(p | apply:getPropertyKey) === expandedDesignationPropertyKey ? 'up' : 'down'"></m-icon>
+              </a>
+            </td>
+            <td>{{p.name}}</td>
+            <td>{{p.uri}}</td>
+            <td><m-checkbox [ngModel]="p.required" readOnly></m-checkbox></td>
+            <td><m-checkbox [ngModel]="p.preferred" readOnly></m-checkbox></td>
+            <td><m-checkbox [ngModel]="p.showInList" readOnly></m-checkbox></td>
+            <td>{{p.description | localName}}</td>
+            <td>{{p.orderNumber}}</td>
+          </tr>
+          @if ((p | apply:getPropertyKey) === expandedDesignationPropertyKey) {
+            <tr>
+              <td colspan="8">
+                <m-form-row>
+                  <m-form-item *mFormCol mLabel="entities.entity-property.name">
+                    {{p.name}}
+                  </m-form-item>
+                  <m-form-item *mFormCol mLabel="entities.entity-property.uri">
+                    {{p.uri}}
+                  </m-form-item>
+                </m-form-row>
+                <m-form-item mLabel="entities.entity-property.description">
+                  {{p.description | localName}}
+                </m-form-item>
+                <m-form-row>
+                  <m-form-item *mFormCol mLabel="entities.entity-property.order-number">
+                    {{p.orderNumber}}
+                  </m-form-item>
+                  <m-form-item *mFormCol mLabel="entities.entity-property.required">
+                    <m-checkbox [ngModel]="p.required" readOnly></m-checkbox>
+                  </m-form-item>
+                  <m-form-item *mFormCol mLabel="entities.entity-property.preferred">
+                    <m-checkbox [ngModel]="p.preferred" readOnly></m-checkbox>
+                  </m-form-item>
+                  <m-form-item *mFormCol mLabel="entities.entity-property.show-in-list">
+                    <m-checkbox [ngModel]="p.showInList" readOnly></m-checkbox>
+                  </m-form-item>
+                </m-form-row>
+              </td>
+            </tr>
+          }
+        </ng-container>
+      </m-table>
+    } @else {
+    <m-editable-table #rowsTable [mData]="designationProperties" [mLoading]="loader.isLoading" [mRowInstance]="designationRowInstance" [mAddAllowed]="!viewMode" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
       <m-editable-column [mTitle]="'entities.entity-property.name'" mName="name">
         <ng-template #viewTemplate let-p>{{p.name}}</ng-template>
       </m-editable-column>
@@ -44,7 +106,7 @@
       <m-editable-column>
         <ng-template #viewTemplate let-p>
           <div class="m-justify-right">
-            @if (p.id) {
+            @if (p.id && !viewMode) {
               <m-dropdown>
                 <a *m-dropdown-item (mClick)="deletePropertyUsages(p.id)">{{'web.code-system.form.delete-property-usages' | translate}}</a>
               </m-dropdown>
@@ -101,6 +163,7 @@
         </tr>
       </ng-template>
     </m-editable-table>
+    }
   </form>
 </m-card>
 
@@ -138,7 +201,7 @@
           <tr>
             <td>
               <a class="m-clickable" (click)="toggleBasicPropertyExpand(p, $event)">
-                {{(p | apply:getBasicPropertyKey) === expandedBasicPropertyKey ? '-' : '+'}}
+                <m-icon [mCode]="(p | apply:getPropertyKey) === expandedBasicPropertyKey ? 'up' : 'down'"></m-icon>
               </a>
             </td>
             <td>{{p.name}}</td>
@@ -150,7 +213,7 @@
             <td>{{p.orderNumber}}</td>
             <td></td>
           </tr>
-          @if ((p | apply:getBasicPropertyKey) === expandedBasicPropertyKey) {
+          @if ((p | apply:getPropertyKey) === expandedBasicPropertyKey) {
           <tr>
             <td colspan="9">
               <m-form-row>
@@ -257,7 +320,7 @@
       <m-editable-column>
         <ng-template #viewTemplate let-p>
           <div class="m-justify-right">
-            @if (p.id) {
+            @if (p.id && !viewMode) {
               <m-dropdown>
                 <a *m-dropdown-item (mClick)="deletePropertyUsages(p.id)">{{'web.code-system.form.delete-property-usages' | translate}}</a>
               </m-dropdown>
@@ -348,7 +411,7 @@
               }
               @if ('code' === p.type) {
                 <m-form-item mLabel="entities.entity-property.rule.filters">
-                  <m-editable-table #rowsTable [mData]="p.rule.filters" [mRowInstance]="filterRowInstance">
+                  <m-editable-table #rowsTable [mData]="p.rule.filters" [mRowInstance]="filterRowInstance" [mAddAllowed]="!viewMode" [mEditAllowed]="!viewMode" [mDeleteAllowed]="!viewMode">
                     <m-editable-column [mTitle]="'entities.entity-property.rule.type'" mName="type">
                       <ng-template #viewTemplate let-f>{{f.type}}</ng-template>
                       <ng-template #editTemplate let-f let-ngModelName="ngModelName">

@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
-import { isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { BooleanInput, isDefined, validateForm, ApplyPipe } from '@kodality-web/core-util';
 import { MuiEditableTableComponent, MuiCardModule, MuiDropdownModule, MuiCoreModule, MuiEditableTableModule, MuiTooltipModule, MuiTextareaModule } from '@kodality-web/marina-ui';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
 import {CodeSystemConcept, CodeSystemLibService, ConceptUtil} from 'term-web/resources/_lib';
@@ -30,6 +30,7 @@ export class ResourceConfigurationAttributesComponent implements OnInit {
   private translateService = inject(TranslateService);
 
   @Input() public attributes?: any[];
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @ViewChild("form") public form?: NgForm;
   @ViewChild(MuiEditableTableComponent) public table?: MuiEditableTableComponent<ChecklistRule>;
 

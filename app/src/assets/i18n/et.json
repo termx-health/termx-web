@@ -1576,6 +1576,7 @@
 		"map-set-version": {
 			"form": {
 				"add-header": "Lisa versioon",
+				"details-header": "Versiooni detailid",
 				"edit-header": "Versiooni metaandmed",
 				"view-header": "Vaata versiooni"
 			},
@@ -2246,6 +2247,7 @@
 					"warning": "Mõistel puudub aktiivne versioon!"
 				},
 				"download": "Laadi alla",
+				"details-header": "Versiooni detailid",
 				"edit-header": "Versiooni metaandmed",
 				"rule-set": {
 					"rule": {

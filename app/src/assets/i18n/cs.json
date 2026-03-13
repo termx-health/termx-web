@@ -1725,6 +1725,7 @@
         "map-set-version": {
             "form": {
                 "add-header": "Přidat verzi",
+                "details-header": "Detaily verze",
                 "edit-header": "Upravit verzi",
                 "view-header": "Zobrazit verzi"
             },
@@ -2396,6 +2397,7 @@
                     "warning": "Koncept nemá aktivní verzi"
                 },
                 "download": "Stáhnout",
+                "details-header": "Detaily verze",
                 "edit-header": "Upravit verzi",
                 "rule-set": {
                     "rule": {

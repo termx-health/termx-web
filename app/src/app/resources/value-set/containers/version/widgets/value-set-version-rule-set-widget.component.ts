@@ -15,6 +15,7 @@ import { PrivilegedPipe } from 'term-web/core/auth/privileges/privileged.pipe';
 })
 export class ValueSetVersionRuleSetWidgetComponent{
   @Input() public ruleSet: ValueSetVersionRuleSet;
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
   @Input() @BooleanInput() public clickable: boolean | string = false;
   @Output() public ruleSetChanged: EventEmitter<void> = new EventEmitter();
   @Output() public ruleSelected: EventEmitter<{index: number, rule: ValueSetVersionRule}> = new EventEmitter();

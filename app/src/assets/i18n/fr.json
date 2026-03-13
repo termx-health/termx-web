@@ -12,6 +12,16 @@
     "resource-context": {
       "details": "Détails"
     },
+    "map-set-version": {
+      "form": {
+        "details-header": "Détails de la version"
+      }
+    },
+    "value-set-version": {
+      "form": {
+        "details-header": "Détails de la version"
+      }
+    },
     "task": {
       "context": "Context",
       "context-type": "Resource type",

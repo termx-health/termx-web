@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {Router} from '@angular/router';
-import { isDefined, LoadingManager, remove, validateForm, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
+import { BooleanInput, isDefined, LoadingManager, remove, validateForm, ApplyPipe, IncludesPipe } from '@kodality-web/core-util';
 import {catchError, of, throwError} from 'rxjs';
 import {LocalizedName} from '@kodality-web/marina-util';
 import { TranslateService, TranslatePipe } from '@ngx-translate/core';
@@ -19,12 +19,14 @@ import { CodeSystemSearchComponent } from 'term-web/resources/_lib/code-system/c
 import { ValueSetSearchComponent } from 'term-web/resources/_lib/value-set/containers/value-set-search.component';
 import { MapSetSearchComponent } from 'term-web/resources/_lib/map-set/containers/map-set-search.component';
 import { ValidateUrlPipe } from 'term-web/core/ui/pipes/validate-url.pipe';
+import { ResourceReadonlyConceptComponent } from 'term-web/resources/resource/components/resource-readonly-concept.component';
+import { ResourceMultiLanguageViewComponent } from 'term-web/resources/resource/components/resource-multi-language-view.component';
 
 
 @Component({
     selector: 'tw-resource-form',
     templateUrl: 'resource-form.component.html',
-    imports: [FormsModule, MuiFormModule, MuiMultiLanguageInputModule, MuiTextareaModule, MuiButtonModule, MuiIconModule, MuiInputModule, MuiTooltipModule, MuiSelectModule, MuiCoreModule, ValueSetConceptSelectComponent, CodeSystemSearchComponent, ValueSetSearchComponent, MapSetSearchComponent, MuiCheckboxModule, MuiModalModule, MarinPageLayoutModule, TranslatePipe, ApplyPipe, IncludesPipe, ValidateUrlPipe]
+    imports: [FormsModule, MuiFormModule, MuiMultiLanguageInputModule, MuiTextareaModule, MuiButtonModule, MuiIconModule, MuiInputModule, MuiTooltipModule, MuiSelectModule, MuiCoreModule, ValueSetConceptSelectComponent, CodeSystemSearchComponent, ValueSetSearchComponent, MapSetSearchComponent, MuiCheckboxModule, MuiModalModule, MarinPageLayoutModule, TranslatePipe, ApplyPipe, IncludesPipe, ValidateUrlPipe, ResourceReadonlyConceptComponent, ResourceMultiLanguageViewComponent]
 })
 export class ResourceFormComponent implements OnChanges {
   private router = inject(Router);
@@ -37,6 +39,7 @@ export class ResourceFormComponent implements OnChanges {
   @Input() public resourceType?: 'CodeSystem' | 'ValueSet' | 'MapSet' | 'ImplementationGuide';
   @Input() public resource?: Resource;
   @Input() public mode?: 'add' | 'edit';
+  @Input() @BooleanInput() public viewMode: boolean | string = false;
 
   protected loader = new LoadingManager();
   protected customPublisher: boolean = false;

@@ -2,7 +2,7 @@
   <m-no-data></m-no-data>
 }
 
-@if (ruleSet && ('edit' | twPrivileged)) {
+@if (ruleSet && !viewMode && ('edit' | twPrivileged)) {
   <m-form-item mName="inactive">
     <m-checkbox name="inactive" [(ngModel)]="ruleSet.inactive" (ngModelChange)="ruleSetChanged.emit()">{{'entities.value-set-rule-set.inactive' | translate}}</m-checkbox>
   </m-form-item>

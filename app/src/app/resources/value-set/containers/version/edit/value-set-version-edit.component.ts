@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild, inject } from '@angular/core';
 import { NgForm, FormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import { compareValues, LoadingManager, validateForm, ApplyPipe } from '@kodality-web/core-util';
+import { compareValues, LoadingManager, validateForm, ApplyPipe, LocalDatePipe } from '@kodality-web/core-util';
 import {ValueSetVersion, ValueSetVersionRuleSet} from 'term-web/resources/_lib';
 import {ValueSetService} from 'term-web/resources/value-set/services/value-set.service';
 import {map, Observable} from 'rxjs';
@@ -12,6 +12,9 @@ import { AsyncPipe } from '@angular/common';
 import { SemanticVersionSelectComponent } from 'term-web/core/ui/components/inputs/version-select/semantic-version-select.component';
 import { ValueSetConceptSelectComponent } from 'term-web/resources/_lib/value-set/containers/value-set-concept-select.component';
 import { ResourceIdentifiersComponent } from 'term-web/resources/resource/components/resource-identifiers.component';
+import { ResourceContextComponent } from 'term-web/resources/resource/components/resource-context.component';
+import { ResourceMultiLanguageViewComponent } from 'term-web/resources/resource/components/resource-multi-language-view.component';
+import { ResourceReadonlyConceptComponent } from 'term-web/resources/resource/components/resource-readonly-concept.component';
 import { ValueSetVersionRuleSetWidgetComponent } from 'term-web/resources/value-set/containers/version/widgets/value-set-version-rule-set-widget.component';
 import { TranslatePipe } from '@ngx-translate/core';
 
@@ -26,8 +29,11 @@ import { TranslatePipe } from '@ngx-translate/core';
     SemanticVersionSelectComponent,
     MuiDatePickerModule,
     ValueSetConceptSelectComponent,
+    ResourceContextComponent,
     MuiMultiLanguageInputModule,
     ResourceIdentifiersComponent,
+    ResourceMultiLanguageViewComponent,
+    ResourceReadonlyConceptComponent,
     MuiDividerModule,
     MuiCheckboxModule,
     ValueSetVersionRuleSetWidgetComponent,
@@ -36,6 +42,7 @@ import { TranslatePipe } from '@ngx-translate/core';
     MuiIconModule,
     AsyncPipe,
     TranslatePipe,
+    LocalDatePipe,
     ApplyPipe
 ],
 })
@@ -47,6 +54,7 @@ export class ValueSetVersionEditComponent implements OnInit {
 
   public valueSetId?: string | null;
   public valueSetVersion?: string | null;
+  public valueSet?: any;
   public version?: ValueSetVersion;
 
   public mode: 'add' | 'edit' = 'add';
@@ -62,12 +70,13 @@ export class ValueSetVersionEditComponent implements OnInit {
     this.valueSetId = this.route.snapshot.paramMap.get('id');
     this.valueSetVersion = this.route.snapshot.paramMap.get('versionCode');
     this.mode = this.valueSetId && this.valueSetVersion ? 'edit' : 'add';
-    this.viewMode = (this.mode === 'edit');
+    this.viewMode = this.route.snapshot.routeConfig?.path === ':id/versions/:versionCode/details';
     if (this.viewMode) {
       this.canEdit = this.authService.hasPrivilege(this.valueSetId + '.ValueSet.edit');
     }
 
     if (this.mode === 'edit') {
+      this.valueSetService.load(this.valueSetId!).subscribe(vs => this.valueSet = vs);
       this.loadVersion(this.valueSetId!, this.valueSetVersion!);
     } else {
       this.valueSetService.searchVersions(this.valueSetId).subscribe(r => {
@@ -102,6 +111,12 @@ export class ValueSetVersionEditComponent implements OnInit {
   public versions = (id): Observable<string[]> => {
     return this.valueSetService.searchVersions(id, {limit: -1}).pipe(map(r => r.data.map(d => d.version)));
   };
+
+  protected openEdit(): void {
+    if (this.valueSetId && this.version?.version) {
+      this.router.navigate(['/resources/value-sets', this.valueSetId, 'versions', this.version.version, 'edit']);
+    }
+  }
 
   private writeVersion(version: ValueSetVersion): ValueSetVersion {
     version.status ??= 'draft';
